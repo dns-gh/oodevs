@@ -19,7 +19,7 @@ RichWarnWidget< T >::RichWarnWidget( const QString& objectName, QWidget* parent 
     , originalPalette_( palette() )
     , warningPalette_( CreatePalette() )
 {
-    baseWidget_ = new RichBaseObject( *this, this );
+    baseWidget_ = new RichBaseObject( *this, objectName + "-base-widget",this );
     timer_ = new QTimer( this );
     connect( timer_, SIGNAL( timeout() ), baseWidget_, SLOT( OnBlink() ) );
 }

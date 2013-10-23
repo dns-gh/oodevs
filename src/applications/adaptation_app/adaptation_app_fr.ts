@@ -152,6 +152,14 @@
         <source>New base creation and input/output file options cannot be used together.</source>
         <translation>Les options de création de base et d&apos;entrée/sortie ne peuvent pas être utilisées conjointement.</translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation>L&apos;option d&apos;échange de langue nécessite les options d&apos;entrée et de sortie.</translation>
+    </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation>L&apos;option de debug des noms qt nécessite l&apos;option d&apos;entrée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>
@@ -982,11 +990,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation>Ajouter protection active</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation>Supprimer protection active</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1525,11 +1533,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Ajouter un capteur</translation>
+        <translation type="unfinished">Ajouter un capteur</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Enlever un capteur</translation>
+        <translation type="unfinished">Enlever un capteur</translation>
     </message>
 </context>
 <context>
@@ -1605,16 +1613,16 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
 <context>
     <name>ADN_Equipments_WeaponsListView</name>
     <message>
+        <source>Weapon systems</source>
+        <translation>Systèmes d&apos;armes</translation>
+    </message>
+    <message>
         <source>Add weapon</source>
-        <translation>Ajouter un armement</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation>Enlever cet armement</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2285,7 +2293,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2296,7 +2304,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2314,7 +2322,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Select an image</source>
-        <translation>Selectionnez une image</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
@@ -2323,31 +2331,7 @@ JPEG (*.jpg *jpeg)
 GIF (*.gif)
 PNG (*.png)
 </source>
-        <translation>Tous les formats supportés (*.bmp *.jpg *.jpeg *.gif *.png)
-Bitmap Files (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)</translation>
-    </message>
-    <message>
-        <source>Add File</source>
-        <translation>Ajouter fichier</translation>
-    </message>
-    <message>
-        <source>Remove File</source>
-        <translation>Enlever fichier</translation>
-    </message>
-    <message>
-        <source>Existing file found</source>
-        <translation>Fichier existant trouvé</translation>
-    </message>
-    <message>
-        <source>The file you want to copy already exists in the base, your file will be renamed</source>
-        <translation>LE fichier que vous voulez ajouter existe déja dans la base, il sera donc renommé</translation>
-    </message>
-    <message>
-        <source>Copy name</source>
-        <translation>Copier nom</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2355,6 +2339,26 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing file found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you want to copy already exists in the base, your file will be renamed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2369,7 +2373,7 @@ PNG (*.png)</translation>
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2380,11 +2384,11 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>Add object</source>
-        <translation>Ajouter un objet</translation>
+        <translation type="unfinished">Ajouter un objet</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>Enlever cet objet</translation>
+        <translation type="unfinished">Enlever cet objet</translation>
     </message>
 </context>
 <context>
@@ -2395,19 +2399,19 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>Unit models</source>
-        <translation>Modèles de pions</translation>
+        <translation type="unfinished">Modèles de pions</translation>
     </message>
     <message>
         <source>Automata models</source>
-        <translation>Modèles d&apos;automates</translation>
+        <translation type="unfinished">Modèles d&apos;automates</translation>
     </message>
     <message>
         <source>Crowds models</source>
-        <translation>Modèles de foules</translation>
+        <translation type="unfinished">Modèles de foules</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2421,7 +2425,7 @@ PNG (*.png)</translation>
     <name>ADN_ListView_Objects</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2485,7 +2489,7 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3769,7 +3773,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_AmmoListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3788,7 +3792,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Undamaged</source>
-        <translation>Disponible</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4102,7 +4106,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_GenericListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

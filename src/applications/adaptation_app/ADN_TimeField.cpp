@@ -79,7 +79,7 @@ namespace
 ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     : QWidget( pParent, szName )
 {
-    pConnector_ = new ADN_Connector_String< ADN_TimeField >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_TimeField >( this ) );
     // objects
     Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );
     pLayout->setMargin( 0 );
@@ -104,7 +104,7 @@ ADN_TimeField::~ADN_TimeField()
 // -----------------------------------------------------------------------------
 void ADN_TimeField::OnValueChanged()
 {
-    static_cast< ADN_Connector_String< ADN_TimeField >* >( pConnector_ )->SetDataChanged( text() );
+    static_cast< ADN_Connector_String< ADN_TimeField >& >( *pConnector_ ).SetDataChanged( text() );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,4 +143,14 @@ void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
 void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
 {
     // NOTHING (For now)
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::setObjectName
+// Created: ABR 2013-10-21
+// -----------------------------------------------------------------------------
+void ADN_TimeField::setObjectName( const QString& name )
+{
+    QWidget::setObjectName( name );
+    pSpinBox_->setObjectName( name + "-spinbox" );
 }

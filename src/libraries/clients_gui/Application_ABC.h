@@ -53,6 +53,8 @@ protected:
 
     void AddTranslator( const char* t );
     void DeleteTranslators();
+
+    void CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const;
     //@}
 
     //! @name Accessors
@@ -76,6 +78,7 @@ protected:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< QStyle >     style_;
     QString                     expiration_;
     bool                        invalidLicense_;
     QLocale                     locale_;

@@ -36,9 +36,8 @@ ADN_Resources_GenericListView::ADN_Resources_GenericListView( QWidget* pParent, 
     : ADN_ListView( pParent, "ADN_Resources_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<CategoryInfo>( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<CategoryInfo>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +46,7 @@ ADN_Resources_GenericListView::ADN_Resources_GenericListView( QWidget* pParent, 
 // -----------------------------------------------------------------------------
 ADN_Resources_GenericListView::~ADN_Resources_GenericListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

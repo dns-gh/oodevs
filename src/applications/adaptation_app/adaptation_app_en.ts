@@ -152,6 +152,14 @@
         <source>New base creation and input/output file options cannot be used together.</source>
         <translation>New base creation and input/output file options cannot be used together.</translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>
@@ -978,11 +986,11 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation>Add active protection</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation>Remove active protection</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1517,11 +1525,11 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Add sensor</translation>
+        <translation type="unfinished">Add sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Remove sensor</translation>
+        <translation type="unfinished">Remove sensor</translation>
     </message>
 </context>
 <context>
@@ -1602,11 +1610,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Add weapon</source>
-        <translation>Add weapon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation>Remove weapon</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2277,7 +2285,7 @@ posture</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2296,7 @@ posture</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2318,11 +2326,11 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add File</source>
-        <translation type="unfinished"></translation>
+        <source>Warning</source>
+        <translation type="unfinished">Warning</translation>
     </message>
     <message>
-        <source>Remove File</source>
+        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2334,15 +2342,15 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copy name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2357,7 +2365,7 @@ PNG (*.png)
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2368,11 +2376,11 @@ PNG (*.png)
     </message>
     <message>
         <source>Add object</source>
-        <translation>Add object</translation>
+        <translation type="unfinished">Add object</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>Remove object</translation>
+        <translation type="unfinished">Remove object</translation>
     </message>
 </context>
 <context>
@@ -2383,19 +2391,19 @@ PNG (*.png)
     </message>
     <message>
         <source>Unit models</source>
-        <translation>Unit models</translation>
+        <translation type="unfinished">Unit models</translation>
     </message>
     <message>
         <source>Automata models</source>
-        <translation>Automata models</translation>
+        <translation type="unfinished">Automata models</translation>
     </message>
     <message>
         <source>Crowds models</source>
-        <translation>Crowds models</translation>
+        <translation type="unfinished">Crowds models</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2409,7 +2417,7 @@ PNG (*.png)
     <name>ADN_ListView_Objects</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2473,7 +2481,7 @@ PNG (*.png)
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3757,7 +3765,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <name>ADN_Resources_AmmoListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3776,7 +3784,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
     <message>
         <source>Undamaged</source>
-        <translation>Undamaged</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4090,7 +4098,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <name>ADN_Resources_GenericListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

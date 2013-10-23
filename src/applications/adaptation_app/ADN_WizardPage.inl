@@ -56,7 +56,7 @@ void ADN_WizardPage< T >::Build()
     QWidget* optionalWidget = CreateOptionalField();
 
     // Buttons
-    QGroupBox* buttonGroupBox = new QGroupBox();
+    QGroupBox* buttonGroupBox = new gui::RichGroupBox( "button" );
     QVBoxLayout* buttonLayout = new QVBoxLayout( buttonGroupBox );
     buttonGroup_ = new QButtonGroup( buttonGroupBox );
     QRadioButton* newRadioButton = new QRadioButton();
@@ -85,9 +85,9 @@ void ADN_WizardPage< T >::Build()
     for( auto it = existingItems_.begin(); it != existingItems_.end(); ++it, ++row )
     {
         QStandardItem* item = new QStandardItem( ( *it )->strName_.GetData().c_str() );
-        QVariant* variant = new QVariant();
-        variant->setValue( kernel::VariantPointer( *it ) );
-        item->setData( *variant, Qt::UserRole );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( *it ) );
+        item->setData( variant, Qt::UserRole );
         model_->setItem( row, 0, item );
     }
     proxy_->sort( 0 );

@@ -15,13 +15,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_EditLine_ABC.h"
 
-enum E_EntityType;
 class ADN_HtmlViewer;
-
-namespace gui
-{
-    class HtmlEditor;
-}
 
 // =============================================================================
 /** @class  ADN_Missions_GUI

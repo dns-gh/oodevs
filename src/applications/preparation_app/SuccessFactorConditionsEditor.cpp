@@ -13,6 +13,7 @@
 #include "SuccessFactorConditionItem.h"
 #include "preparation/SuccessFactorCondition.h"
 #include "preparation/SuccessFactorConditions.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichRadioButton.h"
 #include <boost/foreach.hpp>
@@ -29,7 +30,7 @@ SuccessFactorConditionsEditor::SuccessFactorConditionsEditor( const QString& obj
     setSpacing( 3 );
     QHBoxLayout* hLayout = new QHBoxLayout;
     addLayout( hLayout );
-    QGroupBox* group = new QGroupBox( tr( "Actions must be executed when: " ) );
+    QGroupBox* group = new gui::RichGroupBox( "condition-groupbox", tr( "Actions must be executed when: " ) );
     hLayout->addWidget( group );
     QHBoxLayout* boxLayout = new QHBoxLayout();
     group->setLayout( boxLayout );

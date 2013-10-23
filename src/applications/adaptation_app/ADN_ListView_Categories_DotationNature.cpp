@@ -27,7 +27,7 @@
 ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_DotationNature", tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Natures_Data::NatureInfos >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Natures_Data::NatureInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -37,7 +37,7 @@ ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( 
 // -----------------------------------------------------------------------------
 ADN_ListView_Categories_DotationNature::~ADN_ListView_Categories_DotationNature()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

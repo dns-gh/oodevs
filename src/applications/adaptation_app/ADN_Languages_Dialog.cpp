@@ -46,12 +46,12 @@ ADN_Languages_Dialog::ADN_Languages_Dialog( ADN_Languages_Data& data )
     resize( 500, 400 );
     setCaption( tr( "Languages" ) );
 
-    QGroupBox* masterGroupBox = new QGroupBox( tr( "Master" ) );
+    QGroupBox* masterGroupBox = new gui::RichGroupBox( "master", tr( "Master" ) );
     QHBoxLayout* masterLayout = new QHBoxLayout( masterGroupBox );
     master_ = new gui::RichWidget< QLabel >( "master-label" );
     masterLayout->addWidget( master_, 1, Qt::AlignCenter );
 
-    QGroupBox* translationsGroupBox = new QGroupBox( tr( "Translations" ) );
+    QGroupBox* translationsGroupBox = new gui::RichGroupBox( "translations", tr( "Translations" ) );
     QGridLayout* translationsLayout = new QGridLayout( translationsGroupBox );
 
     availables_ = new gui::RichWidget< QTreeWidget >( "available-languages" );

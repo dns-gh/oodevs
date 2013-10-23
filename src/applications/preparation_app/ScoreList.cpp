@@ -12,6 +12,7 @@
 #include "moc_ScoreList.cpp"
 #include "ScoreEditor.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/SubObjectName.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWidget.h"
 #include "indicators/Primitives.h"
@@ -26,13 +27,15 @@ Q_DECLARE_METATYPE( const Score_ABC* )
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreList::ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                      const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+                      const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder, const QString& objectName )
     : controllers_( controllers )
     , model_      ( model )
     , scores_     ( new gui::RichWidget< QTreeWidget >( "scores", this ) )
     , editor_     ( new ScoreEditor( this, controllers, model, staticModel, tools, builder ) )
     , config_     ( config )
 {
+    setObjectName( objectName );
+    gui::SubObjectName subObject( objectName );
     scores_->setHeaderLabels( QStringList( tr( "Name" ) ) );
     scores_->setRootIsDecorated( false );
 
@@ -50,7 +53,6 @@ ScoreList::ScoreList( kernel::Controllers& controllers, ScoresModel& model, cons
     generatorBox_->hide();
 
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
-    gui::SubObjectName subObject( "ScoreList" );
     mainLayout->setAlignment( Qt::AlignRight );
     mainLayout->addWidget( scores_ );
     mainLayout->addWidget( box );

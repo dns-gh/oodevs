@@ -30,10 +30,8 @@ typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Launchers", ADN_Tr::ConvertFromWorkspaceElement( eLaunchers ).c_str() )
 {
-    // Connector creation.
-    pConnector_ = new ADN_Connector_ListView<LauncherInfos>( *this );
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<LauncherInfos>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +40,7 @@ ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Launchers::~ADN_ListView_Launchers()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

@@ -24,9 +24,8 @@ typedef ADN_Inhabitants_Data::InhabitantsInfos PeopleInfos;
 ADN_Inhabitants_ListView::ADN_Inhabitants_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Inhabitants_ListView", ADN_Tr::ConvertFromWorkspaceElement( eInhabitants ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< PeopleInfos >( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< PeopleInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ ADN_Inhabitants_ListView::ADN_Inhabitants_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_ListView::~ADN_Inhabitants_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

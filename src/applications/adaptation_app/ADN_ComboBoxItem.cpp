@@ -22,8 +22,7 @@ ADN_ComboBoxItem::ADN_ComboBoxItem(ADN_ComboBox& combo,void *data)
     , pData_(data)
     , szTmpTxt_()
 {
-    pConnector_=new ADN_Connector_String<ADN_ComboBoxItem>(this);
-    assert(pConnector_);
+    pConnector_.reset( new ADN_Connector_String< ADN_ComboBoxItem >( this ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ ADN_ComboBoxItem::ADN_ComboBoxItem(ADN_ComboBox& combo,void *data)
 //-----------------------------------------------------------------------------
 ADN_ComboBoxItem::~ADN_ComboBoxItem()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

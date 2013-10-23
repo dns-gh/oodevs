@@ -24,9 +24,8 @@ typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent )
 : ADN_ListView( pParent, "ADN_Automata_ListView", ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<AutomatonInfos>(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< AutomatonInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Automata_ListView::~ADN_Automata_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

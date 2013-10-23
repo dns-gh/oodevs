@@ -51,7 +51,6 @@ private:
 private:
     //! @name Member data
     //@{
-    static ObjectNameManager* instance_;
     QStringList objectNamePath_;
     QStringList paths_;
     //@}

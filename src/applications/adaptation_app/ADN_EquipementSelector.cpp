@@ -25,7 +25,7 @@ ADN_EquipementSelector::ADN_EquipementSelector( QWidget* pParent, const char* sz
     , pData_     ( 0 )
 {
     setText( tr( "Click here to select" ) );
-    pConnector_ = new ADN_EquipementSelector_Connector( *this );
+    pConnector_.reset( new ADN_EquipementSelector_Connector( *this ) );
     connect( this, SIGNAL( clicked() ), this, SLOT( OnButtonPressed() ) );
 }
 
@@ -35,7 +35,7 @@ ADN_EquipementSelector::ADN_EquipementSelector( QWidget* pParent, const char* sz
 // -----------------------------------------------------------------------------
 ADN_EquipementSelector::~ADN_EquipementSelector()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void ADN_EquipementSelector::OnButtonPressed()
     {
         // Reteive the category from the result, and use the connector to notify its selection.
         this->SetItem( (void*)nResult );
-        static_cast<ADN_EquipementSelector_Connector*>(pConnector_)->NotifySelected( (void*)nResult );
+        static_cast< ADN_EquipementSelector_Connector& >( *pConnector_ ).NotifySelected( (void*) nResult );
     }
 
     delete pPopup;
@@ -91,7 +91,7 @@ void ADN_EquipementSelector::ItemRemoved( void* pItem )
 
     disconnect( pConnected_, 0, this, SLOT( ItemRemoved( void* ) ) );
     pConnected_ = 0;
-    static_cast<ADN_EquipementSelector_Connector*>(pConnector_)->NotifySelected( (void*)0 );
+    static_cast< ADN_EquipementSelector_Connector& >( *pConnector_ ).NotifySelected( (void*) 0 );
 }
 
 // -----------------------------------------------------------------------------

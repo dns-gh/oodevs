@@ -67,11 +67,13 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
     {
         QLabel* directionLabel = new QLabel( tr( "Direction" ) );
         hsDial_ = new QDial( 0, 359, 1, directionHs_ );
+        hsDial_->setObjectName( "hill-shade-direction" );
         hsDial_->setMaximumSize( 50, 50 );
         connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
 
         QLabel* strengthLabel = new QLabel( tr( "Strength" ) );
         hillShadeStrength_ = new QSlider( 1, 50, 1, int( strengthHs_ ), Qt::Horizontal );
+        hillShadeStrength_->setObjectName( "hill-shade-strength" );
         connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
 
         hsBox_ = new RichGroupBox( "hsBox", tr( "Hillshade" ) );

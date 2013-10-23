@@ -152,6 +152,14 @@
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>
@@ -2304,6 +2312,14 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Existing file found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2321,14 +2337,6 @@ PNG (*.png)
     </message>
     <message>
         <source>Remove File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

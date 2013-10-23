@@ -41,7 +41,7 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objec
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 0, 1, INT_MAX );
     delegate_.AddDoubleSpinBoxOnColumn( 1 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( 0 );
+    static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,16 +74,16 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( const QPoint& pt )
         // Delete the current element.
         ConvoyInfo* pCurrentPart = (ConvoyInfo*)GetSelectedData();
         if( pCurrentPart != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentPart );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrentPart );
     }
     else
     {
         assert( nMenuResult == 0 );
         // Create a new element
         ConvoyInfo* pNewInfo = new ConvoyInfo( 1. );
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

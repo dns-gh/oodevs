@@ -49,10 +49,14 @@ public:
     //@{
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
+    //@}
 
-    ADN_Table*    CreateAutomataCompositionsTable  ();
-    ADN_ListView* CreateAutomataLogTable           ();
-    ADN_ListView* CreateAutomataLogTablePerDotation();
+private:
+    //! @name Helpers
+    //@{
+    QWidget* CreateAutomataCompositionsTable();
+    QWidget* CreateAutomataLogTable();
+    QWidget* CreateAutomataLogTablePerDotation();
     //@}
 
 private:

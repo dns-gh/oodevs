@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
-#include "ADN_Callback.h"
 #include "ADN_MainWindow.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Automata_Data.h"
@@ -70,7 +69,7 @@ void ADN_Automata_GUI::Build()
     builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     // Sub units
-    QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
+    QGroupBox* pSubUnitsGroup = new gui::RichGroupBox( "sub-units", tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( builder.GetChildName( "sub-units-table" ), vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
@@ -128,7 +127,7 @@ namespace
 // Name: ADN_Automata_GUI::CreateAutomataCompositionsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
+QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 {
     ADN_Table* pTable = new ADN_CompositionTable( std::string( std::string( strClassName_ ) + "automata-compositions-consistency-table" ).c_str() );
     pTable->AddBoldGridCol( 1 );
@@ -206,6 +205,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
         pTable->AddItem( nRow, 0, nRowSpan, 1, &automaton, strText );
         nRow += nRowSpan;
     }
+    automats.clear(); // force clear here so ADN_Type_Vector_ABC won't delete each automat
     return pTable;
 }
 
@@ -213,7 +213,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 // Name: ADN_Automata_GUI::CreateAutomataLogTable
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTable()
+QWidget* ADN_Automata_GUI::CreateAutomataLogTable()
 {
     return new ADN_AutomatLog_ListView( data_ );
 }
@@ -222,7 +222,7 @@ ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTable()
 // Name: ADN_Automata_GUI::CreateAutomataLogTablePerDotation
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
+QWidget* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 {
     return new ADN_AutomatLogCategory_ListView( data_ );
 }
@@ -233,7 +233,7 @@ ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*  ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
-    mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
-    mainWindow.AddListView( tr( "Logistic per resource" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
+    mainWindow.AddTable( tr( "Automata compositions" ), boost::bind( &ADN_Automata_GUI::CreateAutomataCompositionsTable, this ) );
+    mainWindow.AddListView( tr( "Logistic per automat" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTable, this ) );
+    mainWindow.AddListView( tr( "Logistic per resource" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTablePerDotation, this ) );
 }

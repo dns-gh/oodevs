@@ -585,48 +585,6 @@
       </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="/missions">
-    <xsl:copy>
-      <xsl:apply-templates select="node()|@*"/>
-      <xsl:if test="count( ./translation-queries ) = 0">
-        <xsl:element name="translation-queries">
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/units/mission/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">unit-missions</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/units/mission/parameter/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">unit-missions-parameters</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/automats/mission/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">automat-missions</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/automats/mission/parameter/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">automat-parameters</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/populations/mission/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">crowd-missions</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/populations/mission/parameter/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">crowd-parameters</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/fragorders/fragorder/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">frag-order</xsl:attribute>
-          </xsl:element>
-          <xsl:element name="translation-query">
-            <xsl:attribute name="query">/missions/fragorders/fragorder/parameter/string(@name)</xsl:attribute>
-            <xsl:attribute name="context">frag-order-parameters</xsl:attribute>
-          </xsl:element>
-        </xsl:element>
-      </xsl:if>
-    </xsl:copy>
-  </xsl:template>
-
   <xsl:template match="node()|@*">
     <xsl:copy>
       <xsl:apply-templates select="node()|@*"/>

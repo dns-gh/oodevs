@@ -11,7 +11,6 @@
 #include "ADN_Sensors_GUI.h"
 #include "moc_ADN_Sensors_GUI.cpp"
 
-#include "ADN_Callback.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_GroupBox.h"
@@ -128,8 +127,8 @@ public:
 //-----------------------------------------------------------------------------
 ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
     : ADN_Tabbed_GUI_ABC( eSensors )
-    , data_      ( data )
-    , radarGui_  ( *new ADN_Radars_GUI( *data.radarData_ ) )
+    , data_( data )
+    , radarGui_( new ADN_Radars_GUI( *data.radarData_ ) )
 {
     // NOTHING
 }
@@ -203,7 +202,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     QLineEdit* identification = builder.AddField< ADN_EditLine_Double >( pDistancesGroupBox, "identification-range", tr( "Identification range" ), vConnectors[ eDistIdent ], tr( "m" ), eGreaterEqualZero );
 
     // Modificators (group 1)
-    QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( tr( "Terrain modifiers" ) );
+    QGroupBox* pAgentDetectionModifiersGroup = new gui::RichGroupBox( "terrain-modifiers", tr( "Terrain modifiers" ) );
 
     ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( builder.GetChildName( "size-modifiers" ), vConnectors[ eModifSizes ], pAgentDetectionModifiersGroup );
     ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( builder.GetChildName( "weather-modifiers" ), vConnectors[ eModifWeather ], pAgentDetectionModifiersGroup );
@@ -221,7 +220,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pAgentDetectionModifiersGroup->setLayout( pAgentDetectionModifiersLayout );
 
     // Modificators (group 2)
-    QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( tr( "Stance modifiers" ) );
+    QGroupBox* pAgentDetectionModifiersGroup2 = new gui::RichGroupBox( "stance-modifiers", tr( "Stance modifiers" ) );
 
     ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ), builder.GetChildName( "posture-modifiers" ), vConnectors[ eModifStances ] );
     ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ), builder.GetChildName( "target-posture-modifiers" ), vConnectors[ eModifTargetStances ] );
@@ -253,7 +252,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ eTargets ] = &pTargetListView->GetConnector();
     T_ConnectorVector vTargetConnectors( eNbrObjGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QGroupBox* pTargetParamsGroupBox = new QGroupBox( tr( "Parameters" ), pObjectParamGroupBox );
+    QGroupBox* pTargetParamsGroupBox = new gui::RichGroupBox( "parameters", tr( "Parameters" ), pObjectParamGroupBox );
 
     // Detection
     QWidget* pObjDetectionRangeHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
@@ -295,7 +294,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ eDisasters ] = &pDisastersListView->GetConnector();
     T_ConnectorVector vDisasterConnectors( eNbrDisasterElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    QGroupBox* pDisasterParamsGroupBox = new QGroupBox( tr( "Parameters" ), pCollisions );
+    QGroupBox* pDisasterParamsGroupBox = new gui::RichGroupBox( "disaster-parameters", tr( "Parameters" ), pCollisions );
     QWidget* pDisasterHolder = builder.AddFieldHolder( pDisasterParamsGroupBox );
     builder.AddField< ADN_EditLine_Double >( pDisasterHolder, "detection-threshold", tr( "Detection threshold" ), vDisasterConnectors[ eDetectionThreshold ], "", eGreaterEqualZero );
 
@@ -399,9 +398,9 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_Double >( pCobraGroup, "range", tr( "Range" ), data_.GetCobraInfos().rRange_, tr( "m" ), eGreaterEqualZero );
 
     // Radar
-    radarGui_.Build();
-    QWidget* pRadarWidget = radarGui_.GetMainWidget();
-    vListViews_.push_back( radarGui_.GetListView() );
+    radarGui_->Build();
+    QWidget* pRadarWidget = radarGui_->GetMainWidget();
+    vListViews_.push_back( radarGui_->GetListView() );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -425,7 +424,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
+QWidget* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Volumes_Data::T_VolumeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos();
     ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
@@ -504,7 +503,7 @@ namespace
 // Name: ADN_Sensors_GUI::CreateObjectDetectionTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
+QWidget* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
     ADN_ObjectDetection_Table* pTable = new ADN_ObjectDetection_Table( std::string( std::string( strClassName_ ) + "_object-detection-consistency-table" ).c_str() );
     // Fill the table
@@ -564,6 +563,6 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
-    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
+    mainWindow.AddTable( tr( "Agent detection" ), boost::bind( &ADN_Sensors_GUI::CreateAgentDetectionTable, this ) );
+    mainWindow.AddTable( tr( "Object detection" ), boost::bind( &ADN_Sensors_GUI::CreateObjectDetectionTable, this ) );
 }

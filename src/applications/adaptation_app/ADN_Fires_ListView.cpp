@@ -23,9 +23,8 @@
 ADN_Fires_ListView::ADN_Fires_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Fires_ListView", ADN_Tr::ConvertFromWorkspaceElement( eFires ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView< ADN_Fires_Data::FireClassInfos >( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Fires_Data::FireClassInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +33,7 @@ ADN_Fires_ListView::ADN_Fires_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Fires_ListView::~ADN_Fires_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

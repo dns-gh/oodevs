@@ -28,7 +28,7 @@ class RichBaseObject : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichBaseObject( RichWarnWidget_ABC& widget, QObject* parent = 0 );
+    explicit RichBaseObject( RichWarnWidget_ABC& widget, const QString& objectName, QObject* parent );
     virtual ~RichBaseObject();
     //@}
 

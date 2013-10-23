@@ -17,9 +17,12 @@
 #include "ADN_StandardItem.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/VariantPointer.h"
+#include "tools/LanguageObserver_ABC.h"
 
 class ADN_Table : public QTableView
-                 , public ADN_Gfx_ABC
+                , public ADN_Gfx_ABC
+                , public tools::Observer_ABC
+                , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
 
@@ -98,13 +101,17 @@ private:
     QString GetToolTips( int nRow, int nCol ) const;
     //@}
 
+    //! @name LanguageObserver_ABC
+    //@{
+    virtual void OnLanguageChanged();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnGotoRequested( const QModelIndex& index );
     void OnCheckedStateChanged( const QStandardItem& item );
     void PrivateOnContextMenu( const QPoint& pt );
-    void OnLanguageChanged();
     //@}
 
 signals:
@@ -199,9 +206,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
         item->setTextAlignment( Qt::AlignRight );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
 
     // ADN Connection
     item->Connect( data );
@@ -227,9 +234,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
 
     // ADN Connection
     item->Connect( data, &content );
@@ -255,9 +262,9 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypeP
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
 
     // Variant
-    QVariant* variant = new QVariant();
-    variant->setValue( kernel::VariantPointer( data ) );
-    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
+    QVariant variant;
+    variant.setValue( kernel::VariantPointer( data ) );
+    item->setData( variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
 
     // ADN Connection
     item->Connect( data );

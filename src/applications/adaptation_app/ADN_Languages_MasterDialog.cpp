@@ -28,7 +28,7 @@ ADN_Languages_MasterDialog::ADN_Languages_MasterDialog( ADN_Languages_Data& data
     setFixedSize( 240, 140 );
     setCaption( tr( "Master language editor" ) );
 
-    QGroupBox* masterGroupBox = new QGroupBox( tr( "Choose a master language" ) );
+    QGroupBox* masterGroupBox = new gui::RichGroupBox( "master-language", tr( "Choose a master language" ) );
     QHBoxLayout* masterLayout = new QHBoxLayout( masterGroupBox );
     combo_= new gui::RichWidget< QComboBox >( "combo" );
     combo_->setModel( &model_ );

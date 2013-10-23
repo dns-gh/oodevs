@@ -61,7 +61,7 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
         }
     case ADN_StandardItem::eColor:
         {
-           QString text = static_cast< std::string* >( data )->c_str();
+            QString text = static_cast< std::string* >( data )->c_str();
             QColor color( "#" + text.right( 6 ) );
             if( color.isValid() )
                 item_.setBackground( QBrush( color ) );
@@ -76,6 +76,12 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             break;
         }
     case ADN_StandardItem::eTime:
+        {
+            const QString time = ADN_Tools::ConvertXmlTimeToLocalTime( static_cast< std::string* >( data )->c_str() );
+            item_.setData( time, Qt::EditRole );
+            item_.setData( time, gui::Roles::DataRole );
+            break;
+        }
     case ADN_StandardItem::eString:
     case ADN_StandardItem::eLocalizedString:
         {

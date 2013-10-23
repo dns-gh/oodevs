@@ -30,10 +30,7 @@ ADN_Equipments_RadarsListView::ADN_Equipments_RadarsListView( QWidget* pParent )
 {
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
-
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<RadarInfos>(*this);
-
+    pConnector_.reset( new ADN_Connector_ListView< RadarInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -43,7 +40,7 @@ ADN_Equipments_RadarsListView::ADN_Equipments_RadarsListView( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_Equipments_RadarsListView::~ADN_Equipments_RadarsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -85,7 +82,7 @@ void ADN_Equipments_RadarsListView::OnContextMenu( const QPoint& pt )
     {
         // Remove the radar from the list.
         RadarInfos* pCurrent = static_cast< RadarInfos* >( pCurData_ );
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurrent);
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem(pCurrent);
     }
     else if( nMenuResult > 1 )
     {
@@ -94,8 +91,8 @@ void ADN_Equipments_RadarsListView::OnContextMenu( const QPoint& pt )
         ADN_Radars_Data::RadarInfos* radarsInfos = vRadars[ nMenuResult - 2 ];
         pNewInfo->SetCrossedElement( radarsInfos );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

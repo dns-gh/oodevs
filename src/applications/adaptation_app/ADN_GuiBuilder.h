@@ -254,7 +254,10 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const cha
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
     else if( sideWidget != 0 )
+    {
         thirdWidget = sideWidget;
+        thirdWidget->setObjectName( GetChildName( "side-widget" ) );
+    }
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
@@ -285,7 +288,10 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const cha
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
     else if( sideWidget != 0 )
+    {
         thirdWidget = sideWidget;
+        thirdWidget->setObjectName( GetChildName( "side-widget" ) );
+    }
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
@@ -318,7 +324,10 @@ T* ADN_GuiBuilder::AddOptionalField( QWidget* pParent, const char* objectName, c
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
     else if( sideWidget != 0 )
+    {
         thirdWidget = sideWidget;
+        thirdWidget->setObjectName( GetChildName( "side-widget" ) );
+    }
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
@@ -350,7 +359,10 @@ T* ADN_GuiBuilder::AddOptionalField( QWidget* pParent, const char* objectName, c
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
     else if( sideWidget != 0 )
+    {
         thirdWidget = sideWidget;
+        thirdWidget->setObjectName( GetChildName( "side-widget" ) );
+    }
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;

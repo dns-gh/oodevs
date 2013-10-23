@@ -93,9 +93,9 @@ namespace
     template< typename T >
     void CreateData( QStandardItem& item, int role, T data )
     {
-        QVariant* variant = new QVariant();
-        variant->setValue( data );
-        item.setData( *variant, role );
+        QVariant variant;
+        variant.setValue( data );
+        item.setData( variant, role );
     }
 
     void CreateRow( QStandardItem& parent, const QString& name, Property_ABC& property, gui::PropertyDisplayer& displayer )

@@ -11,9 +11,11 @@
 #include "ADN_App.h"
 #include "ADN_Data_ABC.h"
 #include "ADN_GeneralConfig.h"
+#include "ADN_Languages_Data.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Tr.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable: 4127 4512 4511 )
@@ -123,6 +125,8 @@ int ADN_App::Run()
     const tools::Path& newFile = config_->GetNewFile();
     const tools::Path& inputFile = config_->GetInputFile();
     const tools::Path& outputFile = config_->GetOutputFile();
+    const std::string& swapLanguage = config_->GetSwapLanguage();
+    const tools::Path& qtNamePath = config_->GetQtNamesPath();
     try
     {
         if( IsInvalidLicense() )
@@ -130,6 +134,10 @@ int ADN_App::Run()
 
         if( !newFile.IsEmpty() && ( !inputFile.IsEmpty() || !outputFile.IsEmpty() ) )
             throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
+        if( !swapLanguage.empty() && ( inputFile.IsEmpty() || outputFile.IsEmpty() ) )
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Swap language option needs both the input and the output file options." ).toStdString() );
+        if( !qtNamePath.IsEmpty() && inputFile.IsEmpty() )
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "Debug qt name path option needs the input file options." ).toStdString() );
         if( !newFile.IsEmpty() )
         {
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( newFile ) )
@@ -140,12 +148,22 @@ int ADN_App::Run()
         }
         if( !inputFile.IsEmpty() )
         {
-            if( outputFile.IsEmpty() )
+            if( outputFile.IsEmpty() && qtNamePath.IsEmpty() )
                 mainWindow_->showMaximized();
             ADN_Workspace::GetWorkspace().Load( inputFile, outputFile.IsEmpty() );
+            if( !qtNamePath.IsEmpty() )
+            {
+                CheckInterfaceComponentNaming( mainWindow_.get(), qtNamePath );
+                return EXIT_SUCCESS;
+            }
         }
         if( !outputFile.IsEmpty() )
         {
+            if( !swapLanguage.empty() )
+            {
+                ADN_Workspace::GetWorkspace().GetLanguages().GetData().ChangeLanguage( swapLanguage );
+                ADN_Workspace::GetWorkspace().GetLanguages().GetData().SwapMaster();
+            }
             if( ADN_Workspace::GetWorkspace().IsNewBaseReadOnly( outputFile ) )
                 return EXIT_FAILURE;
             ADN_Workspace::GetWorkspace().SaveAs( outputFile );

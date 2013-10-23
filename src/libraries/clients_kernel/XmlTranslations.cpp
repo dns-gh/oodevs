@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "XmlTranslations.h"
 #include "Context.h"
-#include "TranslationQuery.h"
 #include "Tools.h"
 #include "tools/FileWrapper.h"
 #include "tools/SchemaWriter.h"
@@ -39,127 +38,14 @@ XmlTranslations::~XmlTranslations()
     // NOTHING
 }
 
-
-// -----------------------------------------------------------------------------
-// TranslationQueries operations
-// -----------------------------------------------------------------------------
-
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::Purge
 // Created: JSR 2013-07-23
 // -----------------------------------------------------------------------------
 void XmlTranslations::Purge()
 {
-    queries_.clear();
     contexts_.clear();
 }
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::LoadTranslationQueries
-// Created: ABR 2013-07-10
-// -----------------------------------------------------------------------------
-bool XmlTranslations::LoadTranslationQueries( const tools::Path& xmlFile )
-{
-    if( !xmlFile.Exists() || xmlFile.IsDirectory() || xmlFile.Extension() != ".xml" )
-        return false;
-    tools::Xifstream xis( xmlFile );
-    xis >> xml::list( boost::bind( &XmlTranslations::ReadTranslationQueries, this, _2, _3, 1 ) );
-    return !queries_.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::ReadTranslationQueries
-// Created: ABR 2013-07-10
-// -----------------------------------------------------------------------------
-void XmlTranslations::ReadTranslationQueries( const std::string& name, xml::xistream& xis, int depthMax )
-{
-    if( name == "translation-queries" )
-        xis >> xml::list( "translation-query", *this, &XmlTranslations::ReadTranslationQuery );
-    else
-        if( depthMax != 0 )
-            xis >> xml::list( boost::bind( &XmlTranslations::ReadTranslationQueries, this, _2, _3, depthMax - 1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::ReadTranslationQuery
-// Created: ABR 2013-07-09
-// -----------------------------------------------------------------------------
-void XmlTranslations::ReadTranslationQuery( xml::xistream& xis )
-{
-    queries_.push_back( TranslationQuery( xis ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::EvaluateTranslationQueries
-// Created: ABR 2013-07-10
-// -----------------------------------------------------------------------------
-void XmlTranslations::EvaluateTranslationQueries( const tools::Path& xmlFile, const tools::LanguagesVector& languages )
-{
-    for( auto it = queries_.begin(); it != queries_.end(); ++it )
-    {
-        QStringList result = it->Evaluate( xmlFile );
-        for( auto itKey = result.begin(); itKey != result.end(); ++itKey )
-            for( auto itLanguage = languages.begin(); itLanguage != languages.end(); ++itLanguage )
-                SetTranslation( it->GetContext(), itKey->toStdString(), itLanguage->GetCode(), "" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::SaveTranslationQueries
-// Created: ABR 2013-07-10
-// -----------------------------------------------------------------------------
-void XmlTranslations::SaveTranslationQueries( const tools::Path& xmlFile ) const
-{
-    if( queries_.empty() )
-        return;
-    tools::Xofstream xos( xmlFile );
-    tools::Xifstream xis( xmlFile );
-    xis >> xml::list( boost::bind( &XmlTranslations::CopyAndAddTranslationQueries, this, _2, _3, boost::ref( xos ) ) );
-}
-
-namespace
-{
-    void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
-    {
-        xos << xml::content( name, xis );
-    }
-
-    tools::Path ExtractSchemaName( xml::xistream& xis )
-    {
-        return  xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::ReadRoodNode
-// Created: ABR 2013-07-11
-// -----------------------------------------------------------------------------
-void XmlTranslations::CopyAndAddTranslationQueries( const std::string& name, xml::xistream& xis, xml::xostream& xos ) const
-{
-    xos << xml::start( name );
-    tools::SchemaWriter writer;
-    writer.WritePhysicalSchema( xos, ExtractSchemaName( xis ).BaseName() );
-    xis >> xml::list( boost::bind( &CopyNode, _2, _3, boost::ref( xos ) ) );
-    SaveTranslationQueries( xos );
-    xos << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: XmlTranslations::SaveTranslationQueries
-// Created: ABR 2013-07-10
-// -----------------------------------------------------------------------------
-void XmlTranslations::SaveTranslationQueries( xml::xostream& xos ) const
-{
-    xos << xml::start( "translation-queries");
-    for( auto it = queries_.begin(); it != queries_.end(); ++it )
-        xos << *it;
-    xos << xml::end; //! translation-queries
-}
-
-
-// -----------------------------------------------------------------------------
-// Context operations
-// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: XmlTranslations::LoadTranslation
@@ -277,12 +163,6 @@ void XmlTranslations::SaveTranslationFiles( const tools::Path& xmlFile, const to
         {
             if( itContext->second->empty() )
                 continue;
-            bool validContext = false;
-            for( auto itQuery = queries_.begin(); itQuery != queries_.end() && !validContext; ++itQuery )
-                validContext = itQuery->GetContext() == itContext->first;
-            if( !validContext )
-                continue;
-
             xos << xml::start( "context" )
                 << xml::start( "name" ) << itContext->first << xml::end;
             for( auto itTranslation = itContext->second->begin(); itTranslation != itContext->second->end(); ++itTranslation )

@@ -22,7 +22,7 @@ ADN_ColorNameSelector::ADN_ColorNameSelector( QWidget* parent )
     setMinimumSize( 25, 25 );
     setMaximumWidth( 3 * height() );
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
-    pConnector_ = new ADN_Connector_String< ADN_ColorNameSelector >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_ColorNameSelector >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ ADN_ColorNameSelector::ADN_ColorNameSelector( QWidget* parent )
 // -----------------------------------------------------------------------------
 ADN_ColorNameSelector::~ADN_ColorNameSelector()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void ADN_ColorNameSelector::OnClick()
     {
         color_ = color;
         repaint();
-        static_cast< ADN_Connector_String< ADN_ColorNameSelector >* >( pConnector_ )->SetDataChanged( color_.name() );
+        static_cast< ADN_Connector_String< ADN_ColorNameSelector >& >( *pConnector_ ).SetDataChanged( color_.name() );
     }
 }
 

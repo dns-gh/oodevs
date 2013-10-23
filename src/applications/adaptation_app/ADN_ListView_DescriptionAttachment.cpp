@@ -28,7 +28,7 @@ ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_Missio
     , missionType_( missionType )
     , missionName_( 0 )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this ) );
     setHeaderHidden( true );
 }
 
@@ -38,7 +38,7 @@ ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_Missio
 // -----------------------------------------------------------------------------
 ADN_ListView_DescriptionAttachment::~ADN_ListView_DescriptionAttachment()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -106,9 +106,8 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         newFileName = tempFileName;
     }
     fileName.Copy( newFileName, tools::Path::OverwriteIfExists );
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    if( connector )
-        connector->AddItem( new ADN_Missions_ABC::ADN_Missions_Attachment( newFileName.FileName() ) );
+    ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    connector.AddItem( new ADN_Missions_ABC::ADN_Missions_Attachment( newFileName.FileName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,13 +133,12 @@ void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
     if( !missionName_ )
         return;
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
+    ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
     tools::Path imageDir = GetImageDir( missionName_->GetKey() );
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
     if( imageDir.Exists() && imageDir.IsRegularFile() )
         imageDir.Remove();
-    if( connector )
-        connector->RemItem( GetCurrentData() );
+    connector.RemItem( GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------

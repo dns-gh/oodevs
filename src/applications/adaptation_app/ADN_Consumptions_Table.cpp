@@ -82,9 +82,9 @@ void ADN_Consumptions_Table::CreateNewConsumption( int resource )
     ADN_Inhabitants_Data::InhabitantsInfosConsumption* pNewInfo = new ADN_Inhabitants_Data::InhabitantsInfosConsumption();
     pNewInfo->SetCrossedElement( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos()[ resource ] );
     pNewInfo->consumption_ = 0;
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCTable.AddItem( pNewInfo );
+    pCTable.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void ADN_Consumptions_Table::RemoveCurrentConsumption()
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurResource );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurResource );
     }
 }
 

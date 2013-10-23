@@ -87,7 +87,7 @@ ADN_Resources_AttritionGraph::ADN_Resources_AttritionGraph( QWidget* pParent /* 
     setMinimumWidth( 500 );
     setMinimumHeight( 300 );
 
-    pConnector_ = new ADN_Connector_AttritionGraph( this );
+    pConnector_.reset( new ADN_Connector_AttritionGraph( this ) );
 
     QColor color;
     color.setHsv( 0, 120, 255 );
@@ -116,7 +116,7 @@ ADN_Resources_AttritionGraph::ADN_Resources_AttritionGraph( QWidget* pParent /* 
 // -----------------------------------------------------------------------------
 ADN_Resources_AttritionGraph::~ADN_Resources_AttritionGraph()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

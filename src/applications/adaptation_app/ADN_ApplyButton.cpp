@@ -14,6 +14,7 @@
 #include "ADN_Languages_GUI.h"
 #include "ADN_Workspace.h"
 #include "ADN_WorkspaceElement.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_kernel/LocalizedString.h"
 
 // -----------------------------------------------------------------------------
@@ -26,9 +27,9 @@ ADN_ApplyButton::ADN_ApplyButton( QWidget* parent /*= 0*/ )
     QToolTip::add( this, tr( "Mark as finished" ) );
     setCheckable( true );
     setIconSize( QSize( 10, 10 ) );
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( LanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
     connect( this, SIGNAL( clicked( bool ) ), this, SLOT( OnClicked( bool ) ) );
     OnLanguageChanged();
+    ADN_Workspace::GetWorkspace().GetLanguageController().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ ADN_ApplyButton::ADN_ApplyButton( QWidget* parent /*= 0*/ )
 // -----------------------------------------------------------------------------
 ADN_ApplyButton::~ADN_ApplyButton()
 {
-    // NOTHING
+    ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

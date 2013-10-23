@@ -80,7 +80,7 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
         // Delete the current element.
         BreakdownInfos* pCurrent = static_cast< BreakdownInfos* >( GetSelectedData() );
         if( pCurrent != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrent );
     }
     else
     {
@@ -88,9 +88,9 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
         ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdowns[ nMenuResult - 2 ];
         BreakdownInfos* pNewInfo = new BreakdownInfos();
         pNewInfo->SetCrossedElement( pCast );
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

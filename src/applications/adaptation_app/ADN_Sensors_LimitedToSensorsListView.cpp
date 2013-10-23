@@ -23,10 +23,8 @@ typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADNSensorsLimitedToSensorsListView", tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<LimitedToSensorsInfos>(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< LimitedToSensorsInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +33,7 @@ ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWid
 // -----------------------------------------------------------------------------
 ADN_Sensors_LimitedToSensorsListView::~ADN_Sensors_LimitedToSensorsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -89,15 +87,15 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     if( nMenuResult == 2 )
     {
         // Remove the sensor from the list.
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurData_ );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurData_ );
     }
     else if( nMenuResult > 2 )
     {
         // Add the sensor to the list.
         ADN_Sensors_Data::LimitedToSensorsInfos* pNewInfo = new ADN_Sensors_Data::LimitedToSensorsInfos();
         pNewInfo->strName_ = menuItems[ nMenuResult - 3 ]->strName_.GetData();
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

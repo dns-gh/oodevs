@@ -41,7 +41,7 @@ ADN_TextEdit_ABC::~ADN_TextEdit_ABC()
 // -----------------------------------------------------------------------------
 void ADN_TextEdit_ABC::TextChanged()
 {
-    static_cast< ADN_Connector_String< ADN_TextEdit_ABC >* >( pConnector_ )->SetDataChanged( toPlainText() );
+    static_cast< ADN_Connector_String< ADN_TextEdit_ABC >& >( *pConnector_ ).SetDataChanged( toPlainText() );
 }
 
 // -----------------------------------------------------------------------------

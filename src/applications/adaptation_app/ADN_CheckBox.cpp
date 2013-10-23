@@ -23,7 +23,7 @@
 ADN_CheckBox::ADN_CheckBox( QWidget* parent, const char* name )
     : QCheckBox( parent, name )
 {
-    pConnector_ = new ADN_Connector_Bool< ADN_CheckBox >( this );
+    pConnector_.reset( new ADN_Connector_Bool< ADN_CheckBox >( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -34,7 +34,7 @@ ADN_CheckBox::ADN_CheckBox( QWidget* parent, const char* name )
 ADN_CheckBox::ADN_CheckBox(const QString& text, QWidget* parent, const char* name )
     : QCheckBox( text, parent, name )
 {
-    pConnector_ = new ADN_Connector_Bool< ADN_CheckBox >( this );
+    pConnector_.reset( new ADN_Connector_Bool< ADN_CheckBox >( this ) );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
 }
 
@@ -44,7 +44,7 @@ ADN_CheckBox::ADN_CheckBox(const QString& text, QWidget* parent, const char* nam
 //-----------------------------------------------------------------------------
 ADN_CheckBox::~ADN_CheckBox()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -53,5 +53,5 @@ ADN_CheckBox::~ADN_CheckBox()
 //-----------------------------------------------------------------------------
 void ADN_CheckBox::BoolChanged( bool b )
 {
-    static_cast< ADN_Connector_Bool< ADN_CheckBox >* >( pConnector_ )->SetDataChanged( b );
+    static_cast< ADN_Connector_Bool< ADN_CheckBox >& >( *pConnector_ ).SetDataChanged( b );
 }

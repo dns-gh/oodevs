@@ -110,9 +110,9 @@ void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( ADN_LogisticSupplyClasses
     pNewInfo->SetCrossedElement( &category );
     pNewInfo->rLogThreshold_ = 10;
 
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCTable.AddItem( pNewInfo );
+    pCTable.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,5 +123,5 @@ void ADN_Units_LogThreshold_GUI::RemoveCurrentLogSupplyClass()
 {
     ADN_Units_Data::StockLogThresholdInfos* param = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( GetSelectedData() );
     if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( param );
 }

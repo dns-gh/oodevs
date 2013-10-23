@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
-#include "ADN_Callback.h"
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
@@ -59,6 +58,11 @@ namespace
         QAction* action = CreateAction( text, parent, name, icon );
         action->setShortcut( shortcut );
         return action;
+    }
+    void AddActionToToolBar( QAction* action, QToolBar* toolbar )
+    {
+        toolbar->addAction( action );
+        toolbar->widgetForAction( action )->setObjectName( action->objectName() + "-button" );
     }
 }
 
@@ -112,17 +116,19 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
 
     // Toolbar
     toolBar_ = new QToolBar( this );
+    toolBar_->setObjectName( "toolbar" );
     addToolBar( toolBar_ );
-    toolBar_->addAction( actionNew );
-    toolBar_->addAction( actionLoad );
-    toolBar_->addAction( actionSave_ );
-    toolBar_->addAction( actionSaveAs_ );
+    AddActionToToolBar( actionNew, toolBar_ );
+    AddActionToToolBar( actionLoad, toolBar_ );
+    AddActionToToolBar( actionSave_, toolBar_ );
+    AddActionToToolBar( actionSaveAs_, toolBar_ );
     toolBar_->addSeparator();
-    toolBar_->addAction( actionBack_ );
-    toolBar_->addAction( actionForward_ );
+    AddActionToToolBar( actionBack_, toolBar_ );
+    AddActionToToolBar( actionForward_, toolBar_ );
 
     // Menus
     QMenu* menuProject = new QMenu( tr("&Project"), this );
+    menuProject->setObjectName( "menu" );
     menuProject->addAction( actionNew );
     menuProject->addAction( actionLoad );
     menuProject->insertSeparator();
@@ -146,6 +152,7 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     menuHelp->insertSeparator();
     menuHelp->addAction( tr( "&About" ), this, SLOT( OnAbout() ), Qt::CTRL + Qt::Key_F1 );
 
+    menuBar()->setObjectName( "menubar" );
     menuBar()->addMenu( menuProject );
     menuBar()->addMenu( menuConsistencyTables_ );
     menuBar()->addMenu( menuLanguages_ );
@@ -287,7 +294,7 @@ void ADN_MainWindow::PurgeGUI()
     disconnect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), actionForward_, SLOT( setEnabled( bool ) ) );
     mainLayout_->removeWidget( mainTabWidget_.get() );
     mainTabWidget_.reset();
-    tools::Language::SetCurrent( ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
+    tools::Language::SetCurrent( "" );
     // ObjectNameManager
     gui::ObjectNameManager::getInstance()->Purge();
 }
@@ -445,7 +452,7 @@ void ADN_MainWindow::AddPage( E_WorkspaceElements element, QWidget& page, const 
 // Name: ADN_MainWindow::AddTable
 // Created: JSR 2012-11-07
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table* >* pCallback )
+void ADN_MainWindow::AddTable( const QString& name, const T_ConsistencyCallBack& pCallback )
 {
     QAction* action = new QAction( name, this );
     QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
@@ -458,13 +465,23 @@ void ADN_MainWindow::AddTable( const QString& name, ADN_Callback_ABC< ADN_Table*
 // Name: ADN_MainWindow::AddListView
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddListView( const QString& name, ADN_Callback_ABC< ADN_ListView* >* pCallback )
+void ADN_MainWindow::AddListView( const QString& name, const T_ConsistencyCallBack& pCallback )
 {
     QAction* action = new QAction( name, this );
     QObject::connect( action, SIGNAL( triggered() ), consistencyMapper_.get(), SLOT( map() ) );
     consistencyMapper_->setMapping( action, name );
     menuConsistencyTables_->addAction( action );
-    consistencyListViews_[ name ] = pCallback;
+    consistencyLists_[ name ] = pCallback;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::SetPageVisible
+// Created: ABR 2013-10-18
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::SetPageVisible( E_WorkspaceElements target, bool visible )
+{
+    assert( mainTabWidget_.get() );
+    mainTabWidget_->SetPageVisible( target, visible );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,15 +509,14 @@ void ADN_MainWindow::OnAbout()
 namespace
 {
     template< typename Dialog, typename Element >
-    bool ShowConsistencyDialog( const QString& name, const std::map< QString, ADN_Callback_ABC< Element* >* >& map )
+    bool ShowConsistencyDialog( const QString& name, const std::map< QString, boost::function< QWidget*() > >& map )
     {
         auto it = map.find( name );
         if( it == map.end() )
             return false;
-        ADN_Callback_ABC< Element* >* callback = it->second;
-        Element* element = (*callback)();
+        QWidget* element = it->second();
         assert( element != 0 );
-        Dialog dialog( 0, name, *element );
+        Dialog dialog( 0, name, static_cast< Element& >( *element ) );
         dialog.exec();
         return true;
     }
@@ -512,8 +528,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::OnShowConsistencyTable( const QString& name ) const
 {
-    if( !ShowConsistencyDialog< ADN_TableDialog >( name, consistencyTables_ ) &&
-        !ShowConsistencyDialog< ADN_ListViewDialog >( name, consistencyListViews_ ) )
+    if( !ShowConsistencyDialog< ADN_TableDialog, ADN_Table >( name, consistencyTables_ ) &&
+        !ShowConsistencyDialog< ADN_ListViewDialog, ADN_ListView >( name, consistencyLists_ ) )
         throw MASA_EXCEPTION( "Invalid consistency table " + name.toStdString() );
 }
 

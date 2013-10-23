@@ -38,13 +38,6 @@ public:
     void SetMenu( QMenu* menu );
     //@}
 
-signals:
-    //! @name Signals
-    //@{
-    void LanguageChanged();
-    void PostLanguageChanged();
-    //@}
-
 private slots:
     //! @name Slots
     //@{

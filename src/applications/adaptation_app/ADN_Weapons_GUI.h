@@ -12,6 +12,7 @@
 
 #include "ADN_GUI_ABC.h"
 
+class ADN_Connector_ABC;
 class ADN_Weapons_Data;
 class ADN_Table;
 class ADN_Weapons_ListView;
@@ -70,8 +71,8 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateWeaponsTable();
-    ADN_Table* CreatePHTable();
+    QWidget* CreateWeaponsTable();
+    QWidget* CreatePHTable();
 
     void UpdateModifiers();
 
@@ -89,6 +90,7 @@ private:
     //! @name Member data
     //@{
     ADN_Weapons_Data& data_;
+    std::auto_ptr< ADN_Connector_ABC > graphConnector_;
     //@}
 };
 

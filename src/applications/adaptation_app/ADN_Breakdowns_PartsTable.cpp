@@ -83,16 +83,16 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
         // Delete the current element.
         ADN_Breakdowns_Data::RepairPartInfo* pCurrentPart = reinterpret_cast< ADN_Breakdowns_Data::RepairPartInfo* >( GetSelectedData() );
         if( pCurrentPart != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentPart );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrentPart );
     }
     else
     {
         // Create a new element
         ADN_Breakdowns_Data::RepairPartInfo* pNewInfo = new ADN_Breakdowns_Data::RepairPartInfo();
         pNewInfo->SetCrossedElement( parts[ nMenuResult - 1 ] );
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

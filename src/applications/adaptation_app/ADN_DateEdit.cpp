@@ -23,7 +23,7 @@ ADN_DateEdit::ADN_DateEdit( QWidget* parent )
 {
     setDate( QDate( 1900, 1, 1 ) );
     setCalendarPopup( true );
-    pConnector_ = new ADN_Connector_String< ADN_DateEdit >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_DateEdit >( this ) );
     connect( this, SIGNAL( dateChanged( const QDate& ) ), this, SLOT( DateChanged( const QDate& ) ) );
 }
 
@@ -33,7 +33,7 @@ ADN_DateEdit::ADN_DateEdit( QWidget* parent )
 // -----------------------------------------------------------------------------
 ADN_DateEdit::~ADN_DateEdit()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void ADN_DateEdit::setText( const QString& text )
 // -----------------------------------------------------------------------------
 void ADN_DateEdit::DateChanged( const QDate& date )
 {
-    static_cast< ADN_Connector_String< ADN_DateEdit >* >(pConnector_)->SetDataChanged( date.toString( strFormat_ ) );
+    static_cast< ADN_Connector_String< ADN_DateEdit >& >( *pConnector_ ).SetDataChanged( date.toString( strFormat_ ) );
 }
 
 // -----------------------------------------------------------------------------

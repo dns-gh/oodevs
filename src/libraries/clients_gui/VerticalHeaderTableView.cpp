@@ -20,10 +20,11 @@ using namespace gui;
 // Name: VerticalHeaderStyle constructor
 // Created: ABR 2012-02-24
 // -----------------------------------------------------------------------------
-VerticalHeaderStyle::VerticalHeaderStyle( QStyle* style )
-    : QProxyStyle( style )
+VerticalHeaderStyle::VerticalHeaderStyle()
+    : QProxyStyle()
+    , baseStyle_( new QCleanlooksStyle() )
 {
-    // NOTHING
+    setBaseStyle( baseStyle_.get() );
 }
 
 // -----------------------------------------------------------------------------

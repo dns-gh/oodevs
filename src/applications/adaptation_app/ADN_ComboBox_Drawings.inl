@@ -18,10 +18,11 @@
 template< typename T >
 inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /* = 0 */, int iconSize /* = 50 */)
     : ADN_ComboBox( pParent )
+    , style_( new gui::StandardIconProxyStyle( iconSize ) )
 {
     setIconSize( QSize( iconSize, iconSize ) );
-    setStyle( new gui::StandardIconProxyStyle( iconSize ) );
-    pConnector_ = new ADN_ComboBox_Drawings_Connector< T >( *this );
+    setStyle( style_.get() );
+    pConnector_.reset( new ADN_ComboBox_Drawings_Connector< T >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

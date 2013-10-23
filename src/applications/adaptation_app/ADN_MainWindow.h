@@ -20,7 +20,6 @@ namespace gui
 
 enum E_WorkspaceElements;
 
-template< typename T > class ADN_Callback_ABC;
 class ADN_Config;
 class ADN_GeneralConfig;
 class ADN_ListView;
@@ -39,6 +38,12 @@ class ADN_MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
+    typedef boost::function< QWidget*() > T_ConsistencyCallBack;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
     explicit ADN_MainWindow( const ADN_GeneralConfig& config );
@@ -48,8 +53,9 @@ public:
     //! @name Operations
     //@{
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
-    void AddTable( const QString& strTableName, ADN_Callback_ABC< ADN_Table* >* pCallback );
-    void AddListView( const QString& strTableName, ADN_Callback_ABC< ADN_ListView* >* pCallback );
+    void AddTable( const QString& strTableName, const T_ConsistencyCallBack& callback );
+    void AddListView( const QString& strTableName, const T_ConsistencyCallBack& callback );
+    void SetPageVisible( E_WorkspaceElements target, bool visible );
 
     bool IsLoaded() const;
     void SetIsLoading( bool );
@@ -93,10 +99,9 @@ private:
     //@}
 
 private:
-    //! @name Types
+    //! @name Private types
     //@{
-    typedef std::map< QString, ADN_Callback_ABC< ADN_Table* >* > T_ConsistencyTables;
-    typedef std::map< QString, ADN_Callback_ABC< ADN_ListView* >* > T_ConsistencyListViews;
+    typedef std::map< QString, T_ConsistencyCallBack >  T_ConsistencyViews;
     //@}
 
 private:
@@ -126,8 +131,8 @@ private:
 
     QToolBar* toolBar_;
 
-    T_ConsistencyTables consistencyTables_;
-    T_ConsistencyListViews consistencyListViews_;
+    T_ConsistencyViews consistencyTables_;
+    T_ConsistencyViews consistencyLists_;
 
     bool isLoaded_;
     //@}

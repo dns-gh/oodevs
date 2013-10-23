@@ -73,6 +73,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
     {
         // ListView
         layersList_ = new QTreeView();
+        layersList_->setObjectName( "layers-list" );
         layersList_->setRootIsDecorated( false );
         layersList_->header()->hide();
         layersList_->setModel( layersModel_ );
@@ -94,6 +95,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
 
         transparencyLabel_ = new QLabel( tr( "Transparency " ) );
         transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal );
+        transparency_->setObjectName( "transparency" );
         transparency_->setMaximumWidth( layersList_->width() );
         connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
 

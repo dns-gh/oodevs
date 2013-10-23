@@ -29,11 +29,8 @@ ADN_Equipments_ActiveProtectionsListView::ADN_Equipments_ActiveProtectionsListVi
 {
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
-
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<ActiveProtectionsInfos>(*this);
-
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< ActiveProtectionsInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +39,7 @@ ADN_Equipments_ActiveProtectionsListView::ADN_Equipments_ActiveProtectionsListVi
 //-----------------------------------------------------------------------------
 ADN_Equipments_ActiveProtectionsListView::~ADN_Equipments_ActiveProtectionsListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -84,7 +81,7 @@ void ADN_Equipments_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
     {
         // Remove the ActiveProtections from the list.
         ActiveProtectionsInfos* pCurActiveProtections = (ActiveProtectionsInfos*)pCurData_;
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurActiveProtections);
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem(pCurActiveProtections);
     }
     else if( nMenuResult > 1 )
     {
@@ -94,8 +91,8 @@ void ADN_Equipments_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
         // Add the ActiveProtections to the list.
         ActiveProtectionsInfos* pNewInfo = new ActiveProtectionsInfos( * vActiveProtections[nIndex] );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

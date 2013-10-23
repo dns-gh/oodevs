@@ -26,13 +26,19 @@ class VerticalHeaderStyle : public QProxyStyle
 public:
     //! @name Constructors/Destructor
     //@{
-             VerticalHeaderStyle( QStyle *style );
+             VerticalHeaderStyle();
     virtual ~VerticalHeaderStyle();
     //@}
 
     //! @name Operations
     //@{
     virtual void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget = 0 ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< QStyle > baseStyle_;
     //@}
 };
 

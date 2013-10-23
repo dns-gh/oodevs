@@ -59,8 +59,6 @@ public:
     void ReadMissionSheet( const tools::Path& missionDir, const std::string& language );
     void RenameDifferentNamedMissionSheet( const tools::Path& missionDir, const std::string& language );
     void WriteMissionSheet( const tools::Path& missionDir, const std::string& language ) const;
-    bool NeedsSaving();
-    void SetNeedsSaving( bool saving );
     virtual void CheckValidity();
     //@}
 

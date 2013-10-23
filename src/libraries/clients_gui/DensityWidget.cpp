@@ -82,7 +82,7 @@ DensityWidget::DensityWidget( const QString& objectName, QWidget* parent, kernel
     Q3HBox* graphicBox = new Q3HBox( this );
     graphicBox->layout()->setAlignment( Qt::AlignCenter );
     graphicBox->setMaximumHeight( 100 );
-    densityEditor_ = new GradientButton( graphicBox, *pPainter_, false, Qt::green, Qt::red );
+    densityEditor_ = new GradientButton( "density-editor", graphicBox, *pPainter_, false, Qt::green, Qt::red );
     color_ = new ColorButton( "color",graphicBox );
     color_->setMaximumHeight( 30 );
     Q3HBox* unoccupiedBox = new Q3HBox( this );

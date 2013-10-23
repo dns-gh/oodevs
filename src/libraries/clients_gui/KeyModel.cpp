@@ -92,9 +92,7 @@ QStandardItem* KeyModel::CreateItem( QStandardItem& parent, const QString& name,
 {
     QStandardItem* category = new QStandardItem( name );
     category->setEditable( false );
-    QVariant* variant = new QVariant();
-    variant->setValue( path );
-    category->setData( *variant, Qt::UserRole );
+    category->setData( QVariant( path ), Qt::UserRole );
     parent.appendRow( category );
     return category;
 }

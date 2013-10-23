@@ -25,7 +25,7 @@
 ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_LogisticSupplyClass", tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "Logistic categories" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_LogisticSupplyClasses_Data::LogisticSupplyClass >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -35,7 +35,7 @@ ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSup
 // -----------------------------------------------------------------------------
 ADN_ListView_Categories_LogisticSupplyClass::~ADN_ListView_Categories_LogisticSupplyClass()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

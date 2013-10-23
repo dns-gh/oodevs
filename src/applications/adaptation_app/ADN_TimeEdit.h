@@ -26,7 +26,7 @@ class ADN_TimeEdit : public QTimeEdit
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_TimeEdit( QWidget* parent = 0, const QString& format = "hh:mm" );
+    explicit ADN_TimeEdit( QWidget* parent = 0 );
     virtual ~ADN_TimeEdit();
     //@}
 
@@ -40,12 +40,6 @@ private slots:
     //! @name Slots
     //@{
     void TimeChanged( const QTime& time );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const QString format_;
     //@}
 };
 

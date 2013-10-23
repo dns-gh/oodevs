@@ -30,38 +30,8 @@ public:
     bool IsAutoEnabled();
 
 protected:
-    ADN_Connector_ABC* pConnector_;
+    std::auto_ptr< ADN_Connector_ABC > pConnector_;
     bool bAutoEnabled_;
 };
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Gfx_ABC::GetConnector
-// Created: JDY 03-07-10
-//-----------------------------------------------------------------------------
-inline
-ADN_Connector_ABC& ADN_Gfx_ABC::GetConnector()
-{
-    return *pConnector_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Gfx_ABC::SetAutoEnabled
-// Created: JDY 03-07-16
-//-----------------------------------------------------------------------------
-inline
-void ADN_Gfx_ABC::SetAutoEnabled( bool bAuto )
-{
-    bAutoEnabled_ = bAuto;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Gfx_ABC::IsAutoEnabled
-// Created: JDY 03-07-16
-//-----------------------------------------------------------------------------
-inline
-bool ADN_Gfx_ABC::IsAutoEnabled()
-{
-    return bAutoEnabled_;
-}
 
 #endif // __ADN_Gfx_ABC_h_

@@ -36,6 +36,5 @@ ADN_Reports_GUI::~ADN_Reports_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Reports_GUI::Build()
 {
-    assert( pMainWidget_ == 0 );
-    pMainWidget_ = new QWidget( 0, "Reports main widget" );
+    // NOTHING
 }

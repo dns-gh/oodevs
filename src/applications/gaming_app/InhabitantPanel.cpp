@@ -107,9 +107,9 @@ namespace
         item->setTextAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
         item->setFlags( item->flags() & ~Qt::ItemIsEditable );
         item->setData( data, Qt::UserRole );
-        QVariant* variant = new QVariant();
-        variant->setValue( kernel::VariantPointer( object ) );
-        item->setData( *variant, Qt::UserRole + 1 );
+        QVariant variant;
+        variant.setValue( kernel::VariantPointer( object ) );
+        item->setData( variant, Qt::UserRole + 1 );
         return item;
     }
 }

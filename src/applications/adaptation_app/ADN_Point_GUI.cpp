@@ -98,9 +98,9 @@ void ADN_Point_GUI::AddNewElement( E_KeyPoint nKeyPoint )
     PointInfos* pNewInfo = new PointInfos();
     pNewInfo->nTypeTerrain_ = nKeyPoint;
 
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCTable.AddItem( pNewInfo );
+    pCTable.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void ADN_Point_GUI::DeleteCurrentElement()
 {
     PointInfos* pCurComposante = static_cast< PointInfos* >( GetSelectedData() );
     if( pCurComposante )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurComposante );
 }
 
 // -----------------------------------------------------------------------------

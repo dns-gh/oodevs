@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     void AddPage( E_WorkspaceElements target, QWidget& page, const QString& title );
+    void SetPageVisible( E_WorkspaceElements target, bool visible );
     //@}
 
 signals:

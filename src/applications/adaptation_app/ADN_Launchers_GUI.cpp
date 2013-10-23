@@ -61,7 +61,7 @@ void ADN_Launchers_GUI::Build()
 
     // Direct fire
     ADN_GroupBox* pDirectGroup = builder.AddGroupBox( 0, "direct-fire", tr( "Direct fire" ), vConnectors[ eDirect ], 1 );
-    QGroupBox* pGroupModificators = new QGroupBox( tr( "Phs modifiers" ), pDirectGroup );
+    QGroupBox* pGroupModificators = new gui::RichGroupBox( "direct-fire-phs-modifiers", tr( "Phs modifiers" ), pDirectGroup );
 
     QLabel* pTargetLabel = new QLabel( tr( "Target's stance" ) );
     pTargetLabel->setAlignment( Qt::AlignHCenter );

@@ -13,8 +13,6 @@
 
 using namespace gui;
 
-ObjectNameManager* ObjectNameManager::instance_ = NULL;
-
 // -----------------------------------------------------------------------------
 // Name: ObjectNameManager constructor
 // Created: NPT 2013-03-11
@@ -30,7 +28,7 @@ ObjectNameManager::ObjectNameManager()
 // -----------------------------------------------------------------------------
 ObjectNameManager::~ObjectNameManager()
 {
-    instance_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,9 +37,8 @@ ObjectNameManager::~ObjectNameManager()
 // -----------------------------------------------------------------------------
 ObjectNameManager* ObjectNameManager::getInstance()
 {
-    if ( instance_ == NULL )
-        instance_ = new ObjectNameManager;
-    return instance_;
+    static ObjectNameManager instance;
+    return &instance;
 }
 
 namespace

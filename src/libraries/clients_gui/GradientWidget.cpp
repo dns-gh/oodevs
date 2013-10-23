@@ -61,7 +61,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     box = new Q3HBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
     box->setMaximumHeight( 100 );
-    gradientEditor_ = new GradientButton( box, painter, true );
+    gradientEditor_ = new GradientButton( "gradient-editor", box, painter, true );
     color_ = new ColorButton( "color", box );
     color_->setMaximumHeight( 30 );
 

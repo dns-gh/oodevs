@@ -17,8 +17,7 @@
 ADN_ComboBox_Enum::ADN_ComboBox_Enum( QWidget* parent )
     : ADN_ComboBox( parent )
 {
-    pConnector_ = new ADN_Connector_EnumComboBox( this );
-    assert( pConnector_ );
+    pConnector_.reset( new ADN_Connector_EnumComboBox( this ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -27,7 +26,7 @@ ADN_ComboBox_Enum::ADN_ComboBox_Enum( QWidget* parent )
 //-----------------------------------------------------------------------------
 ADN_ComboBox_Enum::~ADN_ComboBox_Enum()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

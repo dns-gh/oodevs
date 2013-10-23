@@ -34,6 +34,8 @@ public:
     const tools::Path& GetInputFile() const;
     const tools::Path& GetOutputFile() const;
     const tools::Path& GetNewFile() const;
+    const std::string& GetSwapLanguage() const;
+    const tools::Path& GetQtNamesPath() const;
     //@}
 
 private:
@@ -44,6 +46,8 @@ private:
     tools::Path inputFile_;
     tools::Path outputFile_;
     tools::Path newFile_;
+    std::string swapLanguage_;
+    tools::Path qtNamesPath_;
     //@}
 };
 

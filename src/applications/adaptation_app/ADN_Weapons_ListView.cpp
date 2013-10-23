@@ -35,9 +35,8 @@ typedef ADN_Weapons_Data_WeaponInfos WeaponInfos;
 ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_Weapons_ListView", ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<WeaponInfos>(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< WeaponInfos >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +45,7 @@ ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Weapons_ListView::~ADN_Weapons_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

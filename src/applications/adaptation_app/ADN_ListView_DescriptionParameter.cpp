@@ -20,7 +20,7 @@
 ADN_ListView_DescriptionParameter::ADN_ListView_DescriptionParameter()
     : ADN_ListView( 0, "ADN_ListView_DescriptionParameter", tr( "Parameters" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Missions_Parameter >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Missions_Parameter >( *this ) );
     setHeaderHidden( true );
 }
 
@@ -30,7 +30,7 @@ ADN_ListView_DescriptionParameter::ADN_ListView_DescriptionParameter()
 // -----------------------------------------------------------------------------
 ADN_ListView_DescriptionParameter::~ADN_ListView_DescriptionParameter()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

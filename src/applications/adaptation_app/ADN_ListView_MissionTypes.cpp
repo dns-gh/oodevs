@@ -31,7 +31,7 @@ ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( QWidget* parent, E_Mission
     , missions_   ( missions )
     , eMissionType_( eMissionType )
 {
-    pConnector_ = new ADN_Connector_ListView< Mission >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< Mission >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -41,7 +41,7 @@ ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( QWidget* parent, E_Mission
 // -----------------------------------------------------------------------------
 ADN_ListView_MissionTypes::~ADN_ListView_MissionTypes()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

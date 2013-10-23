@@ -126,7 +126,7 @@ void ADN_Units_GUI::Build()
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ) );
     {
         Q3VBox* natureLayout = new Q3VBox( pNatureGroup );
-        QGroupBox* pNatureInternalGroup = new QGroupBox( natureLayout );
+        QGroupBox* pNatureInternalGroup = new gui::RichGroupBox( "nature-group-box", natureLayout );
         QGridLayout* pNatureInternalGroupLayout = new QGridLayout( pNatureInternalGroup );
         pNatureInternalGroupLayout->setMargin( 10 );
         pNatureInternalGroupLayout->setAlignment( Qt::AlignTop );

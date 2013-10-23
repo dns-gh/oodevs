@@ -82,7 +82,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
         // Delete the current element.
         ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* pCurrent = static_cast< ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* >( GetSelectedData() );
         if( pCurrent != 0 )
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
+            static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrent );
     }
     else
     {
@@ -91,9 +91,9 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
         pNewInfo->SetCrossedElement( pWeapon[ nMenuResult - 2 ] );
         pNewInfo->coefficient_ = 0;
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
-        pCTable->AddItem( 0 );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
+        pCTable.AddItem( 0 );
     }
 }
 

@@ -99,9 +99,8 @@ void Application_ABC::InitializeBugTrap()
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeStyle()
 {
-    app_.setStyle( new QCleanlooksStyle ); // $$$$ ABR 2012-07-12: Still needed ?
-    app_.setStyle( new gui::VerticalHeaderStyle( qApp->style() ) );
-
+    style_.reset( new gui::VerticalHeaderStyle() );
+    app_.setStyle( style_.get() );
     QFile file( "style.qss" );
     if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
         QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );
@@ -174,4 +173,44 @@ void Application_ABC::DeleteTranslators()
     for( std::vector< QTranslator* >::const_iterator it = translators_.begin(); it != translators_.end(); ++it )
         app_.removeTranslator( *it );
     translators_.clear();
+}
+
+namespace
+{
+
+    void CheckNamingHierarchy( std::ostream& out, QObject* parent, std::map< std::string, std::pair< unsigned int, unsigned int > >& map, const QString& parentPath )
+    {
+        if( !parent )
+            return;
+        for( auto it  = parent->children().begin(); it != parent->children().end(); ++it )
+        {
+            std::string className = ( *it )->metaObject()->className();
+            QString path = parentPath + "." + className.c_str();
+            bool hasName =  !( *it )->objectName().isEmpty();
+            out << hasName << "," << path << "," << parent->objectName() << std::endl;
+            if( hasName )
+                ++map[ className ].first;
+            else
+                ++map[ className ].second;
+
+            CheckNamingHierarchy( out, *it, map, path );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::CheckInterfaceComponentNaming
+// Created: NPT 2013-03-21
+// -----------------------------------------------------------------------------
+void Application_ABC::CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const
+{
+    std::ostream* output = &std::cout;
+    std::fstream fp;
+    if( outpath != "-" )
+    {
+        fp.open( outpath.ToUnicode(), std::ios::out );
+        output = &fp;
+    }
+    std::map< std::string, std::pair< unsigned int, unsigned int > > map;
+    CheckNamingHierarchy( *output, root, map, "" );
 }

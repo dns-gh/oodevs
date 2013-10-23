@@ -15,10 +15,9 @@ template <class Connector, class Validator>
 ADN_EditLine<Connector, Validator>::ADN_EditLine( QWidget* parent, const char * name)
     : ADN_EditLine_ABC( parent, name )
 {
-    pConnector_ = new Connector( this );
-    pValidator_ = new Validator( this );
-    this->setValidator( pValidator_ );
-    assert( pConnector_ != 0 );
+    pConnector_.reset( new Connector( this ) );
+    pValidator_.reset( new Validator( this ) );
+    setValidator( pValidator_.get() );
 }
 
 //-----------------------------------------------------------------------------
@@ -28,7 +27,7 @@ ADN_EditLine<Connector, Validator>::ADN_EditLine( QWidget* parent, const char * 
 template <class Connector, class Validator>
 ADN_EditLine<Connector, Validator>::~ADN_EditLine()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +47,7 @@ Validator& ADN_EditLine<Connector, Validator>::GetValidator()
 template <class Connector, class Validator>
 void ADN_EditLine<Connector, Validator>::TextChanged( const QString& string )
 {
-    static_cast<Connector*>(pConnector_)->SetDataChanged(string);
+    static_cast< Connector& >( *pConnector_ ).SetDataChanged( string );
 }
 
 // -----------------------------------------------------------------------------

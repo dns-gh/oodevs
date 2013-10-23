@@ -152,6 +152,14 @@
         <source>New base creation and input/output file options cannot be used together.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>
@@ -966,11 +974,11 @@ Parked engine running</source>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation type="unfinished">إضافة الحماية النشطة</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation type="unfinished">إزالة الحماية النشطة</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1591,11 +1599,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>Add weapon</source>
-        <translation type="unfinished">إضافة الأسلحة</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation type="unfinished">إزالة الأسلحة</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2306,11 +2314,11 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add File</source>
-        <translation type="unfinished"></translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-        <source>Remove File</source>
+        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2322,15 +2330,15 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copy name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
-    </message>
-    <message>
-        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3764,7 +3772,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
     <message>
         <source>Undamaged</source>
-        <translation type="unfinished">غير التالفة</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

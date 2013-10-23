@@ -20,10 +20,10 @@ namespace
     void Initialize( QStandardItem* item )
     {
         item->setFlags( Qt::ItemIsEnabled );
-        item->setData( *new QVariant( gui::StandardModel::showValue_ ), gui::Roles::FilterRole );
-        item->setData( *new QVariant(), gui::Roles::DataRole );
-        item->setData( *new QVariant(), gui::Roles::SafeRole );
-        item->setData( *new QVariant(), gui::Roles::MimeTypeRole );
+        item->setData( QVariant( gui::StandardModel::showValue_ ), gui::Roles::FilterRole );
+        item->setData( QVariant(), gui::Roles::DataRole );
+        item->setData( QVariant(), gui::Roles::SafeRole );
+        item->setData( QVariant(), gui::Roles::MimeTypeRole );
     }
 }
 

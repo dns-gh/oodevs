@@ -26,9 +26,8 @@ typedef ADN_KnowledgeGroups_Data::GroupInfo GroupInfo;
 ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_KnowledgeGroups_ListView", ADN_Tr::ConvertFromWorkspaceElement( eKnowledgeGroups ).c_str() )
 {
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<GroupInfo>(*this);
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView< GroupInfo >( *this ) );
+    SetDeletionEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_ListView::~ADN_KnowledgeGroups_ListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

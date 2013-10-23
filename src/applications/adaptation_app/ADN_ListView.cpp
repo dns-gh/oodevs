@@ -22,6 +22,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_WorkspaceElement.h"
+#include "clients_kernel/LanguageController.h"
 #include <boost/bind.hpp>
 #include <excel/ExcelFormat.h>
 
@@ -72,7 +73,6 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     , pObjectCreator_   ( 0 )
     , bDeletionEnabled_ ( false )
     , bDeletionWarning_ ( true )
-    , bEditionEnabled_  ( true )
     , bPrinting_        ( false )
     , usedByMapper_     ( this )
 {
@@ -85,7 +85,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
 
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( SetCurrentItem() ) );
     connect( &usedByMapper_, SIGNAL( mapped( int ) ), this, SLOT( ContextMenuSearchElements( int ) ) );
-    connect( &ADN_Workspace::GetWorkspace().GetLanguages().GetGuiABC(), SIGNAL( PostLanguageChanged() ), this, SLOT( OnLanguageChanged() ) );
+    ADN_Workspace::GetWorkspace().GetLanguageController().Register( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
 //-----------------------------------------------------------------------------
 ADN_ListView::~ADN_ListView()
 {
-    // NOTHING
+    ADN_Workspace::GetWorkspace().GetLanguageController().Unregister( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_Objec
 {
     usedByInfos_.clear();
     pObjectCreator_ = 0;
-    if( !bEditionEnabled_ )
+    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() )
         return;
     pObjectCreator_ = &objectCreator;
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
@@ -421,8 +421,8 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
         return;
     }
 
-    ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCList->AddItem( ref );
+    ADN_Connector_Vector_ABC& pCList = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    pCList.AddItem( ref );
 
     selectionModel()->setCurrentIndex( dataModel_.indexFromItem( FindItem( ref ) ), QItemSelectionModel::ClearAndSelect );
 
@@ -449,7 +449,7 @@ bool ADN_ListView::ContextMenuDelete()
     else if( !DeletionWarning() )
         return false;
     // Remove the item from the list.
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
+    static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurrentData );
     ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     delete pCurrentData;
     return true;
@@ -895,7 +895,7 @@ void ADN_ListView::RemoveCurrentElement()
 {
     void* data = GetCurrentData();
     if( data )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( data );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( data );
 }
 
 // -----------------------------------------------------------------------------
@@ -904,7 +904,6 @@ void ADN_ListView::RemoveCurrentElement()
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnLanguageChanged()
 {
-    bEditionEnabled_ = ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster();
     for( int row = 0; row < dataModel_.rowCount(); ++row )
         if( ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) ) )
             if( ADN_Ref_ABC* parentData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() ) )

@@ -24,11 +24,12 @@ namespace
     class RichDial : public QDial
     {
     public:
-        RichDial( QWidget* parent, const QString& imagePath, float sizeRatio )
+        RichDial( QWidget* parent, const QString& imagePath, float sizeRatio, const QString& objectName )
             : QDial( parent )
             , image_    ( imagePath )
             , sizeRatio_( sizeRatio )
         {
+            setObjectName( objectName );
             image_.setAlphaBuffer( true );
             imageRatio_ = ( image_.width() > image_.height() )
                 ? (float) image_.height() / (float) image_.width()
@@ -91,7 +92,7 @@ WeatherWidget::WeatherWidget( const QString& objectName, QWidget* parent, const 
 
     // Direction
     QLabel* windDirectionLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Wind direction:" ) );
-    windDirection_ = new RichDial( this, "resources/images/gui/windsock.png", 0.8f );
+    windDirection_ = new RichDial( this, "resources/images/gui/windsock.png", 0.8f, "wind-direction" );
     windDirection_->setWrapping( true );
     windDirection_->setRange( 0, 359 );
     windDirection_->setMinimumSize( 50, 50 );

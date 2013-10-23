@@ -82,6 +82,7 @@
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 #include "clients_kernel/Context.h"
+#include "clients_kernel/LanguageController.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
@@ -161,6 +162,7 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
     : mainWindow_( mainWindow )
     , progressIndicator_( mainWindow.GetProgressBar() )
     , config_( config )
+    , languageController_( new kernel::LanguageController() )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , projectData_( new ADN_Project_Data() )
@@ -203,6 +205,7 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
 //-----------------------------------------------------------------------------
 ADN_Workspace::~ADN_Workspace()
 {
+    mainWindow_.LoadStatusChanged( false );
     for( int n = 0; n < eNbrWorkspaceElements; n++ )
         elements_[ n ].reset();
 }
@@ -353,9 +356,8 @@ void ADN_Workspace::BuildGUI()
     AddPage( eKnowledgeGroups );
     AddPage( eHumanFactors );
     AddPage( eAiEngine );
-    if( config_.IsDevMode() )
-        AddPage( eDisasters );
-
+    AddPage( eDisasters );
+    mainWindow_.SetPageVisible( eDisasters, config_.IsDevMode() );
     mainWindow_.SetIsLoading( false );
     connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainWindow_, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
@@ -463,6 +465,16 @@ namespace
             return false;
         return true;
     }
+    bool IsAValidFileToCopy( const tools::Path& filename, const ADN_Project_Data::DataInfos& infos )
+    {
+        // TODO: Add a method "Contains" to tools::Path
+        const std::string file = filename.Normalize().ToUTF8();
+        return file.find( infos.szLocalesDirectory_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szUnitsMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szAutomataMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szCrowdsMissionPath_.Normalize().ToUTF8() ) == std::string::npos &&
+               file.find( infos.szFragOrdersMissionPath_.Normalize().ToUTF8() ) == std::string::npos;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -560,7 +572,7 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
 
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-        szOldWorkDir.Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::IgnoreIfExists );
+        szOldWorkDir.Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::IgnoreIfExists, boost::bind( &IsAValidFileToCopy, _1, boost::cref( infos ) ) );
 
     // Unzip symbols.pak if not already in the working directory
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
@@ -924,4 +936,13 @@ bool ADN_Workspace::ApplyOnGui( const boost::function< bool( ADN_GUI_ABC& data )
         if( functor( elements_[ n ]->GetGuiABC() ) )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetLanguageController
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+kernel::LanguageController& ADN_Workspace::GetLanguageController()
+{
+    return *languageController_;
 }

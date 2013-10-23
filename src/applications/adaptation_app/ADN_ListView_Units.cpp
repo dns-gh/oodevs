@@ -25,8 +25,7 @@ typedef ADN_Units_Data::UnitInfos UnitInfos;
 ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Units", ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str() )
 {
-    // Connector creation.
-    pConnector_ = new ADN_Connector_ListView<UnitInfos>( *this );
+    pConnector_.reset( new ADN_Connector_ListView<UnitInfos>( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -36,7 +35,7 @@ ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Units::~ADN_ListView_Units()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

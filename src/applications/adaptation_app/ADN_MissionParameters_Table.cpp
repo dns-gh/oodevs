@@ -163,9 +163,9 @@ void ADN_MissionParameters_Table::AddNewElement()
     ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter( missionType_ );
     newElement->strName_ = tr( "New parameter" ).toStdString();
 
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    connector->AddItem( newElement );
-    connector->AddItem( 0 );
+    ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+    connector.AddItem( newElement );
+    connector.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------

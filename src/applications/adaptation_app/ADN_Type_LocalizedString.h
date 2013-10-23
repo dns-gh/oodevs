@@ -12,6 +12,7 @@
 
 #include "ADN_Type_ABC.h"
 #include "clients_kernel/LocalizedString.h"
+#include "tools/LanguageObserver_ABC.h"
 
 namespace kernel
 {
@@ -25,6 +26,8 @@ namespace kernel
 // Created: ABR 2013-07-12
 // =============================================================================
 class ADN_Type_LocalizedString : public ADN_Type_ABC< std::string >
+                               , public tools::Observer_ABC
+                               , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
 
@@ -106,10 +109,10 @@ public slots:
     void OnTypeChanged( int );
     //@}
 
-private slots:
-    //! @name Slots
+private:
+    //! @name LanguageObserver_ABC implementation
     //@{
-    void OnLanguageChanged();
+    virtual void OnLanguageChanged();
     //@}
 
 private:

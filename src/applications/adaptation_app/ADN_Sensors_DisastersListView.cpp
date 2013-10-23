@@ -50,8 +50,8 @@ namespace
 ADN_Sensors_DisastersListView::ADN_Sensors_DisastersListView( QWidget* pParent /* = 0 */ )
     : ADN_ListView( pParent, "ADN_Sensors_DisastersListView", tools::translate( "ADN_Sensors_DisastersListView", "Disasters" ) )
 {
-    pConnector_ = new ADN_Connector_Disasters( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_Disasters( *this ) );
+    SetDeletionEnabled( true );
     setMaximumHeight( 150 );
 }
 
@@ -61,7 +61,7 @@ ADN_Sensors_DisastersListView::ADN_Sensors_DisastersListView( QWidget* pParent /
 // -----------------------------------------------------------------------------
 ADN_Sensors_DisastersListView::~ADN_Sensors_DisastersListView()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void ADN_Sensors_DisastersListView::OnContextMenu( const QPoint& pt )
     if( nMenuResult == 1 )
     {
         ADN_Sensors_Data::DisasterInfos* pCurObject = (ADN_Sensors_Data::DisasterInfos*)pCurData_;
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurObject );
+        static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( pCurObject );
     }
     else if( nMenuResult > 1 )
     {
@@ -115,8 +115,8 @@ void ADN_Sensors_DisastersListView::OnContextMenu( const QPoint& pt )
         ADN_Sensors_Data::DisasterInfos* pNewInfo = new ADN_Sensors_Data::DisasterInfos();
         pNewInfo->SetCrossedElement( vDisasters[ nMenuResult - 2 ] );
 
-        ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-        pCTable->AddItem( pNewInfo );
+        ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
+        pCTable.AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }

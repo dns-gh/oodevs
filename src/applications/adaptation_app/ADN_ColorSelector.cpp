@@ -28,7 +28,7 @@ ADN_ColorSelector::ADN_ColorSelector( QWidget* parent, bool fixedSize )
         setMaximumWidth( 3 * height() );
     }
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
-    pConnector_ = new ADN_Connector_String< ADN_ColorSelector >( this );
+    pConnector_.reset( new ADN_Connector_String< ADN_ColorSelector >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ ADN_ColorSelector::ADN_ColorSelector( QWidget* parent, bool fixedSize )
 // -----------------------------------------------------------------------------
 ADN_ColorSelector::~ADN_ColorSelector()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void ADN_ColorSelector::OnClick()
     {
         color_ = color;
         repaint();
-        static_cast< ADN_Connector_String< ADN_ColorSelector >* >( pConnector_ )->SetDataChanged( "0x" + color_.name().right( 6 ) );
+        static_cast< ADN_Connector_String< ADN_ColorSelector >& >( *pConnector_ ).SetDataChanged( "0x" + color_.name().right( 6 ) );
     }
 }
 

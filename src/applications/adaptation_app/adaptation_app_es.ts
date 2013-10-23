@@ -152,6 +152,14 @@
         <source>New base creation and input/output file options cannot be used together.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Swap language option needs both the input and the output file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug qt name path option needs the input file options.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ApplyButton</name>
@@ -978,11 +986,11 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation>Agregar protecciones activas</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation>Remover protecciones activas</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1521,11 +1529,11 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Agregar un sensor</translation>
+        <translation type="unfinished">Agregar un sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Remover un sensor</translation>
+        <translation type="unfinished">Remover sensor</translation>
     </message>
 </context>
 <context>
@@ -1600,16 +1608,16 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_Equipments_WeaponsListView</name>
     <message>
+        <source>Weapon systems</source>
+        <translation>Sistemas de arma</translation>
+    </message>
+    <message>
         <source>Add weapon</source>
-        <translation>Agregar un arma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation>Remover un arma</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Sistemas de arma</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2321,11 +2329,11 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add File</source>
+        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove File</source>
+        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2337,15 +2345,15 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Copy name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
+        <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2371,11 +2379,11 @@ PNG (*.png)
     </message>
     <message>
         <source>Add object</source>
-        <translation>Agregar objetos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>Borrar objetos</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3779,7 +3787,7 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
     <message>
         <source>Undamaged</source>
-        <translation type="unfinished">Sin daños</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

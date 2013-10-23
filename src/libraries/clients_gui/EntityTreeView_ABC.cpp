@@ -113,7 +113,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
     QStandardItem* item = dataModel_.FindDataItem( entity );
     if( item )
     {
-        item->setData( *new QVariant( entity.GetName() ), Qt::DisplayRole );
+        item->setData( QVariant( entity.GetName() ), Qt::DisplayRole );
         proxyModel_->invalidate();
     }
 }
@@ -214,8 +214,8 @@ void EntityTreeView_ABC::OnDataChanged( const QModelIndex& index, const QVariant
             modelObserver_.OnRename( *entity, value.toString() );
             if( QStandardItem* item = dataModel_.GetItemFromIndex( index ) )
             {
-                item->setData( *new QVariant( entity->GetName() ), Qt::DisplayRole );
-                item->setData( *new QVariant( entity->GetTooltip()  ), Qt::ToolTipRole );
+                item->setData( QVariant( entity->GetName() ), Qt::DisplayRole );
+                item->setData( QVariant( entity->GetTooltip() ), Qt::ToolTipRole );
             }
         }
     }

@@ -41,6 +41,7 @@ public:
     QString text() const;
     void setText( const QString& strText );
     void SetMinimumValueInSecond( unsigned int value );
+    virtual void setObjectName( const QString& name );
     //@}
 
 private slots:

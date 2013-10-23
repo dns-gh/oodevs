@@ -25,6 +25,8 @@ ADN_SearchListView::ADN_SearchListView( const QString& objectName, ADN_GUI_ABC* 
     , lineEdit_( 0 )
     , subTab_  ( subTab )
 {
+    setObjectName( objectName + "search-list-view-container" );
+
     // Layout
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->setMargin( 0 );

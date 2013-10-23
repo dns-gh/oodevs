@@ -13,6 +13,9 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_Languages_Dialog.h"
 #include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
+#include "clients_kernel/Context.h"
+#include "clients_kernel/LanguageController.h"
 #include "clients_Kernel/LocalizedString.h"
 #include "clients_Kernel/Tools.h"
 #include "tools/Languages.h"
@@ -109,7 +112,10 @@ void ADN_Languages_GUI::BuildMenu()
     swapSeparator_ = menu_->addSeparator();
     swapAction_ = menu_->addAction( tr( "Set current language as master" ), this, SLOT( OnSwap() ) );
     menu_->addSeparator();
-    menu_->addAction( tr( "Edit..." ), dialog_.get(), SLOT( exec() ) );
+    QAction* action = new QAction( tr( "Edit..." ), menu_ );
+    action->setObjectName( "edit-language" );
+    connect( action, SIGNAL( triggered() ), dialog_.get(), SLOT( exec() ) );
+    menu_->addAction( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,9 +148,7 @@ void ADN_Languages_GUI::OnLanguagesEdited()
         OnLanguageChanged();
     else
         UpdateMenu();
-
-    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                               boost::bind( &kernel::LocalizedString::Initialize, _1, data_.GetActiveLanguages() ) ) ) );
+    data_.InitializeLanguages();
 }
 
 // -----------------------------------------------------------------------------
@@ -174,25 +178,12 @@ void ADN_Languages_GUI::OnLanguageChanged( const QString& language )
     for( auto it = data_.GetActiveLanguages().begin(); it != data_.GetActiveLanguages().end(); ++it )
         if( it->GetName() == language.toStdString() )
         {
-            ChangeLanguage( it->GetCode() );
+            data_.ChangeLanguage( it->GetCode() );
             UpdateMenu();
             return;
         }
-    ChangeLanguage( data_.Master() );
+    data_.ChangeLanguage( data_.Master() );
     UpdateMenu();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Languages_GUI::ChangeLanguage
-// Created: ABR 2013-07-17
-// -----------------------------------------------------------------------------
-void ADN_Languages_GUI::ChangeLanguage( const std::string& language )
-{
-    tools::Language::SetCurrent( language );
-    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( true );
-    emit LanguageChanged();
-    emit PostLanguageChanged();
-    ADN_Workspace::GetWorkspace().SetIsSwappingLanguage( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,13 +223,7 @@ void ADN_Languages_GUI::OnSwap()
                          "%1 and %2 as reference language, and may lost some unfinished translations. "
                          "Proceed anyway?" ).arg( current ).arg( master ) ) )
         return;
-
-    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref(
-                                               boost::bind( &kernel::LocalizedString::SwapKey, _1, data_.Master(), tools::Language::Current() ) ) ) );
-
     data_.SwapMaster();
-    ChangeLanguage( data_.Master() );
-    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
     BuildMenu();
     UpdateMenu();
 }

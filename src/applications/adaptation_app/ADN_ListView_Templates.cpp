@@ -23,7 +23,7 @@
 ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent )
     :  ADN_ListView( pParent, "Template", tools::translate( "ADN_ListView_Templates", "Template" ) )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanTemplateInfos >( *this );
+    pConnector_.reset( new ADN_Connector_ListView< ADN_Urban_Data::UrbanTemplateInfos >( *this ) );
     SetDeletionEnabled( true );
 }
 
@@ -33,7 +33,7 @@ ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_ListView_Templates::~ADN_ListView_Templates()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

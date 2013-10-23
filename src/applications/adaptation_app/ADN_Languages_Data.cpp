@@ -11,7 +11,13 @@
 #include "ADN_Languages_Data.h"
 #include "ADN_GeneralConfig.h"
 #include "ADN_Tools.h"
+#include "ADN_Missions_Data.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Workspace.h"
+#include "ADN_WorkspaceElement.h"
+#include "clients_kernel/Context.h"
+#include "clients_kernel/LanguageController.h"
+#include "clients_kernel/LocalizedString.h"
 #include "tools/Languages.h"
 
 // -----------------------------------------------------------------------------
@@ -120,11 +126,48 @@ void ADN_Languages_Data::SetMaster( const std::string& language )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::ChangeLanguage
+// Created: ABR 2013-10-18
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::ChangeLanguage( const std::string& language ) const
+{
+    ADN_Workspace& workspace = ADN_Workspace::GetWorkspace();
+    workspace.SetIsSwappingLanguage( true );
+    workspace.GetLanguageController().ChangeLanguage( language );
+    workspace.SetIsSwappingLanguage( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Languages_Data::InitializeLanguages
+// Created: ABR 2013-10-18
+// -----------------------------------------------------------------------------
+void ADN_Languages_Data::InitializeLanguages() const
+{
+    boost::function< bool ( kernel::LocalizedString& ) > initializer = boost::bind( &kernel::LocalizedString::Initialize, _1, GetActiveLanguages() );
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( initializer ) ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( initializer );
+}
+
+namespace
+{
+    bool SetFinished( kernel::LocalizedString& text, const std::string& language )
+    {
+        text.SetType( language, kernel::eTranslationType_None );
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Languages_Data::SwapMaster
 // Created: ABR 2013-10-08
 // -----------------------------------------------------------------------------
 void ADN_Languages_Data::SwapMaster()
 {
+    const boost::function< bool ( kernel::LocalizedString& ) > swapper = boost::bind( &kernel::LocalizedString::SwapKey, _1, Master(), tools::Language::Current() ) ;
+    ADN_Workspace::GetWorkspace().ApplyOnData( boost::bind( &ADN_Data_ABC::ApplyOnTranslations, _1, boost::cref( swapper ) ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( boost::bind( &SetFinished, _1, tools::Language::Current() ) );
+    ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionSheetPathContext()->Apply( swapper );
+
     if( IsMasterEmpty() )
         throw MASA_EXCEPTION ( "Can't swap languages if master is empty" );
     const std::string& current = tools::Language::Current();
@@ -139,6 +182,10 @@ void ADN_Languages_Data::SwapMaster()
         }
     activeLanguages_.push_back( allLanguages_.Get( master_ ) );
     InternalSetMaster( current );
+
+    ChangeLanguage( Master() );
+
+    ADN_Workspace::GetWorkspace().SetMainWindowModified( true );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,9 +27,8 @@ typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;
 ADN_ListView_Equipments::ADN_ListView_Equipments( QWidget* pParent )
     : ADN_ListView( pParent, "ADN_ListView_Equipments", ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str() )
 {
-    // Connector creation.
-    pConnector_ = new ADN_Connector_ListView<ComposanteInfos>( *this );
-    this->SetDeletionEnabled( true );
+    pConnector_.reset( new ADN_Connector_ListView<ComposanteInfos>( *this ) );
+    SetDeletionEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -38,7 +37,7 @@ ADN_ListView_Equipments::ADN_ListView_Equipments( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_ListView_Equipments::~ADN_ListView_Equipments()
 {
-   delete pConnector_;
+   // NOTHING
 }
 
 //-----------------------------------------------------------------------------

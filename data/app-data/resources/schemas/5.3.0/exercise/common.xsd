@@ -396,23 +396,4 @@
 			</xs:element>
 		</xs:all>
 	</xs:complexType>
-	<xs:complexType name="T_TranslationQueries">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Data specifying the translation queries</xs:documentation>
-			<xs:documentation xml:lang="fr">Cette donnée permet de caractériser les requêtes de traductions</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="translation-query" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">A given translation query</xs:documentation>
-					<xs:documentation xml:lang="fr">Une requête de traduction</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:attribute name="query" type="xs:string" use="required"/>
-					<xs:attribute name="context" type="xs:string" use="required"/>
-					<xs:attribute name="prefix" type="xs:string" use="optional"/>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 </xs:schema>
