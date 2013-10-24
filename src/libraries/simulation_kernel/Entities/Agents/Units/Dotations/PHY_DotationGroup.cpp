@@ -378,7 +378,7 @@ void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClas
 // Name: PHY_DotationGroup::EnforceAviationResources
 // Created: JSR 2013-10-21
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::EnforceAviationResources( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 ) const
+void PHY_DotationGroup::EnforceAviationResources( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 )
 {
     for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
     {

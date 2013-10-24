@@ -107,7 +107,7 @@ public:
 
     //! @name Logistic - Aviation resource quotas
     //@{
-    virtual void EnforceAviationResources( E_AviationRange aviationRange ) const = 0;
+    virtual void EnforceAviationResources( E_AviationRange aviationRange ) = 0;
     //@}
 
 private:
