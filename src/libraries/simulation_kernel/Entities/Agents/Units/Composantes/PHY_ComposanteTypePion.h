@@ -12,7 +12,6 @@
 #ifndef __PHY_ComposanteType_h_
 #define __PHY_ComposanteType_h_
 
-#include "MIL.h"
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
