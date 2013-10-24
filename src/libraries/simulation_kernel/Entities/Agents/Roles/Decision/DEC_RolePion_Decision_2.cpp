@@ -358,8 +358,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Agent_CanExtinguish",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::AgentCanExtinguish, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_CanFly", boost::bind( &DEC_AgentFunctions::AgentCanFly, boost::cref( GetPion() ) ) );
-    RegisterFunction( "DEC_Agent_GetStandardFlyingHeight", boost::bind( &DEC_AgentFunctions::GetStandardFlyingHeight, boost::cref( GetPion() ) ) );
-    RegisterFunction( "DEC_Agent_GetTacticalFlyingHeight", boost::bind( &DEC_AgentFunctions::GetTacticalFlyingHeight, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_GetFuelDotationNumber",  boost::function< double ( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetFuelDotationNumber, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_AutonomieEnDeplacement", boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite",
@@ -712,8 +710,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void( int, const double ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, -1 ) ) );
     RegisterFunction( "DEC_ChangeValeurDotations3",
         boost::function< void( int, const double, int ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC_EnforceAviationResources",
-        boost::function< void( int ) >( boost::bind( &DEC_LogisticFunctions::EnforceAviationResources, boost::ref( GetPion() ), _1 ) ) );
 
     // Transport / Heliportage
     RegisterFunction( "DEC_Transport_AjouterPion",

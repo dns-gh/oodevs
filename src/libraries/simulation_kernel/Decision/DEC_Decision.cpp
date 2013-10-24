@@ -138,6 +138,8 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_GetCurrentSpeed", &DEC_AgentFunctions::GetCurrentSpeed );
     brain.RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
     brain.RegisterFunction( "DEC_Agent_PionCanFly", boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::PionCanFly, _1 ) ) );
+    brain.RegisterFunction( "DEC_Agent_GetStandardFlyingHeight", &DEC_AgentFunctions::GetStandardFlyingHeight );
+    brain.RegisterFunction( "DEC_Agent_GetTacticalFlyingHeight", &DEC_AgentFunctions::GetTacticalFlyingHeight );
     brain.RegisterFunction( "DEC_Agent_MaxSpeed", &DEC_AgentFunctions::GetMaxSpeed );
     brain.RegisterFunction( "DEC_GetUnitById", &DEC_AgentFunctions::GetUnitById );
 }
@@ -428,6 +430,7 @@ void RegisterLogisticFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_EvacuerBlessesVersTC2", &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 );
     brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
     brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
+    brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
 }
 
 // -----------------------------------------------------------------------------
