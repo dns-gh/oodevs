@@ -64,45 +64,6 @@ DEC_KS_Perception::~DEC_KS_Perception()
     // NOTHING
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                unsigned id = it->second->GetID();
-                file << it->first << id;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Agent_ABC* pAgent;
-                unsigned int nID;
-                file >> pAgent >> nID;
-                map[ pAgent ] = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12

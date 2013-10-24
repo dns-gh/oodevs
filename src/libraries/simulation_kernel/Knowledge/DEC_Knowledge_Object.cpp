@@ -229,15 +229,10 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> localisation_
          >> avoidanceLocalisation_;
     idManager_.GetId( nID_, true );
-    unsigned int nPerceptionID;
-    file >> nPerceptionID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
-    file >> nPerceptionID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
-    file >> nPerceptionID;
-    pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
-
-    file >> perceptionPerAutomateSet_
+    file >> pCurrentPerceptionLevel_
+         >> pPreviousPerceptionLevel_
+         >> pMaxPerceptionLevel_
+         >> perceptionPerAutomateSet_
          >> previousPerceptionPerAutomateSet_
          >> nTimeLastUpdate_
          >> rRelevance_
@@ -270,9 +265,6 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
 void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pObjectType_ );
-    unsigned current = pCurrentPerceptionLevel_->GetID(),
-             previous = pPreviousPerceptionLevel_->GetID(),
-             max = pMaxPerceptionLevel_->GetID();
     std::string name = pObjectType_->GetName();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << name
@@ -286,9 +278,9 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pOwnerArmy_
          << localisation_
          << avoidanceLocalisation_
-         << current
-         << previous
-         << max
+         << pCurrentPerceptionLevel_
+         << pPreviousPerceptionLevel_
+         << pMaxPerceptionLevel_
          << perceptionPerAutomateSet_
          << previousPerceptionPerAutomateSet_
          << nTimeLastUpdate_

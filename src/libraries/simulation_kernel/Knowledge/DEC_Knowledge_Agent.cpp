@@ -160,46 +160,6 @@ DEC_Knowledge_Agent::~DEC_Knowledge_Agent()
         SendMsgDestruction();
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion);
-        }
-        template < typename Archive >
-        void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                unsigned id = it->second->GetID();
-                file << id;
-            }
-        }
-        template < typename Archive >
-        void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& g, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                 MIL_Automate* pAutomate;
-                const PHY_PerceptionLevel* pLevel;
-                file >> pAutomate;
-                unsigned int nID;
-                file >> nID;
-                pLevel = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-                g.insert( std::make_pair( pAutomate, pLevel ) );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::load
 // Created: JVT 2005-03-24
@@ -216,14 +176,10 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> dataIdentification_
          >> nTimeLastUpdate_;
     idManager_.GetId( nID_, true );
-    unsigned int nID;
-    file >> nID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    file >> nID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    file >> nID;
-    pMaxPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    file >> perceptionLevelPerAutomateMap_
+    file >> pCurrentPerceptionLevel_
+         >> pPreviousPerceptionLevel_
+         >> pMaxPerceptionLevel_
+         >> perceptionLevelPerAutomateMap_
          >> previousPerceptionLevelPerAutomateMap_
          >> rRelevance_
          >> bCreatedOnNetwork_
@@ -247,9 +203,6 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int current = pCurrentPerceptionLevel_->GetID();
-    unsigned int previous = pPreviousPerceptionLevel_->GetID();
-    unsigned int max = pMaxPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pArmyKnowing_
          << pAgentKnown_
@@ -259,9 +212,9 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
          << dataRecognition_
          << dataIdentification_
          << nTimeLastUpdate_
-         << current
-         << previous
-         << max
+         << pCurrentPerceptionLevel_
+         << pPreviousPerceptionLevel_
+         << pMaxPerceptionLevel_
          << perceptionLevelPerAutomateMap_
          << previousPerceptionLevelPerAutomateMap_
          << rRelevance_

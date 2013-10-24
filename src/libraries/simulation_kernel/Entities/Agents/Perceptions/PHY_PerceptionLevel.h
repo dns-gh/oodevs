@@ -98,4 +98,24 @@ private:
     //@}
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_PerceptionLevel* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_PerceptionLevel*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = &PHY_PerceptionLevel::FindPerceptionLevel( id );
+    }
+}
+}
+
 #endif // __PHY_PerceptionLevel_h_
