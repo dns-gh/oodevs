@@ -168,8 +168,8 @@ const PHY_HumanWound& MIL_DisasterType::GetRandomWound( int threshold ) const
         const double rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
 
         double rSumCoefs = 0.;
-        const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
-        for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+        const auto& humanWounds = PHY_HumanWound::GetHumanWounds();
+        for( auto itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
         {
             const PHY_HumanWound& wound = *itWound->second;
             CIT_Wounds it = wounds.find( wound.GetID() );

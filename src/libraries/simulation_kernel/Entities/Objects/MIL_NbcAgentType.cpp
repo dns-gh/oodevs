@@ -195,7 +195,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
 {
     std::string wound;
     xis >> xml::attribute( "wound", wound );
-    PHY_HumanWound::CIT_HumanWoundMap it = PHY_HumanWound::GetHumanWounds().find( wound );
+    auto it = PHY_HumanWound::GetHumanWounds().find( wound );
     if( it != PHY_HumanWound::GetHumanWounds().end() )
     {
         double percentage;
@@ -215,8 +215,8 @@ const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVe
     const double rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
 
     double rSumCoefs = 0.;
-    const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
-    for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+    const auto& humanWounds = PHY_HumanWound::GetHumanWounds();
+    for( auto itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
     {
         const PHY_HumanWound& wound = *itWound->second;
         rSumCoefs += data[ wound.GetID() ];

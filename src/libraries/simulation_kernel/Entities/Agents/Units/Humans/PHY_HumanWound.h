@@ -34,7 +34,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_HumanWound*, sCaseInsensitiveLess > T_HumanWoundMap;
-    typedef T_HumanWoundMap::const_iterator                                    CIT_HumanWoundMap;
     //@}
 
 public:
