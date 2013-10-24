@@ -52,45 +52,6 @@ PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
         delete it->second;
 }
 
-namespace boost
-{
-namespace serialization
-{
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int nVersion )
-    {
-        split_free( file, map, nVersion );
-    }
-
-    template< typename Archive >
-    void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
-    {
-        std::size_t size = map.size();
-        file << size;
-        for( auto it = map.begin(); it != map.end(); ++it )
-        {
-            unsigned id = it->first->GetID();
-            file << id
-                 << it->second;
-        }
-    }
-
-    template< typename Archive >
-    void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
-    {
-        std::size_t n;
-        file >> n;
-        while( n-- )
-        {
-            unsigned int id;
-            file >> id;
-            file >> map[ PHY_DotationType::FindDotationType( id ) ];
-        }
-    }
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::serialize
 // Created: MCO 2010-09-30

@@ -86,4 +86,24 @@ private:
     //@}
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_DotationType* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_DotationType*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_DotationType::FindDotationType( id );
+    }
+}
+}
+
 #endif // __PHY_DotationType_h_
