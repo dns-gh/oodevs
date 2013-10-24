@@ -269,7 +269,14 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
             manager_->Select( *decisions );
     }
     else
-        manager_->Select();
+    {
+        QVariant variant = missionTypeCombo_->itemData( missionTypeCombo_->currentIndex() );
+        if( variant.isValid() )
+            manager_->Select( static_cast< E_MissionType >( variant.toUInt() ),
+                              missionCombo_->currentText().toStdString() );
+        else
+            manager_->Select();
+    }
 }
 
 // -----------------------------------------------------------------------------
