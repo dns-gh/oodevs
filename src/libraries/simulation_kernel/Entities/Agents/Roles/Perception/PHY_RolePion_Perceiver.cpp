@@ -166,42 +166,10 @@ PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
     activePerceptions_.clear();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 namespace boost
 {
     namespace serialization
     {
-        // =============================================================================
-        // T_SurfaceAgentKeyPair
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int nVersion )
-        {
-            split_free( file, pair, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
-        {
-            assert( pair.first );
-            unsigned id = pair.first->GetType().GetID();
-            file << id
-                 << pair.second;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Perceiver::T_SurfaceAgentKeyPair& pair, const unsigned int )
-        {
-            unsigned int nID;
-            file >> nID;
-            assert( PHY_SensorType::FindSensorType( nID ) );
-            pair.first = PHY_SensorType::FindSensorType( nID )->GetTypeAgent();
-            file >> pair.second;
-        }
-
         // =============================================================================
         // T_SurfaceObjectKeyPair
         // =============================================================================
