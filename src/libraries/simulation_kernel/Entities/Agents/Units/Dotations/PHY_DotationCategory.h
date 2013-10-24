@@ -165,4 +165,24 @@ private:
     static unsigned int nbComposantes;
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_DotationCategory* t )
+    {
+        unsigned int id = t ? t->GetMosID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_DotationCategory*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_DotationType::FindDotationCategory( id );
+    }
+}
+}
+
 #endif // __PHY_DotationCategory_h_

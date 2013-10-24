@@ -71,13 +71,9 @@ PHY_DotationStock::~PHY_DotationStock()
 // -----------------------------------------------------------------------------
 void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pStockContainer_;
-
-    unsigned int nID;
-    file >> nID;
-    pCategory_ = PHY_DotationType::FindDotationCategory( nID );
-
-    file >> rValue_
+    file >> pStockContainer_
+         >> pCategory_
+         >> rValue_
          >> rCapacity_
          >> rSupplyThreshold_
          >> bInfiniteDotations_;
@@ -89,9 +85,8 @@ void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned category = pCategory_->GetMosID();
     file << pStockContainer_
-         << category
+         << pCategory_
          << rValue_
          << rCapacity_
          << rSupplyThreshold_

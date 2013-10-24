@@ -352,24 +352,7 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
     archive >> boost::serialization::base_object< SupplyRequestParameters_ABC >( *this );
     archive >> builder_;
     archive >> dispatcher_;
-    size_t requestsSize;
-    archive >> requestsSize;
-    for( size_t i = 0; i < requestsSize; ++i )
-    {
-        SupplyRecipient_ABC* recipient; 
-        archive >> recipient;
-        size_t requestSize;
-        archive >> requestSize;
-        for( size_t j = 0; j < requestSize; ++j )
-        {
-            unsigned int dotationCategory;
-            archive >> dotationCategory;
-            const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotationCategory );
-            boost::shared_ptr< SupplyRequest_ABC > request;
-            archive >> request;
-            requests_[ recipient ][ category ] = request;
-        }
-    }
+    archive >> requests_;
     archive >> consigns_;
     archive >> transportersProvider_;
     archive >> transporters_;
@@ -384,24 +367,10 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
 {
-    size_t requestsSize = requests_.size();
     archive << boost::serialization::base_object< SupplyRequestParameters_ABC >( *this );
     archive << builder_;
     archive << dispatcher_;
-    archive << requestsSize;
-    for( auto it = requests_.begin(); it != requests_.end(); ++it )
-    {
-        const T_Requests& request = it->second;
-        size_t requestSize = request.size();
-        archive << it->first;
-        archive << requestSize;
-        for( auto requestIt = request.begin(); requestIt != request.end(); ++requestIt )
-        {
-            unsigned int id = requestIt->first->GetMosID();
-            archive << id;
-            archive << requestIt->second;
-        }
-    }
+    archive << requests_;
     archive << consigns_;
     archive << transportersProvider_;
     archive << transporters_;

@@ -57,51 +57,6 @@ PHY_DotationGroup::~PHY_DotationGroup()
     dotations_.clear();
 }
 
-namespace boost
-{
-namespace serialization
-{
-    template< typename Archive >
-    void serialize( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int nVersion )
-    {
-        split_free( file, map, nVersion );
-    }
-
-    template< typename Archive >
-    void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
-    {
-        std::size_t size = map.size();
-        for( auto it = map.begin(); it != map.end(); ++it )
-        {
-            if( !it->first )
-                --size;
-        }
-        file << size;
-        for( auto it = map.begin(); it != map.end(); ++it )
-        {
-            if( !it->first )
-                continue;
-            unsigned id = it->first->GetMosID();
-            file << id;
-            file << it->second;
-        }
-    }
-
-    template< typename Archive >
-    void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int )
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned int nID;
-            file >> nID;
-            file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
-        }
-    }
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::load
 // Created: JVT 2005-03-31

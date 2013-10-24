@@ -284,8 +284,7 @@ namespace boost
             file << size;
             for( auto it = map.begin(); it != map.end(); ++it )
             {
-                unsigned int id = it->first->GetMosID();
-                file << id
+                file << it->first
                      << it->second.quota_
                      << it->second.quotaThreshold_;
             }
@@ -298,10 +297,8 @@ namespace boost
             file >> nNbr;
             while( nNbr-- )
             {
-                unsigned int nCategory;
-                file >> nCategory;
-                const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( nCategory );
-
+                const PHY_DotationCategory* pCategory;
+                file >> pCategory;
                 LogisticLink::sDotationQuota quota;
                 file >> quota.quota_
                      >> quota.quotaThreshold_;

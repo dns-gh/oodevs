@@ -143,16 +143,14 @@ MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
 // -----------------------------------------------------------------------------
 void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    std::string dotation;
     double percentage = 0.;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> dotation
+    ar >> dotation_
        >> nFullNbrDotation_
        >> nCurrentNbrDotation_
        >> percentage
        >> bMustBeMined_;
     miningPercentage_.Set( percentage );
-    dotation_ = PHY_DotationType::FindDotationCategory( dotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,11 +160,8 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    if( dotation_ )
-       ar << dotation_->GetName();
-    else
-       ar << "";
-    ar << nFullNbrDotation_
+    ar << dotation_
+       << nFullNbrDotation_
        << nCurrentNbrDotation_
        << (double)miningPercentage_.Get()
        << bMustBeMined_;
