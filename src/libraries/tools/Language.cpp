@@ -28,6 +28,8 @@ std::string Language::current_ = "en";
 Language::Language( const Language& other )
     : name_( other.name_ )
     , code_( other.code_ )
+    , englishName_( other.englishName_ )
+    , supported_( other.supported_ )
 {
     // NOTHING
 }
@@ -39,6 +41,8 @@ Language::Language( const Language& other )
 Language::Language( xml::xistream& xis )
     : name_( xis.attribute( "name", "" ) )
     , code_( xis.attribute( "code", "" ) )
+    , englishName_( xis.attribute( "english-name", "" ) )
+    , supported_( xis.attribute( "supported", false ) )
 {
     if( name_.empty() || code_.empty() )
         throw MASA_EXCEPTION( QString( "Incomplete language '%1' / '%2'" ).arg( name_.c_str() ).arg( code_.c_str() ).toStdString() );
@@ -65,12 +69,30 @@ const std::string& Language::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Language::GetEnglishName
+// Created: ABR 2013-10-24
+// -----------------------------------------------------------------------------
+const std::string& Language::GetEnglishName() const
+{
+    return englishName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Language::GetCode
 // Created: ABR 2013-07-09
 // -----------------------------------------------------------------------------
 const std::string& Language::GetCode() const
 {
     return code_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::IsSupported
+// Created: ABR 2013-10-24
+// -----------------------------------------------------------------------------
+bool Language::IsSupported() const
+{
+    return supported_;
 }
 
 // -----------------------------------------------------------------------------

@@ -70,14 +70,14 @@ void ADN_Languages_MasterDialog::showEvent( QShowEvent* pEvent )
     QString english;
     const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto it = languages.begin(); it != languages.end(); ++it )
-    {
-        if( it->GetCode() == "en" )
-            english = it->GetName().c_str();
-        model_.appendRow( QList< QStandardItem* >()
-                          << new QStandardItem( it->GetName().c_str() )
-                          << new QStandardItem( it->GetCode().c_str() ) );
-    }
-    model_.sort( 1 );
+        if( it->IsSupported() )
+        {
+            if( it->GetCode() == "en" )
+                english = it->GetName().c_str();
+            model_.appendRow( QList< QStandardItem* >()
+                              << new QStandardItem( it->GetName().c_str() )
+                              << new QStandardItem( it->GetCode().c_str() ) );
+        }
     if( !english.isEmpty() )
         combo_->setCurrentIndex( combo_->findText( english ) );
     QDialog::showEvent( pEvent );

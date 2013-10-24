@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <languages>
-  <language code="ar" name="العربية"/>
-  <language code="en" name="English"/>
-  <language code="es" name="Español"/>
-  <language code="fr" name="Français"/>
-  <language code="pt" name="Português"/>
+  <language code="ar" name="العربية" english-name="Arabic" supported="true"/>
+  <language code="en" name="English" english-name="English" supported="true"/>
+  <language code="es" name="Español" english-name="Spanish" supported="true"/>
+  <language code="fr" name="Français" english-name="French" supported="true"/>
+  <language code="pt" name="Português" english-name="Portuguese" supported="true"/>
 </languages>

@@ -122,10 +122,13 @@ int ADN_Languages_Dialog::exec()
 
     const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
-        if( data_.IsMaster( itAll->GetCode() ) )
-            master_->setText( itAll->GetName().c_str() );
-        else if( !data_.HasActiveLanguage( itAll->GetCode() ) )
-            InsertItem( *itAll, availables_ );
+        if( itAll->IsSupported() )
+        {
+            if( data_.IsMaster( itAll->GetCode() ) )
+                master_->setText( itAll->GetName().c_str() );
+            else if( !data_.HasActiveLanguage( itAll->GetCode() ) )
+                InsertItem( *itAll, availables_ );
+        }
 
     const tools::LanguagesVector& activeLanguages = data_.GetActiveLanguages();
     for( auto itActive = activeLanguages.begin(); itActive != activeLanguages.end(); ++itActive )
