@@ -25,7 +25,6 @@
 #include <graphics/MultiTextureLayer.h>
 #include <graphics/ShaderProgram.h>
 #include <graphics/TextureSet.h>
-#include <graphics/TextureTree.h>
 #include <graphics/Visitor3d.h>
 
 using namespace kernel;
