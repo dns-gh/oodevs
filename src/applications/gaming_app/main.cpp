@@ -36,10 +36,6 @@ int appMain( int argc, char** argv )
         MT_LOG_ERROR_MSG( err );
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), err.c_str() );
     }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
-    }
     return EXIT_FAILURE;
 }
 
