@@ -26,6 +26,8 @@
 
 using namespace logistic;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyRequestContainer )
+
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer constructor
 // Created: NLD 2011-07-25
@@ -407,5 +409,3 @@ void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const
     archive << transportersProviderPath_;
     archive << supplierPath_;
 }
-
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyRequestContainer )
