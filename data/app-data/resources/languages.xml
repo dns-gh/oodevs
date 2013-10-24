@@ -1,8 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <languages>
   <language code="ar" name="العربية" english-name="Arabic" supported="true"/>
+  <language code="be" name="Беларуская" english-name="Belarusian"/>
+  <language code="bg" name="български език" english-name="Bulgarian"/>
+  <language code="br" name="Brezhoneg" english-name="Breton"/>
+  <language code="bs" name="Bosanski jezik" english-name="Bosnian"/>
+  <language code="ca" name="Català" english-name="Catalan"/>
+  <language code="ce" name="нохчийн мотт" english-name="Chechen"/>
+  <language code="cs" name="Česky ; čeština" english-name="Czech"/>
+  <language code="cy" name="Cymraeg" english-name="Welsh"/>
+  <language code="da" name="Dansk" english-name="Danish"/>
+  <language code="de" name="Deutsch" english-name="German"/>
+  <language code="el" name="Ελληνικά" english-name="Greek"/>
   <language code="en" name="English" english-name="English" supported="true"/>
   <language code="es" name="Español" english-name="Spanish" supported="true"/>
+  <language code="et" name="Eesti keel" english-name="Estonian"/>
+  <language code="eu" name="Euskara" english-name="Basque"/>
+  <language code="fa" name="فارسی" english-name="Persian"/>
+  <language code="fi" name="Suomen kieli" english-name="Finnish"/>
   <language code="fr" name="Français" english-name="French" supported="true"/>
+  <language code="ga" name="Gaeilge" english-name="Irish"/>
+  <language code="gd" name="Gàidhlig" english-name="Scottish Gaelic"/>
+  <language code="hr" name="Hrvatski" english-name="Croatian"/>
+  <language code="hu" name="magyar" english-name="Hungarian"/>
+  <language code="hy" name="Հայերեն" english-name="Armenian"/>
+  <language code="id" name="Bahasa Indonesia" english-name="Indonesian"/>
+  <language code="is" name="Íslenska" english-name="Icelandic"/>
+  <language code="it" name="Italiano" english-name="Italian"/>
+  <language code="ja" name="日本語 (にほんご)" english-name="Japanese"/>
+  <language code="ka" name="ქართული" english-name="Georgian"/>
+  <language code="kk" name="Қазақ тілі" english-name="Kazakh"/>
+  <language code="ko" name="한국어 (韓國語) ; 조선말 (朝鮮語)" english-name="Korean"/>
+  <language code="lb" name="Lëtzebuergesch" english-name="Luxembourgish"/>
+  <language code="lt" name="Lietuvių kalba" english-name="Lithuanian"/>
+  <language code="lv" name="Latviešu valoda" english-name="Latvian"/>
+  <language code="mk" name="македонски јазик" english-name="Macedonian"/>
+  <language code="mn" name="Монгол" english-name="Mongolian"/>
+  <language code="mt" name="Malti" english-name="Maltese"/>
+  <language code="ne" name="नेपाली" english-name="Nepali"/>
+  <language code="nl" name="Nederlands" english-name="Dutch"/>
+  <language code="no" name="Norsk" english-name="Norwegian"/>
+  <language code="pl" name="Polski" english-name="Polish"/>
   <language code="pt" name="Português" english-name="Portuguese" supported="true"/>
+  <language code="ro" name="Română" english-name="Romanian"/>
+  <language code="ru" name="русский язык" english-name="Russian"/>
+  <language code="sk" name="Slovenčina" english-name="Slovak"/>
+  <language code="sl" name="Slovenščina" english-name="Slovene"/>
+  <language code="su" name="Basa Sunda" english-name="Sundanese"/>
+  <language code="sv" name="Svenska" english-name="Swedish"/>
+  <language code="th" name="ไทย" english-name="Thai"/>
+  <language code="tr" name="Türkçe" english-name="Turkish"/>
+  <language code="ty" name="Reo Mā`ohi" english-name="Tahitian"/>
+  <language code="uk" name="українська мова" english-name="Ukrainian"/>
+  <language code="vi" name="Tiếng Việt" english-name="Viêt Namese"/>
+  <language code="wa" name="Walon" english-name="Walloon"/>
+  <language code="zh" name="中文, 汉语, 漢語" english-name="Chinese"/>
 </languages>
