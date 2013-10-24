@@ -30,6 +30,7 @@ namespace controls
     size_t QuitClient  ( void* dst, size_t size );
     size_t ReloadClient( void* dst, size_t size );
     size_t LoadClient  ( void* dst, size_t size, const std::string& url );
+    size_t UpdateQuery ( void* dst, size_t size, const std::map< std::string, std::string >& query );
     size_t CenterClient( void* dst, size_t size );
     size_t CreateEvent ( void* dst, size_t size, const Event& event );
     size_t ReadEvents  ( void* dst, size_t size );
@@ -48,6 +49,7 @@ namespace controls
         virtual void OnQuitClient()   = 0;
         virtual void OnReloadClient() = 0;
         virtual void OnLoadClient( const std::string& url ) = 0;
+        virtual void OnUpdateQuery( const std::map< std::string, std::string >& query ) = 0;
         virtual void OnCenterClient() = 0;
         virtual void OnCreateEvent( const Event& event ) = 0;
         virtual void OnReadEvents() = 0;

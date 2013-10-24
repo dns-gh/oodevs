@@ -10,6 +10,7 @@
 #define TIMELINE_API_H__
 
 #include <string>
+#include <map>
 #include <memory>
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
@@ -121,6 +122,7 @@ public slots:
     virtual void Reload() = 0;
     virtual void Load( const std::string& url ) = 0;
     virtual void Center() = 0;
+    virtual void UpdateQuery( const std::map< std::string, std::string >& parameters ) = 0;
     virtual bool CreateEvent( const timeline::Event& event ) = 0;
     virtual bool ReadEvents() = 0;
     virtual bool ReadEvent( const std::string& uuid ) = 0;

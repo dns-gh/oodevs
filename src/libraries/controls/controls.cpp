@@ -79,6 +79,19 @@ size_t tic::LoadClient( void* data, size_t size, const std::string& url )
     return Marshall( data, size, cmd );
 }
 
+size_t controls::UpdateQuery( void* data, size_t size, const std::map< std::string, std::string >& parameters )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_QUERY_UPDATE );
+    for( auto it = parameters.begin(); it != parameters.end(); ++it )
+    {
+        sdk::QueryParameter* parameter = cmd.add_query();
+        parameter->set_key( it->first );
+        parameter->set_value( it->second );
+    }
+    return Marshall( data, size, cmd );
+}
+
 size_t tic::CenterClient( void* data, size_t size )
 {
     return MarshallType< ClientCommand >( data, size, sdk::CLIENT_CENTER );
@@ -134,6 +147,14 @@ namespace
         for( auto it = events.begin(); it != events.end(); ++it )
             rpy.push_back( GetEvent( *it ) );
         return rpy;
+    }
+
+    std::map< std::string, std::string > GetQuery( const google::protobuf::RepeatedPtrField< sdk::QueryParameter >& parameters )
+    {
+        std::map< std::string, std::string > result;
+        for( auto it = parameters.begin(); it != parameters.end(); ++it )
+            result[ it->key() ] = it->value();
+        return result;
     }
 
     void SetError( sdk::Error& dst, const Error& error )
@@ -204,18 +225,19 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::CLIENT_RESIZE:         return handler.OnResizeClient();
-        case sdk::CLIENT_QUIT:           return handler.OnQuitClient();
-        case sdk::CLIENT_RELOAD:         return handler.OnReloadClient();
-        case sdk::CLIENT_LOAD:           return handler.OnLoadClient( cmd.url() );
-        case sdk::CLIENT_CENTER:         return handler.OnCenterClient();
-        case sdk::CLIENT_EVENT_CREATE:   return handler.OnCreateEvent( GetEvent( cmd.event() ) );
-        case sdk::CLIENT_EVENT_READ_ALL: return handler.OnReadEvents();
-        case sdk::CLIENT_EVENT_READ_ONE: return handler.OnReadEvent( GetEvent( cmd.event() ).uuid );
-        case sdk::CLIENT_EVENT_UPDATE:   return handler.OnUpdateEvent( GetEvent( cmd.event() ) );
-        case sdk::CLIENT_EVENT_DELETE:   return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
-        case sdk::CLIENT_EVENTS_LOAD:    return handler.OnLoadEvents( cmd.data() );
-        case sdk::CLIENT_EVENTS_SAVE:    return handler.OnSaveEvents();
+        case sdk::CLIENT_RESIZE:                return handler.OnResizeClient();
+        case sdk::CLIENT_QUIT:                  return handler.OnQuitClient();
+        case sdk::CLIENT_RELOAD:                return handler.OnReloadClient();
+        case sdk::CLIENT_LOAD:                  return handler.OnLoadClient( cmd.url() );
+        case sdk::CLIENT_QUERY_UPDATE:  return handler.OnUpdateQuery( GetQuery( cmd.query() ) );
+        case sdk::CLIENT_CENTER:                return handler.OnCenterClient();
+        case sdk::CLIENT_EVENT_CREATE:          return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_READ_ALL:        return handler.OnReadEvents();
+        case sdk::CLIENT_EVENT_READ_ONE:        return handler.OnReadEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_EVENT_UPDATE:          return handler.OnUpdateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_DELETE:          return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_EVENTS_LOAD:           return handler.OnLoadEvents( cmd.data() );
+        case sdk::CLIENT_EVENTS_SAVE:           return handler.OnSaveEvents();
     }
 }
 

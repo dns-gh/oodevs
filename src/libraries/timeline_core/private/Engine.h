@@ -47,6 +47,7 @@ public:
     void Register   ( CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CenterClient();
+    void UpdateQuery( const std::map< std::string, std::string >& query );
     void CreateEvent( const Event& event );
     void ReadEvents ();
     void ReadEvent  ( const std::string& uuid );

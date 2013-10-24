@@ -266,6 +266,30 @@ void Engine::CenterClient()
             gate.Execute( center, CefV8ValueList() );
 }
 
+namespace
+{
+    std::string ParamsToQuery( const std::map< std::string, std::string >& parameters )
+    {
+        std::string query = "?";
+        for( auto it = parameters.begin(); it != parameters.end(); ++it )
+            query += it->first + "=" + it->second;
+        return query;
+    }
+}
+
+void Engine::UpdateQuery( const std::map< std::string, std::string >& parameters )
+{
+    const std::string queryurl = ParamsToQuery( parameters );
+    Gate gate;
+    if( gate.Acquire( ctx_ ) )
+    {
+        auto update_query = GetValue( ctx_, "gaming.update_query" );
+        CefV8ValueList args;
+        args.push_back( CefV8Value::CreateString( queryurl ) );
+        gate.Execute( update_query, args );
+    }
+}
+
 void Engine::CreateEvent( const timeline::Event& event )
 {
     Gate gate;
