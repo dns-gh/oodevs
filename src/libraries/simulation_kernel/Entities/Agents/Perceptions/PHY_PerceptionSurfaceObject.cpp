@@ -50,13 +50,8 @@ PHY_PerceptionSurfaceObject::~PHY_PerceptionSurfaceObject()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nID;
-
-    file >> nID;
-    assert( PHY_SensorType::FindSensorType( nID ) );
-    pSensorType_ = PHY_SensorType::FindSensorType( nID )->GetTypeObject();
-
-    file >> vOrigin_
+    file >> pSensorType_
+         >> vOrigin_
          >> rHeight_;
 }
 
@@ -66,9 +61,7 @@ void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    assert( pSensorType_ );
-    unsigned type = pSensorType_->GetType().GetID();
-    file << type
+    file << pSensorType_
          << vOrigin_
          << rHeight_;
 }
