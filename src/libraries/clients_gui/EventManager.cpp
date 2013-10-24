@@ -167,6 +167,7 @@ void EventManager::Select( E_MissionType type )
 void EventManager::Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action )
 {
     std::string currentMission = mission;
+    std::string lastMission = currentMission_;
 
     // Retrieve types
     std::vector< E_MissionType > types;
@@ -194,12 +195,16 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
         GetCurrentOrder< kernel::FragOrderType >( agentTypes_, type, currentMission ) :
         GetCurrentOrder< kernel::MissionType >( agentTypes_, type, currentMission );
 
-    // Build parameters interface
-    missionInterface_.Purge();
-    if( order )
-        missionInterface_.Build( interfaceBuilder_, *order, currentMissionType_ );
-    if( action )
-        missionInterface_.FillFrom( *action );
+    // Reset interface only for a different mission
+    if( currentMission != lastMission )
+    {
+        // Build parameters interface
+        missionInterface_.Purge();
+        if( order )
+            missionInterface_.Build( interfaceBuilder_, *order, currentMissionType_ );
+        if( action )
+            missionInterface_.FillFrom( *action );
+    }
     missionInterface_.SetEntity( 0 );
     currentMission_ = currentMission;
 }

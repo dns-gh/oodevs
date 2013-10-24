@@ -256,14 +256,13 @@ BOOST_FIXTURE_TEST_CASE( select_target_then_clear_it, Fixture )
         eMissionType_Pawn, "missionType1" );
     manager.Select( decisions, eMissionType_Pawn );
 
-    // Remove target
-    PurgeAndBuild();
+    // Remove target and keeps the current mission and its parameters
+    MOCK_EXPECT( missionInterface.SetEntity ).once();
     MOCK_EXPECT( builder.Build ).once().with( boost::assign::list_of( eMissionType_Pawn )( eMissionType_Automat )
         ( eMissionType_Population )( eMissionType_FragOrder ), eMissionType_Pawn,
         boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ"), "missionType1", false );
     manager.Select();
 }
-
 
 BOOST_FIXTURE_TEST_CASE( select_mission_then_select_agent_with_and_without_this_mission, Fixture )
 {
@@ -383,7 +382,7 @@ BOOST_FIXTURE_TEST_CASE( display_all_frag_orders_if_no_target_is_selected, Fixtu
     manager.SetPlanningMode( true );
 
     // No target is seleted
-    PurgeAndBuild();
+    MOCK_EXPECT( missionInterface.SetEntity ).once();
     MOCK_EXPECT( builder.Build ).once().with( types,
         eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), "fragorder", false );
     manager.Select( eMissionType_FragOrder );
