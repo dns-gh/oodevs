@@ -24,6 +24,7 @@
 			<xs:element name="sensors" type="T_Sensors"/>
 			<xs:element name="radars" type="T_Radars"/>
 			<xs:element name="consumptions" type="T_Consumptions"/>
+			<xs:element name="aviation-quotas" type="T_AviationQuotas" minOccurs="0"/>
 			<xs:element name="objects" type="T_Objects"/>
 			<xs:element name="active-protections" type="T_ActiveProtection" minOccurs="0"/>
 			<xs:element name="logistic-functions" type="T_Logistics" minOccurs="0"/>
@@ -61,7 +62,7 @@
 		<xs:attribute name="size" type="xs:string" use="required"/>
 		<xs:attribute name="weight" type="T_NonNegativeDouble" use="required"/>
 		<xs:attribute name="max-slope" type="T_NonNegativeDouble" use="optional"/>
-    <xs:attribute name="length" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="length" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="width" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="front-separation-distance" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="safety-distance" type="T_NonNegativeDouble" use="optional"/>
@@ -161,6 +162,23 @@
 						</xs:element>
 					</xs:sequence>
 					<xs:attribute name="status" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="T_AviationQuotas">
+		<xs:sequence>
+			<xs:element name="aviation-quota" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="quota">
+							<xs:complexType>
+								<xs:attribute name="category" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="range" type="xs:string" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

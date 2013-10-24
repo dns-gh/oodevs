@@ -955,5 +955,21 @@
         <source>In funeral system</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Short range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medium range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Long range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No ammunition</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

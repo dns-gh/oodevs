@@ -17,6 +17,7 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_AmmoDotationClass.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
@@ -369,7 +370,21 @@ void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClas
             if( !dotation.GetCategory().GetAmmoDotationClass() || *dotation.GetCategory().GetAmmoDotationClass() != *pAmmoDotationClass )
             continue;
         }
-        dotation.ChangeValueUsingTC2( rCapacityFactor, tc2 );
+        dotation.SetValueUsingTC2( rCapacityFactor * dotation.GetCapacity(), tc2 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::EnforceAviationResources
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::EnforceAviationResources( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 ) const
+{
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
+    {
+        PHY_Dotation& dotation = *it->second;
+        double newValue = unitType.GetResourceCapacityWithAviationQuotas( aviationRange, dotation );
+        dotation.SetValueUsingTC2( newValue, tc2 );
     }
 }
 

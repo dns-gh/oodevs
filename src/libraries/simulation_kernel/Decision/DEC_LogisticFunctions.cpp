@@ -455,6 +455,15 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerA
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::EnforceAviationResources
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::EnforceAviationResources( MIL_Agent_ABC& callerAgent, int aviationRange )
+{
+    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().EnforceAviationResources( static_cast< E_AviationRange >( aviationRange ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ConnectToResourceNode
 // Created: JSR 2012-04-23
 // -----------------------------------------------------------------------------

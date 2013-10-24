@@ -1520,6 +1520,10 @@ estacionado con motor encendido</translation>
         <source>m</source>
         <translation type="unfinished">m</translation>
     </message>
+    <message>
+        <source>Enforce resource quotas for aviation equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_RadarsListView</name>
@@ -5843,6 +5847,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Speed reduction modifier</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Standard flying height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical flying height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
@@ -6470,6 +6482,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid range type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid category &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -453,6 +453,43 @@ public:
     };
 
     //*****************************************************************************
+    class AviationResourceQuotasInfos : public ADN_Ref_ABC
+    {
+    public:
+        explicit AviationResourceQuotasInfos( E_AviationRange nRange );
+        virtual ~AviationResourceQuotasInfos() {}
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        E_AviationRange nRange_;
+        ADN_Type_Int resourceQuotas_[ eNbrAmmunitionType + 1 ];
+
+    private:
+        void ReadQuota( xml::xistream& input );
+
+    public:
+        class Cmp : public std::unary_function< AviationResourceQuotasInfos*, bool >
+        {
+        public:
+            Cmp( E_AviationRange& val ) : val_( val ) {}
+            ~Cmp() {}
+
+            bool operator()( AviationResourceQuotasInfos* tgtnfos ) const
+            {
+                return tgtnfos->nRange_ == val_;
+            }
+
+        private:
+            E_AviationRange val_;
+        };
+    };
+
+    typedef ADN_Type_Vector_ABC< AviationResourceQuotasInfos > T_AviationResourceQuotasInfos_Vector;
+
+
+    //*****************************************************************************
     class EquipmentInfos : public ADN_RefWithLocalizedName
     {
     public:
@@ -464,6 +501,7 @@ public:
         EquipmentInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadSpeed( xml::xistream& input );
+        void ReadAviationQuota( xml::xistream& input );
         void ReadSensor( xml::xistream& input );
         void ReadRadar( xml::xistream& input );
         void ReadWeapon( xml::xistream& input );
@@ -498,6 +536,8 @@ public:
         T_ObjectInfos_Vector vObjects_;
         ConsumptionsInfos consumptions_;
         ResourceInfos resources_;
+        ADN_Type_Bool bAviationResourcesQuotas_;
+        T_AviationResourceQuotasInfos_Vector vAviationResourceQuotas_;
         T_ActiveProtectionsInfos_Vector vActiveProtections_;
         BreakdownGroupInfos attritionBreakdowns_;
         BreakdownGroupInfos randomBreakdowns_;

@@ -423,6 +423,15 @@ ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
     T_ConverterAgentNbcSuit( "", "", (E_AgentNbcSuit)-1 )
 };
 
+ENT_Tr::T_ConverterAviationRange ENT_Tr::AviationRangeConverter_[] =
+{
+    T_ConverterAviationRange( "short range",   QT_TRANSLATE_NOOP( "ENT_Tr", "Short range" ),  eAviationRange_ShortRange ),
+    T_ConverterAviationRange( "medium range",  QT_TRANSLATE_NOOP( "ENT_Tr", "Medium range" ), eAviationRange_MediumRange ),
+    T_ConverterAviationRange( "long range",    QT_TRANSLATE_NOOP( "ENT_Tr", "Long range" ),   eAviationRange_LongRange ),
+    T_ConverterAviationRange( "no ammunition", QT_TRANSLATE_NOOP( "ENT_Tr", "No ammunition" ),   eAviationRange_NoAmmunition ),
+    T_ConverterAviationRange( "", "", (E_AviationRange)-1 )
+};
+
 ENT_Tr::T_ConverterLayerTypes ENT_Tr::LayerTypesConverter_[] =
 {
     T_ConverterLayerTypes( "units",             QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),             eLayerTypes_Agent ),
@@ -458,7 +467,6 @@ ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
     T_ConverterMissionType( "automat",   QT_TRANSLATE_NOOP( "ENT_Tr", "Automat missions" ),   eMissionType_Automat ),
     T_ConverterMissionType( "crowd",     QT_TRANSLATE_NOOP( "ENT_Tr", "Crowd missions" ),     eMissionType_Population ),
     T_ConverterMissionType( "frag-order", QT_TRANSLATE_NOOP( "ENT_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
-
     T_ConverterMissionType( "", "", (E_MissionType)-1 )
 };
 
@@ -504,6 +512,7 @@ void ENT_Tr::InitTranslations()
     InitTr( NbcStateConverter_, "ENT_Tr" );
     InitTr( ModesConverter_, "ENT_Tr" );
     InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
+    InitTr( AviationRangeConverter_, "ENT_Tr" );
     InitTr( LayerTypesConverter_, "ENT_Tr" );
     InitTr( EventTypesConverter_, "ENT_Tr" );
     InitTr( MissionTypeConverter_, "ENT_Tr" );
@@ -825,7 +834,7 @@ const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConve
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromAgentNbcSuit
+// Name: ENT_Tr::ConvertFromAgentNbcSuit
 // Created: LGY 2012-11-23
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Conversion nConverterType )
@@ -834,7 +843,16 @@ const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromLayerType
+// Name: ENT_Tr::ConvertFromAviationRange
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromAviationRange( E_AviationRange nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( AviationRangeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLayerType
 // Created: LGY 2013-02-27
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversion nConverterType )
@@ -843,7 +861,7 @@ const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversi
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromEventType
+// Name: ENT_Tr::ConvertFromEventType
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversion nConverterType )
@@ -1176,7 +1194,7 @@ E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToAgentNbcSuit
+// Name: ENT_Tr::ConvertToAgentNbcSuit
 // Created: LGY 2012-11-23
 // -----------------------------------------------------------------------------
 E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
@@ -1185,7 +1203,16 @@ E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToLayerType
+// Name: ENT_Tr::ConvertToAviationRange
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+E_AviationRange ENT_Tr::ConvertToAviationRange( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( AviationRangeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLayerType
 // Created: LGY 2013-02-27
 // -----------------------------------------------------------------------------
 E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
@@ -1194,7 +1221,7 @@ E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToEventType
+// Name: ENT_Tr::ConvertToEventType
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversion mode )

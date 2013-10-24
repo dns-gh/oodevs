@@ -15,6 +15,7 @@
 #include "Postures/PostureTime_ABC.h"
 #include "Dotations/PHY_DotationCapacities.h"
 #include "MT_Tools/MT_Scipio_enum.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <tools/Map.h>
 
 namespace xml
@@ -27,6 +28,7 @@ class PHY_ComposanteTypePion;
 class PHY_RolePion_Composantes;
 class PHY_HumanRank;
 class PHY_NbcSuit;
+class PHY_Dotation;
 class PHY_DotationLogisticType;
 
 // =============================================================================
@@ -69,11 +71,14 @@ public:
     double GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const;
     double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
     bool CanFly() const;
+    unsigned int GetStandardFlyingHeight() const;
+    unsigned int GetTacticalFlyingHeight() const;
     bool IsAutonomous() const;
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
     E_CrossingHeight GetCrossingHeight() const;
     const PHY_NbcSuit& GetNbcSuit() const;
     bool IsStockLogisticTypeDefined( const PHY_DotationLogisticType& type ) const;
+    double GetResourceCapacityWithAviationQuotas( E_AviationRange aviationRange, const PHY_Dotation& dotation ) const;
     //@}
 
 private:
@@ -134,6 +139,8 @@ private:
     double rCoefDecontaminationPerTimeStep_;
     bool bCanFly_;
     bool bIsAutonomous_; // Drones
+    unsigned int standardFlyingHeight_;
+    unsigned int tacticalFlyingHeight_;
     unsigned int nReconEfficiency_;
     unsigned int nCombatSupportEfficiency_;
     unsigned int nCombatEfficiency_;

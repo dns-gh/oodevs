@@ -16,6 +16,7 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <tools/Map.h>
 
 namespace sword
@@ -32,6 +33,7 @@ class MIL_ObjectType_ABC;
 class MIL_Object_ABC;
 class MIL_Time_ABC;
 class PHY_ActiveProtection;
+class PHY_AmmoDotationClass;
 class PHY_Breakdown;
 class PHY_BreakdownType;
 class PHY_ComposantePion;
@@ -201,6 +203,11 @@ public:
     const PHY_DotationNature* GetStockTransporterNature       () const;
     //@}
 
+    //! @name Logistic - aviation resource quota
+    //@{
+    double GetAviationResourceQuota( E_AviationRange aviationRange, const PHY_DotationType* dotationType, const PHY_AmmoDotationClass* ammoClass ) const;
+    //@}
+
     //! @name Active Protection
     //@{
     void   UseAmmunition( const PHY_DotationCategory&, MIL_Agent_ABC& pion ) const;
@@ -253,6 +260,21 @@ private:
     };
     typedef std::vector< sBreakdownTypeProbability >   T_BreakdownTypeProbabilityVector;
     typedef std::vector< const PHY_ActiveProtection* > T_ActiveProtectionVector;
+
+    struct sAviationResourceQuota
+    {
+        sAviationResourceQuota() : dotationType_( 0 )
+                                 , ammoClass_( 0 )
+                                 , quota_( 0 )
+        {
+            // NOTHING
+        }
+        const PHY_DotationType* dotationType_;
+        const PHY_AmmoDotationClass* ammoClass_;
+        double quota_;
+    };
+    typedef std::vector< sAviationResourceQuota > T_AviationResourceQuota;
+    typedef std::map< E_AviationRange, T_AviationResourceQuota > T_AviationResourceQuotas;
     //@}
 
 private:
@@ -261,6 +283,7 @@ private:
     void InitializeAttritionBreakdownTypes( xml::xistream& xis );
     void InitializeBreakdown              ( xml::xistream& xis );
     void InitializeConsumptions           ( xml::xistream& xis );
+    void InitializeAviationQuotas         ( xml::xistream& xis );
     void InitializeLogistic               ( xml::xistream& xis );
     void InitializeLogisticMaintenance    ( xml::xistream& xis );
     void InitializeLogisticMedical        ( xml::xistream& xis );
@@ -291,6 +314,7 @@ private:
     void ReadTransportCrowd      ( xml::xistream& xis );
     void ReadObject              ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
     void ReadConsumption         ( xml::xistream& xis );
+    void ReadAviationQuotas      ( xml::xistream& xis, T_AviationResourceQuota& resourceQuota );
     void ReadMaintenance         ( xml::xistream& xis );
     void ReadTowing              ( xml::xistream& xis );
     void ReadRepairing           ( xml::xistream& xis );
@@ -364,6 +388,9 @@ private:
     const PHY_DotationNature* pStockTransporterNature_;
           double              rStockTransporterWeightCapacity_;
           double              rStockTransporterVolumeCapacity_;
+
+    // Logistic : aviation resources quotas
+    T_AviationResourceQuotas aviationResourceQuotas_;
 
     // Active Protections
     T_ActiveProtectionVector activeProtections_;

@@ -129,6 +129,7 @@ public:
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const; // Logistic
     bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;  // Logistic
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
+    virtual void EnforceAviationResources( E_AviationRange aviationRange) const;
     //@}
 
 private:

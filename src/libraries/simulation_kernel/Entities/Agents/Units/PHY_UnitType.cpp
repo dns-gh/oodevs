@@ -14,6 +14,8 @@
 #include "Postures/PHY_Posture.h"
 #include "Composantes/PHY_ComposanteTypePion.h"
 #include "Composantes/PHY_ComposantePion.h"
+#include "Dotations/PHY_Dotation.h"
+#include "Dotations/PHY_DotationCategory.h"
 #include "Humans/PHY_HumanRank.h"
 #include "Humans/PHY_NbcSuit.h"
 #include "Dotations/PHY_DotationLogisticType.h"
@@ -51,6 +53,8 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , rCoefDecontaminationPerTimeStep_  ( 0. )
     , bCanFly_                          ( false )
     , bIsAutonomous_                    ( false )
+    , standardFlyingHeight_             ( 0 )
+    , tacticalFlyingHeight_             ( 0 )
     , nReconEfficiency_                 ( 50 )
     , nCombatSupportEfficiency_         ( 50 )
     , nCombatEfficiency_                ( 50 )
@@ -62,10 +66,10 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , crossingHeight_                   ( eCrossingHeightLowAreas )
     , suit_                             ( PHY_NbcSuit::Find( "none" ) )
 {
-    xis >> xml::optional
-            >> xml::attribute( "can-fly", bCanFly_ )
-        >> xml::optional
-            >> xml::attribute( "is-autonomous", bIsAutonomous_ );
+    xis >> xml::optional >> xml::attribute( "can-fly", bCanFly_ )
+        >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ )
+        >> xml::optional >> xml::attribute( "standard-flying-height", standardFlyingHeight_ )
+        >> xml::optional >> xml::attribute( "tactical-flying-height", tacticalFlyingHeight_ );
 
     InitializeComposantes                 ( xis );
     InitializeCommanderRepartition        ( xis );
@@ -450,6 +454,24 @@ bool PHY_UnitType::CanFly() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetStandardFlyingHeight
+// Created: JSR 2013-10-18
+// -----------------------------------------------------------------------------
+unsigned int PHY_UnitType::GetStandardFlyingHeight() const
+{
+    return bCanFly_ ? standardFlyingHeight_ : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetTacticalFlyingHeight
+// Created: JSR 2013-10-18
+// -----------------------------------------------------------------------------
+unsigned int PHY_UnitType::GetTacticalFlyingHeight() const
+{
+    return bCanFly_ ? tacticalFlyingHeight_ : 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::IsAutonomous
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
@@ -548,4 +570,36 @@ const PHY_NbcSuit& PHY_UnitType::GetNbcSuit() const
 bool PHY_UnitType::IsStockLogisticTypeDefined( const PHY_DotationLogisticType& type ) const
 {
     return definedStockLogisticTypes_.find( &type ) != definedStockLogisticTypes_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetResourceCapacityWithAviationQuotas
+// Created: JSR 2013-10-21
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetResourceCapacityWithAviationQuotas( E_AviationRange aviationRange, const PHY_Dotation& dotation ) const
+{
+    double totalCapacity = 0;
+    const PHY_DotationCategory& category = dotation.GetCategory();
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    {
+        const PHY_ComposanteTypePion* composante = it->first;
+        const PHY_DotationCapacities& capacities = composante->GetDotationCapacities();
+        totalCapacity += capacities.GetCapacity( category ) * it->second.nNbr_;
+    }
+    totalCapacity += dotationCapacitiesTC1_.GetCapacity( category );
+    double ratio = dotation.GetValue() / totalCapacity;
+
+    double newCapacity = 0;
+    const PHY_DotationType& dotationType = category.GetType();
+    const PHY_AmmoDotationClass* ammoClass = category.GetAmmoDotationClass();
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    {
+        const PHY_ComposanteTypePion* composante = it->first;
+        const PHY_DotationCapacities& capacities = composante->GetDotationCapacities();
+        double aviationResource = composante->GetAviationResourceQuota( aviationRange, &dotationType, ammoClass );
+        double composanteRatio = ( aviationResource > 0 ) ? aviationResource : ratio;
+        newCapacity += capacities.GetCapacity( category ) * composanteRatio * it->second.nNbr_;
+    }
+    newCapacity += dotationCapacitiesTC1_.GetCapacity( category ) * ratio;
+    return newCapacity;
 }

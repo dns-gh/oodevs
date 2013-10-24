@@ -42,6 +42,7 @@ public:
     void RegisterCapacities( PHY_DotationGroupContainer& container, T_Dotations* dotations ) const;
     T_Dotations UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
     double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
+    double GetCapacity( const PHY_DotationCategory& category ) const;
     //@}
 
 private:

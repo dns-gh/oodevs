@@ -74,6 +74,8 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eHasTC1 ]->Connect( &pInfos->bTC1_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasStock ]->Connect( &pInfos->bStock_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasStrengthRatioFeedbackTime ]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eStandardFlyingHeight ]->Connect( &pInfos->standardFlyingHeight_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eTacticalFlyingHeight ]->Connect( &pInfos->tacticalFlyingHeight_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCanFly ]->Connect( &pInfos->bCanFly_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCrossingHeight ]->Connect( &pInfos->eCrossingHeight_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eIsAutonomous ]->Connect( &pInfos->bIsAutonomous_, bConnect );

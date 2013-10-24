@@ -484,6 +484,24 @@ bool DEC_AgentFunctions::AgentCanFly( const MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetStandardFlyingHeight
+// Created: JSR 2013-10-18
+// -----------------------------------------------------------------------------
+unsigned int DEC_AgentFunctions::GetStandardFlyingHeight( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetType().GetUnitType().GetStandardFlyingHeight();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetTacticalFlyingHeight
+// Created: JSR 2013-10-18
+// -----------------------------------------------------------------------------
+unsigned int DEC_AgentFunctions::GetTacticalFlyingHeight( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetType().GetUnitType().GetTacticalFlyingHeight();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DecisionalState
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------

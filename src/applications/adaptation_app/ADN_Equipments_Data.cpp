@@ -1345,6 +1345,71 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
     output << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AviationResourceQuotasInfos Constructor
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+ADN_Equipments_Data::AviationResourceQuotasInfos::AviationResourceQuotasInfos( E_AviationRange nRange )
+    : nRange_( nRange )
+{
+    for( int i = 0; i < eNbrAmmunitionType; ++i )
+        resourceQuotas_[ i ] = ( nRange == eAviationRange_NoAmmunition ) ? 0 : 100;
+    resourceQuotas_[ eNbrAmmunitionType ] = 100;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AviationResourceQuotasInfos::ReadArchive
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::AviationResourceQuotasInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::list( "quota", *this, &ADN_Equipments_Data::AviationResourceQuotasInfos::ReadQuota );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AviationResourceQuotasInfos::ReadQuota
+// Created: JSR 2013-10-18
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::AviationResourceQuotasInfos::ReadQuota( xml::xistream& input )
+{
+    const std::string category = input.attribute< std::string >( "category" );
+    const unsigned int value = input.attribute< unsigned int >( "value" );
+    try
+    {
+        if( category ==  ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ) )
+            resourceQuotas_[ eNbrAmmunitionType ] = value;
+        else
+        {
+            E_AmmunitionType type = ENT_Tr::ConvertToAmmunitionType( category );
+            resourceQuotas_[ type ] = value;
+        }
+    }
+    catch( const std::exception& /*e*/ )
+    {
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Aviation range - Invalid category '%1'" ).arg( category.c_str() ).toStdString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AviationResourceQuotasInfos::WriteArchive
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::AviationResourceQuotasInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "aviation-quota" )
+            << xml::attribute( "range", ENT_Tr::ConvertFromAviationRange( nRange_ ) );
+    for( int i = 0; i < eNbrAmmunitionType; ++i )
+        output << xml::start( "quota" )
+                << xml::attribute( "category", ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ) ) )
+                << xml::attribute( "value", resourceQuotas_[ i ] )
+               << xml::end;
+    output << xml::start( "quota" )
+            << xml::attribute( "category", ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ) )
+            << xml::attribute( "value", resourceQuotas_[ eNbrAmmunitionType ] )
+           << xml::end;
+    output << xml::end;
+}
+
 //=============================================================================
 //
 //=============================================================================
@@ -1360,6 +1425,8 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
     , vSpeeds_                       ( false )
+    , bAviationResourcesQuotas_      ( false )
+    , vAviationResourceQuotas_       ( false )
     , bTroopEmbarkingTimes_          ( false )
     , embarkingTimePerPerson_        ( "0s" )
     , disembarkingTimePerPerson_     ( "0s" )
@@ -1400,6 +1467,8 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Volumes_Data >( eVolumes ).GetVolumesInfos(), 0 )
     , rWeight_                       ( 100 )
     , vSpeeds_                       ( false )
+    , bAviationResourcesQuotas_      ( false )
+    , vAviationResourceQuotas_       ( false )
     , bTroopEmbarkingTimes_          ( false )
     , embarkingTimePerPerson_        ( "0s" )
     , disembarkingTimePerPerson_     ( "0s" )
@@ -1455,11 +1524,11 @@ void ADN_Equipments_Data::EquipmentInfos::Initialize()
     equipmentCategory_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eEquipments, "equipment-category" ) );
 
     // initialize speeds
-    for( int iTerrain=0; iTerrain < eNbrLocation; ++iTerrain )
-    {
-        SpeedInfos * pNewSpeedInfos = new SpeedInfos( (E_Location)iTerrain );
-        vSpeeds_.AddItem(pNewSpeedInfos);
-    }
+    for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
+        vSpeeds_.AddItem( new SpeedInfos( static_cast< E_Location >( iTerrain ) ) );
+
+    for( int iRange = 0; iRange < eNbrAviationRanges; ++iRange )
+        vAviationResourceQuotas_.AddItem( new AviationResourceQuotasInfos( static_cast< E_AviationRange >( iRange ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1499,6 +1568,11 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
         pCopy->vSpeeds_[ iTerrain ]->rSpeed_        = vSpeeds_[ iTerrain ]->rSpeed_.GetData();
         pCopy->vSpeeds_[ iTerrain ]->nConstruction_ = vSpeeds_[ iTerrain ]->nConstruction_.GetData();
     }
+
+    pCopy->bAviationResourcesQuotas_ = bAviationResourcesQuotas_.GetData();
+    for( int iRange = 0; iRange < eNbrAviationRanges; ++iRange )
+        for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
+            pCopy->vAviationResourceQuotas_[ iRange ]->resourceQuotas_[ i ] = vAviationResourceQuotas_[ iRange ]->resourceQuotas_[ i ].GetData();
 
     for( auto itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
     {
@@ -1572,9 +1646,7 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::EquipmentInfos::ReadSpeed( xml::xistream& input )
 {
-    std::string strLocation;
-    input >> xml::attribute( "terrain", strLocation );
-
+    const std::string strLocation = input.attribute< std::string >( "terrain" );
     try
     {
         E_Location nLocation = ENT_Tr::ConvertToLocation( strLocation );
@@ -1583,6 +1655,24 @@ void ADN_Equipments_Data::EquipmentInfos::ReadSpeed( xml::xistream& input )
     catch( const std::exception& /*e*/ )
     {
         throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toStdString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::EquipmentInfos::ReadAviationQuota
+// Created: JSR 2013-10-16
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::ReadAviationQuota( xml::xistream& input )
+{
+    const std::string strRange = input.attribute< std::string >( "range" );
+    try
+    {
+        E_AviationRange nRange = ENT_Tr::ConvertToAviationRange( strRange );
+        vAviationResourceQuotas_.at( nRange )->ReadArchive( input );
+    }
+    catch( const std::exception& /*e*/ )
+    {
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Aviation range - Invalid range type '%1'" ).arg( strRange.c_str() ).toStdString() );
     }
 }
 
@@ -1725,6 +1815,11 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 
     consumptions_.ReadArchive( input, resources_.categories_, strName_.GetData() );
     FillMissingConsumptions();
+    bAviationResourcesQuotas_ = input.has_child( "aviation-quotas" );
+    if( bAviationResourcesQuotas_.GetData() )
+        input >> xml::start( "aviation-quotas" )
+                >> xml::list( "aviation-quota", *this, &ADN_Equipments_Data::EquipmentInfos::ReadAviationQuota )
+              >> xml::end;
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Equipments_Data::EquipmentInfos::ReadWeapon )
@@ -1879,6 +1974,13 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
     output << xml::end;
 
     consumptions_.WriteArchive( output );
+    if( bAviationResourcesQuotas_.GetData() )
+    {
+        output << xml::start( "aviation-quotas" );
+            for( auto itQuota = vAviationResourceQuotas_.begin(); itQuota != vAviationResourceQuotas_.end(); ++itQuota )
+                ( *itQuota )->WriteArchive( output );
+        output << xml::end;
+    }
 
     output << xml::start( "weapon-systems" );
     for( auto itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )

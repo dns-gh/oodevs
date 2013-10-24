@@ -13,6 +13,7 @@
 #define __PHY_DotationGroup_h_
 
 #include "MIL.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <tools/Map.h>
 
 namespace xml
@@ -27,6 +28,7 @@ class PHY_DotationType;
 class PHY_DotationGroupContainer;
 class PHY_DotationCapacity;
 class PHY_AmmoDotationClass;
+class PHY_UnitType;
 class MIL_AutomateLOG;
 
 // =============================================================================
@@ -104,6 +106,7 @@ public:
     bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;
     void Apply                       ( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
+    void EnforceAviationResources    ( E_AviationRange aviationRange, const PHY_UnitType& unitType, MIL_AutomateLOG& tc2 ) const;
     //@}
 
     //! @name Accessors

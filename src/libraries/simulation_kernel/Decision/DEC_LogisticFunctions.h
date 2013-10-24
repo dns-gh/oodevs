@@ -96,6 +96,7 @@ public:
     static void PionRequestSupply( MIL_Agent_ABC& callerAgent );
 
     static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId );
+    static void EnforceAviationResources( MIL_Agent_ABC& callerAgent, int aviationRange );
 
     static void ConnectToResourceNode( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     static void DisconnectFromResourceNode( DEC_Decision_ABC* callerAgent );

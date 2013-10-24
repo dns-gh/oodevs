@@ -72,6 +72,8 @@ public:
         eHasTC1,
         eHasStrengthRatioFeedbackTime,
         eCanFly,
+        eStandardFlyingHeight,
+        eTacticalFlyingHeight,
         eCrossingHeight,
         eIsAutonomous,
         eFootprint,

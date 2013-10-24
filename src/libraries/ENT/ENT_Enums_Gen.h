@@ -466,6 +466,15 @@ enum E_MissionType
     eNbrMissionTypes        = 4
 };
 
+enum E_AviationRange
+{
+    eAviationRange_ShortRange   = 0,
+    eAviationRange_MediumRange  = 1,
+    eAviationRange_LongRange    = 2,
+    eAviationRange_NoAmmunition = 3,
+    eNbrAviationRanges          = 4
+};
+
 enum E_FuncLimaType
 {
     eLimaFuncLD     = 0, // Ligne de débouché

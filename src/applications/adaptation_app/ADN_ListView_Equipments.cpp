@@ -90,6 +90,8 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eObjects]->Connect( &pInfos->vObjects_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAttritionBreakdowns]->Connect( &pInfos->attritionBreakdowns_.vBreakdowns_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eRandomBreakdowns]->Connect( &pInfos->randomBreakdowns_.vBreakdowns_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eAviationResourceQuotas]->Connect( &pInfos->vAviationResourceQuotas_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasAviationResourceQuotas]->Connect( &pInfos->bAviationResourcesQuotas_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eHasAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulance_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rCapacity_, bConnect );

@@ -1524,6 +1524,10 @@ Arrêt moteur allumé</translation>
         <source>m</source>
         <translation>m</translation>
     </message>
+    <message>
+        <source>Enforce resource quotas for aviation equipments</source>
+        <translation>Appliquer les quotas de dotations pour les équipements aériens</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_RadarsListView</name>
@@ -5857,6 +5861,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Speed reduction modifier</source>
         <translation>Coefficient de réduction de la vitesse</translation>
     </message>
+    <message>
+        <source>Standard flying height</source>
+        <translation>Hauteur de vol standard</translation>
+    </message>
+    <message>
+        <source>Tactical flying height</source>
+        <translation>Hauteur de vol tactique</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
@@ -6485,6 +6497,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipement - Type de terrain invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid range type &apos;%1&apos;</source>
+        <translation>Portée aérienne - Type de portée &apos;%1&apos; invalide</translation>
+    </message>
+    <message>
+        <source>Aviation range - Invalid category &apos;%1&apos;</source>
+        <translation>Portée aérienne - Catégorie &apos;%1&apos; invalide</translation>
     </message>
 </context>
 <context>
