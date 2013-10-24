@@ -248,7 +248,7 @@ const T_LimaVector& MIL_OrderContext::GetLimas() const
 // -----------------------------------------------------------------------------
 MIL_LimaOrder* MIL_OrderContext::FindLima( unsigned int nID )
 {
-    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+    for( auto it = limas_.begin(); it != limas_.end(); ++it )
         if( it->GetID() == nID )
             return &(*it);
     return 0;
@@ -260,7 +260,7 @@ MIL_LimaOrder* MIL_OrderContext::FindLima( unsigned int nID )
 // -----------------------------------------------------------------------------
 MIL_LimaOrder* MIL_OrderContext::FindLima( const MIL_LimaFunction& func )
 {
-    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+    for( auto it = limas_.begin(); it != limas_.end(); ++it )
         if( it->HasFunction( func ) )
             return &(*it);
     return 0;
@@ -286,7 +286,7 @@ std::vector< MIL_LimaOrder* > MIL_OrderContext::FindAllLimas( const MIL_LimaFunc
 MIL_LimaOrder* MIL_OrderContext::FindNextScheduledLima()
 {
     MIL_LimaOrder* pNextLima = 0;
-    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+    for( auto it = limas_.begin(); it != limas_.end(); ++it )
     {
         MIL_LimaOrder& lima = *it;
         if( lima.GetSchedule() == 0 || lima.IsScheduleFlagged() )
