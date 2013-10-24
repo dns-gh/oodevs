@@ -525,10 +525,10 @@ void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
         return;
 
     output << xml::start( "logistic-functions" );
-    if( bHasHealthInfos_.GetData() )
-        healthInfos_.WriteArchive( output );
     if( bHasMaintenanceInfos_.GetData() )
         maintenanceInfos_.WriteArchive( output );
+    if( bHasHealthInfos_.GetData() )
+        healthInfos_.WriteArchive( output );
     if( bHasSupplyInfos_.GetData() )
         supplyInfos_.WriteArchive( output );
     output << xml::end;
