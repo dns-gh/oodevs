@@ -85,15 +85,13 @@ PHY_RolePion_Humans::HumanState::~HumanState()
 void PHY_RolePion_Humans::HumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int rankId;
-    unsigned int stateId;
     file >> number_
          >> rankId
-         >> stateId
+         >> state_
          >> location_
          >> contaminated_
          >> psyop_;
     rank_ = PHY_HumanRank::Find( rankId );
-    state_ = PHY_HumanWound::Find( stateId );
     assert( rank_ && state_ );
 }
 
@@ -104,10 +102,9 @@ void PHY_RolePion_Humans::HumanState::load( MIL_CheckPointInArchive& file, const
 void PHY_RolePion_Humans::HumanState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const unsigned int rankId = rank_->GetID();
-    const unsigned int stateId = state_->GetID();
     file << number_
          << rankId
-         << stateId
+         << state_
          << location_
          << contaminated_
          << psyop_;

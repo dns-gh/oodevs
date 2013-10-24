@@ -83,46 +83,6 @@ bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MissionParameter_Value
     return true;
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
-
-        template< typename Archive >
-        void serialize( Archive& file, T_MedicalPriorityVector& vector, const unsigned int nVersion )
-        {
-            split_free( file, vector, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const T_MedicalPriorityVector& vector, const unsigned int )
-        {
-            std::size_t size = vector.size();
-            file << size;
-            for( auto it = vector.begin(); it != vector.end(); ++it )
-            {
-                unsigned id = (*it)->GetID();
-                file << id;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, T_MedicalPriorityVector& vector, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            vector.reserve( nNbr );
-            while( nNbr-- )
-            {
-                unsigned int nID;
-                file >> nID;
-                vector.push_back( PHY_HumanWound::Find( nID ) );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMedicalPrioritiesParameter::load
 // Created: LGY 2011-06-06

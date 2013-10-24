@@ -71,19 +71,8 @@ FloodCapacity::~FloodCapacity()
 void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    std::size_t size;
-    file >> size;
-    std::string type;
-    double percentage;
-    for( std::size_t i = 0; i < size; ++i )
-    {
-        file >> type
-             >> percentage;
-        const PHY_HumanWound* pType = PHY_HumanWound::Find( type );
-        if( pType )
-            injuries_.insert( std::make_pair( pType, percentage ) );
-    }
+         >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
+         >> injuries_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +82,8 @@ void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 void FloodCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    std::size_t size = injuries_.size();
-    file << size;
-    for( auto it = injuries_.begin(); it != injuries_.end(); ++it )
-    {
-        file << it->first->GetName();
-        file << it->second;
-    }
+         << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
+         << injuries_;
 }
 
 // -----------------------------------------------------------------------------
