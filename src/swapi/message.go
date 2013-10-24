@@ -44,7 +44,6 @@ type header struct {
 
 type SwordMessage struct {
 	tag      uint32
-	Size     uint32
 	Context  int32
 	ClientId int32
 	// * -> client

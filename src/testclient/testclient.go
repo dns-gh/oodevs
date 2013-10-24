@@ -138,14 +138,11 @@ used to exercise swapi.Model update against real world scenarii.
 					s[i] = space
 				}
 			}
-			prefix := []byte(fmt.Sprintf("in %6d bytes ", msg.Size))
-			parts := [][]byte{prefix, s, []byte("\n")}
-			for _, part := range parts {
-				_, err := logWriter.Write(part)
-				if err != nil {
-					log.Fatalf("error: cannot write message to log file: %s", err)
-				}
+			_, err = logWriter.Write(s)
+			if err != nil {
+				log.Fatalf("error: cannot write message to log file: %s", err)
 			}
+			logWriter.WriteString("\n")
 		}
 		return false
 	})
