@@ -412,9 +412,7 @@
         -->
         <test-adaptation dir="${data.dir}/data/models/ada/physical/worldwide"/>
         <test-adaptation-unicode zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
-        <!-- Disable currently broken test
         <test-adaptation-swap dir="${data.dir}/data/models/ada/physical/test" master="en" language="fr"/>
-        -->
     </target>
 
     <macrodef name="test-exercise">
