@@ -83,7 +83,7 @@ void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC
 // Name: MessengerPlugin::NotifyClientLeft
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/ )
+void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/, bool /*uncounted*/ )
 {
     chat_->NotifyClientLeft( client );
 }

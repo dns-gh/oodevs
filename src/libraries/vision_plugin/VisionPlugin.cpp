@@ -139,7 +139,7 @@ void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, bool ac
     Update();
 }
 
-void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& /*link*/ )
+void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& /*link*/, bool /*uncounted*/ )
 {
     clients_->Unregister( publisher );
     units_->Unregister( publisher );

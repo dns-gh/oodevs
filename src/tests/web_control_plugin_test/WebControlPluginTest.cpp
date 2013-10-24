@@ -220,17 +220,15 @@ BOOST_FIXTURE_TEST_CASE( plugin_receive_date_time_updates, Fixture )
 BOOST_FIXTURE_TEST_CASE( plugin_list_clients, Fixture )
 {
     CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", std::vector< std::string >() );
-    control_.NotifyClientAuthenticated( "127.0.0.1", false );
+    control_.NotifyClientAuthenticated( "127.0.0.1" );
     CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
         ( "127.0.0.1" ) );
-    control_.NotifyClientAuthenticated( "192.168.1.13", false );
+    control_.NotifyClientAuthenticated( "192.168.1.13" );
     CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
         ( "127.0.0.1" )( "192.168.1.13" ) );
     control_.NotifyClientLeft( "127.0.0.1" );
     CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", boost::assign::list_of< std::string >
         ( "192.168.1.13" ) );
     control_.NotifyClientLeft( "192.168.1.13" );
-    CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", std::vector< std::string >() );
-    control_.NotifyClientAuthenticated( "192.168.1.13", true );
     CheckNotifyJsonList( control_, "GET", "/get", 200, "clients", std::vector< std::string >() );
 }

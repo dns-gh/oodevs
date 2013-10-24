@@ -66,7 +66,7 @@ public:
 
     virtual bool Filter( const sword::SimToClient& message ) const;
     virtual void Receive( const sword::SimToClient& message );
-    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link );
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link, bool uncounted );
 
 private:
     void OnReceive( const std::string& link, const sword::ClientToSim& message );
