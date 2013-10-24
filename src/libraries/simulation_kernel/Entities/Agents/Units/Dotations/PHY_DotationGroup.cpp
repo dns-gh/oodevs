@@ -18,7 +18,6 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
 

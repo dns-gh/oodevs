@@ -26,7 +26,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/split_free.hpp>
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )

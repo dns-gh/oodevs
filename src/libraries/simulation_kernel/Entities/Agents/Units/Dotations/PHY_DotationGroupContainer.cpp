@@ -17,7 +17,6 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/split_free.hpp>
 #include <boost/serialization/set.hpp>
 
 // -----------------------------------------------------------------------------

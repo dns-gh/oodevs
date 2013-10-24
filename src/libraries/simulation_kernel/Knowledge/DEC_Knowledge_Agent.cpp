@@ -39,7 +39,6 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 #include "Urban/PHY_MaterialCompositionType.h"
-#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 

@@ -17,7 +17,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "protocol/Protocol.h"
-#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
 
