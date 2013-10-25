@@ -73,18 +73,22 @@ type Packet struct {
 	done chan struct{}
 }
 
-func postPacket(dst chan<- *Packet, tag uint32, data []byte) {
+func postPacket(ctx *TcpContext, dst chan<- *Packet, tag uint32, data []byte) {
 	pkt := &Packet{
 		tag:  tag,
 		data: data,
 		done: make(chan struct{}),
 	}
-	dst <- pkt
+	select {
+	case <-ctx.quit:
+		return
+	case dst <- pkt:
+	}
 	<-pkt.done
 }
 
-func postRawPacket(dst chan<- *Packet, data []byte) {
-	postPacket(dst, SkipEncoding, data)
+func postRawPacket(ctx *TcpContext, dst chan<- *Packet, data []byte) {
+	postPacket(ctx, dst, SkipEncoding, data)
 }
 
 type TcpContext struct {
@@ -162,7 +166,7 @@ func (t *TcpProxy) readClient(ctx *TcpContext, link net.Conn) {
 		if ctx.server == nil {
 			return false
 		}
-		postPacket(ctx.server, tag, data)
+		postPacket(ctx, ctx.server, tag, data)
 		return true
 	}
 	readMessage := func(msg *swapi.SwordMessage) error {
@@ -265,7 +269,7 @@ func (t *TcpProxy) login(ctx *TcpContext, context int32, auth *sword.Authenticat
 	if err != nil {
 		return err
 	}
-	postRawPacket(ctx.server, buffer.Bytes())
+	postRawPacket(ctx, ctx.server, buffer.Bytes())
 	return nil
 }
 
@@ -287,7 +291,7 @@ func (t *TcpProxy) deny(ctx *TcpContext, msg *swapi.SwordMessage) error {
 	if err != nil {
 		return err
 	}
-	postRawPacket(ctx.client, buffer.Bytes())
+	postRawPacket(ctx, ctx.client, buffer.Bytes())
 	return nil
 }
 
@@ -314,7 +318,7 @@ func (t *TcpProxy) writePackets(ctx *TcpContext, link net.Conn, packets <-chan *
 				}
 				log.Println(written, "bytes written to", link.RemoteAddr(), dumped)
 			}
-			packet.done <- struct{}{}
+			close(packet.done)
 			if err != nil {
 				if !ctx.isClosed(err) {
 					log.Printf("Unable to write data to %s: %s\n", link.RemoteAddr(), err)
@@ -341,7 +345,7 @@ func (t *TcpProxy) handleServer(ctx *TcpContext, link net.Conn) {
 	defer log.Println("- server", link.RemoteAddr())
 	defer link.Close()
 	go t.readPackets(ctx, link, func(tag uint32, data []byte) bool {
-		postPacket(ctx.client, tag, data)
+		postPacket(ctx, ctx.client, tag, data)
 		return true
 	}, nil)
 	t.writePackets(ctx, link, ctx.server)
