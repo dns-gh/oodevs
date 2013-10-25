@@ -67,6 +67,16 @@ void Profile::Login() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile::SetCredentials
+// Created: BAX 2013-10-25
+// -----------------------------------------------------------------------------
+void Profile::SetCredentials( const std::string& login, const std::string& password )
+{
+    login_ = login;
+    password_ = password;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile::Login
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------

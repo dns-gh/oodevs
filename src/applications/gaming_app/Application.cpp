@@ -58,7 +58,11 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     simulationController_.reset( new SimulationController( *simulation_, *controllers_, network_->GetMessageMgr() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
     staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_, *simulation_ ) );
-    profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
+    const std::string& login = config_->GetLogin();
+    const std::string& pwd = config_->GetPassword();
+    profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), login, config_->IsLoginInCommandLine() ) );
+    if( !pwd.empty() )
+        profile_->SetCredentials( login, pwd );
     model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_, *profile_ ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
 

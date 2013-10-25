@@ -34,6 +34,7 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     desc.add_options()
         ( "host",  po::value( &host_ ), "specify host to join" )
         ( "login", po::value( &login_ ), "specify login" )
+        ( "password", po::value( &password_ ), "specify password" )
         ( "order-file", po::value( &orderFile_ ), "specify an order file to load" );
     AddOptions( desc );
     Parse( argc, argv );
@@ -102,9 +103,18 @@ void Config::Connect( Network& network ) const
 // Name: Config::GetLogin
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-std::string Config::GetLogin() const
+const std::string& Config::GetLogin() const
 {
     return login_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetPassword
+// Created: BAX 2013-10-24
+// -----------------------------------------------------------------------------
+const std::string& Config::GetPassword() const
+{
+    return password_;
 }
 
 // -----------------------------------------------------------------------------
