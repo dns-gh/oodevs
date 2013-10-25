@@ -69,6 +69,10 @@ ADN_Languages_Dialog::ADN_Languages_Dialog( ADN_Languages_Data& data )
     down_ = CreateArrowButton( "down", tr( "Move down"), Qt::DownArrow, this, SLOT( OnDown() ) );
     add_ = CreateArrowButton( "add", tr( "Add language" ), Qt::RightArrow, this, SLOT( OnAdd() ) );
     remove_ = CreateArrowButton( "remove", tr( "Remove language" ), Qt::LeftArrow, this, SLOT( OnRemove() ) );
+
+    connect( availables_, SIGNAL( activated( const QModelIndex& ) ), this, SLOT( OnAdd() ) );
+    connect( actives_, SIGNAL( activated( const QModelIndex& ) ), this, SLOT( OnRemove() ) );
+
     translationsLayout->addWidget( availables_, 0, 0, 4, 1 );
     translationsLayout->addWidget( add_, 1, 1 );
     translationsLayout->addWidget( remove_, 2, 1 );
