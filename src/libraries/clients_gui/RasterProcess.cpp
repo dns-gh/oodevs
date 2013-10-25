@@ -12,7 +12,7 @@
 #include "moc_RasterProcess.cpp"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
-#include <tools/EncodingConverter.h>
+#include <tools/Helpers.h>
 #include <tools/Path.h>
 #include <tools/StdFileWrapper.h>
 #include <boost/make_shared.hpp>
