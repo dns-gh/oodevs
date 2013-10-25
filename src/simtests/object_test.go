@@ -270,3 +270,41 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 		return data.FindObject(object.Id).Altitude == altitude
 	})
 }
+
+func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	model := client.Model
+	data := model.GetData()
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+
+	// Get a party identifier
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	// Create Object
+	object, err := client.CreateDefaultObject("installation", party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	// Check object is constructed
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindObject(object.Id).Construction == 100
+	})
+
+	// Update construction attribute
+	params := swapi.MakeList(
+		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_construction)), // attribute type
+		swapi.MakeIdentifier(0),                                            // unused
+		swapi.MakeQuantity(0),                                              // unused
+		swapi.MakeFloat(0),                                                 // unused
+		swapi.MakeQuantity(5),                                              // % construction
+	)
+	err = client.UpdateObject(object.Id, params)
+	c.Assert(err, IsNil)
+
+	// Check object is updated
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindObject(object.Id).Construction == 5
+	})
+}

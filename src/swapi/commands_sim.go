@@ -1416,3 +1416,26 @@ func (c *Client) DeleteObject(objectId uint32) error {
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) UpdateObject(objectId uint32, attributes ...*sword.MissionParameter_Value) error {
+	msg := createObjectMagicAction(objectId, MakeParameters(MakeParameter(attributes...)),
+		sword.ObjectMagicAction_update)
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectUpdate(); reply != nil {
+			return ErrContinue
+		}
+		reply := msg.GetObjectMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		id, err := GetObjectMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		if id != objectId {
+			return mismatch("object id", objectId, id)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}

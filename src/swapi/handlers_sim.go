@@ -1013,6 +1013,9 @@ func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
 		if altitude := attributes.GetAltitudeModifier(); altitude != nil {
 			object.Altitude = altitude.GetHeight()
 		}
+		if construction := attributes.GetConstruction(); construction != nil {
+			object.Construction = construction.GetPercentage()
+		}
 	}
 	return nil
 }
