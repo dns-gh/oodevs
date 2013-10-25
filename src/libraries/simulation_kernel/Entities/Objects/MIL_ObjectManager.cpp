@@ -449,40 +449,31 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         else if( msg.type() == sword::ObjectMagicAction::destroy )
         {
             MIL_Object_ABC* pObject = Find( msg.object().id() );
-            if( !pObject || pObject->Retrieve< CrowdCapacity >() )
-                throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
-                                         "invalid object identifier" );
-            else
+            protocol::Check( pObject && !pObject->Retrieve< CrowdCapacity >(),
+                    "invalid object identifier" );
+            MIL_Army_ABC* army = pObject->GetArmy();
+            if( army )
             {
-                MIL_Army_ABC* army = pObject->GetArmy();
-                if( army )
+                auto knowledges = army->GetKnowledgeGroups();
+                for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
                 {
-                    auto knowledges = army->GetKnowledgeGroups();
-                    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
-                    {
-                        auto bbKg = it->second->GetKnowledge();
-                        if( bbKg )
-                            bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
-                    }
+                    auto bbKg = it->second->GetKnowledge();
+                    if( bbKg )
+                        bbKg->GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
                 }
-                id = pObject->GetID();
-                ( *pObject )().Destroy();
             }
+            id = pObject->GetID();
+            ( *pObject )().Destroy();
         }
         else if( msg.type() == sword::ObjectMagicAction::update )
         {
             MIL_Object_ABC* pObject = Find( msg.object().id() );
-            if( !pObject )
-                throw MASA_BADPARAM_ASN( sword::ObjectMagicActionAck::ErrorCode, sword::ObjectMagicActionAck::error_invalid_object,
-                                         "invalid object identifier" );
-            else
-            {
-                id = pObject->GetID();
-                const sword::MissionParameters& params = msg.parameters();
-                const int count = protocol::GetCount( params, 1 );
-                protocol::Check( count > 0, "invalid specific attributes" );
-                pObject->OnUpdate( params );
-            }
+            protocol::Check( pObject, "invalid object identifier" );
+            id = pObject->GetID();
+            const sword::MissionParameters& params = msg.parameters();
+            const int count = protocol::GetCount( params, 1 );
+            protocol::Check( count > 0, "invalid specific attributes" );
+            pObject->OnUpdate( params );
         }
     }
     catch( const NET_AsnBadParam< sword::ObjectMagicActionAck::ErrorCode >& e )
