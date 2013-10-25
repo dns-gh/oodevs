@@ -459,23 +459,27 @@ bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
     return false;
 }
 
+namespace
+{
+
+E_Tristate IsSomeDiplomacyValue( E_Diplomacy value, E_Diplomacy expected )
+{
+    if( value == expected )
+        return eTristate_True;
+    if( value >= 0 && value < eNbrDiplomacy && value != eDiplomacy_Inconnu )
+        return eTristate_False;
+    return eTristate_DontKnow;
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAnEnemy( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eDiplomacy_Inconnu : return eTristate_DontKnow;
-        case eDiplomacy_Ami     : return eTristate_False;
-        case eDiplomacy_Ennemi  : return eTristate_True;
-        case eDiplomacy_Neutre  : return eTristate_False;
-        default:
-            assert( false );
-            return eTristate_DontKnow;
-    };
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Ennemi );
 }
 
 // -----------------------------------------------------------------------------
@@ -493,17 +497,7 @@ E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) cons
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAFriend( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eDiplomacy_Inconnu : return eTristate_DontKnow;
-        case eDiplomacy_Ami     : return eTristate_True;
-        case eDiplomacy_Ennemi  : return eTristate_False;
-        case eDiplomacy_Neutre  : return eTristate_False;
-        default:
-            assert( false );
-    };
-    return eTristate_DontKnow;
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Ami );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,17 +518,7 @@ E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eDiplomacy_Inconnu : return eTristate_DontKnow;
-        case eDiplomacy_Ami     : return eTristate_False;
-        case eDiplomacy_Ennemi  : return eTristate_False;
-        case eDiplomacy_Neutre  : return eTristate_True;
-        default:
-            assert( false );
-    };
-    return eTristate_DontKnow;
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Neutre );
 }
 
 // -----------------------------------------------------------------------------
