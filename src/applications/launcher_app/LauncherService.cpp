@@ -12,8 +12,8 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "launcher_dll/LauncherFacade.h"
 #include "tools/FileWrapper.h"
-#include <tools/EncodingConverter.h>
 #include <tools/Exception.h>
+#include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
 #pragma warning( push, 0 )

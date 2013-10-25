@@ -14,8 +14,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include <tools/Helpers.h>
 #include <tools/Loader_ABC.h>
-#include <tools/EncodingConverter.h>
 #include <boost/bind.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>

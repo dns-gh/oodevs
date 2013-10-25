@@ -16,11 +16,11 @@
 #include "clients_kernel/Controllers.h"
 #include "frontend/commands.h"
 #include "frontend/ListViewHelper.h"
-#include "tools/EncodingConverter.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/VersionHelper.h"
 #include "tools/FileWrapper.h"
+#include <tools/Helpers.h>
 #include <xeumeuleu/xml.h>
 #pragma warning( push )
 #pragma warning( disable: 4244 4267 )

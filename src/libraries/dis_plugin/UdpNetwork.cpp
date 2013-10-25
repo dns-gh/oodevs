@@ -10,7 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
 #include "dispatcher/Logger_ABC.h"
-#include "tools/EncodingConverter.h"
+#include <tools/Helpers.h>
 #include <boost/lexical_cast.hpp>
 #pragma warning( disable : 4503 4355 )
 

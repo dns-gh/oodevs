@@ -11,6 +11,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "tools/MessageController.h"
 #include "tools/MessageObserver.h"
+#include <tools/Helpers.h>
 
 #ifdef _MSC_VER
 #pragma warning( disable : 4127 4244 )
@@ -353,8 +354,6 @@ struct UriHandler
     }
 };
 }
-
-#define COUNT_OF( array ) ( sizeof (array) / sizeof *(array) )
 
 // -----------------------------------------------------------------------------
 // Name: WebControl::Notify
