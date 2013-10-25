@@ -44,15 +44,9 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    virtual QString GetDisplayName() const;
     virtual std::string Commit( const T_Parameters& parameters ) const;
     indicators::Gauge* CreateGauge() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreDefinition( const ScoreDefinition& );            //!< Copy constructor
-    ScoreDefinition& operator=( const ScoreDefinition& ); //!< Assignment operator
     //@}
 
 private:

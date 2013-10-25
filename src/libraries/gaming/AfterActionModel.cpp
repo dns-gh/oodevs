@@ -73,6 +73,15 @@ const IndicatorDefinition_ABC* AfterActionModel::FindDefinition( const std::stri
 }
 
 // -----------------------------------------------------------------------------
+// Name: AfterActionModel::CreateIterator
+// Created: JSR 2013-10-23
+// -----------------------------------------------------------------------------
+tools::Iterator< const AfterActionFunction& > AfterActionModel::CreateIterator() const
+{
+    return tools::Resolver< AfterActionFunction, QString >::CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AfterActionModel::Load
 // Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------

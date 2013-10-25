@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const = 0;
+    virtual QString GetDisplayName() const = 0;
     virtual std::string Commit( const T_Parameters& parameters ) const = 0;
     //@}
 };

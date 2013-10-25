@@ -46,7 +46,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterActionModel : public tools::Resolver< AfterActionFunction, QString >
+class AfterActionModel : private tools::Resolver< AfterActionFunction, QString >
                        , private boost::noncopyable
 {
 public:
@@ -63,6 +63,7 @@ public:
     void Purge();
     IndicatorRequest& CreateRequest( const AfterActionFunction& function, const QString& name );
     const IndicatorDefinition_ABC* FindDefinition( const std::string& definition ) const;
+    tools::Iterator< const AfterActionFunction& > CreateIterator() const;
     void SaveRequests( const tools::Path& path ) const;
     void LoadRequests( const tools::Loader_ABC& loader, const tools::Path& path );
     //@}

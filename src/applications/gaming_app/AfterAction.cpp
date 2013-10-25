@@ -28,9 +28,6 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, con
     , config_( config )
     , model_( model )
 {
-    QScrollArea* scrollArea = new QScrollArea;
-    scrollArea->setWidgetResizable( true );
-
     QWidget* main = new QWidget;
     QVBoxLayout* layout = new QVBoxLayout( main );
     QHBoxLayout* toolbarLayout = new QHBoxLayout;
@@ -44,19 +41,25 @@ AfterAction::AfterAction( QWidget* parent, kernel::Controllers& controllers, con
     toolbarLayout->addWidget( save );
     toolbarLayout->addStretch();
 
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable( true );
+
+    QWidget* scrollWidget = new QWidget;
+    QVBoxLayout* scrollLayout = new QVBoxLayout;
+    scrollWidget->setLayout( scrollLayout );
     QTabWidget* functionsTab = new QTabWidget;
     functionList_ = new AfterActionFunctionList( functionsTab, controllers, model, interfaceBuilder );
     functionsTab->addTab( functionList_, tools::translate( "AfterAction", "Creation" ) );
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab, controllers, plotFactory );
     functionsTab->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
-
+    scrollLayout->addWidget( functionsTab );
     setFeatures( QDockWidget::AllDockWidgetFeatures );
     setWindowTitle( tools::translate( "AfterAction", "After action review" ) );
-    layout->addLayout( toolbarLayout );
-    layout->addWidget( functionsTab );
 
-    scrollArea->setWidget( main );
-    setWidget( scrollArea );
+    scrollArea->setWidget( scrollWidget );
+    layout->addLayout( toolbarLayout );
+    layout->addWidget( scrollArea);
+    setWidget( main );
 
     connect( load, SIGNAL( clicked() ), SLOT( OnLoad() ) );
     connect( save, SIGNAL( clicked() ), SLOT( OnSave() ) );

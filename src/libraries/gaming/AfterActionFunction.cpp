@@ -35,14 +35,15 @@ namespace
 AfterActionFunction::AfterActionFunction( xml::xistream& xis )
     : base_( ReadBase( xis ) )
 {
+    name_ = xis.attribute< std::string >( "name" ).c_str();
     xis >> xml::start( "descriptions" )
           >> xml::list( "description", *this, &AfterActionFunction::ReadDescription )
         >> xml::end;
-    if( name_.isEmpty() )
-        name_ = xis.attribute< std::string >( "name" ).c_str();
     xis >> xml::start( "parameters" )
           >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
         >> xml::end;
+    if( displayName_.isEmpty() )
+        displayName_ = name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,11 +61,12 @@ AfterActionFunction::~AfterActionFunction()
 // -----------------------------------------------------------------------------
 void AfterActionFunction::ReadDescription( xml::xistream& xis )
 {
-    if( xis.attribute< std::string >( "lang" ) == tools::Language::Current() || ( name_.isEmpty() && xis.attribute< std::string >( "lang" ) == "en" ) )
+    const std::string lang = xis.attribute< std::string >( "lang" );
+    if( lang == tools::Language::Current() || displayName_.isEmpty() && lang == "en" )
     {
         std::string comments;
         xis >> comments;
-        name_ = xis.attribute< std::string >( "name" ).c_str();
+        displayName_ = xis.attribute< std::string >( "name" ).c_str();
         comments_ = comments.c_str();
     }
 }
@@ -86,6 +88,15 @@ void AfterActionFunction::ReadParameter( xml::xistream& xis )
 QString AfterActionFunction::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::GetDisplayName
+// Created: JSR 2013-10-23
+// -----------------------------------------------------------------------------
+QString AfterActionFunction::GetDisplayName() const
+{
+    return displayName_;
 }
 
 // -----------------------------------------------------------------------------

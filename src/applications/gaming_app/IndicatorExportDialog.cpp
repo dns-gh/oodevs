@@ -117,7 +117,7 @@ void IndicatorExportDialog::OnAccept()
         {
             file << tools::translate( "Indicators", "Time" );
             BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
-                file << sep << request->GetName();
+                file << sep << request->GetDisplayName();
             file << std::endl;
         }
         std::size_t hasData = requests_.size();

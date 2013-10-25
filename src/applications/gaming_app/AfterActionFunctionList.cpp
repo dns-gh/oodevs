@@ -54,11 +54,23 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     name_ = new QLineEdit;
     nameLayout->addWidget( new QLabel( tr( "Name:" ) ) );
     nameLayout->addWidget( name_ );
+
     functions_ = new QComboBox;
+    QSortFilterProxyModel* proxy = new QSortFilterProxyModel( functions_ );
+    proxy->setSourceModel( functions_->model() );
+    functions_->model()->setParent( proxy );
+    functions_->setModel( proxy );
+    functions_->setSizeAdjustPolicy( QComboBox::AdjustToMinimumContentsLength );
+
     QGroupBox* descriptionGroup = new QGroupBox( tr( "Description" ) );
     descriptionGroup->setLayout( new QVBoxLayout );
     description_ = new QLabel( "---" );
+    description_->setWordWrap( true );
     descriptionGroup->layout()->addWidget( description_ );
+
+    QWidget* parametersWidget = new QWidget;
+    QVBoxLayout* parametersLayout = new QVBoxLayout;
+    parametersWidget->setLayout( parametersLayout );
     timeGroup_ = new QGroupBox( tr( "Time range" ) );
     QVBoxLayout* timeLayout = new QVBoxLayout;
     timeGroup_->setLayout( timeLayout );
@@ -82,18 +94,23 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     while( it.HasMoreElements() )
     {
         const AfterActionFunction& function = it.NextElement();
-        functions_->addItem( function.GetName(), QVariant::fromValue( &function ) );
+        functions_->addItem( function.GetDisplayName(), QVariant::fromValue( &function ) );
     }
+    functions_->model()->sort( 0 );
+    functions_->setCurrentIndex( 0 );
     parameters_ = new QGroupBox( tr( "Parameters" ) );
     request_ = new QPushButton( tr( "Create request" ) );
     QToolTip::add( request_, tr( "Send request" ) );
     setLayout( layout );
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable( true );
+    scrollArea->setWidget( parametersWidget );
+    parametersLayout->addWidget( timeGroup_ );
+    parametersLayout->addWidget( parameters_, 1 );
     layout->addLayout( nameLayout );
     layout->addWidget( functions_ );
     layout->addWidget( descriptionGroup );
-    layout->addWidget( timeGroup_ );
-    layout->addWidget( parameters_ );
-    layout->addStretch();
+    layout->addWidget( scrollArea );
     layout->addWidget( request_ );
     connect( functions_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnSelectionChange( int ) ) );
     connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
@@ -132,7 +149,8 @@ void AfterActionFunctionList::OnSelectionChange( int index )
     if( index == -1 )
         return;
     ClearParameters();
-    parameters_->setLayout( new QVBoxLayout );
+    QVBoxLayout* layout = new QVBoxLayout;
+    parameters_->setLayout( layout );
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
     const AfterActionFunction* function = 0;
@@ -150,6 +168,7 @@ void AfterActionFunctionList::OnSelectionChange( int index )
             }
         }
     }
+    layout->addStretch();
     parameters_->setVisible( function && function->Count() > 0 );
     QString comments = function ? function->GetComments() : QString();
     description_->setText( comments.isEmpty() ? QString( "---" ) : comments );
