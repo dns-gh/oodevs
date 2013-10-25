@@ -73,3 +73,12 @@ BOOST_AUTO_TEST_CASE( compat_embedding_enum )
     BOOST_REQUIRE( decoded );
     BOOST_CHECK_EQUAL( before::external0, decoded->embedding_enum().value() );
 }
+
+BOOST_AUTO_TEST_CASE( compat_int_to_enum )
+{
+    after::Root msg;
+    msg.mutable_int_to_enum()->set_value( after::value1 );
+    auto decoded = EncodeDecode( msg );
+    BOOST_REQUIRE( decoded );
+    BOOST_CHECK_EQUAL( int(after::value1), decoded->int_to_enum().value() );
+}

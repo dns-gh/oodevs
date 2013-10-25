@@ -30,8 +30,13 @@ message EmbeddingEnum {
     required ExternalEnum value = 1;
 }
 
+message IntToEnum {
+    required int32 value = 1;
+}
+
 message Root {
     optional EnumNewValueMsg enum_new_value_msg = 1;
     optional UintToIntMsg uint_to_int_msg = 2;
     optional EmbeddingEnum embedding_enum = 3;
+    optional IntToEnum int_to_enum = 4;
 }
