@@ -510,8 +510,7 @@ end
 
 -- Manage the end of the commander mission
 integration.manageEndMission = function( self )
-    local ok, canMissionEnd = pcall( function() return self.companyTask:canMissionEnd() end )
-    if myself.feedback and ( not ok or canMissionEnd ) then
+    if myself.feedback and ( not self.companyTask.canMissionEnd or self.companyTask:canMissionEnd() ) then
         if self.params.disableWhenDone then
             self.Feedback( self.feedbacks.done )
             return
