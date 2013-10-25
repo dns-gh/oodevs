@@ -471,7 +471,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             protocol::Check( pObject, "invalid object identifier" );
             id = pObject->GetID();
             const sword::MissionParameters& params = msg.parameters();
-            const int count = protocol::GetCount( params, 1 );
+            const int count = protocol::GetCount( params, 0 );
             protocol::Check( count > 0, "invalid specific attributes" );
             pObject->OnUpdate( params );
         }
