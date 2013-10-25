@@ -115,6 +115,7 @@ func (t *TcpProxy) handleClient(link net.Conn, id int32) {
 	defer link.Close()
 	ctx := NewTcpContext()
 	go t.readClient(ctx, link)
+	go t.publishAuthService(ctx)
 	t.writePackets(ctx, link, ctx.client)
 }
 
@@ -257,28 +258,35 @@ func dump(data []byte) string {
 	return dumpTag(header.Tag, payload)
 }
 
-func (t *TcpProxy) login(ctx *TcpContext, context int32, auth *sword.AuthenticationRequest, password string) error {
+func createMessage(tag uint32, msg proto.Message) ([]byte, error) {
 	buffer := bytes.Buffer{}
 	writer := swapi.NewWriter(&buffer)
-	auth.Password = proto.String(password)
-	msg := &sword.ClientToAuthentication{
-		Context: proto.Int32(context),
-		Message: &sword.ClientToAuthentication_Content{
-			AuthenticationRequest: auth,
-		},
+	err := writer.Encode(tag, msg)
+	if err != nil {
+		return nil, err
 	}
-	err := writer.Encode(swapi.ClientToAuthenticationTag, msg)
+	return buffer.Bytes(), nil
+
+}
+
+func (t *TcpProxy) login(ctx *TcpContext, context int32, auth *sword.AuthenticationRequest, password string) error {
+	auth.Password = proto.String(password)
+	data, err := createMessage(swapi.ClientToAuthenticationTag,
+		&sword.ClientToAuthentication{
+			Context: proto.Int32(context),
+			Message: &sword.ClientToAuthentication_Content{
+				AuthenticationRequest: auth,
+			},
+		})
 	if err != nil {
 		return err
 	}
-	postRawPacket(ctx, ctx.server, buffer.Bytes())
+	postRawPacket(ctx, ctx.server, data)
 	return nil
 }
 
 func (t *TcpProxy) deny(ctx *TcpContext, msg *swapi.SwordMessage) error {
-	buffer := bytes.Buffer{}
-	writer := swapi.NewWriter(&buffer)
-	err := writer.Encode(swapi.AuthenticationToClientTag,
+	data, err := createMessage(swapi.AuthenticationToClientTag,
 		&sword.AuthenticationToClient{
 			Context: proto.Int32(msg.Context),
 			Message: &sword.AuthenticationToClient_Content{
@@ -293,8 +301,23 @@ func (t *TcpProxy) deny(ctx *TcpContext, msg *swapi.SwordMessage) error {
 	if err != nil {
 		return err
 	}
-	postRawPacket(ctx, ctx.client, buffer.Bytes())
+	postRawPacket(ctx, ctx.client, data)
 	return nil
+}
+
+func (t *TcpProxy) publishAuthService(ctx *TcpContext) {
+	data, err := createMessage(swapi.DispatcherToClientTag,
+		&sword.DispatcherToClient{
+			Message: &sword.DispatcherToClient_Content{
+				ServicesDescription: &sword.ServicesDescription{
+					Services: []string{"struct authentication::Service"},
+				},
+			},
+		})
+	if err != nil {
+		ctx.stop()
+	}
+	postRawPacket(ctx, ctx.client, data)
 }
 
 func (t *TcpProxy) writePackets(ctx *TcpContext, link net.Conn, packets <-chan *Packet) {
