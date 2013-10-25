@@ -34,7 +34,7 @@ namespace hla
     template< typename T >
     Serializer_ABC& operator<<( Serializer_ABC& serializer, const std::vector< T >& values )
     {
-        for( std::vector< T >::const_iterator it = values.begin(); it != values.end(); ++it )
+        for( typename std::vector< T >::const_iterator it = values.begin(); it != values.end(); ++it )
             serializer << *it;
         return serializer;
     }
@@ -43,7 +43,7 @@ namespace hla
     {
         if( values.size() != 0 )
         {
-            for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
+            for( typename std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
                 deserializer >> *it;
         }
         else
