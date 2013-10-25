@@ -10,6 +10,7 @@
 #ifndef __ADN_MissionGenObjectTypes_Infos_h_
 #define __ADN_MissionGenObjectTypes_Infos_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 
@@ -23,10 +24,8 @@ namespace helpers
 */
 // Created: LGY 2012-04-18
 // =============================================================================
-class ADN_MissionGenObjectTypes_Infos : public ADN_Ref_ABC
+class ADN_MissionGenObjectTypes_Infos : public ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >
 {
-    // $$$$ JSR 2013-04-09: TODO Inherit from ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >, to dynamically change objects names
-    // We cannot do it now because it takes too much time (we need to wait for global simplification of connectors)
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,7 +43,6 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > ptrObject_;
     ADN_Type_Bool isAllowed_;
     //@}
 
@@ -59,7 +57,7 @@ public:
 
         bool operator()( ADN_MissionGenObjectTypes_Infos* tgtnfos ) const
         {
-            return tgtnfos->ptrObject_.GetData() == val_;
+            return tgtnfos->GetCrossedElement() == val_;
         }
     private:
         ADN_Objects_Data_ObjectInfos* val_;
