@@ -138,7 +138,6 @@ int ADN_Languages_Dialog::exec()
     for( auto itActive = activeLanguages.begin(); itActive != activeLanguages.end(); ++itActive )
         InsertItem( *itActive, actives_ );
 
-    availables_->sortItems( 1, Qt::AscendingOrder );
     OnSelectionChanged();
     return QDialog::exec();
 }
@@ -184,13 +183,6 @@ namespace
         widget->insertTopLevelItem( index + indexModifier, item );
         widget->setCurrentItem( item );
     }
-    void SwapItem( QTreeWidget* source, QTreeWidget* dest )
-    {
-        QTreeWidgetItem* item = source->currentItem();
-        source->takeTopLevelItem( source->indexOfTopLevelItem( item ) );
-        dest->insertTopLevelItem( dest->topLevelItemCount(), item );
-        dest->setCurrentItem( item );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +209,10 @@ void ADN_Languages_Dialog::OnDown()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Dialog::OnAdd()
 {
-    SwapItem( availables_, actives_ );
+    QTreeWidgetItem* item = availables_->currentItem();
+    availables_->takeTopLevelItem( availables_->indexOfTopLevelItem( item ) );
+    actives_->insertTopLevelItem( actives_->topLevelItemCount(), item );
+    actives_->setCurrentItem( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,6 +221,22 @@ void ADN_Languages_Dialog::OnAdd()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Dialog::OnRemove()
 {
-    SwapItem( actives_, availables_ );
-    availables_->sortItems( 1, Qt::AscendingOrder );
+    QTreeWidgetItem* item = actives_->currentItem();
+    actives_->takeTopLevelItem( actives_->indexOfTopLevelItem( item ) );
+
+    int index = 0;
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
+    for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
+        if( itAll->IsSupported() &&
+            !data_.IsMaster( itAll->GetCode() ) &&
+            actives_->findItems( itAll->GetCode().c_str(), Qt::MatchExactly, 1 ).size() == 0 )
+            {
+                if( itAll->GetCode() == item->text( 1 ).toStdString() )
+                {
+                    availables_->insertTopLevelItem( index, item );
+                    break;
+                }
+                ++index;
+            }
+    availables_->setCurrentItem( item );
 }
