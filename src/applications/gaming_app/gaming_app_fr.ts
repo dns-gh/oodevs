@@ -235,10 +235,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Erreur irrécupérable</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -3106,6 +3102,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>orders</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to vertical view</source>
+        <translation>Passer en mode vertical</translation>
+    </message>
+    <message>
+        <source>Switch to horizontal view</source>
+        <translation>Passer en mode horizontal</translation>
     </message>
 </context>
 <context>

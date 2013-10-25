@@ -235,10 +235,6 @@
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished">خطأ لم تتم معالجته</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished">خطأ</translation>
     </message>
@@ -3092,6 +3088,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to vertical view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to horizontal view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

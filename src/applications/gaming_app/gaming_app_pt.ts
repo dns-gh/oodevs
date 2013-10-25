@@ -238,10 +238,6 @@
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BorrowingsListView</name>
@@ -3091,6 +3087,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to vertical view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to horizontal view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
