@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 #include <set>
-#include <string>
 
 namespace sword
 {
