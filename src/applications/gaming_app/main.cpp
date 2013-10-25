@@ -32,11 +32,9 @@ int appMain( int argc, char** argv )
     }
     catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
-    }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
+        const std::string err = tools::GetExceptionMsg( e );
+        MT_LOG_ERROR_MSG( err );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), err.c_str() );
     }
     return EXIT_FAILURE;
 }
