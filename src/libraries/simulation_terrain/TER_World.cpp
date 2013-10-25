@@ -29,7 +29,6 @@
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
 #include "tools/ExerciseConfig.h"
-#include <geocoord/Geoid.h>
 #include <xeumeuleu/xml.hpp>
 
 TER_World*  TER_World::pInstance_ = 0;
