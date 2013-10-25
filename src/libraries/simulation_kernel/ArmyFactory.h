@@ -13,6 +13,7 @@
 #include "ArmyFactory_ABC.h"
 #include "MT_Tools/MT_Converter.h"
 #include "MT_Tools/MT_String.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 class AutomateFactory_ABC;
 class FormationFactory_ABC;
@@ -71,7 +72,7 @@ private:
     PopulationFactory_ABC& populationFactory_;
     InhabitantFactory_ABC& inhabitantFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
-    std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess > > diplomacyConverter_;
+    std::auto_ptr< MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess > > diplomacyConverter_;
     //@}
 };
 

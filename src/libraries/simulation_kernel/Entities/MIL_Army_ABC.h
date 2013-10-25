@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "Tristate.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <boost/serialization/export.hpp>
 #include <map>
 
@@ -51,17 +52,6 @@ public:
     //@{
     typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroups;
     typedef std::map< unsigned long, MIL_Object_ABC* > T_Objects;
-    //@}
-
-    //! @name Diplomacy Types
-    //@{
-    enum E_Diplomacy
-    {
-        eUnknown,
-        eFriend,
-        eEnemy,
-        eNeutral
-    };
     //@}
 
 public:
