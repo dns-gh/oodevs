@@ -29,6 +29,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
+#include "tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 
@@ -351,14 +353,13 @@ void MIL_Object::SendFullState() const
 // Name: MIL_Object::OnUpdate
 // Created: JSR 2011-02-11
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+void MIL_Object::OnUpdate( const sword::MissionParameters& params )
 {
-    for( int i = 0; i < attributes.size(); ++i )
+    auto size = protocol::GetCount( params, 0 );
+    for( auto i = 0; i < size; ++i )
     {
-        const sword::MissionParameter_Value& attribute = attributes.Get( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        const unsigned int actionId = protocol::GetIdentifier( params, 0, i, 0 );
+        const sword::MissionParameter_Value& attribute = params.elem( 0 ).value().Get( i );
         switch( actionId )
         {
         case sword::ObjectMagicAction::mine:
@@ -396,7 +397,6 @@ sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protob
             break;
         }
     }
-    return sword::ObjectMagicActionAck::no_error;
 }
 
 // -----------------------------------------------------------------------------

@@ -32,8 +32,8 @@ namespace protobuf
 namespace sword
 {
     enum MagicActionAck_ErrorCode;
-    enum ObjectMagicActionAck_ErrorCode;
     class MissionParameter_Value;
+    class MissionParameters;
 }
 
 class DEC_Knowledge_Object;
@@ -175,7 +175,7 @@ public:
 
     //! @name Network
     //@{
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes ) = 0;
+    virtual void OnUpdate( const sword::MissionParameters& params ) = 0;
     virtual void OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
     virtual void SendCreation() const = 0;

@@ -246,6 +246,11 @@ message ObjectMagicActionAck {
     //! Reason for the failure of the object magic action execution
     //! operation @see ErrorCode
     required ErrorCode error_code = 1;
+    //! Identifier of the object on which the magic action was requested
+    //! to be executed
+    optional ObjectId  object     = 2;
+    //! More detailed account of the returned error
+    optional string    error_msg  = 3;
 }
 
 /** @struct CrowdMagicActionAck

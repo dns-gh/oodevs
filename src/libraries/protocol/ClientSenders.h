@@ -116,7 +116,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectKnowledgeCreation                        , object_knowledge_creation                 )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectKnowledgeDestruction                     , object_knowledge_destruction              )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectKnowledgeUpdate                          , object_knowledge_update                   )
-    GENERATE_MESSAGE( sword::SimToClient, sword, ObjectMagicActionAck                           , object_magic_action_ack                   )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ObjectMagicActionAck             , object_magic_action_ack                   )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectUpdate                                   , object_update                             )
     GENERATE_MESSAGE( sword::SimToClient, sword, PartyCreation                                  , party_creation                            )
     GENERATE_MESSAGE( sword::SimToClient, sword, PopulationCreation                             , population_creation                       )

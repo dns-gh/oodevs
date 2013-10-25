@@ -22,7 +22,9 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include <boost/lexical_cast.hpp>
+#include "tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanObject )
 
@@ -659,14 +661,13 @@ unsigned int MIL_UrbanObject::GetTotalInhabitantsForMotivation( const std::strin
 // Name: MIL_UrbanObject::OnUpdate
 // Created: BCI 2011-02-28
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_UrbanObject::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+void MIL_UrbanObject::OnUpdate( const sword::MissionParameters& params )
 {
-    for( int i = 0; i < attributes.size(); ++i )
+    auto size = params.elem( 0 ).value().size();
+    for( auto i = 0; i < size; ++i )
     {
-        const sword::MissionParameter_Value& attribute = attributes.Get( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        const unsigned int actionId = protocol::GetIdentifier( params, 0, i, 0 );
+        const sword::MissionParameter_Value& attribute = params.elem( 0 ).value().Get( i );
         switch( actionId )
         {
         case sword::ObjectMagicAction::alerted:
@@ -682,7 +683,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_UrbanObject::OnUpdate( const google::p
             break;
         }
     }
-    return MIL_UrbanObject_ABC::OnUpdate( attributes );
+    MIL_UrbanObject_ABC::OnUpdate( params );
 }
 
 // -----------------------------------------------------------------------------
