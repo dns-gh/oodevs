@@ -39,7 +39,7 @@ public:
     //! @name Methods
     //@{
     bool Has( sword::Service id ) const;
-    void Declare( sword::Service );
+    void Declare( sword::Service id );
     void Clear();
     //@}
 
