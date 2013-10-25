@@ -9,8 +9,7 @@
 #include "Actions.h"
 #include "Simulation.h"
 #include "ENT/ENT_Enums_Gen.h"
-
-#define COUNT_OF( name ) sizeof( name )/sizeof( *( name ) )
+#include <tools/Helpers.h>
 
 #define ENUM( name, ... )                                                               \
     const int name##_values[] = { __VA_ARGS__ };                                        \

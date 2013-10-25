@@ -11,6 +11,7 @@
 #include "dispatcher/MessageLoader.h"
 #include "dispatcher/MessageHandler_ABC.h"
 #include "MT_Tools/MT_LogManager.h"
+#include <tools/Helpers.h>
 
 using namespace dispatcher;
 
@@ -88,8 +89,6 @@ namespace
         { "truncated_key",        1,  5, 5, 763,   0 },
         { "truncated_keyindex",   1,  5, 5, 763,   0 },
     };
-
-    #define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
 
     void TestRecords( const TestCase* tests, size_t size, bool thread )
     {

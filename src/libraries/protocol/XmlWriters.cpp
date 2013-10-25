@@ -13,6 +13,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
 #include <tools/Exception.h>
+#include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace protocol;
@@ -20,7 +21,6 @@ using namespace sword;
 
 namespace
 {
-    #define COUNT_OF(X) (sizeof(X)/sizeof*(X))
     #define CALL(X,Y) ((X).*(Y))
 
     typedef MissionParameter_Value Value;
