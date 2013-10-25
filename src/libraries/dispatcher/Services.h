@@ -10,8 +10,7 @@
 #ifndef __Services_h_
 #define __Services_h_
 
-#include <set>
-#include <string>
+#include "clients_kernel/Services.h"
 
 namespace dispatcher
 {
@@ -23,7 +22,7 @@ namespace dispatcher
 */
 // Created: AGE 2008-08-13
 // =============================================================================
-class Services
+class Services : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,37 +34,14 @@ public:
     //! @name Operations
     //@{
     void Send( ClientPublisher_ABC& publisher ) const;
-
-    template< typename T >
-    void Declare()
-    {
-        Declare( typeid( T ).name() );
-    }
-
-    template< typename T >
-    bool HasService() const
-    {
-        return HasService( typeid( T ).name() );
-    }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Services( const Services& );            //!< Copy constructor
-    Services& operator=( const Services& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void Declare( const std::string& name );
-    bool HasService( const std::string& name ) const;
+    void Declare( sword::Service id );
+    bool HasService( sword::Service id ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::set< std::string > services_;
+    kernel::Services services_;
     //@}
 };
 

@@ -17,8 +17,9 @@
 #include "ScoreDefinitions.h"
 #include "Services.h"
 #include "clients_kernel/Controllers.h"
-#include "protocol/ReplaySenders.h"
 #include "protocol/AarSenders.h"
+#include "protocol/Dispatcher.h"
+#include "protocol/ReplaySenders.h"
 
 using namespace sword;
 
@@ -63,7 +64,7 @@ void ScoreModel::Purge()
 // -----------------------------------------------------------------------------
 void ScoreModel::NotifyUpdated( const Services& services )
 {
-    hasReplay_ = services.HasService< replay::Service >();
+    hasReplay_ = services.HasService( sword::service_replay );
 }
 
 namespace

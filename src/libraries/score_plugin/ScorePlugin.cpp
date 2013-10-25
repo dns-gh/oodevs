@@ -54,7 +54,7 @@ ScorePlugin::~ScorePlugin()
 // -----------------------------------------------------------------------------
 void ScorePlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< aar::Service >(); // $$$$ SBO 2009-04-30: new service if needed (see 3a)
+    services.Declare( sword::service_aar ); // $$$$ SBO 2009-04-30: new service if needed (see 3a)
 }
 
 // -----------------------------------------------------------------------------

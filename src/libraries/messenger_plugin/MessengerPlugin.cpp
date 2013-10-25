@@ -53,7 +53,7 @@ MessengerPlugin::~MessengerPlugin()
 // -----------------------------------------------------------------------------
 void MessengerPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< Service >();
+    services.Declare( sword::service_messenger );
 }
 
 // -----------------------------------------------------------------------------

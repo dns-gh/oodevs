@@ -130,3 +130,14 @@ const mapping::PhaseLineType mapping::PhaseLineType::data_[] = {
 
 const size_t mapping::PhaseLineType::size_ = COUNT_OF( mapping::PhaseLineType::data_ );
 BOOST_STATIC_ASSERT( sword::PhaseLineOrder::Function_ARRAYSIZE == mapping::PhaseLineType::size_ );
+
+const mapping::Service mapping::Service::data_[] = {
+    { "struct aar::Service",                sword::service_aar },
+    { "struct authentication::Service",     sword::service_authentication },
+    { "struct plugins::messenger::Service", sword::service_messenger },
+    { "struct simulation::Service",         sword::service_simulation },
+    { "struct replay::Service",             sword::service_replay },
+};
+
+const size_t mapping::Service::size_ = COUNT_OF( mapping::Service::data_ );
+BOOST_STATIC_ASSERT( sword::Service_ARRAYSIZE == mapping::Service::size_ );

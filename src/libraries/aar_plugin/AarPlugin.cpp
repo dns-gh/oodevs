@@ -16,8 +16,9 @@
 #include "dispatcher/AuthenticatedLinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/AarSenders.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/Dispatcher.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -65,7 +66,7 @@ void AarPlugin::Receive( const sword::SimToClient& )
 // -----------------------------------------------------------------------------
 void AarPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< ::aar::Service >();
+    services.Declare( sword::service_aar );
 }
 
 // -----------------------------------------------------------------------------

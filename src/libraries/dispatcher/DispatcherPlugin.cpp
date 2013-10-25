@@ -16,6 +16,7 @@
 #include "Services.h"
 #include "Logger.h"
 #include "ClientsNetworker.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/RightsHelper.h"
 
@@ -51,7 +52,7 @@ DispatcherPlugin::~DispatcherPlugin()
 // -----------------------------------------------------------------------------
 void DispatcherPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< simulation::Service >();
+    services.Declare( sword::service_simulation );
 }
 
 // -----------------------------------------------------------------------------

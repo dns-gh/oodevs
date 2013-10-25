@@ -18,6 +18,7 @@
 #include "dispatcher/Config.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/Version.h"
 #include "protocol/RightsHelper.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -99,7 +100,7 @@ RightsPlugin::~RightsPlugin()
 // -----------------------------------------------------------------------------
 void RightsPlugin::Register( dispatcher::Services& services )
 {
-    services.Declare< authentication::Service >();
+    services.Declare( sword::service_authentication );
 }
 
 // -----------------------------------------------------------------------------

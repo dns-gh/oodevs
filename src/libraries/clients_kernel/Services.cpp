@@ -7,13 +7,10 @@
 //
 // *****************************************************************************
 
-#include "dispatcher_pch.h"
+#include "clients_kernel_pch.h"
 #include "Services.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include "protocol/DispatcherSenders.h"
-#include "protocol/Helpers.h"
 
-using namespace dispatcher;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Services constructor
@@ -34,32 +31,28 @@ Services::~Services()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Services::Declare
+// Name: Services::Has
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Services::Declare( sword::Service id )
+bool Services::Has( sword::Service id ) const
 {
-    services_.Declare( id );
+    return services_.find( id ) != services_.end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Services::HasService
-// Created: LDC 2010-03-19
+// Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::HasService( sword::Service id ) const
+void Services::Declare( sword::Service id )
 {
-    return services_.Has( id );
+    services_.insert( id );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Services::Send
-// Created: AGE 2008-08-13
+// Name: Services::Clear
+// Created: BAX 2013-10-25
 // -----------------------------------------------------------------------------
-void Services::Send( ClientPublisher_ABC& publisher ) const
+void Services::Clear()
 {
-    dispatcher::ServicesDescription services;
-    for( size_t i = 0; i < protocol::mapping::Service::size_; ++i )
-        if( services_.Has( protocol::mapping::Service::data_[i].type ) )
-            services().add_services( protocol::mapping::Service::data_[i].name );
-    services.Send( publisher );
+    services_.clear();
 }
