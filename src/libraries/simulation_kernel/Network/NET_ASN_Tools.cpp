@@ -58,7 +58,7 @@ bool NET_ASN_Tools::ReadLocation( const std::vector< sword::CoordLatLong >& loca
 {
     T_PointVector pointVector;
     pointVector.reserve( location.size() );
-    for( auto i = 0; i < location.size(); ++i )
+    for( size_t i = 0; i < location.size(); ++i )
     {
         MT_Vector2D vPos;
         NET_ASN_Tools::ReadPoint( location[i], vPos );
