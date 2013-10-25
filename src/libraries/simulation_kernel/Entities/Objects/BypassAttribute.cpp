@@ -115,7 +115,8 @@ void BypassAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_bypass()->set_percentage( static_cast< unsigned int >( bypassPercentage_.Send() * 100 + 0.0005f ) );
+    asn.mutable_bypass()->set_percentage( static_cast< unsigned int >(
+                bypassPercentage_.Send() * 100 + 0.5f ) );
 }
 
 // -----------------------------------------------------------------------------
