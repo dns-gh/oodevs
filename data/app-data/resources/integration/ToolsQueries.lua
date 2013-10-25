@@ -375,8 +375,13 @@ integration.getEntitiesFromBatallion = function ()
 -- @author LMT
 -- @release 2011-10-12
 -- --------------------------------------------------------------------------------
-integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withPC)
-    local entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC )
+integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withPC, noCommunication )
+    local entities
+    if not noCommunication then -- default case
+        entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC )
+    else
+        entities = integration.getEntitiesFromAutomat( automat, role, withPC )
+    end
     local operationnalEntities = {}
     for i = 1, #entities do
         if entities[i]:isOperational() then
