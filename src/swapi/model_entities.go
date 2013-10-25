@@ -105,6 +105,27 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 	}
 }
 
+type Object struct {
+	Id           uint32
+	ObjectType   string
+	Name         string
+	PartyId      uint32
+	Activated    bool
+	Bypass       int32
+	Altitude     int32
+	Construction int32
+}
+
+func NewObject(id, partyId uint32, objectType, name string) *Object {
+	return &Object{
+		Id:         id,
+		ObjectType: objectType,
+		Name:       name,
+		PartyId:    partyId,
+		Activated:  false,
+	}
+}
+
 type EquipmentDotation struct {
 	Available     int32
 	Unavailable   int32
@@ -293,6 +314,7 @@ type Party struct {
 	Populations     map[uint32]*Population
 	KnowledgeGroups map[uint32]*KnowledgeGroup
 	Diplomacies     map[uint32]sword.EnumDiplomacy
+	Objects         map[uint32]*Object
 }
 
 func NewParty(id uint32, name string) *Party {
@@ -304,6 +326,7 @@ func NewParty(id uint32, name string) *Party {
 		Populations:     map[uint32]*Population{},
 		KnowledgeGroups: map[uint32]*KnowledgeGroup{},
 		Diplomacies:     map[uint32]sword.EnumDiplomacy{},
+		Objects:         map[uint32]*Object{},
 	}
 }
 
@@ -447,8 +470,9 @@ type ModelData struct {
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
 	// Tick and time of the most recent started tick
-	Tick int32
-	Time time.Time
+	Tick         int32
+	Time         time.Time
+	TickDuration int32
 }
 
 func NewModelData() *ModelData {
@@ -908,6 +932,50 @@ func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]
 		formation := model.FindFormation(suppliedId)
 		if formation != nil {
 			formation.SuperiorQuotas = quotas
+			return true
+		}
+	}
+	return false
+}
+
+func (model *ModelData) addObject(object *Object) bool {
+	party, ok := model.Parties[object.PartyId]
+	if ok {
+		party.Objects[object.Id] = object
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) ListObjects() []*Object {
+	objects := []*Object{}
+	for _, party := range model.Parties {
+		for _, object := range party.Objects {
+			objects = append(objects, object)
+		}
+	}
+	return objects
+}
+
+func (model *ModelData) FindObject(objectId uint32) *Object {
+	for _, o := range model.ListObjects() {
+		if o.Id == objectId {
+			return o
+		}
+	}
+	return nil
+}
+
+func (model *ModelData) removeObject(objectId uint32) bool {
+	o := model.FindObject(objectId)
+	if o == nil {
+		return false
+	}
+	p := model.Parties[o.PartyId]
+	if p != nil {
+		size := len(p.Objects)
+		delete(p.Objects, objectId)
+		if size != len(p.Objects) {
 			return true
 		}
 	}

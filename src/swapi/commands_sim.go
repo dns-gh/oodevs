@@ -37,6 +37,15 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	return 0, makeError(msg, int32(code), sword.UnitActionAck_ErrorCode_name)
 }
 
+func GetObjectMagicActionAck(msg *sword.ObjectMagicActionAck) (uint32, error) {
+	code := msg.GetErrorCode()
+	if code == sword.ObjectMagicActionAck_no_error {
+		id := msg.GetObject().GetId()
+		return id, nil
+	}
+	return 0, makeError(msg, int32(code), sword.ObjectMagicActionAck_ErrorCode_name)
+}
+
 func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
 	code := msg.GetErrorCode()
 	if code == sword.KnowledgeGroupAck_no_error {
@@ -1322,6 +1331,113 @@ func (c *Client) TriggerError(kind string) error {
 	params := MakeParameters(MakeString("trigger_error"), MakeString(kind))
 	msg := createMagicAction(params, sword.MagicAction_debug_internal)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
+
+type ObjectMagicEnumerator interface {
+	Enum() *sword.ObjectMagicAction_Type
+}
+
+func createObjectMagicAction(objectId uint32, params *sword.MissionParameters,
+	enumerator ObjectMagicEnumerator) SwordMessage {
+	return SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ObjectMagicAction: &sword.ObjectMagicAction{
+					Object: &sword.ObjectId{
+						Id: proto.Uint32(objectId),
+					},
+					Type:       enumerator.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+}
+
+func (c *Client) CreateObject(objectType string, partyId uint32,
+	location *sword.Location, attributes ...*sword.MissionParameter_Value) (*Object, error) {
+	params := []interface{}{
+		MakeString(objectType),
+		MakeLocation(location),
+		"name",
+		MakeParty(partyId),
+	}
+	if len(attributes) != 0 {
+		params = append(params, MakeParameter(attributes...))
+	}
+	msg := createObjectMagicAction(0, MakeParameters(params...),
+		sword.ObjectMagicAction_create)
+	var created *Object
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectCreation(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		reply := msg.GetObjectMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		id, err := GetObjectMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		created = c.Model.GetObject(id)
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
+}
+
+func (c *Client) CreateDefaultObject(objectType string, partyId uint32,
+	location *sword.Location) (*Object, error) {
+	return c.CreateObject(objectType, partyId, location)
+}
+
+func (c *Client) DeleteObject(objectId uint32) error {
+	msg := createObjectMagicAction(objectId, MakeParameters(),
+		sword.ObjectMagicAction_destroy)
+
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectDestruction(); reply != nil {
+			return ErrContinue
+		}
+		reply := msg.GetObjectMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		id, err := GetObjectMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		if id != objectId {
+			return mismatch("object id", objectId, id)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) UpdateObject(objectId uint32, attributes ...*sword.MissionParameter_Value) error {
+	msg := createObjectMagicAction(objectId, MakeParameters(MakeParameter(attributes...)),
+		sword.ObjectMagicAction_update)
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetObjectUpdate(); reply != nil {
+			return ErrContinue
+		}
+		reply := msg.GetObjectMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		id, err := GetObjectMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		if id != objectId {
+			return mismatch("object id", objectId, id)
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
 }
 
 func (c *Client) LogFinishHandlings(unitId uint32) error {

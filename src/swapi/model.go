@@ -142,6 +142,7 @@ var (
 		(*Model).handleAutomatOrder,
 		(*Model).handleChangeDiplomacy,
 		(*Model).handleControlBeginTick,
+		(*Model).handleControlInformation,
 		(*Model).handleControlGlobalWeather,
 		(*Model).handleControlLocalWeatherCreation,
 		(*Model).handleControlLocalWeatherDestruction,
@@ -162,6 +163,9 @@ var (
 		(*Model).handleKnowledgeGroupCreation,
 		(*Model).handleKnowledgeGroupUpdate,
 		(*Model).handleLogSupplyQuotas,
+		(*Model).handleObjectCreation,
+		(*Model).handleObjectDestruction,
+		(*Model).handleObjectUpdate,
 		(*Model).handleObjectKnowledgeCreation,
 		(*Model).handlePartyCreation,
 		(*Model).handlePopulationCreation,
@@ -441,6 +445,18 @@ func (model *Model) GetTick() int32 {
 		tick = model.data.Tick
 	})
 	return tick
+}
+
+func (model *Model) GetObject(objectId uint32) *Object {
+	var o *Object
+	model.waitCommand(func(model *Model) {
+		object := model.data.FindObject(objectId)
+		if object != nil {
+			o = &Object{}
+			DeepCopy(o, object)
+		}
+	})
+	return o
 }
 
 func (model *Model) WaitUntilTick(tick int32) bool {

@@ -57,6 +57,15 @@ func (model *Model) handleControlBeginTick(m *sword.SimToClient_Content) error {
 	return nil
 }
 
+func (model *Model) handleControlInformation(m *sword.SimToClient_Content) error {
+	mm := m.GetControlInformation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	model.data.TickDuration = mm.GetTickDuration()
+	return nil
+}
+
 func (model *Model) handlePartyCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetPartyCreation()
 	if mm == nil {
@@ -960,6 +969,60 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 				Height:   cone.GetHeight(),
 				Sensor:   cone.GetSensor(),
 				Headings: headings})
+	}
+	return nil
+}
+
+func (model *Model) handleObjectCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetObjectCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	object := NewObject(mm.GetObject().GetId(),
+		mm.GetParty().GetId(),
+		mm.GetType().GetId(),
+		mm.GetName(),
+	)
+	if !model.data.addObject(object) {
+		return fmt.Errorf("cannot insert created object: %d", object.Id)
+	}
+	return nil
+}
+
+func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetObjectUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	object := model.data.FindObject(mm.GetObject().GetId())
+	if object == nil {
+		return ErrSkipHandler // can be an urban bloc
+	}
+	if attributes := mm.GetAttributes(); attributes != nil {
+		if obstacle := attributes.GetObstacle(); obstacle != nil {
+			object.Activated = obstacle.GetActivated()
+		}
+		if bypass := attributes.GetBypass(); bypass != nil {
+			object.Bypass = bypass.GetPercentage()
+		}
+		if altitude := attributes.GetAltitudeModifier(); altitude != nil {
+			object.Altitude = altitude.GetHeight()
+		}
+		if construction := attributes.GetConstruction(); construction != nil {
+			object.Construction = construction.GetPercentage()
+		}
+	}
+	return nil
+}
+
+func (model *Model) handleObjectDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetObjectDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	if !model.data.removeObject(mm.GetObject().GetId()) {
+		return fmt.Errorf("cannot find object to destroy: %d",
+			mm.GetObject().GetId())
 	}
 	return nil
 }
