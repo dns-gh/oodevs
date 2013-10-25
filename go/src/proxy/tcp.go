@@ -30,9 +30,10 @@ const (
 )
 
 type TcpProxy struct {
-	http   int
-	tcp    int
-	scheme string
+	http    int
+	tcp     int
+	scheme  string
+	verbose int
 }
 
 func NewTcpProxy(options *Options) *TcpProxy {
@@ -45,9 +46,10 @@ func NewTcpProxy(options *Options) *TcpProxy {
 		http = options.override
 	}
 	return &TcpProxy{
-		http:   http,
-		tcp:    options.tcp,
-		scheme: scheme,
+		http:    http,
+		tcp:     options.tcp,
+		scheme:  scheme,
+		verbose: options.verbose,
 	}
 }
 
@@ -141,7 +143,7 @@ func (t *TcpProxy) readPackets(ctx *TcpContext, link net.Conn, readPayload Paylo
 			}
 			return
 		}
-		if false {
+		if t.verbose > 0 {
 			log.Println(8+len(buffer), "bytes read from", link.RemoteAddr(), header, dumpTag(header.Tag, buffer))
 		}
 		if readPayload(header.Tag, buffer) {
@@ -309,7 +311,7 @@ func (t *TcpProxy) writePackets(ctx *TcpContext, link net.Conn, packets <-chan *
 			} else {
 				written, err = swapi.EncodePayload(link, packet.tag, packet.data)
 			}
-			if false {
+			if t.verbose > 0 {
 				var dumped string
 				if packet.tag == SkipEncoding {
 					dumped = dump(packet.data)

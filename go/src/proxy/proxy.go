@@ -14,6 +14,7 @@ type Options struct {
 	key         string
 	threads     int
 	override    int
+	verbose     int
 }
 
 func (o *Options) Print() {
@@ -38,6 +39,7 @@ func main() {
 	flag.StringVar(&options.key, "ssl_key", "", "SSL key")
 	flag.IntVar(&options.threads, "threads", runtime.NumCPU(), "Number of threads")
 	flag.IntVar(&options.override, "override", 0, "Override proxy HTTP port")
+	flag.IntVar(&options.verbose, "verbose", 0, "Verbosity level")
 	flag.Parse()
 	options.Print()
 	runtime.GOMAXPROCS(options.threads)
