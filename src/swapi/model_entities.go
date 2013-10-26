@@ -460,7 +460,7 @@ type ModelData struct {
 	LocalWeathers        map[uint32]*LocalWeather
 	Urbans               map[uint32]*Urban
 	Orders               map[uint32]*Order
-    Objects         map[uint32]*Object
+	Objects              map[uint32]*Object
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
 	MedicalHandlings     map[uint32]*MedicalHandling
 	FuneralHandlings     map[uint32]*FuneralHandling
@@ -481,7 +481,7 @@ func NewModelData() *ModelData {
 		LocalWeathers:        map[uint32]*LocalWeather{},
 		Urbans:               map[uint32]*Urban{},
 		Orders:               map[uint32]*Order{},
-        Objects:         map[uint32]*Object{},
+		Objects:              map[uint32]*Object{},
 		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
@@ -939,17 +939,17 @@ func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]
 }
 
 func (model *ModelData) addObject(object *Object) bool {
-    _, ok := model.Objects[object.Id]
-    model.Objects[object.Id] = object
-    return !ok
+	_, ok := model.Objects[object.Id]
+	model.Objects[object.Id] = object
+	return !ok
 }
 
 func (model *ModelData) FindObject(objectId uint32) *Object {
-    return model.Objects[objectId]
+	return model.Objects[objectId]
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
-    _, ok := model.Objects[objectId]
-    delete(model.Objects, objectId)
-    return ok
+	_, ok := model.Objects[objectId]
+	delete(model.Objects, objectId)
+	return ok
 }

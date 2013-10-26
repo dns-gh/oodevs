@@ -28,7 +28,7 @@ func invalid(name string, value interface{}) error {
 	return fmt.Errorf("invalid %v: %v", name, value)
 }
 
-func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
+func getUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	code := msg.GetErrorCode()
 	if code == sword.UnitActionAck_no_error {
 		id := msg.GetUnit().GetId()
@@ -37,7 +37,7 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	return 0, makeError(msg, int32(code), sword.UnitActionAck_ErrorCode_name)
 }
 
-func GetObjectMagicActionAck(msg *sword.ObjectMagicActionAck) (uint32, error) {
+func getObjectMagicActionAck(msg *sword.ObjectMagicActionAck) (uint32, error) {
 	code := msg.GetErrorCode()
 	if code == sword.ObjectMagicActionAck_no_error {
 		id := msg.GetObject().GetId()
@@ -46,7 +46,7 @@ func GetObjectMagicActionAck(msg *sword.ObjectMagicActionAck) (uint32, error) {
 	return 0, makeError(msg, int32(code), sword.ObjectMagicActionAck_ErrorCode_name)
 }
 
-func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
+func getKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
 	code := msg.GetErrorCode()
 	if code == sword.KnowledgeGroupAck_no_error {
 		id := msg.GetKnowledgeGroup().GetId()
@@ -106,7 +106,7 @@ func (c *Client) CreateFormationTest(partyId uint32, parentId uint32,
 			return unexpected(msg)
 		}
 		// Wait for the final UnitMagicActionAck
-		id, err := GetUnitMagicActionAck(reply)
+		id, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -174,7 +174,7 @@ func (c *Client) createUnit(automatId, unitType uint32, location Point,
 		if reply == nil {
 			return unexpected(msg)
 		}
-		_, err := GetUnitMagicActionAck(reply)
+		_, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -290,7 +290,7 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 		if reply == nil {
 			return unexpected(msg)
 		}
-		id, err := GetUnitMagicActionAck(reply)
+		id, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -325,7 +325,7 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 		if reply == nil {
 			return unexpected(msg)
 		}
-		_, err := GetUnitMagicActionAck(reply)
+		_, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -368,7 +368,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 		if reply == nil {
 			return unexpected(msg)
 		}
-		_, err := GetUnitMagicActionAck(reply)
+		_, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -571,7 +571,7 @@ func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
 	if reply == nil {
 		return unexpected(msg)
 	}
-	_, err := GetUnitMagicActionAck(reply)
+	_, err := getUnitMagicActionAck(reply)
 	return err
 }
 
@@ -592,7 +592,7 @@ func defaultKnowledgeGroupMagicHandler(msg *sword.SimToClient_Content) error {
 	if reply == nil {
 		return unexpected(msg)
 	}
-	_, err := GetKnowledgeGroupMagicActionAck(reply)
+	_, err := getKnowledgeGroupMagicActionAck(reply)
 	return err
 }
 
@@ -1040,7 +1040,7 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 		if reply == nil {
 			return unexpected(msg)
 		}
-		_, err := GetKnowledgeGroupMagicActionAck(reply)
+		_, err := getKnowledgeGroupMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -1269,7 +1269,7 @@ func (c *Client) ExecScript(id uint32, function, script string) (string, error) 
 		if reply == nil {
 			return unexpected(msg)
 		}
-		_, err := GetUnitMagicActionAck(reply)
+		_, err := getUnitMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -1377,7 +1377,7 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 		if reply == nil {
 			return unexpected(msg)
 		}
-		id, err := GetObjectMagicActionAck(reply)
+		id, err := getObjectMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -1405,7 +1405,7 @@ func (c *Client) DeleteObject(objectId uint32) error {
 		if reply == nil {
 			return unexpected(msg)
 		}
-		id, err := GetObjectMagicActionAck(reply)
+		id, err := getObjectMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
@@ -1428,7 +1428,7 @@ func (c *Client) UpdateObject(objectId uint32, attributes ...*sword.MissionParam
 		if reply == nil {
 			return unexpected(msg)
 		}
-		id, err := GetObjectMagicActionAck(reply)
+		id, err := getObjectMagicActionAck(reply)
 		if err != nil {
 			return err
 		}
