@@ -40,7 +40,7 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 	c.Assert(object, NotNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.ListObjects()) == 1
+		return len(data.Objects) == 1
 	})
 }
 
@@ -69,7 +69,7 @@ func (s *TestSuite) TestDestroyEmptyObject(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.ListObjects()) == 0
+		return len(data.Objects) == 0
 	})
 }
 

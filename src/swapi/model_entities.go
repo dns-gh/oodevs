@@ -314,7 +314,6 @@ type Party struct {
 	Populations     map[uint32]*Population
 	KnowledgeGroups map[uint32]*KnowledgeGroup
 	Diplomacies     map[uint32]sword.EnumDiplomacy
-	Objects         map[uint32]*Object
 }
 
 func NewParty(id uint32, name string) *Party {
@@ -326,7 +325,6 @@ func NewParty(id uint32, name string) *Party {
 		Populations:     map[uint32]*Population{},
 		KnowledgeGroups: map[uint32]*KnowledgeGroup{},
 		Diplomacies:     map[uint32]sword.EnumDiplomacy{},
-		Objects:         map[uint32]*Object{},
 	}
 }
 
@@ -462,6 +460,7 @@ type ModelData struct {
 	LocalWeathers        map[uint32]*LocalWeather
 	Urbans               map[uint32]*Urban
 	Orders               map[uint32]*Order
+    Objects         map[uint32]*Object
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
 	MedicalHandlings     map[uint32]*MedicalHandling
 	FuneralHandlings     map[uint32]*FuneralHandling
@@ -482,6 +481,7 @@ func NewModelData() *ModelData {
 		LocalWeathers:        map[uint32]*LocalWeather{},
 		Urbans:               map[uint32]*Urban{},
 		Orders:               map[uint32]*Order{},
+        Objects:         map[uint32]*Object{},
 		MaintenanceHandlings: map[uint32]*MaintenanceHandling{},
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
@@ -939,45 +939,17 @@ func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]
 }
 
 func (model *ModelData) addObject(object *Object) bool {
-	party, ok := model.Parties[object.PartyId]
-	if ok {
-		party.Objects[object.Id] = object
-		return true
-	}
-	return false
-}
-
-func (model *ModelData) ListObjects() []*Object {
-	objects := []*Object{}
-	for _, party := range model.Parties {
-		for _, object := range party.Objects {
-			objects = append(objects, object)
-		}
-	}
-	return objects
+    _, ok := model.Objects[object.Id]
+    model.Objects[object.Id] = object
+    return !ok
 }
 
 func (model *ModelData) FindObject(objectId uint32) *Object {
-	for _, o := range model.ListObjects() {
-		if o.Id == objectId {
-			return o
-		}
-	}
-	return nil
+    return model.Objects[objectId]
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
-	o := model.FindObject(objectId)
-	if o == nil {
-		return false
-	}
-	p := model.Parties[o.PartyId]
-	if p != nil {
-		size := len(p.Objects)
-		delete(p.Objects, objectId)
-		if size != len(p.Objects) {
-			return true
-		}
-	}
-	return false
+    _, ok := model.Objects[objectId]
+    delete(model.Objects, objectId)
+    return ok
 }
