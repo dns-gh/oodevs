@@ -1363,11 +1363,6 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 	return created, err
 }
 
-func (c *Client) CreateDefaultObject(objectType string, partyId uint32,
-	location *sword.Location) (*Object, error) {
-	return c.CreateObject(objectType, partyId, location)
-}
-
 func (c *Client) DeleteObject(objectId uint32) error {
 	msg := createObjectMagicAction(objectId, MakeParameters(),
 		sword.ObjectMagicAction_destroy)
