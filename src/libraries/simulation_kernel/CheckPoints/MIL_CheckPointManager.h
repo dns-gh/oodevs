@@ -72,7 +72,8 @@ private:
     //! @name Tools
     //@{
     void RotateCheckPoints( const tools::Path& newName );
-    std::string SaveCheckPoint( const tools::Path& name, const tools::Path& userName );
+    std::string SaveCheckPoint( const tools::Path& name, const tools::Path& userName,
+            bool sendState, unsigned int clientId, unsigned int ctx );
     std::string SaveOrbatCheckPoint( const tools::Path& name );
     std::string SaveFullCheckPoint( const tools::Path& name, const tools::Path& userName );
     tools::Path BuildCheckPointName() const;

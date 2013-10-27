@@ -18,6 +18,7 @@
 #include "DispatcherPlugin.h"
 #include "FileLogger.h"
 #include "PluginFactory_ABC.h"
+#include "CheckpointFilterPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
@@ -50,34 +51,36 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     , staticModel_ ( staticModel )
     , simulation_  ( simulation )
     , clients_     ( clients )
-    , handler_     ( handler )
+    , rootHandler_ ( handler )
     , registrables_( registrables )
     , rights_      ( new plugins::rights::RightsPlugin( *model_, *clients_,
-        config_, *clients_, handler_, *clients_, registrables, maxConnections ) )
+        config_, *clients_, rootHandler_, *clients_, registrables, maxConnections ) )
+    , checkpointFilter_( new CheckpointFilterPlugin( *rights_ ) )
     , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
 {
     clients_->RegisterMessage( *this, &PluginFactory::Receive );
 
-    // handler_ is the root element of the plugin tree. Parent plugins can
+    // rootHandler_ is the root element of the plugin tree. Parent plugins can
     // prevent specific message to reach their descendants. All other actions
     // are forwarded unconditionally. The registration order is also important:
     // - DispatcherPlugin forwards to clients
     // - Model is used by other plugins and also triggers events on Entity_ABC::Update
     // - SaverPlugin uses the Model
-    handler_.Add( rights_ );
-    handler_.Add( pOrder_ );
-    handler_.Add( boost::make_shared< DispatcherPlugin >(
+    rootHandler_.Add( checkpointFilter_ );
+    checkpointFilter_->Add( rights_ );
+    checkpointFilter_->Add( pOrder_ );
+    checkpointFilter_->Add( boost::make_shared< DispatcherPlugin >(
                 simulation_, *clients_, *rights_, *pOrder_, log ) );
 
     // Vision plugin prevents vision cones from reaching ClientsNetworker and
     // being broadcast.
     auto vision = boost::make_shared< vision::VisionPlugin >( *model_, *clients_,
             simulation_, *rights_ );
-    handler_.Add( vision );
+    checkpointFilter_->Add( vision );
     vision->Add( clients_ );
 
-    handler_.AddHandler( model_ );
+    checkpointFilter_->AddHandler( model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +108,14 @@ void PluginFactory::Register( PluginFactory_ABC& factory )
 void PluginFactory::Instanciate()
 {
     // $$$$ AGE 2008-08-04: retirer la dépendance...
-    handler_.Add( boost::make_shared< messenger::MessengerPlugin >(
+    checkpointFilter_->Add( boost::make_shared< messenger::MessengerPlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
-    handler_.Add( boost::make_shared< script::ScriptPlugin >(
+    checkpointFilter_->Add( boost::make_shared< script::ScriptPlugin >(
                 *model_, config_, simulation_, *clients_, *clients_, *rights_, registrables_ ) );
-    handler_.Add( boost::make_shared< score::ScorePlugin >(
+    checkpointFilter_->Add( boost::make_shared< score::ScorePlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
-    handler_.Add( boost::make_shared< logger::LoggerPlugin >( *model_, staticModel_, config_, services_ ) );
+    checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
+                staticModel_, config_, services_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -126,7 +130,7 @@ void PluginFactory::Instanciate()
 // -----------------------------------------------------------------------------
 void PluginFactory::Close()
 {
-    handler_.Close();
+    rootHandler_.Close();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +142,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
     if( xis.has_attribute( "library" ) )
         LoadPlugin( tools::Path::FromUTF8( name ), xis );
     else if( name == "recorder" )
-        handler_.Add( boost::make_shared< plugins::saver::SaverPlugin >( *clients_, *model_, config_ ) );
+        checkpointFilter_->Add( boost::make_shared< plugins::saver::SaverPlugin >( *clients_, *model_, config_ ) );
     else
     {
         for( auto it = factories_.begin(); it != factories_.end(); ++it )
@@ -146,7 +150,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
             auto plugin = it->Create( name, xis, config_, *model_, staticModel_,
                     simulation_, *clients_, *clients_ , *clients_, registrables_ );
             if( plugin )
-                handler_.Add( plugin );
+                checkpointFilter_->Add( plugin );
         }
     }
 }
@@ -223,7 +227,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
                 });
         if( !plugin.get() )
             throw MASA_EXCEPTION( "CreateFunctor returned an error (see details in plugin log file)" );
-        handler_.Add( plugin );
+        checkpointFilter_->Add( plugin );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library.ToUTF8() << ")" );
     }
     catch( const std::exception& e )
@@ -270,5 +274,5 @@ void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& 
 {
     UnicastPublisher unicaster( rights_->GetPublisher( link ),
             rights_->GetClientID( link ), msg.context() );
-    handler_.HandleClientToSim( msg, unicaster, *clients_ );
+    rootHandler_.HandleClientToSim( msg, unicaster, *clients_ );
 }
