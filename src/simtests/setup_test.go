@@ -120,6 +120,12 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 	opts.SessionName = session
 	opts.CheckpointName = checkpoint
 
+	s, err := simu.ReadSessionFile(opts.GetSessionFile())
+	c.Assert(err, IsNil)
+	s.Paused = paused
+	err = simu.WriteSessionFile(s, opts.GetSessionFile())
+	c.Assert(err, IsNil)
+
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil) // failed to start the simulation
 	return sim
