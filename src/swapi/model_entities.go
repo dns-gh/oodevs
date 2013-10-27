@@ -515,6 +515,18 @@ func NewModelData() *ModelData {
 	}
 }
 
+func (model *ModelData) Reset() {
+	newModel := NewModelData()
+	// Following fields are not sent as part of simulation state
+	newModel.Profiles = model.Profiles
+	newModel.KnownScores = model.KnownScores
+	newModel.Scores = model.Scores
+	newModel.Tick = model.Tick
+	newModel.Time = model.Time
+	newModel.TickDuration = model.TickDuration
+	*model = *newModel
+}
+
 func (model *ModelData) FindPartyByName(name string) *Party {
 	for _, party := range model.Parties {
 		if party.Name == name {
@@ -824,6 +836,7 @@ var (
 		(*ModelData).handleControlGlobalWeather,
 		(*ModelData).handleControlLocalWeatherCreation,
 		(*ModelData).handleControlLocalWeatherDestruction,
+		(*ModelData).handleControlSendCurrentStateBegin,
 		(*ModelData).handleControlSendCurrentStateEnd,
 		(*ModelData).handleCrowdConcentrationCreation,
 		(*ModelData).handleCrowdConcentrationDestruction,

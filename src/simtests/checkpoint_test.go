@@ -37,7 +37,8 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 			return false
 		})
 
-		checkpoint, err := client.CreateCheckpoint(input)
+		checkpoint, snapshot, err := client.CreateCheckpoint(input, false)
+		c.Assert(snapshot, IsNil)
 		if len(errmsg) > 0 {
 			c.Assert(checkpoint, Equals, "")
 			c.Assert(err, ErrorMatches, errmsg)
@@ -86,6 +87,50 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 	check(strings.Repeat("a", 300), ".*create_directory.*")
 }
 
+func (s *TestSuite) TestCheckpointSendState(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	check := func(sendState bool) {
+		boundaries := ""
+		ctx := client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+			if err != nil {
+				return true
+			}
+			if msg.SimulationToClient == nil || msg.SimulationToClient.GetMessage() == nil {
+				return false
+			}
+			m := msg.SimulationToClient.GetMessage()
+			if reply := m.GetControlCheckpointSaveBegin(); reply != nil {
+				boundaries += "<"
+			} else if reply := m.GetControlCheckpointSaveEnd(); reply != nil {
+				boundaries += ">"
+			} else if reply := m.GetControlSendCurrentStateBegin(); reply != nil {
+				boundaries += "("
+			} else if reply := m.GetControlSendCurrentStateEnd(); reply != nil {
+				boundaries += ")"
+			} else if len(boundaries) > 0 && boundaries[len(boundaries)-1] != '>' {
+				boundaries += "o"
+			}
+			return false
+		})
+
+		_, snapshot, err := client.CreateCheckpoint("checkpoint", sendState)
+		c.Assert(err, IsNil)
+		if sendState {
+			c.Assert(boundaries, Matches, `o*<\(o+\)>o*`)
+			c.Assert(snapshot, NotNil)
+		} else {
+			c.Assert(boundaries, Matches, `o*<>o*`)
+			c.Assert(snapshot, IsNil)
+		}
+		client.Unregister(ctx)
+	}
+
+	check(false)
+	check(true)
+}
+
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
@@ -97,7 +142,7 @@ func checkpointAndRestart(c *C, sim *simu.SimProcess, client *swapi.Client) (
 	*simu.SimProcess, *swapi.Client) {
 	session := sim.Opts.SessionName
 	exercise := sim.Opts.ExerciseName
-	checkpoint, err := client.CreateCheckpoint("")
+	checkpoint, _, err := client.CreateCheckpoint("", false)
 	c.Assert(err, IsNil)
 	client.Close()
 	sim.Stop()
