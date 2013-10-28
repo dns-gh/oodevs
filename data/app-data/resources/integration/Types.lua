@@ -321,3 +321,7 @@ eRandomStay = 2
 eAmbianceMission_Safety = 0
 eAmbianceMission_Speed = 1
 eAmbianceMission_None = 2
+
+-- firing type enumeration
+eDirectFires = 0
+eIndirectFires = 1
