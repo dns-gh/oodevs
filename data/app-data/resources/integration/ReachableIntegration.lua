@@ -36,36 +36,6 @@ integration.getPlatoonAllyPosition = function( platoon )
   end
 end
 
-integration.getHeadPosition = function( crowd )
-    if DEC_ConnaissancePopulation_HasFlow( myself, crowd.source ) then
-        local pointEnTete = DEC_ConnaissancePopulation_PointEnTeteDeFlux( myself, crowd.source )
-        crowd.getPointEnTeteResult = crowd.getPointEnTeteResult or pointEnTete
-        if DEC_Geometrie_DistanceBetweenPoints( crowd.getPointEnTeteResult,  pointEnTete) > 30 then
-            crowd.getPointEnTeteResult = pointEnTete
-        end
-        return crowd.getPointEnTeteResult
-    else
-        return integration.getCrowdPosition( crowd )
-    end
-end
-
-integration.getCrowdPosition = function( crowd )
-    if crowd == meKnowledge then
-        return DEC_GetPosition()
-    else
-        local pointLePlusProche = DEC_ConnaissancePopulation_PointPlusProche( crowd.source )
-        crowd.getCrowdPositionResult =  crowd.getCrowdPositionResult or pointLePlusProche
-        if DEC_Geometrie_DistanceBetweenPoints( pointLePlusProche, crowd.getCrowdPositionResult ) > 30 then
-            crowd.getCrowdPositionResult = pointLePlusProche
-        end
-        return crowd.getCrowdPositionResult
-    end
-end
-
-integration.crowdAgentHasFlow = function()
-    return DEC_HasFlow()
-end
-
 integration.getPointPosition = function( point )
   return point.source
 end
