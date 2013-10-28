@@ -23,7 +23,7 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
 
 	// Test invalid army identifier
-	_, err := client.CreateDefaultObject("invalid", 1245, location)
+	_, err := client.CreateObject("invalid", 1245, location)
 	c.Assert(err, IsSwordError, "error_invalid_object")
 
 	// Get a party identifier
@@ -31,16 +31,16 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 	c.Assert(party, NotNil)
 
 	// Test invalid object type
-	_, err = client.CreateDefaultObject("invalid", party.Id, location)
+	_, err = client.CreateObject("invalid", party.Id, location)
 	c.Assert(err, IsSwordError, "error_invalid_object")
 
 	// Test valid
-	object, err := client.CreateDefaultObject("jamming area", party.Id, location)
+	object, err := client.CreateObject("jamming area", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.ListObjects()) == 1
+		return len(data.Objects) == 1
 	})
 }
 
@@ -56,7 +56,7 @@ func (s *TestSuite) TestDestroyEmptyObject(c *C) {
 	c.Assert(party, NotNil)
 
 	// Create Object
-	object, err := client.CreateDefaultObject("jamming area", party.Id, location)
+	object, err := client.CreateObject("jamming area", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
@@ -69,7 +69,7 @@ func (s *TestSuite) TestDestroyEmptyObject(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.ListObjects()) == 0
+		return len(data.Objects) == 0
 	})
 }
 
@@ -105,7 +105,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	// Create mined area (linear and destructible) by default
 	// object isn't activated
-	object, err := client.CreateDefaultObject("mined area (linear and destructible)",
+	object, err := client.CreateObject("mined area (linear and destructible)",
 		party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -214,7 +214,7 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Create mined area by default
-	object, err := client.CreateDefaultObject("mined area (linear and destructible)",
+	object, err := client.CreateObject("mined area (linear and destructible)",
 		party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
@@ -249,7 +249,7 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Create mined area by default
-	object, err := client.CreateDefaultObject("dyke", party.Id, location)
+	object, err := client.CreateObject("dyke", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 	c.Assert(object.Altitude, Equals, int32(0))
@@ -283,7 +283,7 @@ func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
 	c.Assert(party, NotNil)
 
 	// Create Object
-	object, err := client.CreateDefaultObject("installation", party.Id, location)
+	object, err := client.CreateObject("installation", party.Id, location)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 

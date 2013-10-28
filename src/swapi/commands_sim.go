@@ -28,31 +28,46 @@ func invalid(name string, value interface{}) error {
 	return fmt.Errorf("invalid %v: %v", name, value)
 }
 
-func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
-	code := msg.GetErrorCode()
+func getUnitMagicActionAck(msg *sword.SimToClient_Content) (*sword.UnitMagicActionAck,
+	uint32, error) {
+	ack := msg.GetUnitMagicActionAck()
+	if ack == nil {
+		return nil, 0, unexpected(msg)
+	}
+	code := ack.GetErrorCode()
 	if code == sword.UnitActionAck_no_error {
-		id := msg.GetUnit().GetId()
-		return id, nil
+		id := ack.GetUnit().GetId()
+		return ack, id, nil
 	}
-	return 0, makeError(msg, int32(code), sword.UnitActionAck_ErrorCode_name)
+	return ack, 0, makeError(ack, int32(code), sword.UnitActionAck_ErrorCode_name)
 }
 
-func GetObjectMagicActionAck(msg *sword.ObjectMagicActionAck) (uint32, error) {
-	code := msg.GetErrorCode()
+func getObjectMagicActionAck(msg *sword.SimToClient_Content) (*sword.ObjectMagicActionAck,
+	uint32, error) {
+	ack := msg.GetObjectMagicActionAck()
+	if ack == nil {
+		return nil, 0, unexpected(msg)
+	}
+	code := ack.GetErrorCode()
 	if code == sword.ObjectMagicActionAck_no_error {
-		id := msg.GetObject().GetId()
-		return id, nil
+		id := ack.GetObject().GetId()
+		return ack, id, nil
 	}
-	return 0, makeError(msg, int32(code), sword.ObjectMagicActionAck_ErrorCode_name)
+	return ack, 0, makeError(ack, int32(code), sword.ObjectMagicActionAck_ErrorCode_name)
 }
 
-func GetKnowledgeGroupMagicActionAck(msg *sword.KnowledgeGroupMagicActionAck) (uint32, error) {
-	code := msg.GetErrorCode()
-	if code == sword.KnowledgeGroupAck_no_error {
-		id := msg.GetKnowledgeGroup().GetId()
-		return id, nil
+func getKnowledgeGroupMagicActionAck(msg *sword.SimToClient_Content) (
+	*sword.KnowledgeGroupMagicActionAck, uint32, error) {
+	ack := msg.GetKnowledgeGroupMagicActionAck()
+	if ack == nil {
+		return nil, 0, unexpected(msg)
 	}
-	return 0, makeError(msg, int32(code), sword.KnowledgeGroupAck_ErrorCode_name)
+	code := ack.GetErrorCode()
+	if code == sword.KnowledgeGroupAck_no_error {
+		id := ack.GetKnowledgeGroup().GetId()
+		return ack, id, nil
+	}
+	return ack, 0, makeError(msg, int32(code), sword.KnowledgeGroupAck_ErrorCode_name)
 }
 
 type simHandler func(msg *sword.SimToClient_Content) error
@@ -101,12 +116,8 @@ func (c *Client) CreateFormationTest(partyId uint32, parentId uint32,
 			// Ignore this message, its context should not be set anyway
 			return ErrContinue
 		}
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
 		// Wait for the final UnitMagicActionAck
-		id, err := GetUnitMagicActionAck(reply)
+		reply, id, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -170,11 +181,7 @@ func (c *Client) createUnit(automatId, unitType uint32, location Point,
 			// Context should not be set on this
 			return ErrContinue
 		}
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		_, err := GetUnitMagicActionAck(reply)
+		reply, _, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -286,11 +293,7 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			destroyed = true
 			return ErrContinue
 		}
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		id, err := GetUnitMagicActionAck(reply)
+		_, id, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -321,11 +324,7 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 			// Ignore this message, its context should not be set anyway
 			return ErrContinue
 		}
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		_, err := GetUnitMagicActionAck(reply)
+		reply, _, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -364,11 +363,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 			// Context should not be set on this
 			return ErrContinue
 		}
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		_, err := GetUnitMagicActionAck(reply)
+		reply, _, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -567,11 +562,7 @@ func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
 }
 
 func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
-	reply := msg.GetUnitMagicActionAck()
-	if reply == nil {
-		return unexpected(msg)
-	}
-	_, err := GetUnitMagicActionAck(reply)
+	_, _, err := getUnitMagicActionAck(msg)
 	return err
 }
 
@@ -588,11 +579,7 @@ func defaultMagicHandler(msg *sword.SimToClient_Content) error {
 }
 
 func defaultKnowledgeGroupMagicHandler(msg *sword.SimToClient_Content) error {
-	reply := msg.GetKnowledgeGroupMagicActionAck()
-	if reply == nil {
-		return unexpected(msg)
-	}
-	_, err := GetKnowledgeGroupMagicActionAck(reply)
+	_, _, err := getKnowledgeGroupMagicActionAck(msg)
 	return err
 }
 
@@ -1036,11 +1023,7 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 			msg.GetUnitKnowledgeUpdate() != nil {
 			return ErrContinue
 		}
-		reply := msg.GetKnowledgeGroupMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		_, err := GetKnowledgeGroupMagicActionAck(reply)
+		reply, _, err := getKnowledgeGroupMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -1265,11 +1248,7 @@ func (c *Client) ExecScript(id uint32, function, script string) (string, error) 
 		sword.UnitMagicAction_exec_script)
 	var result string
 	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		_, err := GetUnitMagicActionAck(reply)
+		reply, _, err := getUnitMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -1373,11 +1352,7 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 			// Context should not be set on this
 			return ErrContinue
 		}
-		reply := msg.GetObjectMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		id, err := GetObjectMagicActionAck(reply)
+		_, id, err := getObjectMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -1388,11 +1363,6 @@ func (c *Client) CreateObject(objectType string, partyId uint32,
 	return created, err
 }
 
-func (c *Client) CreateDefaultObject(objectType string, partyId uint32,
-	location *sword.Location) (*Object, error) {
-	return c.CreateObject(objectType, partyId, location)
-}
-
 func (c *Client) DeleteObject(objectId uint32) error {
 	msg := createObjectMagicAction(objectId, MakeParameters(),
 		sword.ObjectMagicAction_destroy)
@@ -1401,11 +1371,7 @@ func (c *Client) DeleteObject(objectId uint32) error {
 		if reply := msg.GetObjectDestruction(); reply != nil {
 			return ErrContinue
 		}
-		reply := msg.GetObjectMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		id, err := GetObjectMagicActionAck(reply)
+		_, id, err := getObjectMagicActionAck(msg)
 		if err != nil {
 			return err
 		}
@@ -1424,11 +1390,7 @@ func (c *Client) UpdateObject(objectId uint32, attributes ...*sword.MissionParam
 		if reply := msg.GetObjectUpdate(); reply != nil {
 			return ErrContinue
 		}
-		reply := msg.GetObjectMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		id, err := GetObjectMagicActionAck(reply)
+		_, id, err := getObjectMagicActionAck(msg)
 		if err != nil {
 			return err
 		}

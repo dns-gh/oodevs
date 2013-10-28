@@ -55,9 +55,12 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 		}
 		m := msg.SimulationToClient.GetMessage()
 		if reply := m.GetUnitMagicActionAck(); reply != nil {
-			_, err = swapi.GetUnitMagicActionAck(reply)
-			if err == nil {
-				err = fmt.Errorf("Got unexpected success: %v", m)
+			code := reply.GetErrorCode()
+			if code != sword.UnitActionAck_error_invalid_unit {
+				name := sword.UnitActionAck_ErrorCode_name[int32(code)]
+				err = fmt.Errorf("Got unexpected error: %v", name)
+			} else {
+				err = fmt.Errorf("error_invalid_unit")
 			}
 		} else {
 			err = fmt.Errorf("Got unexpected: %v", m)
@@ -131,7 +134,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	}
 	for _, tasker := range taskers {
 		err := postInvalidTasker(client, tasker)
-		c.Assert(err, IsSwordError, "error_invalid_unit",
+		c.Assert(err, ErrorMatches, "error_invalid_unit.*",
 			Commentf("for tasker %v", tasker))
 	}
 }
