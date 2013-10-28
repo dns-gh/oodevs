@@ -233,6 +233,7 @@ func (c *Client) serve() {
 			for context, handler := range c.handlers {
 				handler(nil, context, ErrConnectionClosed)
 			}
+			c.handlers = nil
 			if quit {
 				return
 			}
