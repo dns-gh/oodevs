@@ -33,6 +33,7 @@ public:
 
     //! @name Operations
     //@{
+    bool operator<( const AvailableProfile& profile ) const;
     const QString& GetLogin() const;
     bool IsPasswordProtected() const;
     bool IsSupervision() const;

@@ -51,6 +51,7 @@ public:
 
     //! @name Operations
     //@{
+    void SetCredentials( const std::string& login, const std::string& password );
     void Login() const;
     void Login( const std::string& login, const std::string& password ) const;
     void Update();
