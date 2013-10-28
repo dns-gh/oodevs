@@ -37,14 +37,13 @@ const (
 	LauncherToAdminTag        = 1796776068
 )
 
-type header struct {
+type Header struct {
 	Size uint32
 	Tag  uint32
 }
 
 type SwordMessage struct {
 	tag      uint32
-	Size     uint32
 	Context  int32
 	ClientId int32
 	// * -> client
@@ -137,20 +136,25 @@ func NewWriter(io io.Writer) *Writer {
 	return &Writer{io: io}
 }
 
+func EncodePayload(dst io.Writer, tag uint32, data []byte) (int, error) {
+	header := Header{
+		Size: 4 /*tag*/ + uint32(len(data)),
+		Tag:  tag,
+	}
+	err := binary.Write(dst, binary.BigEndian, &header)
+	if err != nil {
+		return 0, err
+	}
+	_, err = dst.Write(data)
+	return 4 + int(header.Size), err
+}
+
 func (w *Writer) Encode(tag uint32, msg proto.Message) error {
 	data, err := proto.Marshal(msg)
 	if err != nil {
 		return err
 	}
-	header := header{
-		Size: 4 /*tag*/ + uint32(len(data)),
-		Tag:  tag,
-	}
-	err = binary.Write(w.io, binary.BigEndian, &header)
-	if err != nil {
-		return err
-	}
-	_, err = w.io.Write(data)
+	_, err = EncodePayload(w.io, tag, data)
 	return err
 }
 
@@ -158,19 +162,19 @@ type RawMessageHandler func(size, tag uint32, data []byte)
 
 type Reader struct {
 	io      io.Reader
-	cache   []uint8
+	cache   []byte
 	handler RawMessageHandler
 }
 
 func NewReader(r io.Reader) *Reader {
-	return &Reader{io: r, cache: make([]uint8, 64)}
+	return &Reader{io: r, cache: make([]byte, 64)}
 }
 
 func (r *Reader) SetHandler(handler RawMessageHandler) {
 	r.handler = handler
 }
 
-func decode(msg *SwordMessage, tag uint32, data []uint8) error {
+func DecodeMessage(msg *SwordMessage, tag uint32, data []byte) error {
 	var err error
 	msg.tag = tag
 	switch tag {
@@ -229,26 +233,35 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 	return err
 }
 
-func (r *Reader) Decode(msg *SwordMessage) error {
-	header := header{}
-	err := binary.Read(r.io, binary.BigEndian, &header)
+func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
+	err := binary.Read(r.io, binary.BigEndian, header)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	msg.Size = header.Size
 	size := int(header.Size - 4)
 	if size > MaxMessageSize {
-		return fmt.Errorf("packet size too big %d", size)
+		return nil, fmt.Errorf("packet size too big %d", size)
 	}
-	if int(size) > len(r.cache) {
-		r.cache = make([]uint8, size)
+	data := buffer
+	if int(size) > cap(buffer) {
+		data = make([]byte, size)
 	}
-	n, err := r.io.Read(r.cache[:size])
+	n, err := r.io.Read(data[:size])
+	if err != nil {
+		return nil, err
+	}
+	return data[:n], err
+}
+
+func (r *Reader) Decode(msg *SwordMessage) error {
+	header := Header{}
+	data, err := r.Parse(&header, r.cache)
 	if err != nil {
 		return err
 	}
+	r.cache = data
 	if r.handler != nil {
-		r.handler(header.Size, header.Tag, r.cache[:n])
+		r.handler(header.Size, header.Tag, r.cache)
 	}
-	return decode(msg, header.Tag, r.cache[:n])
+	return DecodeMessage(msg, header.Tag, r.cache)
 }
