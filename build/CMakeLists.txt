@@ -69,6 +69,7 @@ masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
+masa_set_external_library( MAPNIK_LIBRARIES           mapnik_d mapnik )
 
 masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
 masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
@@ -559,6 +560,11 @@ target_link_libraries( gaming_app
     actions_gui
     gaming
     ${TIMELINE_LIBRARIES}
+    ${EXTRACTOR_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
+    ${GEODATA_LIBRARIES}
+    ${GRAPHICS_LIBRARIES}
+    ${MAPNIK_LIBRARIES}
 )
 
 # launcher_dll

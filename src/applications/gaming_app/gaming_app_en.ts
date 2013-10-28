@@ -1816,6 +1816,10 @@ This data can&apos;t be projected.</source>
         <source>Resource networks</source>
         <translation type="unfinished">Resource networks</translation>
     </message>
+    <message>
+        <source>Mapnik</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
