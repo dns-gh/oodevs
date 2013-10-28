@@ -77,23 +77,35 @@ integration.getPositionAlongDangerDirection = function( entity, point )
     return DEC_Geometrie_PositionAdvanceAlongDangerDirection( entity.source, point )
 end
 
+local getPositionTranslateDirFromFriend = function( friendToSupport, withIndirectFires ) 
+    local integration = integration
+    if integration.hasMission( meKnowledge.source ) then
+        local rangeDistance = 0
+        if withIndirectFires then
+            rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2
+        else
+            rangeDistance = integration.firingRangeWithDirectFires( 0,5 ) -- direct fire case pH = 0.5
+        end
+        local mission = DEC_GetRawMission( meKnowledge.source )
+        local dir = integration.getDangerousDirection( mission )
+        local friendPos = friendToSupport:getPosition()
+        return DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
+    end
+    return nil
+end
 
 -- Returns the C++ source of a position to support friend, guaranteed to be inside the AOR
 -- (as opposed to the position returned by integration.getPositionToSupportFriend)
 -- @param friendToSupport : The allied unit to support
-integration.getPositionInAORToSupportFriendWithIndirectFires = function( friendToSupport )
+integration.getPositionInAORToSupportFriendWithIndirectOrDirectFires = function( friendToSupport, withIndirectFires )
 
     -- Split the AOR in sections (no need to do it again if it has already been done in the current mission)
     myself.areasInAOR = myself.areasInAOR or integration.splitAORInSections( 100 )
     local areas = myself.areasInAOR
 
     -- Get the position to support (that might be outside of the AOR)
-    local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2
-    local mission = DEC_GetRawMission( meKnowledge.source )
-    local dir = integration.getDangerousDirection( mission )
-    local friendPos = friendToSupport:getPosition()
-    local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
-   
+    local positionToSupport = getPositionTranslateDirFromFriend( friendToSupport, withIndirectFires )
+
     -- Find a position at the center of one of the sections of the AOR (therefore necessarily inside the AOR),
     -- so that it is close to the position to support (e.g. find the closest position)
     local bestDistance = math.huge
@@ -106,18 +118,9 @@ integration.getPositionInAORToSupportFriendWithIndirectFires = function( friendT
             bestDistance = currentDistance
         end
     end
-
     return bestPosition
 end
 
-integration.getPositionToSupportFriendWithIndirectFires = function( friendToSupport )
-    if integration.hasMission( meKnowledge.source ) then
-        local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
-        local mission = DEC_GetRawMission( meKnowledge.source )
-        local dir = integration.getDangerousDirection( mission )
-        local friendPos = friendToSupport:getPosition()
-        local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
-        return positionToSupport
-    end
-    return nil
+integration.getPositionToSupportFriendWithIndirectOrDirectFires = function( friendToSupport, withIndirectFires )
+    return getPositionTranslateDirFromFriend( friendToSupport, withIndirectFires )
 end
