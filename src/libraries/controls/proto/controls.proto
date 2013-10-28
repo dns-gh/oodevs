@@ -10,22 +10,23 @@ package sdk;
 
 enum ClientType
 {
-    CLIENT_INVALID        = 0x000;
+    CLIENT_INVALID              = 0x000;
     // commands
-    CLIENT_RESIZE         = 0x100;
-    CLIENT_QUIT           = 0x101;
-    CLIENT_RELOAD         = 0x102;
-    CLIENT_LOAD           = 0x103;
-    CLIENT_CENTER         = 0x104;
+    CLIENT_RESIZE               = 0x100;
+    CLIENT_QUIT                 = 0x101;
+    CLIENT_RELOAD               = 0x102;
+    CLIENT_LOAD                 = 0x103;
+    CLIENT_CENTER               = 0x104;
+    CLIENT_QUERY_UPDATE         = 0x105;
     // event commands
-    CLIENT_EVENT_CREATE   = 0x200;
-    CLIENT_EVENT_READ_ALL = 0x201;
-    CLIENT_EVENT_READ_ONE = 0x202;
-    CLIENT_EVENT_UPDATE   = 0x203;
-    CLIENT_EVENT_DELETE   = 0x204;
+    CLIENT_EVENT_CREATE         = 0x200;
+    CLIENT_EVENT_READ_ALL       = 0x201;
+    CLIENT_EVENT_READ_ONE       = 0x202;
+    CLIENT_EVENT_UPDATE         = 0x203;
+    CLIENT_EVENT_DELETE         = 0x204;
     // serialization commands
-    CLIENT_EVENTS_LOAD    = 0x300;
-    CLIENT_EVENTS_SAVE    = 0x301;
+    CLIENT_EVENTS_LOAD          = 0x300;
+    CLIENT_EVENTS_SAVE          = 0x301;
 }
 
 enum ServerType
@@ -84,12 +85,19 @@ message KeyBoardEvent
     optional int32 keyup    = 3;
 }
 
+message QueryParameter
+{
+    required string key = 1;
+    required string value = 2;
+}
+
 message ClientCommand
 {
-    optional ClientType type  = 1;
-    optional Event      event = 2;
-    optional string     url   = 3;
-    optional string     data  = 4;
+    optional ClientType     type  = 1;
+    optional Event          event = 2;
+    optional string         url   = 3;
+    optional string         data  = 4;
+    repeated QueryParameter query = 5;
 }
 
 message ServerCommand

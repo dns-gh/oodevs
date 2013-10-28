@@ -44,6 +44,7 @@ public:
     /// Server_ABC methods
     virtual void Reload();
     virtual void Load( const std::string& url );
+    virtual void UpdateQuery( const std::map< std::string, std::string >& parameters );
     virtual void Center();
     virtual bool CreateEvent( const Event& event );
     virtual bool ReadEvents();

@@ -43,13 +43,15 @@ Controller::Controller( const Configuration& cfg )
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
     QObject::connect( ui_->actionReload, SIGNAL( triggered() ), this, SLOT( OnReload() ) );
-    QObject::connect( ui_->actionCenter, SIGNAL( triggered() ), this, SLOT( OnCenter() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
     QObject::connect( ui_->actionReadEvents, SIGNAL( triggered() ), ctx_.get(), SLOT( ReadEvents() ) );
     QObject::connect( ui_->actionLoad, SIGNAL( triggered() ), this, SLOT( OnLoadActionTriggered() ) );
     QObject::connect( ui_->actionSave, SIGNAL( triggered() ), ctx_.get(), SLOT( SaveEvents() ) );
+    QObject::connect( ui_->actionCenter, SIGNAL( triggered() ), this, SLOT( OnCenter() ) );
+    QObject::connect( ui_->actionSwitchLayout, SIGNAL( triggered() ), this, SLOT( OnSwitchLayout() ) );
+    ui_->actionSwitchLayout->setCheckable( true );
 
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( Ready() ), this, SLOT( OnReady() ) );
@@ -138,6 +140,12 @@ void Controller::OnReady()
 void Controller::OnCenter()
 {
     ctx_->Center();
+}
+
+void Controller::OnSwitchLayout()
+{
+    auto query = boost::assign::map_list_of( "horizontal", ui_->actionSwitchLayout->isChecked() ? "true" : "false" );
+    ctx_->UpdateQuery( query );
 }
 
 void Controller::OnCreateEvent()

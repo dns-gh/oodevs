@@ -130,6 +130,11 @@ void Server::Center()
     Write( *write_, &controls::CenterClient );
 }
 
+void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
+{
+    Write( *write_, boost::bind( &controls::UpdateQuery, _1, _2, boost::cref( parameters ) ) );
+}
+
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )
