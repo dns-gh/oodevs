@@ -22,6 +22,8 @@ func (o *Options) Print() {
 	log.Println("tcp", o.tcp)
 	log.Println("ssl", o.ssl)
 	log.Println("threads", o.threads)
+	log.Println("verbose", o.verbose)
+	log.Println("override", o.override)
 	if o.ssl {
 		log.Println("certificate", o.certificate)
 		log.Println("key", o.key)

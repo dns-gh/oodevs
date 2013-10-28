@@ -43,7 +43,7 @@ namespace
     {
         Fixture()
             : ssl    ( false, "cert.pem", "key.pem" )
-            , config ( "", "app", 1337, ssl )
+            , config ( "", "app", 1337, 1338, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
             MOCK_EXPECT( fs.Exists ).with( config.app ).returns( true );
@@ -87,7 +87,7 @@ namespace
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.port, "/register_proxy",
+            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.http, "/register_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of
                     ( "prefix", prefix )
                     ( "host",   host )
@@ -100,7 +100,7 @@ namespace
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.port, "/unregister_proxy",
+            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.http, "/unregister_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", prefix ) ) )
                 .returns( response );
             proxy->Unregister( prefix );

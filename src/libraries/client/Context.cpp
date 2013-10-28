@@ -562,6 +562,18 @@ Path Context::GetPath( const QString& type )
     return install_->GetRoot( *it.value() );
 }
 
+namespace
+{
+    std::string GetPassword( const QUrl& url )
+    {
+        QStringList data;
+        data << url.queryItemValue( "sid" );
+        data << url.queryItemValue( "session" );
+        data << "invalid";
+        return data.join( "$" ).toStdString();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Context::StartClient
 // Created: BAX 2012-10-02
@@ -575,13 +587,14 @@ void Context::StartClient()
     if( client.empty() || model.empty() || terrain.empty() || exercise.empty() )
         return;
     const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
-    WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), Get< int >( session_, "port" ),
+    WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), url_.queryItemValue( "tcp" ).toInt(),
         Get< int >( session_, "timeline.port" ) );
     std::vector< std::string > args = boost::assign::list_of
         ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
         ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )
         ( MakeOption( "exercises-dir", Utf8( exercise / "exercises" ) ) )
-        ( MakeOption( "exercise", Utf8( name ) ) );
+        ( MakeOption( "exercise", Utf8( name ) ) )
+        ( MakeOption( "password", GetPassword( url_ ) ) );
     try
     {
         runtime_.Start( Utf8( client / "gaming_app.exe" ), args, Utf8( client ), std::string() );

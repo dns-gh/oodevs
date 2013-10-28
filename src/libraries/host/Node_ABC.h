@@ -93,7 +93,7 @@ struct Node_ABC : public boost::noncopyable
     //@{
     virtual Tree Save() const = 0;
     virtual bool Start( const Path& app, const Path& web,
-                        const std::string& type, int host, bool weak ) = 0;
+                        const std::string& type, int http, int tcp, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( runtime::Async& async ) = 0;
     virtual bool Update( const Tree& cfg ) = 0;

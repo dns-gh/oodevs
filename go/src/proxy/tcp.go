@@ -204,7 +204,7 @@ type Session struct {
 func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword.AuthenticationRequest) error {
 	parts := strings.SplitN(auth.GetPassword(), "$", 3)
 	if len(parts) != 3 {
-		return fmt.Errorf("invalid password format")
+		return fmt.Errorf("invalid password format %s", auth.GetPassword())
 	}
 	values := url.Values{}
 	values.Add("sid", parts[0])

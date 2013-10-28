@@ -250,7 +250,7 @@ std::string MakeOption( const std::string& option, const T& value )
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 bool Node::Start( const Path& app, const Path& web, const std::string& type,
-                  int host, bool weak )
+                  int host, int tcp, bool weak )
 {
     // ensure we have a non-exclusive path if current node does not need
     // to restart
@@ -279,6 +279,7 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
         ( MakeOption( "type", type ) )
         ( MakeOption( "name", cfg_.name ) )
         ( MakeOption( "host", host ) )
+        ( MakeOption( "tcp", tcp ) )
         ( MakeOption( "port", port_->Get() ) );
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );

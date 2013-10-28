@@ -31,7 +31,7 @@ namespace mocks
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( Save, 0 );
-        MOCK_METHOD( Start, 5 );
+        MOCK_METHOD( Start, 6 );
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( SoftKill, 0 );
         MOCK_METHOD( Remove, 1 );

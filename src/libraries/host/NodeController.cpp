@@ -53,6 +53,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const Path& licenses,
                                 const std::string& type,
                                 int host,
+                                int tcp,
                                 Pool_ABC& pool,
                                 Proxy_ABC& proxy )
     : log_        ( log )
@@ -66,6 +67,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , licensesDir_( licenses )
     , type_       ( type )
     , host_       ( host )
+    , tcp_        ( tcp )
     , proxy_      ( proxy )
     , client_     ()
     , async_      ( pool )
@@ -344,7 +346,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void NodeController::Start( Node_ABC& node, bool force, bool weak ) const
 {
-    bool modified = node.Start( app_, web_, type_, host_, weak );
+    bool modified = node.Start( app_, web_, type_, host_, tcp_, weak );
     if( modified || force )
         Save( node );
 }
