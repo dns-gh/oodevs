@@ -67,7 +67,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDummyEvent( E_EventTypes type ); // $$$$ ABR 2013-05-24: Test method
     Event& GetOrCreateEvent( const timeline::Event& event );
 
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
@@ -108,7 +107,6 @@ private slots:
     void OnKeyUp( int key );
 
     void OnCreateClicked( int );
-    void OnCreateDummyClicked( int );
 
     void OnLoadOrderFileRequested( const tools::Path& filename );
     void OnSaveOrderFileRequested( const tools::Path& filename );
@@ -131,7 +129,6 @@ private:
     boost::shared_ptr< timeline::Event > selected_;
     QDateTime selectedDateTime_;
     boost::scoped_ptr< QSignalMapper > creationSignalMapper_;
-    boost::scoped_ptr< QSignalMapper > dummySignalMapper_;
     tools::Path currentFile_;
     //@}
 };
