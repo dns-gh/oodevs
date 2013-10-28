@@ -818,6 +818,7 @@ $("#session_edit").click ->
     mod.find(".apply").click ->
         data = validate_settings ui, true
         return unless data?
+        data.sides.no_side_objects = "true"
         session_default.set data
         $.cookie "default_session_settings", JSON.stringify data
         mod.modal "hide"
