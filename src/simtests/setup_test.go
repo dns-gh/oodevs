@@ -18,7 +18,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"swapi"
 	"swapi/simu"
 	"testing"
@@ -238,18 +237,10 @@ func readFileAsString(c *C, path string) string {
 }
 
 func makeDiff(before, after string) (string, error) {
-	splitLines := func(s string) []string {
-		lines := []string{}
-		for _, line := range strings.Split(s, "\n") {
-			lines = append(lines, line+"\n")
-		}
-		return lines
-	}
-
 	diff := difflib.UnifiedDiff{
-		A:        splitLines(before),
+		A:        difflib.SplitLines(before),
 		FromFile: "before",
-		B:        splitLines(after),
+		B:        difflib.SplitLines(after),
 		ToFile:   "after",
 		Context:  4,
 	}
