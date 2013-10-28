@@ -81,3 +81,12 @@ bool AvailableProfile::IsSupervision() const
 {
     return supervisor_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AvailableProfile::operator<
+// Created: BAX 2013-10-28
+// -----------------------------------------------------------------------------
+bool AvailableProfile::operator<( const AvailableProfile& profile ) const
+{
+    return login_ < profile.login_;
+}

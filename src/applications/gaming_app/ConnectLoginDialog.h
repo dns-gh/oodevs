@@ -57,7 +57,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< AvailableProfile > T_Profiles;
+    typedef std::set< AvailableProfile > T_Profiles;
     //@}
 
 private:

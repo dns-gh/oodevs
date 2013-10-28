@@ -68,7 +68,7 @@ ConnectLoginDialog::~ConnectLoginDialog()
 // -----------------------------------------------------------------------------
 void ConnectLoginDialog::NotifyUpdated( const AvailableProfile& profile )
 {
-    profiles_.push_back( profile );
+    profiles_.insert( profile );
 }
 
 // -----------------------------------------------------------------------------
