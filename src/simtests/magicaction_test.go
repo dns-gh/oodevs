@@ -262,9 +262,8 @@ func (s *TestSuite) TestTriggerError(c *C) {
 		// And the sim.log should contain a stack trace related to the error
 		log, err := ioutil.ReadFile(opts.GetSimLogPath())
 		c.Assert(err, IsNil)
-		ref := "(simulation_app): (filename not available)"
 		reStack := regexp.MustCompile(
-			`(?s)Crash - stack trace.*` + regexp.QuoteMeta(ref))
+			`(?s)Crash - stack trace.*(filename not available|\\simulation_kernel\\)`)
 		c.Assert(reStack.FindSubmatch(log), NotNil)
 	}
 
