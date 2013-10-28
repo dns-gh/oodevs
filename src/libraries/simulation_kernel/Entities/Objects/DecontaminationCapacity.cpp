@@ -100,6 +100,17 @@ void DecontaminationCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MI
 }
 
 // -----------------------------------------------------------------------------
+// Name: DecontaminationCapacity::ProcessAgentExiting
+// Created: LDC 2013-10-28
+// -----------------------------------------------------------------------------
+void DecontaminationCapacity::ProcessAgentExiting( MIL_Object_ABC&, MIL_Agent_ABC& agent )
+{
+    auto it = std::find( agentsInside_.begin(), agentsInside_.end(), &agent );
+    if( it != agentsInside_.end() )
+        agentsInside_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DecontaminationCapacity::ProcessPopulationInside
 // Created: LGY 2011-11-18
 // -----------------------------------------------------------------------------
