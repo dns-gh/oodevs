@@ -14,7 +14,7 @@
 
 /// enable this line to enable embedded core
 /// this mode is only available on 32-bit
-#define USE_EMBEDDED_CORE
+//#define USE_EMBEDDED_CORE
 
 namespace tools
 {

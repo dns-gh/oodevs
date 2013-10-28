@@ -229,7 +229,7 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
         case sdk::CLIENT_QUIT:                  return handler.OnQuitClient();
         case sdk::CLIENT_RELOAD:                return handler.OnReloadClient();
         case sdk::CLIENT_LOAD:                  return handler.OnLoadClient( cmd.url() );
-        case sdk::CLIENT_QUERY_UPDATE:  return handler.OnUpdateQuery( GetQuery( cmd.query() ) );
+        case sdk::CLIENT_QUERY_UPDATE:          return handler.OnUpdateQuery( GetQuery( cmd.query() ) );
         case sdk::CLIENT_CENTER:                return handler.OnCenterClient();
         case sdk::CLIENT_EVENT_CREATE:          return handler.OnCreateEvent( GetEvent( cmd.event() ) );
         case sdk::CLIENT_EVENT_READ_ALL:        return handler.OnReadEvents();
