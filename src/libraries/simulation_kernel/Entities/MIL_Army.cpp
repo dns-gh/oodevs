@@ -51,7 +51,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned int /*version*/ )
 {
     const ArmyFactory_ABC* const armyFactory = &army->armyFactory_;
-    const MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >* const diplomacyConverter = &army->diplomacyConverter_;
+    const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >* const diplomacyConverter = &army->diplomacyConverter_;
     archive << armyFactory
             << diplomacyConverter;
 }
@@ -64,7 +64,7 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /*version*/ )
 {
     ArmyFactory_ABC* armyFactory = 0;
-    MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >* diplomacyConverter = 0;
+    MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >* diplomacyConverter = 0;
     archive >> armyFactory
             >> diplomacyConverter;
     ::new( army )MIL_Army( *armyFactory, *diplomacyConverter );
@@ -79,7 +79,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
                     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter, bool canCreateChildren )
     : nID_                 ( xis.attribute< unsigned int >( "id" ) )
     , strName_             ( xis.attribute< std::string >( "name") )
-    , nType_               ( eUnknown )
+    , nType_               ( eDiplomacy_Inconnu )
     , armyFactory_         ( armyFactory )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , diplomacyConverter_  ( diplomacyConverter )
@@ -330,7 +330,7 @@ void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabi
 void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( xis.attribute< std::string >( "diplomacy" ) );
-    if( nDiplomacy == eUnknown )
+    if( nDiplomacy == eDiplomacy_Inconnu )
         throw MASA_EXCEPTION( xis.context() + "Unknown diplomacy relation between armies" );
     MIL_Army_ABC* pArmy = armyFactory_.Find( xis.attribute< unsigned int >( "party" ) );
     if( !pArmy )
@@ -459,23 +459,27 @@ bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
     return false;
 }
 
+namespace
+{
+
+E_Tristate IsSomeDiplomacyValue( E_Diplomacy value, E_Diplomacy expected )
+{
+    if( value == expected )
+        return eTristate_True;
+    if( value >= 0 && value < eNbrDiplomacy && value != eDiplomacy_Inconnu )
+        return eTristate_False;
+    return eTristate_DontKnow;
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAnEnemy( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eUnknown : return eTristate_DontKnow;
-        case eFriend  : return eTristate_False;
-        case eEnemy   : return eTristate_True;
-        case eNeutral : return eTristate_False;
-        default:
-            assert( false );
-            return eTristate_DontKnow;
-    };
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Ennemi );
 }
 
 // -----------------------------------------------------------------------------
@@ -493,17 +497,7 @@ E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) cons
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAFriend( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eUnknown : return eTristate_DontKnow;
-        case eFriend  : return eTristate_True;
-        case eEnemy   : return eTristate_False;
-        case eNeutral : return eTristate_False;
-        default:
-            assert( false );
-    };
-    return eTristate_DontKnow;
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Ami );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,17 +518,7 @@ E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 {
-    E_Diplomacy nRelation = GetDiplomacy( army );
-    switch( nRelation )
-    {
-        case eUnknown : return eTristate_DontKnow;
-        case eFriend  : return eTristate_False;
-        case eEnemy   : return eTristate_False;
-        case eNeutral : return eTristate_True;
-        default:
-            assert( false );
-    };
-    return eTristate_DontKnow;
+    return IsSomeDiplomacyValue( GetDiplomacy( army ), eDiplomacy_Neutre );
 }
 
 // -----------------------------------------------------------------------------
@@ -772,13 +756,13 @@ const MIL_Color& MIL_Army::GetColor() const
 // Name: MIL_Army::GetDiplomacy
 // Created: NLD 2004-03-24
 //-----------------------------------------------------------------------------
-MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy ) const
+E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy ) const
 {
     if( &otherArmy == this )
-        return eFriend;
+        return eDiplomacy_Ami;
     auto it = diplomacies_.find( &otherArmy );
     if( it == diplomacies_.end() )
-        return eUnknown;
+        return eDiplomacy_Inconnu;
     return it->second;
 }
 

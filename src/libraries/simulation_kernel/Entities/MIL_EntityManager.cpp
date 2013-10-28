@@ -1521,15 +1521,15 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& mes
 // Name: MIL_EntityManager::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-MIL_Army_ABC::E_Diplomacy GetDiplomacy( sword::EnumDiplomacy e )
+E_Diplomacy GetDiplomacy( sword::EnumDiplomacy e )
 {
     switch( e )
     {
-        case sword::friendly: return MIL_Army_ABC::eFriend;
-        case sword::enemy: return MIL_Army_ABC::eEnemy;
-        case sword::neutral: return MIL_Army_ABC::eNeutral;
+        case sword::friendly: return eDiplomacy_Ami;
+        case sword::enemy: return eDiplomacy_Ennemi;
+        case sword::neutral: return eDiplomacy_Neutre;
     }
-    return MIL_Army_ABC::eUnknown;
+    return eDiplomacy_Inconnu;
 }
 
 void MIL_EntityManager::OnReceiveChangeDiplomacy( const sword::MagicAction& message, unsigned int nCtx )

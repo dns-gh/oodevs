@@ -77,7 +77,7 @@ ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory
     , populationFactory_    ( populationFactory )
     , inhabitantFactory_    ( inhabitantFactory )
     , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
-    , diplomacyConverter_   ( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >( MIL_Army_ABC::eUnknown ) ) // LTO
+    , diplomacyConverter_   ( new MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >( eDiplomacy_Inconnu ) ) // LTO
 {
     InitializeDiplomacies();
 }
@@ -152,9 +152,9 @@ void ArmyFactory::Finalize()
 void ArmyFactory::InitializeDiplomacies()
 {
     MT_LOG_INFO_MSG( "Initializing armies diplomacies" );
-    diplomacyConverter_->Register( "enemy"  , MIL_Army_ABC::eEnemy   );
-    diplomacyConverter_->Register( "friend" , MIL_Army_ABC::eFriend  );
-    diplomacyConverter_->Register( "neutral", MIL_Army_ABC::eNeutral );
+    diplomacyConverter_->Register( "enemy"  , eDiplomacy_Ennemi   );
+    diplomacyConverter_->Register( "friend" , eDiplomacy_Ami  );
+    diplomacyConverter_->Register( "neutral", eDiplomacy_Neutre );
 }
 
 // -----------------------------------------------------------------------------
