@@ -235,10 +235,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation>Erreur irrécupérable</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
