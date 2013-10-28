@@ -84,7 +84,7 @@ local getPositionTranslateDirFromFriend = function( friendToSupport, withIndirec
         if withIndirectFires then
             rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2
         else
-            rangeDistance = integration.firingRangeWithDirectFires( 0,5 ) -- direct fire case pH = 0.5
+            rangeDistance = integration.firingRangeWithDirectFires( 0.5 ) -- direct fire case pH = 0.5
         end
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = integration.getDangerousDirection( mission )
