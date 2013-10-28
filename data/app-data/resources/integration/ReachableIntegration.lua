@@ -62,6 +62,10 @@ integration.getCrowdPosition = function( crowd )
     end
 end
 
+integration.crowdAgentHasFlow = function()
+    return DEC_HasFlow()
+end
+
 integration.getPointPosition = function( point )
   return point.source
 end
