@@ -124,7 +124,7 @@ void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // Name: RightsPlugin::NotifyClientLeft
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& /*link*/ )
+void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& /*link*/, bool /*uncounted*/ )
 {
     Logout( client );
 }
@@ -259,7 +259,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
-        container_.NotifyClientLeft( sender.GetClient(), link );
+        container_.NotifyClientLeft( sender.GetClient(), link, silentClients_.find( link ) != silentClients_.end() );
 
     bool keyAuthenticated = false;
     if( message.has_authentication_key() )

@@ -81,10 +81,10 @@ public:
             (*it)->NotifyClientAuthenticated( client, link, profile, uncounted );
     }
 
-    virtual void NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link )
+    virtual void NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link, bool uncounted )
     {
         for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
-            (*it)->NotifyClientLeft( client, link );
+            (*it)->NotifyClientLeft( client, link, uncounted );
     }
 
     virtual void Update()

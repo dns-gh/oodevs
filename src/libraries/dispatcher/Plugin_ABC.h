@@ -39,7 +39,8 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/,
                                             dispatcher::Profile_ABC& /*profile*/, bool /*uncounted*/ )
     {}
-    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/ )
+    virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/,
+                                   bool /*uncounted*/ )
     {}
 
     virtual void Register( dispatcher::Services& ) {}

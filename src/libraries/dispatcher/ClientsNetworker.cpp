@@ -85,10 +85,12 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link,
-                                                  dispatcher::Profile_ABC& /*profile*/, bool /*uncounted*/ )
+                                                  dispatcher::Profile_ABC& /*profile*/, bool uncounted )
 {
     boost::shared_ptr< Client > pClient = clients_[ link ];
     internals_[ link ] = pClient;
+    if( uncounted )
+        uncountedClients_.insert( link );
     model_.Send( *pClient );
 }
 
@@ -96,8 +98,9 @@ void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_AB
 // Name: ClientsNetworker::NotifyClientLeft
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
-void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link )
+void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, bool /*uncounted*/ )
 {
+    uncountedClients_.erase( link );
     internals_.erase( link );
 }
 
@@ -136,7 +139,7 @@ void ClientsNetworker::ConnectionError( const std::string& link, const std::stri
     if( it != clients_.end() && it->second )
     {
         MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
-        plugin_.NotifyClientLeft( *it->second, it->first );
+        plugin_.NotifyClientLeft( *it->second, it->first, uncountedClients_.find( link ) != uncountedClients_.end() );
         clients_.erase( it );
     }
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
