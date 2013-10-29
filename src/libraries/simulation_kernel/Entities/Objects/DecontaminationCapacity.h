@@ -53,6 +53,7 @@ public:
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
 
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
 
     void QueueForDecontamination( MIL_Agent_ABC& agent );
