@@ -145,7 +145,7 @@ func (t *TcpProxy) readPackets(ctx *TcpContext, link net.Conn, readPayload Paylo
 			return
 		}
 		if t.verbose > 0 {
-			log.Println(8+len(buffer), "bytes read from", link.RemoteAddr(), header, dumpTag(header.Tag, buffer))
+			log.Println(8+len(buffer), "bytes read from", link.RemoteAddr(), header, dumpMessage(header.Tag, buffer))
 		}
 		if readPayload(header.Tag, buffer) {
 			continue
@@ -235,7 +235,7 @@ func (t *TcpProxy) fixAuthentication(ctx *TcpContext, context int32, auth *sword
 	return t.login(ctx, context, auth, parts[2])
 }
 
-func dumpTag(tag uint32, src []byte) string {
+func dumpMessage(tag uint32, src []byte) string {
 	msg := swapi.SwordMessage{}
 	err := swapi.DecodeMessage(&msg, tag, src)
 	if err != nil {
@@ -255,7 +255,7 @@ func dump(data []byte) string {
 	if err != nil {
 		return fmt.Sprintf("unable to parse header: %s", err)
 	}
-	return dumpTag(header.Tag, payload)
+	return dumpMessage(header.Tag, payload)
 }
 
 func createMessage(tag uint32, msg proto.Message) ([]byte, error) {
@@ -339,7 +339,7 @@ func (t *TcpProxy) writePackets(ctx *TcpContext, link net.Conn, packets <-chan *
 				if packet.tag == SkipEncoding {
 					dumped = dump(packet.data)
 				} else {
-					dumped = dumpTag(packet.tag, packet.data)
+					dumped = dumpMessage(packet.tag, packet.data)
 				}
 				log.Println(written, "bytes written to", link.RemoteAddr(), dumped)
 			}
