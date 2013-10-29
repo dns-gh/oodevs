@@ -70,6 +70,7 @@ public:
                              const Path& licenses,
                              const std::string& type,
                              int host,
+                             int tcp,
                              runtime::Pool_ABC& pool,
                              Proxy_ABC& proxy );
     virtual ~NodeController();
@@ -174,6 +175,7 @@ private:
     const Path licensesDir_;
     const std::string type_;
     const int host_;
+    const int tcp_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;

@@ -10,6 +10,7 @@
     <script>
         [[ if ne .type "cluster" ]]
         var uuid = "[[ .uuid ]]";
+        var tcp = [[ .tcp ]];
         [[ end ]]
         var user = {};
         [[ range $k, $v := .user ]]

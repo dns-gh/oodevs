@@ -76,7 +76,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     if( !fs_.IsFile( config_.app ) )
         throw std::runtime_error( runtime::Utf8( config_.app ) + " is not a file" );
     const Path tag = config_.root / "proxy.id";
-    LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
+    LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.http;
     bool hasProcess = fs_.IsFile( tag );
     if( hasProcess )
     {
@@ -169,7 +169,7 @@ void Proxy::Update()
 // -----------------------------------------------------------------------------
 int Proxy::GetPort() const
 {
-    return config_.port;
+    return config_.http;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +179,8 @@ int Proxy::GetPort() const
 Tree Proxy::GetProperties() const
 {
     Tree tree;
-    tree.put( "port", config_.port );
+    tree.put( "http", config_.http );
+    tree.put( "tcp", config_.tcp );
     tree.put( "process.pid", process_->GetPid() );
     tree.put( "process.name", process_->GetName() );
     return tree;
@@ -194,12 +195,15 @@ bool Proxy::Reload( const Path& path )
     try
     {
         const Tree tree = FromJson( fs_.ReadFile( path ) );
-        const boost::optional< int > port = tree.get_optional< int >( "port" );
-        if( port == boost::none || *port != config_.port )
+        const boost::optional< int > http = tree.get_optional< int >( "http" );
+        if( !http || *http != config_.http )
+            return false;
+        const boost::optional< int > tcp = tree.get_optional< int >( "tcp" );
+        if( !tcp || *tcp != config_.tcp )
             return false;
         const boost::optional< int > pid  = tree.get_optional< int >( "process.pid" );
         const boost::optional< std::string > name = tree.get_optional< std::string >( "process.name" );
-        if( pid == boost::none || name == boost::none )
+        if( !pid || !name )
             return false;
         T_Process ptr = runtime_.GetProcess( *pid );
         if( !ptr || ptr->GetName() != *name )
@@ -221,7 +225,8 @@ bool Proxy::Reload( const Path& path )
 Proxy::T_Process Proxy::MakeProcess() const
 {
     std::vector< std::string > args = boost::assign::list_of
-        ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" );
+        ( "--http \"" + boost::lexical_cast< std::string >( config_.http ) + "\"" )
+        ( "--tcp \"" + boost::lexical_cast< std::string >( config_.tcp ) + "\"" );
     if( config_.ssl.enabled )
     {
         args.push_back( "--ssl" );
@@ -293,7 +298,7 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 void Proxy::HttpRegister( const std::string& prefix, const Link& link )
 {
     const std::string scheme = config_.ssl.enabled ? "https" : "http";
-    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.port, "/register_proxy",
+    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.http, "/register_proxy",
         boost::assign::map_list_of
             ( "prefix", prefix )
             ( "host", link.host )
@@ -330,7 +335,7 @@ void Proxy::Unregister( const std::string& prefix )
 void Proxy::HttpUnregister( const std::string& prefix )
 {
     const std::string scheme = config_.ssl.enabled ? "https" : "http";
-    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.port, "/unregister_proxy",
+    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.http, "/unregister_proxy",
         boost::assign::map_list_of( "prefix", prefix ) );
     if( response->GetStatus() != 200 )
         return;

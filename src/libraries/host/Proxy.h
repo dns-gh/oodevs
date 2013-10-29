@@ -73,17 +73,19 @@ private:
 
 struct Config
 {
-    Config( const Path& root, const Path& app, int port, const Ssl& ssl )
+    Config( const Path& root, const Path& app, int http, int tcp, const Ssl& ssl )
         : root( root )
         , app ( app )
-        , port( port )
+        , http( http )
+        , tcp ( tcp )
         , ssl ( ssl )
     {
         // NOTHING
     }
     const Path root;
     const Path app;
-    const int port;
+    const int http;
+    const int tcp;
     const Ssl ssl;
 private:
     Config& operator=( const Config& );

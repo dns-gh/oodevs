@@ -127,7 +127,8 @@ struct Configuration
     Path root;
     struct
     {
-        int proxy;
+        int http;
+        int tcp;
         int period;
         int min;
         int max;
@@ -176,7 +177,8 @@ struct Configuration
             found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
             found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
-            found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
+            found |= ReadParameter( ports.http, "--port_http", i, argc, argv );
+            found |= ReadParameter( ports.tcp, "--port_tcp", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
             found |= ReadParameter( proxy.service, "--service", i, argc, argv );
             found |= ReadParameter( proxy.user, "--user", i, argc, argv );
@@ -353,7 +355,7 @@ struct Facade : SqlFacade
         Pool pool( 32, 256 );
         web::Client client;
         const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );
-        const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
+        const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.http, cfg.ports.tcp, ssl );
         Proxy proxy( log, runtime, fs, proxyConfig, client, pool );
         PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         PackageFactory packages( pool, fs );
@@ -361,9 +363,11 @@ struct Facade : SqlFacade
         NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
         const Port host = ports.Create();
         const Path client_root = cfg.root / "client";
-        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, client_root, cfg.session.simulation.parent_path(), "node", host->Get(), pool, proxy );
+        NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
+            client_root, cfg.session.simulation.parent_path(), "node", host->Get(), cfg.ports.tcp, pool, proxy );
         fnodes.observer = &nodes;
-        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), pool, proxy );
+        NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
+            Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), cfg.ports.tcp, pool, proxy );
         SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
@@ -425,7 +429,8 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ports.period "          << cfg.ports.period;
     LOG_INFO( log ) << "[cfg] ports.min "             << cfg.ports.min;
     LOG_INFO( log ) << "[cfg] ports.max "             << cfg.ports.max;
-    LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
+    LOG_INFO( log ) << "[cfg] ports.http "            << cfg.ports.http;
+    LOG_INFO( log ) << "[cfg] ports.tcp "             << cfg.ports.tcp;
     LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
     LOG_INFO( log ) << "[cfg] proxy.service "         << cfg.proxy.service;
     LOG_INFO( log ) << "[cfg] proxy.app "             << cfg.proxy.app;
@@ -459,7 +464,8 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ports.period          = GetTree( tree, "ports.period", 12 );
     cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
-    cfg.ports.proxy           = GetTree( tree, "ports.proxy", 8080 );
+    cfg.ports.http            = GetTree( tree, "ports.http", 8080 );
+    cfg.ports.tcp             = GetTree( tree, "ports.tcp",  cfg.ports.http+1 );
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
     cfg.ssl.certificate       = Utf8( GetTree( tree, "ssl.certificate", Utf8( bin / "certificate.pem" ) ) );

@@ -26,25 +26,27 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	debug := flag.Bool("debug", false, "debug mode")
-	reset := flag.Bool("reset", false, "allow session reset")
 	host := flag.Int("host", 0, "")
 	name := flag.String("name", "", "node name")
 	node := flag.String("type", "cluster", "node type")
 	port := flag.Int("port", 0, "listening port")
+	reset := flag.Bool("reset", false, "allow session reset")
+	tcp := flag.Int("tcp", 0, "Tcp host port")
 	uuid := flag.String("uuid", "", "node uuid")
 	www := flag.String("www", "www", "www directory")
 	flag.Parse()
 
 	log.Println("debug", *debug)
 	log.Println("host", *host)
-	log.Println("port", *port)
 	log.Println("name", *name)
+	log.Println("port", *port)
+	log.Println("reset", *reset)
+	log.Println("tcp", *tcp)
 	log.Println("type", *node)
 	log.Println("uuid", *uuid)
 	log.Println("www", *www)
-	log.Println("reset", *reset)
 
-	handler := NewHandler(*debug, *reset, *host, *name, *node, *uuid, *www)
+	handler := NewHandler(*debug, *reset, *host, *tcp, *name, *node, *uuid, *www)
 	server := &http.Server{
 		Addr:           fmt.Sprintf(":%d", *port),
 		Handler:        handler,
@@ -64,6 +66,7 @@ type Handler struct {
 	debug  bool
 	reset  bool
 	host   int
+	tcp    int
 	name   string
 	node   string
 	uuid   string
@@ -79,11 +82,12 @@ func loadTemplates(pattern string) (*template.Template, error) {
 	return t, err
 }
 
-func NewHandler(debug, reset bool, host int, name, node, uuid, www string) *Handler {
+func NewHandler(debug, reset bool, host, tcp int, name, node, uuid, www string) *Handler {
 	it := &Handler{
 		debug: debug,
 		reset: reset,
 		host:  host,
+		tcp:   tcp,
 		name:  name,
 		node:  node,
 		uuid:  uuid,
@@ -215,6 +219,7 @@ func (it *Handler) MakeModel(params url.Values, user User) map[string]interface{
 	}
 	model := make(map[string]interface{})
 	model["url"] = url
+	model["tcp"] = it.tcp
 	model["uuid"] = it.uuid
 	model["name"] = it.name
 	model["type"] = it.node

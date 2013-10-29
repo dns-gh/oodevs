@@ -449,7 +449,11 @@ class SessionItemView extends Backbone.View
         @$el.html session_template data
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
-            next = "sword://#{location.host}/?protocol=#{window.location.protocol}&sid=#{$.cookie "sid"}&session=#{@model.id}"
+            next = "sword://#{location.host}/?" + $.param
+                protocol: window.location.protocol
+                session:  @model.id
+                sid:      $.cookie "sid"
+                tcp:      tcp
             if convert_to_boolean $.cookie "redirect"
                 return load_url next
             msg = $ session_redirect_template id: @model.id
