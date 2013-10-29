@@ -238,10 +238,6 @@
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BorrowingsListView</name>
