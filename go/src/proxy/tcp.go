@@ -243,7 +243,7 @@ func dumpMessage(tag uint32, src []byte) string {
 	}
 	data, err := json.MarshalIndent(msg.GetMessage(), "", "\t")
 	if err != nil {
-		return fmt.Sprintf("unable to decode json: %s", err)
+		return fmt.Sprintf("unable to encode to json: %s", err)
 	}
 	return string(data)
 }
