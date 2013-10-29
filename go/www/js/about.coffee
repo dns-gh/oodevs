@@ -84,5 +84,8 @@ $("#upload_form .upload").click ->
 
 $("#upload_target").load ->
     toggle_upload()
-    license_view.model.set jQuery.parseJSON $(@).contents().text()
-
+    data = $(@).contents().text()
+    if !data.length
+        print_error "Unable to upload license"
+        return
+    license_view.model.set jQuery.parseJSON data
