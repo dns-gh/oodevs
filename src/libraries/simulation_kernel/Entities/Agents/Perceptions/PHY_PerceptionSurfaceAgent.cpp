@@ -54,12 +54,8 @@ PHY_PerceptionSurfaceAgent::~PHY_PerceptionSurfaceAgent()
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nID;
-    file >> nID;
-    assert( PHY_SensorType::FindSensorType( nID ) );
-    pSensorType_ = PHY_SensorType::FindSensorType( nID )->GetTypeAgent();
-    assert( pSensorType_ );
-    file >> vOrigin_
+    file >> pSensorType_
+         >> vOrigin_
          >> rHeight_
          >> sectors_;
 }
@@ -70,10 +66,7 @@ void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsi
 // -----------------------------------------------------------------------------
 void PHY_PerceptionSurfaceAgent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    assert( pSensorType_ );
-
-    unsigned type = pSensorType_->GetType().GetID();
-    file << type
+    file << pSensorType_
          << vOrigin_
          << rHeight_
          << sectors_;

@@ -124,12 +124,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
     unsigned int nID;
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
-    sword::EquipmentType nEqID;
-    unsigned int equipment;
-    file >> equipment;
-    nEqID.set_id( equipment );
-    pType_ = PHY_ComposanteTypePion::Find( nEqID );
-    assert( pType_ );
+    file >> pType_;
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
     file >> const_cast< bool& >( bMajor_ )
@@ -158,11 +153,10 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
 void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned int state = pState_->GetID();
-    unsigned int type = pType_->GetMosID().id();
     file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
          << pRole_
          << state
-         << type
+         << pType_
          << bMajor_
          << bLoadable_
          << bCanBePartOfConvoy_

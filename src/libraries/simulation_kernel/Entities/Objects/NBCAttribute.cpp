@@ -77,27 +77,16 @@ NBCAttribute::~NBCAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttribute::Insert
-// Created: JCR 2008-09-05
-// -----------------------------------------------------------------------------
-template< typename T >
-bool NBCAttribute::Insert( const T& type )
-{
-    const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( type );
-    if( pType )
-        agents_.push_back( pType );
-    return pType != 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: NBCAttribute::ReadNBCAgent
 // Created: JCR 2008-08-27
 // -----------------------------------------------------------------------------
 void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 {
-    std::string type( xis.attribute< std::string >( "type", std::string() ) );
-    if( ! Insert( type ) )
+    const std::string type = xis.attribute< std::string >( "type", std::string() );
+    const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( type );
+    if( ! pType )
         throw MASA_EXCEPTION( xis.context() + "Unknown 'AgentNBC' '" + type + "' for NBC object" );
+    agents_.push_back( pType );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,18 +96,9 @@ void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-
-    std::size_t nNbrNbcAgents;
     file >> danger_;
     file >> nForm_;
-    file >> nNbrNbcAgents;
-    while( nNbrNbcAgents-- )
-    {
-        unsigned int nID;
-        file >> nID;
-        if( !Insert( nID ) )
-            throw MASA_EXCEPTION( "Unknown 'AgentNBC' '" + boost::lexical_cast<std::string>( nID ) + "' for NBC object" );
-    }
+    file >> agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,23 +108,9 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
 void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-
     file << danger_;
     file << nForm_;
-    std::size_t size = agents_.size();
-    for( auto it = agents_.begin(); it != agents_.end(); ++it )
-    {
-        if( !*it )
-            --size;
-    }
-    file << size;
-    for( auto it = agents_.begin(); it != agents_.end(); ++it )
-    {
-        if( !*it )
-            continue;
-        unsigned id = (*it)->GetID();
-        file << id;
-    }
+    file << agents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -278,8 +244,12 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
     std::istringstream stream( strAgents );
     std::string strAgent;
     while( std::getline( stream, strAgent ) )
-        if( !Insert( strAgent ) )
+    {
+        const MIL_NbcAgentType* type = MIL_NbcAgentType::Find( strAgent );
+        if( ! type )
             return false;
+        agents_.push_back( type );
+    }
     return true;
 }
 

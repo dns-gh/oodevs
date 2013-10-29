@@ -75,4 +75,24 @@ private:
     static T_LimaFunctionMap limaFunctions_;
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const MIL_LimaFunction* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const MIL_LimaFunction*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = MIL_LimaFunction::Find( id );
+    }
+}
+}
+
 #endif // __MIL_LimaFunction_h_

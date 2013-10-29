@@ -195,7 +195,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
 {
     std::string wound;
     xis >> xml::attribute( "wound", wound );
-    PHY_HumanWound::CIT_HumanWoundMap it = PHY_HumanWound::GetHumanWounds().find( wound );
+    auto it = PHY_HumanWound::GetHumanWounds().find( wound );
     if( it != PHY_HumanWound::GetHumanWounds().end() )
     {
         double percentage;
@@ -215,8 +215,8 @@ const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVe
     const double rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
 
     double rSumCoefs = 0.;
-    const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
-    for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+    const auto& humanWounds = PHY_HumanWound::GetHumanWounds();
+    for( auto itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
     {
         const PHY_HumanWound& wound = *itWound->second;
         rSumCoefs += data[ wound.GetID() ];
@@ -249,4 +249,170 @@ void MIL_NbcAgentType::ApplyIntoxication( MIL_IntoxicationEffect& effect, const 
                    + data[ PHY_HumanWound::woundedU1_.GetID() ] + data[ PHY_HumanWound::woundedUE_.GetID() ];
     double killed = data[ PHY_HumanWound::killed_.GetID() ];
     effect.Add( wounded, killed );
+}
+
+const MIL_NbcAgentType* MIL_NbcAgentType::Find( const std::string& strName )
+{
+    CIT_NbcAgentTypeMap it = nbcAgentTypes_.find( strName );
+    if( it == nbcAgentTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::Find
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+const MIL_NbcAgentType* MIL_NbcAgentType::Find( unsigned int nID )
+{
+    for( CIT_NbcAgentTypeMap itNbcAgent = nbcAgentTypes_.begin(); itNbcAgent != nbcAgentTypes_.end(); ++itNbcAgent )
+    {
+        const MIL_NbcAgentType& nbcAgentType = *itNbcAgent->second;
+        if( nbcAgentType.GetID() == nID )
+            return &nbcAgentType;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::CanBeVaporized
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+bool MIL_NbcAgentType::CanBeVaporized() const
+{
+    return bCanBeVaporized_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetName
+// Created: NLD 2004-04-30
+// -----------------------------------------------------------------------------
+const std::string& MIL_NbcAgentType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetID
+// Created: NLD 2004-05-03
+// -----------------------------------------------------------------------------
+unsigned int MIL_NbcAgentType::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetLiquidRandomWound
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+const PHY_HumanWound& MIL_NbcAgentType::GetLiquidRandomWound() const
+{
+    return GetRandomWound( liquidPoisonous_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetGasRandomWound
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+const PHY_HumanWound& MIL_NbcAgentType::GetGasRandomWound() const
+{
+    return GetRandomWound( gasPoisonous_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsGasContaminating
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+bool MIL_NbcAgentType::IsGasContaminating() const
+{
+    return bGasContaminating_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsLiquidContaminating
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+bool MIL_NbcAgentType::IsLiquidContaminating() const
+{
+    return bLiquidContaminating_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsGasPoisonous
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+bool MIL_NbcAgentType::IsGasPoisonous() const
+{
+    return bGasPoisonous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsLiquidPoisonous
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+bool MIL_NbcAgentType::IsLiquidPoisonous() const
+{
+    return bLiquidPoisonous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetGasLifeTime
+// Created: JVT 2004-10-28
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetGasLifeTime() const
+{
+    return nGasLifeTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetGasPropagationAngle
+// Created: JVT 2004-10-28
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetGasPropagationAngle() const
+{
+    return rGasPropagationAngle_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetCoefMaxSpeedModificator
+// Created: NLD 2004-05-05
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetCoefMaxSpeedModificator()
+{
+    return rCoefMaxSpeedModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetCoefReloadingTimeModificator
+// Created: NLD 2004-05-05
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetCoefReloadingTimeModificator()
+{
+    return rCoefReloadingTimeModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetContaminationDistance
+// Created: HBD 2010-06-08
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetContaminationDistance()
+{
+    return rContaminationDistance_;
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetMinContaminationQuantity
+// Created: HBD 2010-06-08
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetMinContaminationQuantity()
+{
+    return rContaminationQuantityGiven_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetMinPropagationSpeed
+// Created: LGY 2011-07-05
+// -----------------------------------------------------------------------------
+double MIL_NbcAgentType::GetMinPropagationSpeed()
+{
+    return rMinPropagationSpeed_;
 }

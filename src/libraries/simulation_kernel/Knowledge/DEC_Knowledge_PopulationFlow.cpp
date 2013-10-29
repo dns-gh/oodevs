@@ -26,7 +26,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/split_free.hpp>
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )
@@ -144,15 +143,9 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
     file >> nTmpID;
     pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
     //assert( pAttitude_ ); // $$$$ SBO 2006-02-24: if popu not recognized, attitude is null (should be default "calme" ?)
-    file >> nTmpID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    assert( pPreviousPerceptionLevel_ );
-    file >> nTmpID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    assert( pCurrentPerceptionLevel_ );
-    file >> nTmpID;
-    pHackedPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    assert( pHackedPerceptionLevel_ );
+    file >> pPreviousPerceptionLevel_
+         >> pCurrentPerceptionLevel_
+         >> pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,10 +154,7 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 ),
-             previousId = pPreviousPerceptionLevel_->GetID(),
-             currentId = pCurrentPerceptionLevel_->GetID(),
-             hackedId = pHackedPerceptionLevel_->GetID();
+    unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 );
     file << pPopulationKnowledge_
          << pFlowKnown_
          << nID_
@@ -175,9 +165,9 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
          << nNbrDeadHumans_
          << bReconAttributesValid_
          << attitudeId
-         << previousId
-         << currentId
-         << hackedId;
+         << pPreviousPerceptionLevel_
+         << pCurrentPerceptionLevel_
+         << pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

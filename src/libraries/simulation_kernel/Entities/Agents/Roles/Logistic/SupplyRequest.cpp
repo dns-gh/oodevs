@@ -319,9 +319,7 @@ void SupplyRequest::Serialize( sword::SupplyResourceRequest& msg ) const
 void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
     archive >> boost::serialization::base_object< SupplyRequest_ABC >( *this );
-    int dotationId;
-    archive >> dotationId;
-    dotationCategory_ = PHY_DotationType::FindDotationCategory( dotationId );
+    archive >> dotationCategory_;
     archive >> resources_;
     archive >> requesters_;
     archive >> supplier_;
@@ -331,7 +329,7 @@ void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> suppliedQuantity_;
     archive >> complementarySupply_;
     archive >> supplierQuotas_;
-    archive >> const_cast< MIL_Agent_ABC*& >( provider_ );
+    archive >> provider_;
 }
 
 // -----------------------------------------------------------------------------
@@ -341,8 +339,7 @@ void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
 void SupplyRequest::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
     archive << boost::serialization::base_object< SupplyRequest_ABC >( *this );
-    int dotationId = dotationCategory_->GetMosID();
-    archive << dotationId;
+    archive << dotationCategory_;
     archive << resources_;
     archive << requesters_;
     archive << supplier_;

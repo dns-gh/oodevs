@@ -84,54 +84,6 @@ bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MissionParameter_V
     return true;
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        typedef std::vector< const PHY_ComposanteTypePion* >  T_MaintenancePriorityVector;
-        typedef T_MaintenancePriorityVector::const_iterator CIT_MaintenancePriorityVector;
-
-        // =============================================================================
-        // T_MaintenancePriorityVector
-        // =============================================================================
-        template< typename Archive >
-        inline
-            void serialize( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int nVersion )
-        {
-            split_free( file, vector, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const T_MaintenancePriorityVector& vector, const unsigned int )
-        {
-            std::size_t size = vector.size();
-            file << size;
-            for( auto it = vector.begin(); it != vector.end(); ++it )
-            {
-                sword::EquipmentType id = (*it)->GetMosID();
-                int equipment = id.id();
-                file << equipment;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            vector.reserve( nNbr );
-            while( nNbr-- )
-            {
-                sword::EquipmentType nID;
-                int equipment;
-                file >> equipment;
-                nID.set_id( equipment );
-                vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMaintenancePrioritiesParameter::load
 // Created: LGY 2011-06-06

@@ -61,57 +61,6 @@ PHY_DotationStockContainer::~PHY_DotationStockContainer()
     // NOTHING
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        void serialize( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                if( !it->first )
-                    --size;
-            }
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                if( !it->first )
-                    continue;
-                unsigned id = it->first->GetMosID();
-                file << id;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                unsigned int nID;
-
-                file >> nID;
-                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( nID );
-
-                PHY_DotationStock* pDotationStock;
-                file >> pDotationStock;
-
-                map[ pDotationCategory ] = pDotationStock;
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::serialize
 // Created: JVT 2005-03-31

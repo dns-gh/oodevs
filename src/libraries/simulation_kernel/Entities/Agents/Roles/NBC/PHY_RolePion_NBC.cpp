@@ -29,51 +29,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( nbc::PHY_RolePion_NBC )
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
-        {
-            std::size_t size = set.size();
-            for ( auto it = set.begin(); it != set.end(); ++it )
-            {
-                if( !*it )
-                    --size;
-            }
-            file << size;
-            for( auto it = set.begin(); it != set.end(); ++it )
-            {
-                if (!*it )
-                    continue;
-                const unsigned id = (*it)->GetID();
-                file << id;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                unsigned int nID;
-                file >> nID;
-                set.insert( MIL_NbcAgentType::Find( nID ) );
-            }
-        }
-    }
-}
-
 namespace nbc
 {
 

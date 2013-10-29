@@ -30,11 +30,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AttritionCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity( xml::xistream& xis )
-    : category_ ( xis.attribute< std::string >( "category", std::string() ) )
-    , dotation_ ( PHY_DotationType::FindDotationCategory( category_ ) )
+    : dotation_( PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "category", std::string() ) ) )
 {
     if( !dotation_ )
-        throw MASA_EXCEPTION( "Unknown dotation category - " + category_ + " - " );
+        throw MASA_EXCEPTION( "Unknown dotation category" );
     xis >> xml::attribute( "attrition-surface", population_.surface_ )
         >> xml::attribute( "ph", population_.ph_ );
 }
@@ -54,8 +53,7 @@ AttritionCapacity::AttritionCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 AttritionCapacity::AttritionCapacity( const AttritionCapacity& from )
-    : category_  ( from.category_ )
-    , dotation_  ( from.dotation_ )
+    : dotation_  ( from.dotation_ )
     , population_( from.population_)
 {
     // NOTHING
@@ -78,12 +76,9 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar >> category_
+    ar >> dotation_
        >> population_.surface_
        >> population_.ph_;
-    dotation_ = PHY_DotationType::FindDotationCategory( category_ );
-    if( !dotation_ )
-        throw MASA_EXCEPTION( "Unknown dotation category - " + category_ + " - " );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +89,7 @@ void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    ar << category_
+    ar << dotation_
        << population_.surface_
        << population_.ph_;
 }

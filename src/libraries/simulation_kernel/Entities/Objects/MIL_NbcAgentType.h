@@ -121,6 +121,24 @@ private:
     //@}
 };
 
-#include "MIL_NbcAgentType.inl"
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const MIL_NbcAgentType* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const MIL_NbcAgentType*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = MIL_NbcAgentType::Find( id );
+    }
+}
+}
 
 #endif // __MIL_NbcAgentType_h_

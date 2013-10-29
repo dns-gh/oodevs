@@ -34,7 +34,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_HumanWound*, sCaseInsensitiveLess > T_HumanWoundMap;
-    typedef T_HumanWoundMap::const_iterator                                    CIT_HumanWoundMap;
     //@}
 
 public:
@@ -140,5 +139,25 @@ private:
     static unsigned int nMentalDiseaseRestingTime_;
     static double rMentalDiseaseFactor_;
 };
+
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_HumanWound* t )
+    {
+        unsigned int id = t ? t->GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_HumanWound*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        t = PHY_HumanWound::Find( id );
+    }
+}
+}
 
 #endif // __PHY_HumanWound_h_

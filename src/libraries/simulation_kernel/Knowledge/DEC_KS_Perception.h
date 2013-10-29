@@ -86,7 +86,7 @@ private:
     void CleanKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge );
     //@}
 
-public:
+private:
     //! @name
     //@{
     typedef tools::Map< MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_AgentPerceptionMap;

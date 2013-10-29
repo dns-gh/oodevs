@@ -693,7 +693,6 @@ boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
 // -----------------------------------------------------------------------------
 void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
-    size_t resourcesSize;
     archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive >> boost::serialization::base_object< SupplyConsign_ABC >( *this );
     archive >> id_;
@@ -703,33 +702,8 @@ void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> state_;
     archive >> currentStateEndTimeStep_;
     archive >> convoy_;
-    archive >> resourcesSize;
-    for( size_t i = 0; i < resourcesSize; ++i )
-    {
-        int dotationId;
-        double quantity;
-        archive >> dotationId;
-        archive >> quantity;
-        resources_[ PHY_DotationType::FindDotationCategory( dotationId ) ] = quantity;
-    }
-    archive >> resourcesSize;
-    for( size_t i = 0; i < resourcesSize; ++i )
-    {
-        SupplyRecipient_ABC* recipient;
-        size_t requestsSize;
-        T_Requests requestMap;
-        archive >> recipient;
-        archive >> requestsSize;
-        for( size_t j = 0; j < requestsSize; ++j )
-        {
-            int dotationId;
-            boost::shared_ptr< SupplyRequest_ABC > request;
-            archive >> dotationId;
-            archive >> request;
-            requestMap[ PHY_DotationType::FindDotationCategory( dotationId ) ] = request;
-        }
-        requestsQueued_.push_back( std::make_pair( recipient, requestMap ) );
-    }
+    archive >> resources_;
+    archive >> requestsQueued_;
     archive >> currentRecipient_;
     archive >> needNetworkUpdate_;
     archive >> requestsNeedNetworkUpdate_;
@@ -750,28 +724,8 @@ void SupplyConsign::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     archive << state_;
     archive << currentStateEndTimeStep_;
     archive << convoy_;
-    size_t size = resources_.size();
-    archive << size;
-    for( auto it = resources_.begin(); it != resources_.end(); ++it )
-    {
-        int dotation = it->first->GetMosID();
-        archive << dotation;
-        archive << it->second;
-    }
-    size = requestsQueued_.size();
-    archive << size;
-    for( auto it = requestsQueued_.begin(); it != requestsQueued_.end(); ++it )
-    {
-        const size_t requestsSize = it->second.size();
-        archive << it->first;
-        archive << requestsSize;
-        for( auto requestsIt = it->second.begin(); requestsIt != it->second.end(); ++requestsIt )
-        {
-            int dotation = requestsIt->first->GetMosID();
-            archive << dotation;
-            archive << requestsIt->second;
-        }
-    }
+    archive << resources_;
+    archive << requestsQueued_;
     archive << currentRecipient_;
     archive << needNetworkUpdate_;
     archive << requestsNeedNetworkUpdate_;

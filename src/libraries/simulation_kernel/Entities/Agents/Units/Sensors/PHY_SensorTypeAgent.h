@@ -148,4 +148,30 @@ private:
     // LTO end
 };
 
+namespace boost
+{
+namespace archive
+{
+    template< class Archive >
+    void save( Archive& ar, const PHY_SensorTypeAgent* t )
+    {
+        unsigned int id = t ? t->GetType().GetID() : std::numeric_limits< unsigned int >::max();
+        ar << id;
+    }
+    template< class Archive >
+    void load( Archive& ar, const PHY_SensorTypeAgent*& t )
+    {
+        unsigned int id;
+        ar >> id;
+        auto type = PHY_SensorType::FindSensorType( id );
+        if( ! type )
+        {
+            t = 0;
+            return;
+        }
+        t = type->GetTypeAgent();
+    }
+}
+}
+
 #endif // __PHY_SensorTypeAgent_h_

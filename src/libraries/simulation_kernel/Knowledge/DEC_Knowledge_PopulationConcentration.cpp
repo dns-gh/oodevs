@@ -142,14 +142,9 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
         assert( pAttitude_ );
     }
     file >> rRelevance_;
-    file >> nTmpID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    assert( pCurrentPerceptionLevel_ );
-    file >> nTmpID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    file >> nTmpID;
-    pHackedPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
-    assert( pPreviousPerceptionLevel_ );
+    file >> pCurrentPerceptionLevel_;
+    file >> pPreviousPerceptionLevel_;
+    file >> pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,13 +168,10 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
         unsigned int attitude = pAttitude_->GetID();
         file << attitude;
     }
-    unsigned int current  = pCurrentPerceptionLevel_->GetID();
-    unsigned int previous = pPreviousPerceptionLevel_->GetID();
-    unsigned int hacked = pHackedPerceptionLevel_->GetID();
     file << rRelevance_
-         << current
-         << previous
-         << hacked;
+         << pCurrentPerceptionLevel_
+         << pPreviousPerceptionLevel_
+         << pHackedPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

@@ -63,11 +63,8 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 {
     file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
          >> pPopulationConcentrationPerceived_;
-    unsigned int nID;
-    file >> nID;
-    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
-    file >> nID;
-    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
+    file >> pCurrentPerceptionLevel_
+         >> pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,12 +73,10 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = pCurrentPerceptionLevel_->GetID(),
-             previous = pPreviousPerceptionLevel_->GetID();
     file << pPopulationKnowledge_
          << pPopulationConcentrationPerceived_
-         << current
-         << previous;
+         << pCurrentPerceptionLevel_
+         << pPreviousPerceptionLevel_;
 }
 
 // -----------------------------------------------------------------------------

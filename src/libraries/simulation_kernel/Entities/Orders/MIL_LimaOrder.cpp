@@ -214,45 +214,6 @@ const MIL_LimaOrder::T_LimaFunctions& MIL_LimaOrder::GetFunctions() const
     return functions_;
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        typedef std::vector< const MIL_LimaFunction* > T_LimaFunctions;
-
-        template< typename Archive >
-        void serialize( Archive& file, T_LimaFunctions& functions, const unsigned int nVersion )
-        {
-            split_free( file, functions, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const T_LimaFunctions& functions, const unsigned int )
-        {
-            std::size_t size = functions.size();
-            file << size;
-            for( auto it = functions.begin(); it != functions.end(); ++it )
-            {
-                unsigned id = (*it)->GetID();
-                file << id;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, T_LimaFunctions& functions, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                unsigned int nID;
-                file >> nID;
-                functions.push_back( MIL_LimaFunction::Find( nID ) );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaOrder::load
 // Created: LGY 2011-06-07

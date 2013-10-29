@@ -82,10 +82,6 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
     delete pDotations_;
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::load
 // Created: JVT 2005-03-31
@@ -93,13 +89,10 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
-         >> owner_ 
-         >> pDotations_;
-    unsigned int nID;
-    file >> nID;
-    pCurrentConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
-    file >> nID;
-    pPreviousConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
+         >> owner_
+         >> pDotations_
+         >> pCurrentConsumptionMode_
+         >> pPreviousConsumptionMode_;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,13 +101,11 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (unsigned int)-1 ) ,
-             previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (unsigned int)-1 );
     file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          << owner_
          << pDotations_
-         << current
-         << previous;
+         << pCurrentConsumptionMode_
+         << pPreviousConsumptionMode_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,9 +118,6 @@ void PHY_RolePion_Dotations::WriteODB( xml::xostream& xos ) const
     pDotations_->WriteODB( xos );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::ReadOverloading
 // Created: NLD 2004-08-17

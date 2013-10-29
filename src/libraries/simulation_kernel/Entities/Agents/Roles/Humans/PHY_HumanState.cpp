@@ -62,15 +62,13 @@ PHY_HumanState::~PHY_HumanState()
 void PHY_HumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int rankId;
-    unsigned int stateId;
     file >> number_
          >> rankId
-         >> stateId
+         >> state_
          >> location_
          >> contaminated_
          >> psyop_;
     rank_ = PHY_HumanRank::Find( rankId );
-    state_ = PHY_HumanWound::Find( stateId );
     assert( rank_ && state_ );
 }
 
@@ -81,10 +79,9 @@ void PHY_HumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
 void PHY_HumanState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const unsigned int rankId = rank_->GetID();
-    const unsigned int stateId = state_->GetID();
     file << number_
          << rankId
-         << stateId
+         << state_
          << location_
          << contaminated_
          << psyop_;

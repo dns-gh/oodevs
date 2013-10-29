@@ -118,12 +118,8 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> size;
     while( size-- )
     {
-        std::string type;
-
-        ar >> type;
-        const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );
-        if( !dotation )
-           throw MASA_EXCEPTION( "Unknown dotation category - " + type + " - " );
+        const PHY_DotationCategory* dotation;
+        ar >> dotation;
         StockDotation& stockDotation = stockDotations_[ dotation ];
         ar >> stockDotation.stock_ >> stockDotation.maxStock_;
     }
@@ -140,7 +136,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
     ar << size;
     for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
-        ar << it->first->GetName()
+        ar << it->first
            << it->second.stock_ << it->second.maxStock_;
     }
 }

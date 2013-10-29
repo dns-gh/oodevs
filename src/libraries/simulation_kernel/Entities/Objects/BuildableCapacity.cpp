@@ -95,19 +95,12 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    unsigned int consumptionId, dotationId;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar >> consumptionId
-       >> dotationId
+    ar >> default_
+       >> dotation_
        >> nFullNbrDotation_
        >> unitType_
        >> finalised_;
-    default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
-    if( !default_ )
-        throw MASA_EXCEPTION( "Unknown consumption category." );
-    dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
-    if( !dotation_ && dotationId )
-        throw MASA_EXCEPTION( "Unknown dotation category." );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +110,8 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << (const unsigned int&)default_->GetID()
-       << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
+    ar << default_
+       << dotation_
        << nFullNbrDotation_
        << unitType_
        << finalised_;

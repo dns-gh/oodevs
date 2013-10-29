@@ -176,23 +176,14 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    dotation_ = 0;
-    std::string dotation;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-       >> dotation
+       >> dotation_
        >> nFullNbrDotation_
        >> nCurrentNbrDotation_
        >> density_;
-
     double tmp;
     ar >> tmp;
     constructionPercentage_.Set( tmp );
-    if( !dotation.empty() )
-    {
-        dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-        if( !dotation_ )
-            throw MASA_EXCEPTION( "Unknown dotation category - " + dotation + " - " );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -201,12 +192,8 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    std::string emptyString;
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    if( dotation_ )
-       ar << dotation_->GetName();
-    else
-       ar << emptyString;
+    ar << dotation_;
     double constructionPercentage = constructionPercentage_.Get();
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_

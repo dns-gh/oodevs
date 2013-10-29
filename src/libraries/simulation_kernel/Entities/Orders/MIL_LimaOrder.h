@@ -98,7 +98,5 @@ private:
 BOOST_CLASS_EXPORT_KEY( MIL_LimaOrder )
 
 typedef std::vector< MIL_LimaOrder  > T_LimaVector;
-typedef T_LimaVector::iterator        IT_LimaVector;
-typedef T_LimaVector::const_iterator  CIT_LimaVector;
 
 #endif // __MIL_LimaOrder_h_

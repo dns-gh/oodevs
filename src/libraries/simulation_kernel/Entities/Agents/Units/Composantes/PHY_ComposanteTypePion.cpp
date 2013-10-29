@@ -1895,3 +1895,13 @@ const PHY_BreakdownType* PHY_ComposanteTypePion::GetAttritionBreakdownType() con
 {
     return GetBreakdownType( attritionBreakdownTypeProbabilities_ );
 }
+
+void boost::archive::save( MIL_CheckPointOutArchive& a, const PHY_ComposanteTypePion* t )
+{
+    boost::archive::save( a, static_cast< const PHY_ComposanteType_ABC* >( t ) );
+}
+
+void boost::archive::load( MIL_CheckPointInArchive& a, const PHY_ComposanteTypePion*& t )
+{
+    boost::archive::load( a, (const PHY_ComposanteType_ABC*&)t );
+}

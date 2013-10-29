@@ -82,7 +82,6 @@ private:
 private:
     //! @name
     //@{
-    std::string category_;
     PopulationAttrition population_;
     const PHY_DotationCategory* dotation_;
     //@}

@@ -12,7 +12,6 @@
 #ifndef __PHY_ComposanteType_h_
 #define __PHY_ComposanteType_h_
 
-#include "MIL.h"
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
@@ -398,5 +397,14 @@ private:
 private:
     static T_ComposanteTypeMap composantesTypes_;
 };
+
+namespace boost
+{
+namespace archive
+{
+    void save( MIL_CheckPointOutArchive& a, const PHY_ComposanteTypePion* t );
+    void load( MIL_CheckPointInArchive& a, const PHY_ComposanteTypePion*& t );
+}
+}
 
 #endif // __PHY_ComposanteType_h_

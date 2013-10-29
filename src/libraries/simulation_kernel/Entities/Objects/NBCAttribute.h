@@ -100,7 +100,6 @@ private:
     void ReadNBCAgent( xml::xistream& xis );
     bool ReadAgents( const std::string& strAgents );
     std::string WriteAgents() const;
-    template< typename T > bool Insert( const T& type );
     //@}
 
 private:
