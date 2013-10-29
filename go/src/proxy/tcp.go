@@ -305,6 +305,10 @@ func (t *TcpProxy) deny(ctx *TcpContext, msg *swapi.SwordMessage) error {
 	return nil
 }
 
+// Tell connected clients we support authentication service. We'll use the
+// password triplet to determine where to dispatch the current connection. We
+// cannot just wait for clients to login as some of them wait for those
+// services to be broadcast before doing anything
 func (t *TcpProxy) publishAuthService(ctx *TcpContext) {
 	data, err := createMessage(swapi.DispatcherToClientTag,
 		&sword.DispatcherToClient{
