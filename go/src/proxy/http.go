@@ -26,6 +26,7 @@ type ProxyContext struct {
 
 type HttpProxy struct {
 	http.Handler
+	verbose int
 	access  sync.RWMutex
 	targets map[string]*ProxyContext
 	local   []net.Addr
@@ -43,6 +44,7 @@ func NewHttpProxy() *HttpProxy {
 }
 
 func (s *HttpProxy) Run(options *Options) error {
+	s.verbose = options.verbose
 	server := http.Server{
 		Addr:         fmt.Sprintf(":%d", options.http),
 		Handler:      s,
@@ -114,9 +116,11 @@ func (it *HttpProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ip := it.SetRemoteAddress(r)
-	// prev := r.URL.Path
+	prev := r.URL.Path
 	r.URL.Path = r.URL.Path[len(ctx.prefix):]
-	// log.Println(prev, "-> http://"+ctx.host+":"+ctx.port+"/"+r.URL.Path, "from", ip)
+	if it.verbose > 0 {
+		log.Println(prev, "-> http://"+ctx.host+":"+ctx.port+"/"+r.URL.Path, "from", ip)
+	}
 	r.Header.Set("Remote-Address", ip)
 	ctx.proxy.ServeHTTP(w, r)
 }
