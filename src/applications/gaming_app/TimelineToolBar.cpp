@@ -36,6 +36,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
     if( !isMain )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
+    OnSwitchView();
 }
 
 // -----------------------------------------------------------------------------

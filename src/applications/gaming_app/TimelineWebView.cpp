@@ -568,6 +568,8 @@ void TimelineWebView::OnSavedEvents( const std::string& content, const timeline:
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
 {
+    if( !server_ )
+        return;
     auto query = boost::assign::map_list_of( "horizontal", horizontal ? "true" : "false" );
     server_->UpdateQuery( query );
 }
