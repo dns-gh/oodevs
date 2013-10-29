@@ -33,6 +33,7 @@
 #include "tools/SchemaWriter.h"
 #include <timeline/api.h>
 #include <tools/StdFileWrapper.h>
+#include <boost/assign.hpp>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -559,4 +560,16 @@ void TimelineWebView::OnSavedEvents( const std::string& content, const timeline:
         return;
     os << content;
     os.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnSetLayoutOrientation
+// Created: ABR 2013-10-25
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
+{
+    if( !server_ )
+        return;
+    auto query = boost::assign::map_list_of( "horizontal", horizontal ? "true" : "false" );
+    server_->UpdateQuery( query );
 }

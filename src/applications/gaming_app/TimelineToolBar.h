@@ -35,6 +35,8 @@ public:
 signals:
     //! @name Signals
     //@{
+    void SetLayoutOrientation( bool horizontal );
+
     void AddView();
     void CenterView();
     void RemoveCurrentView();
@@ -49,6 +51,7 @@ signals:
 public slots:
     //! @name Slots
     //@{
+    void OnSwitchView();
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
@@ -60,6 +63,7 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
+    QAction* horizontalView_;
     //@}
 };
 

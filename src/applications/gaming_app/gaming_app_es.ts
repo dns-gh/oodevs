@@ -3096,6 +3096,14 @@ This data can&apos;t be projected.</source>
         <source>orders</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch to vertical view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to horizontal view</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

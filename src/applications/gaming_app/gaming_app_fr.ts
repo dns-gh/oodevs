@@ -3103,6 +3103,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>orders</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch to vertical view</source>
+        <translation>Passer en mode vertical</translation>
+    </message>
+    <message>
+        <source>Switch to horizontal view</source>
+        <translation>Passer en mode horizontal</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

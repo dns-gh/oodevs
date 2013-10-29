@@ -90,6 +90,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCenterView();
+    void OnSetLayoutOrientation( bool horizontal );
 
     void CreateEvent( const timeline::Event& event );
     void EditEvent( const timeline::Event& event );

@@ -22,8 +22,10 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     : QToolBar( parent )
     , config_( config )
 {
-    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
+    horizontalView_ = addAction( qApp->style()->standardIcon( QStyle::SP_TitleBarMaxButton ), "", this, SLOT( OnSwitchView() ) );
+    horizontalView_->setCheckable( true );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
+    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SIGNAL( SetLayout() ) );
     addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
@@ -34,6 +36,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
     if( !isMain )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
+    OnSwitchView();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +46,17 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
 TimelineToolBar::~TimelineToolBar()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnSwitchView
+// Created: ABR 2013-10-25
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnSwitchView()
+{
+    bool horizontal = horizontalView_->isChecked();
+    horizontalView_->setText( horizontal ? tr( "Switch to vertical view" ) : tr( "Switch to horizontal view" ) );
+    emit SetLayoutOrientation( horizontal );
 }
 
 // -----------------------------------------------------------------------------
