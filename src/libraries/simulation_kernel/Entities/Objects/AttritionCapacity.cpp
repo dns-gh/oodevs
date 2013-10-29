@@ -33,7 +33,8 @@ AttritionCapacity::AttritionCapacity( xml::xistream& xis )
     : dotation_( PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "category", std::string() ) ) )
 {
     if( !dotation_ )
-        throw MASA_EXCEPTION( "Unknown dotation category" );
+        throw MASA_EXCEPTION( xis.context() + "Unknown dotation category '"
+            + xis.attribute< std::string >( "category" ) + "' for attrition capacity" );
     xis >> xml::attribute( "attrition-surface", population_.surface_ )
         >> xml::attribute( "ph", population_.ph_ );
 }
