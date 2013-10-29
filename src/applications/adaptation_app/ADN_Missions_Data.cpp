@@ -449,7 +449,7 @@ namespace
     {
         for( auto itObject = vector.begin(); itObject != vector.end(); ++itObject )
         {
-            ADN_Objects_Data_ObjectInfos* infos = ( *itObject )->ptrObject_.GetData();
+            ADN_Objects_Data_ObjectInfos* infos = ( *itObject )->GetCrossedElement();
             if( infos && ( *itObject )->isAllowed_.GetData() && infos->strName_.GetData() == objectName )
                 result << ( ( prefix.empty() ) ? missionName.c_str() : QString( "%1 - %2" ).arg( prefix.c_str() ).arg( missionName.c_str() ) );
         }

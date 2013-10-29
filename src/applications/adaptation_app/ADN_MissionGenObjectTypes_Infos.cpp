@@ -19,10 +19,10 @@ using namespace helpers;
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Data_ObjectInfos* ptr )
-    : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), ptr )
+    : ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), ptr, true )
     , isAllowed_( false )
 {
-    BindExistenceTo( &ptrObject_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Da
 // Created: LGY 2012-04-19
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos()
-    : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
+    : ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true )
     , isAllowed_( false )
 {
     // NOTHING
@@ -54,7 +54,7 @@ void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output ) cons
     if( isAllowed_.GetData() )
     {
         output << xml::start( "parameter" )
-                  << xml::attribute( "type", ptrObject_.GetData()->strType_ )
+                  << xml::attribute( "type", GetCrossedElement()->strType_ )
                << xml::end;
     }
 }
@@ -65,8 +65,7 @@ void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output ) cons
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Infos* ADN_MissionGenObjectTypes_Infos::CreateCopy()
 {
-    ADN_MissionGenObjectTypes_Infos* infos = new ADN_MissionGenObjectTypes_Infos();
-    infos->ptrObject_ = ptrObject_.GetData();
+    ADN_MissionGenObjectTypes_Infos* infos = new ADN_MissionGenObjectTypes_Infos( GetCrossedElement() );
     infos->isAllowed_ = isAllowed_.GetData();
     return infos;
 }

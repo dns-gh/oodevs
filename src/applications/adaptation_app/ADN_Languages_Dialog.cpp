@@ -69,6 +69,10 @@ ADN_Languages_Dialog::ADN_Languages_Dialog( ADN_Languages_Data& data )
     down_ = CreateArrowButton( "down", tr( "Move down"), Qt::DownArrow, this, SLOT( OnDown() ) );
     add_ = CreateArrowButton( "add", tr( "Add language" ), Qt::RightArrow, this, SLOT( OnAdd() ) );
     remove_ = CreateArrowButton( "remove", tr( "Remove language" ), Qt::LeftArrow, this, SLOT( OnRemove() ) );
+
+    connect( availables_, SIGNAL( activated( const QModelIndex& ) ), this, SLOT( OnAdd() ) );
+    connect( actives_, SIGNAL( activated( const QModelIndex& ) ), this, SLOT( OnRemove() ) );
+
     translationsLayout->addWidget( availables_, 0, 0, 4, 1 );
     translationsLayout->addWidget( add_, 1, 1 );
     translationsLayout->addWidget( remove_, 2, 1 );
@@ -122,16 +126,18 @@ int ADN_Languages_Dialog::exec()
 
     const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
     for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
-        if( data_.IsMaster( itAll->GetCode() ) )
-            master_->setText( itAll->GetName().c_str() );
-        else if( !data_.HasActiveLanguage( itAll->GetCode() ) )
-            InsertItem( *itAll, availables_ );
+        if( itAll->IsSupported() )
+        {
+            if( data_.IsMaster( itAll->GetCode() ) )
+                master_->setText( itAll->GetName().c_str() );
+            else if( !data_.HasActiveLanguage( itAll->GetCode() ) )
+                InsertItem( *itAll, availables_ );
+        }
 
     const tools::LanguagesVector& activeLanguages = data_.GetActiveLanguages();
     for( auto itActive = activeLanguages.begin(); itActive != activeLanguages.end(); ++itActive )
         InsertItem( *itActive, actives_ );
 
-    availables_->sortItems( 1, Qt::AscendingOrder );
     OnSelectionChanged();
     return QDialog::exec();
 }
@@ -177,13 +183,6 @@ namespace
         widget->insertTopLevelItem( index + indexModifier, item );
         widget->setCurrentItem( item );
     }
-    void SwapItem( QTreeWidget* source, QTreeWidget* dest )
-    {
-        QTreeWidgetItem* item = source->currentItem();
-        source->takeTopLevelItem( source->indexOfTopLevelItem( item ) );
-        dest->insertTopLevelItem( dest->topLevelItemCount(), item );
-        dest->setCurrentItem( item );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +209,10 @@ void ADN_Languages_Dialog::OnDown()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Dialog::OnAdd()
 {
-    SwapItem( availables_, actives_ );
+    QTreeWidgetItem* item = availables_->currentItem();
+    availables_->takeTopLevelItem( availables_->indexOfTopLevelItem( item ) );
+    actives_->insertTopLevelItem( actives_->topLevelItemCount(), item );
+    actives_->setCurrentItem( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,6 +221,22 @@ void ADN_Languages_Dialog::OnAdd()
 // -----------------------------------------------------------------------------
 void ADN_Languages_Dialog::OnRemove()
 {
-    SwapItem( actives_, availables_ );
-    availables_->sortItems( 1, Qt::AscendingOrder );
+    QTreeWidgetItem* item = actives_->currentItem();
+    actives_->takeTopLevelItem( actives_->indexOfTopLevelItem( item ) );
+
+    int index = 0;
+    const tools::LanguagesVector& languages = data_.GetAllLanguages().GetVector();
+    for( auto itAll = languages.begin(); itAll != languages.end(); ++itAll )
+        if( itAll->IsSupported() &&
+            !data_.IsMaster( itAll->GetCode() ) &&
+            actives_->findItems( itAll->GetCode().c_str(), Qt::MatchExactly, 1 ).size() == 0 )
+            {
+                if( itAll->GetCode() == item->text( 1 ).toStdString() )
+                {
+                    availables_->insertTopLevelItem( index, item );
+                    break;
+                }
+                ++index;
+            }
+    availables_->setCurrentItem( item );
 }

@@ -99,8 +99,7 @@ void Application_ABC::InitializeBugTrap()
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeStyle()
 {
-    style_.reset( new gui::VerticalHeaderStyle() );
-    app_.setStyle( style_.get() );
+    app_.setStyle( "cleanlooks" );
     QFile file( "style.qss" );
     if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
         QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );

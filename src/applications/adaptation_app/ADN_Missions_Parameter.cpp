@@ -213,7 +213,7 @@ void ADN_Missions_Parameter::ReadChoiceGenObjects( xml::xistream& input, helpers
     std::string name = input.attribute< std::string >( "type" );
     for( std::size_t i = 0; i < data.size(); ++i )
     {
-        if( data[ i ]->ptrObject_.GetData() && data[ i ]->ptrObject_.GetData()->strType_.GetData() == name )
+        if( data[ i ]->GetCrossedElement() && data[ i ]->GetCrossedElement()->strType_.GetData() == name )
         {
             data[ i ]->isAllowed_ = true;
             return;

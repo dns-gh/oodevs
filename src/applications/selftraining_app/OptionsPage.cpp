@@ -83,11 +83,12 @@ void OptionsPage::SetSettingsLayout()
     languageCombo_ = new QComboBox();
 
     for( auto it = config_.GetLanguages().GetVector().begin(); it != config_.GetLanguages().GetVector().end(); ++it )
-    {
-        languageCombo_->addItem( it->GetName().c_str() );
-        if( it->GetCode() == selectedLanguage_ )
-            languageCombo_->setCurrentIndex( languageCombo_->findText( it->GetName().c_str() ) );
-    }
+        if( it->IsSupported() )
+        {
+            languageCombo_->addItem( it->GetName().c_str() );
+            if( it->GetCode() == selectedLanguage_ )
+                languageCombo_->setCurrentIndex( languageCombo_->findText( it->GetName().c_str() ) );
+        }
     connect( languageCombo_, SIGNAL( activated( const QString& ) ), SLOT( OnChangeLanguage( const QString& ) ) );
 
     // Data

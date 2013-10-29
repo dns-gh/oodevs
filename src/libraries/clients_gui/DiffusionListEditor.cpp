@@ -54,8 +54,10 @@ DiffusionListEditor::DiffusionListEditor( QWidget* parent, kernel::Controllers& 
     , tableView_    ( this )
     , dataModel_    ( this )
     , currentTeam_     ( controllers )
+    , style_( new VerticalHeaderStyle() )
 {
     // TableView init
+    tableView_.setStyle( style_.get() );
     tableView_.setModel( &dataModel_ );
     tableView_.setSortingEnabled( false );
     tableView_.setShowGrid( true );

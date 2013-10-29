@@ -42,7 +42,9 @@ public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
+    const std::string& GetEnglishName() const;
     const std::string& GetCode() const;
+    bool IsSupported() const;
     //@}
 
     //! @name Static methods
@@ -56,7 +58,9 @@ private:
     //! @name Member data
     //@{
     std::string name_;
+    std::string englishName_;
     std::string code_;
+    bool supported_;
     //@}
 
     //! @name Static member data

@@ -60,7 +60,7 @@ Config::~Config()
 void Config::ReadSession()
 {
     const tools::Path session = GetSessionFile();
-    if( !session.IsEmpty() )
+    if( !session.IsEmpty() && session.Exists() )
     {
         tools::Xifstream xis( session );
         xis >> xml::start( "session" )
