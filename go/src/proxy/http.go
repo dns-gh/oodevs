@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net"
@@ -19,9 +20,9 @@ const (
 
 type ProxyContext struct {
 	proxy  *httputil.ReverseProxy
-	prefix string
-	host   string
-	port   string
+	Prefix string
+	Host   string
+	Port   string
 }
 
 type HttpProxy struct {
@@ -110,16 +111,16 @@ func (it *HttpProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// url path is a target prefix without trailing slash
-	if len(r.URL.Path) < len(ctx.prefix) {
-		http.Redirect(w, r, ctx.prefix, http.StatusMovedPermanently)
+	if len(r.URL.Path) < len(ctx.Prefix) {
+		http.Redirect(w, r, ctx.Prefix, http.StatusMovedPermanently)
 		return
 	}
 
 	ip := it.SetRemoteAddress(r)
 	prev := r.URL.Path
-	r.URL.Path = r.URL.Path[len(ctx.prefix):]
+	r.URL.Path = r.URL.Path[len(ctx.Prefix):]
 	if it.verbose > 0 {
-		log.Println(prev, "-> http://"+ctx.host+":"+ctx.port+"/"+r.URL.Path, "from", ip)
+		log.Println(prev, "-> http://"+ctx.Host+":"+ctx.Port+"/"+r.URL.Path, "from", ip)
 	}
 	r.Header.Set("Remote-Address", ip)
 	ctx.proxy.ServeHTTP(w, r)
@@ -163,9 +164,9 @@ func (it *HttpProxy) Register(q url.Values) error {
 	defer it.access.Unlock()
 	it.targets[prefix] = &ProxyContext{
 		proxy:  httputil.NewSingleHostReverseProxy(url),
-		prefix: prefix,
-		host:   host,
-		port:   port,
+		Prefix: prefix,
+		Host:   host,
+		Port:   port,
 	}
 	log.Println("added proxy", prefix, "to", url)
 	return nil
@@ -182,14 +183,13 @@ func (it *HttpProxy) Unregister(q url.Values) {
 func (it *HttpProxy) List(w http.ResponseWriter) {
 	it.access.RLock()
 	defer it.access.RUnlock()
-	fmt.Fprint(w, "[")
-	next := false
+	dst := []*ProxyContext{}
 	for _, v := range it.targets {
-		if next {
-			fmt.Fprintf(w, ",")
-		}
-		next = true
-		fmt.Fprintf(w, "{\"prefix\":\"%s\",\"host\":\"%s\",\"port\":\"%s\"}", v.prefix, v.host, v.port)
+		dst = append(dst, v)
 	}
-	fmt.Fprint(w, "]")
+	bytes, err := json.MarshalIndent(dst, "", "\t")
+	if err != nil {
+		return
+	}
+	fmt.Fprintln(w, string(bytes))
 }
