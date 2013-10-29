@@ -238,22 +238,16 @@ integration.isMissionAgentAvailable = function( entity, targetTaskName )
     return DEC_IsMissionPionAvailable( entity, targetTaskName )
 end
 
-masalife.brain.communication.setMessageTreatment( "StageChanged",
-    function( message )
-        myself.leadData.stageChangedSubordinates = myself.leadData.stageChangedSubordinates or {}
-        myself.leadData.stageChangedSubordinates[ message.element ] = myself.leadData.stageChangedSubordinates[ message.element ] or {}
-        myself.leadData.stageChangedSubordinates[ message.element ].taskName = message.taskName
-        myself.leadData.stageChangedSubordinates[ message.element ].id = message.id
-    end
-)
-
 masalife.brain.communication.setMessageTreatment( "TaskDone",
     function( message )
         local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
         local frontElement = message.element
         if myFrontElements and frontElement then
-            myself.leadData.finishedSubordinates = myself.leadData.finishedSubordinates or {}
-            myself.leadData.finishedSubordinates[ #myself.leadData.finishedSubordinates + 1 ] = frontElement
+            local myself = myself
+            if myself.leadData then
+                myself.leadData.finishedSubordinates = myself.leadData.finishedSubordinates or {}
+                myself.leadData.finishedSubordinates[ #myself.leadData.finishedSubordinates + 1 ] = frontElement
+            end
             if myFrontElements[ frontElement ] then 
                 myFrontElements[ frontElement ] = nil
                 if not next( myFrontElements ) then
