@@ -63,6 +63,10 @@ void EventManager::Select()
 
 namespace
 {
+    bool localAwareStringCompare( const std::string& string1, const std::string& string2 )
+    {
+        return QString::fromStdString( string1 ).localeAwareCompare( QString::fromStdString( string2 ) ) < 0;
+    }
     template< typename T >
     void FillOrders( std::vector< std::string >& result, const kernel::AgentTypes& agentTypes,
                      const E_MissionType type )
@@ -74,7 +78,7 @@ namespace
             if( mission.GetType() == type )
                 result.push_back( mission.GetName() );
         }
-        std::sort( result.begin(), result.end() );
+        std::sort( result.begin(), result.end(), &localAwareStringCompare );
     }
     template< typename T >
     const kernel::OrderType* GetCurrentOrder( const kernel::AgentTypes& agentTypes,
@@ -103,7 +107,7 @@ namespace
     {
         while( it.HasMoreElements() )
             result.push_back( it.NextElement().GetName() );
-        std::sort( result.begin(), result.end() );
+        std::sort( result.begin(), result.end(), &localAwareStringCompare );
     }
     void FillCompatibleFragOrders( std::vector< std::string >& result,
                                    std::vector< std::string >& disabledResult,
@@ -129,7 +133,7 @@ namespace
                 }
             }
         }
-        std::sort( result.begin(), result.end() );
+        std::sort( result.begin(), result.end(), &localAwareStringCompare );
     }
     template< typename T >
     const kernel::OrderType* GetCurrentOrder( tools::Iterator< const T& > it, const std::string& name )
