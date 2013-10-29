@@ -34,7 +34,7 @@ Services::~Services()
 // Name: Services::Has
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::Has( sword::Service id ) const
+bool Services::Has( sword::EnumService id ) const
 {
     return services_.find( id ) != services_.end();
 }
@@ -43,7 +43,7 @@ bool Services::Has( sword::Service id ) const
 // Name: Services::HasService
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Services::Declare( sword::Service id )
+void Services::Declare( sword::EnumService id )
 {
     services_.insert( id );
 }

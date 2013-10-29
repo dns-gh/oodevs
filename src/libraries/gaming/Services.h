@@ -40,8 +40,8 @@ public:
 
     //! @name Read methods
     //@{
-    bool HasService( sword::Service id ) const;
-    bool RequireService( sword::Service id ) const;
+    bool HasService( sword::EnumService id ) const;
+    bool RequireService( sword::EnumService id ) const;
     //@}
 
     //! @name Read methods

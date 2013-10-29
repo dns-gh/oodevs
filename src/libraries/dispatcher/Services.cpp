@@ -37,7 +37,7 @@ Services::~Services()
 // Name: Services::Declare
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Services::Declare( sword::Service id )
+void Services::Declare( sword::EnumService id )
 {
     services_.Declare( id );
 }
@@ -46,7 +46,7 @@ void Services::Declare( sword::Service id )
 // Name: Services::HasService
 // Created: LDC 2010-03-19
 // -----------------------------------------------------------------------------
-bool Services::HasService( sword::Service id ) const
+bool Services::HasService( sword::EnumService id ) const
 {
     return services_.Has( id );
 }

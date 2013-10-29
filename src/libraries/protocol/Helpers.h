@@ -64,7 +64,7 @@ namespace mapping
 
     struct Service
     {
-        typedef sword::Service value_type;
+        typedef sword::EnumService value_type;
         std::string          name;
         value_type           type;
         static const Service data_[];

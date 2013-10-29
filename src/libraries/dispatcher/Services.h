@@ -34,8 +34,8 @@ public:
     //! @name Operations
     //@{
     void Send( ClientPublisher_ABC& publisher ) const;
-    void Declare( sword::Service id );
-    bool HasService( sword::Service id ) const;
+    void Declare( sword::EnumService id );
+    bool HasService( sword::EnumService id ) const;
     //@}
 
 private:

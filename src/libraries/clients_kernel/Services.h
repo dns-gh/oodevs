@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    enum Service;
+    enum EnumService;
 }
 
 namespace kernel
@@ -37,15 +37,15 @@ public:
 
     //! @name Methods
     //@{
-    bool Has( sword::Service id ) const;
-    void Declare( sword::Service id );
+    bool Has( sword::EnumService id ) const;
+    void Declare( sword::EnumService id );
     void Clear();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::set< sword::Service > services_;
+    std::set< sword::EnumService > services_;
     //@}
 };
 }

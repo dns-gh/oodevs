@@ -141,5 +141,5 @@ const mapping::Service mapping::Service::data_[] = {
 };
 
 const size_t mapping::Service::size_ = COUNT_OF( mapping::Service::data_ );
-BOOST_STATIC_ASSERT( sword::Service_ARRAYSIZE == mapping::Service::size_ );
-BOOST_STATIC_ASSERT( sizeof sword::Service == sizeof uint32_t );
+BOOST_STATIC_ASSERT( sword::EnumService_ARRAYSIZE == mapping::Service::size_ );
+BOOST_STATIC_ASSERT( sizeof sword::EnumService == sizeof uint32_t );

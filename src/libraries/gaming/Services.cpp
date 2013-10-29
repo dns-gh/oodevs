@@ -40,7 +40,7 @@ Services::~Services()
 
 namespace
 {
-    boost::optional< sword::Service > FindService( const std::string& name )
+    boost::optional< sword::EnumService > FindService( const std::string& name )
     {
         for( size_t i = 0; i < protocol::mapping::Service::size_; ++i )
             if( protocol::mapping::Service::data_[i].name == name )
@@ -66,7 +66,7 @@ void Services::Update( const sword::ServicesDescription& message )
 // Name: Services::HasService
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::HasService( sword::Service id ) const
+bool Services::HasService( sword::EnumService id ) const
 {
     return services_.Has( id );
 }
@@ -75,11 +75,11 @@ bool Services::HasService( sword::Service id ) const
 // Name: Services::RequireService
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::RequireService( sword::Service id ) const
+bool Services::RequireService( sword::EnumService id ) const
 {
     if( HasService( id ) )
         return true;
-    logger_.Error( "Host does not implement service '" + sword::Service_Name( id ) + "'" );
+    logger_.Error( "Host does not implement service '" + sword::EnumService_Name( id ) + "'" );
     return false;
 }
 

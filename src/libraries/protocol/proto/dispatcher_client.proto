@@ -15,7 +15,9 @@ package sword;
  *  @{
  */
 
-enum Service {
+// EnumService is not directly used by the protocol, but client code can
+// use it internally instead of string identifiers.
+enum EnumService {
     service_aar            = 0;
     service_authentication = 1;
     service_messenger      = 2;
