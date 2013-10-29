@@ -108,11 +108,11 @@ void FireResultListView::DisplayFirer( QTreeWidgetItem* item, const kernel::Enti
         return;
     const std::string& typeName = firer->GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
-        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) ) );
+        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) ) );
     else if( typeName == kernel::Population_ABC::typeName_ )
-        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) ) );
+        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) ) );
     else if( typeName == kernel::Object_ABC::typeName_ )
-        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) ) );
+        item->setText( 1, extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
     if( !item )
         return;
     item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
-    item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    item->setText( 2, extractor_.GetDisplayName( result.target_ ) );
     DisplayFirer( item, result.firer_ );
     SetNumberOfChildren( item, 0 );
 
@@ -182,7 +182,7 @@ void FireResultListView::Display( const PopulationFireResult& result, QTreeWidge
     if( !item )
         return;
     item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
-    item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    item->setText( 2, extractor_.GetDisplayName( result.target_ ) );
     DisplayFirer( item, result.firer_ );
     int lines = ( result.deadPeople_ == 0 ? 0 : 1 ) + ( result.woundedPeople_ == 0 ? 0 : 1 ) + ( result.scatteredPeople_ == 0 ? 0 : 1 );
     SetNumberOfChildren( item, lines );
