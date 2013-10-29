@@ -49,7 +49,6 @@ TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& 
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
     , creationSignalMapper_( 0 )
-    , dummySignalMapper_( 0 )
 {
     setObjectName( "timeline-webview" );
 
@@ -275,20 +274,12 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
     creationSignalMapper_.reset( new QSignalMapper( this ) );
     connect( creationSignalMapper_.get(), SIGNAL( mapped( int ) ), this, SLOT( OnCreateClicked( int ) ) );
 
-    dummySignalMapper_.reset( new QSignalMapper( this ) );
-    connect( dummySignalMapper_.get(), SIGNAL( mapped( int ) ), this, SLOT( OnCreateDummyClicked( int ) ) );
-
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
-    kernel::ContextMenu* dummyMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
-    {
         if( i != eEventTypes_Report )
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
-        AddToMenu( *dummyMenu, dummySignalMapper_.get(), QString( "Dummy " ) + QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
-    }
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
-    menu.InsertItem( "Command", "Create dummy event", dummyMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,16 +293,6 @@ void TimelineWebView::OnCreateClicked( int type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnCreateDummyClicked
-// Created: ABR 2013-06-19
-// -----------------------------------------------------------------------------
-void TimelineWebView::OnCreateDummyClicked( int type )
-{
-    assert( type >= 0 && type < eNbrEventTypes );
-    CreateDummyEvent( static_cast< E_EventTypes >( type ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TimelineWebView::OnKeyUp
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
@@ -319,70 +300,6 @@ void TimelineWebView::OnKeyUp( int key )
 {
     if( selected_ && key == VK_DELETE )
         DeleteEvent( selected_->uuid );
-}
-
-// -----------------------------------------------------------------------------
-// Temporary method to test display
-// -----------------------------------------------------------------------------
-void TimelineWebView::CreateDummyEvent( E_EventTypes type )
-{
-    // Action
-    timeline::Action action;
-    switch( type )
-    {
-    case eEventTypes_Order:
-    case eEventTypes_SupervisorAction:
-        action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
-        break;
-    case eEventTypes_Report:
-        action.target = CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE );
-        break;
-    case eEventTypes_Multimedia:
-        action.target = CREATE_EVENT_TARGET( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE );
-        break;
-    }
-
-    // Create dummy protobuf message if order or supervisor action
-    if( type == eEventTypes_Order )
-    {
-        sword::ClientToSim msg;
-        sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
-        unitOrder->mutable_tasker()->set_id( 159 );
-        unitOrder->mutable_type()->set_id( 44582 ); // Move To
-        sword::MissionParameters* parameters = unitOrder->mutable_parameters();
-        parameters->add_elem()->add_value()->mutable_heading()->set_heading( 360 );
-        parameters->add_elem()->set_null_value( true );
-        parameters->add_elem()->set_null_value( true );
-        parameters->add_elem()->set_null_value( true );
-        sword::Location* location = parameters->add_elem()->add_value()->mutable_point()->mutable_location();
-        location->set_type( sword::Location_Geometry_point );
-        sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
-        latLong->set_latitude( 30.632128244641702 );
-        latLong->set_longitude( 28.976535107619295 );
-        msg.SerializePartialToString( &action.payload );
-    }
-    else if( type == eEventTypes_SupervisorAction )
-    {
-        sword::ClientToSim msg;
-        sword::UnitMagicAction* unitMagic = msg.mutable_message()->mutable_unit_magic_action();
-        unitMagic->mutable_tasker()->mutable_unit()->set_id( 159 );
-        unitMagic->set_type( sword::UnitMagicAction_Type_move_to );
-        sword::Location* location = unitMagic->mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
-        location->set_type( sword::Location_Geometry_point );
-        sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
-        latLong->set_latitude( 30.632128244641702 );
-        latLong->set_longitude( 28.976535107619295 );
-        msg.SerializePartialToString( &action.payload );
-    }
-
-    // Event
-    timeline::Event event;
-    event.name = "Dummy " + ENT_Tr::ConvertFromEventType( type );
-    event.info = "Dummy Infos";
-    event.begin = selectedDateTime_.toString( EVENT_DATE_FORMAT ).toStdString();
-    event.done = false;
-    event.action = action;
-    CreateEvent( event );
 }
 
 // -----------------------------------------------------------------------------
