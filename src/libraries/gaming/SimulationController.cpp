@@ -11,6 +11,7 @@
 #include "SimulationController.h"
 #include "Services.h"
 #include "Simulation.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
@@ -211,8 +212,8 @@ void SimulationController::ForceReplayDataRequest()
 // -----------------------------------------------------------------------------
 void SimulationController::NotifyUpdated( const Services& services )
 {
-    hasReplay_ = services.HasService< replay::Service >();
-    hasSimulation_ = services.HasService< simulation::Service >();
+    hasReplay_ = services.HasService( sword::service_replay );
+    hasSimulation_ = services.HasService( sword::service_simulation );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 
 // -----------------------------------------------------------------------------
@@ -118,5 +119,5 @@ void TimelineMarker::DisplayToolTip( QWidget* parent ) const
 // -----------------------------------------------------------------------------
 void TimelineMarker::NotifyUpdated( const Services& services )
 {
-    setEnabled( !services.HasService< replay::Service >() );
+    setEnabled( !services.HasService( sword::service_replay ) );
 }

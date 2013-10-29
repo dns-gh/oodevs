@@ -18,6 +18,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Population.h"
 #include "dispatcher/Services.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/Simulation.h"
 #include "tools/SessionConfig.h"
 #include "reports/ReportFactory.h"
@@ -90,7 +91,7 @@ bool LoggerPlugin::Initialize()
 {
     if( !initialized_ )
     {
-        if( !services_.HasService< replay::Service >() )
+        if( !services_.HasService( sword::service_replay ) )
         {
             if( !pLogger_.get() )
                 pLogger_.reset( new MT_FileLogger( filename_,

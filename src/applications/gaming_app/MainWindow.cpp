@@ -111,6 +111,7 @@
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
 #include "geodata/ProjectionException.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -511,12 +512,12 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // Name: MainWindow::NotifyUpdated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const Services& services )
+void MainWindow::NotifyUpdated( const ::Services& services )
 {
     Load();
-    if( services.HasService< simulation::Service >() )
+    if( services.HasService( sword::service_simulation ) )
         controllers_.ChangeMode( eModes_Gaming );
-    else if( services.HasService< replay::Service >() )
+    else if( services.HasService( sword::service_replay ) )
         controllers_.ChangeMode( eModes_Replay );
 }
 

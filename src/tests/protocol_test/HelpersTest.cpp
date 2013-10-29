@@ -72,3 +72,12 @@ BOOST_AUTO_TEST_CASE( check_phase_line_type_mappings )
         PhaseLineOrder::Function_IsValid,
         PhaseLineOrder::Function_Name );
 }
+
+BOOST_AUTO_TEST_CASE( check_service_mappings )
+{
+    CheckMapping< mapping::Service >(
+        EnumService_MIN,
+        EnumService_MAX,
+        EnumService_IsValid,
+        EnumService_Name );
+}

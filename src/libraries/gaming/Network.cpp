@@ -26,7 +26,7 @@ using namespace sword;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( Services& services, Simulation& simu, kernel::Logger_ABC& logger, unsigned long timeOut )
+Network::Network( ::Services& services, Simulation& simu, kernel::Logger_ABC& logger, unsigned long timeOut )
     : tools::ClientNetworker( "", false, timeOut )
     , services_( services )
     , simu_    ( simu )

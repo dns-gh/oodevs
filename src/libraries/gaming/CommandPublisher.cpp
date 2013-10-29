@@ -11,6 +11,7 @@
 #include "CommandPublisher.h"
 #include "Services.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -83,7 +84,7 @@ void CommandPublisher::NotifyUpdated( const kernel::Profile_ABC& profile )
 // -----------------------------------------------------------------------------
 void CommandPublisher::NotifyUpdated( const Services& services )
 {
-    messenger_ = services.HasService< plugins::messenger::Service >();
+    messenger_ = services.HasService( sword::service_messenger );
 }
 
 // -----------------------------------------------------------------------------

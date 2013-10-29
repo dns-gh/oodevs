@@ -16,6 +16,7 @@
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -61,7 +62,7 @@ ReplayPlugin::~ReplayPlugin()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Register( Services& services )
 {
-    services.Declare< ::replay::Service >();
+    services.Declare( sword::service_replay );
 }
 
 // -----------------------------------------------------------------------------

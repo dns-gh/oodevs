@@ -7,22 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef __Services_h_
-#define __Services_h_
+#ifndef CLIENTS_KERNEL_SERVICES_H__
+#define CLIENTS_KERNEL_SERVICES_H__
 
-#include "clients_kernel/Services.h"
-
-namespace kernel
-{
-    class Controller;
-    class Logger_ABC;
-}
+#include <boost/noncopyable.hpp>
+#include <set>
 
 namespace sword
 {
-    class ServicesDescription;
+    enum EnumService;
 }
 
+namespace kernel
+{
 // =============================================================================
 /** @class  Services
     @brief  Services
@@ -34,28 +31,23 @@ class Services : public boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Services( kernel::Controller& controller, kernel::Logger_ABC& logger );
+             Services();
     virtual ~Services();
     //@}
 
-    //! @name Read methods
+    //! @name Methods
     //@{
-    bool HasService( sword::EnumService id ) const;
-    bool RequireService( sword::EnumService id ) const;
-    //@}
-
-    //! @name Read methods
-    //@{
-    void Update( const sword::ServicesDescription& message );
+    bool Has( sword::EnumService id ) const;
+    void Declare( sword::EnumService id );
+    void Clear();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    kernel::Logger_ABC& logger_;
-    kernel::Services services_;
+    std::set< sword::EnumService > services_;
     //@}
 };
+}
 
 #endif // __Services_h_
