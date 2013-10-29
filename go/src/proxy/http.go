@@ -44,11 +44,10 @@ func NewHttpProxy() *HttpProxy {
 
 func (s *HttpProxy) Run(options *Options) error {
 	server := http.Server{
-		Addr:           fmt.Sprintf(":%d", options.http),
-		Handler:        s,
-		ReadTimeout:    ReadTimeout,
-		WriteTimeout:   WriteTimeout,
-		MaxHeaderBytes: http.DefaultMaxHeaderBytes,
+		Addr:         fmt.Sprintf(":%d", options.http),
+		Handler:      s,
+		ReadTimeout:  ReadTimeout,
+		WriteTimeout: WriteTimeout,
 	}
 	if !options.ssl {
 		return server.ListenAndServe()
