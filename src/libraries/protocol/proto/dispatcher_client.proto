@@ -15,6 +15,14 @@ package sword;
  *  @{
  */
 
+enum Service {
+    service_aar            = 0;
+    service_authentication = 1;
+    service_messenger      = 2;
+    service_replay         = 3;
+    service_simulation     = 4;
+}
+
 /** @struct ServicesDescription
     @brief A message sent by the Dispatcher to announce available services.
     

@@ -10,6 +10,7 @@
 #ifndef PROTOCOL_HELPERS_H__
 #define PROTOCOL_HELPERS_H__
 
+#include "Dispatcher.h"
 #include "Simulation.h"
 
 namespace protocol
@@ -59,6 +60,15 @@ namespace mapping
         value_type                 type;
         static const PhaseLineType data_[];
         static const size_t        size_;
+    };
+
+    struct Service
+    {
+        typedef sword::Service value_type;
+        std::string          name;
+        value_type           type;
+        static const Service data_[];
+        static const size_t  size_;
     };
 }
 }

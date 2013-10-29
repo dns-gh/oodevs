@@ -21,6 +21,7 @@
 #include "Config.h"
 #include "gaming/Services.h"
 #include "icons.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/bind.hpp>
@@ -280,7 +281,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::NotifyUpdated( const Services& services )
 {
-    hasReplay_ = services.HasService< replay::Service >();
+    hasReplay_ = services.HasService( sword::service_replay );
 }
 
 // -----------------------------------------------------------------------------

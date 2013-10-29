@@ -62,7 +62,7 @@ using namespace tools;
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, Services& services, Simulation& simu, Logger_ABC& logger, CommandHandler& commands )
+AgentServerMsgMgr::AgentServerMsgMgr( MessageDispatcher_ABC& dispatcher, MessageSender_ABC& sender, ::Services& services, Simulation& simu, Logger_ABC& logger, CommandHandler& commands )
     : dispatcher_( dispatcher )
     , sender_    ( sender )
     , model_     ( 0 )
@@ -113,7 +113,7 @@ void AgentServerMsgMgr::Disconnect()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const sword::ClientToSim& wrapper )
 {
-    if( ! host_.empty() && services_.RequireService< simulation::Service >() )
+    if( ! host_.empty() && services_.RequireService( sword::service_simulation ) )
         sender_.Send( host_, wrapper );
 }
 
@@ -123,7 +123,7 @@ void AgentServerMsgMgr::Send( const sword::ClientToSim& wrapper )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const sword::ClientToAuthentication& wrapper )
 {
-    if( ! host_.empty() && services_.RequireService< authentication::Service >())
+    if( ! host_.empty() && services_.RequireService( sword::service_authentication ) )
         sender_.Send( host_, wrapper );
 }
 
@@ -133,7 +133,7 @@ void AgentServerMsgMgr::Send( const sword::ClientToAuthentication& wrapper )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const sword::ClientToReplay& wrapper )
 {
-    if( ! host_.empty() && services_.RequireService< replay::Service >() )
+    if( ! host_.empty() && services_.RequireService( sword::service_replay ) )
         sender_.Send( host_, wrapper );
 }
 
@@ -143,7 +143,7 @@ void AgentServerMsgMgr::Send( const sword::ClientToReplay& wrapper )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const sword::ClientToAar& wrapper )
 {
-    if( ! host_.empty() && services_.RequireService< aar::Service >() )
+    if( ! host_.empty() && services_.RequireService( sword::service_aar ) )
         sender_.Send( host_, wrapper );
 }
 
@@ -153,7 +153,7 @@ void AgentServerMsgMgr::Send( const sword::ClientToAar& wrapper )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::Send( const sword::ClientToMessenger& wrapper )
 {
-    if( ! host_.empty() && services_.RequireService< plugins::messenger::Service >() )
+    if( ! host_.empty() && services_.RequireService( sword::service_messenger ) )
         sender_.Send( host_, wrapper );
 }
 

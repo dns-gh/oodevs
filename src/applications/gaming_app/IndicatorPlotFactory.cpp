@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "gaming/Services.h"
 #include "gaming/Simulation.h"
+#include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 
 // -----------------------------------------------------------------------------
@@ -65,5 +66,5 @@ IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request
 // -----------------------------------------------------------------------------
 void IndicatorPlotFactory::NotifyUpdated( const Services& services )
 {
-    hasReplay_ = services.HasService< replay::Service >();
+    hasReplay_ = services.HasService( sword::service_replay );
 }

@@ -11,7 +11,10 @@
 #include "Services.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Logger_ABC.h"
+#include "clients_kernel/Services.h"
+#include "protocol/Helpers.h"
 #include "protocol/Protocol.h"
+#include <boost/optional.hpp>
 
 using namespace sword;
 
@@ -35,16 +38,27 @@ Services::~Services()
     // NOTHING
 }
 
+namespace
+{
+    boost::optional< sword::Service > FindService( const std::string& name )
+    {
+        for( size_t i = 0; i < protocol::mapping::Service::size_; ++i )
+            if( protocol::mapping::Service::data_[i].name == name )
+                return protocol::mapping::Service::data_[i].type;
+        return boost::none;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Services::Update
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
 void Services::Update( const sword::ServicesDescription& message )
 {
-    services_.clear();
+    services_.Clear();
     for( int i = 0; i < message.services_size(); ++i )
-        services_.insert( message.services(i) );
-
+        if( auto service = FindService( message.services( i ) ) )
+            services_.Declare( *service );
     controller_.Update( *this );
 }
 
@@ -52,22 +66,20 @@ void Services::Update( const sword::ServicesDescription& message )
 // Name: Services::HasService
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::HasService( const std::string& name ) const
+bool Services::HasService( sword::Service id ) const
 {
-    return services_.find( name ) != services_.end();
+    return services_.Has( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Services::RequireService
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-bool Services::RequireService( const std::string& name ) const
+bool Services::RequireService( sword::Service id ) const
 {
-    if( ! HasService( name ) )
-    {
-        logger_.Error( std::string( "Host does not implement service '" ) + name + "'" );
-        return false;
-    }
-    return true;
+    if( HasService( id ) )
+        return true;
+    logger_.Error( "Host does not implement service '" + sword::Service_Name( id ) + "'" );
+    return false;
 }
 

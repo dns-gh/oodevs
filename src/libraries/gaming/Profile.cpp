@@ -13,8 +13,9 @@
 #include "Services.h"
 #include "Simulation.h"
 #include "clients_kernel/Controller.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/Dispatcher.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -270,10 +271,10 @@ void Profile::NotifyUpdated( const Simulation& simulation )
 // Name: Profile::NotifyUpdated
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Profile::NotifyUpdated( const Services& services )
+void Profile::NotifyUpdated( const ::Services& services )
 {
-    simulation_ = services.HasService< simulation::Service >();
-    if( services.HasService< authentication::Service >() )
+    simulation_ = services.HasService( sword::service_simulation );
+    if( services.HasService( sword::service_authentication ) )
         Login();
 }
 
