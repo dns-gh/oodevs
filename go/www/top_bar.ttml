@@ -2,6 +2,11 @@
     <div class="navbar-inner">
         <div class="container">
             [[ if ne .type "cluster" ]]
+            [[ if eq .user.type "administrator" ]]
+            <ul class="nav pull-left">
+                <a href=".." class="btn btn-inverse"><i class="icon-sitemap"></i></a>
+            </ul>
+            [[ end ]]
             <a class="brand_name brand"> [[ .name ]]</a>
             [[ end ]]
             <a class="brand"> Sword <span class="ufirst">[[ .type ]]</span></a>
