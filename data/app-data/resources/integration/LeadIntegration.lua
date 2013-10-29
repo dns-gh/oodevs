@@ -728,7 +728,6 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
     -- Init
     local Activate = Activate
-    myself.tasksGiven = {}
     myself.leadData = {}
     myself.leadData.paramsGiven = {}
     myself.leadData.workMap = {}

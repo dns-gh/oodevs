@@ -240,10 +240,10 @@ end
 
 masalife.brain.communication.setMessageTreatment( "StageChanged",
     function( message )
-        myself.stageChangedSubordinates = myself.stageChangedSubordinates or {}
-        myself.stageChangedSubordinates[ message.element ] = myself.stageChangedSubordinates[ message.element ] or {}
-        myself.stageChangedSubordinates[ message.element ].taskName = message.taskName
-        myself.stageChangedSubordinates[ message.element ].id = message.id
+        myself.leadData.stageChangedSubordinates = myself.leadData.stageChangedSubordinates or {}
+        myself.leadData.stageChangedSubordinates[ message.element ] = myself.leadData.stageChangedSubordinates[ message.element ] or {}
+        myself.leadData.stageChangedSubordinates[ message.element ].taskName = message.taskName
+        myself.leadData.stageChangedSubordinates[ message.element ].id = message.id
     end
 )
 
@@ -252,8 +252,8 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
         local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
         local frontElement = message.element
         if myFrontElements and frontElement then
-            myself.finishedSubordinates = myself.finishedSubordinates or {}
-            myself.finishedSubordinates[ #myself.finishedSubordinates + 1 ] = frontElement
+            myself.leadData.finishedSubordinates = myself.leadData.finishedSubordinates or {}
+            myself.leadData.finishedSubordinates[ #myself.leadData.finishedSubordinates + 1 ] = frontElement
             if myFrontElements[ frontElement ] then 
                 myFrontElements[ frontElement ] = nil
                 if not next( myFrontElements ) then
