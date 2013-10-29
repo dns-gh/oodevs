@@ -1775,7 +1775,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
     std::vector< std::tuple< const PHY_ComposanteTypePion*, unsigned int, const PHY_BreakdownType* > > content;
     for( int i = 0; i < protocol::GetCount( msg, 0 ); ++ i )
     {
-        protocol::CheckCount( 0, i, msg, 2, 3 );
+        const int count = protocol::CheckCount( 0, i, msg, 2, 3 );
         const uint32_t identifier = protocol::GetIdentifier( msg, 0, i, 0 );
         sword::EquipmentType type;
         type.set_id( identifier );
@@ -1785,7 +1785,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
         const int quantity = protocol::GetQuantity( msg, 0, i, 1 );
         protocol::Check( quantity > 0, "must be positive", 0, i, 1 );
         const PHY_BreakdownType* breakdown = nullptr;
-        if( protocol::GetCount( msg, 0, i ) == 3 )
+        if( count == 3 )
         {
             const uint32_t id = protocol::GetIdentifier( msg, 0, i, 2 );
             breakdown = PHY_BreakdownType::Find( id );
@@ -1804,34 +1804,26 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 {
-    CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
+    protocol::CheckCount( msg, 1 );
     std::vector< std::pair< unsigned int, const PHY_HumanWound* > > content;
-    for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
+    for( int i = 0; i < protocol::GetCount( msg, 0 ); ++i )
     {
-        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
-        CheckSubParameterCount( elem.list_size() != 1 && elem.list_size() != 2, i, "must have 1 or 2 parameters" );
-
-        CHECK_PARAM( elem, i, 0, quantity, "must be a Quantity" );
-        if( elem.list_size() == 2 )
-            CHECK_PARAM( elem, i, 1, enumeration, "must be an Enumeration" );
-
-        int number = elem.list( 0 ).quantity();
-        CheckSubSubParameterCount( number <= 0, i, 0, "must be positive a non-zero positive number" );
-
-        const PHY_HumanWound* pHumanWound = 0;
-        if( elem.list_size() == 2 )
+        const int count = protocol::CheckCount( 0, i, msg, 1, 2 );
+        const int quantity = protocol::GetQuantity( msg, 0, i, 0 );
+        protocol::Check( quantity > 0, "must be positive", 0, i, 0 );
+        const PHY_HumanWound* pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
+        if( count == 2 )
         {
-            pHumanWound = PHY_HumanWound::Find( elem.list( 1 ).enumeration() );
-            CheckSubSubParameterCount( !pHumanWound, i, 1, "invalid, bad wound enumeration" );
+            // FIXME do not use private enumerations
+            const unsigned enumeration = static_cast< unsigned >( protocol::GetUnsafeEnumeration( msg, 0, i, 1 ) );
+            pHumanWound = PHY_HumanWound::Find( enumeration );
+            protocol::Check( pHumanWound, "must be a valid wound enumeration", 0, i, 1 );
         }
-        else
-            pHumanWound = PHY_HumanWound::GetRandomWoundSeriousness();
-
-        content.push_back( std::make_pair( number, pHumanWound ) );
+        content.push_back( std::make_pair( quantity, pHumanWound ) );
     }
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( auto it = content.begin(); it != content.end(); ++it )
-        roleComposantes.CreateWounds( std::get< 0 >( *it ), std::get< 1 >( *it ) );
+        roleComposantes.CreateWounds( it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------

@@ -190,6 +190,11 @@ int protocol::GetQuantity( const sword::MissionParameters& params, int i, int j,
     return GetValue< Quantity >( params, i, j, k );
 }
 
+int protocol::GetUnsafeEnumeration( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return GetValue< Enumeration >( params, i, j, k );
+}
+
 int protocol::GetEnumeration( const ::google::protobuf::EnumDescriptor* descriptor,
                                 const sword::MissionParameters& params,
                                 int i, int j, int k )
