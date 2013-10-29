@@ -6,6 +6,7 @@
             <dt> Sword Simulation </dt>
             <dd><span class="label label-info"> SIMULATION_VERSION </span></dd>
         </dl>
+        <div id="license_error"></div>
         <div id="licenses"></div>
         [[ if eq .type "cluster" ]]
             <div class="hide">
