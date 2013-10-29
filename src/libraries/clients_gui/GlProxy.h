@@ -16,6 +16,7 @@
 namespace kernel
 {
     class GraphicalEntity_ABC;
+    class Logger_ABC;
 }
 
 namespace gui
@@ -37,7 +38,7 @@ class GlProxy : public View_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GlProxy();
+    explicit GlProxy( kernel::Logger_ABC& logger );
     virtual ~GlProxy();
     //@}
 
@@ -123,6 +124,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Logger_ABC& logger_;
     View_ABC* view_;
     GlTools_ABC* tools_;
     T_Layers layers_;

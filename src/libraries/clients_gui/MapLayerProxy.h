@@ -12,6 +12,11 @@
 
 #include "Layer.h"
 
+namespace kernel
+{
+    class Logger_ABC;
+}
+
 namespace gui
 {
 // =============================================================================
@@ -25,7 +30,7 @@ class MapLayerProxy : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MapLayerProxy( Layer& layer );
+             MapLayerProxy( Layer& layer, kernel::Logger_ABC& logger );
     virtual ~MapLayerProxy();
     //@}
 
@@ -45,7 +50,8 @@ public:
 private:
     //! @name Member data
     //@{
-    Layer& layer_;
+    Layer* layer_;
+    kernel::Logger_ABC& logger_;
     //@}
 };
 

@@ -142,7 +142,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , config_          ( config )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
-    , glProxy_         ( new gui::GlProxy() )
+    , glProxy_         ( new gui::GlProxy( logger ) )
     , connected_       ( false )
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
@@ -167,7 +167,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );

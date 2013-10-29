@@ -88,6 +88,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/ModeController.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
@@ -114,6 +115,26 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
+namespace
+{
+    class NullLogger : public kernel::Logger_ABC
+    {
+    public:
+        virtual void Info( const std::string& message )
+        {
+            MT_LOG_INFO_MSG( message );
+        }
+        virtual void Warning( const std::string& message )
+        {
+            MT_LOG_WARNING_MSG( message );
+        }
+        virtual void Error( const std::string& message )
+        {
+            MT_LOG_ERROR_MSG( message );
+        }
+    } logger;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
@@ -129,7 +150,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , modelBuilder_     ( new ModelBuilder( controllers, model ) )
     , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , colorController_  ( new ColorController( controllers_ ) )
-    , glProxy_          ( new gui::GlProxy() )
+    , glProxy_          ( new gui::GlProxy( logger ) )
     , lighting_         ( new gui::LightingProxy( this ) )
     , strategy_         ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
     , dockContainer_    ( 0 )
@@ -165,7 +186,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );

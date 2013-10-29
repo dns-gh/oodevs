@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "MapLayerProxy.h"
+#include "clients_kernel/Logger_ABC.h"
 
 using namespace gui;
 
@@ -16,8 +17,9 @@ using namespace gui;
 // Name: MapLayerProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-MapLayerProxy::MapLayerProxy( Layer& layer )
-    : layer_( layer )
+MapLayerProxy::MapLayerProxy( Layer& layer, kernel::Logger_ABC& logger )
+    : layer_ ( &layer )
+    , logger_( logger )
 {
     // NOTHING
 }
@@ -39,10 +41,13 @@ void MapLayerProxy::Initialize( const geometry::Rectangle2f& extent )
 {
     try
     {
-        layer_.Initialize( extent );
+        if( layer_ )
+            layer_->Initialize( extent );
     }
-    catch( ... )
+    catch( std::exception& e )
     {
+        layer_ = 0;
+        logger_.Error( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -54,10 +59,13 @@ void MapLayerProxy::Paint( const ViewFrustum& frustum )
 {
     try
     {
-        layer_.Paint( frustum );
+        if( layer_ )
+            layer_->Paint( frustum );
     }
-    catch( ... )
+    catch( std::exception& e )
     {
+        layer_ = 0;
+        logger_.Error( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -69,10 +77,13 @@ void MapLayerProxy::Paint( const geometry::Rectangle2f& viewport )
 {
     try
     {
-        layer_.Paint( viewport );
+        if( layer_ )
+            layer_->Paint( viewport );
     }
-    catch( ... )
+    catch( std::exception& e )
     {
+        layer_ = 0;
+        logger_.Error( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -84,10 +95,13 @@ void MapLayerProxy::Paint( Viewport_ABC& viewport )
 {
     try
     {
-        layer_.Paint( viewport );
+        if( layer_ )
+            layer_->Paint( viewport );
     }
-    catch( ... )
+    catch( std::exception& e )
     {
+        layer_ = 0;
+        logger_.Error( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -97,7 +111,7 @@ void MapLayerProxy::Paint( Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 bool MapLayerProxy::HandleKeyPress( QKeyEvent* key )
 {
-    return layer_.HandleKeyPress( key );
+    return layer_ && layer_->HandleKeyPress( key );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +120,7 @@ bool MapLayerProxy::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool MapLayerProxy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return layer_.HandleMousePress( mouse, point );
+    return layer_ && layer_->HandleMousePress( mouse, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +129,7 @@ bool MapLayerProxy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2
 // -----------------------------------------------------------------------------
 bool MapLayerProxy::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return layer_.HandleMouseDoubleClick( mouse, point );
+    return layer_ && layer_->HandleMouseDoubleClick( mouse, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,5 +138,5 @@ bool MapLayerProxy::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::
 // -----------------------------------------------------------------------------
 bool MapLayerProxy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return layer_.HandleMouseMove( mouse, point );
+    return layer_ && layer_->HandleMouseMove( mouse, point );
 }

@@ -78,9 +78,9 @@ void Layer::Paint( Viewport_ABC& )
 // Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer::RegisterIn( Gl3dWidget& widget )
+void Layer::RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger )
 {
-    currentProxy_ = new MapLayerProxy( *this );
+    currentProxy_ = new MapLayerProxy( *this, logger );
     widget.Register( *currentProxy_ );
 }
 
@@ -88,10 +88,10 @@ void Layer::RegisterIn( Gl3dWidget& widget )
 // Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer::RegisterIn( GlWidget& widget )
+void Layer::RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger )
 {
     currentWidget_ = &widget;
-    currentProxy_ = new MapLayerProxy( *this );
+    currentProxy_ = new MapLayerProxy( *this, logger );
     widget.Register( *currentProxy_ );
 }
 
