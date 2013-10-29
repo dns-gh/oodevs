@@ -116,10 +116,9 @@ private:
     void SetTarget( const kernel::Entity_ABC* entity );
     void Publish( timeline::Event* event, bool planned ) const;
 
-
     virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
                         const std::vector< std::string >& missions, const std::string& currentMission,
-                        bool invalid = false );
+                        const std::vector< std::string >& disabledMissions, bool invalid = false );
     bool HasInvalidMission() const;
     //@}
 

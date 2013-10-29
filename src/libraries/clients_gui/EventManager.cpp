@@ -109,9 +109,13 @@ namespace
             result.push_back( it.NextElement().GetName() );
         std::sort( result.begin(), result.end(), &localAwareStringCompare );
     }
-    void FillCompatibleFragOrders( std::vector< std::string >& result, tools::Iterator< const kernel::Mission& > it,
-                                   const kernel::Mission* currentMission, bool planningMode )
+    void FillCompatibleFragOrders( std::vector< std::string >& result,
+                                   std::vector< std::string >& disabledResult,
+                                   tools::Iterator< const kernel::Mission& > it,
+                                   const kernel::Mission* currentMission,
+                                   bool planningMode )
     {
+        std::vector< std::string > enabledResult;
         while( it.HasMoreElements() )
         {
             const kernel::Mission& mission = it.NextElement();
@@ -119,11 +123,22 @@ namespace
             while( itFrag.HasMoreElements() )
             {
                 const kernel::OrderType& order = itFrag.NextElement().GetType();
-                if( ( planningMode || ( currentMission && currentMission->GetType().GetId() == mission.GetType().GetId() ) ) &&
-                    std::find( result.begin(), result.end(), order.GetName() ) == result.end() )
-                    result.push_back( order.GetName() );
+                const std::string name = order.GetName();
+
+                if( !planningMode )
+                {
+                    if( currentMission && currentMission->GetType().GetId() == mission.GetType().GetId() )
+                        enabledResult.push_back( name );
+                    else if( std::find( disabledResult.begin(), disabledResult.end(), name ) == disabledResult.end() )
+                        disabledResult.push_back( name );
+                }
+
+                if( std::find( result.begin(), result.end(), name ) == result.end() )
+                    result.push_back( name );
             }
         }
+        for( auto it = enabledResult.begin(); it != enabledResult.end(); ++it )
+            disabledResult.erase( std::remove( disabledResult.begin(), disabledResult.end(), *it ), disabledResult.end() );
         std::sort( result.begin(), result.end(), &localAwareStringCompare );
     }
     template< typename T >
@@ -190,7 +205,7 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
         currentMission = result[ 0 ];
 
     // Build interface
-    builder_.Build( types, type, result, currentMission );
+    builder_.Build( types, type, result, currentMission, std::vector< std::string >() );
 
     currentMissionType_ = type;
 
@@ -280,12 +295,13 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 
     // Retrieve entity missions
     std::vector< std::string > result;
+    std::vector< std::string > disabledResult;
     if( currentMissionType_ == eMissionType_FragOrder )
     {
         // General frag order
         FillCompatibleOrders< kernel::FragOrder >( result, decisions.GetFragOrders() );
         // frag order relating to a mission
-        FillCompatibleFragOrders( result, decisions.GetMissions(), decisions.GetCurrentMission(), planningMode_ );
+        FillCompatibleFragOrders( result, disabledResult, decisions.GetMissions(), decisions.GetCurrentMission(), planningMode_ );
     }
     else
         FillCompatibleOrders( result, decisions.GetMissions() );
@@ -298,10 +314,10 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
     // Reset current mission
     // current mission is empty || (entity type changed(except frag oder) && unknown mission) => select first mission
     if( ( currentMission.empty() || // no mission selected
-            lastMissionType != currentMissionType_ &&
-            currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
-            std::find( result.begin(), result.end(), mission ) == result.end()
-          ) && !result.empty() )
+          lastMissionType != currentMissionType_ &&
+          currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
+          std::find( result.begin(), result.end(), mission ) == result.end()
+         ) && !result.empty() )
         currentMission = result[ 0 ];
 
     // Insert invalid mission
@@ -310,7 +326,7 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 
     // Build mission combobox
     builder_.Build( boost::assign::list_of( entityType )( eMissionType_FragOrder ),
-                    currentMissionType_, result, currentMission, invalidMission );
+                    currentMissionType_, result, currentMission, disabledResult, invalidMission );
 
     // Retrieve current order
     const kernel::OrderType* order = 0;
