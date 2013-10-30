@@ -368,11 +368,17 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
 end
 
 local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
     local redone = false
+
+    -- If the HQ is jammed, the company can not manage added and deleted units
+    if integration.agentEstBrouille( integration.getKnowledgeHQ() ) then
+        return
+    end
+
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
