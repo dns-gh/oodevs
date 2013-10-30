@@ -47,6 +47,7 @@ public:
     static void GetCrossroads( sword::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
     static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetRoadIntersectionsWithZone( const TER_Localisation* zone );
+    static bool ArePointsOnSameRiverBank( const MT_Vector2D* from, const MT_Vector2D* to );
 
     // Movement
     static bool CanMoveOn( const DEC_Decision_ABC* agent, boost::shared_ptr< MT_Vector2D > position );

@@ -70,3 +70,28 @@ bool DEC_TerrainFunctions::CanMoveOn( const DEC_Decision_ABC* agent, boost::shar
         return false;
     return agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( *position );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_TerrainFunctions::ArePointsOnSameRiverBank
+// Created: LDC 2013-10-29
+// This is a very raw algorithm. It handles a river loop but not tributaries/junctions/bridges...
+// A more exact solution would require to run a pathfind to check if destination is reachable
+// without crossing a river, but I don't want to have to wait for a pathfind result,
+// particularly because the 'to' point is likely not reachable, so it would take forever to compute.
+// -----------------------------------------------------------------------------
+bool DEC_TerrainFunctions::ArePointsOnSameRiverBank( const MT_Vector2D* from, const MT_Vector2D* to )
+{
+    if( !from || !to )
+        throw MASA_EXCEPTION( "Invalid point in call to IsRiverSegment" );
+    std::vector< boost::shared_ptr< MT_Vector2D > > positions;
+    TER_AnalyzerManager::GetAnalyzerManager().FindRiverSegmentIntersections( *from, *to, positions );
+    if ( positions.size() % 2 == 1 )
+        return false;
+    // Surfacic...
+    std::vector< MT_Vector2D > line;
+    line.push_back( *from );
+    line.push_back( *to );
+    TER_Localisation location( TER_Localisation::eLine, line );
+    TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().GetTerrainData( location );
+    return !data.ContainsOne( TerrainData::Water() );
+}

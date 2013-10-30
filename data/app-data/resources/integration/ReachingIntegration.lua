@@ -13,10 +13,15 @@ getBetterReachingEfficiencyInList = function( elements, entity )
     local bestPosition = -1
     local currentPositionReach = -1 
     local bestReturnPosition = nil
+    local riverCost = -1 -- assumes reachEficiency is between 0 and 1
+    local entityPosition = entity:getPosition()
+
     for i = 1, nPosition do
         local position = elements[i]
         currentPositionReach = position:reachEfficiency( entity )
-        local distance = integration.distance( position, entity)
+        if not DEC_Geometrie_ArePointsOnSameRiverBank( entityPosition, position:getPosition() ) then
+            currentPositionReach = currentPositionReach + riverCost
+        end
         if currentPositionReach > bestPosition then
             bestPosition = currentPositionReach
             bestReturnPosition = position

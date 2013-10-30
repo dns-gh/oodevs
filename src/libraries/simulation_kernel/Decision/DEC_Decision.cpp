@@ -295,7 +295,6 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_ClipperLocalisation", &DEC_GeometryFunctions::ClipLocalisation );
     brain.RegisterFunction( "DEC_IsPointInCity", &DEC_GeometryFunctions::IsPointInCity );
     brain.RegisterFunction( "DEC_Geometrie_ComputeNearestBorder", &DEC_GeometryFunctions::ComputeNearestBorder );
-    brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
     brain.RegisterFunction( "DEC_Geometrie_CalculerTrafficablePointPourPoint",
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) ) );
     brain.RegisterFunction( "DEC_IsPointInUrbanBlockTrafficableForPlatoon",
@@ -315,6 +314,9 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection );
     brain.RegisterFunction( "DEC_Geometrie_ConvexHull", DEC_GeometryFunctions::ComputeConvexHull );
+    
+    brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
+    brain.RegisterFunction( "DEC_Geometrie_ArePointsOnSameRiverBank", &DEC_TerrainFunctions::ArePointsOnSameRiverBank );
 }
 
 // -----------------------------------------------------------------------------
