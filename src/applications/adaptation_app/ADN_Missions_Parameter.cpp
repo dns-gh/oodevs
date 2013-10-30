@@ -74,19 +74,13 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
     {
         newParam->genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
         for( unsigned int i = 0; i < genObjects_.size(); ++i )
-        {
-            assert( genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() );
             newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
-        }
     }
     else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
         newParam->knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
         for( unsigned int i = 0; i < knowledgeObjects_.size(); ++i )
-        {
-            assert( knowledgeObjects_[ i ]->ptrObject_.GetData() == newParam->knowledgeObjects_[ i ]->ptrObject_.GetData() );
             newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
-        }
     }
     return newParam;
 }
