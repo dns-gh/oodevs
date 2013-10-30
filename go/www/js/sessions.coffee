@@ -450,7 +450,7 @@ class SessionItemView extends Backbone.View
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
             next = "sword://#{location.host}/?" + $.param
-                protocol: window.location.protocol
+                protocol: window.location.protocol.replace /:$/, ""
                 session:  @model.id
                 sid:      $.cookie "sid"
                 tcp:      tcp
