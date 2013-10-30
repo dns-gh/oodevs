@@ -15,6 +15,9 @@
 #include <graphics/MapnikView.h>
 #include <terrain/PointProjector.h>
 #include <extractor/TerrainExportManager.h>
+#include <extractor/TerrainFileExporter.h>
+#include <boost/assign/list_of.hpp>
+#include <boost/range/algorithm.hpp>
 
 using namespace gui;
 
@@ -54,6 +57,15 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
             TerrainExportManager manager( terrain_, projector );
             manager.Run( exportDirectory );
         }
+        const auto shapefiles =
+            boost::assign::list_of( "forest" )( "urban" )
+                ( "mountain" )( "road" )( "water" )( "river" )( "bridge" );
+        boost::for_each( shapefiles, [&]( const char* const shapefile )
+        {
+            const tools::Path filename = exportDirectory / shapefile + ".shp";
+            if( !filename.Exists() )
+                TerrainFileExporter( filename, wkbLineString );
+        } );
         layer_.reset( new graphics::MapnikView( terrain_, terrain_ / "export", "resources/mapnik.xml" ) );
     }
     layer_->Paint( viewport, GetAlpha() );
