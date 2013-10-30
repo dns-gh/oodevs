@@ -140,6 +140,12 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
             authenticated_.erase( it );
             if( silentClients_.erase( link ) == 0 )
                 --currentConnections_;
+            auto id = clientsID_.find( link );
+            if( id != clientsID_.end() )
+            {
+                ids_.erase( id->second );
+                clientsID_.erase( id );
+            }
             AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
