@@ -1083,6 +1083,10 @@ end
 integration.leadDroneActivate = function( self, findBestsFunction )
     local Activate = Activate
     local integration = integration
+    
+    if myself.newTask then
+      self:create()
+    end
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE = echelons[1]
     local pionsSE = echelons[2]
