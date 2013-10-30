@@ -34,11 +34,6 @@ public:
         handlers_.push_back( plugin );
     }
 
-    void Add( Plugin_ABC* plugin )
-    {
-        Add( boost::shared_ptr< Plugin_ABC >( plugin ) );
-    }
-
     void AddHandler( const boost::shared_ptr< MessageHandler_ABC >& handler )
     {
         handlers_.push_back( handler );

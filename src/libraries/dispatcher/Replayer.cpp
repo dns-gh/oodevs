@@ -26,6 +26,7 @@
 #include "web_control_plugin/WebPlugin.h"
 #include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace dispatcher;
 
@@ -74,12 +75,16 @@ Replayer::Replayer( const Config& config )
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    plugins::rights::RightsPlugin* rights = new plugins::rights::RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
+    auto rights = boost::make_shared< plugins::rights::RightsPlugin >(
+            *model_, *clientsNetworker_, config, *clientsNetworker_,
+            handler_, *clientsNetworker_, registrables_, 0 );
     handler_.Add( rights );
     handler_.Add( plugin_ );
-    handler_.Add( new plugins::aar::AarPlugin( *clientsNetworker_, *rights, config ) );
-    handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
-    handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+    handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights, config ) );
+    handler_.Add( boost::make_shared< plugins::score::ScorePlugin >(
+                *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+    handler_.Add( boost::make_shared< plugins::messenger::MessengerPlugin >(
+                *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     tools::Xifstream xis( config.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -117,5 +122,5 @@ void Replayer::Update()
 // -----------------------------------------------------------------------------
 void Replayer::OnWebControl( xml::xistream& xis )
 {
-    handler_.Add( new plugins::web_control::WebPlugin( *publisher_, xis ) );
+    handler_.Add( boost::make_shared< plugins::web_control::WebPlugin >( *publisher_, xis ) );
 }

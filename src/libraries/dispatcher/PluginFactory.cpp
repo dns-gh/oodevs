@@ -30,6 +30,7 @@
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 #include <windows.h>
 
 using namespace dispatcher;
@@ -55,7 +56,8 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const dispatch
 {
     handler_.Add( rights_ );
     handler_.Add( pOrder_ );
-    handler_.Add( new DispatcherPlugin( simulation_, clients_, *rights_, *pOrder_, log ) );
+    handler_.Add( boost::make_shared< DispatcherPlugin >(
+                simulation_, clients_, *rights_, *pOrder_, log ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,11 +85,14 @@ void PluginFactory::Register( PluginFactory_ABC& factory )
 void PluginFactory::Instanciate()
 {
     // $$$$ AGE 2008-08-04: retirer la dépendance...
-    handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
-    handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
-    handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
-    handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
-    handler_.Add( new vision::VisionPlugin( model_, clients_, simulation_, *rights_ ) );
+    handler_.Add( boost::make_shared< messenger::MessengerPlugin >(
+                clients_, clients_, clients_, config_, registrables_ ) );
+    handler_.Add( boost::make_shared< script::ScriptPlugin >(
+                model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
+    handler_.Add( boost::make_shared< score::ScorePlugin >(
+                clients_, clients_, clients_, config_, registrables_ ) );
+    handler_.Add( boost::make_shared< logger::LoggerPlugin >( model_, staticModel_, config_, services_ ) );
+    handler_.Add( boost::make_shared< vision::VisionPlugin >( model_, clients_, simulation_, *rights_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -114,14 +119,15 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
     if( xis.has_attribute( "library" ) )
         LoadPlugin( tools::Path::FromUTF8( name ), xis );
     else if( name == "recorder" )
-        handler_.Add( new plugins::saver::SaverPlugin( clients_, model_, config_ ) );
+        handler_.Add( boost::make_shared< plugins::saver::SaverPlugin >( clients_, model_, config_ ) );
     else
     {
         for( auto it = factories_.begin(); it != factories_.end(); ++it )
         {
-            std::auto_ptr< Plugin_ABC > plugin = it->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ );
-            if( plugin.get() )
-                handler_.Add( plugin.release() );
+            auto plugin = it->Create( name, xis, config_, model_, staticModel_,
+                    simulation_, clients_, clients_ , clients_, registrables_ );
+            if( plugin )
+                handler_.Add( plugin );
         }
     }
 }
