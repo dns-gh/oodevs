@@ -78,12 +78,18 @@ integration.isTrafficable = function( object )
 end
 
 integration.getPositionsAroundObject = function( object )
+    local result = {}
     object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
     if object.getObjectNearestBorderPosition == nil then
         local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
         object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
     end
-    return { CreateKnowledge( integration.ontology.types.point, object.getObjectNearestBorderPosition ) }
+    result[ 1 ] = CreateKnowledge( integration.ontology.types.point, object.getObjectNearestBorderPosition )
+    local simPoints = object:getPositions() 
+    for i = 1, #simPoints do
+        result[ #result + 1 ] = CreateKnowledge( integration.ontology.types.point, simPoints[i] )
+    end
+    return result
 end
 
 integration.getKnowledgesObjectsInCircle = function( position, distance, objectTypeList )
