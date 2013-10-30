@@ -120,6 +120,14 @@
         <translation>Plage temporelle</translation>
     </message>
     <message>
+        <source>First tick</source>
+        <translation>Premier tick</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>Durée</translation>
+    </message>
+    <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
@@ -134,14 +142,6 @@
     <message>
         <source>Name:</source>
         <translation>Nom:</translation>
-    </message>
-    <message>
-        <source>Start date</source>
-        <translation>Date de début</translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation>Date de fin</translation>
     </message>
 </context>
 <context>
@@ -676,20 +676,8 @@ Raison: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Save</source>
-        <translation>Sauvegarder</translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation>Date de fin</translation>
-    </message>
-    <message>
-        <source>Start date</source>
-        <translation>Date de début</translation>
-    </message>
-    <message>
-        <source>Planning</source>
-        <translation>Plannification</translation>
+        <source>Discard</source>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Trigger</source>
@@ -698,14 +686,6 @@ Raison: %3
     <message>
         <source>Copy and trigger</source>
         <translation>Copier et déclencher</translation>
-    </message>
-    <message>
-        <source>Save as copy</source>
-        <translation>Copier et enregistrer</translation>
-    </message>
-    <message>
-        <source>Clear parameters</source>
-        <translation>Effacer les paramètres</translation>
     </message>
 </context>
 <context>
@@ -797,6 +777,37 @@ Raison: %3
     <message>
         <source>Notifications</source>
         <translation>Notifications</translation>
+    </message>
+</context>
+<context>
+    <name>EventTopWidget</name>
+    <message>
+        <source>End</source>
+        <translation>Fin</translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation>Plannification</translation>
+    </message>
+    <message>
+        <source>Save as copy</source>
+        <translation>Copier et enregistrer</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Sauvegarder</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Début</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation>Date de début</translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation>Date de fin</translation>
     </message>
 </context>
 <context>
@@ -2755,14 +2766,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unpause (Alt+P)</source>
         <translation>Reprendre (Alt+P)</translation>
-    </message>
-    <message>
-        <source>Go to start (Alt+A)</source>
-        <translation>Aller au début (Alt+A)</translation>
-    </message>
-    <message>
-        <source>Go to end (Alt+Z)</source>
-        <translation>Aller à la fin (Alt+Z)</translation>
     </message>
 </context>
 <context>

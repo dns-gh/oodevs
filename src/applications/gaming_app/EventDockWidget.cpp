@@ -69,12 +69,11 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     hide();
 
     // Header / footer
-    topWidget_ = new EventTopWidget();
-    bottomWidget_ = new EventBottomWidget( simulation_, controllers.actions_, config );
+    topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
+    bottomWidget_ = new EventBottomWidget( config );
 
     // Content
     EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
-    connect( bottomWidget_, SIGNAL( PlanningModeToggled( bool ) ), orderWidget, SLOT( OnPlanningModeToggled( bool ) ) );
 
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
@@ -111,14 +110,16 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     SetContentVisible( false );
 
     // Connections
-    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), bottomWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
-    connect( this, SIGNAL( EditingChanged( bool ) ), bottomWidget_, SLOT( OnEditingChanged( bool ) ) );
-    connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
-    connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
-    connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
-    connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
-    connect( orderWidget, SIGNAL( EnableTriggerEvent( bool ) ), bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
-    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
+    connect( this, SIGNAL( EditingChanged( bool ) ),               topWidget_, SLOT( OnEditingChanged( bool ) ) );
+
+    connect( topWidget_,    SIGNAL( Save() ),       this, SLOT( OnSave() ) );
+    connect( bottomWidget_, SIGNAL( Trigger() ),    this, SLOT( OnTrigger() ) );
+    connect( bottomWidget_, SIGNAL( Discard() ),    this, SLOT( OnDiscard() ) );
+    connect( bottomWidget_, SIGNAL( ShowDetail() ), this, SLOT( OnShowDetail() ) );
+
+    connect( orderWidget,   SIGNAL( EnableTriggerEvent( bool ) ),                      bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
+    connect( orderWidget,   SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this,          SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
 }
 
 // -----------------------------------------------------------------------------

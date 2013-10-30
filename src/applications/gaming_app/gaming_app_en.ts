@@ -120,6 +120,14 @@
         <translation>Time range</translation>
     </message>
     <message>
+        <source>First tick</source>
+        <translation>First tick</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>Duration</translation>
+    </message>
+    <message>
         <source>Send request</source>
         <translation>Send request</translation>
     </message>
@@ -134,14 +142,6 @@
     <message>
         <source>Name:</source>
         <translation>Name:</translation>
-    </message>
-    <message>
-        <source>Start date</source>
-        <translation>Start date</translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation>End date</translation>
     </message>
 </context>
 <context>
@@ -674,19 +674,7 @@ Reason: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Save</source>
-        <translation type="unfinished">Save</translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation type="unfinished">End date</translation>
-    </message>
-    <message>
-        <source>Start date</source>
-        <translation type="unfinished">Start date</translation>
-    </message>
-    <message>
-        <source>Planning</source>
+        <source>Discard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -695,14 +683,6 @@ Reason: %3
     </message>
     <message>
         <source>Copy and trigger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save as copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -795,6 +775,37 @@ Reason: %3
     <message>
         <source>Notifications</source>
         <translation>Notifications</translation>
+    </message>
+</context>
+<context>
+    <name>EventTopWidget</name>
+    <message>
+        <source>End</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2741,14 +2752,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Unpause (Alt+P)</source>
         <translation>Unpause (Alt+P)</translation>
-    </message>
-    <message>
-        <source>Go to start (Alt+A)</source>
-        <translation>Go to start (Alt+A)</translation>
-    </message>
-    <message>
-        <source>Go to end (Alt+Z)</source>
-        <translation>Go to end (Alt+Z)</translation>
     </message>
 </context>
 <context>
