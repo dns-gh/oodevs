@@ -16,7 +16,6 @@
 
 namespace dispatcher
 {
-    class Logger_ABC;
 
 // =============================================================================
 /** @class  CompositePlugin
@@ -33,12 +32,6 @@ public:
     {
         plugins_.push_back( plugin );
         handlers_.push_back( plugin );
-    }
-
-    void Add( const boost::shared_ptr< Plugin_ABC >& plugin, const boost::shared_ptr< Logger_ABC >& logger )
-    {
-        Add( plugin );
-        loggers_.push_back( logger );
     }
 
     void Add( Plugin_ABC* plugin )
@@ -111,7 +104,6 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< boost::shared_ptr< Logger_ABC > > loggers_;
     std::vector< boost::shared_ptr< Plugin_ABC > > plugins_;
     std::vector< boost::shared_ptr< MessageHandler_ABC > > handlers_;
     //@}

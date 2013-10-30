@@ -189,10 +189,16 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( name + "_plugin.log", config_ ) );
-        boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, staticModel_, simulation_, clients_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
+        boost::shared_ptr< Plugin_ABC > plugin(
+                createFunction( model_, staticModel_, simulation_, clients_, config_, *logger, xis ),
+                // Note the lambda holds a reference to the logger
+                [logger, destroyFunction]( dispatcher::Plugin_ABC* p )
+                { 
+                    destroyFunction( p, *logger );
+                });
         if( !plugin.get() )
             throw MASA_EXCEPTION( "CreateFunctor returned an error (see details in plugin log file)" );
-        handler_.Add( plugin, logger );
+        handler_.Add( plugin );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library.ToUTF8() << ")" );
     }
     catch( const std::exception& e )
