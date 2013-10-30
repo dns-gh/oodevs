@@ -43,6 +43,7 @@ public:
     //! @name Operations
     //@{
     bool IsPaused() const;
+    unsigned int GetFirstTick() const;
     unsigned int GetTickCount() const;
     unsigned int GetTickDuration() const;
     void Pause();

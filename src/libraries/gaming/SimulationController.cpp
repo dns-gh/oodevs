@@ -50,6 +50,15 @@ bool SimulationController::IsPaused() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationController::GetFirstTick
+// Created: JSR 2013-10-30
+// -----------------------------------------------------------------------------
+unsigned int SimulationController::GetFirstTick() const
+{
+    return simulation_.GetFirstTick();
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationController::GetTickCount
 // Created: JSR 2013-03-27
 // -----------------------------------------------------------------------------

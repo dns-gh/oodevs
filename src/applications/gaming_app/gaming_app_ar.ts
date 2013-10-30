@@ -2739,6 +2739,14 @@ This data can&apos;t be projected.</source>
         <source>Unpause (Alt+P)</source>
         <translation type="unfinished">إلغاء الإيقاف المؤقت (Alt + P)</translation>
     </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Score</name>

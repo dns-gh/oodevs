@@ -47,6 +47,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , network_( network )
     , slider_( 0 )
     , sliderTick_( 0 )
+    , lastTickSkip_( 0 )
 {
     setWindowTitle( tr( "Replay control" ) );
     QLabel* label = new QLabel( this );
@@ -283,7 +284,10 @@ void ReplayerToolbar::OnRefresh()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::SkipToTick( unsigned int tick )
 {
+    if( lastTickSkip_ == tick )
+        return;
     simulationController_.SkipToTick( tick - 1 );
+    lastTickSkip_ = tick;
 }
 
 // -----------------------------------------------------------------------------

@@ -2738,6 +2738,14 @@ This data can&apos;t be projected.</source>
         <source>Unpause (Alt+P)</source>
         <translation>Unpause (Alt+P)</translation>
     </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation>Go to start (Alt+A)</translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation>Go to end (Alt+Z)</translation>
+    </message>
 </context>
 <context>
     <name>Score</name>

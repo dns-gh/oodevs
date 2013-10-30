@@ -82,6 +82,7 @@ private:
     kernel::ContextMenu* menu_;
     QPushButton* button_;
     int sliderTick_;
+    unsigned int lastTickSkip_;
     //@}
 };
 
