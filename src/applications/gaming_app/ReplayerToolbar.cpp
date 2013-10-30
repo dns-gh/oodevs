@@ -119,6 +119,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
         }
         SpinBox()->setRange( simulation.GetFirstTick(), maxTick );
+        SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
         slider_->setRange( simulation.GetFirstTick(), maxTick );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->blockSignals( true );
