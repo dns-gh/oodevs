@@ -78,6 +78,7 @@ MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel
     , entity_( controllers )
     , order_( 0 )
     , planned_( false )
+    , type_( eNbrMissionTypes )
 {
     setObjectName( name );
     setMinimumSize( 280, 50 );
@@ -96,13 +97,11 @@ MissionInterface::~MissionInterface()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface::Purge
-// Created: ABR 2013-06-04
+// Name: MissionInterface::PurgeParameters
+// Created: ABR 2013-10-30
 // -----------------------------------------------------------------------------
-void MissionInterface::Purge()
+void MissionInterface::PurgeParameters()
 {
-    entity_ = 0;
-    order_ = 0;
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         (*it)->RemoveFromController();
@@ -114,6 +113,30 @@ void MissionInterface::Purge()
     for( auto it = widgetToDelete_.begin(); it != widgetToDelete_.end(); ++it )
         delete *it;
     widgetToDelete_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::Purge
+// Created: ABR 2013-06-04
+// -----------------------------------------------------------------------------
+void MissionInterface::Purge()
+{
+    entity_ = 0;
+    order_ = 0;
+    type_ = eNbrMissionTypes;
+    PurgeParameters();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::Rebuild
+// Created: ABR 2013-10-30
+// -----------------------------------------------------------------------------
+void MissionInterface::Rebuild( InterfaceBuilder_ABC& builder )
+{
+    PurgeParameters();
+    if( order_ )
+        Build( builder, *order_, type_ );
+    SetEntity( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +156,7 @@ void MissionInterface::SetEntity( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& order, E_MissionType type )
 {
+    type_ = type;
     order_ = &order;
 
     setVisible( false ); // $$$$ ABR 2013-06-04: For some reason the current tab display doesn't refresh, probably because of Q3VBox. This will be fix when Param_ABC::BuildInterface will take a QVBoxLayout as parent instead of a QWidget
@@ -143,7 +167,6 @@ void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::Order
     // Help tab
     std::string doctrine = order.GetDoctrineInformation();
     std::string usage = order.GetUsageInformation();
-    assert( type >= 0 && type < eNbrMissionTypes );
     tools::Path fileName = config_.GetPhysicalChildPath( missionSheetPhysicalTags_[ type ] ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
     if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
     {

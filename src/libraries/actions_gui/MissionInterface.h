@@ -77,6 +77,7 @@ public:
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
+    void Rebuild( InterfaceBuilder_ABC& builder );
     virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
     virtual void SetEntity( const kernel::Entity_ABC* entity );
     virtual void Purge();
@@ -126,6 +127,7 @@ private:
         else
             model.Publish( *action, 0 );
     }
+    void PurgeParameters();
     //@}
 
 private:
@@ -143,6 +145,7 @@ private:
     QWidget* helpTab_;
     std::vector< QWidget* > widgetToDelete_;
     bool planned_;
+    E_MissionType type_;
 
     static std::map< E_MissionType, const std::string > missionSheetPhysicalTags_;
     //@}
