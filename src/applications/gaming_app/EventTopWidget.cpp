@@ -12,6 +12,7 @@
 #include "moc_EventTopWidget.cpp"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichDateTimeEdit.h"
+#include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
@@ -44,6 +45,7 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     , switchAction_( 0 )
     , saveAction_( 0 )
     , editing_( false )
+    , triggerEvent_( true )
 {
     // Header
     QFont font( "Arial", 12, QFont::Bold );
@@ -90,8 +92,11 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     toolBar->addWidget( CreateStretcher() );
     planningActions_.push_back( toolBar->addWidget( dateWidget ) );
     planningActions_.push_back( toolBar->addWidget( CreateStretcher() ) );
-    saveAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), "", this, SIGNAL( Save() ) );
+    saveAction_ = toolBar->addAction( MAKE_ICON( save ), tr( "Save" ), this, SIGNAL( Save() ) );
+    saveAsAction_ = toolBar->addAction( MAKE_ICON( saveas ), tr( "Save as copy" ), this, SIGNAL( SaveAs() ) );
+
     planningActions_.push_back( saveAction_ );
+    planningActions_.push_back( saveAsAction_ );
     planningActions_.push_back( toolBar->addSeparator() );
 
     // Layout
@@ -118,10 +123,12 @@ EventTopWidget::~EventTopWidget()
 // -----------------------------------------------------------------------------
 void EventTopWidget::Fill( const Event& event )
 {
+    triggerEvent_ = event.GetEvent().uuid.empty();
+
     title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( event.GetType() ) ) );
     source_->setText( QString::fromStdString( event.GetEvent().action.target ) );
-    saveAction_->setText( event.GetEvent().done ? tr( "Save as copy" ) : tr( "Save" ) );
-    // $$$$ ABR 2013-07-04: TODO Change icon when "as copy"
+    saveAction_->setEnabled( switchAction_->isChecked() && !event.GetEvent().done );
+    saveAsAction_->setEnabled( switchAction_->isChecked() && editing_ );
 
     // Date time
     bool canHaveEndTime = ( event.GetType() == eEventTypes_Task || event.GetType() == eEventTypes_Multimedia );
@@ -169,9 +176,13 @@ void EventTopWidget::OnSwitchToggled( bool checked )
         for( auto it = planningActions_.begin(); it != planningActions_.end(); ++it )
             if( *it )
                 ( *it )->setEnabled( checked );
+
+        saveAction_->setEnabled( checked && triggerEvent_ );
+        saveAsAction_->setEnabled( checked && !triggerEvent_ );
+
         hasEndDateTimeCheckbox_->setChecked( hasEndDateTimeCheckbox_->isChecked() );
+        emit PlanningModeToggled( checked );
     }
-    emit PlanningModeToggled( checked );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +193,7 @@ void EventTopWidget::OnEditingChanged( bool editing )
 {
     editing_ = editing;
     switchAction_->setChecked( editing );
+    saveAsAction_->setEnabled( editing_ );
     OnSwitchToggled( editing );
 }
 
@@ -215,9 +227,10 @@ void EventTopWidget::NotifyContextMenu( const QDateTime& dateTime, kernel::Conte
     selectedDateTime_ = dateTime;
     if( !isVisible() )
         return;
-    menu.InsertItem( "Parameter", tr( "Start date" ), this, SLOT( OnBeginDateTimeSelected() ) );
-    if( endDateTimeEdit_->isVisible() && dateTime.secsTo( beginDateTimeEdit_->dateTime() ) < 0 )
-        menu.InsertItem( "Parameter", tr( "End date" ), this, SLOT( OnEndDateTimeSelected() ) );
+    bool hasEndDateTime = endDateTimeEdit_->isVisible();
+    menu.InsertItem( "Parameter", hasEndDateTime ? tr( "Set event start date" ) : tr( "Set event date" ), this, SLOT( OnBeginDateTimeSelected() ) );
+    if( hasEndDateTime && dateTime.secsTo( beginDateTimeEdit_->dateTime() ) < 0 )
+        menu.InsertItem( "Parameter", tr( "Set event end date" ), this, SLOT( OnEndDateTimeSelected() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,6 +240,8 @@ void EventTopWidget::NotifyContextMenu( const QDateTime& dateTime, kernel::Conte
 void EventTopWidget::OnBeginDateTimeSelected()
 {
     beginDateTimeEdit_->setDateTime( selectedDateTime_ );
+    if( !switchAction_->isChecked() )
+        switchAction_->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,6 +252,8 @@ void EventTopWidget::OnEndDateTimeSelected()
 {
     hasEndDateTimeCheckbox_->setCheckState( Qt::Checked );
     endDateTimeEdit_->setDateTime( selectedDateTime_ );
+    if( !switchAction_->isChecked() )
+        switchAction_->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------

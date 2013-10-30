@@ -802,12 +802,16 @@ Raison: %3
         <translation>Début</translation>
     </message>
     <message>
-        <source>Start date</source>
-        <translation>Date de début</translation>
+        <source>Set event start date</source>
+        <translation>Définir la date de début de l&apos;évènement</translation>
     </message>
     <message>
-        <source>End date</source>
-        <translation>Date de fin</translation>
+        <source>Set event date</source>
+        <translation>Définir la date de l&apos;évènement</translation>
+    </message>
+    <message>
+        <source>Set event end date</source>
+        <translation>Définir la date de fin de l&apos;évènement</translation>
     </message>
 </context>
 <context>

@@ -54,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                              Model& model, timeline::Configuration& cfg );
+                              kernel::ActionController& eventController, Model& model, timeline::Configuration& cfg );
     virtual ~TimelineWebView();
     //@}
 
@@ -79,6 +79,7 @@ signals:
     //! @name Signals
     //@{
     void CreateEventSignal( const timeline::Event& event );
+    void SelectEventSignal( const std::string& uuid );
     void EditEventSignal( const timeline::Event& event );
     void DeleteEventSignal( const std::string& uuid );
 
@@ -92,6 +93,7 @@ private slots:
     void OnSetLayoutOrientation( bool horizontal );
 
     void CreateEvent( const timeline::Event& event );
+    void SelectEvent( const std::string& uuid );
     void EditEvent( const timeline::Event& event );
     void DeleteEvent( const std::string& uuid );
 
@@ -123,6 +125,7 @@ private:
 
     const tools::ExerciseConfig& config_;
     kernel::ActionController& actionController_;
+    kernel::ActionController& eventController_;
     Model& model_;
 
     boost::scoped_ptr< timeline::Server_ABC > server_;
@@ -131,6 +134,7 @@ private:
     QDateTime selectedDateTime_;
     boost::scoped_ptr< QSignalMapper > creationSignalMapper_;
     tools::Path currentFile_;
+    std::string eventCreated_;
     //@}
 };
 

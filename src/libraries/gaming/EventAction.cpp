@@ -57,8 +57,8 @@ void EventAction::Purge()
 {
     if( action_ )
     {
-        if( controllers_.actions_.IsSelected( action_ ) )
-            controllers_.actions_.DeselectAll();
+        if( controllers_.eventActions_.IsSelected( action_ ) )
+            controllers_.eventActions_.DeselectAll();
         model_.Destroy( *action_ );
     }
 }
@@ -140,4 +140,15 @@ QString EventAction::GetName() const
 QString EventAction::GetTooltip() const
 {
     return ( action_ ) ? action_->GetTooltip() : Event::GetTooltip();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventAction::Select
+// Created: ABR 2013-07-02
+// -----------------------------------------------------------------------------
+void EventAction::Select( kernel::ActionController& eventController, kernel::ActionController& actionController ) const
+{
+    eventController.Select( static_cast< const Event& >( *this ) );
+    if( action_ && event_.get() && event_->done )
+        actionController.Select( *action_ );
 }

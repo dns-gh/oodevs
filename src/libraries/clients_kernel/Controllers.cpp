@@ -24,11 +24,12 @@ using namespace kernel;
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
 Controllers::Controllers()
-    : options_   ( *new Options() )
-    , controller_( *new Controller() )
-    , actions_   ( *new ActionController() )
-    , modes_     ( *new ModeController() )
-    , languages_ ( *new LanguageController() )
+    : options_     ( *new Options() )
+    , controller_  ( *new Controller() )
+    , actions_     ( *new ActionController() )
+    , eventActions_( *new ActionController() )
+    , modes_       ( *new ModeController() )
+    , languages_   ( *new LanguageController() )
 {
     // NOTHING
 }
@@ -42,6 +43,7 @@ Controllers::~Controllers()
     delete &languages_;
     delete &modes_;
     delete &actions_;
+    delete &eventActions_;
     delete &controller_;
     delete &options_;
 }

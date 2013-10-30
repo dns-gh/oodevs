@@ -800,11 +800,15 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start date</source>
+        <source>Set event start date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>End date</source>
+        <source>Set event date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set event end date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

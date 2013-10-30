@@ -60,6 +60,7 @@ public:
     Options&            options_;
     Controller&         controller_;
     ActionController&   actions_;
+    ActionController&   eventActions_;
     ModeController&     modes_;
     LanguageController& languages_;
     //@}

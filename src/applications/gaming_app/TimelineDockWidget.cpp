@@ -50,7 +50,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     // Content
     tabWidget_ = new QTabWidget();
     tabWidget_->setVisible( false );
-    webView_ = new TimelineWebView( 0, config, controllers.actions_, model, *cfg_ );
+    webView_ = new TimelineWebView( 0, config, controllers.actions_, controllers.eventActions_, model, *cfg_ );
     AddView();
 
     // Main Layout
@@ -64,6 +64,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
 
     // Connections
     connect( this, SIGNAL( CreateEvent( const timeline::Event& ) ), webView_, SLOT( CreateEvent( const timeline::Event& ) ) );
+    connect( this, SIGNAL( SelectEvent( const std::string& ) ), webView_, SLOT( SelectEvent( const std::string& ) ) );
     connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
     connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ) );

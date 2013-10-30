@@ -48,6 +48,7 @@ signals:
     //! @name Signals
     //@{
     void Save();
+    void SaveAs();
     void PlanningModeToggled( bool );
     //@}
 
@@ -88,13 +89,14 @@ private:
     std::vector< QAction* > planningActions_;
     QAction* switchAction_;
     QAction* saveAction_;
+    QAction* saveAsAction_;
     gui::RichDateTimeEdit* beginDateTimeEdit_;
     gui::RichDateTimeEdit* endDateTimeEdit_;
     QCheckBox* hasEndDateTimeCheckbox_;
 
     QDateTime selectedDateTime_;
     bool editing_;
-
+    bool triggerEvent_;
     //@}
 };
 

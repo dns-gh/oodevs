@@ -133,6 +133,7 @@ private slots:
     void OnShowDetail();
     void OnDiscard();
     void OnSave();
+    void OnSaveAs();
     //@}
 
 private:
@@ -150,6 +151,7 @@ private:
     std::auto_ptr< Event > event_;
     kernel::SafePointer< Event > selected_;
     bool editing_;
+    E_EventTypes lastOrder_;
     //@}
 };
 

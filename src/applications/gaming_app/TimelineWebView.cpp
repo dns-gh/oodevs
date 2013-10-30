@@ -41,10 +41,11 @@
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                                  Model& model, timeline::Configuration& cfg )
+                                  kernel::ActionController& eventController, Model& model, timeline::Configuration& cfg )
     : QWidget( parent )
     , config_( config )
     , actionController_( actionController )
+    , eventController_( eventController )
     , model_( model )
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
@@ -80,6 +81,7 @@ void TimelineWebView::Connect()
     server_.reset( MakeServer( *cfg_ ).release() );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
+    connect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
     connect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
@@ -106,6 +108,7 @@ void TimelineWebView::Disconnect()
         return;
 
     disconnect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
+    disconnect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
     disconnect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
     disconnect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
@@ -156,7 +159,17 @@ void TimelineWebView::OnCenterView()
 // -----------------------------------------------------------------------------
 void TimelineWebView::CreateEvent( const timeline::Event& event )
 {
+    eventCreated_ = event.uuid;
     emit CreateEventSignal( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::SelectEvent
+// Created: LGY 2013-11-12
+// -----------------------------------------------------------------------------
+void TimelineWebView::SelectEvent( const std::string& uuid )
+{
+    emit SelectEventSignal( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +187,7 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
-    actionController_.DeselectAll();
+    eventController_.DeselectAll();
     emit DeleteEventSignal( uuid );
 }
 
@@ -187,6 +200,11 @@ void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeli
     if( error.code != timeline::EC_OK )
         MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
     model_.events_.Create( event );
+    if( !eventCreated_.empty() && event.uuid == eventCreated_ )
+    {
+        emit SelectEventSignal( event.uuid );
+        eventCreated_ = "";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -222,10 +240,13 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     if( selected_ )
     {
         Event& gamingEvent = GetOrCreateEvent( *selected_ );
-        gamingEvent.Select( actionController_ );
+        gamingEvent.Select( eventController_, actionController_ );
     }
     else if( hadSelection )
+    {
         actionController_.DeselectAll();
+        eventController_.DeselectAll();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +256,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    gamingEvent.Activate( actionController_ );
+    gamingEvent.Activate( eventController_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,7 +269,7 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
     if( event )
     {
         Event& gamingEvent = GetOrCreateEvent( *event );
-        gamingEvent.ContextMenu( actionController_, QCursor::pos() );
+        gamingEvent.ContextMenu( eventController_, QCursor::pos() );
     }
     else
         actionController_.ContextMenu( selectedDateTime_, QCursor::pos() );

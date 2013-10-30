@@ -57,6 +57,7 @@ public:
     timeline::Event& GetEvent() const;
     virtual Event* Clone() const;
     virtual void Update( const timeline::Event& event );
+    virtual void Select( kernel::ActionController& eventController, kernel::ActionController& actionController ) const;
     //@}
 
     //! @name GraphicalEntity_ABC implementation
