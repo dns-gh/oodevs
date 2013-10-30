@@ -854,19 +854,10 @@ end
 
 --- Generic activate for Lead skills
 -- @param self: The leading skill
--- @param listenFrontElement : Whether or not there should be a call to integration.ListenFrontElement at the beginning of the function
--- @param endMissionBeforeCoordination : Whether the managing of the end of the mission should be done before or after the managing of the coordination
--- @param manageRelieveBeforeCoordination : Whether the managing of the relieve units should be done before or after the managing of the coordination
--- @param manageRCnoPEInAutomatWhenNoCoordination : Whether or not the RC "No PE In Automat" should be managed when there is no coordination management
--- @param assignDefaultTaskToSE : Whether or not the default task should be assigned to the second echelon (along with the support tasks)
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
--- @param disengageTask : the name of the disengage task given to the non operational entities
 -- @author NMI
 -- @release 2013-07-05
-integration.leadActivate = function( self, listenFrontElement, endMissionBeforeCoordination, manageRelieveBeforeCoordination,
-                            manageRCnoPEInAutomatWhenNoCoordination, assignDefaultTaskToSE,
-                            findBestsFunction, disengageTask )
-                                   
+integration.leadActivate = function( self, findBestsFunction )
     local integration = integration
     local myself = myself
 
@@ -874,7 +865,7 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
       self:create()
     end
     
-    if listenFrontElement and self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
+    if self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
         for _, elem in pairs( self.bestUnits or emptyTable ) do
             integration.ListenFrontElement( elem.entity )
         end
@@ -882,13 +873,13 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        manageAddedAndDeletedUnits( self, findBestsFunction, disengageTask)
+        manageAddedAndDeletedUnits( self, findBestsFunction )
     end
 
     local Activate = Activate
     
     -- Dynamicity managing
-    integration.manageDynamicTask( self, findBestsFunction, disengageTask )
+    integration.manageDynamicTask( self, findBestsFunction )
     
     -- Communication between the company and the subordinates
     if self.companyTask.communicateWithSubordinates then
@@ -902,16 +893,14 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
     -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
     Activate( self.skill.links.synchronizeRC, 1, { entities = pionsPE } )
 
-    if endMissionBeforeCoordination then
-        integration.manageEndMission( self )
-    end
+    integration.manageEndMission( self )
 
     -- Gestion du soutien
     if self.params.taskForSupporting and self.params.taskForSupporting ~= NIL then
         Activate( self.skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
     end
 
-    if manageRelieveBeforeCoordination and self.params.relieveManager then
+    if self.params.relieveManager then
         -- Gestion de la relève
         Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
     end
@@ -951,17 +940,8 @@ integration.leadActivate = function( self, listenFrontElement, endMissionBeforeC
          -- The second echelon is not allowed to go in front of the first echelon
         Activate( self.skill.links.coordinationManagerBetweenEchelon , 1, { FirstEchelon = pionsPE, SecondEchelon = pionsSE, progressionInDangerDirection = self.progressionInDangerDirection } )
     end
-
-    if not manageRelieveBeforeCoordination and self.params.relieveManager then
-        -- Gestion de la releve
-        Activate( self.skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE})
-    end
-
-    if not endMissionBeforeCoordination then
-        integration.manageEndMission( self )
-    end
     
-    if not( not manageRCnoPEInAutomatWhenNoCoordination and self.params.noCoordination ) then
+    if not self.params.noCoordination then
         if not self.params.continueIfNoMainTask and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
             Activate( self.skill.links.RC, 1, { RC = eRC_NoPEInAutomat } )
         end
