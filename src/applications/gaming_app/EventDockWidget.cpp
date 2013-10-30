@@ -280,10 +280,7 @@ void EventDockWidget::OnShowDetail()
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnDiscard()
 {
-    if( editing_ )
-        Fill();
-    else
-        currentWidget_->Reset();
+    currentWidget_->Reset();
 }
 
 // -----------------------------------------------------------------------------

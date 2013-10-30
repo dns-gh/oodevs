@@ -344,18 +344,21 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
     // no last mission || entity type changed || last mission != current mission => need to refresh parameters interface
     if( ( currentMission_.empty() ||
         lastMissionType != currentMissionType_ ||
-        currentMission_ != currentMission ) && !invalidMission )
+        currentMission_ != currentMission || 
+        action ) && !invalidMission )
     {
         // Purge parameters interface
         missionInterface_.Purge();
         // Build parameters interface
         if( order )
             missionInterface_.Build( interfaceBuilder_, *order, currentMissionType_ );
-        // Fill parameters
-        if( action )
-            missionInterface_.FillFrom( *action );
     }
+
     missionInterface_.SetEntity( &entity );
+    // Fill parameters
+    if( action )
+        missionInterface_.FillFrom( *action );
+
     currentMission_ = currentMission;
 }
 
