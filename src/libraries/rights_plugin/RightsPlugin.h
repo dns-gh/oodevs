@@ -77,6 +77,7 @@ public:
 
     virtual dispatcher::Profile_ABC& GetProfile( const std::string& link ) const;
     virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link ) const;
+    virtual dispatcher::ClientPublisher_ABC& GetPublisher( unsigned int clientId ) const;
     virtual unsigned int GetClientID( const std::string& link ) const;
     //@}
 
@@ -118,6 +119,7 @@ private:
     int                                         maxConnections_;
     int                                         currentConnections_;
     T_ClientsID                                 clientsID_;
+    std::map< unsigned int, std::string >       ids_;
     unsigned int                                countID_;
     T_AuthenticationKeys                        authenticationKeys_;
     T_SilentClients                             silentClients_;

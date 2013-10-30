@@ -307,6 +307,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         authenticated_[ link ] = profile;
         clientsID_[ link ] = countID_;
+        ids_[ countID_ ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
@@ -413,13 +414,28 @@ Profile_ABC& RightsPlugin::GetProfile( const std::string& link ) const
 // Name: RightsPlugin::GetPublisher
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
+
+namespace
+{
+
+NullClientPublisher nullPublisher;
+
+}  // namespace
+
 ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link ) const
 {
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return resolver_.GetPublisher( link );
-    static NullClientPublisher publisher;
-    return publisher;
+    return nullPublisher;
+}
+
+ClientPublisher_ABC& RightsPlugin::GetPublisher( unsigned int clientId ) const
+{
+   auto it = ids_.find( clientId );
+   if( it != ids_.end() )
+       return resolver_.GetPublisher( it->second );
+   return nullPublisher;
 }
 
 // -----------------------------------------------------------------------------
