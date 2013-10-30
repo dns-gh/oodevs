@@ -785,11 +785,18 @@ default_session_settings =
     timeline:
         enabled: false
         port:    50066
-get_default_session_settings = ->
+
+load_default_session_settings = ->
     data = $.cookie "default_session_settings"
     return default_session_settings unless data?
     return JSON.parse data
-session_default.set get_default_session_settings()
+
+save_default_session_settings = (data) ->
+    data.sides = no_side_objects: true
+    session_default.set data
+    $.cookie "default_session_settings", JSON.stringify data
+
+save_default_session_settings load_default_session_settings()
 
 validate_input_session = (control, result, error) ->
     unless result
@@ -844,7 +851,5 @@ $("#session_edit").click ->
     mod.find(".apply").click ->
         data = validate_settings ui, true
         return unless data?
-        data.sides.no_side_objects = "true"
-        session_default.set data
-        $.cookie "default_session_settings", JSON.stringify data
+        save_default_session_settings data
         mod.modal "hide"
