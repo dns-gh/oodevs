@@ -729,7 +729,27 @@ class LicenseView extends Backbone.View
             suffix = if missings.length > 1 then "s" else ""
             print_license_error "Missing #{missings.join " & "} licence#{suffix}", true
 
+class NodeItem extends Backbone.Model
+
+    initialize: -> @delta()
+
+    sync: (method, model, options) =>
+        if method == "read"
+            return ajax "/api/get_node", id: uuid,
+                options.success, options.error
+        return Backbone.sync method, model, options
+
+    delta: =>
+        @fetch
+            success: (model, response, options) =>
+                @set response
+                setTimeout @delta, 5000
+            error: =>
+                print_error "Unable to fetch node"
+                setTimeout @delta, 5000
+
 licenses = new LicenseView
+current_node = new NodeItem
 exercise_view = new ExerciseListItemView
 session_view = new SessionListView
 session_default = new SessionItem
@@ -769,11 +789,18 @@ default_session_settings =
     timeline:
         enabled: false
         port:    50066
-get_default_session_settings = ->
+
+load_default_session_settings = ->
     data = $.cookie "default_session_settings"
     return default_session_settings unless data?
     return JSON.parse data
-session_default.set get_default_session_settings()
+
+save_default_session_settings = (data) ->
+    data.sides = no_side_objects: true
+    session_default.set data
+    $.cookie "default_session_settings", JSON.stringify data
+
+save_default_session_settings load_default_session_settings()
 
 validate_input_session = (control, result, error) ->
     unless result
@@ -815,13 +842,18 @@ $(".session_search input").bind "input propertychange", ->
     session_view.set_search get_search()
 
 $("#session_edit").click ->
+    data = plugins: {}
+    for it in current_node.get "plugins"
+        plugin = data.plugins[it] = {}
+        for group in session_plugins[it]?.groups
+            for option in group.options
+                set_xpath option.id, plugin, option.default
     overrides =
         is_default: true
         status: "stopped"
-    [ui, mod] = pop_settings $("#settings"), _.extend {}, session_default.attributes, overrides
+    [ui, mod] = pop_settings $("#settings"), _.extend data, session_default.attributes, overrides
     mod.find(".apply").click ->
         data = validate_settings ui, true
         return unless data?
-        session_default.set data
-        $.cookie "default_session_settings", JSON.stringify data
+        save_default_session_settings data
         mod.modal "hide"
