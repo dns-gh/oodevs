@@ -82,3 +82,15 @@ BOOST_AUTO_TEST_CASE( compat_int_to_enum )
     BOOST_REQUIRE( decoded );
     BOOST_CHECK_EQUAL( int(after::value1), decoded->int_to_enum().value() );
 }
+
+BOOST_AUTO_TEST_CASE( typed_list_to_untyped )
+{
+    after::Root msg;
+    msg.mutable_typed_list_to_untyped()->add_elem()->set_id( 7 );
+    msg.mutable_typed_list_to_untyped()->add_elem()->set_id( 13 );
+    auto decoded = EncodeDecode( msg );
+    BOOST_REQUIRE( decoded );
+    BOOST_CHECK_EQUAL( msg.typed_list_to_untyped().elem_size(), decoded->typed_list_to_untyped().elem_size() );
+    for( int i = 0; i < msg.typed_list_to_untyped().elem_size(); ++i )
+        BOOST_CHECK_EQUAL( msg.typed_list_to_untyped().elem( i ).id(), decoded->typed_list_to_untyped().elem( i ).id() );
+}
