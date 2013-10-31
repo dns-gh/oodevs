@@ -60,10 +60,12 @@ class PluginFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
-                            SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                            CompositePlugin& handler, CompositeRegistrable& registrables,
-                            const Services& services, tools::Log& log, int maxConnections );
+             PluginFactory( const Config& config, Model& model,
+                 const dispatcher::StaticModel& staticModel,
+                 SimulationPublisher_ABC& simulation,
+                 const boost::shared_ptr< ClientsNetworker >& clients,
+                 CompositePlugin& handler, CompositeRegistrable& registrables,
+                 const Services& services, tools::Log& log, int maxConnections );
     virtual ~PluginFactory();
     //@}
 
@@ -88,7 +90,7 @@ private:
     Model& model_;
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
-    ClientsNetworker& clients_;
+    boost::shared_ptr< ClientsNetworker > clients_;
     CompositePlugin& handler_;
     CompositeRegistrable& registrables_;
     boost::ptr_vector< PluginFactory_ABC > factories_;
