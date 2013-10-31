@@ -59,6 +59,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , tools_( tools )
     , simulation_( simulation )
     , selectedEntity_( 0 )
+    , alternateSelectedEntity_( 0 )
     , target_( 0 )
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
     , missionCombo_( 0 )
@@ -136,6 +137,7 @@ namespace
 void EventOrderWidget::Purge()
 {
     selectedEntity_ = 0;
+    alternateSelectedEntity_ = 0;
     target_ = 0;
     PurgeComboBox( *missionTypeCombo_ );
     PurgeComboBox( *missionCombo_ );
@@ -361,7 +363,11 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
 
             QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( ActivateMissionPanel() ), false, 2 );
             if( decisions->IsEmbraye() )
+            {
                 action->setIcon( MAKE_PIXMAP( lock ) );
+                alternateSelectedEntity_ = &agent;
+                menu.InsertItem( "Order", tr( "Order (unit)" ), this, SLOT( ActivateMissionPanelOnUnit() ), false, 3 );
+            }
         }
 }
 
@@ -436,12 +442,26 @@ void EventOrderWidget::ActivateMissionPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventOrderWidget::ActivateMissionPanelOnUnit
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::ActivateMissionPanelOnUnit()
+{
+    if( !alternateSelectedEntity_ )
+        return;
+
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    SetTarget( alternateSelectedEntity_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::NotifyUpdated
 // Created: LGY 2013-08-22
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 {
-   if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() )
+   if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() ||
+       alternateSelectedEntity_ && alternateSelectedEntity_->GetId() == decisions.GetAgent().GetId() )
         OnMissionChanged( 0 );
 }
 

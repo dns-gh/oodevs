@@ -144,6 +144,7 @@ private slots:
     void OnTargetRemoved();
 
     void ActivateMissionPanel();
+    void ActivateMissionPanelOnUnit();
     //@}
 
 private:
@@ -165,6 +166,7 @@ private:
     boost::scoped_ptr< actions::gui::MissionInterface > missionInterface_;
 
     const kernel::Entity_ABC* selectedEntity_;
+    const kernel::Entity_ABC* alternateSelectedEntity_;
     const kernel::Entity_ABC* target_;
 
     bool planningMode_;

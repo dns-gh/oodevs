@@ -742,6 +742,10 @@ Reason: %3
         <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Order (unit)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>

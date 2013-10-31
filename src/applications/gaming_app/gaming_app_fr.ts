@@ -744,6 +744,10 @@ Raison: %3
         <source>Recipient</source>
         <translation>Destinataire</translation>
     </message>
+    <message>
+        <source>Order (unit)</source>
+        <translation>Ordre (pion)</translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>
