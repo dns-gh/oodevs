@@ -917,6 +917,19 @@ integration.findSafetyPositions = function( radius, safetyDistance )
     return DEC_FindSafetyPositions( radius, safetyDistance )
 end
 
+-- Returns the time (minutes) needed to move towards the
+-- provided position with a straight line itinerary
+-- @params position : the position with respect to which the time will be computed
+integration.getAgentTimeToReachPosition = function( position )
+    return DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( DEC_Geometrie_Distance( meKnowledge:getPosition(), position:getPosition() ) )
+end
+
+-- Returns the time (minutes) during which the agent
+-- can remain autonomous while moving
+integration.getAgentMovementAutonomy = function()
+    return DEC_Agent_AutonomieEnDeplacement()
+end
+
 -- Return the list without element from list
 removeListElementWithSameLocation = function( position, list )
     local result = {}
