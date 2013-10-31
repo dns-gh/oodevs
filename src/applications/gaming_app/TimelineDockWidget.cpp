@@ -18,7 +18,6 @@
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/Language.h"
 #include <timeline/api.h>
 
 int TimelineDockWidget::maxTabNumber_ = -1;
@@ -37,7 +36,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     setCaption( tr( "Actions timeline" ) );
 
     // Configuration
-    cfg_->url = "http://" + config.GetTimelineUrl() + "/?lang=" + tools::Language::Current(); // $$$$ ABR 2013-05-24: Timeline server must keep this parameter when it automatically add session id
+    cfg_->url = "http://" + config.GetTimelineUrl();
     int timelineDebugPort = config.GetTimelineDebugPort();
     if( timelineDebugPort != 0 )
         cfg_->debug_port = timelineDebugPort;

@@ -29,6 +29,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Language.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <timeline/api.h>
@@ -79,6 +80,9 @@ void TimelineWebView::Connect()
     mainLayout_->addWidget( timelineWidget_.get() );
     cfg_->widget = timelineWidget_.get();
     server_.reset( MakeServer( *cfg_ ).release() );
+
+    auto query = boost::assign::map_list_of( "lang", tools::Language::Current() );
+    server_->UpdateQuery( query );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
