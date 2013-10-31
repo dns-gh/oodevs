@@ -92,6 +92,16 @@ QPalette RichWarnWidget< T >::CreatePalette() const
     return p;
 }
 
+// -----------------------------------------------------------------------------
+// Name: RichWarnWidget::EnableStaticWarning
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+template< typename T >
+void RichWarnWidget< T >::EnableStaticWarning( bool warn )
+{
+    setPalette( ( warn ) ? warningPalette_ : originalPalette_ );
+}
+
 /*
 QPalette::Window            // A general background color.
 QPalette::WindowText        // A general foreground color.

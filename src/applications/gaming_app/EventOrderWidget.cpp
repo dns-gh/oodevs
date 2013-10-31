@@ -561,12 +561,10 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
     // Disable invalid mission
     if( invalid )
-    {
         missionCombo_->setItemData( missionCombo_->currentIndex(), Qt::NoItemFlags, Qt::UserRole - 1 );
-        missionCombo_->Warn();
-        targetGroupBox_->Warn();
-        targetLabel_->Warn();
-    }
+    missionCombo_->EnableStaticWarning( invalid );
+    targetGroupBox_->EnableStaticWarning( invalid );
+    targetLabel_->EnableStaticWarning( invalid );
     missionCombo_->blockSignals( false );
 
     bool enableTriggerEvent = ShouldEnableTriggerEvent( target_ );
