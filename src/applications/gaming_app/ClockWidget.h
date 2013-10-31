@@ -10,6 +10,7 @@
 #ifndef __ClockWidget_h_
 #define __ClockWidget_h_
 
+#include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -19,8 +20,6 @@ namespace kernel
 }
 
 class ActionsScheduler;
-class Publisher_ABC;
-class Profile;
 class Simulation;
 
 // =============================================================================
@@ -29,9 +28,10 @@ class Simulation;
 */
 // Created: SBO 2007-04-17
 // =============================================================================
-class ClockWidget : public Q3HBox
+class ClockWidget : public QWidget
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Simulation >
+                  , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,16 +40,11 @@ public:
     virtual ~ClockWidget();
     //@}
 
-    //! @name Operations
-    //@{
-    void SetAlarmVisible( bool visible );
-    //@}
-
 private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void paintEvent( QPaintEvent* e );
+    virtual void NotifyModeChanged( E_Modes newMode );
     //@}
 
 private:
