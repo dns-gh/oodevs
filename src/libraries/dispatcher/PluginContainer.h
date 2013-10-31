@@ -17,6 +17,9 @@
 namespace dispatcher
 {
 
+// PluginContainer lets you build a plugins tree where a parent node can prevent
+// messages to reach its children by overriding the Forward* methods.
+// Other notifications and actions pass through unaffected.
 class PluginContainer : public Plugin_ABC
 {
 public:
@@ -38,10 +41,12 @@ public:
 
     virtual void Update();
     virtual void Close();
-    virtual bool Filter( const sword::SimToClient& message ) const;
     virtual bool HandleClientToSim( const sword::ClientToSim&, RewritingPublisher_ABC&,
             ClientPublisher_ABC& );
     //@}
+
+private:
+    virtual bool ForwardSimToClient( const sword::SimToClient& message );
 
 private:
     //! @name Member data

@@ -25,8 +25,9 @@ void PluginContainer::AddHandler( const boost::shared_ptr< MessageHandler_ABC >&
 
 void PluginContainer::Receive( const sword::SimToClient& message )
 {
-    for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
-        (*it)->Receive( message );
+    if( ForwardSimToClient( message ) )
+        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
+            (*it)->Receive( message );
 }
 
 void PluginContainer::Receive( const sword::AarToClient& message )
@@ -73,12 +74,9 @@ void PluginContainer::Close()
         (*it)->Close();
 }
 
-bool PluginContainer::Filter( const sword::SimToClient& message ) const
+bool PluginContainer::ForwardSimToClient( const sword::SimToClient& )
 {
-    for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
-        if( (*it)->Filter( message ) )
-            return true;
-    return false;
+    return true;
 }
 
 bool PluginContainer::HandleClientToSim( const sword::ClientToSim& msg,

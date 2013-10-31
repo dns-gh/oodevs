@@ -56,8 +56,6 @@ void ClientsNetworker::Update()
 // -----------------------------------------------------------------------------
 void ClientsNetworker::Receive( const sword::SimToClient& message )
 {
-    if( plugin_.Filter( message ) )
-        return;
     if( message.message().has_control_send_current_state_begin() )
         DenyConnections();
     else if( message.message().has_control_send_current_state_end() )

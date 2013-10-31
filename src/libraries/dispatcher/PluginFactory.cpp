@@ -59,7 +59,9 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
 {
     clients_->RegisterMessage( *this, &PluginFactory::Receive );
 
-    // Plugins are registered in a precise order:
+    // handler_ is the root element of the plugin tree. Parent plugins can
+    // prevent specific message to reach their descendants. All other actions
+    // are forwarded unconditionally. The registration order is also important:
     // - DispatcherPlugin forwards to clients
     // - Model is used by other plugins and also triggers events on Entity_ABC::Update
     // - SaverPlugin uses the Model
@@ -67,7 +69,14 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     handler_.Add( pOrder_ );
     handler_.Add( boost::make_shared< DispatcherPlugin >(
                 simulation_, *clients_, *rights_, *pOrder_, log ) );
-    handler_.Add( clients_ );
+
+    // Vision plugin prevents vision cones from reaching ClientsNetworker and
+    // being broadcast.
+    auto vision = boost::make_shared< vision::VisionPlugin >( *model_, *clients_,
+            simulation_, *rights_ );
+    handler_.Add( vision );
+    vision->Add( clients_ );
+
     handler_.AddHandler( model_ );
 }
 
@@ -103,7 +112,6 @@ void PluginFactory::Instanciate()
     handler_.Add( boost::make_shared< score::ScorePlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     handler_.Add( boost::make_shared< logger::LoggerPlugin >( *model_, staticModel_, config_, services_ ) );
-    handler_.Add( boost::make_shared< vision::VisionPlugin >( *model_, *clients_, simulation_, *rights_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

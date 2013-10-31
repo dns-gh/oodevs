@@ -38,22 +38,6 @@ VisionPlugin::~VisionPlugin()
     // NOTHING
 }
 
-bool VisionPlugin::Filter( const sword::SimToClient& message ) const
-{
-    return message.message().has_unit_vision_cones();
-}
-
-void VisionPlugin::Receive( const sword::SimToClient& message )
-{
-    if( Filter( message ) )
-    {
-        const unsigned int id = message.message().unit_vision_cones().unit().id();
-        cones_[ id ] = message;
-        units_->Send( id, message );
-        clients_->Send( message );
-    }
-}
-
 void VisionPlugin::OnReceive( const std::string& link, const sword::ClientToSim& message )
 {
     if( message.message().has_control_toggle_vision_cones() )
@@ -126,7 +110,7 @@ void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, const s
     }
     else
         units_->Unregister( publisher, unitId );
-    Update();
+    NotifyFilterChanged();
 }
 
 void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, bool activate )
@@ -136,17 +120,24 @@ void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, bool ac
         clients_->Register( publisher );
     else
         clients_->Unregister( publisher );
-    Update();
+    NotifyFilterChanged();
 }
 
-void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& /*link*/, bool /*uncounted*/ )
+void VisionPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link, bool uncounted )
 {
     clients_->Unregister( publisher );
     units_->Unregister( publisher );
-    Update();
+    NotifyFilterChanged();
+    dispatcher::PluginContainer::NotifyClientLeft( publisher, link, uncounted );
 }
 
 void VisionPlugin::Update()
+{
+    NotifyFilterChanged(); 
+    dispatcher::PluginContainer::Update();
+}
+
+void VisionPlugin::NotifyFilterChanged()
 {
     const bool enabled = clients_->IsRegistered() || units_->IsRegistered();
     if( enabled_ == enabled )
@@ -157,4 +148,15 @@ void VisionPlugin::Update()
     enabled_ = enabled;
     if( ! enabled_ )
         cones_.clear();
+}
+
+bool VisionPlugin::ForwardSimToClient( const sword::SimToClient& message )
+{
+    if( !message.message().has_unit_vision_cones() )
+        return true;
+    const unsigned int id = message.message().unit_vision_cones().unit().id();
+    cones_[ id ] = message;
+    units_->Send( id, message );
+    clients_->Send( message );
+    return false;
 }
