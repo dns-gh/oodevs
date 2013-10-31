@@ -141,6 +141,7 @@ private slots:
     void OnMissionTypeChanged( int index );
     void OnMissionChanged( int id );
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
+    void OnTargetActivated() const;
     void OnTargetRemoved();
 
     void ActivateMissionPanel();
@@ -163,6 +164,8 @@ private:
     QStandardItemModel missionModel_;
     gui::RichGroupBox* targetGroupBox_;
     gui::RichLabel* targetLabel_;
+    QPushButton* activateTargetButton_;
+    QPushButton* removeTargetButton_;
     boost::scoped_ptr< actions::gui::MissionInterface > missionInterface_;
 
     const kernel::Entity_ABC* selectedEntity_;

@@ -37,6 +37,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/TimelinePublisher.h"
 #include <timeline/api.h>
+#include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
 
 namespace
@@ -72,8 +73,12 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionComboLayout_->setMargin( 0 );
     missionComboLayout_->setSpacing( 0 );
     targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    gui::RichPushButton* removeTargetButton = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
-    connect( removeTargetButton, SIGNAL( clicked() ), this, SLOT( OnTargetRemoved() ) );
+
+    activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogApplyButton ), "" );
+    connect( activateTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetActivated() ) );
+
+    removeTargetButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
+    connect( removeTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetRemoved() ) );
 
     missionCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-combobox" );
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel( missionCombo_ );
@@ -89,7 +94,8 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     QHBoxLayout* internalTargetLayout = new QHBoxLayout( targetGroupBox_ );
     internalTargetLayout->setContentsMargins( 5, 0, 5, 5 );
     internalTargetLayout->addWidget( targetLabel_, 10, Qt::AlignCenter );
-    internalTargetLayout->addWidget( removeTargetButton, 1, Qt::AlignRight );
+    internalTargetLayout->addWidget( activateTargetButton_, 1, Qt::AlignRight );
+    internalTargetLayout->addWidget( removeTargetButton_, 1, Qt::AlignRight );
 
     QHBoxLayout* targetLayout = new QHBoxLayout();
     targetLayout->addWidget( targetGroupBox_ );
@@ -263,7 +269,10 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 {
     target_ = entity;
-    targetLabel_->setText( target_ ? target_->GetName() : "---" );
+    bool hasTarget = target_ != 0;
+    targetLabel_->setText( hasTarget ? target_->GetName() : "---" );
+    activateTargetButton_->setEnabled( hasTarget );
+    removeTargetButton_->setEnabled( hasTarget );
 
     if( const Decisions_ABC* decisions = GetTargetDecision() )
     {
@@ -339,7 +348,22 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnTargetRemoved()
 {
+    if( target_ == 0 )
+        throw MASA_EXCEPTION( "Can't remove an unset target" );
     SetTarget( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::OnTargetActivated
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::OnTargetActivated() const
+{
+    if( target_ == 0 )
+        throw MASA_EXCEPTION( "Can't activate an unset target" );
+    target_->Select( controllers_.actions_ );
+    target_->MultipleSelect( controllers_.actions_, boost::assign::list_of( target_ ) );
+    target_->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
