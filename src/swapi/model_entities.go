@@ -36,9 +36,43 @@ type Point struct {
 }
 
 type Profile struct {
-	Login      string
-	Password   string
-	Supervisor bool
+	Login               string
+	Password            string
+	Supervisor          bool
+	ReadOnlyFormations  map[uint32]struct{}
+	ReadWriteFormations map[uint32]struct{}
+	ReadOnlyAutomats    map[uint32]struct{}
+	ReadWriteAutomats   map[uint32]struct{}
+	ReadOnlyParties     map[uint32]struct{}
+	ReadWriteParties    map[uint32]struct{}
+	ReadOnlyCrowds      map[uint32]struct{}
+	ReadWriteCrowds     map[uint32]struct{}
+}
+
+func mapIds(src *sword.IdList) map[uint32]struct{} {
+	dst := map[uint32]struct{}{}
+	for _, obj := range src.GetElem() {
+		if obj.Id != nil {
+			dst[*obj.Id] = struct{}{}
+		}
+	}
+	return dst
+}
+
+func NewProfile(profile *sword.Profile) *Profile {
+	return &Profile{
+		Login:               profile.GetLogin(),
+		Password:            profile.GetPassword(),
+		Supervisor:          profile.GetSupervisor(),
+		ReadOnlyFormations:  mapIds(profile.GetReadOnlyFormations()),
+		ReadWriteFormations: mapIds(profile.GetReadWriteFormations()),
+		ReadOnlyAutomats:    mapIds(profile.GetReadOnlyAutomates()),
+		ReadWriteAutomats:   mapIds(profile.GetReadWriteAutomates()),
+		ReadOnlyParties:     mapIds(profile.GetReadOnlyParties()),
+		ReadWriteParties:    mapIds(profile.GetReadWriteParties()),
+		ReadOnlyCrowds:      mapIds(profile.GetReadOnlyCrowds()),
+		ReadWriteCrowds:     mapIds(profile.GetReadWriteCrowds()),
+	}
 }
 
 type Block struct {

@@ -169,11 +169,7 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 			return unexpected(msg)
 		}
 		for _, p := range reply.GetElem() {
-			profile := &Profile{
-				p.GetLogin(),
-				p.GetPassword(),
-				p.GetSupervisor()}
-			profiles = append(profiles, profile)
+			profiles = append(profiles, NewProfile(p))
 		}
 		return nil
 	}

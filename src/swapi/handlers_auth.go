@@ -18,11 +18,7 @@ func (model *Model) handleProfileCreation(m *sword.AuthenticationToClient_Conten
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	profile := &Profile{
-		mm.GetProfile().GetLogin(),
-		mm.GetProfile().GetPassword(),
-		mm.GetProfile().GetSupervisor(),
-	}
+	profile := NewProfile(mm.GetProfile())
 	if !model.data.addProfile(profile) {
 		return fmt.Errorf("cannot insert profile: %s", profile.Login)
 	}
@@ -34,11 +30,7 @@ func (model *Model) handleProfileUpdate(m *sword.AuthenticationToClient_Content)
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	profile := &Profile{
-		mm.GetProfile().GetLogin(),
-		mm.GetProfile().GetPassword(),
-		mm.GetProfile().GetSupervisor(),
-	}
+	profile := NewProfile(mm.GetProfile())
 	if !model.data.updateProfile(mm.GetLogin(), profile) {
 		return fmt.Errorf("cannot find profile to update: %s", profile.Login)
 	}
