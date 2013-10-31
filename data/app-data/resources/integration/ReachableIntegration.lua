@@ -139,8 +139,8 @@ integration.distance = function( pos1, pos2 )
         error( "knowledge invalid with a nil position" )
     end
 end
+
 integration.proximity = function( pos1, pos2 ) -- $$$ MIA security. A mettre en commun avec integration.normalizedInversedDistance
-    
     local pos1Pos = pos1:getPosition()
     local pos2Pos = pos2:getPosition()
     if not pos1Pos or not pos2Pos then
@@ -150,16 +150,51 @@ integration.proximity = function( pos1, pos2 ) -- $$$ MIA security. A mettre en 
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
+local normalizedInverseDistanceSimSim = function( simPos1, simPos2, distanceMax )
+    if not simPos1 or not simPos2 then
+        return 1
+    end
+    return LinearInterpolation( 1, 100, 10, distanceMax, false, DEC_Geometrie_DistanceBetweenPoints( simPos1, simPos2 ) )
+end
+
+local normalizedInverseDistanceSimListSim = function( simList, simPos, distanceMax )
+    local distance = 1
+    if not simList then return 1 end
+    for _, simPos2 in pairs( simList ) do
+          local currentDistance = normalizedInverseDistanceSimSim( simPos2, simPos, distanceMax )
+          if distance > currentDistance then
+              distance = currentDistance
+          end
+    end
+    return distance
+
+end
+
+local normalizedInverseDistanceSim = function( simPos, pos2, distanceMax )
+    if not simPos or not pos2 then return 1 end
+    if pos2.getPositions then 
+        return normalizedInverseDistanceSimListSim( pos2:getPositions(), simPos, distanceMax )
+    end
+    return normalizedInverseDistanceSimSim( simPos, pos2:getPosition(), distanceMax )
+end
+
+local normalizedInverseDistanceSimList = function( posList, pos2, distanceMax )
+    if not posList or not pos2 then
+        return 1
+    end
+    local distance = 1
+    for _, simPos in pairs( posList ) do
+          local currentDistance = normalizedInverseDistanceSim( simPos, pos2, distanceMax )
+          if distance > currentDistance then
+              distance = currentDistance
+          end
+    end
+    return distance
+end
+
+-- Return 1 if positions are far, 100 if they are near. 'Near/far' is defined according to detection distance.
 integration.normalizedInversedDistance = function( pos1, pos2 )
     if not pos1 or not pos2 then
-        return 1
-    end
-    local pos1Pos = pos1:getPosition()
-    if not pos1Pos then
-        return 1
-    end
-    local pos2Pos = pos2:getPosition()
-    if not pos2Pos then
         return 1
     end
     local distanceMax 
@@ -168,7 +203,13 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
     else
         distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or 4000
     end
-    return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
+    if pos1.getPositions then
+        return normalizedInverseDistanceSimList( pos1:getPositions(), pos2, distanceMax )
+    end
+    if pos2.getPositions then
+        return normalizedInverseDistanceSimList( pos2:getPositions(), pos1, distanceMax )
+    end
+    return normalizedInverseDistanceSimSim ( pos1:getPosition(), pos2:getPosition(), distanceMax )
 end
 
 -- ============================================================================
