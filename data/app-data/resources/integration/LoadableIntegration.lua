@@ -244,6 +244,14 @@ integration.canTransportKnowledge = function( knowledge, onlyLoadable )
     return DEC_Connaissance_PeutTransporterPion( myself, knowledge.source, onlyLoadable )
 end
 
+-- Returns true if the transporting agent can transport the knowledge to transport, false otherwise
+-- @param transportingAgent : the transporting agent
+-- @param knowledgeToTransport : knowledge of the agent to transport
+-- @param onlyLoadable : whether or not the non-loadable equipments should be ignored
+integration.canAgentTransportKnowledge = function( transportingAgent, knowledgeToTransport, onlyLoadable )
+    return DEC_Connaissance_PeutTransporterPion( transportingAgent.source, knowledgeToTransport.source, onlyLoadable )
+end
+
 integration.transportUnitRoundTrip = function( unit, onlyLoadable )
     return DEC_Agent_TransportNombreAllerRetour( unit.source, onlyLoadable )
 end
