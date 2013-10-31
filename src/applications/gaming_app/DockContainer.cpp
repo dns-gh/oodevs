@@ -108,7 +108,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy );
         eventDockWidget_->SetModes( eModes_Default );
-        //eventDockWidget_->SetMenuVisibility( false );
+        eventDockWidget_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
     }
     // Orbat panel
