@@ -70,3 +70,32 @@ bool DEC_TerrainFunctions::CanMoveOn( const DEC_Decision_ABC* agent, boost::shar
         return false;
     return agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( *position );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_TerrainFunctions::IsLinearRiverInBetween
+// Created: LDC 2013-10-29
+// -----------------------------------------------------------------------------
+bool DEC_TerrainFunctions::IsLinearRiverInBetween( const MT_Vector2D* from, const MT_Vector2D* to )
+{
+    if( !from || !to )
+        throw MASA_EXCEPTION( "Invalid point in call to ArePointsOnSameRiverBank" );
+    std::vector< boost::shared_ptr< MT_Vector2D > > positions;
+    TerrainData rivers;
+    rivers.Merge( TerrainData::SmallRiver() ).Merge( TerrainData::MediumRiver() ).Merge( TerrainData::LargeRiver() );
+    TER_AnalyzerManager::GetAnalyzerManager().FindSegmentIntersections( *from, *to, rivers, positions );
+    return !positions.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_TerrainFunctions::DEC_TerrainFunctions::IsWaterInBetween
+// Created: LDC 2013-10-31
+// -----------------------------------------------------------------------------
+bool DEC_TerrainFunctions::IsWaterInBetween( const MT_Vector2D* from, const MT_Vector2D* to )
+{
+    if( !from || !to )
+        throw MASA_EXCEPTION( "Invalid point in call to ArePointsOnSameRiverBank" );
+    std::vector< boost::shared_ptr< MT_Vector2D > > positions;
+    TerrainData rivers;
+    TER_AnalyzerManager::GetAnalyzerManager().FindSegmentIntersections( *from, *to, TerrainData::WaterBorder(), positions );
+    return !positions.empty();
+}

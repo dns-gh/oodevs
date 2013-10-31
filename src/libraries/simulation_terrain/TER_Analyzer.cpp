@@ -65,6 +65,10 @@ namespace
     {
         return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
     };
+    inline geometry::Segment2f MakeSegment( const MT_Vector2D& from, const MT_Vector2D& to )
+    {
+        return geometry::Segment2f( MakePoint( from ), MakePoint( to ) );
+    };
     inline boost::shared_ptr< MT_Vector2D > MakeVectorPointer( const geometry::Point2f& p )
     {
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( p.X() ), static_cast< double >( p.Y() ) ) );
@@ -122,7 +126,19 @@ void TER_Analyzer::FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::
 {
     std::vector< geometry::Point2f > roadPoints;
     pAnalyzer_->FindRoadsOnBorderOfPolygon( MakePolygon( polygon ), roadPoints );
-    for( std::vector< geometry::Point2f >::const_iterator it = roadPoints.begin(); it != roadPoints.end(); ++it )
+    for( auto it = roadPoints.begin(); it != roadPoints.end(); ++it )
+        positions.push_back( MakeVectorPointer( *it ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Analyzer::FindSegmentIntersections
+// Created: LDC 2013-10-30
+// -----------------------------------------------------------------------------
+void TER_Analyzer::FindSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& terrainSought, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+{
+    std::vector< geometry::Point2f > result;
+    pAnalyzer_->FindSegmentIntersections( MakeSegment( from, to ), terrainSought, result );
+    for( auto it = result.begin(); it != result.end(); ++it )
         positions.push_back( MakeVectorPointer( *it ) );
 }
 
