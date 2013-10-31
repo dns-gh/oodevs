@@ -87,8 +87,8 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionCombo_->setModel( proxy );
     missionComboLayout_->addWidget( missionCombo_ );
 
-    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
-    connect( missionTypeCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionTypeChanged( int ) ) );
+    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( SelectWhenMissionChanged() ) );
+    connect( missionTypeCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( SelectWhenMissionTypeChanged() ) );
 
     targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
     QHBoxLayout* internalTargetLayout = new QHBoxLayout( targetGroupBox_ );
@@ -144,9 +144,10 @@ void EventOrderWidget::Purge()
 {
     selectedEntity_ = 0;
     alternateSelectedEntity_ = 0;
-    target_ = 0;
+    SetTarget( 0 );
     PurgeComboBox( *missionTypeCombo_ );
     PurgeComboBox( *missionCombo_ );
+    SelectDefault();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,23 +170,13 @@ void EventOrderWidget::Fill( const Event& event )
     if( action != 0 )
     {
         const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
-        const kernel::OrderType& order = mission->GetType();
-
         kernel::Entity_ABC* entity = model_.agents_.tools::Resolver< kernel::Agent_ABC >::Find( mission->GetEntityId() );
         if( entity == 0 )
             entity = model_.agents_.tools::Resolver< kernel::Automat_ABC >::Find( mission->GetEntityId() );
         if( entity == 0 )
             entity = model_.agents_.tools::Resolver< kernel::Population_ABC >::Find( mission->GetEntityId() );
-
-        target_ = entity;
-        targetLabel_->setText( target_ ? target_->GetName() : "---" );
-
-        const actions::Action_ABC* action = eventAction.GetAction();
-        auto type = eventAction.GetMissionType() ;
-        if( const Decisions_ABC* decisions = GetTargetDecision() )
-            manager_->Select( *decisions, type, order.GetName(), action );
-        else
-            manager_->Select( type, order.GetName(), action );
+        SetTarget( entity );
+        SelectWhenEventExist( *mission, eventAction.GetMissionType() );
     }
 }
 
@@ -273,59 +264,87 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
     targetLabel_->setText( hasTarget ? target_->GetName() : "---" );
     activateTargetButton_->setEnabled( hasTarget );
     removeTargetButton_->setEnabled( hasTarget );
-
-    if( const Decisions_ABC* decisions = GetTargetDecision() )
-    {
-        QVariant variant = missionTypeCombo_->itemData( missionTypeCombo_->currentIndex() );
-        if( variant.isValid() )
-            manager_->Select( *decisions, static_cast< E_MissionType >( variant.toUInt() ),
-                              missionCombo_->currentText().toStdString() );
-        else
-            manager_->Select( *decisions );
-    }
-    else
-    {
-        QVariant variant = missionTypeCombo_->itemData( missionTypeCombo_->currentIndex() );
-        if( variant.isValid() )
-            manager_->Select( static_cast< E_MissionType >( variant.toUInt() ),
-                              missionCombo_->currentText().toStdString() );
-        else
-            manager_->Select();
-    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnMissionTypeChanged
-// Created: ABR 2013-06-06
+// Name: EventOrderWidget::GetMissionType
+// Created: ABR 2013-10-31
 // -----------------------------------------------------------------------------
-void EventOrderWidget::OnMissionTypeChanged( int value )
-{
-    QVariant variant = missionTypeCombo_->itemData( value );
-    if( variant.isValid() )
-    {
-        auto type = static_cast< E_MissionType >( variant.toUInt() );
-        if( const Decisions_ABC* decisions = GetTargetDecision() )
-            manager_->Select( *decisions, type );
-        else
-            manager_->Select( type );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnMissionChanged
-// Created: ABR 2013-06-06
-// -----------------------------------------------------------------------------
-void EventOrderWidget::OnMissionChanged( int /*value*/ )
+E_MissionType EventOrderWidget::GetMissionType() const
 {
     QVariant variant = missionTypeCombo_->itemData( missionTypeCombo_->currentIndex() );
-    if( variant.isValid() )
-    {
-        auto type = static_cast< E_MissionType >( variant.toUInt() );
-        if( const Decisions_ABC* decisions = GetTargetDecision() )
-            manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
-        else
-            manager_->Select( type, missionCombo_->currentText().toStdString(), 0 );
-    }
+    if( !variant.isValid() )
+        return eNbrMissionTypes;
+    return static_cast< E_MissionType >( variant.toUInt() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::SelectDefault
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::SelectDefault()
+{
+    if( const Decisions_ABC* decisions = GetTargetDecision() )
+        manager_->Select( *decisions );
+    else
+        manager_->Select();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::SelectWhenEventExist
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type )
+{
+    if( const Decisions_ABC* decisions = GetTargetDecision() )
+        manager_->Select( *decisions, type, action.GetType().GetName(), &action );
+    else
+        manager_->Select( type, action.GetType().GetName(), &action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::SelectWhenTargetChanged
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::SelectWhenTargetChanged()
+{
+    E_MissionType type = GetMissionType();
+    if( type == eNbrMissionTypes )
+        SelectDefault();
+    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+        manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
+    else
+        manager_->Select( type, missionCombo_->currentText().toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::SelectWhenMissionTypeChanged
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::SelectWhenMissionTypeChanged()
+{
+    E_MissionType type = GetMissionType();
+    if( type == eNbrMissionTypes )
+        SelectDefault();
+    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+        manager_->Select( *decisions, type );
+    else
+        manager_->Select( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::SelectWhenMissionChanged
+// Created: ABR 2013-10-31
+// -----------------------------------------------------------------------------
+void EventOrderWidget::SelectWhenMissionChanged()
+{
+    E_MissionType type = GetMissionType();
+    if( type == eNbrMissionTypes )
+        SelectDefault();
+    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+        manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
+    else
+        manager_->Select( type, missionCombo_->currentText().toStdString(), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,6 +370,7 @@ void EventOrderWidget::OnTargetRemoved()
     if( target_ == 0 )
         throw MASA_EXCEPTION( "Can't remove an unset target" );
     SetTarget( 0 );
+    SelectWhenTargetChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -460,9 +480,9 @@ void EventOrderWidget::ActivateMissionPanel()
 {
     if( !selectedEntity_ )
         return;
-
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     SetTarget( selectedEntity_ );
+    SelectWhenTargetChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -473,9 +493,9 @@ void EventOrderWidget::ActivateMissionPanelOnUnit()
 {
     if( !alternateSelectedEntity_ )
         return;
-
-    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     SetTarget( alternateSelectedEntity_ );
+    SelectWhenTargetChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -486,7 +506,7 @@ void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 {
    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() ||
        alternateSelectedEntity_ && alternateSelectedEntity_->GetId() == decisions.GetAgent().GetId() )
-        OnMissionChanged( 0 );
+        SelectWhenMissionChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -499,7 +519,7 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
     if( planningMode_ != value )
     {
         planningMode_ = value;
-        OnMissionChanged( 0 );
+        SelectWhenMissionChanged();
     }
 }
 
@@ -577,7 +597,7 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
         missionCombo_->setPalette( palette );
         enableTriggerEvent = enableTriggerEvent && brush != disabledColor;
     }
-    emit EnableTriggerEvent( enableTriggerEvent );
+    emit EnableTriggerEvent( !invalid && enableTriggerEvent );
 }
 
 // -----------------------------------------------------------------------------

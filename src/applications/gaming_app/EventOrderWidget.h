@@ -21,7 +21,7 @@
 namespace actions
 {
     class Action_ABC;
-
+    class ActionWithTarget_ABC;
     namespace gui
     {
         class InterfaceBuilder_ABC;
@@ -112,6 +112,11 @@ private:
 
     //! @name Helpers
     //@{
+    void SelectDefault();
+    void SelectWhenTargetChanged();
+    void SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type );
+
+    E_MissionType GetMissionType() const;
     const Decisions_ABC* GetTargetDecision() const;
     void SetTarget( const kernel::Entity_ABC* entity );
     void Publish( timeline::Event* event, bool planned ) const;
@@ -125,7 +130,7 @@ private:
 signals:
     //! @name Signals
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
     void EnableTriggerEvent( bool enable );
     //@}
 
@@ -138,8 +143,8 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void OnMissionTypeChanged( int index );
-    void OnMissionChanged( int id );
+    void SelectWhenMissionTypeChanged();
+    void SelectWhenMissionChanged();
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
     void OnTargetActivated() const;
     void OnTargetRemoved();

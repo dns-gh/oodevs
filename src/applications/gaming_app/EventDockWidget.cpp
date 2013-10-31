@@ -121,8 +121,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     connect( bottomWidget_, SIGNAL( Discard() ),    this, SLOT( OnDiscard() ) );
     connect( bottomWidget_, SIGNAL( ShowDetail() ), this, SLOT( OnShowDetail() ) );
 
-    connect( orderWidget,   SIGNAL( EnableTriggerEvent( bool ) ),                      bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
-    connect( orderWidget,   SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this,          SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( orderWidget,   SIGNAL( EnableTriggerEvent( bool ) ),                            bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
+    connect( orderWidget,   SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this,          SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
     controllers_.actions_.Unregister( *this );
     controllers_.eventActions_.Register( *this );
 }
@@ -140,7 +140,7 @@ EventDockWidget::~EventDockWidget()
 // Name: EventDockWidget::StartCreation
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime )
+void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge )
 {
     if( event_.get() )
         StartEdition( *event_ );
@@ -149,7 +149,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
         event_.reset( factory_.Create( type ) );
         if( dateTime.isValid() )
             emit BeginDateChanged( dateTime );
-        Configure( type, false, true );
+        Configure( type, false, purge );
         ShowWidget( this );
     }
 }
@@ -170,13 +170,9 @@ void EventDockWidget::StartEdition( const Event& event )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
 {
-    SetEventType( type );
     if( purge )
-    {
-        topWidget_->Purge();
-        bottomWidget_->Purge();
-        detailWidget_->Purge();
-    }
+        Purge();
+    SetEventType( type );
     SetEditing( editing );
     Fill();
     SetContentVisible( true );

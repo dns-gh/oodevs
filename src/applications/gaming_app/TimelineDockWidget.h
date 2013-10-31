@@ -63,7 +63,7 @@ signals:
     void EditEvent( const timeline::Event& );
     void DeleteEvent( const std::string& );
 
-    void StartCreation( E_EventTypes, const QDateTime& );
+    void StartCreation( E_EventTypes, const QDateTime&, bool );
     //@}
 
 public slots:

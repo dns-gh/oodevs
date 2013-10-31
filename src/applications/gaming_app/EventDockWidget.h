@@ -125,7 +125,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
     void OnEditClicked();
     void OnDeleteClicked();
 
