@@ -12,9 +12,11 @@
 #include "Model.h"
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
+#include "CompositeRegistrable.h"
 #include "Config.h"
 #include "MemoryLogger.h"
 #include "PluginFactory.h"
+#include "PluginContainer.h"
 #include "Services.h"
 #include "StaticModel.h"
 #include <google/protobuf/message.h>
@@ -29,7 +31,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     : staticModel_        ( new StaticModel( config ) )
     , memoryLogger_       ( new MemoryLogger() )
     , model_              ( new Model( config, *staticModel_, *memoryLogger_ ) )
-    , handler_            ( new CompositePlugin() )
+    , handler_            ( new PluginContainer() )
     , registrables_       ( new CompositeRegistrable() )
     , services_           ( new Services() )
     , log_                ( config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(),

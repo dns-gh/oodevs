@@ -44,7 +44,7 @@ namespace dispatcher
     class StaticModel;
     class SimulationPublisher_ABC;
     class ClientsNetworker;
-    class CompositePlugin;
+    class PluginContainer;
     class CompositeRegistrable;
     class PluginFactory_ABC;
     class Services;
@@ -65,7 +65,7 @@ public:
                  const dispatcher::StaticModel& staticModel,
                  SimulationPublisher_ABC& simulation,
                  const boost::shared_ptr< ClientsNetworker >& clients,
-                 CompositePlugin& handler, CompositeRegistrable& registrables,
+                 PluginContainer& handler, CompositeRegistrable& registrables,
                  const Services& services, tools::Log& log, int maxConnections );
     virtual ~PluginFactory();
     //@}
@@ -92,7 +92,7 @@ private:
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     boost::shared_ptr< ClientsNetworker > clients_;
-    CompositePlugin& handler_;
+    PluginContainer& handler_;
     CompositeRegistrable& registrables_;
     boost::ptr_vector< PluginFactory_ABC > factories_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;

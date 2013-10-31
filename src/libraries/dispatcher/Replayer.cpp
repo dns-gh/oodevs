@@ -32,7 +32,7 @@ using namespace dispatcher;
 
 namespace
 {
-    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, CompositePlugin& handler )
+    boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, PluginContainer& handler )
     {
         boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
         handler.AddHandler( result );

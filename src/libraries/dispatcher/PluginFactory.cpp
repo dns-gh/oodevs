@@ -12,7 +12,7 @@
 #include "Config.h"
 #include "Model.h"
 #include "StaticModel.h"
-#include "CompositePlugin.h"
+#include "PluginContainer.h"
 #include "SimulationPublisher_ABC.h"
 #include "ClientsNetworker.h"
 #include "DispatcherPlugin.h"
@@ -42,7 +42,7 @@ using namespace plugins;
 // -----------------------------------------------------------------------------
 PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Model >& model,
     const dispatcher::StaticModel& staticModel, SimulationPublisher_ABC& simulation,
-    const boost::shared_ptr< ClientsNetworker >& clients, CompositePlugin& handler,
+    const boost::shared_ptr< ClientsNetworker >& clients, PluginContainer& handler,
     CompositeRegistrable& registrables, const Services& services, tools::Log& log,
     int maxConnections )
     : config_      ( config )
