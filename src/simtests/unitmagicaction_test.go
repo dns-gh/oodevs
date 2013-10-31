@@ -9,7 +9,6 @@
 package simtests
 
 import (
-	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	. "launchpad.net/gocheck"
 	"math"
@@ -106,31 +105,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	popId := populations[0].Id
 
 	taskers := []*sword.Tasker{
-		&sword.Tasker{
-			Formation: &sword.FormationId{
-				Id: proto.Uint32(formationId),
-			},
-		},
-		&sword.Tasker{
-			Automat: &sword.AutomatId{
-				Id: proto.Uint32(automatId),
-			},
-		},
-		&sword.Tasker{
-			Unit: &sword.UnitId{
-				Id: proto.Uint32(unitId),
-			},
-		},
-		&sword.Tasker{
-			Crowd: &sword.CrowdId{
-				Id: proto.Uint32(crowdId),
-			},
-		},
-		&sword.Tasker{
-			Population: &sword.PopulationId{
-				Id: proto.Uint32(popId),
-			},
-		},
+		swapi.MakeFormationTasker(formationId),
+		swapi.MakeAutomatTasker(automatId),
+		swapi.MakeUnitTasker(unitId),
+		swapi.MakeCrowdTasker(crowdId),
+		swapi.MakePopulationTasker(popId),
 	}
 	for _, tasker := range taskers {
 		err := postInvalidTasker(client, tasker)

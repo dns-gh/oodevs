@@ -18,6 +18,18 @@ const (
 	BoostTimeLayout = "20060102T150405"
 )
 
+func MakeId(id uint32) *sword.Id {
+	return &sword.Id{Id: proto.Uint32(id)}
+}
+
+func MakeIdList(ids ...uint32) *sword.IdList {
+	list := make([]*sword.Id, 0, len(ids))
+	for _, id := range ids {
+		list = append(list, MakeId(id))
+	}
+	return &sword.IdList{Elem: list}
+}
+
 func MakeParameters(args ...interface{}) *sword.MissionParameters {
 	reply := &sword.MissionParameters{}
 	for _, arg := range args {
@@ -99,54 +111,42 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 func MakeAgent(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			Agent: &sword.UnitId{
-				Id: proto.Uint32(value),
-			},
+			Agent: MakeId(value),
 		})
 }
 
 func MakeAutomat(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			Automat: &sword.AutomatId{
-				Id: proto.Uint32(value),
-			},
+			Automat: MakeId(value),
 		})
 }
 
 func MakeFormation(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			Formation: &sword.FormationId{
-				Id: proto.Uint32(value),
-			},
+			Formation: MakeId(value),
 		})
 }
 
 func MakeObject(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			Object: &sword.ObjectId{
-				Id: proto.Uint32(value),
-			},
+			Object: MakeId(value),
 		})
 }
 
 func MakeKnowledgeGroup(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			KnowledgeGroup: &sword.KnowledgeGroupId{
-				Id: proto.Uint32(value),
-			},
+			KnowledgeGroup: MakeId(value),
 		})
 }
 
 func MakeParty(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			Party: &sword.PartyId{
-				Id: proto.Uint32(value),
-			},
+			Party: MakeId(value),
 		})
 }
 
@@ -319,9 +319,7 @@ func MakeTime(value time.Time) *sword.MissionParameter {
 func MakeResourceType(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
-			ResourceType: &sword.ResourceType{
-				Id: proto.Uint32(value),
-			},
+			ResourceType: MakeId(value),
 		})
 }
 
@@ -452,49 +450,25 @@ func GetParameterValue(params *sword.MissionParameters,
 }
 
 func MakeAutomatTasker(id uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Automat: &sword.AutomatId{
-			Id: proto.Uint32(id),
-		},
-	}
+	return &sword.Tasker{Automat: MakeId(id)}
 }
 
 func MakeCrowdTasker(id uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Crowd: &sword.CrowdId{
-			Id: proto.Uint32(id),
-		},
-	}
+	return &sword.Tasker{Crowd: MakeId(id)}
 }
 
 func MakeFormationTasker(id uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Formation: &sword.FormationId{
-			Id: proto.Uint32(id),
-		},
-	}
+	return &sword.Tasker{Formation: MakeId(id)}
 }
 
 func MakePartyTasker(id uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Party: &sword.PartyId{
-			Id: proto.Uint32(id),
-		},
-	}
+	return &sword.Tasker{Party: MakeId(id)}
 }
 
-func MakePopulationTasker(populationId uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Population: &sword.PopulationId{
-			Id: proto.Uint32(populationId),
-		},
-	}
+func MakePopulationTasker(id uint32) *sword.Tasker {
+	return &sword.Tasker{Population: MakeId(id)}
 }
 
 func MakeUnitTasker(id uint32) *sword.Tasker {
-	return &sword.Tasker{
-		Unit: &sword.UnitId{
-			Id: proto.Uint32(id),
-		},
-	}
+	return &sword.Tasker{Unit: MakeId(id)}
 }

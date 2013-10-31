@@ -243,12 +243,8 @@ func (c *Client) SendUnitOrder(unitId, missionType uint32,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitOrder: &sword.UnitOrder{
-					Tasker: &sword.UnitId{
-						Id: proto.Uint32(unitId),
-					},
-					Type: &sword.MissionType{
-						Id: proto.Uint32(missionType),
-					},
+					Tasker:     MakeId(unitId),
+					Type:       MakeId(missionType),
 					Parameters: params,
 				},
 			},
@@ -262,12 +258,8 @@ func (c *Client) SendAutomatOrder(automatId, missionType uint32,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				AutomatOrder: &sword.AutomatOrder{
-					Tasker: &sword.AutomatId{
-						Id: proto.Uint32(automatId),
-					},
-					Type: &sword.MissionType{
-						Id: proto.Uint32(missionType),
-					},
+					Tasker:     MakeId(automatId),
+					Type:       MakeId(missionType),
 					Parameters: params,
 				},
 			},
@@ -384,12 +376,8 @@ func (c *Client) SendCrowdOrder(crowdId, missionType uint32,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				CrowdOrder: &sword.CrowdOrder{
-					Tasker: &sword.CrowdId{
-						Id: proto.Uint32(crowdId),
-					},
-					Type: &sword.MissionType{
-						Id: proto.Uint32(missionType),
-					},
+					Tasker:     MakeId(crowdId),
+					Type:       MakeId(missionType),
 					Parameters: params,
 				},
 			},
@@ -406,10 +394,8 @@ func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				SetAutomatMode: &sword.SetAutomatMode{
-					Automate: &sword.AutomatId{
-						Id: proto.Uint32(automatId),
-					},
-					Mode: &mode,
+					Automate: MakeId(automatId),
+					Mode:     &mode,
 				},
 			},
 		},
@@ -514,10 +500,8 @@ func (c *Client) SendFragOrder(tasker *sword.Tasker, fragOrderType uint32,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				FragOrder: &sword.FragOrder{
-					Tasker: tasker,
-					Type: &sword.FragOrderType{
-						Id: proto.Uint32(fragOrderType),
-					},
+					Tasker:     tasker,
+					Type:       MakeId(fragOrderType),
 					Parameters: params,
 				},
 			},
@@ -618,11 +602,9 @@ func createKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledg
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				KnowledgeMagicAction: &sword.KnowledgeMagicAction{
-					KnowledgeGroup: &sword.KnowledgeGroupId{
-						Id: &knowledgeGroupId,
-					},
-					Type:       enumerator.Enum(),
-					Parameters: params,
+					KnowledgeGroup: MakeId(knowledgeGroupId),
+					Type:           enumerator.Enum(),
+					Parameters:     params,
 				},
 			},
 		},
@@ -896,7 +878,7 @@ func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.Mi
 }
 
 func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, suppliedId uint32) error {
-	recipient := &sword.SupplyFlowRecipient{Receiver: &sword.AutomatId{Id: proto.Uint32(suppliedId)}}
+	recipient := &sword.SupplyFlowRecipient{Receiver: MakeId(suppliedId)}
 	recipients := []*sword.SupplyFlowRecipient{recipient}
 	pushFlowParams := &sword.PushFlowParameters{Recipients: recipients}
 	param := MakeParameter(&sword.MissionParameter_Value{PushFlowParameters: pushFlowParams})
@@ -904,7 +886,7 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, suppliedId uint32) e
 }
 
 func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) error {
-	supplier := &sword.ParentEntity{Formation: &sword.FormationId{Id: proto.Uint32(supplierId)}}
+	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
 	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
 	return c.sendUnitMagicAction(MakeAutomatTasker(suppliedId), MakeParameters(param),
@@ -1153,16 +1135,12 @@ func (c *Client) ChangeHumanFactors(unitId uint32, tiredness sword.UnitAttribute
 }
 
 func (c *Client) EnableVisionCones(enabled bool, unitIds ...uint32) error {
-	var units []*sword.UnitId = nil
-	for _, unitId := range unitIds {
-		units = append(units, &sword.UnitId{Id: proto.Uint32(unitId)})
-	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ControlToggleVisionCones: &sword.ControlEnableVisionCones{
 					VisionCones: proto.Bool(enabled),
-					Units:       units,
+					Units:       MakeIdList(unitIds...).GetElem(),
 				},
 			},
 		},
@@ -1186,7 +1164,7 @@ func (c *Client) ListEnabledVisionCones(start uint32, count uint32) (*sword.List
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ListEnabledVisionCones: &sword.ListEnabledVisionCones{
-					Start: &sword.UnitId{Id: proto.Uint32(start)},
+					Start: MakeId(start),
 					Count: proto.Uint32(count),
 				},
 			},
@@ -1322,9 +1300,7 @@ func createObjectMagicAction(objectId uint32, params *sword.MissionParameters,
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ObjectMagicAction: &sword.ObjectMagicAction{
-					Object: &sword.ObjectId{
-						Id: proto.Uint32(objectId),
-					},
+					Object:     MakeId(objectId),
 					Type:       enumerator.Enum(),
 					Parameters: params,
 				},
