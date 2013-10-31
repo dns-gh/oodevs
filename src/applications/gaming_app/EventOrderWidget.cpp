@@ -84,7 +84,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     connect( missionTypeCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionTypeChanged( int ) ) );
 
-    targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Target" ) );
+    targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
     QHBoxLayout* internalTargetLayout = new QHBoxLayout( targetGroupBox_ );
     internalTargetLayout->setContentsMargins( 5, 0, 5, 5 );
     internalTargetLayout->addWidget( targetLabel_, 10, Qt::AlignCenter );

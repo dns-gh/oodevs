@@ -735,11 +735,11 @@ Reason: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Target</source>
-        <translation type="unfinished">Target</translation>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order</source>
+        <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

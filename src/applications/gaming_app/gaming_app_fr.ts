@@ -737,12 +737,12 @@ Raison: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Target</source>
-        <translation type="unfinished">Cible</translation>
-    </message>
-    <message>
         <source>Order</source>
         <translation>Ordre</translation>
+    </message>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinataire</translation>
     </message>
 </context>
 <context>
