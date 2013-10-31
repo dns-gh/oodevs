@@ -3023,10 +3023,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Actions timeline</source>
-        <translation type="unfinished">Cronología de acciones</translation>
-    </message>
-    <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3036,6 +3032,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New actions timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -34,7 +34,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     , webView_( 0 )
 {
     // Init
-    setCaption( tr( "Actions timeline" ) );
+    setCaption( tr( "New actions timeline" ) );
 
     // Configuration
     cfg_->url = "http://" + config.GetTimelineUrl() + "/?lang=" + tools::Language::Current(); // $$$$ ABR 2013-05-24: Timeline server must keep this parameter when it automatically add session id

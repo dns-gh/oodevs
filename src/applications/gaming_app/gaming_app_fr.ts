@@ -3030,10 +3030,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Actions timeline</source>
-        <translation>Chronologie des actions</translation>
-    </message>
-    <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
@@ -3044,6 +3040,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>View %1</source>
         <translation>Vue %1</translation>
+    </message>
+    <message>
+        <source>New actions timeline</source>
+        <translation>Nouvelle chronologie des actions</translation>
     </message>
 </context>
 <context>
