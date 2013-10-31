@@ -148,11 +148,8 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.relevancePresent )
         message().set_relevance( nRelevance_ );
     if( optionals_.automat_perceptionPresent )
-        for( std::vector< unsigned int >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-        {
-            sword::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
-            data.set_id( *it );
-        }
+        for( auto it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
+            message().mutable_perceiving_automats()->add_elem()->set_id( *it );
     attributes_.Send( *message().mutable_attributes() );
     message.Send( publisher );
 }

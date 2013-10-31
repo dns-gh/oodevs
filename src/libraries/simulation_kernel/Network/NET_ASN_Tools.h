@@ -18,21 +18,18 @@
 
 namespace sword
 {
-    class AutomatId;
-    class AutomatIdList;
     class CoordLatLong;
     class CoordLatLongList;
     class DateTime;
     class Heading;
+    class Id;
+    class IdList;
     class Line;
     class Location;
     class LocationList;
-    class LogMaintenancePriorities;
     class LogMedicalPriorities;
     class MissionObjective;
     class MissionObjectiveList;
-    class ObjectKnowledgeId;
-    class ObjectKnowledgeIdList;
     class Path;
     class PathList;
     class PlannedWork;
@@ -41,11 +38,6 @@ namespace sword
     class PointList;
     class Polygon;
     class PolygonList;
-    class CrowdKnowledgeId;
-    class UnitId;
-    class UnitKnowledgeId;
-    class UnitKnowledgeIdList;
-    class UnitIdList;
 }
 
 class TER_Localisation;
@@ -65,26 +57,6 @@ class MIL_EntityManager_ABC;
 class NET_ASN_Tools
 {
 public:
-    // @name Misc tools
-    //@{
-    static void Delete( sword::MissionObjective& asn );
-    static void Delete( sword::MissionObjectiveList& asn );
-    static void Delete( sword::PlannedWork& asn );
-    static void Delete( sword::PlannedWorkList& asn );
-    static void Delete( sword::UnitIdList& asn );
-    static void Delete( sword::AutomatIdList& asn );
-    static void Delete( sword::Polygon& asn );
-    static void Delete( sword::PolygonList& asn );
-    static void Delete( sword::PointList& asn );
-    static void Delete( sword::PathList& asn );
-    static void Delete( sword::LocationList& asn );
-    static void Delete( sword::UnitKnowledgeIdList& asn );
-    static void Delete( sword::ObjectKnowledgeIdList& asn );
-    static void Delete( sword::LogMedicalPriorities& asn );
-    static void Delete( sword::LogMaintenancePriorities& asn );
-    static void Delete( sword::CoordLatLongList& asn );
-    //@}
-
     //! @name Decoding tools
     //@{
     static bool ReadLine( const sword::Line& asn, TER_Localisation& localisation );
@@ -140,13 +112,13 @@ public:
     static bool ReadPolygonList( const sword::PolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
     static bool ReadPathList( const sword::PathList& asn, T_ItinerairePtrVector& itineraireVector );
 
-    static DEC_Decision_ABC*            ReadAgent              ( const sword::UnitId&               asn );
-    static DEC_Decision_ABC*            ReadAutomate           ( const sword::UnitId&               asn );
-    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const sword::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static boost::shared_ptr< DEC_Knowledge_Population > ReadPopulationKnowledge( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Decision_ABC*                             ReadAgent              ( const sword::Id& asn );
+    static DEC_Decision_ABC*                             ReadAutomate           ( const sword::Id& asn );
+    static boost::shared_ptr< DEC_Knowledge_Agent >      ReadAgentKnowledge     ( const sword::Id& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Population > ReadPopulationKnowledge( const sword::Id& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
-    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const sword::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static bool                         ReadObjectKnowledgeList( const sword::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const sword::Id&     asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static bool                                      ReadObjectKnowledgeList( const sword::IdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 
     // @name Encoding tools
@@ -157,11 +129,11 @@ public:
     static void WritePathList( const T_ItinerairePtrVector& itineraireVector, sword::PathList& asn );
     static void WritePointList( const T_PointVector& pointVector, sword::PointList& asn );
 
-    static void WriteAgent              ( const DEC_Decision_ABC&             pion      , sword::UnitId&     asn );
-    static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , sword::AutomatId&  asn );
-    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , sword::UnitKnowledgeId&      asnKnowledge );
-    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , sword::ObjectKnowledgeId&     asnKnowledge );
-    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
+    static void WriteAgent              ( const DEC_Decision_ABC&             pion      , sword::Id&     asn );
+    static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , sword::Id&     asn );
+    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , sword::Id&     asnKnowledge );
+    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , sword::Id&     asnKnowledge );
+    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::IdList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 };
 

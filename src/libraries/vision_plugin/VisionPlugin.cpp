@@ -112,7 +112,7 @@ bool VisionPlugin::Validate( dispatcher::ClientPublisher_ABC& publisher, const s
     return true;
 }
 
-void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& unitId, bool activate )
+void VisionPlugin::Register( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& unitId, bool activate )
 {
     const unsigned int id = unitId.id();
     if( activate )

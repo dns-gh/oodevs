@@ -547,12 +547,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_altitude( nAltitude_ );
         asn().set_speed( nSpeed_ );
         asn().set_raw_operational_state( nOperationalStateValue_ );
-
-        {
-            for( tools::Iterator< const kernel::Agent_ABC& > it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
-                asn().mutable_reinforced_unit()->set_id( it.NextElement().GetId() );
-        }
-
+        for( auto it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
+            asn().mutable_reinforced_unit()->set_id( it.NextElement().GetId() );
         asn().mutable_reinforced_unit()->set_id( pReinforced_ ? pReinforced_->GetId() : 0 );
         asn().set_dead( bDead_ );
         asn().set_neutralized( bNeutralized_ );
@@ -565,14 +561,9 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_posture_transition( nPostureCompletion_ );
         asn().set_installation( nInstallationState_ );
         asn().set_protective_suits( bNbcProtectionSuitEnabled_ );
-        {
-            asn().mutable_contamination_agents();
-            for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
-            {
-                sword::NBCAgentType& data = *asn().mutable_contamination_agents()->add_elem();
-                data.set_id( *it );
-            }
-        }
+        asn().mutable_contamination_agents();
+        for( auto it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
+            asn().mutable_contamination_agents()->add_elem()->set_id( *it );
         asn().mutable_contamination_state()->set_decontamination_process( decontaminationPercentage_ );
         asn().mutable_contamination_state()->set_percentage( contaminationPercentage_ );
         asn().mutable_contamination_state()->set_contaminated( contaminated_ );
@@ -583,11 +574,9 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_radio_emitter_disabled( bRadioEmitterEnabled_ );
         asn().set_radio_receiver_disabled( bRadioRecieverEnabled_ );
         asn().set_radar_active( bRadarEnabled_ );
-        {
-            asn().mutable_transported_units();
-            for( tools::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
-                asn().mutable_transported_units()->add_elem()->set_id( it.NextElement().GetId() );
-        }
+        asn().mutable_transported_units();
+        for( auto it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
+            asn().mutable_transported_units()->add_elem()->set_id( it.NextElement().GetId() );
         asn().mutable_transporting_unit()->set_id( pTransporter_ ? pTransporter_->GetId() : 0 );
         asn().set_force_ratio( nForceRatioState_ );
         asn().set_meeting_engagement( nCloseCombatState_ );
@@ -602,26 +591,16 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().mutable_surrendered_unit()->set_id( pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetId() : 0 );
         asn().set_prisoner( bPrisonner_ );
         asn().set_refugees_managed( bRefugeeManaged_ );
-        {
-            for( tools::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_equipment_dotations()->add_elem() );
-        }
-        {
-            for( unsigned int i = 0; i < troops_.size(); ++i )
-                troops_[ i ].Send( *asn().mutable_human_dotations()->add_elem() );
-        }
-        {
-            for( tools::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_resource_dotations()->add_elem() );
-        }
-        {
-            for( tools::Iterator< const Loan& > it = borrowings_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_borrowed_equipments()->add_elem() );
-        }
-        {
-            for( tools::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_lent_equipments()->add_elem() );
-        }
+        for( auto it = equipments_.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().Send( *asn().mutable_equipment_dotations()->add_elem() );
+        for( unsigned int i = 0; i < troops_.size(); ++i )
+            troops_[ i ].Send( *asn().mutable_human_dotations()->add_elem() );
+        for( auto it = dotations_.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().Send( *asn().mutable_resource_dotations()->add_elem() );
+        for( auto it = borrowings_.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().Send( *asn().mutable_borrowed_equipments()->add_elem() );
+        for( auto it = lendings_.CreateIterator(); it.HasMoreElements(); )
+            it.NextElement().Send( *asn().mutable_lent_equipments()->add_elem() );
         for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
             sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();

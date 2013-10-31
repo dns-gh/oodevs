@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_DotationTypeParameter();
-    explicit MIL_DotationTypeParameter( const sword::ResourceType & asn );
+    explicit MIL_DotationTypeParameter( const sword::Id & asn );
     explicit MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory );
     virtual ~MIL_DotationTypeParameter();
     //@}

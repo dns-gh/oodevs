@@ -65,15 +65,15 @@ private:
 private:
     //! @name Member data
     //@{
-    sword::FireId                oid_tir_;
-    sword::UnitId                tireur_;
+    sword::Id                          oid_tir_;
+    sword::Id                          tireur_;
     sword::StartUnitFire::UnitFireType type_;
-    bool                          munitionPresent_;
-    sword::ResourceType          munition_;
-    int                           typeCible_;
-    int                           oid_cible_;
-    int                           population_cible_;
-    sword::CoordLatLong       positionCible_;
+    bool                               munitionPresent_;
+    sword::Id                          munition_;
+    int                                typeCible_;
+    int                                oid_cible_;
+    int                                population_cible_;
+    sword::CoordLatLong                positionCible_;
     //@}
 };
 

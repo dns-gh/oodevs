@@ -20,7 +20,7 @@
 namespace sword
 {
     class SimToClient;
-    class UnitId;
+    class Id;
 }
 
 namespace dispatcher
@@ -46,9 +46,9 @@ namespace vision
 class Units
 {
 public:
-    void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& id );
+    void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& id );
 
-    void Unregister( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& id );
+    void Unregister( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& id );
     void Unregister( dispatcher::ClientPublisher_ABC& publisher );
 
     void List( dispatcher::ClientPublisher_ABC&, unsigned int start, std::size_t max, client::ListEnabledVisionConesAck& ack );

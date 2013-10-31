@@ -272,7 +272,7 @@ void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( const boost::shared_ptr< 
 // Name: MIL_DotationSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::Serialize( sword::AutomatId& msg ) const
+void MIL_DotationSupplyManager::Serialize( sword::Id& msg ) const
 {
     msg.set_id( pAutomate_->GetID() );
 }

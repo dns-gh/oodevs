@@ -41,7 +41,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void Serialize( sword::UnitId& msg ) const;
+    virtual void Serialize( sword::Id& msg ) const;
     template< typename Archive > void serialize( Archive& archive, const unsigned int );
     //@}
 

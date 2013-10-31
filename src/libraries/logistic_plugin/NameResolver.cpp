@@ -39,7 +39,7 @@ NameResolver::NameResolver( const dispatcher::Model_ABC& model, const kernel::St
 // Name: NameResolver destructor
 // Created: PMD 2012-09-02
 // -----------------------------------------------------------------------------
-NameResolver::~NameResolver() 
+NameResolver::~NameResolver()
 {
 }
 
@@ -134,7 +134,7 @@ void NameResolver::GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLo
 // Name: NameResolver::GetEquipmentName
 // Created: PMD 2012-09-02
 // -----------------------------------------------------------------------------
-void NameResolver::GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const
+void NameResolver::GetEquipmentName( const sword::Id& equipmentType, std::string& name ) const
 {
     kernel::ComponentType* pEquipment = staticModel_.types_.tools::Resolver< kernel::ComponentType >::Find( equipmentType.id() );
     if( pEquipment )
@@ -145,7 +145,7 @@ void NameResolver::GetEquipmentName( const sword::EquipmentType& equipmentType, 
 // Name: NameResolver::GetBreakdownName
 // Created: PMD 2012-09-02
 // -----------------------------------------------------------------------------
-void NameResolver::GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const
+void NameResolver::GetBreakdownName( const sword::Id& breakdownType, std::string& name ) const
 {
      kernel::BreakdownType* pBreakdown = staticModel_.objectTypes_.kernel::Resolver2< kernel::BreakdownType >::Find( breakdownType.id() );
     if( pBreakdown )
@@ -156,7 +156,7 @@ void NameResolver::GetBreakdownName( const sword::BreakdownType& breakdownType, 
 // Name: NameResolver::GetResourceName
 // Created: PMD 2012-09-02
 // -----------------------------------------------------------------------------
-void NameResolver::GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const
+void NameResolver::GetResourceName( const sword::Id& resourceType, std::string& name ) const
 {
     kernel::DotationType* pDotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( resourceType.id() );
     if( pDotation )

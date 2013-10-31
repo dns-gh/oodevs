@@ -270,7 +270,7 @@ void MIL_StockSupplyManager::OnSupplyConvoyLeaving( const boost::shared_ptr< log
 // Name: MIL_StockSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::Serialize( sword::AutomatId& msg ) const
+void MIL_StockSupplyManager::Serialize( sword::Id& msg ) const
 {
     msg.set_id( pAutomate_->GetID() );
 }

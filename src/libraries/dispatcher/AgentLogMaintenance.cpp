@@ -74,7 +74,7 @@ void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
         priorities_.clear();
         for( int i = 0; i < message.priorities().elem_size(); ++i )
         {
-            sword::EquipmentType msg;
+            sword::Id msg;
             msg.set_id( message.priorities().elem( i ).id() );
             priorities_.push_back( msg );
         }
@@ -90,21 +90,13 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_chain ( bSystemEnabled_ );
-    {
-        for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
-            it->Send( *asn().mutable_repairers()->add_elem() );
-    }
-    {
-        for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
-            it->Send( *asn().mutable_haulers()->add_elem() );
-    }
-    {
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
-            asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
-    }
-    {
-        for( std::vector< sword::EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorities()->add_elem()->set_id( (*it).id() );
-    }
+    for( auto it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
+        it->Send( *asn().mutable_repairers()->add_elem() );
+    for( auto it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
+        it->Send( *asn().mutable_haulers()->add_elem() );
+    for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
+        asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
+    for( auto it = priorities_.begin(); it != priorities_.end(); ++it )
+        asn().mutable_priorities()->add_elem()->set_id( it->id() );
     asn.Send( publisher );
 }

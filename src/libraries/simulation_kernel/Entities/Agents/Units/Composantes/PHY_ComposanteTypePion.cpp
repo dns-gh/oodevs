@@ -1478,7 +1478,7 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 // Name: PHY_ComposanteTypePion::Find
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::EquipmentType nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::Id nAsnID )
 {
     for( auto it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {

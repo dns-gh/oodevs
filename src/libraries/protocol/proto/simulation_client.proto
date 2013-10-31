@@ -121,7 +121,7 @@ message SetAutomatModeAck {
         //! Operation failed because the parent automat is engaged
         error_not_allowed  = 2;
     }
-    required AutomatId automate   = 1;
+    required Id        automate   = 1;
     required ErrorCode error_code = 2;
 }
 
@@ -171,7 +171,7 @@ message UnitCreationRequestAck {
 message UnitMagicActionAck {
     //! Identifier of the agent on which the magic action was requested
     //! to be executed @todo rename to agent
-    required UnitId                  unit       = 1;
+    required Id                      unit       = 1;
     //! Reason for the failure of the agent magic action execution
     //! operation. @see UnitActionAck.ErrorCode
     required UnitActionAck.ErrorCode error_code = 2;
@@ -180,7 +180,7 @@ message UnitMagicActionAck {
     //! Action results, depends on the action type and outcome.
     optional MissionParameters       result     = 4;
      //! Action parameters, copied from UnitMagicAction
-    optional MissionParameters       parameters = 5;    
+    optional MissionParameters       parameters = 5;
     //! The tasker @todo remove unit id and use one tasker only
     optional Tasker                  tasker     = 6;
     //! The magic action type
@@ -209,7 +209,7 @@ message MagicActionAck {
     //! @see ErrorCode
     required ErrorCode error_code     = 1;
     //! Deprecated attribute
-    optional WeatherId weather        = 2;
+    optional Id        weather        = 2;
     //! Action results, depends on the action type and outcome.
     optional MissionParameters result = 3;
     //! More detailed account of the returned error
@@ -248,7 +248,7 @@ message ObjectMagicActionAck {
     required ErrorCode error_code = 1;
     //! Identifier of the object on which the magic action was requested
     //! to be executed
-    optional ObjectId  object     = 2;
+    optional Id        object     = 2;
     //! More detailed account of the returned error
     optional string    error_msg  = 3;
 }
@@ -274,7 +274,7 @@ message CrowdMagicActionAck {
     }
     //! Identifier of the crowd on which the magic action was requested
     //! to be executed
-    required CrowdId   crowd      = 1;
+    required Id        crowd      = 1;
     //! Reason for the failure of the crowd magic action execution
     //! operation @see ErrorCode
     required ErrorCode error_code = 2;
@@ -284,8 +284,8 @@ message CrowdMagicActionAck {
 //! relationships are not symmetric, the relation of party1 with party2
 //! may be different from the one of party2 with party1.
 message ChangeDiplomacy {
-    required PartyId       party1    = 1;
-    required PartyId       party2    = 2;
+    required Id            party1    = 1;
+    required Id            party2    = 2;
     //! Relationship from party1 to party2.
     required EnumDiplomacy diplomacy = 3;
 }
@@ -303,9 +303,9 @@ message ChangeDiplomacyAck {
         error_invalid_party_diplomacy = 1;
     }
     //! Identifier of the party from which the diplomacy is defined
-    required PartyId       party1     = 1;
+    required Id            party1     = 1;
     //! Identifier of the party to which the diplomacy is defined
-    required PartyId       party2     = 2;
+    required Id            party2     = 2;
     //! Definition of the diplomacy between specified parties
     required EnumDiplomacy diplomacy  = 3;
     //! Reason for the failure of the diplomacy change operation
@@ -363,9 +363,9 @@ message AutomatChangeKnowledgeGroupAck {
 
 //! Notifies an automat belongs to a new knowledge group.
 message AutomatChangeKnowledgeGroup {
-    required AutomatId        automat         = 1;
-    required PartyId          party           = 2;
-    required KnowledgeGroupId knowledge_group = 3;
+    required Id automat         = 1;
+    required Id party           = 2;
+    required Id knowledge_group = 3;
 }
 
 //! DEPRECATED in 5.3
@@ -692,8 +692,8 @@ message ControlResumeAck {
     @brief A party creation message
 */
 message PartyCreation {
-    //! The party identifier @see PartyId
-    required PartyId       party     = 1;
+    //! The party identifier
+    required Id            party     = 1;
     //! The party name
     required string        name      = 2;
     //! @todo Relation to what ?
@@ -719,11 +719,11 @@ enum EnumLogisticLevel {
 */
 message FormationCreation {
     //! The formation identifier @see FormationId
-    required FormationId       formation             = 1;
-    //! The party identifier @see PartyId
-    required PartyId           party                 = 2;
+    required Id                formation             = 1;
+    //! The party identifier
+    required Id                party                 = 2;
     //! The parent formation identifier @see FormationId
-    optional FormationId       parent                = 3;
+    optional Id                parent                = 3;
     //! The formation nature level @see EnumNatureLevel
     required EnumNatureLevel   level                 = 4;
     //! The formation name
@@ -745,34 +745,34 @@ message FormationCreation {
 */
 message FormationUpdate {
     //! The formation identifier @see FormationId
-    required FormationId       formation             = 1;
+    required Id        formation             = 1;
     //! The extension fields
-    optional Extension         extension             = 2;
+    optional Extension extension             = 2;
 }
 
 /** @struct FormationDestruction
     @brief A formation destruction message
 */
 message FormationDestruction {
-    required FormationId formation = 1;
+    required Id formation = 1;
 }
 
 /** @struct AutomatCreation
     @brief An automat creation message
 */
 message AutomatCreation {
-    //! The automat identifier @see AutomatId
-    required AutomatId         automat         = 1;
+    //! The automat identifier
+    required Id                automat         = 1;
     //! The automat type @see AutomatType
-    required AutomatType       type            = 2;
+    required Id                type            = 2;
     //! The automat name
     required string            name            = 3;
     //! The automat parent @see ParentEntity
     required ParentEntity      parent          = 4;
-    //! The automat party @see PartyId
-    required PartyId           party           = 5;
-    //! The automat knowledge group @see KnowledgeGroupId
-    optional KnowledgeGroupId  knowledge_group = 6;
+    //! The automat party
+    required Id                party           = 5;
+    //! The automat knowledge group
+    optional Id                knowledge_group = 6;
     //! The automat APP-6 symbol
     required string            app6symbol      = 7;
     //! The automat logistic level @see EnumLogisticLevel
@@ -856,7 +856,7 @@ enum EnumOperationalStatus {
 */
 message AutomatAttributes {
     //! The automat identifier
-    required AutomatId                   automat               = 1;
+    required Id                          automat               = 1;
     //! The automat mode
     optional EnumAutomatMode             mode                  = 2;
     //! The automat force ratio
@@ -879,22 +879,22 @@ message AutomatAttributes {
     @brief An automat destruction message
 */
 message AutomatDestruction {
-    //! The automat identifier @see AutomatId
-    required AutomatId automat = 1;
+    //! The automat identifier
+    required Id        automat = 1;
 }
 
 /** @struct UnitCreation
     @brief A unit creation message
 */
 message UnitCreation {
-    //! The unit identifier @see UnitId
-    required UnitId           unit        = 1;
-    //! The unit type @see UnitType
-    required UnitType         type        = 2;
+    //! The unit identifier
+    required Id               unit        = 1;
+    //! The unit type
+    required Id               type        = 2;
     //! The unit name
     required string           name        = 3;
     //! The automata the unit belongs to
-    required AutomatId        automat     = 4;
+    required Id               automat     = 4;
     //! Whether the unit is headquarters of its automata
     required bool             pc          = 5;
     //! The unit color @see RgbColor
@@ -913,8 +913,8 @@ message UnitCreation {
 message BorrowedEquipments {
 
     message BorrowedEquipment {
-        required UnitId        owner    = 1;
-        required EquipmentType type     = 2;
+        required Id            owner    = 1;
+        required Id            type     = 2;
         required int32         quantity = 3;
     }
     repeated BorrowedEquipment elem = 1;
@@ -924,8 +924,8 @@ message BorrowedEquipments {
 message LentEquipments {
 
     message LentEquipment {
-        required UnitId        borrower = 1;
-        required EquipmentType type     = 2;
+        required Id            borrower = 1;
+        required Id            type     = 2;
         required int32         quantity = 3;
     }
     repeated LentEquipment elem = 1;
@@ -935,7 +935,7 @@ message LentEquipments {
 message ResourceDotations {
 
     message ResourceDotation {
-        required ResourceType type      = 1;
+        required Id           type      = 1;
         required int32        quantity  = 2;
         //! The logistic threshold between 0 and 100.
         optional float        threshold = 3;
@@ -947,7 +947,7 @@ message ResourceDotations {
 message EquipmentDotations {
 
     message EquipmentDotation {
-        required EquipmentType type            = 1;
+        required Id            type            = 1;
         //! The number of available equipments
         required int32         available       = 2;
         //! The number of unavailable equipments
@@ -1056,16 +1056,6 @@ message ContaminationState {
     optional int32 decontamination_process  = 5;
 }
 
-/** @struct NBCAgents
-    @brief A NBC agents message
-    @todo rename to NbcAgents
-    @todo move into UnitAttributes
-*/
-message NBCAgents {
-    //! The list of NBC agents @see NBCAgentType
-    repeated NBCAgentType elem = 1;
-}
-
 /** @struct Communication
     @brief A communication message
     @todo move into UnitAttributes
@@ -1074,8 +1064,8 @@ message NBCAgents {
 message Communication {
     //! Whether the communications are jammed or not
     optional bool              jammed          = 1;
-    //! The knowledge group identifier @see KnowledgeGroupId
-    optional KnowledgeGroupId  knowledge_group = 2;
+    //! The knowledge group identifier
+    optional Id                knowledge_group = 2;
 }
 
 //! Unit attributes update notification.
@@ -1141,7 +1131,7 @@ message UnitAttributes {
         optional float access_to_health_care = 3;
     }
 
-    required UnitId                      unit                       = 1;
+    required Id                          unit                       = 1;
     //! Human composition of this unit, with their current states.
     optional HumanDotations              human_dotations            = 2;
     //! Unit equipments, mostly vehicles or human surrogates.
@@ -1164,10 +1154,10 @@ message UnitAttributes {
     optional int32                       speed                      = 11;
     //! The operational state as a percentage
     optional int32                       raw_operational_state      = 12;
-    //! The reinforcements @see UnitIdList
-    optional UnitIdList                  reinforcements             = 13;
-    //! The reinforced unit @see UnitId
-    optional UnitId                      reinforced_unit            = 14;
+    //! The reinforcements
+    optional IdList                      reinforcements             = 13;
+    //! The reinforced unit
+    optional Id                          reinforced_unit            = 14;
     //! Whether the unit is dead or not
     optional bool                        dead                       = 15;
     //! Whether the unit has been neutralized or not
@@ -1190,8 +1180,8 @@ message UnitAttributes {
     optional int32                       installation               = 24;
     //! Whether the unit is wearing NBC protective suits or not
     optional bool                        protective_suits           = 25;
-    //! The NBC contamination agents @see NBCAgents
-    optional NBCAgents                   contamination_agents       = 26;
+    //! The NBC contamination agents
+    optional IdList                      contamination_agents       = 26;
     //! The NBC contamination state @see ContaminationState
     optional ContaminationState          contamination_state        = 27;
     //! The communication state @see Communication
@@ -1202,10 +1192,10 @@ message UnitAttributes {
     optional bool                        radio_receiver_disabled    = 30;
     //! Whether the radar is active or not
     optional bool                        radar_active               = 31;
-    //! The transported units @see UnitIdList
-    optional UnitIdList                  transported_units          = 32;
-    //! The transporting unit @see UnitId
-    optional UnitId                      transporting_unit          = 33;
+    //! The transported units
+    optional IdList                      transported_units          = 32;
+    //! The transporting unit
+    optional Id                          transporting_unit          = 33;
     //! The force ratio @see ForceRatio
     optional ForceRatio.Value            force_ratio                = 34;
     //! The meeting engagement status
@@ -1226,8 +1216,8 @@ message UnitAttributes {
     //! The experience @see EnumUnitExperience
     optional EnumUnitExperience          experience                 = 42;
     //! The identifier of the party the unit surrendered to. This field
-    //! remains as a UnitId for backward compatibility reasons.
-    optional UnitId                      surrendered_unit           = 43;
+    //! remains as a Id     for backward compatibility reasons.
+    optional Id                          surrendered_unit           = 43;
     //! Whether the unit has been made prisoner or not
     optional bool                        prisoner                   = 44;
     //! Whether refugees are being handled by the unit or not
@@ -1260,8 +1250,8 @@ message UnitAttributes {
     @brief Notifies of a path change for a unit
 */
 message UnitPathFind {
-    //! The unit identifier @see UnitId
-    required UnitId unit = 1;
+    //! The unit identifier
+    required Id     unit = 1;
     //! The unit path @see Path
     required Path   path = 2;
 }
@@ -1270,16 +1260,16 @@ message UnitPathFind {
     @brief Notifies of the destruction a unit
 */
 message UnitDestruction {
-    //! The unit identifier @see UnitId
-    required UnitId unit = 1;
+    //! The unit identifier
+    required Id     unit = 1;
 }
 
 /** @struct UnitEnvironmentType
     @brief Notifies of a change in the environment for a given unit
 */
 message UnitEnvironmentType {
-    //! The unit identifier @see UnitId
-    required UnitId unit   = 1;
+    //! The unit identifier
+    required Id     unit   = 1;
     //! @todo What's this ?
     required int32  area   = 2;
     //! @todo What's this ?
@@ -1294,14 +1284,14 @@ message UnitEnvironmentType {
     @brief Notifies of the creation of a unit knowledge
 */
 message UnitKnowledgeCreation {
-    //! The unit knowledge identifier @see UnitKnowledgeId
-    required UnitKnowledgeId  knowledge       = 1;
-    //! The knowledge group identifier @see KnowledgeGroupId
-    required KnowledgeGroupId knowledge_group = 2;
-    //! The unit identifier @see UnitId
-    required UnitId           unit            = 3;
-    //! The unit type @see UnitType
-    required UnitType         type            = 4;
+    //! The unit knowledge identifier
+    required Id               knowledge       = 1;
+    //! The knowledge group identifier
+    required Id               knowledge_group = 2;
+    //! The unit identifier
+    required Id               unit            = 3;
+    //! The unit type
+    required Id               type            = 4;
 }
 
 /** @struct UnitIdentification
@@ -1327,8 +1317,8 @@ message UnitIdentification {
     @brief Describes the perception of an automat
 */
 message AutomatPerception {
-    //! The automat identifier @see AutomatId
-    required AutomatId                   automat           = 1;
+    //! The automat identifier
+    required Id                          automat           = 1;
     //! The identification level @see UnitIdentification.Level
     required UnitIdentification.Level identification_level = 2;
 }
@@ -1345,10 +1335,10 @@ message SeqOfAutomatPerception {
     @brief Notifies of an update in the knowledge of a unit
 */
 message UnitKnowledgeUpdate {
-    //! The unit knowledge @see UnitKnowledgeId
-    required UnitKnowledgeId          knowledge                = 1;
-    //! The knowledge group identifier @see KnowledgeGroupId
-    required KnowledgeGroupId         knowledge_group          = 2;
+    //! The unit knowledge
+    required Id                       knowledge                = 1;
+    //! The knowledge group identifier
+    required Id                       knowledge_group          = 2;
     //! The relevance of the knowledge in percent
     optional int32                    pertinence               = 3;
     //! The identification level @see UnitIdentification.Level
@@ -1365,14 +1355,14 @@ message UnitKnowledgeUpdate {
     optional Heading                  direction                = 9;
     //! The unit speed in kilometers per hour
     optional int32                    speed                    = 10;
-    //! The unit party identifier @see PartyId
-    optional PartyId                  party                    = 11;
+    //! The unit party identifier
+    optional Id                       party                    = 11;
     //! Whether the unit is a command post or not
     optional bool                     command_post             = 12;
     //! The perceptions for each automat
     optional SeqOfAutomatPerception   perceptions              = 13;
-    //! The unit to which this unit has surrendered @see UnitId
-    optional UnitId                   surrendered_unit         = 14;
+    //! The unit to which this unit has surrendered
+    optional Id                       surrendered_unit         = 14;
     //! Whether the unit has been made prisoner or not
     optional bool                     prisoner                 = 15;
     //! Whether refugees are being handled by the unit or not
@@ -1388,9 +1378,9 @@ message UnitKnowledgeUpdate {
 */
 message UnitKnowledgeDestruction {
     //! The unit knowledge
-    required UnitKnowledgeId  knowledge       = 1;
+    required Id               knowledge       = 1;
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 2;
+    required Id               knowledge_group = 2;
 }
 
 /** @struct StartUnitFire
@@ -1402,13 +1392,13 @@ message StartUnitFire {
     */
     message UnitFireTarget {
         //! The target unit
-        optional UnitId       unit            = 1;
+        optional Id           unit            = 1;
         //! The target crowd
-        optional CrowdId      crowd           = 2;
+        optional Id           crowd           = 2;
         //! The target position
         optional CoordLatLong position        = 3;
         //! The target crowd
-        optional CrowdElementId crowd_element = 4;
+        optional Id           crowd_element   = 4;
     }
     /** @enum UnitFireType
         @brief Defines the fire type
@@ -1420,15 +1410,15 @@ message StartUnitFire {
         indirect = 1;
     }
     //! The fire identifier
-    required FireId         fire        = 1;
+    required Id             fire        = 1;
     //! The firing unit identifier
-    required UnitId         firing_unit = 2;
+    required Id             firing_unit = 2;
     //! The target
     required UnitFireTarget target      = 3;
     //! The fire type
     required UnitFireType   type        = 4;
     //! The ammunition type
-    optional ResourceType   ammunition  = 5;
+    optional Id             ammunition  = 5;
 }
 
 /** @struct UnitHumanFireDamage
@@ -1464,7 +1454,7 @@ message SeqOfUnitHumanFireDamage {
 */
 message UnitEquipmentFireDamage {
     //! The equipment
-    required EquipmentType equipement  = 1;
+    required Id            equipement  = 1;
     //! The number of available equipements
     required uint32        available   = 2;
     //! The number of unavailable equipements
@@ -1486,7 +1476,7 @@ message SeqOfUnitEquipmentFireDamage {
 */
 message UnitFireDamages {
     //! The unit identifier
-    required UnitId                       target     = 1;
+    required Id                           target     = 1;
     //! The damages to the humans
     required SeqOfUnitHumanFireDamage     humans     = 2;
     //! The damages to the equipments
@@ -1506,7 +1496,7 @@ message UnitsFireDamages {
 */
 message CrowdFireDamages {
     //! The crowd identifier
-    required CrowdId target    = 1;
+    required Id      target    = 1;
     //! The number of dead persons
     required int32   dead      = 2;
     //! The number of wounded persons
@@ -1528,7 +1518,7 @@ message CrowdsFireDamages {
 */
 message StopUnitFire {
     //! The fire identifier
-    required FireId            fire           = 1;
+    required Id                fire           = 1;
     //! The resulting damages dealt to units
     optional UnitsFireDamages  units_damages  = 2;
     //! The resulting damages dealt to crowds
@@ -1540,9 +1530,9 @@ message StopUnitFire {
 */
 message StartCrowdFire {
     //! The fire identifier
-    required FireId  fire         = 1;
+    required Id      fire         = 1;
     //! The crowd identifier
-    required CrowdId firing_crowd = 2;
+    required Id      firing_crowd = 2;
 }
 
 /** @struct StopCrowdFire
@@ -1550,7 +1540,7 @@ message StartCrowdFire {
 */
 message StopCrowdFire {
     //! The fire identifier
-    required FireId           fire          = 1;
+    required Id               fire          = 1;
     //! The resulting damages dealt to units
     required UnitsFireDamages units_damages = 2;
 }
@@ -1560,7 +1550,7 @@ message StopCrowdFire {
 */
 message Explosion {
     //! The explosion object identifier
-    required ObjectId          object         = 1;
+    required Id                object         = 1;
     //! The resulting damages dealt to units
     optional UnitsFireDamages  units_damages  = 2;
     //! The resulting damages dealt to crowds
@@ -1569,13 +1559,13 @@ message Explosion {
 
 message UnitDamagedByUnitFire {
     //! The target unit identifier
-    required UnitId                       unit        = 1;
+    required Id                           unit        = 1;
     //! The target party identifier
-    required PartyId                      party       = 2;
+    required Id                           party       = 2;
     //! The firer unit identifier
-    required UnitId                       firer       = 3;
+    required Id                           firer       = 3;
     //! The fire identifier
-    required FireId                       fire        = 4;
+    required Id                           fire        = 4;
     //! Whether the fire is direct or not
     required bool                         direct_fire = 5;
     //! Whether the fire is fratricide or not
@@ -1588,13 +1578,13 @@ message UnitDamagedByUnitFire {
 
 message CrowdDamagedByUnitFire {
     //! The target crowd identifier
-    required CrowdId crowd       = 1;
+    required Id      crowd       = 1;
     //! The target party identifier
-    required PartyId party       = 2;
+    required Id      party       = 2;
     //! The firer unit identifier
-    required UnitId  firer       = 3;
+    required Id      firer       = 3;
     //! The fire identifier
-    required FireId  fire        = 4;
+    required Id      fire        = 4;
     //! Whether the fire is direct or not
     required bool    direct_fire = 5;
     //! Whether the fire is fratricide or not
@@ -1609,13 +1599,13 @@ message CrowdDamagedByUnitFire {
 
 message UnitDamagedByCrowdFire {
     //! The target unit identifier
-    required UnitId                       unit       = 1;
+    required Id                           unit       = 1;
     //! The target party identifier
-    required PartyId                      party      = 2;
+    required Id                           party      = 2;
     //! The firer crowd identifier
-    required CrowdId                      firer      = 3;
+    required Id                           firer      = 3;
     //! The fire identifier
-    required FireId                       fire       = 4;
+    required Id                           fire       = 4;
     //! Whether the fire is fratricide or not
     required bool                         fratricide = 5;
     //! The damages to the humans
@@ -1642,7 +1632,7 @@ message StartFireEffect {
         neutralization = 3;
     }
     //! The fire effect identifier
-    required FireEffectId       fire_effect = 1;
+    required Id                 fire_effect = 1;
     //! The fire location
     required Location           location    = 2;
     //! The fire type
@@ -1654,7 +1644,7 @@ message StartFireEffect {
 */
 message StopFireEffect {
     //! The fire effect identifier
-    required FireEffectId fire_effect = 1;
+    required Id fire_effect = 1;
 }
 
 /** @struct IndirectFirePerception
@@ -1662,11 +1652,11 @@ message StopFireEffect {
 */
 message IndirectFirePerception {
     //! The perceivers (list can be empty)
-    repeated UnitId perceivers         = 1;
+    repeated Id perceivers   = 1;
     //! The ammunition fired
-    required ResourceType ammunition   = 2;
+    required Id ammunition   = 2;
     //! The fire effects (list cannot be empty)
-    repeated FireEffectId fire_effects = 3;
+    repeated Id fire_effects = 3;
 }
 
 /** @struct ControlEnableVisionConesAck
@@ -1692,10 +1682,10 @@ message ListEnabledVisionConesAck {
     optional bool all     = 1;
     //! List of unit identifiers in ascending order for which vision cone
     //! updates are being sent
-    repeated UnitId units = 2;
+    repeated Id     units = 2;
     //! Identifier to start from (included), if omitted it starts from the
     //! beginning
-    optional UnitId start = 3;
+    optional Id     start = 3;
     //! Total number of units listened to
     optional uint32 count = 4;
 }
@@ -1718,11 +1708,11 @@ message Report {
         warning           = 3;
     }
     //! The report identifier
-    required ReportId          report     = 1;
+    required Id                report     = 1;
     //! The report source
     required Tasker            source     = 2;
     //! The report type
-    required ReportType        type       = 3;
+    required Id                type       = 3;
     //! The report category type
     required EnumReportType    category   = 4;
     //! The report time
@@ -1736,7 +1726,7 @@ message Report {
 */
 message InvalidateReport {
     //! The report identifier
-    required ReportId report = 1;
+    required Id       report = 1;
     //! The report source
     required Tasker   source = 2;
 }
@@ -1808,7 +1798,7 @@ message SeqOfVisionCone {
 */
 message UnitVisionCones {
     //! The unit identifier
-    required UnitId          unit       = 1;
+    required Id              unit       = 1;
     //! The vision cones
     required SeqOfVisionCone cones      = 2;
     //! DEPRECATED in 5.3
@@ -1843,9 +1833,9 @@ message UnitVisibility {
 */
 message UnitDetection {
     //! The observer unit identifier
-    required UnitId               observer           = 1;
+    required Id                   observer           = 1;
     //! The detected unit identifier @todo rename to unit
-    required UnitId               detected_unit      = 2;
+    required Id                   detected_unit      = 2;
     //! The current visibility level @todo rename to visibility
     required UnitVisibility.Level current_visibility = 3;
     //! The maximum visibility level
@@ -1857,9 +1847,9 @@ message UnitDetection {
 */
 message ObjectDetection {
     //! The observer unit identifier
-    required UnitId               observer        = 1;
+    required Id                   observer        = 1;
     //! The detected object identifier @todo rename to object
-    required ObjectId             detected_object = 2;
+    required Id                   detected_object = 2;
     //! The current visibility level
     required UnitVisibility.Level visibility      = 3;
 }
@@ -1869,11 +1859,11 @@ message ObjectDetection {
 */
 message CrowdConcentrationDetection {
     //! The observer unit identifier
-    required UnitId               observer               = 1;
+    required Id                   observer               = 1;
     //! The detected crowd identifier @todo rename to crowd
-    required CrowdId              detected_crowd         = 2;
+    required Id                   detected_crowd         = 2;
     //! The detected concentration @todo rename to concentration
-    required CrowdConcentrationId detected_concentration = 3;
+    required Id                   detected_concentration = 3;
     //! The current visibility level
     required UnitVisibility.Level visibility             = 4;
 }
@@ -1883,11 +1873,11 @@ message CrowdConcentrationDetection {
 */
 message CrowdFlowDetection {
     //! The observer unit identifier
-    required UnitId      observer       = 1;
+    required Id          observer       = 1;
     //! The detected crowd identifier @todo rename to crowd
-    required CrowdId     detected_crowd = 2;
+    required Id          detected_crowd = 2;
     //! The detected flow identifier @todo rename to flow
-    required CrowdFlowId detected_flow  = 3;
+    required Id          detected_flow  = 3;
     //! The flow path @todo rename to path
     required Path        visible_flow   = 4;
 }
@@ -1897,13 +1887,13 @@ message CrowdFlowDetection {
 */
 message ObjectCreation {
     //! The object identifier
-    required ObjectId         object              = 1;
+    required Id               object              = 1;
     //! The object type
     required ObjectType       type                = 2;
     //! The object name
     required string           name                = 3;
     //! The object party
-    required PartyId          party               = 4;
+    required Id               party               = 4;
     //! The object location
     required Location         location            = 5;
     //! The object attributes
@@ -1921,7 +1911,7 @@ message ObjectCreation {
 */
 message ObjectDestruction {
     //! The object identifier
-    required ObjectId object = 1;
+    required Id       object = 1;
 }
 
 /** @struct ObjectUpdate
@@ -1929,7 +1919,7 @@ message ObjectDestruction {
 */
 message ObjectUpdate {
     //! The object identifier
-    required ObjectId         object     = 1;
+    required Id               object     = 1;
     //! The object location
     optional Location         location   = 2;
     //! The object attributes
@@ -1941,19 +1931,19 @@ message ObjectUpdate {
 */
 message ObjectKnowledgeCreation {
     //! The knowledge identifier
-    required ObjectKnowledgeId knowledge       = 1;
+    required Id                knowledge       = 1;
     //! The party identifier
-    required PartyId           party           = 2;
+    required Id                party           = 2;
     //! The object identifier
-    required ObjectId          object          = 3;
+    required Id                object          = 3;
     //! The object type
     required ObjectType        type            = 4;
     //! The object attributes
     required ObjectAttributes  attributes      = 5;
     //! The knowledge group identifier
-    optional KnowledgeGroupId  knowledge_group = 6;
+    optional Id                knowledge_group = 6;
     //! The object party
-    optional PartyId           object_party    = 7;
+    optional Id                object_party    = 7;
     //! The object name
     optional string            object_name     = 8;
     //! The display symbol from location type geometry
@@ -1965,11 +1955,11 @@ message ObjectKnowledgeCreation {
 */
 message ObjectKnowledgeUpdate {
     //! The knowledge identifier
-    required ObjectKnowledgeId knowledge           = 1;
+    required Id                knowledge           = 1;
     //! The party identifier
-    required PartyId           party               = 2;
+    required Id                party               = 2;
     //! The object identifier
-    optional ObjectId          object              = 3;
+    optional Id                object              = 3;
     //! The percentage of relevance
     optional int32             relevance           = 4;
     //! The object location
@@ -1979,9 +1969,9 @@ message ObjectKnowledgeUpdate {
     //! Whether the object is currently perceived or not
     optional bool              perceived           = 7;
     //! The list of automats perceiving the object
-    optional AutomatIdList     perceiving_automats = 8;
+    optional IdList            perceiving_automats = 8;
     //! The knowledge group identifier
-    optional KnowledgeGroupId  knowledge_group     = 9;
+    optional Id                knowledge_group     = 9;
 }
 
 /** @struct ObjectKnowledgeDestruction
@@ -1989,10 +1979,10 @@ message ObjectKnowledgeUpdate {
 */
 message ObjectKnowledgeDestruction {
     //! The knowledge identifier
-    required ObjectKnowledgeId knowledge = 1;
+    required Id                knowledge = 1;
     //! The knowledge party identifier @deprecated to be maintained by
     //! the client if needed
-    required PartyId           party     = 2;
+    required Id                party     = 2;
 }
 
 /** @struct UrbanKnowledgeCreation
@@ -2000,11 +1990,11 @@ message ObjectKnowledgeDestruction {
 */
 message UrbanKnowledgeCreation {
     //! The knowledge identifier
-    required UrbanObjectKnowledgeId knowledge = 1;
+    required Id                     knowledge = 1;
     //! The party identifier
-    required PartyId                party     = 2;
+    required Id                     party     = 2;
     //! The object identifier
-    required ObjectId               object    = 3;
+    required Id                     object    = 3;
 }
 
 /** @struct UrbanKnowledgeUpdate
@@ -2012,11 +2002,11 @@ message UrbanKnowledgeCreation {
 */
 message UrbanKnowledgeUpdate {
     //! The knowledge identifier
-    required UrbanObjectKnowledgeId knowledge           = 1;
+    required Id                     knowledge           = 1;
     //! The party identifier
-    required PartyId                party               = 2;
+    required Id                     party               = 2;
     //! The object identifier
-    required ObjectId               object              = 3;
+    required Id                     object              = 3;
     //! The percentage of knowledge
     optional int32                  progress            = 4;
     //! The maximum percentage of knowledge ever reached
@@ -2025,28 +2015,28 @@ message UrbanKnowledgeUpdate {
     optional bool                   perceived           = 6;
     //! The list of automats perceiving the object @todo rename along
     //! ObjectKnowledgeUpdate::perceiving_automats
-    optional AutomatIdList          automat_perceptions = 7;
+    optional IdList                 automat_perceptions = 7;
 }
 
 /** @struct UrbanKnowledgeDestruction
     @brief Notifies of the destruction of a urban knowledge
-*/                    
+*/
 message UrbanKnowledgeDestruction {
     //! The knowledge identifier
-    required UrbanObjectKnowledgeId knowledge = 1;
+    required Id                     knowledge = 1;
     //! The party identifier
-    required PartyId                party     = 2;
+    required Id                     party     = 2;
 }
 
 
 /** @struct LogFuneralHandlingCreation
     @brief Notifies of the creation of a funeral handling
-*/                    
+*/
 message LogFuneralHandlingCreation {
     //! The funeral request identifier
-    required FuneralRequestId request          = 1;
+    required Id               request          = 1;
     //! The requesting unit identifier
-    required UnitId           unit             = 2;
+    required Id               unit             = 2;
     //! The creation tick number
     required int32            tick             = 3;
     //! The rank of the human associated to the request
@@ -2079,17 +2069,17 @@ message LogFuneralHandlingUpdate {
         finished                 = 6;
     }
     //! The request identifier
-    required FuneralRequestId              request                = 1;
+    required Id                            request                = 1;
     //! The current logistic base handling the request
     optional ParentEntity                  handling_unit          = 2;
     //! The current unit transporting the body
-    optional UnitId                        convoying_unit         = 3;
+    optional Id                            convoying_unit         = 3;
     //! The current status
     optional EnumLogFuneralHandlingStatus  state                  = 4;
     //! When set, the tick when the current state will be finished
     optional int32                         current_state_end_tick = 5;
-    //! The packaging type    
-    optional ResourceType                  packaging_resource     = 6;
+    //! The packaging type
+    optional Id                            packaging_resource     = 6;
 }
 
 /** @struct LogFuneralHandlingDestruction
@@ -2097,18 +2087,18 @@ message LogFuneralHandlingUpdate {
 */
 message LogFuneralHandlingDestruction {
     //! The request identifier
-    required FuneralRequestId request = 1;
+    required Id               request = 1;
 }
 
 
 /** @struct LogMedicalHandlingCreation
     @brief Notifies of the creation of a medical handling
-*/                    
+*/
 message LogMedicalHandlingCreation {
     //! The medical request identifier
-    required MedicalRequestId request          = 1;
+    required Id               request          = 1;
     //! The unit identifier
-    required UnitId           unit             = 2;
+    required Id               unit             = 2;
     //! The creation tick number
     required int32            tick             = 3;
     //! The rank
@@ -2173,11 +2163,11 @@ message LogMedicalHandlingUpdate {
         finished                                  = 20;
     }
     //! The request identifier
-    required MedicalRequestId             request          = 1;
+    required Id                           request          = 1;
     //! The unit identifier
-    required UnitId                       unit             = 2;
+    required Id                           unit             = 2;
     //! The provider identifier
-    optional UnitId                       provider         = 3;
+    optional Id                           provider         = 3;
     //! The type of wound
     optional EnumHumanWound               wound            = 4;
     //! Whether the unit is mentally wounded or not
@@ -2197,9 +2187,9 @@ message LogMedicalHandlingUpdate {
 */
 message LogMedicalHandlingDestruction {
     //! The request identifier
-    required MedicalRequestId request = 1;
+    required Id               request = 1;
     //! The unit identifier
-    required UnitId           unit    = 2;
+    required Id               unit    = 2;
 }
 
 /** @struct LogMedicalEquipmentAvailability
@@ -2210,7 +2200,7 @@ message LogMedicalHandlingDestruction {
 */
 message LogMedicalEquipmentAvailability {
     //! The equipment type
-    required EquipmentType equipment = 1;
+    required Id            equipment = 1;
     //! The total
     required int32         total     = 2;
     //! The number of equipments available
@@ -2236,13 +2226,13 @@ message SeqOfLogMedicalEquipmentAvailability {
 */
 message LogMedicalState {
     //! The unit identifier
-    required UnitId                               unit                  = 1;
+    required Id                                   unit                  = 1;
     //! Whether the supply chain is in place or not
     optional bool                                 chain                 = 2;
     //! The medical priorities
     optional LogMedicalPriorities                 priorities            = 3;
     //! The tactical priorities @todo What's this ?
-    optional AutomatIdList                        tactical_priorities   = 4;
+    optional IdList                               tactical_priorities   = 4;
     //! The status of evacuation ambulances @todo explain the
     //! difference between evacuation and collection somewhere
     optional SeqOfLogMedicalEquipmentAvailability evacuation_ambulances = 5;
@@ -2258,15 +2248,15 @@ message LogMedicalState {
 */
 message LogMaintenanceHandlingCreation {
     //! The request identifier
-    required MaintenanceRequestId request    = 1;
+    required Id                   request    = 1;
     //! The unit identifier
-    required UnitId               unit       = 2;
+    required Id                   unit       = 2;
     //! The creation tick number
     required int32                tick       = 3;
     //! The equipment type under maintenance
-    required EquipmentType        equipement = 4;
+    required Id                   equipement = 4;
     //! The breakdown type
-    required BreakdownType        breakdown  = 5;
+    required Id                   breakdown  = 5;
 }
 
 /** @struct LogMaintenanceHandlingUpdate
@@ -2305,11 +2295,11 @@ message LogMaintenanceHandlingUpdate {
         finished                     = 12;
     }
     //! The request identifier
-    required MaintenanceRequestId             request                = 1;
+    required Id                               request                = 1;
     //! The unit identifier
-    required UnitId                           unit                   = 2;
+    required Id                               unit                   = 2;
     //! The maintenance provider identifier
-    required UnitId                           provider               = 3;
+    required Id                               provider               = 3;
     //! The maintenance state
     optional EnumLogMaintenanceHandlingStatus state                  = 4;
     //! When set, the tick when the current state will be finished
@@ -2323,9 +2313,9 @@ message LogMaintenanceHandlingUpdate {
 */
 message LogMaintenanceHandlingDestruction {
     //! The request identifier
-    required MaintenanceRequestId request = 1;
+    required Id                   request = 1;
     //! The unit identifier
-    required UnitId               unit    = 2;
+    required Id                   unit    = 2;
 }
 
 /** @struct LogMaintenanceEquipmentAvailability
@@ -2337,7 +2327,7 @@ message LogMaintenanceHandlingDestruction {
 */
 message LogMaintenanceEquipmentAvailability {
     //! The equipment type
-    required EquipmentType equipment = 1;
+    required Id            equipment = 1;
     //! The total
     required int32         total     = 2;
     //! The number of equipments available
@@ -2377,15 +2367,15 @@ enum EnumLogMaintenanceWorkRate {
 */
 message LogMaintenanceState {
     //! The unit identifier
-    required UnitId                                   unit                = 1;
+    required Id                                       unit                = 1;
     //! Whether the supply chain is in place or not
     optional bool                                     chain               = 2;
     //! The work rate
     optional EnumLogMaintenanceWorkRate               work_rate           = 3;
     //! The maintenance priorities
-    optional LogMaintenancePriorities                 priorities          = 4;
+    optional IdList                                   priorities          = 4;
     //! The tactical priorities @todo What's this ?
-    optional AutomatIdList                            tactical_priorities = 5;
+    optional IdList                                   tactical_priorities = 5;
     //! The haulers availabilities
     optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6;
     //! The repairers availabilities
@@ -2396,8 +2386,8 @@ message LogMaintenanceState {
     @brief Queries a dotation
 */
 message SupplyResourceRequest {
-    //! The type of the resource @see ResourceType
-    required ResourceType resource  = 1;
+    //! The type of the resource
+    required Id           resource  = 1;
     //! The amount requested
     required int32        requested = 2;
     //! The amount granted
@@ -2412,7 +2402,7 @@ message SupplyResourceRequest {
 */
 message SupplyRecipientResourcesRequest {
     //! The recipient of the supply flow
-    required AutomatId             recipient = 1;
+    required Id                    recipient = 1;
     //! The resources requested/granted/convoyed
     repeated SupplyResourceRequest resources = 2;
 }
@@ -2425,7 +2415,7 @@ message SupplyRecipientResourceRequests {
 */
 message LogSupplyHandlingCreation {
     //! The request identifier
-    required SupplyRequestId request               = 1;
+    required Id              request               = 1;
     //! The creation tick number
     required int32           tick                  = 2;
     //! The supplier
@@ -2459,10 +2449,10 @@ message LogSupplyHandlingUpdate {
         //! Convoying operation is finished
         convoy_finished                     = 7;
     }
-    //! The request identifier    
-    optional SupplyRequestId                 request                = 1;
+    //! The request identifier
+    optional Id                              request                = 1;
     //! The convoyer
-    optional UnitId                          convoyer               = 2;
+    optional Id                              convoyer               = 2;
     //! The current state of the handling
     optional EnumLogSupplyHandlingStatus     state                  = 3;
     //! When set, the tick when the current state will be finished
@@ -2476,7 +2466,7 @@ message LogSupplyHandlingUpdate {
 */
 message LogSupplyHandlingDestruction {
     //! The request identifier
-    required SupplyRequestId request  = 1;
+    required Id              request  = 1;
 }
 
 /** @struct LogSupplyEquimentAvailability
@@ -2484,7 +2474,7 @@ message LogSupplyHandlingDestruction {
 */
 message LogSupplyEquimentAvailability {
     //! The equipment type @bug not sure this is really meant to be optional
-    optional EquipmentType equipment = 1;
+    optional Id            equipment = 1;
     //! The total number of equipment
     optional int32         total     = 2;
     //! The number of equipment available
@@ -2510,7 +2500,7 @@ message SeqOfLogSupplyEquimentAvailability {
 */
 message DotationStock {
     //! The resource type
-    required ResourceType resource = 1;
+    required Id           resource = 1;
     //! The quantity
     required int32        quantity = 2;
 }
@@ -2528,7 +2518,7 @@ message SeqOfDotationStock {
 */
 message LogSupplyState {
     //! The unit identifier
-    optional UnitId                             unit          = 1;
+    optional Id                                 unit          = 1;
     //! Whether the supply chain is in place or not
     optional bool                               chain         = 2;
     //! The dotation stocks
@@ -2544,7 +2534,7 @@ message LogSupplyState {
 */
 message DotationQuota {
     //! The resource type
-    required ResourceType resource = 1;
+    required Id           resource = 1;
     //! The quantity
     required int32        quantity = 2;
 }
@@ -2574,13 +2564,13 @@ message LogSupplyQuotas {
 */
 message CrowdCreation {
     //! The crowd identifier
-    required CrowdId          crowd       = 1;
+    required Id               crowd       = 1;
     //! The crowd type
-    required CrowdType        type        = 2;
+    required Id               type        = 2;
     //! The crowd name
     optional string           name        = 3;
     //! The crowd party
-    required PartyId          party       = 4;
+    required Id               party       = 4;
     //! The crowd repartition @see HumanRepartition
     required HumanRepartition repartition = 5;
 }
@@ -2590,7 +2580,7 @@ message CrowdCreation {
 */
 message CrowdUpdate {
     //! The crowd identifier
-    required CrowdId        crowd                 = 1;
+    required Id             crowd                 = 1;
     //! The crowd domination
     optional int32          domination            = 2;
     //! The party adhesions
@@ -2620,7 +2610,7 @@ message CrowdUpdate {
 */
 message CrowdDestruction {
     //! The crowd identifier
-    required CrowdId crowd = 1;
+    required Id      crowd = 1;
 }
 
 /** @struct CrowdConcentrationCreation
@@ -2628,9 +2618,9 @@ message CrowdDestruction {
 */
 message CrowdConcentrationCreation {
     //! The crowd concentration identifier
-    required CrowdConcentrationId concentration = 1;
+    required Id                   concentration = 1;
     //! The crowd identifier
-    required CrowdId              crowd         = 2;
+    required Id                   crowd         = 2;
     //! The crowd position
     required CoordLatLong         position      = 3;
 }
@@ -2640,9 +2630,9 @@ message CrowdConcentrationCreation {
 */
 message CrowdConcentrationDestruction {
     //! The crowd concentration identifier
-    required CrowdConcentrationId concentration = 1;
+    required Id                   concentration = 1;
     //! The crowd identifier
-    required CrowdId              crowd         = 2;
+    required Id                   crowd         = 2;
 }
 
 /** @enum EnumCrowdAttitude
@@ -2664,9 +2654,9 @@ enum EnumCrowdAttitude {
 */
 message CrowdConcentrationUpdate {
     //! The crowd concentration identifier
-    required CrowdConcentrationId concentration = 1;
+    required Id                   concentration = 1;
     //! The crowd identifier
-    required CrowdId              crowd         = 2;
+    required Id                   crowd         = 2;
     //! The number of healthy persons
     optional int32                healthy       = 3;
     //! The number of wounded persons
@@ -2684,9 +2674,9 @@ message CrowdConcentrationUpdate {
 */
 message CrowdFlowCreation {
     //! The crowd flow identifier
-    required CrowdFlowId flow  = 1;
+    required Id          flow  = 1;
     //! The crowd identifier
-    required CrowdId     crowd = 2;
+    required Id          crowd = 2;
 }
 
 /** @struct CrowdFlowDestruction
@@ -2694,9 +2684,9 @@ message CrowdFlowCreation {
 */
 message CrowdFlowDestruction {
     //! The crowd flow identifier
-    required CrowdFlowId flow  = 1;
+    required Id          flow  = 1;
     //! The crowd identifier
-    required CrowdId     crowd = 2;
+    required Id          crowd = 2;
 }
 
 /** @struct CrowdFlowUpdate
@@ -2704,9 +2694,9 @@ message CrowdFlowDestruction {
 */
 message CrowdFlowUpdate {
     //! The crowd flow identifier
-    required CrowdFlowId       flow         = 1;
+    required Id                flow         = 1;
     //! The crowd identifier
-    required CrowdId           crowd        = 2;
+    required Id                crowd        = 2;
     //! The crowd shape
     optional Path              parts        = 3;
     //! The crowd path
@@ -2732,13 +2722,13 @@ message CrowdFlowUpdate {
 */
 message CrowdKnowledgeCreation {
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId knowledge       = 1;
+    required Id               knowledge       = 1;
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 2;
+    required Id               knowledge_group = 2;
     //! The crowd identifier
-    optional CrowdId          crowd           = 3;
+    optional Id               crowd           = 3;
     //! The party identifier
-    optional PartyId          party           = 4;
+    optional Id               party           = 4;
 }
 
 /** @struct CrowdKnowledgeUpdate
@@ -2746,9 +2736,9 @@ message CrowdKnowledgeCreation {
 */
 message CrowdKnowledgeUpdate {
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId knowledge             = 1;
+    required Id               knowledge             = 1;
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group       = 2;
+    required Id               knowledge_group       = 2;
     //! The crowd domination
     optional int32            domination            = 3;
     //! The crowd critical intelligence
@@ -2760,9 +2750,9 @@ message CrowdKnowledgeUpdate {
 */
 message CrowdKnowledgeDestruction {
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId knowledge       = 1;
+    required Id               knowledge       = 1;
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 2;
+    required Id               knowledge_group = 2;
 }
 
 /** @struct CrowdConcentrationKnowledgeCreation
@@ -2770,13 +2760,13 @@ message CrowdKnowledgeDestruction {
 */
 message CrowdConcentrationKnowledgeCreation {
     //! The crowd concentration knowledge identifier
-    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required Id                            knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId              crowd           = 2;
+    required Id                            crowd           = 2;
     //! The knowledge group identifier
-    required KnowledgeGroupId              knowledge_group = 3;
+    required Id                            knowledge_group = 3;
     //! The crowd concentration identifier
-    required CrowdConcentrationId          concentration   = 4;
+    required Id                            concentration   = 4;
     //! The crowd position
     optional CoordLatLong                  position        = 5;
 }
@@ -2786,13 +2776,13 @@ message CrowdConcentrationKnowledgeCreation {
 */
 message CrowdConcentrationKnowledgeUpdate {
     //! The crowd concentration knowledge identifier
-    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required Id                            knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId              crowd           = 2;
+    required Id                            crowd           = 2;
     //! The knowledge group identifier
-    required KnowledgeGroupId              knowledge_group = 3;
+    required Id                            knowledge_group = 3;
     //! The crowd concentration identifier
-    optional CrowdConcentrationId          concentration   = 4;
+    optional Id                            concentration   = 4;
     //! The number of persons alive
     optional int32                         alive           = 5;
     //! The number of dead persons
@@ -2810,11 +2800,11 @@ message CrowdConcentrationKnowledgeUpdate {
 */
 message CrowdConcentrationKnowledgeDestruction {
     //! The crowd concentration knowledge identifier
-    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required Id                            knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId              crowd           = 2;
+    required Id                            crowd           = 2;
     //! The knowledge group identifier
-    required KnowledgeGroupId              knowledge_group = 3;
+    required Id                            knowledge_group = 3;
 }
 
 /** @struct CrowdFlowKnowledgeCreation
@@ -2822,13 +2812,13 @@ message CrowdConcentrationKnowledgeDestruction {
 */
 message CrowdFlowKnowledgeCreation {
     //! The crowd flow knowledge identifier
-    required CrowdFlowKnowledgeId knowledge       = 1;
+    required Id                   knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId     crowd           = 2;
+    required Id                   crowd           = 2;
     //! The knowledge group identifier
-    required KnowledgeGroupId     knowledge_group = 3;
+    required Id                   knowledge_group = 3;
     //! The crowd flow identifier
-    required CrowdFlowId          flow            = 4;
+    required Id                   flow            = 4;
 }
 
 /** @struct FlowPart
@@ -2854,27 +2844,27 @@ message SeqOfFlowPart {
 */
 message CrowdFlowKnowledgeUpdate {
     //! The crowd flow knowledge identifier
-    required CrowdFlowKnowledgeId knowledge       = 1;
+    required Id                knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId     crowd           = 2;
+    required Id                crowd           = 2;
     //! The crowd knowledge group identifier
-    required KnowledgeGroupId     knowledge_group = 3;
+    required Id                knowledge_group = 3;
     //! The flow identifier
-    optional CrowdFlowId          flow            = 4;
+    optional Id                flow            = 4;
     //! The flow parts
-    optional SeqOfFlowPart        parts           = 5;
+    optional SeqOfFlowPart     parts           = 5;
     //! The flow direction
-    optional Heading              direction       = 6;
+    optional Heading           direction       = 6;
     //! The flow speed
-    optional int32                speed           = 7;
+    optional int32             speed           = 7;
     //! The number of persons alive
-    optional int32                alive           = 8;
+    optional int32             alive           = 8;
     //! The number of dead persons
-    optional int32                dead            = 9;
+    optional int32             dead            = 9;
     //! The crowd attitude
-    optional EnumCrowdAttitude    attitude        = 10;
+    optional EnumCrowdAttitude attitude        = 10;
     //! Whether the flow is currently perceived or not
-    optional bool                 perceived       = 11;
+    optional bool              perceived       = 11;
 }
 
 /** @struct CrowdFlowKnowledgeDestruction
@@ -2882,11 +2872,11 @@ message CrowdFlowKnowledgeUpdate {
 */
 message CrowdFlowKnowledgeDestruction {
     //! The crowd flow knowledge identifier
-    required CrowdFlowKnowledgeId knowledge       = 1;
+    required Id                   knowledge       = 1;
     //! The crowd knowledge identifier
-    required CrowdKnowledgeId     crowd           = 2;
+    required Id                   crowd           = 2;
     //! The knowledge group identifier
-    required KnowledgeGroupId     knowledge_group = 3;
+    required Id                   knowledge_group = 3;
 }
 
 /** @struct FolkCreation
@@ -3082,7 +3072,7 @@ message UrbanAttributes {
 */
 message UrbanCreation {
     //! The object identifier
-    required ObjectId        object       = 1;
+    required Id              object       = 1;
     //! The object name
     required string          name         = 2;
     //! The object location
@@ -3090,7 +3080,7 @@ message UrbanCreation {
     //! The object attributes
     optional UrbanAttributes attributes   = 4;
     //! The parent object
-    optional ObjectId        parent       = 5;
+    optional Id              parent       = 5;
 }
 
 /** @struct UrbanDetection
@@ -3098,9 +3088,9 @@ message UrbanCreation {
 */
 message UrbanDetection {
     //! The unit identifier
-    required UnitId               observer     = 1;
+    required Id                   observer     = 1;
     //! The object identifier
-    required ObjectId             object       = 2;
+    required Id                   object       = 2;
     //! The visibility level
     required UnitVisibility.Level visibility   = 3;
 }
@@ -3110,7 +3100,7 @@ message UrbanDetection {
 */
 message UrbanUpdate {
     //! The object identifier
-    required ObjectId        object     = 1;
+    required Id              object     = 1;
     //! The object location
     optional Location        location   = 2;
     //! The object attributes
@@ -3122,11 +3112,11 @@ message UrbanUpdate {
 */
 message KnowledgeGroupCreation {
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 1;
+    required Id               knowledge_group = 1;
     //! The party identifier
-    required PartyId          party           = 2;
+    required Id               party           = 2;
     //! The parent group
-    optional KnowledgeGroupId parent          = 3;
+    optional Id               parent          = 3;
     //! The group type
     required string           type            = 4;
     //! Whether the communication of the group is jammed or not
@@ -3142,11 +3132,11 @@ message KnowledgeGroupCreation {
 */
 message KnowledgeGroupUpdate {
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 1;
+    required Id               knowledge_group = 1;
     //! The party identifier
-    optional PartyId          party           = 2;
+    optional Id               party           = 2;
     //! The parent group
-    optional KnowledgeGroupId parent          = 3;
+    optional Id               parent          = 3;
     //! Whether the group is enabled or not
     optional bool             enabled         = 4;
     //! The group type
@@ -3158,9 +3148,9 @@ message KnowledgeGroupUpdate {
 */
 message KnowledgeGroupDestruction {
     //! The knowledge group identifier
-    required KnowledgeGroupId knowledge_group = 1;
+    required Id               knowledge_group = 1;
     //! The party identifier
-    required PartyId          party           = 2;
+    required Id               party           = 2;
 }
 
 /** @struct KnowledgeGroupAck
@@ -3199,7 +3189,7 @@ message KnowledgeGroupAck {
 */
 message KnowledgeGroupMagicActionAck {
     //! The knowledge group identifier
-    required KnowledgeGroupId            knowledge_group = 1;
+    required Id                          knowledge_group = 1;
     //! The error code
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
     //! More detailed account of the returned error
@@ -3213,7 +3203,7 @@ message KnowledgeGroupMagicActionAck {
 //! This message is replaced by MagicActionAck.
 message KnowledgeGroupCreationAck {
     //! The knowledge group identifier
-    required KnowledgeGroupId            knowledge_group = 1;
+    required Id                          knowledge_group = 1;
     //! The error code
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
@@ -3223,7 +3213,7 @@ message KnowledgeGroupCreationAck {
 //! This message is replaced by KnowledgeGroupMagicActionAck.
 message KnowledgeGroupUpdateAck {
     //! The knowledge group identifier
-    required KnowledgeGroupId            knowledge_group = 1;
+    required Id                          knowledge_group = 1;
     //! The error code
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
@@ -3286,13 +3276,13 @@ message WeatherAttributes {
 
 //! Global weather update notification.
 message ControlGlobalWeather {
-    required WeatherId         weather    = 1;
+    required Id                weather    = 1;
     required WeatherAttributes attributes = 2;
 }
 
 //! Local weather creation or update notification.
 message ControlLocalWeatherCreation {
-    required WeatherId         weather      = 1;
+    required Id                weather      = 1;
     //! The top-left corner of the area
     optional CoordLatLong      top_left     = 2;
     //! The bottom-left corner of the area
@@ -3304,7 +3294,7 @@ message ControlLocalWeatherCreation {
 
 //! Local weather removal notification.
 message ControlLocalWeatherDestruction {
-    required WeatherId weather = 1;
+    required Id weather = 1;
 }
 
 /** @struct PopulationCreation
@@ -3312,17 +3302,17 @@ message ControlLocalWeatherDestruction {
 */
 message PopulationCreation {
     //! The population identifier
-    required PopulationId   id        = 1;
+    required Id             id        = 1;
     //! The party identifier
-    required PartyId        party     = 2;
+    required Id             party     = 2;
     //! The population type
-    required PopulationType type      = 3;
+    required Id             type      = 3;
     //! The population name
     required string         name      = 4;
     //! @deprecated should be an extension entry
     required string         text      = 5;
     //! The object identifiers of urban blocks where the population live
-    repeated ObjectId       objects   = 6;
+    repeated Id             objects   = 6;
 }
 
 /** @struct PopulationUpdate
@@ -3344,7 +3334,7 @@ message PopulationUpdate {
     */
     message ResourceSatisfaction {
         //! The resource type
-        required ResourceType resource = 1;
+        required Id           resource = 1;
         //! The level of satisfaction for this motivation between 0 and 1
         required float        value    = 2;
     }
@@ -3377,7 +3367,7 @@ message PopulationUpdate {
             required int32  number = 2;
         }
         //! The block object identifier
-        required ObjectId        object    = 1;
+        required Id              object    = 1;
         //! The number of persons by usage
         repeated UsageOccupation persons   = 2;
         //! Whether the population has been alerted or not
@@ -3390,7 +3380,7 @@ message PopulationUpdate {
         required float           angriness = 6;
     }
     //! The population identifier
-    required PopulationId    id           = 1;
+    required Id              id           = 1;
     //! The number of healthy persons
     optional int32           healthy      = 2;
     //! The number of wounded persons
@@ -3723,7 +3713,7 @@ message SimToClient {
         //! @copybrief IndirectFirePerception
         optional IndirectFirePerception indirect_fire_perception = 147;
         //! @copybrief ControlEnableVisionConesAck
-        optional ControlEnableVisionConesAck 
+        optional ControlEnableVisionConesAck
             control_enable_vision_cones_ack = 148;
         //! @copybrief ListEnabledVisionConesAck
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;

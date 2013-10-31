@@ -374,7 +374,7 @@ namespace
         VisitList( xos, writer, src, "path", &Value::pathlist, &WriteCoordinates );
     }
 
-    void AddAutomat( xml::xostream& xos, const Writer_ABC&, const AutomatId& src )
+    void AddAutomat( xml::xostream& xos, const Writer_ABC&, const Id& src )
     {
         WritePair( xos, "automat", src.id() );
     }
@@ -384,7 +384,7 @@ namespace
         VisitList( xos, writer, src, "automat", &Value::automatlist, &AddAutomat );
     }
 
-    void AddUnit( xml::xostream& xos, const Writer_ABC&, const UnitId& src )
+    void AddUnit( xml::xostream& xos, const Writer_ABC&, const Id& src )
     {
         WritePair( xos, "agent", src.id() );
     }
@@ -394,7 +394,7 @@ namespace
         VisitList( xos, writer, src, "agent", &Value::unitlist, &AddUnit );
     }
 
-    void AddUnitKnowledge( xml::xostream& xos, const Writer_ABC&, const UnitKnowledgeId& src )
+    void AddUnitKnowledge( xml::xostream& xos, const Writer_ABC&, const Id& src )
     {
         WritePair( xos, "agentknowledge", src.id() );
     }
@@ -404,7 +404,7 @@ namespace
         VisitList( xos, writer, src, "agentknowledge", &Value::unitknowledgelist, &AddUnitKnowledge );
     }
 
-    void AddObjectKnowledge( xml::xostream& xos, const Writer_ABC&, const ObjectKnowledgeId& src )
+    void AddObjectKnowledge( xml::xostream& xos, const Writer_ABC&, const Id& src )
     {
         WritePair( xos, "objectknowledge", src.id() );
     }

@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class ObjectKnowledgeId;
+    class Id;
 }
 
 namespace kernel
@@ -54,7 +54,7 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
-    void CommitTo( sword::ObjectKnowledgeId& message ) const;
+    void CommitTo( sword::Id& message ) const;
     //@}
 
 private:

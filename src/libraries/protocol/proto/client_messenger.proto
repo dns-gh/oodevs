@@ -35,8 +35,8 @@ message PhaseLineCreationRequest {
     @see PhaseLineUpdate
 */
 message PhaseLineUpdateRequest {
-    //! The identifier of the phase line to update @see TacticalLineId
-    required TacticalLineId id            = 1;
+    //! The identifier of the phase line to update
+    required Id             id            = 1;
     //! Specifies the phase line data to use for update @see
     //! TacticalLine @bug should not be optional
     optional TacticalLine   tactical_line = 2;
@@ -49,8 +49,8 @@ message PhaseLineUpdateRequest {
     @see PhaseLineDestruction
 */
 message PhaseLineDestructionRequest {
-    //! The identifier of the phase line to destroy @see TacticalLineId
-    required TacticalLineId id = 1;
+    //! The identifier of the phase line to destroy
+    required Id             id = 1;
 }
 
 /** @struct LimitCreationRequest
@@ -71,8 +71,8 @@ message LimitCreationRequest {
     @see LimitUpdate
 */
 message LimitUpdateRequest {
-    //! The identifier of the limit to update @see TacticalLineId
-    required TacticalLineId  id            = 1;
+    //! The identifier of the limit to update
+    required Id              id            = 1;
     //! Specifies the limit data to use for update @see TacticalLine
     //! @bug should not be optional
     optional TacticalLine    tactical_line = 2;
@@ -85,8 +85,8 @@ message LimitUpdateRequest {
     @see LimitDestruction
 */
 message LimitDestructionRequest {
-    //! The identifier of the limit to destroy @see TacticalLineId
-    required TacticalLineId id = 1;
+    //! The identifier of the limit to destroy
+    required Id             id = 1;
 }
 
 /** @struct ShapeCreationRequest
@@ -111,9 +111,9 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    //! The identifier of the shape to update @see DrawingId @todo
+    //! The identifier of the shape to update @todo
     //! should be named "id" instead of "shape" (coherence)
-    required DrawingId        shape    = 1;
+    required Id               shape    = 1;
     //! The new category of the shape
     optional string           category = 2;
     //! The new color of the shape
@@ -132,8 +132,8 @@ message ShapeUpdateRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeDestructionRequest {
-    //! The identifier of the shape to destroy @see DrawingId
-    required DrawingId id = 1;
+    //! The identifier of the shape to destroy
+    required Id        id = 1;
 }
 
 /** @struct MarkerCreationRequest
@@ -156,10 +156,9 @@ message MarkerCreationRequest {
 message MarkerUpdateRequest {
     /** @property marker
         @brief The identifier of the marker to update.
-        @see MarkerId
         @todo should be named "id" instead of "marker" (coherence)
     */
-    required MarkerId marker      = 1;
+    required Id       marker      = 1;
     /** @property name
         @brief The new name of the marker.
         @note Only needs to be set if data has changed.
@@ -181,7 +180,7 @@ message MarkerUpdateRequest {
         @brief The identifier of the new parent marker (for nested markers).
         @note Only needs to be set if data has changed.
     */
-    optional MarkerId parent      = 5;
+    optional Id       parent      = 5;
 }
 
 /** @struct MarkerDestructionRequest
@@ -196,10 +195,9 @@ message MarkerUpdateRequest {
 message MarkerDestructionRequest {
     /** @property marker
         @brief The identifier of the marker to destroy.
-        @see MarkerId
         @todo should be named "id" instead of "marker" (coherence)
     */
-    required MarkerId marker     = 1;
+    required Id       marker     = 1;
     /** @property delete_all
         @brief Flag used to request recursive destruction of any child marker.
         @todo should be named "cascade" or "recursive" instead of
@@ -249,10 +247,9 @@ message ClientObjectCreationRequest {
 message ClientObjectUpdateRequest {
     /** @property object
         @brief The identifier of the client object to update.
-        @see ClientObjectId
         @todo should be named "id" instead of "object" (coherence)
     */
-    required ClientObjectId       object     = 1;
+    required Id                   object     = 1;
     /** @property name
         @brief The new name of the client object.
         @note Only needs to be set if data has changed.
@@ -278,10 +275,9 @@ message ClientObjectUpdateRequest {
 message ClientObjectDestructionRequest {
     /** @property object
         @brief The identifier of the client object to destroy.
-        @see ClientObjectId
         @todo should be named "id" instead of "object" (coherence)
     */
-    required ClientObjectId object = 1;
+    required Id             object = 1;
 }
 
 /** @struct ClientToMessenger

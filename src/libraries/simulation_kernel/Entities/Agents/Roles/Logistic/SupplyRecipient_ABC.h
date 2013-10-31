@@ -19,7 +19,7 @@ class PHY_DotationCategory;
 
 namespace sword
 {
-    class AutomatId;
+    class Id;
 }
 
 namespace logistic
@@ -68,7 +68,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void Serialize( sword::AutomatId& message ) const = 0;
+    virtual void Serialize( sword::Id& message ) const = 0;
 
     template < typename Archive >
     void serialize( Archive&, const unsigned int )

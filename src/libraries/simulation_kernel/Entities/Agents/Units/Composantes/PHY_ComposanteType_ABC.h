@@ -38,7 +38,7 @@ public:
 
     //! @name Accessors
     //@{
-    sword::EquipmentType  GetMosID     () const;
+    sword::Id             GetMosID     () const;
     const PHY_Protection& GetProtection() const;
     const PHY_Volume&     GetVolume    () const;
     const std::string&    GetName      () const;
@@ -52,10 +52,10 @@ public:
     //@}
 
 private:
-    const std::string          strName_;
-    const PHY_Protection*      pProtection_;
-    const PHY_Volume*          pVolume_;
-    sword::EquipmentType nMosID_;
+    const std::string     strName_;
+    const PHY_Protection* pProtection_;
+    const PHY_Volume*     pVolume_;
+    sword::Id             nMosID_;
 };
 
 namespace boost

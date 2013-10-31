@@ -52,7 +52,7 @@ PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 // Name: PHY_ComposanteType_ABC::GetMosID
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-sword::EquipmentType PHY_ComposanteType_ABC::GetMosID() const
+sword::Id PHY_ComposanteType_ABC::GetMosID() const
 {
     return nMosID_;
 }
@@ -96,7 +96,7 @@ void boost::archive::load( MIL_CheckPointInArchive& a, const PHY_ComposanteType_
 {
     int id;
     a >> id;
-    sword::EquipmentType type;
+    sword::Id type;
     type.set_id( id );
     t = PHY_ComposanteTypePion::Find( type );
 }

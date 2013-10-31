@@ -28,7 +28,7 @@ MIL_TirIndirectParameter::MIL_TirIndirectParameter()
 // Name: MIL_TirIndirectParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_TirIndirectParameter::MIL_TirIndirectParameter( const sword::FireId& asn )
+MIL_TirIndirectParameter::MIL_TirIndirectParameter( const sword::Id& asn )
     : data_( asn.id() )
 {
     // NOTHING

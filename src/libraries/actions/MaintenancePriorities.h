@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class LogMaintenancePriorities;
+    class IdList;
 }
 
 namespace kernel
@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MaintenancePriorities( const kernel::OrderParameter& parameter );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const sword::LogMaintenancePriorities& message );
+             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const sword::IdList& message );
              MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
     virtual ~MaintenancePriorities();
     //@}
@@ -53,16 +53,16 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 
+    //! @name Helpers
+    //@{
+    typedef std::vector< const kernel::EquipmentType* > T_Priorities;
+    //@}
+
 private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< const kernel::EquipmentType* > T_Priorities;
     //@}
 
 private:

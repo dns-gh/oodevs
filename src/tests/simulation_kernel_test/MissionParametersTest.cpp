@@ -101,7 +101,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
 {
-    UnitKnowledgeId in;
+    Id in;
     in.set_id( 35 );
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
@@ -134,7 +134,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( TestMIL_ObjectKnowledgeParameter, Fixture )
 {
-    ObjectKnowledgeId in;
+    Id in;
     in.set_id( 56 );
     MockMIL_ObjectType_ABC objectType;
     StubMIL_Object_ABC object( &army, objectType, 56u );
@@ -155,7 +155,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_ObjectKnowledgeParameter, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, Fixture )
 {
-    CrowdKnowledgeId in;
+    Id in;
     in.set_id( 0 );
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
@@ -183,7 +183,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
 {
-    UnitId in;
+    Id in;
     in.set_id( 12 );
     MockMIL_EntityManager_ABC entityManager;
     MissionController controller;
@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter )
 {
-    AutomatId in;
+    Id in;
     in.set_id( 0 );
     MockMIL_EntityManager_ABC entityManager;
     MissionController controller;
@@ -308,7 +308,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter )
                              "</resources>" );
     MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
-    ResourceType in;
+    Id in;
     in.set_id( 42 );
     MIL_DotationTypeParameter param( in );
     MissionParameter_Value out;
@@ -621,7 +621,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_StringParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter )
 {
-    FireId in;
+    Id in;
     in.set_id( 33 );
     MIL_TirIndirectParameter param( in );
     MissionParameter_Value out;

@@ -74,7 +74,7 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 void Formation::CommitTo( sword::MissionParameter& message ) const
 {
-    sword::FormationId* value = message.add_value()->mutable_formation();    // enforce initialisation of parameter to force his type
+    auto* value = message.add_value()->mutable_formation();    // enforce initialisation of parameter to force his type
     if( IsSet() )
         Entity< Formation_ABC >::CommitTo( *value );
 }

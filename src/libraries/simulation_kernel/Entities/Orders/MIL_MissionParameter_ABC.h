@@ -24,15 +24,12 @@ namespace protobuf
 
 namespace sword
 {
-    class AutomatId;
-    class AutomatIdList;
-    class EquipmentType;
-    class FireId;
     class DateTime;
     class Heading;
+    class Id;
+    class IdList;
     class Location;
     class LocationList;
-    class LogMaintenancePriorities;
     class LogMedicalPriorities;
     class MissionObjectiveList;
     class MissionParameter_Value;
@@ -45,15 +42,6 @@ namespace sword
     class Polygon;
     class PolygonList;
     class MsgUnitKnowledge;
-    class ObjectKnowledgeId;
-    class ObjectKnowledgeIdList;
-    class CrowdKnowledgeId;
-    class ResourceType;
-    class UnitId;
-    class UnitIdList;
-    class UnitKnowledgeId;
-    class UnitKnowledgeIdList;
-    class UrbanObjectId;
     class ResourceNetworkElement;
     class ResourceNetworkType;
 }

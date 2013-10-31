@@ -43,7 +43,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( boost::share
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const sword::Id& asn, const DEC_KnowledgeResolver_ABC& resolver,
                                                                     const MIL_EntityManager_ABC& entityManager )
 {
     MIL_Population* pPopulation = entityManager.FindPopulation( asn.id() );

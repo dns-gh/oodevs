@@ -51,23 +51,23 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPolygonList( sword::PolygonList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToAgent( sword::UnitId& ) const
+    virtual bool ToAgent( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentKnowledge( sword::UnitKnowledgeId& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToAgentKnowledgeList( sword::UnitKnowledgeIdList& ) const
+    virtual bool ToAgentKnowledgeList( sword::IdList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToAgentList( sword::UnitIdList& ) const
+    virtual bool ToAgentList( sword::IdList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToAutomat( sword::AutomatId& ) const
+    virtual bool ToAutomat( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToAutomatList( sword::AutomatIdList& ) const
+    virtual bool ToAutomatList( sword::IdList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDirection( sword::Heading& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToDotationType( sword::ResourceType& ) const
+    virtual bool ToDotationType( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToEquipmentType( sword::EquipmentType& ) const
+    virtual bool ToEquipmentType( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGDH( sword::DateTime& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
@@ -75,13 +75,13 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObjectList( sword::PlannedWorkList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToIndirectFire( sword::FireId& ) const
+    virtual bool ToIndirectFire( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocation( sword::Location& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocationList( sword::LocationList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToMaintenancePriorities( sword::LogMaintenancePriorities& ) const
+    virtual bool ToMaintenancePriorities( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToMedicalPriorities( sword::LogMedicalPriorities& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
@@ -93,15 +93,15 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectiveList( sword::MissionObjectiveList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToObjectKnowledge( sword::ObjectKnowledgeId& ) const
+    virtual bool ToObjectKnowledge( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToObjectKnowledgeList( sword::ObjectKnowledgeIdList& ) const
+    virtual bool ToObjectKnowledgeList( sword::IdList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPath( sword::Path& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPathList( sword::PathList& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToPopulationKnowledge( sword::CrowdKnowledgeId& ) const
+    virtual bool ToPopulationKnowledge( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToString( std::string& result ) const
     {
@@ -168,7 +168,7 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToUrbanBlock( sword::UrbanObjectId& ) const
+    virtual bool ToUrbanBlock( sword::Id& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }

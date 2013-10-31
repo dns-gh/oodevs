@@ -129,7 +129,7 @@ void AmmoEffect::ApplyEffect( weather::Meteo& meteo ) const
 // Name: AmmoEffect::SetPerceivers
 // Created: JSR 2013-04-26
 // -----------------------------------------------------------------------------
-void AmmoEffect::SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sword::UnitId >& perceivers )
+void AmmoEffect::SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sword::Id >& perceivers )
 {
     perceivers_.clear();
     for( auto it = perceivers.begin(); it != perceivers.end(); ++it )

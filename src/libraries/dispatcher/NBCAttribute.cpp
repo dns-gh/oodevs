@@ -58,10 +58,7 @@ void NBCAttribute::Send( sword::ObjectAttributes& asn ) const
     sword::ObjectAttributeNBC& nbc = *asn.mutable_nbc();
     nbc.set_danger_level( danger_ );
     nbc.mutable_nbc_agents();
-    for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
-    {
-        sword::NBCAgentType& data = *nbc.add_nbc_agents();
-        data.set_id( *it );
-    }
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
+        nbc.add_nbc_agents()->set_id( *it );
     //asn.mutable_nbc()->CopyFrom( nbc_ );
 }
