@@ -316,7 +316,8 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_ConvexHull", DEC_GeometryFunctions::ComputeConvexHull );
     
     brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
-    brain.RegisterFunction( "DEC_Geometrie_ArePointsOnSameRiverBank", &DEC_TerrainFunctions::ArePointsOnSameRiverBank );
+    brain.RegisterFunction( "DEC_Geometrie_IsLinearRiverInBetween", &DEC_TerrainFunctions::IsLinearRiverInBetween );
+    brain.RegisterFunction( "DEC_Geometrie_IsWaterInBetween", &DEC_TerrainFunctions::IsWaterInBetween );
 }
 
 // -----------------------------------------------------------------------------

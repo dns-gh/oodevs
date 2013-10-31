@@ -78,12 +78,12 @@ void TER_AnalyzerManager::FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AnalyzerManager::FindRiverSegmentIntersections
+// Name: TER_AnalyzerManager::FindSegmentIntersections
 // Created: LDC 2013-10-30
 // -----------------------------------------------------------------------------
-void TER_AnalyzerManager::FindRiverSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
+void TER_AnalyzerManager::FindSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& terrainSought, std::vector< boost::shared_ptr< MT_Vector2D > >& positions )
 {
-    pAnalyzer_->FindRiverSegmentIntersections( from, to, positions );
+    pAnalyzer_->FindSegmentIntersections( from, to, terrainSought, positions );
 }
 
 // -----------------------------------------------------------------------------

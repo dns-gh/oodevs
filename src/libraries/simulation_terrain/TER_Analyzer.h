@@ -41,7 +41,7 @@ public:
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );
     void FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
     void FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
-    void FindRiverSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
+    void FindSegmentIntersections( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& terrainSought, std::vector< boost::shared_ptr< MT_Vector2D > >& positions );
     std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
 
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
