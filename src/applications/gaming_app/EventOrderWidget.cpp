@@ -479,6 +479,28 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
     }
 }
 
+namespace
+{
+    bool ShouldEnableTriggerEvent( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return false;
+        if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+                if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
+                    if( decisions->IsEmbraye() )
+                        return false;
+        }
+        else
+            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+                if( const kernel::AutomatDecisions_ABC* decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
+                    if( !decisions->IsEmbraye() )
+                        return false;
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::Build
 // Created: LGY 2013-08-29
@@ -523,6 +545,7 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     }
     missionCombo_->blockSignals( false );
 
+    bool enableTriggerEvent = ShouldEnableTriggerEvent( target_ );
     QVariant missionVariant = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::ForegroundRole );
     if( missionVariant.isValid() )
     {
@@ -530,8 +553,9 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
         QBrush brush = missionVariant.value< QBrush >();
         palette.setColor( QPalette::Text, brush );
         missionCombo_->setPalette( palette );
-        emit EnableTriggerEvent( brush != disabledColor );
+        enableTriggerEvent = enableTriggerEvent && brush != disabledColor;
     }
+    emit EnableTriggerEvent( enableTriggerEvent );
 }
 
 // -----------------------------------------------------------------------------
