@@ -131,3 +131,8 @@ end
 integration.supplyRequest = function( )
     return DEC_DemandeDeRavitaillement()
 end
+
+-- Returns the HQ of the current TC2 (returns nil if there is no current TC2)
+integration.getHQofTC2 = function( )
+    return DEC_Pion_PcDeTC2()
+end
