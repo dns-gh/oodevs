@@ -60,7 +60,8 @@ class PluginFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model,
+             PluginFactory( const Config& config,
+                 const boost::shared_ptr< Model >& model,
                  const dispatcher::StaticModel& staticModel,
                  SimulationPublisher_ABC& simulation,
                  const boost::shared_ptr< ClientsNetworker >& clients,
@@ -87,7 +88,7 @@ private:
     //! @name Member data
     //@{
     const Config& config_;
-    Model& model_;
+    boost::shared_ptr< Model > model_;
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     boost::shared_ptr< ClientsNetworker > clients_;

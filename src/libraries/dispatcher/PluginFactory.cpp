@@ -40,7 +40,7 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model,
+PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Model >& model,
     const dispatcher::StaticModel& staticModel, SimulationPublisher_ABC& simulation,
     const boost::shared_ptr< ClientsNetworker >& clients, CompositePlugin& handler,
     CompositeRegistrable& registrables, const Services& services, tools::Log& log,
@@ -52,16 +52,21 @@ PluginFactory::PluginFactory( const Config& config, Model& model,
     , clients_     ( clients )
     , handler_     ( handler )
     , registrables_( registrables )
-    , rights_      ( new plugins::rights::RightsPlugin( model_, *clients_,
+    , rights_      ( new plugins::rights::RightsPlugin( *model_, *clients_,
         config_, *clients_, handler_, *clients_, registrables, maxConnections ) )
-    , pOrder_      ( new plugins::order::OrderPlugin( config_, model_, simulation_ ) )
+    , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
 {
+    // Plugins are registered in a precise order:
+    // - DispatcherPlugin forwards to clients
+    // - Model is used by other plugins and also triggers events on Entity_ABC::Update
+    // - SaverPlugin uses the Model
     handler_.Add( rights_ );
     handler_.Add( pOrder_ );
     handler_.Add( boost::make_shared< DispatcherPlugin >(
                 simulation_, *clients_, *rights_, *pOrder_, log ) );
     handler_.Add( clients_ );
+    handler_.AddHandler( model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,11 +97,11 @@ void PluginFactory::Instanciate()
     handler_.Add( boost::make_shared< messenger::MessengerPlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     handler_.Add( boost::make_shared< script::ScriptPlugin >(
-                model_, config_, simulation_, *clients_, *clients_, *rights_, registrables_ ) );
+                *model_, config_, simulation_, *clients_, *clients_, *rights_, registrables_ ) );
     handler_.Add( boost::make_shared< score::ScorePlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
-    handler_.Add( boost::make_shared< logger::LoggerPlugin >( model_, staticModel_, config_, services_ ) );
-    handler_.Add( boost::make_shared< vision::VisionPlugin >( model_, *clients_, simulation_, *rights_ ) );
+    handler_.Add( boost::make_shared< logger::LoggerPlugin >( *model_, staticModel_, config_, services_ ) );
+    handler_.Add( boost::make_shared< vision::VisionPlugin >( *model_, *clients_, simulation_, *rights_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -123,12 +128,12 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
     if( xis.has_attribute( "library" ) )
         LoadPlugin( tools::Path::FromUTF8( name ), xis );
     else if( name == "recorder" )
-        handler_.Add( boost::make_shared< plugins::saver::SaverPlugin >( *clients_, model_, config_ ) );
+        handler_.Add( boost::make_shared< plugins::saver::SaverPlugin >( *clients_, *model_, config_ ) );
     else
     {
         for( auto it = factories_.begin(); it != factories_.end(); ++it )
         {
-            auto plugin = it->Create( name, xis, config_, model_, staticModel_,
+            auto plugin = it->Create( name, xis, config_, *model_, staticModel_,
                     simulation_, *clients_, *clients_ , *clients_, registrables_ );
             if( plugin )
                 handler_.Add( plugin );
@@ -200,7 +205,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( name + "_plugin.log", config_ ) );
         boost::shared_ptr< Plugin_ABC > plugin(
-                createFunction( model_, staticModel_, simulation_, *clients_, config_, *logger, xis ),
+                createFunction( *model_, staticModel_, simulation_, *clients_, config_, *logger, xis ),
                 // Note the lambda holds a reference to the logger
                 [logger, destroyFunction]( dispatcher::Plugin_ABC* p )
                 { 
