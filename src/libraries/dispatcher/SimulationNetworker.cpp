@@ -12,6 +12,7 @@
 #include "ClientsNetworker.h"
 #include "Simulation.h"
 #include "Model.h"
+#include "Plugin_ABC.h"
 #include "Config.h"
 #include "Logger.h"
 #include "protocol/Protocol.h"
@@ -25,12 +26,12 @@ using namespace dispatcher;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients,
-                                          MessageHandler_ABC& handler, const Config& config,
+                                          Plugin_ABC& plugins, const Config& config,
                                           tools::Log& log )
     : ClientNetworker( config.GetNetworkSimulationParameters(), true, config.GetNetworkTimeout() )
     , model_  ( model )
     , clients_( clients )
-    , handler_( handler )
+    , plugins_( plugins )
 {
     RegisterMessage( MakeConstLogger( log, "Dispatcher sent : ", *this, &SimulationNetworker::OnReceiveSimToClient ) );
 }
@@ -53,7 +54,7 @@ void SimulationNetworker::ConnectionSucceeded( const std::string& local, const s
     MT_LOG_INFO_MSG( "Connected from '" << local << "' to '" << remote << "'" );
     ClientNetworker::ConnectionSucceeded( local, remote );
     assert( !simulation_.get() );
-    simulation_.reset( new Simulation( handler_, *this, remote ) );
+    simulation_.reset( new Simulation( plugins_, *this, remote ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +67,7 @@ void SimulationNetworker::ConnectionFailed( const std::string& address, const st
     ClientNetworker::ConnectionFailed( address, error );
     model_.Reset();
     clients_.DenyConnections();
+    plugins_.NotifySimulationLeft();
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +81,7 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
     simulation_.reset();
     model_.Reset();
     clients_.DenyConnections();
+    plugins_.NotifySimulationLeft();
     dispatcher::ConnectionToSimLost msg;
     msg.Send( clients_ );
 }

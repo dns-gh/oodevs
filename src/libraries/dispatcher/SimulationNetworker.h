@@ -27,7 +27,7 @@ namespace dispatcher
 {
     class Model;
     class ClientsNetworker;
-    class MessageHandler_ABC;
+    class Plugin_ABC;
     class Simulation;
     class Config;
 
@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SimulationNetworker( Model& model, ClientsNetworker& clients,
-                                  MessageHandler_ABC& handler, const Config& config,
+                                  Plugin_ABC& plugins, const Config& config,
                                   tools::Log& log );
     virtual ~SimulationNetworker();
     //@}
@@ -72,7 +72,7 @@ private:
 private:
     Model&                      model_;
     ClientsNetworker&           clients_;
-    MessageHandler_ABC&         handler_;
+    Plugin_ABC&                 plugins_;
     std::auto_ptr< Simulation > simulation_;
 };
 

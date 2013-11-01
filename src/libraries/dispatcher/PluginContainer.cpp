@@ -62,6 +62,12 @@ void PluginContainer::NotifyClientLeft( ClientPublisher_ABC& client,
         (*it)->NotifyClientLeft( client, link, uncounted );
 }
 
+void PluginContainer::NotifySimulationLeft()
+{
+    for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
+        (*it)->NotifySimulationLeft();
+}
+
 void PluginContainer::Update()
 {
     for( auto it = plugins_.begin(); it != plugins_.end(); ++it )

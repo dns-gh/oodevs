@@ -59,6 +59,7 @@ public:
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& /*link*/,
                                    bool /*uncounted*/ )
     {}
+    virtual void NotifySimulationLeft() {}
 
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}

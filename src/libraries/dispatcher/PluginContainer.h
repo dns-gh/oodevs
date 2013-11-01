@@ -38,6 +38,7 @@ public:
             const std::string& link, Profile_ABC& profile, bool uncounted );
     virtual void NotifyClientLeft( ClientPublisher_ABC& client,
             const std::string& link, bool uncounted );
+    virtual void NotifySimulationLeft();
 
     virtual void Update();
     virtual void Close();
