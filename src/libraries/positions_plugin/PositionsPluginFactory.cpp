@@ -12,6 +12,7 @@
 #include "dispatcher/Config.h"
 #include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace plugins::positions;
 
@@ -37,19 +38,21 @@ PositionsPluginFactory::~PositionsPluginFactory()
 // Name: PositionsPluginFactory::Create
 // Created: ABR 2011-04-04
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > PositionsPluginFactory::Create( const std::string& name, xml::xistream& xis, const dispatcher::Config& config,
-                                                                        dispatcher::Model_ABC& /*model*/, const kernel::StaticModel& /*staticModel*/,
-                                                                        dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/,
-                                                                        tools::MessageDispatcher_ABC& /*client*/, dispatcher::LinkResolver_ABC& /*resolver*/,
-                                                                        dispatcher::CompositeRegistrable& /*registrables*/ ) const
+boost::shared_ptr< dispatcher::Plugin_ABC > PositionsPluginFactory::Create(
+        const std::string& name, xml::xistream& xis, const dispatcher::Config& config,
+        dispatcher::Model_ABC&, const kernel::StaticModel&,
+        dispatcher::SimulationPublisher_ABC&,
+        dispatcher::ClientPublisher_ABC&, tools::MessageDispatcher_ABC&,
+        dispatcher::LinkResolver_ABC&,
+        dispatcher::CompositeRegistrable&) const
 {
-    std::auto_ptr< dispatcher::Plugin_ABC > result;
+    boost::shared_ptr< dispatcher::Plugin_ABC > result;
     if( name == "position-saver" )
     {
         unsigned int frequency;
         if( !tools::DecodeTime( xis.attribute< std::string >( "frequency" ), frequency ) )
             throw MASA_EXCEPTION( xis.context() + "Invalid time specified for position export frequency" );
-        result.reset( new PositionsPlugin( config.BuildSessionChildFile( "positions.csv" ), frequency ) );
+        result = boost::make_shared< PositionsPlugin >( config.BuildSessionChildFile( "positions.csv" ), frequency );
     }
     return result;
 }

@@ -140,6 +140,12 @@ void RightsPlugin::Logout( ClientPublisher_ABC& client )
             authenticated_.erase( it );
             if( silentClients_.erase( link ) == 0 )
                 --currentConnections_;
+            auto id = clientsID_.find( link );
+            if( id != clientsID_.end() )
+            {
+                ids_.erase( id->second );
+                clientsID_.erase( id );
+            }
             AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
@@ -301,6 +307,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         authenticated_[ link ] = profile;
         clientsID_[ link ] = countID_;
+        ids_[ countID_ ] = link;
         if( keyAuthenticated )
             silentClients_.insert( link );
         else
@@ -308,6 +315,8 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         SendProfiles( sender );
         container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
         ++countID_;
+        if( !countID_ )
+            ++countID_;
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
@@ -407,13 +416,28 @@ Profile_ABC& RightsPlugin::GetProfile( const std::string& link ) const
 // Name: RightsPlugin::GetPublisher
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
+
+namespace
+{
+
+NullClientPublisher nullPublisher;
+
+}  // namespace
+
 ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link ) const
 {
     auto it = authenticated_.find( link );
     if( it != authenticated_.end() )
         return resolver_.GetPublisher( link );
-    static NullClientPublisher publisher;
-    return publisher;
+    return nullPublisher;
+}
+
+ClientPublisher_ABC& RightsPlugin::GetPublisher( unsigned int clientId ) const
+{
+   auto it = ids_.find( clientId );
+   if( it != ids_.end() )
+       return resolver_.GetPublisher( it->second );
+   return nullPublisher;
 }
 
 // -----------------------------------------------------------------------------

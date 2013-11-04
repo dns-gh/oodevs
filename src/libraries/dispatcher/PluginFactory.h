@@ -44,7 +44,7 @@ namespace dispatcher
     class StaticModel;
     class SimulationPublisher_ABC;
     class ClientsNetworker;
-    class CompositePlugin;
+    class PluginContainer;
     class CompositeRegistrable;
     class PluginFactory_ABC;
     class Services;
@@ -60,10 +60,13 @@ class PluginFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, const dispatcher::StaticModel& staticModel,
-                            SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                            CompositePlugin& handler, CompositeRegistrable& registrables,
-                            const Services& services, tools::Log& log, int maxConnections );
+             PluginFactory( const Config& config,
+                 const boost::shared_ptr< Model >& model,
+                 const dispatcher::StaticModel& staticModel,
+                 SimulationPublisher_ABC& simulation,
+                 const boost::shared_ptr< ClientsNetworker >& clients,
+                 PluginContainer& handler, CompositeRegistrable& registrables,
+                 const Services& services, tools::Log& log, int maxConnections );
     virtual ~PluginFactory();
     //@}
 
@@ -85,11 +88,11 @@ private:
     //! @name Member data
     //@{
     const Config& config_;
-    Model& model_;
+    boost::shared_ptr< Model > model_;
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
-    ClientsNetworker& clients_;
-    CompositePlugin& handler_;
+    boost::shared_ptr< ClientsNetworker > clients_;
+    PluginContainer& handler_;
     CompositeRegistrable& registrables_;
     boost::ptr_vector< PluginFactory_ABC > factories_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;

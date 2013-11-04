@@ -10,7 +10,7 @@
 #ifndef __Replayer_h_
 #define __Replayer_h_
 
-#include "CompositePlugin.h"
+#include "PluginContainer.h"
 #include "CompositeRegistrable.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
@@ -75,7 +75,7 @@ private:
     boost::shared_ptr< Model >                         model_;
     dispatcher::CompositeRegistrable                   registrables_;
     boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
-    CompositePlugin                                    handler_;
+    PluginContainer                                    handler_;
     boost::shared_ptr< SimulationDispatcher >          simulation_;
     std::auto_ptr< Loader >                            loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
