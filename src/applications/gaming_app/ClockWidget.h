@@ -53,6 +53,7 @@ private:
     kernel::Controllers& controllers_;
     QLabel* time_;
     QLabel* day_;
+    QLabel* realDateTime_;
     QPushButton* alarmButton_;
     //@}
 };

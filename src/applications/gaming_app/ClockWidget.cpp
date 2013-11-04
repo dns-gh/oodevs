@@ -39,21 +39,36 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     vLayout->setMargin( 0 );
     vLayout->setSpacing( 0 );
     vLayout->setSizeConstraint( QLayout::SetMinimumSize );
-    QFont font;
-    font.setPixelSize( 40 );
-    font.setBold( true );
     const QColor foregroundColor( 173, 230, 255 );
     time_ = new QLabel();
+    QFont font = time_->font();
+    font.setPixelSize( 40 );
+    font.setBold( true );
     time_->setFont( font );
     time_->setPaletteForegroundColor( foregroundColor );
     time_->setText( "00:00:00" );
     time_->setAlignment( Qt::AlignCenter );
+    realDateTime_ = new QLabel();
+    font = realDateTime_->font();
+    font.setPixelSize( 10 );
+    realDateTime_->setFont( font );
+    realDateTime_->setPaletteForegroundColor( foregroundColor );
+    realDateTime_->setAlignment( Qt::AlignCenter );
+
     day_ = new QLabel();
     day_->setFixedHeight( 25 );
     day_->setPaletteForegroundColor( foregroundColor );
     day_->setText( tools::translate( "ClockWidget", "Day 1" ) );
     day_->setAlignment( Qt::AlignCenter );
-    vLayout->addWidget( time_ );
+
+    QVBoxLayout* timeLayout = new QVBoxLayout();
+    timeLayout->setSpacing( 0 );
+    timeLayout->addWidget( time_ );
+    timeLayout->addWidget( realDateTime_ );
+
+    vLayout->addStretch();
+    vLayout->addLayout( timeLayout );
+    vLayout->addStretch();
     vLayout->addWidget( day_ );
 
     mainLayout->addLayout( vLayout );
@@ -109,6 +124,8 @@ void ClockWidget::NotifyUpdated( const Simulation& simulation )
 {
     day_ ->setText( simulation.GetDateAsString() );
     time_->setText( simulation.GetTimeAsString() );
+    if( GetCurrentMode() == eModes_Replay )
+        realDateTime_->setText( QString( "%1 - %2" ).arg( simulation.GetRealDateAsString() ).arg( simulation.GetRealTimeAsString() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,4 +136,5 @@ void ClockWidget::NotifyModeChanged( E_Modes newMode )
 {
     kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
     alarmButton_->setVisible( newMode != eModes_Replay );
+    realDateTime_->setVisible( newMode == eModes_Replay );
 }

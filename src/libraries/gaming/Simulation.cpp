@@ -16,13 +16,11 @@
 #include "Network.h"
 #include "protocol/ReplaySenders.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Controller& controller )
+Simulation::Simulation( kernel::Controller& controller )
     : controller_ ( controller )
     , tickDuration_( 10 )
     , timeFactor_  ( 1 )
@@ -109,7 +107,7 @@ void Simulation::Update( const sword::ControlInformation& message )
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
-    date_         = message.date_time().data();
+    simDate_      = message.date_time().data();
     controller_.Update( *this );
 }
 
@@ -126,7 +124,9 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
-    date_         = message.date_time().data();
+    simDate_      = message.date_time().data();
+    if( message.has_real_date_time() )
+        realDate_ = message.real_date_time().data();
     if( message.has_first_tick() )
         firstTick_ = message.first_tick();
     controller_.Update( *this );
@@ -148,7 +148,9 @@ void Simulation::Update( const sword::ControlProfilingInformation& message )
 void Simulation::Update( const sword::ControlBeginTick& message )
 {
     currentTick_ = message.current_tick();
-    date_ = message.date_time().data();
+    simDate_ = message.date_time().data();
+    if( message.has_real_date_time() )
+        realDate_  = message.real_date_time().data();
     profiling_.Tick();
     MT_LOG_INFO_MSG( MT_FormatString( "**** End tick %d %.2fms - %.3f MB / %.3f MB (VM)",
         currentTick_,
@@ -325,13 +327,30 @@ float Simulation::GetActualSpeed() const
     return std::floor( tickDuration_ / profiling_.ActualTickDuration() + 0.5f );
 }
 
+namespace
+{
+    QString GetTimeAsString( const QDateTime& dateTime )
+    {
+        if( dateTime.isValid() )
+            return dateTime.time().toString();
+        return QString();
+    }
+
+    QString GetDateAsString( const QDateTime& dateTime )
+    {
+        if( dateTime.isValid() )
+            return QLocale().toString( dateTime.date(), QLocale::LongFormat );
+        return QString();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Simulation::GetTimeAsString
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
 QString Simulation::GetTimeAsString() const
 {
-    return GetDateTime().time().toString();
+    return ::GetTimeAsString( GetDateTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +359,7 @@ QString Simulation::GetTimeAsString() const
 // -----------------------------------------------------------------------------
 QString Simulation::GetDateAsString() const
 {
-    return QLocale().toString( GetDateTime().date(), QLocale::LongFormat );
+    return ::GetDateAsString( GetDateTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +368,34 @@ QString Simulation::GetDateAsString() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetDateTime() const
 {
-    return tools::IsoStringToQTime( date_ );
+    return tools::IsoStringToQTime( simDate_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetRealDateTime
+// Created: JSR 2013-10-31
+// -----------------------------------------------------------------------------
+QDateTime Simulation::GetRealDateTime() const
+{
+    return tools::IsoStringToQTime( realDate_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetRealTimeAsString
+// Created: JSR 2013-10-31
+// -----------------------------------------------------------------------------
+QString Simulation::GetRealTimeAsString() const
+{
+    return ::GetTimeAsString( GetRealDateTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetRealDateAsString
+// Created: JSR 2013-10-31
+// -----------------------------------------------------------------------------
+QString Simulation::GetRealDateAsString() const
+{
+    return ::GetDateAsString( GetRealDateTime() );
 }
 
 // -----------------------------------------------------------------------------
