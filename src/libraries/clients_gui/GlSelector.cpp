@@ -31,13 +31,14 @@ using namespace kernel;
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
+GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger )
     : QStackedWidget( parent )
     , proxy_            ( proxy )
     , controllers_      ( controllers )
     , config_           ( config )
     , map_              ( map )
     , strategy_         ( strategy )
+    , logger_           ( logger )
     , iconLayout_       ( new IconLayout() )
     , widget2d_         ( 0 )
     , widget3d_         ( 0 )
@@ -102,9 +103,9 @@ void GlSelector::AddLayer( Layer& layer )
 {
     proxy_.Register( layer );
     if( widget2d_ )
-        layer.RegisterIn( *widget2d_ );
+        layer.RegisterIn( *widget2d_, logger_ );
     if( widget3d_ )
-        layer.RegisterIn( *widget3d_ );
+        layer.RegisterIn( *widget3d_, logger_ );
 }
 
 // -----------------------------------------------------------------------------

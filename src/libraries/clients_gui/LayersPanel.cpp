@@ -140,14 +140,13 @@ namespace
 void LayersPanel::AddLayer( const QString& name, Layer& layer, bool dynamic /* = false */ )
 {
     CreateItem( "  " + name, layer, *layersModel_ );
-
     if( dynamic )
         dynamicLayers_.push_back( &layer );
     layers_       .push_back( &layer );
     currentLayers_.push_back( &layer );
     newLayers_    .push_back( &layer );
-    current_.push_back( 1 );
-    new_    .push_back( 1 );
+    current_.push_back( layer.GetAlpha() );
+    new_    .push_back( layer.GetAlpha() );
     names_  .push_back( name );
 }
 

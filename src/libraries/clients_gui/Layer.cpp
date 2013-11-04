@@ -78,20 +78,20 @@ void Layer::Paint( Viewport_ABC& )
 // Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer::RegisterIn( Gl3dWidget& widget )
+void Layer::RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger )
 {
-    currentProxy_  = new MapLayerProxy( *this );
-    widget.Register( static_cast< gui::Layer& >( *currentProxy_ ) );
+    currentProxy_ = new MapLayerProxy( *this, logger );
+    widget.Register( *currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer::RegisterIn( GlWidget& widget )
+void Layer::RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger )
 {
     currentWidget_ = &widget;
-    currentProxy_  = new MapLayerProxy( *this );
+    currentProxy_ = new MapLayerProxy( *this, logger );
     widget.Register( *currentProxy_ );
 }
 
@@ -101,7 +101,7 @@ void Layer::RegisterIn( GlWidget& widget )
 // -----------------------------------------------------------------------------
 void Layer::UnregisterIn( Gl3dWidget& widget )
 {
-    widget.Unregister( static_cast< gui::Layer& >( *currentProxy_ ) );
+    widget.Unregister( *currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void Layer::UnregisterIn( GlWidget& widget )
 void Layer::Reset2d()
 {
     currentWidget_ = 0;
-    currentProxy_   = 0;
+    currentProxy_ = 0;
 }
 
 // -----------------------------------------------------------------------------

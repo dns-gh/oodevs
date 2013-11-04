@@ -22,8 +22,9 @@ using namespace gui;
 // Name: GlProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-GlProxy::GlProxy()
-    : view_        ( 0 )
+GlProxy::GlProxy( kernel::Logger_ABC& logger )
+    : logger_      ( logger )
+    , view_        ( 0 )
     , tools_       ( 0 )
     , tooltipLayer_( 0 )
 {
@@ -97,7 +98,7 @@ void GlProxy::ChangeTo( GlWidget* newWidget )
 void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->RegisterIn( *newWidget );
+        (*it)->RegisterIn( *newWidget, logger_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +108,7 @@ void GlProxy::RegisterTo( Gl3dWidget* newWidget )
 void GlProxy::RegisterTo( GlWidget* newWidget )
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        (*it)->RegisterIn( *newWidget );
+        (*it)->RegisterIn( *newWidget, logger_ );
 }
 
 // -----------------------------------------------------------------------------

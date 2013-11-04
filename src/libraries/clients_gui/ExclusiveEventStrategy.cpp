@@ -18,9 +18,8 @@ using namespace gui;
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
 ExclusiveEventStrategy::ExclusiveEventStrategy( EventStrategy_ABC& forward )
-    : forward_     ( forward )
-    , layer_       ( 0 )
-    , layerTerrain_( 0 )
+    : forward_( forward )
+    , layer_  ( 0 )
 {
     // NOTHING
 }
@@ -32,15 +31,6 @@ ExclusiveEventStrategy::ExclusiveEventStrategy( EventStrategy_ABC& forward )
 ExclusiveEventStrategy::~ExclusiveEventStrategy()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExclusiveEventStrategy::AddTerrainLayer
-// Created: ABR 2012-04-20
-// -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::AddTerrainLayer( Layer_ABC& layer )
-{
-    layerTerrain_ = &layer;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,11 +115,7 @@ void ExclusiveEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const g
 void ExclusiveEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
     if( layer_ )
-    {
         layer_->HandleMouseMove( mouse, point );
-        if( layerTerrain_ )
-            layerTerrain_->HandleMouseMove( mouse, point );
-    }
     else
         forward_.HandleMouseMove( mouse, point );
 }

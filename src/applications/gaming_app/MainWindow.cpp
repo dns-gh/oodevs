@@ -96,6 +96,7 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
+#include "clients_gui/MapnikLayer.h"
 #include "clients_gui/RasterProcess.h"
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/RichItemFactory.h"
@@ -141,7 +142,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , config_          ( config )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
-    , glProxy_         ( new gui::GlProxy() )
+    , glProxy_         ( new gui::GlProxy( logger ) )
     , connected_       ( false )
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
@@ -166,7 +167,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget
-    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, logger ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
@@ -287,6 +288,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer& mapnik               = *new gui::MapnikLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
@@ -311,6 +313,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( defaultLayer );
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
     AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
+    AddLayer( mapnik, "main,composition,miniviews", tr( "Mapnik" ) );
     AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
     AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );

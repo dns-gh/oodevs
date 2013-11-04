@@ -21,6 +21,7 @@ namespace kernel
 {
     class Controllers;
     class DetectionMap;
+    class Logger_ABC;
 }
 
 class MapLayer_ABC;
@@ -53,7 +54,7 @@ class GlSelector : public QStackedWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
+             GlSelector( QWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy, kernel::Logger_ABC& logger );
     virtual ~GlSelector();
     //@}
 
@@ -99,6 +100,7 @@ private:
     const tools::ExerciseConfig& config_;
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
+    kernel::Logger_ABC& logger_;
 
     std::auto_ptr< IconLayout > iconLayout_;
     std::auto_ptr< MapLayer_ABC >    moveLayer_;

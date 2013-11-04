@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class GraphicalEntity_ABC;
+    class Logger_ABC;
 }
 
 namespace gui
@@ -55,8 +56,8 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( Viewport_ABC& viewport );
 
-    virtual void RegisterIn( Gl3dWidget& widget );
-    virtual void RegisterIn( GlWidget& widget );
+    virtual void RegisterIn( Gl3dWidget& widget, kernel::Logger_ABC& logger );
+    virtual void RegisterIn( GlWidget& widget, kernel::Logger_ABC& logger );
 
     virtual void UnregisterIn( Gl3dWidget& widget );
     virtual void UnregisterIn( GlWidget& widget );
@@ -112,7 +113,7 @@ private:
     //! @name Member data
     //@{
     GlWidget*     currentWidget_;
-    Layer_ABC*    currentProxy_;
+    Layer*        currentProxy_;
     float         alpha_;
     std::string   passes_;
     bool          enabled_;

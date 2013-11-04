@@ -26,7 +26,6 @@ namespace gui
 {
     class IconLayout;
     class GlRenderPass_ABC;
-    class TextureRenderPass;
     class PickingSelector;
 
 // =============================================================================
