@@ -750,11 +750,13 @@
                                    gdal19.dll,
                                    geos.dll,
                                    geos_c.dll,
+                                   icudt52.dll,
+                                   icuuc52.dll,
                                    libeay32.dll,
                                    libexpat.dll,
                                    libiconv.dll,
                                    libpq.dll,
-                                   libpng.dll,
+                                   libpng16.dll,
                                    mapnik.dll,
                                    phonon4.dll,
                                    proj.dll,
@@ -899,6 +901,7 @@
         <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
         <update name="icu"/>
+        <update name="libpng"/>
         <update name="mapnik"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
