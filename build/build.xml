@@ -776,7 +776,8 @@
                                    zlib1.dll,
                                    phonon_backend/*.dll,
                                    imageformats/*.dll,
-                                   mapnik/**/*.*"/>
+                                   mapnik/fonts/*.ttf,
+                                   mapnik/input/shape.input"/>
                 <fileset dir="${run.dir}" includes="resources/**"/>
             </zip>
             <check-depends file="@{file}"/>
