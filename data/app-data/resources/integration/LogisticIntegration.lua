@@ -136,3 +136,20 @@ end
 integration.getHQofTC2 = function( )
     return DEC_Pion_PcDeTC2()
 end
+
+-- Returns the knowledge of the HQ of the current TC2 (returns nil if there is no current TC2)
+integration.getHQknowledgeOfTC2 = function( )
+    local tc2 = DEC_Pion_PcDeTC2()
+    if tc2 then
+        return CreateKnowledge( integration.ontology.types.agent, tc2 )
+    end
+    return nil
+end
+
+-- Changes the value of a dotation type for the agent 
+-- with respect to a capacity factor
+-- @param dotationType : integer, the type of dotation (e.g. eDotation_Fuel)
+-- @param capacityFactor : float, the proportion (over the total capacity) of dotation that will be set
+integration.changeDotationValue = function( dotationType, capacityFactor )
+    DEC_ChangeValeurDotations2( dotationType, capacityFactor )
+end

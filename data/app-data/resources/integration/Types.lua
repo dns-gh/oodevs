@@ -325,3 +325,12 @@ eAmbianceMission_None = 2
 -- firing type enumeration
 eDirectFires = 0
 eIndirectFires = 1
+
+-- Dotation type
+eDotation_Ammunition = 0
+eDotation_Fuel = 1
+eDotation_Explosives = 2
+eDotation_Mine = 3
+eDotation_BarbedWire = 4
+eDotation_Piece = 5
+eDotation_Ration = 6
