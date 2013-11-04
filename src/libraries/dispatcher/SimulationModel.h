@@ -63,6 +63,7 @@ private:
    unsigned int nCurrentTick_;
    std::string initialDate_;
    std::string date_;
+   std::string realDate_;
    unsigned int nTickDuration_;
    unsigned int nTimeFactor_;
    unsigned int nCheckpointFrequency_;

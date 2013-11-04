@@ -137,8 +137,8 @@ SaverFacade::~SaverFacade()
 // -----------------------------------------------------------------------------
 void SaverFacade::Receive( const sword::SimToClient& wrapper )
 {
-    if( wrapper.message().has_control_begin_tick())
-        StartFrame( wrapper, wrapper.message().control_begin_tick().date_time().data() );
+    if( wrapper.message().has_control_begin_tick() )
+        StartFrame( wrapper );
     else if( wrapper.message().has_control_end_tick() )
         EndFrame( wrapper );
     else if( wrapper.message().has_control_checkpoint_save_end() )
@@ -168,7 +168,7 @@ void SaverFacade::Receive( const sword::SimToClient& wrapper )
 // Name: SaverFacade::StartFrame
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void SaverFacade::StartFrame( const sword::SimToClient& message, const std::string& dateTime )
+void SaverFacade::StartFrame( const sword::SimToClient& message )
 {
     if( firstTick_ && config_.HasCheckpoint() )
         firstTick_ = false;
@@ -183,7 +183,7 @@ void SaverFacade::StartFrame( const sword::SimToClient& message, const std::stri
         keyFrameIndex_ = 0;
     if( keyFrameIndex_ == 0 )
         saver_->SaveKeyFrame( ModelMessage( model_, encodingBuffer_, firstTick_ ) );
-    saver_->StartFrame( Message( SerializeToString( message, encodingBuffer_ ) ), dateTime );
+    saver_->StartFrame( Message( SerializeToString( message, encodingBuffer_ ) ), message );
     ++fragmentIndex_;
     ++keyFrameIndex_;
     firstTick_ = false;

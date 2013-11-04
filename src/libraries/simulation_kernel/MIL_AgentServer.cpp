@@ -309,6 +309,8 @@ void MIL_AgentServer::SendMsgBeginTick() const
     client::ControlBeginTick msgBeginTick;
     msgBeginTick().set_current_tick( GetCurrentTimeStep() );
     NET_ASN_Tools::WriteGDH( nRealTime_, *msgBeginTick().mutable_date_time() );
+    const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
+    msgBeginTick().mutable_real_date_time()->set_data( localTime );
     msgBeginTick.Send( NET_Publisher_ABC::Publisher() );
 }
 

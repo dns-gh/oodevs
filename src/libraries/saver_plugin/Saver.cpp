@@ -148,10 +148,16 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
 // Name: Saver::StartFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Saver::StartFrame( const Savable_ABC& message, const std::string& dateTime )
+void Saver::StartFrame( const Savable_ABC& message, const sword::SimToClient& msg )
 {
     SaveUpdateMessage( message );
-    realTime_ = dateTime;
+    if( msg.message().has_control_begin_tick() )
+    {
+        const sword::ControlBeginTick& beginTickMsg = msg.message().control_begin_tick();
+        simTime_ = beginTickMsg.date_time().data();
+        if( beginTickMsg.has_real_date_time() )
+            realTime_ = beginTickMsg.real_date_time().data();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +290,6 @@ void Saver::GenerateInfoFile() const
     const tools::Path currentDirectory = recorderDirectory_ / currentFolderName_;
     try
     {
-        const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
         tools::Ofstream info;
         info.open( currentDirectory / "info", std::ios_base::binary | std::ios_base::in | std::ios_base::ate );
         tools::OutputBinaryWrapper wrapper( info );
@@ -292,8 +297,8 @@ void Saver::GenerateInfoFile() const
         wrapper << fragmentFirstFrame_;
         wrapper << std::max( fragmentFirstFrame_, frameCount_ - 1 );
         info.seekp( 0, std::ios_base::end );
+        wrapper << simTime_;
         wrapper << realTime_;
-        wrapper << localTime;
         info.close();
     }
     catch( const std::exception& e )

@@ -38,6 +38,8 @@ message ControlReplayInformation {
     required int32               tick_count        = 7;
     //! The first tick recorded
     optional int32               first_tick        = 8;
+    //! The real current date and time
+    optional DateTime            real_date_time    = 9;
 }
 
 /** @struct ControlSkipToTickAck
