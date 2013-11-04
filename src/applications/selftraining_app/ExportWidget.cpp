@@ -322,6 +322,7 @@ void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QMod
         frontend::BuildExerciseFeatures( exercise, config_, exerciseContentModel_ );
         frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
         exerciseContent_->expandAll();
+        exerciseContent_->resizeColumnToContents( 0 );
     }
     OnButtonChanged();
 }
