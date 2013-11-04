@@ -314,7 +314,9 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
             ++currentConnections_;
         SendProfiles( sender );
         container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, keyAuthenticated );
-        while( !++countID_ );
+        ++countID_;
+        if( !countID_ )
+            ++countID_;
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
