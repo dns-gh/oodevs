@@ -398,6 +398,11 @@
             <span class="well session {{{status}}}"></span>
             <div class="session_name">
                 {{name}}
+                {{#if last_error}}
+                <span>
+                    <a class="btn error-btn"><i class="icon-exclamation"/></a>
+                </span>
+                {{/if}}
                 <span> :{{port}} </span>
                 <span> {{status}} </span>
             </div>

@@ -239,6 +239,7 @@ private:
     T_Clients clients_;
     std::string start_time_;
     std::string current_time_;
+    std::string last_error_;
     web::session::Config cfg_;
     T_Checkpoints checkpoints_;
     bool first_time_;

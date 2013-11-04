@@ -13,6 +13,7 @@
 #include "NodeController_ABC.h"
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
+#include "Error.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
@@ -241,6 +242,7 @@ Session::Session( const SessionDependencies& deps,
     , clients_     ()
     , start_time_  ()
     , current_time_()
+    , last_error_  ( Get< std::string >( tree, "last_error" ) )
     , checkpoints_ ()
     , first_time_  ( Get< bool >( tree, "first_time" ) )
     , replays_     ()
@@ -399,6 +401,7 @@ Tree Session::GetProperties( bool save ) const
     WriteConfig( tree, cfg_ );
     tree.put( "status", ConvertStatus( status_ ) );
     tree.put( "first_time", first_time_ );
+    tree.put( "last_error", last_error_ );
     if( IsReplay() )
         tree.put( "replay.root", replay_ );
     if( save )
@@ -581,6 +584,7 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
     {
         boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
         status_ = GetIdleStatus( IsReplay() );
+        last_error_ = GetLastError( deps_.fs, GetOutput() );
         copy.swap( process_ );
         if( timeline_ )
             timeline_->Kill();
