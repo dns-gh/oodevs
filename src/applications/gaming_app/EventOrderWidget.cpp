@@ -39,6 +39,11 @@
 #include <timeline/api.h>
 #include <boost/make_shared.hpp>
 
+namespace
+{
+    const QBrush disabledColor = Qt::darkGray;
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget constructor
 // Created: ABR 2013-05-30
@@ -97,12 +102,12 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     mainLayout_->setSpacing( 5 );
     mainLayout_->addLayout( targetLayout );
     mainLayout_->addLayout( topLayout );
-    mainLayout_->addWidget( missionInterface_, 1 );
+    mainLayout_->addWidget( missionInterface_.get(), 1 );
 
     controllers_.Register( *this );
 
     // Connections
-    connect( missionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
+    connect( missionInterface_.get(), SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +147,7 @@ void EventOrderWidget::Purge()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Reset()
 {
-    selectedEntity_ = 0;
-    SetTarget( 0 );
+    missionInterface_->Rebuild( interfaceBuilder_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,6 +314,15 @@ void EventOrderWidget::OnMissionChanged( int /*value*/ )
             manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
         else
             manager_->Select( type, missionCombo_->currentText().toStdString(), 0 );
+        QVariant missionVariant = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::ForegroundRole );
+        if( missionVariant.isValid() )
+        {
+            QPalette palette = missionCombo_->palette();
+            QBrush brush = missionVariant.value< QBrush >();
+            palette.setColor( QPalette::Text, brush );
+            missionCombo_->setPalette( palette );
+            emit EnableTriggerEvent( brush != disabledColor );
+        }
     }
 }
 
@@ -456,8 +469,8 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
 // Created: LGY 2013-08-29
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                             const std::vector< std::string >& missions, const std::string& currentMission,
-                             bool invalid  )
+                              const std::vector< std::string >& missions, const std::string& currentMission,
+                              const std::vector< std::string >& disabledMissions, bool invalid )
 {
     missionTypeCombo_->blockSignals( true );
     // CLEAR
@@ -475,10 +488,16 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     missionCombo_->clear();
     // FILL
     for( auto it = missions.begin(); it != missions.end(); ++it )
-        missionCombo_->addItem( (*it).c_str() );
+    {
+        const std::string& name = *it;
+        missionCombo_->addItem( name.c_str() );
+        QBrush missionColor = std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
+            ? Qt::black
+            : disabledColor;
+        missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
+    }
     // SELECT
-    missionCombo_->setCurrentIndex( missionCombo_->findText(
-        QString::fromStdString( currentMission ) ) );
+    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
     // Disable invalid mission
     if( invalid )
     {

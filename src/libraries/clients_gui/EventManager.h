@@ -63,12 +63,10 @@ public:
     void Select( E_MissionType type, const std::string& mission );
     void Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action );
     void Select( const Decisions_ABC& decisions );
-    void Select( const Decisions_ABC& decisions, E_MissionType type ); // useless
+    void Select( const Decisions_ABC& decisions, E_MissionType type );
     void Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
     void Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
                  const actions::Action_ABC* action );
-    void Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
-                 E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action );
 
     void Publish( actions::ActionsModel& model, timeline::Event* event, bool planned ) const;
     void SetPlanningMode( bool value );
@@ -77,6 +75,8 @@ public:
 private:
     //! @name Operations
     //@{
+    void Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
+                 E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action );
     void Build( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
     //@}
 
