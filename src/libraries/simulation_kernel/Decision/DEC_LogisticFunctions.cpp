@@ -458,9 +458,11 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerA
 // Name: DEC_LogisticFunctions::EnforceAviationResources
 // Created: JSR 2013-10-21
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::EnforceAviationResources( MIL_Agent_ABC& callerAgent, int aviationRange )
+void DEC_LogisticFunctions::EnforceAviationResources( DEC_Decision_ABC* callerAgent, int aviationRange )
 {
-    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().EnforceAviationResources( static_cast< E_AviationRange >( aviationRange ) );
+    if( !callerAgent )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().EnforceAviationResources( static_cast< E_AviationRange >( aviationRange ) );
 }
 
 // -----------------------------------------------------------------------------
