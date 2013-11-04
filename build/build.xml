@@ -775,7 +775,8 @@
                                    xerces-c_3_1.dll,
                                    zlib1.dll,
                                    phonon_backend/*.dll,
-                                   imageformats/*.dll"/>
+                                   imageformats/*.dll,
+                                   mapnik/**/*.*"/>
                 <fileset dir="${run.dir}" includes="resources/**"/>
             </zip>
             <check-depends file="@{file}"/>
