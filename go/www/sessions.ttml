@@ -56,6 +56,31 @@
 {{/each_pair}}
 [[ template "input_checkbox" sub "id" "no_side_object_creation" "label" "Create objects without sides" "value" "{{#bool sides.no_side_objects}} checked=\"checked\"{{/bool}}" ]]
 [[ end ]]
+<!-- access settings -->
+[[ define "access_session_settings" ]]
+<div class="control-group">
+    <label class="control-label">Owner</label>
+    <div class="controls">
+        <span class="uneditable-input read_only">{{owner.name}}</span>
+    </div>
+</div>
+[[ template "input_checkbox" sub "id" "access_restricted" "label" "Limit to authorized users only" "value" "{{#bool authorized_users.enabled}} checked=\"checked\"{{/bool}}" ]]
+<div class="control-group user_group">
+    <label class="control-label">Users</label>
+    <div class="controls">
+        <select id="user_selected">
+{{#each_pair users}}
+            <option value="{{value.id}}">{{value.username}}</option>
+{{/each_pair}}
+        </select>
+    <a class="btn user_select"><i class="icon-plus"></i> Add</a>
+        <table class="table table-striped user_table">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+[[ end ]]
 <!-- logs settings -->
 [[ define "logs_session_settings" ]]
 [[ template "input_checkbox" sub "id" "logs_rotate" "label" "Rotate Logs" "value" "{{#bool logs.rotate}} checked=\"checked\"{{/bool}}" ]]
@@ -159,6 +184,7 @@
                             {{#unless is_default}}
                             <li><a href="#tab_orbat" data-toggle="tab"> Orbat </a></li>
                             {{/unless}}
+                            <li><a href="#tab_access" data-toggle="tab"> Access </a></li>
                             <li><a href="#tab_logs" data-toggle="tab"> Logs </a></li>
                             <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                             {{#if ui_plugins}}
@@ -175,6 +201,7 @@
                             <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_orbat"> [[ template "orbat_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_access"> [[ template "access_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_logs"> [[ template "logs_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
                             {{#if ui_plugins}}
@@ -479,4 +506,13 @@
             [[ template "input_checkbox" sub "id" "redirect_{{id}}" "label" "Remember my choice" ]]
         </form>
     </div>
+</script>
+<!-- User selected Template -->
+<script type="text/template" id="user_selected_template">
+    <td>{{username}}</td>
+    <td class="action">
+        <div class="btn-group">
+            <a class="btn delete"><i class="icon-trash"></i> </a>
+        </div>
+    </td>
 </script>

@@ -623,10 +623,10 @@ void Controller::DownloadInstall( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_PLAYER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 100 );
-    WriteHttpReply( rpy, agent_.ListSessions( node, offset, limit ) );
+    WriteHttpReply( rpy, agent_.ListSessions( user, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -635,8 +635,8 @@ void Controller::ListSessions( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
-    WriteHttpReply( rpy, agent_.CountSessions( node ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_PLAYER, "node" );
+    WriteHttpReply( rpy, agent_.CountSessions( user ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -645,8 +645,8 @@ void Controller::CountSessions( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "node" );
-    WriteHttpReply( rpy, agent_.GetSession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_PLAYER, "node" );
+    WriteHttpReply( rpy, agent_.GetSession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -655,15 +655,15 @@ void Controller::GetSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::CreateSession( Reply_ABC& rpy, Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    if( node.is_nil() )
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    if( user.node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
-    const Tree tree = request.ParseBodyAsJson();
-    const std::string exercise = RequireParameter< std::string >( "exercise", tree );
+    const Tree body = request.ParseBodyAsJson();
+    const std::string exercise = RequireParameter< std::string >( "exercise", body );
     session::Config cfg;
-    session::ReadConfig( cfg, plugins_, tree );
-    LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << cfg.name << " exercise: " << exercise;
-    WriteHttpReply( rpy, agent_.CreateSession( node, cfg, exercise ) );
+    session::ReadConfig( cfg, plugins_, body );
+    LOG_INFO( log_ ) << "[web] /create_session node: " << user.node << " name: " << cfg.name << " exercise: " << exercise << " owner: " << user.id;
+    WriteHttpReply( rpy, agent_.CreateSession( user, cfg, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -672,10 +672,10 @@ void Controller::CreateSession( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DeleteSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
     const Uuid id = GetId( request );
     LOG_INFO( log_ ) << "[web] /delete_session id: " << id;
-    WriteHttpReply( rpy, agent_.DeleteSession( node, id ) );
+    WriteHttpReply( rpy, agent_.DeleteSession( user, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -684,9 +684,9 @@ void Controller::DeleteSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::StartSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
     const std::string checkpoint = GetParameter( "checkpoint", request, std::string() );
-    WriteHttpReply( rpy, agent_.StartSession( node, GetId( request ), checkpoint ) );
+    WriteHttpReply( rpy, agent_.StartSession( user, GetId( request ), checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -695,8 +695,8 @@ void Controller::StartSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::StopSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.StopSession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.StopSession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -705,8 +705,8 @@ void Controller::StopSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::PauseSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.PauseSession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.PauseSession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -715,10 +715,10 @@ void Controller::PauseSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::UpdateSession( Reply_ABC& rpy, Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
     const Tree tree = request.ParseBodyAsJson();
     const Uuid id = RequireParameter< Uuid >( "id", tree );
-    WriteHttpReply( rpy, agent_.UpdateSession( node, id, tree ) );
+    WriteHttpReply( rpy, agent_.UpdateSession( user, id, tree ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -727,8 +727,8 @@ void Controller::UpdateSession( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ArchiveSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.ArchiveSession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.ArchiveSession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -737,8 +737,8 @@ void Controller::ArchiveSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::RestoreSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.RestoreSession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.RestoreSession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -747,9 +747,9 @@ void Controller::RestoreSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DownloadSession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    agent_.DownloadSession( node, GetId( request ), *chunker );
+    agent_.DownloadSession( user, GetId( request ), *chunker );
 }
 
 // -----------------------------------------------------------------------------
@@ -758,8 +758,8 @@ void Controller::DownloadSession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ReplaySession( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    WriteHttpReply( rpy, agent_.ReplaySession( node, GetId( request ) ) );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    WriteHttpReply( rpy, agent_.ReplaySession( user, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -768,15 +768,15 @@ void Controller::ReplaySession( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
-    const boost::optional< std::string > encoding = request.GetHeader( "Accept-Encoding" );
+    const auto user = AuthenticateUser( request, USER_TYPE_USER, "node" );
+    const auto encoding = request.GetHeader( "Accept-Encoding" );
     bool deflate = encoding && encoding->find( "deflate" ) != std::string::npos;
     if( deflate )
         rpy.SetHeader( "Content-Encoding", "deflate" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
     const std::string logFile = RequireParameter< std::string >( "logfile", request );
     const int limitSize = GetParameter( "limitsize", request, 0 );
-    agent_.DownloadSessionLog( node, GetId( request ), *chunker, logFile, limitSize, deflate );
+    agent_.DownloadSessionLog( user, GetId( request ), *chunker, logFile, limitSize, deflate );
 }
 
 // -----------------------------------------------------------------------------
@@ -912,7 +912,7 @@ void Controller::UserUpdateLogin( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::ListUsers( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit = GetParameter( "limit", request, 100 );
     WriteHttpReply( rpy, users_.ListUsers( node, offset, limit ) );
@@ -924,7 +924,7 @@ void Controller::ListUsers( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::CountUsers( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     WriteHttpReply( rpy, users_.CountUsers( node ) );
 }
 
@@ -934,7 +934,7 @@ void Controller::CountUsers( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetUser( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const int id = RequireParameter< int >( "id", request );
     WriteHttpReply( rpy, users_.GetUser( node, id ) );
 }
@@ -979,9 +979,11 @@ void Controller::CreateUser( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::DeleteUser( Reply_ABC& rpy, const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const auto user = AuthenticateUser( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
-    WriteHttpReply( rpy, users_.DeleteUser( node, request.GetSid(), id ) );
+    const auto tree = users_.DeleteUser( user.node, request.GetSid(), id );
+    agent_.DeleteUser( user, id );
+    WriteHttpReply( rpy, tree );
 }
 
 // -----------------------------------------------------------------------------
@@ -1061,21 +1063,21 @@ Uuid MaybeUuid( const boost::optional< std::string >& opt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::Authenticate
-// Created: BAX 2012-07-23
+// Name: Controller::AuthenticateUser
+// Created: LGY 2014-04-04
 // -----------------------------------------------------------------------------
-web::Uuid Controller::AuthenticateNode( const Request_ABC& request, UserType required, const std::string& key )
+User Controller::AuthenticateUser( const Request_ABC& request, UserType required, const std::string& key )
 {
     const boost::optional< std::string > optional = request.GetParameter( key );
     if( !secure_ )
-        return MaybeUuid( optional );
+        return User( 0, "", USER_TYPE_ADMINISTRATOR, MaybeUuid( optional ) );
 
-    const Tree user = users_.IsAuthenticated( request.GetSid() );
-    const UserType type = ValidateType( user, required );
-    if( type == USER_TYPE_ADMINISTRATOR )
-        return MaybeUuid( optional );
+    const Tree tree = users_.IsAuthenticated( request.GetSid() );
+    const User user( tree.get< int >( "id" ), tree.get< std::string >( "name" ), ValidateType( tree, required ), MaybeUuid( optional ) );
+    if( user.type == USER_TYPE_ADMINISTRATOR )
+        return user;
 
-    const boost::optional< std::string > implicit = user.get_optional< std::string >( "node" );
+    const boost::optional< std::string > implicit = tree.get_optional< std::string >( "node" );
     if( implicit == boost::none )
         throw HttpException( web::INTERNAL_SERVER_ERROR );
 
@@ -1083,5 +1085,14 @@ web::Uuid Controller::AuthenticateNode( const Request_ABC& request, UserType req
         if( *optional != *implicit )
             throw HttpException( web::BAD_REQUEST );
 
-    return Convert( *implicit );
+    return User( user.id, user.name, user.type, Convert( *implicit ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::Authenticate
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+web::Uuid Controller::AuthenticateNode( const Request_ABC& request, UserType required, const std::string& key )
+{
+    return AuthenticateUser( request, required, key ).node;
 }

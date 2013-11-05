@@ -51,7 +51,7 @@ namespace mocks
         MOCK_METHOD( Archive, 0 );
         MOCK_METHOD( Restore, 0 );
         MOCK_METHOD( Download, 1 );
-        MOCK_METHOD( Replay, 0 );
+        MOCK_METHOD( Replay, 1 );
         MOCK_METHOD( IsReplay, 0 );
         MOCK_METHOD( GetReplayId, 0 );
         MOCK_METHOD( HasReplays, 0 );
@@ -60,13 +60,15 @@ namespace mocks
         MOCK_METHOD( NotifyNode, 0 );
         MOCK_METHOD( AvailableLogs, 0 );
         MOCK_METHOD( DownloadLog, 4 );
+        MOCK_METHOD( IsAuthorized, 1 );
+        MOCK_METHOD( DeleteUser, 2 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
     {
         MOCK_METHOD_EXT( Make, 2, host::Session_ABC::T_Ptr( const host::Path& tag,  const host::Path& trash ), Make2 );
-        MOCK_METHOD_EXT( Make, 5, host::Session_ABC::T_Ptr( const host::Path& root, const host::Path& trash,
-                         const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise ), Make5 );
+        MOCK_METHOD_EXT( Make, 6, host::Session_ABC::T_Ptr( const host::Path& root, const host::Path& trash,
+                         const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise, const web::User& owner ), Make5 );
     };
 };
 

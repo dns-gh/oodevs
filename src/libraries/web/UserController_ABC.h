@@ -10,7 +10,7 @@
 #ifndef USER_CONTROLLER_ABC_H
 #define USER_CONTROLLER_ABC_H
 
-#include "UserType.h"
+#include "User.h"
 
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>

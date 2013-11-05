@@ -15,7 +15,7 @@
 #include "Sql_ABC.h"
 #include "UuidFactory_ABC.h"
 #include "web/HttpException.h"
-#include "web/UserType.h"
+#include "web/User.h"
 
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/lexical_cast.hpp>

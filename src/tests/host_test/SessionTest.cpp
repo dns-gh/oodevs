@@ -166,7 +166,7 @@ namespace
             cfg.profiles.insert( web::session::Profile( "username", "password" ) );
             SessionPaths paths( "a", "b" );
             SessionDependencies deps( fs, runtime, plugins, nodes, uuids, log, client, pool, ports );
-            return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
+            return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid(), web::User( 42, "" ) );
         }
 
         typedef std::pair< ProcessPtr, ProcessPtr > T_Processes;
@@ -239,7 +239,7 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( boost::uuids::random_generator()() );
             MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), session.GetExercise() ).returns( FromJson( links ) );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort + 17 ) );
-            return session.Replay();
+            return session.Replay( web::User( 42, "" ) );
         }
     };
 }
@@ -519,7 +519,7 @@ BOOST_FIXTURE_TEST_CASE( session_removal_eventually_succeeds, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_cannot_replay_without_one_play, Fixture )
 {
     SessionPtr session = MakeSession();
-    BOOST_CHECK_THROW( session->Replay(), web::HttpException );
+    BOOST_CHECK_THROW( session->Replay( web::User( 42, "" ) ), web::HttpException );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_can_replay, Fixture )
@@ -551,7 +551,7 @@ BOOST_FIXTURE_TEST_CASE( replay_session_cannot_be_replayed, Fixture )
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
-    BOOST_CHECK_THROW( replay->Replay(), web::HttpException );
+    BOOST_CHECK_THROW( replay->Replay( web::User( 42, "" ) ), web::HttpException );
 }
 
 namespace

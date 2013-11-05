@@ -13,6 +13,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "web/Configs.h"
+#include "web/User.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -68,6 +69,7 @@ namespace
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
     const Uuid idNode = boost::uuids::string_generator()( idNodeText );
+    const web::User standartUser = web::User( 42, "standart", web::USER_TYPE_ADMINISTRATOR, boost::uuids::string_generator()( idNodeText ) );
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
     const Uuid idActive = boost::uuids::string_generator()( idActiveText );
@@ -118,12 +120,12 @@ namespace
         boost::shared_ptr< MockSession > active;
         boost::shared_ptr< MockSession > idle;
 
-        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const Uuid& node, const std::string& text, const Path& path = Path() )
+        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const web::User& user, const std::string& text, const Path& path = Path() )
         {
             const Tree tree = FromJson( text );
-            boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
+            boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, user.node, tree );
             if( path.empty() )
-                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, node, mock::any, session->GetExercise() ).returns( session );
+                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, user.node, mock::any, session->GetExercise(), mock::same( user ) ).returns( session );
             else
                 MOCK_EXPECT( sub.factory.Make2 ).once().returns( session );
             MOCK_EXPECT( sub.fs.WriteFile ).returns( true );
@@ -137,8 +139,8 @@ namespace
                 boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/session.id" ).returns( true );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/session.id" ).returns( true );
-            active = AddSession( idActive, idNode, sessionActive, "a/session.id" );
-            idle = AddSession( idIdle, idNode, sessionIdle, "b/session.id" );
+            active = AddSession( idActive, standartUser, sessionActive, "a/session.id" );
+            idle = AddSession( idIdle, standartUser, sessionIdle, "b/session.id" );
             control.Reload( &IsKnownNode );
         }
     };
@@ -156,10 +158,10 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 {
-    AddSession( idIdle, idNode, sessionIdle );
+    AddSession( idIdle, standartUser, sessionIdle );
     web::session::Config cfg;
     cfg.name = "myName2";
-    SessionController::T_Session session = control.Create( idNode, cfg, "myExercise2" );
+    SessionController::T_Session session = control.Create( standartUser, cfg, "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( control.Get( idNode, idIdle ), session );

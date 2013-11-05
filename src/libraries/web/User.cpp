@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "UserType.h"
+#include "User.h"
 
 #include <boost/static_assert.hpp>
 

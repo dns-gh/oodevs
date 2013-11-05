@@ -11,6 +11,7 @@ session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 session_settings_template = Handlebars.compile $("#session_settings_template").html()
 session_redirect_template = Handlebars.compile $("#session_redirect_template").html()
+user_selected_template = Handlebars.compile $("#user_selected_template").html()
 
 session_plugins = {}
 init_plugins = ->
@@ -139,7 +140,57 @@ bind_ui_plugins = (ui) ->
         idx = parseInt it.attr "data-ref"
         box.carousel idx+1
 
-pop_settings = (ui, data) ->
+class UserSelectedItem extends Backbone.Model
+    view: UserSelectedItemView
+
+class UserSelectedList extends Backbone.Collection
+    model: UserSelectedItem
+
+class UserSelectedItemView extends Backbone.View
+    tagName: "tr"
+
+    initialize: ->
+        @render()
+
+    events:
+        "click .delete" : "delete"
+
+    render: =>
+        @$el.empty()
+        @$el.attr "data_id", @model.id
+        @$el.html user_selected_template @model.attributes
+
+    delete: (evt) =>
+        @remove()
+        @model.collection.remove(@model)
+
+class UserSelectedListView extends Backbone.View
+
+    initialize: (options) ->
+        @$el.empty()
+        @$el = options
+        @model = new UserSelectedList
+        @model.bind 'add', @add
+
+    add: (item) =>
+        view = new UserSelectedItemView model: item
+        item.view = view
+        @$el.prepend view.el
+
+    create: (data) =>
+        @model.add data
+
+    clear: =>
+        @model.reset()
+        @$el.empty()
+
+pop_settings = (ui, session, users) ->
+    all_users = []
+    for it in users
+        all_users.push( { id: it.id, username: it.attributes.name } )
+    data = _.extend session, users: all_users
+    if !data.owner
+        data.owner = { name: user.name }
     set_ui_plugins data
     data.checkpoints.frequency = Math.ceil data.checkpoints.frequency / 60
     ui.html session_settings_template data
@@ -150,6 +201,30 @@ pop_settings = (ui, data) ->
     attach_checkbox_and_input $("#rng_seed"), $("#rng_seed_check")
     attach_checkbox_and_input $("#logs_files"), $("#logs_files_check")
     attach_click_to_dropdown $("#size_unit")
+    user_selected_view = new UserSelectedListView ui.find ".user_table tbody"
+    for k, v of data.authorized_users?.list
+        result = all_users.filter (x) -> x.id == k && x.username == v
+        if result?.length > 0
+            user_selected_view.create { id: k, username: v }
+
+    group = ui.find(".user_group")
+    if ui.find("#access_restricted").is ":checked"
+        group.show()
+    else
+        group.hide()
+
+    ui.find("#access_restricted").click (e)->
+        group = ui.find(".user_group")
+        if $(e.target).is ":checked"
+            group.show()
+        else
+            user_selected_view.clear()
+            group.hide()
+
+    ui.find(".user_select").click ->
+        data = $('#user_selected :selected')
+        user_selected_view.create id: data.val(), username: data.text()
+
     mod = ui.find ".modal"
     mod.modal "show"
     return [ui, mod]
@@ -276,14 +351,55 @@ validate_settings = (ui, is_default) ->
     if has_element ui, "#tab_plugins"
         validate_plugins ui, data
 
+    if has_element ui, "#tab_access"
+        next = data.authorized_users = {}
+        next.enabled = ui.find("#access_restricted").is ":checked"
+        next.list = {}
+        for it in ui.find ".user_table tbody tr"
+            id = $(it).attr "data_id"
+            username = ($(it).find "td").first().text()
+            next.list[id] = username
+
     data.checkpoints?.frequency *= 60
     return data
+
+scope = (model) ->
+    model ?= {}
+    if uuid?
+        model.node = uuid
+    return model
+
+class UserItem extends Backbone.Model
+
+class UserList extends Backbone.Collection
+    model: UserItem
+    view:  UserListView
+    
+    sync: (method, model, options) =>
+        if method == "read"
+            return ajax "/api/list_users", scope({}),
+                options.success, options.error
+        return Backbone.sync method, model, options
+
+class UserListView extends Backbone.View
+    el: $ "#users"
+
+    initialize: ->
+        @model = new UserList
+        @model.fetch error: -> print_error "Unable to fetch users"
+        @render()
+
+    render: =>
+        @$el.empty()
+        for it in @model
+            @$el.append "<option>" + it + "</option>"
+        return
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs", "mapnik"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs", "mapnik", "authorized_users"]
 
         if method == "create"
             data = select_attributes model.attributes, _.union cfg_attributes, ["exercise"]
@@ -569,8 +685,8 @@ class SessionItemView extends Backbone.View
 
     edit: (evt) =>
         return if is_disabled evt
-        data = $.extend {}, @model.attributes
-        [ui, mod] = pop_settings $("#settings"), data
+        session = _.extend {}, @model.attributes
+        [ui, mod] = pop_settings $("#settings"), session, user_view.model.models
         mod.find(".apply").click =>
             data = validate_settings ui
             return unless data?
@@ -795,6 +911,10 @@ exercise_view = new ExerciseListItemView
 session_view = new SessionListView
 session_default = new SessionItem
 
+user_view = null
+if user.type != "player"
+    user_view = new UserListView
+
 default_session_settings =
     logs:
         level:     "all"
@@ -893,7 +1013,8 @@ $("#session_edit").click ->
     overrides =
         is_default: true
         status: "stopped"
-    [ui, mod] = pop_settings $("#settings"), _.extend data, session_default.attributes, overrides
+    data = _.extend data, session_default.attributes, overrides
+    [ui, mod] = pop_settings $("#settings"), data, user_view.model.models
     mod.find(".apply").click ->
         data = validate_settings ui, true
         return unless data?

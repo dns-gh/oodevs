@@ -33,6 +33,7 @@ namespace io
 namespace web
 {
     struct Chunker_ABC;
+    struct User;
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -106,20 +107,21 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Session Methods
     //@{
-    virtual std::vector< Tree > ListSessions      ( const Uuid& node, int offset, int limit ) const = 0;
-    virtual size_t              CountSessions     ( const Uuid& node ) const = 0;
-    virtual Tree                GetSession        ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                CreateSession     ( const Uuid& node, const session::Config& cfg, const std::string& exercise ) = 0;
-    virtual Tree                DeleteSession     ( const Uuid& node, const Uuid& id ) = 0;
-    virtual Tree                StartSession      ( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const = 0;
-    virtual Tree                StopSession       ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                PauseSession      ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                UpdateSession     ( const Uuid& node, const Uuid& id, const Tree& cfg ) const = 0;
-    virtual Tree                ArchiveSession    ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual Tree                RestoreSession    ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual void                DownloadSession   ( const Uuid& node, const Uuid& id, Chunker_ABC& dst ) const = 0;
-    virtual Tree                ReplaySession     ( const Uuid& node, const Uuid& id ) const = 0;
-    virtual void                DownloadSessionLog( const Uuid& node, const Uuid& id, Chunker_ABC& dst, const std::string& logFile, int limitSize,
+    virtual std::vector< Tree > ListSessions      ( const User& user, int offset, int limit ) const = 0;
+    virtual size_t              CountSessions     ( const User& user ) const = 0;
+    virtual Tree                GetSession        ( const User& user, const Uuid& id ) const = 0;
+    virtual Tree                CreateSession     ( const User& user, const session::Config& cfg, const std::string& exercise ) = 0;
+    virtual Tree                DeleteSession     ( const User& user, const Uuid& id ) = 0;
+    virtual void                DeleteUser        ( const User& user, int id ) = 0;
+    virtual Tree                StartSession      ( const User& user, const Uuid& id, const std::string& checkpoint ) const = 0;
+    virtual Tree                StopSession       ( const User& user, const Uuid& id ) const = 0;
+    virtual Tree                PauseSession      ( const User& user, const Uuid& id ) const = 0;
+    virtual Tree                UpdateSession     ( const User& user, const Uuid& id, const Tree& cfg ) const = 0;
+    virtual Tree                ArchiveSession    ( const User& user, const Uuid& id ) const = 0;
+    virtual Tree                RestoreSession    ( const User& user, const Uuid& id ) const = 0;
+    virtual void                DownloadSession   ( const User& user, const Uuid& id, Chunker_ABC& dst ) const = 0;
+    virtual Tree                ReplaySession     ( const User& user, const Uuid& id ) const = 0;
+    virtual void                DownloadSessionLog( const User& user, const Uuid& id, Chunker_ABC& dst, const std::string& logFile, int limitSize,
                                                     bool deflate ) const = 0;
     //@}
 

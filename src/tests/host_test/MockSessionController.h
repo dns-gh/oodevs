@@ -26,6 +26,7 @@ namespace mocks
         MOCK_METHOD( Get, 2 );
         MOCK_METHOD( Create, 3 );
         MOCK_METHOD( Delete, 2 );
+        MOCK_METHOD( DeleteUser, 2 );
         MOCK_METHOD( Start, 3 );
         MOCK_METHOD( Stop, 2 );
         MOCK_METHOD( Pause, 2 );
@@ -36,6 +37,7 @@ namespace mocks
         MOCK_METHOD( Replay, 2 );
         MOCK_METHOD( NotifyNode, 1 );
         MOCK_METHOD( DownloadLog, 6 );
+        MOCK_METHOD( Filter, 2 );
     };
 };
 

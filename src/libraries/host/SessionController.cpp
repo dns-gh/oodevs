@@ -15,6 +15,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Session_ABC.h"
+#include "web/User.h"
 
 #include <boost/uuid/uuid_io.hpp>
 
@@ -209,6 +210,16 @@ size_t SessionController::Count( T_Predicate predicate ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::Filter
+// Created: LGY 2014-04-04
+// -----------------------------------------------------------------------------
+bool SessionController::Filter( T_Predicate predicate, const Uuid& id ) const
+{
+    const auto session = sessions_.Get( id );
+    return session && predicate( *session );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Get
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
@@ -238,10 +249,10 @@ void SessionController::Create( Session_ABC& session )
 // Name: SessionController::Create
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Create( const Uuid& node, const web::session::Config& cfg, const std::string& exercise )
+SessionController::T_Session SessionController::Create( const web::User& user, const web::session::Config& cfg, const std::string& exercise )
 {
     const Path output = fs_.MakeAnyPath( root_ );
-    boost::shared_ptr< Session_ABC > session = factory_.Make( output, trash_, node, cfg, exercise );
+    auto session = factory_.Make( output, trash_, user.node, cfg, exercise, user );
     sessions_.Attach( session );
     Create( *session );
     return session;
@@ -282,6 +293,24 @@ SessionController::T_Session SessionController::Delete( const Uuid& node, const 
     async_.Post( boost::bind( &Session_ABC::Remove, session ) );
     sessions_.Foreach( boost::bind( &Session_ABC::DetachReplay, _1, boost::ref( *session ) ) );
     return session;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::DeleteUser
+// Created: LGY 2014-04-10
+// -----------------------------------------------------------------------------
+void SessionController::DeleteUser( const web::User& user, int id )
+{
+    sessions_.Foreach( boost::bind( &SessionController::DeleteUser, this, _1, user, id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::DeleteUser
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+void SessionController::DeleteUser( T_Session session, const web::User& user, int id )
+{
+    session->DeleteUser( user, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,24 +398,25 @@ SessionController::T_Session SessionController::Restore( const Uuid& node, const
 // Name: SessionController::Download
 // Created: BAX 2012-08-06
 // -----------------------------------------------------------------------------
-void SessionController::Download( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const
+SessionController::T_Session SessionController::Download( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst ) const
 {
     try
     {
-        Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
+        return Dispatch( node, id, boost::bind( &Session_ABC::Download, _1, boost::ref( dst ) ) );
     }
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[session] " << err.what();
         LOG_WARN( log_ ) << "[session] Unable to download session " << id;
     }
+    return SessionController::T_Session();
 }
 
 namespace
 {
-bool Replay( Session_ABC::T_Ptr& next, Session_ABC::T_Ptr current )
+bool Replay( Session_ABC::T_Ptr& next, Session_ABC::T_Ptr current, const web::User& user )
 {
-    next = current->Replay();
+    next = current->Replay( user );
     return true;
 }
 }
@@ -395,10 +425,10 @@ bool Replay( Session_ABC::T_Ptr& next, Session_ABC::T_Ptr current )
 // Name: SessionController::Replay
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Replay( const Uuid& node, const Uuid& id )
+SessionController::T_Session SessionController::Replay( const web::User& user, const Uuid& id )
 {
     T_Session next;
-    Dispatch( node, id, boost::bind( &::Replay, boost::ref( next ), _1 ) );
+    Dispatch( user.node, id, boost::bind( &::Replay, boost::ref( next ), _1, boost::ref( user ) ) );
     if( !next )
         return next;
     sessions_.Attach( next );
@@ -428,16 +458,17 @@ void SessionController::NotifyNode( const Uuid& node )
 // Name: SessionController::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-void SessionController::DownloadLog( const Uuid& node, const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize,
-                                     bool deflate ) const
+SessionController::T_Session SessionController::DownloadLog( const Uuid& node,
+    const Uuid& id, web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
 {
     try
     {
-        Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ), boost::ref( deflate ) ) );
+        return Dispatch( node, id, boost::bind( &Session_ABC::DownloadLog, _1, boost::ref( dst ), boost::ref( logFile ), boost::ref( limitSize ), boost::ref( deflate ) ) );
     }
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[session] " << err.what();
         LOG_WARN( log_ ) << "[session] Unable to download session logs" << logFile;
     }
+    return SessionController::T_Session();
 }

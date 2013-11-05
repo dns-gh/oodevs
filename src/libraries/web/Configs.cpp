@@ -121,6 +121,7 @@ session::Config::Config()
     reports.clean_frequency = 100;
     sides.no_side_objects = true;
     mapnik.enabled = false;
+    restricted.enabled = false;
 }
 
 namespace
@@ -168,12 +169,31 @@ bool TryRead( T& dst, const Request_ABC& request, const std::string& key )
 template< typename T >
 bool TryReadSet( T& dst, const Tree& src, const std::string& key )
 {
-    Tree::const_assoc_iterator sub = src.find( key );
+    auto sub = src.find( key );
     if( sub == src.not_found() )
         return false;
     T next;
-    for( Tree::const_iterator it = sub->second.begin(); it != sub->second.end(); ++it )
+    for( auto it = sub->second.begin(); it != sub->second.end(); ++it )
         next.insert( it->second.get_value( std::string() ) );
+    if( next == dst )
+        return false;
+    dst = next;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TryReadMap
+// Created: LGY 2014-04-04
+// -----------------------------------------------------------------------------
+template< typename T >
+bool TryReadMap( T& dst, const Tree& src, const std::string& key )
+{
+    const auto tree = src.get_child_optional( key );
+    if( !tree )
+        return false;
+    T next;
+    for( auto it = tree->begin(); it != tree->end(); ++it )
+        next[ boost::lexical_cast< int >( it->first ) ] = it->second.data();
     if( next == dst )
         return false;
     dst = next;
@@ -390,6 +410,8 @@ bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tr
     modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
     modified |= TryRead( dst.sides.no_side_objects, src, "sides.no_side_objects" );
     modified |= TryRead( dst.mapnik.enabled, src, "mapnik.enabled" );
+    modified |= TryRead( dst.restricted.enabled, src, "authorized_users.enabled" );
+    modified |= TryReadMap( dst.restricted.users, src, "authorized_users.list" );
     modified |= ReadSideConfig( dst.sides.list, src, "sides.list" );
     modified |= ReadProfileConfig( dst.profiles, src, "profiles" );
     modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown." );
@@ -421,6 +443,8 @@ void session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
     dst.put( "sides.no_side_objects", cfg.sides.no_side_objects );
     dst.put( "mapnik.enabled", cfg.mapnik.enabled );
+    dst.put( "authorized_users.enabled", cfg.restricted.enabled );
+    PutMap( dst, "authorized_users.list", cfg.restricted.users );
     WriteSideConfig( dst, "sides.list", cfg.sides.list );
     WriteProfileConfig( dst, "profiles.", cfg.profiles );
     WriteRngConfig( dst, "rng.breakdown.", cfg.rng.breakdown );

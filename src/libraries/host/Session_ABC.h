@@ -29,6 +29,7 @@ namespace uuids
 namespace web
 {
     struct Chunker_ABC;
+    struct User;
 namespace session
 {
     struct Config;
@@ -71,6 +72,7 @@ struct Session_ABC : public boost::noncopyable
     virtual Uuid GetReplayId() const = 0;
     virtual bool HasReplays() const = 0;
     virtual Tree AvailableLogs() const = 0;
+    virtual bool IsAuthorized( const web::User& user ) const = 0;
     //@}
 
     //! @name Typedef helpers
@@ -92,11 +94,12 @@ struct Session_ABC : public boost::noncopyable
     virtual bool  Archive() = 0;
     virtual bool  Restore() = 0;
     virtual bool  Download( web::Chunker_ABC& dst ) const = 0;
-    virtual T_Ptr Replay() = 0;
+    virtual T_Ptr Replay( const web::User& user ) = 0;
     virtual void  AttachReplay( const Session_ABC& replay ) = 0;
     virtual void  DetachReplay( const Session_ABC& replay ) = 0;
     virtual void  NotifyNode() = 0;
     virtual bool  DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const = 0;
+    virtual void DeleteUser( const web::User& user, int id ) = 0;
     //@}
 };
 
@@ -117,7 +120,7 @@ struct SessionFactory_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& node,
-                                     const web::session::Config& cfg, const std::string& exercise ) const = 0;
+                                     const web::session::Config& cfg, const std::string& exercise, const web::User& user ) const = 0;
     virtual Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const = 0;
     //@}
 };

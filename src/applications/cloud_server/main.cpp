@@ -285,13 +285,13 @@ struct SessionFactory : public SessionFactory_ABC
         // NOTHING
     }
 
-    Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise ) const
+    Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise, const web::User& owner ) const
     {
         NodeController_ABC::T_Node node = deps.nodes.Get( id );
         if( !node )
             return Session_ABC::T_Ptr();
         SessionPaths paths( root, trash );
-        return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise, boost::uuids::nil_uuid() );
+        return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise, boost::uuids::nil_uuid(), owner );
     }
 
     Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const
