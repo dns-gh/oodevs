@@ -16,7 +16,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/xpressive/xpressive.hpp>
 
 using namespace web;
 using namespace property_tree;
