@@ -38,8 +38,8 @@ std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const Path& o
     fs.Walk( output, false, [&]( const runtime::Path& path ) -> bool
     {
         const auto file = path.filename().string();
-        static const auto regex = boost::xpressive::sregex::compile( "Sim\\.\\d{8}T\\d{6}\\.log(\\.\\d+)*" );
-        if( boost::xpressive::regex_match( file, regex ) || file == "Sim.log" )
+        static const auto regex = boost::xpressive::sregex::compile( "Sim(\\.\\d{8}T\\d{6})?\\.log(\\.\\d+)*" );
+        if( boost::xpressive::regex_match( file, regex ) )
             logs.insert( path );
         return true;
     } );
