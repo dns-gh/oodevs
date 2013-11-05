@@ -23,6 +23,7 @@ namespace dispatcher
 
 namespace sword
 {
+    class ControlBeginTick;
     class ControlInformation;
     class SimToClient;
 }
@@ -52,7 +53,7 @@ public:
     //@{
     void ControlInformation( const sword::ControlInformation& controlInformation );
     void CreateNewFragment ( bool first = false );
-    void StartFrame        ( const Savable_ABC& message, const sword::SimToClient& msg );
+    void StartFrame        ( const Savable_ABC& message, const sword::ControlBeginTick& controlBeginTickMsg );
     void SaveUpdateMessage ( const Savable_ABC& message );
     void EndFrame          ( const Savable_ABC& message );
     void SaveKeyFrame      ( const Savable_ABC& message );

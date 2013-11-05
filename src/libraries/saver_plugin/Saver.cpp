@@ -148,16 +148,12 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
 // Name: Saver::StartFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Saver::StartFrame( const Savable_ABC& message, const sword::SimToClient& msg )
+void Saver::StartFrame( const Savable_ABC& message, const sword::ControlBeginTick& controlBeginTickMsg )
 {
     SaveUpdateMessage( message );
-    if( msg.message().has_control_begin_tick() )
-    {
-        const sword::ControlBeginTick& beginTickMsg = msg.message().control_begin_tick();
-        simTime_ = beginTickMsg.date_time().data();
-        if( beginTickMsg.has_real_date_time() )
-            realTime_ = beginTickMsg.real_date_time().data();
-    }
+    simTime_ = controlBeginTickMsg.date_time().data();
+    if( controlBeginTickMsg.has_real_date_time() )
+        realTime_ = controlBeginTickMsg.real_date_time().data();
 }
 
 // -----------------------------------------------------------------------------

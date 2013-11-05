@@ -585,7 +585,7 @@ message ControlProfilingInformation {
 message ControlBeginTick {
     //! The current tick number
     required int32    current_tick   = 1;
-    //! The current date and time @see DateTime
+    //! The simulated date and time @see DateTime
     required DateTime date_time      = 2;
     //! The real date and time @see DateTime
     optional DateTime real_date_time = 3;
