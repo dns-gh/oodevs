@@ -146,10 +146,18 @@ integration.getHQknowledgeOfTC2 = function( )
     return nil
 end
 
--- Changes the value of a dotation type for the agent 
--- with respect to a capacity factor
+-- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
+-- with respect to a capacity factor.
 -- @param dotationType : integer, the type of dotation (e.g. eDotation_Fuel)
 -- @param capacityFactor : float, the proportion (over the total capacity) of dotation that will be set
-integration.changeDotationValue = function( dotationType, capacityFactor )
+integration.changeDotationValueUsingCombatTrains = function( dotationType, capacityFactor )
     DEC_ChangeValeurDotations2( dotationType, capacityFactor )
 end
+
+-- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
+-- with respect to predefined resource quotas (ranges)
+-- @param range : integer, the range corresponding to the desired resource quota (e.g. eAviationRange_MediumRange)
+integration.enforceAviationResourcesFromRange = function( range )
+    DEC_EnforceAviationResources( myself, range )
+end
+
