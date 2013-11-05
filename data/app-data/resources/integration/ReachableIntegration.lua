@@ -162,7 +162,7 @@ local normalizedInverseDistanceSimListSim = function( simList, simPos, distanceM
     if not simList then return 1 end
     for _, simPos2 in pairs( simList ) do
           local currentDistance = normalizedInverseDistanceSimSim( simPos2, simPos, distanceMax )
-          if distance > currentDistance then
+          if distance < currentDistance then
               distance = currentDistance
           end
     end
@@ -185,7 +185,7 @@ local normalizedInverseDistanceSimList = function( posList, pos2, distanceMax )
     local distance = 1
     for _, simPos in pairs( posList ) do
           local currentDistance = normalizedInverseDistanceSim( simPos, pos2, distanceMax )
-          if distance > currentDistance then
+          if distance < currentDistance then
               distance = currentDistance
           end
     end
