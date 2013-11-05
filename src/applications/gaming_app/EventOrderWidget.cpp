@@ -102,12 +102,12 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     mainLayout_->setSpacing( 5 );
     mainLayout_->addLayout( targetLayout );
     mainLayout_->addLayout( topLayout );
-    mainLayout_->addWidget( missionInterface_.get(), 1 );
+    mainLayout_->addWidget( missionInterface_, 1 );
 
     controllers_.Register( *this );
 
     // Connections
-    connect( missionInterface_.get(), SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
+    connect( missionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,8 @@ void EventOrderWidget::Purge()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Reset()
 {
-    missionInterface_->Rebuild( interfaceBuilder_ );
+    selectedEntity_ = 0;
+    SetTarget( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -497,7 +498,8 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
         missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
     }
     // SELECT
-    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
+    missionCombo_->setCurrentIndex( missionCombo_->findText(
+        QString::fromStdString( currentMission ) ) );
     // Disable invalid mission
     if( invalid )
     {
