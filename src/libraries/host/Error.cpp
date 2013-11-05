@@ -22,8 +22,8 @@ namespace
         if( pos == std::string::npos )
             return "";
         const std::string tail = content.substr( pos + tag.size() );
-        const std::string date = "^\\[\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}\\]";
-        const auto regex = boost::xpressive::sregex::compile( date + " <Simulation>" );
+        static const std::string date = "^\\[\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}\\]";
+        static const auto regex = boost::xpressive::sregex::compile( date + " <Simulation>" );
         boost::xpressive::smatch what;
         boost::xpressive::regex_search( tail, what, regex );
         if( what.empty() )
@@ -34,11 +34,11 @@ namespace
 
 std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const Path& output )
 {
-    const auto regex = boost::xpressive::sregex::compile( "Sim\\.\\d{8}T\\d{6}\\.log(\\.\\d+)*" );
     std::set< runtime::Path > logs;
     fs.Walk( output, false, [&]( const runtime::Path& path ) -> bool
     {
         const auto file = path.filename().string();
+        static const auto regex = boost::xpressive::sregex::compile( "Sim\\.\\d{8}T\\d{6}\\.log(\\.\\d+)*" );
         if( boost::xpressive::regex_match( file, regex ) || file == "Sim.log" )
             logs.insert( path );
         return true;
