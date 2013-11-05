@@ -75,6 +75,7 @@ private slots:
     void OnToggleContourLinesEnabled( bool toggled );
     void OnLinesHeightChanged();
     void OnColorContourChanged( const QColor& color );
+    void SetTerrainProfilerChecked( bool visible );
     //@}
 
 private:

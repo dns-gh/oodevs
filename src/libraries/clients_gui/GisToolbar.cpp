@@ -73,7 +73,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         terrainProfilerButton_->setToggleButton( true );
 
         connect( terrainProfilerButton_, SIGNAL( toggled( bool ) ), &terrainProfiler, SLOT( setVisible( bool ) ) );
-        connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), terrainProfilerButton_, SLOT( setOn( bool ) ) );
+        connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), this, SLOT( SetTerrainProfilerChecked( bool ) ) );
 
         Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new RichCheckBox( "contourBoxEnabled", tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
@@ -255,6 +255,17 @@ void GisToolbar::OnColorContourChanged( const QColor& color )
 void GisToolbar::OnColorChanged( const QColor& color )
 {
     controllers_.options_.Change( "WatershedColor", color.name() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::SetTerrainProfilerChecked
+// Created: LDC 2013-11-04
+// -----------------------------------------------------------------------------
+void GisToolbar::SetTerrainProfilerChecked( bool visible )
+{
+    bool wasBlocked = terrainProfilerButton_->blockSignals( true );
+    terrainProfilerButton_->setChecked( visible );
+    terrainProfilerButton_->blockSignals( wasBlocked );
 }
 
 // -----------------------------------------------------------------------------
