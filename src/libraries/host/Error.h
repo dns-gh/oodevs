@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef HOST_ERROR_H
+#define HOST_ERROR_H
 
 #include <string>
 
@@ -32,4 +32,4 @@ namespace host
     std::string GetLastError( const runtime::FileSystem_ABC& fs, const Path& output );
 }
 
-#endif // ERROR_H
+#endif // HOST_ERROR_H
