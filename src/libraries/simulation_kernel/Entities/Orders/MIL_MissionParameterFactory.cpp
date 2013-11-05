@@ -143,7 +143,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_EquipmentTypeParameter( message.equipmenttype() );
     else if( message.has_indirectfire() )
     {
-        sword::FireId msg;
+        sword::Id msg;
         msg.set_id( message.indirectfire().id() );
         ptr = new MIL_TirIndirectParameter( msg );
     }
@@ -315,7 +315,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateS
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateTir( int id )
 {
-    sword::FireId msg;
+    sword::Id msg;
     msg.set_id( id );
     boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_TirIndirectParameter >( msg );
     return result;

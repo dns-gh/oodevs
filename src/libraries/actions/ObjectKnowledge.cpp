@@ -90,9 +90,9 @@ void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( sword::ObjectKnowledgeId& message ) const
+void ObjectKnowledge::CommitTo( sword::Id& message ) const
 {
-    Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
+    Knowledge_ABC< ObjectKnowledge_ABC >::CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------

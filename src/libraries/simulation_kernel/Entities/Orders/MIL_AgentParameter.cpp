@@ -42,7 +42,7 @@ MIL_AgentParameter::MIL_AgentParameter( const DEC_Decision_ABC* pAgent )
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( const sword::UnitId& asn, const MIL_EntityManager_ABC& entityManager )
+MIL_AgentParameter::MIL_AgentParameter( const sword::Id& asn, const MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
     MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.id() );

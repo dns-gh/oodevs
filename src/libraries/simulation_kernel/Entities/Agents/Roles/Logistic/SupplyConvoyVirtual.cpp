@@ -20,7 +20,7 @@ using namespace logistic;
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyVirtual )
 
 // =============================================================================
-// Constructor / destructor 
+// Constructor / destructor
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ unsigned SupplyConvoyVirtual::MoveToSupplyRecipient()
 {
     currentAction_ = eMoveToSupplyRecipient;
     if( !currentSupplyRecipient_ )
-        return 0;    
+        return 0;
     return MoveTo( currentSupplyRecipient_->GetPosition() );
 }
 
@@ -120,7 +120,7 @@ unsigned SupplyConvoyVirtual::MoveToTransportersProvider()
 // Name: SupplyConvoy::Serialize
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-void SupplyConvoyVirtual::Serialize( sword::UnitId& msg ) const
+void SupplyConvoyVirtual::Serialize( sword::Id& msg ) const
 {
     msg.set_id( 0 );
 }

@@ -13,204 +13,20 @@ package sword;
  *  @brief Messages common to various modules
  */
 
-/** @struct AutomatId
-    @brief Defines an automat identifier
+/** @struct Id
+    @brief Defines an identifier
 */
-message AutomatId {
+message Id {
     //! The identifier
     required uint32 id = 1;
 }
 
-/** @struct AutomatIdList
-    @brief Defines a list of automat identifiers
+/** @struct IdList
+    @brief Defines a list of identifiers
 */
-message AutomatIdList {
+message IdList {
     //! The identifiers
-    repeated AutomatId elem = 1;
-}
-
-/** @struct FormationId
-    @brief Defines a formation identifier
-*/
-message FormationId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct FormationIdList
-    @brief Defines a list of formation identifiers
-*/
-message FormationIdList {
-    //! The identifiers
-    repeated FormationId elem = 1;
-}
-
-/** @struct KnowledgeGroupId
-    @brief Defines a knowledge group identifier
-*/
-message KnowledgeGroupId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ObjectId
-    @brief Defines an object identifier
-*/
-message ObjectId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ObjectKnowledgeId
-    @brief Defines an object knowledge identifier
-*/
-message ObjectKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ObjectKnowledgeIdList
-    @brief Defines a list of object knowledge identifiers
-*/
-message ObjectKnowledgeIdList {
-    //! The identifiers
-    repeated ObjectKnowledgeId elem = 1;
-}
-
-/** @struct PartyId
-    @brief Defines a party identifier
-*/
-message PartyId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct PartyIdList
-    @brief Defines a list of party identifiers
-*/
-message PartyIdList {
-    //! The identifiers
-    repeated PartyId elem = 1;
-}
-
-/** @struct CrowdId
-    @brief Defines a crowd identifier
-*/
-message CrowdId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdElementId
-    @brief Defines a crowd element (flow or concentration) identifier
-*/
-message CrowdElementId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdIdList
-    @brief Defines a list of crowd identifiers
-*/
-message CrowdIdList {
-    //! The identifiers
-    repeated CrowdId elem = 1;
-}
-
-/** @struct CrowdKnowledgeId
-    @brief Defines a crowd knowledge identifier
-*/
-message CrowdKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdConcentrationId
-    @brief Defines a crowd concentration identifier
-*/
-message CrowdConcentrationId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdConcentrationKnowledgeId
-    @brief Defines a crowd concentration knowledge identifier
-*/
-message CrowdConcentrationKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdFlowId
-    @brief Defines a crowd flow identifier
-*/
-message CrowdFlowId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct CrowdFlowKnowledgeId
-    @brief Defines a crowd flow knowledge identifier
-*/
-message CrowdFlowKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct UnitId
-    @brief Defines a unit identifier
-*/
-message UnitId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct UnitIdList
-    @brief Defines a list of unit identifiers
-*/
-message UnitIdList {
-    //! The identifiers
-    repeated UnitId elem = 1;
-}
-
-/** @struct UnitKnowledgeId
-    @brief Defines a unit knowledge identifier
-*/
-message UnitKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct UnitKnowledgeIdList
-    @brief Defines a list of unit knowledge identifiers
-*/
-message UnitKnowledgeIdList {
-    //! The identifiers
-    repeated UnitKnowledgeId elem = 1;
-}
-
-/** @struct UrbanObjectKnowledgeId
-    @brief Defines a urban object knowledge identifier
-*/
-message UrbanObjectKnowledgeId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ClientObjectId
-    @brief Defines a client object identifier
-*/
-message ClientObjectId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct PopulationId
-    @brief Defines a population identifier
-*/
-message PopulationId {
-    //! The identifier
-    required uint32 id = 1;
+    repeated Id elem = 1;
 }
 
 /** @struct Tasker
@@ -218,17 +34,17 @@ message PopulationId {
 */
 message Tasker {
     //! An automat
-    optional AutomatId    automat    = 1;
+    optional Id automat    = 1;
     //! A formation
-    optional FormationId  formation  = 2;
+    optional Id formation  = 2;
     //! A crowd
-    optional CrowdId      crowd      = 3;
+    optional Id crowd      = 3;
     //! A unit
-    optional UnitId       unit       = 4;
+    optional Id unit       = 4;
     //! A party
-    optional PartyId      party      = 5;
+    optional Id party      = 5;
     //! A population
-    optional PopulationId population = 6;
+    optional Id population = 6;
 }
 
 /** @struct ParentEntity
@@ -237,163 +53,9 @@ message Tasker {
 */
 message ParentEntity {
     //! An automat
-    optional AutomatId   automat   = 1;
+    optional Id automat   = 1;
     //! A formation
-    optional FormationId formation = 2;
-}
-
-/** @struct DrawingId
-    @brief Defines a drawing identifier
-*/
-message DrawingId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct TacticalLineId
-    @brief Defines a tactical line identifier
-*/
-message TacticalLineId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct MarkerId
-    @brief Defines a marker identifier
-*/
-message MarkerId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct FireId
-    @brief Defines a fire identifier
-*/
-message FireId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct FireEffectId
-    @brief Defines a fire effect identifier
-*/
-message FireEffectId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ReportId
-    @brief Defines a report identifier
-*/
-message ReportId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct WeatherId
-    @brief Defines a weather identifier
-*/
-message WeatherId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct MaintenanceRequestId
-    @brief Defines a maintenance request identifier
-*/
-message MaintenanceRequestId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct FuneralRequestId
-    @brief Defines a funeral request identifier
-*/
-message FuneralRequestId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct MedicalRequestId
-    @brief Defines a medical request identifier
-*/
-message MedicalRequestId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct SupplyRequestId
-    @brief Defines a supply request identifier
-*/
-message SupplyRequestId {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct AutomatType
-    @brief Defines an automat type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref automats_xsd.
-*/
-message AutomatType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct BreakdownType
-    @brief Defines a breakdown type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref breakdowns_xsd.
-*/
-message BreakdownType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct EquipmentType
-    @brief Defines an equipment type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref equipments_xsd.
-*/
-message EquipmentType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct FragOrderType
-    @brief Defines a frag order type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref missions_xsd and the fragorder section.
-*/
-message FragOrderType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct MissionType
-    @brief Defines a mission type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref missions_xsd and the mission section.
-*/
-message MissionType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct NBCAgentType
-    @brief Defines a NBC agent type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref nbc_xsd.
-*/
-message NBCAgentType {
-    //! The identifier
-    required uint32 id = 1;
+    optional Id formation = 2;
 }
 
 /** @struct ObjectType
@@ -407,50 +69,6 @@ message ObjectType {
     required string id = 1;
 }
 
-/** @struct CrowdType
-    @brief Defines a crowd type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref crowds_xsd.
-*/
-message CrowdType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ReportType
-    @brief Defines a report type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref reports_xsd.
-*/
-message ReportType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct ResourceType
-    @brief Defines a resource type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref resources_xsd.
-*/
-message ResourceType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
-/** @struct UnitType
-    @brief Defines a unit type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref units_xsd.
-*/
-message UnitType {
-    //! The identifier
-    required uint32 id = 1;
-}
-
 /** @struct ResourceNetworkType
     @brief Defines a resource network type
 
@@ -460,17 +78,6 @@ message UnitType {
 message ResourceNetworkType {
     //! The identifier
     required string name = 1;
-}
-
-/** @struct PopulationType
-    @brief Defines a population type
-
-    The Id refers to the type implemented in the physical database. See
-    the @ref units_xsd.
-*/
-message PopulationType {
-    //! The identifier
-    required uint32 id = 1;
 }
 
 /** @struct Heading
@@ -498,15 +105,15 @@ message AutomatChangeSuperior {
         @todo why not use a ParentEntity ?
     */
     message Superior {
-        //! An automat
-        optional FormationId formation = 1;
         //! A formation
-        optional AutomatId   automat   = 2;
+        optional Id formation = 1;
+        //! An automat
+        optional Id automat   = 2;
     }
     //! The automat identifier
-    required AutomatId automat  = 1;
+    required Id       automat  = 1;
     //! The superior
-    required Superior  superior = 2;
+    required Superior superior = 2;
 }
 
 /** @struct FormationChangeSuperior
@@ -518,15 +125,15 @@ message FormationChangeSuperior {
         @todo why not use a ParentEntity ?
     */
     message Superior {
-        //! An automat
-        optional FormationId formation = 1;
         //! A formation
-        optional PartyId   party   = 2;
+        optional Id formation = 1;
+        //! A party
+        optional Id party     = 2;
     }
-    //! The automat identifier
-    required FormationId formation  = 1;
+    //! The formation identifier
+    required Id       formation = 1;
     //! The superior
-    required Superior  superior = 2;
+    required Superior superior  = 2;
 }
 
 /** @struct UnitChangeSuperior
@@ -534,9 +141,9 @@ message FormationChangeSuperior {
 */
 message UnitChangeSuperior {
     //! The unit identifier
-    required UnitId    unit   = 1;
+    required Id unit   = 1;
     //! The parent identifier
-    required AutomatId parent = 2;
+    required Id parent = 2;
 }
 
 /** @enum EnumSimulationState
@@ -826,7 +433,7 @@ message PlannedWork {
     //! The obstacle density (for instance density of mines) @todo unit ?
     optional float                             density           = 4;
     //! The combat train
-    optional AutomatId                         combat_train      = 5;
+    optional Id                                combat_train      = 5;
     //! The obstacle life time in seconds
     optional int32                             activity_time     = 6;
     //! The time at which the obstacle is to be activated
@@ -849,14 +456,6 @@ message PlannedWork {
 message PlannedWorkList {
     //! The planned works
     repeated PlannedWork elem = 1;
-}
-
-/** @struct LogMaintenancePriorities
-    @brief Lists maintenance priorities
-*/
-message LogMaintenancePriorities {
-    //! The maintenance priorities
-    repeated EquipmentType elem = 1;
 }
 
 /** @struct MissionObjective
@@ -978,7 +577,7 @@ message Extension {
 */
 message ResourceNetworkElement {
     //! An object identifier
-    required ObjectId            object   = 1;
+    required Id                  object   = 1;
     //! The resource network type
     required ResourceNetworkType resource = 2;
 }
@@ -989,9 +588,9 @@ message ResourceNetworkElement {
 */
 message SupplyFlowResource {
     //! The resource type that will be conveyed
-    required ResourceType resourceType = 1;
+    required Id     resourceType = 1;
     //! The quantity that will be conveyed
-    required uint32       quantity     = 2;
+    required uint32 quantity     = 2;
 }
 
 /** @struct SupplyFlowTransporter
@@ -1000,9 +599,9 @@ message SupplyFlowResource {
 */
 message SupplyFlowTransporter {
     //! The equipment (trucks ...) that will be used to convey the resources
-    required EquipmentType equipmentType = 1;
+    required Id     equipmentType = 1;
     //! The previous equipment type quantity
-    required uint32        quantity      = 2;
+    required uint32 quantity      = 2;
 }
 
 /** @struct SupplyFlowRecipient
@@ -1011,7 +610,7 @@ message SupplyFlowTransporter {
 */
 message SupplyFlowRecipient {
     //! The receiver of the supply flow
-    required AutomatId          receiver  = 1;
+    required Id                 receiver  = 1;
     //! The resources conveyed  - must contain at least one element
     repeated SupplyFlowResource resources = 2;
     //! The optional way points the convey has to take to go to the receiver
@@ -1087,25 +686,25 @@ message MissionParameter {
         //! A phase line list
         optional PhaseLinesOrder          phaseLine                = 10;
         //! An automat identifier
-        optional AutomatId                automat                  = 11;
+        optional Id                       automat                  = 11;
         //! An agent identifier
-        optional UnitId                   agent                    = 12;
+        optional Id                       agent                    = 12;
         //! An agent knowledge identifier
-        optional UnitKnowledgeId          agentKnowledge           = 13;
+        optional Id                       agentKnowledge           = 13;
         //! A crowd knowledge identifier
-        optional CrowdKnowledgeId         crowdKnowledge           = 14;
+        optional Id                       crowdKnowledge           = 14;
         //! An object knowledge identifier
-        optional ObjectKnowledgeId        objectKnowledge          = 15;
+        optional Id                       objectKnowledge          = 15;
         //! A urban object knowledge identifier
-        optional UrbanObjectKnowledgeId   urbanKnowledge           = 16;
+        optional Id                       urbanKnowledge           = 16;
         //! A planned work
         optional PlannedWork              plannedWork              = 17;
         //! A nature
         optional Nature                   nature                   = 18;
         //! A resource type
-        optional ResourceType             resourceType             = 19;
+        optional Id                       resourceType             = 19;
         //! A maintenance priority list
-        optional LogMaintenancePriorities logMaintenancePriorities = 20;
+        optional IdList                   logMaintenancePriorities = 20;
         //! A medical priority list
         optional LogMedicalPriorities     logMedicalPriorities     = 21;
         //! A resource network node element
@@ -1126,19 +725,19 @@ message MissionParameter {
         //! A location list
         optional LocationList             locationList             = 29;
         //! An agent identifier list
-        optional UnitIdList               unitList                 = 30;
+        optional IdList                   unitList                 = 30;
         //! An automat identifier list
-        optional AutomatIdList            automatList              = 31;
+        optional IdList                   automatList              = 31;
         //! A unit knowledge list
-        optional UnitKnowledgeIdList      unitKnowledgeList        = 32;
+        optional IdList                   unitKnowledgeList        = 32;
         //! An object knowledge list
-        optional ObjectKnowledgeIdList    objectKnowledgeList      = 33;
+        optional IdList                   objectKnowledgeList      = 33;
         //! A planned work list
         optional PlannedWorkList          plannedWorkList          = 34;
         //! An equipment type
-        optional EquipmentType            equipmentType            = 35;
+        optional Id                       equipmentType            = 35;
         //! An indirect fire identifier
-        optional FireId                   indirectFire             = 36;
+        optional Id                       indirectFire             = 36;
         //! A string
         optional string                   aCharStr                 = 37;
         //! A mission objective
@@ -1146,17 +745,17 @@ message MissionParameter {
         //! A mission objective list
         optional MissionObjectiveList     missionObjectiveList     = 39;
         //! An object identifier
-        optional ObjectId                 object                   = 40;
+        optional Id                       object                   = 40;
         //! A party identifier
-        optional PartyId                  party                    = 41;
+        optional Id                       party                    = 41;
         //! A formation identifier
-        optional FormationId              formation                = 42;
+        optional Id                       formation                = 42;
         //! @todo What's this ?
         optional uint32                   identifier               = 43;
         //! A quantity
         optional int32                    quantity                 = 44;
         //! A knowledge group identifier
-        optional KnowledgeGroupId         knowledgeGroup           = 45;
+        optional Id                       knowledgeGroup           = 45;
         //! An extension list
         optional Extension                extensionList            = 46;
         //! A list of values
@@ -1171,7 +770,7 @@ message MissionParameter {
         //! A stage
         optional string                   stage                    = 51;
         //! A crowd identifier
-        optional CrowdId                  crowd                    = 52;
+        optional Id                       crowd                    = 52;
         //! A phase line function type
         optional PhaseLineOrder.Function  phase_line_function      = 53;
     }
@@ -1194,9 +793,9 @@ message MissionParameters {
 */
 message UnitOrder {
     //! The tasker
-    required UnitId            tasker         = 1;
+    required Id                tasker         = 1;
     //! The mission type
-    required MissionType       type           = 2;
+    required Id                type           = 2;
     //! The mission parameters
     optional MissionParameters parameters     = 3;
     //! The label
@@ -1216,9 +815,9 @@ message UnitOrder {
 */
 message AutomatOrder {
     //! The tasker
-    required AutomatId         tasker         = 1;
+    required Id                tasker         = 1;
     //! The mission type
-    required MissionType       type           = 2;
+    required Id                type           = 2;
     //! The mission parameters
     optional MissionParameters parameters     = 3;
     //! The label
@@ -1238,9 +837,9 @@ message AutomatOrder {
 */
 message CrowdOrder {
     //! The tasker
-    required CrowdId           tasker         = 1;
+    required Id                tasker         = 1;
     //! The mission type
-    required MissionType       type           = 2;
+    required Id                type           = 2;
     //! The mission parameters
     optional MissionParameters parameters     = 3;
     //! The label
@@ -1262,7 +861,7 @@ message FragOrder {
     //! The tasker
     required Tasker            tasker         = 1;
     //! The mission type
-    required FragOrderType     type           = 2;
+    required Id                type           = 2;
     //! The mission parameters
     optional MissionParameters parameters     = 3;
     //! The label
@@ -1307,15 +906,15 @@ message ClientObjectProperty {
 */
 message Diffusion {
     //! The automat identifier
-    optional AutomatId        automat         = 1;
+    optional Id automat         = 1;
     //! The formation identifier
-    optional FormationId      formation       = 2;
+    optional Id formation       = 2;
     //! The party identifier
-    repeated PartyId          party           = 3;
+    repeated Id party           = 3;
     //! The knowledge group identifier
-    optional KnowledgeGroupId knowledge_group = 4;
+    optional Id knowledge_group = 4;
     //! The unit identifier
-    optional UnitId           unit            = 5;
+    optional Id unit            = 5;
 }
 
 /** @struct TacticalLine
@@ -1399,11 +998,11 @@ message ResourceNetwork {
     */
     message Link {
         //! The target identifier
-        required ObjectId   object   = 1;
+        required Id     object   = 1;
         //! The capacity
-        required int32      capacity = 2;
+        required int32  capacity = 2;
         //! The flow identifier
-        required uint32     flow     = 3;
+        required uint32 flow     = 3;
     }
     //! The resource network type
     required ResourceNetworkType resource            = 1;
@@ -1447,13 +1046,13 @@ message ObjectAttributeResourceNetwork {
 */
 message ObjectAttributeConstruction {
     //! The resource type
-    optional ResourceType resource   = 1;
+    optional Id    resource   = 1;
     //! The dotation
-    optional int32        dotation   = 2;
+    optional int32 dotation   = 2;
     //! The density
-    optional float        density    = 3;
+    optional float density    = 3;
     //! The percentage of completion
-    optional int32        percentage = 4;
+    optional int32 percentage = 4;
 }
 
 /** @struct ObjectAttributeMine
@@ -1461,13 +1060,13 @@ message ObjectAttributeConstruction {
 */
 message ObjectAttributeMine {
     //! The resource type
-    optional ResourceType resource   = 1;
+    optional Id    resource   = 1;
     //! The dotation
-    optional int32        dotation   = 2;
+    optional int32 dotation   = 2;
     //! The density
-    optional float        density    = 3;
+    optional float density    = 3;
     //! The percentage of completion
-    optional int32        percentage = 4;
+    optional int32 percentage = 4;
 }
 
 /** @struct ObjectAttributeLodging
@@ -1539,9 +1138,9 @@ message ObjectAttributeEffectDelay {
 */
 message ObjectAttributeNBC {
     //! The danger level @todo unit ?
-    required int32        danger_level = 1;
+    required int32 danger_level = 1;
     //! The NBC agents
-    repeated NBCAgentType nbc_agents   = 2;
+    repeated Id    nbc_agents   = 2;
 }
 
 /** @struct StockResource
@@ -1549,11 +1148,11 @@ message ObjectAttributeNBC {
 */
 message StockResource {
     //! The resource type
-    required ResourceType resource = 1;
+    required Id    resource = 1;
     //! The current amount
-    required int32        current  = 2;
+    required int32 current  = 2;
     //! The maximum amount
-    optional int32        maximum  = 3;
+    optional int32 maximum  = 3;
 }
 
 /** @struct ObjectAttributeStock
@@ -1773,11 +1372,11 @@ message ObjectAttributeMedicalTreatment {
 */
 message ObjectAttributeNBCType {
     //! The agent type
-    required NBCAgentType agent                = 1;
+    required Id    agent                = 1;
     //! The concentration of the agent @todo unit ?
-    required int32        concentration        = 2;
+    required int32 concentration        = 2;
     //! The life duration of the source @todo unit ? @todo rename to duration
-    required int32        source_life_duration = 3;
+    required int32 source_life_duration = 3;
 }
 
 /** @struct ObjectAttributeAltitudeModifier
@@ -1867,13 +1466,13 @@ message ObjectAttributes {
 */
 message Marker {
     //! The marker name
-    required string   name        = 1;
+    required string name        = 1;
     //! The marker description
-    required string   description = 2;
+    required string description = 2;
     //! The marker parent
-    optional MarkerId parent      = 4;
+    optional Id     parent      = 4;
     //! The marker number
-    optional string   number      = 5;
+    optional string number      = 5;
 }
 
 /** @struct PartyAdhesion
@@ -1881,9 +1480,9 @@ message Marker {
 */
 message PartyAdhesion {
     //! The party identifier
-    required PartyId party = 1;
+    required Id    party = 1;
     //! @todo What's this ?
-    required float   value = 2;
+    required float value = 2;
 }
 
 /** @struct PartyAdhesion
@@ -1980,7 +1579,7 @@ message UnitMagicAction {
         //! parameters[1], Quantity: wounded number.
         //! parameters[2], Quantity: contaminated number.
         //! parameters[3], Quantity: dead number.
-        //! all parameters must be positive integers 
+        //! all parameters must be positive integers
         //!     and non-zero.
         crowd_change_health_state         = 15;
         //! Change crowd attitude.
@@ -2011,7 +1610,7 @@ message UnitMagicAction {
         //! successful update.
         change_knowledge_group            = 19;
         //! A change logistic links magic action
-        //! parameters with each parameter has value(0) for 
+        //! parameters with each parameter has value(0) for
         //! 'superior' that is an identifier, an automat or a formation
         change_logistic_links             = 20;
         //! A unit change superior magic action

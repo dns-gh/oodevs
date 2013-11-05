@@ -44,7 +44,7 @@ message ControlCheckPointSaveNow {
 //! have to be given to the automat which dispatches them afterwards.
 //! The operation is acknowledged with a SetAutomatModeAck.
 message SetAutomatMode {
-    required AutomatId       automate = 1;
+    required Id              automate = 1;
     required EnumAutomatMode mode     = 2;
     optional string          name     = 3;
 }
@@ -57,9 +57,9 @@ message SetAutomatMode {
 */
 message UnitCreationRequest {
     //! The agent type
-    required UnitType     type     = 1;
+    required Id           type     = 1;
     //! The superior identifier
-    required AutomatId    superior = 2;
+    required Id           superior = 2;
     //! The position
     required CoordLatLong position = 3;
 }
@@ -97,10 +97,9 @@ message KnowledgeMagicAction {
         //!   This parameter can also be an Quantity (deprecated)
         add_knowledge       = 4;
     }
-    required KnowledgeGroupId  knowledge_group = 1;
+    required Id                knowledge_group = 1;
     required Type              type            = 2;
     required MissionParameters parameters      = 3;
-    //! optional name
     optional string            name            = 4;
 }
 
@@ -169,7 +168,7 @@ message ObjectMagicAction {
         density            = 30;
     }
     //! The object identifier
-    required ObjectId          object     = 1;
+    required Id                object     = 1;
     //! The type of magic action
     required Type              type       = 2;
     //! The parameters of the magic action : the first parameter must
@@ -296,7 +295,7 @@ message ControlEnableVisionCones {
     required bool vision_cones = 1;
     //! Units for which to activate/deactivate vision cones updates,
     //! applies to all units if empty
-    repeated UnitId units = 2;
+    repeated Id   units = 2;
 }
 
 /** @struct ChangePopulationMagicAction
@@ -305,7 +304,7 @@ message ControlEnableVisionCones {
 */
 message ChangePopulationMagicAction {
     //! The population identifier @todo rename to population
-    required PopulationId   tasker     = 1;
+    required Id             tasker     = 1;
     //! The party adhesions
     repeated PartyAdhesion  adhesions  = 2;
     //! The number of healthy persons
@@ -329,11 +328,11 @@ message ChangePopulationMagicAction {
 */
 message BurningCellRequest {
     //! Identifier of the burning object
-    required ObjectId object = 1;
+    required Id    object = 1;
     //! X coordinates of the burning cell
-    required float x = 2;
+    required float x      = 2;
     //! Y coordinates of the burning cell
-    required float y = 3;
+    required float y      = 3;
 }
 
 /** @struct OrderStream
@@ -352,7 +351,7 @@ message OrderStream {
 message ListEnabledVisionCones {
     //! Identifier to start from (included), if omitted start from the
     //! beginning
-    optional UnitId start = 1;
+    optional Id     start = 1;
     //! Maximum number of identifiers to send
     optional uint32 count = 2;
 }

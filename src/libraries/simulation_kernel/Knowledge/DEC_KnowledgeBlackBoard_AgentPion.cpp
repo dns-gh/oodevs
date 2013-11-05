@@ -570,7 +570,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPopulationAttacking( const DEC_Knowled
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const sword::Id& asn ) const
 {
     auto bbKg = pPion_->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
@@ -606,7 +606,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::Id& asn ) const
 {
     return pPion_->GetKnowledgeGroup()->ResolveKnowledgeObject( asn.id() );
 }
@@ -642,7 +642,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const sword::Id& asn ) const
 {
     auto bbKg = pPion_->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )

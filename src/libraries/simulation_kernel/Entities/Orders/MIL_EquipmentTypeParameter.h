@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_EquipmentTypeParameter();
-    explicit MIL_EquipmentTypeParameter( const sword::EquipmentType& asn );
+    explicit MIL_EquipmentTypeParameter( const sword::Id& asn );
     explicit MIL_EquipmentTypeParameter( const PHY_ComposanteTypePion* pEquipmentType );
     virtual ~MIL_EquipmentTypeParameter();
     //@}

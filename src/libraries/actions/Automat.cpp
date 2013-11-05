@@ -86,7 +86,7 @@ void Automat::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Automat_ABC >::CommitTo< sword::AutomatId >( *message.add_value()->mutable_automat() );
+        Entity< Automat_ABC >::CommitTo( *message.add_value()->mutable_automat() );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::CommitTo
@@ -95,7 +95,7 @@ void Automat::CommitTo( sword::MissionParameter& message ) const
 void Automat::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< Automat_ABC >::CommitTo< sword::AutomatId >( *message.mutable_automat() );
+        Entity< Automat_ABC >::CommitTo( *message.mutable_automat() );
 }
 
 // -----------------------------------------------------------------------------

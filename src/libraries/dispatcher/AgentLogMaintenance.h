@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class EquipmentType;
+    class Id;
     class LogMaintenanceState;
     class LogMaintenanceEquipmentAvailability;
 }
@@ -60,10 +60,10 @@ private:
     //@}
 
 private:
-    const Model_ABC&         model_;
-    const kernel::Agent_ABC& agent_;
-    bool                     bSystemEnabled_;
-    std::vector< sword::EquipmentType >        priorities_;
+    const Model_ABC&                          model_;
+    const kernel::Agent_ABC&                  agent_;
+    bool                                      bSystemEnabled_;
+    std::vector< sword::Id >                  priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
     std::vector< MaintenanceEquipmentAvailability > haulersAvailability_;

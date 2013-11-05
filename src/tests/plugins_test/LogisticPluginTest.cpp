@@ -76,17 +76,17 @@ public:
         name = "funeral_" + boost::lexical_cast< std::string >( eFuneral );
     }
 
-    virtual void GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const
+    virtual void GetEquipmentName( const sword::Id& equipmentType, std::string& name ) const
     {
         name = "equipment_" + boost::lexical_cast< std::string >( equipmentType.id() );
     }
 
-    virtual void GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const
+    virtual void GetBreakdownName( const sword::Id& breakdownType, std::string& name ) const
     {
         name = "breakdown_" + boost::lexical_cast< std::string >( breakdownType.id() );
     }
 
-    virtual void GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const
+    virtual void GetResourceName( const sword::Id& resourceType, std::string& name ) const
     {
         name = "resource_" + boost::lexical_cast< std::string >( resourceType.id() );
     }
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
     boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.Path() );
-    
+
     {
         bg::date day1( bg::from_string( "2001/05/17" ) );
 

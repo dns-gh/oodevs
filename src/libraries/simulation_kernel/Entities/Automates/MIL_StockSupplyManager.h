@@ -75,7 +75,7 @@ public:
     virtual void OnSupplyDone          ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual void OnSupplyConvoyArriving( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual void OnSupplyConvoyLeaving ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
-    virtual void Serialize( sword::AutomatId& msg ) const;
+    virtual void Serialize( sword::Id& msg ) const;
     //@}
 
     //! @name Logistic

@@ -243,7 +243,7 @@ bool NET_ASN_Tools::ReadPathList( const PathList&   asn, T_ItinerairePtrVector& 
 // Created: NLD 2003-03-24
 //-----------------------------------------------------------------------------
 // static
-DEC_Decision_ABC* NET_ASN_Tools::ReadAgent( const UnitId& asnAgent )
+DEC_Decision_ABC* NET_ASN_Tools::ReadAgent( const Id& asnAgent )
 {
     MIL_AgentPion* pPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( asnAgent.id() );
     if( !pPion )
@@ -256,7 +256,7 @@ DEC_Decision_ABC* NET_ASN_Tools::ReadAgent( const UnitId& asnAgent )
 // Created: NLD 2003-03-24
 //-----------------------------------------------------------------------------
 // static
-DEC_Decision_ABC* NET_ASN_Tools::ReadAutomate( const UnitId& asnAgent )
+DEC_Decision_ABC* NET_ASN_Tools::ReadAutomate( const Id& asnAgent )
 {
     MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnAgent.id() );
     if( !pAutomate )
@@ -269,7 +269,7 @@ DEC_Decision_ABC* NET_ASN_Tools::ReadAutomate( const UnitId& asnAgent )
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static $$NLDJVT$$ Interet de cette fonction
-boost::shared_ptr< DEC_Knowledge_Agent > NET_ASN_Tools::ReadAgentKnowledge( const UnitKnowledgeId& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Agent > NET_ASN_Tools::ReadAgentKnowledge( const Id& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeAgent( asnAgent );
 }
@@ -279,7 +279,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > NET_ASN_Tools::ReadAgentKnowledge( cons
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static
-boost::shared_ptr< DEC_Knowledge_Object > NET_ASN_Tools::ReadObjectKnowledge( const ObjectKnowledgeId& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Object > NET_ASN_Tools::ReadObjectKnowledge( const Id& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgeObject( asnObject );
 }
@@ -288,7 +288,7 @@ boost::shared_ptr< DEC_Knowledge_Object > NET_ASN_Tools::ReadObjectKnowledge( co
 // Name: NET_ASN_Tools::ReadListKnowledgeObject
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadObjectKnowledgeList( const ObjectKnowledgeIdList& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
+bool NET_ASN_Tools::ReadObjectKnowledgeList( const IdList& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledges.clear(); knowledges.reserve( asnListObject.elem_size() );
     for( int n = 0; n < asnListObject.elem_size(); ++n )
@@ -305,7 +305,7 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ObjectKnowledgeIdList& asnLis
 // Name: NET_ASN_Tools::ReadPopulationKnowledge
 // Created: HME 05-12-22
 //-----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Population > NET_ASN_Tools::ReadPopulationKnowledge( const CrowdKnowledgeId& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr< DEC_Knowledge_Population > NET_ASN_Tools::ReadPopulationKnowledge( const Id& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
 {
     return resolver.ResolveKnowledgePopulation( asnPopulation );
 }
@@ -528,7 +528,7 @@ void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector
 // Name: NET_ASN_Tools::WriteAgent
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgent( const DEC_Decision_ABC& pion, UnitId& asn )
+void NET_ASN_Tools::WriteAgent( const DEC_Decision_ABC& pion, Id& asn )
 {
     asn.set_id( pion.GetPion().GetID() );
 }
@@ -537,7 +537,7 @@ void NET_ASN_Tools::WriteAgent( const DEC_Decision_ABC& pion, UnitId& asn )
 // Name: NET_ASN_Tools::WriteAutomate
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAutomate( const DEC_Decision_ABC& automate, AutomatId& asn )
+void NET_ASN_Tools::WriteAutomate( const DEC_Decision_ABC& automate, Id& asn )
 {
     asn.set_id( automate.GetAutomate().GetID() );
 }
@@ -546,7 +546,7 @@ void NET_ASN_Tools::WriteAutomate( const DEC_Decision_ABC& automate, AutomatId& 
 // Name: NET_ASN_Tools::WriteKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, UnitKnowledgeId& asnKnowledge )
+void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, Id& asnKnowledge )
 {
     asnKnowledge.set_id( knowledge.GetID() );
 }
@@ -555,7 +555,7 @@ void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, U
 // Name: NET_ASN_Tools::WriteObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, ObjectKnowledgeId& asnKnowledge )
+void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, Id& asnKnowledge )
 {
     asnKnowledge.set_id( knowledge.GetID() );
 }
@@ -564,7 +564,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 // Name: NET_ASN_Tools::WriteListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
+void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, IdList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
 {
     listResult.clear_elem();
     for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )

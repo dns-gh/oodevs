@@ -20,7 +20,7 @@ namespace sword
     class ClientToSim;
     class ControlEnableVisionCones;
     class ListEnabledVisionCones;
-    class UnitId;
+    class Id;
 }
 
 namespace tools
@@ -75,7 +75,7 @@ private:
     void Handle( const std::string& link, const sword::ListEnabledVisionCones& message, int context ) const;
 
     bool Validate( dispatcher::ClientPublisher_ABC& publisher, const sword::ControlEnableVisionCones& message, int context, unsigned int client ) const;
-    void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& unitId, bool activate );
+    void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& unitId, bool activate );
     void Register( dispatcher::ClientPublisher_ABC& publisher, bool activate );
 
     void Update();

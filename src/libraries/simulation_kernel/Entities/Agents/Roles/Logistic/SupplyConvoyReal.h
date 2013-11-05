@@ -72,7 +72,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void Serialize( sword::UnitId& msg ) const;
+    virtual void Serialize( sword::Id& msg ) const;
     //@}
 
     //! @name Serialization

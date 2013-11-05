@@ -42,7 +42,7 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::Id& asn, const DEC_KnowledgeResolver_ABC& resolver,
                                                           const MIL_EntityManager_ABC& entityManager )
 {
     MIL_AgentPion* pAgent = entityManager.FindAgentPion( asn.id() );

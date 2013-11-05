@@ -15,6 +15,11 @@
 #include "ParameterVisitor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
+namespace sword
+{
+    class Id;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -42,12 +47,7 @@ public:
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void NotifyDestruction();
-    template< typename M >
-    void CommitTo( M& message ) const
-    {
-        if( GetValue() )
-            message.set_id( id_ );
-    }
+    void CommitTo( sword::Id& message ) const;
     //@}
 
 private:

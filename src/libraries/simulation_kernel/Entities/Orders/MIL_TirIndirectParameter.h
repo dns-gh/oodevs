@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_TirIndirectParameter();
-    explicit MIL_TirIndirectParameter( const sword::FireId& fire );
+    explicit MIL_TirIndirectParameter( const sword::Id& fire );
     virtual ~MIL_TirIndirectParameter();
     //@}
 

@@ -13,12 +13,12 @@
 
 using namespace plugins::vision;
 
-void Units::Register( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& id )
+void Units::Register( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& id )
 {
     units_.insert( Value( &publisher, id.id() ) );
 }
 
-void Units::Unregister( dispatcher::ClientPublisher_ABC& publisher, const sword::UnitId& id )
+void Units::Unregister( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& id )
 {
     auto it = units_.find( boost::make_tuple( &publisher, id.id() ) );
     if( it != units_.end() )

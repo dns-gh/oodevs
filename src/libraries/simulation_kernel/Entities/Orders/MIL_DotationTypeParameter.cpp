@@ -30,7 +30,7 @@ MIL_DotationTypeParameter::MIL_DotationTypeParameter()
 // Name: MIL_DotationTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DotationTypeParameter::MIL_DotationTypeParameter( const sword::ResourceType & asn )
+MIL_DotationTypeParameter::MIL_DotationTypeParameter( const sword::Id & asn )
     : pCategory_( PHY_DotationType::FindDotationCategory( asn.id() ) )
 {
     // NOTHING

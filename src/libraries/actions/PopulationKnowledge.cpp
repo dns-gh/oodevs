@@ -74,7 +74,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.add_value()->mutable_crowdknowledge() );
+        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( *message.add_value()->mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,16 +84,16 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 void PopulationKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
+        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( *message.mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( sword::CrowdKnowledgeId& message ) const
+void PopulationKnowledge::CommitTo( sword::Id& message ) const
 {
-    Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
+    Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------

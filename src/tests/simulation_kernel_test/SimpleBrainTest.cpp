@@ -101,7 +101,6 @@ public:
     }
     virtual void RegisterSpecific( sword::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
 
-
     void UsedByDIA() {}
     void ReleasedByDIA () {}
 

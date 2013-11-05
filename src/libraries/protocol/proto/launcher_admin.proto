@@ -287,11 +287,11 @@ message CheckpointDeleteResponse {
 */
 message SessionNotification {
     message UnitUpdate {
-        required UnitId    unit       = 1;
+        required Id        unit       = 1;
         optional Extension extensions = 2;
     }
     message FormationUpdate {
-        required FormationId formation  = 1;
+        required Id          formation  = 1;
         optional Extension   extensions = 2;
     }
     message ProfileCreation {

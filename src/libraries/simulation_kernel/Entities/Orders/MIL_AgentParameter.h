@@ -30,7 +30,7 @@ public:
     //@{
              MIL_AgentParameter();
     explicit MIL_AgentParameter( const DEC_Decision_ABC* pAgent );
-             MIL_AgentParameter( const sword::UnitId&, const MIL_EntityManager_ABC& entityManager );
+             MIL_AgentParameter( const sword::Id&, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
     //@}
 

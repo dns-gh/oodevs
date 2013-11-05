@@ -55,7 +55,7 @@ public:
     void Draw( const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile ) const;
     bool IsInside( const geometry::Point2f& point ) const;
     void ApplyEffect( weather::Meteo& meteo ) const;
-    void SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sword::UnitId >& perceivers );
+    void SetPerceivers( const ::google::protobuf::RepeatedPtrField< ::sword::Id >& perceivers );
     //@}
 
 private:

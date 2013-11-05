@@ -20,7 +20,7 @@
 
 namespace sword
 {
-    class EquipmentType;
+    class Id;
 }
 
 namespace xml
@@ -67,7 +67,7 @@ public:
     static void Terminate();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
-    static const PHY_ComposanteTypePion* Find( sword::EquipmentType nAsnID );
+    static const PHY_ComposanteTypePion* Find( sword::Id nAsnID );
     //@}
 
     //! @name Instanciation

@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LogMaintenancePrioritiesParameter();
-    explicit MIL_LogMaintenancePrioritiesParameter( const sword::LogMaintenancePriorities & asn );
+    explicit MIL_LogMaintenancePrioritiesParameter( const sword::IdList & asn );
     virtual ~MIL_LogMaintenancePrioritiesParameter();
     //@}
 

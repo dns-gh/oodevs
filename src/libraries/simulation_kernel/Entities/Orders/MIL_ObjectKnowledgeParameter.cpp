@@ -42,7 +42,7 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver,
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::Id& asn, const DEC_KnowledgeResolver_ABC& resolver,
                                                             const MIL_EntityManager_ABC& entityManager )
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );

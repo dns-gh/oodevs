@@ -90,7 +90,7 @@ private:
     const Model& model_;
     const kernel::KnowledgeGroup_ABC& knowledgeGroup_;
     const dispatcher::Agent_ABC& agent_;
-    const sword::UnitType type_;
+    const sword::Id type_;
     unsigned int nRelevance_;
     sword::UnitIdentification::Level nPerceptionLevel_;
     sword::UnitIdentification::Level nMaxPerceptionLevel_;

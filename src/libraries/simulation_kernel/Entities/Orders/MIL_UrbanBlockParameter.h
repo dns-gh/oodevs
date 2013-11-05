@@ -19,7 +19,7 @@ class MIL_CheckPointOutArchive;
 
 namespace sword
 {
-    class UrbanObjectKnowledgeId;
+    class Id;
 }
 
 // =============================================================================
@@ -34,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_UrbanBlockParameter();
-             MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const MIL_EntityManager_ABC& entityManager );
+             MIL_UrbanBlockParameter( const sword::Id& asn, const MIL_EntityManager_ABC& entityManager );
     explicit MIL_UrbanBlockParameter( MIL_UrbanObject_ABC* pUrbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}

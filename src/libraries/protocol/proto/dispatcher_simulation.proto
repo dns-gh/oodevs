@@ -24,7 +24,7 @@ message CtrlDispatcherTickAck {}
 
 message CtrlEnableVisionCones {
     required bool vision_cones = 1;
-    repeated UnitId units = 2;
+    repeated Id   units = 2;
 }
 
 message DispatcherToSim {

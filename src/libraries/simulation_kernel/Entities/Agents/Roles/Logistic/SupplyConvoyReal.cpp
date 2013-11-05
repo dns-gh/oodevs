@@ -285,7 +285,7 @@ bool SupplyConvoyReal::IsConvoyDestroyed() const
 // Name: SupplyConvoy::Serialize
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-void SupplyConvoyReal::Serialize( sword::UnitId& msg ) const
+void SupplyConvoyReal::Serialize( sword::Id& msg ) const
 {
     if( convoyPion_ )
         msg.set_id( convoyPion_->GetID() );

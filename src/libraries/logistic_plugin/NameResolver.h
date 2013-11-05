@@ -55,9 +55,9 @@ public:
     virtual void GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const;
     virtual void GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const;
     virtual void GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const;
-    virtual void GetEquipmentName( const sword::EquipmentType& equipmentType, std::string& name ) const;
-    virtual void GetBreakdownName( const sword::BreakdownType& breakdownType, std::string& name ) const;
-    virtual void GetResourceName( const sword::ResourceType& resourceType, std::string& name ) const;
+    virtual void GetEquipmentName( const sword::Id& equipmentType, std::string& name ) const;
+    virtual void GetBreakdownName( const sword::Id& breakdownType, std::string& name ) const;
+    virtual void GetResourceName( const sword::Id& resourceType, std::string& name ) const;
     //@}
 
 private:

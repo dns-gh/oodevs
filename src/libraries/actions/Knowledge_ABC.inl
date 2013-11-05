@@ -106,3 +106,14 @@ void Knowledge_ABC< ConcreteEntity >::NotifyValueSet()
         isEntityValid_ = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Knowledge_ABC::CommitTo
+// Created: BAX 2013-10-31
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void Knowledge_ABC< ConcreteEntity >::CommitTo( sword::Id& message ) const
+{
+    if( GetValue() )
+        message.set_id( id_ );
+}

@@ -193,7 +193,7 @@ void Model::ReadFormation( xml::xistream& xis )
 {
     unsigned int id = xis.attribute< unsigned int >( "id" );
     sword::Diffusion diffusion;
-    sword::FormationId formation;
+    sword::Id formation;
     formation.set_id( id );
     diffusion.mutable_formation()->set_id( id ) ;
     xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )

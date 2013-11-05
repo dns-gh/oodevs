@@ -140,10 +140,7 @@ void NBCAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     asn.mutable_nbc()->set_danger_level( danger_ );
     asn.mutable_nbc()->mutable_nbc_agents();
     for( auto it = agents_.begin(); it != agents_.end(); ++it )
-    {
-        sword::NBCAgentType& data = *asn.mutable_nbc()->add_nbc_agents();
-        data.set_id( (*it)->GetID() ) ;
-    }
+        asn.mutable_nbc()->add_nbc_agents()->set_id( (*it)->GetID() );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class CrowdKnowledgeId;
+    class Id;
 }
 
 namespace kernel
@@ -53,7 +53,7 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
-    void CommitTo( sword::CrowdKnowledgeId& asn ) const;
+    void CommitTo( sword::Id& asn ) const;
     //@}
 
     //! @name Helpers

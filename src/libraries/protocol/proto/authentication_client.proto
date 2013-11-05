@@ -218,39 +218,39 @@ message RoleType {
 */
 message Profile {
     //! The profile unique identifier
-    required string          login                 = 1;
+    required string login                 = 1;
     //! The password is optional and allows the protection of a
     //! profile during the authentication process
-    optional string          password              = 2;
+    optional string password              = 2;
     //! Profiles with read-only permissions can only see the situation
     //! from the specified formations but cannot control them
-    optional FormationIdList read_only_formations  = 3;
+    optional IdList read_only_formations  = 3;
     //! Profiles with read-write permissions can see the situation
     //! from the specified formations and control them
-    optional FormationIdList read_write_formations = 4;
+    optional IdList read_write_formations = 4;
     //! Profiles with read-only permissions can only see the situation
     //! from the specified automats but cannot control them
-    optional AutomatIdList   read_only_automates   = 5;
+    optional IdList read_only_automates   = 5;
     //! Profiles with read-write permissions can see the situation from
     //! the specified automats and control them
-    optional AutomatIdList   read_write_automates  = 6;
+    optional IdList read_write_automates  = 6;
     //! Profiles with read-only permissions can only see the situation
     //! from the specified parties but cannot control them
-    optional PartyIdList     read_only_parties     = 7;
+    optional IdList read_only_parties     = 7;
     //! Profiles with read-write permissions can see the situation
     //! from the specified parties and control them
-    optional PartyIdList     read_write_parties    = 8;
+    optional IdList read_write_parties    = 8;
     //! Profiles with read-only permissions can only see the situation
     //! from the specified crowds but cannot control them
-    optional CrowdIdList     read_only_crowds      = 9;
+    optional IdList read_only_crowds      = 9;
     //! Profiles with read-write permissions can see the situation from
     //! the specified crowds and control them
-    optional CrowdIdList     read_write_crowds     = 10;
+    optional IdList read_write_crowds     = 10;
     //! Supervisor access grants a profile the right to execute "magic
     //! actions" such as teleporting or recompleting a unit, and also
     //! edit profiles and control the simulation (pause, resume, changing
     //! speed factor)
-    required bool            supervisor            = 11;
+    required bool   supervisor            = 11;
 }
 
 /** @struct ConnectedProfileList

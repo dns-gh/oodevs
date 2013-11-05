@@ -29,12 +29,12 @@ MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter()
 // Name: MIL_LogMaintenancePrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const sword::LogMaintenancePriorities & asn )
+MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const sword::IdList & asn )
 {
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        sword::EquipmentType nCompTypeMosID = asn.elem(i);
+        sword::Id nCompTypeMosID = asn.elem(i);
         const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
