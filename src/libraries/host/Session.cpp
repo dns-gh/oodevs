@@ -582,8 +582,9 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
     T_Process copy;
     Node_ABC::T_Token token;
     {
-        last_error_ = GetLastError( deps_.fs, GetOutput() );
+        const std::string last_error = GetLastError( deps_.fs, GetOutput() );
         boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
+        last_error_ = last_error;
         status_ = GetIdleStatus( IsReplay() );
         copy.swap( process_ );
         if( timeline_ )
