@@ -448,8 +448,8 @@ class SessionItemView extends Backbone.View
         data.replay_license = check_license "sword-replayer", licenses.model
         @$el.html session_template data
         @$el.find(".error-btn").popover
-            content: data.last_error,
-            title: "Error",
+            content: data.last_error
+            title: "Error"
             placement: "bottom"
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
