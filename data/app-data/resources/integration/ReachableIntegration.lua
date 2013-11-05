@@ -333,8 +333,12 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
     started = function( entity, pathType )
         return integration.updateMoveToIt( entity, pathType )
     end, 
-    stop = function( entity, pathType )
-        return integration.deselectMoveToIt( entity )
+    stop = function( entity, pathType, waypoints )
+        if waypoints and #waypoints > 0 then
+            return integration.deselectMoveToIt( entity )
+        else
+            return integration.stopMoveToIt( entity )
+        end
     end,
 } )
 
