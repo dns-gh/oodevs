@@ -129,6 +129,8 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
         realDate_ = message.real_date_time().data();
     if( message.has_first_tick() )
         firstTick_ = message.first_tick();
+    if( message.has_end_date_time() )
+        endDateTime_ = message.end_date_time().data();
     controller_.Update( *this );
 }
 
@@ -181,6 +183,17 @@ void Simulation::Update( const sword::ControlEndTick& message )
 void Simulation::Update( const sword::ControlSendCurrentStateEnd& /*message*/ )
 {
     initialized_ = true;
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Update
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+void Simulation::Update( const sword::NewDataChunkNotification& message )
+{
+    if( message.has_end_date_time() )
+        endDateTime_ = message.end_date_time().data();
     controller_.Update( *this );
 }
 
@@ -351,6 +364,15 @@ namespace
 QString Simulation::GetTimeAsString() const
 {
     return ::GetTimeAsString( GetDateTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetEndDateTime
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+QDateTime Simulation::GetEndDateTime() const
+{
+    return tools::IsoStringToQDateTime( endDateTime_ );
 }
 
 // -----------------------------------------------------------------------------

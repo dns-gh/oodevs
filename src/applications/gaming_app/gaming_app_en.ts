@@ -120,14 +120,6 @@
         <translation>Time range</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>First tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Duration</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation>Send request</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Name:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation>Start date</translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation>End date</translation>
     </message>
 </context>
 <context>

@@ -64,6 +64,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChange( int index );
+    void OnStartDateChanged( const QDateTime& startDate );
     void Request();
     //@}
 
@@ -91,8 +92,8 @@ private:
     QComboBox* functions_;
     QLabel* description_;
     QGroupBox* timeGroup_;
-    QSpinBox* firstTick_;
-    QSpinBox* duration_;
+    QDateTimeEdit* startDate_;
+    QDateTimeEdit* endDate_;
     QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;

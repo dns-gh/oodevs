@@ -25,7 +25,6 @@ IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const Indica
     , displayName_( displayName )
     , done_( false )
     , firstTick_( 0 )
-    , duration_( std::numeric_limits< unsigned int >::max() )
 {
     controller_.Create( *this );
 }
@@ -41,14 +40,13 @@ IndicatorRequest::IndicatorRequest( xml::xistream& xis, kernel::Controller& cont
     , displayName_( xis.attribute< std::string >( "name" ).c_str() )
     , done_( false )
     , firstTick_( 0 )
-    , duration_( std::numeric_limits< unsigned int >::max() )
 {
     xis >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &IndicatorRequest::ReadParameter )
         >> xml::end
         >> xml::optional >> xml::start( "time-range" )
-            >> xml::optional >> xml::attribute( "first-tick", firstTick_ )
-            >> xml::optional >> xml::attribute( "duration", duration_ )
+            >> xml::attribute( "start-date", startDate_ )
+            >> xml::attribute( "end-date", endDate_ )
         >> xml::end;
     controller_.Create( *this );
 }
@@ -84,10 +82,10 @@ void IndicatorRequest::SetParameter( const std::string& name, const std::string&
 // Name: IndicatorRequest::SetTimeRange
 // Created: JSR 2011-04-26
 // -----------------------------------------------------------------------------
-void IndicatorRequest::SetTimeRange( unsigned int firstTick, unsigned int duration )
+void IndicatorRequest::SetTimeRange( const std::string& startDate, const std::string& endDate )
 {
-    firstTick_ = firstTick;
-    duration_ = duration;
+    startDate_ = startDate;
+    endDate_ = endDate;
 }
 
 // -----------------------------------------------------------------------------
@@ -100,11 +98,10 @@ void IndicatorRequest::Commit() const
     const std::string request = definition_.Commit( parameters_ );
     message().set_identifier( reinterpret_cast< unsigned int >( this ) );
     message().set_request( request );
-    bool durationDefined = duration_ != std::numeric_limits< unsigned int >::max();
-    if( firstTick_ != 0 || durationDefined )
+    if( !startDate_.empty() && !endDate_.empty() )
     {
-        message().mutable_time_range()->set_begin_tick( firstTick_ );
-        message().mutable_time_range()->set_end_tick( durationDefined ? firstTick_ + duration_ : duration_ );
+        message().mutable_date_time_range()->mutable_begin_date()->set_data( startDate_ );
+        message().mutable_date_time_range()->mutable_end_date()->set_data( endDate_ );
     }
     message.Send( publisher_, 0 );
 }
@@ -135,14 +132,12 @@ void IndicatorRequest::Save( xml::xostream& xos ) const
                     << xml::attribute( "value", it->second )
                 << xml::end;
     xos     << xml::end;
-    if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
+    if( !startDate_.empty() && !endDate_.empty() )
     {
-        xos << xml::start( "time-range" );
-        if( firstTick_ != 0 )
-            xos << xml::attribute( "first-tick", firstTick_ );
-        if( duration_ != std::numeric_limits< unsigned int >::max() )
-            xos << xml::attribute( "duration", duration_ );
-         xos << xml::end;
+        xos << xml::start( "time-range" )
+                << xml::attribute( "start-date", startDate_ )
+                << xml::attribute( "end-date", endDate_ )
+            << xml::end;
     }
     xos << xml::end;
 }

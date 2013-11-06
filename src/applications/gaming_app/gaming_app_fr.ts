@@ -120,14 +120,6 @@
         <translation>Plage temporelle</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>Premier tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Durée</translation>
-    </message>
-    <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation>Date de début</translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation>Date de fin</translation>
     </message>
 </context>
 <context>

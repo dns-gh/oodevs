@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     void SetParameter( const std::string& name, const std::string& value );
-    void SetTimeRange( unsigned int firstTick, unsigned int duration );
+    void SetTimeRange( const std::string& startDate, const std::string& endDate );
     void Commit() const;
     void SetDisplayName( const QString& name );
     void Save( xml::xostream& xos ) const;
@@ -90,7 +90,8 @@ private:
     T_Parameters parameters_;
     bool done_;
     unsigned int firstTick_;
-    unsigned int duration_;
+    std::string startDate_;
+    std::string endDate_;
     T_Data result_;
     T_Data newValues_;
     std::string error_;
