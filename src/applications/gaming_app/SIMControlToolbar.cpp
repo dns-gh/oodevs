@@ -120,26 +120,38 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers&
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
     , stopPix_      ( MAKE_ICON( stop ) )
+    , goToStartPix_ ( MAKE_ICON( go_to_start ) )
+    , goToEndPix_   ( MAKE_ICON( go_to_end ) )
 {
     setObjectName( "simControl" );
     setWindowTitle( tr( "Simulation control" ) );
     pConnectButton_ = new QToolButton( this );
-    pConnectButton_->setIconSet( disconnectPix_ );
+    pConnectButton_->setIcon( disconnectPix_ );
     pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
     pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) );
 
+    QToolButton* pGoToStartButton = new QToolButton( this );
+    pGoToStartButton->setIcon( goToStartPix_ );
+    pGoToStartButton->setTextLabel( tr( "Go to start (Alt+A)" ) );
+    pGoToStartButton->setShortcut( QKeySequence( Qt::ALT + Qt::Key_A ) );
+
     pPlayButton_ = new QToolButton( this );
-    pPlayButton_->setIconSet( MAKE_ICON( stop ) );
+    pPlayButton_->setIcon( MAKE_ICON( stop ) );
     pPlayButton_->setTextLabel( tr( "Pause (Alt+P)" ) );
     pPlayButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_P ) );
     pPlayButton_->setEnabled( false );
 
     pStepButton_ = new QToolButton( this );
     pStepButton_->setAccel( Qt::Key_S );
-    pStepButton_->setIconSet( MAKE_ICON( step ) );
+    pStepButton_->setIcon( MAKE_ICON( step ) );
     pStepButton_->setTextLabel( tr( "Step (Alt+S)" ) );
     pStepButton_->setEnabled( false );
     pStepButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_S ) );
+
+    QToolButton* pGoToEndButton = new QToolButton( this );
+    pGoToEndButton->setIcon( goToEndPix_ );
+    pGoToEndButton->setTextLabel( tr( "Go to end (Alt+Z)" ) );
+    pGoToEndButton->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Z ) );
 
     pSpeedSpinBox_ = new SpinBox( "pSpeedSpinBox", 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
@@ -152,7 +164,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers&
     pSpeedButton_->setEnabled( false );
 
     pCheckpointButton_ = new QToolButton( this );
-    pCheckpointButton_->setIconSet( MAKE_ICON( checkpoint ) );
+    pCheckpointButton_->setIcon( MAKE_ICON( checkpoint ) );
     pCheckpointButton_->setTextLabel( tr( "Save checkpoint" ) );
     pCheckpointButton_->setEnabled( false );
     {
@@ -176,21 +188,27 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers&
     pDisconnectDlg_->hide();
 
     addWidget( pConnectButton_ );
+    pGoToStartAction_ = addWidget( pGoToStartButton );
     addWidget( pPlayButton_ );
     addWidget( pStepButton_ );
+    pGoToEndAction_ = addWidget( pGoToEndButton );
     addWidget( new QLabel( " ", this ) );
     addWidget( new QLabel( tr( "Speed factor: " ), this ) );
     addWidget( pSpeedSpinBox_ );
     addWidget( pSpeedButton_ );
     pCheckpointAction_ = addWidget( pCheckpointButton_ );
     pCheckpointAction_->setVisible( false );
+    pGoToStartAction_->setVisible( false );
+    pGoToEndAction_->setVisible( false );
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
-    connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
-    connect( pPlayButton_,    SIGNAL( clicked( bool ) ), pParent, SLOT( PlayPauseSoundControl( bool ) ) );
-    connect( pStepButton_,    SIGNAL( clicked() ), SLOT( SlotStep() ) );
-    connect( pSpeedButton_,   SIGNAL( clicked() ), SLOT( SlotSpeedChange() ) );
-    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );
+    connect( pGoToStartButton, SIGNAL( clicked() ), SLOT( SlotGoToStart() ) );
+    connect( pPlayButton_, SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
+    connect( pPlayButton_, SIGNAL( clicked( bool ) ), pParent, SLOT( PlayPauseSoundControl( bool ) ) );
+    connect( pStepButton_, SIGNAL( clicked() ), SLOT( SlotStep() ) );
+    connect( pGoToEndButton, SIGNAL( clicked() ), SLOT( SlotGoToEnd() ) );
+    connect( pSpeedButton_, SIGNAL( clicked() ), SLOT( SlotSpeedChange() ) );
+    connect( pSpeedSpinBox_, SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );
     connect( pCheckpointButton_, SIGNAL( clicked() ), SLOT( SlotCheckpoint() ) );
 
     controllers_.Update( *this );
@@ -215,10 +233,10 @@ void SIMControlToolbar::SlotConnectDisconnect()
         pDisconnectDlg_->show();
     else
     {
-        pConnectButton_->setIconSet( MAKE_ICON( connecting ) );
+        pConnectButton_->setIcon( MAKE_ICON( connecting ) );
         pConnectButton_->setTextLabel( tr( "Connecting" ) );
         pConnectDlg_->exec();
-        pConnectButton_->setIconSet( disconnectPix_ );
+        pConnectButton_->setIcon( disconnectPix_ );
         pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
         pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) ); // bug QT setText() function overwrites the already defined shortcut
     }
@@ -243,6 +261,24 @@ void SIMControlToolbar::SlotPlayPause()
 void SIMControlToolbar::SlotStep()
 {
     simulationController_.Step();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::SlotGoToStart
+// Created: JSR 2013-10-30
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::SlotGoToStart()
+{
+    simulationController_.SkipToTick( simulationController_.GetFirstTick() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::SlotGoToEnd
+// Created: JSR 2013-10-30
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::SlotGoToEnd()
+{
+    simulationController_.SkipToTick( simulationController_.GetTickCount() - 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,11 +312,13 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         if( connected_ )
         {
             pConnectButton_->setPopupMode( QToolButton::InstantPopup );
-            pConnectButton_->setIconSet( connectPix_ );
+            pConnectButton_->setIcon( connectPix_ );
             pConnectButton_->setTextLabel( tr( "Disconnect (Alt+C)" ) );
             pConnectButton_->setPopup( 0 );
             pPlayButton_->setEnabled( true );
             pStepButton_->setEnabled( true );
+            pGoToEndAction_->setEnabled( true );
+            pGoToStartAction_->setEnabled( true );
             if( !pSpeedSpinBox_->isEnabled() )
                 pSpeedSpinBox_->setEnabled( true );
             if( !pCheckpointButton_->isEnabled() )
@@ -289,7 +327,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         else
         {
             pConnectButton_->setPopupMode( QToolButton::MenuButtonPopup );
-            pConnectButton_->setIconSet( disconnectPix_ );
+            pConnectButton_->setIcon( disconnectPix_ );
             pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
             pConnectButton_->setFocus();
             {
@@ -300,6 +338,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             }
             pPlayButton_->setEnabled( false );
             pStepButton_->setEnabled( false );
+            pGoToEndAction_->setEnabled( false );
+            pGoToStartAction_->setEnabled( false );
             pSpeedSpinBox_->setEnabled( false );
             pSpeedButton_->setEnabled( false );
             pCheckpointButton_->setEnabled( false );
@@ -312,12 +352,12 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         paused_ = simulation.IsPaused();
         if( paused_ )
         {
-            pPlayButton_->setIconSet( playPix_ );
+            pPlayButton_->setIcon( playPix_ );
             pPlayButton_->setTextLabel( tr( "Unpause (Alt+P)" ) );
         }
         else
         {
-            pPlayButton_->setIconSet( stopPix_ );
+            pPlayButton_->setIcon( stopPix_ );
             pPlayButton_->setTextLabel( tr( "Pause (Alt+P)" ) );
         }
         pPlayButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_P ) );
@@ -339,6 +379,9 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
     const bool super = profile.IsSupervision();
     pPlayButton_->setEnabled( super );
+    pStepButton_->setEnabled( super );
+    pGoToEndAction_->setEnabled( super );
+    pGoToStartAction_->setEnabled( super );
     pSpeedSpinBox_->setEnabled( super );
     pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
@@ -353,6 +396,8 @@ void SIMControlToolbar::NotifyModeChanged( E_Modes newMode, bool useDefault, boo
 {
     RichToolBar::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
     pCheckpointButton_->setVisible( newMode != eModes_Replay );
+    pGoToStartAction_->setVisible( newMode == eModes_Replay );
+    pGoToEndAction_->setVisible( newMode == eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------

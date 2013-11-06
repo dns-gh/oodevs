@@ -115,6 +115,8 @@ void SimulationModel::Update( const sword::ControlBeginTick& msg )
 {
     nCurrentTick_ = msg.current_tick();
     date_ = msg.date_time().data();
+    if( msg.has_real_date_time() )
+        realDate_ = msg.real_date_time().data();
     if( initialDate_.empty() )
         initialDate_ = date_;
 }
@@ -165,6 +167,8 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned i
     msg().set_current_tick( nCurrentTick_ );
     msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
     msg().mutable_date_time()->set_data( date_.c_str() );
+    if( !realDate_.empty() )
+        msg().mutable_real_date_time()->set_data( realDate_.c_str() );
     msg().set_tick_duration( nTickDuration_ );
     msg().set_time_factor( factor );
     msg().set_status( status );
@@ -183,5 +187,7 @@ void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
     client::ControlBeginTick msg;
     msg().set_current_tick( 0 );
     msg().mutable_date_time()->set_data( date_.c_str() );
+    if( !realDate_.empty() )
+        msg().mutable_real_date_time()->set_data( realDate_.c_str() );
     msg.Send( publisher );
 }

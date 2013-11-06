@@ -2756,6 +2756,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unpause (Alt+P)</source>
         <translation>Reprendre (Alt+P)</translation>
     </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation>Aller au début (Alt+A)</translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation>Aller à la fin (Alt+Z)</translation>
+    </message>
 </context>
 <context>
     <name>Score</name>

@@ -47,6 +47,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , network_( network )
     , slider_( 0 )
     , sliderTick_( 0 )
+    , lastTickSkip_( 0 )
 {
     setWindowTitle( tr( "Replay control" ) );
     QLabel* label = new QLabel( this );
@@ -119,6 +120,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
         }
         SpinBox()->setRange( simulation.GetFirstTick(), maxTick );
+        SpinBox()->setSuffix( QString( " / %1" ).arg( maxTick ) );
         slider_->setRange( simulation.GetFirstTick(), maxTick );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->blockSignals( true );
@@ -282,7 +284,10 @@ void ReplayerToolbar::OnRefresh()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::SkipToTick( unsigned int tick )
 {
+    if( lastTickSkip_ == tick )
+        return;
     simulationController_.SkipToTick( tick - 1 );
+    lastTickSkip_ = tick;
 }
 
 // -----------------------------------------------------------------------------

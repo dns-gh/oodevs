@@ -23,7 +23,9 @@ namespace dispatcher
 
 namespace sword
 {
+    class ControlBeginTick;
     class ControlInformation;
+    class SimToClient;
 }
 
 namespace plugins
@@ -51,7 +53,7 @@ public:
     //@{
     void ControlInformation( const sword::ControlInformation& controlInformation );
     void CreateNewFragment ( bool first = false );
-    void StartFrame        ( const Savable_ABC& message, const std::string& dateTime );
+    void StartFrame        ( const Savable_ABC& message, const sword::ControlBeginTick& controlBeginTickMsg );
     void SaveUpdateMessage ( const Savable_ABC& message );
     void EndFrame          ( const Savable_ABC& message );
     void SaveKeyFrame      ( const Savable_ABC& message );
@@ -73,6 +75,7 @@ private:
     dispatcher::ClientPublisher_ABC& client_;
     static const tools::Path currentFolderName_;
     tools::Path recorderDirectory_;
+    std::string simTime_;
     std::string realTime_;
     dispatcher::Frame current_;
     tools::Ofstream index_;

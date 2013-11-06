@@ -17,6 +17,7 @@
 
 namespace sword
 {
+    class ControlBeginTick;
     class SimToClient;
 }
 
@@ -56,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void StartFrame( const sword::SimToClient& message, const std::string& dateTime );
+    void StartFrame( const sword::SimToClient& message, const sword::ControlBeginTick& controlBeginTickMsg );
     void EndFrame( const sword::SimToClient& message );
     //@}
 

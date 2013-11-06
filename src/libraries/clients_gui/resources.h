@@ -24,6 +24,8 @@ DECLARE_ICON( notconnected );
 DECLARE_ICON( play );
 DECLARE_ICON( step );
 DECLARE_ICON( stop );
+DECLARE_ICON( go_to_start );
+DECLARE_ICON( go_to_end );
 DECLARE_ICON( textsmall );
 DECLARE_ICON( textbig );
 DECLARE_ICON( crossings );

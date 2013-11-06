@@ -1,0 +1,22 @@
+/* XPM */
+static const char * xpm_go_to_end[] = {
+"16 16 3 1",
+"a c #000000008080",
+"b c None",
+"c c #00000000ffff",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbaabbbbbbbbaab",
+"bbbccaabbbbbbccb",
+"bbbccccaabbbbccb",
+"bbbccccccaabbccb",
+"bbbcccccccccaccb",
+"bbbcccccccccaccb",
+"bbbccccccaabbccb",
+"bbbccccaabbbbccb",
+"bbbccaabbbbbbccb",
+"bbbaabbbbbbbbaab",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb",
+"bbbbbbbbbbbbbbbb"};

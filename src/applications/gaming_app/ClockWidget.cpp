@@ -23,71 +23,88 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler )
-    : Q3HBox( parent, "ClockWidget" )
+    : QWidget( parent )
     , controllers_( controllers )
 {
-    static const QColor foregroundColor( 173, 230, 255 );
-    static const QColor backgroundColor( 13, 122, 168 );
+    QHBoxLayout* mainLayout = new QHBoxLayout();
+    mainLayout->setMargin( 0 );
+    mainLayout->setSpacing( 0 );
+    setObjectName( "ClockWidget" );
+    setBackgroundColor( QColor( 13, 122, 168 ) );
+    setAutoFillBackground( true );
 
-    setMinimumSize( 200, 80 );
-    setStyleSheet("Q3HBox { background-color: #0d7aa8; }");
-    {
-        Q3VBox* vBox = new Q3VBox( this );
-        vBox->setMargin( 5 );
-        vBox->setMaximumWidth( 25 );
-        vBox->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
-    }
-    {
-        Q3VBox* vBox = new Q3VBox( this );
-        QFont font;
-        font.setPixelSize( 40 );
-        font.setBold( true );
-        time_ = new QLabel( vBox );
-        time_->setFont( font );
-        time_->setPaletteForegroundColor( foregroundColor );
-        time_->setText( "00:00:00" );
-        time_->setAlignment( Qt::AlignCenter );
-        Q3HBox* box = new Q3HBox( vBox );
-        box->setFixedHeight( 1 );
-        box->layout()->setAlignment( Qt::AlignCenter );
-        QLabel* spacer = new QLabel( box );
-        spacer->setFixedWidth( 100 );
-        spacer->setPaletteBackgroundColor( foregroundColor );
-        day_ = new QLabel( vBox );
-        day_->setFixedHeight( 25 );
-        day_->setPaletteForegroundColor( foregroundColor );
-        day_->setText( tools::translate( "ClockWidget", "Day 1" ) );
-        day_->setAlignment( Qt::AlignCenter );
-    }
-    {
-        ClockEditDialog* editor = new ClockEditDialog( this, controllers, scheduler );
-        AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
-        Q3VBox* vBox = new Q3VBox( this );
-        vBox->setMargin( 5 );
-        vBox->setMaximumWidth( 25 );
-        vBox->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
-        {
-            QPushButton* editButton = new QPushButton( vBox );
-            editButton->setIconSet( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_edit.png" ) ) );
-            editButton->setFlat( true );
-            editButton->setFixedSize( 22, 22 );
-            editButton->setPaletteBackgroundColor( backgroundColor );
-            QToolTip::add( editButton, tools::translate( "ClockWidget", "Change date and time" ) );
-            connect( editButton, SIGNAL( clicked() ), editor, SLOT( show() ) );
-        }
-        {
-            alarmButton_ = new QPushButton( vBox );
-            alarmButton_->setIconSet( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ) ) );
-            alarmButton_->setFlat( true );
-            alarmButton_->setFixedSize( 22, 22 );
-            alarmButton_->setPaletteBackgroundColor( backgroundColor );
-            alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
-            QToolTip::add( alarmButton_, tools::translate( "ClockWidget", "Configure alarms" ) );
-            connect( alarmButton_, SIGNAL( clicked() ), alarms, SLOT( show() ) );
-        }
-    }
+    mainLayout->addStretch();
+
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    vLayout->setMargin( 0 );
+    vLayout->setSpacing( 0 );
+    vLayout->setSizeConstraint( QLayout::SetMinimumSize );
+    const QColor foregroundColor( 173, 230, 255 );
+    time_ = new QLabel();
+    QFont font = time_->font();
+    font.setPixelSize( 40 );
+    font.setBold( true );
+    time_->setFont( font );
+    time_->setPaletteForegroundColor( foregroundColor );
+    time_->setText( "00:00:00" );
+    time_->setAlignment( Qt::AlignCenter );
+    realDateTime_ = new QLabel();
+    font = realDateTime_->font();
+    font.setPixelSize( 10 );
+    realDateTime_->setFont( font );
+    realDateTime_->setPaletteForegroundColor( foregroundColor );
+    realDateTime_->setAlignment( Qt::AlignCenter );
+
+    day_ = new QLabel();
+    day_->setFixedHeight( 25 );
+    day_->setPaletteForegroundColor( foregroundColor );
+    day_->setText( tools::translate( "ClockWidget", "Day 1" ) );
+    day_->setAlignment( Qt::AlignCenter );
+
+    QVBoxLayout* timeLayout = new QVBoxLayout();
+    timeLayout->setSpacing( 0 );
+    timeLayout->addWidget( time_ );
+    timeLayout->addWidget( realDateTime_ );
+
+    vLayout->addStretch();
+    vLayout->addLayout( timeLayout );
+    vLayout->addStretch();
+    vLayout->addWidget( day_ );
+
+    mainLayout->addLayout( vLayout );
+    mainLayout->addStretch();
+
+    vLayout = new QVBoxLayout();
+    vLayout->setMargin( 5 );
+    vLayout->setSpacing( 5 );
+    vLayout->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
+
+    QPushButton* editButton = new QPushButton();
+    editButton->setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_edit.png" ) ) );
+    editButton->setFlat( true );
+    editButton->setFixedSize( 22, 22 );
+    QToolTip::add( editButton, tools::translate( "ClockWidget", "Change date and time" ) );
+
+    alarmButton_ = new QPushButton();
+    alarmButton_->setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ) ) );
+    alarmButton_->setFlat( true );
+    alarmButton_->setFixedSize( 22, 22 );
+    alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
+    QToolTip::add( alarmButton_, tools::translate( "ClockWidget", "Configure alarms" ) );
+
+    vLayout->addWidget( editButton );
+    vLayout->addWidget( alarmButton_ );
+    mainLayout->addLayout( vLayout );
+
+    setLayout( mainLayout );
+
+    ClockEditDialog* editor = new ClockEditDialog( this, controllers, scheduler );
+    AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
+
+    connect( editButton, SIGNAL( clicked() ), editor, SLOT( show() ) );
+    connect( alarmButton_, SIGNAL( clicked() ), alarms, SLOT( show() ) );
+
     controllers_.Register( *this );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -100,17 +117,6 @@ ClockWidget::~ClockWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClockWidget paintEvent
-// Created: SBO 2011-06-22
-// -----------------------------------------------------------------------------
-void ClockWidget::paintEvent( QPaintEvent* = 0)
-{
-    QPainter p;
-    if( p.begin( this ) )
-        p.end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ClockWidget::NotifyUpdated
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
@@ -118,14 +124,17 @@ void ClockWidget::NotifyUpdated( const Simulation& simulation )
 {
     day_ ->setText( simulation.GetDateAsString() );
     time_->setText( simulation.GetTimeAsString() );
+    if( GetCurrentMode() == eModes_Replay )
+        realDateTime_->setText( QString( "%1 - %2" ).arg( simulation.GetRealDateAsString() ).arg( simulation.GetRealTimeAsString() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClockWidget::SetAlarmVisible
-// Created: NPT 2013-02-28
+// Name: ClockWidget::NotifyModeChanged
+// Created: JSR 2013-10-31
 // -----------------------------------------------------------------------------
-void ClockWidget::SetAlarmVisible( bool visible )
+void ClockWidget::NotifyModeChanged( E_Modes newMode )
 {
-    alarmButton_->setVisible( visible );
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    alarmButton_->setVisible( newMode != eModes_Replay );
+    realDateTime_->setVisible( newMode == eModes_Replay );
 }
-

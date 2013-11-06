@@ -87,6 +87,9 @@ public:
     virtual QDateTime GetDateTime() const;
     virtual QString GetTimeAsString() const;
     QString GetDateAsString() const;
+    QDateTime GetRealDateTime() const;
+    QString GetRealTimeAsString() const;
+    QString GetRealDateAsString() const;
 
     int GetTime() const;                    //!< seconds since simulation start
 
@@ -119,7 +122,8 @@ private:
     unsigned int firstTick_;
     int time_;
     std::string initialDate_;
-    std::string date_;
+    std::string simDate_;
+    std::string realDate_;
     bool paused_;
     bool connected_;
     bool initialized_;

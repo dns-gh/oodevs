@@ -58,6 +58,8 @@ private slots:
     void SlotConnectDisconnect();
     void SlotPlayPause();
     void SlotStep();
+    void SlotGoToStart();
+    void SlotGoToEnd();
     void SlotOnSpinBoxChange( int );
     void SlotCheckpoint();
     //@}
@@ -82,6 +84,8 @@ private:
     QToolButton* pSpeedButton_;
     QSpinBox* pSpeedSpinBox_;
     QToolButton* pCheckpointButton_;
+    QAction* pGoToStartAction_;
+    QAction* pGoToEndAction_;
     QAction* pCheckpointAction_ ;
     ConnectDialog* pConnectDlg_;
     DisconnectDialog* pDisconnectDlg_;
@@ -92,6 +96,8 @@ private:
     QIcon disconnectPix_;
     QIcon playPix_;
     QIcon stopPix_;
+    QIcon goToStartPix_;
+    QIcon goToEndPix_;
     //@}
 };
 
