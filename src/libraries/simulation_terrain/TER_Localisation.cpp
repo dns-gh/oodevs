@@ -452,7 +452,19 @@ void TER_Localisation::Reset( const TER_Localisation& localisation, double point
         }
         else
         {
-            const MT_Vector2D& point = localisation.boundingBox_.GetCenter();
+            MT_Vector2D point;
+            if( localisation.GetType() == ePoint )
+            {
+                if( !localisation.GetPoints().empty() )
+                    point = localisation.GetPoints()[0];
+                else
+                {
+                    point = localisation.boundingBox_.GetCenter();
+                    MT_LOG_ERROR_MSG( __FUNCTION__ << ": Reset point error: uninitialised point" );
+                }
+            }
+            else
+                point = localisation.boundingBox_.GetCenter();
             T_PointVector pointsTmp;
             pointsTmp.reserve( 5 );
             pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ - pointSize, point.rY_ - pointSize ) ));
