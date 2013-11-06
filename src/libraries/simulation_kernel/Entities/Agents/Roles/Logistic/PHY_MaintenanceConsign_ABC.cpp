@@ -110,7 +110,8 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
     assert( pMaintenance_ );
     asn().mutable_provider()->set_id( pMaintenance_->GetID() );
     asn().set_state( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus( nState_ ) );
-    asn().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
+        asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
 
 // -----------------------------------------------------------------------------

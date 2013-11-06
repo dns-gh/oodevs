@@ -64,6 +64,8 @@ void LogConsignMedical::Update( const sword::LogMedicalHandlingUpdate& msg )
         nState_ = msg.state();
     if( msg.has_current_state_end_tick() )
         currentStateEndTick_ = msg.current_state_end_tick();
+    else
+        currentStateEndTick_ = std::numeric_limits< unsigned long >::max();
     if( msg.has_diagnosed() )
         bDiagnosed_ = msg.diagnosed() != 0;
 }
@@ -102,7 +104,8 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_nbc_contaminated( bContaminated_);
     asn().set_diagnosed( bDiagnosed_);
     asn().set_state( nState_);
-    asn().set_current_state_end_tick( currentStateEndTick_ );
+    if( currentStateEndTick_ != std::numeric_limits< unsigned long >::max() )
+        asn().set_current_state_end_tick( currentStateEndTick_ );
     asn.Send( publisher );
 }
 
