@@ -42,7 +42,7 @@ public:
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_ConstPopulationConcentrationVector& concentrations ) const;
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_PopulationConcentrationVector& concentrations ) const;
     void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationConcentrationVector& concentrations ) const;
-    void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations ) const;
+    void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations, double precision ) const;
 
     TER_PopulationConcentration_ABC::T_Hint UpdatePosition( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );
     bool                                    Remove        ( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );

@@ -156,6 +156,7 @@ public:
     //@{
     static E_LocationType ConvertLocalisationType( const std::string& strType ); // A deplacer dans TER_Tools si nécessaire
     static std::string        ConvertLocalisationType( E_LocationType );         // A deplacer dans TER_Tools si nécessaire
+    static double DefaultPrecision();
     //@}
 
 private:

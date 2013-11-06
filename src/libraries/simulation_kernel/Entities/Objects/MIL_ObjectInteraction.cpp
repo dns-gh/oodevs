@@ -112,8 +112,9 @@ void MIL_ObjectInteraction::Clean( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER_Localisation& location )
 {
-    UpdateAgents( object, location );
-    UpdatePopulations( location );
+    double precision = object.GetPrecision();
+    UpdateAgents( object, location, precision );
+    UpdatePopulations( location, precision );
 }
 
 namespace
@@ -127,10 +128,10 @@ namespace
     };
     typedef std::set< MIL_Agent_ABC*, Comparator > T_SortedAgents;
 
-    T_SortedAgents GetAgentsInside( const TER_Localisation& location )
+    T_SortedAgents GetAgentsInside( const TER_Localisation& location, double precision )
     {
         TER_Agent_ABC::T_AgentPtrVector agents;
-        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location, agents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location, agents, precision );
         T_SortedAgents result;
         for( auto it = agents.begin(); it != agents.end(); ++it )
             result.insert( &static_cast< PHY_RoleInterface_Location* >( *it )->GetAgent() );
@@ -150,10 +151,10 @@ namespace
 // Name: MIL_ObjectInteraction::UpdateAgents
 // Created: MCO 2013-02-13
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location )
+void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location, double precision )
 {
     const T_SortedAgents agents( agentsInside_.begin(), agentsInside_.end() );
-    const T_SortedAgents inside = GetAgentsInside( location );
+    const T_SortedAgents inside = GetAgentsInside( location, precision );
     boost::set_difference( agents, inside, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) ) );
     boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ) );
 }
@@ -161,18 +162,18 @@ void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Loca
 namespace
 {
     template< typename P >
-    void GetConcentrations( const TER_Localisation& location, P& populations )
+    void GetConcentrations( const TER_Localisation& location, P& populations, double precision )
     {
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, concentrations );
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, concentrations, precision );
         for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
             populations.insert( static_cast< MIL_PopulationConcentration* >( *it ) );
     }
     template< typename P >
-    void GetFlows( const TER_Localisation& location, P& populations )
+    void GetFlows( const TER_Localisation& location, P& populations, double precision )
     {
         TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
-        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, flows );
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, flows, precision );
         for( auto it = flows.begin(); it != flows.end(); ++it )
             populations.insert( static_cast< MIL_PopulationFlow* >( *it ) );
     }
@@ -182,11 +183,11 @@ namespace
 // Name: MIL_ObjectInteraction::UpdatePopulations
 // Created: MCO 2013-02-13
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::UpdatePopulations( const TER_Localisation& location )
+void MIL_ObjectInteraction::UpdatePopulations( const TER_Localisation& location, double precision )
 {
     T_Populations populations;
-    GetConcentrations( location, populations );
-    GetFlows( location, populations );
+    GetConcentrations( location, populations, precision );
+    GetFlows( location, populations, precision );
     populations.swap( populationsInside_ );
 }
 

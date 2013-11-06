@@ -158,3 +158,12 @@ void TER_Object_ABC::InsertInWorld()
 {
     hint_ = TER_World::GetWorld().GetObjectManager().UpdatePosition( *this, hint_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::GetPrecision
+// Created: LDC 2013-11-06
+// -----------------------------------------------------------------------------
+double TER_Object_ABC::GetPrecision() const
+{
+    return epsilon_;
+}

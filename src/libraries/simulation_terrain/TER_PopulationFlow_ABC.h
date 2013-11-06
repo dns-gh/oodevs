@@ -46,7 +46,7 @@ public:
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
     bool Intersect2DWithLine  ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const;
-    bool IsIntersecting       ( const TER_Localisation& localisation ) const;
+    bool IsIntersecting       ( const TER_Localisation& localisation, double precision ) const;
     //@}
 
     //! @name Operations

@@ -89,7 +89,7 @@ bool TER_PopulationFlow_ABC::Intersect2DWithLine( const MT_Vector2D& vStart, con
 // Name: TER_PopulationFlow_ABC::IsIntersecting
 // Created: LGY 2011-04-04
 // -----------------------------------------------------------------------------
-bool TER_PopulationFlow_ABC::IsIntersecting( const TER_Localisation& localisation ) const
+bool TER_PopulationFlow_ABC::IsIntersecting( const TER_Localisation& localisation, double precision ) const
 {
-    return GetLocation().IsIntersecting( localisation );
+    return GetLocation().IsIntersecting( localisation, precision );
 }

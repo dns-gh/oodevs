@@ -241,10 +241,10 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
     }
 
     collidingPopulationConcentrations_.clear();
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), collidingPopulationConcentrations_ );
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocation(), collidingPopulationConcentrations_, TER_Localisation::DefaultPrecision() );
 
     collidingPopulationFlows_.clear();
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), collidingPopulationFlows_ );
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), collidingPopulationFlows_, TER_Localisation::DefaultPrecision() );
 
     ClearCollidingAttackingAgents();
 }

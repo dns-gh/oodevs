@@ -74,8 +74,8 @@ private:
     //@}
 
 private:
-    void UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location );
-    void UpdatePopulations( const TER_Localisation& location );
+    void UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location, double precision );
+    void UpdatePopulations( const TER_Localisation& location, double precision );
 
 private:
     //! @name Member data

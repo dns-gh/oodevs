@@ -71,7 +71,7 @@ void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D&
 // Name: TER_PopulationConcentrationManager::GetListWithinLocalisation
 // Created: MGD 2010-05-12
 // -----------------------------------------------------------------------------
-void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations ) const
+void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations, double precision ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
     spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() ),
@@ -80,7 +80,7 @@ void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Lo
     while( view.HasMoreElements() )
     {
         TER_PopulationConcentration_ABC* pConcentration = view.NextElement();
-        if( pConcentration && pConcentration->IsIntersecting( localisation ) )
+        if( pConcentration && pConcentration->IsIntersecting( localisation, precision ) )
             concentrations.push_back( pConcentration );
     }
 }
