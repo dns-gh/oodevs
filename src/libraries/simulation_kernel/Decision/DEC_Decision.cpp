@@ -313,7 +313,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
     brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection );
-    brain.RegisterFunction( "DEC_Geometrie_ConvexHull", DEC_GeometryFunctions::ComputeConvexHull );
+    brain.RegisterFunction( "DEC_Geometrie_ConvexHull", &DEC_GeometryFunctions::ComputeConvexHull );
     
     brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
     brain.RegisterFunction( "DEC_Geometrie_IsLinearRiverInBetween", &DEC_TerrainFunctions::IsLinearRiverInBetween );
