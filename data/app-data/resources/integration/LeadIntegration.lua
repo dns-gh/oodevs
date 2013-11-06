@@ -696,12 +696,16 @@ integration.allocateElements = function( elementsToAssignTo, elementsToBeAssigne
                 end
             end
         end
-        -- The current entity is assigned the best objective
-        allocation[ elementsToAssignTo[i] ] = bestElement
         
-        -- The assigned objective is removed from elementsToBeAssignedCopy
-        -- to make sure that the objectives are fairly allocated.
-        table.remove( elementsToBeAssignedCopy, bestIndex )
+        -- If an element respecting the additional constraints was found, then...
+        if bestElement then
+            -- The current entity is assigned the best objective
+            allocation[ elementsToAssignTo[i] ] = bestElement
+            
+            -- The assigned objective is removed from elementsToBeAssignedCopy
+            -- to make sure that the objectives are fairly allocated.
+            table.remove( elementsToBeAssignedCopy, bestIndex )
+        end
     end
     
     return allocation
