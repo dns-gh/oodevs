@@ -454,7 +454,15 @@ void TER_Localisation::Reset( const TER_Localisation& localisation, double point
         {
             MT_Vector2D point;
             if( localisation.GetType() == ePoint )
-                point = localisation.GetPoints()[0];
+            {
+                if( !localisation.GetPoints().empty() )
+                    point = localisation.GetPoints()[0];
+                else
+                {
+                    point = localisation.boundingBox_.GetCenter();
+                    MT_LOG_ERROR_MSG( __FUNCTION__ << ": Reset point error: uninitialised point" );
+                }
+            }
             else
                 point = localisation.boundingBox_.GetCenter();
             T_PointVector pointsTmp;
