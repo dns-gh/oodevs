@@ -155,3 +155,20 @@ end
 integration.objectNeedsImprovement = function( kObject )
     return DEC_ObjectKnowledge_MustBeMined( kObject.source )
 end
+
+integration.getPositionOutsideObjects = function( kObjects, distance )
+    if not distance then
+        distance = 20 -- meters
+    end
+    local localisations = {}
+    for i = 1, #kObjects do
+        localisations[ i ] = integration.getKnowledgeObjectLocation( kObjects[ i ].source )
+    end 
+    if #localisations > 0 then
+        local localisation = DEC_Geometrie_ConvexHull( localisations )
+        local simPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+        return CreateKnowledge( integration.ontology.types.point, simPosition )
+    else
+        return nil
+    end
+end
