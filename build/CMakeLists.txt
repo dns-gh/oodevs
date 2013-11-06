@@ -366,25 +366,6 @@ target_link_libraries( dispatcher
     ${DIRECTIA_LIBRARIES}
 )
 
-# dispatcher_app
-add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS executable )
-target_link_libraries( dispatcher_app
-    dispatcher
-    ${LICENSE_GUI_LIBRARIES}
-)
-add_dependencies( dispatcher_app dispatcher_dll )
-
-# dispatcher_dll
-add_target( dispatcher_dll server "libraries/dispatcher_dll" OPTIONS shared )
-target_link_libraries( dispatcher_dll
-    dispatcher
-    positions_plugin
-)
-
-# dispatcher_test
-add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test )
-target_link_libraries( dispatcher_test dispatcher )
-
 # dis_plugin_dll
 add_target( dis_plugin_dll plugins "libraries/dis_plugin_dll" OPTIONS plugin shared )
 masa_add_target_definition( dis_plugin_dll DIS_PLUGIN_DLL_EXPORTS )
@@ -432,6 +413,35 @@ target_link_libraries( timeline_plugin_dll
     dispatcher
     ${OPENSSL_LIBRARIES}
 )
+
+set( PLUGINS_DLL
+    dis_plugin_dll
+    hla_plugin_dll
+    logistic_plugin_dll
+    timeline_plugin_dll
+    web_control_plugin_dll
+    )
+
+
+# dispatcher_app
+add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS executable )
+target_link_libraries( dispatcher_app
+    dispatcher
+    ${LICENSE_GUI_LIBRARIES}
+)
+add_dependencies( dispatcher_app dispatcher_dll )
+
+# dispatcher_dll
+add_target( dispatcher_dll server "libraries/dispatcher_dll" OPTIONS shared )
+target_link_libraries( dispatcher_dll
+    dispatcher
+    positions_plugin
+    ${PLUGINS_DLL}
+)
+
+# dispatcher_test
+add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test )
+target_link_libraries( dispatcher_test dispatcher )
 
 # resource_network
 add_target( resource_network server "libraries/resource_network" OPTIONS protocol )
