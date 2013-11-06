@@ -35,6 +35,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
                                   const boost::shared_ptr< MIL_Mission_ABC >& parent )
     : type_             ( type )
     , id_               ( id )
+    , parentId_         ( parent ? parent->GetId() : 0 )
     , context_          ( parent ? parent->context_ : MIL_OrderContext( true ) )
     , knowledgeResolver_( knowledgeResolver )
 {
@@ -56,6 +57,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type,
                                   const boost::optional< MT_Vector2D >& orientation )
     : type_             ( type )
     , id_               ( id )
+    , parentId_         ( 0 )
     , context_          ( orientation ? MIL_OrderContext( parameters, *orientation ) : MIL_OrderContext( false ) )
     , knowledgeResolver_( knowledgeResolver )
 {
@@ -71,6 +73,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_Mission_ABC& rhs,
                                   uint32_t id )
     : type_             ( rhs.type_ )
     , id_               ( id )
+    , parentId_         ( 0 )
     , context_          ( rhs.context_ )
     , knowledgeResolver_( knowledgeResolver )
     , parameters_       ( rhs.parameters_ )
@@ -392,6 +395,15 @@ uint32_t MIL_Mission_ABC::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::GetParentId
+// Created: SLI 2013-11-06
+// -----------------------------------------------------------------------------
+uint32_t MIL_Mission_ABC::GetParentId() const
+{
+    return parentId_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::load
 // Created: LGY 2011-06-06
 // -----------------------------------------------------------------------------
@@ -399,7 +411,8 @@ void MIL_Mission_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> context_
          >> parameters_
-         >> const_cast< uint32_t& >( id_ );
+         >> const_cast< uint32_t& >( id_ )
+         >> const_cast< uint32_t& >( parentId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,5 +423,6 @@ void MIL_Mission_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int )
 {
     file << context_
          << parameters_
-         << id_;
+         << id_
+         << parentId_;
 }

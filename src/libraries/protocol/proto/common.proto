@@ -808,6 +808,8 @@ message UnitOrder {
     optional string            name           = 7;
     //! unique order id
     optional uint32            id             = 8;
+    //! The parent automat order id
+    optional uint32            parent         = 9;
 }
 
 /** @struct AutomatOrder

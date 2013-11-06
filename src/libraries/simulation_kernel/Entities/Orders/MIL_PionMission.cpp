@@ -158,6 +158,7 @@ void MIL_PionMission::Send() const
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn().set_name( GetName() );
     asn().set_id( GetId() );
+    asn().set_parent( GetParentId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

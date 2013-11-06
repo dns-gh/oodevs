@@ -104,6 +104,7 @@ protected:
     void FillParameters( int firstIndex, const sword::MissionParameters& parameters );
     void Serialize( sword::MissionParameters& asn ) const;
     uint32_t GetId() const;
+    uint32_t GetParentId() const;
     //@}
 
     //! @name Member Data
@@ -122,6 +123,7 @@ private:
     //@{
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
     const uint32_t id_;
+    const uint32_t parentId_;
     MIL_OrderContext context_;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}
