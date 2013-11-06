@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: tools::IsoStringToQTime
 // Created: ABR 2012-07-19
 // -----------------------------------------------------------------------------
-QDateTime tools::IsoStringToQTime( const std::string& text )
+QDateTime tools::IsoStringToQDateTime( const std::string& text )
 {
     return QDateTime::fromString( text.c_str(), "yyyyMMddThhmmss" );
 }
@@ -38,7 +38,7 @@ QDateTime tools::IsoStringToQTime( const std::string& text )
 // Name: tools::GDHStringToQTime
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
-QDateTime tools::GDHStringToQTime( const std::string& text )
+QDateTime tools::GDHStringToQDateTime( const std::string& text )
 {
     QString extended( text.c_str() );
     extended.insert( 13, ':' ); extended.insert( 11, ':' );
@@ -47,12 +47,24 @@ QDateTime tools::GDHStringToQTime( const std::string& text )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::QDateTimeToGDHString
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+std::string tools::QDateTimeToGDHString( const QDateTime& dateTime )
+{
+    QString str = dateTime.toString( Qt::ISODate );
+    str.remove( ':' );
+    str.remove( '-' );
+    return str.toStdString();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::BoostTimeToQTime
 // Created: ABR 2012-07-19
 // -----------------------------------------------------------------------------
 QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
 {
-    return IsoStringToQTime( boost::posix_time::to_iso_string( btime ) );
+    return IsoStringToQDateTime( boost::posix_time::to_iso_string( btime ) );
 }
 
 // -----------------------------------------------------------------------------

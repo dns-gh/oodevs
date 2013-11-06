@@ -14,6 +14,7 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ReplaySenders.h"
 
@@ -82,18 +83,6 @@ QDateTime ActionsScheduler::GetDateTime() const
     return currentTime_;
 }
 
-namespace
-{
-    std::string MakeGDHString( const QDateTime& datetime )
-    {
-        // $$$$ SBO 2008-04-25: ...
-        QString str = datetime.toString( Qt::ISODate );
-        str.remove( ':' );
-        str.remove( '-' );
-        return str.toStdString();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionsScheduler::Shift
 // Created: SBO 2007-07-16
@@ -113,7 +102,7 @@ void ActionsScheduler::SetDate( const QDateTime& dateTime )
     if( newTime < simulation_.GetInitialDateTime() )
         newTime = simulation_.GetInitialDateTime();
     simulation::ControlDateTimeChange message;
-    message().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
+    message().mutable_date_time()->set_data( tools::QDateTimeToGDHString( dateTime ) );
     message.Send( publisher_ );
 }
 
@@ -124,6 +113,6 @@ void ActionsScheduler::SetDate( const QDateTime& dateTime )
 void ActionsScheduler::SkipToDate( const QDateTime& dateTime )
 {
     replay::ControlSkipToDate skip;
-    skip().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
+    skip().mutable_date_time()->set_data( tools::QDateTimeToGDHString( dateTime ) );
     skip.Send( publisher_ );
 }

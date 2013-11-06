@@ -368,7 +368,7 @@ QString Simulation::GetDateAsString() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetDateTime() const
 {
-    return tools::IsoStringToQTime( simDate_ );
+    return tools::IsoStringToQDateTime( simDate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ QDateTime Simulation::GetDateTime() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetRealDateTime() const
 {
-    return tools::IsoStringToQTime( realDate_ );
+    return tools::IsoStringToQDateTime( realDate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -404,7 +404,7 @@ QString Simulation::GetRealDateAsString() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetInitialDateTime() const
 {
-    return tools::IsoStringToQTime( initialDate_ );
+    return tools::IsoStringToQDateTime( initialDate_ );
 }
 
 // -----------------------------------------------------------------------------
