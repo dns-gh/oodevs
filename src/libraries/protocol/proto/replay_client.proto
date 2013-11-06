@@ -40,6 +40,8 @@ message ControlReplayInformation {
     optional int32               first_tick        = 8;
     //! The real current date and time
     optional DateTime            real_date_time    = 9;
+    //! The end date and time
+    optional DateTime            end_date_time     = 10;
 }
 
 /** @struct ControlSkipToTickAck
@@ -101,7 +103,9 @@ message TimeTable {
 */
 message NewDataChunkNotification {
     //! The last tick for this chunk
-    required int32 last_tick = 1;
+    required int32 last_tick        = 1;
+    //! The end date/time
+    optional DateTime end_date_time = 2;
 }
 
 /** @struct ReplayToClient

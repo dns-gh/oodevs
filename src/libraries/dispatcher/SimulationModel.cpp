@@ -161,14 +161,15 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // Name: SimulationModel::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick /*= 1*/ ) const
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, const std::string& endDateTime, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick /*= 1*/ ) const
 {
     replay::ControlReplayInformation msg;
     msg().set_current_tick( nCurrentTick_ );
-    msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
-    msg().mutable_date_time()->set_data( date_.c_str() );
+    msg().mutable_initial_date_time()->set_data( initialDate_ );
+    msg().mutable_date_time()->set_data( date_ );
+    msg().mutable_end_date_time()->set_data( endDateTime );
     if( !realDate_.empty() )
-        msg().mutable_real_date_time()->set_data( realDate_.c_str() );
+        msg().mutable_real_date_time()->set_data( realDate_ );
     msg().set_tick_duration( nTickDuration_ );
     msg().set_time_factor( factor );
     msg().set_status( status );
@@ -186,8 +187,8 @@ void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
 {
     client::ControlBeginTick msg;
     msg().set_current_tick( 0 );
-    msg().mutable_date_time()->set_data( date_.c_str() );
+    msg().mutable_date_time()->set_data( date_ );
     if( !realDate_.empty() )
-        msg().mutable_real_date_time()->set_data( realDate_.c_str() );
+        msg().mutable_real_date_time()->set_data( realDate_ );
     msg.Send( publisher );
 }

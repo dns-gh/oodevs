@@ -140,6 +140,15 @@ unsigned int Loader::FindTickForDate( const std::string& GDHDate ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Loader::GetEndDateTime
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+const std::string& Loader::GetEndDateTime() const
+{
+    return loader_->GetEndDateTime();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Loader::ReloadAll
 // Created: MMC 2012-09-14
 // -----------------------------------------------------------------------------

@@ -307,6 +307,15 @@ unsigned int MessageLoader::FindTickForDate( const std::string& GDHDate ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MessageLoader::GetEndDateTime
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+const std::string& MessageLoader::GetEndDateTime() const
+{
+    return endDateTime_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MessageLoader::ScanData
 // Created: JSR 2010-10-27
 // -----------------------------------------------------------------------------
@@ -389,14 +398,23 @@ void MessageLoader::AddFolder( const tools::Path& folderName )
     tools::InputBinaryWrapper wrapper( infoFile );
     wrapper >> start;
     wrapper >> end;
-    infoFile.close();
     fragmentsInfos_[ folderName ] = std::make_pair< unsigned int, unsigned int >( start, end );
-    tickCount_ = std::max( tickCount_, end );
+    if( tickCount_ < end )
+    {
+        tickCount_ = end;
+        std::string dummy;
+        for( unsigned int i = start; i < end; ++i )
+            wrapper >> dummy >> dummy;
+        wrapper >> endDateTime_;
+    }
+    infoFile.close();
     firstTick_ = std::min( firstTick_, start );
     if( clients_ )
     {
         replay::NewDataChunkNotification msg;
         msg().set_last_tick( tickCount_ );
+        if( !endDateTime_.empty() )
+            msg().mutable_end_date_time()->set_data( endDateTime_ );
         msg.Send( *clients_ );
     }
 }

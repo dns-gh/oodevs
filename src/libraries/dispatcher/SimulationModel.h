@@ -52,7 +52,7 @@ public:
     void Update( const sword::ControlResumeAck& msg );
     void Update( const sword::ControlChangeTimeFactorAck& msg );
     void Send( ClientPublisher_ABC& publisher ) const;
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned int totalTicks, const std::string& endDateTime, sword::EnumSimulationState status, unsigned int factor, unsigned int firstTick = 1 ) const;
     void Reset();
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
