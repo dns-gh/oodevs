@@ -136,3 +136,28 @@ end
 integration.getHQofTC2 = function( )
     return DEC_Pion_PcDeTC2()
 end
+
+-- Returns the knowledge of the HQ of the current TC2 (returns nil if there is no current TC2)
+integration.getHQknowledgeOfTC2 = function( )
+    local tc2 = DEC_Pion_PcDeTC2()
+    if tc2 then
+        return CreateKnowledge( integration.ontology.types.agent, tc2 )
+    end
+    return nil
+end
+
+-- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
+-- with respect to a capacity factor.
+-- @param ressourceType : integer, the type of ressource (e.g. eDotation_Fuel)
+-- @param capacityFactor : float, the proportion (over the total capacity) of resource that will be set
+integration.changeResourceValueUsingCombatTrains = function( resourceType, capacityFactor )
+    DEC_ChangeValeurDotations2( resourceType, capacityFactor )
+end
+
+-- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
+-- with respect to predefined resource quotas (ranges)
+-- @param range : integer, the range corresponding to the desired resource quota (e.g. eAviationRange_MediumRange)
+integration.enforceAviationResourcesFromRange = function( range )
+    DEC_EnforceAviationResources( myself, range )
+end
+
