@@ -148,10 +148,10 @@ end
 
 -- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
 -- with respect to a capacity factor.
--- @param dotationType : integer, the type of dotation (e.g. eDotation_Fuel)
--- @param capacityFactor : float, the proportion (over the total capacity) of dotation that will be set
-integration.changeDotationValueUsingCombatTrains = function( dotationType, capacityFactor )
-    DEC_ChangeValeurDotations2( dotationType, capacityFactor )
+-- @param ressourceType : integer, the type of ressource (e.g. eDotation_Fuel)
+-- @param capacityFactor : float, the proportion (over the total capacity) of resource that will be set
+integration.changeResourceValueUsingCombatTrains = function( resourceType, capacityFactor )
+    DEC_ChangeValeurDotations2( resourceType, capacityFactor )
 end
 
 -- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
