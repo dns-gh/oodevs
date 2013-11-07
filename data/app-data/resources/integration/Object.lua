@@ -156,16 +156,18 @@ integration.objectNeedsImprovement = function( kObject )
     return DEC_ObjectKnowledge_MustBeMined( kObject.source )
 end
 
-integration.getPositionOutsideObjects = function( kObjects, distance )
-    if not distance then
-        distance = 20 -- meters
-    end
+-- Returns a position (a ML knowledge) outsides provided objects locations.
+-- The method computes the convex hull of the 'kObjects' locations, and then
+-- computes the nearest border position, taking into account the given
+-- 'distanceFromBorder' (METERS)
+integration.getPositionOutsideObjects = function( kObjects, distanceFromBorder )
+    distanceFromBorder = distanceFromBorder or 20 -- meters
     local localisations = {}
     for i = 1, #kObjects do
-        localisations[ i ] = integration.getKnowledgeObjectLocation( kObjects[ i ].source )
+        localisations[ i ] = DEC_ConnaissanceObjet_Localisation( kObjects[ i ].source )
     end 
     if #localisations > 0 then
-        local localisation = DEC_Geometrie_ConvexHull( localisations )
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_Geometrie_ConvexHull( localisations ) , distanceFromBorder )
         local simPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
         return CreateKnowledge( integration.ontology.types.point, simPosition )
     else
