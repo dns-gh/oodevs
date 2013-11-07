@@ -11,9 +11,10 @@
 #define __MIL_LocationParameter_h_
 
 #include "MIL_BaseParameter.h"
-#include "simulation_terrain/TER_Localisation.h"
+
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_LocationParameter

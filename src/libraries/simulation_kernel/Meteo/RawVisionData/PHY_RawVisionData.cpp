@@ -13,6 +13,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
 

@@ -9,6 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PopulationConcentration_ABC.h"
+#include "TER_Localisation.h"
 #include "TER_World.h"
 #include "TER_PopulationManager.h"
 

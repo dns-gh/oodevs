@@ -12,8 +12,24 @@
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
+#include <boost/make_shared.hpp>
 
-TER_Polygon* TER_Polygon::empty_polygon = 0;
+struct TER_Polygon::PolygonData
+{
+    PolygonData( bool isNull ) : bIsNull_( isNull ), rArea_( -1 ) {};
+    bool             bIsNull_;
+    mutable double rArea_; // $$$$ AGE 2005-06-14: late initialization
+    T_PointVector    borderVector_;
+    MT_Rect          boundingBox_;
+};
+
+namespace
+{
+
+const boost::shared_ptr< TER_Polygon::PolygonData > emptyData(
+        new TER_Polygon::PolygonData( true ));
+
+}  // namespace
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon constructor
@@ -21,48 +37,7 @@ TER_Polygon* TER_Polygon::empty_polygon = 0;
 //-----------------------------------------------------------------------------
 TER_Polygon::TER_Polygon()
 {
-    if (!empty_polygon)
-    {
-        empty_polygon=new TER_Polygon(true);
-        assert(empty_polygon);
-    }
-    pData_ = empty_polygon->pData_;
-    pData_->ref();
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon constructor
-// Created: JDY 03-05-26
-//-----------------------------------------------------------------------------
-TER_Polygon::TER_Polygon(bool bEmpty)
-{
-    pData_ = new PolygonData();
-    assert( pData_ );
-    pData_->bIsNull_=bEmpty;
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon constructor
-// Created: JDY 03-05-26
-//-----------------------------------------------------------------------------
-TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
-{
-    pData_ = new PolygonData();
-    pData_->bIsNull_=points.empty();
-
-    // no points in polygon
-    if (pData_->bIsNull_)
-        return;
-
-    // set ring
-    pData_->borderVector_.reserve( points.size() );
-    for( CIT_PointPtrVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
-        pData_->borderVector_.push_back( **itPoint );
-
-    if( bConvexHull )
-        Convexify();
-
-    ComputeBoundingBox();
+    Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -71,8 +46,7 @@ TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
 //-----------------------------------------------------------------------------
 TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
 {
-    pData_ = new PolygonData();
-    pData_->bIsNull_=points.empty();
+    pData_ = boost::make_shared< PolygonData >( points.empty() );
 
     // no points in polygon
     if (pData_->bIsNull_)
@@ -93,7 +67,6 @@ TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
 TER_Polygon::TER_Polygon(const TER_Polygon& poly)
 {
     pData_ = poly.pData_;
-    pData_->ref();
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +75,7 @@ TER_Polygon::TER_Polygon(const TER_Polygon& poly)
 //-----------------------------------------------------------------------------
 TER_Polygon::~TER_Polygon()
 {
-    Detach();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -111,24 +84,8 @@ TER_Polygon::~TER_Polygon()
 //-----------------------------------------------------------------------------
 TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 {
-    if( &rhs == this )
-        return *this;
-    rhs.pData_->ref();                // beware of r = r
-    Detach();
     pData_ = rhs.pData_;
     return *this;
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon::Detach
-// Created: JDY 03-05-26
-//-----------------------------------------------------------------------------
-void TER_Polygon::Detach()
-{
-    assert(pData_);
-    if( pData_->deref() )
-        delete pData_;
-    pData_ = 0;
 }
 
 //=============================================================================
@@ -653,15 +610,6 @@ const T_PointVector& TER_Polygon::GetBorderPoints() const
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon::Reset
-// Created: JDY 03-05-19
-//-----------------------------------------------------------------------------
-void TER_Polygon::Reset(const T_PointPtrVector& points,bool bConvexHull )
-{
-    *this=TER_Polygon( points, bConvexHull );
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon::Reset
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
 void TER_Polygon::Reset( const T_PointVector& points, bool bConvexHull )
@@ -675,7 +623,7 @@ void TER_Polygon::Reset( const T_PointVector& points, bool bConvexHull )
 //-----------------------------------------------------------------------------
 void TER_Polygon::Reset()
 {
-    *this=*empty_polygon;
+    pData_ = emptyData;
 }
 
 //-----------------------------------------------------------------------------

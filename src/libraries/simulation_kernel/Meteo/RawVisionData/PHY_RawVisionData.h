@@ -12,11 +12,13 @@
 
 #include "ElevationGrid.h"
 #include "meteo/PHY_RawVisionData_ABC.h"
-#include "simulation_terrain/TER_Localisation.h"
 
 class MT_Ellipse;
+class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
 class PHY_MeteoDataManager;
+class TER_Localisation;
+class TER_Localisation_ABC;
 
 namespace tools
 {

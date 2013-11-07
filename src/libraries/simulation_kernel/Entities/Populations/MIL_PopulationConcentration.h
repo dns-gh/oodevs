@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "MIL_PopulationElement_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "Tools/MIL_IDManager.h"
 
