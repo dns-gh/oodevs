@@ -13,8 +13,8 @@
 #define __TER_Polygon_h_
 
 #include "TER_Localisation_ABC.h"
-#include "MT_Tools/MT_Shared.h"
 #include "MT_Tools/MT_Rect.h"
+#include <boost/shared_ptr.hpp>
 
 class MT_Polyline;
 class MT_Droite;
@@ -25,6 +25,8 @@ class MT_Droite;
 class TER_Polygon: public TER_Localisation_ABC
 {
 public:
+    struct PolygonData;
+
     // @name Constructors/Destructor
     //@{
              TER_Polygon();
@@ -96,15 +98,7 @@ private:
     //@}
 
 private:
-
-    TER_Polygon(bool bEmpty);
-    void        Detach();
-
-    struct PolygonData;
-    PolygonData* pData_;
-
-    static TER_Polygon*       empty_polygon;
-
+    boost::shared_ptr< PolygonData > pData_;
 };
 
 #endif // __TER_Polygon_h_
