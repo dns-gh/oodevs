@@ -52,6 +52,7 @@ public:
 
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     unsigned int FindTickForDate( const std::string& GDHDate ) const;
+    const std::string& GetEndDateTime() const;
 
     void ReloadAll();
     //@}

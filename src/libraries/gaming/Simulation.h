@@ -27,6 +27,7 @@ namespace sword
     class ControlEndTick;
     class ControlSendCurrentStateEnd;
     class ControlCheckPointSaveEnd;
+    class NewDataChunkNotification;
     class TimeTable;
 }
 
@@ -67,6 +68,7 @@ public:
     void Update( const sword::ControlBeginTick& message );
     void Update( const sword::ControlEndTick& message );
     void Update( const sword::ControlSendCurrentStateEnd& message );
+    void Update( const sword::NewDataChunkNotification& message );
     void Update( const sword::TimeTable& message );
     //@}
 
@@ -86,6 +88,7 @@ public:
     virtual QDateTime GetInitialDateTime() const;
     virtual QDateTime GetDateTime() const;
     virtual QString GetTimeAsString() const;
+    QDateTime GetEndDateTime() const;
     QString GetDateAsString() const;
     QDateTime GetRealDateTime() const;
     QString GetRealTimeAsString() const;
@@ -122,6 +125,7 @@ private:
     unsigned int firstTick_;
     int time_;
     std::string initialDate_;
+    std::string endDateTime_;
     std::string simDate_;
     std::string realDate_;
     bool paused_;

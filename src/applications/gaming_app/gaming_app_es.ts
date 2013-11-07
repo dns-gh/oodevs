@@ -120,14 +120,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>After action review</source>
         <translation type="unfinished">Revisión post acción</translation>
     </message>
@@ -141,6 +133,14 @@
     </message>
     <message>
         <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

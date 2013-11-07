@@ -60,7 +60,7 @@ void MissionParameters::UpdateMessage( const T& message )
 
     if( message.has_start_time() )
     {
-        QDateTime time = tools::GDHStringToQTime( message.start_time().data() );
+        QDateTime time = tools::GDHStringToQDateTime( message.start_time().data() );
         tools::Iterator< const Action_ABC& > it = CreateIterator();
         while( it.HasMoreElements() )
         {

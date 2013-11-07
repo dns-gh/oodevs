@@ -2072,9 +2072,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_new_data_chunk_notification() )
-        {}
-    else if( wrapper.message().has_new_data_chunk_notification() )
-        {}
+        OnReceiveNewDataChunkNotification( wrapper.message().new_data_chunk_notification() );
     else if( wrapper.message().has_time_table_request_ack() )
         OnReceiveTimeTableRequestAck( wrapper.message().time_table_request_ack() );
     else if( wrapper.message().has_time_table() )
@@ -2264,6 +2262,16 @@ void AgentServerMsgMgr::OnReceiveControlMeteoLocalDestruction( const sword::Cont
 void AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd( const sword::ControlSendCurrentStateEnd& message )
 {
     simulation_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveNewDataChunkNotification
+// Created: JSR 2013-11-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveNewDataChunkNotification( const sword::NewDataChunkNotification& message )
+{
+    if( services_.HasService( sword::service_replay ) )
+        simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------

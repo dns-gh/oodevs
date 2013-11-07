@@ -124,6 +124,7 @@ namespace sword
     class MarkerUpdate;
     class MessengerToClient;
     class MessengerToClient;
+    class NewDataChunkNotification;
     class ObjectCreation;
     class ObjectDestruction;
     class ObjectDetection;
@@ -295,6 +296,7 @@ private:
     void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation& message );
     void OnReceiveControlMeteoLocalDestruction( const sword::ControlLocalWeatherDestruction& message );
     void OnReceiveMsgSendCurrentStateEnd      ( const sword::ControlSendCurrentStateEnd& message );
+    void OnReceiveNewDataChunkNotification    ( const sword::NewDataChunkNotification& message );
     void OnReceiveTimeTableRequestAck         ( const sword::TimeTableRequestAck& message );
     void OnReceiveTimeTable                   ( const sword::TimeTable& message );
 

@@ -63,6 +63,7 @@ public:
     virtual unsigned int GetFirstTick() const;
     unsigned int FindKeyFrame( unsigned int frameNumber );
     unsigned int FindTickForDate( const std::string& GDHDate ) const;
+    const std::string& GetEndDateTime() const;
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     void ReloadAllFragmentsInfos();
     //@}
@@ -105,6 +106,7 @@ private:
     ClientPublisher_ABC* clients_;
     unsigned int firstTick_;
     unsigned int tickCount_;
+    std::string endDateTime_;
     mutable boost::mutex access_;
     std::auto_ptr< tools::WaitEvent > init_;
     std::auto_ptr< tools::WaitEvent > quit_;

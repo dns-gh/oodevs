@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+import "common.proto";
+
 package sword;
 
 /** @file
@@ -23,7 +25,7 @@ package sword;
     @see PlotResult
 */
 message PlotRequest {
-    /** @struct TimeRange
+    /** @struct TimeRange @deprecated
         @brief Defines the request time range.
     */
     message TimeRange {
@@ -32,12 +34,23 @@ message PlotRequest {
         //! The last tick of the time range request (must be >= begin_tick)
         required uint32 end_tick   = 2;
     }
+    /** @struct DateTimeRange
+        @brief Defines the request time range.
+    */
+    message DateTimeRange {
+        //! The first date/time of the time range request
+        required DateTime begin_date = 1;
+        //! The last date/time of the time range request (must be >= begin_date)
+        required DateTime end_date   = 2;
+    }
     //! An identifier for the request
-    required uint32    identifier = 1;
+    required uint32 identifier             = 1;
     //! The request
-    required string    request    = 2;
+    required string request                = 2;
+    //! The request time range @deprecated
+    optional TimeRange time_range          = 3;
     //! The request time range
-    optional TimeRange time_range = 3;
+    optional DateTimeRange date_time_range = 4;
 }
 
 /** @struct ClientToAar

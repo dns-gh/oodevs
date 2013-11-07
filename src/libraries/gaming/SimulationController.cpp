@@ -11,6 +11,7 @@
 #include "SimulationController.h"
 #include "Services.h"
 #include "Simulation.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
@@ -159,18 +160,6 @@ void SimulationController::ChangeTimeFactor( int factor )
     }
 }
 
-namespace
-{
-    std::string MakeGDHString( const QDateTime& datetime )
-    {
-        // $$$$ SBO 2008-04-25: ...
-        QString str = datetime.toString( Qt::ISODate );
-        str.remove( ':' );
-        str.remove( '-' );
-        return str.toStdString();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: SimulationController::SkipToDate
 // Created: JSR 2013-03-27
@@ -178,7 +167,7 @@ namespace
 void SimulationController::SkipToDate( const QDateTime& dateTime )
 {
     replay::ControlSkipToDate skip;
-    skip().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
+    skip().mutable_date_time()->set_data( tools::QDateTimeToGDHString( dateTime ) );
     skip.Send( publisher_ );
 }
 

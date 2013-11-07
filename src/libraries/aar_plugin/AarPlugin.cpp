@@ -109,6 +109,11 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
             firstTick = request.time_range().begin_tick();
             lastTick = request.time_range().end_tick();
         }
+        else if( request.has_date_time_range() )
+        {
+            firstTick = messages_->FindTickForDate( request.date_time_range().begin_date().data() );
+            lastTick = messages_->FindTickForDate( request.date_time_range().end_date().data() );
+        }
         xml::xistringstream xis( request.request() );
         AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );
         xis >> xml::start( "indicator" );

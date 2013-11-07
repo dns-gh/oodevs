@@ -12,9 +12,10 @@
 #include "moc_AfterActionFunctionList.cpp"
 #include "actions/Parameter_ABC.h"
 #include "actions_gui/ParamLocation.h"
+#include "clients_gui/RichDateTimeEdit.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/RichSpinBox.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/AfterActionParameter.h"
@@ -48,6 +49,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     , builder_    ( interfaceBuilder )
     , controllers_( controllers )
     , model_      ( model )
+    , firstUpdate_( true )
 {
     QVBoxLayout* layout = new QVBoxLayout;
     QHBoxLayout* nameLayout = new QHBoxLayout;
@@ -78,16 +80,16 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     timeGroup_->setChecked( false );
     {
         QHBoxLayout* box = new QHBoxLayout;
-        box->addWidget( new QLabel( tr( "First tick" ) ) );
-        firstTick_ = new gui::RichSpinBox( "firstTick" );
-        box->addWidget( firstTick_ );
+        box->addWidget( new QLabel( tr( "Start date" ) ) );
+        startDate_ = new gui::RichDateTimeEdit( "startDate" );
+        box->addWidget( startDate_ );
         timeLayout->addLayout( box );
     }
     {
         QHBoxLayout* box = new QHBoxLayout;
-        box->addWidget( new QLabel( tr( "Duration" ) ) );
-        duration_ = new gui::RichSpinBox( "duration" );
-        box->addWidget( duration_ );
+        box->addWidget( new QLabel( tr( "End date" ) ) );
+        endDate_ = new gui::RichDateTimeEdit( "endDate" );
+        box->addWidget( endDate_ );
         timeLayout->addLayout( box );
     }
     tools::Iterator< const AfterActionFunction& > it = model_.CreateIterator();
@@ -114,6 +116,8 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     layout->addWidget( request_ );
     connect( functions_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnSelectionChange( int ) ) );
     connect( request_, SIGNAL( clicked() ), SLOT( Request() ) );
+    connect( startDate_, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnDateChanged() ) );
+    connect( endDate_, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnDateChanged() ) );
     controllers_.controller_.Register( *this );
 }
 
@@ -132,12 +136,19 @@ AfterActionFunctionList::~AfterActionFunctionList()
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
 {
-    const unsigned int tickCount = simulation.GetTickCount();
-    const unsigned int firstTick = simulation.GetFirstTick();
-    firstTick_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? tickCount : firstTick );
-    firstTick_->setMaxValue( tickCount );
-    duration_->setMinValue( 0 );
-    duration_->setMaxValue( tickCount );
+    if( !simulation.IsConnected() )
+    {
+        firstUpdate_ = true;
+        return;
+    }
+    startTime_ = simulation.GetInitialDateTime();
+    endTime_ = simulation.GetEndDateTime();
+    if( firstUpdate_ && startTime_.isValid() && endTime_.isValid() )
+    {
+        startDate_->setDateTime( startTime_ );
+        endDate_->setDateTime( endTime_ );
+        firstUpdate_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +183,30 @@ void AfterActionFunctionList::OnSelectionChange( int index )
     parameters_->setVisible( function && function->Count() > 0 );
     QString comments = function ? function->GetComments() : QString();
     description_->setText( comments.isEmpty() ? QString( "---" ) : comments );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::OnDateChanged
+// Created: JSR 2013-11-05
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::OnDateChanged()
+{
+    startDate_->OnDone();
+    endDate_->OnDone();
+    if( firstUpdate_ )
+        return;
+    if( startDate_->dateTime() > endDate_->dateTime() )
+    {
+        startDate_->Warn();
+        endDate_->Warn();
+    }
+    else
+    {
+        if( endDate_->dateTime() > endTime_ )
+            endDate_->Warn();
+        if( startDate_->dateTime() < startTime_ )
+            startDate_->Warn();
+    }
 }
 
 namespace
@@ -213,7 +248,7 @@ void AfterActionFunctionList::Request()
         {
             IndicatorRequest& request = model_.CreateRequest( *function, name_->text() );
             if( timeGroup_->isChecked() )
-                request.SetTimeRange( firstTick_->value() - 1, duration_->value() );
+                request.SetTimeRange( tools::QDateTimeToGDHString( startDate_->dateTime() ), tools::QDateTimeToGDHString( endDate_->dateTime() ) );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );

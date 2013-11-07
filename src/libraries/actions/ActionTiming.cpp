@@ -38,7 +38,7 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     : controller_( controller )
     , simulation_( simulation )
     , enabled_( true )
-    , time_( tools::GDHStringToQTime( datetime ) )
+    , time_( tools::GDHStringToQDateTime( datetime ) )
 {
     // NOTHING
 }
