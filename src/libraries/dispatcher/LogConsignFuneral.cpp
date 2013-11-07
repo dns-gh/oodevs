@@ -59,6 +59,8 @@ void LogConsignFuneral::Update( const sword::LogFuneralHandlingUpdate& msg )
         nState_ = msg.state();
     if( msg.has_current_state_end_tick() )
         currentStateEndTick_ = msg.current_state_end_tick();
+    else
+        currentStateEndTick_ = std::numeric_limits< unsigned long >::max();
     if( msg.has_packaging_resource() )
         packaging_ = msg.packaging_resource().id();
 }
@@ -86,7 +88,8 @@ void LogConsignFuneral::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::LogFuneralHandlingUpdate msg;
     msg().mutable_request()->set_id( GetId() );
     msg().set_state( nState_ );
-    msg().set_current_state_end_tick( currentStateEndTick_ );
+    if( currentStateEndTick_ != std::numeric_limits< unsigned long >::max() )
+        msg().set_current_state_end_tick( currentStateEndTick_ );
     if( pHandlingEntity_ )
         FillLogEntityID( *msg().mutable_handling_unit(), pHandlingEntity_ );
     if( pConvoy_ )

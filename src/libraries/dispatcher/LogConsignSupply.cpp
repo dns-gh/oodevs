@@ -58,6 +58,8 @@ void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
         nState_ = msg.state();
     if( msg.has_current_state_end_tick() )
         currentStateEndTick_ = msg.current_state_end_tick();
+    else
+        currentStateEndTick_ = std::numeric_limits< unsigned long >::max();
     if( msg.has_requests() )
     {
         requests_.DeleteAll();
@@ -100,7 +102,8 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().mutable_request()->set_id( GetId() );
     msg().mutable_convoyer()->set_id( pConvoy_ ? pConvoy_->GetId() : 0 );
     msg().set_state( nState_ );
-    msg().set_current_state_end_tick( currentStateEndTick_ );
+    if( currentStateEndTick_ != std::numeric_limits< unsigned long >::max() )
+        msg().set_current_state_end_tick( currentStateEndTick_ );
     for( tools::Iterator< const LogSupplyRecipientResourcesRequest& > it = requests_.CreateIterator(); it.HasMoreElements(); )
         it.NextElement().Send( *msg().mutable_requests()->add_requests() );
     msg.Send( publisher );

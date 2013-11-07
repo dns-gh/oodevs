@@ -2079,6 +2079,7 @@ message LogFuneralHandlingUpdate {
     //! The current status
     optional EnumLogFuneralHandlingStatus  state                  = 4;
     //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
     optional int32                         current_state_end_tick = 5;
     //! The packaging type
     optional Id                            packaging_resource     = 6;
@@ -2179,6 +2180,7 @@ message LogMedicalHandlingUpdate {
     //! The current state
     optional EnumLogMedicalHandlingStatus state            = 7;
     //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
     optional int32                        current_state_end_tick = 8;
     //! Whether a diagnostic has been established or not
     optional bool                         diagnosed        = 9;
@@ -2305,6 +2307,7 @@ message LogMaintenanceHandlingUpdate {
     //! The maintenance state
     optional EnumLogMaintenanceHandlingStatus state                  = 4;
     //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
     optional int32                            current_state_end_tick = 5;
     //! Whether a diagnostic has been established or not
     optional bool                             diagnosed              = 6;
@@ -2458,6 +2461,7 @@ message LogSupplyHandlingUpdate {
     //! The current state of the handling
     optional EnumLogSupplyHandlingStatus     state                  = 3;
     //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
     optional int32                           current_state_end_tick = 4;
     //! The resources requested
     optional SupplyRecipientResourceRequests requests               = 5;

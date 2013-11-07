@@ -117,7 +117,8 @@ void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& as
     assert( pMedical_ );
     asn().mutable_provider()->set_id( pMedical_->GetID() );
     asn().set_state( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus( nState_ ) );
-    asn().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< int32_t >::max() )
+        asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
 
 // -----------------------------------------------------------------------------

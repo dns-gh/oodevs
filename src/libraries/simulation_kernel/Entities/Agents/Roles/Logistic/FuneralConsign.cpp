@@ -318,7 +318,8 @@ void FuneralConsign::SendFullState( unsigned int context ) const
     client::LogFuneralHandlingUpdate msg;
     msg().mutable_request()->set_id( id_ );
     msg().set_state( (sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus)state_ );
-    msg().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
+        msg().set_current_state_end_tick( currentStateEndTimeStep_ );
     if( handler_ )
         handler_->Serialize( *msg().mutable_handling_unit() );
     if( convoy_ )
@@ -339,7 +340,8 @@ void FuneralConsign::SendChangedState() const
     client::LogFuneralHandlingUpdate msg;
     msg().mutable_request()->set_id( id_ );
     msg().set_state( (sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus)state_ );
-    msg().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
+        msg().set_current_state_end_tick( currentStateEndTimeStep_ );
     handler_ ? handler_->Serialize( *msg().mutable_handling_unit() ) : msg().mutable_handling_unit()->mutable_automat()->set_id( 0 );
     convoy_ ? convoy_->Serialize( *msg().mutable_convoying_unit() ) : msg().mutable_convoying_unit()->set_id( 0 );
     if( packaging_ )

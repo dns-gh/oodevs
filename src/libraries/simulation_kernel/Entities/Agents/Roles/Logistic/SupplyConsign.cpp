@@ -572,7 +572,8 @@ void SupplyConsign::SendFullState() const
     msg().mutable_request()->set_id( id_ );
     convoy_->Serialize( *msg().mutable_convoyer() );
     msg().set_state( (sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus)state_ );
-    msg().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
+        msg().set_current_state_end_tick( currentStateEndTimeStep_ );
     BOOST_FOREACH( const auto& recipient, requestsQueued_ )
     {
         sword::SupplyRecipientResourcesRequest* req = msg().mutable_requests()->add_requests();
@@ -596,7 +597,8 @@ void SupplyConsign::SendChangedState() const
     msg().mutable_request()->set_id( id_ );
     convoy_->Serialize( *msg().mutable_convoyer() );
     msg().set_state( (sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus)state_ );
-    msg().set_current_state_end_tick( currentStateEndTimeStep_ );
+    if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
+        msg().set_current_state_end_tick( currentStateEndTimeStep_ );
     if( requestsNeedNetworkUpdate_ )
     {
         msg().mutable_requests();

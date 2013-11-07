@@ -91,6 +91,8 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
         nState_ = E_LogSupplyHandlingStatus( message.state() );
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
+    else
+        currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
     if( message.has_requests() )
     {
         for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
