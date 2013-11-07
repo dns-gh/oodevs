@@ -14,6 +14,11 @@
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
+namespace gui
+{
+    class RichDateTimeEdit;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -64,7 +69,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChange( int index );
-    void OnStartDateChanged( const QDateTime& startDate );
+    void OnDateChanged();
     void Request();
     //@}
 
@@ -92,11 +97,14 @@ private:
     QComboBox* functions_;
     QLabel* description_;
     QGroupBox* timeGroup_;
-    QDateTimeEdit* startDate_;
-    QDateTimeEdit* endDate_;
+    gui::RichDateTimeEdit* startDate_;
+    gui::RichDateTimeEdit* endDate_;
     QGroupBox* parameters_;
     QPushButton* request_;
     T_Parameters paramList_;
+    QDateTime startTime_;
+    QDateTime endTime_;
+    bool firstUpdate_;
     //@}
 };
 

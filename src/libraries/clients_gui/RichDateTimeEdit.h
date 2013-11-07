@@ -32,15 +32,10 @@ public:
     virtual ~RichDateTimeEdit();
     //@}
 
-
-    //! @name Operations
-    //@{
-
-    //@}
-
     //! @name Operations
     //@{
     virtual void Warn( int msec = 3000 );
+    virtual void OnDone();
 
     QDate date() const;
     QDateTime dateTime() const;

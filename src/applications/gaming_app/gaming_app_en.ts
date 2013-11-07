@@ -683,11 +683,11 @@ Reason: %3
     </message>
     <message>
         <source>End date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">End date</translation>
     </message>
     <message>
         <source>Start date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start date</translation>
     </message>
     <message>
         <source>Planning</source>
