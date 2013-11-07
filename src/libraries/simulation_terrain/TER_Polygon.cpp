@@ -15,6 +15,15 @@
 
 TER_Polygon* TER_Polygon::empty_polygon = 0;
 
+struct TER_Polygon::PolygonData : public MT_Shared
+{
+    PolygonData() : bIsNull_( false ), rArea_( -1 ) {};
+    bool             bIsNull_;
+    mutable double rArea_; // $$$$ AGE 2005-06-14: late initialization
+    T_PointVector    borderVector_;
+    MT_Rect          boundingBox_;
+};
+
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon constructor
 // Created: JDY 03-05-19

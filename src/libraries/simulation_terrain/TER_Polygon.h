@@ -100,14 +100,8 @@ private:
     TER_Polygon(bool bEmpty);
     void        Detach();
 
-    struct PolygonData : public MT_Shared
-    {
-        PolygonData() : bIsNull_( false ), rArea_( -1 ) {};
-        bool             bIsNull_;
-        mutable double rArea_; // $$$$ AGE 2005-06-14: late initialization
-        T_PointVector    borderVector_;
-        MT_Rect          boundingBox_;
-    } * pData_;
+    struct PolygonData;
+    PolygonData* pData_;
 
     static TER_Polygon*       empty_polygon;
 
