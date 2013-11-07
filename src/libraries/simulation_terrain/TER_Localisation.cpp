@@ -1345,3 +1345,11 @@ const MT_Vector2D& TER_Localisation::GetCircleCenter() const
     return vCircleCenter_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::DefaultPrecision
+// Created: LDC 2013-11-06
+// -----------------------------------------------------------------------------
+double TER_Localisation::DefaultPrecision()
+{
+    return rPrecision_;
+}

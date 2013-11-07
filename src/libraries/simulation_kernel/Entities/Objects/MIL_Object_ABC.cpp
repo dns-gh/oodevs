@@ -108,16 +108,16 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
     TER_Object_ABC::Initialize( localisation, pType_->GetPointSize() );
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject, GetPrecision() );
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyTerrainPutInsideObject( *this );
     // Notify object when population natively inside the object
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector populationsInsideObject;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocalisation(), populationsInsideObject );
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( GetLocalisation(), populationsInsideObject, GetPrecision() );
     for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itPopulation = populationsInsideObject.begin(); itPopulation != populationsInsideObject.end(); ++itPopulation )
         NotifyPopulationMovingInside( static_cast< MIL_PopulationConcentration& >( **itPopulation ) );
     TER_PopulationFlow_ABC::T_PopulationFlowVector populationsFlowInsideObject;
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocalisation(), populationsFlowInsideObject );
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocalisation(), populationsFlowInsideObject, GetPrecision() );
     for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itPopulation = populationsFlowInsideObject.begin(); itPopulation != populationsFlowInsideObject.end(); ++itPopulation )
         NotifyPopulationMovingInside( static_cast< MIL_PopulationFlow& >( **itPopulation ) );
 }

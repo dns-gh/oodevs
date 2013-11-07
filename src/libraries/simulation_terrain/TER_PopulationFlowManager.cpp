@@ -106,7 +106,7 @@ void TER_PopulationFlowManager::GetListIntersectingLine( const MT_Vector2D& vSta
 // Name: TER_PopulationFlowManager::GetListWithinLocalisation
 // Created: MGD 2010-05-12
 // -----------------------------------------------------------------------------
-void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const
+void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows, double precision ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
     spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() ),
@@ -115,7 +115,7 @@ void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisatio
     while( view.HasMoreElements() )
     {
         TER_PopulationFlow_ABC* pFlow = view.NextElement();
-        if( pFlow && pFlow->IsIntersecting( localisation ) )
+        if( pFlow && pFlow->IsIntersecting( localisation, precision ) )
             flows.push_back( pFlow );
     }
 }

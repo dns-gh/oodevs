@@ -41,7 +41,7 @@ public:
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_ConstPopulationFlowVector& flows ) const;
     void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_PopulationFlowVector& flows ) const;
     void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationFlowVector& flows ) const;
-    void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const;
+    void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows, double precision ) const;
 
     TER_PopulationFlow_ABC::T_Hint UpdatePosition( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );
     bool                           Remove        ( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );
