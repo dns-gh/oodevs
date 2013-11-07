@@ -17,10 +17,7 @@ import (
 
 func getRandomUnit(c *C, client *swapi.Client) *swapi.Unit {
 	data := client.Model.GetData()
-	units := data.ListUnits()
-	c.Assert(len(units), Greater, 0)
-	unit := units[0]
-	return unit
+	return getSomeUnit(c, data)
 }
 
 func (s *TestSuite) TestExecScript(c *C) {

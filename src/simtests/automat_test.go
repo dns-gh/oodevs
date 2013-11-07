@@ -34,27 +34,6 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 
 	// Engage it again
 	checkEngage(automat.Id, automat.Id, true)
-
-	subAutomat, err := client.CreateAutomat(0, automat.Id, AutomatType,
-		automat.KnowledgeGroupId)
-	c.Assert(err, IsNil)
-
-	// Changing the sub automat mode fails if parent is engaged (why?)
-	err = client.SetAutomatMode(subAutomat.Id, true)
-	c.Assert(err, IsSwordError, "error_not_allowed")
-	err = client.SetAutomatMode(subAutomat.Id, false)
-	c.Assert(err, IsSwordError, "error_not_allowed")
-
-	// Disengaging the parent, does not disengage the children
-	checkEngage(automat.Id, automat.Id, false)
-	subAutomat = client.Model.GetAutomat(subAutomat.Id)
-	c.Assert(subAutomat.Engaged, Equals, true)
-
-	// The sub automat can be disengaged alone
-	checkEngage(subAutomat.Id, subAutomat.Id, false)
-
-	// Reengaging the parent, reengage the child
-	checkEngage(automat.Id, subAutomat.Id, true)
 }
 
 func (s *TestSuite) TestAutomatReloadBrain(c *C) {

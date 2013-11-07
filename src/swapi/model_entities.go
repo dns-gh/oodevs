@@ -252,27 +252,11 @@ type Automat struct {
 	PartyId          uint32
 	FormationId      uint32
 	Name             string
-	Automats         map[uint32]*Automat
-	Units            map[uint32]*Unit
 	Engaged          bool
 	DebugBrain       bool
 	KnowledgeGroupId uint32
 	LogSuperiors     []uint32
 	SuperiorQuotas   map[uint32]int32
-}
-
-func NewAutomat(id, partyId, formationId, knowledgeGroupId uint32, name string) *Automat {
-	return &Automat{
-		Id:               id,
-		PartyId:          partyId,
-		FormationId:      formationId,
-		Name:             name,
-		Automats:         map[uint32]*Automat{},
-		Units:            map[uint32]*Unit{},
-		Engaged:          true,
-		DebugBrain:       false,
-		KnowledgeGroupId: knowledgeGroupId,
-	}
 }
 
 type Formation struct {
@@ -282,8 +266,6 @@ type Formation struct {
 	Name           string
 	Level          string
 	LogLevel       string
-	Formations     map[uint32]*Formation
-	Automats       map[uint32]*Automat
 	LogSuperiors   []uint32
 	SuperiorQuotas map[uint32]int32
 }
@@ -291,14 +273,12 @@ type Formation struct {
 func NewFormation(id uint32, name string, parentId uint32,
 	partyId uint32, level, logLevel string) *Formation {
 	return &Formation{
-		Id:         id,
-		PartyId:    partyId,
-		ParentId:   parentId,
-		Name:       name,
-		Level:      level,
-		LogLevel:   logLevel,
-		Formations: map[uint32]*Formation{},
-		Automats:   map[uint32]*Automat{},
+		Id:       id,
+		PartyId:  partyId,
+		ParentId: parentId,
+		Name:     name,
+		Level:    level,
+		LogLevel: logLevel,
 	}
 }
 
@@ -310,9 +290,6 @@ type KnowledgeGroup struct {
 	Type                string
 	IsCrowdDefaultGroup bool
 	Enabled             bool
-	UnitKnowledges      map[uint32]*UnitKnowledge
-	ObjectKnowledges    map[uint32]*ObjectKnowledge
-	CrowdKnowledges     map[uint32]*CrowdKnowledge
 }
 
 type UnitKnowledge struct {
@@ -341,24 +318,16 @@ type CrowdKnowledge struct {
 }
 
 type Party struct {
-	Id              uint32
-	Name            string
-	Formations      map[uint32]*Formation
-	Crowds          map[uint32]*Crowd
-	Populations     map[uint32]*Population
-	KnowledgeGroups map[uint32]*KnowledgeGroup
-	Diplomacies     map[uint32]sword.EnumDiplomacy
+	Id          uint32
+	Name        string
+	Diplomacies map[uint32]sword.EnumDiplomacy
 }
 
 func NewParty(id uint32, name string) *Party {
 	return &Party{
-		Id:              id,
-		Name:            name,
-		Formations:      map[uint32]*Formation{},
-		Crowds:          map[uint32]*Crowd{},
-		Populations:     map[uint32]*Population{},
-		KnowledgeGroups: map[uint32]*KnowledgeGroup{},
-		Diplomacies:     map[uint32]sword.EnumDiplomacy{},
+		Id:          id,
+		Name:        name,
+		Diplomacies: map[uint32]sword.EnumDiplomacy{},
 	}
 }
 
@@ -489,9 +458,16 @@ type SupplyHandling struct {
 
 type ModelData struct {
 	Parties              map[uint32]*Party
+	Formations           map[uint32]*Formation
+	Automats             map[uint32]*Automat
+	Units                map[uint32]*Unit
+	Crowds               map[uint32]*Crowd
+	Populations          map[uint32]*Population
+	KnowledgeGroups      map[uint32]*KnowledgeGroup
+	UnitKnowledges       map[uint32]*UnitKnowledge
+	ObjectKnowledges     map[uint32]*ObjectKnowledge
+	CrowdKnowledges      map[uint32]*CrowdKnowledge
 	Profiles             map[string]*Profile
-	GlobalWeather        Weather
-	LocalWeathers        map[uint32]*LocalWeather
 	Urbans               map[uint32]*Urban
 	Orders               map[uint32]*Order
 	Objects              map[uint32]*Object
@@ -499,6 +475,8 @@ type ModelData struct {
 	MedicalHandlings     map[uint32]*MedicalHandling
 	FuneralHandlings     map[uint32]*FuneralHandling
 	SupplyHandlings      map[uint32]*SupplyHandling
+	LocalWeathers        map[uint32]*LocalWeather
+	GlobalWeather        Weather
 	// Available scores definitions
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
@@ -511,6 +489,15 @@ type ModelData struct {
 func NewModelData() *ModelData {
 	return &ModelData{
 		Parties:              map[uint32]*Party{},
+		Formations:           map[uint32]*Formation{},
+		Automats:             map[uint32]*Automat{},
+		Units:                map[uint32]*Unit{},
+		Crowds:               map[uint32]*Crowd{},
+		Populations:          map[uint32]*Population{},
+		KnowledgeGroups:      map[uint32]*KnowledgeGroup{},
+		UnitKnowledges:       map[uint32]*UnitKnowledge{},
+		ObjectKnowledges:     map[uint32]*ObjectKnowledge{},
+		CrowdKnowledges:      map[uint32]*CrowdKnowledge{},
 		Profiles:             map[string]*Profile{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
 		Urbans:               map[uint32]*Urban{},
@@ -534,170 +521,73 @@ func (model *ModelData) FindPartyByName(name string) *Party {
 	return nil
 }
 
-func (model *ModelData) ListFormations() []*Formation {
-	formations := []*Formation{}
-	pendings := []*Formation{}
-	for _, p := range model.Parties {
-		for _, f := range p.Formations {
-			pendings = append(pendings, f)
-		}
-	}
-	for len(pendings) > 0 {
-		f := pendings[len(pendings)-1]
-		pendings = pendings[:len(pendings)-1]
-		for _, v := range f.Formations {
-			pendings = append(pendings, v)
-		}
-		formations = append(formations, f)
-	}
-	return formations
-}
-
-func (model *ModelData) FindFormation(formationId uint32) *Formation {
-	for _, f := range model.ListFormations() {
-		if f.Id == formationId {
-			return f
-		}
-	}
-	return nil
-}
-
 func (model *ModelData) addFormation(f *Formation) bool {
-	parent := model.FindFormation(f.ParentId)
-	if parent != nil {
-		parent.Formations[f.Id] = f
-		return true
+	_, ok := model.Formations[f.ParentId]
+	if !ok {
+		_, ok = model.Parties[f.PartyId]
 	}
-	party, ok := model.Parties[f.PartyId]
 	if ok {
-		party.Formations[f.Id] = f
-		return true
+		model.Formations[f.Id] = f
 	}
-	return false
+	return ok
 }
 
 func (model *ModelData) removeFormation(formationId uint32) bool {
-	f := model.FindFormation(formationId)
-	if f == nil {
+	size := len(model.Formations)
+	delete(model.Formations, formationId)
+	if size == len(model.Formations) {
 		return false
 	}
-	if f.ParentId != 0 {
-		supf := model.FindFormation(f.ParentId)
-		if supf != nil {
-			size := len(supf.Formations)
-			delete(supf.Formations, formationId)
-			if size != len(supf.Formations) {
-				return true
-			}
-		}
-	} else {
-		p := model.Parties[f.PartyId]
-		if p != nil {
-			size := len(p.Formations)
-			delete(p.Formations, formationId)
-			if size != len(p.Formations) {
-				return true
-			}
+	for _, f := range model.Formations {
+		if f.ParentId == formationId {
+			return false
 		}
 	}
-	return false
+	for _, a := range model.Automats {
+		if a.FormationId == formationId {
+			return false
+		}
+	}
+	return true
 }
 
-func (model *ModelData) ListAutomats() []*Automat {
-	automats := []*Automat{}
-	pendings := []*Automat{}
-	for _, f := range model.ListFormations() {
-		for _, a := range f.Automats {
-			pendings = append(pendings, a)
-		}
+func (model *ModelData) addAutomat(a *Automat) bool {
+	if _, ok := model.Formations[a.FormationId]; !ok {
+		return false
 	}
-	for len(pendings) > 0 {
-		a := pendings[len(pendings)-1]
-		pendings = pendings[:len(pendings)-1]
-		for _, child := range a.Automats {
-			pendings = append(pendings, child)
-		}
-		automats = append(automats, a)
-	}
-	return automats
-}
-
-func (model *ModelData) FindAutomat(id uint32) *Automat {
-	for _, a := range model.ListAutomats() {
-		if a.Id == id {
-			return a
-		}
-	}
-	return nil
-}
-
-func (model *ModelData) addAutomat(automatId, formationId uint32, a *Automat) bool {
-	if parent := model.FindAutomat(automatId); parent != nil {
-		parent.Automats[a.Id] = a
-		return true
-	}
-	if parent := model.FindFormation(formationId); parent != nil {
-		parent.Automats[a.Id] = a
-		return true
-	}
-	return false
+	model.Automats[a.Id] = a
+	return true
 }
 
 func (model *ModelData) removeAutomat(automatId uint32) bool {
-	a := model.FindAutomat(automatId)
-	if a == nil {
+	size := len(model.Automats)
+	delete(model.Automats, automatId)
+	if size == len(model.Automats) {
 		return false
 	}
-	f := model.FindFormation(a.FormationId)
-	if f == nil {
-		return false
-	}
-	size := len(f.Automats)
-	delete(f.Automats, automatId)
-	return size != len(f.Automats)
-}
-
-func (model *ModelData) ListUnits() []*Unit {
-	units := []*Unit{}
-	for _, a := range model.ListAutomats() {
-		for _, u := range a.Units {
-			units = append(units, u)
+	for _, u := range model.Units {
+		if u.AutomatId == automatId {
+			return false
 		}
 	}
-	return units
-}
-
-func (model *ModelData) FindUnit(unitId uint32) *Unit {
-	for _, u := range model.ListUnits() {
-		if u.Id == unitId {
-			return u
-		}
-	}
-	return nil
-}
-
-func (model *ModelData) FindCrowd(crowdId uint32) *Crowd {
-	for _, u := range model.ListCrowds() {
-		if u.Id == crowdId {
-			return u
-		}
-	}
-	return nil
+	return true
 }
 
 func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
-	if crowd := model.FindCrowd(crowdId); crowd != nil {
-		if element := crowd.CrowdElements[elementId]; element == nil {
-			crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0}
-			return true
-		}
+	crowd, ok := model.Crowds[crowdId]
+	if !ok {
+		return false
 	}
-	return false
+	if _, ok := crowd.CrowdElements[elementId]; ok {
+		return false
+	}
+	crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0}
+	return true
 }
 
 func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
-	crowd := model.FindCrowd(crowdId)
-	if crowd == nil {
+	crowd, ok := model.Crowds[crowdId]
+	if !ok {
 		return false
 	}
 	size := len(crowd.CrowdElements)
@@ -706,130 +596,96 @@ func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
 }
 
 func (model *ModelData) addUnit(unit *Unit) bool {
-	f := model.FindAutomat(unit.AutomatId)
-	if f != nil {
-		f.Units[unit.Id] = unit
-		return true
+	if _, ok := model.Automats[unit.AutomatId]; !ok {
+		return false
 	}
-	return false
+	model.Units[unit.Id] = unit
+	return true
 }
 
 func (model *ModelData) removeUnit(unitId uint32) bool {
-	u := model.FindUnit(unitId)
-	if u == nil {
-		return false
-	}
-	a := model.FindAutomat(u.AutomatId)
-	if a == nil {
-		return false
-	}
-	size := len(a.Units)
-	delete(a.Units, unitId)
-	return size != len(a.Units)
+	size := len(model.Units)
+	delete(model.Units, unitId)
+	return size != len(model.Units)
 }
 
-func (model *ModelData) changeUnitSuperior(unit *Unit, newSuperior *Automat) error {
-	oldAutomat := model.FindAutomat(unit.AutomatId)
-	if oldAutomat == nil {
-		return fmt.Errorf("invalid automat identifier: %v", unit.AutomatId)
+func (model *ModelData) changeUnitAutomat(unitId, automatId uint32) error {
+	unit, ok := model.Units[unitId]
+	if !ok {
+		return fmt.Errorf("invalid unit identifier: %v", unitId)
 	}
-	if !model.removeUnit(unit.Id) {
-		return fmt.Errorf("impossible to remove the automat: %v", unit.Id)
+	if _, ok = model.Automats[automatId]; !ok {
+		return fmt.Errorf("invalid automat identifier: %v", automatId)
 	}
-	unit.AutomatId = newSuperior.Id
-	if !model.addUnit(unit) {
-		return fmt.Errorf("impossible to add the automat: %v", unit.Id)
-	}
+	unit.AutomatId = automatId
 	return nil
 }
 
-func (model *ModelData) changeAutomatSuperior(automat *Automat, newSuperior *Formation) error {
-	if !model.removeAutomat(automat.Id) {
-		return fmt.Errorf("impossible to remove the unit: %v", automat.Id)
+func (model *ModelData) changeAutomatFormation(automatId, formationId uint32) error {
+	automat, ok := model.Automats[automatId]
+	if !ok {
+		return fmt.Errorf("invalid automat identifier: %v", automatId)
 	}
-	automat.FormationId = newSuperior.Id
-	if !model.addAutomat(0, automat.FormationId, automat) {
-		return fmt.Errorf("impossible to add the automat: %v", automat.Id)
+	if _, ok = model.Formations[formationId]; !ok {
+		return fmt.Errorf("invalid formation identifier: %v", formationId)
 	}
+	automat.FormationId = formationId
 	return nil
 }
 
-func (model *ModelData) changeFormationSuperior(formation, parent *Formation, party *Party) error {
-	if !model.removeFormation(formation.Id) {
-		return fmt.Errorf("impossible to remove the formation: %v", formation.Id)
+func (model *ModelData) changeFormationSuperior(formationId, partyId, parentId uint32) error {
+	formation, ok := model.Formations[formationId]
+	if !ok {
+		return fmt.Errorf("invalid formation identifier: %v", formationId)
 	}
-	if parent != nil {
-		formation.ParentId = parent.Id
-	} else {
-		formation.ParentId = 0
+	if partyId != 0 && parentId != 0 {
+		return fmt.Errorf("unable to set both parent & party")
 	}
-	if !model.addFormation(formation) {
-		return fmt.Errorf("impossible to add the formation: %v", formation.Id)
-	}
-	return nil
-}
-
-func (model *ModelData) ListCrowds() []*Crowd {
-	crowds := []*Crowd{}
-	for _, party := range model.Parties {
-		for _, crowd := range party.Crowds {
-			crowds = append(crowds, crowd)
+	if partyId != 0 {
+		if _, ok = model.Parties[partyId]; !ok {
+			return fmt.Errorf("invalid party identifier: %v", partyId)
 		}
 	}
-	return crowds
+	if parentId != 0 {
+		if _, ok = model.Formations[parentId]; !ok {
+			return fmt.Errorf("invalid parent formation identifier: %v", parentId)
+		}
+	}
+	formation.ParentId = parentId
+	formation.PartyId = partyId
+	return nil
 }
 
 func (model *ModelData) addCrowd(crowd *Crowd) bool {
-	party, ok := model.Parties[crowd.PartyId]
-	if ok {
-		party.Crowds[crowd.Id] = crowd
-		return true
+	if _, ok := model.Parties[crowd.PartyId]; !ok {
+		return false
 	}
-	return false
-}
-
-func (model *ModelData) ListPopulations() []*Population {
-	pops := []*Population{}
-	for _, party := range model.Parties {
-		for _, pop := range party.Populations {
-			pops = append(pops, pop)
-		}
-	}
-	return pops
+	model.Crowds[crowd.Id] = crowd
+	return true
 }
 
 func (model *ModelData) addPopulation(population *Population) bool {
-	party, ok := model.Parties[population.PartyId]
-	if ok {
-		party.Populations[population.Id] = population
-		return true
+	if _, ok := model.Parties[population.PartyId]; !ok {
+		return false
 	}
-	return false
-}
-
-func (model *ModelData) FindPopulation(populationId uint32) *Population {
-	for _, u := range model.ListPopulations() {
-		if u.Id == populationId {
-			return u
-		}
-	}
-	return nil
+	model.Populations[population.Id] = population
+	return true
 }
 
 func (model *ModelData) addProfile(profile *Profile) bool {
-	if _, ok := model.Profiles[profile.Login]; !ok {
-		model.Profiles[profile.Login] = profile
-		return true
+	if _, ok := model.Profiles[profile.Login]; ok {
+		return false
 	}
-	return false
+	model.Profiles[profile.Login] = profile
+	return true
 }
 
 func (model *ModelData) updateProfile(login string, profile *Profile) bool {
-	_, ok := model.Profiles[login]
-	if ok {
-		model.Profiles[login] = profile
+	if _, ok := model.Profiles[login]; !ok {
+		return false
 	}
-	return ok
+	model.Profiles[login] = profile
+	return true
 }
 
 func (model *ModelData) removeProfile(login string) bool {
@@ -838,75 +694,40 @@ func (model *ModelData) removeProfile(login string) bool {
 	return size != len(model.Profiles)
 }
 
-func (model *ModelData) ListKnowledgeGroups() []*KnowledgeGroup {
-	groups := []*KnowledgeGroup{}
-	for _, party := range model.Parties {
-		for _, group := range party.KnowledgeGroups {
-			groups = append(groups, group)
-		}
-	}
-	return groups
-}
-
 func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
-	party, ok := model.Parties[group.PartyId]
-	if ok {
-		party.KnowledgeGroups[group.Id] = group
-		return true
+	if _, ok := model.Parties[group.PartyId]; !ok {
+		return false
 	}
-	return false
-}
-
-func (model *ModelData) FindKnowledgeGroup(knowledgeGroupId uint32) *KnowledgeGroup {
-	for _, u := range model.ListKnowledgeGroups() {
-		if u.Id == knowledgeGroupId {
-			return u
-		}
-	}
-	return nil
-}
-
-func (model *ModelData) FindUnitKnowledge(knowledgeGroupId uint32, unitId uint32) *UnitKnowledge {
-	knowledgeGroup := model.FindKnowledgeGroup(knowledgeGroupId)
-	if knowledgeGroup == nil {
-		return nil
-	}
-	for _, u := range knowledgeGroup.UnitKnowledges {
-		if u.UnitId == unitId {
-			return u
-		}
-	}
-	return nil
+	model.KnowledgeGroups[group.Id] = group
+	return true
 }
 
 func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
-	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
-	if knowledgeGroup != nil {
-		knowledgeGroup.UnitKnowledges[knowledge.Id] = knowledge
-		return true
+	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
+		return false
 	}
-	return false
+	model.UnitKnowledges[knowledge.Id] = knowledge
+	return true
 }
 
 func (model *ModelData) addObjectKnowledge(knowledge *ObjectKnowledge) bool {
-	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
-	if knowledgeGroup != nil {
-		knowledgeGroup.ObjectKnowledges[knowledge.Id] = knowledge
-		return true
+	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
+		return false
 	}
-	return false
+	model.ObjectKnowledges[knowledge.Id] = knowledge
+	return true
 }
 
 func (model *ModelData) addCrowdKnowledge(knowledge *CrowdKnowledge) bool {
-	knowledgeGroup := model.FindKnowledgeGroup(knowledge.KnowledgeGroupId)
-	if knowledgeGroup != nil {
-		knowledgeGroup.CrowdKnowledges[knowledge.Id] = knowledge
-		return true
+	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
+		return false
 	}
-	return false
+	model.CrowdKnowledges[knowledge.Id] = knowledge
+	return true
 }
 
 func (model *ModelData) addLocalWeather(weather *LocalWeather) {
+	// check conflicts ?
 	model.LocalWeathers[weather.Id] = weather
 }
 
@@ -917,11 +738,11 @@ func (model *ModelData) removeLocalWeather(id uint32) bool {
 }
 
 func (model *ModelData) addUrban(urban *Urban) bool {
-	if _, ok := model.Urbans[urban.Id]; !ok {
-		model.Urbans[urban.Id] = urban
-		return true
+	if _, ok := model.Urbans[urban.Id]; ok {
+		return false
 	}
-	return false
+	model.Urbans[urban.Id] = urban
+	return true
 }
 
 func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
@@ -933,57 +754,46 @@ func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*Reso
 }
 
 func (model *ModelData) addOrder(order *Order) bool {
-	if _, ok := model.Orders[order.Id]; !ok {
-		model.Orders[order.Id] = order
-		return true
+	if _, ok := model.Orders[order.Id]; ok {
+		return false
 	}
-	return false
+	model.Orders[order.Id] = order
+	return true
 }
 
 func (model *ModelData) changeLogisticsLinks(entityId uint32, superiors []uint32) bool {
-	automat := model.FindAutomat(entityId)
-	if automat != nil {
-		automat.LogSuperiors = make([]uint32, len(superiors))
-		copy(automat.LogSuperiors, superiors)
+	if automat, ok := model.Automats[entityId]; ok {
+		automat.LogSuperiors = append([]uint32{}, superiors...)
 		return true
-	} else {
-		formation := model.FindFormation(entityId)
-		if formation != nil {
-			formation.LogSuperiors = make([]uint32, len(superiors))
-			copy(formation.LogSuperiors, superiors)
-			return true
-		}
+	}
+	if formation, ok := model.Formations[entityId]; ok {
+		formation.LogSuperiors = append([]uint32{}, superiors...)
+		return true
 	}
 	return false
 }
 
 func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]int32) bool {
-	automat := model.FindAutomat(suppliedId)
-	if automat != nil {
+	if automat, ok := model.Automats[suppliedId]; ok {
 		automat.SuperiorQuotas = quotas
 		return true
-	} else {
-		formation := model.FindFormation(suppliedId)
-		if formation != nil {
-			formation.SuperiorQuotas = quotas
-			return true
-		}
+	}
+	if formation, ok := model.Formations[suppliedId]; ok {
+		formation.SuperiorQuotas = quotas
 	}
 	return false
 }
 
 func (model *ModelData) addObject(object *Object) bool {
-	_, ok := model.Objects[object.Id]
+	if _, ok := model.Objects[object.Id]; ok {
+		return false
+	}
 	model.Objects[object.Id] = object
-	return !ok
-}
-
-func (model *ModelData) FindObject(objectId uint32) *Object {
-	return model.Objects[objectId]
+	return true
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
-	_, ok := model.Objects[objectId]
+	size := len(model.Objects)
 	delete(model.Objects, objectId)
-	return ok
+	return size != len(model.Objects)
 }

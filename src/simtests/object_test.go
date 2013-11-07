@@ -118,7 +118,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	c.Assert(object, NotNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindObject(object.Id).Activated
+		return data.Objects[object.Id].Activated
 	})
 
 	// Create mined area, activated after a delay
@@ -131,7 +131,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	tick := client.Model.GetData().Tick
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.FindObject(object.Id).Activated {
+		if data.Objects[object.Id].Activated {
 			tick = data.Tick - tick
 			return true
 		}
@@ -148,7 +148,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	tick = 0
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.FindObject(object.Id).Activated {
+		if data.Objects[object.Id].Activated {
 			tick = data.Tick
 			return true
 		}
@@ -157,7 +157,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	// Wait area is disabled
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if !data.FindObject(object.Id).Activated {
+		if !data.Objects[object.Id].Activated {
 			tick = data.Tick - tick
 			return true
 		}
@@ -192,7 +192,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 
 	// Wait object is destroyed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.FindObject(object.Id) == nil {
+		if data.Objects[object.Id] == nil {
 			tick = data.Tick - tick
 			return true
 		}
@@ -233,7 +233,7 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 
 	// Check bypass
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindObject(object.Id).Bypass == percentage
+		return data.Objects[object.Id].Bypass == percentage
 	})
 }
 
@@ -267,7 +267,7 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 
 	// Check altitude
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindObject(object.Id).Altitude == altitude
+		return data.Objects[object.Id].Altitude == altitude
 	})
 }
 
@@ -289,7 +289,7 @@ func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
 
 	// Check object is constructed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindObject(object.Id).Construction == 100
+		return data.Objects[object.Id].Construction == 100
 	})
 
 	// Update construction attribute
@@ -305,6 +305,6 @@ func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
 
 	// Check object is updated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindObject(object.Id).Construction == 5
+		return data.Objects[object.Id].Construction == 5
 	})
 }

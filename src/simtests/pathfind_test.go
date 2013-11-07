@@ -38,7 +38,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 
 	// Check unit path is sent
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(unit.Id).PathPoints != uint32(0)
+		return data.Units[unit.Id].PathPoints != uint32(0)
 	})
 
 	// Teleport unit
@@ -47,6 +47,6 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 
 	// Wait its path is reset
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(unit.Id).PathPoints == uint32(0)
+		return data.Units[unit.Id].PathPoints == uint32(0)
 	})
 }

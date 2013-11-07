@@ -155,8 +155,8 @@ used to exercise swapi.Model update against real world scenarii.
 			if tick < data.Tick {
 				tick = data.Tick
 				tickCh <- tickInfo{
-					Automats: len(data.ListAutomats()),
-					Units:    len(data.ListUnits()),
+					Automats: len(data.Automats),
+					Units:    len(data.Units),
 					Tick:     int(data.Tick),
 				}
 			}

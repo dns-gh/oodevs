@@ -191,6 +191,14 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	})
 }
 
+func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
+	for _, k := range data.KnowledgeGroups {
+		return k
+	}
+	c.Fatal("missing knowledge groups")
+	return nil
+}
+
 func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -210,7 +218,7 @@ func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	group, err = client.CreateKnowledgeGroupTest(params)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
-	parent := client.Model.GetData().ListKnowledgeGroups()[0]
+	parent := getSomeKnowledgeGroup(c, client.Model.GetData())
 	c.Assert(parent, Not(IsNil))
 
 	// error: second parameter must be a valid knowledge group type identifier

@@ -73,36 +73,33 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 	return err
 }
 
+func getSomeFormation(c *C, data *swapi.ModelData) *swapi.Formation {
+	for _, f := range data.Formations {
+		return f
+	}
+	c.Fatal("missing formations")
+	return nil
+}
+
+func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
+	for _, cr := range data.Crowds {
+		return cr
+	}
+	c.Fatal("missing crowds")
+	return nil
+}
+
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
 
-	// Get a formation identifier
-	formations := data.ListFormations()
-	c.Assert(len(formations), Greater, 0)
-	formationId := formations[0].Id
-
-	// Get an automat identifier
-	automats := data.ListAutomats()
-	c.Assert(len(automats), Greater, 0)
-	automatId := automats[0].Id
-
-	// Get a unit identifier
-	units := data.ListUnits()
-	c.Assert(len(units), Greater, 0)
-	unitId := units[0].Id
-
-	// Get a crowd identifier
-	crowds := data.ListCrowds()
-	c.Assert(len(crowds), Greater, 0)
-	crowdId := crowds[0].Id
-
-	// Get a population identifier
-	populations := data.ListPopulations()
-	c.Assert(len(populations), Greater, 0)
-	popId := populations[0].Id
+	formationId := getSomeFormation(c, data).Id
+	automatId := getSomeAutomat(c, data).Id
+	unitId := getSomeUnit(c, data).Id
+	crowdId := getSomeCrowd(c, data).Id
+	popId := getSomePopulation(c, data).Id
 
 	taskers := []*sword.Tasker{
 		swapi.MakeFormationTasker(formationId),
@@ -121,7 +118,6 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 func (s *TestSuite) TestCreateFormation(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
 	defer sim.Stop()
-	model := client.Model
 
 	// Test with invalid tasker
 	_, err := client.CreateFormation(0, 0, "invalid-tasker", 1, "")
@@ -150,8 +146,6 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	c.Assert(f2.ParentId, Equals, f1.Id)
 	c.Assert(f2.Level, Equals, "o")
 	c.Assert(f2.LogLevel, Equals, "logistic_base")
-	f1 = model.GetFormation(f1.Id)
-	c.Assert(f1.Formations[f2.Id].Id, Equals, f2.Id)
 
 	// Invalid formation parameters (empty)
 	_, err = client.CreateFormationTest(0, f1.Id, swapi.MakeParameters())
@@ -182,16 +176,12 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
-	c.Assert(len(party.Formations), Greater, 0)
-	var formation *swapi.Formation
-	for _, f := range party.Formations {
-		formation = f
-		break
-	}
+	formation := getSomeFormation(c, data)
+
 	// Find a suitable knowledge group matching the formation, this should be
 	// simpler...
 	var kg *swapi.KnowledgeGroup
-	for _, g := range data.ListKnowledgeGroups() {
+	for _, g := range data.KnowledgeGroups {
 		if g.PartyId == formation.PartyId {
 			kg = g
 			break
@@ -199,7 +189,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	}
 	c.Assert(kg, NotNil)
 
-	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	automat, err := client.CreateAutomat(formation.Id, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 
 	pos := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -223,15 +213,13 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	u, err := client.CreateUnit(automat.Id, unitType, pos)
 	c.Assert(err, IsNil)
 	c.Assert(u, NotNil)
+	c.Assert(u.AutomatId, Equals, automat.Id)
 	c.Assert(u.Pc, Equals, true)
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.FindUnit(u.Id).Position, pos)
+		return Nearby(data.Units[u.Id].Position, pos)
 	})
-
-	automat = client.Model.GetAutomat(automat.Id)
-	c.Assert(automat.Units[u.Id], NotNil)
 
 	pos = swapi.Point{X: -15.8219, Y: 28.2456}
 
@@ -243,10 +231,10 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.FindUnit(u.Id).Position, pos)
+		return Nearby(data.Units[u.Id].Position, pos)
 	})
 
-	automat, err = client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	automat, err = client.CreateAutomat(formation.Id, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 
 	// Add unit with name, becomes a PC even if PC is false (wut?)
@@ -263,11 +251,11 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(u2, NotNil)
 	c.Assert(u2.Pc, Equals, false)
 	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		return data.FindUnit(u2.Id).Pc
+		return data.Units[u2.Id].Pc
 	})
 	c.Assert(ok, Equals, true)
 	ok = client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		return !data.FindUnit(u1.Id).Pc
+		return !data.Units[u1.Id].Pc
 	})
 	c.Assert(ok, Equals, true)
 
@@ -275,7 +263,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	err = client.DeleteUnit(u2.Id)
 	c.Assert(err, IsNil)
 	ok = client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		return data.FindUnit(u1.Id).Pc
+		return data.Units[u1.Id].Pc
 	})
 	c.Assert(ok, Equals, true)
 
@@ -297,10 +285,9 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Find some unit and make it move
-	units := data.ListUnits()
-	c.Assert(len(units), Greater, 0)
+	c.Assert(len(data.Units), Greater, 0)
 	var unit *swapi.Unit
-	for _, u := range units {
+	for _, u := range data.Units {
 		if strings.Contains(u.Name, "ARMOR.MBT") {
 			unit = u
 		}
@@ -317,7 +304,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !Nearby(data.FindUnit(unit.Id).Position, unit.Position)
+		return !Nearby(data.Units[unit.Id].Position, unit.Position)
 	})
 
 	// Blast it
@@ -331,13 +318,11 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	defer sim.Stop()
 	model := client.Model
 
-	formations := model.GetData().ListFormations()
-	c.Assert(len(formations), Greater, 0)
-	formation := formations[0]
+	formation := getSomeFormation(c, model.GetData())
 
 	// We want two knowledge groups from different parties, one of which
 	// matches selected formation.
-	knowledgeGroups := model.GetData().ListKnowledgeGroups()
+	knowledgeGroups := model.GetData().KnowledgeGroups
 	c.Assert(len(knowledgeGroups), Greater, 1)
 	var kg0 *swapi.KnowledgeGroup
 	var kg1 *swapi.KnowledgeGroup
@@ -354,48 +339,31 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 	automatType := AutomatType
 
-	// No parent formation or automat
-	_, err := client.CreateAutomat(0, 0, automatType, kg0.Id)
+	// No parent formation
+	_, err := client.CreateAutomat(0, automatType, kg0.Id)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid formation
-	_, err = client.CreateAutomat(InvalidIdentifier, 0, automatType, kg0.Id)
-	c.Assert(err, IsSwordError, "error_invalid_unit")
-
-	// Invalid automat
-	_, err = client.CreateAutomat(formation.Id, InvalidIdentifier, automatType, kg0.Id)
+	_, err = client.CreateAutomat(InvalidIdentifier, automatType, kg0.Id)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Invalid automat type
-	_, err = client.CreateAutomat(formation.Id, 0, InvalidIdentifier, kg0.Id)
+	_, err = client.CreateAutomat(formation.Id, InvalidIdentifier, kg0.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid knowledge group
-	_, err = client.CreateAutomat(formation.Id, 0, automatType, InvalidIdentifier)
+	_, err = client.CreateAutomat(formation.Id, automatType, InvalidIdentifier)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Knowledge group not belonging to formation party
-	_, err = client.CreateAutomat(formation.Id, 0, automatType, kg1.Id)
+	_, err = client.CreateAutomat(formation.Id, automatType, kg1.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Create automat in formation
-	a, err := client.CreateAutomat(formation.Id, 0, automatType, kg0.Id)
+	a, err := client.CreateAutomat(formation.Id, automatType, kg0.Id)
 	c.Assert(err, IsNil)
 	c.Assert(a, NotNil)
 	c.Assert(a.KnowledgeGroupId, Equals, kg0.Id)
-
-	// Create automat in previous automat
-	aa, err := client.CreateAutomat(0, a.Id, automatType, kg0.Id)
-	c.Assert(err, IsNil)
-	c.Assert(aa, NotNil)
-	a = model.GetAutomat(a.Id)
-	aa, ok := a.Automats[aa.Id]
-	c.Assert(ok, Equals, true)
-
-	// Knowledge group not belonging to parent automat party
-	aa, err = client.CreateAutomat(0, a.Id, automatType, kg1.Id)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-	c.Assert(aa, IsNil)
 }
 
 func (s *TestSuite) TestCreateCrowd(c *C) {
@@ -444,9 +412,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 
-	formations := model.GetData().ListFormations()
-	c.Assert(len(formations), Greater, 0)
-	formation := formations[0]
+	formation := getSomeFormation(c, model.GetData())
 
 	// Create crowd in party with formation identifier
 	crowd, err = client.CreateCrowd(formation.Id, 0, CrowdType, pos, healthy,
@@ -483,7 +449,7 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.FindUnit(unit.Id).Position, pos)
+		return Nearby(data.Units[unit.Id].Position, pos)
 	})
 }
 
@@ -511,10 +477,10 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 
 	// logistics links model updated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		a := data.FindAutomat(9)
-		return (a != nil) && (len(a.LogSuperiors) > 1)
+		a, ok := data.Automats[9]
+		return ok && len(a.LogSuperiors) > 1
 	})
-	automat := client.Model.GetData().FindAutomat(9)
+	automat := client.Model.GetData().Automats[9]
 	c.Assert(automat.LogSuperiors, DeepEquals, newSuperiors)
 }
 
@@ -540,10 +506,10 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		a := data.FindAutomat(23)
-		return (a != nil) && (len(a.SuperiorQuotas) > 0)
+		a, ok := data.Automats[23]
+		return ok && len(a.SuperiorQuotas) > 0
 	})
-	automat := client.Model.GetData().FindAutomat(23)
+	automat := client.Model.GetData().Automats[23]
 	c.Assert(automat.SuperiorQuotas, DeepEquals, newQuotas)
 }
 
@@ -589,15 +555,16 @@ func CheckUnitSuperior(model *swapi.Model, c *C,
 	c.Assert(unit, NotNil)
 	c.Assert(unit.AutomatId, Equals, newAutomatId)
 
+	data := model.GetData()
 	// Check oldAutomat is empty
-	oldAutomat := model.GetData().FindAutomat(oldAutomatId)
+	oldAutomat := data.Automats[oldAutomatId]
 	c.Assert(oldAutomat, NotNil)
-	c.Assert(oldAutomat.Units, HasLen, 0)
+	c.Assert(getAutomatUnits(data, oldAutomat.Id), HasLen, 0)
 
 	// Check newAutomat contains one element
-	newAutomat := model.GetData().FindAutomat(newAutomatId)
+	newAutomat := data.Automats[newAutomatId]
 	c.Assert(newAutomat, NotNil)
-	c.Assert(newAutomat.Units, HasLen, 1)
+	c.Assert(getAutomatUnits(data, newAutomat.Id), HasLen, 1)
 }
 
 func CheckAutomatSuperior(model *swapi.Model, c *C,
@@ -605,19 +572,19 @@ func CheckAutomatSuperior(model *swapi.Model, c *C,
 
 	d := model.GetData()
 	// Check AutomatId attribute in Unit
-	automat := d.FindAutomat(automatId)
+	automat := d.Automats[automatId]
 	c.Assert(automat, NotNil)
 	c.Assert(automat.FormationId, Equals, newFormationId)
 
 	// Check oldFormation is empty
-	oldFormation := d.FindFormation(oldFormationId)
+	oldFormation := d.Formations[oldFormationId]
 	c.Assert(oldFormation, NotNil)
-	c.Assert(oldFormation.Automats, HasLen, 0)
+	c.Assert(getFormationAutomats(d, oldFormation.Id), HasLen, 0)
 
 	// Check newFormation contains one element
-	newFormation := d.FindFormation(newFormationId)
+	newFormation := d.Formations[newFormationId]
 	c.Assert(newFormation, NotNil)
-	c.Assert(newFormation.Automats, HasLen, 1)
+	c.Assert(getFormationAutomats(d, newFormation.Id), HasLen, 1)
 }
 
 func CheckFormationSuperior(model *swapi.Model, c *C,
@@ -625,18 +592,18 @@ func CheckFormationSuperior(model *swapi.Model, c *C,
 
 	d := model.GetData()
 	// Check AutomatId attribute in Unit
-	formation := d.FindFormation(formationId)
+	formation := d.Formations[formationId]
 	c.Assert(formation, NotNil)
 
 	// Check newFormation or newParty contains one element
-	newFormation := d.FindFormation(newParentId)
+	newFormation := d.Formations[newParentId]
 	if newFormation == nil {
 		newParty := d.Parties[newParentId]
 		c.Assert(newParty, NotNil)
 		c.Assert(formation.ParentId, Equals, uint32(0))
 	} else {
 		c.Assert(newFormation, NotNil)
-		c.Assert(newFormation.Formations, HasLen, 1)
+		c.Assert(getChildFormations(d, newFormation.Id), HasLen, 1)
 		c.Assert(formation.ParentId, Equals, newParentId)
 	}
 }
@@ -647,11 +614,39 @@ func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formatio
 	return formation
 }
 
-func CreateAutomat(c *C, client *swapi.Client, formationId, knowledgeGroup uint32) *swapi.Automat {
-	knowledgeGroups := client.Model.GetData().ListKnowledgeGroups()
-	kg0 := knowledgeGroups[knowledgeGroup]
+func getAnyKnowledgeGroupId(c *C, data *swapi.ModelData) uint32 {
+	for id := range data.KnowledgeGroups {
+		return id
+	}
+	c.Fatal("unable to find any knowledge group")
+	return 0
+}
 
-	automat, err := client.CreateAutomat(formationId, 0, AutomatType, kg0.Id)
+func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int) uint32 {
+	parties := map[uint32]struct{}{}
+	for id, group := range data.KnowledgeGroups {
+		_, found := parties[group.PartyId]
+		if found {
+			continue
+		}
+		if len(parties) == index {
+			return id
+		}
+		parties[group.PartyId] = struct{}{}
+	}
+	c.Fatal("unable to find a knowledge group with party index", index)
+	return 0
+}
+
+func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swapi.Automat {
+	data := client.Model.GetData()
+	if groupId == 0 {
+		groupId = getAnyKnowledgeGroupId(c, data)
+	}
+	kg0, ok := data.KnowledgeGroups[groupId]
+	c.Assert(ok, Equals, true)
+	c.Assert(kg0, NotNil)
+	automat, err := client.CreateAutomat(formationId, AutomatType, kg0.Id)
 	c.Assert(err, IsNil)
 	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
 	return automat
@@ -670,8 +665,11 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 	f1 := CreateFormation(c, client, 1)
 
 	// Create 2 automats
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	a2 := CreateAutomat(c, client, f1.Id, 0)
+	data := client.Model.GetData()
+	kg0 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 0)
+	kg1 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 1)
+	a1 := CreateAutomat(c, client, f1.Id, kg0)
+	a2 := CreateAutomat(c, client, f1.Id, kg0)
 
 	// One unit in a2 automat
 	u2 := CreateUnit(c, client, a2.Id)
@@ -694,7 +692,7 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 
 	// error: automat parameter isn't in the same side
 	f2 := CreateFormation(c, client, 2)
-	a3 := CreateAutomat(c, client, f2.Id, 2)
+	a3 := CreateAutomat(c, client, f2.Id, kg1)
 
 	err = client.ChangeUnitSuperior(u2.Id, a3.Id)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
@@ -724,8 +722,11 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	f2 := CreateFormation(c, client, 2)
 
 	// Create 2 automats
-	a1 := CreateAutomat(c, client, f1.Id, 0)
-	a2 := CreateAutomat(c, client, f2.Id, 2)
+	data := client.Model.GetData()
+	kg0 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 0)
+	kg1 := getAnyKnowledgeGroupIdWithPartyIndex(c, data, 1)
+	a1 := CreateAutomat(c, client, f1.Id, kg0)
+	a2 := CreateAutomat(c, client, f2.Id, kg1)
 
 	// Create 2 mortar units
 	const infMortarTroopType = 31
@@ -737,7 +738,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	const fullyOperational = 100
 	// Waiting for the target initialization
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(target.Id)
+		unit := data.Units[target.Id]
 		return !unit.Neutralized && unit.RawOperationalState == fullyOperational
 	})
 
@@ -753,7 +754,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// testing strike effect: neutralization and attrition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(target.Id)
+		unit := data.Units[target.Id]
 		return unit.Neutralized && unit.RawOperationalState < fullyOperational
 	})
 
@@ -808,7 +809,7 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 
 	// Check u2 is PC
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(u2.Id).Pc
+		return data.Units[u2.Id].Pc
 	})
 
 	// Change superior u1 -> a2
@@ -817,7 +818,7 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 
 	// Check u1 is not PC
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindUnit(u1.Id).Pc
+		return !data.Units[u1.Id].Pc
 	})
 }
 
@@ -852,7 +853,7 @@ func (s *TestSuite) TestAutomatChangeSuperior(c *C) {
 	err = client.ChangeAutomatSuperior(a1.Id, f2.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindAutomat(a1.Id).FormationId == f2.Id
+		return data.Automats[a1.Id].FormationId == f2.Id
 	})
 	CheckAutomatSuperior(client.Model, c, a1.Id, f2.Id, f1.Id)
 
@@ -860,7 +861,7 @@ func (s *TestSuite) TestAutomatChangeSuperior(c *C) {
 	err = client.ChangeAutomatSuperior(a1.Id, f1.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindAutomat(a1.Id).FormationId == f1.Id
+		return data.Automats[a1.Id].FormationId == f1.Id
 	})
 	CheckAutomatSuperior(client.Model, c, a1.Id, f1.Id, f2.Id)
 }
@@ -895,7 +896,7 @@ func (s *TestSuite) TestFormationChangeSuperior(c *C) {
 	err = client.ChangeFormationSuperior(f1.Id, f2.Id, false)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindFormation(f1.Id).ParentId == f2.Id
+		return data.Formations[f1.Id].ParentId == f2.Id
 	})
 	CheckFormationSuperior(client.Model, c, f1.Id, f2.Id)
 
@@ -903,7 +904,7 @@ func (s *TestSuite) TestFormationChangeSuperior(c *C) {
 	err = client.ChangeFormationSuperior(f1.Id, 1, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindFormation(f1.Id).ParentId == 0
+		return data.Formations[f1.Id].ParentId == 0
 	})
 	CheckFormationSuperior(client.Model, c, f1.Id, 1)
 }
@@ -930,7 +931,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	err = client.DebugBrain(unit.Id, true)
 	c.Assert(err, IsNil)
 	client.Model.WaitCondition(func(model *swapi.ModelData) bool {
-		return model.FindUnit(unit.Id).DebugBrain
+		return model.Units[unit.Id].DebugBrain
 	})
 
 	// Enable again
@@ -982,19 +983,19 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 	err = client.DebugBrain(unit.Id, false)
 	c.Assert(err, IsNil)
 	client.Model.WaitCondition(func(model *swapi.ModelData) bool {
-		return !model.FindUnit(unit.Id).DebugBrain
+		return !model.Units[unit.Id].DebugBrain
 	})
 }
 
 func CheckLentEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, lent int32) bool {
-	unit := data.FindUnit(from)
+	unit := data.Units[from]
 	return unit.EquipmentDotations[11].Available == available &&
 		(lent == 0 && len(unit.LentEquipments) == 0 ||
 			len(unit.LentEquipments) != 0 && unit.LentEquipments[0].Borrower == to && unit.LentEquipments[0].TypeId == 11 && unit.LentEquipments[0].Quantity == lent)
 }
 
 func CheckBorrowedEquipment(data *swapi.ModelData, from uint32, to uint32, available int32, borrowed int32) bool {
-	target := data.FindUnit(to)
+	target := data.Units[to]
 	return target.EquipmentDotations[11].Available == available &&
 		(borrowed == 0 && len(target.BorrowedEquipments) == 0 ||
 			len(target.BorrowedEquipments) != 0 && target.BorrowedEquipments[0].Owner == from && target.BorrowedEquipments[0].TypeId == 11 && target.BorrowedEquipments[0].Quantity == borrowed)
@@ -1082,9 +1083,8 @@ func (s *TestSuite) TestSurrender(c *C) {
 	defer sim.Stop()
 
 	isSurrendered := func(data *swapi.ModelData, automatId, partyId uint32) bool {
-		automat := data.FindAutomat(automatId)
-		for _, unit := range automat.Units {
-			if unit.PartySurrenderedTo != partyId {
+		for _, k := range getAutomatUnits(data, automatId) {
+			if data.Units[uint32(k)].PartySurrenderedTo != partyId {
 				return false
 			}
 		}
@@ -1092,9 +1092,7 @@ func (s *TestSuite) TestSurrender(c *C) {
 	}
 
 	data := client.Model.GetData()
-	automats := data.ListAutomats()
-	c.Assert(len(automats), Greater, 0)
-	automat := automats[0]
+	automat := getSomeAutomat(c, data)
 
 	// find another party Id
 	armies := data.Parties
@@ -1158,17 +1156,17 @@ func (s *TestSuite) TestSurrender(c *C) {
 	// Move a normal unit into a surrendered automat
 	err = client.Surrender(automat.Id, otherPartyId)
 	c.Assert(err, IsNil)
-	a2 := CreateAutomat(c, client, automat.FormationId, 0)
+	a2 := CreateAutomat(c, client, automat.FormationId, 3)
 	u2 := CreateUnit(c, client, a2.Id)
 	// Wait for the unit to be fully generated, there is an update race
 	// otherwise masking the previous failure.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindUnit(u2.Id).EquipmentDotations) > 0
+		return len(data.Units[u2.Id].EquipmentDotations) > 0
 	})
 	err = client.ChangeUnitSuperior(u2.Id, automat.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(u2.Id).AutomatId == automat.Id &&
+		return data.Units[u2.Id].AutomatId == automat.Id &&
 			isSurrendered(data, automat.Id, otherPartyId)
 	})
 
@@ -1176,7 +1174,7 @@ func (s *TestSuite) TestSurrender(c *C) {
 	err = client.ChangeUnitSuperior(u2.Id, a2.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(u2.Id).AutomatId == a2.Id &&
+		return data.Units[u2.Id].AutomatId == a2.Id &&
 			isSurrendered(data, a2.Id, 0)
 	})
 }
@@ -1241,7 +1239,7 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 
 	// Check initial humans state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanQuantity(data.FindUnit(u1.Id).HumanDotations,
+		return CheckHumanQuantity(data.Units[u1.Id].HumanDotations,
 			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
 	})
 
@@ -1272,11 +1270,11 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eHealthy, 1, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eHealthy, 4, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 1, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eHealthy, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
 	})
 
 	// Kill all humans
@@ -1284,11 +1282,11 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eDead, 1, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
+		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU2) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, quantity, eInjuryU1)
 	})
 
 	// Heal humans
@@ -1296,9 +1294,9 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 7, notWounded)
+		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eDead, 4, notWounded) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 7, notWounded)
 	})
 }
 
@@ -1312,7 +1310,7 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 
 	// Check initial humans state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanQuantity(data.FindUnit(u1.Id).HumanDotations,
+		return CheckHumanQuantity(data.Units[u1.Id].HumanDotations,
 			map[int32]int32{eOfficer: 1, eWarrantOfficer: 4, eTrooper: 7})
 	})
 
@@ -1356,10 +1354,10 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 
 	// Check human composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eHealthy, 1, 0) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eHealthy, 4, 0) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 6, 0) &&
-			CheckHumanTotalState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eInjured, 1, eInjuryU3, true, true)
+		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eHealthy, 1, 0) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eHealthy, 4, 0) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 6, 0) &&
+			CheckHumanTotalState(data.Units[u1.Id].HumanDotations, eTrooper, eInjured, 1, eInjuryU3, true, true)
 	})
 
 	// Heal trooper, kill officer and wound 1245 warrant officers
@@ -1386,9 +1384,9 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 
 	// Check human composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eOfficer, eDead, 1, 0) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eWarrantOfficer, eInjured, 4, eInjuryUe) &&
-			CheckHumanState(data.FindUnit(u1.Id).HumanDotations, eTrooper, eHealthy, 7, 0)
+		return CheckHumanState(data.Units[u1.Id].HumanDotations, eOfficer, eDead, 1, 0) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eWarrantOfficer, eInjured, 4, eInjuryUe) &&
+			CheckHumanState(data.Units[u1.Id].HumanDotations, eTrooper, eHealthy, 7, 0)
 	})
 }
 
@@ -1402,7 +1400,7 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindUnit(u1.Id).ResourceDotations) > 1
+		return len(data.Units[u1.Id].ResourceDotations) > 1
 	})
 
 	u1 = client.Model.GetUnit(u1.Id)
@@ -1457,8 +1455,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return *data.FindUnit(u1.Id).ResourceDotations[0] == resource &&
-			*data.FindUnit(u1.Id).ResourceDotations[1] == resource2
+		return *data.Units[u1.Id].ResourceDotations[0] == resource &&
+			*data.Units[u1.Id].ResourceDotations[1] == resource2
 	})
 
 	// Change dotation with a huge quantity
@@ -1467,7 +1465,7 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		dotation := *data.FindUnit(u1.Id).ResourceDotations[0]
+		dotation := *data.Units[u1.Id].ResourceDotations[0]
 		return dotation.Quantity == int32(1000)
 	})
 }
@@ -1486,7 +1484,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Check initial state
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindUnit(u1.Id).EquipmentDotations) != 0
+		return len(data.Units[u1.Id].EquipmentDotations) != 0
 	})
 
 	c.Assert(*client.Model.GetUnit(u1.Id).EquipmentDotations[equipmentId], DeepEquals, equipment)
@@ -1509,7 +1507,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	equipment.Unavailable = 4
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
 	})
 
 	// Change equipments
@@ -1523,7 +1521,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
 	})
 
 	// Error: breakdown missing
@@ -1552,7 +1550,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &equipment)
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
 	})
 }
 
@@ -1607,7 +1605,7 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	// Check breakdown
 	initial.Breakdowns = equipment.Breakdowns
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &initial)
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &initial)
 	})
 
 	// Create 5 breakdowns but 3 available
@@ -1623,7 +1621,7 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 	initial.Available = 0
 	initial.Breakdowns = []int32{82, 82, 82, 82}
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(u1.Id).EquipmentDotations[equipmentId], &initial)
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &initial)
 	})
 }
 
@@ -1650,7 +1648,7 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 	err = client.ChangePosture(unit.Id, sword.UnitAttributes_parked)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		u := data.FindUnit(unit.Id)
+		u := data.Units[unit.Id]
 		return u.Posture.Old == sword.UnitAttributes_parked &&
 			u.Posture.New == sword.UnitAttributes_parked_on_self_prepared_area &&
 			u.Posture.Transition > 0
@@ -1682,7 +1680,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 	err = client.ChangeUnitAdhesions(u1.Id, adhesions)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindUnit(u1.Id).Adhesions) != 0
+		return len(data.Units[u1.Id].Adhesions) != 0
 	})
 	newAdhesions := client.Model.GetUnit(u1.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
@@ -1699,7 +1697,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 	err = client.ChangeUnitAdhesions(u1.Id, map[uint32]float32{0: 0.5})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		updated := data.FindUnit(u1.Id)
+		updated := data.Units[u1.Id]
 		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
 	})
 	newAdhesions = client.Model.GetUnit(u1.Id).Adhesions
@@ -1750,7 +1748,7 @@ func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
 	err = client.ChangeHumanFactors(u1.Id, sword.UnitAttributes_tired, sword.UnitAttributes_high, sword.UnitAttributes_expert, sword.UnitAttributes_worried)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(u1.Id)
+		unit := data.Units[u1.Id]
 		return unit.HumanFactors.Tiredness == sword.UnitAttributes_tired &&
 			unit.HumanFactors.Morale == sword.UnitAttributes_high &&
 			unit.HumanFactors.Experience == sword.UnitAttributes_expert &&
@@ -1783,7 +1781,7 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 
 	// Check vehicles aren't away
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindUnit(transported.Id).EquipmentDotations) != 0
+		return len(data.Units[transported.Id].EquipmentDotations) != 0
 	})
 
 	// Mission 'COMMON - Get transported' on the transported
@@ -1804,7 +1802,7 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 func CheckAwayEquipment(c *C, client *swapi.Client, awayEquipmentId, transportedId,
 	carrierId uint32, number int32) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		transported := data.FindUnit(transportedId)
+		transported := data.Units[transportedId]
 		return transported.EquipmentDotations[awayEquipmentId].Away == number &&
 			transported.TransporterId == carrierId
 	})
@@ -1823,7 +1821,7 @@ func (s *TestSuite) TestUnitRecoverTransporters(c *C) {
 
 	// Check unit is unloaded
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(transported.Id).TransporterId == 0
+		return data.Units[transported.Id].TransporterId == 0
 	})
 
 	// Send recover_transporters magic action
@@ -1856,7 +1854,7 @@ func (s *TestSuite) TestDeleteUnitWithAwayEquipments(c *C) {
 
 	// Delete unit after the transport
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(transported.Id).TransporterId == 0
+		return data.Units[transported.Id].TransporterId == 0
 	})
 	err = client.DeleteUnit(transported.Id)
 	c.Assert(err, IsNil)
@@ -1884,7 +1882,7 @@ func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindUnit(transported.Id).EquipmentDotations[awayEquipmentId],
+		return reflect.DeepEqual(data.Units[transported.Id].EquipmentDotations[awayEquipmentId],
 			&awayEquipment)
 	})
 
@@ -1894,7 +1892,7 @@ func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
 
 	// Check unit is unloaded
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindUnit(transported.Id).TransporterId == 0
+		return data.Units[transported.Id].TransporterId == 0
 	})
 
 	// Send recover_transporters magic action
@@ -1921,7 +1919,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(unit.Id)
+		unit := data.Units[unit.Id]
 		if len(unit.BorrowedEquipments) == 0 {
 			return false
 		}
@@ -1939,7 +1937,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(unit.Id)
+		unit := data.Units[unit.Id]
 		return len(unit.BorrowedEquipments) == 0
 	})
 
@@ -2036,8 +2034,8 @@ func (s *TestSuite) TestLoadUnit(c *C) {
 	err = client.LoadUnit(unit1.Id, unit2.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		u1 := data.FindUnit(unit1.Id)
-		u2 := data.FindUnit(unit2.Id)
+		u1 := data.Units[unit1.Id]
+		u2 := data.Units[unit2.Id]
 		return u2.TransporterId == u1.Id &&
 			reflect.DeepEqual(u1.TransportedIds, []uint32{u2.Id})
 	})
@@ -2089,8 +2087,8 @@ func (s *TestSuite) TestUnloadUnit(c *C) {
 	err = client.UnloadUnit(unit1.Id, unit2.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		u1 := data.FindUnit(unit1.Id)
-		u2 := data.FindUnit(unit2.Id)
+		u1 := data.Units[unit1.Id]
+		u2 := data.Units[unit2.Id]
 		return u2.TransporterId == 0 &&
 			len(u1.TransportedIds) == 0
 	})
@@ -2115,7 +2113,7 @@ func (s *TestSuite) TestDestroyUnit(c *C) {
 	err = client.DestroyUnit(unit1.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		u1 := data.FindUnit(unit1.Id)
+		u1 := data.Units[unit1.Id]
 		// Equipments are unavailable
 		for _, eq := range u1.EquipmentDotations {
 			if eq.Available != 0 {
@@ -2161,7 +2159,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 		Available: 4,
 	}
 	data := client.Model.GetData()
-	c.Assert(dotation, DeepEquals, *data.FindUnit(unitId).EquipmentDotations[equipmentId])
+	c.Assert(dotation, DeepEquals, *data.Units[unitId].EquipmentDotations[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 	equipment := swapi.EquipmentDotation{
 		Available:  3,
@@ -2188,7 +2186,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
 	data = client.Model.GetData()
-	unit := data.FindUnit(unitId)
+	unit := data.Units[unitId]
 	c.Assert(dotation, DeepEquals, *unit.EquipmentDotations[equipmentId])
 	c.Assert(data.MaintenanceHandlings, HasLen, 0)
 
@@ -2246,7 +2244,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.ChangeDotation(unitId, []*swapi.ResourceDotation{&resource})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if *data.FindUnit(unitId).ResourceDotations[0] != resource {
+		if *data.Units[unitId].ResourceDotations[0] != resource {
 			return false
 		}
 		for _, h := range data.SupplyHandlings {

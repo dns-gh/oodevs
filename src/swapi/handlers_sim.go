@@ -104,8 +104,8 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
+	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find unit to update: %d",
 			mm.GetUnit().GetId())
 	}
@@ -227,19 +227,17 @@ func (model *Model) handleAutomatCreation(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	automatId, formationId := uint32(0), uint32(0)
-	if parent := mm.GetParent().GetAutomat(); parent != nil {
-		automatId = parent.GetId()
-	} else if parent := mm.GetParent().GetFormation(); parent != nil {
-		formationId = parent.GetId()
+	automat := &Automat{
+		Id:               mm.GetAutomat().GetId(),
+		PartyId:          mm.GetParty().GetId(),
+		Name:             mm.GetName(),
+		Engaged:          true,
+		KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
 	}
-	automat := NewAutomat(
-		mm.GetAutomat().GetId(),
-		mm.GetParty().GetId(),
-		formationId,
-		mm.GetKnowledgeGroup().GetId(),
-		mm.GetName())
-	if !model.data.addAutomat(automatId, formationId, automat) {
+	if parent := mm.GetParent().GetFormation(); parent != nil {
+		automat.FormationId = parent.GetId()
+	}
+	if !model.data.addAutomat(automat) {
 		return fmt.Errorf("cannot insert created automat: %d", automat.Id)
 	}
 	return nil
@@ -250,8 +248,8 @@ func (model *Model) handleAutomatAttributes(m *sword.SimToClient_Content) error 
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	automat := model.data.FindAutomat(mm.GetAutomat().GetId())
-	if automat == nil {
+	automat, ok := model.data.Automats[mm.GetAutomat().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find automat to update: %d",
 			mm.GetAutomat().GetId())
 	}
@@ -319,8 +317,8 @@ func (model *Model) handleCrowdUpdate(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd := model.data.FindCrowd(mm.GetCrowd().GetId())
-	if crowd == nil {
+	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
 	}
@@ -386,8 +384,8 @@ func (model *Model) handleCrowdFlowUpdate(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd := model.data.FindCrowd(mm.GetCrowd().GetId())
-	if crowd == nil {
+	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
 	}
@@ -429,8 +427,8 @@ func (model *Model) handleCrowdConcentrationUpdate(m *sword.SimToClient_Content)
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd := model.data.FindCrowd(mm.GetCrowd().GetId())
-	if crowd == nil {
+	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
 	}
@@ -467,8 +465,8 @@ func (model *Model) handlePopulationUpdate(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	population := model.data.FindPopulation(mm.GetId().GetId())
-	if population == nil {
+	population, ok := model.data.Populations[mm.GetId().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find population to update: %d",
 			mm.GetId().GetId())
 	}
@@ -502,8 +500,8 @@ func (model *Model) handleUnitPathfind(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
+	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find pathfind source unit: %d",
 			mm.GetUnit().GetId())
 	}
@@ -541,9 +539,6 @@ func (model *Model) handleKnowledgeGroupCreation(m *sword.SimToClient_Content) e
 		Type:                mm.GetType(),
 		IsCrowdDefaultGroup: mm.GetCrowd(),
 		Enabled:             true,
-		UnitKnowledges:      map[uint32]*UnitKnowledge{},
-		ObjectKnowledges:    map[uint32]*ObjectKnowledge{},
-		CrowdKnowledges:     map[uint32]*CrowdKnowledge{},
 	}
 	if !model.data.addKnowledgeGroup(group) {
 		return fmt.Errorf("cannot insert knowledge group: %d", group.Id)
@@ -613,22 +608,22 @@ func (model *Model) handleKnowledgeGroupUpdate(m *sword.SimToClient_Content) err
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	knowledgeGroup := model.data.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
-	if knowledgeGroup == nil {
+	group, ok := model.data.KnowledgeGroups[mm.GetKnowledgeGroup().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find knowledge group to update: %d",
 			mm.GetKnowledgeGroup().GetId())
 	}
 	if mm.Party != nil {
-		knowledgeGroup.PartyId = mm.GetParty().GetId()
+		group.PartyId = mm.GetParty().GetId()
 	}
 	if mm.Parent != nil {
-		knowledgeGroup.ParentId = mm.GetParent().GetId()
+		group.ParentId = mm.GetParent().GetId()
 	}
 	if mm.Enabled != nil {
-		knowledgeGroup.Enabled = *mm.Enabled
+		group.Enabled = *mm.Enabled
 	}
 	if mm.Type != nil {
-		knowledgeGroup.Type = *mm.Type
+		group.Type = *mm.Type
 	}
 	return nil
 }
@@ -787,15 +782,15 @@ func (model *Model) handleAutomatChangeKnowledgeGroup(m *sword.SimToClient_Conte
 	if !ok {
 		return fmt.Errorf("unknown party: %d", mm.GetParty().GetId())
 	}
-	automat := d.FindAutomat(mm.GetAutomat().GetId())
-	if automat == nil {
+	automat, ok := d.Automats[mm.GetAutomat().GetId()]
+	if !ok {
 		return fmt.Errorf("unknown automat: %d", mm.GetAutomat().GetId())
 	}
-	knowledgeGroup := d.FindKnowledgeGroup(mm.GetKnowledgeGroup().GetId())
-	if knowledgeGroup == nil {
+	group, ok := d.KnowledgeGroups[mm.GetKnowledgeGroup().GetId()]
+	if !ok {
 		return fmt.Errorf("unknown knowledge group: %d", mm.GetKnowledgeGroup().GetId())
 	}
-	if knowledgeGroup.PartyId != mm.GetParty().GetId() {
+	if group.PartyId != mm.GetParty().GetId() {
 		return fmt.Errorf("bad party %d for knowledge group %d", mm.GetParty().GetId(), mm.GetKnowledgeGroup().GetId())
 	}
 	automat.KnowledgeGroupId = mm.GetKnowledgeGroup().GetId()
@@ -833,20 +828,11 @@ func (model *Model) handleUnitChangeSuperior(m *sword.SimToClient_Content) error
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	d := model.data
-	unit := d.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
-		return fmt.Errorf("cannot find unit which superior must be updated: %d",
-			mm.GetUnit().GetId())
-	}
-	newAutomat := d.FindAutomat(mm.GetParent().GetId())
-	if newAutomat == nil {
-		return fmt.Errorf("cannot find unit new parent automat: %d",
-			mm.GetParent().GetId())
-	}
-	if err := d.changeUnitSuperior(unit, newAutomat); err != nil {
-		return fmt.Errorf("cannot change %d unit superior to %d: %s",
-			unit.Id, newAutomat.Id, err)
+	unitId := mm.GetUnit().GetId()
+	automatId := mm.GetParent().GetId()
+	if err := model.data.changeUnitAutomat(unitId, automatId); err != nil {
+		return fmt.Errorf("cannot change %d unit automat to %d: %s",
+			unitId, automatId, err)
 	}
 	return nil
 }
@@ -857,19 +843,11 @@ func (model *Model) handleAutomatChangeSuperior(m *sword.SimToClient_Content) er
 		return ErrSkipHandler
 	}
 	d := model.data
-	automat := d.FindAutomat(mm.GetAutomat().GetId())
-	if automat == nil {
-		return fmt.Errorf("cannot find automat which superior must be updated: %d",
-			mm.GetAutomat().GetId())
-	}
-	newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
-	if newFormation == nil {
-		return fmt.Errorf("cannot find automata new parent formation: %d",
-			mm.GetSuperior().GetFormation().GetId())
-	}
-	if err := d.changeAutomatSuperior(automat, newFormation); err != nil {
-		return fmt.Errorf("cannot change %d automat superior to %d: %s",
-			automat.Id, newFormation.Id, err)
+	automatId := mm.GetAutomat().GetId()
+	formationId := mm.GetSuperior().GetFormation().GetId()
+	if err := d.changeAutomatFormation(automatId, formationId); err != nil {
+		return fmt.Errorf("cannot change %d automat formation to %d: %s",
+			automatId, formationId, err)
 	}
 	return nil
 }
@@ -880,17 +858,12 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 		return ErrSkipHandler
 	}
 	d := model.data
-	formation := d.FindFormation(mm.GetFormation().GetId())
-	if formation == nil {
-		return fmt.Errorf("cannot find formation which superior must be updated: %d",
-			mm.GetFormation().GetId())
-	}
-	newFormation := d.FindFormation(mm.GetSuperior().GetFormation().GetId())
-	newParty := d.Parties[mm.GetSuperior().GetParty().GetId()]
-	err := d.changeFormationSuperior(formation, newFormation, newParty)
-	if err != nil {
+	formationId := mm.GetFormation().GetId()
+	partyId := mm.GetSuperior().GetParty().GetId()
+	parentId := mm.GetSuperior().GetFormation().GetId()
+	if err := d.changeFormationSuperior(formationId, partyId, parentId); err != nil {
 		return fmt.Errorf("cannot change %d formation superior: %s",
-			formation.Id, err)
+			formationId, err)
 	}
 	return nil
 }
@@ -949,8 +922,8 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit := model.data.FindUnit(mm.GetUnit().GetId())
-	if unit == nil {
+	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	if !ok {
 		return fmt.Errorf("cannot find unit for which vision cones must be updated: %d",
 			mm.GetUnit().GetId())
 	}
@@ -965,10 +938,12 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 			&VisionCone{
 				Origin: Point{
 					X: cone.GetOrigin().GetLatitude(),
-					Y: cone.GetOrigin().GetLongitude()},
+					Y: cone.GetOrigin().GetLongitude(),
+				},
 				Height:   cone.GetHeight(),
 				Sensor:   cone.GetSensor(),
-				Headings: headings})
+				Headings: headings,
+			})
 	}
 	return nil
 }
@@ -994,8 +969,8 @@ func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	object := model.data.FindObject(mm.GetObject().GetId())
-	if object == nil {
+	object, ok := model.data.Objects[mm.GetObject().GetId()]
+	if !ok {
 		return ErrSkipHandler // can be an urban bloc
 	}
 	if attributes := mm.GetAttributes(); attributes != nil {

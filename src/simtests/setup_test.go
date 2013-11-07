@@ -166,16 +166,13 @@ func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.
 	party := data.FindPartyByName(partyName)
 	c.Assert(party, NotNil)
 
-	c.Assert(len(party.Formations), Greater, 0)
-	var formation *swapi.Formation
-	for _, f := range party.Formations {
-		formation = f
-		break
-	}
+	formations := getPartyFormations(data, party.Id)
+	c.Assert(len(formations), Greater, 0)
+	formation := data.Formations[uint32(formations[0])]
 	// Find a suitable knowledge group matching the formation, this should be
 	// simpler...
 	var kg *swapi.KnowledgeGroup
-	for _, g := range data.ListKnowledgeGroups() {
+	for _, g := range data.KnowledgeGroups {
 		if g.PartyId == formation.PartyId {
 			kg = g
 			break
@@ -183,7 +180,7 @@ func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.
 	}
 	c.Assert(kg, NotNil)
 
-	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	automat, err := client.CreateAutomat(formation.Id, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 	c.Assert(automat, NotNil)
 	return automat

@@ -45,7 +45,7 @@ func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 
 	// Check humans composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumans(healthy, wounded, dead, 0, data.FindCrowd(crowd.Id))
+		return CheckHumans(healthy, wounded, dead, 0, data.Crowds[crowd.Id])
 	})
 
 	// Kill all humans with invalid identifier
@@ -58,7 +58,7 @@ func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 
 	// Check humans composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumans(0, 0, dead+wounded+healthy, 0, data.FindCrowd(crowd.Id))
+		return CheckHumans(0, 0, dead+wounded+healthy, 0, data.Crowds[crowd.Id])
 	})
 }
 
@@ -70,7 +70,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 	// Check default armed individuals proportion(set in physical database)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindCrowd(crowd.Id).ArmedIndividuals == 0.1
+		return data.Crowds[crowd.Id].ArmedIndividuals == 0.1
 	})
 
 	// Error : missing parameter
@@ -89,7 +89,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 	// Check armed individuals proportion
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindCrowd(crowd.Id).ArmedIndividuals == 0.5
+		return data.Crowds[crowd.Id].ArmedIndividuals == 0.5
 	})
 }
 
@@ -112,7 +112,7 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 
 	// Check critical intelligence
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindCrowd(crowd.Id).CriticalIntelligence == "critical"
+		return data.Crowds[crowd.Id].CriticalIntelligence == "critical"
 	})
 }
 
@@ -125,7 +125,7 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 
 	// Check human composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumans(healthy, wounded, dead, contaminated, data.FindCrowd(crowd.Id))
+		return CheckHumans(healthy, wounded, dead, contaminated, data.Crowds[crowd.Id])
 	})
 
 	// Error : negative parameter
@@ -143,7 +143,7 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 
 	// Check new humans composition
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckHumans(healthy, wounded, dead, contaminated, data.FindCrowd(crowd.Id))
+		return CheckHumans(healthy, wounded, dead, contaminated, data.Crowds[crowd.Id])
 	})
 }
 
@@ -169,16 +169,16 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	err = client.ChangeCrowdAdhesions(crowd.Id, adhesions)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).Adhesions) != 0
+		return len(data.Crowds[crowd.Id].Adhesions) != 0
 	})
-	newAdhesions := client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	newAdhesions := client.Model.GetData().Crowds[crowd.Id].Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
 	err = client.ChangeCrowdAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
-	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	newAdhesions = client.Model.GetData().Crowds[crowd.Id].Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// Partial change
@@ -186,10 +186,10 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	err = client.ChangeCrowdAdhesions(crowd.Id, map[uint32]float32{0: 0.5})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		updated := data.FindCrowd(crowd.Id)
+		updated := data.Crowds[crowd.Id]
 		return math.Abs(float64(updated.Adhesions[0]-0.5)) < 1e-5
 	})
-	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	newAdhesions = client.Model.GetData().Crowds[crowd.Id].Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 }
 
@@ -241,7 +241,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 
 	// Initial crowd has a concentration
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).CrowdElements) == 1
+		return len(data.Crowds[crowd.Id].CrowdElements) == 1
 	})
 
 	// Send moveTo mission on the crowd
@@ -252,15 +252,15 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 
 	// Check crowd begin its movement, a flow is created
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).CrowdElements) == 2
+		return len(data.Crowds[crowd.Id].CrowdElements) == 2
 	})
 
 	// Reset movement, the flow is destroyed
-	knownElements := client.Model.GetData().FindCrowd(crowd.Id).CrowdElements
+	knownElements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
 	err = client.TeleportCrowd(crowd.Id, to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		elements := data.FindCrowd(crowd.Id).CrowdElements
+		elements := data.Crowds[crowd.Id].CrowdElements
 		for id, _ := range elements {
 			if knownElements[id] != nil {
 				return false
@@ -289,11 +289,11 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 
 	// Check new extensions
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).Extensions) != 0
+		return len(data.Crowds[crowd.Id].Extensions) != 0
 	})
 
 	data := client.Model.GetData()
-	newExtensions := data.FindCrowd(crowd.Id).Extensions
+	newExtensions := data.Crowds[crowd.Id].Extensions
 	c.Assert(extensions, DeepEquals, newExtensions)
 
 	// Change extension
@@ -303,7 +303,7 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 
 	client.Model.WaitTicks(2)
 	data = client.Model.GetData()
-	newExtensions = data.FindCrowd(crowd.Id).Extensions
+	newExtensions = data.Crowds[crowd.Id].Extensions
 	c.Assert(map[string]string{"name1": "value1", "name2": "value3"},
 		DeepEquals, newExtensions)
 }
@@ -334,7 +334,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Check attitude is peaceful
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.FindCrowd(crowd.Id), Peaceful)
+		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)
 	})
 
 	// Error : missing parameter
@@ -351,7 +351,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Check attitude is agitated
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.FindCrowd(crowd.Id), Agitated)
+		return CheckAttitude(data.Crowds[crowd.Id], Agitated)
 	})
 
 	// Send moveTo mission on the crowd
@@ -362,7 +362,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Check crowd begin its movement, a flow is created
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.FindCrowd(crowd.Id).CrowdElements) == 2
+		return len(data.Crowds[crowd.Id].CrowdElements) == 2
 	})
 
 	// Change attitude(excited)
@@ -371,6 +371,6 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 
 	// Check flow and concentation have an excited attitude
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return CheckAttitude(data.FindCrowd(crowd.Id), Excited)
+		return CheckAttitude(data.Crowds[crowd.Id], Excited)
 	})
 }

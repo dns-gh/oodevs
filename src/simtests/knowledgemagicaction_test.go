@@ -24,9 +24,7 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kgs := data.ListKnowledgeGroups()
-	c.Assert(len(kgs), Greater, 0)
-	kg := kgs[0]
+	kg := getSomeKnowledgeGroup(c, data)
 
 	// error: no params
 	err = client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, swapi.MakeParameters(), kg.Id)
@@ -46,14 +44,14 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 	err = client.EnableKnowledgeGroup(kg.Id, false)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !data.FindKnowledgeGroup(kg.Id).Enabled
+		return !data.KnowledgeGroups[kg.Id].Enabled
 	})
 
 	// test: enable knowledge group
 	err = client.EnableKnowledgeGroup(kg.Id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindKnowledgeGroup(kg.Id).Enabled
+		return data.KnowledgeGroups[kg.Id].Enabled
 	})
 }
 
@@ -63,9 +61,7 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kgs := data.ListKnowledgeGroups()
-	c.Assert(len(kgs), Greater, 0)
-	kg := kgs[0]
+	kg := getSomeKnowledgeGroup(c, data)
 
 	// error: update party with 2 parameters
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_party,
@@ -107,14 +103,14 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 	err = client.ChangeKnowledgeGroupSuperiorToKnowledgeGroup(kg.Id, kg.PartyId, group.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindKnowledgeGroup(kg.Id).ParentId == group.Id
+		return data.KnowledgeGroups[kg.Id].ParentId == group.Id
 	})
 
 	// change parent back to army
 	err = client.ChangeKnowledgeGroupSuperiorToArmy(kg.Id, kg.PartyId)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindKnowledgeGroup(kg.Id).ParentId == 0
+		return data.KnowledgeGroups[kg.Id].ParentId == 0
 	})
 }
 
@@ -124,9 +120,7 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kgs := data.ListKnowledgeGroups()
-	c.Assert(len(kgs), Greater, 0)
-	kg := kgs[0]
+	kg := getSomeKnowledgeGroup(c, data)
 
 	// error: no params
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, swapi.MakeParameters(), kg.Id)
@@ -141,7 +135,7 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 	err = client.ChangeKnowledgeGroupType(kg.Id, "Battalion")
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindKnowledgeGroup(kg.Id).Type == "Battalion"
+		return data.KnowledgeGroups[kg.Id].Type == "Battalion"
 	})
 }
 
@@ -151,14 +145,12 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	kgs := data.ListKnowledgeGroups()
+	kgs := data.KnowledgeGroups
 	c.Assert(len(kgs), Greater, 0)
 
 	// error: no units defined
-	units := data.ListUnits()
-	c.Assert(len(units), Greater, 1)
-	unit := units[0]
-	unitKgId := data.FindAutomat(unit.AutomatId).KnowledgeGroupId
+	unit := getSomeUnit(c, data)
+	unitKgId := data.Automats[unit.AutomatId].KnowledgeGroupId
 
 	// error: no second knowledge group
 	var kg *swapi.KnowledgeGroup
@@ -189,20 +181,33 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
 }
 
+func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {
+	for _, a := range data.Units {
+		return a
+	}
+	c.Fatal("missing units")
+	return nil
+}
+
+func getSomeAutomat(c *C, data *swapi.ModelData) *swapi.Automat {
+	for _, a := range data.Automats {
+		return a
+	}
+	c.Fatal("missing automats")
+	return nil
+}
+
 func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
-	knowledgeGroups := data.ListKnowledgeGroups()
-	c.Assert(len(knowledgeGroups), Greater, 0)
-	knowledgeGroup := knowledgeGroups[0]
-
-	automat := data.ListAutomats()[0]
+	knowledgeGroup := getSomeKnowledgeGroup(c, data)
+	automat := getSomeAutomat(c, data)
 
 	// error: invalid tasker (not an automat)
-	err := client.ChangeKnowledgeGroupTest(data.ListUnits()[0].Id, swapi.MakeParameters())
+	err := client.ChangeKnowledgeGroupTest(getSomeUnit(c, data).Id, swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: no params
@@ -241,7 +246,7 @@ func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	err = client.ChangeKnowledgeGroup(automat.Id, group.Id)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindAutomat(automat.Id).KnowledgeGroupId == group.Id
+		return data.Automats[automat.Id].KnowledgeGroupId == group.Id
 	})
 
 	// change knowledge group to itself

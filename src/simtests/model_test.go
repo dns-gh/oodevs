@@ -50,6 +50,83 @@ func (p *prettyPrinter) GetOutput() string {
 	return strings.Join(p.lines, "\n") + "\n"
 }
 
+func getAutomatUnits(data *swapi.ModelData, automatId uint32) []int {
+	keys := []int{}
+	for id, unit := range data.Units {
+		if unit.AutomatId == automatId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getChildFormations(data *swapi.ModelData, formationId uint32) []int {
+	keys := []int{}
+	for id, formation := range data.Formations {
+		if formation.ParentId == formationId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getFormationAutomats(data *swapi.ModelData, formationId uint32) []int {
+	keys := []int{}
+	for id, automat := range data.Automats {
+		if automat.FormationId == formationId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getPartyFormations(data *swapi.ModelData, partyId uint32) []int {
+	keys := []int{}
+	for id, formation := range data.Formations {
+		if formation.PartyId == partyId && formation.ParentId == 0 {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getPartyCrowds(data *swapi.ModelData, partyId uint32) []int {
+	keys := []int{}
+	for id, crowd := range data.Crowds {
+		if crowd.PartyId == partyId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getPartyPopulations(data *swapi.ModelData, partyId uint32) []int {
+	keys := []int{}
+	for id, population := range data.Populations {
+		if population.PartyId == partyId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
+func getPartyKnowledgeGroups(data *swapi.ModelData, partyId uint32) []int {
+	keys := []int{}
+	for id, group := range data.KnowledgeGroups {
+		if group.PartyId == partyId {
+			keys = append(keys, int(id))
+		}
+	}
+	sort.Ints(keys)
+	return keys
+}
+
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 	printKnowledgeGroup := func(p *prettyPrinter, group *swapi.KnowledgeGroup) {
 		p.P("Id: %s", p.Unstable(group.Id))
@@ -83,27 +160,9 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		p.P("Id: %s", p.Unstable(a.Id))
 		p.P("PartyId: %s", p.Unstable(a.PartyId))
 		p.P("Name: %s", a.Name)
-		keys := []int{}
-		for k := range a.Automats {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := a.Automats[uint32(k)]
-			p.Shift()
-			p.P("Automat[%s]", p.Unstable(k))
-			p.Shift()
-			printAutomat(p, child)
-			p.Unshift()
-			p.Unshift()
-		}
 
-		for k := range a.Units {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := a.Units[uint32(k)]
+		for _, k := range getAutomatUnits(model, a.Id) {
+			child := model.Units[uint32(k)]
 			p.Shift()
 			p.P("Unit[%s]", p.Unstable(k))
 			p.Shift()
@@ -121,13 +180,9 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		p.P("PartyId: %s", p.Unstable(f.PartyId))
 		p.P("Level: %s", f.Level)
 		p.P("LogLevel: %s", f.LogLevel)
-		keys := []int{}
-		for k := range f.Formations {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := f.Formations[uint32(k)]
+
+		for _, k := range getChildFormations(model, f.Id) {
+			child := model.Formations[uint32(k)]
 			p.Shift()
 			p.P("Formation[%s]", p.Unstable(k))
 			p.Shift()
@@ -136,13 +191,8 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 		}
 
-		keys = []int{}
-		for k := range f.Automats {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := f.Automats[uint32(k)]
+		for _, k := range getFormationAutomats(model, f.Id) {
+			child := model.Automats[uint32(k)]
 			p.Shift()
 			p.P("Automat[%s]", p.Unstable(k))
 			p.Shift()
@@ -154,13 +204,9 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 
 	printParty := func(p *prettyPrinter, party *swapi.Party) {
 		p.P("Name: %s", party.Name)
-		keys := []int{}
-		for k := range party.Formations {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := party.Formations[uint32(k)]
+
+		for _, k := range getPartyFormations(model, party.Id) {
+			child := model.Formations[uint32(k)]
 			p.Shift()
 			p.P("Formation[%s]", p.Unstable(k))
 			p.Shift()
@@ -169,13 +215,8 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 		}
 
-		keys = []int{}
-		for k := range party.Crowds {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := party.Crowds[uint32(k)]
+		for _, k := range getPartyCrowds(model, party.Id) {
+			child := model.Crowds[uint32(k)]
 			p.Shift()
 			p.P("Crowds[%s]", p.Unstable(k))
 			p.Shift()
@@ -184,13 +225,8 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 		}
 
-		keys = []int{}
-		for k := range party.Populations {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := party.Populations[uint32(k)]
+		for _, k := range getPartyPopulations(model, party.Id) {
+			child := model.Populations[uint32(k)]
 			p.Shift()
 			p.P("Population[%s]", p.Unstable(k))
 			p.Shift()
@@ -199,13 +235,8 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 		}
 
-		keys = []int{}
-		for k := range party.KnowledgeGroups {
-			keys = append(keys, int(k))
-		}
-		sort.Ints(keys)
-		for _, k := range keys {
-			child := party.KnowledgeGroups[uint32(k)]
+		for _, k := range getPartyKnowledgeGroups(model, party.Id) {
+			child := model.KnowledgeGroups[uint32(k)]
 			p.Shift()
 			p.P("KnowledgeGroup[%s]", p.Unstable(k))
 			p.Shift()
@@ -419,8 +450,7 @@ func (s *TestSuite) TestModelIsolation(c *C) {
 	// not change.
 	delete(data.Parties, 2)
 	data.Parties[1].Name = "foobar"
-	data.Parties[1].Formations[5].Name = "blaz"
-	delete(data.Parties[1].Formations, 6)
+	data.Formations[5].Name = "blaz"
 	modified := printParties(&prettyPrinter{}, data).GetOutput()
 	c.Assert(modified, Not(Equals), expected)
 

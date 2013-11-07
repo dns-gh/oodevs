@@ -336,8 +336,8 @@ func (model *Model) GetProfile(login string) *Profile {
 func (model *Model) GetFormation(formationId uint32) *Formation {
 	var f *Formation
 	model.waitCommand(func(model *Model) {
-		formation := model.data.FindFormation(formationId)
-		if formation != nil {
+		formation, ok := model.data.Formations[formationId]
+		if ok {
 			f = &Formation{}
 			DeepCopy(f, formation)
 		}
@@ -348,8 +348,8 @@ func (model *Model) GetFormation(formationId uint32) *Formation {
 func (model *Model) GetAutomat(automatId uint32) *Automat {
 	var a *Automat
 	model.waitCommand(func(model *Model) {
-		automat := model.data.FindAutomat(automatId)
-		if automat != nil {
+		automat, ok := model.data.Automats[automatId]
+		if ok {
 			a = &Automat{}
 			DeepCopy(a, automat)
 		}
@@ -360,8 +360,8 @@ func (model *Model) GetAutomat(automatId uint32) *Automat {
 func (model *Model) GetUnit(unitId uint32) *Unit {
 	var u *Unit
 	model.waitCommand(func(model *Model) {
-		unit := model.data.FindUnit(unitId)
-		if unit != nil {
+		unit, ok := model.data.Units[unitId]
+		if ok {
 			u = &Unit{}
 			DeepCopy(u, unit)
 		}
@@ -372,8 +372,8 @@ func (model *Model) GetUnit(unitId uint32) *Unit {
 func (model *Model) GetCrowd(crowdId uint32) *Crowd {
 	var c *Crowd
 	model.waitCommand(func(model *Model) {
-		crowd := model.data.FindCrowd(crowdId)
-		if crowd != nil {
+		crowd, ok := model.data.Crowds[crowdId]
+		if ok {
 			c = &Crowd{}
 			DeepCopy(c, crowd)
 		}
@@ -427,13 +427,13 @@ func (model *Model) GetOrder(id uint32) *Order {
 	return o
 }
 
-func (model *Model) GetUnitKnowledge(groupId, id uint32) *UnitKnowledge {
+func (model *Model) GetUnitKnowledge(id uint32) *UnitKnowledge {
 	var k *UnitKnowledge
 	model.waitCommand(func(model *Model) {
-		group := model.data.FindKnowledgeGroup(groupId)
-		if group != nil {
+		knowledge, ok := model.data.UnitKnowledges[id]
+		if ok {
 			k = &UnitKnowledge{}
-			DeepCopy(k, group.UnitKnowledges[id])
+			DeepCopy(k, knowledge)
 		}
 	})
 	return k
@@ -447,11 +447,11 @@ func (model *Model) GetTick() int32 {
 	return tick
 }
 
-func (model *Model) GetObject(objectId uint32) *Object {
+func (model *Model) GetObject(id uint32) *Object {
 	var o *Object
 	model.waitCommand(func(model *Model) {
-		object := model.data.FindObject(objectId)
-		if object != nil {
+		object, ok := model.data.Objects[id]
+		if ok {
 			o = &Object{}
 			DeepCopy(o, object)
 		}

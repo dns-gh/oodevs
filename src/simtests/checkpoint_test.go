@@ -190,15 +190,15 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	sim, client = checkpointAndRestart(c, sim, client)
 	defer sim.Stop()
 	data := client.Model.GetData()
-	unit2 := data.FindUnit(unit.Id)
+	unit2 := data.Units[unit.Id]
 	c.Assert(unit2, NotNil)
 	c.Assert(unit2.Name, Equals, unit.Name)
 	c.Assert(unit2.Pc, Equals, unit.Pc)
-	automat2 := data.FindAutomat(automat.Id)
+	automat2 := data.Automats[automat.Id]
 	c.Assert(automat2, NotNil)
 	c.Assert(automat2.Engaged, Equals, false)
 	c.Assert(automat2.FormationId, Equals, automat.FormationId)
-	formation2 := data.FindFormation(automat.FormationId)
+	formation2 := data.Formations[automat.FormationId]
 	c.Assert(formation2, NotNil)
 
 	order2 := data.Orders[order.Id]
@@ -212,9 +212,8 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 
 	// Find the supply base
 	model := client.Model.GetData()
-	automats := model.ListAutomats()
 	var supplyAutomat *swapi.Automat
-	for _, a := range automats {
+	for _, a := range model.Automats {
 		if strings.Contains(a.Name, "LOG.Supply logistic area") {
 			supplyAutomat = a
 		}
@@ -237,7 +236,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	// Once scout ammunitions are depleted, a convoy should be generated, with
 	// a pathfind, eventually.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, u := range data.ListUnits() {
+		for _, u := range data.Units {
 			if strings.Contains(u.Name, "LOG.Convoy") && u.PathPoints > 0 {
 				return true
 			}
@@ -251,7 +250,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 
 	// Is the convoy still there?
 	var convoy *swapi.Unit
-	for _, u := range model.ListUnits() {
+	for _, u := range model.Units {
 		if strings.Contains(u.Name, "LOG.Convoy") {
 			convoy = u
 		}

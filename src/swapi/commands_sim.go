@@ -300,12 +300,9 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) CreateAutomat(formationId, automatId, automatType,
+func (c *Client) CreateAutomat(formationId, automatType,
 	knowledgeGroupId uint32) (*Automat, error) {
 	tasker := MakeFormationTasker(formationId)
-	if automatId != 0 {
-		tasker = MakeAutomatTasker(automatId)
-	}
 	msg := createUnitMagicAction(tasker, MakeParameters(
 		MakeIdentifier(automatType),
 		MakeIdentifier(knowledgeGroupId),
@@ -418,7 +415,8 @@ func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 		return err
 	}
 	ok := c.Model.WaitCondition(func(data *ModelData) bool {
-		return data.FindAutomat(automatId).Engaged == engaged
+		automat, ok := data.Automats[automatId]
+		return ok && automat.Engaged == engaged
 	})
 	if !ok {
 		return fmt.Errorf("automat mode change timed out")
@@ -918,15 +916,12 @@ func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*Kno
 	}
 	var group *KnowledgeGroup
 	ok := c.Model.WaitCondition(func(data *ModelData) bool {
-		for _, party := range data.Parties {
-			for _, g := range party.KnowledgeGroups {
-				if g.Id == id {
-					group = g
-					return true
-				}
-			}
+		g, ok := data.KnowledgeGroups[id]
+		if !ok {
+			return false
 		}
-		return false
+		group = g
+		return true
 	})
 	if !ok {
 		return nil, ErrTimeout
@@ -1013,7 +1008,7 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		created = c.Model.GetUnitKnowledge(knowledgeGroupId, value.GetIdentifier())
+		created = c.Model.GetUnitKnowledge(value.GetIdentifier())
 		if created == nil {
 			return fmt.Errorf("created unit knowledge %d/%d is not available "+
 				"after ack", knowledgeGroupId, value.GetIdentifier())

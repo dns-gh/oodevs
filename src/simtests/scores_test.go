@@ -40,7 +40,7 @@ func (s *TestSuite) TestScores(c *C) {
 	})
 
 	// Destroy some equipment
-	units := model.ListUnits()
+	units := model.Units
 	c.Assert(len(units), Greater, 0)
 	for _, unit := range units {
 		err := client.DestroyUnit(unit.Id)

@@ -17,7 +17,7 @@ import (
 func CheckHealthState(c *C, client *swapi.Client,
 	id uint32, healthy, wounded, dead int32) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindPopulation(id)
+		unit := data.Populations[id]
 		return unit.Healthy == healthy &&
 			unit.Wounded == wounded &&
 			unit.Dead == dead
@@ -27,7 +27,7 @@ func CheckHealthState(c *C, client *swapi.Client,
 func CheckResidentCount(c *C, client *swapi.Client,
 	id uint32, healthy, wounded, dead int32) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		unit := data.FindPopulation(id)
+		unit := data.Populations[id]
 		residents := int32(0)
 		for _, o := range unit.LivingArea {
 			for _, r := range o.Residents {
@@ -38,6 +38,14 @@ func CheckResidentCount(c *C, client *swapi.Client,
 	})
 }
 
+func getSomePopulation(c *C, data *swapi.ModelData) *swapi.Population {
+	for _, p := range data.Populations {
+		return p
+	}
+	c.Fatal("missing populations")
+	return nil
+}
+
 func (s *TestSuite) TestChangeHealthState(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -45,9 +53,7 @@ func (s *TestSuite) TestChangeHealthState(c *C) {
 	data := model.GetData()
 
 	// Get a population
-	populations := data.ListPopulations()
-	c.Assert(len(populations), Greater, 0)
-	population := populations[0]
+	population := getSomePopulation(c, data)
 
 	// Check initial health state
 	healthy := int32(100)
@@ -87,12 +93,11 @@ func (s *TestSuite) TestPopulationChangeAdhesions(c *C) {
 	data := model.GetData()
 
 	// Get a population
-	populations := data.ListPopulations()
-	c.Assert(len(populations), Greater, 0)
-	population := populations[0]
+	c.Assert(len(data.Populations), Greater, 0)
+	population := getSomePopulation(c, data)
 	adhesions := map[uint32]float32{1: 0, 2: 0, 33: 0}
 
-	population = data.FindPopulation(population.Id)
+	population = data.Populations[population.Id]
 	// Check initial state
 	c.Assert(population.Adhesions, DeepEquals, adhesions)
 
@@ -111,7 +116,7 @@ func (s *TestSuite) TestPopulationChangeAdhesions(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindPopulation(population.Id).Adhesions, adhesions)
+		return reflect.DeepEqual(data.Populations[population.Id].Adhesions, adhesions)
 	})
 
 	// No change adhesions if new adhesions are invalid
@@ -120,6 +125,6 @@ func (s *TestSuite) TestPopulationChangeAdhesions(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.FindPopulation(population.Id).Adhesions, adhesions)
+		return reflect.DeepEqual(data.Populations[population.Id].Adhesions, adhesions)
 	})
 }
