@@ -342,7 +342,7 @@ void DEC_PathWalker::SetBlockedByObject( MIL_Object_ABC& object, CIT_MoveStepSet
 // Name: DEC_PathWalker::TryToMoveToNextStep
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove )
+bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining )
 {
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
@@ -351,10 +351,10 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
-            if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
+            movingEntity_.NotifyMovingInsideObject( object );
+            if( rSpeedWithinObject == 0. )
             {
-                movingEntity_.NotifyMovingInsideObject( object );
-                if( rSpeedWithinObject == 0. )
+                if( !object.IsInside( itCurMoveStep->vPos_ ) )
                 {
                     SetBlockedByObject( object, itCurMoveStep );
                     return false;
@@ -371,12 +371,17 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
             movingEntity_.NotifyMovingInsideObject( object );
-            rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeed( environment_, object) );
-            if( rMaxSpeedForStep == 0. )
+            double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
+            if( rSpeedWithinObject == 0. )
             {
-                SetBlockedByObject( object, itCurMoveStep );
-                return false;
+                if( !object.IsInside( itCurMoveStep->vPos_ ) )
+                {
+                    SetBlockedByObject( object, itCurMoveStep );
+                    return false;
+                }
             }
+            else
+                rMaxSpeedForStep = std::min( rMaxSpeedForStep, rSpeedWithinObject );
         }
     }
 
@@ -442,7 +447,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     ++itNextMoveStep;
     while( rTimeRemaining > 0. )
     {
-        if( !TryToMoveToNextStep( itCurMoveStep, itNextMoveStep, rTimeRemaining, bFirstMove ) )
+        if( !TryToMoveToNextStep( itCurMoveStep, itNextMoveStep, rTimeRemaining ) )
             return false;
         itCurMoveStep = itNextMoveStep;
         ++itNextMoveStep;

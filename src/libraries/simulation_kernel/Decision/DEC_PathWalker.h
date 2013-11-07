@@ -129,7 +129,7 @@ private:
 
     //! @name Tools
     //@{
-    bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove );
+    bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining );
     bool TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining );
     void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed();
