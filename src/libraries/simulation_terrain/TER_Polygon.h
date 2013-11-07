@@ -41,7 +41,6 @@ public:
 
     // @name Reset
     //@{
-    virtual void Reset( const T_PointPtrVector& points, bool bConvexHull = false );
     virtual void Reset( const T_PointVector& points, bool bConvexHull = false );
     virtual void Reset();
     //@}
@@ -74,7 +73,6 @@ public:
 private:
     // @name
     //@{
-    TER_Polygon( const T_PointPtrVector& points , bool bConvexHull = false );
     TER_Polygon( const T_PointVector& points    , bool bConvexHull = false );
     //@}
 

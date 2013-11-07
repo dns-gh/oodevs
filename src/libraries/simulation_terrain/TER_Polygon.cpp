@@ -44,29 +44,6 @@ TER_Polygon::TER_Polygon()
 // Name: TER_Polygon constructor
 // Created: JDY 03-05-26
 //-----------------------------------------------------------------------------
-TER_Polygon::TER_Polygon( const T_PointPtrVector& points,bool bConvexHull )
-{
-    pData_ = boost::make_shared< PolygonData >( points.empty() );
-
-    // no points in polygon
-    if (pData_->bIsNull_)
-        return;
-
-    // set ring
-    pData_->borderVector_.reserve( points.size() );
-    for( CIT_PointPtrVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
-        pData_->borderVector_.push_back( **itPoint );
-
-    if( bConvexHull )
-        Convexify();
-
-    ComputeBoundingBox();
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon constructor
-// Created: JDY 03-05-26
-//-----------------------------------------------------------------------------
 TER_Polygon::TER_Polygon( const T_PointVector& points, bool bConvexHull )
 {
     pData_ = boost::make_shared< PolygonData >( points.empty() );
@@ -629,15 +606,6 @@ const T_PointVector& TER_Polygon::GetBorderPoints() const
 {
     assert(pData_);
     return pData_->borderVector_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: TER_Polygon::Reset
-// Created: JDY 03-05-19
-//-----------------------------------------------------------------------------
-void TER_Polygon::Reset(const T_PointPtrVector& points,bool bConvexHull )
-{
-    *this=TER_Polygon( points, bConvexHull );
 }
 
 //-----------------------------------------------------------------------------
