@@ -305,7 +305,6 @@
 					<xs:attribute name="value" type="xs:nonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="sealoff" minOccurs="0"/>
 			<xs:element name="fire-propagation-modifier" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -331,7 +330,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="crowd-obstacle" minOccurs="0"/>
 			<xs:element name="burn" minOccurs="0"/>
 			<xs:element name="flood" minOccurs="0">
 				<xs:complexType>
