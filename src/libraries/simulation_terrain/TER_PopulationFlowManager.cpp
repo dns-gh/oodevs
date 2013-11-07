@@ -11,6 +11,7 @@
 #include "TER_PopulationFlowManager.h"
 #include "TER_PopulationFlow_ABC.h"
 #include "TER_PopulationFlowVisitor_ABC.h"
+#include "TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationFlowManager constructor

@@ -10,13 +10,15 @@
 #ifndef __TER_PopulationConcentration_ABC_h_
 #define __TER_PopulationConcentration_ABC_h_
 
-#include "TER_Localisation.h"
 #include "TER_PopulationConcentrationTraits.h"
 
 namespace spatialcontainer
 {
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
+
+class MT_Vector2D;
+class TER_Localisation;
 
 // =============================================================================
 // Created: AGE 2005-01-31

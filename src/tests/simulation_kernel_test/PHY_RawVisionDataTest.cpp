@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "meteo/Meteo.cpp"
 #include "StubTER_World.h"
 

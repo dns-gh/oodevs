@@ -10,13 +10,17 @@
 #ifndef __TER_PopulationFlow_ABC_h_
 #define __TER_PopulationFlow_ABC_h_
 
-#include "TER_Localisation.h"
 #include "TER_PopulationFlowTraits.h"
+#include <vector>
 
 namespace spatialcontainer
 {
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
+
+class MT_Vector2D;
+class TER_Localisation;
+typedef std::vector< MT_Vector2D > T_PointVector;
 
 // =============================================================================
 // Created: AGE 2005-01-31

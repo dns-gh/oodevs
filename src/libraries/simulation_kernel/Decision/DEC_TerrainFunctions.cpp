@@ -13,8 +13,9 @@
 #include "Brain.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
-#include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::GetCrossroads

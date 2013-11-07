@@ -12,6 +12,7 @@
 #include "TER_PopulationConcentrationManager.h"
 #include "TER_PopulationConcentration_ABC.h"
 #include "TER_PopulationConcentrationVisitor_ABC.h"
+#include "TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager constructor
