@@ -52,8 +52,6 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetTooltip() const;
-
-    virtual void Select( kernel::ActionController& controller ) const;
     //@}
 
 private:
