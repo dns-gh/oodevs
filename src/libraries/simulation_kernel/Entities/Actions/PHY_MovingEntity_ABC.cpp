@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MovingEntity_ABC.h"
+#include "Decision/DEC_PathWalker.h"
 #pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
@@ -16,7 +17,7 @@
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 PHY_MovingEntity_ABC::PHY_MovingEntity_ABC()
-    : pathWalker_( *this )
+    : pathWalker_( new DEC_PathWalker( *this ))
 {
     // NOTHING
 }
@@ -36,7 +37,7 @@ PHY_MovingEntity_ABC::~PHY_MovingEntity_ABC()
 // -----------------------------------------------------------------------------
 void PHY_MovingEntity_ABC::Clean()
 {
-    pathWalker_.Clean();
+    pathWalker_->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +46,7 @@ void PHY_MovingEntity_ABC::Clean()
 // -----------------------------------------------------------------------------
 int PHY_MovingEntity_ABC::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    return pathWalker_.Move( pPath );
+    return pathWalker_->Move( pPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +55,7 @@ int PHY_MovingEntity_ABC::Move( boost::shared_ptr< DEC_PathResult > pPath )
 // -----------------------------------------------------------------------------
 void PHY_MovingEntity_ABC::MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    pathWalker_.MoveSuspended( pPath );
+    pathWalker_->MoveSuspended( pPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +64,7 @@ void PHY_MovingEntity_ABC::MoveSuspended( boost::shared_ptr< DEC_PathResult > pP
 // -----------------------------------------------------------------------------
 void PHY_MovingEntity_ABC::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    pathWalker_.MoveCanceled( pPath );
+    pathWalker_->MoveCanceled( pPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +73,7 @@ void PHY_MovingEntity_ABC::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPa
 // -----------------------------------------------------------------------------
 void PHY_MovingEntity_ABC::SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const
 {
-    pathWalker_.SerializeEnvironmentType( msg );
+    pathWalker_->SerializeEnvironmentType( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +82,7 @@ void PHY_MovingEntity_ABC::SerializeEnvironmentType( sword::UnitEnvironmentType&
 // -----------------------------------------------------------------------------
 void PHY_MovingEntity_ABC::SerializeCurrentPath( sword::Path& asn ) const
 {
-    pathWalker_.SerializeCurrentPath( asn );
+    pathWalker_->SerializeCurrentPath( asn );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +91,7 @@ void PHY_MovingEntity_ABC::SerializeCurrentPath( sword::Path& asn ) const
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_MovingEntity_ABC::ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const
 {
-    return pathWalker_.ExtrapolatePosition( position, rSpeed, rTime, bBoundOnPath );
+    return pathWalker_->ExtrapolatePosition( position, rSpeed, rTime, bBoundOnPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +100,7 @@ MT_Vector2D PHY_MovingEntity_ABC::ExtrapolatePosition( const MT_Vector2D& positi
 // -----------------------------------------------------------------------------
 bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
 {
-    return pathWalker_.IsMovingOn( path );
+    return pathWalker_->IsMovingOn( path );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +109,7 @@ bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
 // -----------------------------------------------------------------------------
 bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
-    return pathWalker_.ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
+    return pathWalker_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,5 +118,5 @@ bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const T_KnowledgeObject
 // -----------------------------------------------------------------------------
 bool PHY_MovingEntity_ABC::HasCurrentPath() const
 {
-    return pathWalker_.HasCurrentPath();
+    return pathWalker_->HasCurrentPath();
 }

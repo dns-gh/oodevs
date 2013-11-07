@@ -24,6 +24,7 @@
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_PathWalker.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"

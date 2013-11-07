@@ -10,7 +10,7 @@
 #ifndef __PHY_MovingEntity_ABC_h_
 #define __PHY_MovingEntity_ABC_h_
 
-#include "Decision/DEC_PathWalker.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 #include <boost/shared_ptr.hpp>
 
 namespace sword
@@ -22,7 +22,12 @@ namespace sword
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
+class DEC_Knowledge_Object;
+class DEC_Path_ABC;
+class DEC_PathPoint;
 class DEC_PathResult;
+class DEC_PathType;
+class DEC_PathWalker;
 class TerrainData;
 struct MIL_DecisionalReport;
 
@@ -108,7 +113,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    DEC_PathWalker pathWalker_;
+    boost::scoped_ptr< DEC_PathWalker > pathWalker_;
     //@}
 };
 
