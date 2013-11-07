@@ -613,3 +613,14 @@ bool DEC_PathWalker::HasCurrentPath() const
 {
     return pCurrentPath_.get() ? true : false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::Clean
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+void DEC_PathWalker::Clean()
+{
+    if( !bHasMoved_ )
+        bForcePathCheck_ = true;    
+    bHasMoved_ = false;
+}

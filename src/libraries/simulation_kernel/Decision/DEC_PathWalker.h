@@ -163,6 +163,4 @@ private:
     //@}
 };
 
-#include "DEC_PathWalker.inl"
-
 #endif // __DEC_PathWalker_h_
