@@ -36,6 +36,8 @@ public:
     static boost::shared_ptr< TER_Localisation > CreateLocalisation ();
     static std::vector< boost::shared_ptr< MT_Vector2D > > CreateListPoint();
     static boost::shared_ptr< MT_Vector2D > CreatePoint();
+    static boost::shared_ptr< MT_Vector2D > CreatePointFromLatLong( double lat, double lng );
+    static boost::shared_ptr< MT_Vector2D > CreatePointFromXY( double x, double y );
     static boost::shared_ptr< MT_Vector2D > CopyPoint( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr< MT_Vector2D > CreateDirection( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
     static boost::shared_ptr< MT_Vector2D > CreateVector( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );

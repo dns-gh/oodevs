@@ -259,6 +259,8 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_CreerLocalisation", &DEC_GeometryFunctions::CreateLocalisation );
     brain.RegisterFunction( "DEC_Geometrie_CreerListePoints", &DEC_GeometryFunctions::CreateListPoint );
     brain.RegisterFunction( "DEC_Geometrie_CreerPoint", &DEC_GeometryFunctions::CreatePoint );
+    brain.RegisterFunction( "DEC_Geometrie_CreerPointLatLong", &DEC_GeometryFunctions::CreatePointFromLatLong );
+    brain.RegisterFunction( "DEC_Geometrie_CreerPointXY", &DEC_GeometryFunctions::CreatePointFromXY );
     brain.RegisterFunction( "DEC_Geometrie_CopiePoint", &DEC_GeometryFunctions::CopyPoint );
     brain.RegisterFunction( "DEC_Geometrie_CreerDirection", &DEC_GeometryFunctions::CreateDirection );
     brain.RegisterFunction( "DEC_Geometrie_CreerVecteur", &DEC_GeometryFunctions::CreateVector );
