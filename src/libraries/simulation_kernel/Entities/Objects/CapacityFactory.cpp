@@ -47,6 +47,7 @@
 #include "ResourceNetworkCapacity.h"
 #include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
+#include "StockCapacity.h"
 #include "StructuralCapacity.h"
 #include "SupplyCapacity.h"
 #include "TerrainHeuristicCapacity.h"
@@ -178,6 +179,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
     DoRegister( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
+    DoRegister( "stock", boost::bind( &AddBuilder< StockCapacity >::Add, _1, _2 ) );
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
     DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );

@@ -44,7 +44,7 @@
 #include "ResourceNetworkCapacity.h"
 #include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
-#include "StructuralCapacity.h"
+#include "StockCapacity.h"
 #include "StructuralCapacity.h"
 #include "SupplyCapacity.h"
 #include "InteractIfEquippedCapacity.h"
@@ -99,6 +99,7 @@ const ObjectCapacity_ABC* CapacityRetriever::RetrieveCapacity( const MIL_ObjectT
     RETRIEVE( "resources", ResourceNetworkCapacity );
     RETRIEVE( "scattering", ScatteringCapacity );
     RETRIEVE( "spawn", SpawnCapacity );
+    RETRIEVE( "stock", StockCapacity );
     RETRIEVE( "structural", StructuralCapacity );
     RETRIEVE( "supply", SupplyCapacity );
     RETRIEVE( "supply-route", InteractIfEquippedCapacity );

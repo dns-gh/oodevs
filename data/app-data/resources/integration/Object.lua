@@ -52,6 +52,9 @@ integration.getObjectPositionsForWork = function( object, distance ) -- object i
     return object.getObjectPositionsForWork
 end
 
+--- Returns a list of simulation objects with a given capacity in a zone
+-- @param capacityName Name of the capacity. The list of supported capacities is defined in ../schemas/(version)/physical/objects.xsd : All possible elements of T_ObjectCapacities - except geometries which defines the geometry of an object -. Examples include "avoidable", "burn", "bypassable"...
+-- @param zone Knowledge of a geometry
 integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone )
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
