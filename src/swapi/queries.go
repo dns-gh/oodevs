@@ -8,6 +8,10 @@
 // ****************************************************************************
 package swapi
 
+import (
+	"sword"
+)
+
 func (model *Model) query(query func(d *ModelData) bool) bool {
 	reply := make(chan bool, 1)
 	model.waitCommand(func(m *Model) {
@@ -100,4 +104,29 @@ func (model *Model) IsCrowdInProfile(id uint32, name string) bool {
 
 func (model *Model) IsPartyInProfile(id uint32, name string) bool {
 	return model.queryIdInProfile(id, name, (*ModelData).IsPartyInProfile)
+}
+
+func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bool {
+	switch {
+	case tasker.Unit != nil:
+		return d.IsUnitInProfile(tasker.Unit.GetId(), profile)
+	case tasker.Automat != nil:
+		return d.IsAutomatInProfile(tasker.Automat.GetId(), profile)
+	case tasker.Formation != nil:
+		return d.IsFormationInProfile(tasker.Formation.GetId(), profile)
+	case tasker.Party != nil:
+		return d.IsPartyInProfile(tasker.Party.GetId(), profile)
+	case tasker.Crowd != nil:
+		return d.IsCrowdInProfile(tasker.Crowd.GetId(), profile)
+	case tasker.Population != nil:
+		return d.IsPopulationInProfile(tasker.Population.GetId(), profile)
+	}
+	return false
+}
+
+func (model *Model) IsTaskerInProfile(tasker *sword.Tasker, name string) bool {
+	return model.query(func(d *ModelData) bool {
+		profile, ok := d.Profiles[name]
+		return ok && d.IsTaskerInProfile(tasker, profile)
+	})
 }
