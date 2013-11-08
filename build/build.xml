@@ -478,6 +478,7 @@
         <test-data-migration old-version="4.3.4embraer" exercise="Egypt"/>
         <test-data-migration old-version="4.3.0cae" exercise="Paris"/>
         <test-data-migration old-version="5.0.0" exercise="Egypt"/>
+        <test-data-migration old-version="5.2.2" exercise="Egypt"/>
     </target>
 
     <macrodef name="check-gui">
