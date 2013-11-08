@@ -124,6 +124,7 @@ public slots:
     virtual void Center() = 0;
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters ) = 0;
     virtual bool CreateEvent( const timeline::Event& event ) = 0;
+    virtual bool SelectEvent( const std::string& uuid ) = 0;
     virtual bool ReadEvents() = 0;
     virtual bool ReadEvent( const std::string& uuid ) = 0;
     virtual bool UpdateEvent( const timeline::Event& event ) = 0;

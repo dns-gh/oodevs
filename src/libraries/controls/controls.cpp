@@ -177,6 +177,14 @@ size_t tic::CreateEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
+size_t tic::SelectEvent( void* data, size_t size, const std::string& uuid )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_EVENT_SELECT );
+    cmd.mutable_event()->set_uuid( uuid );
+    return Marshall( data, size, cmd );
+}
+
 size_t tic::ReadEvents( void* data, size_t size )
 {
     return MarshallType< ClientCommand >( data, size, sdk::CLIENT_EVENT_READ_ALL );
@@ -232,6 +240,7 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
         case sdk::CLIENT_QUERY_UPDATE:          return handler.OnUpdateQuery( GetQuery( cmd.query() ) );
         case sdk::CLIENT_CENTER:                return handler.OnCenterClient();
         case sdk::CLIENT_EVENT_CREATE:          return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_SELECT:          return handler.OnSelectEvent( GetEvent( cmd.event() ).uuid );
         case sdk::CLIENT_EVENT_READ_ALL:        return handler.OnReadEvents();
         case sdk::CLIENT_EVENT_READ_ONE:        return handler.OnReadEvent( GetEvent( cmd.event() ).uuid );
         case sdk::CLIENT_EVENT_UPDATE:          return handler.OnUpdateEvent( GetEvent( cmd.event() ) );

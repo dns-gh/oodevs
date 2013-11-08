@@ -142,6 +142,11 @@ bool Server::CreateEvent( const Event& event )
     return Write( *write_, boost::bind( &controls::CreateEvent, _1, _2, event ) );
 }
 
+bool Server::SelectEvent( const std::string& uuid )
+{
+    return Write( *write_, boost::bind( &controls::SelectEvent, _1, _2, uuid ) );
+}
+
 bool Server::ReadEvents()
 {
     return Write( *write_, static_cast< size_t ( * )( void*, size_t ) >( &controls::ReadEvents ) );

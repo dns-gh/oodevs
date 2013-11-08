@@ -35,6 +35,7 @@
     </property>
     <addaction name="actionCreate"/>
     <addaction name="actionDelete"/>
+    <addaction name="actionSelect"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -119,6 +120,11 @@
   <action name="actionSwitchLayout">
    <property name="text">
     <string>Switch layout</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="text">
+    <string>Select</string>
    </property>
   </action>
  </widget>

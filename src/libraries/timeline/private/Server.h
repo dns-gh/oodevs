@@ -47,6 +47,7 @@ public:
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters );
     virtual void Center();
     virtual bool CreateEvent( const Event& event );
+    virtual bool SelectEvent( const std::string& uuid );
     virtual bool ReadEvents();
     virtual bool ReadEvent( const std::string& uuid );
     virtual bool UpdateEvent( const Event& event );

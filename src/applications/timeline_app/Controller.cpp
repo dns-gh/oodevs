@@ -46,10 +46,11 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
-    QObject::connect( ui_->actionReadEvents, SIGNAL( triggered() ), ctx_.get(), SLOT( ReadEvents() ) );
+    QObject::connect( ui_->actionReadEvents, SIGNAL( triggered() ), this, SLOT( OnReadEvents() ) );
     QObject::connect( ui_->actionLoad, SIGNAL( triggered() ), this, SLOT( OnLoadActionTriggered() ) );
     QObject::connect( ui_->actionSave, SIGNAL( triggered() ), ctx_.get(), SLOT( SaveEvents() ) );
     QObject::connect( ui_->actionCenter, SIGNAL( triggered() ), this, SLOT( OnCenter() ) );
+    QObject::connect( ui_->actionSelect, SIGNAL( triggered() ), this, SLOT( OnSelect() ) );
     QObject::connect( ui_->actionSwitchLayout, SIGNAL( triggered() ), this, SLOT( OnSwitchLayout() ) );
     ui_->actionSwitchLayout->setCheckable( true );
 
@@ -58,7 +59,6 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
-    QObject::connect( ctx_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -264,22 +264,6 @@ void Controller::OnKeyPress( int key )
 void Controller::OnKeyUp( int key )
 {
     ui_->statusBar->showMessage( QString( "key 0x%1 up" ).arg( key, 0, 16 ) );
-}
-
-void Controller::OnGetEvents( const timeline::Events& events, const timeline::Error& error )
-{
-    if( error.code != EC_OK )
-        ui_->statusBar->showMessage( QString( "An error occured during while receiving GetEvents: %1" ).arg( error.text.c_str() ) );
-    if( !usePopups_ )
-        return;
-    QDialog dialog( &main_ );
-    dialog.setMinimumSize( 400, 500 );
-    QVBoxLayout layout( &dialog );
-    QListWidget list;
-    layout.addWidget( &list );
-    for( auto it = events.begin(); it != events.end(); ++it )
-        list.addItem( QString( "Event %1: %2: %3" ).arg( list.count() ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
-    dialog.exec();
 }
 
 void Controller::OnLoadEvents()
@@ -721,4 +705,42 @@ int Controller::Execute( const std::string& command, const std::vector< std::str
     if( command == "saveload" )
         return SaveLoad( args );
     throw std::runtime_error( "unexpected command " + command );
+}
+
+void Controller::OnSelect()
+{
+    if( !usePopups_ )
+        return;
+    QDialog dialog( &main_ );
+    dialog.setMinimumSize( 300, 100 );
+    QHBoxLayout layout( &dialog );
+    QComboBox comboBox;
+    QPushButton button( "ok" );
+    auto pair = ReadEvents( *ctx_ );
+    for( auto it = pair.first.begin(); it != pair.first.end(); ++it )
+        comboBox.addItem( it->uuid.c_str() );
+    layout.addWidget( new QLabel( "uuid:" ) );
+    layout.addWidget( &comboBox );
+    layout.addWidget( &button );
+    QObject::connect( &button, SIGNAL( clicked() ), &dialog, SLOT( accept() ) );
+    const int ret = dialog.exec();
+    QString uuid = comboBox.currentText();
+    if( ret != QDialog::Accepted || uuid.isEmpty() )
+        return;
+    ctx_->SelectEvent( uuid.toStdString() );
+}
+
+void Controller::OnReadEvents()
+{
+    if( !usePopups_ )
+        return;
+    auto pair = ReadEvents( *ctx_ );
+    QDialog dialog( &main_ );
+    dialog.setMinimumSize( 400, 500 );
+    QVBoxLayout layout( &dialog );
+    QListWidget list;
+    layout.addWidget( &list );
+    for( auto it = pair.first.begin(); it != pair.first.end(); ++it )
+        list.addItem( QString( "Event %1: %2: %3" ).arg( list.count() ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
+    dialog.exec();
 }

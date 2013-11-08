@@ -138,6 +138,11 @@ void Client::OnCreateEvent( const timeline::Event& event )
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CreateEvent, event ) );
 }
 
+void Client::OnSelectEvent( const std::string& uuid )
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::SelectEvent, uuid ) );
+}
+
 void Client::OnReadEvents()
 {
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::ReadEvents ) );

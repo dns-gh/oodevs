@@ -55,6 +55,7 @@ public:
     virtual void OnLoadClient( const std::string& url );
     virtual void OnUpdateQuery( const std::map< std::string, std::string >& query );
     virtual void OnCreateEvent( const Event& event );
+    virtual void OnSelectEvent( const std::string& uuid );
     virtual void OnReadEvents();
     virtual void OnReadEvent( const std::string& uuid );
     virtual void OnUpdateEvent( const Event& event );
