@@ -309,7 +309,9 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointSurFuseau", &DEC_GeometryFunctions::GetPointAlongFuseau );
     brain.RegisterFunction( "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion", &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon );
     brain.RegisterMethod( "DEC_Geometrie_X", &MT_Vector2D::GetX );
+    brain.RegisterMethod( "X", &MT_Vector2D::GetX );
     brain.RegisterMethod( "DEC_Geometrie_Y", &MT_Vector2D::GetY );
+    brain.RegisterMethod( "Y", &MT_Vector2D::GetY );
     brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
     brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
     brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection );
