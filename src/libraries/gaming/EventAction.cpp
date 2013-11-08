@@ -141,14 +141,3 @@ QString EventAction::GetTooltip() const
 {
     return ( action_ ) ? action_->GetTooltip() : Event::GetTooltip();
 }
-
-// -----------------------------------------------------------------------------
-// Name: EventAction::Select
-// Created: ABR 2013-07-02
-// -----------------------------------------------------------------------------
-void EventAction::Select( kernel::ActionController& controller ) const
-{
-    Event::Select( controller );
-    if( action_ )
-        action_->Select( controller );
-}
