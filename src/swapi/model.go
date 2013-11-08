@@ -132,6 +132,10 @@ func (model *Model) run() error {
 	return nil
 }
 
+func (model *Model) Close() {
+	close(model.requests)
+}
+
 var (
 	simToClientHandlers = []func(model *Model, m *sword.SimToClient_Content) error{
 		(*Model).handleAutomatAttributes,

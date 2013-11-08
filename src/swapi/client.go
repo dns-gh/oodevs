@@ -146,6 +146,7 @@ func (c *Client) Close() {
 	close(c.posts)
 	<-c.writer
 	c.link.Close()
+	c.Model.Close()
 }
 
 func (c *Client) getContext() int32 {
