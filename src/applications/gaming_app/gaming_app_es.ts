@@ -674,10 +674,6 @@ Reason: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Discard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation type="unfinished">Grabar</translation>
     </message>
@@ -703,6 +699,10 @@ Reason: %3
     </message>
     <message>
         <source>Save as copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

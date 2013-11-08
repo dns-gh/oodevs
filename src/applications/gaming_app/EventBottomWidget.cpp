@@ -90,7 +90,7 @@ EventBottomWidget::EventBottomWidget( const kernel::Time_ABC& simulation, kernel
     saveAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), saveText_, this, SIGNAL( Save() ) );
     planningActions_.push_back( saveAction_ );
     planningActions_.push_back( toolBar->addSeparator() );
-    toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Discard" ), this, SIGNAL( Discard() ) );
+    toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Clear parameters" ), this, SIGNAL( Discard() ) );
     toolBar->setIconSize( QSize( 30, 30 ) );
 
     triggerButton_ = new QToolButton();

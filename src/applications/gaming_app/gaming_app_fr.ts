@@ -676,10 +676,6 @@ Raison: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Discard</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
@@ -706,6 +702,10 @@ Raison: %3
     <message>
         <source>Save as copy</source>
         <translation>Copier et enregistrer</translation>
+    </message>
+    <message>
+        <source>Clear parameters</source>
+        <translation>Effacer les paramètres</translation>
     </message>
 </context>
 <context>
