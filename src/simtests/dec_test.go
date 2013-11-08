@@ -11,6 +11,7 @@ package simtests
 import (
 	"bytes"
 	. "launchpad.net/gocheck"
+	"regexp"
 	"swapi"
 	"text/template"
 )
@@ -105,4 +106,32 @@ end
 	// Result is in m/s
 	checkScript(c, client, script, map[string]interface{}{"unitid": unit.Id},
 		`19\.4\d*`, "")
+}
+
+func (s *TestSuite) TestDecGeometry(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer sim.Stop()
+
+	testCreatePoint := `
+function TestFunction()
+    points = {
+        DEC_Geometrie_CreerPoint(),
+        DEC_Geometrie_CreerPointLatLong(-28.3456, -15.8193),
+        DEC_Geometrie_CreerPointLatLong(0, 0),
+        DEC_Geometrie_CreerPointXY(10000, 20000),
+    }
+    result = ""
+    for i = 1, #points do
+        p = points[i]
+        result = result .. string.format("(%.2f, %.2f)\n", p:X(), p:Y())
+    end
+    return result
+end
+`
+	expected := regexp.QuoteMeta(`(0.00, 0.00)
+(11829.77, -5316878.77)
+(1750510.29, -2899797.56)
+(10000.00, 20000.00)
+`)
+	checkScript(c, client, testCreatePoint, nil, expected, "")
 }
