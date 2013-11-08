@@ -11,7 +11,7 @@
 #define __PHY_MovingEntity_ABC_h_
 
 #include "Knowledge/DEC_Knowledge_Def.h"
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace sword
 {
@@ -113,7 +113,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    boost::scoped_ptr< DEC_PathWalker > pathWalker_;
+    std::unique_ptr< DEC_PathWalker > pathWalker_;
     //@}
 };
 
