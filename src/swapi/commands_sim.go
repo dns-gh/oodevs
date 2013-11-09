@@ -995,11 +995,6 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 		sword.KnowledgeMagicAction_add_knowledge)
 	var created *UnitKnowledge
 	handler := func(msg *sword.SimToClient_Content) error {
-
-		if msg.GetUnitKnowledgeCreation() != nil ||
-			msg.GetUnitKnowledgeUpdate() != nil {
-			return ErrContinue
-		}
 		reply, _, err := getKnowledgeGroupMagicActionAck(msg)
 		if err != nil {
 			return err
