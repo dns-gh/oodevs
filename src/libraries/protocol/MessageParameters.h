@@ -16,6 +16,11 @@
 
 #define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
 
+namespace boost
+{
+    template< typename T > class optional;
+}
+
 namespace sword
 {
     class CoordLatLong;
@@ -57,6 +62,7 @@ namespace protocol
     const std::string&                 GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int                                GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int                                GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    boost::optional< int >             TryGetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< sword::CoordLatLong > GetLocation( const sword::MissionParameters& params, int i );
     sword::Location_Geometry           GetLocationType( const sword::MissionParameters& params, int i );
     int                                GetUnsafeEnumeration( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

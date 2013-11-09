@@ -1373,11 +1373,10 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
-        if( pReceiver )
-            pReceiver->OnReceiveKnowledgeGroupUpdate( message, ack(), *armyFactory_ );
-        else
-            throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_knowledgegroup, "Knowledge Group not found" );
+        auto pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
+        if( !pReceiver )
+            throw MASA_BADGROUP_KNOWLEDGE( "unknown knowledge group" );
+        pReceiver->OnReceiveKnowledgeGroupUpdate( message, ack(), *armyFactory_ );
     }
     catch( const NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
     {

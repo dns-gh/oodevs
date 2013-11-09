@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
+#include <boost/optional.hpp>
 #include <sstream>
 
 #define EXCEPTION( WHAT ) protocol::Exception( __FILE__, __FUNCTION__, __LINE__, (WHAT) )
@@ -81,21 +82,43 @@ namespace
         return dst.str();
     }
 
-    template< typename T >
-    typename T::value_type GetValue( const sword::MissionParameters& params, int i, int j, int k )
+    bool Check( bool valid, const std::string& msg, int i, int j, int k, bool optional )
     {
-        protocol::Check( params.elem_size() > i, "is missing", i, j, k );
+        if( valid )
+            return true;
+        if( optional )
+            return false;
+        if( i < 0 )
+            throw EXCEPTION( msg );
+        throw EXCEPTION( STR( "parameter" << GetIndex( i, j, k ) << " " << msg ) );
+    }
+
+    template< typename T >
+    boost::optional< typename T::value_type > TryGetValue(
+        const sword::MissionParameters& params, int i, int j, int k, bool optional )
+    {
+        if( !Check( params.elem_size() > i, "is missing", i, j, k, optional ) )
+            return boost::optional< T::value_type >();
         const auto& values = params.elem( i );
         const int jmax = std::max( 0, j );
-        protocol::Check( values.value_size() > jmax, "is missing", i, j, k );
+        if( !Check( values.value_size() > jmax, "is missing", i, j, k, optional ) )
+            return boost::optional< T::value_type >();
         const auto* value = &values.value( jmax );
         if( k >= 0 )
         {
-            protocol::Check( value->list_size() > k, "must be a list", i, j, k );
+            if( !Check( value->list_size() > k, "must be a list", i, j, k, optional ) )
+                return boost::optional< T::value_type >();
             value = &value->list( k );
         }
-        protocol::Check( T::Has( *value ), "must be a " + T::GetName(), i, j, k );
+        if( !Check( T::Has( *value ), "must be a " + T::GetName(), i, j, k, optional ) )
+            return boost::optional< T::value_type >();
         return T::Get( *value );
+    }
+
+    template< typename T >
+    typename T::value_type GetValue( const sword::MissionParameters& params, int i, int j, int k )
+    {
+        return *TryGetValue< T >( params, i, j, k, false );
     }
 
     int CheckCount( int value, int min, int max )
@@ -112,11 +135,7 @@ namespace
 
 void protocol::Check( bool valid, const std::string& msg, int i, int j, int k )
 {
-    if( valid )
-        return;
-    if( i < 0 )
-        throw EXCEPTION( msg );
-    throw EXCEPTION( STR( "parameter" << GetIndex( i, j, k ) << " " << msg ) );
+    ::Check( valid, msg, i, j, k, false );
 }
 
 void protocol::Check( const void* pointer, const std::string& msg, int i, int j, int k )
@@ -188,6 +207,12 @@ int protocol::GetHeading( const sword::MissionParameters& params, int i, int j, 
 int protocol::GetQuantity( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< Quantity >( params, i, j, k );
+}
+
+boost::optional< int > protocol::TryGetQuantity(
+        const sword::MissionParameters& params, int i, int j, int k )
+{
+    return TryGetValue< Quantity >( params, i, j, k, true );
 }
 
 int protocol::GetUnsafeEnumeration( const sword::MissionParameters& params, int i, int j, int k )
