@@ -179,6 +179,15 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
+
+	// add object in knowledge group
+	location := swapi.MakePointLocation(unit.Position)
+	object, err := client.CreateObject("jamming area", kg.PartyId, location)
+	c.Assert(err, IsNil)
+	objectKnowledge, err := client.AddObjectKnowledgeInKnowledgeGroup(kg.Id, object.Id, 2)
+	c.Assert(err, IsNil)
+	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg.Id)
+	c.Assert(objectKnowledge.ObjectId, Equals, object.Id)
 }
 
 func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {
