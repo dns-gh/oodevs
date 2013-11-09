@@ -70,10 +70,13 @@ namespace protocol
     const sword::CoordLatLong&         GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetKnowledgeGroup( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetKnowledgeGroup( const sword::MissionParameters& params, int i = -1, int j = -1, int k = -1 );
     uint32_t                           GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetAutomatId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetResourceType( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< Extension >           GetExtensionList( const sword::MissionParameters& params, int i );
 }

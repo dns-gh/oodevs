@@ -95,7 +95,7 @@ namespace
 
     template< typename T >
     boost::optional< typename T::value_type > TryGetValue(
-        const sword::MissionParameters& params, int i, int j, int k, bool optional )
+        const sword::MissionParameters& params, int i, int j, int k, bool optional = true )
     {
         if( !Check( params.elem_size() > i, "is missing", i, j, k, optional ) )
             return boost::optional< T::value_type >();
@@ -212,7 +212,7 @@ int protocol::GetQuantity( const sword::MissionParameters& params, int i, int j,
 boost::optional< int > protocol::TryGetQuantity(
         const sword::MissionParameters& params, int i, int j, int k )
 {
-    return TryGetValue< Quantity >( params, i, j, k, true );
+    return TryGetValue< Quantity >( params, i, j, k );
 }
 
 int protocol::GetUnsafeEnumeration( const sword::MissionParameters& params, int i, int j, int k )
@@ -268,6 +268,11 @@ uint32_t protocol::GetKnowledgeGroup( const sword::MissionParameters& params, in
     return GetValue< KnowledgeGroup >( params, i, j, k );
 }
 
+boost::optional< uint32_t > protocol::TryGetKnowledgeGroup( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return TryGetValue< KnowledgeGroup >( params, i, j, k );
+}
+
 uint32_t protocol::GetAgentId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< AgentId >( params, i, j, k );
@@ -283,9 +288,19 @@ uint32_t protocol::GetFormationId( const sword::MissionParameters& params, int i
     return GetValue< FormationId >( params, i, j, k );
 }
 
+boost::optional< uint32_t > protocol::TryGetFormationId( const sword::MissionParameters& params, int i, int  j, int k )
+{
+    return TryGetValue< FormationId >( params, i, j, k );
+}
+
 uint32_t protocol::GetPartyId( const sword::MissionParameters& params, int i, int j, int k )
 {
     return GetValue< PartyId >( params, i, j, k );
+}
+
+boost::optional< uint32_t > protocol::TryGetPartyId( const sword::MissionParameters& params, int i, int j, int k )
+{
+    return TryGetValue< PartyId >( params, i, j, k );
 }
 
 uint32_t protocol::GetResourceType( const sword::MissionParameters& params, int i, int j, int k )
