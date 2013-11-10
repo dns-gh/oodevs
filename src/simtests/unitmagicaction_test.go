@@ -285,14 +285,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Find some unit and make it move
-	c.Assert(len(data.Units), Greater, 0)
-	var unit *swapi.Unit
-	for _, u := range data.Units {
-		if strings.Contains(u.Name, "ARMOR.MBT") {
-			unit = u
-		}
-	}
-	c.Assert(unit, NotNil)
+	unit := getSomeUnitByName(c, data, "ARMOR.MBT")
 	parent := model.GetAutomat(unit.AutomatId)
 	c.Assert(parent, NotNil)
 	err = client.SetAutomatMode(parent.Id, false)
