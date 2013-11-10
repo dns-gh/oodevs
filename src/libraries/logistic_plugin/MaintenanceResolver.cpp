@@ -120,37 +120,22 @@ MaintenanceResolver::~MaintenanceResolver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool MaintenanceResolver::IsManageable( const sword::SimToClient& message )
-{
-    return      message.message().has_log_maintenance_handling_creation()
-            ||  message.message().has_log_maintenance_handling_update()
-            ||  message.message().has_log_maintenance_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool MaintenanceResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_maintenance_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MaintenanceResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_maintenance_handling_creation() )
-        TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation(), output_ );
+        return TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation() );
     if( message.message().has_log_maintenance_handling_update() )
-        TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update(), output_ );
-    if( message.message().has_log_maintenance_handling_destruction() && message.message().log_maintenance_handling_destruction().has_request() )
-        DestroyConsignData( message.message().log_maintenance_handling_destruction().request().id() );
+        return TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update() );
+    if( message.message().has_log_maintenance_handling_destruction() )
+    {
+        if( message.message().log_maintenance_handling_destruction().has_request() )
+            DestroyConsignData( message.message().log_maintenance_handling_destruction().request().id() );
+        return boost::optional< std::string >( "" );
+    }
+    return boost::optional< std::string >();
 }
 
 // -----------------------------------------------------------------------------

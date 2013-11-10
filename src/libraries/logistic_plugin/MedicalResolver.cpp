@@ -147,40 +147,23 @@ MedicalResolver::~MedicalResolver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool MedicalResolver::IsManageable( const sword::SimToClient& message )
-{
-    return      message.message().has_log_medical_handling_creation()
-            ||  message.message().has_log_medical_handling_update()
-            ||  message.message().has_log_medical_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool MedicalResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_medical_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MedicalResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MedicalResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > MedicalResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_medical_handling_creation() )
-        TraceConsign< ::sword::LogMedicalHandlingCreation, MedicalConsignData >( message.message().log_medical_handling_creation(), output_ );
+        return TraceConsign< ::sword::LogMedicalHandlingCreation, MedicalConsignData >( message.message().log_medical_handling_creation() );
     if( message.message().has_log_medical_handling_update() )
-        TraceConsign< ::sword::LogMedicalHandlingUpdate, MedicalConsignData >( message.message().log_medical_handling_update(), output_ );
-    if( message.message().has_log_medical_handling_destruction() && message.message().log_medical_handling_destruction().has_request() )
+        return TraceConsign< ::sword::LogMedicalHandlingUpdate, MedicalConsignData >( message.message().log_medical_handling_update() );
+    if( message.message().has_log_medical_handling_destruction() )
     {
-        TraceConsign< ::sword::LogMedicalHandlingDestruction, MedicalConsignData >( message.message().log_medical_handling_destruction(), output_ );
-        DestroyConsignData( message.message().log_medical_handling_destruction().request().id() );
+        const auto data = TraceConsign< ::sword::LogMedicalHandlingDestruction, MedicalConsignData >( message.message().log_medical_handling_destruction() );
+        if( message.message().log_medical_handling_destruction().has_request() )
+            DestroyConsignData( message.message().log_medical_handling_destruction().request().id() );
+        return data;
     }
+    return boost::optional< std::string >();
 }
 
 // -----------------------------------------------------------------------------

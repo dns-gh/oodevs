@@ -59,13 +59,17 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
 // -----------------------------------------------------------------------------
 bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boost::gregorian::date& today )
 {
-    if( !IsManageable( message ) )
-        return false;
-    if( !IsEmptyLineMessage( message ) )
-        CheckOutputFile( today );
-    if( output_.is_open() )
-        ManageMessage( message );
-    return true;
+    if( const auto data = ManageMessage( message ) )
+    {
+        if( !data->empty() )
+        {
+            CheckOutputFile( today );
+            if( output_.is_open() )
+                output_ << *data << std::flush;
+        }
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

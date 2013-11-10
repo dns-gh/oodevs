@@ -81,9 +81,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual bool IsManageable( const sword::SimToClient& message );
-    virtual bool IsEmptyLineMessage( const sword::SimToClient& message );
-    virtual void ManageMessage( const sword::SimToClient& message );
+    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& message );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}
 };

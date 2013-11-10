@@ -129,37 +129,22 @@ FuneralResolver::~FuneralResolver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FuneralResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool FuneralResolver::IsManageable( const sword::SimToClient& message )
-{
-    return     message.message().has_log_funeral_handling_creation()
-            || message.message().has_log_funeral_handling_update()
-            || message.message().has_log_funeral_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool FuneralResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_funeral_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
 // Name: FuneralResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void FuneralResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > FuneralResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_funeral_handling_creation() )
-        TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation(), output_ );
+        return TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation() );
     if( message.message().has_log_funeral_handling_update() )
-        TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update(), output_ );
-    if( message.message().has_log_funeral_handling_destruction() && message.message().log_funeral_handling_destruction().has_request() )
-        DestroyConsignData( message.message().log_funeral_handling_destruction().request().id() );
+        return TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update() );
+    if( message.message().has_log_funeral_handling_destruction() )
+    {
+        if( message.message().log_funeral_handling_destruction().has_request() )
+            DestroyConsignData( message.message().log_funeral_handling_destruction().request().id() );
+        return boost::optional< std::string >( "" );
+    }
+    return boost::optional< std::string >();
 }
 
 // -----------------------------------------------------------------------------

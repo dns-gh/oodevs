@@ -190,37 +190,22 @@ SupplyResolver::~SupplyResolver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool SupplyResolver::IsManageable( const sword::SimToClient& message )
-{
-    return      message.message().has_log_supply_handling_creation()
-            ||  message.message().has_log_supply_handling_update()
-            ||  message.message().has_log_supply_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool SupplyResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_supply_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SupplyResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void SupplyResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > SupplyResolver::ManageMessage( const sword::SimToClient& message )
 {
     if( message.message().has_log_supply_handling_creation() )
-        TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), output_ );
+        return TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation() );
     if( message.message().has_log_supply_handling_update() )
-        TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), output_ );
-    if( message.message().has_log_supply_handling_destruction() && message.message().log_supply_handling_destruction().has_request() )
-        DestroyConsignData( message.message().log_supply_handling_destruction().request().id() );
+        return TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update() );
+    if( message.message().has_log_supply_handling_destruction() )
+    {
+        if( message.message().log_supply_handling_destruction().has_request() )
+            DestroyConsignData( message.message().log_supply_handling_destruction().request().id() );
+        return boost::optional< std::string >( "" );
+    }
+    return boost::optional< std::string >();
 }
 
 // -----------------------------------------------------------------------------

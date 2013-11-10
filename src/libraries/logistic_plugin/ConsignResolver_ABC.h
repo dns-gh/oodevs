@@ -16,7 +16,7 @@
 #include <tools/Path.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/noncopyable.hpp>
-
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -67,25 +67,21 @@ protected:
 
     //! @name Operations
     //@{
-    virtual bool IsManageable( const sword::SimToClient& ) { return false; }
-    virtual void ManageMessage( const sword::SimToClient& ) {}
-    virtual bool IsEmptyLineMessage( const sword::SimToClient& ) = 0;
     ConsignData_ABC& GetConsign( int requestId );
     virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
+    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& ) = 0;
     virtual void DestroyConsignData( int requestId );
 
     template < typename M, typename T >
-    void TraceConsign( const M& msg, tools::Ofstream& output )
+    std::string TraceConsign( const M& msg )
     {
-        if( msg.has_request() )
-        {
-            ConsignData_ABC& consignData = GetConsign( static_cast< int >( msg.request().id() ) );
-            GetSimTime( consignData.simTime_, consignData.tick_ );
-            ConsignWriter writer;
-            static_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
-            output << writer.GetLine();
-            output.flush();
-        }
+        if( !msg.has_request() )
+            return "";
+        ConsignData_ABC& consignData = GetConsign( static_cast< int >( msg.request().id() ) );
+        GetSimTime( consignData.simTime_, consignData.tick_ );
+        ConsignWriter writer;
+        static_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
+        return writer.GetLine();
     }
     //@}
 
@@ -108,13 +104,15 @@ protected:
     std::string simTime_;
     const tools::Path name_;
     tools::Path fileName_;
-    tools::Ofstream output_;
     std::map< int, ConsignData_ABC* > consignsData_;
     int curFileIndex_;
     int curLineIndex_;
     int maxLinesInFile_;
     const int daysBeforeToKeep_;
     //@}
+
+private:
+    tools::Ofstream output_;
 };
 }
 }
