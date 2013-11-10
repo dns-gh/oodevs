@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "MaintenanceResolver.h"
+#include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
@@ -15,20 +16,21 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceConsignData::Write
+// Name: MaintenanceConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MaintenanceConsignData::operator>>( std::stringstream& output ) const
+void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 {
-    output  << requestId_    << separator_
-            << tick_         << separator_
-            << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
-            << unit_         << separator_   // << providerId_       << separator_
-            << provider_     << separator_   // << equipmentId_      << separator_
-            << equipment_    << separator_   // << breakdownId_      << separator_
-            << breakdown_    << separator_   // << stateId_          << separator_
-            << state_        << separator_
-            << stateEndTick_ << std::endl;
+    output  << requestId_
+            << tick_
+            << simTime_
+            << unit_
+            << provider_
+            << equipment_
+            << breakdown_
+            << state_
+            << stateEndTick_;
+    output.End();
 }
 
 // -----------------------------------------------------------------------------

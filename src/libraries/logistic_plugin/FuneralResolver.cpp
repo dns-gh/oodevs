@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "FuneralResolver.h"
+#include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
@@ -15,21 +16,22 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: FuneralConsignData::operator>>
+// Name: FuneralConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void FuneralConsignData::operator>>( std::stringstream& output ) const
+void FuneralConsignData::WriteConsign( ConsignWriter& output ) const
 {
-    output  << requestId_            << separator_
-            << tick_                 << separator_
-            << simTime_              << separator_   // << creationTick_         << separator_    << unitId_  << separator_
-            << unit_                 << separator_   // << handlingUnitId_       << separator_
-            << handlingUnit_         << separator_   // << conveyingUnitId_      << separator_
-            << conveyingUnit_        << separator_   
-            << rank_                 << separator_   // << packagingResourceId_  << separator_
-            << packagingResource_    << separator_   // << stateId_              << separator_
-            << state_                << separator_
-            << stateEndTick_         << std::endl;
+    output  << requestId_
+            << tick_
+            << simTime_
+            << unit_
+            << handlingUnit_
+            << conveyingUnit_
+            << rank_
+            << packagingResource_
+            << state_
+            << stateEndTick_;
+    output.End();
 }
 
 // -----------------------------------------------------------------------------

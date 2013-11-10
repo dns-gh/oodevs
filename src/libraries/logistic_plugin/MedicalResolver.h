@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void operator>>( std::stringstream& output ) const;
+    virtual void WriteConsign( ConsignWriter& output ) const;
     virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver );
     virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver );
     virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg, ConsignResolver_ABC& resolver );

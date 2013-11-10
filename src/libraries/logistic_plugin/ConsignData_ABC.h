@@ -18,6 +18,7 @@ namespace plugins
 {
 namespace logistic
 {
+    class ConsignWriter;
 
 // =============================================================================
 /** @class  ConsignData_ABC
@@ -30,14 +31,13 @@ class ConsignData_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ), separator_( " ; " ) {}
+            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ) {}
     virtual ~ConsignData_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void operator>>( std::stringstream& output ) const = 0;
-    virtual void operator>>( tools::Ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
+    virtual void WriteConsign( ConsignWriter& w ) const = 0;
     //@}
 
 public:
@@ -51,9 +51,9 @@ protected:
     //! @name Member data
     //@{
     std::string requestId_;
-    const std::string separator_;
     //@}
 };
+
 }
 }
 

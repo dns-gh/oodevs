@@ -81,7 +81,9 @@ protected:
         {
             ConsignData_ABC& consignData = GetConsign( static_cast< int >( msg.request().id() ) );
             GetSimTime( consignData.simTime_, consignData.tick_ );
-            static_cast< T& >( consignData ).ManageMessage( msg, *this ) >> output;
+            ConsignWriter writer;
+            static_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
+            output << writer.GetLine();
             output.flush();
         }
     }

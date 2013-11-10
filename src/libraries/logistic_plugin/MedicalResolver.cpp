@@ -9,6 +9,7 @@
 
 #include "MedicalResolver.h"
 #include "NameResolver_ABC.h"
+#include "ConsignWriter.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
 #pragma warning( push, 0 )
@@ -18,22 +19,23 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: MedicalConsignData::operator>>
+// Name: MedicalConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MedicalConsignData::operator>>( std::stringstream& output ) const
+void MedicalConsignData::WriteConsign( ConsignWriter& output ) const
 {
-    output  << requestId_    << separator_
-            << tick_         << separator_
-            << simTime_      << separator_   // << creationTick_ << separator_ << unitId_ << separator_
-            << unit_         << separator_   // << providerId_   << separator_
-            << provider_     << separator_
-            << rank_         << separator_
-            << wound_        << separator_
-            << nbc_          << separator_
-            << mental_       << separator_   // << stateId_      << separator_
-            << state_        << separator_
-            << stateEndTick_ << std::endl;
+    output  << requestId_
+            << tick_
+            << simTime_
+            << unit_
+            << provider_
+            << rank_
+            << wound_
+            << nbc_
+            << mental_
+            << state_
+            << stateEndTick_;
+    output.End();
 }
 
 // -----------------------------------------------------------------------------

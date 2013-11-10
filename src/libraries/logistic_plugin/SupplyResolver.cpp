@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "SupplyResolver.h"
+#include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
@@ -18,36 +19,36 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsignData::Write
+// Name: SupplyConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void SupplyConsignData::operator>>( std::stringstream& output ) const
+void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 {
     if( recipientAutomats_.empty() )
     {
-        output << requestId_         << separator_
-            << tick_                 << separator_
-            << simTime_              << separator_   // << creationTick_         << separator_    << recipientId_       << separator_
-            << recipientAutomat_     << separator_   // << providerId_           << separator_
-            << provider_             << separator_   // << transportProviderId_  << separator_
-            << transportProvider_    << separator_   // << conveyorId_           << separator_
-            << conveyor_             << separator_   // << stateId_              << separator_
-            << state_                << separator_
+        output << requestId_
+            << tick_
+            << simTime_
+            << recipientAutomat_
+            << provider_
+            << transportProvider_
+            << conveyor_
+            << state_
             << stateEndTick_;
-        output  << std::endl;
+        output.End();
     }
     else if( !resources_.empty() )
         for( std::map< int, std::string >::const_iterator it = recipientAutomats_.begin(); it != recipientAutomats_.end(); ++it )
         {
             int recipientAutomatId = it->first;
-            output << requestId_         << separator_
-                << tick_                 << separator_
-                << simTime_              << separator_   // << creationTick_         <<  separator_   << recipientId_    <<  separator_
-                << it->second            << separator_   // << providerId_           <<  separator_
-                << provider_             << separator_   // << transportProviderId_  <<  separator_
-                << transportProvider_    << separator_   // << conveyorId_           <<  separator_
-                << conveyor_             << separator_   // << stateId_              <<  separator_
-                << state_                << separator_
+            output << requestId_
+                << tick_
+                << simTime_
+                << it->second 
+                << provider_
+                << transportProvider_
+                << conveyor_
+                << state_
                 << stateEndTick_;
 
             for( std::map< int, Resource >::const_iterator itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
@@ -55,14 +56,13 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
                 const Resource& resource = itRes->second;
                 if( resource.recipientAutomatId_ == recipientAutomatId )
                 {
-                    output << separator_      // << resource.id_ << separator_
-                        << resource.type_       << separator_
-                        << resource.requested_  << separator_
-                        << resource.granted_    << separator_
+                    output << resource.type_
+                        << resource.requested_
+                        << resource.granted_
                         << resource.conveyed_;
                 }
             }
-            output  << std::endl;
+            output.End();
         }
 }
 

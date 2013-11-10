@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ConsignResolver_ABC.h"
+#include "ConsignWriter.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
 #include <boost/regex.hpp>
@@ -257,9 +258,9 @@ const NameResolver_ABC& ConsignResolver_ABC::GetNameResolver() const
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
 {
-    std::stringstream header;
-    consign >> header;
-    header_ = header.str();
+    ConsignWriter writer;
+    consign.WriteConsign( writer );
+    header_ = writer.GetLine();
 }
 
 // -----------------------------------------------------------------------------
