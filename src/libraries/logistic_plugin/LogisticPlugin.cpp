@@ -40,8 +40,6 @@ namespace
 {
     int localAppliArgc( 1 );
     char* localAppliArgv[] = { " " };
-
-    typedef std::vector< ConsignResolver_ABC* >::iterator IT_ConsignResolvers;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +63,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver );
     resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver );
     resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver );
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         (*r)->InitHeader();
 }
 
@@ -75,7 +73,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
 // -----------------------------------------------------------------------------
 LogisticPlugin::~LogisticPlugin()
 {
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         delete *r;
 }
 
@@ -98,12 +96,12 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     {
         int currentTick = message.message().control_begin_tick().current_tick();
         std::string simTime = message.message().control_begin_tick().date_time().data();        
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
             (*r)->SetTime( currentTick, simTime );
     }
     else
     {
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
             if( (*r)->Receive( message, today ) )
                 break;
     }
@@ -131,7 +129,7 @@ int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
 // -----------------------------------------------------------------------------
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         (*r)->SetMaxLinesInFile( maxLines );
 }
 
