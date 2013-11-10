@@ -88,6 +88,7 @@ func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
 	opts := MakeOpts()
 	session := simu.CreateDefaultSession()
 	session.GamingServer = opts.DispatcherAddr
+	session.LogisticPlugin = simu.NewLogisticPlugin(platform)
 	return opts, session
 }
 
