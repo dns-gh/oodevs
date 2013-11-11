@@ -107,7 +107,6 @@ protected:
     //@{
     virtual boost::optional< std::string > ManageMessage(
             const sword::SimToClient& message, ConsignData_ABC& consign );
-    virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}
 };
 }

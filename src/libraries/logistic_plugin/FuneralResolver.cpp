@@ -166,12 +166,3 @@ void FuneralResolver::InitHeader()
     consign.state_                  = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
-
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver::CreateConsignData
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-ConsignData_ABC* FuneralResolver::CreateConsignData( int requestId )
-{ 
-    return static_cast< ConsignData_ABC* >( new FuneralConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
-}

@@ -238,12 +238,3 @@ void SupplyResolver::InitHeader()
     }
     SetHeader( consign );
 }
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::MaintenanceResolver
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-ConsignData_ABC* SupplyResolver::CreateConsignData( int requestId )
-{
-    return static_cast< ConsignData_ABC* >( new SupplyConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
-}

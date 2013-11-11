@@ -156,12 +156,3 @@ void MaintenanceResolver::InitHeader()
     consign.state_          = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::MaintenanceResolver
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-ConsignData_ABC* MaintenanceResolver::CreateConsignData( int requestId )
-{
-    return static_cast< ConsignData_ABC* >( new MaintenanceConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
-}

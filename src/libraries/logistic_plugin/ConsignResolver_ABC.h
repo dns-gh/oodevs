@@ -52,7 +52,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
     bool Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
             const boost::gregorian::date& today );
     const NameResolver_ABC& GetNameResolver() const;

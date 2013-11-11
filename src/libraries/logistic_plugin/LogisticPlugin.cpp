@@ -20,6 +20,7 @@
 #include "tools/Language.h"
 #include "tools/SessionConfig.h"
 #include "tools/XmlStreamOperators.h"
+#include <tools/Exception.h>
 #include <tools/Path.h>
 #pragma warning( push, 0 )
 #include "QtCore/qTranslator.h"
@@ -114,6 +115,23 @@ ConsignEvent GetEventType( const sword::SimToClient& message )
     return ConsignEvent( LogisticPlugin::eNbrLogisticType, eConsignUnknown, -1 );
 }
 
+std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type, int id )
+{
+    const auto idString = boost::lexical_cast< std::string >( id );
+    switch( type )
+    {
+        case LogisticPlugin::eLogisticType_Funeral:
+            return std::auto_ptr< ConsignData_ABC >( new FuneralConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Maintenance:
+            return std::auto_ptr< ConsignData_ABC >( new MaintenanceConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Medical:
+            return std::auto_ptr< ConsignData_ABC >( new MedicalConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Supply:
+            return std::auto_ptr< ConsignData_ABC >( new SupplyConsignData( idString ) );
+    };
+    throw MASA_EXCEPTION( "unsupported logistic consign type" );
+}
+
 }  // namespace
 
 // -----------------------------------------------------------------------------
@@ -186,10 +204,9 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
     {
-        auto consign = resolver->CreateConsignData( ev.id );
-        int id = ev.id;
+        auto consign = NewConsign( ev.type, ev.id );
         if( it == consigns_.end() )
-            it = consigns_.insert( id, consign ).first;
+            it = consigns_.insert( ev.id, consign ).first;
         else
             consigns_.replace( it, consign );
     } 

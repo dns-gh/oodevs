@@ -181,12 +181,3 @@ void MedicalResolver::InitHeader()
     consign.state_          = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MedicalResolver::MaintenanceResolver
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-ConsignData_ABC* MedicalResolver::CreateConsignData( int requestId )
-{
-    return static_cast< ConsignData_ABC* >( new MedicalConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
-}
