@@ -35,10 +35,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void WriteConsign( ConsignWriter& output ) const;
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver );
+    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     //@}
+
+private:
+    virtual void WriteConsign( ConsignWriter& output ) const;
+    void ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
+            const NameResolver_ABC& resolver );
 
 public:
     //! @name Member data
@@ -60,29 +65,6 @@ public:
 
 std::string GetMaintenanceHeader();
 
-// =============================================================================
-/** @class  MaintenanceResolver
-    @brief  MaintenanceResolver
-*/
-// Created: MMC 2012-08-06
-// =============================================================================
-class MaintenanceResolver : public ConsignResolver_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
-                    const std::string& header );
-    virtual ~MaintenanceResolver();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual boost::optional< std::string > ManageMessage(
-            const sword::SimToClient& message, ConsignData_ABC& consign );
-    //@}
-};
 }
 }
 

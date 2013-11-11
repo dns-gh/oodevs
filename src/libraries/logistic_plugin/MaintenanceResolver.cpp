@@ -37,9 +37,9 @@ void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver )
+void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -59,16 +59,15 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
         nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -95,43 +94,22 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const tools::Path& name,
-        const NameResolver_ABC& nameResolver, const std::string& header )
-    : ConsignResolver_ABC( name, nameResolver, header )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver destructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-MaintenanceResolver::~MaintenanceResolver()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::ManageMessage
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-boost::optional< std::string > MaintenanceResolver::ManageMessage(
-        const sword::SimToClient& message, ConsignData_ABC& consign )
+bool MaintenanceConsignData::UpdateConsign( const sword::SimToClient& message,
+        const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_maintenance_handling_creation() )
-        return TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation(), consign );
+    {
+        ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
+        return true;
+    }
     if( message.message().has_log_maintenance_handling_update() )
-        return TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update(), consign );
-    if( message.message().has_log_maintenance_handling_destruction() )
-        return boost::optional< std::string >( "" );
-    return boost::optional< std::string >();
+    {
+        ManageMessage( message.message().log_maintenance_handling_update(), resolver );
+        return true;
+    }
+    return false;
 }
 
 std::string plugins::logistic::GetMaintenanceHeader()

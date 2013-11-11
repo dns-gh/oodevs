@@ -70,9 +70,9 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver )
+void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
@@ -105,16 +105,15 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             nameResolver.GetFormationName( transportId, transportProvider_ );
         }
     }
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -165,42 +164,22 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             }
         }
     }
-    return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-SupplyResolver::SupplyResolver( const tools::Path& name,
-        const NameResolver_ABC& nameResolver, const std::string& header )
-    : ConsignResolver_ABC( name, nameResolver, header )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver destructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-SupplyResolver::~SupplyResolver()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::ManageMessage
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-boost::optional< std::string > SupplyResolver::ManageMessage( const sword::SimToClient& message, ConsignData_ABC& consign )
+bool SupplyConsignData::UpdateConsign( const sword::SimToClient& message,
+        const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_supply_handling_creation() )
-        return TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), consign );
+    {
+        ManageMessage( message.message().log_supply_handling_creation(), resolver );
+        return true;
+    }
     if( message.message().has_log_supply_handling_update() )
-        return TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), consign );
-    if( message.message().has_log_supply_handling_destruction() )
-        return boost::optional< std::string >( "" );
-    return boost::optional< std::string >();
+    {
+        ManageMessage( message.message().log_supply_handling_update(), resolver );
+        return true;
+    }
+    return false;
 }
 
 std::string plugins::logistic::GetSupplyHeader()

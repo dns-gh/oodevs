@@ -38,9 +38,9 @@ void FuneralConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: FuneralConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg, ConsignResolver_ABC& resolver )
+void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -51,16 +51,15 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
     }
     if( msg.has_rank() )
         nameResolver.GetRankName( msg.rank(), rank_ );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FuneralConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -104,43 +103,22 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
         nameResolver.GetFuneralName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-FuneralResolver::FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
-       const std::string& header ) 
-    : ConsignResolver_ABC( name, nameResolver, header )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver destructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-FuneralResolver::~FuneralResolver()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver::ManageMessage
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-boost::optional< std::string > FuneralResolver::ManageMessage(
-        const sword::SimToClient& message, ConsignData_ABC& consign )
+bool FuneralConsignData::UpdateConsign( const sword::SimToClient& message,
+        const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_funeral_handling_creation() )
-        return TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation(), consign );
+    {
+        ManageMessage( message.message().log_funeral_handling_creation(), resolver );
+        return true;
+    }
     if( message.message().has_log_funeral_handling_update() )
-        return TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update(), consign );
-    if( message.message().has_log_funeral_handling_destruction() )
-        return boost::optional< std::string >( "" );
-    return boost::optional< std::string >();
+    {
+        ManageMessage( message.message().log_funeral_handling_update(), resolver );
+        return true;
+    }
+    return false;
 }
 
 std::string plugins::logistic::GetFuneralHeader()

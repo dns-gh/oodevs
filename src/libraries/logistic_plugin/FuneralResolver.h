@@ -35,10 +35,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void WriteConsign( ConsignWriter& output ) const;
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogFuneralHandlingCreation& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg, ConsignResolver_ABC& resolver );
+    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     //@}
+
+private:
+    virtual void WriteConsign( ConsignWriter& output ) const;
+    void ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
+            const NameResolver_ABC& resolver );
 
 public:
     //! @name Member data
@@ -61,29 +66,6 @@ public:
 
 std::string GetFuneralHeader();
 
-// =============================================================================
-/** @class  FuneralResolver
-    @brief  FuneralResolver
-*/
-// Created: MMC 2012-08-06
-// =============================================================================
-class FuneralResolver : public ConsignResolver_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
-                    const std::string& header );
-    virtual ~FuneralResolver();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual boost::optional< std::string > ManageMessage(
-            const sword::SimToClient& message, ConsignData_ABC& consign );
-    //@}
-};
 }
 }
 

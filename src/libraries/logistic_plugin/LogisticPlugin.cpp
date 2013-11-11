@@ -152,14 +152,10 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     ENT_Tr::InitTranslations();
 
     resolvers_.resize( eNbrLogisticType );
-    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile,
-            *nameResolver, GetMaintenanceHeader() );
-    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile,
-            *nameResolver, GetSupplyHeader() );
-    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile,
-            *nameResolver, GetFuneralHeader() );
-    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile,
-            *nameResolver, GetMedicalHeader() );
+    resolvers_[ eLogisticType_Maintenance ] = new ConsignResolver_ABC( maintenanceFile, GetMaintenanceHeader() );
+    resolvers_[ eLogisticType_Supply ]      = new ConsignResolver_ABC( supplyFile, GetSupplyHeader() );
+    resolvers_[ eLogisticType_Funeral ]     = new ConsignResolver_ABC( funeralFile, GetFuneralHeader() );
+    resolvers_[ eLogisticType_Medical ]     = new ConsignResolver_ABC( medicalFile, GetMedicalHeader() );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +209,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
             consigns_.replace( it, consign );
     } 
     it->second->SetTime( currentTick_, simTime_ );
-    resolver->Receive( message, *it->second, today );
+    if( it->second->UpdateConsign( message, *nameResolver_ ) )
+        resolver->Write( it->second->ToString(), today );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }

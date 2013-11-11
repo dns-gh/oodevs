@@ -37,11 +37,9 @@ std::wstring EscapeRegex( const std::wstring& s )
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name,
-        const NameResolver_ABC& nameResolver, const std::string& header )
+ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const std::string& header )
     : name_( name )
     , header_( header)
-    , nameResolver_( nameResolver )
     , curFileIndex_( 0 )
     , curLineIndex_( 0 )
     , maxLinesInFile_( 50000 )
@@ -62,24 +60,15 @@ ConsignResolver_ABC::~ConsignResolver_ABC()
 // Name: ConsignResolver_ABC::Receive
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
-        const boost::gregorian::date& today )
+void ConsignResolver_ABC::Write( const std::string& data, const boost::gregorian::date& today )
 {
-    if( const auto data = ManageMessage( message, consign ) )
-    {
-        if( !data->empty() )
-        {
-            CheckOutputFile( today );
-            if( output_.is_open() )
-            {
-                output_ << *data << std::flush;
-                curLineIndex_ += boost::numeric_cast< int >(
-                        std::count( data->begin(), data->end(), '\n' ) );
-            }
-        }
-        return true;
-    }
-    return false;
+    if( data.empty() )
+        return;
+    CheckOutputFile( today );
+    if( !output_.is_open() )
+        return;
+    output_ << data << std::flush;
+    curLineIndex_ += boost::numeric_cast< int >( std::count( data.begin(), data.end(), '\n' ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,15 +192,6 @@ void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
         OpenFile();
         RemoveOldFiles( today );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetNameResolver
-// Created: PMD 2012-09-02
-// -----------------------------------------------------------------------------
-const NameResolver_ABC& ConsignResolver_ABC::GetNameResolver() const
-{
-    return nameResolver_;
 }
 
 }  // namespace logistic

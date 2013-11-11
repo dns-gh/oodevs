@@ -22,6 +22,7 @@ namespace plugins
 namespace logistic
 {
     class ConsignWriter;
+    class NameResolver_ABC;
 
 // =============================================================================
 /** @class  ConsignData_ABC
@@ -39,6 +40,9 @@ public:
                 , requestId_( requestId ) {}
     virtual ~ConsignData_ABC() {}
     //@}
+
+    // Returns true if the consign was updated and a log entry should be added.
+    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
 
     //! @name Operations
     //@{

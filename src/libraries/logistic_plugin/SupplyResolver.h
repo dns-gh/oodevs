@@ -38,10 +38,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void WriteConsign( ConsignWriter& output ) const;
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver );
+    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     //@}
+
+private:
+    virtual void WriteConsign( ConsignWriter& output ) const;
+    void ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, 
+            const NameResolver_ABC& resolver );
 
 public:
 
@@ -84,29 +89,6 @@ public:
 
 std::string GetSupplyHeader();
 
-// =============================================================================
-/** @class  SupplyResolver
-    @brief  SupplyResolver
-*/
-// Created: MMC 2012-08-06
-// =============================================================================
-class SupplyResolver : public ConsignResolver_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
-                    const std::string& header );
-    virtual ~SupplyResolver();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual boost::optional< std::string > ManageMessage(
-            const sword::SimToClient& message, ConsignData_ABC& consign );
-    //@}
-};
 }
 }
 
