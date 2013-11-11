@@ -132,7 +132,7 @@ function CreatePolygonFromLatLong(coords)
 end
 
 function PointToString(point)
-    return string.format("(%.2f, %.2f)", point:X(), point:Y())
+    return string.format("(%.2f, %.2f)", point:DEC_Geometrie_X(), point:DEC_Geometrie_Y())
 end
 
 function PolygonToString(poly)
@@ -143,7 +143,7 @@ function PolygonToString(poly)
     if poly then
         local points = DEC_Geometrie_ListePointsLocalisation(poly)
         for i = 1, #points do
-        output = output .. string.format("(%.2f, %.2f), ", points[i]:X(), points[i]:Y())
+        output = output .. PointToString(points[i]) .. ", "
         end
     end
     output = output .. "]"
