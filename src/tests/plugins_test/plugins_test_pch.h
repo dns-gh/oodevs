@@ -21,13 +21,11 @@
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 
-#include <tools/Path.h>
+#include <tools/Exception.h>
+#include <tools/BoostTest.h>
 
-tools::Path BOOST_RESOLVE( const tools::Path& filename );
-const tools::Path& GetTestTempDirectory();
+extern tools::TestOptions testOptions;
 
 #undef max
-
-#include <tools/Exception.h>
 
 #endif // __plugins_test_pch_h_

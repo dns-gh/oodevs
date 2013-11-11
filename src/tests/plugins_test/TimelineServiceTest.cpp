@@ -57,7 +57,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( timeline_plugin_action_loader_test )
 {
-    const tools::Path filename = BOOST_RESOLVE( "timeline_plugin/orders.ord" );
+    const tools::Path filename = testOptions.GetDataPath( "timeline_plugin/orders.ord" );
     MockPublisher publisher;
     dispatcher::MockLogger logger;
     MOCK_EXPECT( logger.LogInfo );
