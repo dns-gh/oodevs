@@ -46,7 +46,8 @@ class ConsignResolver_ABC : private boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-    ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver );
+    ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver,
+           const std::string& header );
     virtual ~ConsignResolver_ABC();
     //@}
 
@@ -55,7 +56,6 @@ public:
     bool Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
             const boost::gregorian::date& today );
     const NameResolver_ABC& GetNameResolver() const;
-    virtual void InitHeader() = 0;
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     //@}
 
@@ -69,9 +69,7 @@ protected:
     template < typename M, typename T >
     std::string TraceConsign( const M& msg, ConsignData_ABC& consignData )
     {
-        ConsignWriter writer;
-        dynamic_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
-        return writer.GetLine();
+        return dynamic_cast< T& >( consignData ).ManageMessage( msg, *this ).ToString();
     }
     //@}
 
@@ -82,13 +80,12 @@ protected:
     void SetNewFile( const boost::gregorian::date& today );
     void RemoveOldFiles( const boost::gregorian::date& today );
     void OpenFile();
-    void SetHeader( const ConsignData_ABC& consign );
     //@}
 
     //! @name Member data
     //@{
     const NameResolver_ABC& nameResolver_; 
-    std::string header_;
+    const std::string header_;
     boost::gregorian::date fileDate_;
     const tools::Path name_;
     tools::Path fileName_;

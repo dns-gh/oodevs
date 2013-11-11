@@ -10,6 +10,7 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
+#include "ConsignWriter.h"
 #include "LogisticPlugin.h"
 #include "tools/FileWrapper.h"
 #include <boost/noncopyable.hpp>
@@ -41,8 +42,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void WriteConsign( ConsignWriter& w ) const = 0;
-
     LogisticPlugin::E_LogisticType GetType() const
     {
         return type_;
@@ -60,7 +59,17 @@ public:
             return 0;
         return std::atoi( tick_.c_str() );
     }
+
+    std::string ToString() const
+    {
+        ConsignWriter w;
+        WriteConsign( w );
+        return w.GetLine();
+    }
     //@}
+
+private:
+    virtual void WriteConsign( ConsignWriter& w ) const = 0;
 
 public:
     //! @name Member data

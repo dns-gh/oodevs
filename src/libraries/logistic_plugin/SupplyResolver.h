@@ -82,6 +82,8 @@ public:
     //@}
 };
 
+std::string GetSupplyHeader();
+
 // =============================================================================
 /** @class  SupplyResolver
     @brief  SupplyResolver
@@ -93,13 +95,9 @@ class SupplyResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
+             SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
+                    const std::string& header );
     virtual ~SupplyResolver();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
     //@}
 
 protected:

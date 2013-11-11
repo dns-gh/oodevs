@@ -58,6 +58,8 @@ public:
     //@}
 };
 
+std::string GetMaintenanceHeader();
+
 // =============================================================================
 /** @class  MaintenanceResolver
     @brief  MaintenanceResolver
@@ -69,13 +71,9 @@ class MaintenanceResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
+             MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
+                    const std::string& header );
     virtual ~MaintenanceResolver();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
     //@}
 
 protected:

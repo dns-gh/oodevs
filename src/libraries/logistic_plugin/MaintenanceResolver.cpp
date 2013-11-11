@@ -102,8 +102,9 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // Name: MaintenanceResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : ConsignResolver_ABC( name, nameResolver )
+MaintenanceResolver::MaintenanceResolver( const tools::Path& name,
+        const NameResolver_ABC& nameResolver, const std::string& header )
+    : ConsignResolver_ABC( name, nameResolver, header )
 {
     // NOTHING
 }
@@ -133,11 +134,7 @@ boost::optional< std::string > MaintenanceResolver::ManageMessage(
     return boost::optional< std::string >();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void MaintenanceResolver::InitHeader()
+std::string plugins::logistic::GetMaintenanceHeader()
 {
     MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
     consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
@@ -154,5 +151,6 @@ void MaintenanceResolver::InitHeader()
     consign.equipment_      = tools::translate( "logistic", "equipment" ).toStdString();
     consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toStdString();
     consign.state_          = tools::translate( "logistic", "state" ).toStdString();
-    SetHeader( consign );
+    return consign.ToString();
 }
+

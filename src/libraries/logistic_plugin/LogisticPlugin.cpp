@@ -152,12 +152,14 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     ENT_Tr::InitTranslations();
 
     resolvers_.resize( eNbrLogisticType );
-    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile, *nameResolver );
-    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver );
-    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver );
-    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver );
-    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        (*r)->InitHeader();
+    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile,
+            *nameResolver, GetMaintenanceHeader() );
+    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile,
+            *nameResolver, GetSupplyHeader() );
+    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile,
+            *nameResolver, GetFuneralHeader() );
+    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile,
+            *nameResolver, GetMedicalHeader() );
 }
 
 // -----------------------------------------------------------------------------

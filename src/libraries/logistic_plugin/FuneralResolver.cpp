@@ -111,8 +111,9 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
 // Name: FuneralResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-FuneralResolver::FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver ) 
-    : ConsignResolver_ABC( name, nameResolver )
+FuneralResolver::FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
+       const std::string& header ) 
+    : ConsignResolver_ABC( name, nameResolver, header )
 {
     // NOTHING
 }
@@ -142,11 +143,7 @@ boost::optional< std::string > FuneralResolver::ManageMessage(
     return boost::optional< std::string >();
 }
 
-// -----------------------------------------------------------------------------
-// Name: FuneralResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void FuneralResolver::InitHeader()
+std::string plugins::logistic::GetFuneralHeader()
 {
     FuneralConsignData consign( tools::translate( "logistic", "request id" ).toStdString()  );
     consign.tick_                   = tools::translate( "logistic", "tick" ).toStdString();
@@ -164,5 +161,6 @@ void FuneralResolver::InitHeader()
     consign.rank_                   = tools::translate( "logistic", "rank" ).toStdString();
     consign.packagingResource_      = tools::translate( "logistic", "packaging resource" ).toStdString();
     consign.state_                  = tools::translate( "logistic", "state" ).toStdString();
-    SetHeader( consign );
+    return consign.ToString();
 }
+

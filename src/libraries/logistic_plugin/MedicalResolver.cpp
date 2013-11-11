@@ -127,8 +127,9 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 // Name: MedicalResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MedicalResolver::MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver ) 
-    : ConsignResolver_ABC( name, nameResolver )
+MedicalResolver::MedicalResolver( const tools::Path& name,
+        const NameResolver_ABC& nameResolver, const std::string& header ) 
+    : ConsignResolver_ABC( name, nameResolver, header )
 {
     // NOTHING
 }
@@ -158,11 +159,7 @@ boost::optional< std::string > MedicalResolver::ManageMessage(
     return boost::optional< std::string >();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MedicalResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void MedicalResolver::InitHeader()
+std::string plugins::logistic::GetMedicalHeader()
 {
     MedicalConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
     consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
@@ -179,5 +176,5 @@ void MedicalResolver::InitHeader()
     consign.unit_           = tools::translate( "logistic", "unit" ).toStdString();
     consign.provider_       = tools::translate( "logistic", "provider" ).toStdString();
     consign.state_          = tools::translate( "logistic", "state" ).toStdString();
-    SetHeader( consign );
+    return consign.ToString();
 }

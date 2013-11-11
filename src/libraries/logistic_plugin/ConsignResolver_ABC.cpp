@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "ConsignResolver_ABC.h"
-#include "ConsignWriter.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
 #include <boost/numeric/conversion/cast.hpp>
@@ -38,8 +37,15 @@ std::wstring EscapeRegex( const std::wstring& s )
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : name_( name ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
+ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name,
+        const NameResolver_ABC& nameResolver, const std::string& header )
+    : name_( name )
+    , header_( header)
+    , nameResolver_( nameResolver )
+    , curFileIndex_( 0 )
+    , curLineIndex_( 0 )
+    , maxLinesInFile_( 50000 )
+    , daysBeforeToKeep_( 1 )
 {
     // NOTHING
 }
@@ -206,17 +212,6 @@ void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
 const NameResolver_ABC& ConsignResolver_ABC::GetNameResolver() const
 {
     return nameResolver_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetHeader
-// Created: MMC 2012-08-23
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
-{
-    ConsignWriter writer;
-    consign.WriteConsign( writer );
-    header_ = writer.GetLine();
 }
 
 }  // namespace logistic

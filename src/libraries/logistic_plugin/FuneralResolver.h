@@ -59,6 +59,8 @@ public:
     //@}
 };
 
+std::string GetFuneralHeader();
+
 // =============================================================================
 /** @class  FuneralResolver
     @brief  FuneralResolver
@@ -70,13 +72,9 @@ class FuneralResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
+             FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
+                    const std::string& header );
     virtual ~FuneralResolver();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
     //@}
 
 protected:

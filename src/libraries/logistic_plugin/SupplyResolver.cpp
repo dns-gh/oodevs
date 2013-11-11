@@ -172,8 +172,9 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
 // Name: SupplyResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-SupplyResolver::SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : ConsignResolver_ABC( name, nameResolver )
+SupplyResolver::SupplyResolver( const tools::Path& name,
+        const NameResolver_ABC& nameResolver, const std::string& header )
+    : ConsignResolver_ABC( name, nameResolver, header )
 {
     // NOTHING
 }
@@ -202,11 +203,7 @@ boost::optional< std::string > SupplyResolver::ManageMessage( const sword::SimTo
     return boost::optional< std::string >();
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void SupplyResolver::InitHeader()
+std::string plugins::logistic::GetSupplyHeader()
 {
     SupplyConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
     consign.tick_               = tools::translate( "logistic", "tick" ).toStdString();
@@ -236,5 +233,5 @@ void SupplyResolver::InitHeader()
         resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
         consign.resources_[ i ] = resource;
     }
-    SetHeader( consign );
+    return consign.ToString();
 }

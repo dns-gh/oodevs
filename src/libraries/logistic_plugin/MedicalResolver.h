@@ -60,6 +60,8 @@ public:
     //@}
 };
 
+std::string GetMedicalHeader();
+
 // =============================================================================
 /** @class  MedicalResolver
     @brief  MedicalResolver
@@ -71,13 +73,9 @@ class MedicalResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
+             MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver,
+                    const std::string& header );
     virtual ~MedicalResolver();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
     //@}
 
 protected:
