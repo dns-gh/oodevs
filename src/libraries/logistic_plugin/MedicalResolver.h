@@ -34,12 +34,8 @@ public:
     virtual ~MedicalConsignData() {}
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
-    //@}
-
 private:
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     virtual void WriteConsign( ConsignWriter& output ) const;
     void ManageMessage( const ::sword::LogMedicalHandlingCreation& msg,
             const NameResolver_ABC& resolver );

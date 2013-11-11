@@ -96,7 +96,7 @@ void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
     }
 }
 
-bool MaintenanceConsignData::UpdateConsign( const sword::SimToClient& message,
+bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_maintenance_handling_creation() )

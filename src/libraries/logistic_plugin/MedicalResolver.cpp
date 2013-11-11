@@ -124,7 +124,7 @@ void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruc
 // Name: MedicalResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-bool MedicalConsignData::UpdateConsign( const sword::SimToClient& message,
+bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_medical_handling_creation() )

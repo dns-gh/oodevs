@@ -166,7 +166,7 @@ void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
     }
 }
 
-bool SupplyConsignData::UpdateConsign( const sword::SimToClient& message,
+bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_supply_handling_creation() )

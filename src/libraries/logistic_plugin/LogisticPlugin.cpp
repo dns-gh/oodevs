@@ -208,8 +208,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         else
             consigns_.replace( it, consign );
     } 
-    it->second->SetTime( currentTick_, simTime_ );
-    if( it->second->UpdateConsign( message, *nameResolver_ ) )
+    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
         resolver->Write( it->second->ToString(), today );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );

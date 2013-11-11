@@ -42,19 +42,19 @@ public:
     //@}
 
     // Returns true if the consign was updated and a log entry should be added.
-    virtual bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
+    bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
+           int tick, const std::string& time )
+    {
+        tick_ = boost::lexical_cast< std::string >( tick );
+        simTime_ = time;
+        return DoUpdateConsign( msg, names );
+    }
 
     //! @name Operations
     //@{
     LogisticPlugin::E_LogisticType GetType() const
     {
         return type_;
-    }
-
-    void SetTime( int tick, const std::string& time )
-    {
-        tick_ = boost::lexical_cast< std::string >( tick );
-        simTime_ = time;
     }
 
     int GetTick() const
@@ -73,6 +73,7 @@ public:
     //@}
 
 private:
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
     virtual void WriteConsign( ConsignWriter& w ) const = 0;
 
 public:

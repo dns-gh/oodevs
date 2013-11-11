@@ -105,7 +105,7 @@ void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate&
     }
 }
 
-bool FuneralConsignData::UpdateConsign( const sword::SimToClient& message,
+bool FuneralConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_funeral_handling_creation() )
