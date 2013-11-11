@@ -57,7 +57,6 @@ public:
             const boost::gregorian::date& today );
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
-    virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     //@}
 

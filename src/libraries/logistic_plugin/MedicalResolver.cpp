@@ -62,7 +62,6 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
         nbc_ = msg.nbc_contaminated() ? strYes : strNo;
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 
@@ -105,7 +104,6 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
         nbc_ = msg.nbc_contaminated() ? strYes : strNo;
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 
@@ -122,7 +120,6 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         nameResolver.GetAgentName( msg.unit().id(), unit_ );
     }
     state_ = tools::translate( "logistic", "instruction finished" ).toAscii().constData();
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 

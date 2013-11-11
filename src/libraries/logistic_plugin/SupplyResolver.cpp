@@ -105,7 +105,6 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             nameResolver.GetFormationName( transportId, transportProvider_ );
         }
     }
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 
@@ -166,7 +165,6 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             }
         }
     }
-    resolver.AddToLineIndex( recipientAutomats_.empty()? 1 : static_cast< int >( recipientAutomats_.size() ) );
     return *this;
 }
 

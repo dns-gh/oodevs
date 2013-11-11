@@ -59,7 +59,6 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
         nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 
@@ -96,7 +95,6 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 

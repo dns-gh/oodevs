@@ -51,7 +51,6 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
     }
     if( msg.has_rank() )
         nameResolver.GetRankName( msg.rank(), rank_ );
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 
@@ -105,7 +104,6 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
         nameResolver.GetFuneralName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    resolver.AddToLineIndex( 1 );
     return *this;
 }
 

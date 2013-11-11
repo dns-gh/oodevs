@@ -11,6 +11,7 @@
 #include "ConsignWriter.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/regex.hpp>
 
 namespace bg = boost::gregorian;
@@ -64,7 +65,11 @@ bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, ConsignDat
         {
             CheckOutputFile( today );
             if( output_.is_open() )
+            {
                 output_ << *data << std::flush;
+                curLineIndex_ += boost::numeric_cast< int >(
+                        std::count( data->begin(), data->end(), '\n' ) );
+            }
         }
         return true;
     }
