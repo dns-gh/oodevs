@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "FuneralConsign.h"
+#include "ConsignHelper.h"
 #include "FuneralPackagingResource.h"
 #include "FuneralConfig.h"
 #include "MIL_Time_ABC.h"
@@ -25,7 +26,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_IDManager.h"
 #include <tools/iterator.h>
 
 using namespace logistic;
@@ -54,17 +54,12 @@ unsigned LogisticVirtualAction::GetTimeRemaining( unsigned actionId, unsigned du
     return timeRemainingForCurrentAction_;
 }
 
-namespace
-{
-    MIL_IDManager idManager;
-}
-
 // -----------------------------------------------------------------------------
 // Name: FuneralConsign constructor
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 FuneralConsign::FuneralConsign( Human_ABC& human )
-    : id_                     ( idManager.GetId() )
+    : id_                     ( NewConsignId() )
     , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , human_                  ( human )
     , handler_                ( 0 )

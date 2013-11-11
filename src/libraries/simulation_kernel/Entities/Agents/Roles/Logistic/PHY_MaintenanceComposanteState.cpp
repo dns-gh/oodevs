@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceComposanteState.h"
+#include "ConsignHelper.h"
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "MIL_Time_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -22,14 +23,12 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceComposanteState )
 
-MIL_IDManager PHY_MaintenanceComposanteState::idManager_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
-    : nID_                ( idManager_.GetId() )
+    : nID_                ( logistic::NewConsignId() )
     , nCreationTick_      ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
@@ -80,7 +79,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
          >> pConsign_
          >> vComposantePosition_
          >> bDiagnosed_;
-    idManager_.GetId( nID_, true );
+    logistic::RegisterConsignId( nID_ );
 }
 
 // -----------------------------------------------------------------------------

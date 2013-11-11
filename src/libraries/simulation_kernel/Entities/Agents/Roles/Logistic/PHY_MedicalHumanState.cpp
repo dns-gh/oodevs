@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MedicalHumanState.h"
+#include "ConsignHelper.h"
 #include "MIL_Time_ABC.h"
 #include "PHY_MedicalConsign_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -20,22 +21,16 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Tools/MIL_IDManager.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHumanState )
-
-namespace
-{
-    MIL_IDManager idManager;
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( idManager.GetId() )
+    : nID_                   ( logistic::NewConsignId() )
     , nCreationTick_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
@@ -99,7 +94,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned 
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
-    idManager.GetId( nID_, true );
+    logistic::RegisterConsignId( nID_ );
 }
 
 // -----------------------------------------------------------------------------

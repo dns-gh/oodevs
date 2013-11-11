@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyConsign.h"
+#include "ConsignHelper.h"
 #include "SupplyRequest_ABC.h"
 #include "SupplyConvoy_ABC.h"
 #include "SupplyConvoyFactory_ABC.h"
@@ -22,7 +23,6 @@
 #include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_IDManager.h"
 #include <boost/foreach.hpp>
 #include <boost/serialization/deque.hpp>
 #include <boost/serialization/export.hpp>
@@ -31,17 +31,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 
 using namespace logistic;
 
-namespace
-{
-    MIL_IDManager idManager;
-}
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign constructor
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
-    : id_                       ( idManager.GetId() )
+    : id_                       ( NewConsignId() )
     , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( &supplier )
     , provider_                 ( 0 )
@@ -709,6 +704,7 @@ void SupplyConsign::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> currentRecipient_;
     archive >> needNetworkUpdate_;
     archive >> requestsNeedNetworkUpdate_;
+    RegisterConsignId( id_ );
 }
 
 // -----------------------------------------------------------------------------
