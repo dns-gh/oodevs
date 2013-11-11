@@ -95,6 +95,8 @@ private:
     boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     boost::ptr_map< int, ConsignData_ABC >      consigns_;
+    int currentTick_;
+    std::string simTime_;
     //@}
 };
 

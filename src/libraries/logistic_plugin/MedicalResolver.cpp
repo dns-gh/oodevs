@@ -78,7 +78,7 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         int entTick = msg.current_state_end_tick();
         if( entTick > 0 )
             stateEndTick_ = boost::lexical_cast< std::string >( entTick );
-        if( entTick <= resolver.GetCurrentTick() )
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_unit() )
@@ -116,7 +116,6 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg, ConsignResolver_ABC& resolver )
 {
     const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
-    resolver.GetSimTime( simTime_, tick_ );
     if( msg.has_unit() )
     {
         unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );

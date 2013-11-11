@@ -124,6 +124,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
                                 const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile )
     : nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
+    , currentTick_( 0 )
 {
     if( qApp )
     {
@@ -168,10 +169,12 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 {
     if( message.message().has_control_begin_tick() )
     {
-        int currentTick = message.message().control_begin_tick().current_tick();
-        std::string simTime = message.message().control_begin_tick().date_time().data();        
-        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick, simTime );
+        const int tick = message.message().control_begin_tick().current_tick();
+        if( tick >= 0 )
+            currentTick_ = tick;
+        const std::string time = message.message().control_begin_tick().date_time().data();        
+        if( !time.empty() )
+            simTime_ = time;
         return;
     }
 
@@ -190,6 +193,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         else
             consigns_.replace( it, consign );
     } 
+    it->second->SetTime( currentTick_, simTime_ );
     resolver->Receive( message, *it->second, today );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );

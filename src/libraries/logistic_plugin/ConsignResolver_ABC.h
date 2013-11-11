@@ -55,13 +55,10 @@ public:
     virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
     bool Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
             const boost::gregorian::date& today );
-    void SetTime( int tick, const std::string& simTime );
-    void GetSimTime( std::string& simTime, std::string& tick ) const;
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
-    int GetCurrentTick() const { return curTick_; }
     //@}
 
 protected:
@@ -74,7 +71,6 @@ protected:
     template < typename M, typename T >
     std::string TraceConsign( const M& msg, ConsignData_ABC& consignData )
     {
-        GetSimTime( consignData.simTime_, consignData.tick_ );
         ConsignWriter writer;
         dynamic_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
         return writer.GetLine();
@@ -96,8 +92,6 @@ protected:
     const NameResolver_ABC& nameResolver_; 
     std::string header_;
     boost::gregorian::date fileDate_;
-    int curTick_;
-    std::string simTime_;
     const tools::Path name_;
     tools::Path fileName_;
     int curFileIndex_;

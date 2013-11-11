@@ -67,7 +67,7 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
         int entTick = msg.current_state_end_tick();
         if( entTick > 0 )
             stateEndTick_ = boost::lexical_cast< std::string >( entTick );
-        if( entTick <= resolver.GetCurrentTick() )
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_handling_unit() )

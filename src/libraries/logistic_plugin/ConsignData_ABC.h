@@ -13,6 +13,7 @@
 #include "LogisticPlugin.h"
 #include "tools/FileWrapper.h"
 #include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
 #include <sstream>
 
 namespace plugins
@@ -45,6 +46,19 @@ public:
     LogisticPlugin::E_LogisticType GetType() const
     {
         return type_;
+    }
+
+    void SetTime( int tick, const std::string& time )
+    {
+        tick_ = boost::lexical_cast< std::string >( tick );
+        simTime_ = time;
+    }
+
+    int GetTick() const
+    {
+        if( tick_.empty() )
+            return 0;
+        return std::atoi( tick_.c_str() );
     }
     //@}
 

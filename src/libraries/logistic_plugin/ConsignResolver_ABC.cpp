@@ -38,7 +38,7 @@ std::wstring EscapeRegex( const std::wstring& s )
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
+    : name_( name ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
 {
     // NOTHING
 }
@@ -192,28 +192,6 @@ void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
         OpenFile();
         RemoveOldFiles( today );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetTime
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime )
-{
-    curTick_ = tick;
-    simTime_ = simTime;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetSimTime
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetSimTime( std::string& simTime, std::string& tick ) const
-{
-    if( !simTime_.empty() )
-        simTime = simTime_;
-    if( curTick_ >= 0 )
-        tick = boost::lexical_cast< std::string >( curTick_ );
 }
 
 // -----------------------------------------------------------------------------
