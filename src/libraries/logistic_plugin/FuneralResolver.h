@@ -28,7 +28,8 @@ class FuneralConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
+             FuneralConsignData( const std::string& requestId )
+                 : ConsignData_ABC( LogisticPlugin::eLogisticType_Funeral, requestId ) {}
     virtual ~FuneralConsignData() {}
     //@}
 
@@ -81,7 +82,8 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& message );
+    virtual boost::optional< std::string > ManageMessage(
+            const sword::SimToClient& message, ConsignData_ABC& consign );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}
 };

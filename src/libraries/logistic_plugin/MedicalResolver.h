@@ -29,7 +29,8 @@ class MedicalConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
+             MedicalConsignData( const std::string& requestId )
+                 : ConsignData_ABC( LogisticPlugin::eLogisticType_Medical, requestId ) {}
     virtual ~MedicalConsignData() {}
     //@}
 
@@ -82,7 +83,8 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& message );
+    virtual boost::optional< std::string > ManageMessage(
+            const sword::SimToClient& message, ConsignData_ABC& consign );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}
 };

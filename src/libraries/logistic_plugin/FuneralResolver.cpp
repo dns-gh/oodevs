@@ -132,18 +132,15 @@ FuneralResolver::~FuneralResolver()
 // Name: FuneralResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-boost::optional< std::string > FuneralResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > FuneralResolver::ManageMessage(
+        const sword::SimToClient& message, ConsignData_ABC& consign )
 {
     if( message.message().has_log_funeral_handling_creation() )
-        return TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation() );
+        return TraceConsign< ::sword::LogFuneralHandlingCreation, FuneralConsignData >( message.message().log_funeral_handling_creation(), consign );
     if( message.message().has_log_funeral_handling_update() )
-        return TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update() );
+        return TraceConsign< ::sword::LogFuneralHandlingUpdate, FuneralConsignData >( message.message().log_funeral_handling_update(), consign );
     if( message.message().has_log_funeral_handling_destruction() )
-    {
-        if( message.message().log_funeral_handling_destruction().has_request() )
-            DestroyConsignData( message.message().log_funeral_handling_destruction().request().id() );
         return boost::optional< std::string >( "" );
-    }
     return boost::optional< std::string >();
 }
 

@@ -52,14 +52,15 @@ public:
 
     //! @name Operations
     //@{
-    bool Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
+    virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
+    bool Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
+            const boost::gregorian::date& today );
     void SetTime( int tick, const std::string& simTime );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
     const NameResolver_ABC& GetNameResolver() const;
     virtual void InitHeader() = 0;
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
-    int GetConsignCount() const;
     int GetCurrentTick() const { return curTick_; }
     //@}
 
@@ -67,20 +68,15 @@ protected:
 
     //! @name Operations
     //@{
-    ConsignData_ABC& GetConsign( int requestId );
-    virtual ConsignData_ABC* CreateConsignData( int requestId ) = 0;
-    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& ) = 0;
-    virtual void DestroyConsignData( int requestId );
+    virtual boost::optional< std::string > ManageMessage(
+            const sword::SimToClient& msg, ConsignData_ABC& consign ) = 0;
 
     template < typename M, typename T >
-    std::string TraceConsign( const M& msg )
+    std::string TraceConsign( const M& msg, ConsignData_ABC& consignData )
     {
-        if( !msg.has_request() )
-            return "";
-        ConsignData_ABC& consignData = GetConsign( static_cast< int >( msg.request().id() ) );
         GetSimTime( consignData.simTime_, consignData.tick_ );
         ConsignWriter writer;
-        static_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
+        dynamic_cast< T& >( consignData ).ManageMessage( msg, *this ).WriteConsign( writer );
         return writer.GetLine();
     }
     //@}
@@ -104,7 +100,6 @@ protected:
     std::string simTime_;
     const tools::Path name_;
     tools::Path fileName_;
-    std::map< int, ConsignData_ABC* > consignsData_;
     int curFileIndex_;
     int curLineIndex_;
     int maxLinesInFile_;

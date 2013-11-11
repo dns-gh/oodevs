@@ -28,7 +28,8 @@ class MaintenanceConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
+             MaintenanceConsignData( const std::string& requestId )
+                 : ConsignData_ABC( LogisticPlugin::eLogisticType_Maintenance, requestId ) {}
     virtual ~MaintenanceConsignData() {}
     //@}
 
@@ -80,7 +81,8 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual boost::optional< std::string > ManageMessage( const sword::SimToClient& message );
+    virtual boost::optional< std::string > ManageMessage(
+            const sword::SimToClient& message, ConsignData_ABC& consign );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}
 };

@@ -10,9 +10,10 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
-#include <sstream>
-#include <boost/noncopyable.hpp>
+#include "LogisticPlugin.h"
 #include "tools/FileWrapper.h"
+#include <boost/noncopyable.hpp>
+#include <sstream>
 
 namespace plugins
 {
@@ -31,13 +32,20 @@ class ConsignData_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ) {}
+             ConsignData_ABC( LogisticPlugin::E_LogisticType type, const std::string& requestId )
+                : type_( type )
+                , requestId_( requestId ) {}
     virtual ~ConsignData_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void WriteConsign( ConsignWriter& w ) const = 0;
+
+    LogisticPlugin::E_LogisticType GetType() const
+    {
+        return type_;
+    }
     //@}
 
 public:
@@ -50,6 +58,7 @@ public:
 protected:
     //! @name Member data
     //@{
+    const LogisticPlugin::E_LogisticType type_;
     std::string requestId_;
     //@}
 };

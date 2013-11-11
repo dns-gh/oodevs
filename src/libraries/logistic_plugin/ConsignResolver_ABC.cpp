@@ -49,17 +49,16 @@ ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameRes
 // -----------------------------------------------------------------------------
 ConsignResolver_ABC::~ConsignResolver_ABC()
 {
-    for ( std::map< int, ConsignData_ABC* >::iterator it = consignsData_.begin(); it != consignsData_.end(); ++it )
-        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC::Receive
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boost::gregorian::date& today )
+bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, ConsignData_ABC& consign,
+        const boost::gregorian::date& today )
 {
-    if( const auto data = ManageMessage( message ) )
+    if( const auto data = ManageMessage( message, consign ) )
     {
         if( !data->empty() )
         {
@@ -70,36 +69,6 @@ bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boos
         return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetConsign
-// Created: MMC 2012-08-23
-// -----------------------------------------------------------------------------
-ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId )
-{
-    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
-    if( it == consignsData_.end() )
-    {
-        ConsignData_ABC* pConsign = CreateConsignData( requestId );
-        consignsData_[ requestId ] = pConsign;
-        return *pConsign;
-    }
-    return *it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::DestroyConsignData
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::DestroyConsignData( int requestId )
-{
-    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
-    if( it != consignsData_.end() )
-    {
-        delete it->second;
-        consignsData_.erase( it );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -265,15 +234,6 @@ void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
     ConsignWriter writer;
     consign.WriteConsign( writer );
     header_ = writer.GetLine();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetHeader
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-int ConsignResolver_ABC::GetConsignCount() const
-{
-    return static_cast< int >( consignsData_.size() );
 }
 
 }  // namespace logistic

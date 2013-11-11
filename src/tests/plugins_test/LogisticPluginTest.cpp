@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_breakdown()->set_id( 11 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
 
         {
             sword::SimToClient m;
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_breakdown()->set_id( 21 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
 
         {
             sword::SimToClient m;
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->set_current_state_end_tick( 400 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
 
         {
             sword::SimToClient m;
@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_request()->set_id( 7 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
 
         {
             sword::SimToClient m;
@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_request()->set_id( 17 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
     }
 
     {
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_mental_wound( false );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 30 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 400 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 500 );
             plugin->Receive( m, day3 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -269,7 +269,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->mutable_request()->set_id( 7 );
             plugin->Receive( m, day3 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
     }
 
     {
@@ -284,7 +284,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
 
         for( int i = 0; i < 5; ++i )
         {
@@ -298,7 +298,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->set_current_state_end_tick( 300 + i * 100 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
 
         {
             sword::SimToClient m;
@@ -306,7 +306,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->mutable_request()->set_id( 7 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 0 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 0 );
     }
 
     {
@@ -322,7 +322,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -362,7 +362,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -384,7 +384,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -406,7 +406,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -439,7 +439,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -447,7 +447,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_request()->set_id( 7 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -455,7 +455,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_request()->set_id( 8 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
+        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
 
     tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );

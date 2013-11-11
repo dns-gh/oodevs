@@ -123,18 +123,15 @@ MaintenanceResolver::~MaintenanceResolver()
 // Name: MaintenanceResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-boost::optional< std::string > MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > MaintenanceResolver::ManageMessage(
+        const sword::SimToClient& message, ConsignData_ABC& consign )
 {
     if( message.message().has_log_maintenance_handling_creation() )
-        return TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation() );
+        return TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation(), consign );
     if( message.message().has_log_maintenance_handling_update() )
-        return TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update() );
+        return TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update(), consign );
     if( message.message().has_log_maintenance_handling_destruction() )
-    {
-        if( message.message().log_maintenance_handling_destruction().has_request() )
-            DestroyConsignData( message.message().log_maintenance_handling_destruction().request().id() );
         return boost::optional< std::string >( "" );
-    }
     return boost::optional< std::string >();
 }
 

@@ -11,9 +11,11 @@
 #define __LogisticPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "ConsignResolver_ABC.h"
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#pragma warning( push, 0 )
+#include <boost/ptr_container/ptr_map.hpp>
+#pragma warning( pop )
 #include <vector>
 
 class QApplication;
@@ -45,6 +47,7 @@ namespace plugins
 namespace logistic
 {
 
+class ConsignData_ABC;
 class ConsignResolver_ABC;
 class NameResolver_ABC;
 
@@ -81,7 +84,7 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& message );
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
-    virtual int GetConsignCount( E_LogisticType eLogisticType ) const;
+    virtual int DebugGetConsignCount( E_LogisticType eLogisticType ) const;
     virtual void SetMaxLinesInFile( int maxLines );
     //@}
 
@@ -91,6 +94,7 @@ private:
     std::vector< ConsignResolver_ABC* >         resolvers_;
     boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
+    boost::ptr_map< int, ConsignData_ABC >      consigns_;
     //@}
 };
 

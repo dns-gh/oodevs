@@ -193,18 +193,14 @@ SupplyResolver::~SupplyResolver()
 // Name: SupplyResolver::ManageMessage
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-boost::optional< std::string > SupplyResolver::ManageMessage( const sword::SimToClient& message )
+boost::optional< std::string > SupplyResolver::ManageMessage( const sword::SimToClient& message, ConsignData_ABC& consign )
 {
     if( message.message().has_log_supply_handling_creation() )
-        return TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation() );
+        return TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), consign );
     if( message.message().has_log_supply_handling_update() )
-        return TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update() );
+        return TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), consign );
     if( message.message().has_log_supply_handling_destruction() )
-    {
-        if( message.message().log_supply_handling_destruction().has_request() )
-            DestroyConsignData( message.message().log_supply_handling_destruction().request().id() );
         return boost::optional< std::string >( "" );
-    }
     return boost::optional< std::string >();
 }
 
