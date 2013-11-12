@@ -13,11 +13,11 @@ import (
 )
 
 func (model *Model) query(query func(d *ModelData) bool) bool {
-	reply := make(chan bool, 1)
+	reply := false
 	model.waitCommand(func(m *Model) {
-		reply <- query(m.data)
+		reply = query(m.data)
 	})
-	return <-reply
+	return reply
 }
 
 func (d *ModelData) IsUnitInProfile(id uint32, profile *Profile) bool {
