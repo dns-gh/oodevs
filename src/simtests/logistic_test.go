@@ -20,64 +20,63 @@ import (
 	"swapi/simu"
 )
 
+// Parse the header and return a list of field matching regexps for fields
+// which have to be censored, nil for the others.
+func makeFieldMatchers(header string) []*regexp.Regexp {
+	matchers := []*regexp.Regexp{}
+	for _, field := range strings.Split(header, ";") {
+		field = strings.TrimSpace(field)
+		p := ""
+		switch field {
+		case "GDH":
+			p = `(\d{8}T\d{6})`
+		case "tick", "state end tick", "request id":
+			p = `(\d*)`
+		}
+		if len(p) > 0 {
+			p = `\s*` + p + `\s*`
+			matchers = append(matchers, regexp.MustCompile(p))
+		} else {
+			matchers = append(matchers, nil)
+		}
+	}
+	return matchers
+}
+
+// Read a logistic file and rewrite varying fields.
+func readLogisticFile(c *C, path string) string {
+	var fields []*regexp.Regexp
+	data, err := ioutil.ReadFile(path)
+	c.Assert(err, IsNil)
+	output := []string{}
+	for i, line := range strings.Split(string(data), "\r\n") {
+		if i == 0 {
+			fields = makeFieldMatchers(line)
+			output = append(output, line)
+			continue
+		}
+		rewritten := []string{}
+		parts := strings.Split(line, ";")
+		for i, matcher := range fields {
+			if i >= len(parts) {
+				// Ignore missing field, supply lines have variable
+				// fields, we cannot deduce mandatory ones...
+				continue
+			}
+			part := parts[i]
+			if matcher != nil && matcher.MatchString(part) {
+				part = " *** "
+			}
+			rewritten = append(rewritten, part)
+		}
+		output = append(output, strings.Join(rewritten, ";"))
+	}
+	return strings.Join(output, "\n")
+}
+
 // Returns a mapping of the concatenation of normalized content of each
 // logistic chains files. Keys are chain names.
 func readAndRewriteLogFiles(c *C, opts *simu.SimOpts) map[string]string {
-
-	// Parse the header and return a list of field matching regexps for fields
-	// which have to be censored, nil for the others.
-	makeFieldMatchers := func(header string) []*regexp.Regexp {
-		matchers := []*regexp.Regexp{}
-		for _, field := range strings.Split(header, ";") {
-			field = strings.TrimSpace(field)
-			p := ""
-			switch field {
-			case "GDH":
-				p = `(\d{8}T\d{6})`
-			case "tick", "state end tick", "request id":
-				p = `(\d*)`
-			}
-			if len(p) > 0 {
-				p = `\s*` + p + `\s*`
-				matchers = append(matchers, regexp.MustCompile(p))
-			} else {
-				matchers = append(matchers, nil)
-			}
-		}
-		return matchers
-	}
-
-	// Read a logistic file and rewrite varying fields.
-	readLog := func(path string) string {
-		var fields []*regexp.Regexp
-		data, err := ioutil.ReadFile(path)
-		c.Assert(err, IsNil)
-		output := []string{}
-		for i, line := range strings.Split(string(data), "\r\n") {
-			if i == 0 {
-				fields = makeFieldMatchers(line)
-				output = append(output, line)
-				continue
-			}
-			rewritten := []string{}
-			parts := strings.Split(line, ";")
-			for i, matcher := range fields {
-				if i >= len(parts) {
-					// Ignore missing field, supply lines have variable
-					// fields, we cannot deduce mandatory ones...
-					continue
-				}
-				part := parts[i]
-				if matcher != nil && matcher.MatchString(part) {
-					part = " *** "
-				}
-				rewritten = append(rewritten, part)
-			}
-			output = append(output, strings.Join(rewritten, ";"))
-		}
-		return strings.Join(output, "\n")
-	}
-
 	// List logistic files and sort them
 	s, err := simu.ReadSessionFile(opts.GetSessionFile())
 	prefixes := map[string]string{
@@ -109,7 +108,7 @@ func readAndRewriteLogFiles(c *C, opts *simu.SimOpts) map[string]string {
 		sort.Sort(sort.StringSlice(matched))
 		data := []string{}
 		for _, path := range matched {
-			lines := readLog(path)
+			lines := readLogisticFile(c, path)
 			data = append(data, lines)
 		}
 		logs[name] = strings.Join(data, "")
