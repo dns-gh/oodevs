@@ -46,6 +46,8 @@ public:
     virtual bool HasTimeline() const;
     virtual std::string GetTimelineUrl() const;
     virtual int GetTimelineDebugPort() const;
+
+    bool HasMapnik() const;
     //@}
 
 private:
@@ -66,6 +68,7 @@ private:
     bool hasTimeline_;
     std::string timelineUrl_;
     int timelineDebugPort_;
+    bool mapnik_;
     //@}
 };
 

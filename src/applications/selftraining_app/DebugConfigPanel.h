@@ -94,6 +94,10 @@ private:
     QPushButton* dataButton_;
     QLabel* filterLabel_;
     QLineEdit* filterEdit_;
+
+    // mapnik
+    QGroupBox* mapnikBox_;
+    QCheckBox* mapnikLayerBox_;
     //@}
 };
 

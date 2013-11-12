@@ -58,8 +58,9 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
             manager.Run( exportDirectory );
         }
         const auto shapefiles =
-            boost::assign::list_of( "forest" )( "urban" )
-                ( "mountain" )( "road" )( "water" )( "river" )( "bridge" );
+            boost::assign::list_of( "bridge" )( "cliff" )( "forest" )( "mountain" )
+                ( "plantation" )( "railroad" )( "road" )( "river" )( "swamp" )
+                ( "tunnel" )( "urban" )( "water" );
         boost::for_each( shapefiles, [&]( const char* const shapefile )
         {
             const tools::Path filename = exportDirectory / shapefile + ".shp";
