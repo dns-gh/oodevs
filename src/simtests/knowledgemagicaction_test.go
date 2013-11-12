@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"strings"
 	"swapi"
 	"sword"
 )
@@ -195,6 +196,16 @@ func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {
 		return a
 	}
 	c.Fatal("missing units")
+	return nil
+}
+
+func getSomeUnitByName(c *C, data *swapi.ModelData, substring string) *swapi.Unit {
+	for _, a := range data.Units {
+		if strings.Contains(a.Name, substring) {
+			return a
+		}
+	}
+	c.Fatal("no unit whose name contains'" + substring + "'")
 	return nil
 }
 

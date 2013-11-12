@@ -249,11 +249,5 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	model = client.Model.GetData()
 
 	// Is the convoy still there?
-	var convoy *swapi.Unit
-	for _, u := range model.Units {
-		if strings.Contains(u.Name, "LOG.Convoy") {
-			convoy = u
-		}
-	}
-	c.Assert(convoy, NotNil)
+	getSomeUnitByName(c, model, "LOG.Convoy")
 }

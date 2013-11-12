@@ -24,13 +24,32 @@ type LogOpts struct {
 	Unit  string
 }
 
+type LogisticPlugin struct {
+	Library         string `xml:"library,attr"`
+	FuneralFile     string `xml:"funeralfile,attr,omitempty"`
+	MaintenanceFile string `xml:"maintenancefile,attr,omitempty"`
+	MedicalFile     string `xml:"medicalfile,attr,omitempty"`
+	SupplyFile      string `xml:"supplyfile,attr,omitempty"`
+}
+
+func NewLogisticPlugin(platform string) *LogisticPlugin {
+	return &LogisticPlugin{
+		Library:         "logistic_plugin-" + platform + "-mt.dll",
+		FuneralFile:     "LogFuneral",
+		MaintenanceFile: "LogMaintenance",
+		MedicalFile:     "LogMedical",
+		SupplyFile:      "LogSupply",
+	}
+}
+
 type Session struct {
-	GamingServer string
-	EndTick      int
-	Paused       bool
-	SimLog       LogOpts
-	TimeFactor   int
-	TimeStep     int
+	GamingServer   string
+	EndTick        int
+	LogisticPlugin *LogisticPlugin
+	Paused         bool
+	SimLog         LogOpts
+	TimeFactor     int
+	TimeStep       int
 }
 
 func ReadBool(value string) bool {
@@ -50,6 +69,10 @@ func (s *Session) syncSession(x *xmlSession) error {
 	}
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
+	s.LogisticPlugin = nil
+	if p := x.Dispatcher.Plugins.Logistic; p != nil {
+		s.LogisticPlugin = p
+	}
 	s.Paused = ReadBool(x.Sim.Time.Paused)
 	s.SimLog.Count = x.Sim.Debug.LogFiles
 	if s.SimLog.Count == 1 {
@@ -65,6 +88,10 @@ func (s *Session) syncSession(x *xmlSession) error {
 func (s *Session) syncXml(x *xmlSession) error {
 	x.GamingNetwork.Server = s.GamingServer
 	x.Dispatcher.Network.Server = s.GamingServer
+	x.Dispatcher.Plugins.Logistic = nil
+	if p := s.LogisticPlugin; p != nil {
+		x.Dispatcher.Plugins.Logistic = p
+	}
 	x.Sim.Debug.LogFiles = s.SimLog.Count
 	if x.Sim.Debug.LogFiles == 1 {
 		x.Sim.Debug.LogFiles = 0
@@ -88,6 +115,7 @@ type xmlDispatcherNetwork struct {
 }
 
 type xmlPlugins struct {
+	Logistic *LogisticPlugin `xml:"logistic,omitempty"`
 }
 
 type xmlDispatcherConfig struct {
