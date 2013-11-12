@@ -1567,7 +1567,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocal
 // Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull
 // Created: LDC 2013-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( const std::vector< boost::shared_ptr< TER_Localisation > >& locations )
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ComputeConvexHull( const std::vector< TER_Localisation* >& locations )
 {
     std::vector< MT_Vector2D > points;
     for( auto it = locations.cbegin(); it != locations.cend(); ++it )

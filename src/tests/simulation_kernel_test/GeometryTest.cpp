@@ -133,18 +133,18 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
 BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
 {
     WorldInitialize( "worldwide/tests/EmptyParis-ML" );
-    std::vector< boost::shared_ptr< TER_Localisation > > locations;
-    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon,
+    std::vector< TER_Localisation* > locations;
+    locations.push_back( new TER_Localisation( TER_Localisation::ePolygon,
              boost::assign::list_of( MT_Vector2D( 100, 100 ) )
                                    ( MT_Vector2D( 101, 100 ) )
                                    ( MT_Vector2D( 100, 101 ) ) ) );
-    locations.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::eLine,
+    locations.push_back( new TER_Localisation( TER_Localisation::eLine,
              boost::assign::list_of( MT_Vector2D( 103, 100 ) )
                                    ( MT_Vector2D( 103, 98 ) ) ) );
     MT_Vector2D mtPoint( 98, 98 );
     std::vector< MT_Vector2D > listPoints;
     listPoints.push_back( mtPoint );
-    boost::shared_ptr< TER_Localisation > point( boost::make_shared< TER_Localisation >() );
+    TER_Localisation* point = new TER_Localisation();
     point->Reset( TER_Localisation::ePoint, listPoints, 1 );
     locations.push_back( point );
     boost::shared_ptr< TER_Localisation > result = DEC_GeometryFunctions::ComputeConvexHull( locations );
