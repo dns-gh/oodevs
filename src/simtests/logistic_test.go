@@ -9,7 +9,7 @@
 package simtests
 
 import (
-	"io/ioutil"
+	"bufio"
 	. "launchpad.net/gocheck"
 	"os"
 	"path/filepath"
@@ -46,10 +46,13 @@ func makeFieldMatchers(header string) []*regexp.Regexp {
 // Read a logistic file and rewrite varying fields.
 func readLogisticFile(c *C, path string) string {
 	var fields []*regexp.Regexp
-	data, err := ioutil.ReadFile(path)
+	fp, err := os.Open(path)
 	c.Assert(err, IsNil)
+	defer fp.Close()
+	scanner := bufio.NewScanner(fp)
 	output := []string{}
-	for i, line := range strings.Split(string(data), "\r\n") {
+	for i := 0; scanner.Scan(); i++ {
+		line := scanner.Text()
 		if i == 0 {
 			fields = makeFieldMatchers(line)
 			output = append(output, line)
@@ -71,6 +74,7 @@ func readLogisticFile(c *C, path string) string {
 		}
 		output = append(output, strings.Join(rewritten, ";"))
 	}
+	c.Assert(scanner.Err(), IsNil)
 	return strings.Join(output, "\n")
 }
 
