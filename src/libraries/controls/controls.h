@@ -33,6 +33,7 @@ namespace controls
     size_t UpdateQuery ( void* dst, size_t size, const std::map< std::string, std::string >& query );
     size_t CenterClient( void* dst, size_t size );
     size_t CreateEvent ( void* dst, size_t size, const Event& event );
+    size_t SelectEvent ( void* dst, size_t size, const std::string& uuid );
     size_t ReadEvents  ( void* dst, size_t size );
     size_t ReadEvent   ( void* dst, size_t size, const std::string& uuid );
     size_t UpdateEvent ( void* dst, size_t size, const Event& event );
@@ -52,6 +53,7 @@ namespace controls
         virtual void OnUpdateQuery( const std::map< std::string, std::string >& query ) = 0;
         virtual void OnCenterClient() = 0;
         virtual void OnCreateEvent( const Event& event ) = 0;
+        virtual void OnSelectEvent( const std::string& uuid ) = 0;
         virtual void OnReadEvents() = 0;
         virtual void OnReadEvent( const std::string& uuid ) = 0;
         virtual void OnUpdateEvent( const Event& event ) = 0;

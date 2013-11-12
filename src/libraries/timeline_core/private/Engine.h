@@ -49,6 +49,7 @@ public:
     void CenterClient();
     void UpdateQuery( const std::map< std::string, std::string >& query );
     void CreateEvent( const Event& event );
+    void SelectEvent( const std::string& uuid );
     void ReadEvents ();
     void ReadEvent  ( const std::string& uuid );
     void UpdateEvent( const Event& event );

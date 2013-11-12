@@ -52,11 +52,12 @@ public slots:
     void OnKeyDown( int key );
     void OnKeyPress( int key );
     void OnKeyUp( int key );
-    void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
     void OnLoadEvents();
     void OnLoadActionTriggered();
     void OnLoadedEvents( const timeline::Error& error );
     void OnSavedEvents( const std::string& events, const timeline::Error& error );
+    void OnSelect();
+    void OnReadEvents();
 
 public:
     void WaitReady() const;
