@@ -173,7 +173,7 @@ integration.startReccePoint = function( point, partially, radius, recceSpeed )
 end
 
 --- Stop reconnoitering a point
--- @param point Poinr knowledge
+-- @param point Point knowledge
 -- @return true
 integration.stopReccePoint = function( point )
     DEC_Perception_DesactiverReconnaissancePoint( point.reconnaissanceAction )
@@ -393,7 +393,7 @@ end
 -- @param area Area knowledge
 -- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, areaNBCSpeed = 2
 -- @return true
-integration.startNBCArea = function( area )
+integration.startNBCArea = function( area, recceSpeed )
     local  lstObjects = {}
     area.actionNBC = DEC_Perception_ActivateLocationProgressiveRecce( area.source, recceSpeed or areaNBCSpeed )
     area.recceObjNBC = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or areaNBCSpeed )
@@ -485,11 +485,11 @@ end
 -- @param object Object knowledge
 -- @param recceSpeed Optional. Speed of the search in meters/tick. By default, objectSearchSpeed = 1
 -- @return true
-integration.startSearchObject = function( object )
+integration.startSearchObject = function( object, recceSpeed )
     area = CreateKnowledge( integration.ontology.types.area, object:getLocalisation() )
     object.actionSearch = 
         DEC_Perception_ActivateLocationProgressiveRecce( area.source, objectSearchSpeed )
-    object.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), objectSearchSpeed )
+    object.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or objectSearchSpeed )
     object.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ object.actionSearch ] = function( arg )
         object.bActionSearchFinished = true
