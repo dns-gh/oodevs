@@ -98,20 +98,20 @@ namespace
         const sword::MissionParameters& params, int i, int j, int k, bool optional = true )
     {
         if( !Check( params.elem_size() > i, "is missing", i, j, k, optional ) )
-            return boost::optional< T::value_type >();
+            return boost::none;
         const auto& values = params.elem( i );
         const int jmax = std::max( 0, j );
         if( !Check( values.value_size() > jmax, "is missing", i, j, k, optional ) )
-            return boost::optional< T::value_type >();
+            return boost::none;
         const auto* value = &values.value( jmax );
         if( k >= 0 )
         {
             if( !Check( value->list_size() > k, "must be a list", i, j, k, optional ) )
-                return boost::optional< T::value_type >();
+                return boost::none;
             value = &value->list( k );
         }
         if( !Check( T::Has( *value ), "must be a " + T::GetName(), i, j, k, optional ) )
-            return boost::optional< T::value_type >();
+            return boost::none;
         return T::Get( *value );
     }
 
