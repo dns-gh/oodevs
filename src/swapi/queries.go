@@ -75,37 +75,6 @@ func (d *ModelData) IsPartyInProfile(id uint32, profile *Profile) bool {
 	return hasId(profile.ReadOnlyParties, profile.ReadWriteParties, id)
 }
 
-func (model *Model) queryIdInProfile(id uint32, name string, query func(*ModelData, uint32, *Profile) bool) bool {
-	return model.Query(func(d *ModelData) bool {
-		profile, ok := d.Profiles[name]
-		return ok && query(d, id, profile)
-	})
-}
-
-func (model *Model) IsUnitInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsUnitInProfile)
-}
-
-func (model *Model) IsAutomatInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsAutomatInProfile)
-}
-
-func (model *Model) IsFormationInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsFormationInProfile)
-}
-
-func (model *Model) IsPopulationInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsPopulationInProfile)
-}
-
-func (model *Model) IsCrowdInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsCrowdInProfile)
-}
-
-func (model *Model) IsPartyInProfile(id uint32, name string) bool {
-	return model.queryIdInProfile(id, name, (*ModelData).IsPartyInProfile)
-}
-
 func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bool {
 	switch {
 	case tasker.Unit != nil:
@@ -122,11 +91,4 @@ func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bo
 		return d.IsPopulationInProfile(tasker.Population.GetId(), profile)
 	}
 	return false
-}
-
-func (model *Model) IsTaskerInProfile(tasker *sword.Tasker, name string) bool {
-	return model.Query(func(d *ModelData) bool {
-		profile, ok := d.Profiles[name]
-		return ok && d.IsTaskerInProfile(tasker, profile)
-	})
 }
