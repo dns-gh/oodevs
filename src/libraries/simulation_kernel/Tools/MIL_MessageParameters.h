@@ -41,6 +41,11 @@
         sword::OrderAck::error_invalid_unit,\
         STR( reason ) )
 
+#define MASA_BADGROUP_KNOWLEDGE( reason )\
+    MASA_BADPARAM_ASN( sword::KnowledgeGroupAck::ErrorCode,\
+        sword::KnowledgeGroupAck::error_invalid_knowledgegroup,\
+        STR( reason ) )
+
 namespace boost
 {
     template< typename T > class function;

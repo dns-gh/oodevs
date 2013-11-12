@@ -6,9 +6,12 @@
 // Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+
+#include "simulation_kernel_pch.h"
 #include "MIL_MessageParameters.h"
 
 #include "protocol/Simulation.h"
+#include <boost/optional.hpp>
 
 const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& params, const ModelFinder& finder )
 {
@@ -22,12 +25,7 @@ const DEC_Model_ABC* parameters::GetModel( const sword::MissionParameters& param
 
 uint32_t parameters::GetPartyId( const sword::MissionParameters& params, int i )
 {
-    try
-    {
-        return protocol::GetPartyId( params, i );
-    }
-    catch( const protocol::Exception& )
-    {
-        return protocol::GetIdentifier( params, i );
-    }
+    if( const auto party = protocol::TryGetPartyId( params, i ) )
+        return *party;
+    return protocol::GetIdentifier( params, i );
 }

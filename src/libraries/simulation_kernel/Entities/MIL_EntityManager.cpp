@@ -1231,14 +1231,10 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
     if( !pType )
         throw MASA_BADPARAM_UNIT( "invalid automat type: " << automatType );
     unsigned int groupId = 0;
-    try
-    {
-        groupId = protocol::GetKnowledgeGroup( params, 1 );
-    }
-    catch( const protocol::Exception& )
-    {
+    if( const auto group = protocol::TryGetKnowledgeGroup( params, 1 ) )
+        groupId = *group;
+    else
         groupId = protocol::GetIdentifier( params, 1 );
-    }
 
     auto group = entity.GetArmy().FindKnowledgeGroup( groupId );
     if( !group || group->IsJammed() )
@@ -1373,11 +1369,10 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
-        if( pReceiver )
-            pReceiver->OnReceiveKnowledgeGroupUpdate( message, ack(), *armyFactory_ );
-        else
-            throw MASA_BADPARAM_ASN( sword::KnowledgeGroupAck_ErrorCode, sword::KnowledgeGroupAck::error_invalid_knowledgegroup, "Knowledge Group not found" );
+        auto pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
+        if( !pReceiver )
+            throw MASA_BADGROUP_KNOWLEDGE( "unknown knowledge group" );
+        pReceiver->OnReceiveKnowledgeGroupUpdate( message, ack(), *armyFactory_ );
     }
     catch( const NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
     {
@@ -1665,15 +1660,14 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
 
     client::AutomatChangeSuperior resendMessage;
     resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-    try
+    if( const auto formationId = protocol::TryGetFormationId( params, 0 ) )
     {
-        const uint32_t formationId = protocol::GetFormationId( params, 0 );
-        MIL_Formation* pFormation = FindFormation( formationId );
+        MIL_Formation* pFormation = FindFormation( *formationId );
         if( !pFormation )
             throw MASA_BADPARAM_UNIT( "invalid new parent formation" );
-        resendMessage().mutable_superior()->mutable_formation()->set_id( formationId );
+        resendMessage().mutable_superior()->mutable_formation()->set_id( *formationId );
     }
-    catch( const protocol::Exception& )
+    else
     {
         const uint32_t automatId = protocol::GetAutomatId( params, 0 );
         MIL_Automate* pAutomat = FindAutomate( automatId );

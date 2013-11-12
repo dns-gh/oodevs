@@ -16,6 +16,11 @@
 
 #define STR( WHAT ) static_cast< std::stringstream& >( std::stringstream() << WHAT ).str()
 
+namespace boost
+{
+    template< typename T > class optional;
+}
+
 namespace sword
 {
     class CoordLatLong;
@@ -57,6 +62,7 @@ namespace protocol
     const std::string&                 GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int                                GetHeading( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     int                                GetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    boost::optional< int >             TryGetQuantity( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< sword::CoordLatLong > GetLocation( const sword::MissionParameters& params, int i );
     sword::Location_Geometry           GetLocationType( const sword::MissionParameters& params, int i );
     int                                GetUnsafeEnumeration( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
@@ -64,10 +70,13 @@ namespace protocol
     const sword::CoordLatLong&         GetPoint( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetIdentifier( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     uint32_t                           GetKnowledgeGroup( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetKnowledgeGroup( const sword::MissionParameters& params, int i = -1, int j = -1, int k = -1 );
     uint32_t                           GetAgentId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetAutomatId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetFormationId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
+    boost::optional< uint32_t >        TryGetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetResourceType( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< Extension >           GetExtensionList( const sword::MissionParameters& params, int i );
 }
