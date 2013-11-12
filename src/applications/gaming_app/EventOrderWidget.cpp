@@ -572,9 +572,11 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     {
         const std::string& name = *it;
         missionCombo_->addItem( name.c_str() );
-        QBrush missionColor = std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
-            ? Qt::black
-            : disabledColor;
+        QBrush missionColor = name == currentMission && invalid
+            ? Qt::red
+            : std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
+                ? Qt::black
+                : disabledColor;
         missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
     }
     // SELECT
@@ -587,17 +589,11 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     targetLabel_->EnableStaticWarning( invalid );
     missionCombo_->blockSignals( false );
 
-    bool enableTriggerEvent = ShouldEnableTriggerEvent( target_ );
+    bool enableTriggerEvent = !invalid && ShouldEnableTriggerEvent( target_ );
     QVariant missionVariant = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::ForegroundRole );
     if( missionVariant.isValid() )
-    {
-        QPalette palette = missionCombo_->palette();
-        QBrush brush = missionVariant.value< QBrush >();
-        palette.setColor( QPalette::Text, brush );
-        missionCombo_->setPalette( palette );
-        enableTriggerEvent = enableTriggerEvent && brush != disabledColor;
-    }
-    emit EnableTriggerEvent( !invalid && enableTriggerEvent );
+        enableTriggerEvent = enableTriggerEvent && missionVariant.value< QBrush >() != disabledColor;
+    emit EnableTriggerEvent( enableTriggerEvent );
 }
 
 // -----------------------------------------------------------------------------
