@@ -13,6 +13,7 @@
 #include "gaming/TacticalLineFactory.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -31,6 +32,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStr
     , tools_         ( tools )
     , factory_       ( factory )
     , selectedEntity_( controllers )
+    , lineSelected_  ( false )
 {
     // NOTHING
 }
@@ -50,7 +52,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    return selectedEntity_ != 0;
+    return selectedEntity_ != 0 && !lineSelected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +69,19 @@ void LimitsLayer::Delete( const kernel::TacticalLine_ABC& l )
     }
 }
 
+namespace
+{
+    template< typename H >
+    bool IsSubordinate( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& candidate )
+    {
+        if( &entity == &candidate )
+            return true;
+        if( const H* hierarchy = entity.Retrieve< H >() )
+            return hierarchy->IsSubordinateOf( candidate );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer::ShouldDisplay
 // Created: SBO 2006-11-06
@@ -75,6 +90,27 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     if( ! drawLines_.IsSet( true, true, true ) )
         return false;
+    if( const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        const kernel::Entity_ABC* lineController = hierarchies->GetSuperior();
+        if( lineController )
+        {
+            const bool selected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( *selectedEntity_, *lineController )
+                                                    || IsSubordinate< kernel::CommunicationHierarchies >( *selectedEntity_, *lineController ) );
+            bool superiorSelected = false;
+            const kernel::Hierarchies* controllerHierarchy = lineController->Retrieve< kernel::TacticalHierarchies >();
+            if( selectedEntity_ && controllerHierarchy )
+            {
+                const kernel::Entity_ABC* superior = controllerHierarchy->GetSuperior();
+                if( superior )
+                    superiorSelected = IsSubordinate< kernel::TacticalHierarchies >( *selectedEntity_, *superior )
+                                    || IsSubordinate< kernel::CommunicationHierarchies >( *selectedEntity_, *superior );
+            }
+            if( !drawLines_.IsSet( selected, superiorSelected || selected, profile_.IsVisible( *lineController ) ) )
+                return false;
+            return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( *lineController );
+        }
+    }
     return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( entity );
 }
 
@@ -105,6 +141,7 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 void LimitsLayer::BeforeSelection()
 {
     selectedEntity_ = 0;
+    lineSelected_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,6 +169,16 @@ void LimitsLayer::Select( const kernel::Automat_ABC& element )
 void LimitsLayer::Select( const kernel::Formation_ABC& element )
 {
     selectedEntity_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Select
+// Created: LDC 2013-11-12
+// -----------------------------------------------------------------------------
+void LimitsLayer::Select( const kernel::TacticalLine_ABC& element )
+{
+    selectedEntity_ = &element;
+    lineSelected_ = true;
 }
 
 // -----------------------------------------------------------------------------

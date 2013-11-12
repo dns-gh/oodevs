@@ -27,6 +27,7 @@ class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public tools::SelectionObserver_Base< kernel::TacticalLine_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -50,6 +51,7 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
+    virtual void Select( const kernel::TacticalLine_ABC& element );
     virtual void tools::SelectionObserver_ABC::AfterSelection();
     //@}
 
@@ -60,6 +62,7 @@ private:
     TacticalLineFactory& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::FourStateOption drawLines_;
+    bool lineSelected_;
     //@}
 };
 
