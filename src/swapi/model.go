@@ -431,6 +431,18 @@ func (model *Model) GetOrder(id uint32) *Order {
 	return o
 }
 
+func (model *Model) GetObjectKnowledge(id uint32) *ObjectKnowledge {
+	var k *ObjectKnowledge
+	model.waitCommand(func(model *Model) {
+		knowledge, ok := model.data.ObjectKnowledges[id]
+		if ok {
+			k = &ObjectKnowledge{}
+			DeepCopy(k, knowledge)
+		}
+	})
+	return k
+}
+
 func (model *Model) GetUnitKnowledge(id uint32) *UnitKnowledge {
 	var k *UnitKnowledge
 	model.waitCommand(func(model *Model) {

@@ -85,11 +85,11 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 
 	// error: update party with other party
 	err = client.ChangeKnowledgeGroupSuperiorToArmy(kg.Id, otherPartyId)
-	c.Assert(err, IsSwordError, "error_invalid_party")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: update party parent with unknown knowledge group
 	err = client.ChangeKnowledgeGroupSuperiorToKnowledgeGroup(kg.Id, kg.PartyId, 42)
-	c.Assert(err, IsSwordError, "error_invalid_superior")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// creation of another knowledge group with the same army
 	params := swapi.MakeParameters(
@@ -172,13 +172,22 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 
 	// error: invalid perception
 	_, err = client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 42)
-	c.Assert(err, IsSwordError, "error_invalid_perception")
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// add a unit in knowledge group and check
 	unitKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 2)
 	c.Assert(err, IsNil)
 	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
+
+	// add object in knowledge group
+	location := swapi.MakePointLocation(unit.Position)
+	object, err := client.CreateObject("jamming area", kg.PartyId, location)
+	c.Assert(err, IsNil)
+	objectKnowledge, err := client.AddObjectKnowledgeInKnowledgeGroup(kg.Id, object.Id, 2)
+	c.Assert(err, IsNil)
+	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg.Id)
+	c.Assert(objectKnowledge.ObjectId, Equals, object.Id)
 }
 
 func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {

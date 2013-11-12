@@ -989,17 +989,14 @@ func (c *Client) ChangeKnowledgeGroupType(knowledgeGroupId uint32, knowledgeGrou
 	return c.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_update_type, MakeParameters(MakeString(knowledgeGroupType)), knowledgeGroupId)
 }
 
-func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entityId uint32, perceptionLevel int32) (*UnitKnowledge, error) {
-	params := MakeParameters(MakeIdentifier(entityId), MakeEnumeration(perceptionLevel))
-	msg := createKnowledgeMagicActionMessage(params, knowledgeGroupId,
-		sword.KnowledgeMagicAction_add_knowledge)
-	var created *UnitKnowledge
-	handler := func(msg *sword.SimToClient_Content) error {
+func (c *Client) addKnowledgeInKnowledgeGroup(groupId, entityId uint32,
+	perceptionLevel int32) (uint32, error) {
 
-		if msg.GetUnitKnowledgeCreation() != nil ||
-			msg.GetUnitKnowledgeUpdate() != nil {
-			return ErrContinue
-		}
+	params := MakeParameters(MakeIdentifier(entityId), MakeEnumeration(perceptionLevel))
+	msg := createKnowledgeMagicActionMessage(params, groupId,
+		sword.KnowledgeMagicAction_add_knowledge)
+	id := uint32(0)
+	handler := func(msg *sword.SimToClient_Content) error {
 		reply, _, err := getKnowledgeGroupMagicActionAck(msg)
 		if err != nil {
 			return err
@@ -1008,15 +1005,41 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(knowledgeGroupId uint32, entit
 		if value == nil {
 			return invalid("result", reply.GetResult())
 		}
-		created = c.Model.GetUnitKnowledge(value.GetIdentifier())
-		if created == nil {
-			return fmt.Errorf("created unit knowledge %d/%d is not available "+
-				"after ack", knowledgeGroupId, value.GetIdentifier())
-		}
+		id = value.GetIdentifier()
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
-	return created, err
+	return id, err
+}
+
+func (c *Client) AddUnitKnowledgeInKnowledgeGroup(groupId uint32, entityId uint32,
+	perceptionLevel int32) (*UnitKnowledge, error) {
+
+	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
+	if err != nil {
+		return nil, err
+	}
+	created := c.Model.GetUnitKnowledge(id)
+	if created == nil {
+		return nil, fmt.Errorf("created unit knowledge %d/%d is not available "+
+			"after ack", groupId, id)
+	}
+	return created, nil
+}
+
+func (c *Client) AddObjectKnowledgeInKnowledgeGroup(groupId, entityId uint32,
+	perceptionLevel int32) (*ObjectKnowledge, error) {
+
+	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
+	if err != nil {
+		return nil, err
+	}
+	created := c.Model.GetObjectKnowledge(id)
+	if created == nil {
+		return nil, fmt.Errorf("created object knowledge %d/%d is not available "+
+			"after ack", groupId, id)
+	}
+	return created, nil
 }
 
 func (c *Client) ChangeKnowledgeGroupTest(automatId uint32,
