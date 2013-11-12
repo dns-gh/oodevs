@@ -182,25 +182,28 @@
 
   <Style name="bridge">
     <Rule>
-      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="4"/>
-      <LineSymbolizer stroke-linejoin="round" stroke="#fed7a5" stroke-width="2" stroke-linecap="round"/>
+      &maxscale_zoom13;
+      &minscale_zoom13;
+      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="3"/>
+    </Rule>
+    <Rule>
+      &maxscale_zoom14;
+      &minscale_zoom15;
+      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="10"/>
     </Rule>
     <Rule>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="8"/>
-      <LineSymbolizer stroke-linejoin="round" stroke="#fed7a5" stroke-width="5" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="12"/>
     </Rule>
     <Rule>
       &maxscale_zoom17;
       &minscale_zoom17;
-      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="8"/>
-      <LineSymbolizer stroke-linejoin="round" stroke="#fed7a5" stroke-width="5" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="17"/>
     </Rule>
     <Rule>
       &maxscale_zoom18;
-      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="8"/>
-      <LineSymbolizer stroke-linejoin="round" stroke="#fed7a5" stroke-width="5" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="black" stroke-width="23"/>
     </Rule>
   </Style>
 
@@ -214,13 +217,13 @@
     <Rule>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-width="4" stroke="#999999" stroke-linejoin="round"/>
-      <LineSymbolizer stroke-width="2" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="0,11,8,1"/>
+      <LineSymbolizer stroke-width="5" stroke="#999999" stroke-linejoin="round"/>
+      <LineSymbolizer stroke-width="3" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="0,11,8,1"/>
     </Rule>
     <Rule>
       &maxscale_zoom17;
-      <LineSymbolizer stroke-width="6" stroke="#999999" stroke-linejoin="round"/>
-      <LineSymbolizer stroke-width="3" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="0,11,8,1"/>
+      <LineSymbolizer stroke-width="8" stroke="#999999" stroke-linejoin="round"/>
+      <LineSymbolizer stroke-width="5" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="0,11,8,1"/>
     </Rule>
   </Style>
 
@@ -292,21 +295,21 @@
   <!-- large -->
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
-      &maxscale_zoom14;
-      &minscale_zoom15;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="6" stroke-linecap="round"/>
+      &maxscale_zoom13;
+      &minscale_zoom13;
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="5" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom14;
       &minscale_zoom14;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="8" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="6" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="10" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="8" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
@@ -317,38 +320,38 @@
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom18;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="15" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="19" stroke-linecap="round"/>
     </Rule>
 
   <!-- motorway -->
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom13;
-      &minscale_zoom15;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="6" stroke-linecap="round"/>
+      &minscale_zoom13;
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="5" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom14;
       &minscale_zoom14;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="8" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="6" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="10" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="8" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom17;
       &minscale_zoom17;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="15" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="13" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom18;
-      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="17" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="19" stroke-linecap="round"/>
     </Rule>
   </Style>
 
@@ -407,21 +410,21 @@
   <Style name="road-large">
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
-      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="4" stroke-linecap="round"/>
-      &maxscale_zoom14;
-      &minscale_zoom15;
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="3" stroke-linecap="round"/>
+      &maxscale_zoom13;
+      &minscale_zoom13;
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom14;
       &minscale_zoom14;
-      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="6" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="4" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="8" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="6" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
@@ -432,39 +435,39 @@
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom18;
-      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="13" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="17" stroke-linecap="round"/>
     </Rule>
   </Style>
 
   <Style name="road-motorway">
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
-      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="4" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="3" stroke-linecap="round"/>
       &maxscale_zoom13;
-      &minscale_zoom15;
+      &minscale_zoom13;
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom14;
       &minscale_zoom14;
-      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="6" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="4" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom15;
       &minscale_zoom16;
-      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="8" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="6" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom17;
       &minscale_zoom17;
-      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="13" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="11" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom18;
-      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="15" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="17" stroke-linecap="round"/>
     </Rule>
   </Style>
 
@@ -533,6 +536,14 @@
       </Datasource>
   </Layer>
 
+  <Layer name="bridge" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>bridge</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">bridge.shp</Parameter>
+      </Datasource>
+  </Layer>
+
   <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>road-casing</StyleName>
       <StyleName>road-small</StyleName>
@@ -574,14 +585,6 @@
         <Parameter name="type">shape</Parameter>
         <Parameter name="file">road.shp</Parameter>
     </Datasource>
-  </Layer>
-
-  <Layer name="bridge" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-      <StyleName>bridge</StyleName>
-      <Datasource>
-        <Parameter name="type">shape</Parameter>
-        <Parameter name="file">bridge.shp</Parameter>
-      </Datasource>
   </Layer>
 
 </Map>
