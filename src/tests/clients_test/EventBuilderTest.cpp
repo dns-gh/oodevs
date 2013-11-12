@@ -16,6 +16,7 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/EventBuilder_ABC.h"
 #include "clients_gui/EventManager.h"
 #include "actions_gui/MissionInterface_ABC.h"
@@ -44,8 +45,19 @@ namespace
                                    "  </fragorders>"
                                    "</missions>" );
 
-    const std::vector< E_MissionType > types = boost::assign::list_of( eMissionType_Pawn )( eMissionType_Automat )
-                                                                     ( eMissionType_Population )( eMissionType_FragOrder );
+    const std::vector< E_MissionType > types = boost::assign::list_of( eMissionType_Pawn )
+                                                                     ( eMissionType_Automat )
+                                                                     ( eMissionType_Population )
+                                                                     ( eMissionType_FragOrder );
+    const std::vector< E_MissionType > pawnTypes =  boost::assign::list_of( eMissionType_Pawn )
+                                                                           ( eMissionType_FragOrder );
+    const std::vector< E_MissionType > automatTypes =  boost::assign::list_of( eMissionType_Automat )
+                                                                             ( eMissionType_FragOrder );
+    const std::vector< E_MissionType > populationTypes =  boost::assign::list_of( eMissionType_Population )
+                                                                                ( eMissionType_FragOrder );
+
+    const std::string missionSelector = "<Select mission>";
+    const std::string fragOrderSelector = "<Select frag order>";
 
     MOCK_BASE_CLASS( MockMissionInterface, actions::gui:: MissionInterface_ABC )
     {
@@ -77,7 +89,7 @@ namespace
 
     MOCK_BASE_CLASS( MockEventBuilder, gui::EventBuilder_ABC )
     {
-        MOCK_METHOD( Build, 6 );
+        MOCK_METHOD( Build, 7 );
     };
 
     MOCK_BASE_CLASS( MockEntity, kernel::Entity_ABC )
@@ -149,33 +161,42 @@ namespace
     tools::Resolver< kernel::Mission > missionResolver;
     tools::Resolver< kernel::FragOrder > fragOrderResolver;
 
-    void PurgeAndBuild( MockEntity* target = 0 )
+    void CheckPurge( MockEntity* target = 0 )
     {
         MOCK_EXPECT( missionInterface.Purge ).once();
-        MOCK_EXPECT( missionInterface.Build ).once();
         MOCK_EXPECT( missionInterface.SetEntity ).once().with( target );
     }
 
-    void Check( const std::string& type, const std::vector< E_MissionType >& missionTypes,
+    void CheckPurgeAndBuild( MockEntity* target = 0 )
+    {
+        CheckPurge( target );
+        MOCK_EXPECT( missionInterface.Build ).once();
+    }
+
+    void CheckMission( const std::string& type, const std::vector< E_MissionType >& missionTypes,
                 E_MissionType current, const std::string& currentMission, bool invalid = false )
     {
+        std::vector< std::string > missions = boost::assign::list_of( "missionType1" )( "missionType2" );
+        bool selector = currentMission == missionSelector;
+        if( selector )
+            missions.insert( missions.begin(), currentMission );
         MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
         MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
         MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
         MOCK_EXPECT( builder.Build ).once().with( missionTypes, current,
-            boost::assign::list_of( "missionType1" )( "missionType2" ), currentMission, std::vector< std::string>(), invalid );
+            missions, currentMission, std::vector< std::string>(), invalid, selector );
     }
 
-    void CheckFragOrder( const std::string& type, const std::vector< E_MissionType >& missionTypes,
-                         E_MissionType current, const std::vector< std::string >& fragorders,
-                         const std::vector< std::string >& disabledMissions )
+    void CheckFragOrder( const std::vector< std::string >& disabledMissions = std::vector< std::string >() )
     {
-        MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( kernel::Agent_ABC::typeName_ ) );
         MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
         MOCK_EXPECT( decisions.GetFragOrders ).once().returns( fragOrderResolver.CreateIterator() );
         MOCK_EXPECT( decisions.GetFragOrders ).once().returns( fragOrderResolver.CreateIterator() );
-        MOCK_EXPECT( builder.Build ).once().with( missionTypes, current, fragorders, "fragorder", disabledMissions, false );
+        MOCK_EXPECT( builder.Build ).once().with( pawnTypes, eMissionType_FragOrder,
+            boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
+            fragOrderSelector, disabledMissions, false, true );
     }
     };
 }
@@ -183,112 +204,116 @@ namespace
 BOOST_FIXTURE_TEST_CASE( no_target_is_selected, Fixture )
 {
     // Select agent
-    PurgeAndBuild();
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_Pawn, boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ" ), "missionType1",
-        std::vector< std::string >(), false );
+        eMissionType_Pawn, boost::assign::list_of( missionSelector )( "missionType1" )( "missionUnitA" )("missionUnitZ" ), missionSelector,
+        std::vector< std::string >(), false, true );
     manager.Select();
 
     // Select automat
-    PurgeAndBuild();
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_Automat, boost::assign::list_of( "missionAutomat" ), "missionAutomat",
-        std::vector< std::string >(), false );
+        eMissionType_Automat, boost::assign::list_of( missionSelector )( "missionAutomat" ), missionSelector,
+        std::vector< std::string >(), false, true );
     manager.Select( eMissionType_Automat );
 
     // Select automat
-    PurgeAndBuild();
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_Population, boost::assign::list_of( "missionPopulation" ), "missionPopulation",
-        std::vector< std::string >(), false );
+        eMissionType_Population, boost::assign::list_of( missionSelector )( "missionPopulation" ), missionSelector,
+        std::vector< std::string >(), false, true );
     manager.Select( eMissionType_Population );
 
    // Select frag order
-    PurgeAndBuild();
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), "fragorder",
-        std::vector< std::string >(), false );
+        eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ), fragOrderSelector,
+        std::vector< std::string >(), false, true );
     manager.Select( eMissionType_FragOrder );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_agent, Fixture )
 {
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-           eMissionType_Pawn, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, missionSelector );
     manager.Select( decisions );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_population, Fixture )
 {
-    PurgeAndBuild( &entity );
-    Check( kernel::Population_ABC::typeName_, boost::assign::list_of( eMissionType_Population )( eMissionType_FragOrder ),
-        eMissionType_Population, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Population_ABC::typeName_, populationTypes, eMissionType_Population, missionSelector );
     manager.Select( decisions );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_automat, Fixture )
 {
-    PurgeAndBuild( &entity );
-    Check( kernel::Automat_ABC::typeName_, boost::assign::list_of( eMissionType_Automat )( eMissionType_FragOrder ),
-        eMissionType_Automat, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Automat_ABC::typeName_, automatTypes, eMissionType_Automat, missionSelector );
     manager.Select( decisions );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_target_then_change_mission_type, Fixture )
 {
     // Select missions
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, missionSelector );
     manager.Select( decisions, eMissionType_Pawn );
 
     // Select frag orders
-    PurgeAndBuild( &entity );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
+    CheckPurge( &entity );
+    MOCK_EXPECT( decisions.GetMissions ).exactly( 2 ).returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( 0 );
-    CheckFragOrder( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), boost::assign::list_of( "fragorder2" ) );
+    CheckFragOrder( boost::assign::list_of( "fragorder2" ) );
     manager.Select( decisions, eMissionType_FragOrder );
 
     // Select missions
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, missionSelector );
     manager.Select( decisions, eMissionType_Pawn );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_target_then_clear_it, Fixture )
 {
     // Select missions
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
+    CheckPurge( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, missionSelector );
     manager.Select( decisions, eMissionType_Pawn );
+
+    // Remove target
+    CheckPurge();
+    MOCK_EXPECT( builder.Build ).once().with( types, eMissionType_Pawn,
+        boost::assign::list_of( missionSelector )( "missionType1" )( "missionUnitA" )("missionUnitZ"),
+        missionSelector, std::vector< std::string >(), false, true );
+    manager.Select();
+}
+
+BOOST_FIXTURE_TEST_CASE( select_target_and_mission_then_clear_target, Fixture )
+{
+    // Select entity
+    CheckPurge( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, missionSelector );
+    manager.Select( decisions, eMissionType_Pawn );
+
+    // Select "missionType1" mission
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
+    manager.Select( decisions, eMissionType_Pawn, "missionType1" );
 
     // Remove target and keeps the current mission and its parameters
     MOCK_EXPECT( missionInterface.SetEntity ).once();
-    MOCK_EXPECT( builder.Build ).once().with(
-        boost::assign::list_of( eMissionType_Pawn )( eMissionType_Automat )( eMissionType_Population )( eMissionType_FragOrder ),
-        eMissionType_Pawn,
+    MOCK_EXPECT( builder.Build ).once().with( types, eMissionType_Pawn,
         boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ"),
-        "missionType1", std::vector< std::string >(), false );
-    manager.Select();
+        "missionType1", std::vector< std::string >(), false, false );
+    manager.Select( eMissionType_Pawn, "missionType1" );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_mission_then_select_agent_with_and_without_this_mission, Fixture )
 {
     // Select "missionType1" mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
-    manager.Select( decisions, eMissionType_Pawn );
-
-    // Select "missionType2" mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType2" );
-    manager.Select( decisions, eMissionType_Pawn, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
+    manager.Select( decisions, eMissionType_Pawn, "missionType1" );
 
     // Select "invalid" mission, first mission of the agent is selected
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
@@ -296,90 +321,78 @@ BOOST_FIXTURE_TEST_CASE( select_mission_then_select_agent_with_and_without_this_
     MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
     MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
-    MOCK_EXPECT( builder.Build ).once().with(
-        boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn,
+    MOCK_EXPECT( builder.Build ).once().with( pawnTypes, eMissionType_Pawn,
         boost::assign::list_of( "invalid" )( "missionType1" )( "missionType2" ),
-        "invalid", std::vector< std::string >(), true );
+        "invalid", std::vector< std::string >(), true, false );
     manager.Select( decisions, eMissionType_Pawn, "invalid" );
 }
 
 BOOST_FIXTURE_TEST_CASE( change_entity_type_clears_selection, Fixture )
 {
     // Select agent mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType2" );
     manager.Select( decisions, eMissionType_Pawn, "missionType2" );
 
     // Select Population mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Population_ABC::typeName_, boost::assign::list_of( eMissionType_Population )( eMissionType_FragOrder ),
-        eMissionType_Population, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Population_ABC::typeName_, populationTypes, eMissionType_Population, "missionType2" );
     manager.Select( decisions, eMissionType_Population, "missionType2" );
 
     // Select automat mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Automat_ABC::typeName_, boost::assign::list_of( eMissionType_Automat )( eMissionType_FragOrder ),
-        eMissionType_Automat, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Automat_ABC::typeName_, automatTypes, eMissionType_Automat, "missionType2" );
     manager.Select( decisions, eMissionType_Automat, "missionType2" );
 }
 
 BOOST_FIXTURE_TEST_CASE( select_automat_mission_with_an_agent, Fixture )
 {
     // Select automat mission with an agent
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
     manager.Select( decisions, eMissionType_Automat, "missionType1" );
 }
 
 BOOST_FIXTURE_TEST_CASE( switching_to_the_same_entity_type_keeps_the_parameters, Fixture )
 {
     // Select agent mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
-    manager.Select( decisions, eMissionType_Pawn );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
+    manager.Select( decisions, eMissionType_Pawn, "missionType1" );
 
     // Select an other agent with the same mission
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
-    manager.Select( decisions, eMissionType_Pawn );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
+    manager.Select( decisions, eMissionType_Pawn, "missionType1" );
 
     // Select an other mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType2" );
     manager.Select( decisions, eMissionType_Pawn, "missionType2" );
 
     // Select an other agent with the same mission
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType2" );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType2" );
     manager.Select( decisions, eMissionType_Pawn, "missionType2" );
 
     // Select automat mission
-    PurgeAndBuild( &entity );
-    Check( kernel::Automat_ABC::typeName_, boost::assign::list_of( eMissionType_Automat )( eMissionType_FragOrder ),
-        eMissionType_Automat, "missionType2" );
+    CheckPurgeAndBuild( &entity );
+    CheckMission( kernel::Automat_ABC::typeName_, automatTypes, eMissionType_Automat, "missionType2" );
     manager.Select( decisions, eMissionType_Automat, "missionType2" );
 }
 
 BOOST_FIXTURE_TEST_CASE( the_parameters_are_filled_without_a_target_then_we_select_a_target, Fixture )
 {
     // Select agent mission
-    PurgeAndBuild();
+    CheckPurgeAndBuild();
     MOCK_EXPECT( builder.Build ).once().with( types,
         eMissionType_Pawn, boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ" ),
-        "missionType1", std::vector< std::string >(), false );
+        "missionType1", std::vector< std::string >(), false, false );
     manager.Select( eMissionType_Pawn, "missionType1" );
 
     // Keep parameters
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
-    Check( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_Pawn, "missionType1" );
+    CheckMission( kernel::Agent_ABC::typeName_, pawnTypes, eMissionType_Pawn, "missionType1" );
     manager.Select( decisions, eMissionType_Pawn, "missionType1" );
 }
 
@@ -388,21 +401,21 @@ BOOST_FIXTURE_TEST_CASE( display_all_frag_orders_if_no_target_is_selected, Fixtu
     // Set normal mode
     manager.SetPlanningMode( false );
 
-    // No target is seleted
-    PurgeAndBuild();
+    // No target is selected
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ),
-        "fragorder", std::vector< std::string >(), false );
+        eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
+        fragOrderSelector, std::vector< std::string >(), false, true );
     manager.Select( eMissionType_FragOrder );
 
     // Set planning mode
     manager.SetPlanningMode( true );
 
-    // No target is seleted
-    MOCK_EXPECT( missionInterface.SetEntity ).once();
+    //// No target is selected
+    CheckPurge();
     MOCK_EXPECT( builder.Build ).once().with( types,
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ),
-        "fragorder", std::vector< std::string >(), false );
+        eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
+        fragOrderSelector, std::vector< std::string >(), false, true );
     manager.Select( eMissionType_FragOrder );
 }
 
@@ -412,11 +425,10 @@ BOOST_FIXTURE_TEST_CASE( in_planning_mode_display_all_frag_orders, Fixture )
     manager.SetPlanningMode( false );
 
     // display only general frag order
-    PurgeAndBuild( &entity );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
+    CheckPurge( &entity );
+    MOCK_EXPECT( decisions.GetMissions ).exactly( 2 ).returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( 0 );
-    CheckFragOrder( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), boost::assign::list_of( "fragorder2" ) );
+    CheckFragOrder( boost::assign::list_of( "fragorder2" ) );
     manager.Select( decisions, eMissionType_FragOrder );
 
     // Set planning mode
@@ -424,28 +436,25 @@ BOOST_FIXTURE_TEST_CASE( in_planning_mode_display_all_frag_orders, Fixture )
 
     // display all frag oders
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
+    MOCK_EXPECT( decisions.GetMissions ).exactly( 2 ).returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( 0 );
-    CheckFragOrder( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), std::vector< std::string >() );
+    CheckFragOrder();
     manager.Select( decisions, eMissionType_FragOrder );
 }
 
 BOOST_FIXTURE_TEST_CASE( display_frag_order_when_a_mission_starts, Fixture )
 {
     // display only general frag order
-    PurgeAndBuild( &entity );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
+    CheckPurge( &entity );
+    MOCK_EXPECT( decisions.GetMissions ).exactly( 2 ).returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( 0 );
-    CheckFragOrder( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), boost::assign::list_of( "fragorder2" ) );
+    CheckFragOrder( boost::assign::list_of( "fragorder2" ) );
     manager.Select( decisions, eMissionType_FragOrder );
 
     // display fragorder2 because mission2 is activated
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
+    MOCK_EXPECT( decisions.GetMissions ).exactly( 2 ).returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( &mission2 );
-    CheckFragOrder( kernel::Agent_ABC::typeName_, boost::assign::list_of( eMissionType_Pawn )( eMissionType_FragOrder ),
-        eMissionType_FragOrder, boost::assign::list_of( "fragorder" )( "fragorder2" ), std::vector< std::string >() );
+    CheckFragOrder( std::vector< std::string >() );
     manager.Select( decisions, eMissionType_FragOrder );
 }

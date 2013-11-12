@@ -20,6 +20,7 @@
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/OrderType.h"
+#include "clients_kernel/Tools.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "gaming/Decisions_ABC.h"
 #include <boost/assign.hpp>
@@ -168,6 +169,12 @@ namespace
         }
         return 0;
     }
+    std::string GetSelector( E_MissionType type )
+    {
+        return type == eMissionType_FragOrder
+            ? tools::translate( "EventManager", "<Select frag order>" ).toStdString()
+            : tools::translate( "EventManager", "<Select mission>" ).toStdString();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -187,6 +194,7 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
 {
     std::string currentMission = mission;
     std::string lastMission = currentMission_;
+    currentMissionType_ = type;
 
     // Retrieve types
     std::vector< E_MissionType > types;
@@ -195,27 +203,30 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
 
     // Retrieve missions
     std::vector< std::string > result;
-    if( type == eMissionType_FragOrder )
-        FillOrders< kernel::FragOrderType >( result, agentTypes_, type );
+    if( currentMissionType_ == eMissionType_FragOrder )
+        FillOrders< kernel::FragOrderType >( result, agentTypes_, currentMissionType_ );
     else
-        FillOrders< kernel::MissionType >( result, agentTypes_, type );
+        FillOrders< kernel::MissionType >( result, agentTypes_, currentMissionType_ );
 
     // Reset current mission
+    bool missionSelector = false;
     if( currentMission.empty() && !result.empty() )
+    {
+        result.insert( result.begin(), GetSelector( currentMissionType_ ) );
         currentMission = result[ 0 ];
+        missionSelector = true;
+    }
 
     // Build interface
-    builder_.Build( types, type, result, currentMission, std::vector< std::string >() );
-
-    currentMissionType_ = type;
+    builder_.Build( types, currentMissionType_, result, currentMission, std::vector< std::string >(), false, missionSelector );
 
     // Retrieve current mission
-    const kernel::OrderType* order = type == eMissionType_FragOrder ?
-        GetCurrentOrder< kernel::FragOrderType >( agentTypes_, type, currentMission ) :
-        GetCurrentOrder< kernel::MissionType >( agentTypes_, type, currentMission );
+    const kernel::OrderType* order = currentMissionType_ == eMissionType_FragOrder ?
+        GetCurrentOrder< kernel::FragOrderType >( agentTypes_, currentMissionType_, currentMission ) :
+        GetCurrentOrder< kernel::MissionType >( agentTypes_, currentMissionType_, currentMission );
 
     // Reset interface only for a different mission
-    if( currentMission != lastMission )
+    if( currentMission != lastMission || missionSelector )
     {
         // Build parameters interface
         missionInterface_.Purge();
@@ -313,12 +324,17 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 
     // Reset current mission
     // current mission is empty || (entity type changed(except frag oder) && unknown mission) => select first mission
+    bool missionSelector = false;
     if( ( currentMission.empty() || // no mission selected
           lastMissionType != currentMissionType_ &&
           currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
           std::find( result.begin(), result.end(), mission ) == result.end()
          ) && !result.empty() )
+    {
+        result.insert( result.begin(), GetSelector( currentMissionType_ ) );
         currentMission = result[ 0 ];
+        missionSelector = true;
+    }
 
     // Insert invalid mission
     if( invalidMission )
@@ -326,7 +342,7 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 
     // Build mission combobox
     builder_.Build( boost::assign::list_of( entityType )( eMissionType_FragOrder ),
-                    currentMissionType_, result, currentMission, disabledResult, invalidMission );
+                    currentMissionType_, result, currentMission, disabledResult, invalidMission, missionSelector );
 
     // Retrieve current order
     const kernel::OrderType* order = 0;

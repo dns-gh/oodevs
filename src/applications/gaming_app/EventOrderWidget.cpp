@@ -147,7 +147,6 @@ void EventOrderWidget::Purge()
     SetTarget( 0 );
     PurgeComboBox( *missionTypeCombo_ );
     PurgeComboBox( *missionCombo_ );
-    SelectDefault();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +177,8 @@ void EventOrderWidget::Fill( const Event& event )
         SetTarget( entity );
         SelectWhenEventExist( *mission, eventAction.GetMissionType() );
     }
+    else
+        SelectWhenTargetChanged(); // use this selection so it keep existing mission type && mission
 }
 
 // -----------------------------------------------------------------------------
@@ -551,7 +552,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
                               const std::vector< std::string >& missions, const std::string& currentMission,
-                              const std::vector< std::string >& disabledMissions, bool invalid )
+                              const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector )
 {
     missionTypeCombo_->blockSignals( true );
     // CLEAR
@@ -582,7 +583,7 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     // SELECT
     missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
     // Disable invalid mission
-    if( invalid )
+    if( invalid || missionSelector)
         missionCombo_->setItemData( missionCombo_->currentIndex(), Qt::NoItemFlags, Qt::UserRole - 1 );
     missionCombo_->EnableStaticWarning( invalid );
     targetGroupBox_->EnableStaticWarning( invalid );
