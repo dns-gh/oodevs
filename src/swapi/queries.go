@@ -12,7 +12,7 @@ import (
 	"sword"
 )
 
-func (model *Model) query(query func(d *ModelData) bool) bool {
+func (model *Model) Query(query func(d *ModelData) bool) bool {
 	reply := false
 	model.waitCommand(func(m *Model) {
 		reply = query(m.data)
@@ -76,7 +76,7 @@ func (d *ModelData) IsPartyInProfile(id uint32, profile *Profile) bool {
 }
 
 func (model *Model) queryIdInProfile(id uint32, name string, query func(*ModelData, uint32, *Profile) bool) bool {
-	return model.query(func(d *ModelData) bool {
+	return model.Query(func(d *ModelData) bool {
 		profile, ok := d.Profiles[name]
 		return ok && query(d, id, profile)
 	})
@@ -125,7 +125,7 @@ func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bo
 }
 
 func (model *Model) IsTaskerInProfile(tasker *sword.Tasker, name string) bool {
-	return model.query(func(d *ModelData) bool {
+	return model.Query(func(d *ModelData) bool {
 		profile, ok := d.Profiles[name]
 		return ok && d.IsTaskerInProfile(tasker, profile)
 	})
