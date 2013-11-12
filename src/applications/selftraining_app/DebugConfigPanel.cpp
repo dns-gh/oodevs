@@ -61,6 +61,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , dataDirectory_( 0 )
     , dataButton_( 0 )
     , exerciseNumber_( 1 )
+    , mapnikBox_( 0 )
+    , mapnikLayerBox_( 0 )
 {
     //integration level label
     integrationLabel_ = new QLabel();
@@ -148,6 +150,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
 
     pathfinds->addLayout( dumpLayout );
     pathfinds->addLayout( filterLayout );
+    
+    //mapnik group box
+    mapnikBox_ = new QGroupBox();
+    QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
+    mapnik->setMargin( 10 );
+    mapnikLayerBox_ = new QCheckBox();
+    mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
@@ -155,6 +164,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mainLayout->addWidget( timelineBox_ );
     mainLayout->addWidget( profilingBox_ );
     mainLayout->addWidget( pathfindsBox_ );
+    mainLayout->addWidget( mapnikBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
 }
 
@@ -216,6 +226,8 @@ void DebugConfigPanel::OnLanguageChanged()
     pathfindsBox_->setTitle( tools::translate( "DebugConfigPanel", "Pathfind settings" ) );
     filterLabel_->setText( tools::translate( "DebugConfigPanel", "Filter :" ) );
     dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
+    mapnikBox_->setTitle( tools::translate( "DebugConfigPanel", "Mapnik settings" ) );
+    mapnikLayerBox_->setText( tools::translate( "DebugConfigPanel", "Activate layer" ) );
     dataButton_->setText( "..." );
 }
 
@@ -234,7 +246,7 @@ QString DebugConfigPanel::GetName() const
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
-    if( decCallsBox_->isChecked() || timelineBox_->isChecked() )
+    if( decCallsBox_->isChecked() || timelineBox_->isChecked() || mapnikLayerBox_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
         if( decCallsBox_->isChecked() )
@@ -245,6 +257,8 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
             action.SetOption( "session/config/timeline/@url", "localhost:" +
                               boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_WEB_PORT ) ) );
         }
+        if( mapnikLayerBox_->isChecked() )
+            action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
         action.Commit();
     }
 }

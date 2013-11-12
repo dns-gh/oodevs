@@ -288,7 +288,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer& mapnik               = *new gui::MapnikLayer( controllers_.controller_ );
+    gui::Layer* mapnik               = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_ ) : 0;
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
@@ -313,7 +313,8 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( defaultLayer );
     AddLayer( elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
     AddLayer( raster, "main,composition,miniviews", tr( "Raster" ) );
-    AddLayer( mapnik, "main,composition,miniviews", tr( "Mapnik" ) );
+    if( mapnik )
+        AddLayer( *mapnik, "main,composition,miniviews", tr( "Mapnik" ) );
     AddLayer( terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( contour, "main,composition,miniviews", tr( "Contour Lines" ) );
     AddLayer( urbanLayer, "main,miniviews", tr( "Urban blocks" ) );

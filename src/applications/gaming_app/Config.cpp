@@ -29,6 +29,7 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     , hasTimeline_( false )
     , timelineUrl_( "" )
     , timelineDebugPort_( 0 )
+    , mapnik_( false )
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()
@@ -66,6 +67,9 @@ void Config::ReadSession()
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
+                        >> xml::optional >> xml::start( "mapnik" )
+                            >> xml::attribute( "activate", mapnik_ )
+                        >> xml::end
                         >> xml::start( "network" )
                             >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ );
         if( host_.empty() )
@@ -169,4 +173,9 @@ std::string Config::GetTimelineUrl() const
 int Config::GetTimelineDebugPort() const
 {
     return timelineDebugPort_;
+}
+
+bool Config::HasMapnik() const
+{
+    return mapnik_;
 }
