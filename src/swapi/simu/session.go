@@ -25,11 +25,11 @@ type LogOpts struct {
 }
 
 type LogisticPlugin struct {
-	Library         string
-	FuneralFile     string
-	MaintenanceFile string
-	MedicalFile     string
-	SupplyFile      string
+	Library         string `xml:"library,attr"`
+	FuneralFile     string `xml:"funeralfile,attr,omitempty"`
+	MaintenanceFile string `xml:"maintenancefile,attr,omitempty"`
+	MedicalFile     string `xml:"medicalfile,attr,omitempty"`
+	SupplyFile      string `xml:"supplyfile,attr,omitempty"`
 }
 
 func NewLogisticPlugin(platform string) *LogisticPlugin {
@@ -69,16 +69,9 @@ func (s *Session) syncSession(x *xmlSession) error {
 	}
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
+	s.LogisticPlugin = nil
 	if p := x.Dispatcher.Plugins.Logistic; p != nil {
-		s.LogisticPlugin = &LogisticPlugin{
-			Library:         p.Library,
-			FuneralFile:     p.FuneralFile,
-			MaintenanceFile: p.MaintenanceFile,
-			MedicalFile:     p.MedicalFile,
-			SupplyFile:      p.SupplyFile,
-		}
-	} else {
-		s.LogisticPlugin = nil
+		s.LogisticPlugin = p
 	}
 	s.Paused = ReadBool(x.Sim.Time.Paused)
 	s.SimLog.Count = x.Sim.Debug.LogFiles
@@ -95,16 +88,9 @@ func (s *Session) syncSession(x *xmlSession) error {
 func (s *Session) syncXml(x *xmlSession) error {
 	x.GamingNetwork.Server = s.GamingServer
 	x.Dispatcher.Network.Server = s.GamingServer
+	x.Dispatcher.Plugins.Logistic = nil
 	if p := s.LogisticPlugin; p != nil {
-		x.Dispatcher.Plugins.Logistic = &xmlLogisticPlugin{
-			Library:         p.Library,
-			FuneralFile:     p.FuneralFile,
-			MaintenanceFile: p.MaintenanceFile,
-			MedicalFile:     p.MedicalFile,
-			SupplyFile:      p.SupplyFile,
-		}
-	} else {
-		x.Dispatcher.Plugins.Logistic = nil
+		x.Dispatcher.Plugins.Logistic = p
 	}
 	x.Sim.Debug.LogFiles = s.SimLog.Count
 	if x.Sim.Debug.LogFiles == 1 {
@@ -128,16 +114,8 @@ type xmlDispatcherNetwork struct {
 	Server string `xml:"server,attr"`
 }
 
-type xmlLogisticPlugin struct {
-	Library         string `xml:"library,attr"`
-	FuneralFile     string `xml:"funeralfile,attr,omitempty"`
-	MaintenanceFile string `xml:"maintenancefile,attr,omitempty"`
-	MedicalFile     string `xml:"medicalfile,attr,omitempty"`
-	SupplyFile      string `xml:"supplyfile,attr,omitempty"`
-}
-
 type xmlPlugins struct {
-	Logistic *xmlLogisticPlugin `xml:"logistic,omitempty"`
+	Logistic *LogisticPlugin `xml:"logistic,omitempty"`
 }
 
 type xmlDispatcherConfig struct {
