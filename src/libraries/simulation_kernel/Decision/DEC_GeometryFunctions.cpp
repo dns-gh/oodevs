@@ -112,8 +112,21 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::CreateLis
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 {
-    boost::shared_ptr< MT_Vector2D > pVect = boost::make_shared< MT_Vector2D >();
-    return pVect;
+    return DEC_GeometryFunctions::CreatePointFromXY(0, 0);
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePointFromLatLong(
+        double lat, double lng )
+{
+    auto p = boost::make_shared< MT_Vector2D >();
+    TER_World::GetWorld().MosToSimMgrsCoord( lat, lng, *p );
+    return p;
+}
+
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePointFromXY(
+        double x, double y )
+{
+    return boost::make_shared< MT_Vector2D >(x, y);
 }
 
 //-----------------------------------------------------------------------------
