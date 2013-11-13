@@ -22,7 +22,7 @@ namespace logistic
 class ConsignWriter: private boost::noncopyable
 {
 public:
-    ConsignWriter() : written_( 0 )
+    ConsignWriter() : written_( false )
     {
     }
 
@@ -31,7 +31,7 @@ public:
     {
         if( written_ )
             buf_ << " ; ";
-        written_++;
+        written_ = true;
         buf_ << value;
         return *this;
     }
@@ -39,7 +39,7 @@ public:
     void End()
     {
         buf_ << "\n";
-        written_ = 0;
+        written_ = false;
     }
 
     std::string GetLine() const
@@ -49,7 +49,7 @@ public:
 
 private:
     std::stringstream buf_;
-    int written_;
+    bool written_;
 };
 
 }  // namespace logistic
