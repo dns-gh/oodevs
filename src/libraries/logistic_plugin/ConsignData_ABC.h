@@ -10,8 +10,10 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
+#include "ConsignState.h"
 #include "LogisticPlugin.h"
 #include <boost/noncopyable.hpp>
+#include <deque>
 
 namespace plugins
 {
@@ -44,7 +46,11 @@ public:
     LogisticPlugin::E_LogisticType GetType() const;
     int GetTick() const;
     std::string ToString() const;
+    const std::deque< ConsignState > GetHistory() const;
     //@}
+
+protected:
+    ConsignState& PushState();
 
 private:
     virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
@@ -63,6 +69,9 @@ protected:
     const LogisticPlugin::E_LogisticType type_;
     std::string requestId_;
     //@}
+
+private:
+    std::deque< ConsignState > history_;
 };
 
 }
