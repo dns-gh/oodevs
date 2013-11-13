@@ -136,6 +136,20 @@
     </Rule>
   </Style>
 
+  <Style name="ice">
+    <Rule>
+      &maxscale_zoom8;
+      &minscale_zoom13;
+      <LineSymbolizer stroke-dasharray="4,2" stroke-width="1.5" stroke="#99ccff"/>
+      <PolygonSymbolizer fill="#DDECEC"/>
+    </Rule>
+    <Rule>
+      &maxscale_zoom14;
+      <LineSymbolizer stroke-dasharray="4,2" stroke-width="1.5" stroke="#99ccff"/>
+      <PolygonPatternSymbolizer file="symbols/glacier2.png"/>
+    </Rule>
+  </Style>
+
   <Style name="dune">
     <Rule>
       <Filter>[MASACODE] = 10005</Filter>
@@ -521,6 +535,14 @@
       <Datasource>
         <Parameter name="type">shape</Parameter>
         <Parameter name="file">mountain.shp</Parameter>
+      </Datasource>
+  </Layer>
+
+  <Layer name="ice" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>ice</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">ice.shp</Parameter>
       </Datasource>
   </Layer>
 
