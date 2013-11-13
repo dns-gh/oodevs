@@ -66,6 +66,8 @@ void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
         model_->Save( wrapper.message().control_checkpoint_save_end().name() );
     if( wrapper.message().has_control_begin_tick() )
         model_->UpdateTime( wrapper.message().control_begin_tick().date_time().data() );
+    if( wrapper.message().has_unit_destruction() )
+        model_->DeleteUnit( wrapper.message().unit_destruction().unit().id() );
 }
 
 // -----------------------------------------------------------------------------

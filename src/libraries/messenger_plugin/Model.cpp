@@ -236,3 +236,12 @@ void Model::UpdateTime( std::string time )
 {
     notes_.UpdateTime( time );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Model::DeleteUnit
+// Created: LDC 2013-11-13
+// -----------------------------------------------------------------------------
+void Model::DeleteUnit( int32_t id )
+{
+    tacticalLines_.DeleteUnit( id );
+}
