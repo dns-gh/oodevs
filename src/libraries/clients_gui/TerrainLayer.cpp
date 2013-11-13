@@ -81,11 +81,11 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() || GetAlpha() == 0 )
-        return;
-
     if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
         LoadGraphics();
+
+    if( !ShouldDrawPass() || GetAlpha() == 0 )
+        return;
 
     if( layer_.get() || noVBOlayer_.get() )
     {
