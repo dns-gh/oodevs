@@ -9,7 +9,7 @@
     </tstamp>
 
     <property environment="env"/>
-    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
+    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/current"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="version.project" value="5.3"/>
