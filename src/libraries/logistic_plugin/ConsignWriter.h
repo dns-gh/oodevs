@@ -26,8 +26,7 @@ public:
     {
     }
 
-    template< typename T >
-    ConsignWriter& operator<<( const T& value )
+    ConsignWriter& operator<<( const std::string& value )
     {
         if( written_ )
             buf_ << " ; ";
