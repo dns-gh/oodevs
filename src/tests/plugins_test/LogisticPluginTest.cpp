@@ -12,7 +12,6 @@
 #include "logistic_plugin/LogisticPlugin.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
-#include <tools/StdFileWrapper.h>
 #include <tools/TemporaryDirectory.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
