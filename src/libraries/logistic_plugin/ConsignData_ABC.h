@@ -10,12 +10,8 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
-#include "ConsignWriter.h"
 #include "LogisticPlugin.h"
-#include "tools/FileWrapper.h"
 #include <boost/noncopyable.hpp>
-#include <boost/lexical_cast.hpp>
-#include <sstream>
 
 namespace plugins
 {
@@ -35,41 +31,19 @@ class ConsignData_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ConsignData_ABC( LogisticPlugin::E_LogisticType type, const std::string& requestId )
-                : type_( type )
-                , requestId_( requestId ) {}
-    virtual ~ConsignData_ABC() {}
+             ConsignData_ABC( LogisticPlugin::E_LogisticType type, const std::string& requestId );
+    virtual ~ConsignData_ABC();
     //@}
 
     // Returns true if the consign was updated and a log entry should be added.
     bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
-           int tick, const std::string& time )
-    {
-        tick_ = boost::lexical_cast< std::string >( tick );
-        simTime_ = time;
-        return DoUpdateConsign( msg, names );
-    }
+           int tick, const std::string& time );
 
     //! @name Operations
     //@{
-    LogisticPlugin::E_LogisticType GetType() const
-    {
-        return type_;
-    }
-
-    int GetTick() const
-    {
-        if( tick_.empty() )
-            return 0;
-        return std::atoi( tick_.c_str() );
-    }
-
-    std::string ToString() const
-    {
-        ConsignWriter w;
-        WriteConsign( w );
-        return w.GetLine();
-    }
+    LogisticPlugin::E_LogisticType GetType() const;
+    int GetTick() const;
+    std::string ToString() const;
     //@}
 
 private:
