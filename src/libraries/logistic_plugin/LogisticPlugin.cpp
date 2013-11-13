@@ -151,11 +151,14 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     }
     ENT_Tr::InitTranslations();
 
-    resolvers_.resize( eNbrLogisticType );
-    resolvers_[ eLogisticType_Maintenance ] = new ConsignResolver_ABC( maintenanceFile, GetMaintenanceHeader() );
-    resolvers_[ eLogisticType_Supply ]      = new ConsignResolver_ABC( supplyFile, GetSupplyHeader() );
-    resolvers_[ eLogisticType_Funeral ]     = new ConsignResolver_ABC( funeralFile, GetFuneralHeader() );
-    resolvers_[ eLogisticType_Medical ]     = new ConsignResolver_ABC( medicalFile, GetMedicalHeader() );
+    resolvers_.insert( eLogisticType_Maintenance, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( maintenanceFile, GetMaintenanceHeader() )));
+    resolvers_.insert( eLogisticType_Supply, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( supplyFile, GetSupplyHeader() )));
+    resolvers_.insert( eLogisticType_Funeral, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( funeralFile, GetFuneralHeader() )));
+    resolvers_.insert( eLogisticType_Medical, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( medicalFile, GetMedicalHeader() )));
 }
 
 // -----------------------------------------------------------------------------
@@ -164,8 +167,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
 // -----------------------------------------------------------------------------
 LogisticPlugin::~LogisticPlugin()
 {
-    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        delete *r;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -195,9 +197,10 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     }
 
     const auto ev = GetEventType( message );
-    if( static_cast< size_t >( ev.type ) >= resolvers_.size() || ev.id <= 0 )
+    auto itResolver = resolvers_.find( ev.type );
+    if( itResolver == resolvers_.end() || ev.id <= 0 )
         return;
-    auto resolver = resolvers_[ static_cast< size_t >( ev.type ) ];
+    auto resolver = itResolver->second;
 
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
@@ -234,7 +237,7 @@ int LogisticPlugin::DebugGetConsignCount( E_LogisticType eLogisticType ) const
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
     for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        (*r)->SetMaxLinesInFile( maxLines );
+        r->second->SetMaxLinesInFile( maxLines );
 }
 
 

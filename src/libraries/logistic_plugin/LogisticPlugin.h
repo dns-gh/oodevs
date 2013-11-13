@@ -91,7 +91,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< ConsignResolver_ABC* >         resolvers_;
+    boost::ptr_map< E_LogisticType, ConsignResolver_ABC > resolvers_;
     boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     boost::ptr_map< int, ConsignData_ABC >      consigns_;
