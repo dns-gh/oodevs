@@ -182,6 +182,6 @@ void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& 
         return;
     bool collisionBefore = roleUrbanLocation->HasInhabitantCollision();
     roleUrbanLocation->RemoveInhabitantCollision( object.GetID() );
-    if( collisionBefore && !roleUrbanLocation->HasInhabitantCollision() )
+    if( !agent.IsMarkedForDestruction() && collisionBefore && !roleUrbanLocation->HasInhabitantCollision() )
         MIL_Report::PostEvent( agent, report::eRC_UrbanCollisionStopped );
 }
