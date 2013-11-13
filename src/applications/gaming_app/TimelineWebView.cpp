@@ -20,6 +20,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/EventAction.h"
@@ -41,12 +42,14 @@
 // Name: TimelineWebView constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                                  kernel::ActionController& eventController, Model& model, timeline::Configuration& cfg )
+TimelineWebView::TimelineWebView( QWidget* parent,
+                                  const tools::ExerciseConfig& config,
+                                  kernel::Controllers& controllers,
+                                  Model& model,
+                                  timeline::Configuration& cfg )
     : QWidget( parent )
     , config_( config )
-    , actionController_( actionController )
-    , eventController_( eventController )
+    , controllers_( controllers )
     , model_( model )
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
@@ -58,7 +61,8 @@ TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& 
     mainLayout_->setMargin( 0 );
     mainLayout_->setSpacing( 0 );
 
-    actionController_.Register( *this );
+    controllers_.actions_.Register( *this );
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +71,8 @@ TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& 
 // -----------------------------------------------------------------------------
 TimelineWebView::~TimelineWebView()
 {
-    actionController_.Unregister( *this );
+    controllers_.actions_.Unregister( *this );
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +86,9 @@ void TimelineWebView::Connect()
     cfg_->widget = timelineWidget_.get();
     server_.reset( MakeServer( *cfg_ ).release() );
 
-    auto query = boost::assign::map_list_of( "lang", tools::Language::Current() );
+    auto query = boost::assign::map_list_of
+        ( "lang",          tools::Language::Current() )
+        ( "sword_profile", lastProfile_ );
     server_->UpdateQuery( query );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
@@ -191,7 +198,7 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
-    eventController_.DeselectAll();
+    controllers_.eventActions_.DeselectAll();
     emit DeleteEventSignal( uuid );
 }
 
@@ -244,12 +251,12 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     if( selected_ )
     {
         Event& gamingEvent = GetOrCreateEvent( *selected_ );
-        gamingEvent.Select( eventController_, actionController_ );
+        gamingEvent.Select( controllers_.eventActions_, controllers_.actions_ );
     }
     else if( hadSelection )
     {
-        actionController_.DeselectAll();
-        eventController_.DeselectAll();
+        controllers_.actions_.DeselectAll();
+        controllers_.eventActions_.DeselectAll();
     }
 }
 
@@ -260,7 +267,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    gamingEvent.Activate( eventController_ );
+    gamingEvent.Activate( controllers_.eventActions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,10 +280,12 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
     if( event )
     {
         Event& gamingEvent = GetOrCreateEvent( *event );
-        gamingEvent.ContextMenu( eventController_, QCursor::pos() );
+        gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos() );
     }
     else
-        actionController_.ContextMenu( selectedDateTime_, QCursor::pos() );
+    {
+        controllers_.actions_.ContextMenu( selectedDateTime_, QCursor::pos() );
+    }
 }
 
 namespace
@@ -305,6 +314,37 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::SetProfile
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::SetProfile( const QString& profile )
+{
+    lastProfile_ = profile;
+    if( !server_ || serverProfile_ == lastProfile_ )
+        return;
+    server_->UpdateQuery( boost::assign::map_list_of( "sword_profile", profile.toStdString() ) );
+    serverProfile_ = lastProfile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyCreated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyCreated( const kernel::Profile_ABC& profile )
+{
+    NotifyUpdated( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyUpdated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    SetProfile( profile.GetLogin() );
 }
 
 // -----------------------------------------------------------------------------

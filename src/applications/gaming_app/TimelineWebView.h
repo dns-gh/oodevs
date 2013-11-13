@@ -12,12 +12,14 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
 
 namespace kernel
 {
+    class Controllers;
     class ContextMenu;
-    class ActionController;
+    class Profile_ABC;
 }
 
 namespace timeline
@@ -47,14 +49,15 @@ class Model;
 class TimelineWebView : public QWidget
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< QDateTime >
+                      , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                              kernel::ActionController& eventController, Model& model, timeline::Configuration& cfg );
+             TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::Controllers& controllers,
+                              Model& model, timeline::Configuration& cfg );
     virtual ~TimelineWebView();
     //@}
 
@@ -70,6 +73,10 @@ private:
     Event& GetOrCreateEvent( const timeline::Event& event );
 
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
+    virtual void NotifyCreated( const kernel::Profile_ABC& profile );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+
+    void SetProfile( const QString& profile );
 
     void ReadActions( xml::xistream& xis );
     void ReadAction( xml::xistream& xis );
@@ -124,8 +131,7 @@ private:
     QVBoxLayout* mainLayout_;
 
     const tools::ExerciseConfig& config_;
-    kernel::ActionController& actionController_;
-    kernel::ActionController& eventController_;
+    kernel::Controllers& controllers_;
     Model& model_;
 
     boost::scoped_ptr< timeline::Server_ABC > server_;
@@ -135,6 +141,8 @@ private:
     boost::scoped_ptr< QSignalMapper > creationSignalMapper_;
     tools::Path currentFile_;
     std::string eventCreated_;
+    QString lastProfile_;
+    QString serverProfile_;
     //@}
 };
 

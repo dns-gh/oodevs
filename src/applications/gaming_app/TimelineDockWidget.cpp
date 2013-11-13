@@ -26,7 +26,10 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, Model& model )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent,
+                                        kernel::Controllers& controllers,
+                                        const Config& config,
+                                        Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , config_( config )
@@ -49,7 +52,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     // Content
     tabWidget_ = new QTabWidget();
     tabWidget_->setVisible( false );
-    webView_ = new TimelineWebView( 0, config, controllers.actions_, controllers.eventActions_, model, *cfg_ );
+    webView_ = new TimelineWebView( 0, config, controllers, model, *cfg_ );
     AddView();
 
     // Main Layout
