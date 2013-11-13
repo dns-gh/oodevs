@@ -29,17 +29,20 @@ class MedicalConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
+             MedicalConsignData( const std::string& requestId )
+                 : ConsignData_ABC( LogisticPlugin::eLogisticType_Medical, requestId ) {}
     virtual ~MedicalConsignData() {}
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void operator>>( std::stringstream& output ) const;
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg, ConsignResolver_ABC& resolver );
-    //@}
+private:
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
+    virtual void WriteConsign( ConsignWriter& output ) const;
+    void ManageMessage( const ::sword::LogMedicalHandlingCreation& msg,
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg,
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg,
+            const NameResolver_ABC& resolver );
 
 public:
     //! @name Member data
@@ -59,35 +62,8 @@ public:
     //@}
 };
 
-// =============================================================================
-/** @class  MedicalResolver
-    @brief  MedicalResolver
-*/
-// Created: MMC 2012-08-06
-// =============================================================================
-class MedicalResolver : public ConsignResolver_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
-    virtual ~MedicalResolver();
-    //@}
+std::string GetMedicalHeader();
 
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual bool IsManageable( const sword::SimToClient& message );
-    virtual bool IsEmptyLineMessage( const sword::SimToClient& message );
-    virtual void ManageMessage( const sword::SimToClient& message );
-    virtual ConsignData_ABC* CreateConsignData( int requestId );
-    //@}
-};
 }
 }
 

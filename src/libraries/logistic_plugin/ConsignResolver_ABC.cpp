@@ -10,6 +10,7 @@
 #include "ConsignResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/regex.hpp>
 
 namespace bg = boost::gregorian;
@@ -36,8 +37,13 @@ std::wstring EscapeRegex( const std::wstring& s )
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
+ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const std::string& header )
+    : name_( name )
+    , header_( header)
+    , curFileIndex_( 0 )
+    , curLineIndex_( 0 )
+    , maxLinesInFile_( 50000 )
+    , daysBeforeToKeep_( 1 )
 {
     // NOTHING
 }
@@ -48,53 +54,21 @@ ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameRes
 // -----------------------------------------------------------------------------
 ConsignResolver_ABC::~ConsignResolver_ABC()
 {
-    for ( std::map< int, ConsignData_ABC* >::iterator it = consignsData_.begin(); it != consignsData_.end(); ++it )
-        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC::Receive
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boost::gregorian::date& today )
+void ConsignResolver_ABC::Write( const std::string& data, const boost::gregorian::date& today )
 {
-    if( !IsManageable( message ) )
-        return false;
-    if( !IsEmptyLineMessage( message ) )
-        CheckOutputFile( today );
-    if( output_.is_open() )
-        ManageMessage( message );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetConsign
-// Created: MMC 2012-08-23
-// -----------------------------------------------------------------------------
-ConsignData_ABC& ConsignResolver_ABC::GetConsign( int requestId )
-{
-    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
-    if( it == consignsData_.end() )
-    {
-        ConsignData_ABC* pConsign = CreateConsignData( requestId );
-        consignsData_[ requestId ] = pConsign;
-        return *pConsign;
-    }
-    return *it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::DestroyConsignData
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::DestroyConsignData( int requestId )
-{
-    std::map< int, ConsignData_ABC* >::iterator it = consignsData_.find( requestId );
-    if( it != consignsData_.end() )
-    {
-        delete it->second;
-        consignsData_.erase( it );
-    }
+    if( data.empty() )
+        return;
+    CheckOutputFile( today );
+    if( !output_.is_open() )
+        return;
+    output_ << data << std::flush;
+    curLineIndex_ += boost::numeric_cast< int >( std::count( data.begin(), data.end(), '\n' ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,57 +192,6 @@ void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
         OpenFile();
         RemoveOldFiles( today );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetTime
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetTime( int tick, const std::string& simTime )
-{
-    curTick_ = tick;
-    simTime_ = simTime;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetSimTime
-// Created: MMC 2012-08-21
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::GetSimTime( std::string& simTime, std::string& tick ) const
-{
-    if( !simTime_.empty() )
-        simTime = simTime_;
-    if( curTick_ >= 0 )
-        tick = boost::lexical_cast< std::string >( curTick_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::GetNameResolver
-// Created: PMD 2012-09-02
-// -----------------------------------------------------------------------------
-const NameResolver_ABC& ConsignResolver_ABC::GetNameResolver() const
-{
-    return nameResolver_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetHeader
-// Created: MMC 2012-08-23
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::SetHeader( const ConsignData_ABC& consign )
-{
-    std::stringstream header;
-    consign >> header;
-    header_ = header.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::SetHeader
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-int ConsignResolver_ABC::GetConsignCount() const
-{
-    return static_cast< int >( consignsData_.size() );
 }
 
 }  // namespace logistic

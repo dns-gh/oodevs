@@ -20,6 +20,7 @@
 #include "tools/Language.h"
 #include "tools/SessionConfig.h"
 #include "tools/XmlStreamOperators.h"
+#include <tools/Exception.h>
 #include <tools/Path.h>
 #pragma warning( push, 0 )
 #include "QtCore/qTranslator.h"
@@ -38,11 +39,80 @@ namespace logistic
 
 namespace
 {
-    int localAppliArgc( 1 );
-    char* localAppliArgv[] = { " " };
 
-    typedef std::vector< ConsignResolver_ABC* >::iterator IT_ConsignResolvers;
+int localAppliArgc( 1 );
+char* localAppliArgv[] = { " " };
+
+enum E_ConsignEvent
+{
+    eConsignUnknown,
+    eConsignCreation,
+    eConsignUpdate,
+    eConsignDestruction,
+};
+
+struct ConsignEvent
+{
+    ConsignEvent( LogisticPlugin::E_LogisticType t, E_ConsignEvent a, int i )
+        : type( t ), action( a ), id( i )
+    {
+    }
+
+    LogisticPlugin::E_LogisticType type;
+    E_ConsignEvent action;
+    int id;
+};
+
+template< typename T >
+ConsignEvent MakeEvent( const T& msg, LogisticPlugin::E_LogisticType type, E_ConsignEvent action )
+{
+    return ConsignEvent( type, action,  msg.has_request() ? msg.request().id() : -1 );
 }
+
+#define MAKE_EVENT( M, T, E ) \
+    if( msg.has_##M() ) return MakeEvent( msg.M(), LogisticPlugin::T, E )
+
+ConsignEvent GetEventType( const sword::SimToClient& message )
+{
+    const auto& msg = message.message();
+    MAKE_EVENT( log_funeral_handling_creation,    eLogisticType_Funeral, eConsignCreation );
+    MAKE_EVENT( log_funeral_handling_update,      eLogisticType_Funeral, eConsignUpdate );
+    MAKE_EVENT( log_funeral_handling_destruction, eLogisticType_Funeral, eConsignDestruction );
+
+    MAKE_EVENT( log_maintenance_handling_creation,    eLogisticType_Maintenance, eConsignCreation );
+    MAKE_EVENT( log_maintenance_handling_update,      eLogisticType_Maintenance, eConsignUpdate );
+    MAKE_EVENT( log_maintenance_handling_destruction, eLogisticType_Maintenance, eConsignDestruction );
+
+    MAKE_EVENT( log_medical_handling_creation,    eLogisticType_Medical, eConsignCreation );
+    MAKE_EVENT( log_medical_handling_update,      eLogisticType_Medical, eConsignUpdate );
+    MAKE_EVENT( log_medical_handling_destruction, eLogisticType_Medical, eConsignDestruction );
+
+    MAKE_EVENT( log_supply_handling_creation,    eLogisticType_Supply, eConsignCreation );
+    MAKE_EVENT( log_supply_handling_update,      eLogisticType_Supply, eConsignUpdate );
+    MAKE_EVENT( log_supply_handling_destruction, eLogisticType_Supply, eConsignDestruction );
+
+    return ConsignEvent( LogisticPlugin::eNbrLogisticType, eConsignUnknown, -1 );
+}
+#undef MAKE_EVENT
+
+std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type, int id )
+{
+    const auto idString = boost::lexical_cast< std::string >( id );
+    switch( type )
+    {
+        case LogisticPlugin::eLogisticType_Funeral:
+            return std::auto_ptr< ConsignData_ABC >( new FuneralConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Maintenance:
+            return std::auto_ptr< ConsignData_ABC >( new MaintenanceConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Medical:
+            return std::auto_ptr< ConsignData_ABC >( new MedicalConsignData( idString ) );
+        case LogisticPlugin::eLogisticType_Supply:
+            return std::auto_ptr< ConsignData_ABC >( new SupplyConsignData( idString ) );
+    };
+    throw MASA_EXCEPTION( "unsupported logistic consign type" );
+}
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: LogisticPlugin constructor
@@ -52,6 +122,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
                                 const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile )
     : nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
+    , currentTick_( 0 )
 {
     if( qApp )
     {
@@ -60,13 +131,14 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     }
     ENT_Tr::InitTranslations();
 
-    resolvers_.resize( eNbrLogisticType );
-    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile, *nameResolver );
-    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver );
-    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver );
-    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver );
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        (*r)->InitHeader();
+    resolvers_.insert( eLogisticType_Maintenance, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( maintenanceFile, GetMaintenanceHeader() )));
+    resolvers_.insert( eLogisticType_Supply, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( supplyFile, GetSupplyHeader() )));
+    resolvers_.insert( eLogisticType_Funeral, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( funeralFile, GetFuneralHeader() )));
+    resolvers_.insert( eLogisticType_Medical, std::auto_ptr< ConsignResolver_ABC >(
+                new ConsignResolver_ABC( medicalFile, GetMedicalHeader() )));
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +147,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
 // -----------------------------------------------------------------------------
 LogisticPlugin::~LogisticPlugin()
 {
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        delete *r;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -96,33 +167,47 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 {
     if( message.message().has_control_begin_tick() )
     {
-        int currentTick = message.message().control_begin_tick().current_tick();
-        std::string simTime = message.message().control_begin_tick().date_time().data();        
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick, simTime );
+        const int tick = message.message().control_begin_tick().current_tick();
+        if( tick >= 0 )
+            currentTick_ = tick;
+        const std::string time = message.message().control_begin_tick().date_time().data();        
+        if( !time.empty() )
+            simTime_ = time;
+        return;
     }
-    else
+
+    const auto ev = GetEventType( message );
+    auto itResolver = resolvers_.find( ev.type );
+    if( itResolver == resolvers_.end() || ev.id <= 0 )
+        return;
+    auto resolver = itResolver->second;
+
+    auto it = consigns_.find( ev.id );
+    if( ev.action == eConsignCreation || it == consigns_.end() )
     {
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            if( (*r)->Receive( message, today ) )
-                break;
-    }
+        auto consign = NewConsign( ev.type, ev.id );
+        if( it == consigns_.end() )
+            it = consigns_.insert( ev.id, consign ).first;
+        else
+            consigns_.replace( it, consign );
+    } 
+    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
+        resolver->Write( it->second->ToString(), today );
+    if( ev.action == eConsignDestruction )
+        consigns_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPlugin::GetConsignCount
+// Name: LogisticPlugin::DebugGetConsignCount
 // Created: MMC 2012-09-11
 // -----------------------------------------------------------------------------
-int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
+int LogisticPlugin::DebugGetConsignCount( E_LogisticType eLogisticType ) const
 {
-    size_t resolverIndex = static_cast< size_t >( eLogisticType );
-    if( resolverIndex < resolvers_.size() )
-    {
-        const ConsignResolver_ABC* pResolver = resolvers_[ resolverIndex ];
-        if( pResolver )
-            return pResolver->GetConsignCount();
-    }
-    return 0;
+    int count = 0;
+    for( auto it = consigns_.cbegin(); it != consigns_.cend(); ++it )
+        if( it->second->GetType() == eLogisticType )
+            ++count;
+    return count;
 }
 
 // -----------------------------------------------------------------------------
@@ -131,8 +216,8 @@ int LogisticPlugin::GetConsignCount( E_LogisticType eLogisticType ) const
 // -----------------------------------------------------------------------------
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        (*r)->SetMaxLinesInFile( maxLines );
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        r->second->SetMaxLinesInFile( maxLines );
 }
 
 

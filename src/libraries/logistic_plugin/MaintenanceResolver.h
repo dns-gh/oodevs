@@ -28,16 +28,18 @@ class MaintenanceConsignData : public ConsignData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceConsignData( const std::string& requestId ) : ConsignData_ABC( requestId ) {}
+             MaintenanceConsignData( const std::string& requestId )
+                 : ConsignData_ABC( LogisticPlugin::eLogisticType_Maintenance, requestId ) {}
     virtual ~MaintenanceConsignData() {}
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void operator>>( std::stringstream& output ) const;
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver );
-    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver );
-    //@}
+private:
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
+    virtual void WriteConsign( ConsignWriter& output ) const;
+    void ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
+            const NameResolver_ABC& resolver );
+    void ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
+            const NameResolver_ABC& resolver );
 
 public:
     //! @name Member data
@@ -57,35 +59,8 @@ public:
     //@}
 };
 
-// =============================================================================
-/** @class  MaintenanceResolver
-    @brief  MaintenanceResolver
-*/
-// Created: MMC 2012-08-06
-// =============================================================================
-class MaintenanceResolver : public ConsignResolver_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
-    virtual ~MaintenanceResolver();
-    //@}
+std::string GetMaintenanceHeader();
 
-    //! @name Operations
-    //@{
-    virtual void InitHeader();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual bool IsManageable( const sword::SimToClient& message );
-    virtual bool IsEmptyLineMessage( const sword::SimToClient& message );
-    virtual void ManageMessage( const sword::SimToClient& message );
-    virtual ConsignData_ABC* CreateConsignData( int requestId );
-    //@}
-};
 }
 }
 

@@ -10,14 +10,15 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
-#include <sstream>
+#include "LogisticPlugin.h"
 #include <boost/noncopyable.hpp>
-#include "tools/FileWrapper.h"
 
 namespace plugins
 {
 namespace logistic
 {
+    class ConsignWriter;
+    class NameResolver_ABC;
 
 // =============================================================================
 /** @class  ConsignData_ABC
@@ -30,15 +31,24 @@ class ConsignData_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-            ConsignData_ABC( const std::string& requestId ) : requestId_( requestId ), separator_( " ; " ) {}
-    virtual ~ConsignData_ABC() {}
+             ConsignData_ABC( LogisticPlugin::E_LogisticType type, const std::string& requestId );
+    virtual ~ConsignData_ABC();
     //@}
+
+    // Returns true if the consign was updated and a log entry should be added.
+    bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
+           int tick, const std::string& time );
 
     //! @name Operations
     //@{
-    virtual void operator>>( std::stringstream& output ) const = 0;
-    virtual void operator>>( tools::Ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
+    LogisticPlugin::E_LogisticType GetType() const;
+    int GetTick() const;
+    std::string ToString() const;
     //@}
+
+private:
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
+    virtual void WriteConsign( ConsignWriter& w ) const = 0;
 
 public:
     //! @name Member data
@@ -50,10 +60,11 @@ public:
 protected:
     //! @name Member data
     //@{
+    const LogisticPlugin::E_LogisticType type_;
     std::string requestId_;
-    const std::string separator_;
     //@}
 };
+
 }
 }
 

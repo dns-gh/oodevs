@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "SupplyResolver.h"
+#include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
@@ -18,36 +19,36 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsignData::Write
+// Name: SupplyConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void SupplyConsignData::operator>>( std::stringstream& output ) const
+void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 {
     if( recipientAutomats_.empty() )
     {
-        output << requestId_         << separator_
-            << tick_                 << separator_
-            << simTime_              << separator_   // << creationTick_         << separator_    << recipientId_       << separator_
-            << recipientAutomat_     << separator_   // << providerId_           << separator_
-            << provider_             << separator_   // << transportProviderId_  << separator_
-            << transportProvider_    << separator_   // << conveyorId_           << separator_
-            << conveyor_             << separator_   // << stateId_              << separator_
-            << state_                << separator_
+        output << requestId_
+            << tick_
+            << simTime_
+            << recipientAutomat_
+            << provider_
+            << transportProvider_
+            << conveyor_
+            << state_
             << stateEndTick_;
-        output  << std::endl;
+        output.End();
     }
     else if( !resources_.empty() )
         for( std::map< int, std::string >::const_iterator it = recipientAutomats_.begin(); it != recipientAutomats_.end(); ++it )
         {
             int recipientAutomatId = it->first;
-            output << requestId_         << separator_
-                << tick_                 << separator_
-                << simTime_              << separator_   // << creationTick_         <<  separator_   << recipientId_    <<  separator_
-                << it->second            << separator_   // << providerId_           <<  separator_
-                << provider_             << separator_   // << transportProviderId_  <<  separator_
-                << transportProvider_    << separator_   // << conveyorId_           <<  separator_
-                << conveyor_             << separator_   // << stateId_              <<  separator_
-                << state_                << separator_
+            output << requestId_
+                << tick_
+                << simTime_
+                << it->second 
+                << provider_
+                << transportProvider_
+                << conveyor_
+                << state_
                 << stateEndTick_;
 
             for( std::map< int, Resource >::const_iterator itRes = resources_.begin(); itRes != resources_.end(); ++itRes )
@@ -55,14 +56,13 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
                 const Resource& resource = itRes->second;
                 if( resource.recipientAutomatId_ == recipientAutomatId )
                 {
-                    output << separator_      // << resource.id_ << separator_
-                        << resource.type_       << separator_
-                        << resource.requested_  << separator_
-                        << resource.granted_    << separator_
+                    output << resource.type_
+                        << resource.requested_
+                        << resource.granted_
                         << resource.conveyed_;
                 }
             }
-            output  << std::endl;
+            output.End();
         }
 }
 
@@ -70,9 +70,9 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg, ConsignResolver_ABC& resolver )
+void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
@@ -105,23 +105,21 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             nameResolver.GetFormationName( transportId, transportProvider_ );
         }
     }
-    resolver.AddToLineIndex( 1 );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
         if( entTick > 0 )
             stateEndTick_ = boost::lexical_cast< std::string >( entTick );
-        if( entTick <= resolver.GetCurrentTick() )
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_convoyer() )
@@ -166,68 +164,25 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
             }
         }
     }
-    resolver.AddToLineIndex( recipientAutomats_.empty()? 1 : static_cast< int >( recipientAutomats_.size() ) );
-    return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-SupplyResolver::SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : ConsignResolver_ABC( name, nameResolver )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver destructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-SupplyResolver::~SupplyResolver()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool SupplyResolver::IsManageable( const sword::SimToClient& message )
-{
-    return      message.message().has_log_supply_handling_creation()
-            ||  message.message().has_log_supply_handling_update()
-            ||  message.message().has_log_supply_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool SupplyResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_supply_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::ManageMessage
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void SupplyResolver::ManageMessage( const sword::SimToClient& message )
+bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
+        const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_supply_handling_creation() )
-        TraceConsign< ::sword::LogSupplyHandlingCreation, SupplyConsignData >( message.message().log_supply_handling_creation(), output_ );
+    {
+        ManageMessage( message.message().log_supply_handling_creation(), resolver );
+        return true;
+    }
     if( message.message().has_log_supply_handling_update() )
-        TraceConsign< ::sword::LogSupplyHandlingUpdate, SupplyConsignData >( message.message().log_supply_handling_update(), output_ );
-    if( message.message().has_log_supply_handling_destruction() && message.message().log_supply_handling_destruction().has_request() )
-        DestroyConsignData( message.message().log_supply_handling_destruction().request().id() );
+    {
+        ManageMessage( message.message().log_supply_handling_update(), resolver );
+        return true;
+    }
+    return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void SupplyResolver::InitHeader()
+std::string plugins::logistic::GetSupplyHeader()
 {
     SupplyConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
     consign.tick_               = tools::translate( "logistic", "tick" ).toStdString();
@@ -257,14 +212,5 @@ void SupplyResolver::InitHeader()
         resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
         consign.resources_[ i ] = resource;
     }
-    SetHeader( consign );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResolver::MaintenanceResolver
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-ConsignData_ABC* SupplyResolver::CreateConsignData( int requestId )
-{
-    return static_cast< ConsignData_ABC* >( new SupplyConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
+    return consign.ToString();
 }

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "MaintenanceResolver.h"
+#include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/FileWrapper.h"
@@ -15,29 +16,30 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceConsignData::Write
+// Name: MaintenanceConsignData::WriteConsign
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-void MaintenanceConsignData::operator>>( std::stringstream& output ) const
+void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 {
-    output  << requestId_    << separator_
-            << tick_         << separator_
-            << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
-            << unit_         << separator_   // << providerId_       << separator_
-            << provider_     << separator_   // << equipmentId_      << separator_
-            << equipment_    << separator_   // << breakdownId_      << separator_
-            << breakdown_    << separator_   // << stateId_          << separator_
-            << state_        << separator_
-            << stateEndTick_ << std::endl;
+    output  << requestId_
+            << tick_
+            << simTime_
+            << unit_
+            << provider_
+            << equipment_
+            << breakdown_
+            << state_
+            << stateEndTick_;
+    output.End();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver )
+void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -57,23 +59,21 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
         nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
-    resolver.AddToLineIndex( 1 );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver )
+void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
+        const NameResolver_ABC& nameResolver )
 {
-    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
         if( entTick > 0 )
             stateEndTick_ = boost::lexical_cast< std::string >( entTick );
-        if( entTick <= resolver.GetCurrentTick() )
+        if( entTick <= GetTick() )
             stateEndTick_.clear();
     }
     if( msg.has_unit() )
@@ -94,68 +94,25 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    resolver.AddToLineIndex( 1 );
-    return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver constructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver )
-    : ConsignResolver_ABC( name, nameResolver )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver destructor
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-MaintenanceResolver::~MaintenanceResolver()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::IsManageable
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-bool MaintenanceResolver::IsManageable( const sword::SimToClient& message )
-{
-    return      message.message().has_log_maintenance_handling_creation()
-            ||  message.message().has_log_maintenance_handling_update()
-            ||  message.message().has_log_maintenance_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::IsEmptyLineMessage
-// Created: MMC 2012-09-11
-// -----------------------------------------------------------------------------
-bool MaintenanceResolver::IsEmptyLineMessage( const sword::SimToClient& message )
-{
-    return message.message().has_log_maintenance_handling_destruction();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::ManageMessage
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
+bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
+        const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_maintenance_handling_creation() )
-        TraceConsign< ::sword::LogMaintenanceHandlingCreation, MaintenanceConsignData >( message.message().log_maintenance_handling_creation(), output_ );
+    {
+        ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
+        return true;
+    }
     if( message.message().has_log_maintenance_handling_update() )
-        TraceConsign< ::sword::LogMaintenanceHandlingUpdate, MaintenanceConsignData >( message.message().log_maintenance_handling_update(), output_ );
-    if( message.message().has_log_maintenance_handling_destruction() && message.message().log_maintenance_handling_destruction().has_request() )
-        DestroyConsignData( message.message().log_maintenance_handling_destruction().request().id() );
+    {
+        ManageMessage( message.message().log_maintenance_handling_update(), resolver );
+        return true;
+    }
+    return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::InitHeader
-// Created: MMC 2012-08-24
-// -----------------------------------------------------------------------------
-void MaintenanceResolver::InitHeader()
+std::string plugins::logistic::GetMaintenanceHeader()
 {
     MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
     consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
@@ -172,14 +129,6 @@ void MaintenanceResolver::InitHeader()
     consign.equipment_      = tools::translate( "logistic", "equipment" ).toStdString();
     consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toStdString();
     consign.state_          = tools::translate( "logistic", "state" ).toStdString();
-    SetHeader( consign );
+    return consign.ToString();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MaintenanceResolver::MaintenanceResolver
-// Created: MMC 2012-09-03
-// -----------------------------------------------------------------------------
-ConsignData_ABC* MaintenanceResolver::CreateConsignData( int requestId )
-{
-    return static_cast< ConsignData_ABC* >( new MaintenanceConsignData( boost::lexical_cast< std::string >( requestId ) ) ); 
-}
