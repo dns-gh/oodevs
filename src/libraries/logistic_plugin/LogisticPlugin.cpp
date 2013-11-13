@@ -69,51 +69,31 @@ ConsignEvent MakeEvent( const T& msg, LogisticPlugin::E_LogisticType type, E_Con
     return ConsignEvent( type, action,  msg.has_request() ? msg.request().id() : -1 );
 }
 
+#define MAKE_EVENT( M, T, E ) \
+    if( msg.has_##M() ) return MakeEvent( msg.M(), LogisticPlugin::T, E )
+
 ConsignEvent GetEventType( const sword::SimToClient& message )
 {
     const auto& msg = message.message();
-    if( msg.has_log_funeral_handling_creation() )
-        return MakeEvent( msg.log_funeral_handling_creation(),
-                LogisticPlugin::eLogisticType_Funeral, eConsignCreation );
-    if( msg.has_log_funeral_handling_update() )
-        return MakeEvent( msg.log_funeral_handling_update(),
-            LogisticPlugin::eLogisticType_Funeral, eConsignUpdate );
-    if( msg.has_log_funeral_handling_destruction() )
-        return MakeEvent( msg.log_funeral_handling_destruction(),
-            LogisticPlugin::eLogisticType_Funeral, eConsignDestruction );
+    MAKE_EVENT( log_funeral_handling_creation,    eLogisticType_Funeral, eConsignCreation );
+    MAKE_EVENT( log_funeral_handling_update,      eLogisticType_Funeral, eConsignUpdate );
+    MAKE_EVENT( log_funeral_handling_destruction, eLogisticType_Funeral, eConsignDestruction );
 
-    if( msg.has_log_maintenance_handling_creation() )
-        return MakeEvent( msg.log_maintenance_handling_creation(),
-            LogisticPlugin::eLogisticType_Maintenance, eConsignCreation );
-    if( msg.has_log_maintenance_handling_update() )
-        return MakeEvent( msg.log_maintenance_handling_update(),
-            LogisticPlugin::eLogisticType_Maintenance, eConsignUpdate );
-    if( msg.has_log_maintenance_handling_destruction() )
-        return MakeEvent( msg.log_maintenance_handling_destruction(),
-            LogisticPlugin::eLogisticType_Maintenance, eConsignDestruction );
+    MAKE_EVENT( log_maintenance_handling_creation,    eLogisticType_Maintenance, eConsignCreation );
+    MAKE_EVENT( log_maintenance_handling_update,      eLogisticType_Maintenance, eConsignUpdate );
+    MAKE_EVENT( log_maintenance_handling_destruction, eLogisticType_Maintenance, eConsignDestruction );
 
-    if( msg.has_log_medical_handling_creation() )
-        return MakeEvent( msg.log_medical_handling_creation(),
-            LogisticPlugin::eLogisticType_Medical, eConsignCreation );
-    if( msg.has_log_medical_handling_update() )
-        return MakeEvent( msg.log_medical_handling_update(),
-            LogisticPlugin::eLogisticType_Medical, eConsignUpdate );
-    if( msg.has_log_medical_handling_destruction() )
-        return MakeEvent( msg.log_medical_handling_destruction(),
-            LogisticPlugin::eLogisticType_Medical, eConsignDestruction );
+    MAKE_EVENT( log_medical_handling_creation,    eLogisticType_Medical, eConsignCreation );
+    MAKE_EVENT( log_medical_handling_update,      eLogisticType_Medical, eConsignUpdate );
+    MAKE_EVENT( log_medical_handling_destruction, eLogisticType_Medical, eConsignDestruction );
 
-    if( msg.has_log_supply_handling_creation() )
-        return MakeEvent( msg.log_supply_handling_creation(),
-            LogisticPlugin::eLogisticType_Supply, eConsignCreation );
-    if( msg.has_log_supply_handling_update() )
-        return MakeEvent( msg.log_supply_handling_update(),
-            LogisticPlugin::eLogisticType_Supply, eConsignUpdate );
-    if( msg.has_log_supply_handling_destruction() )
-        return MakeEvent( msg.log_supply_handling_destruction(),
-            LogisticPlugin::eLogisticType_Supply, eConsignDestruction );
+    MAKE_EVENT( log_supply_handling_creation,    eLogisticType_Supply, eConsignCreation );
+    MAKE_EVENT( log_supply_handling_update,      eLogisticType_Supply, eConsignUpdate );
+    MAKE_EVENT( log_supply_handling_destruction, eLogisticType_Supply, eConsignDestruction );
 
     return ConsignEvent( LogisticPlugin::eNbrLogisticType, eConsignUnknown, -1 );
 }
+#undef MAKE_EVENT
 
 std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type, int id )
 {
@@ -218,7 +198,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPlugin::GetConsignCount
+// Name: LogisticPlugin::DebugGetConsignCount
 // Created: MMC 2012-09-11
 // -----------------------------------------------------------------------------
 int LogisticPlugin::DebugGetConsignCount( E_LogisticType eLogisticType ) const
