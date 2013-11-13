@@ -60,30 +60,31 @@
   <Style name="forest">
     <Rule>
       &maxscale_zoom8;
-<!--
       &minscale_zoom13;
--->
-      <PolygonSymbolizer fill="#336600"/>
+      <PolygonSymbolizer fill="#8DC56C"/>
     </Rule>
-<!--
     <Rule>
       &maxscale_zoom14;
-      <PolygonPatternSymbolizer file="image/forest.png"/>
+      <PolygonPatternSymbolizer file="symbols/forest.png"/>
     </Rule>
--->
   </Style>
 
   <Style name="plantation">
     <Rule>
       &maxscale_zoom8;
-      <PolygonSymbolizer fill="#5C8A00"/>
+      &minscale_zoom13;
+      <PolygonSymbolizer fill="#9ED88F"/>
+    </Rule>
+    <Rule>
+      &maxscale_zoom14;
+      <PolygonPatternSymbolizer file="symbols/orchard.png"/>
     </Rule>
   </Style>
 
   <Style name="swamp">
     <Rule>
-      &maxscale_zoom8;
-      <PolygonSymbolizer fill="#8A5C2E"/>
+      &maxscale_zoom14;
+      <PolygonPatternSymbolizer file="symbols/marsh.png"/>
     </Rule>
   </Style>
 
@@ -138,24 +139,19 @@
   <Style name="dune">
     <Rule>
       <Filter>[MASACODE] = 10005</Filter>
-      <PolygonSymbolizer fill="#FFEDA5"/>
+      <PolygonSymbolizer fill="#FFDF88"/>
     </Rule>
   </Style>
 
   <Style name="cliff">
     <Rule>
+      &maxscale_zoom14;
+      <LinePatternSymbolizer file="symbols/cliff2.png" />
+    </Rule>
+    <Rule>
       &maxscale_zoom13;
       &minscale_zoom14;
-      <LineSymbolizer stroke-width="2" stroke="black" stroke-linejoin="round"/>
-    </Rule>
-    <Rule>
-      &maxscale_zoom15;
-      &minscale_zoom16;
-      <LineSymbolizer stroke-width="4" stroke="black" stroke-linejoin="round"/>
-    </Rule>
-    <Rule>
-      &maxscale_zoom17;
-      <LineSymbolizer stroke-width="6" stroke="black" stroke-linejoin="round"/>
+      <LinePatternSymbolizer file="symbols/cliff.png" />
     </Rule>
   </Style>
 
@@ -231,7 +227,7 @@
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom13;
-      <ShieldSymbolizer size="10" fill="#fff" placement="line" file="image/mot_shield.png" spacing="750" minimum-distance="30" fontset-name="bold-fonts">[NAME]</ShieldSymbolizer>
+      <ShieldSymbolizer size="10" fill="#fff" placement="line" file="symbols/mot_shield.png" spacing="750" minimum-distance="30" fontset-name="bold-fonts">[NAME]</ShieldSymbolizer>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
@@ -471,6 +467,22 @@
     </Rule>
   </Style>
 
+  <Layer name="water" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>water</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">water.shp</Parameter>
+      </Datasource>
+  </Layer>
+
+  <Layer name="swamp" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>water</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">swamp.shp</Parameter>
+      </Datasource>
+  </Layer>
+
   <Layer name="forest" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" >
       <StyleName>forest</StyleName>
       <Datasource>
@@ -517,14 +529,6 @@
       <Datasource>
         <Parameter name="type">shape</Parameter>
         <Parameter name="file">cliff.shp</Parameter>
-      </Datasource>
-  </Layer>
-
-  <Layer name="water" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-      <StyleName>water</StyleName>
-      <Datasource>
-        <Parameter name="type">shape</Parameter>
-        <Parameter name="file">water.shp</Parameter>
       </Datasource>
   </Layer>
 
