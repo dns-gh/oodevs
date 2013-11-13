@@ -182,6 +182,7 @@ void AgentServerMsgMgr::OnReceiveUnitCreation( const sword::UnitCreation& messag
 void AgentServerMsgMgr::OnReceiveUnitDestruction( const sword::UnitDestruction& message )
 {
     GetModel().logistics_.DestroyAgent( message.unit().id() );
+    GetModel().limits_.DestroyAgent( message.unit().id() );
     GetModel().agents_.DestroyAgent( message );
 }
 

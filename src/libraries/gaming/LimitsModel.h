@@ -49,6 +49,7 @@ public:
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );
+    void DestroyAgent( unsigned long id );
     void Purge();
     //@}
 

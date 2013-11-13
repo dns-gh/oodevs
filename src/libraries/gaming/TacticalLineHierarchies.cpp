@@ -72,18 +72,23 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // -----------------------------------------------------------------------------
 void TacticalLineHierarchies::Update( const sword::Diffusion& message )
 {
+    const Entity_ABC* superior = 0;
     if( message.has_unit() )
+    {
         diffusion_ = eUnit;
+        superior = agents_.Find( message.unit().id() );
+    }
     else if( message.has_automat() )
+    {
         diffusion_ = eAutomat;
+        superior = automats_.Find( message.automat().id() );
+    }
     else if( message.has_formation() )
+    {
         diffusion_ = eFormation;
-    if( diffusion_ == eUnit )
-        SetSuperior( &agents_.Get( message.unit().id() ) );
-    else if( diffusion_ == eAutomat )
-        SetSuperior( &automats_.Get( message.automat().id() ) );
-    else if( diffusion_ == eFormation )
-        SetSuperior( &formations_.Get( message.formation().id() ) );
+        superior = formations_.Find( message.formation().id() );
+    }
+    SetSuperior( superior );   
 }
 
 // -----------------------------------------------------------------------------

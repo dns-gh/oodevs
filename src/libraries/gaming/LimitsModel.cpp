@@ -11,6 +11,7 @@
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TacticalLineFactory.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -82,4 +83,22 @@ void LimitsModel::DeleteLima( unsigned long id )
     kernel::TacticalLine_ABC* line = Find( id );
     Remove( id );
     delete line;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::DestroyAgent
+// Created: LDC 2013-11-12
+// -----------------------------------------------------------------------------
+void LimitsModel::DestroyAgent( unsigned long id )
+{
+    std::vector< unsigned long > idToRemove;
+    auto functor = [ id, &idToRemove ] ( const kernel::TacticalLine_ABC& element )
+    {
+        const kernel::Hierarchies* hierarchy = element.Retrieve< kernel::TacticalHierarchies >();
+        if( hierarchy && hierarchy->GetSuperior() && hierarchy->GetSuperior()->GetId() == id )
+            idToRemove.push_back( element.GetId() );
+    };
+    Apply( functor );
+    for( auto it = idToRemove.begin(); it != idToRemove.end(); ++it )
+        DeleteLimit( *it );
 }
