@@ -946,7 +946,7 @@ unsigned long MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const swo
     unsigned long ret = 0;
     if( MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id ))
     {
-        if ( pAgent->GetKnowledgeGroup()->GetId() != id_ )
+        if( !pAgent->IsMarkedForDestruction() && pAgent->GetKnowledgeGroup()->GetId() != id_ )
         {
             DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( *pAgent );
             knowledgeAgent.HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
@@ -981,6 +981,8 @@ unsigned long MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const swo
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception )
 {
+    if( agent.IsMarkedForDestruction() )
+        return;
     additionalPerceptions_.insert( agent.GetID() );
     for( auto it( knowledgeGroups_.begin() ); it != knowledgeGroups_.end(); ++it )
     {
@@ -1326,6 +1328,8 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MI
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromCrowdPerception( MIL_Agent_ABC& agent, int currentTimeStep )
 {
+    if( agent.IsMarkedForDestruction() )
+        return;
     DEC_Knowledge_Agent& knowledgeAgent = GetAgentKnowledgeToUpdate( agent );
     knowledgeAgent.UpdateFromCrowdPerception( currentTimeStep );
 }
@@ -1396,7 +1400,12 @@ void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowl
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
 {
     if( perception.IsAvailable() )
-        GetAgentKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception, currentTimeStep );
+    {
+        const MIL_Agent_ABC& agent = perception.GetAgentPerceived();
+        if( agent.IsMarkedForDestruction() )
+            return;
+        GetAgentKnowledgeToUpdate( agent ).Update( perception, currentTimeStep );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1407,7 +1416,12 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Know
 void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
 {
     if( agentKnowledge.IsValid() && ( !parent_ || parent_->GetType().GetKnowledgeCommunicationDelay() <= currentTimeStep ) )
-        GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+    {
+        const MIL_Agent_ABC& agent = agentKnowledge.GetAgentKnown();
+        if( agent.IsMarkedForDestruction() )
+            return;
+        GetAgentKnowledgeToUpdate( agent ).Update( agentKnowledge, currentTimeStep );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1467,6 +1481,8 @@ DEC_Knowledge_Population& MIL_KnowledgeGroup::CreateKnowledgePopulation( MIL_Pop
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived )
 {
+    if( perceived.IsMarkedForDestruction() )
+        return;
     DEC_Knowledge_Agent& agent = GetAgentKnowledgeToUpdate( perceived );
     agent.Extrapolate();
     agent.UpdateOnNetwork();
