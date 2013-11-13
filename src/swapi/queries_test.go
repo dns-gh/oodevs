@@ -54,7 +54,7 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	fill(&p.ReadOnlyCrowds)
 	fill(&p.ReadWriteCrowds)
 	d.Profiles[p.Login] = p
-	c.Assert(model.IsUnitInProfile(0, "noname"), Equals, false)
+	c.Assert(d.IsUnitInProfile(0, p), Equals, false)
 
 	// read-only automat
 	u := &Unit{
@@ -63,19 +63,19 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	}
 	d.Units[u.Id] = u
 	fill(&p.ReadOnlyAutomats, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
 	fill(&p.ReadOnlyAutomats)
 
 	// read-write automat
 	fill(&p.ReadWriteAutomats, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
 	fill(&p.ReadWriteAutomats)
 
 	// unknown automat
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, false)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, false)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, false)
 
 	// read-only formation
 	a := &Automat{
@@ -84,22 +84,22 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	}
 	d.Automats[a.Id] = a
 	fill(&p.ReadOnlyFormations, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
 	fill(&p.ReadOnlyFormations)
 
 	// read-write formation
 	fill(&p.ReadWriteFormations, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
 	fill(&p.ReadWriteFormations)
 
 	// unknown formation
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, false)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, false)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, false)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, false)
 
 	// read-only parent formation
 	f1 := &Formation{
@@ -108,41 +108,41 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	}
 	d.Formations[f1.Id] = f1
 	fill(&p.ReadOnlyFormations, 2)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, true)
 	fill(&p.ReadOnlyFormations)
 
 	// read-write parent formation
 	fill(&p.ReadWriteFormations, 2)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, true)
 	fill(&p.ReadWriteFormations)
 
 	// unknown parent formation
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, false)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, false)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, false)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, false)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, false)
 
 	// unknown population
-	c.Assert(model.IsPopulationInProfile(1, "noname"), Equals, false)
+	c.Assert(d.IsPopulationInProfile(1, p), Equals, false)
 
 	// read-only crowd
 	fill(&p.ReadOnlyCrowds, 1)
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
 	fill(&p.ReadOnlyCrowds)
 
 	// read-write crowd
 	fill(&p.ReadWriteCrowds, 1)
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
 	fill(&p.ReadWriteCrowds)
 
 	// unknown crowd
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, false)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, false)
 
 	// read-only party
 	f2 := &Formation{
@@ -161,43 +161,32 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	}
 	d.Crowds[c0.Id] = c0
 	fill(&p.ReadOnlyParties, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, true)
-	c.Assert(model.IsPopulationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsPartyInProfile(1, "noname"), Equals, true)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, true)
+	c.Assert(d.IsPopulationInProfile(1, p), Equals, true)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
+	c.Assert(d.IsPartyInProfile(1, p), Equals, true)
 	fill(&p.ReadOnlyParties)
 
 	// read-write party
 	fill(&p.ReadWriteParties, 1)
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, true)
-	c.Assert(model.IsPopulationInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, true)
-	c.Assert(model.IsPartyInProfile(1, "noname"), Equals, true)
-	fill(&p.ReadWriteParties)
-
-	// unknown profiles
-	fill(&p.ReadWriteParties, 1)
-	c.Assert(model.IsUnitInProfile(1, "bad"), Equals, false)
-	c.Assert(model.IsAutomatInProfile(1, "bad"), Equals, false)
-	c.Assert(model.IsFormationInProfile(1, "bad"), Equals, false)
-	c.Assert(model.IsFormationInProfile(2, "bad"), Equals, false)
-	c.Assert(model.IsPopulationInProfile(1, "bad"), Equals, false)
-	c.Assert(model.IsCrowdInProfile(1, "bad"), Equals, false)
-	c.Assert(model.IsPartyInProfile(1, "bad"), Equals, false)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, true)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, true)
+	c.Assert(d.IsPopulationInProfile(1, p), Equals, true)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
+	c.Assert(d.IsPartyInProfile(1, p), Equals, true)
 	fill(&p.ReadWriteParties)
 
 	// unknown party
-	c.Assert(model.IsUnitInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsAutomatInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsFormationInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsFormationInProfile(2, "noname"), Equals, false)
-	c.Assert(model.IsPopulationInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsCrowdInProfile(1, "noname"), Equals, false)
-	c.Assert(model.IsPartyInProfile(1, "noname"), Equals, false)
+	c.Assert(d.IsUnitInProfile(1, p), Equals, false)
+	c.Assert(d.IsAutomatInProfile(1, p), Equals, false)
+	c.Assert(d.IsFormationInProfile(1, p), Equals, false)
+	c.Assert(d.IsFormationInProfile(2, p), Equals, false)
+	c.Assert(d.IsPopulationInProfile(1, p), Equals, false)
+	c.Assert(d.IsCrowdInProfile(1, p), Equals, false)
+	c.Assert(d.IsPartyInProfile(1, p), Equals, false)
 }
