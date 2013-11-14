@@ -19,6 +19,7 @@
 #include "EventSupervisorActionWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
+#include "clients_kernel/ActionController.h"
 
 #include "clients_kernel/Time_ABC.h"
 
@@ -63,18 +64,18 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     , editing_( false )
     , event_( 0 )
     , selected_( controllers )
+    , lastOrder_( eEventTypes_Order )
 {
     setWindowTitle( tr( "Event edition" ) );
     setFloating( true );
     hide();
 
     // Header / footer
-    topWidget_ = new EventTopWidget();
-    bottomWidget_ = new EventBottomWidget( simulation_, controllers.actions_, config );
+    topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
+    bottomWidget_ = new EventBottomWidget( config );
 
     // Content
     EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
-    connect( bottomWidget_, SIGNAL( PlanningModeToggled( bool ) ), orderWidget, SLOT( OnPlanningModeToggled( bool ) ) );
 
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
@@ -111,14 +112,19 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     SetContentVisible( false );
 
     // Connections
-    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), bottomWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
-    connect( this, SIGNAL( EditingChanged( bool ) ), bottomWidget_, SLOT( OnEditingChanged( bool ) ) );
-    connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
-    connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
-    connect( bottomWidget_, SIGNAL( Save() ),           this, SLOT( OnSave() ) );
-    connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
-    connect( orderWidget, SIGNAL( EnableTriggerEvent( bool ) ), bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
-    connect( orderWidget, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( this, SIGNAL( BeginDateChanged( const QDateTime& ) ), topWidget_, SLOT( SetBeginDateTime( const QDateTime& ) ) );
+    connect( this, SIGNAL( EditingChanged( bool ) ),               topWidget_, SLOT( OnEditingChanged( bool ) ) );
+
+    connect( topWidget_,    SIGNAL( Save() ),       this, SLOT( OnSave() ) );
+    connect( topWidget_,    SIGNAL( SaveAs() ),     this, SLOT( OnSaveAs() ) );
+    connect( bottomWidget_, SIGNAL( Trigger() ),    this, SLOT( OnTrigger() ) );
+    connect( bottomWidget_, SIGNAL( Discard() ),    this, SLOT( OnDiscard() ) );
+    connect( bottomWidget_, SIGNAL( ShowDetail() ), this, SLOT( OnShowDetail() ) );
+
+    connect( orderWidget,   SIGNAL( EnableTriggerEvent( bool ) ),                      bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
+    connect( orderWidget,   SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this,          SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    controllers_.actions_.Unregister( *this );
+    controllers_.eventActions_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +133,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 EventDockWidget::~EventDockWidget()
 {
-    // NOTHING
+    controllers_.eventActions_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +142,16 @@ EventDockWidget::~EventDockWidget()
 // -----------------------------------------------------------------------------
 void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime )
 {
-    event_.reset( factory_.Create( type ) );
-    if( dateTime.isValid() )
-        emit BeginDateChanged( dateTime );
-    Configure( type, false, true );
-    ShowWidget( this );
+    if( event_.get() )
+        StartEdition( *event_ );
+    else
+    {
+        event_.reset( factory_.Create( type ) );
+        if( dateTime.isValid() )
+            emit BeginDateChanged( dateTime );
+        Configure( type, false, true );
+        ShowWidget( this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +161,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 void EventDockWidget::StartEdition( const Event& event )
 {
     event_.reset( event.Clone() );
-    Configure( event.GetType(), true, true );
+    Configure( event_->GetType(), true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,6 +225,7 @@ void EventDockWidget::Purge()
     bottomWidget_->Purge();
     detailWidget_->Purge();
     SetContentVisible( false );
+    event_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +234,8 @@ void EventDockWidget::Purge()
 // -----------------------------------------------------------------------------
 void EventDockWidget::Fill()
 {
-    assert( event_.get() );
+    if( !event_.get() )
+        return;
     topWidget_->Fill( *event_ );
     currentWidget_->Fill( *event_ );
     bottomWidget_->Fill( *event_ );
@@ -251,6 +264,9 @@ void EventDockWidget::OnTrigger()
         if( editing_ && event_.get() && !event_->GetEvent().done )
             emit DeleteEvent( event_->GetEvent().uuid );
         currentWidget_->Trigger();
+        if( event_.get() )
+            lastOrder_ = event_->GetType();
+        event_.reset();
     }
     else
     {
@@ -289,19 +305,40 @@ void EventDockWidget::OnDiscard()
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnSave()
 {
+    if( !event_.get() )
+        event_.reset( factory_.Create( lastOrder_ ) );
+
     timeline::Event event;
     Commit( event );
-    assert( event_.get() );
-    bool create = !editing_ || event_->GetEvent().done;
-    event.uuid = ( create ) ? boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) : event_->GetEvent().uuid;
+    if( event_->GetEvent().done )
+        throw MASA_EXCEPTION( "Can save an already triggered event" );
+    event.uuid = editing_ ? event_->GetEvent().uuid : boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event_->Update( event );
-    if( create )
-        emit CreateEvent( event );
-    else
+    if( editing_ )
         emit EditEvent( event );
-
-    if( !editing_ )
+    else
+    {
+        emit CreateEvent( event );
         SetEditing( true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnSaveAs
+// Created: ABR 2013-10-30
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnSaveAs()
+{
+    if( !event_.get() )
+        return;
+    timeline::Event event;
+    Commit( event );
+    if( !editing_ )
+        throw MASA_EXCEPTION( "Can save as a new event" );
+    event.uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    event_->Update( event );
+    emit CreateEvent( event );
+    SetEditing( true );
 }
 
 // -----------------------------------------------------------------------------

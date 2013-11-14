@@ -59,6 +59,7 @@ signals:
     //! @name Signals
     //@{
     void CreateEvent( const timeline::Event& );
+    void SelectEvent( const std::string& );
     void EditEvent( const timeline::Event& );
     void DeleteEvent( const std::string& );
 
