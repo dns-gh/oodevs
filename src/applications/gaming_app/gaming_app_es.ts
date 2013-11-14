@@ -3100,14 +3100,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">Grabar acciones en linea de tiempo activo a archivo</translation>
     </message>
     <message>
-        <source>Load timeline session file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save timeline session to file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timeline session files (*.timeline)</source>
         <translation type="unfinished"></translation>
     </message>

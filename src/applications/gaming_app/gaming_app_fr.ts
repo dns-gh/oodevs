@@ -3107,14 +3107,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Enregistrer les actions de la vue courante dans un fichier</translation>
     </message>
     <message>
-        <source>Load timeline session file</source>
-        <translation>Charger un fichier de session de timeline</translation>
-    </message>
-    <message>
-        <source>Save timeline session to file</source>
-        <translation>Enregistrer la session courante de la timeline dans un fichier</translation>
-    </message>
-    <message>
         <source>Timeline session files (*.timeline)</source>
         <translation>Fichier de session de timeline (*.timeline)</translation>
     </message>
