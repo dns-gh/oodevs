@@ -139,8 +139,10 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver jammedAgent;
+    MOCK_EXPECT( jammedAgent.IsMarkedForDestruction ).returns( false );
     boost::shared_ptr< MIL_KnowledgeGroup > groupJammed1( new MIL_KnowledgeGroup( *group1, jammedAgent, 0 ) );
     MockAgentWithPerceiver mockAgent;
+    MOCK_EXPECT( mockAgent.IsMarkedForDestruction ).returns( false );
     MOCK_EXPECT( mockAgent.BelongsTo ).with( boost::cref( *group1 ) ).returns( true );
     MOCK_EXPECT( mockAgent.GetKnowledgeGroup ).returns( boost::ref( group1 ) );
     MOCK_EXPECT( mockAgent.GetType );
@@ -156,6 +158,7 @@ BOOST_FIXTURE_TEST_CASE( TestPropagationInKnowledgeGroups, ArmyFixture )
         mock::verify( mockAgent );
     //}
     MockAgentWithPerceiver mockAgentJammed1;
+    MOCK_EXPECT( mockAgentJammed1.IsMarkedForDestruction ).returns( false );
     MOCK_EXPECT( mockAgentJammed1.BelongsTo ).with( boost::cref( *groupJammed1 ) ).returns( true );
     MOCK_EXPECT( mockAgentJammed1.GetKnowledgeGroup ).returns( boost::ref( groupJammed1 ) );
     MOCK_EXPECT( mockAgentJammed1.GetType );
