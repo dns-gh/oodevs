@@ -3405,6 +3405,42 @@ message PopulationUpdate {
     optional Extension       extension    = 9;
 }
 
+enum EnumLogisticType {
+    log_unknown     = 0;
+    log_funeral     = 1;
+    log_maintenance = 2;
+    log_medical     = 3;
+    log_supply      = 4;
+}
+
+//! Represents a snapshot of a logistic request.
+message LogisticHistoryState {
+    required Id               request    = 1;
+    //! State identifier, unique per request.
+    required Id               id         = 2;
+    optional EnumLogisticType type       = 3;
+    required int32            start_tick = 4;
+    optional int32            end_tick   = 5;
+    //! The handler depends on the request type:
+    //! - funeral: formation or automat identifier
+    //! - maintenance: provider identifier
+    //! - medical: provider identifier
+    //! - supply: supplied formation or automat identifier
+    required Id               handler    = 6;
+    //! The status value depends on the request type:
+    //! - funeral: an EnumLogFuneralHandlingStatus value
+    //! - maintenance: an EnumLogMaintenanceHandlingStatus value
+    //! - medical: EnumLogMedicalHandlingStatus value
+    //! - supply: EnumLogSupplyHandlingStatus value
+    required int32            status     = 7;
+}
+
+//! Returns a list of logistic requests states matching those specified
+//! in the LogisticHistoryRequest.
+message LogisticHistoryAck {
+    repeated LogisticHistoryState states    = 2;
+}
+
 message SimToClient {
     message Content {
         //! @copybrief TaskCreationRequestAck
@@ -3723,6 +3759,7 @@ message SimToClient {
             control_enable_vision_cones_ack = 148;
         //! @copybrief ListEnabledVisionConesAck
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
+        optional LogisticHistoryAck logistic_history_ack = 150;
     }
     /** @property context
         @brief Identifies the request matching the response
@@ -3738,6 +3775,11 @@ message SimToClient {
     required Content message = 2;
     //! specific messages, mostly requests acknowledgements.
     optional int32   client_id = 3;
+    //! This fields will eventually supersede message specific error
+    //! handling. For now, ignore it unless a client message explicitely
+    //! states it is using it, in which case a non-empty message signals
+    //! an error.
+    optional string  error_msg = 4;
 }
 
 /** @}*/

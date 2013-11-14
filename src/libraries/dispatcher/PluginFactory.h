@@ -37,6 +37,11 @@ namespace tools
     class Log;
 }
 
+namespace sword
+{
+    class ClientToSim;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -80,6 +85,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void Receive( const std::string& link, const sword::ClientToSim& msg );
     void ReadPlugin( const std::string& name, xml::xistream& xis );
     void LoadPlugin( const tools::Path& name, xml::xistream& xis );
     //@}
