@@ -22,10 +22,10 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     : QToolBar( parent )
     , config_( config )
 {
-    horizontalView_ = addAction( qApp->style()->standardIcon( QStyle::SP_TitleBarMaxButton ), "", this, SLOT( OnSwitchView() ) );
+    horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     horizontalView_->setCheckable( true );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
-    addAction( qApp->style()->standardIcon( QStyle::SP_BrowserReload ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
+    addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
     addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
@@ -33,7 +33,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load timeline session file" ), this, SLOT( OnLoadTimelineSessionFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save timeline session to file" ), this, SLOT( OnSaveTimelineSessionFile() ) );
     addSeparator();
-    addAction( qApp->style()->standardIcon( QStyle::SP_DialogOkButton ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
+    addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/new_tab.png" ) ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
     if( !isMain )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
     OnSwitchView();
