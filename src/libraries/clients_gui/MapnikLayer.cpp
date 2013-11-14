@@ -67,7 +67,7 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
             if( !filename.Exists() )
                 TerrainFileExporter( filename, wkbLineString );
         } );
-        layer_.reset( new graphics::MapnikView( terrain_, terrain_ / "export", "resources/mapnik.xml" ) );
+        layer_.reset( new graphics::MapnikView( terrain_, exportDirectory, "resources/mapnik.xml" ) );
     }
     layer_->Paint( viewport, GetAlpha() );
 }
