@@ -58,16 +58,16 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
             manager.Run( exportDirectory );
         }
         const auto shapefiles =
-            boost::assign::list_of( "bridge" )( "cliff" )( "forest" )( "mountain" )
-                ( "plantation" )( "railroad" )( "road" )( "river" )( "swamp" )
-                ( "tunnel" )( "urban" )( "water" );
+            boost::assign::list_of( "bridge" )( "cliff" )( "forest" )( "ice" )
+                ( "mountain" )( "plantation" )( "railroad" )( "road" )
+                ( "river" )( "swamp" )( "tunnel" )( "urban" )( "water" );
         boost::for_each( shapefiles, [&]( const char* const shapefile )
         {
             const tools::Path filename = exportDirectory / shapefile + ".shp";
             if( !filename.Exists() )
                 TerrainFileExporter( filename, wkbLineString );
         } );
-        layer_.reset( new graphics::MapnikView( terrain_, terrain_ / "export", "resources/mapnik.xml" ) );
+        layer_.reset( new graphics::MapnikView( terrain_, exportDirectory, "resources/mapnik.xml" ) );
     }
     layer_->Paint( viewport, GetAlpha() );
 }

@@ -60,30 +60,31 @@
   <Style name="forest">
     <Rule>
       &maxscale_zoom8;
-<!--
       &minscale_zoom13;
--->
-      <PolygonSymbolizer fill="#336600"/>
+      <PolygonSymbolizer fill="#8DC56C"/>
     </Rule>
-<!--
     <Rule>
       &maxscale_zoom14;
-      <PolygonPatternSymbolizer file="image/forest.png"/>
+      <PolygonPatternSymbolizer file="symbols/forest.png"/>
     </Rule>
--->
   </Style>
 
   <Style name="plantation">
     <Rule>
       &maxscale_zoom8;
-      <PolygonSymbolizer fill="#5C8A00"/>
+      &minscale_zoom13;
+      <PolygonSymbolizer fill="#9ED88F"/>
+    </Rule>
+    <Rule>
+      &maxscale_zoom14;
+      <PolygonPatternSymbolizer file="symbols/orchard.png"/>
     </Rule>
   </Style>
 
   <Style name="swamp">
     <Rule>
-      &maxscale_zoom8;
-      <PolygonSymbolizer fill="#8A5C2E"/>
+      &maxscale_zoom14;
+      <PolygonPatternSymbolizer file="symbols/marsh.png"/>
     </Rule>
   </Style>
 
@@ -135,27 +136,36 @@
     </Rule>
   </Style>
 
+  <Style name="ice">
+    <Rule>
+      &maxscale_zoom8;
+      &minscale_zoom13;
+      <LineSymbolizer stroke-dasharray="4,2" stroke-width="1.5" stroke="#99ccff"/>
+      <PolygonSymbolizer fill="#DDECEC"/>
+    </Rule>
+    <Rule>
+      &maxscale_zoom14;
+      <LineSymbolizer stroke-dasharray="4,2" stroke-width="1.5" stroke="#99ccff"/>
+      <PolygonPatternSymbolizer file="symbols/glacier2.png"/>
+    </Rule>
+  </Style>
+
   <Style name="dune">
     <Rule>
       <Filter>[MASACODE] = 10005</Filter>
-      <PolygonSymbolizer fill="#FFEDA5"/>
+      <PolygonSymbolizer fill="#FFDF88"/>
     </Rule>
   </Style>
 
   <Style name="cliff">
     <Rule>
+      &maxscale_zoom14;
+      <LinePatternSymbolizer file="symbols/cliff2.png" />
+    </Rule>
+    <Rule>
       &maxscale_zoom13;
       &minscale_zoom14;
-      <LineSymbolizer stroke-width="2" stroke="black" stroke-linejoin="round"/>
-    </Rule>
-    <Rule>
-      &maxscale_zoom15;
-      &minscale_zoom16;
-      <LineSymbolizer stroke-width="4" stroke="black" stroke-linejoin="round"/>
-    </Rule>
-    <Rule>
-      &maxscale_zoom17;
-      <LineSymbolizer stroke-width="6" stroke="black" stroke-linejoin="round"/>
+      <LinePatternSymbolizer file="symbols/cliff.png" />
     </Rule>
   </Style>
 
@@ -231,7 +241,7 @@
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom13;
-      <ShieldSymbolizer size="10" fill="#fff" placement="line" file="image/mot_shield.png" spacing="750" minimum-distance="30" fontset-name="bold-fonts">[NAME]</ShieldSymbolizer>
+      <ShieldSymbolizer size="10" fill="#fff" placement="line" file="symbols/mot_shield.png" spacing="750" minimum-distance="30" fontset-name="bold-fonts">[NAME]</ShieldSymbolizer>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
@@ -270,7 +280,7 @@
   <!-- medium -->
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
-      &maxscale_zoom14;
+      &maxscale_zoom13;
       &minscale_zoom15;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="4" stroke-linecap="round"/>
     </Rule>
@@ -293,6 +303,12 @@
     </Rule>
 
   <!-- large -->
+    <Rule>
+      <Filter>[MASACODE] = 20002</Filter>
+      &maxscale_zoom12;
+      &minscale_zoom12;
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="3" stroke-linecap="round"/>
+    </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom13;
@@ -324,6 +340,18 @@
     </Rule>
 
   <!-- motorway -->
+    <Rule>
+      <Filter>[MASACODE] = 20001</Filter>
+      &maxscale_zoom9;
+      &minscale_zoom11;
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="1" stroke-linecap="round"/>
+    </Rule>
+    <Rule>
+      <Filter>[MASACODE] = 20001</Filter>
+      &maxscale_zoom12;
+      &minscale_zoom12;
+      <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="3" stroke-linecap="round"/>
+    </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom13;
@@ -385,7 +413,7 @@
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
       <LineSymbolizer stroke-linejoin="round" stroke="#fed7a5" stroke-width="2" stroke-linecap="round"/>
-      &maxscale_zoom14;
+      &maxscale_zoom13;
       &minscale_zoom15;
     </Rule>
     <Rule>
@@ -410,6 +438,12 @@
   <Style name="road-large">
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="2" stroke-linecap="round"/>
+      &maxscale_zoom12;
+      &minscale_zoom12;
+    </Rule>
+    <Rule>
+      <Filter>[MASACODE] = 20002</Filter>
       <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="3" stroke-linecap="round"/>
       &maxscale_zoom13;
       &minscale_zoom13;
@@ -418,7 +452,7 @@
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom14;
       &minscale_zoom14;
-      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="4" stroke-linecap="round"/>
+      <LineSymbolizer stroke-linejoin="round" stroke="#f4c3c4" stroke-width="5" stroke-linecap="round"/>
     </Rule>
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
@@ -440,6 +474,17 @@
   </Style>
 
   <Style name="road-motorway">
+    <Rule>
+      <Filter>[MASACODE] = 20001</Filter>
+      &minscale_zoom11;
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="0.5" stroke-linecap="round"/>
+    </Rule>
+    <Rule>
+      <Filter>[MASACODE] = 20001</Filter>
+      &maxscale_zoom12;
+      &minscale_zoom12;
+      <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="1.5" stroke-linecap="round"/>
+    </Rule>
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="3" stroke-linecap="round"/>
@@ -470,6 +515,22 @@
       <LineSymbolizer stroke-linejoin="round" stroke="#809bc0" stroke-width="17" stroke-linecap="round"/>
     </Rule>
   </Style>
+
+  <Layer name="water" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>water</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">water.shp</Parameter>
+      </Datasource>
+  </Layer>
+
+  <Layer name="swamp" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>water</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">swamp.shp</Parameter>
+      </Datasource>
+  </Layer>
 
   <Layer name="forest" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" >
       <StyleName>forest</StyleName>
@@ -512,19 +573,19 @@
       </Datasource>
   </Layer>
 
+  <Layer name="ice" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>ice</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">ice.shp</Parameter>
+      </Datasource>
+  </Layer>
+
   <Layer name="cliff" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>cliff</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
         <Parameter name="file">cliff.shp</Parameter>
-      </Datasource>
-  </Layer>
-
-  <Layer name="water" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-      <StyleName>water</StyleName>
-      <Datasource>
-        <Parameter name="type">shape</Parameter>
-        <Parameter name="file">water.shp</Parameter>
       </Datasource>
   </Layer>
 
