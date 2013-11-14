@@ -383,7 +383,7 @@ void UnitMagicOrdersInterface::DeleteUnit()
     if( selectedEntity_)
     {
         if( QMessageBox::warning( QApplication::activeWindow(), tr( "Confirmation" ), tr( "Delete '%1'?" ).arg( selectedEntity_->GetName() ), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
-            CreateAndPublish( "delete_unit", tr( "Delete unit" ), false );
+            CreateAndPublish( "delete_unit", tr( "Delete unit" ) );
     }
 }
 
