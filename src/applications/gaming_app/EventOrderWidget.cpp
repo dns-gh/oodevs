@@ -400,6 +400,10 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( target_ == &entity || selectedEntity_ == &entity )
         manager_->Select();
+    if( target_ == &entity )
+        target_ = 0;
+    if( selectedEntity_ == &entity )
+        selectedEntity_ = 0;
 }
 
 // -----------------------------------------------------------------------------
