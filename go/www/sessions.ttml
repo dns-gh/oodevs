@@ -399,12 +399,12 @@
             <div class="session_name">
                 {{name}}
                 {{#if last_error}}
-                <span>
-                    <a class="btn error-btn"><i class="icon-exclamation"/></a>
+                <span class="badge badge-important emu_btn error-btn">
+                    <i class="icon-exclamation"/>
                 </span>
                 {{/if}}
-                <span> :{{port}} </span>
-                <span> {{status}} </span>
+                <span class="info"> :{{port}} </span>
+                <span class="info"> {{status}} </span>
             </div>
             {{#is_option status replaying="" waiting=""}}
             {{else}}
