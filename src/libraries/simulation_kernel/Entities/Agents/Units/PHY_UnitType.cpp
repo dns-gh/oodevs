@@ -597,7 +597,7 @@ double PHY_UnitType::GetResourceCapacityWithAviationQuotas( E_AviationRange avia
         const PHY_ComposanteTypePion* composante = it->first;
         const PHY_DotationCapacities& capacities = composante->GetDotationCapacities();
         double aviationResource = composante->GetAviationResourceQuota( aviationRange, &dotationType, ammoClass );
-        double composanteRatio = ( aviationResource > 0 ) ? aviationResource : ratio;
+        double composanteRatio = ( aviationResource >= 0 ) ? aviationResource : ratio;
         newCapacity += capacities.GetCapacity( category ) * composanteRatio * it->second.nNbr_;
     }
     newCapacity += dotationCapacitiesTC1_.GetCapacity( category ) * ratio;
