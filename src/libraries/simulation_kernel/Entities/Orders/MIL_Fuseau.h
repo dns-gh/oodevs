@@ -82,6 +82,7 @@ public:
     //@{
     const T_PointVector& GetLeftLimit () const;
     const T_PointVector& GetRightLimit() const;
+    const T_PointVector& GetMiddleLimit() const;
 
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;

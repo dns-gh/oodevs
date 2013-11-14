@@ -2098,6 +2098,27 @@ bool DEC_GeometryFunctions::IsNull( const MIL_Fuseau* pFuseau )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeMiddlePointsInAOR
+// Created: NMI 2013-11-14
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeMiddlePointsInAOR( const MIL_Fuseau* pFuseau )
+{
+	if( !pFuseau )
+        throw MASA_EXCEPTION( "Invalid fuseau" );
+
+    T_PointVector middlePoints = pFuseau->GetMiddleLimit();
+    std::vector< boost::shared_ptr< MT_Vector2D > > result = std::vector< boost::shared_ptr< MT_Vector2D > >();
+
+    for( auto it = middlePoints.begin(); it != middlePoints.end(); ++it )
+    {
+        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( *it );
+        result.push_back( point );
+    }
+
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau
 // Created: EVH 2011-07-26
 // -----------------------------------------------------------------------------
