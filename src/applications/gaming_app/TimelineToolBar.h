@@ -55,8 +55,6 @@ public slots:
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
-    void OnLoadTimelineSessionFile();
-    void OnSaveTimelineSessionFile();
     //@}
 
 private:
@@ -64,6 +62,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     QAction* horizontalView_;
+    QString filters_;
     //@}
 };
 
