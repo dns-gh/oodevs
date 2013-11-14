@@ -43,6 +43,7 @@
 #include <timeline/api.h>
 #include <tools/StdFileWrapper.h>
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
@@ -84,6 +85,37 @@ TimelineWebView::~TimelineWebView()
     controllers_.controller_.Unregister( *this );
 }
 
+namespace
+{
+    // find a lib which does that
+    std::string urlEncode( const std::string& value )
+    {
+        std::ostringstream escaped;
+        escaped.fill( '0' );
+        escaped << std::hex;
+        for( auto it = value.begin(); it != value.end(); ++it )
+        {
+            const auto& c = *it;
+            if( std::isalnum( c ) || c == '-' || c == '_' || c == '.' || c == '~')
+                escaped << c;
+            else if( c == ' ' )
+                escaped << '+';
+            else
+                escaped << '%' << std::setw(2) << static_cast< int >( c ) << std::setw(0);
+        }
+        return escaped.str();
+    }
+
+    std::string makeQuery( const std::map< std::string, std::string >& parameters )
+    {
+        std::vector< std::string > tokens;
+        for( auto it = parameters.begin(); it != parameters.end(); ++it )
+            if( !it->second.empty() )
+                tokens.push_back( it->first + "=" + urlEncode( it->second ) );
+        return "?" + boost::algorithm::join( tokens, "&" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::Connect
 // Created: ABR 2013-05-15
@@ -92,14 +124,14 @@ void TimelineWebView::Connect()
 {
     timelineWidget_.reset( new QWidget() );
     mainLayout_->addWidget( timelineWidget_.get() );
-    cfg_->widget = timelineWidget_.get();
-    server_.reset( MakeServer( *cfg_ ).release() );
-
+    timeline::Configuration next = *cfg_;
+    next.widget = timelineWidget_.get();
     auto query = boost::assign::map_list_of
         ( "lang",          tools::Language::Current() )
         ( "sword_filter",  entityFilter_ )
         ( "sword_profile", lastProfile_ );
-    server_->UpdateQuery( query );
+    next.url += makeQuery( query );
+    server_.reset( MakeServer( next ).release() );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
@@ -146,7 +178,6 @@ void TimelineWebView::Disconnect()
     disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
 
     server_.reset();
-    cfg_->widget = 0;
     mainLayout_->removeWidget( timelineWidget_.get() );
     timelineWidget_.reset();
 }
