@@ -782,10 +782,6 @@ Raison: %3
         <translation>Fin</translation>
     </message>
     <message>
-        <source>Planning</source>
-        <translation>Plannification</translation>
-    </message>
-    <message>
         <source>Save as copy</source>
         <translation>Copier et enregistrer</translation>
     </message>

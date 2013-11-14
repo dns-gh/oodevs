@@ -780,10 +780,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Planning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save as copy</source>
         <translation type="unfinished"></translation>
     </message>
