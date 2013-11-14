@@ -43,6 +43,8 @@
 namespace
 {
     const QBrush disabledColor = Qt::darkGray;
+    const QBrush invalidColor = Qt::red;
+    const QBrush defaultColor = Qt::black;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,6 +149,7 @@ void EventOrderWidget::Purge()
     SetTarget( 0 );
     PurgeComboBox( *missionTypeCombo_ );
     PurgeComboBox( *missionCombo_ );
+    Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -201,29 +204,40 @@ void EventOrderWidget::Trigger() const
     Publish( 0, false );
 }
 
+namespace
+{
+    bool IsValidTarget( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return false;
+        if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+                if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
+                    if( decisions->IsEmbraye() )
+                        return false;
+        }
+        else
+            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+                if( const kernel::AutomatDecisions_ABC* decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
+                    if( !decisions->IsEmbraye() )
+                        return false;
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::IsValid
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
 bool EventOrderWidget::IsValid() const
 {
-    return target_ && missionInterface_->CheckValidity() && !HasInvalidMission();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::Warn
-// Created: ABR 2013-06-14
-// -----------------------------------------------------------------------------
-void EventOrderWidget::Warn() const
-{
-    if( !target_ )
-    {
-        targetGroupBox_->Warn();
-        targetLabel_->Warn();
-    }
-    if( HasInvalidMission() )
-        missionCombo_->Warn();
-    missionInterface_->CheckValidity(); // $$$$ ABR 2013-06-14: TODO Use missionInterface_->Warn() when ready
+    QVariant missionColor = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::ForegroundRole );
+    return IsValidTarget( target_ ) &&                          // check target validity
+           missionInterface_->CheckValidity() &&                // check parameters validity
+           missionColor.isValid() &&                            // check mission validity
+           missionColor.value< QBrush >() != disabledColor &&
+           missionColor.value< QBrush >() != invalidColor;
 }
 
 // -----------------------------------------------------------------------------
@@ -511,6 +525,25 @@ void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventOrderWidget::NotifyUpdated
+// Created: ABR 2013-11-13
+// -----------------------------------------------------------------------------
+void EventOrderWidget::NotifyUpdated( const actions::gui::Param_ABC& param )
+{
+    if( missionInterface_->HasParameter( param ) )
+        UpdateTriggerAction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::UpdateTriggerAction
+// Created: ABR 2013-11-13
+// -----------------------------------------------------------------------------
+void EventOrderWidget::UpdateTriggerAction()
+{
+    emit EnableTriggerEvent( IsValid() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::OnPlanningModeToggled
 // Created: LGY 2013-08-29
 // -----------------------------------------------------------------------------
@@ -521,28 +554,6 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
     {
         planningMode_ = value;
         SelectWhenMissionChanged();
-    }
-}
-
-namespace
-{
-    bool ShouldEnableTriggerEvent( const kernel::Entity_ABC* entity )
-    {
-        if( !entity )
-            return false;
-        if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
-        {
-            if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-                if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
-                    if( decisions->IsEmbraye() )
-                        return false;
-        }
-        else
-            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-                if( const kernel::AutomatDecisions_ABC* decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
-                    if( !decisions->IsEmbraye() )
-                        return false;
-        return true;
     }
 }
 
@@ -573,10 +584,17 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     {
         const std::string& name = *it;
         missionCombo_->addItem( name.c_str() );
-        QBrush missionColor = name == currentMission && invalid
-            ? Qt::red
-            : std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
-                ? Qt::black
+        QBrush missionColor = defaultColor;
+        if( name == currentMission )
+        {
+            if( invalid )
+                missionColor = invalidColor;
+            else if( missionSelector )
+                missionColor = disabledColor;
+        }
+        else
+            missionColor = std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
+                ? defaultColor
                 : disabledColor;
         missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
     }
@@ -589,19 +607,13 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
     targetGroupBox_->EnableStaticWarning( invalid );
     targetLabel_->EnableStaticWarning( invalid );
     missionCombo_->blockSignals( false );
-
-    bool enableTriggerEvent = !invalid && ShouldEnableTriggerEvent( target_ );
-    QVariant missionVariant = missionCombo_->itemData( missionCombo_->currentIndex(), Qt::ForegroundRole );
-    if( missionVariant.isValid() )
-        enableTriggerEvent = enableTriggerEvent && missionVariant.value< QBrush >() != disabledColor;
-    emit EnableTriggerEvent( enableTriggerEvent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::HasInvalidMission
-// Created: LGY 2013-08-29
+// Name: EventOrderWidget::UpdateActions
+// Created: ABR 2013-11-14
 // -----------------------------------------------------------------------------
-bool EventOrderWidget::HasInvalidMission() const
+void EventOrderWidget::UpdateActions()
 {
-     return missionCombo_->itemData( missionCombo_->currentIndex(), Qt::UserRole - 1 ) == QVariant( Qt::NoItemFlags );
+    UpdateTriggerAction();
 }

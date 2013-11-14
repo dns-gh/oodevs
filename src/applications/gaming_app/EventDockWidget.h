@@ -94,7 +94,7 @@ private:
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
     void SetEditing( bool editing );
-    void Configure( E_EventTypes type, bool editing, bool purge );
+    void Configure( E_EventTypes type, bool editing );
     void StartEdition( const Event& event );
     //@}
 

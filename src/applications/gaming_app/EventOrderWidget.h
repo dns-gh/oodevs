@@ -26,6 +26,7 @@ namespace actions
     {
         class InterfaceBuilder_ABC;
         class MissionInterface;
+        class Param_ABC;
     }
 }
 
@@ -75,6 +76,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Decisions_ABC >
+                       , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , private gui::EventBuilder_ABC
 {
     Q_OBJECT
@@ -97,7 +99,6 @@ private:
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
     virtual bool IsValid() const;
-    virtual void Warn() const;
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
@@ -108,7 +109,17 @@ private:
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const Decisions_ABC& decisions );
+    virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
     //@}
+
+    //! @name EventBuilder_ABC implementation
+    //@{
+    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
+                    const std::vector< std::string >& missions, const std::string& currentMission,
+                    const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector );
+    virtual void UpdateActions();
+    //@}
+
 
     //! @name Helpers
     //@{
@@ -116,15 +127,12 @@ private:
     void SelectWhenTargetChanged();
     void SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type );
 
+    void UpdateTriggerAction();
+
     E_MissionType GetMissionType() const;
     const Decisions_ABC* GetTargetDecision() const;
     void SetTarget( const kernel::Entity_ABC* entity );
     void Publish( timeline::Event* event, bool planned ) const;
-
-    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                        const std::vector< std::string >& missions, const std::string& currentMission,
-                        const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector );
-    bool HasInvalidMission() const;
     //@}
 
 signals:

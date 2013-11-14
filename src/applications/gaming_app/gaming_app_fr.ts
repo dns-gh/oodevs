@@ -695,14 +695,6 @@ Raison: %3
         <translation>Edition d&apos;évènement</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>This event is incomplete so it can&apos;t be triggered.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit</source>
         <translation>Editer</translation>
     </message>

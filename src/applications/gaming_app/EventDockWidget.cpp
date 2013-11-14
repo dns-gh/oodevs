@@ -142,6 +142,8 @@ EventDockWidget::~EventDockWidget()
 // -----------------------------------------------------------------------------
 void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge )
 {
+    if( purge )
+        Purge();
     if( event_.get() )
         StartEdition( *event_ );
     else
@@ -149,7 +151,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
         event_.reset( factory_.Create( type ) );
         if( dateTime.isValid() )
             emit BeginDateChanged( dateTime );
-        Configure( type, false, purge );
+        Configure( type, false );
         ShowWidget( this );
     }
 }
@@ -161,17 +163,15 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 void EventDockWidget::StartEdition( const Event& event )
 {
     event_.reset( event.Clone() );
-    Configure( event_->GetType(), true, true );
+    Configure( event_->GetType(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget::Configure
 // Created: ABR 2013-08-21
 // -----------------------------------------------------------------------------
-void EventDockWidget::Configure( E_EventTypes type, bool editing, bool purge )
+void EventDockWidget::Configure( E_EventTypes type, bool editing )
 {
-    if( purge )
-        Purge();
     SetEventType( type );
     SetEditing( editing );
     Fill();
@@ -255,20 +255,15 @@ void EventDockWidget::Commit( timeline::Event& event )
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnTrigger()
 {
-    if( currentWidget_->IsValid() )
-    {
-        if( editing_ && event_.get() && !event_->GetEvent().done )
-            emit DeleteEvent( event_->GetEvent().uuid );
-        currentWidget_->Trigger();
-        if( event_.get() )
-            lastOrder_ = event_->GetType();
-        event_.reset();
-    }
-    else
-    {
-        currentWidget_->Warn();
-        QMessageBox::warning( this, tr( "Warning" ), tr( "This event is incomplete so it can't be triggered.") );
-    }
+    if( !currentWidget_->IsValid() )
+        throw MASA_EXCEPTION( "Can't trigger an invalid event" );
+
+    if( editing_ && event_.get() && !event_->GetEvent().done )
+        emit DeleteEvent( event_->GetEvent().uuid );
+    currentWidget_->Trigger();
+    if( event_.get() )
+        lastOrder_ = event_->GetType();
+    event_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -407,13 +402,7 @@ void EventDockWidget::NotifyContextMenu( const Event& event, kernel::ContextMenu
 void EventDockWidget::NotifyDeleted( const Event& event )
 {
     if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
-    {
-        topWidget_->Purge();
-        if( currentWidget_ )
-            currentWidget_->Reset();
-        bottomWidget_->Purge();
-        detailWidget_->Purge();
-    }
+        Purge();
 }
 
 // -----------------------------------------------------------------------------

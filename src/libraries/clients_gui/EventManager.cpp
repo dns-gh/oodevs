@@ -237,6 +237,7 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
     }
     missionInterface_.SetEntity( 0 );
     currentMission_ = currentMission;
+    builder_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------
@@ -376,6 +377,8 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
         missionInterface_.FillFrom( *action );
 
     currentMission_ = currentMission;
+
+    builder_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------
