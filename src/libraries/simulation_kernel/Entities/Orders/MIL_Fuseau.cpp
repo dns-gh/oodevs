@@ -1188,6 +1188,15 @@ const T_PointVector& MIL_Fuseau::GetRightLimit() const
     return pRightLimit_->GetPoints();
 }
 
+//-----------------------------------------------------------------------------
+// Name: MIL_Fuseau::GetMiddleLimit
+// Created: NMI 2013-11-14
+//-----------------------------------------------------------------------------
+const T_PointVector& MIL_Fuseau::GetMiddleLimit() const
+{
+    return pMiddleLimit_->GetPoints();
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Fuseau::GetGlobalDirection
 // Created: NLD 2003-09-29

@@ -382,6 +382,7 @@ void RegisterFuseauFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_Fuseau_Width", &DEC_GeometryFunctions::GetWidth );
     brain.RegisterFunction( "DEC_Fuseau_IsNull", &DEC_GeometryFunctions::IsNull );
+    brain.RegisterFunction( "DEC_Fuseau_ComputeMiddlePointsInAOR", &DEC_GeometryFunctions::ComputeMiddlePointsInAOR );
 }
 
 // -----------------------------------------------------------------------------
