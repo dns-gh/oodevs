@@ -103,7 +103,7 @@ end
 --- Returns points in the middle of the provided area of responsibility.
 -- The returned points constitute an itinerary along the AOR
 -- @param AOR knowledge of an area of responsibility
--- @return a list of points in the middle of the AOR (MT_Vector2D)
+-- @return a list of simulation points in the middle of the AOR
 integration.computeMiddlePointsInAOR = function( AOR )
     return DEC_Fuseau_ComputeMiddlePointsInAOR( AOR.source )
 end
