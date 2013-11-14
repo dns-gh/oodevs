@@ -100,6 +100,14 @@ integration.splitAORInSections = function( length )
     return DEC_Geometrie_DecoupeFuseauEnTroncons( length )
 end
 
+--- Returns points in the middle of the provided area of responsibility.
+-- The returned points constitute an itinerary along the AOR
+-- @param AOR knowledge of an area of responsibility
+-- @return a list of points in the middle of the AOR (MT_Vector2D)
+integration.computeMiddlePointsInAOR = function( AOR )
+    return DEC_Fuseau_ComputeMiddlePointsInAOR( AOR.source )
+end
+
 integration.clipperLocalisation = function( area, fuseau )
     return DEC_Geometrie_ClipperLocalisation( area.source, fuseau.source )
 end

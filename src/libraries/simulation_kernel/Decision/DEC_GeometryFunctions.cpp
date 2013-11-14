@@ -2103,11 +2103,11 @@ bool DEC_GeometryFunctions::IsNull( const MIL_Fuseau* pFuseau )
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeMiddlePointsInAOR( const MIL_Fuseau* pFuseau )
 {
-	if( !pFuseau )
+    if( !pFuseau )
         throw MASA_EXCEPTION( "Invalid fuseau" );
 
     T_PointVector middlePoints = pFuseau->GetMiddleLimit();
-    std::vector< boost::shared_ptr< MT_Vector2D > > result = std::vector< boost::shared_ptr< MT_Vector2D > >();
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
 
     for( auto it = middlePoints.begin(); it != middlePoints.end(); ++it )
     {
