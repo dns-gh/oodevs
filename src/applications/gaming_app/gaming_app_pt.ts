@@ -120,14 +120,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,6 +133,14 @@
     </message>
     <message>
         <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2759,6 +2759,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Unpause (Alt+P)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

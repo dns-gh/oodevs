@@ -120,14 +120,6 @@
         <translation>Time range</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>First tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Duration</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation>Send request</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Name:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2760,6 +2760,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Unpause (Alt+P)</source>
         <translation>Unpause (Alt+P)</translation>
+    </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

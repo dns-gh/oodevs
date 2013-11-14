@@ -120,14 +120,6 @@
         <translation>Plage temporelle</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>Premier tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Durée</translation>
-    </message>
-    <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2774,6 +2774,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unpause (Alt+P)</source>
         <translation>Reprendre (Alt+P)</translation>
+    </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
