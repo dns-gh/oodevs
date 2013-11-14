@@ -77,6 +77,7 @@ public:
     void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineDestructionRequest& message );
     void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineUpdateRequest& message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
+    void DeleteUnit( int32_t id );
     //@}
 
     //! @name xml read / write

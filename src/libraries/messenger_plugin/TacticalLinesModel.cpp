@@ -284,4 +284,36 @@ void TacticalLinesModel::CollectUnits( T_UnitMap& units )
             if( lima.GetDiffusion().has_unit() )
                 units[ lima.GetDiffusion().unit().id() ].insert( &lima );
         }
-    }}
+    }
+}
+
+namespace
+{
+    template< typename T >
+    void DeleteFromCollection( unsigned int id, tools::Resolver< T >& collection, dispatcher::ClientPublisher_ABC& clients )
+    {
+        std::vector< unsigned int > idToDelete;
+        auto functor = [&] ( TacticalLine_ABC& line )
+        {
+            if( line.GetDiffusion().unit().id() == id )
+                idToDelete.push_back( line.GetID() );
+        };    
+        collection.Apply( functor );
+        for( auto it = idToDelete.begin(); it != idToDelete.end(); ++it )
+        {
+            collection.Get( *it ).SendDestruction( clients );
+            collection.Delete( *it );
+        }
+        collection.Apply( functor );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinesModel::DeleteUnit
+// Created: LDC 2013-11-13
+// -----------------------------------------------------------------------------
+void TacticalLinesModel::DeleteUnit( int32_t id )
+{
+    DeleteFromCollection( unsigned int( id ), limits_, clients_ );
+    DeleteFromCollection( unsigned int( id ), limas_, clients_ );
+}

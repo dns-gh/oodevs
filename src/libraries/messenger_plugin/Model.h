@@ -61,6 +61,7 @@ public:
     void Save( const std::string& name ) const;
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& client );
     void UpdateTime( std::string time );
+    void DeleteUnit( int32_t id );
     //@}
 
 private:
