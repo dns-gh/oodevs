@@ -298,19 +298,17 @@ void EventDockWidget::OnSave()
 {
     if( !event_.get() )
         event_.reset( factory_.Create( lastOrder_ ) );
-
-    timeline::Event event;
-    Commit( event );
-    if( event_->GetEvent().done )
-        throw MASA_EXCEPTION( "Can save an already triggered event" );
-    event.uuid = editing_ ? event_->GetEvent().uuid : boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
-    event_->Update( event );
-    if( editing_ )
-        emit EditEvent( event );
+    if( !editing_ )
+        OnSaveAs();
     else
     {
-        emit CreateEvent( event );
-        SetEditing( true );
+        timeline::Event event;
+        Commit( event );
+        if( event_->GetEvent().done )
+            throw MASA_EXCEPTION( "Can save an already triggered event" );
+        event.uuid = event_->GetEvent().uuid;
+        event_->Update( event );
+            emit EditEvent( event );
     }
 }
 
@@ -324,8 +322,6 @@ void EventDockWidget::OnSaveAs()
         return;
     timeline::Event event;
     Commit( event );
-    if( !editing_ )
-        throw MASA_EXCEPTION( "Can save as a new event" );
     event.uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event_->Update( event );
     emit CreateEvent( event );
