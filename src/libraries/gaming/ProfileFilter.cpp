@@ -142,3 +142,12 @@ void ProfileFilter::RemoveFilter()
     profile_ = 0;
     pUnitFilter_->RemoveFilter();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::GetFilteredEntity
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ProfileFilter::GetFilteredEntity() const
+{
+    return pUnitFilter_->GetFilteredEntity();
+}

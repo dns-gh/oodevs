@@ -53,6 +53,7 @@ public:
     virtual void SetFilter( const kernel::Entity_ABC& entity );
     virtual void SetFilter( const kernel::Profile_ABC& profile );
     virtual void RemoveFilter();
+    virtual const kernel::Entity_ABC* GetFilteredEntity() const;
     //@}
 
 private:

@@ -20,6 +20,7 @@ namespace kernel
     class Controllers;
     class ContextMenu;
     class Profile_ABC;
+    class Filter_ABC;
 }
 
 namespace timeline
@@ -50,6 +51,7 @@ class TimelineWebView : public QWidget
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< QDateTime >
                       , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
     Q_OBJECT
 
@@ -75,6 +77,8 @@ private:
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifyCreated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
 
     void SetProfile( const QString& profile );
 
@@ -143,6 +147,7 @@ private:
     std::string eventCreated_;
     QString lastProfile_;
     QString serverProfile_;
+    std::string entityFilter_;
     //@}
 };
 

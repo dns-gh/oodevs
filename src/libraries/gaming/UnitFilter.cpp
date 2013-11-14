@@ -347,3 +347,12 @@ bool UnitFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::GetFilteredEntity
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* UnitFilter::GetFilteredEntity() const
+{
+    return entity_;
+}
