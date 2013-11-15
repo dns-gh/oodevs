@@ -85,9 +85,14 @@ func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan err
 			msg.Context != context {
 			return false
 		}
-		err = handler(msg.SimulationToClient.GetMessage())
-		if err == ErrContinue {
-			return false
+		errMsg := msg.SimulationToClient.GetErrorMsg()
+		if len(errMsg) > 0 {
+			err = errors.New(errMsg)
+		} else {
+			err = handler(msg.SimulationToClient.GetMessage())
+			if err == ErrContinue {
+				return false
+			}
 		}
 		quit <- err
 		return true
@@ -1399,4 +1404,51 @@ func (c *Client) UpdateObject(objectId uint32, attributes ...*sword.MissionParam
 func (c *Client) LogFinishHandlings(unitId uint32) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId), MakeParameters(),
 		sword.UnitMagicAction_log_finish_handlings)
+}
+
+type LogisticHistoryState struct {
+	RequestId uint32
+	Id        uint32
+	Type      int32
+	StartTick int32
+	EndTick   int32
+	HandlerId uint32
+	Status    int32
+}
+
+func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*LogisticHistoryState, error) {
+	ids := make([]*sword.Id, 0, len(requestId))
+	for _, rid := range requestId {
+		ids = append(ids, MakeId(rid))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				LogisticHistoryRequest: &sword.LogisticHistoryRequest{
+					Requests: ids,
+				},
+			},
+		},
+	}
+	var states []*LogisticHistoryState
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetLogisticHistoryAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		for _, s := range reply.GetStates() {
+			states = append(states, &LogisticHistoryState{
+				RequestId: s.GetRequest().GetId(),
+				Id:        s.GetId().GetId(),
+				Type:      int32(s.GetType()),
+				StartTick: s.GetStartTick(),
+				EndTick:   s.GetEndTick(),
+				HandlerId: s.GetHandler().GetId(),
+				Status:    s.GetStatus(),
+			})
+		}
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return states, err
 }
