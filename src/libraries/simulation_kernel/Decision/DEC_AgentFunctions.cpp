@@ -487,18 +487,22 @@ bool DEC_AgentFunctions::AgentCanFly( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetStandardFlyingHeight
 // Created: JSR 2013-10-18
 // -----------------------------------------------------------------------------
-unsigned int DEC_AgentFunctions::GetStandardFlyingHeight( const MIL_Agent_ABC& callerAgent )
+unsigned int DEC_AgentFunctions::GetStandardFlyingHeight( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetType().GetUnitType().GetStandardFlyingHeight();
+    if( !callerAgent )
+        throw MASA_EXCEPTION( "Invalid pion in DEC_AgentFunctions::GetStandardFlyingHeight" );
+    return callerAgent->GetPion().GetType().GetUnitType().GetStandardFlyingHeight();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetTacticalFlyingHeight
 // Created: JSR 2013-10-18
 // -----------------------------------------------------------------------------
-unsigned int DEC_AgentFunctions::GetTacticalFlyingHeight( const MIL_Agent_ABC& callerAgent )
+unsigned int DEC_AgentFunctions::GetTacticalFlyingHeight( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetType().GetUnitType().GetTacticalFlyingHeight();
+    if( !callerAgent )
+        throw MASA_EXCEPTION( "Invalid pion in DEC_AgentFunctions::GetTacticalFlyingHeight" );
+    return callerAgent->GetPion().GetType().GetUnitType().GetTacticalFlyingHeight();
 }
 
 // -----------------------------------------------------------------------------

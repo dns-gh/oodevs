@@ -78,8 +78,8 @@ public:
     static void EnableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static bool AgentCanFly( const MIL_Agent_ABC& callerAgent );
-    static unsigned int GetStandardFlyingHeight( const MIL_Agent_ABC& callerAgent );
-    static unsigned int GetTacticalFlyingHeight( const MIL_Agent_ABC& callerAgent );
+    static unsigned int GetStandardFlyingHeight( const DEC_Decision_ABC* callerAgent );
+    static unsigned int GetTacticalFlyingHeight( const DEC_Decision_ABC* callerAgent );
     static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
     static void CreateInstantaneously( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Gen_Object > genObject );
     static bool PionCanFly( const DEC_Decision_ABC* callerAgent );
