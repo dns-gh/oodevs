@@ -84,3 +84,12 @@ bool MIL_PopulationOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& 
 {
     return population_.GetRole< DEC_PopulationDecision >().GetModel().IsMissionAvailable( missionType );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::GetFuseau
+// Created: NLD 2003-12-23
+// -----------------------------------------------------------------------------
+const MIL_Fuseau& MIL_PopulationOrderManager::GetFuseau() const
+{
+    throw MASA_EXCEPTION( "GetFuseau unexpected on population" );
+}

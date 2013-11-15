@@ -670,8 +670,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_IsPointInUrbanBlockTrafficable",
         boost::function< bool( MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongFuseau",
-        boost::function< double( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Geometrie_GetLeavingAreaPosition",
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::GetLeavingAreaPosition< MIL_AgentPion>, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_EstDansLeFuseau", boost::bind( &DEC_AgentFunctions::AgentHasFuseau , boost::cref( GetPion() ) ) );

@@ -38,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    const MIL_Fuseau& GetFuseau() const;
     bool IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const;
     //@}
 

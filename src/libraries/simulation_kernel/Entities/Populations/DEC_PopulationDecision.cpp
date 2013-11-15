@@ -396,6 +396,15 @@ std::string DEC_PopulationDecision::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::GetOrderManager
+// Created: NMI 2013-11-15
+// -----------------------------------------------------------------------------
+MIL_OrderManager_ABC& DEC_PopulationDecision::GetOrderManager() const
+{
+    return GetPopulation().GetOrderManager();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------

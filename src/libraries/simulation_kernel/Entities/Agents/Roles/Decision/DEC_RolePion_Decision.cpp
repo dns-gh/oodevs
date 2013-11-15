@@ -943,6 +943,15 @@ MIL_AgentPion& DEC_RolePion_Decision::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetOrderManager
+// Created: NMI 2013-11-15
+// -----------------------------------------------------------------------------
+MIL_OrderManager_ABC& DEC_RolePion_Decision::GetOrderManager() const
+{
+    return GetPion().GetOrderManager();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::Clean
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
