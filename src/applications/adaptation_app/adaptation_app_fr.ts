@@ -1373,10 +1373,6 @@ Arrêt moteur allumé</translation>
         <translation>Equipements</translation>
     </message>
     <message>
-        <source>Max steepness</source>
-        <translation>Pente maximum</translation>
-    </message>
-    <message>
         <source>Mounting duration per person</source>
         <translation>Temps d&apos;embarquement par personne</translation>
     </message>
@@ -1527,6 +1523,18 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Enforce resource quotas for aviation equipments</source>
         <translation>Appliquer les quotas de dotations pour les équipements aériens</translation>
+    </message>
+    <message>
+        <source>Slope</source>
+        <translation>Pente</translation>
+    </message>
+    <message>
+        <source>Deceleration</source>
+        <translation>Ralentissement</translation>
+    </message>
+    <message>
+        <source>Slope deceleration</source>
+        <translation>Ralentissement dû à la pente</translation>
     </message>
 </context>
 <context>

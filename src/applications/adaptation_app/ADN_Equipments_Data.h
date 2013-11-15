@@ -552,8 +552,8 @@ public:
         ADN_Type_Int nCrowdTransportCapacity_;
         ADN_Type_Time crowdEmbarkingTimePerPerson_;
         ADN_Type_Time crowdDisembarkingTimePerPerson_;
-        ADN_Type_Bool bMaxSlope_;
         ADN_Type_Double rMaxSlope_;
+        ADN_Type_Double rSlopeDeceleration_;
         LogInfos logInfos_;
         ADN_Type_Int nPowerDirectFire_;
         ADN_Type_Int nPowerIndirectFire_;

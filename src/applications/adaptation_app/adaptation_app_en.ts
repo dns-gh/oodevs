@@ -1413,10 +1413,6 @@ Parked engine running</translation>
         <translation>MOS Id</translation>
     </message>
     <message>
-        <source>Max steepness</source>
-        <translation>Max steepness</translation>
-    </message>
-    <message>
         <source>Mounting duration per person</source>
         <translation>Mounting duration per person</translation>
     </message>
@@ -1519,6 +1515,18 @@ Parked engine running</translation>
     <message>
         <source>Enforce resource quotas for aviation equipments</source>
         <translation>Enforce resource quotas for aviation equipments</translation>
+    </message>
+    <message>
+        <source>Slope</source>
+        <translation>Slope</translation>
+    </message>
+    <message>
+        <source>Deceleration</source>
+        <translation>Deceleration</translation>
+    </message>
+    <message>
+        <source>Slope deceleration</source>
+        <translation>Slope deceleration</translation>
     </message>
 </context>
 <context>

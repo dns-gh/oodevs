@@ -62,6 +62,7 @@
 		<xs:attribute name="size" type="xs:string" use="required"/>
 		<xs:attribute name="weight" type="T_NonNegativeDouble" use="required"/>
 		<xs:attribute name="max-slope" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="slope-deceleration" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="length" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="width" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="front-separation-distance" type="T_NonNegativeDouble" use="optional"/>

@@ -130,6 +130,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eIsTower]->Connect( &pInfos->logInfos_.maintenanceInfos_.bIsTower_, bConnect );
     
     vItemConnectors_[ADN_Equipments_GUI::eMaxSlope]->Connect( &pInfos->rMaxSlope_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSlopeDeceleration]->Connect( &pInfos->rSlopeDeceleration_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eLength]->Connect( &pInfos->length_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eWidth]->Connect( &pInfos->width_, bConnect );
@@ -158,7 +159,6 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eIsMaintenance]->Connect( &pInfos->logInfos_.bHasMaintenanceInfos_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eIsLogSupply]->Connect( &pInfos->logInfos_.bHasSupplyInfos_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eHasHealthLog]->Connect( &pInfos->logInfos_.bHasHealthInfos_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eHasMaxSlope]->Connect( &pInfos->bMaxSlope_, bConnect );
 
     vItemConnectors_[ ADN_Equipments_GUI::ePowerDirectFire ]->Connect( &pInfos->nPowerDirectFire_, bConnect );
     vItemConnectors_[ ADN_Equipments_GUI::ePowerIndirectFire ]->Connect( &pInfos->nPowerIndirectFire_, bConnect );

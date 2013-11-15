@@ -1441,8 +1441,8 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     , rMaxSpeed_                     ( 100 )
     , attritionBreakdowns_           ( "attrition" )
     , randomBreakdowns_              ( "random" )
-    , bMaxSlope_                     ( false )
     , rMaxSlope_                     ( 100 )
+    , rSlopeDeceleration_            ( 0 )
     , length_                        ( 0. )
     , width_                         ( 0. )
     , frontSeparationDistance_       ( 0. )
@@ -1483,8 +1483,8 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     , rMaxSpeed_                     ( 100 )
     , attritionBreakdowns_           ( "attrition" )
     , randomBreakdowns_              ( "random" )
-    , bMaxSlope_                     ( false )
     , rMaxSlope_                     ( 100 )
+    , rSlopeDeceleration_            ( 0 )
     , length_                        ( 0. )
     , width_                         ( 0. )
     , frontSeparationDistance_       ( 0. )
@@ -1624,8 +1624,8 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     pCopy->attritionBreakdowns_.CopyFrom( attritionBreakdowns_ );
     pCopy->randomBreakdowns_.CopyFrom( randomBreakdowns_ );
 
-    pCopy->bMaxSlope_ = bMaxSlope_.GetData();
     pCopy->rMaxSlope_ = rMaxSlope_.GetData();
+    pCopy->rSlopeDeceleration_ = rSlopeDeceleration_.GetData();
     pCopy->length_ = length_.GetData();
     pCopy->width_ = width_.GetData();
     pCopy->frontSeparationDistance_ = frontSeparationDistance_.GetData();
@@ -1845,12 +1845,9 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     randomBreakdowns_.ReadArchive( input, strName_.GetData() );
     attritionBreakdowns_.ReadArchive( input, strName_.GetData() );
 
-    input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
-    if( rMaxSlope_ != 100. )
-    {
-        bMaxSlope_ = true;
-        rMaxSlope_ =  rMaxSlope_.GetData() * 100.0;
-    }
+    if( input.has_attribute( "max-slope" ) )
+        rMaxSlope_ = input.attribute< double >( "max-slope" ) * 100;
+    input >> xml::optional >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ );
 
     input >> xml::optional >> xml::attribute( "length", length_ );
     input >> xml::optional >> xml::attribute( "width", width_ );
@@ -2019,8 +2016,9 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
         attritionBreakdowns_.WriteArchive( output, strName_.GetData() );
         output << xml::end;
     }
-    if( bMaxSlope_.GetData() )
-        output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
+    output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 )
+           << xml::attribute( "slope-deceleration", rSlopeDeceleration_.GetData() );
+
     if( length_.GetData() )
         output << xml::attribute( "length", length_ );
     if( width_.GetData() )

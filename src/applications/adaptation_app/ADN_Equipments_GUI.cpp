@@ -89,8 +89,11 @@ void ADN_Equipments_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "volume", tr( "Volume" ), vInfosConnectors[ eSize ]  );
     // Weight
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, "weight", tr( "Weight" ), vInfosConnectors[ eWeight ], tr( "T" ), eGreaterZero );
-    // Max slope
-    builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "max-slope", tr( "Max slope" ), vInfosConnectors[ eHasMaxSlope ], vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
+
+    // Slope groupbox
+    Q3GroupBox* pSlopeGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Slope" ) );
+    builder.AddField<ADN_EditLine_Double>( pSlopeGroupBox, "max-slope", tr( "Max slope" ), vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pSlopeGroupBox, "slope_deceleration", tr( "Deceleration" ), vInfosConnectors[ eSlopeDeceleration ], "", eGreaterEqualZero );
 
     // Troop/Crew groupbox
     QGroupBox* pTroopGroupBox = new gui::RichGroupBox( "troop-crew", tr( "Troop/Crew" ) );
@@ -260,21 +263,22 @@ void ADN_Equipments_GUI::Build()
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
     pDataPageLayout->addWidget( pInfoHolder         , 0, 0 );
-    pDataPageLayout->addWidget( pIdGroupBox         , 2, 0 );
-    pDataPageLayout->addWidget( pInfoGroupBox       , 2, 1 );
-    pDataPageLayout->addWidget( pBreakdownsGroup_   , 3, 0, 2, 1 );
+    pDataPageLayout->addWidget( pSlopeGroupBox      , 1, 0 );
+    pDataPageLayout->addWidget( pDimensionsGroupBox , 2, 0 );
+    pDataPageLayout->addWidget( pIdGroupBox         , 3, 0 );
+    pDataPageLayout->addWidget( pInfoGroupBox       , 3, 1 );
+    pDataPageLayout->addWidget( pBreakdownsGroup_   , 4, 0, 2, 1 );
 
-    pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 2, 1 );
-    pDataPageLayout->addWidget( pDimensionsGroupBox , 1, 0 );
-    pDataPageLayout->addWidget( pSensorsGroup       , 3, 1 );
-    pDataPageLayout->addWidget( pRadarsGroup        , 4, 1 );
+    pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 3, 1 );
+    pDataPageLayout->addWidget( pSensorsGroup       , 4, 1 );
+    pDataPageLayout->addWidget( pRadarsGroup        , 5, 1 );
 
-    pDataPageLayout->addWidget( pSpeedGroup             , 0, 2, 3, 1 );
-    pDataPageLayout->addWidget( pWeaponsGroup           , 3, 2 );
-    pDataPageLayout->addWidget( pActiveProtectionsGroup , 4, 2 );
+    pDataPageLayout->addWidget( pSpeedGroup             , 0, 2, 4, 1 );
+    pDataPageLayout->addWidget( pWeaponsGroup           , 4, 2 );
+    pDataPageLayout->addWidget( pActiveProtectionsGroup , 5, 2 );
 
-    pDataPageLayout->addWidget( pResourcesGroup     , 5, 0, 1, 3 );
-    pDataPageLayout->addWidget( pObjectsGroup       , 6, 0, 1, 3 );
+    pDataPageLayout->addWidget( pResourcesGroup     , 6, 0, 1, 3 );
+    pDataPageLayout->addWidget( pObjectsGroup       , 7, 0, 1, 3 );
 
     // List view
     QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Equipments >( this, data_.GetEquipments(), vInfosConnectors );
@@ -557,8 +561,8 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData() ? composante.ptrArmor_.GetData()->strName_.GetData().c_str() : "" );
         builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData() ? composante.ptrSize_.GetData()->strName_.GetData().c_str() : "" );
         builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
-        if( composante.bMaxSlope_.GetData() )
-            builder.ListItem( tr( "Max steepness" ), composante.rMaxSlope_.GetData() );
+        builder.ListItem( tr( "Max slope" ), composante.rMaxSlope_.GetData() );
+        builder.ListItem( tr( "Slope deceleration" ), composante.rSlopeDeceleration_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )
         {
             builder.ListItem( tr( "Mounting duration per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
