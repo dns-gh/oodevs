@@ -89,7 +89,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionCombo_->setModel( proxy );
     missionComboLayout_->addWidget( missionCombo_ );
 
-    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( SelectWhenMissionChanged() ) );
+    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( SelectWhenTargetOrMissionChanged() ) );
     connect( missionTypeCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( SelectWhenMissionTypeChanged() ) );
 
     targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
@@ -181,7 +181,7 @@ void EventOrderWidget::Fill( const Event& event )
         SelectWhenEventExist( *mission, eventAction.GetMissionType() );
     }
     else
-        SelectWhenTargetChanged(); // use this selection so it keep existing mission type && mission
+        SelectWhenTargetOrMissionChanged(); // use this selection so it keep existing mission type && mission
 }
 
 // -----------------------------------------------------------------------------
@@ -212,14 +212,14 @@ namespace
             return false;
         if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
         {
-            if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-                if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
+            if( auto automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+                if( auto decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
                     if( decisions->IsEmbraye() )
                         return false;
         }
         else
             if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-                if( const kernel::AutomatDecisions_ABC* decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
+                if( auto decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
                     if( !decisions->IsEmbraye() )
                         return false;
         return true;
@@ -318,10 +318,10 @@ void EventOrderWidget::SelectWhenEventExist( const actions::ActionWithTarget_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::SelectWhenTargetChanged
+// Name: EventOrderWidget::SelectWhenTargetOrMissionChanged
 // Created: ABR 2013-10-31
 // -----------------------------------------------------------------------------
-void EventOrderWidget::SelectWhenTargetChanged()
+void EventOrderWidget::SelectWhenTargetOrMissionChanged()
 {
     E_MissionType type = GetMissionType();
     if( type == eNbrMissionTypes )
@@ -348,21 +348,6 @@ void EventOrderWidget::SelectWhenMissionTypeChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::SelectWhenMissionChanged
-// Created: ABR 2013-10-31
-// -----------------------------------------------------------------------------
-void EventOrderWidget::SelectWhenMissionChanged()
-{
-    E_MissionType type = GetMissionType();
-    if( type == eNbrMissionTypes )
-        SelectDefault();
-    else if( const Decisions_ABC* decisions = GetTargetDecision() )
-        manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
-    else
-        manager_->Select( type, missionCombo_->currentText().toStdString(), 0 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::PlanMission
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
@@ -382,10 +367,10 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnTargetRemoved()
 {
-    if( target_ == 0 )
+    if( !target_ )
         throw MASA_EXCEPTION( "Can't remove an unset target" );
     SetTarget( 0 );
-    SelectWhenTargetChanged();
+    SelectWhenTargetOrMissionChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -394,7 +379,7 @@ void EventOrderWidget::OnTargetRemoved()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnTargetActivated() const
 {
-    if( target_ == 0 )
+    if( !target_ )
         throw MASA_EXCEPTION( "Can't activate an unset target" );
     target_->Select( controllers_.actions_ );
     target_->MultipleSelect( controllers_.actions_, boost::assign::list_of( target_ ) );
@@ -497,7 +482,7 @@ void EventOrderWidget::ActivateMissionPanel()
         return;
     emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     SetTarget( selectedEntity_ );
-    SelectWhenTargetChanged();
+    SelectWhenTargetOrMissionChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -510,7 +495,7 @@ void EventOrderWidget::ActivateMissionPanelOnUnit()
         return;
     emit StartCreation( eEventTypes_Order, simulation_.GetDateTime(), false );
     SetTarget( alternateSelectedEntity_ );
-    SelectWhenTargetChanged();
+    SelectWhenTargetOrMissionChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -521,7 +506,7 @@ void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 {
    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() ||
        alternateSelectedEntity_ && alternateSelectedEntity_->GetId() == decisions.GetAgent().GetId() )
-        SelectWhenMissionChanged();
+        SelectWhenTargetOrMissionChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -553,7 +538,7 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
     if( planningMode_ != value )
     {
         planningMode_ = value;
-        SelectWhenMissionChanged();
+        SelectWhenTargetOrMissionChanged();
     }
 }
 

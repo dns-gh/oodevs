@@ -124,7 +124,6 @@ private:
     //! @name Helpers
     //@{
     void SelectDefault();
-    void SelectWhenTargetChanged();
     void SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type );
 
     void UpdateTriggerAction();
@@ -152,7 +151,7 @@ private slots:
     //! @name Slots
     //@{
     void SelectWhenMissionTypeChanged();
-    void SelectWhenMissionChanged();
+    void SelectWhenTargetOrMissionChanged();
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
     void OnTargetActivated() const;
     void OnTargetRemoved();
