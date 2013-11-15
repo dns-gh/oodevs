@@ -88,7 +88,7 @@ TimelineWebView::~TimelineWebView()
 namespace
 {
     // find a lib which does that
-    std::string urlEncode( const std::string& value )
+    std::string UrlEncode( const std::string& value )
     {
         std::ostringstream escaped;
         escaped.fill( '0' );
@@ -106,12 +106,12 @@ namespace
         return escaped.str();
     }
 
-    std::string makeQuery( const std::map< std::string, std::string >& parameters )
+    std::string MakeQuery( const std::map< std::string, std::string >& parameters )
     {
         std::vector< std::string > tokens;
         for( auto it = parameters.begin(); it != parameters.end(); ++it )
             if( !it->second.empty() )
-                tokens.push_back( it->first + "=" + urlEncode( it->second ) );
+                tokens.push_back( it->first + "=" + UrlEncode( it->second ) );
         return "?" + boost::algorithm::join( tokens, "&" );
     }
 }
@@ -130,7 +130,7 @@ void TimelineWebView::Connect()
         ( "lang",          tools::Language::Current() )
         ( "sword_filter",  entityFilter_ )
         ( "sword_profile", lastProfile_ );
-    next.url += makeQuery( query );
+    next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
