@@ -42,7 +42,7 @@ class InfoSubordinatesWidget : public QListWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons );
     virtual ~InfoSubordinatesWidget();
     //@}
 
@@ -65,7 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    gui::EntitySymbols& icons_;
+    const gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

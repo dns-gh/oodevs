@@ -20,7 +20,7 @@ Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
 // Name: InfoSubordinateItem constructor
 // Created: SBO 2007-02-22
 // -----------------------------------------------------------------------------
-InfoSubordinateItem::InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
+InfoSubordinateItem::InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
     : QListWidgetItem( entity.GetName(), parent )
     , controllers_( controllers )
     , icons_( icons )
