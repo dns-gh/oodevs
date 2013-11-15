@@ -14,7 +14,10 @@ namespace kernel
 {
     class Entity_ABC;
     class Profile_ABC;
+}
 
+namespace kernel
+{
 // =============================================================================
 /** @class  Filter_ABC
     @brief  Filter definition
@@ -36,6 +39,7 @@ public:
     virtual void SetFilter( const kernel::Entity_ABC& entity ) = 0;
     virtual void SetFilter( const kernel::Profile_ABC& profile ) = 0;
     virtual void RemoveFilter() = 0;
+    virtual const kernel::Entity_ABC* GetFilteredEntity() const = 0;
     //@}
 };
 

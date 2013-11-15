@@ -18,8 +18,15 @@
 #include "actions/ActionTiming.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Filter_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/EventAction.h"
@@ -29,23 +36,30 @@
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Language.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
+
 #include <timeline/api.h>
 #include <tools/StdFileWrapper.h>
+
+#include <boost/algorithm/string/join.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::ActionController& actionController,
-                                  kernel::ActionController& eventController, Model& model, timeline::Configuration& cfg )
+TimelineWebView::TimelineWebView( QWidget* parent,
+                                  const tools::ExerciseConfig& config,
+                                  kernel::Controllers& controllers,
+                                  Model& model,
+                                  timeline::Configuration& cfg )
     : QWidget( parent )
     , config_( config )
-    , actionController_( actionController )
-    , eventController_( eventController )
+    , controllers_( controllers )
     , model_( model )
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
@@ -57,7 +71,8 @@ TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& 
     mainLayout_->setMargin( 0 );
     mainLayout_->setSpacing( 0 );
 
-    actionController_.Register( *this );
+    controllers_.actions_.Register( *this );
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +81,39 @@ TimelineWebView::TimelineWebView( QWidget* parent, const tools::ExerciseConfig& 
 // -----------------------------------------------------------------------------
 TimelineWebView::~TimelineWebView()
 {
-    actionController_.Unregister( *this );
+    controllers_.actions_.Unregister( *this );
+    controllers_.controller_.Unregister( *this );
+}
+
+namespace
+{
+    // find a lib which does that
+    std::string UrlEncode( const std::string& value )
+    {
+        std::ostringstream escaped;
+        escaped.fill( '0' );
+        escaped << std::hex;
+        for( auto it = value.begin(); it != value.end(); ++it )
+        {
+            const auto& c = *it;
+            if( std::isalnum( c ) || c == '-' || c == '_' || c == '.' || c == '~')
+                escaped << c;
+            else if( c == ' ' )
+                escaped << '+';
+            else
+                escaped << '%' << std::setw(2) << static_cast< int >( c ) << std::setw(0);
+        }
+        return escaped.str();
+    }
+
+    std::string MakeQuery( const std::map< std::string, std::string >& parameters )
+    {
+        std::vector< std::string > tokens;
+        for( auto it = parameters.begin(); it != parameters.end(); ++it )
+            if( !it->second.empty() )
+                tokens.push_back( it->first + "=" + UrlEncode( it->second ) );
+        return "?" + boost::algorithm::join( tokens, "&" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +124,14 @@ void TimelineWebView::Connect()
 {
     timelineWidget_.reset( new QWidget() );
     mainLayout_->addWidget( timelineWidget_.get() );
-    cfg_->widget = timelineWidget_.get();
-    server_.reset( MakeServer( *cfg_ ).release() );
+    timeline::Configuration next = *cfg_;
+    next.widget = timelineWidget_.get();
+    auto query = boost::assign::map_list_of
+        ( "lang",          tools::Language::Current() )
+        ( "sword_filter",  entityFilter_ )
+        ( "sword_profile", lastProfile_ );
+    next.url += MakeQuery( query );
+    server_.reset( MakeServer( next ).release() );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
@@ -125,7 +178,6 @@ void TimelineWebView::Disconnect()
     disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
 
     server_.reset();
-    cfg_->widget = 0;
     mainLayout_->removeWidget( timelineWidget_.get() );
     timelineWidget_.reset();
 }
@@ -187,7 +239,7 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
-    eventController_.DeselectAll();
+    controllers_.eventActions_.DeselectAll();
     emit DeleteEventSignal( uuid );
 }
 
@@ -240,12 +292,12 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     if( selected_ )
     {
         Event& gamingEvent = GetOrCreateEvent( *selected_ );
-        gamingEvent.Select( eventController_, actionController_ );
+        gamingEvent.Select( controllers_.eventActions_, controllers_.actions_ );
     }
     else if( hadSelection )
     {
-        actionController_.DeselectAll();
-        eventController_.DeselectAll();
+        controllers_.actions_.DeselectAll();
+        controllers_.eventActions_.DeselectAll();
     }
 }
 
@@ -256,7 +308,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
-    gamingEvent.Activate( eventController_ );
+    gamingEvent.Activate( controllers_.eventActions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,10 +321,12 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
     if( event )
     {
         Event& gamingEvent = GetOrCreateEvent( *event );
-        gamingEvent.ContextMenu( eventController_, QCursor::pos() );
+        gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos() );
     }
     else
-        actionController_.ContextMenu( selectedDateTime_, QCursor::pos() );
+    {
+        controllers_.actions_.ContextMenu( selectedDateTime_, QCursor::pos() );
+    }
 }
 
 namespace
@@ -301,6 +355,86 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::SetProfile
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::SetProfile( const QString& profile )
+{
+    lastProfile_ = profile;
+    if( !server_ || serverProfile_ == lastProfile_ )
+        return;
+    server_->UpdateQuery( boost::assign::map_list_of( "sword_profile", profile.toStdString() ) );
+    serverProfile_ = lastProfile_;
+}
+
+namespace
+{
+    std::string GetEntityFilter( const kernel::Filter_ABC& filter )
+    {
+        auto entity = filter.GetFilteredEntity();
+        if( !entity )
+            return std::string();
+        const auto& type = entity->GetTypeName();
+        std::string query;
+        if( type == kernel::Agent_ABC::typeName_ )
+            query = "u:";
+        else if( type == kernel::Automat_ABC::typeName_ )
+            query = "a:";
+        else if( type == kernel::Formation_ABC::typeName_ )
+            query = "f:";
+        else if( type == kernel::Team_ABC::typeName_ )
+            query = "p:";
+        else if( type == kernel::Inhabitant_ABC::typeName_ )
+            query = "i:";
+        else if( type == kernel::Population_ABC::typeName_ )
+            query = "c:";
+        else
+            MT_LOG_ERROR_MSG( "unsupported entity type " + type );
+        if( !query.empty() )
+            query += boost::lexical_cast< std::string >( entity->GetId() );
+        return query;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyUpdated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyUpdated( const kernel::Filter_ABC& filter )
+{
+    entityFilter_ = GetEntityFilter( filter );
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", entityFilter_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyCreated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyCreated( const kernel::Filter_ABC& filter )
+{
+    NotifyUpdated( filter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyCreated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyCreated( const kernel::Profile_ABC& profile )
+{
+    NotifyUpdated( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::NotifyUpdated
+// Created: BAX 2013-11-14
+// -----------------------------------------------------------------------------
+void TimelineWebView::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    SetProfile( profile.GetLogin() );
 }
 
 // -----------------------------------------------------------------------------
