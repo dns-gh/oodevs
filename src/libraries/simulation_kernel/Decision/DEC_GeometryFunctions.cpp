@@ -1953,17 +1953,6 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( const DEC_Decis
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat
-// Created: DDA 2011-10-17
-// -----------------------------------------------------------------------------
-double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat( MIL_Automate& callerAutomate, MT_Vector2D* point )
-{
-    if( !point)
-        return 0.;
-    return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( *point );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetPointAlongFuseau
 // Created: LDC 2010-10-18
 // -----------------------------------------------------------------------------

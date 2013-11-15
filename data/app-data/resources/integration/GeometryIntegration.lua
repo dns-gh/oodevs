@@ -134,7 +134,12 @@ stopSettleCalcul = function( line )
     DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
 end
 
--- Overriding DEC_Geometrie_PositionAdvanceAlongFuseau to ensure backwards compatibility
+-- Overriding DEC_Geometrie_PositionAdvanceAlongFuseau and DEC_Geometrie_PositionAdvanceAlongFuseauAutomat
+-- to ensure backwards compatibility
 DEC_Geometrie_PositionAdvanceAlongFuseau = function( position )
+    DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
+end
+
+DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
     DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
