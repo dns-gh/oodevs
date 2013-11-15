@@ -1928,7 +1928,7 @@ double DEC_GeometryFunctions::ComputeAdvanceAlongFuseau( MIL_Automate& callerAut
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau
+// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection
 // Created: LMT 2013-08-29
 // -----------------------------------------------------------------------------
 double DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection( DEC_Decision_ABC* pPion, MT_Vector2D* position )
@@ -1942,14 +1942,15 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection( DEC_De
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau
+// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongAOR
 // Created: LDC 2010-12-08
+// Modified: NMI 2013-11-15
 // -----------------------------------------------------------------------------
-double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( MIL_AgentPion& pion, MT_Vector2D* point )
+double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( DEC_Decision_ABC* pCaller, MT_Vector2D* point )
 {
-    if( !point)
+    if( !pCaller || !point )
         return 0.;
-    return pion.GetOrderManager().GetFuseau().ComputeAdvance( *point );
+    return pCaller->GetOrderManager().GetFuseau().ComputeAdvance( *point );
 }
 
 // -----------------------------------------------------------------------------

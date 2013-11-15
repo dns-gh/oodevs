@@ -95,6 +95,7 @@ public:
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
     virtual std::string GetGroupName() { return std::string(); };
+    virtual MIL_OrderManager_ABC& GetOrderManager() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; };
     virtual void RegisterSelf( sword::Brain& brain )
     {
         brain.GetScriptRef( "myself" ) = this;

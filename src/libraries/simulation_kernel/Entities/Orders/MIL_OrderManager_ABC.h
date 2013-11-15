@@ -55,6 +55,7 @@ public:
     virtual std::vector< MIL_LimaOrder* > FindAllLimas( const MIL_LimaFunction& function ) const;
     virtual MIL_LimaOrder* FindNextScheduledLima() const;
     const T_LimaVector& GetLimas() const;
+    virtual const MIL_Fuseau& GetFuseau() const = 0;
     const MT_Vector2D& GetDirDanger() const;
     const std::string& GetMissionName() const;
     //@}

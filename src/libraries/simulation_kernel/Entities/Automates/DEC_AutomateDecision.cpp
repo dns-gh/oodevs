@@ -518,6 +518,15 @@ MIL_Automate& DEC_AutomateDecision::GetAutomate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Automate_Decision::GetOrderManager
+// Created: NMI 2013-11-15
+// -----------------------------------------------------------------------------
+MIL_OrderManager_ABC& DEC_AutomateDecision::GetOrderManager() const
+{
+    return GetAutomate().GetOrderManager();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetKnowledgeGroup
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------

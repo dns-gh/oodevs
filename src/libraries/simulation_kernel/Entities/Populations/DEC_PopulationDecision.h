@@ -68,6 +68,7 @@ public:
     bool HasStateChanged() const; // Etat decisionnel
     virtual DEC_AutomateDecision* GetDecAutomate();
     virtual std::string GetName() const;
+    virtual MIL_OrderManager_ABC& GetOrderManager() const;
     //@}
 
     //! @name Notifications

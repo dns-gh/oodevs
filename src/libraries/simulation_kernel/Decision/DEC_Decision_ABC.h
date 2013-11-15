@@ -27,6 +27,7 @@ class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
 class MIL_MissionType_ABC;
+class MIL_OrderManager_ABC;
 
 class MT_Vector2D;
 class PHY_Action_ABC;
@@ -70,6 +71,7 @@ public:
     virtual MIL_Automate& GetAutomate() const = 0;
     virtual unsigned int GetID() const = 0;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
+    virtual MIL_OrderManager_ABC& GetOrderManager() const = 0;
 
     virtual void GarbageCollect() = 0;
     virtual void Reload( bool doInitBrain ) = 0;

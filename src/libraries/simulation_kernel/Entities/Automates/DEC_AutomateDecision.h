@@ -81,6 +81,7 @@ public:
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     virtual DEC_AutomateDecision* GetDecAutomate();
     virtual std::string GetName() const;
+    virtual MIL_OrderManager_ABC& GetOrderManager() const;
 
     virtual int GeteEtatPhaseMission() const;
     virtual void SeteEtatPhaseMission( int value );

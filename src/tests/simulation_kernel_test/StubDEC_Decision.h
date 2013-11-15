@@ -27,6 +27,7 @@ public:
     virtual DEC_AutomateDecision* GetDecAutomate() { return 0; }
     virtual std::string GetName() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual std::string GetGroupName() { return std::string(); }
+    virtual MIL_OrderManager_ABC& GetOrderManager() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void EndCleanStateAfterCrash() {}
     virtual void RegisterUserFunctions( sword::Brain& ) {}
     virtual void RegisterSelf( sword::Brain& /*brain*/ ) {}

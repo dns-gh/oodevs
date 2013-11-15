@@ -78,6 +78,7 @@ public:
     const PHY_RoePopulation&      GetRoePopulation() const;
 
     virtual std::string           GetName         () const;
+    virtual MIL_OrderManager_ABC& GetOrderManager() const;
     virtual DEC_AutomateDecision* GetDecAutomate  ();
 
     virtual const std::string& GetDIAType() const;
