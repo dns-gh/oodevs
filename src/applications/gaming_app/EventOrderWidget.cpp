@@ -14,6 +14,7 @@
 #include "actions/ActionWithTarget_ABC.h"
 #include "actions_gui/MissionInterface.h"
 #include "clients_gui/GLToolColors.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/EventManager.h"
 #include "clients_gui/RichLabel.h"
@@ -36,6 +37,7 @@
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/TimelinePublisher.h"
+#include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 #include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
@@ -76,7 +78,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionComboLayout_->setSpacing( 0 );
     targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
 
-    activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogApplyButton ), "" );
+    activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
     connect( activateTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetActivated() ) );
 
     removeTargetButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
