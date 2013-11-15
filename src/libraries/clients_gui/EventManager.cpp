@@ -318,21 +318,23 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
     else
         FillCompatibleOrders( result, decisions.GetMissions() );
 
+    std::string selectorText = GetSelector( currentMissionType_ );
     std::string currentMission = mission;
     // Entity type unchanged && current mission set && unknown mission => invalid mission
     bool invalidMission = currentMissionType_ == lastMissionType && !currentMission.empty() &&
-        std::find( result.begin(), result.end(), mission ) == result.end();
+         currentMission != selectorText &&  std::find( result.begin(), result.end(), mission ) == result.end();
 
     // Reset current mission
     // current mission is empty || (entity type changed(except frag oder) && unknown mission) => select first mission
     bool missionSelector = false;
     if( ( currentMission.empty() || // no mission selected
+          currentMission == selectorText ||
           lastMissionType != currentMissionType_ &&
           currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
           std::find( result.begin(), result.end(), mission ) == result.end()
          ) && !result.empty() )
     {
-        result.insert( result.begin(), GetSelector( currentMissionType_ ) );
+        result.insert( result.begin(), selectorText );
         currentMission = result[ 0 ];
         missionSelector = true;
     }
