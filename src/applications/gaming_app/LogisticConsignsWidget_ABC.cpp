@@ -55,6 +55,10 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     completedCheckbox_ = new gui::RichCheckBox( "completedRequestsCheckbox", tools::translate( "LogisticConsignsWidget_ABC", "Show completed requests" ) );
     completedCheckbox_->setFocusPolicy( Qt::NoFocus );
     connect( completedCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( OnCompletedFilter() ) );
+    // The history filtering is partially implemented but does not seem to work,
+    // even if logistic requests are not destroyed. I am leaving it here, hidden,
+    // until I figure out it is broken by design or not.
+    completedCheckbox_->setVisible( false );
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
     requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, filter );
