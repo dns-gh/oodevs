@@ -32,11 +32,12 @@ namespace actions
 
 namespace gui
 {
+    class EntitySymbols;
+    class EventManager;
     class GlTools_ABC;
-    template< typename T > class RichWarnWidget;
     class RichGroupBox;
     class RichLabel;
-    class EventManager;
+    template< typename T > class RichWarnWidget;
 }
 
 namespace kernel
@@ -86,7 +87,7 @@ public:
     //@{
              EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                                actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                               gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation );
+                               gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation, const gui::EntitySymbols& entitySymbols );
     virtual ~EventOrderWidget();
     //@}
 
@@ -169,6 +170,7 @@ private:
     const kernel::Profile_ABC& profile_;
     gui::GlTools_ABC& tools_;
     const kernel::Time_ABC& simulation_;
+    const gui::EntitySymbols& entitySymbols_;
 
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
@@ -176,6 +178,7 @@ private:
     QStandardItemModel missionModel_;
     gui::RichGroupBox* targetGroupBox_;
     gui::RichLabel* targetLabel_;
+    gui::RichLabel* symbolLabel_;
     QPushButton* activateTargetButton_;
     QPushButton* removeTargetButton_;
     boost::scoped_ptr< actions::gui::MissionInterface > missionInterface_;

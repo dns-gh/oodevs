@@ -28,6 +28,7 @@ namespace actions
 
 namespace gui
 {
+    class EntitySymbols;
     class GlTools_ABC;
     class Viewport_ABC;
 }
@@ -76,7 +77,7 @@ public:
     //@{
              EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                               const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools );
+                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools, const gui::EntitySymbols& entitySymbols );
     virtual ~EventDockWidget();
     //@}
     //! @name Operations

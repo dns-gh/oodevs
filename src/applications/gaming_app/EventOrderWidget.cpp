@@ -16,6 +16,7 @@
 #include "clients_gui/GLToolColors.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
+#include "clients_gui/EntitySymbols.h"
 #include "clients_gui/EventManager.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
@@ -55,7 +56,7 @@ namespace
 // -----------------------------------------------------------------------------
 EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                                     actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                                    gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation )
+                                    gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation, const gui::EntitySymbols& entitySymbols )
     : EventWidget_ABC()
     , controllers_( controllers )
     , model_( model )
@@ -63,6 +64,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , profile_( profile )
     , tools_( tools )
     , simulation_( simulation )
+    , entitySymbols_( entitySymbols )
     , selectedEntity_( 0 )
     , alternateSelectedEntity_( 0 )
     , target_( 0 )
@@ -77,7 +79,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     missionComboLayout_->setMargin( 0 );
     missionComboLayout_->setSpacing( 0 );
     targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-
+    symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
     activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
     connect( activateTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetActivated() ) );
 
@@ -97,7 +99,12 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
     QHBoxLayout* internalTargetLayout = new QHBoxLayout( targetGroupBox_ );
     internalTargetLayout->setContentsMargins( 5, 0, 5, 5 );
-    internalTargetLayout->addWidget( targetLabel_, 10, Qt::AlignCenter );
+    QWidget* symbolWidget = new QWidget();
+    QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
+    symbolLayout->setMargin( 0 );
+    symbolLayout->addWidget( symbolLabel_ );
+    symbolLayout->addWidget( targetLabel_ );
+    internalTargetLayout->addWidget( symbolWidget, 10, Qt::AlignCenter );
     internalTargetLayout->addWidget( activateTargetButton_, 1, Qt::AlignRight );
     internalTargetLayout->addWidget( removeTargetButton_, 1, Qt::AlignRight );
 
@@ -281,6 +288,16 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
     targetLabel_->setText( hasTarget ? target_->GetName() : "---" );
     activateTargetButton_->setEnabled( hasTarget );
     removeTargetButton_->setEnabled( hasTarget );
+
+    QPixmap pixmap;
+    if( hasTarget )
+        if( auto symbol = entity->Retrieve< kernel::TacticalHierarchies >() )
+        {
+            pixmap = entitySymbols_.GetSymbol( *entity, symbol->GetSymbol(), symbol->GetLevel(),
+                                                QSize( 64, 64 ), gui::EntitySymbols::eColorWithModifier );
+            pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+        }
+    symbolLabel_->setPixmap( pixmap );
 }
 
 // -----------------------------------------------------------------------------

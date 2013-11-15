@@ -53,7 +53,7 @@ namespace
 // -----------------------------------------------------------------------------
 EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                                   const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                                  const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools )
+                                  const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools, const gui::EntitySymbols& entitySymbols )
     : gui::RichDockWidget( controllers, parent, "event-dock-widget" )
     , factory_( model.eventFactory_ )
     , simulation_( simulation )
@@ -75,7 +75,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     bottomWidget_ = new EventBottomWidget( config );
 
     // Content
-    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_ );
+    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_, entitySymbols );
 
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
