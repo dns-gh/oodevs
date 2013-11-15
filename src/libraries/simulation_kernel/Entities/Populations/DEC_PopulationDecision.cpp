@@ -401,7 +401,7 @@ std::string DEC_PopulationDecision::GetName() const
 // -----------------------------------------------------------------------------
 MIL_OrderManager_ABC& DEC_PopulationDecision::GetOrderManager() const
 {
-    throw MASA_EXCEPTION( "GetOrderManager unexpected on population" );
+    return GetPopulation().GetOrderManager();
 }
 
 // -----------------------------------------------------------------------------

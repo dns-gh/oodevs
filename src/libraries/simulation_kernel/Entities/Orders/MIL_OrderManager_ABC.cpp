@@ -13,7 +13,6 @@
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_Mission_ABC.h"
 #include "MissionController_ABC.h"
-#include "MIL_Fuseau.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC constructor

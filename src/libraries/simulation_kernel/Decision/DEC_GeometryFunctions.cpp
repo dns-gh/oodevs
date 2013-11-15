@@ -1942,15 +1942,14 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection( DEC_De
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongAOR
+// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau
 // Created: LDC 2010-12-08
-// Modified: NMI 2013-11-15
 // -----------------------------------------------------------------------------
-double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( DEC_Decision_ABC* pCaller, MT_Vector2D* point )
+double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( const DEC_Decision_ABC& caller, MT_Vector2D* point )
 {
-    if( !pCaller || !point )
+    if( !point )
         return 0.;
-    return pCaller->GetOrderManager().GetFuseau().ComputeAdvance( *point );
+    return caller.GetOrderManager().GetFuseau().ComputeAdvance( *point );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,7 +53,7 @@ integration.computeDistance = function( firstPosition, secondPosition )
 end
 
 integration.postionAdvanceAlongAOR = function( position )
-    return DEC_Geometrie_PositionAdvanceAlongFuseau( myself, position )
+    return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
 
 integration.enlargeLocation = function( location, distance )
@@ -132,4 +132,9 @@ end
 
 stopSettleCalcul = function( line )
     DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
+end
+
+-- Overriding DEC_Geometrie_PositionAdvanceAlongFuseau to ensure backwards compatibility
+DEC_Geometrie_PositionAdvanceAlongFuseau = function( position )
+    DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
