@@ -56,6 +56,7 @@ private slots:
     void OnTimelineChecked( bool checked );
     void OnTimelineDebugPortChanged( int port );
     void OnExerciseNumberChanged( int exerciseNumber );
+    void OnMapnikLayerChecked( bool checked );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
     void OnChangeDataDirectory();

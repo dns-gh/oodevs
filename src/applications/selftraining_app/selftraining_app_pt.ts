@@ -183,6 +183,14 @@
         <source>Debug port</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mapnik settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate layer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
