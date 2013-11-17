@@ -11,10 +11,7 @@
 #include "NameResolver_ABC.h"
 #include "ConsignWriter.h"
 #include "clients_kernel/Tools.h"
-#include "tools/FileWrapper.h"
-#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
 
 using namespace plugins::logistic;
 

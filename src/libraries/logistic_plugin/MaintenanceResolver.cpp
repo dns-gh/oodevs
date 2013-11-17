@@ -11,7 +11,7 @@
 #include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "tools/FileWrapper.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::logistic;
 
