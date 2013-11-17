@@ -156,28 +156,12 @@ void ConsignResolver_ABC::OpenFile()
 {
     if( output_.is_open() )
         output_.close();
-    if( !fileName_.IsEmpty() )
-    {
-        try
-        {
-            if( fileName_.Exists() )
-            {
-                if( !output_.is_open() )
-                    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
-            }
-            else
-            {
-                if( output_.is_open() )
-                    output_.close();
-                output_.open( fileName_, std::ios_base::out | std::ios_base::app );
-                output_ << header_;
-            }
-        }
-        catch( ... )
-        {
-            // NOTHING
-        }
-    }
+    if( fileName_.IsEmpty() )
+        return;
+    const bool newFile = !fileName_.Exists();
+    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
+    if( newFile )
+        output_ << header_;
 }
 
 // -----------------------------------------------------------------------------
