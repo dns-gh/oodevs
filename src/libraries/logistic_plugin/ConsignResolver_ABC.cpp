@@ -159,7 +159,7 @@ void ConsignResolver_ABC::OpenFile()
     if( fileName_.IsEmpty() )
         return;
     const bool newFile = !fileName_.Exists();
-    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
+    output_.open( fileName_, std::ios::out | std::ios::app | std::ios::binary );
     if( newFile )
         output_ << header_;
 }
