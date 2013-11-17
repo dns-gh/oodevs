@@ -36,8 +36,18 @@ public:
     ConsignArchive( const tools::Path& basePath, uint32_t maxSize );
     virtual ~ConsignArchive();
 
-    void Write( const void* data, uint32_t length );
+    struct Offset
+    {
+        uint32_t file;
+        uint32_t offset;
+    };
+
+    Offset Write( const void* data, uint32_t length );
+    bool Read( uint32_t file, uint32_t offset, std::vector< uint8_t >& output ) const;
     void Flush();
+
+private:
+    tools::Path GetFilename( uint32_t index ) const;
 
 private:
     tools::Path basePath_;

@@ -23,8 +23,24 @@ namespace plugins
 namespace logistic
 {
 
-ConsignRecorder::ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize )
+class ConsignRecorder::ConsignHistory
+{
+public:
+    ConsignHistory( uint32_t i )
+        : id( i )
+        , destroyed( false )
+    {
+    }
+
+    std::vector< ConsignArchive::Offset > records;
+    uint32_t id;
+    bool destroyed;
+};
+
+ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+        uint32_t maxSize, uint32_t maxConsigns )
     : archive_( new ConsignArchive( archivePath, maxSize ))
+    , maxConsigns_( maxConsigns )
 {
 }
 
@@ -64,14 +80,69 @@ void ConsignRecorder::SetMaxLinesInFile( int maxLines )
         it->second->SetMaxLinesInFile( maxLines );
 }
 
-void ConsignRecorder::WriteEntry( const sword::LogHistoryEntry& entry )
+void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
+        const sword::LogHistoryEntry& entry )
 {
     if( !entry.IsInitialized() )
         throw MASA_EXCEPTION( "input entry is not initialized: " + entry.ShortDebugString() );
     std::vector< uint8_t > buffer( entry.ByteSize() );
     if( !entry.SerializeWithCachedSizesToArray( &buffer[0] ) )
         throw MASA_EXCEPTION( "could not serialize input message: " + entry.ShortDebugString() );
-    archive_->Write( &buffer[0], static_cast< uint32_t >( buffer.size() ));
+    const auto offset = archive_->Write( &buffer[0], static_cast< uint32_t >( buffer.size() ));
+
+    // Now, get the record file/offset/length and add it to the history,
+    // possibly evicting entries, from oldest deleted to newest alive. 
+
+    // Push a new record and update the LRU
+    auto ic = consigns_.find( requestId );
+    if( ic == consigns_.end() )
+    {
+        alive_.push_back( ConsignHistory( requestId ) );
+        ic = consigns_.insert( std::make_pair( requestId, std::prev( alive_.end() ) )).first;
+    }
+    auto& source = ic->second->destroyed ? destroyed_ : alive_;
+    ic->second->records.push_back( offset );
+    if( destroyed )
+        ic->second->destroyed = true;
+    auto& dest = ic->second->destroyed ? destroyed_ : alive_;
+    dest.splice( dest.end() , source, ic->second );
+
+    // Remove extra entries
+    T_LRU* const lists[] = { &destroyed_, &alive_ };
+    for( int i = 0; i != sizeof( lists )/sizeof( *lists ); ++i )
+    {
+        T_LRU& list = *lists[i];
+        while( consigns_.size() > maxConsigns_ && !list.empty() )
+        {
+            consigns_.erase( list.front().id );
+            list.pop_front();
+        }
+    }
+}
+
+void ConsignRecorder::GetHistory( uint32_t requestId,
+        boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
+{
+    entries.clear();
+    const auto ic = consigns_.find( requestId );
+    if( ic == consigns_.end() )
+        return;
+    const ConsignHistory& c = *ic->second;
+    std::vector< uint8_t > buffer;
+    for( auto it = c.records.cbegin(); it != c.records.cend(); ++it )
+    {
+        if( !archive_->Read( it->file, it->offset, buffer ) )
+            continue;
+        std::auto_ptr< sword::LogHistoryEntry > entry( new sword::LogHistoryEntry() );
+        if( !entry->ParseFromArray( &buffer[0], static_cast< int >( buffer.size() )))
+            continue;
+        entries.push_back( entry );
+    }
+}
+
+size_t ConsignRecorder::GetHistorySize() const
+{
+    return consigns_.size();
 }
 
 }  // namespace logistic

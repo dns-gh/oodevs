@@ -124,7 +124,10 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC 
         const tools::Path& archiveFile, const tools::Path& maintenanceFile,
         const tools::Path& supplyFile, const tools::Path& funeralFile,
         const tools::Path& medicalFile )
-    : recorder_( new ConsignRecorder( archiveFile, 20*1024*1024 ) )
+    // QA brigade benchmark reported around 17000 log lines, for all logistic
+    // chains, over 55h of simulated time. This more than an order of magnitude
+    // larger, being the number of requests instead of updates.
+    : recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, 100000 ) )
     , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
@@ -194,7 +197,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     } 
     if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
         recorder_->Write( ev.type, it->second->ToString(), today );
-    recorder_->WriteEntry( it->second->GetHistoryEntry() );
+    recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction,
+            it->second->GetHistoryEntry() );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }

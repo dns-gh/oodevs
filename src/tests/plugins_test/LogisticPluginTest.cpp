@@ -11,6 +11,7 @@
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
 #include "logistic_plugin/ConsignArchive.h"
+#include "logistic_plugin/ConsignRecorder.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <tools/TemporaryDirectory.h>
@@ -616,5 +617,97 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
 
     auto paths = tempDir.Path().ListFiles( false, true, true );
     BOOST_REQUIRE_EQUAL( 2u, paths.size() );
-    BOOST_CHECK_EQUAL( "consign.1", paths[1].ToUTF8() );
+    BOOST_CHECK_EQUAL( "consign.2", paths[1].ToUTF8() );
+}
+
+namespace
+{
+
+void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
+        bool destroyed )
+{
+    // ConsignRecord does not understand creation/update/destruction protocol,
+    // it can be fed with any structure.
+    sword::LogHistoryEntry entry;
+    entry.set_tick( tick );
+    auto funeral = entry.mutable_funeral()->mutable_creation();
+    funeral->mutable_request()->set_id( requestId );
+    funeral->mutable_unit()->set_id( 8 );
+    funeral->set_tick( tick );
+    funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+    rec.WriteEntry( requestId, destroyed, entry );
+    rec.Flush();
+}
+
+// Turn recorded LogHistoryEntry into something easily checked.
+std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& entries,
+        size_t index )
+{
+    const auto e = entries.at( index );
+    if( !e.has_funeral() || !e.funeral().has_creation() )
+        return "";
+    auto& creation = e.funeral().creation();
+    std::stringstream ss;
+    ss << creation.request().id() << "." << creation.tick();
+    return ss.str();
+}
+
+}  // namespace
+
+BOOST_AUTO_TEST_CASE( TestConsignRecorder )
+{
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
+    const tools::Path path = tempDir.Path() / "consigns";
+    boost::ptr_vector< sword::LogHistoryEntry > entries;
+
+    ConsignRecorder rec( path, 1024*1024, 2 );
+    BOOST_CHECK_EQUAL( 0u, rec.GetHistorySize() );
+
+    // Same consign
+    AddAndFlush( rec, 1, 1, false );
+    BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
+    AddAndFlush( rec, 1, 2, false );
+    BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
+    rec.GetHistory( 1, entries ); 
+    BOOST_REQUIRE_EQUAL( 2u, entries.size() );
+    BOOST_CHECK_EQUAL( "1.1", GetHistoryTrace( entries, 0 ) );
+    BOOST_CHECK_EQUAL( "1.2", GetHistoryTrace( entries, 1 ) );
+
+    // One destroyed
+    AddAndFlush( rec, 2, 1, true );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 2, entries ); 
+    BOOST_REQUIRE_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "2.1", GetHistoryTrace( entries, 0 ) );
+
+    // Another valid -> evict the destroyed [2]
+    AddAndFlush( rec, 3, 1, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 3, entries ); 
+    BOOST_CHECK_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "3.1", GetHistoryTrace( entries, 0 ) );
+    rec.GetHistory( 2, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+
+    // Another destroyed -> removed immediately
+    AddAndFlush( rec, 4, 1, true );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 4, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+
+    // Update [1]
+    AddAndFlush( rec, 1, 3, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+
+    // A new valid one -> evict [3]
+    AddAndFlush( rec, 5, 1, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 1, entries ); 
+    BOOST_CHECK_EQUAL( 3u, entries.size() );
+    BOOST_CHECK_EQUAL( "1.3", GetHistoryTrace( entries, entries.size() - 1 ) );
+    rec.GetHistory( 3, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+    rec.GetHistory( 5, entries ); 
+    BOOST_CHECK_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "5.1", GetHistoryTrace( entries, entries.size() - 1 ) );
 }
