@@ -169,6 +169,9 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 {
     if( message.message().has_control_begin_tick() )
     {
+        for( auto it = resolvers_.begin(); it != resolvers_.end(); ++it )
+            it->second->Flush();
+
         const int tick = message.message().control_begin_tick().current_tick();
         if( tick >= 0 )
             currentTick_ = tick;

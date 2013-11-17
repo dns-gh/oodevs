@@ -67,8 +67,14 @@ void ConsignResolver_ABC::Write( const std::string& data, const boost::gregorian
     CheckOutputFile( today );
     if( !output_.is_open() )
         return;
-    output_ << data << std::flush;
+    output_ << data;
     curLineIndex_ += boost::numeric_cast< int >( std::count( data.begin(), data.end(), '\n' ) );
+}
+
+void ConsignResolver_ABC::Flush()
+{
+    if( output_.is_open() )
+        output_.flush();
 }
 
 // -----------------------------------------------------------------------------

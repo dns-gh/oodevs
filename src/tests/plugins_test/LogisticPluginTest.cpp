@@ -456,6 +456,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
+    plugin.reset(); // flush
 
     tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expecteds;
@@ -565,6 +566,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
     // Recreate it on multiple files
     plugin = CreateLogisticPlugin( tempDir.Path() );
     PushFuneralMessage( plugin.get() );
+    plugin.reset();
 
     tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expected;

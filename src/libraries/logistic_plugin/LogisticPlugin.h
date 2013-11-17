@@ -86,7 +86,6 @@ public:
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
     virtual bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
-
     int DebugGetConsignCount( E_LogisticType eLogisticType ) const;
     void SetMaxLinesInFile( int maxLines );
     //@}
