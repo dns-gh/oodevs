@@ -210,7 +210,7 @@
     </message>
 </context>
 <context>
-    <name>EventManager</name>
+    <name>EventOrderPresenter</name>
     <message>
         <source>&lt;Select frag order&gt;</source>
         <translation type="unfinished"></translation>

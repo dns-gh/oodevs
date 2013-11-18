@@ -18,7 +18,7 @@
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/EventBuilder_ABC.h"
-#include "clients_gui/EventManager.h"
+#include "clients_gui/EventOrderPresenter.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "gaming/Decisions_ABC.h"
@@ -143,7 +143,7 @@ namespace
     MockEventBuilder builder;
     MockInterfaceBuilder interfaceBuilder;
     MockMissionInterface missionInterface;
-    gui::EventManager manager;
+    gui::EventOrderPresenter manager;
     xml::xistringstream xisMissionType1;
     xml::xistringstream xisMissionType2;
     xml::xistringstream xisFragOrderType1;

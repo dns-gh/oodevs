@@ -17,7 +17,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_gui/EventManager.h"
+#include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWarnWidget.h"
@@ -72,7 +72,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
     , missionCombo_( 0 )
     , planningMode_( false )
-    , manager_( new gui::EventManager( *this, model.static_.types_, interfaceBuilder, *missionInterface_ ) )
+    , manager_( new gui::EventOrderPresenter( *this, model.static_.types_, interfaceBuilder, *missionInterface_ ) )
     , context_( 0 )
 {
     // Top

@@ -40,20 +40,20 @@ namespace gui
 {
     class EventBuilder_ABC;
 // =============================================================================
-/** @class  EventManager
+/** @class  EventOrderPresenter
     @brief  Event manager
 */
 // Created: LGY 2013-10-03
 // =============================================================================
-class EventManager : private boost::noncopyable
+class EventOrderPresenter : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EventManager( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
-                           actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                           actions::gui::MissionInterface_ABC& missionInterface );
-            ~EventManager();
+             EventOrderPresenter( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
+                                  actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                                  actions::gui::MissionInterface_ABC& missionInterface );
+            ~EventOrderPresenter();
     //@}
 
     //! @name Operations

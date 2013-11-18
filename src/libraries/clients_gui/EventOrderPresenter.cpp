@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "EventManager.h"
+#include "EventOrderPresenter.h"
 #include "EventBuilder_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
@@ -28,12 +28,12 @@
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: EventManager constructor
+// Name: EventOrderPresenter constructor
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-EventManager::EventManager( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
-                            actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                            actions::gui::MissionInterface_ABC& missionInterface )
+EventOrderPresenter::EventOrderPresenter( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
+                                          actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                                          actions::gui::MissionInterface_ABC& missionInterface )
     : builder_           ( builder )
     , agentTypes_        ( agentTypes )
     , currentMissionType_( eMissionType_Pawn )
@@ -45,19 +45,19 @@ EventManager::EventManager( EventBuilder_ABC& builder, const kernel::AgentTypes&
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager destructor
+// Name: EventOrderPresenter destructor
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-EventManager::~EventManager()
+EventOrderPresenter::~EventOrderPresenter()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select()
+void EventOrderPresenter::Select()
 {
     Select( eMissionType_Pawn );
 }
@@ -172,25 +172,25 @@ namespace
     std::string GetSelector( E_MissionType type )
     {
         return type == eMissionType_FragOrder
-            ? tools::translate( "EventManager", "<Select frag order>" ).toStdString()
-            : tools::translate( "EventManager", "<Select mission>" ).toStdString();
+            ? tools::translate( "EventOrderPresenter", "<Select frag order>" ).toStdString()
+            : tools::translate( "EventOrderPresenter", "<Select mission>" ).toStdString();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( E_MissionType type )
+void EventOrderPresenter::Select( E_MissionType type )
 {
     Select( type, "", 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action )
+void EventOrderPresenter::Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action )
 {
     std::string currentMission = mission;
     std::string lastMission = currentMission_;
@@ -241,19 +241,19 @@ void EventManager::Select( E_MissionType type, const std::string& mission, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( E_MissionType type, const std::string& mission )
+void EventOrderPresenter::Select( E_MissionType type, const std::string& mission )
 {
     Select( type, mission, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( const Decisions_ABC& decisions )
+void EventOrderPresenter::Select( const Decisions_ABC& decisions )
 {
     const kernel::Entity_ABC& entity = decisions.GetAgent();
     E_MissionType type = GetEntityType( entity );
@@ -261,29 +261,29 @@ void EventManager::Select( const Decisions_ABC& decisions )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type )
+void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type )
 {
     Select( decisions, type, "" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission )
+void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission )
 {
     Select( decisions, type, mission, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
-                           const actions::Action_ABC* action )
+void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
+                                  const actions::Action_ABC* action )
 {
     const kernel::Entity_ABC& entity = decisions.GetAgent();
     auto entityType = GetEntityType( entity );
@@ -296,11 +296,11 @@ void EventManager::Select( const Decisions_ABC& decisions, E_MissionType type, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Select
+// Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
-                           E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action )
+void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
+                                  E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action )
 {
     E_MissionType lastMissionType = currentMissionType_;
     currentMissionType_ = type;
@@ -384,10 +384,10 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::Publish
+// Name: EventOrderPresenter::Publish
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const
+void EventOrderPresenter::Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const
 {
     missionInterface_.SetPlanned( planned );
     if( currentMissionType_ == eMissionType_FragOrder )
@@ -397,10 +397,10 @@ void EventManager::Publish( actions::ActionsModel& model, timeline::Event* event
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventManager::SetPlanningMode
+// Name: EventOrderPresenter::SetPlanningMode
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::SetPlanningMode( bool value )
+void EventOrderPresenter::SetPlanningMode( bool value )
 {
     planningMode_ = value;
 }

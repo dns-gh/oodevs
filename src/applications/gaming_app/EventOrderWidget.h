@@ -33,7 +33,7 @@ namespace actions
 namespace gui
 {
     class EntitySymbols;
-    class EventManager;
+    class EventOrderPresenter;
     class GlTools_ABC;
     class RichGroupBox;
     class RichLabel;
@@ -193,7 +193,7 @@ private:
     const kernel::Entity_ABC* target_;
 
     bool planningMode_;
-    boost::scoped_ptr< gui::EventManager > manager_;
+    boost::scoped_ptr< gui::EventOrderPresenter > manager_;
     int context_;
     //@}
 };
