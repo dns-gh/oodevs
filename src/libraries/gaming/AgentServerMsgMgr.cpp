@@ -570,7 +570,7 @@ namespace
 void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
     const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& states )
 {
-    if( start == end )
+    if( start >= end )
         return;
     const auto& s = states.Get( start );
     const auto id = s.request().id();
@@ -599,12 +599,10 @@ void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistoryAck& message )
 {
-    if( message.states().size() == 0 )
-        return;
     // Assume states are sorted by ascending (request, state)
     auto& model = GetModel().logistics_;
     int i = 0, j;
-    for( j = 1; j < message.states().size(); ++j )
+    for( j = 0; j < message.states().size(); ++j )
     {
         if( message.states( i ).request().id() == message.states( j ).request().id() )
             continue;
