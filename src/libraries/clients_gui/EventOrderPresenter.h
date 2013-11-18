@@ -10,6 +10,7 @@
 #ifndef __EventManager_h_
 #define __EventManager_h_
 
+#include "EventOrderViewState.h"
 #include "ENT/ENT_Tr.h"
 
 namespace kernel
@@ -83,13 +84,13 @@ private:
 private:
     //! @name Member data
     //@{
-    EventOrderView_ABC& builder_;
+    EventOrderView_ABC& view_;
     const kernel::AgentTypes& agentTypes_;
-    E_MissionType currentMissionType_;
-    std::string currentMission_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
-    bool planningMode_;
     actions::gui::MissionInterface_ABC& missionInterface_;
+
+    EventOrderViewState state_;
+    bool planningMode_;
     //@}
 };
 

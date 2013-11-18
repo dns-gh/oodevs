@@ -34,6 +34,7 @@ namespace gui
 {
     class EntitySymbols;
     class EventOrderPresenter;
+    struct EventOrderViewState;
     class GlTools_ABC;
     class RichGroupBox;
     class RichLabel;
@@ -117,9 +118,7 @@ private:
 
     //! @name EventOrderView_ABC implementation
     //@{
-    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                    const std::vector< std::string >& missions, const std::string& currentMission,
-                    const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector );
+    virtual void Build( const gui::EventOrderViewState& state );
     virtual void UpdateActions();
     virtual void NotifyUpdated( const MissionParameters& extension );
     //@}

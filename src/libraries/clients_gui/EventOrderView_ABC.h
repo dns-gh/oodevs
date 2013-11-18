@@ -10,12 +10,10 @@
 #ifndef __EventBuilder_ABC_h_
 #define __EventBuilder_ABC_h_
 
-#include "ENT/ENT_Tr.h"
-#include <boost/noncopyable.hpp>
-#include <vector>
-
 namespace gui
 {
+    struct EventOrderViewState;
+
 // =============================================================================
 /** @class  EventOrderView_ABC
     @brief  Event order view declaration
@@ -33,9 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                        const std::vector< std::string >& missions, const std::string& currentMission,
-                        const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector ) = 0;
+    virtual void Build( const EventOrderViewState& state ) = 0;
 
     virtual void UpdateActions() = 0;
     //@}

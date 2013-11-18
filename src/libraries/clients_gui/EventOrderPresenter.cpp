@@ -31,12 +31,11 @@ using namespace gui;
 // Name: EventOrderPresenter constructor
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& builder, const kernel::AgentTypes& agentTypes,
+EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& view, const kernel::AgentTypes& agentTypes,
                                           actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                           actions::gui::MissionInterface_ABC& missionInterface )
-    : builder_           ( builder )
+    : view_              ( view )
     , agentTypes_        ( agentTypes )
-    , currentMissionType_( eMissionType_Pawn )
     , interfaceBuilder_  ( interfaceBuilder )
     , missionInterface_  ( missionInterface )
     , planningMode_      ( false )
@@ -192,52 +191,49 @@ void EventOrderPresenter::Select( E_MissionType type )
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action )
 {
-    std::string currentMission = mission;
-    std::string lastMission = currentMission_;
-    currentMissionType_ = type;
+    const std::string lastMission = state_.currentMission_;
+    state_.Purge();
+    state_.currentMission_ = mission;
+    state_.currentType_ = type;
 
     // Retrieve types
-    std::vector< E_MissionType > types;
     for( int i = 0; i < eNbrMissionTypes; ++i )
-        types.push_back( static_cast< E_MissionType >( i ) );
+        state_.types_.push_back( static_cast< E_MissionType >( i ) );
 
     // Retrieve missions
-    std::vector< std::string > result;
-    if( currentMissionType_ == eMissionType_FragOrder )
-        FillOrders< kernel::FragOrderType >( result, agentTypes_, currentMissionType_ );
+    if( state_.currentType_ == eMissionType_FragOrder )
+        FillOrders< kernel::FragOrderType >( state_.missions_, agentTypes_, state_.currentType_ );
     else
-        FillOrders< kernel::MissionType >( result, agentTypes_, currentMissionType_ );
+        FillOrders< kernel::MissionType >( state_.missions_, agentTypes_, state_.currentType_ );
 
     // Reset current mission
-    bool missionSelector = false;
-    if( currentMission.empty() && !result.empty() )
+    if( state_.currentMission_.empty() && !state_.missions_.empty() )
     {
-        result.insert( result.begin(), GetSelector( currentMissionType_ ) );
-        currentMission = result[ 0 ];
-        missionSelector = true;
+        state_.missions_.insert( state_.missions_.begin(), GetSelector( state_.currentType_ ) );
+        state_.currentMission_ = state_.missions_[ 0 ];
+        state_.missionSelector_ = true;
     }
 
-    // Build interface
-    builder_.Build( types, currentMissionType_, result, currentMission, std::vector< std::string >(), false, missionSelector );
-
     // Retrieve current mission
-    const kernel::OrderType* order = currentMissionType_ == eMissionType_FragOrder ?
-        GetCurrentOrder< kernel::FragOrderType >( agentTypes_, currentMissionType_, currentMission ) :
-        GetCurrentOrder< kernel::MissionType >( agentTypes_, currentMissionType_, currentMission );
+    const kernel::OrderType* order = state_.currentType_ == eMissionType_FragOrder ?
+        GetCurrentOrder< kernel::FragOrderType >( agentTypes_, state_.currentType_, state_.currentMission_ ) :
+        GetCurrentOrder< kernel::MissionType >( agentTypes_, state_.currentType_, state_.currentMission_ );
 
     // Reset interface only for a different mission
-    if( currentMission != lastMission || missionSelector )
+    if( state_.currentMission_ != lastMission || state_.missionSelector_ )
     {
         // Build parameters interface
         missionInterface_.Purge();
         if( order )
-            missionInterface_.Build( interfaceBuilder_, *order, currentMissionType_ );
+            missionInterface_.Build( interfaceBuilder_, *order, state_.currentType_ );
         if( action )
             missionInterface_.FillFrom( *action );
     }
     missionInterface_.SetEntity( 0 );
-    currentMission_ = currentMission;
-    builder_.UpdateActions();
+
+    // Update the view
+    view_.Build( state_ );
+    view_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------
@@ -302,75 +298,73 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType 
 void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
                                   E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action )
 {
-    E_MissionType lastMissionType = currentMissionType_;
-    currentMissionType_ = type;
+    const std::string lastMission = state_.currentMission_;
+    E_MissionType lastMissionType = state_.currentType_;
+    state_.Purge();
+    state_.currentType_ = type;
+    state_.currentMission_ = mission;
 
     // Retrieve entity missions
-    std::vector< std::string > result;
-    std::vector< std::string > disabledResult;
-    if( currentMissionType_ == eMissionType_FragOrder )
+    if( state_.currentType_ == eMissionType_FragOrder )
     {
         // General frag order
-        FillCompatibleOrders< kernel::FragOrder >( result, decisions.GetFragOrders() );
+        FillCompatibleOrders< kernel::FragOrder >( state_.missions_, decisions.GetFragOrders() );
         // frag order relating to a mission
-        FillCompatibleFragOrders( result, disabledResult, decisions.GetMissions(), decisions.GetCurrentMission(), planningMode_ );
+        FillCompatibleFragOrders( state_.missions_, state_.disabledMissions_, decisions.GetMissions(), decisions.GetCurrentMission(), planningMode_ );
     }
     else
-        FillCompatibleOrders( result, decisions.GetMissions() );
+        FillCompatibleOrders( state_.missions_, decisions.GetMissions() );
 
-    std::string selectorText = GetSelector( currentMissionType_ );
-    std::string currentMission = mission;
+    std::string selectorText = GetSelector( state_.currentType_ );
     // Entity type unchanged && current mission set && unknown mission => invalid mission
-    bool invalidMission = currentMissionType_ == lastMissionType && !currentMission.empty() &&
-         currentMission != selectorText &&  std::find( result.begin(), result.end(), mission ) == result.end();
+    state_.invalid_ = state_.currentType_ == lastMissionType && !state_.currentMission_.empty() &&
+                      state_.currentMission_ != selectorText &&  std::find( state_.missions_.begin(), state_.missions_.end(), mission ) == state_.missions_.end();
 
     // Reset current mission
     // current mission is empty || (entity type changed(except frag oder) && unknown mission) => select first mission
-    bool missionSelector = false;
-    if( ( currentMission.empty() || // no mission selected
-          currentMission == selectorText ||
-          lastMissionType != currentMissionType_ &&
-          currentMissionType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
-          std::find( result.begin(), result.end(), mission ) == result.end()
-         ) && !result.empty() )
+    if( ( state_.currentMission_.empty() || // no mission selected
+          state_.currentMission_ == selectorText ||
+          lastMissionType != state_.currentType_ &&
+          state_.currentType_ != eMissionType_FragOrder && lastMissionType != eMissionType_FragOrder &&
+          std::find( state_.missions_.begin(), state_.missions_.end(), mission ) == state_.missions_.end()
+         ) && !state_.missions_.empty() )
     {
-        result.insert( result.begin(), selectorText );
-        currentMission = result[ 0 ];
-        missionSelector = true;
+        state_.missions_.insert( state_.missions_.begin(), selectorText );
+        state_.currentMission_ = state_.missions_[ 0 ];
+        state_.missionSelector_ = true;
     }
 
     // Insert invalid mission
-    if( invalidMission )
-        result.insert( result.begin(), currentMission );
+    if( state_.invalid_ )
+        state_.missions_.insert( state_.missions_.begin(), state_.currentMission_ );
 
-    // Build mission combobox
-    builder_.Build( boost::assign::list_of( entityType )( eMissionType_FragOrder ),
-                    currentMissionType_, result, currentMission, disabledResult, invalidMission, missionSelector );
+    // Fill types
+    state_.types_ = boost::assign::list_of( entityType )( eMissionType_FragOrder );
 
     // Retrieve current order
     const kernel::OrderType* order = 0;
-    if( currentMissionType_ == eMissionType_FragOrder )
+    if( state_.currentType_ == eMissionType_FragOrder )
     {
         // General frag order
-        order = GetCurrentOrder< kernel::FragOrder >( decisions.GetFragOrders(), currentMission );
+        order = GetCurrentOrder< kernel::FragOrder >( decisions.GetFragOrders(), state_.currentMission_ );
         // Frag order with mission
         if( !order )
-            order = GetCurrentFragOrder( decisions.GetMissions(), currentMission );
+            order = GetCurrentFragOrder( decisions.GetMissions(), state_.currentMission_ );
     }
     else
-        order = GetCurrentOrder< kernel::Mission >( decisions.GetMissions(), currentMission );
+        order = GetCurrentOrder< kernel::Mission >( decisions.GetMissions(), state_.currentMission_ );
 
     // no last mission || entity type changed || last mission != current mission => need to refresh parameters interface
-    if( ( currentMission_.empty() ||
-        lastMissionType != currentMissionType_ ||
-        currentMission_ != currentMission || 
-        action ) && !invalidMission )
+    if( ( lastMission.empty() ||
+        lastMissionType != state_.currentType_ ||
+        lastMission != state_.currentMission_ || 
+        action ) && !state_.invalid_ )
     {
         // Purge parameters interface
         missionInterface_.Purge();
         // Build parameters interface
         if( order )
-            missionInterface_.Build( interfaceBuilder_, *order, currentMissionType_ );
+            missionInterface_.Build( interfaceBuilder_, *order, state_.currentType_ );
     }
 
     missionInterface_.SetEntity( &entity );
@@ -378,9 +372,9 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::
     if( action )
         missionInterface_.FillFrom( *action );
 
-    currentMission_ = currentMission;
-
-    builder_.UpdateActions();
+    // Update the view
+    view_.Build( state_ );
+    view_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +384,7 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::
 void EventOrderPresenter::Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const
 {
     missionInterface_.SetPlanned( planned );
-    if( currentMissionType_ == eMissionType_FragOrder )
+    if( state_.currentType_ == eMissionType_FragOrder )
         missionInterface_.PublishFragOrder( model, event, context );
     else
         missionInterface_.PublishMissionOrder( model, event, context );

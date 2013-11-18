@@ -576,51 +576,49 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
 // Name: EventOrderWidget::Build
 // Created: LGY 2013-08-29
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                              const std::vector< std::string >& missions, const std::string& currentMission,
-                              const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector )
+void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 {
     missionTypeCombo_->blockSignals( true );
     // CLEAR
     missionTypeCombo_->clear();
     // FILL
-    for( auto it = types.begin(); it != types.end(); ++it )
+    for( auto it = state.types_.begin(); it != state.types_.end(); ++it )
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( *it ) ),
                                     QVariant( static_cast< unsigned int >( *it ) ) );
     // SELECT
     missionTypeCombo_->setCurrentIndex( missionTypeCombo_->findText(
-        QString::fromStdString( ENT_Tr::ConvertFromMissionType( currentType ) ) ) );
+        QString::fromStdString( ENT_Tr::ConvertFromMissionType( state.currentType_ ) ) ) );
     missionTypeCombo_->blockSignals( false );
     missionCombo_->blockSignals( true );
     // CLEAR
     missionCombo_->clear();
     // FILL
-    for( auto it = missions.begin(); it != missions.end(); ++it )
+    for( auto it = state.missions_.begin(); it != state.missions_.end(); ++it )
     {
         const std::string& name = *it;
         missionCombo_->addItem( name.c_str() );
         QBrush missionColor = defaultColor;
-        if( name == currentMission )
+        if( name == state.currentMission_ )
         {
-            if( invalid )
+            if( state.invalid_ )
                 missionColor = invalidColor;
-            else if( missionSelector )
+            else if( state.missionSelector_ )
                 missionColor = disabledColor;
         }
         else
-            missionColor = std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
+            missionColor = std::find( state.disabledMissions_.begin(), state.disabledMissions_.end(), name ) == state.disabledMissions_.end()
                 ? defaultColor
                 : disabledColor;
         missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
     }
     // SELECT
-    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
+    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( state.currentMission_ ) ) );
     // Disable invalid mission
-    if( invalid || missionSelector)
+    if( state.invalid_ || state.missionSelector_ )
         missionCombo_->setItemData( missionCombo_->currentIndex(), Qt::NoItemFlags, Qt::UserRole - 1 );
-    missionCombo_->EnableStaticWarning( invalid );
-    targetGroupBox_->EnableStaticWarning( invalid );
-    targetLabel_->EnableStaticWarning( invalid );
+    missionCombo_->EnableStaticWarning( state.invalid_ );
+    targetGroupBox_->EnableStaticWarning( state.invalid_ );
+    targetLabel_->EnableStaticWarning( state.invalid_ );
     missionCombo_->blockSignals( false );
 }
 

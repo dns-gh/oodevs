@@ -25,6 +25,34 @@
 #include <boost/assign.hpp>
 #include "ENT/ENT_Tr.h"
 
+namespace gui
+{
+    template< typename T >
+    std::ostream& operator<<( std::ostream& os, const std::vector< T >& vector )
+    {
+        os << "[";
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+            if( it == vector.begin() )
+                os << *it;
+            else
+                os << ", " << *it;
+        os << "]";
+        return os;
+    }
+
+    std::ostream& operator<<( std::ostream& os, const gui::EventOrderViewState& state )
+    {
+        os << state.types_
+           << state.currentType_
+           << state.missions_
+           << state.currentMission_
+           << state.disabledMissions_
+           << state.invalid_
+           << state.missionSelector_;
+        return os;
+    }
+}
+
 namespace
 {
     const xml::xistringstream xis( "<missions>"
@@ -59,6 +87,17 @@ namespace
     const std::string missionSelector = "<Select mission>";
     const std::string fragOrderSelector = "<Select frag order>";
 
+    bool operator==( const gui::EventOrderViewState& lhs, const gui::EventOrderViewState& rhs )
+    {
+        return lhs.types_ == rhs.types_ &&
+               lhs.currentType_ == rhs.currentType_ &&
+               lhs.missions_ == rhs.missions_ &&
+               lhs.currentMission_ == rhs.currentMission_ &&
+               lhs.disabledMissions_ == rhs.disabledMissions_ &&
+               lhs.invalid_ == rhs.invalid_ &&
+               lhs.missionSelector_ == rhs.missionSelector_;
+    }
+
     MOCK_BASE_CLASS( MockMissionInterface, actions::gui:: MissionInterface_ABC )
     {
         MOCK_METHOD( Build, 3 );
@@ -89,7 +128,7 @@ namespace
 
     MOCK_BASE_CLASS( MockEventBuilder, gui::EventOrderView_ABC )
     {
-        MOCK_METHOD( Build, 7 );
+        MOCK_METHOD( Build, 1 );
         MOCK_METHOD( UpdateActions, 0 );
     };
 
@@ -175,7 +214,7 @@ namespace
     }
 
     void CheckMission( const std::string& type, const std::vector< E_MissionType >& missionTypes,
-                E_MissionType current, const std::string& currentMission, bool invalid = false )
+                       E_MissionType current, const std::string& currentMission, bool invalid = false )
     {
         std::vector< std::string > missions = boost::assign::list_of( "missionType1" )( "missionType2" );
         bool selector = currentMission == missionSelector;
@@ -185,8 +224,8 @@ namespace
         MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
         MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
         MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
-        MOCK_EXPECT( builder.Build ).once().with( missionTypes, current,
-            missions, currentMission, std::vector< std::string>(), invalid, selector );
+        MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( missionTypes, current,
+            missions, currentMission, std::vector< std::string>(), invalid, selector ) );
         MOCK_EXPECT( builder.UpdateActions ).once();
     }
 
@@ -196,9 +235,9 @@ namespace
         MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
         MOCK_EXPECT( decisions.GetFragOrders ).once().returns( fragOrderResolver.CreateIterator() );
         MOCK_EXPECT( decisions.GetFragOrders ).once().returns( fragOrderResolver.CreateIterator() );
-        MOCK_EXPECT( builder.Build ).once().with( pawnTypes, eMissionType_FragOrder,
+        MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( pawnTypes, eMissionType_FragOrder,
             boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
-            fragOrderSelector, disabledMissions, false, true );
+            fragOrderSelector, disabledMissions, false, true ) );
         MOCK_EXPECT( builder.UpdateActions ).once();
     }
     };
@@ -208,33 +247,33 @@ BOOST_FIXTURE_TEST_CASE( no_target_is_selected, Fixture )
 {
     // Select agent
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( types,
         eMissionType_Pawn, boost::assign::list_of( missionSelector )( "missionType1" )( "missionUnitA" )("missionUnitZ" ), missionSelector,
-        std::vector< std::string >(), false, true );
+        std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select();
 
     // Select automat
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( types,
         eMissionType_Automat, boost::assign::list_of( missionSelector )( "missionAutomat" ), missionSelector,
-        std::vector< std::string >(), false, true );
+        std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_Automat );
 
     // Select automat
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( types,
         eMissionType_Population, boost::assign::list_of( missionSelector )( "missionPopulation" ), missionSelector,
-        std::vector< std::string >(), false, true );
+        std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_Population );
 
    // Select frag order
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( types,
         eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ), fragOrderSelector,
-        std::vector< std::string >(), false, true );
+        std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_FragOrder );
 }
@@ -289,9 +328,9 @@ BOOST_FIXTURE_TEST_CASE( select_target_then_clear_it, Fixture )
 
     // Remove target
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types, eMissionType_Pawn,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState( types, eMissionType_Pawn,
         boost::assign::list_of( missionSelector )( "missionType1" )( "missionUnitA" )("missionUnitZ"),
-        missionSelector, std::vector< std::string >(), false, true );
+        missionSelector, std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select();
 }
@@ -310,9 +349,9 @@ BOOST_FIXTURE_TEST_CASE( select_target_and_mission_then_clear_target, Fixture )
 
     // Remove target and keeps the current mission and its parameters
     MOCK_EXPECT( missionInterface.SetEntity ).once();
-    MOCK_EXPECT( builder.Build ).once().with( types, eMissionType_Pawn,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState(types, eMissionType_Pawn,
         boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ"),
-        "missionType1", std::vector< std::string >(), false, false );
+        "missionType1", std::vector< std::string >(), false, false ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_Pawn, "missionType1" );
 }
@@ -330,9 +369,9 @@ BOOST_FIXTURE_TEST_CASE( select_mission_then_select_agent_with_and_without_this_
     MOCK_EXPECT( decisions.GetAgent ).once().returns( boost::cref( entity ) );
     MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
     MOCK_EXPECT( decisions.GetMissions ).once().returns( missionResolver.CreateIterator() );
-    MOCK_EXPECT( builder.Build ).once().with( pawnTypes, eMissionType_Pawn,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState(pawnTypes, eMissionType_Pawn,
         boost::assign::list_of( "invalid" )( "missionType1" )( "missionType2" ),
-        "invalid", std::vector< std::string >(), true, false );
+        "invalid", std::vector< std::string >(), true, false ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( decisions, eMissionType_Pawn, "invalid" );
 }
@@ -395,9 +434,9 @@ BOOST_FIXTURE_TEST_CASE( the_parameters_are_filled_without_a_target_then_we_sele
 {
     // Select agent mission
     CheckPurgeAndBuild();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState(types,
         eMissionType_Pawn, boost::assign::list_of( "missionType1" )( "missionUnitA" )("missionUnitZ" ),
-        "missionType1", std::vector< std::string >(), false, false );
+        "missionType1", std::vector< std::string >(), false, false ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_Pawn, "missionType1" );
 
@@ -414,9 +453,9 @@ BOOST_FIXTURE_TEST_CASE( display_all_frag_orders_if_no_target_is_selected, Fixtu
 
     // No target is selected
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState(types,
         eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
-        fragOrderSelector, std::vector< std::string >(), false, true );
+        fragOrderSelector, std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_FragOrder );
 
@@ -425,9 +464,9 @@ BOOST_FIXTURE_TEST_CASE( display_all_frag_orders_if_no_target_is_selected, Fixtu
 
     //// No target is selected
     CheckPurge();
-    MOCK_EXPECT( builder.Build ).once().with( types,
+    MOCK_EXPECT( builder.Build ).once().with( gui::EventOrderViewState(types,
         eMissionType_FragOrder, boost::assign::list_of( fragOrderSelector )( "fragorder" )( "fragorder2" ),
-        fragOrderSelector, std::vector< std::string >(), false, true );
+        fragOrderSelector, std::vector< std::string >(), false, true ) );
     MOCK_EXPECT( builder.UpdateActions ).once();
     manager.Select( eMissionType_FragOrder );
 }
