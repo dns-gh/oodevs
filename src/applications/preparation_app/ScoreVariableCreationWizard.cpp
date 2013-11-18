@@ -228,7 +228,7 @@ void ScoreVariableCreationWizard::OnChangeType()
     {
         parameter_->BuildInterface( type_->GetValue().c_str(), paramBox_ );
         parameter_->SetEnabled( true );
-        parameter_->RegisterIn( controllers_.actions_ );
+        parameter_->RegisterIn();
     }
     else
         paramBox_->layout()->addWidget( new QLabel( name_->text() ) );
