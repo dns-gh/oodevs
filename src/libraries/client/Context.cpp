@@ -535,13 +535,14 @@ std::string MakeOption( const std::string& option, const T& value )
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
 void WriteConfiguration( const FileSystem_ABC& fs, Path root,
-                         const std::string& host, int port, int timelinePort )
+                         const std::string& host, int port, int timelinePort, bool mapnik )
 {
     root /= "sessions";
     fs.MakePaths( root );
     Tree data;
     data.put( "session.config.gaming.network.<xmlattr>.server", host + ":" + boost::lexical_cast< std::string >( port ) );
     data.put( "session.config.timeline.<xmlattr>.url", host + ":" + boost::lexical_cast< std::string >( timelinePort ) );
+    data.put( "session.config.gaming.mapnik.<xmlattr>.activate", mapnik );
     fs.WriteFile( root / "session.xml", ToXml( data ) );
 }
 }
@@ -588,7 +589,7 @@ void Context::StartClient()
         return;
     const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), url_.queryItemValue( "tcp" ).toInt(),
-        Get< int >( session_, "timeline.port" ) );
+        Get< int >( session_, "timeline.port" ), Get< bool >( sessions_, "mapnik" ) );
     std::vector< std::string > args = boost::assign::list_of
         ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
         ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )

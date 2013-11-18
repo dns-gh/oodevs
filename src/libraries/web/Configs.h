@@ -150,6 +150,10 @@ struct Config
     {
         bool        enabled;
     }               timeline;
+    struct
+    {
+        bool        enabled;
+    }               mapnik;
     T_Profiles      profiles;
 };
 
