@@ -234,7 +234,6 @@ namespace
 // A RewritingPublisher_ABC rewriting output messages client identifier and
 // context number.
 class UnicastPublisher : public RewritingPublisher_ABC
-                       , private boost::noncopyable
 {
 public:
     UnicastPublisher( ClientPublisher_ABC& publisher, int32_t clientId, int32_t context )
@@ -263,6 +262,5 @@ void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& 
 {
     UnicastPublisher unicaster( rights_->GetPublisher( link ),
             rights_->GetClientID( link ), msg.context() );
-    auto& broadcaster = *clients_;
-    handler_.HandleClientToSim( msg, unicaster, broadcaster );
+    handler_.HandleClientToSim( msg, unicaster, *clients_ );
 }

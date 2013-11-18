@@ -9,10 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticsRequestsSupplyWidget.h"
+#include "moc_LogisticsRequestsSupplyWidget.cpp"
 #include "LogisticsRequestsDetailsTable.h"
 #include "LogisticsRequestsSupplyTable.h"
 #include "LogisticsRequestsTable.h"
-#include "moc_LogisticsRequestsSupplyWidget.cpp"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_gui/DisplayExtractor.h"

@@ -148,7 +148,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
-    , logisticSubMenu_( 0 )
 {
     // File
     gui::RichMenu* menu = new gui::RichMenu( "file", this, controllers_, tools::translate( "Menu", "&File" ) );
@@ -185,7 +184,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
-    logisticSubMenu_ = subMenu;
     toolBar = new gui::RichToolBar( controllers, pParent, "logistics toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );

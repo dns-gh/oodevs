@@ -54,7 +54,7 @@ namespace
             QModelIndex curIndex = sourceModel()->index( source_row, 3 );
             if( !curIndex.isValid() )
                 return true;
-            return ( sourceModel()->data( curIndex ).toString() != requestToSkip_ );
+            return sourceModel()->data( curIndex ).toString() != requestToSkip_;
         }
 
     private:

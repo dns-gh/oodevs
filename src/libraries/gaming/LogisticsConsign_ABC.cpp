@@ -60,8 +60,7 @@ QString LogisticsConsign_ABC::ConvertTimeToString( unsigned int timeToConvert ) 
     QString currentEndTime;
     unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + timeToConvert * simulation_.GetTickDuration();
     QDateTime endDate = QDateTime::fromTime_t( endSeconds );
-    QDateTime curDate = simulation_.GetDateTime();
-    if( endDate.date() != curDate.date() )
+    if( endDate.date() != simulation_.GetDateTime().date() )
         currentEndTime += endDate.date().toString() + " ";
     currentEndTime += endDate.time().toString();
     return currentEndTime;

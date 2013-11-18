@@ -10,8 +10,7 @@
 #ifndef LOGISTICPLUGIN_CONSIGNSTATE_H
 #define LOGISTICPLUGIN_CONSIGNSTATE_H
 
-#include <boost/noncopyable.hpp>
-#include <stdint.h>
+#include <cstdint>
 
 namespace plugins
 {

@@ -64,7 +64,6 @@ private:
     kernel::Controllers& controllers_;
     UserProfileDialog& profileDialog_;
     int profileMenu_;
-    kernel::ContextMenu* logisticSubMenu_;
     gui::RichAction* windowAction_;
     //@}
 };

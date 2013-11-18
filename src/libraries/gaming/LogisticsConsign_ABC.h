@@ -11,6 +11,7 @@
 #define __LogisticsConsign_ABC_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,6 +42,7 @@ class Simulation;
 // Created: MMC 2013-09-16
 // =============================================================================
 class LogisticsConsign_ABC : public gui::Drawable_ABC
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructor / Destructor
@@ -77,7 +79,6 @@ public:
              , startedTick_( 0 )
              , endedTick_( 0 )
         {}
-        ~HistoryState() {}
 
         int nStatus_;
         kernel::Entity_ABC* handler_;
@@ -90,7 +91,6 @@ public:
     public:
         History( const LogisticsConsign_ABC& consign ) 
             : consign_( &consign ) {}
-        ~History() {}
 
         void Clear()
         {
@@ -120,18 +120,12 @@ public:
 
     //! @name Operations
     //@{
-   const History& GetHistory() const;
-   QString GetStatusLastStarted( int status ) const;
+    const History& GetHistory() const;
+    QString GetStatusLastStarted( int status ) const;
     //@}
 
 private:
     virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const = 0;
-
-    //! @name Copy/Assignment
-    //@{
-    LogisticsConsign_ABC( const LogisticsConsign_ABC& );
-    LogisticsConsign_ABC& operator=( const LogisticsConsign_ABC& );
-    //@}
 
 public:
     //! @name Helpers
