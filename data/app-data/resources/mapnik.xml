@@ -43,11 +43,15 @@
 <Map background-color="lightgrey">
 
   <FontSet name="book-fonts">
-    <Font face-name="DejaVu Sans Book" />
+    <Font face-name="DejaVu Sans Book"/>
   </FontSet>
   <FontSet name="bold-fonts">
-      <Font face-name="DejaVu Sans Bold" />
-    <Font face-name="unifont Medium" />
+    <Font face-name="DejaVu Sans Bold"/>
+    <Font face-name="unifont Medium"/>
+  </FontSet>
+  <FontSet name="fontset-0">
+    <Font face-name="DejaVu Sans Book"/>
+    <Font face-name="unifont Medium"/>
   </FontSet>
 
   <Style name="water">
@@ -126,6 +130,13 @@
     <Rule>
       <LineSymbolizer stroke="grey" stroke-width="1"/>
       <PolygonSymbolizer fill="#ededed"/>
+    </Rule>
+  </Style>
+
+  <Style name="urban-text">
+    <Rule>
+      &maxscale_zoom14;
+      <TextSymbolizer size="14" fill="#777777" fontset-name="fontset-0" halo-radius="1" wrap-width="20" ><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
   </Style>
 
@@ -244,19 +255,23 @@
     </Rule>
   </Style>
 
-  <!--Style name="road-text">
+  <Style name="road-text">
     <Rule>
-      <Filter>[MASACODE] = 20001</Filter>
-      &maxscale_zoom13;
-      <ShieldSymbolizer size="10" fill="#fff" placement="line" file="symbols/mot_shield.png" spacing="750" minimum-distance="30" fontset-name="bold-fonts">[NAME]</ShieldSymbolizer>
+      <Filter>[MASACODE] = 20003 and [LENGTH] &lt; 5</Filter>
+      &maxscale_zoom16;
+      <TextSymbolizer size="12" fill="black" placement="line" fontset-name="book-fonts" halo-radius="3" halo-fill="white" minimum-distance="400"><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <Filter>[MASACODE] = 20003</Filter>
-      &maxscale_zoom13;
-      &minscale_zoom13;
-      <TextSymbolizer size="15" fill="black" placement="line" fontset-name="book-fonts" halo-radius="1" halo-fill="#fed7a5">[NAME]</TextSymbolizer>
+      <Filter>[MASACODE] = 20002 and [LENGTH] &lt; 5</Filter>
+      &maxscale_zoom15;
+      <TextSymbolizer size="12" fill="black" placement="line" fontset-name="book-fonts" halo-radius="3" halo-fill="#fed7a5" minimum-distance="200"><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
-  </Style-->
+    <Rule>
+      <Filter>[MASACODE] = 20001 and [LENGTH] &lt; 5</Filter>
+      &maxscale_zoom14;
+      <TextSymbolizer size="12" fill="black" fontset-name="book-fonts" halo-radius="3" halo-fill="#fa9e25" minimum-distance="200"><![CDATA[[NAME]]]></TextSymbolizer>
+    </Rule>
+  </Style>
 
   <Style name="road-casing">
   <!-- small -->
@@ -641,18 +656,19 @@
 
   <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>road-motorway</StyleName>
+      <StyleName>road-text</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
         <Parameter name="file">road.shp</Parameter>
       </Datasource>
   </Layer>
 
-  <Layer name="road-text" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-    <StyleName>road-text</StyleName>
-    <Datasource>
+  <Layer name="urban" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+      <StyleName>urban-text</StyleName>
+      <Datasource>
         <Parameter name="type">shape</Parameter>
-        <Parameter name="file">road.shp</Parameter>
-    </Datasource>
+        <Parameter name="file">urban.shp</Parameter>
+      </Datasource>
   </Layer>
 
 </Map>

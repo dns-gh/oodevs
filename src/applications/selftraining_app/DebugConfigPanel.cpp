@@ -156,6 +156,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
+    mapnikLayerBox_->setChecked( ReadIntSetting( "MapnikLayer" ) != 0 );
+    connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     //general Layout
@@ -312,3 +314,7 @@ void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
     exerciseNumber_ = exerciseNumber;
 }
 
+void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
+{
+    WriteIntSetting( "MapnikLayer", checked );
+}
