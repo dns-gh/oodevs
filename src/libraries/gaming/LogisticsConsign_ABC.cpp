@@ -53,13 +53,13 @@ unsigned int LogisticsConsign_ABC::GetId() const
 // Name: LogisticsConsign_ABC ConvertTimeToString
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-QString LogisticsConsign_ABC::ConvertTimeToString( unsigned int timeToConvert ) const
+QString LogisticsConsign_ABC::ConvertTickToTimeString( unsigned int tick ) const
 {
-    if( timeToConvert == std::numeric_limits< unsigned int >::max() || timeToConvert == 0 )
+    if( tick == std::numeric_limits< unsigned int >::max() || tick == 0 )
         return tools::translate( "Logistic", "Unknown" );
     QString currentEndTime;
-    unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + timeToConvert * simulation_.GetTickDuration();
-    QDateTime endDate = QDateTime::fromTime_t( endSeconds );
+    const QDateTime endDate = simulation_.GetInitialDateTime().addSecs(
+            tick * simulation_.GetTickDuration() );
     if( endDate.date() != simulation_.GetDateTime().date() )
         currentEndTime += endDate.date().toString() + " ";
     currentEndTime += endDate.time().toString();
@@ -72,7 +72,7 @@ QString LogisticsConsign_ABC::ConvertTimeToString( unsigned int timeToConvert ) 
 // -----------------------------------------------------------------------------
 QString LogisticsConsign_ABC::GetCreationTime() const
 {
-    return ConvertTimeToString( creationTick_ );
+    return ConvertTickToTimeString( creationTick_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ QString LogisticsConsign_ABC::GetCreationTime() const
 // -----------------------------------------------------------------------------
 QString LogisticsConsign_ABC::GetCurrentEndTime() const
 {
-    return ConvertTimeToString( currentStateEndTick_ );
+    return ConvertTickToTimeString( currentStateEndTick_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,5 +127,5 @@ QString LogisticsConsign_ABC::GetStatusLastStarted( int status ) const
     for( auto it = history_->GetStates().rbegin(); it != history_->GetStates().rend(); ++it  )
         if( it->nStatus_ == status && it->startedTick_ > tickStarted )
             tickStarted = it->startedTick_;
-    return ConvertTimeToString( tickStarted );
+    return ConvertTickToTimeString( tickStarted );
 }

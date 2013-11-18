@@ -131,7 +131,7 @@ public:
     //! @name Helpers
     //@{
     virtual QString GetStatusDisplay( int status ) const = 0;
-    QString ConvertTimeToString( unsigned int timeToConvert ) const;
+    QString ConvertTickToTimeString( unsigned int tick ) const;
     //@}
 
 protected:

@@ -275,8 +275,8 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
     for( auto it = states.rbegin(); it != states.rend(); ++it )
         if( it->endedTick_ )
             historyTable_->AddRequest( consign.GetStatusDisplay( it->nStatus_ ),
-                requestSelected_->ConvertTimeToString( it->startedTick_ ),
-                requestSelected_->ConvertTimeToString( it->endedTick_ ),
+                requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
+                requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
                 GetDisplayName( it->handler_ ) );
 }
 
