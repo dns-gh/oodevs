@@ -44,7 +44,8 @@ Param_ABC::Param_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderPa
 // -----------------------------------------------------------------------------
 Param_ABC::~Param_ABC()
 {
-    RemoveFromController();
+    if( registered_ )
+        throw MASA_EXCEPTION( "Parameter registered to action controller, unregister it manually." );
 }
 
 // -----------------------------------------------------------------------------
