@@ -27,6 +27,7 @@ namespace
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
+            || type == eUnknownMaterial || type == eUnknownRoofShape
             || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature
             || type == eImpossibleObjectCreation;
     }
@@ -125,6 +126,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ]                          = "%1";
     errorDescriptions_[ eEquipmentState ] = tools::translate( "ModelConsistencyDialog", "Equipments in maintenance or surrendered state have been reset to on site fixable." );
+    errorDescriptions_[ eUnknownMaterial ] = tools::translate( "ModelConsistencyDialog", "Unknown material \"%1\". It will be replaced by default material at next save." );
+    errorDescriptions_[ eUnknownRoofShape ] = tools::translate( "ModelConsistencyDialog", "Unknown roof shape \"%1\". It will be replaced by default roof shape at next save." );
 }
 
 // -----------------------------------------------------------------------------

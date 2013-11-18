@@ -57,6 +57,7 @@
 #include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -762,6 +763,19 @@ void ModelConsistencyChecker::CheckUrban()
             if( !network->GetInvalidResources().empty() )
                 for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
                     unknownNetworks.insert( *itResource );
+        if( auto physical = object.Retrieve< kernel::PhysicalAttribute_ABC >() )
+        {
+            if( !physical->GetInvalidMaterial().empty() )
+            {
+                AddError( eUnknownMaterial, &object, physical->GetInvalidMaterial() );
+                model_.SetConsistencyErrorsOnLoad();
+            }
+            if( !physical->GetInvalidRoofShape().empty() )
+            {
+                AddError( eUnknownRoofShape, &object, physical->GetInvalidRoofShape() );
+                model_.SetConsistencyErrorsOnLoad();
+            }
+        }
     }
     Iterator< const kernel::Object_ABC& > itObject = model_.GetObjectResolver().CreateIterator();
     while( itObject.HasMoreElements() )
