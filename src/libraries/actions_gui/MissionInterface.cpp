@@ -73,7 +73,6 @@ namespace
 MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
-    , controllers_( controllers )
     , config_( config )
     , entity_( controllers )
     , order_( 0 )
@@ -255,7 +254,7 @@ void MissionInterface::AddParameter( const QString& objectName, Param_ABC& param
     parameters_.push_back( &parameter );
     QWidget* widget = parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
     widgetToDelete_.push_back( widget );
-    parameter.RegisterIn( controllers_.actions_ );
+    parameter.RegisterIn();
 }
 
 // -----------------------------------------------------------------------------
@@ -291,4 +290,16 @@ int MissionInterface::GetIndex( Param_ABC* param ) const
 void MissionInterface::SetPlanned( bool planned )
 {
     planned_ = planned;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::HasParameter
+// Created: ABR 2013-11-13
+// -----------------------------------------------------------------------------
+bool MissionInterface::HasParameter( const Param_ABC& parameter ) const
+{
+    for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
+        if( ( *it )->HasParameter( parameter ) )
+            return true;
+    return false;
 }

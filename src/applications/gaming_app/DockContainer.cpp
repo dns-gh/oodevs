@@ -61,7 +61,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               const Simulation& simulation, const Config& config, ProfileFilter& profile,
                               gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
                               gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
-                              gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, gui::EntitySymbols& entitySymbols, 
+                              gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols, 
                               IndicatorExportDialog& indicatorExportDialog )
     : timelineDockWidget_( 0 )
 {
@@ -106,9 +106,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Event panel
     {
-        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy );
+        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, proxy, entitySymbols );
         eventDockWidget_->SetModes( eModes_Default );
-        //eventDockWidget_->SetMenuVisibility( false );
+        eventDockWidget_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
     }
     // Orbat panel
@@ -201,10 +201,10 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
         timelineDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
-        QObject::connect( eventDockWidget_,    SIGNAL( CreateEvent( const timeline::Event& ) ),           timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
-        QObject::connect( eventDockWidget_,    SIGNAL( EditEvent( const timeline::Event& ) ),             timelineDockWidget_, SIGNAL( EditEvent( const timeline::Event& ) ) );
-        QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),               timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
-        QObject::connect( timelineDockWidget_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), eventDockWidget_,    SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( CreateEvent( const timeline::Event& ) ),                 timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( EditEvent( const timeline::Event& ) ),                   timelineDockWidget_, SIGNAL( EditEvent( const timeline::Event& ) ) );
+        QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),                     timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
+        QObject::connect( timelineDockWidget_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), eventDockWidget_,    SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
     }
     {
         // Old Timeline

@@ -23,7 +23,7 @@ using namespace actions::gui;
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
 ParamQuantity::ParamQuantity( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , modifier_( 0 )
     , min_( 0 )
     , max_( std::numeric_limits< int >::max() )

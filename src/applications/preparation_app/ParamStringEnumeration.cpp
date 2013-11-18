@@ -21,8 +21,8 @@
 // Name: ParamStringEnumeration constructor
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-ParamStringEnumeration::ParamStringEnumeration( QObject* parent, const actions::gui::ParamInterface_ABC& paramInterface, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values )
-    : actions::gui::Param_ABC( parent, paramInterface, parameter )
+ParamStringEnumeration::ParamStringEnumeration( const actions::gui::InterfaceBuilder_ABC& builder, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values )
+    : actions::gui::Param_ABC( builder, parameter )
     , title_( title )
     , values_( values )
 {

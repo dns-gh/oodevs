@@ -44,7 +44,6 @@ public:
     virtual void Reset();
     virtual void Update();
     virtual bool IsValid() const;
-    virtual void Warn() const;
     virtual void Trigger() const;
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}

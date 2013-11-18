@@ -29,7 +29,7 @@ using namespace actions::gui;
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 LimitParameter::LimitParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC  ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC  ( builder, parameter )
     , controller_( builder.GetControllers().controller_ )
     , converter_ ( builder.GetStaticModel().coordinateConverter_ )
     , resolver_  ( builder.GetTacticalLineResolver() )
@@ -103,6 +103,7 @@ void LimitParameter::OnMenuClick()
     Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

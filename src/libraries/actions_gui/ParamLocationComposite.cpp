@@ -58,7 +58,7 @@ namespace
 // Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
 ParamLocationComposite::ParamLocationComposite( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , builder_      ( builder )
     , selectedParam_( 0 )
     , stack_        ( 0 )
@@ -123,10 +123,10 @@ void ParamLocationComposite::RemoveFromController()
 // Name: ParamLocationComposite::RegisterIn
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void ParamLocationComposite::RegisterIn( kernel::ActionController& controller )
+void ParamLocationComposite::RegisterIn()
 {
     for( auto it = params_.begin(); it != params_.end(); ++it )
-        (*it)->RegisterIn( controller );
+        (*it)->RegisterIn();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,13 +183,7 @@ void ParamLocationComposite::InternalBuildInterface()
 // -----------------------------------------------------------------------------
 bool ParamLocationComposite::CheckValidity()
 {
-    if( IsChecked() && ( !selectedParam_ || !selectedParam_->CheckValidity() ) )
-    {
-        for( std::vector< QWidget* >::iterator it = widgets_.begin(); it != widgets_.end(); ++it )
-            static_cast< ::gui::RichGroupBox* >( *it )->Warn();
-        return false;
-    }
-    return true;
+    return !IsChecked() || ( selectedParam_ && selectedParam_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,7 +395,20 @@ void ParamLocationComposite::InternalVisit( const T& param, const std::string& t
         {
             param.Accept( *internalParam );
             NotifyChanged( *internalParam );
+            Update();
             return;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+bool ParamLocationComposite::HasParameter( const Param_ABC& param ) const
+{
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+        if( ( *it )->HasParameter( param ) )
+            return true;
+    return Param_ABC::HasParameter( param );
 }

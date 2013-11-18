@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RegisterIn();
     virtual void RemoveFromController();
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
@@ -68,6 +68,7 @@ public:
     virtual bool InternalCheckValidity() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void NotifyChanged( Param_ABC& param );
+    virtual bool HasParameter( const Param_ABC& param ) const;
 
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Visit( const actions::parameters::EngineerConstruction& param );
@@ -99,7 +100,6 @@ private:
     const kernel::ObjectTypes&                          objectTypes_;
     ::gui::ParametersLayer&                             layer_;
     const kernel::CoordinateConverter_ABC&              converter_;
-    kernel::ActionController&                           controller_;
     ::gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     QComboBox*                                          activatedCombo_;
     ParamLocation*                                      location_;

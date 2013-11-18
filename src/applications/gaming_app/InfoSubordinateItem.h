@@ -40,7 +40,7 @@ class InfoSubordinateItem : public QListWidgetItem
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
+             InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
     virtual ~InfoSubordinateItem();
     //@}
 
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::EntitySymbols& icons_;
+    const gui::EntitySymbols& icons_;
     int oldRawState_;
     //@}
 };

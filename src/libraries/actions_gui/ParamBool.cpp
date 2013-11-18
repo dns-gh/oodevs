@@ -26,7 +26,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 ParamBool::ParamBool( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , value_   ( false )
     , comboBox_( 0 )
 {

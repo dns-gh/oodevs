@@ -20,7 +20,7 @@
 
 namespace kernel
 {
-    class ActionController;
+    class Controllers;
     class AgentKnowledgeConverter_ABC;
     class CoordinateConverter_ABC;
     class OrderParameter;
@@ -57,6 +57,7 @@ namespace actions
 
     namespace gui
     {
+        class InterfaceBuilder_ABC;
         class ListParameterBase;
         class ParamInterface_ABC;
 
@@ -76,7 +77,7 @@ class Param_ABC : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Param_ABC( QObject* parent, const ParamInterface_ABC& paramInterface, const kernel::OrderParameter& parameter );
+             Param_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~Param_ABC();
     //@}
 
@@ -87,7 +88,7 @@ public:
     void NotifyChange();
     virtual void NotifyChanged( Param_ABC& param );
     virtual void RemoveFromController();
-    virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RegisterIn();
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool CheckValidity();
@@ -98,6 +99,8 @@ public:
     virtual void Purge();
     virtual void SetVisible( bool visible ) { if( group_ ) group_->setVisible( visible ); }
     virtual bool IsVisible() const { return ( group_ ) ? group_->isVisible() : false; }
+
+    virtual bool HasParameter( const Param_ABC& param ) const;
     //@}
 
     //! @name Accessors
@@ -122,6 +125,7 @@ public slots:
     //! @name Slots
     //@{
     virtual void OnMenuClick();
+    void Update();
     //@}
 
 protected:
@@ -146,12 +150,12 @@ private:
     //@{
     void ConnectAction();
     void ConnectWithParentList();
-
     //@}
 
 protected:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const ParamInterface_ABC& paramInterface_;
     ListParameterBase* parentList_;
     Param_ABC* parentParameter_;
@@ -159,8 +163,8 @@ protected:
     std::string type_;
     ::gui::RichGroupBox* group_;
     kernel::OrderParameter parameter_;
-    kernel::ActionController* controller_;
     kernel::ContextMenu::T_MenuVariant internalMenu_;
+    bool registered_;
     //@}
 };
 

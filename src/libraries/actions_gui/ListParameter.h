@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ListParameterBase( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-        : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter ) {}
+        : Param_ABC( builder, parameter ) {}
 
     virtual ~ListParameterBase() {}
     //@}
@@ -107,6 +107,7 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual Param_ABC* CreateElement();
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual bool HasParameter( const Param_ABC& param ) const;
     //@}
 
     //! @name ParameterVisitor_ABC implementation
@@ -167,7 +168,6 @@ private:
     //! @name Member data
     //@{
     const InterfaceBuilder_ABC& builder_;
-    kernel::ActionController&   controller_;
     QTreeView*                  list_;
     QStandardItem*              selected_;
     QStandardItemModel          model_;

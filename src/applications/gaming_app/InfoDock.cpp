@@ -17,7 +17,7 @@
 // Name: InfoDock constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
+InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
                     gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : gui::RichDockWidget( controllers, parent, "info" )
 {

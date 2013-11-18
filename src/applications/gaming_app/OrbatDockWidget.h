@@ -50,7 +50,7 @@ public:
     OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                      ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                      actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                     gui::EntitySymbols& icons );
+                     const gui::EntitySymbols& icons );
     virtual ~OrbatDockWidget();
     //@}
 

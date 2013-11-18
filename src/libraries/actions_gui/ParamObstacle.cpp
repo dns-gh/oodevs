@@ -49,7 +49,6 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , objectTypes_( builder.GetStaticModel().objectTypes_ )
     , layer_      ( builder.GetParameterLayer() )
     , converter_  ( builder.GetStaticModel().coordinateConverter_ )
-    , controller_ ( builder.GetControllers().actions_ )
     , typeCombo_  ( 0 )
     , activatedCombo_( 0 )
 {
@@ -109,7 +108,7 @@ void ParamObstacle::NotifyChanged( Param_ABC& /*param*/ )
 // Name: ParamObstacle::RegisterIn
 // Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
-void ParamObstacle::RegisterIn( kernel::ActionController& /*controller*/ )
+void ParamObstacle::RegisterIn()
 {
     // NOTHING
 }
@@ -324,11 +323,11 @@ namespace
     }
 
     template< typename T >
-    void ShowAndAddToControllerIfNeeded( T& param, kernel::ActionController& controller, const kernel::ObjectType& type, bool (kernel::ObjectType::* has_field)() const )
+    void ShowAndAddToControllerIfNeeded( T& param, const kernel::ObjectType& type, bool (kernel::ObjectType::* has_field)() const )
     {
         if( (type.*has_field)() )
         {
-            param.RegisterIn( controller );
+            param.RegisterIn();
             param.SetVisible( true );
         }
     }
@@ -355,17 +354,17 @@ void ParamObstacle::OnTypeChanged()
     if( !type )
         return;
 
-    ShowAndAddToControllerIfNeeded( *density_,          controller_, *type, &kernel::ObjectType::HasBuildableDensity );
-    ShowAndAddToControllerIfNeeded( *tc2_,              controller_, *type, &kernel::ObjectType::HasLogistic );
-    ShowAndAddToControllerIfNeeded( *activityTime_,     controller_, *type, &kernel::ObjectType::CanBeActivated );
-    ShowAndAddToControllerIfNeeded( *activationTime_,   controller_, *type, &kernel::ObjectType::CanBeActivated );
-    ShowAndAddToControllerIfNeeded( *altitudeModifier_, controller_, *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
-    ShowAndAddToControllerIfNeeded( *timeLimit_,        controller_, *type, &kernel::ObjectType::HasTimeLimitedCapacity );
-    ShowAndAddToControllerIfNeeded( *mining_,           controller_, *type, &kernel::ObjectType::CanBeValorized );
-    ShowAndAddToControllerIfNeeded( *lodging_,          controller_, *type, &kernel::ObjectType::HasLodgingCapacity );
+    ShowAndAddToControllerIfNeeded( *density_,          *type, &kernel::ObjectType::HasBuildableDensity );
+    ShowAndAddToControllerIfNeeded( *tc2_,              *type, &kernel::ObjectType::HasLogistic );
+    ShowAndAddToControllerIfNeeded( *activityTime_,     *type, &kernel::ObjectType::CanBeActivated );
+    ShowAndAddToControllerIfNeeded( *activationTime_,   *type, &kernel::ObjectType::CanBeActivated );
+    ShowAndAddToControllerIfNeeded( *altitudeModifier_, *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
+    ShowAndAddToControllerIfNeeded( *timeLimit_,        *type, &kernel::ObjectType::HasTimeLimitedCapacity );
+    ShowAndAddToControllerIfNeeded( *mining_,           *type, &kernel::ObjectType::CanBeValorized );
+    ShowAndAddToControllerIfNeeded( *lodging_,          *type, &kernel::ObjectType::HasLodgingCapacity );
 
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
-    location_->RegisterIn( controller_ );
+    location_->RegisterIn();
     location_->SetVisible( true );
     emit ToggleReservable( type->CanBeActivated() );
 }
@@ -474,4 +473,23 @@ void ParamObstacle::Visit( const actions::parameters::String& param )
 {
     assert( name_ != 0 );
     param.Accept( *name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+bool ParamObstacle::HasParameter( const Param_ABC& param ) const
+{
+    return ParamLocationComposite::HasParameter( param ) ||
+        location_->HasParameter( param ) ||
+        density_->HasParameter( param ) ||
+        tc2_->HasParameter( param ) ||
+        activityTime_->HasParameter( param ) ||
+        activationTime_->HasParameter( param ) ||
+        name_->HasParameter( param ) ||
+        altitudeModifier_->HasParameter( param ) ||
+        timeLimit_->HasParameter( param ) ||
+        mining_->HasParameter( param ) ||
+        lodging_->HasParameter( param );
 }

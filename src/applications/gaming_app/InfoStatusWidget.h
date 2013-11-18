@@ -54,7 +54,7 @@ class InfoStatusWidget : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons );
     virtual ~InfoStatusWidget();
     //@}
 
@@ -95,7 +95,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    gui::EntitySymbols& icons_;
+    const gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
     QPushButton* gotoParent_;

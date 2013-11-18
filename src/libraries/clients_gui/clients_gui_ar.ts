@@ -211,6 +211,17 @@
     </message>
 </context>
 <context>
+    <name>EventManager</name>
+    <message>
+        <source>&lt;Select frag order&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Select mission&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Menu</name>
     <message>
         <source>Increase symbol size</source>

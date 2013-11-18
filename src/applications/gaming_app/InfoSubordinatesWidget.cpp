@@ -60,7 +60,7 @@ namespace
 // Name: InfoSubordinatesWidget constructor
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons )
     : QListWidget( parent )
     , controllers_( controllers )
     , profile_( profile )

@@ -35,7 +35,9 @@ public:
     //@{
     virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
                         const std::vector< std::string >& missions, const std::string& currentMission,
-                        const std::vector< std::string >& disabledMissions, bool invalid = false ) = 0;
+                        const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector ) = 0;
+
+    virtual void UpdateActions() = 0;
     //@}
 };
 

@@ -14,11 +14,10 @@
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::EntityParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : EntityParameterBase( builder, parameter )
-    , controller_        ( builder.GetControllers().controller_ )
     , potential_         ( 0 )
     , selected_          ( 0 )
 {
-    controller_.Register( *this );
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +28,7 @@ template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::~EntityParameter()
 {
     Purge();
-    controller_.Unregister( *this );
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +104,7 @@ void EntityParameter< ConcreteEntity >::OnMenuClick()
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
     NotifyChange();
+    Update();
 }
 
 // -----------------------------------------------------------------------------

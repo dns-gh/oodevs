@@ -26,7 +26,7 @@
 // Name: InfoWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
+InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
                         gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : Q3HBox( parent, "InfoWidget" )
 {

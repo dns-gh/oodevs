@@ -36,7 +36,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     , webView_( 0 )
 {
     // Init
-    setCaption( tr( "Actions timeline" ) );
+    setCaption( tr( "New actions timeline" ) );
 
     // Configuration
     cfg_->url = "http://" + config.GetTimelineUrl();
@@ -69,7 +69,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     connect( this, SIGNAL( SelectEvent( const std::string& ) ), webView_, SLOT( SelectEvent( const std::string& ) ) );
     connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
-    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ) );
+    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -120,14 +120,6 @@
         <translation>Time range</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>First tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Duration</translation>
-    </message>
-    <message>
         <source>Send request</source>
         <translation>Send request</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Name:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -693,14 +693,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>This event is incomplete so it can&apos;t be triggered.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -735,11 +727,15 @@ Reason: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Target</source>
-        <translation type="unfinished">Target</translation>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order</source>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order (unit)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -781,10 +777,6 @@ Reason: %3
     <name>EventTopWidget</name>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Planning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2757,6 +2749,14 @@ This data can&apos;t be projected.</source>
         <source>Unpause (Alt+P)</source>
         <translation>Unpause (Alt+P)</translation>
     </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Score</name>
@@ -3012,10 +3012,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Actions timeline</source>
-        <translation type="unfinished">Actions timeline</translation>
-    </message>
-    <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3025,6 +3021,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New actions timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

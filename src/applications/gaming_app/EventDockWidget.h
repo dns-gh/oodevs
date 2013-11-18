@@ -28,6 +28,7 @@ namespace actions
 
 namespace gui
 {
+    class EntitySymbols;
     class GlTools_ABC;
     class Viewport_ABC;
 }
@@ -76,7 +77,7 @@ public:
     //@{
              EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
                               const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools );
+                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools, const gui::EntitySymbols& entitySymbols );
     virtual ~EventDockWidget();
     //@}
     //! @name Operations
@@ -94,7 +95,7 @@ private:
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
     void SetEditing( bool editing );
-    void Configure( E_EventTypes type, bool editing, bool purge );
+    void Configure( E_EventTypes type, bool editing );
     void StartEdition( const Event& event );
     //@}
 
@@ -125,7 +126,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
     void OnEditClicked();
     void OnDeleteClicked();
 

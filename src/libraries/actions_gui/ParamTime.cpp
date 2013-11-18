@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
 ParamTime::ParamTime( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , time_( 0, 0, 0, 0 ) // $$$ LDC Must be a valid time otherwise user can't understand why he can't click ok with a 0 value time.
 {
     // NOTHING

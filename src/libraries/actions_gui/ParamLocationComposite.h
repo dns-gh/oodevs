@@ -52,7 +52,7 @@ public:
     virtual int GetIndex( Param_ABC* param ) const;
     virtual void SetParentList( ListParameterBase* parentList );
     virtual void SetName( const QString& name );
-    virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RegisterIn();
     virtual void RemoveFromController();
 
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
@@ -60,6 +60,7 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual bool HasParameter( const Param_ABC& param ) const;
 
     virtual void Visit( const actions::parameters::Agent& param );
     virtual void Visit( const actions::parameters::Automat& param );

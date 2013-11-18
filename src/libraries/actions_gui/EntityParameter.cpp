@@ -18,7 +18,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 EntityParameterBase::EntityParameterBase( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
 {
     entityLabel_ = new QLabel();
     Display( "---" );

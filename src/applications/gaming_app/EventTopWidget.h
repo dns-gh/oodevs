@@ -49,7 +49,6 @@ signals:
     //@{
     void Save();
     void SaveAs();
-    void PlanningModeToggled( bool );
     //@}
 
 private slots:
@@ -57,7 +56,6 @@ private slots:
     //@{
     void SetBeginDateTime( const QDateTime& dateTime );
 
-    void OnSwitchToggled( bool checked );
     void OnEditingChanged( bool editing );
 
     void OnBeginDateTimeChanged( const QDateTime& dateTime );
@@ -86,8 +84,6 @@ private:
     QLabel* title_;
     QLabel* source_;
     QLabel* startDateLabel_;
-    std::vector< QAction* > planningActions_;
-    QAction* switchAction_;
     QAction* saveAction_;
     QAction* saveAsAction_;
     gui::RichDateTimeEdit* beginDateTimeEdit_;
@@ -96,7 +92,6 @@ private:
 
     QDateTime selectedDateTime_;
     bool editing_;
-    bool triggerEvent_;
     //@}
 };
 

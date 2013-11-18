@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
 ParamLocation_ABC< BaseParameter >::ParamLocation_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC ( builder, parameter )
     , converter_( builder.GetStaticModel().coordinateConverter_ )
     , layer_    ( builder.GetParameterLayer() )
     , location_ ()
@@ -120,6 +120,7 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
         NotifyChange();
+        Update();
     }
 }
 
@@ -145,6 +146,7 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
     else if( parameter_.GetType() == "rectangle" )
         layer_.StartRectangle( *this );
     InternalOnMenuClick();
+    Update();
 }
 
 // -----------------------------------------------------------------------------

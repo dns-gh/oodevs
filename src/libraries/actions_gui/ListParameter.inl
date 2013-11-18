@@ -18,7 +18,6 @@ template< typename ConcreteElement >
 ListParameter< ConcreteElement >::ListParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ListParameterBase( builder, parameter )
     , builder_      ( builder )
-    , controller_   ( builder.GetControllers().actions_ )
     , list_         ( 0 )
     , selected_     ( 0 )
     , min_          ( parameter.MinOccurs() )
@@ -55,7 +54,7 @@ void ListParameter< ConcreteElement >::CreatePotential()
     potential_ = CreateElement();
     if( potential_ )
     {
-        potential_->RegisterIn( controller_ );
+        potential_->RegisterIn();
         potential_->SetEntity( entity_ );
     }
 }
@@ -231,7 +230,7 @@ void ListParameter< ConcreteElement >::OnSelectionChanged( const QItemSelection&
     if( item && item->data( ParamRole ).isValid())
     {
         Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >();
-        param->RegisterIn( controller_ );
+        param->RegisterIn();
         widgets_[ param ]->show();
     }
     selected_ = item;
@@ -432,6 +431,7 @@ void ListParameter< ConcreteElement >::OnMenuClick()
     newParam->SetName( CreateNextNameAndId() );
     AddElement( *newParam );
     CreatePotential();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -487,4 +487,14 @@ void ListParameter< ConcreteElement >::Visit( const actions::Parameter_ABC& para
             elem.Accept( *param );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::HasParameter( const Param_ABC& param ) const
+{
+    return Param_ABC::HasParameter( param ) || potential_->HasParameter( param );
 }

@@ -310,7 +310,7 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
         paramList_.push_back( pParameter );
         QWidget* widget = pParameter->BuildInterface( "parameters", parameters_ );
         widget->setEnabled( true );
-        pParameter->RegisterIn( controllers_.actions_ );
+        pParameter->RegisterIn();
     }
     else
         parameters_->layout()->addWidget( new QLabel( parameter.GetName() ) );

@@ -120,14 +120,6 @@
         <translation>Plage temporelle</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation>Premier tick</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Durée</translation>
-    </message>
-    <message>
         <source>After action review</source>
         <translation>Analyse après action</translation>
     </message>
@@ -142,6 +134,14 @@
     <message>
         <source>Name:</source>
         <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -695,14 +695,6 @@ Raison: %3
         <translation>Edition d&apos;évènement</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
-        <source>This event is incomplete so it can&apos;t be triggered.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit</source>
         <translation>Editer</translation>
     </message>
@@ -737,12 +729,16 @@ Raison: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Target</source>
-        <translation type="unfinished">Cible</translation>
-    </message>
-    <message>
         <source>Order</source>
         <translation>Ordre</translation>
+    </message>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinataire</translation>
+    </message>
+    <message>
+        <source>Order (unit)</source>
+        <translation>Ordre (pion)</translation>
     </message>
 </context>
 <context>
@@ -784,10 +780,6 @@ Raison: %3
     <message>
         <source>End</source>
         <translation>Fin</translation>
-    </message>
-    <message>
-        <source>Planning</source>
-        <translation>Plannification</translation>
     </message>
     <message>
         <source>Save as copy</source>
@@ -2771,6 +2763,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unpause (Alt+P)</source>
         <translation>Reprendre (Alt+P)</translation>
     </message>
+    <message>
+        <source>Go to start (Alt+A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to end (Alt+Z)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Score</name>
@@ -3026,10 +3026,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Actions timeline</source>
-        <translation>Chronologie des actions</translation>
-    </message>
-    <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
@@ -3040,6 +3036,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>View %1</source>
         <translation>Vue %1</translation>
+    </message>
+    <message>
+        <source>New actions timeline</source>
+        <translation>Nouvelle chronologie des actions</translation>
     </message>
 </context>
 <context>

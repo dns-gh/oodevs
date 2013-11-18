@@ -35,7 +35,7 @@ namespace
 // Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 ParamDirection::ParamDirection( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , value_   ( 0 )
 {
     // NOTHING

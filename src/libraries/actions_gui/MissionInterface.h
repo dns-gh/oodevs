@@ -76,6 +76,7 @@ public:
     bool IsEmpty() const;
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
+    bool HasParameter( const Param_ABC& parameter ) const;
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     void Rebuild( InterfaceBuilder_ABC& builder );
     virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
@@ -133,7 +134,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const tools::ExerciseConfig& config_;
 
     kernel::SafePointer< kernel::Entity_ABC > entity_;

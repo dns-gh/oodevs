@@ -20,7 +20,7 @@ using namespace actions::gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamStringField::ParamStringField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , pEdit_ ( 0 )
 {
     // NOTHING

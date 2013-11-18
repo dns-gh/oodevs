@@ -121,7 +121,7 @@ namespace
 // Name: InfoStatusWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons )
     : Q3VBox       ( parent, "InfoStatusWidget" )
     , controllers_( controllers )
     , profile_    ( profile )
