@@ -15,6 +15,7 @@
 #include "DEC_Path_KnowledgePopulation.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "MIL_AgentServer.h"
+#include "SlopeSpeedModifier.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -75,6 +76,7 @@ DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, 
     , rMaxAltitude_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
     , rAltitudeCostPerMeter_         ( path.GetPathClass().GetAltitudePreference() )
     , rMaxSlope_                     ( path.GetUnitMaxSlope() )
+    , rSlopeDeceleration_            ( path.GetUnitSlopeDeceleration() )
     , pFuseau_                       ( 0 )
     , rComfortFuseauDistance_        ( path.GetPathClass().GetComfortFuseauDistance() )
     , rFuseauCostPerMeterOut_        ( path.GetPathClass().GetFuseauCostPerMeterOut() )
@@ -293,6 +295,16 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
             boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
     if( Elevation( altitudeData_.GetCellSize() ).FindPath( from, to, elevationChecker ) )
         return IMPOSSIBLE_WAY( "Slope" );
+
+    if( rSlopeDeceleration_ != 0 )
+    {
+        SlopeSpeedModifier slopeSpeedModifier;
+        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( altitudeData_ ), _1, _2 );
+        Elevation( altitudeData_.GetCellSize() ).FindPath( from, to, decelerationFunc );
+        slopeSpeedModifier.ModifySpeed( rSpeed, rSlopeDeceleration_, to );
+        if( rSpeed == 0 )
+            return IMPOSSIBLE_WAY( "Speed on slope == 0" );
+    }
 
     // Cost computation taken various dynamic terrain items into account
     double rDynamicCost = 0.;

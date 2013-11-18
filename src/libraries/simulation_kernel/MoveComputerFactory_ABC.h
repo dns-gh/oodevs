@@ -16,6 +16,7 @@ namespace moving
     class SpeedComputer_ABC;
     class SpeedStrategy_ABC;
     class MaxSlopeComputer_ABC;
+    class SlopeDecelerationComputer_ABC;
 
 // =============================================================================
 /** @class  MoveComputerFactory_ABC
@@ -38,6 +39,7 @@ public:
     virtual std::auto_ptr< MoveComputer_ABC > CreateMagicMoveComputer() const = 0;
     virtual std::auto_ptr< SpeedComputer_ABC > CreateSpeedComputer( const SpeedStrategy_ABC& strategy ) const = 0;
     virtual std::auto_ptr< MaxSlopeComputer_ABC > CreateMaxSlopeComputer() const = 0;
+    virtual std::auto_ptr< SlopeDecelerationComputer_ABC > CreateSlopeDecelerationComputer() const = 0;
     //@}
 };
 

@@ -54,6 +54,7 @@ public:
     //@{
     virtual double GetSpeed( const TerrainData& environment ) const = 0;
     virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
+    virtual double GetSlopeDeceleration() const = 0;
     //@}
 
     //! @name

@@ -10,12 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
 #include "DEC_PathPoint.h"
+#include "MIL_AgentServer.h"
+#include "SlopeSpeedModifier.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "meteo/PHY_MeteoDataManager.h"
+#include "meteo/RawVisionData/Elevation.h"
+#include "meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Authentication.h"
 #include "simulation_terrain/TER_World.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
@@ -24,6 +30,7 @@
 DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
     : pathType_( pathType )
     , bSectionJustEnded_( false )
+    , elevation_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -282,7 +289,28 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
         resultList_.pop_back();
         bSectionJustEnded_ = false;
     }
-    boost::shared_ptr< DEC_PathPoint > point( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    if( !resultList_.empty() )
+    {
+        SlopeSpeedModifier slopeSpeedModifier;
+        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation_ ), _1, _2 );
+        const MT_Vector2D& startPoint = resultList_.back()->GetPos();
+        Elevation( elevation_.GetCellSize() ).FindPath( startPoint, vPos, decelerationFunc );
+        const SlopeSpeedModifier::T_Slopes& slopes = slopeSpeedModifier.GetSlopes();
+        for( auto itSlope = slopes.begin(); itSlope != slopes.end(); ++itSlope )
+        {
+            auto itPoint = resultList_.rbegin();
+            while( itPoint != resultList_.rend() && !( *itPoint )->IsSlopeValid() )
+                ( *itPoint++ )->SetSlope( itSlope->second );
+            if( itSlope->second > 0 && itSlope + 1 != slopes.end() )
+            {
+                const MT_Line segment( startPoint, vPos );
+                const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
+                boost::shared_ptr< DEC_PathPoint > point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint );
+                resultList_.push_back( point );
+            }
+        }
+    }
+    boost::shared_ptr< DEC_PathPoint > point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint );
     resultList_.push_back( point );
     if( resultList_.size() == 1 )
         itCurrentPathPoint_ = resultList_.begin();

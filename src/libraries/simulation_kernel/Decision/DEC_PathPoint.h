@@ -66,12 +66,15 @@ public:
     virtual int GetTypeLima();
     virtual unsigned int GetLimaID();
     virtual const TerrainData& GetTypeTerrain() const;
+    bool IsSlopeValid() const;
+    double GetSlope() const;
     //@}
 
     //! @name Main
     //@{
     bool IsInObject( const TerrainData& data ) const;
     bool WillBeInObject( const TerrainData& data ) const;
+    void SetSlope( double slope );
     //@}
 
     //! @name DIA
@@ -90,6 +93,8 @@ protected:
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
+    double slope_;
+    bool validSlope_;
     //@}
 };
 

@@ -86,6 +86,7 @@ public:
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
     virtual double GetMaxSlope() const;
+    virtual double GetSlopeDeceleration() const;
     virtual void ApplyTrafficModifier();
     virtual bool HasResources();
     virtual bool CanMove() const;

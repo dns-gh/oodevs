@@ -69,6 +69,7 @@ public:
     const MIL_Fuseau& GetAutomataFuseau() const;
     const PHY_Speeds& GetUnitSpeeds() const;
     double GetUnitMaxSlope() const;
+    double GetUnitSlopeDeceleration() const;
     const MT_Vector2D& GetDirDanger() const;
     const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
     double GetCostOutsideOfAllObjects() const;
@@ -132,6 +133,7 @@ private:
     MT_Vector2D vDirDanger_;
     PHY_Speeds unitSpeeds_;
     double rMaxSlope_;
+    double rSlopeDeceleration_;
     T_PathKnowledgeAgentVector pathKnowledgeAgents_;
     T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
     double rCostOutsideOfAllObjects_;

@@ -15,10 +15,12 @@
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType )
-    : vPos_      ( vPos )
-    , nType_     ( type )
+    : vPos_( vPos )
+    , nType_( type )
     , nPointType_( nPointType )
-    , diaType_   ( szDIARepType )
+    , diaType_( szDIARepType )
+    , slope_( 0 )
+    , validSlope_( false )
 {
     // NOTHING
 }
@@ -28,11 +30,13 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint 
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
-    : vPos_                   ( vPos )
-    , nType_                  ( eTypePointPath )
-    , nPointType_             ( eTypePointNormal )
-    , nObjectTypes_           ( nObjectTypes )
+    : vPos_( vPos )
+    , nType_( eTypePointPath )
+    , nPointType_( eTypePointNormal )
+    , nObjectTypes_( nObjectTypes )
     , nObjectTypesToNextPoint_( nObjectTypesToNextPoint )
+    , slope_( 0 )
+    , validSlope_( false )
 {
     // NOTHING
 }

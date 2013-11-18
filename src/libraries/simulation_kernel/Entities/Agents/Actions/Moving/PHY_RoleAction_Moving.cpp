@@ -20,6 +20,7 @@
 #include "ConsumptionModeChangeRequest_ABC.h"
 #include "ConsumptionChangeRequestHandler_ABC.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
+#include "SlopeDecelerationComputer_ABC.h"
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -212,9 +213,21 @@ double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment, const MI
 double PHY_RoleAction_Moving::GetMaxSlope() const
 {
     std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
-            owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
+        owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
     owner_->Execute< OnComponentComputer_ABC >( *computer );
     return computer->GetMaxSlope();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetSlopeDeceleration
+// Created: JSR 2013-11-08
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetSlopeDeceleration() const
+{
+    std::auto_ptr< moving::SlopeDecelerationComputer_ABC > computer =
+        owner_->GetAlgorithms().moveComputerFactory_->CreateSlopeDecelerationComputer();
+    owner_->Execute< OnComponentComputer_ABC >( *computer );
+    return computer->GetSlopeDeceleration();
 }
 
 // -----------------------------------------------------------------------------

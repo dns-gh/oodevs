@@ -38,6 +38,16 @@ double DEC_Agent_Path::GetUnitMaxSlope() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetUnitSlopeDeceleration
+// Created: JSR 2013-11-08
+// -----------------------------------------------------------------------------
+inline
+double DEC_Agent_Path::GetUnitSlopeDeceleration() const
+{
+    return rSlopeDeceleration_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetAutomataFuseau
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
