@@ -21,7 +21,7 @@ class ConsignState
 {
 public:
      ConsignState()
-        : id_( 0 )
+        : id_( 1 )
         , startTick_( -1 )
         , endTick_( -1 )
         , status_( -1 )

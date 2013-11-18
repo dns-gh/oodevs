@@ -59,16 +59,11 @@ ConsignState& ConsignData_ABC::PushState()
     if( !history_.empty() )
     {
         // There is no undefined state, each new state terminates the previous one
-        history_.back().endTick_ = tick;
         state = history_.back();
         state.id_++;
-    }
-    else
-    {
-        state.id_ = 1;
+        history_.back().endTick_ = tick;
     }
     state.startTick_ = tick;
-    state.endTick_ = -1;
     history_.push_back( state );
     return history_.back();
 }
