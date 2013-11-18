@@ -60,6 +60,7 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual bool HasParameter( const Param_ABC& param ) const;
 
     virtual void Visit( const actions::parameters::Agent& param );
     virtual void Visit( const actions::parameters::Automat& param );

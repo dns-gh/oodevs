@@ -107,6 +107,7 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual Param_ABC* CreateElement();
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual bool HasParameter( const Param_ABC& param ) const;
     //@}
 
     //! @name ParameterVisitor_ABC implementation

@@ -400,3 +400,15 @@ void ParamLocationComposite::InternalVisit( const T& param, const std::string& t
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+bool ParamLocationComposite::HasParameter( const Param_ABC& param ) const
+{
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+        if( ( *it )->HasParameter( param ) )
+            return true;
+    return Param_ABC::HasParameter( param );
+}

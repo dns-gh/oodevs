@@ -474,3 +474,22 @@ void ParamObstacle::Visit( const actions::parameters::String& param )
     assert( name_ != 0 );
     param.Accept( *name_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+bool ParamObstacle::HasParameter( const Param_ABC& param ) const
+{
+    return ParamLocationComposite::HasParameter( param ) ||
+        location_->HasParameter( param ) ||
+        density_->HasParameter( param ) ||
+        tc2_->HasParameter( param ) ||
+        activityTime_->HasParameter( param ) ||
+        activationTime_->HasParameter( param ) ||
+        name_->HasParameter( param ) ||
+        altitudeModifier_->HasParameter( param ) ||
+        timeLimit_->HasParameter( param ) ||
+        mining_->HasParameter( param ) ||
+        lodging_->HasParameter( param );
+}

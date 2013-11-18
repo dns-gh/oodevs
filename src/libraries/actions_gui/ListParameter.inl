@@ -488,3 +488,13 @@ void ListParameter< ConcreteElement >::Visit( const actions::Parameter_ABC& para
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::HasParameter( const Param_ABC& param ) const
+{
+    return Param_ABC::HasParameter( param ) || potential_->HasParameter( param );
+}

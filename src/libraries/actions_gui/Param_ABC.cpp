@@ -449,3 +449,12 @@ void Param_ABC::Purge()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::HasParameter
+// Created: ABR 2013-11-14
+// -----------------------------------------------------------------------------
+bool Param_ABC::HasParameter( const Param_ABC& param ) const
+{
+    return this == &param;
+}

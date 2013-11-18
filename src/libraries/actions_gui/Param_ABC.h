@@ -99,6 +99,8 @@ public:
     virtual void Purge();
     virtual void SetVisible( bool visible ) { if( group_ ) group_->setVisible( visible ); }
     virtual bool IsVisible() const { return ( group_ ) ? group_->isVisible() : false; }
+
+    virtual bool HasParameter( const Param_ABC& param ) const;
     //@}
 
     //! @name Accessors

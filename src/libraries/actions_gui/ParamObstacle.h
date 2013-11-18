@@ -68,6 +68,7 @@ public:
     virtual bool InternalCheckValidity() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void NotifyChanged( Param_ABC& param );
+    virtual bool HasParameter( const Param_ABC& param ) const;
 
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Visit( const actions::parameters::EngineerConstruction& param );
