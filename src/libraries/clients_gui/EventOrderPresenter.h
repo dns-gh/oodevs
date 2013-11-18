@@ -38,7 +38,7 @@ class Decisions_ABC;
 
 namespace gui
 {
-    class EventBuilder_ABC;
+    class EventOrderView_ABC;
 // =============================================================================
 /** @class  EventOrderPresenter
     @brief  Event manager
@@ -50,7 +50,7 @@ class EventOrderPresenter : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderPresenter( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
+             EventOrderPresenter( EventOrderView_ABC& builder, const kernel::AgentTypes& agentTypes,
                                   actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                   actions::gui::MissionInterface_ABC& missionInterface );
             ~EventOrderPresenter();
@@ -83,7 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
-    EventBuilder_ABC& builder_;
+    EventOrderView_ABC& builder_;
     const kernel::AgentTypes& agentTypes_;
     E_MissionType currentMissionType_;
     std::string currentMission_;

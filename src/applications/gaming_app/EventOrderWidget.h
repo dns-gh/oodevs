@@ -12,7 +12,7 @@
 
 #include "EventWidget_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_gui/EventBuilder_ABC.h"
+#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
@@ -80,7 +80,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public tools::ElementObserver_ABC< Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , public tools::ElementObserver_ABC< MissionParameters >
-                       , private gui::EventBuilder_ABC
+                       , private gui::EventOrderView_ABC
 {
     Q_OBJECT
 
@@ -115,7 +115,7 @@ private:
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
     //@}
 
-    //! @name EventBuilder_ABC implementation
+    //! @name EventOrderView_ABC implementation
     //@{
     virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
                     const std::vector< std::string >& missions, const std::string& currentMission,

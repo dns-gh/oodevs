@@ -17,7 +17,7 @@
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/EventBuilder_ABC.h"
+#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_gui/EventOrderPresenter.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
@@ -87,7 +87,7 @@ namespace
         MOCK_METHOD( SetParamInterface, 1 );
     };
 
-    MOCK_BASE_CLASS( MockEventBuilder, gui::EventBuilder_ABC )
+    MOCK_BASE_CLASS( MockEventBuilder, gui::EventOrderView_ABC )
     {
         MOCK_METHOD( Build, 7 );
         MOCK_METHOD( UpdateActions, 0 );

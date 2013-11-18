@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "EventOrderPresenter.h"
-#include "EventBuilder_ABC.h"
+#include "EventOrderView_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -31,7 +31,7 @@ using namespace gui;
 // Name: EventOrderPresenter constructor
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-EventOrderPresenter::EventOrderPresenter( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
+EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& builder, const kernel::AgentTypes& agentTypes,
                                           actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                           actions::gui::MissionInterface_ABC& missionInterface )
     : builder_           ( builder )

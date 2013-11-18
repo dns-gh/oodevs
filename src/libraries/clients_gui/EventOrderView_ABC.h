@@ -17,18 +17,18 @@
 namespace gui
 {
 // =============================================================================
-/** @class  EventBuilder_ABC
-    @brief  Event builder declaration
+/** @class  EventOrderView_ABC
+    @brief  Event order view declaration
 */
 // Created: LGY 2013-10-03
 // =============================================================================
-class EventBuilder_ABC : private boost::noncopyable
+class EventOrderView_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EventBuilder_ABC() {}
-    virtual ~EventBuilder_ABC() {}
+             EventOrderView_ABC() {}
+    virtual ~EventOrderView_ABC() {}
     //@}
 
     //! @name Operations
