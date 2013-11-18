@@ -115,11 +115,11 @@ protected:
 */
 // Created: MMC 2013-10-21
 // =============================================================================
-template< typename Extension, typename Request, typename RequestHistory >
+template< typename Extension, typename Request >
 class LogisticConsignsWidget : public LogisticConsignsWidget_ABC, 
                                public tools::ElementObserver_ABC< Extension >,
                                public tools::ElementObserver_ABC< Request >,
-                               public tools::ElementObserver_ABC< RequestHistory >
+                               public tools::ElementObserver_ABC< typename Request::History >
 {
 public:
     //! @name Constructors/Destructor
@@ -146,7 +146,7 @@ protected:
         DisplayRequest( consign );
     }
 
-    virtual void NotifyUpdated( const RequestHistory& history )
+    virtual void NotifyUpdated( const typename Request::History& history )
     {
         DisplayHistory( history );
     }

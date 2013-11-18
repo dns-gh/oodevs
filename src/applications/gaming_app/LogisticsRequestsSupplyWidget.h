@@ -24,7 +24,7 @@ class Publisher_ABC;
 */
 // Created: MMC 2013-09-16
 // =============================================================================
-class LogisticsRequestsSupplyWidget : public LogisticConsignsWidget< LogSupplyConsigns, LogSupplyConsign, LogSupplyConsign::History >
+class LogisticsRequestsSupplyWidget : public LogisticConsignsWidget< LogSupplyConsigns, LogSupplyConsign >
                                     , private boost::noncopyable
 {
     Q_OBJECT

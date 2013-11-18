@@ -23,7 +23,7 @@ class Publisher_ABC;
 */
 // Created: MMC 2013-09-16
 // =============================================================================
-class LogisticsRequestsMedicalWidget : public LogisticConsignsWidget< LogMedicalConsigns, LogMedicalConsign, LogMedicalConsign::History >
+class LogisticsRequestsMedicalWidget : public LogisticConsignsWidget< LogMedicalConsigns, LogMedicalConsign >
 {
 public:
     //! @name Constructors/Destructor

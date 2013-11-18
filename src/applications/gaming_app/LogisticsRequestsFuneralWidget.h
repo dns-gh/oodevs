@@ -23,7 +23,7 @@ class Publisher_ABC;
 */
 // Created: MMC 2013-09-16
 // =============================================================================
-class LogisticsRequestsFuneralWidget : public LogisticConsignsWidget< LogFuneralConsigns, LogFuneralConsign, LogFuneralConsign::History >
+class LogisticsRequestsFuneralWidget : public LogisticConsignsWidget< LogFuneralConsigns, LogFuneralConsign >
                                     , private boost::noncopyable
 {
 public:
