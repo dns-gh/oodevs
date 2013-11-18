@@ -20,16 +20,16 @@ namespace
         {}
         void TestAdjacent( const MT_Vector2D& from, const MT_Vector2D& to )
         {
-            MOCK_FUNCTOR( collector, bool( const MT_Vector2D& ) );
-            MOCK_EXPECT( collector ).once().with( to ).returns( false );
+            MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
+            MOCK_EXPECT( collector ).once().with( from, to ).returns( false );
             elevation.FindPath( from, to, collector );
         }
         void TestConsecutive( const MT_Vector2D& from, const MT_Vector2D& middle, const MT_Vector2D& to )
         {
             mock::sequence s;
-            MOCK_FUNCTOR( collector, bool( const MT_Vector2D& ) );
-            MOCK_EXPECT( collector ).once().with( middle ).in( s ).returns( false );
-            MOCK_EXPECT( collector ).once().with( to ).in( s ).returns( false );
+            MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
+            MOCK_EXPECT( collector ).once().with( from, middle ).in( s ).returns( false );
+            MOCK_EXPECT( collector ).once().with( middle, to ).in( s ).returns( false );
             elevation.FindPath( from, to, collector );
         }
         int size;
@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_CASE( path_from_a_square_to_itself_is_empty, Fixture )
 {
     const MT_Vector2D from( 0, 0 );
     const MT_Vector2D to( 0, 1 );
-    MOCK_FUNCTOR( collector, bool( const MT_Vector2D& ) );
+    MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
     elevation.FindPath( from, to, collector );
 }
 
