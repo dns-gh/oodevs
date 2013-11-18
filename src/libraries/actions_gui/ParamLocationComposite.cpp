@@ -401,6 +401,7 @@ void ParamLocationComposite::InternalVisit( const T& param, const std::string& t
         {
             param.Accept( *internalParam );
             NotifyChanged( *internalParam );
+            Update();
             return;
         }
     }

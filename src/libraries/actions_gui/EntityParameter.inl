@@ -104,6 +104,7 @@ void EntityParameter< ConcreteEntity >::OnMenuClick()
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
     NotifyChange();
+    Update();
 }
 
 // -----------------------------------------------------------------------------

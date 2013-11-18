@@ -123,6 +123,7 @@ public slots:
     //! @name Slots
     //@{
     virtual void OnMenuClick();
+    void Update();
     //@}
 
 protected:

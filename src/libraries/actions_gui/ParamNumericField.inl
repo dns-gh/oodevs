@@ -51,6 +51,7 @@ QWidget* ParamNumericField< NumericType >::BuildInterface( const QString& object
     Param_ABC::BuildInterface( objectName, parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     pEdit_ = new QLineEdit( parent );
+    connect( pEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( Update() ) );
     layout->addWidget( pEdit_ );
     pEdit_->setPlaceholderText( "0" );
     double min = std::max< double >( parameter_.MinValue(), std::numeric_limits< NumericType >::min() );

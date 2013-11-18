@@ -103,6 +103,7 @@ void LimitParameter::OnMenuClick()
     Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

@@ -431,6 +431,7 @@ void ListParameter< ConcreteElement >::OnMenuClick()
     newParam->SetName( CreateNextNameAndId() );
     AddElement( *newParam );
     CreatePotential();
+    Update();
 }
 
 // -----------------------------------------------------------------------------

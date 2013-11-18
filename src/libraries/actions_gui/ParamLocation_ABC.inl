@@ -120,6 +120,7 @@ void ParamLocation_ABC< BaseParameter >::Handle( kernel::Location_ABC& location 
         location_.reset( &location );
         pPosLabel_->setText( location.GetName() );
         NotifyChange();
+        Update();
     }
 }
 
@@ -145,6 +146,7 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
     else if( parameter_.GetType() == "rectangle" )
         layer_.StartRectangle( *this );
     InternalOnMenuClick();
+    Update();
 }
 
 // -----------------------------------------------------------------------------
