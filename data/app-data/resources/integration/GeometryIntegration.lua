@@ -137,9 +137,9 @@ end
 -- Overriding DEC_Geometrie_PositionAdvanceAlongFuseau and DEC_Geometrie_PositionAdvanceAlongFuseauAutomat
 -- to ensure backwards compatibility
 DEC_Geometrie_PositionAdvanceAlongFuseau = function( position )
-    DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
+    return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
 
 DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
-    DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
+    return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
