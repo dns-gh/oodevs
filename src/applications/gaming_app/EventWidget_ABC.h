@@ -44,14 +44,14 @@ public:
     virtual void Reset();
     virtual void Update();
     virtual bool IsValid() const;
-    virtual void Trigger() const;
+    virtual void Trigger();
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
     //! @name Abstract operations
     //@{
     virtual void Fill( const Event& event ) = 0;
-    virtual void Commit( timeline::Event& event ) const = 0;
+    virtual void Commit( timeline::Event& event ) = 0;
     //@}
 
 protected:

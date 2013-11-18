@@ -857,18 +857,32 @@ actions::Action_ABC* ActionFactory::CreateInhabitantChangeConfinedStateAction( b
 
 namespace
 {
-    class InvalidAction : public Action_ABC
+    class ValidAction : public Action_ABC
     {
     public:
-        InvalidAction( kernel::Controller& controller, const kernel::OrderType& type )
+        ValidAction( kernel::Controller& controller, const kernel::OrderType& type, int context )
             : Action_ABC( controller, type )
+            , context_( context )
+        {
+        }
+        virtual ~ValidAction() {};
+    public:
+        virtual void Publish( Publisher_ABC&, int ) const {};
+        virtual int GetContext() const { return context_; }
+        virtual void Polish() {};
+    private:
+        int context_;
+    };
+
+    class InvalidAction : public ValidAction
+    {
+    public:
+        InvalidAction( kernel::Controller& controller, const kernel::OrderType& type, int context )
+            : ValidAction( controller, type, context )
         {
             Invalidate();
         }
         virtual ~InvalidAction() {};
-    public:
-        virtual void Publish( Publisher_ABC&, int ) const {};
-        virtual void Polish() {};
     };
 }
 
@@ -876,9 +890,20 @@ namespace
 // Name: ActionFactory::CreateInvalidAction
 // Created: LGY 2013-05-14
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission ) const
+Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission, int context ) const
 {
-    std::auto_ptr< actions::Action_ABC > action( new InvalidAction( controller_, mission ) );
+    std::auto_ptr< actions::Action_ABC > action( new InvalidAction( controller_, mission, context ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateValidAction
+// Created: LGY 2013-011-15
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateValidAction( const kernel::OrderType& mission, int context ) const
+{
+    std::auto_ptr< actions::Action_ABC > action( new ValidAction( controller_, mission, context ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }

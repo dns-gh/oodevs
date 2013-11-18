@@ -28,15 +28,11 @@ public:
     virtual ~EventTaskWidget();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Fill( const Event& event );
-    virtual void Commit( timeline::Event& event ) const;
+    virtual void Commit( timeline::Event& event );
     //@}
 
 private:

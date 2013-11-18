@@ -36,12 +36,7 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Fill( const Event& event );
-    virtual void Commit( timeline::Event& event ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
+    virtual void Commit( timeline::Event& event );
     //@}
 };
 

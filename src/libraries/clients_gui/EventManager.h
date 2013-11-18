@@ -68,7 +68,7 @@ public:
     void Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
                  const actions::Action_ABC* action );
 
-    void Publish( actions::ActionsModel& model, timeline::Event* event, bool planned ) const;
+    void Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const;
     void SetPlanningMode( bool value );
     //@}
 

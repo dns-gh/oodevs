@@ -702,6 +702,14 @@ Raison: %3
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Order acknowledged</source>
+        <translation>Ordre executé</translation>
+    </message>
 </context>
 <context>
     <name>EventMultimediaWidget</name>

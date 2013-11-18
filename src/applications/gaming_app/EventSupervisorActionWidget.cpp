@@ -38,14 +38,14 @@ EventSupervisorActionWidget::~EventSupervisorActionWidget()
 // -----------------------------------------------------------------------------
 void EventSupervisorActionWidget::Fill( const Event& /*event*/ )
 {
-    // TODO
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventSupervisorActionWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventSupervisorActionWidget::Commit( timeline::Event& event ) const
+void EventSupervisorActionWidget::Commit( timeline::Event& event )
 {
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

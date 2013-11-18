@@ -63,6 +63,7 @@ class Decisions_ABC;
 class EventAction;
 class Model;
 class Decisions_ABC;
+class MissionParameters;
 
 // =============================================================================
 /** @class  EventOrderWidget
@@ -78,6 +79,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
+                       , public tools::ElementObserver_ABC< MissionParameters >
                        , private gui::EventBuilder_ABC
 {
     Q_OBJECT
@@ -97,8 +99,8 @@ private:
     virtual void Purge();
     virtual void Reset();
     virtual void Fill( const Event& event );
-    virtual void Commit( timeline::Event& event ) const;
-    virtual void Trigger() const;
+    virtual void Commit( timeline::Event& event );
+    virtual void Trigger();
     virtual bool IsValid() const;
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
@@ -119,6 +121,7 @@ private:
                     const std::vector< std::string >& missions, const std::string& currentMission,
                     const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector );
     virtual void UpdateActions();
+    virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
 
 
@@ -132,7 +135,7 @@ private:
     E_MissionType GetMissionType() const;
     const Decisions_ABC* GetTargetDecision() const;
     void SetTarget( const kernel::Entity_ABC* entity );
-    void Publish( timeline::Event* event, bool planned ) const;
+    void Publish( timeline::Event* event, bool planned );
     //@}
 
 signals:
@@ -140,6 +143,8 @@ signals:
     //@{
     void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
     void EnableTriggerEvent( bool enable );
+    void GetMissionAck( const actions::Action_ABC& action );
+    void EventChanged();
     //@}
 
 public slots:
@@ -189,6 +194,7 @@ private:
 
     bool planningMode_;
     boost::scoped_ptr< gui::EventManager > manager_;
+    int context_;
     //@}
 };
 

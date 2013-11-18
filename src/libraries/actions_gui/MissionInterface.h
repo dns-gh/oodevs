@@ -85,13 +85,13 @@ public:
     virtual void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
     virtual void FillFrom( const actions::Action_ABC& action );
-    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const
     {
-        Publish< kernel::FragOrderType >( model, event );
+        Publish< kernel::FragOrderType >( model, event, context );
     }
-    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const
     {
-        Publish< kernel::MissionType >( model, event );
+        Publish< kernel::MissionType >( model, event, context );
     }
     //@}
 
@@ -117,7 +117,7 @@ private:
     //! @name Helpers
     //@{
     template< typename T >
-    void Publish( actions::ActionsModel& model, timeline::Event* event = 0 ) const
+    void Publish( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const
     {
         if( !order_ )
             return;
@@ -126,7 +126,7 @@ private:
         if( planned_ )
             emit PlannedMission( *action, event );
         else
-            model.Publish( *action, 0 );
+            model.Publish( *action, context );
     }
     void PurgeParameters();
     //@}

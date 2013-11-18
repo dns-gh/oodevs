@@ -34,6 +34,7 @@ namespace sword
     class CrowdOrder;
     class FragOrder;
     class TaskCreationRequestAck;
+    class FragOrderAck;
 }
 
 // =============================================================================
@@ -49,6 +50,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< sword::CrowdOrder >
                         , public kernel::Updatable_ABC< sword::FragOrder >
                         , public kernel::Updatable_ABC< sword::TaskCreationRequestAck >
+                        , public kernel::Updatable_ABC< sword::FragOrderAck >
                         , public tools::Resolver< actions::Action_ABC >
                         , public tools::ElementObserver_ABC< actions::Action_ABC >
                         , public gui::Drawable_ABC
@@ -66,6 +68,8 @@ public:
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     void Display( kernel::Displayer_ABC& displayer ) const;
+    unsigned long GetEntityId() const;
+    const actions::Action_ABC* GetLastMission() const;
     //@}
 
 private:
@@ -81,9 +85,12 @@ private:
     virtual void DoUpdate( const sword::AutomatOrder& message );
     virtual void DoUpdate( const sword::CrowdOrder& message );
     virtual void DoUpdate( const sword::FragOrder& message );
-    virtual void DoUpdate( const sword::TaskCreationRequestAck& message );
+    virtual void DoUpdateContext( const sword::TaskCreationRequestAck& message, int context );
+    virtual void DoUpdateContext( const sword::FragOrderAck& message, int context );
     template< typename T >
     void UpdateMessage( const T& message );
+    template< typename T >
+    void UpdateMessage( const T& message, int context );
     //@}
 
 private:
@@ -93,6 +100,7 @@ private:
     const actions::ActionFactory_ABC& factory_;
     unsigned long entityId_;
     const kernel::OrderType* currentMission_;
+    std::auto_ptr< actions::Action_ABC > pLastAck_;
     //@}
 };
 

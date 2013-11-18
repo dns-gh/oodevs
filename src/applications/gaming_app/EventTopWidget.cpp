@@ -149,7 +149,7 @@ void EventTopWidget::Fill( const Event& event )
 // Name: EventTopWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventTopWidget::Commit( timeline::Event& event ) const
+void EventTopWidget::Commit( timeline::Event& event )
 {
     event.done = false;
     event.begin = beginDateTimeEdit_->dateTime().toString( EVENT_DATE_FORMAT ).toStdString();

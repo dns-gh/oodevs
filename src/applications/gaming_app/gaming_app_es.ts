@@ -700,6 +700,14 @@ Reason: %3
         <source>Delete</source>
         <translation type="unfinished">Eliminar</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order acknowledged</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventMultimediaWidget</name>

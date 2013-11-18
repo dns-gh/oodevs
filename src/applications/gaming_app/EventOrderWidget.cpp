@@ -37,6 +37,7 @@
 #include "gaming/Model.h"
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
+#include "gaming/MissionParameters.h"
 #include "gaming/TimelinePublisher.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
@@ -72,6 +73,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , missionCombo_( 0 )
     , planningMode_( false )
     , manager_( new gui::EventManager( *this, model.static_.types_, interfaceBuilder, *missionInterface_ ) )
+    , context_( 0 )
 {
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
@@ -168,6 +170,7 @@ void EventOrderWidget::Purge()
 void EventOrderWidget::Reset()
 {
     missionInterface_->Rebuild( interfaceBuilder_ );
+    UpdateTriggerAction();
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +200,7 @@ void EventOrderWidget::Fill( const Event& event )
 // Name: EventOrderWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Commit( timeline::Event& event ) const
+void EventOrderWidget::Commit( timeline::Event& event )
 {
     Publish( &event, true );
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
@@ -208,7 +211,7 @@ void EventOrderWidget::Commit( timeline::Event& event ) const
 // Name: EventOrderWidget::Trigger
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Trigger() const
+void EventOrderWidget::Trigger()
 {
     Publish( 0, false );
 }
@@ -253,9 +256,9 @@ bool EventOrderWidget::IsValid() const
 // Name: EventOrderWidget::Publish
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Publish( timeline::Event* event, bool planned ) const
+void EventOrderWidget::Publish( timeline::Event* event, bool planned )
 {
-    manager_->Publish( model_.actions_, event, planned );
+    manager_->Publish( model_.actions_, event, planned, ++context_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -620,4 +623,19 @@ void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_Missi
 void EventOrderWidget::UpdateActions()
 {
     UpdateTriggerAction();
+    emit EventChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::NotifyUpdated
+// Created: LGY 2013-08-29
+// -----------------------------------------------------------------------------
+void EventOrderWidget::NotifyUpdated( const MissionParameters& extension )
+{
+    if( target_ && target_->GetId() == extension.GetEntityId() )
+    {
+        const actions::Action_ABC* action = extension.GetLastMission();
+        if( action && action->GetContext() == context_ )
+            emit GetMissionAck( *action );
+    }
 }

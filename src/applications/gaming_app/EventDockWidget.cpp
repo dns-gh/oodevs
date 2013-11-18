@@ -20,7 +20,7 @@
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 #include "clients_kernel/ActionController.h"
-
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Time_ABC.h"
 
 #include "gaming/Event.h"
@@ -28,6 +28,8 @@
 #include "gaming/EventFactory.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionError.h"
 
 #include <timeline/api.h>
 
@@ -100,6 +102,11 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     stackArea->setMinimumSize( 300, 160 );
     stackAreaLayout->addWidget( stack_ );
 
+    ackBox_ = new QGroupBox();
+    acknowledgedLabel_ = new QLabel( "acknowledged_label", ackBox_ );
+    QVBoxLayout* layout = new QVBoxLayout( ackBox_ );
+    layout->addWidget( acknowledgedLabel_, 0, Qt::AlignCenter );
+
     // Layout
     QWidget* mainWidget = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
@@ -107,6 +114,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
     mainLayout->setSpacing( 5 );
     mainLayout->addWidget( topWidget_ );
     mainLayout->addWidget( stackArea, 1 );
+    mainLayout->addWidget( ackBox_ );
     mainLayout->addWidget( bottomWidget_ );
     setWidget( mainWidget );
     SetContentVisible( false );
@@ -123,6 +131,8 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 
     connect( orderWidget,   SIGNAL( EnableTriggerEvent( bool ) ),                            bottomWidget_, SLOT( OnEnableTriggerEvent( bool ) ) );
     connect( orderWidget,   SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this,          SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
+    connect( orderWidget,   SIGNAL( GetMissionAck( const actions::Action_ABC& ) ),           this,          SLOT( GetMissionAck( const actions::Action_ABC& ) ) );
+    connect( orderWidget,   SIGNAL( EventChanged() ),                                        this,          SLOT( OnEventChanged() ) );
     controllers_.actions_.Unregister( *this );
     controllers_.eventActions_.Register( *this );
 }
@@ -172,6 +182,7 @@ void EventDockWidget::StartEdition( const Event& event )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Configure( E_EventTypes type, bool editing )
 {
+    ackBox_->setVisible( false );
     SetEventType( type );
     SetEditing( editing );
     Fill();
@@ -215,6 +226,7 @@ void EventDockWidget::SetContentVisible( bool visible )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Purge()
 {
+    ackBox_->setVisible( false );
     topWidget_->Purge();
     if( currentWidget_ )
         currentWidget_->Purge();
@@ -287,6 +299,7 @@ void EventDockWidget::OnShowDetail()
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnDiscard()
 {
+    ackBox_->setVisible( false );
     currentWidget_->Reset();
 }
 
@@ -430,4 +443,51 @@ void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool 
     if( newMode == eModes_Default )
         Purge();
     gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+}
+
+namespace
+{
+    void SetColor( QWidget& widget, const QColor& color )
+    {
+        QPalette p = widget.palette();
+        p.setColor( QPalette::WindowText,color );
+        p.setColor( QPalette::Text, color );
+        p.setColor( QPalette::ButtonText, color );
+        p.setColor( QPalette::BrightText, color );
+        p.setColor( QPalette::Light, color);
+        p.setColor( QPalette::Midlight, color );
+        widget.setPalette( p );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::GetMissionAck
+// Created: LGY 2013-11-14
+// -----------------------------------------------------------------------------
+void EventDockWidget::GetMissionAck( const actions::Action_ABC& action )
+{
+    ackBox_->setVisible( true );
+    bool valid = action.IsValid();
+    SetColor( *acknowledgedLabel_, valid ? Qt::darkGreen : Qt::red );
+    SetColor( *ackBox_, valid ? Qt::darkGreen : Qt::red );
+    acknowledgedLabel_->setText( valid ? tools::translate( "EventDockWidget", "Order acknowledged" ) :
+        tools::translate( "EventDockWidget", "Error" ) );
+    if( !valid )
+    {
+        if( const actions::ActionError* error = action.Retrieve< actions::ActionError >() )
+        {
+            std::string text = error->GetError();
+            if( !text.empty() )
+                acknowledgedLabel_->setText( text.c_str() );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnEventChanged
+// Created: LGY 2013-11-14
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnEventChanged()
+{
+    ackBox_->setVisible( false );
 }
