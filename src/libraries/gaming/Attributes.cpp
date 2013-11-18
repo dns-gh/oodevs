@@ -9,16 +9,17 @@
 
 #include "gaming_pch.h"
 #include "Attributes.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Units.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_gui/DictionaryUpdated.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Units.h"
 #include "clients_kernel/SensorType.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
@@ -33,16 +34,19 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const CoordinateConverter_ABC& converter,
-                        gui::PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const kernel::DetectionMap& elevation, 
+                        const CoordinateConverter_ABC& converter, gui::PropertiesDictionary& dictionary,
+                        const tools::Resolver_ABC< Team_ABC >& teamResolver )
     : entity_                           ( entity )
     , controller_                       ( controller )
+    , elevation_                        ( elevation )
     , converter_                        ( converter )
     , teamResolver_                     ( teamResolver )
     , vPos_                             ( 0, 0 )
     , nSpeed_                           ( 0 )
     , nAltitude_                        ( 0 )
     , nDirection_                       ( 0 )
+    , nSlope_                           ( 0 )
     , nRawOpState_                      ( 0 )
     , nOpState_                         ( eOperationalStatus_Operationnel )
     , nFightRateState_                  ( (E_ForceRatioStatus)0 )
@@ -73,6 +77,7 @@ Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, cons
     , fLodgingSatisfactionPercent_      ( 0.0f )
     , fSecuritySatisfactionPercent_     ( 0.0f )
     , fHealthSatisfactionPercent_       ( 0.0f )
+    , cellDistance_                     ( 1.414f * elevation_.GetCellSize() )
     , crowdTransported_                 ( -1 )
 {
     CreateDictionary( dictionary );
@@ -275,6 +280,16 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         }
     }
 
+    if( message.has_position() || message.has_direction() )
+    {
+        const float angle = nDirection_ * 3.14f / 180.f;
+        const geometry::Vector2f direction = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
+        const geometry::Point2f vDst = vPos_ + cellDistance_ * direction;
+        const float distance = vDst.Distance( vPos_ );
+        const short diff = elevation_.ElevationAt( vDst ) - elevation_.ElevationAt( vPos_ );
+        nSlope_ = distance == 0 ? 0 : static_cast< int >( 100.f * diff / distance );
+    }
+
     controller_.Update( *this );
 }
 
@@ -298,6 +313,7 @@ void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Attributes", "Speed:" ) , nSpeed_ * Units::kilometersPerHour )
+             .Display( tools::translate( "Attributes", "Slope:" ) , nSlope_ * Units::percentage )
              .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters )
              .Display( tools::translate( "Attributes", "Troops:" ), bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) );
     if( crowdTransported_!= -1 )
