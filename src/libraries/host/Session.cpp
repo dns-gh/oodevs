@@ -714,6 +714,7 @@ Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_
     status_ = next;
     start_time_.clear();
     current_time_.clear();
+    last_error_.clear();
     const Path output = GetOutput();
     if( !replay && checkpoint.empty() )
         ClearOutput( output );
