@@ -197,7 +197,7 @@ QString Param_ABC::GetMenuName() const
         name = tools::translate( "Param_ABC", "Add item" );
     }
     else
-        name = IsInParam() ? GetType().c_str() : GetName();
+        name = IsInParam() ? tools::translate( "actions_gui_Param", GetType().c_str() ) : GetName();
     return name;
 }
 

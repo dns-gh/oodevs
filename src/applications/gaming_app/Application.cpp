@@ -99,6 +99,7 @@ void Application::CreateTranslators()
     AddTranslator( "ENT" );
     AddTranslator( "actions" );
     AddTranslator( "actions_gui" );
+    AddTranslator( "actions_gui_parameters" );
     AddTranslator( "clients_kernel" );
     AddTranslator( "clients_gui" );
     AddTranslator( "clients_gui_app6" );
