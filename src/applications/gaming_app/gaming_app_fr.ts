@@ -752,8 +752,24 @@ Raison: %3
         <translation>Description</translation>
     </message>
     <message>
-        <source>Profiles</source>
-        <translation type="unfinished">Profils</translation>
+        <source>Url</source>
+        <translation>Url</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Afficher</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Cacher</translation>
+    </message>
+    <message>
+        <source>Base64 Payload</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
