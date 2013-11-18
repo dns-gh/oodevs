@@ -58,7 +58,7 @@ namespace
 // Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
 ParamLocationComposite::ParamLocationComposite( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , builder_      ( builder )
     , selectedParam_( 0 )
     , stack_        ( 0 )
@@ -123,10 +123,10 @@ void ParamLocationComposite::RemoveFromController()
 // Name: ParamLocationComposite::RegisterIn
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void ParamLocationComposite::RegisterIn( kernel::ActionController& controller )
+void ParamLocationComposite::RegisterIn()
 {
     for( auto it = params_.begin(); it != params_.end(); ++it )
-        (*it)->RegisterIn( controller );
+        (*it)->RegisterIn();
 }
 
 // -----------------------------------------------------------------------------

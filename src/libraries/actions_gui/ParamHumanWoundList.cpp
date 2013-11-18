@@ -26,7 +26,7 @@ using namespace actions::gui;
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
 ParamHumanWoundList::ParamHumanWoundList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , list_( 0 )
 {
     // NOTHING

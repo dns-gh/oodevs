@@ -31,7 +31,7 @@ using namespace actions::gui;
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
 ParamResourceNetworkNode::ParamResourceNetworkNode( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC     ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC     ( builder, parameter )
     , controller_   ( builder.GetControllers().controller_ )
     , current_      ( 0 )
     , selected_     ( 0 )

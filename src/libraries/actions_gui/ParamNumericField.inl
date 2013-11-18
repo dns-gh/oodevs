@@ -24,7 +24,7 @@ namespace gui
 // -----------------------------------------------------------------------------
 template< typename NumericType >
 ParamNumericField< NumericType >::ParamNumericField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , pEdit_ ( 0 )
     , pLabel_( 0 )
 {

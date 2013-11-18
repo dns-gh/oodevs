@@ -25,7 +25,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
 ParamDotationTypeList::ParamDotationTypeList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , resolver_( builder.GetStaticModel().objectTypes_ )
     , list_( 0 )
 {

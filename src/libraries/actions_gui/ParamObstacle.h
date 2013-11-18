@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RegisterIn();
     virtual void RemoveFromController();
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
@@ -99,7 +99,6 @@ private:
     const kernel::ObjectTypes&                          objectTypes_;
     ::gui::ParametersLayer&                             layer_;
     const kernel::CoordinateConverter_ABC&              converter_;
-    kernel::ActionController&                           controller_;
     ::gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
     QComboBox*                                          activatedCombo_;
     ParamLocation*                                      location_;

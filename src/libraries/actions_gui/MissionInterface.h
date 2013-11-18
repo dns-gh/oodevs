@@ -133,7 +133,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const tools::ExerciseConfig& config_;
 
     kernel::SafePointer< kernel::Entity_ABC > entity_;

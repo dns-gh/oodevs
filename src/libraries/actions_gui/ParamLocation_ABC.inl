@@ -13,7 +13,7 @@
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
 ParamLocation_ABC< BaseParameter >::ParamLocation_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC ( builder, parameter )
     , converter_( builder.GetStaticModel().coordinateConverter_ )
     , layer_    ( builder.GetParameterLayer() )
     , location_ ()

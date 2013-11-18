@@ -26,7 +26,7 @@ namespace
 // -----------------------------------------------------------------------------
 template< typename T >
 ParamComboBox< T >::ParamComboBox( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , comboBox_( 0 )
 {
     OrderParameterValueVisitor visitor( *this );

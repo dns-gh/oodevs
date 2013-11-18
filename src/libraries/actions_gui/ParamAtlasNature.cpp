@@ -28,7 +28,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
 ParamAtlasNature::ParamAtlasNature( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , natures_ ( builder.GetStaticModel().atlasNatures_ )
 {
     // NOTHING

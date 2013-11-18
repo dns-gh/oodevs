@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     ListParameterBase( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-        : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter ) {}
+        : Param_ABC( builder, parameter ) {}
 
     virtual ~ListParameterBase() {}
     //@}
@@ -167,7 +167,6 @@ private:
     //! @name Member data
     //@{
     const InterfaceBuilder_ABC& builder_;
-    kernel::ActionController&   controller_;
     QTreeView*                  list_;
     QStandardItem*              selected_;
     QStandardItemModel          model_;

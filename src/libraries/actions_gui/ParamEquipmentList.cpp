@@ -36,7 +36,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
 ParamEquipmentList::ParamEquipmentList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    : Param_ABC( builder, parameter )
     , resolver_( builder.GetStaticModel().objectTypes_ )
     , builder_ ( builder )
     , list_    ( 0 )

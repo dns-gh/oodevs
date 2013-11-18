@@ -56,7 +56,7 @@ void ParamPopulationKnowledge::NotifyContextMenu( const kernel::Population_ABC& 
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::PopulationKnowledge_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_, controller_ ) );
+    std::auto_ptr< actions::parameters::Entity< kernel::PopulationKnowledge_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_, controllers_.controller_ ) );
     EntityParameter< kernel::PopulationKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

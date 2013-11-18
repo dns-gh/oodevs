@@ -384,29 +384,29 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
         // TODO: move ParamStringEnumeration to actions_gui and make it creatable by the builder
         const OrderParameter parameter( variableName.toStdString(), type, false );
         if( type == "force-ratio types" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Force ratio types" ),   parameter, ForceRatioTypes() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Force ratio types" ),  parameter, ForceRatioTypes() ) );
         else if( type == "ambulance types" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Ambulance types" ),     parameter, AmbulanceTypes() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Ambulance types" ),    parameter, AmbulanceTypes() ) );
         else if( type == "crowd states" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Crowd states" ),        parameter, CrowdStates() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Crowd states" ),       parameter, CrowdStates() ) );
         else if( type == "equipment states" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Equipment states" ),    parameter, EquipmentStates() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Equipment states" ),   parameter, EquipmentStates() ) );
         else if( type == "fire types" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Fire types" ),          parameter, FireTypes() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Fire types" ),         parameter, FireTypes() ) );
         else if( type == "fratricide" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Fratricide fires" ),    parameter, Fratricide() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Fratricide fires" ),   parameter, Fratricide() ) );
         else if( type == "human states" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Human states" ),        parameter, HumanStates() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Human states" ),       parameter, HumanStates() ) );
         else if( type == "human ranks" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Human ranks" ),         parameter, HumanRanks() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Human ranks" ),        parameter, HumanRanks() ) );
         else if( type == "maintenance types" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Maintenance types" ),   parameter, MaintenanceTypes() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Maintenance types" ),  parameter, MaintenanceTypes() ) );
         else if( type == "population states" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Population states" ),   parameter, PopulationStates() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Population states" ),  parameter, PopulationStates() ) );
         else if( type == "perception levels" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Perception levels" ),   parameter, PerceptionLevels() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Perception levels" ),  parameter, PerceptionLevels() ) );
         else if( type == "satisfaction types" )
-            result.reset( new ParamStringEnumeration( this, *this, tr( "Satisfaction types" ),  parameter, SatisfactionTypes() ) );
+            result.reset( new ParamStringEnumeration( builder_, tr( "Satisfaction types" ), parameter, SatisfactionTypes() ) );
     }
     return result;
 }

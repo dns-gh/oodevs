@@ -22,17 +22,18 @@ using namespace actions::gui;
 // Name: Param_ABC constructor
 // Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
-Param_ABC::Param_ABC( QObject* parent, const ParamInterface_ABC& paramInterface, const kernel::OrderParameter& parameter )
-    : QObject( parent )
+Param_ABC::Param_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : QObject( builder.GetParentObject() )
     , ParameterVisitor_ABC( false )
-    , paramInterface_ ( paramInterface )
+    , paramInterface_ ( builder.GetParamInterface() )
     , parameter_      ( parameter )
     , parentList_     ( 0 )
     , parentParameter_( 0 )
     , name_           ( parameter.GetName().c_str() )
     , type_           ( parameter.GetType() )
-    , controller_     ( 0 )
+    , controllers_    ( builder.GetControllers() )
     , group_          ( 0 )
+    , registered_     ( false )
 {
     // NOTHING
 }
@@ -52,21 +53,22 @@ Param_ABC::~Param_ABC()
 // -----------------------------------------------------------------------------
 void Param_ABC::RemoveFromController()
 {
-    if( controller_ )
-    {
-        controller_->Unregister( *this );
-        controller_ = 0;
-    }
+    if( !registered_ )
+        return;
+    controllers_.actions_.Unregister( *this );
+    registered_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC::RegisterIn
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void Param_ABC::RegisterIn( kernel::ActionController& controller )
+void Param_ABC::RegisterIn()
 {
-    controller.Register( *this );
-    controller_ = &controller;
+    if( registered_ )
+        return;
+    controllers_.actions_.Register( *this );
+    registered_ = true;
 }
 
 // -----------------------------------------------------------------------------

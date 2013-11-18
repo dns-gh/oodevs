@@ -52,7 +52,7 @@ public:
     virtual int GetIndex( Param_ABC* param ) const;
     virtual void SetParentList( ListParameterBase* parentList );
     virtual void SetName( const QString& name );
-    virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RegisterIn();
     virtual void RemoveFromController();
 
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;

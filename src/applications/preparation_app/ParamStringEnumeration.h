@@ -17,6 +17,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
         class ParamInterface_ABC;
     }
 }
@@ -36,7 +37,7 @@ class ParamStringEnumeration : public actions::gui::Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamStringEnumeration( QObject* parent, const actions::gui::ParamInterface_ABC& paramInterface, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values );
+             ParamStringEnumeration( const actions::gui::InterfaceBuilder_ABC& builder, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values );
     virtual ~ParamStringEnumeration();
     //@}
 

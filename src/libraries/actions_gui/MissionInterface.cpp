@@ -73,7 +73,6 @@ namespace
 MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
-    , controllers_( controllers )
     , config_( config )
     , entity_( controllers )
     , order_( 0 )
@@ -255,7 +254,7 @@ void MissionInterface::AddParameter( const QString& objectName, Param_ABC& param
     parameters_.push_back( &parameter );
     QWidget* widget = parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
     widgetToDelete_.push_back( widget );
-    parameter.RegisterIn( controllers_.actions_ );
+    parameter.RegisterIn();
 }
 
 // -----------------------------------------------------------------------------

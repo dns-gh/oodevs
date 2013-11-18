@@ -112,12 +112,6 @@ protected:
     virtual void InternalVisit( const actions::parameters::Entity< ConcreteEntity >& param );
     //@}
 
-protected:
-    //! @name Member data
-    //@{
-    kernel::Controller& controller_;
-    //@}
-
 private:
     //! @name Member data
     //@{
