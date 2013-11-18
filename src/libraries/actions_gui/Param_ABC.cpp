@@ -95,13 +95,7 @@ void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, gui:
 // -----------------------------------------------------------------------------
 bool Param_ABC::CheckValidity()
 {
-    if( IsChecked() && !InternalCheckValidity() )
-    {
-        if( group_ )
-            group_->Warn();
-        return false;
-    }
-    return true;
+    return !IsChecked() || InternalCheckValidity();
 }
 
 // -----------------------------------------------------------------------------

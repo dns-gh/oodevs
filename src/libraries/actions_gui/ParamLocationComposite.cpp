@@ -183,13 +183,7 @@ void ParamLocationComposite::InternalBuildInterface()
 // -----------------------------------------------------------------------------
 bool ParamLocationComposite::CheckValidity()
 {
-    if( IsChecked() && ( !selectedParam_ || !selectedParam_->CheckValidity() ) )
-    {
-        for( std::vector< QWidget* >::iterator it = widgets_.begin(); it != widgets_.end(); ++it )
-            static_cast< ::gui::RichGroupBox* >( *it )->Warn();
-        return false;
-    }
-    return true;
+    return !IsChecked() || ( selectedParam_ && selectedParam_->CheckValidity() );
 }
 
 // -----------------------------------------------------------------------------
