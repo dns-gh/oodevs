@@ -10,7 +10,7 @@
 #ifndef __LogisticsRequestsFuneralWidget_h_
 #define __LogisticsRequestsFuneralWidget_h_
 
-#include "LogisticConsignsWidget_ABC.h"
+#include "LogisticConsignsWidget.h"
 #include "gaming/LogFuneralConsign.h"
 #include <boost/noncopyable.hpp>
 

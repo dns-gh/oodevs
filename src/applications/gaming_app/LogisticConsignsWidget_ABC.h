@@ -17,7 +17,6 @@
 #include "gaming/Simulation.h"
 #include "gaming/LogisticsConsign_ABC.h"
 #include "LogisticsRequestsHistoryTable.h"
-#include <boost/bind.hpp>
 
 namespace kernel
 {
@@ -106,69 +105,6 @@ protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     bool needUpdating_;
     const LogisticsConsign_ABC* requestSelected_;
-    //@}
-};
-
-// =============================================================================
-/** @class  LogisticConsignsWidget
-    @brief  LogisticConsignsWidget
-*/
-// Created: MMC 2013-10-21
-// =============================================================================
-template< typename Extension, typename Request >
-class LogisticConsignsWidget : public LogisticConsignsWidget_ABC, 
-                               public tools::ElementObserver_ABC< Extension >,
-                               public tools::ElementObserver_ABC< Request >,
-                               public tools::ElementObserver_ABC< typename Request::History >
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-    LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-        const QString& filter, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, const QStringList& requestsHeader = QStringList() )
-        : LogisticConsignsWidget_ABC( parent, controllers, extractor, filter, profile, publisher, requestsHeader ) {}
-
-    ~LogisticConsignsWidget() {}
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void NotifyUpdated( const Extension& consigns )
-    {
-        if( selected_ && logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( *selected_, &consigns ) )
-            needUpdating_ = true;
-    }
-
-    virtual void NotifyUpdated( const Request& consign )
-    {
-        SendHistoryRequest( consign );
-        DisplayRequest( consign );
-    }
-
-    virtual void NotifyUpdated( const typename Request::History& history )
-    {
-        DisplayHistory( history );
-    }
-
-    virtual void DisplayRequests()
-    {
-        Purge();
-        if( !selected_ )
-            return;
-        std::set< const Request* > consigns;
-        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, [ &consigns ]( const kernel::Entity_ABC& entity ) {
-            const Extension* pConsigns = entity.Retrieve< Extension >();
-            if( pConsigns )
-            {
-                consigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
-                consigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
-            }
-        } );
-
-        for( auto it = consigns.begin(); it != consigns.end(); ++it )
-            DisplayRequest( **it );
-    }
     //@}
 };
 

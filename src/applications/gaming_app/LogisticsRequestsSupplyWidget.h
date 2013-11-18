@@ -10,9 +10,8 @@
 #ifndef __LogisticsRequestsSupplyWidget_h_
 #define __LogisticsRequestsSupplyWidget_h_
 
-#include "LogisticConsignsWidget_ABC.h"
+#include "LogisticConsignsWidget.h"
 #include "gaming/LogSupplyConsign.h"
-#include <boost/noncopyable.hpp>
 
 class LogSupplyConsigns;
 class LogisticsRequestsSupplyTable;
@@ -25,7 +24,6 @@ class Publisher_ABC;
 // Created: MMC 2013-09-16
 // =============================================================================
 class LogisticsRequestsSupplyWidget : public LogisticConsignsWidget< LogSupplyConsigns, LogSupplyConsign >
-                                    , private boost::noncopyable
 {
     Q_OBJECT
     
