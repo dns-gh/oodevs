@@ -620,14 +620,8 @@ void EventOrderWidget::Build( const gui::EventOrderViewState& state )
     targetGroupBox_->EnableStaticWarning( state.invalid_ );
     targetLabel_->EnableStaticWarning( state.invalid_ );
     missionCombo_->blockSignals( false );
-}
 
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::UpdateActions
-// Created: ABR 2013-11-14
-// -----------------------------------------------------------------------------
-void EventOrderWidget::UpdateActions()
-{
+    // Update actions
     UpdateTriggerAction();
     emit EventChanged();
 }

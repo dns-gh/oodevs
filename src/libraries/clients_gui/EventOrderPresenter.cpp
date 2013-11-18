@@ -233,7 +233,6 @@ void EventOrderPresenter::Select( E_MissionType type, const std::string& mission
 
     // Update the view
     view_.Build( state_ );
-    view_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------
@@ -374,7 +373,6 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::
 
     // Update the view
     view_.Build( state_ );
-    view_.UpdateActions();
 }
 
 // -----------------------------------------------------------------------------

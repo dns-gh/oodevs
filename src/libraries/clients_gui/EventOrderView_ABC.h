@@ -32,8 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void Build( const EventOrderViewState& state ) = 0;
-
-    virtual void UpdateActions() = 0;
     //@}
 };
 

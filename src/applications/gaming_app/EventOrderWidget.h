@@ -114,15 +114,13 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const Decisions_ABC& decisions );
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
+    virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
 
     //! @name EventOrderView_ABC implementation
     //@{
     virtual void Build( const gui::EventOrderViewState& state );
-    virtual void UpdateActions();
-    virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
-
 
     //! @name Helpers
     //@{
