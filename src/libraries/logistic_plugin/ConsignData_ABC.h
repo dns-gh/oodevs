@@ -46,7 +46,7 @@ public:
     LogisticPlugin::E_LogisticType GetType() const;
     int GetTick() const;
     std::string ToString() const;
-    const std::deque< ConsignState > GetHistory() const;
+    const std::deque< ConsignState >& GetHistory() const;
     //@}
 
 protected:

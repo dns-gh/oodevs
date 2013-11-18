@@ -73,7 +73,7 @@ ConsignState& ConsignData_ABC::PushState()
     return history_.back();
 }
 
-const std::deque< ConsignState > ConsignData_ABC::GetHistory() const
+const std::deque< ConsignState >& ConsignData_ABC::GetHistory() const
 {
     return history_;
 }
