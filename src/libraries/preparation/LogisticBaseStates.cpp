@@ -44,7 +44,7 @@ LogisticBaseStates::LogisticBaseStates( kernel::Controller& controller, kernel::
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates destructor
+// Name: LogisticBaseStates destructor
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 LogisticBaseStates::~LogisticBaseStates()
@@ -53,7 +53,7 @@ LogisticBaseStates::~LogisticBaseStates()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::CreateDictionary
+// Name: LogisticBaseStates::CreateDictionary
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
@@ -67,7 +67,7 @@ void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kern
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::Draw
+// Name: LogisticBaseStates::Draw
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
@@ -85,7 +85,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& , const gui::Viewport_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::ClearDotations
+// Name: LogisticBaseStates::ClearDotations
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::ClearDotations()
@@ -96,7 +96,7 @@ void LogisticBaseStates::ClearDotations()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::SetDotation
+// Name: LogisticBaseStates::SetDotation
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SetDotation( const kernel::DotationType& type, unsigned int quantity )
@@ -166,7 +166,7 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceStates::SetLogisticSuperior
+// Name: LogisticBaseStates::SetLogisticSuperior
 // Created: LGY 2011-10-12
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior )
