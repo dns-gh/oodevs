@@ -589,7 +589,7 @@ void Context::StartClient()
         return;
     const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ), url_.queryItemValue( "tcp" ).toInt(),
-        Get< int >( session_, "timeline.port" ), Get< bool >( session_, "mapnik" ) );
+        Get< int >( session_, "timeline.port" ), Get< bool >( session_, "mapnik.enabled" ) );
     std::vector< std::string > args = boost::assign::list_of
         ( MakeOption( "models-dir", Utf8( model / "data/models" ) ) )
         ( MakeOption( "terrains-dir", Utf8( terrain / "data/terrains" ) ) )

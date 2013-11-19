@@ -259,6 +259,8 @@ validate_settings = (ui, is_default) ->
         return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 0, Number.MAX_VALUE, "Invalid"
         next = data.timeline = {}
         next.enabled = get_ui_option ui.find "#timeline_enabled"
+        next = data.mapnik = {}
+        next.enabled = get_ui_option ui.find "#mapnik_enabled"
 
     if has_element ui, "#tab_logs"
         next = data.logs = {}
@@ -290,7 +292,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline", "logs", "mapnik"]
 
         if method == "create"
             data = select_attributes model.attributes, _.union cfg_attributes, ["exercise"]
@@ -793,6 +795,8 @@ default_session_settings =
     timeline:
         enabled: false
         port:    50066
+    mapnik:
+        enabled: false
 
 load_default_session_settings = ->
     data = $.cookie "default_session_settings"
