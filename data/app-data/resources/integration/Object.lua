@@ -16,16 +16,13 @@ integration.isObjectRemoved = function( object )
     return not DEC_IsValidKnowledgeObject( object.source )
 end
 
+--- Returns the nearest position to the border of the provided object, at a specified distance
+-- @param object The knowledge of the object
+-- @param distance Optional, the minimal distance in meters between the returned position and the border of the object (20 by default)
 integration.getObjectNearestBorderPosition = function( object, distance )
-    if distance == nil then
-        distance = 20 -- meters
-    end
-    object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
-    if object.getObjectNearestBorderPosition == nil then
-        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , distance )
-        object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
-    end
-    return object.getObjectNearestBorderPosition
+    distance = distance or 20 -- meters
+    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , distance )
+    return DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
 end
 
 integration.getObjectNearestPositionOnBorder = function( object )
@@ -80,18 +77,19 @@ integration.isTrafficable = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "trafficability" )
 end
 
+--- Returns position around the provided object
+-- @param object The knowledge of an object
 integration.getPositionsAroundObject = function( object )
+    local CreateKnowledge = CreateKnowledge
+    local typePoint = integration.ontology.types.point
+    
     local result = {}
-    object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
-    if object.getObjectNearestBorderPosition == nil then
-        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
-        object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
-    end
-    result[ 1 ] = CreateKnowledge( integration.ontology.types.point, object.getObjectNearestBorderPosition )
     local simPoints = object:getPositions() 
     for i = 1, #simPoints do
-        result[ #result + 1 ] = CreateKnowledge( integration.ontology.types.point, simPoints[i] )
+        result[i] = CreateKnowledge( typePoint, simPoints[i] )
     end
+    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
+    result[ #result + 1 ] = CreateKnowledge( typePoint, DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation ) )
     return result
 end
 
