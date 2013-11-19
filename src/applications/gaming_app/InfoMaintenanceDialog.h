@@ -40,8 +40,8 @@ class InfoMaintenanceDialog : public InfoDialog< kernel::MaintenanceStates_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+             InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
+                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     virtual ~InfoMaintenanceDialog();
     //@}
 

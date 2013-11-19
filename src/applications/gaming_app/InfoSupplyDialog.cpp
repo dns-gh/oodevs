@@ -40,7 +40,7 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
 
     QWidget* statusWidget = new QWidget();
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
-    statusLayout->addWidget( new SupplyStatusWidget( this, controllers, factory ) );
+    statusLayout->addWidget( new SupplyStatusWidget( this, controllers ) );
 
     supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
     tabs_->addTab( new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, publisher )
@@ -48,7 +48,7 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
     tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );
-    tabs_->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
+    tabs_->addTab( statusWidget, tools::translate( "InfoSupplyDialog", "Chain status" ) );
     setMinimumWidth( 520 );
 }
 

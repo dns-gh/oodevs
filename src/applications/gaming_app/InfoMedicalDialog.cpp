@@ -23,8 +23,8 @@
 // Name: InfoMedicalDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
+                                      gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : InfoDialog< MedicalStates >( parent, controllers, tools::translate( "InfoMedicalDialog", "Medical system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -37,12 +37,12 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
 
     QWidget* statusWidget = new QWidget();
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
-    statusLayout->addWidget( new MedicalStatusWidget( tabs, controllers, factory ) );
+    statusLayout->addWidget( new MedicalStatusWidget( tabs, controllers ) );
 
     tabs->addTab( new LogisticsRequestsMedicalWidget( tabs, controllers, extractor, profile, publisher )
-        , tools::translate( "InfoMedicalDialog", "Instructions" ) );    
+        , tools::translate( "InfoMedicalDialog", "Instructions" ) );
     tabs->addTab( ambulancesDoctorsWidget, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
-    tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
+    tabs->addTab( statusWidget, tools::translate( "InfoMedicalDialog", "Chain status" ) );
     setMinimumWidth( 450 );
 }
 

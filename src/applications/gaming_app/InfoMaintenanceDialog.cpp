@@ -22,8 +22,8 @@
 // Name: InfoMaintenanceDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                            , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
+                                              gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -35,12 +35,12 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
 
     QWidget* statusWidget = new QWidget();
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
-    statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers, factory ) );
+    statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers ) );
 
     tabs->addTab( new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, publisher )
         , tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
-    tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
+    tabs->addTab( statusWidget, tools::translate( "InfoMaintenanceDialog", "Chain status" ) );
     setMinimumWidth( 420 );
 }
 

@@ -1127,6 +1127,10 @@ Reason: %3
         <source>Equipment availabilities</source>
         <translation>Equipment availabilities</translation>
     </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Supply system state</translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -1141,6 +1145,10 @@ Reason: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Equipment availabilities</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Supply system state</translation>
     </message>
 </context>
 <context>
@@ -1221,6 +1229,10 @@ Reason: %3
     <message>
         <source>Instructions</source>
         <translation type="unfinished">Requests</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Supply system state</translation>
     </message>
 </context>
 <context>
@@ -3037,13 +3049,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Logistic superior</source>
         <translation>Logistic superior</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Chain status</source>
-        <translation>Supply system state</translation>
     </message>
 </context>
 <context>

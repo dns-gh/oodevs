@@ -48,7 +48,7 @@ LogisticsRequestsDetailsTable::LogisticsRequestsDetailsTable( const QString& obj
     setFrameStyle( QFrame::NoFrame );
     setFocusPolicy( Qt::NoFocus );
     verticalHeader()->setDefaultSectionSize( 22 );
-    setFixedHeight( dataModel_->rowCount() * rowHeight( 0 ) + ( frameWidth() * 2 ) );
+    setFixedHeight( dataModel_->rowCount() * rowHeight( 0 ) + frameWidth() * 2 );
 
     Purge();
 }

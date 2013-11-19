@@ -105,11 +105,11 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "" )
-                .Display( tools::translate( "MaintenanceStates", "System status" ), bChainEnabled_ ?
-                          tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
-                .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) )
-                .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
-                .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
+        .Display( tools::translate( "MaintenanceStates", "System status" ),
+            tools::translate( "MaintenanceStates", bChainEnabled_ ? "Enabled" : "Disabled" ) )
+        .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) )
+        .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
+        .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -126,9 +126,9 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );
     if( pRealObject )
-        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), pRealObject );
+        displayer.Display( tools::translate( "ObjectKnowledgePanel", "Known objects" ), pRealObject );
     else
-        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), id_ );
+        displayer.Display( tools::translate( "ObjectKnowledgePanel", "Known objects" ), id_ );
 }
 
 // -----------------------------------------------------------------------------

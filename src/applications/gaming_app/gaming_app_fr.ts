@@ -1129,6 +1129,10 @@ Raison: %3
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
     </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -1143,6 +1147,10 @@ Raison: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1223,6 +1231,10 @@ Raison: %3
     <message>
         <source>Instructions</source>
         <translation>Consignes</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -3051,13 +3063,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Logistic superior</source>
         <translation>Supérieur logistique</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Chain status</source>
-        <translation>Etat de la chaîne ravitaillement</translation>
     </message>
 </context>
 <context>
