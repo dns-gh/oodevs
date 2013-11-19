@@ -47,6 +47,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class EventAction;
     class Mission;
     class OrderType;
     class Population_ABC;
@@ -61,7 +62,6 @@ namespace tools
 }
 
 class Decisions_ABC;
-class EventAction;
 class Model;
 class Decisions_ABC;
 class MissionParameters;
@@ -99,7 +99,7 @@ private:
     //@{
     virtual void Purge();
     virtual void Reset();
-    virtual void Fill( const Event& event );
+    virtual void Fill( const kernel::Event& event );
     virtual void Commit( timeline::Event& event );
     virtual void Trigger();
     virtual bool IsValid() const;

@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "EventBottomWidget.h"
 #include "moc_EventBottomWidget.cpp"
-#include "gaming/Event.h"
+#include "clients_kernel/Event.h"
 #include <timeline/api.h>
 
 namespace
@@ -68,7 +68,7 @@ EventBottomWidget::~EventBottomWidget()
 // Name: EventBottomWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventBottomWidget::Fill( const Event& event )
+void EventBottomWidget::Fill( const kernel::Event& event )
 {
     triggerButton_->setToolTip( event.GetEvent().done ? tr( "Copy and trigger" ) : tr( "Trigger" ) );
     if( detailAction_ )

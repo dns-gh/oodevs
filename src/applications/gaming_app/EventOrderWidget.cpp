@@ -25,15 +25,16 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
+#include "clients_kernel/EventAction.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/TimelinePublisher.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
-#include "gaming/EventAction.h"
 #include "gaming/Model.h"
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
@@ -179,9 +180,9 @@ void EventOrderWidget::Reset()
 // Name: EventOrderWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Fill( const Event& event )
+void EventOrderWidget::Fill( const kernel::Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
+    const kernel::EventAction& eventAction = static_cast< const kernel::EventAction& >( event );
     const actions::Action_ABC* action = eventAction.GetAction();
     if( action != 0 )
     {

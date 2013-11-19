@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "EventDetailWidget.h"
-#include "gaming/Event.h"
+#include "clients_kernel/Event.h"
 #include "protocol/Protocol.h"
 #include <timeline/api.h>
 #include <tools/Base64Converters.h>
@@ -83,7 +83,7 @@ EventDetailWidget::~EventDetailWidget()
 // Name: EventDetailWidget::Fill
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void EventDetailWidget::Fill( const Event& event )
+void EventDetailWidget::Fill( const kernel::Event& event )
 {
     const timeline::Event& timelineEvent = event.GetEvent();
     uuid_->setText( QString::fromStdString( timelineEvent.uuid ) );

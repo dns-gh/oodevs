@@ -15,12 +15,15 @@ namespace gui
     class Viewport_ABC;
 }
 
+namespace kernel
+{
+    class Event;
+}
+
 namespace timeline
 {
     struct Event;
 }
-
-class Event;
 
 // =============================================================================
 /** @class  EventWidget_ABC
@@ -50,7 +53,7 @@ public:
 
     //! @name Abstract operations
     //@{
-    virtual void Fill( const Event& event ) = 0;
+    virtual void Fill( const kernel::Event& event ) = 0;
     virtual void Commit( timeline::Event& event ) = 0;
     //@}
 

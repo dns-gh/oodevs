@@ -7,19 +7,21 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "EventFactory.h"
+#include "Controller.h"
+#include "Controllers.h"
 #include "EventAction.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Tr.h"
 #include <timeline/api.h>
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: EventFactory constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventFactory::EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers )
+EventFactory::EventFactory( actions::ActionsModel& actionsModel, Controllers& controllers )
     : actionsModel_( actionsModel )
     , controllers_( controllers )
 {

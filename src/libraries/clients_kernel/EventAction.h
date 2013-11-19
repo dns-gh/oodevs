@@ -22,7 +22,6 @@ namespace actions
 namespace kernel
 {
     class Controllers;
-}
 
 // =============================================================================
 /** @class  EventAction
@@ -70,5 +69,7 @@ private:
     E_MissionType missionType_;
     //@}
 };
+
+} //! namespace kernel
 
 #endif // __EventAction_h_

@@ -22,9 +22,12 @@ namespace kernel
 {
     class AgentKnowledgeConverter_ABC;
     class Controllers;
+    class EventFactory;
+    class EventsModel;
     class ObjectKnowledgeConverter_ABC;
     class Profile_ABC;
     class SymbolFactory;
+    class TimelinePublisher;
     class Workers;
 }
 
@@ -41,8 +44,6 @@ class AgentKnowledgeFactory;
 class AgentsModel;
 class DrawingFactory;
 class DrawingsModel;
-class EventFactory;
-class EventsModel;
 class FireFactory;
 class FireResultFactory;
 class FiresModel;
@@ -68,7 +69,6 @@ class SurfaceFactory;
 class TacticalLineFactory;
 class TeamFactory_ABC;
 class TeamsModel;
-class TimelinePublisher;
 class UrbanBlockDetectionMap;
 class UrbanKnowledgeFactory;
 class UserProfileFactory_ABC;
@@ -159,9 +159,9 @@ public:
     SurfaceFactory& surfaceFactory_;
     FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
-    const EventFactory& eventFactory_;
-    EventsModel& events_;
-    TimelinePublisher& timelinePublisher_;
+    const kernel::EventFactory& eventFactory_;
+    kernel::EventsModel& events_;
+    kernel::TimelinePublisher& timelinePublisher_;
     //@}
 };
 

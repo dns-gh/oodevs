@@ -37,6 +37,9 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class Event;
+    class EventAction;
+    class EventFactory;
     class Profile_ABC;
     class Time_ABC;
 }
@@ -51,10 +54,7 @@ namespace tools
     class ExerciseConfig;
 }
 
-class Event;
-class EventAction;
 class EventBottomWidget;
-class EventFactory;
 class EventTopWidget;
 class EventWidget_ABC;
 class Model;
@@ -66,10 +66,10 @@ class Model;
 // Created: ABR 2013-07-02
 // =============================================================================
 class EventDockWidget : public gui::RichDockWidget
-                      , public kernel::ContextMenuObserver_ABC< Event >
-                      , public tools::ElementObserver_ABC< Event >
-                      , public tools::SelectionObserver< Event >
-                      , public kernel::ActivationObserver_ABC< Event >
+                      , public kernel::ContextMenuObserver_ABC< kernel::Event >
+                      , public tools::ElementObserver_ABC< kernel::Event >
+                      , public tools::SelectionObserver< kernel::Event >
+                      , public kernel::ActivationObserver_ABC< kernel::Event >
 {
     Q_OBJECT
 
@@ -97,16 +97,16 @@ private:
     void SetContentVisible( bool visible );
     void SetEditing( bool editing );
     void Configure( E_EventTypes type, bool editing );
-    void StartEdition( const Event& event );
+    void StartEdition( const kernel::Event& event );
     //@}
 
     //! @name Observers implementation
     //@{
-    virtual void NotifyActivated( const Event& event );
-    virtual void NotifySelected( const Event* event );
-    virtual void NotifyContextMenu( const Event& event, kernel::ContextMenu& menu );
-    virtual void NotifyDeleted( const Event& event );
-    virtual void NotifyUpdated( const Event& event );
+    virtual void NotifyActivated( const kernel::Event& event );
+    virtual void NotifySelected( const kernel::Event* event );
+    virtual void NotifyContextMenu( const kernel::Event& event, kernel::ContextMenu& menu );
+    virtual void NotifyDeleted( const kernel::Event& event );
+    virtual void NotifyUpdated( const kernel::Event& event );
     //@}
 
     //! @name RichDockWidget implementation
@@ -143,7 +143,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    const EventFactory& factory_;
+    const kernel::EventFactory& factory_;
     const kernel::Time_ABC& simulation_;
     QWidget* mainWidget_;
     QStackedWidget* stack_;
@@ -154,8 +154,8 @@ private:
     QGroupBox* ackBox_;
     QLabel* acknowledgedLabel_;
     int lastCurrentIndex_;
-    std::auto_ptr< Event > event_;
-    kernel::SafePointer< Event > selected_;
+    std::auto_ptr< kernel::Event > event_;
+    kernel::SafePointer< kernel::Event > selected_;
     bool editing_;
     E_EventTypes lastOrder_;
     //@}

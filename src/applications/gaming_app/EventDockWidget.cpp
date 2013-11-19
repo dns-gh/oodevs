@@ -20,12 +20,10 @@
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Tools.h"
+#include "clients_kernel/Event.h"
+#include "clients_kernel/EventFactory.h"
 #include "clients_kernel/Time_ABC.h"
-
-#include "gaming/Event.h"
-#include "gaming/EventAction.h"
-#include "gaming/EventFactory.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 #include "actions/Action_ABC.h"
@@ -170,7 +168,7 @@ void EventDockWidget::StartCreation( E_EventTypes type, const QDateTime& dateTim
 // Name: EventDockWidget::StartEdition
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDockWidget::StartEdition( const Event& event )
+void EventDockWidget::StartEdition( const kernel::Event& event )
 {
     event_.reset( event.Clone() );
     Configure( event_->GetType(), true );
@@ -377,7 +375,7 @@ void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 // Name: EventDockWidget::NotifyActivated
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyActivated( const Event& event )
+void EventDockWidget::NotifyActivated( const kernel::Event& event )
 {
     StartEdition( event );
     ShowWidget( this );
@@ -387,7 +385,7 @@ void EventDockWidget::NotifyActivated( const Event& event )
 // Name: EventDockWidget::NotifySelected
 // Created: BAX 2013-09-17
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifySelected( const Event* event )
+void EventDockWidget::NotifySelected( const kernel::Event* event )
 {
     if( event )
         StartEdition( *event );
@@ -397,7 +395,7 @@ void EventDockWidget::NotifySelected( const Event* event )
 // Name: EventDockWidget::NotifyContextMenu
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyContextMenu( const Event& event, kernel::ContextMenu& menu )
+void EventDockWidget::NotifyContextMenu( const kernel::Event& event, kernel::ContextMenu& menu )
 {
     selected_ = &event;
     menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
@@ -408,7 +406,7 @@ void EventDockWidget::NotifyContextMenu( const Event& event, kernel::ContextMenu
 // Name: EventDockWidget::NotifyDeleted
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyDeleted( const Event& event )
+void EventDockWidget::NotifyDeleted( const kernel::Event& event )
 {
     if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
         Purge();
@@ -418,7 +416,7 @@ void EventDockWidget::NotifyDeleted( const Event& event )
 // Name: EventDockWidget::NotifyUpdated
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyUpdated( const Event& event )
+void EventDockWidget::NotifyUpdated( const kernel::Event& event )
 {
     if( event_.get() && event_->GetEvent().uuid == event.GetEvent().uuid )
         StartEdition( event );

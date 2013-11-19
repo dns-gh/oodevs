@@ -17,17 +17,16 @@ namespace actions
     class ActionsModel;
 }
 
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace timeline
 {
     struct Event;
 }
 
-class Event;
+namespace kernel
+{
+    class Controller;
+    class Controllers;
+    class Event;
 
 // =============================================================================
 /** @class  EventFactory
@@ -41,7 +40,7 @@ class EventFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers );
+             EventFactory( actions::ActionsModel& actionsModel, Controllers& controllers );
     virtual ~EventFactory();
     //@}
 
@@ -55,8 +54,10 @@ private:
     //! @name Member data
     //@{
     actions::ActionsModel& actionsModel_;
-    kernel::Controllers& controllers_;
+    Controllers& controllers_;
     //@}
 };
+
+} //! namespace kernel
 
 #endif // __EventFactory_h_

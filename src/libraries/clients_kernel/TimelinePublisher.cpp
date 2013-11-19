@@ -7,9 +7,11 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "TimelinePublisher.h"
 #include "protocol/Protocol.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePublisher constructor

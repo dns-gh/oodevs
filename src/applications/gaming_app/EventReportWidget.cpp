@@ -35,7 +35,7 @@ EventReportWidget::~EventReportWidget()
 // Name: EventReportWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventReportWidget::Fill( const Event& /*event*/ )
+void EventReportWidget::Fill( const kernel::Event& /*event*/ )
 {
     // TODO
 }

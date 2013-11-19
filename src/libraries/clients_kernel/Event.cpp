@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "Event.h"
-#include "clients_kernel/ActionController.h"
+#include "ActionController.h"
 #include <timeline/api.h>
 
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Event constructor
@@ -62,6 +63,17 @@ Event* Event::Clone() const
 
 // -----------------------------------------------------------------------------
 // Name: Event::Update
+// Created: ABR 2013-11-20
+// -----------------------------------------------------------------------------
+void Event::Update()
+{
+    if( !event_ )
+        throw MASA_EXCEPTION( "Event not set");
+    Update( *event_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::Update
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
 void Event::Update( const timeline::Event& event )
@@ -75,7 +87,7 @@ void Event::Update( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 QString Event::GetName() const
 {
-    if( event_.get() )
+    if( event_ )
         return QString::fromStdString( event_->name );
     return "";
 }
@@ -86,7 +98,7 @@ QString Event::GetName() const
 // -----------------------------------------------------------------------------
 QString Event::GetTooltip() const
 {
-    if( event_.get() )
+    if( event_ )
         return QString::fromStdString( event_->name );
     return "";
 }
@@ -95,7 +107,7 @@ QString Event::GetTooltip() const
 // Name: Event::Select
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::Select( kernel::ActionController& eventController, kernel::ActionController& /*actionController*/ ) const
+void Event::Select( ActionController& eventController, ActionController& /*actionController*/ ) const
 {
     eventController.Select( static_cast< const Event& >( *this ) );
 }
@@ -104,7 +116,7 @@ void Event::Select( kernel::ActionController& eventController, kernel::ActionCon
 // Name: Event::Select
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::Select( kernel::ActionController& /*controller*/ ) const
+void Event::Select( ActionController& /*controller*/ ) const
 {
     // NOTHING
 }
@@ -113,7 +125,7 @@ void Event::Select( kernel::ActionController& /*controller*/ ) const
 // Name: Event::MultipleSelect
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
+void Event::MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const
 {
     controller.MultipleSelect( elements );
 }
@@ -122,7 +134,7 @@ void Event::MultipleSelect( kernel::ActionController& controller, const std::vec
 // Name: Event::ContextMenu
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+void Event::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
     controller.ContextMenu( *this, where );
 }
@@ -131,7 +143,7 @@ void Event::ContextMenu( kernel::ActionController& controller, const QPoint& whe
 // Name: Event::Activate
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::Activate( kernel::ActionController& controller ) const
+void Event::Activate( ActionController& controller ) const
 {
     controller.Activate( *this );
 }
@@ -140,7 +152,7 @@ void Event::Activate( kernel::ActionController& controller ) const
 // Name: Event::OverFly
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void Event::OverFly( kernel::ActionController& controller ) const
+void Event::OverFly( ActionController& controller ) const
 {
     controller.OverFly( *this );
 }
