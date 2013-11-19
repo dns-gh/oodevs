@@ -47,11 +47,6 @@
   </FontSet>
   <FontSet name="bold-fonts">
     <Font face-name="DejaVu Sans Bold"/>
-    <Font face-name="unifont Medium"/>
-  </FontSet>
-  <FontSet name="fontset-0">
-    <Font face-name="DejaVu Sans Book"/>
-    <Font face-name="unifont Medium"/>
   </FontSet>
 
   <Style name="water">
@@ -136,7 +131,7 @@
   <Style name="urban-text">
     <Rule>
       &maxscale_zoom14;
-      <TextSymbolizer size="14" fill="#777777" fontset-name="fontset-0" halo-radius="1" wrap-width="20" ><![CDATA[[NAME]]]></TextSymbolizer>
+      <TextSymbolizer size="14" fill="#777777" fontset-name="book-fonts" halo-radius="1" wrap-width="20" ><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
   </Style>
 
