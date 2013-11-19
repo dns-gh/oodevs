@@ -57,6 +57,8 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
 {
+    clients_->RegisterMessage( *this, &PluginFactory::Receive );
+
     // Plugins are registered in a precise order:
     // - DispatcherPlugin forwards to clients
     // - Model is used by other plugins and also triggers events on Entity_ABC::Update
@@ -224,4 +226,41 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
     {
         MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "', unknown reason" );
     }
+}
+
+namespace
+{
+
+// A RewritingPublisher_ABC rewriting output messages client identifier and
+// context number.
+class UnicastPublisher : public RewritingPublisher_ABC
+{
+public:
+    UnicastPublisher( ClientPublisher_ABC& publisher, int32_t clientId, int32_t context )
+        : publisher_( publisher )
+        , clientId_( clientId )
+        , context_( context )
+    {
+    }
+
+    void Send( sword::SimToClient& message )
+    {
+        message.set_client_id( clientId_ );
+        message.set_context( context_ );
+        publisher_.Send( message );
+    }
+
+private:
+    ClientPublisher_ABC& publisher_;
+    int32_t clientId_;
+    int32_t context_;
+};
+
+}  // namespace
+
+void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& msg )
+{
+    UnicastPublisher unicaster( rights_->GetPublisher( link ),
+            rights_->GetClientID( link ), msg.context() );
+    handler_.HandleClientToSim( msg, unicaster, *clients_ );
 }

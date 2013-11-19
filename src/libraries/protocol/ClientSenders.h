@@ -90,6 +90,7 @@ namespace client
     GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, KnowledgeGroupMagicActionAck     , knowledge_group_magic_action_ack          )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupUpdate                           , knowledge_group_update                    )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupUpdateAck                        , knowledge_group_update_ack                )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, LogisticHistoryAck               , logistic_history_ack                      )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogMaintenanceHandlingCreation                 , log_maintenance_handling_creation         )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogMaintenanceHandlingDestruction              , log_maintenance_handling_destruction      )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogMaintenanceHandlingUpdate                   , log_maintenance_handling_update           )

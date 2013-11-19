@@ -17,8 +17,15 @@
 namespace kernel
 {
     class Controllers;
-    class DisplayExtractor_ABC;
+    class Profile_ABC;
 }
+
+namespace gui
+{
+    class DisplayExtractor;
+}
+
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  InfoFuneralDialog
@@ -34,7 +41,8 @@ class InfoFuneralDialog : public InfoDialog_Base
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
+             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers
+                              , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     virtual ~InfoFuneralDialog();
     //@}
 

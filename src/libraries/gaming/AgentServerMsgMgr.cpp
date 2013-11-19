@@ -564,6 +564,55 @@ void AgentServerMsgMgr::OnReceiveLogSupplyQuotas( const sword::LogSupplyQuotas& 
         GetModel().teams_.GetFormation( message.supplied().formation().id() ).Update( message );
 }
 
+namespace
+{
+
+void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
+    const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& states )
+{
+    if( start >= end )
+        return;
+    const auto& s = states.Get( start );
+    const auto id = s.request().id();
+    switch( s.type() )
+    {
+        case sword::log_funeral:
+            model.GetFuneralConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_maintenance:
+            model.GetMaintenanceConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_medical:
+            model.GetMedicalConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_supply:
+            model.GetSupplyConsign( id ).UpdateHistory( start, end, states );
+            break;
+    }
+}
+
+}  // namespace
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveLogHistoryResponse
+// Created: MMC 2013-09-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistoryAck& message )
+{
+    // Assume states are sorted by ascending (request, state)
+    auto& model = GetModel().logistics_;
+    int i = 0, j;
+    for( j = 0; j < message.states().size(); ++j )
+    {
+        if( message.states( i ).request().id() == message.states( j ).request().id() )
+            continue;
+        UpdateLogisticHistory( model, i, j, message.states() );
+        i = j;
+    }
+    if( i != j )
+        UpdateLogisticHistory( model, i, j, message.states() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
@@ -2014,6 +2063,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
     {
         // unused
     }
+    else if( wrapper.message().has_logistic_history_ack() )
+        OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack() );
     else
         UnhandledMessage( &wrapper.message() );
 }

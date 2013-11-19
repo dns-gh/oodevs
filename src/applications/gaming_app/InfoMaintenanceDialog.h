@@ -17,13 +17,16 @@
 namespace kernel
 {
     class Controllers;
-    class DisplayExtractor_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
 {
     class ItemFactory_ABC;
+    class DisplayExtractor;
 }
+
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  InfoMaintenanceDialog
@@ -37,7 +40,8 @@ class InfoMaintenanceDialog : public InfoDialog< kernel::MaintenanceStates_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
+             InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     virtual ~InfoMaintenanceDialog();
     //@}
 

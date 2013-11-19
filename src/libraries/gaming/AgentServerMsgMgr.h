@@ -99,6 +99,7 @@ namespace sword
     class LimitUpdate;
     class LimitUpdateRequestAck;
     class Listener;
+    class LogisticHistoryAck;
     class LogMaintenanceHandlingCreation;
     class LogMaintenanceHandlingDestruction;
     class LogMaintenanceHandlingUpdate;
@@ -355,6 +356,9 @@ private:
     void OnReceiveLogFuneralHandlingCreation          ( const sword::LogFuneralHandlingCreation&      message );
     void OnReceiveLogFuneralHandlingDestruction       ( const sword::LogFuneralHandlingDestruction&   message );
     void OnReceiveLogFuneralHandlingUpdate            ( const sword::LogFuneralHandlingUpdate&        message );
+
+    // Log
+    void OnReceiveLogisticHistoryAck         ( const sword::LogisticHistoryAck& message );
 
     // Limas / Limits
     void OnReceiveLimitCreationRequestAck    ( const sword::LimitCreationRequestAck&    message);

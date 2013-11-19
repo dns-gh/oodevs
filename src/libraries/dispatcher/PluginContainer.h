@@ -39,6 +39,8 @@ public:
     virtual void Update();
     virtual void Close();
     virtual bool Filter( const sword::SimToClient& message ) const;
+    virtual bool HandleClientToSim( const sword::ClientToSim&, RewritingPublisher_ABC&,
+            ClientPublisher_ABC& );
     //@}
 
 private:

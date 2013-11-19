@@ -10,7 +10,7 @@
 #ifndef __LogSupplyConsign_h_
 #define __LogSupplyConsign_h_
 
-#include "clients_gui/Drawable_ABC.h"
+#include "LogisticsConsign_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Types.h"
 #include <tools/Resolver.h>
@@ -37,7 +37,6 @@ namespace sword
 }
 
 class Simulation;
-class LogConsignDisplayer_ABC;
 
 // =============================================================================
 /** @class  LogSupplyConsign
@@ -47,7 +46,7 @@ class LogConsignDisplayer_ABC;
 // $$$$ AGE 2006-04-21: factorisations entre types de consignes
 // =============================================================================
 class LogSupplyConsign : public tools::Resolver< SupplyRecipientResourcesRequest >
-                       , public gui::Drawable_ABC
+                       , public LogisticsConsign_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -58,16 +57,27 @@ public:
     virtual ~LogSupplyConsign();
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
     void Update( const sword::LogSupplyHandlingUpdate& message );
-    void Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    unsigned int GetId() const;
-    bool RefersToAgent( unsigned int id ) const;
+    virtual bool RefersToAgent( unsigned int id ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const kernel::Agent_ABC* GetConsumer() const;
+    virtual const kernel::Entity_ABC* GetHandler() const;
+    const kernel::Agent_ABC* GetConvoying() const;
+    const kernel::Entity_ABC* GetProviding() const;
+    E_LogSupplyHandlingStatus GetStatus() const;
+    virtual QString GetStatusDisplay() const;
+    virtual QString GetStatusDisplay( int status ) const;
+    virtual QString GetCurrentStartedTime() const;
     //@}
 
 private:
+    virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
     //! @name Copy/Assignment
     //@{
     LogSupplyConsign( const LogSupplyConsign& );
@@ -83,18 +93,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
-    const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    const Simulation& simulation_;
-    unsigned int nID_;
     kernel::SafePointer< kernel::Entity_ABC > pLogHandlingEntity_;
     kernel::SafePointer< kernel::Agent_ABC > pPionLogConvoying_;
     kernel::SafePointer< kernel::Entity_ABC > pLogProvidingConvoyResourcesEntity_;
     E_LogSupplyHandlingStatus nState_;
-    unsigned int currentStateEndTick_;
     //@}
 };
 

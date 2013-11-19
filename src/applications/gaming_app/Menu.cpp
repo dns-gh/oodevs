@@ -27,6 +27,9 @@
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichToolBar.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
+#include "gaming/AgentServerMsgMgr.h"
+#include "gaming/Network.h"
+#include "gaming/Profile.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
 #include <tools/VersionHelper.h>
