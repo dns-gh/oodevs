@@ -470,6 +470,16 @@ ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
     T_ConverterMissionType( "", "", (E_MissionType)-1 )
 };
 
+ENT_Tr::T_ConverterEventDockModes ENT_Tr::EventDockModesConverter_[] =
+{
+    T_ConverterEventDockModes( "none",              QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),           eEventDockModes_None ),
+    T_ConverterEventDockModes( "display-triggered", QT_TRANSLATE_NOOP( "ENT_Tr", "Display triggered" ), eEventDockModes_DisplayTriggered ),
+    T_ConverterEventDockModes( "edit-triggered",    QT_TRANSLATE_NOOP( "ENT_Tr", "Edit triggered" ),    eEventDockModes_EditTriggered ),
+    T_ConverterEventDockModes( "edit-planned",      QT_TRANSLATE_NOOP( "ENT_Tr", "Edit planned" ),      eEventDockModes_EditPlanned ),
+    T_ConverterEventDockModes( "create",            QT_TRANSLATE_NOOP( "ENT_Tr", "Create new" ),        eEventDockModes_Create ),
+    T_ConverterEventDockModes( "", "", (E_EventDockModes)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -516,6 +526,7 @@ void ENT_Tr::InitTranslations()
     InitTr( LayerTypesConverter_, "ENT_Tr" );
     InitTr( EventTypesConverter_, "ENT_Tr" );
     InitTr( MissionTypeConverter_, "ENT_Tr" );
+    InitTr( EventDockModesConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -878,6 +889,15 @@ const std::string& ENT_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conve
     return ENT_Tr::InverseFindInConverter( MissionTypeConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromEventDockModes
+// Created: ABR 2013-11-19
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromEventDockModes( E_EventDockModes nValue, E_Conversion nConverterType /* = eToTr */ )
+{
+    return ENT_Tr::InverseFindInConverter( EventDockModesConverter_, nValue, nConverterType );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1236,4 +1256,13 @@ E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversio
 E_MissionType ENT_Tr::ConvertToMissionType( const std::string& strName, E_Conversion mode )
 {
     return ENT_Tr::FindInConverter( MissionTypeConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToEventDockModes
+// Created: ABR 2013-11-19
+// -----------------------------------------------------------------------------
+E_EventDockModes ENT_Tr::ConvertToEventDockModes( const std::string& strName, E_Conversion mode /* = eToTr */ )
+{
+    return ENT_Tr::FindInConverter( EventDockModesConverter_, strName, mode );
 }

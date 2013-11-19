@@ -66,6 +66,7 @@ public:
     static const std::string& ConvertFromLayerType( E_LayerTypes, E_Conversion = eToTr );
     static const std::string& ConvertFromEventType( E_EventTypes, E_Conversion = eToTr );
     static const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
+    static const std::string& ConvertFromEventDockModes( E_EventDockModes, E_Conversion = eToTr );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
@@ -108,6 +109,7 @@ public:
     static E_LayerTypes ConvertToLayerType( const std::string& );
     static E_EventTypes ConvertToEventType( const std::string&, E_Conversion = eToTr );
     static E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );
+    static E_EventDockModes ConvertToEventDockModes( const std::string&, E_Conversion = eToTr );
 
 private:
     // Typedefs
@@ -151,6 +153,7 @@ private:
     typedef ENT_Tr::converter< E_LayerTypes > T_ConverterLayerTypes;
     typedef ENT_Tr::converter< E_EventTypes > T_ConverterEventTypes;
     typedef ENT_Tr::converter< E_MissionType > T_ConverterMissionType;
+    typedef ENT_Tr::converter< E_EventDockModes > T_ConverterEventDockModes;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
@@ -193,6 +196,7 @@ private:
     static T_ConverterLayerTypes LayerTypesConverter_ [];
     static T_ConverterEventTypes EventTypesConverter_ [];
     static T_ConverterMissionType MissionTypeConverter_[];
+    static T_ConverterEventDockModes EventDockModesConverter_[]; 
 };
 
 #endif // __ENT_Tr_Gen_h_
