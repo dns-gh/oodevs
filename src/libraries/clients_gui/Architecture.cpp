@@ -52,6 +52,21 @@ Architecture::~Architecture()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Architecture::IsDefault
+// Created: JSR 2012-09-04
+// -----------------------------------------------------------------------------
+bool Architecture::IsDefault() const
+{
+    tools::Iterator< const MaterialCompositionType& > itMaterial = static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
+    assert( itMaterial.HasMoreElements() );
+    const MaterialCompositionType* material = &itMaterial.NextElement();
+    tools::Iterator< const RoofShapeType& > itRoof = static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).CreateIterator();
+    assert( itRoof.HasMoreElements() );
+    const RoofShapeType* roofShape = &itRoof.NextElement();
+    return height_.value_ == 20 && floorNumber_ == 6 && parkingFloors_ ==  0 && occupation_.value_ == 50 && trafficability_.value_ == 0.5f && material_ == material && roofShape_ == roofShape;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Architecture::Initialize
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
@@ -67,24 +82,18 @@ void Architecture::Initialize( unsigned int height, unsigned int floorNumber, un
     material_ = objectTypes_.StringResolver< MaterialCompositionType >::Find( material );
     if( !material_ )
     {
-        invalidMaterial_ = material;
         tools::Iterator< const MaterialCompositionType& > it = static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         material_ = const_cast< MaterialCompositionType* >( &it.NextElement() );
     }
-    else
-        invalidMaterial_ = std::string();
 
     roofShape_ = objectTypes_.StringResolver< RoofShapeType >::Find( roofShape );
     if( !roofShape_ )
     {
-        invalidRoofType_ = roofShape;
         tools::Iterator< const RoofShapeType& > it = static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         roofShape_ = const_cast< RoofShapeType* >( &it.NextElement() );
     }
-    else
-        invalidRoofType_ = std::string();
 }
 
 template< typename T >
@@ -182,22 +191,4 @@ unsigned int Architecture::GetHeight() const
 float Architecture::GetTrafficability() const
 {
     return trafficability_.value_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetInvalidMaterial
-// Created: LDC 2013-11-15
-// -----------------------------------------------------------------------------
-const std::string& Architecture::GetInvalidMaterial() const
-{
-    return invalidMaterial_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetInvalidRoofShape
-// Created: LDC 2013-11-15
-// -----------------------------------------------------------------------------
-const std::string& Architecture::GetInvalidRoofShape() const
-{
-    return invalidRoofType_;
 }

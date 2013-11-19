@@ -42,6 +42,7 @@ public:
     //@{
     virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" ) = 0;
+    virtual bool IsDefault() const = 0;
     virtual const MaterialCompositionType& GetMaterial() const = 0;
     virtual const RoofShapeType& GetRoofShape() const = 0;
     virtual unsigned int GetFloorNumber() const = 0;
@@ -56,8 +57,6 @@ public:
     virtual void SetOccupation( unsigned int occupation ) = 0;
     virtual void SetHeight( unsigned int height ) = 0;
     virtual void SetTrafficability( float trafficability) = 0;
-    virtual const std::string& GetInvalidMaterial() const = 0;
-    virtual const std::string& GetInvalidRoofShape() const = 0;
     //@}
 };
 

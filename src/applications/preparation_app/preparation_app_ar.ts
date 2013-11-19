@@ -1427,14 +1427,6 @@ This data can&apos;t be projected.</source>
         <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unknown material &quot;%1&quot;. It will be replaced by default material at next save.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown roof shape &quot;%1&quot;. It will be replaced by default roof shape at next save.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
