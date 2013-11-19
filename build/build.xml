@@ -906,11 +906,11 @@
         <update name="icu"/>
         <update name="libpng"/>
         <update name="mapnik"/>
-        <update name="masalife/brain"/>
-        <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
-        <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
-        <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
-        <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
+        <update name="masalife/brain" version="2013-2.0"/>
+        <update name="models" version="5.3" package="decisional-dev" todir="${data.dir}/data/models"/>
+        <update name="models" version="5.3" package="exercises-dev" todir="${data.dir}/exercises"/>
+        <update name="models" version="5.3" package="propagations-dev" todir="${data.dir}/data/propagations"/>
+        <update name="models" version="5.3" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose"/>
         <update name="openssl"/>
         <update name="proj4"/>
@@ -919,13 +919,13 @@
         <update name="qt"/>
         <update name="spatialite"/>
         <update name="sqlite"/>
-        <update name="steel"/>
+        <update name="steel" version="5.3"/>
         <update name="svgl"/>
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword-doc" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
-        <update name="terrain"/>
-        <update name="tools"/>
+        <update name="terrain" version="5.3"/>
+        <update name="tools" version="1.3"/>
         <update name="turtle"/>
         <update name="vcredist" package="vcredist"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
@@ -934,10 +934,10 @@
         <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline"/>
-        <update name="timeline_ui" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" package="include"           todir="${include.dir}"/>
-        <update name="timeline_ui" package="lib/${platform}"   todir="${lib.dir}"/>
+        <update name="timeline" version="5.3"/>
+        <update name="timeline_ui" version="5.3" package="dll/${platform32}" todir="${run.dir}/cef"/>
+        <update name="timeline_ui" version="5.3" package="include"           todir="${include.dir}"/>
+        <update name="timeline_ui" version="5.3" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
     <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
