@@ -83,9 +83,6 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     QToolBar* toolBar = new QToolBar();
     toolBar->setStyleSheet("QToolBar { border: 0px }");
     toolBar->setIconSize( QSize( 30, 30 ) );
-    QLabel* label = new QLabel();
-    label->setPixmap( MakePixmap( "actions_designmode" ) );
-    toolBar->addWidget( label );
     toolBar->addWidget( CreateStretcher() );
     toolBar->addWidget( dateWidget );
     toolBar->addWidget( CreateStretcher() );
