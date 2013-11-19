@@ -42,8 +42,6 @@ public:
     virtual Architecture_ABC& GetArchitecture() const;
     virtual Usages_ABC& GetUsages() const;
     virtual unsigned int FindUsagesValue( const std::string& motivation ) const;
-    virtual const std::string& GetInvalidMaterial() const;
-    virtual const std::string& GetInvalidRoofShape() const;
     //@}
 
     //! @name Displayable_ABC

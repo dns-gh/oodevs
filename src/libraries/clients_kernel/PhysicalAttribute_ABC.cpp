@@ -111,21 +111,3 @@ void PhysicalAttribute_ABC::DisplayInSummary( Displayer_ABC& displayer ) const
     assert( usages_.get() );
     usages_->DisplayInSummary( displayer );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PhysicalAttribute_ABC::GetInvalidMaterial
-// Created: LDC 2013-11-15
-// -----------------------------------------------------------------------------
-const std::string& PhysicalAttribute_ABC::GetInvalidMaterial() const
-{
-    return architecture_->GetInvalidMaterial();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhysicalAttribute_ABC::GetInvalidRoofShape
-// Created: LDC 2013-11-15
-// -----------------------------------------------------------------------------
-const std::string& PhysicalAttribute_ABC::GetInvalidRoofShape() const
-{
-    return architecture_->GetInvalidRoofShape();
-}

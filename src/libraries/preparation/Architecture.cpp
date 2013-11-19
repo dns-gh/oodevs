@@ -14,11 +14,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/ModeController.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
-#include "tools/Iterator.h"
-#include <tools/Resolver.h>
 #include "ENT/ENT_Enums_Gen.h"
 
 // -----------------------------------------------------------------------------
@@ -42,17 +39,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
                     parentArchitecture.GetRoofShape().GetName() );
     }
     else
-    {
-        std::string material;
-        tools::Iterator< const kernel::MaterialCompositionType& > it = static_cast< const tools::StringResolver< kernel::MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
-        assert( it.HasMoreElements() );
-        material = it.NextElement().GetName();
-        std::string roofShape;
-        tools::Iterator< const kernel::RoofShapeType& > roofit = static_cast< const tools::StringResolver< kernel::RoofShapeType >& >( objectTypes_ ).CreateIterator();
-        assert( roofit.HasMoreElements() );
-        roofShape = roofit.NextElement().GetName();
-        Initialize( 20, 6, 0, 0.5f, 0.5f, material, roofShape );
-    }
+        Initialize( 20, 6, 0, 0.5f, 0.5f );
 
     controllers_.modes_.Register( *this );
     NotifyModeChanged( controllers_.modes_.GetCurrentMode() );
@@ -103,6 +90,8 @@ Architecture::~Architecture()
 // -----------------------------------------------------------------------------
 void Architecture::SerializeAttributes( xml::xostream& xos ) const
 {
+    if( IsDefault() )
+        return;
     assert( roofShape_ && material_ );
     xos << xml::start( "architecture" )
             << xml::attribute( "height", height_.value_ )
@@ -114,8 +103,6 @@ void Architecture::SerializeAttributes( xml::xostream& xos ) const
     if( parkingFloors_ > 0 )
         xos << xml::attribute( "parking-floors", parkingFloors_ );
     xos << xml::end;
-    invalidMaterial_ = std::string();
-    invalidRoofType_ = std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +125,6 @@ void Architecture::NotifyModeChanged( E_Modes newMode )
 void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
 {
     material_ = &material;
-    invalidMaterial_ = std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +134,6 @@ void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
 void Architecture::SetRoofShape( kernel::RoofShapeType& roofShape )
 {
     roofShape_ = &roofShape;
-    invalidRoofType_ = std::string();
 }
 
 // -----------------------------------------------------------------------------

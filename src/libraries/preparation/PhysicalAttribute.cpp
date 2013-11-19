@@ -72,6 +72,8 @@ void PhysicalAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     assert( architecture_.get() );
     assert( usages_.get() );
+    if( architecture_->IsDefault() && usages_->IsDefault() )
+        return;
     xos << xml::start( "physical" );
     architecture_->SerializeAttributes( xos );
     usages_->SerializeAttributes( xos );
