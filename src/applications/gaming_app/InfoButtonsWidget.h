@@ -20,15 +20,16 @@ namespace kernel
     class Controllers;
     class Profile_ABC;
     class Time_ABC;
-    class DisplayExtractor_ABC;
 }
 
 namespace gui
 {
     class ItemFactory_ABC;
+    class DisplayExtractor;
 }
 
 class StaticModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  InfoButtonsWidget
@@ -42,8 +43,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                              , kernel::DisplayExtractor_ABC& extractor, const StaticModel& staticModel,
-                                actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+                              , gui::DisplayExtractor& extractor, const StaticModel& staticModel
+                              , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile
+                              , Publisher_ABC& publisher );
     virtual ~InfoButtonsWidget();
     //@}
 
@@ -53,9 +55,11 @@ private:
     template< typename Dialog >
     void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     template< typename Dialog >
-    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
+    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC &publisher );
     template< typename Dialog >
-    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
+    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers
+                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC &publisher );
     void AddButton( QDialog* dialog, const QPixmap& pixmap, const QString& tooltips, const char* toggleSlot, const char* toggleSignal );
     //@}
 };

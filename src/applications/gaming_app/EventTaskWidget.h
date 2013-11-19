@@ -20,6 +20,7 @@
 // =============================================================================
 class EventTaskWidget : public EventWidget_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -28,15 +29,17 @@ public:
     virtual ~EventTaskWidget();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Fill( const Event& event );
-    virtual void Commit( timeline::Event& event ) const;
+    virtual void Commit( timeline::Event& event );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnShow();
     //@}
 
 private:
@@ -44,7 +47,11 @@ private:
     //@{
     QLineEdit* label_;
     QTextEdit* description_;
-    QComboBox* profiles_;
+    QLineEdit* url_;
+    QCheckBox* apply_;
+    QLabel* bytes_;
+    QPushButton* showButton_;
+    QTextEdit* payload_;
     //@}
 };
 

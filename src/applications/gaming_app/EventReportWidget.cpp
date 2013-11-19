@@ -44,7 +44,7 @@ void EventReportWidget::Fill( const Event& /*event*/ )
 // Name: EventReportWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventReportWidget::Commit( timeline::Event& event ) const
+void EventReportWidget::Commit( timeline::Event& event )
 {
     event.action.target = "sword://client";
 }

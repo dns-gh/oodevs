@@ -702,6 +702,14 @@ Raison: %3
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Order acknowledged</source>
+        <translation>Ordre executé</translation>
+    </message>
 </context>
 <context>
     <name>EventMultimediaWidget</name>
@@ -752,8 +760,28 @@ Raison: %3
         <translation>Description</translation>
     </message>
     <message>
-        <source>Profiles</source>
-        <translation type="unfinished">Profils</translation>
+        <source>Url</source>
+        <translation>Url</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Appliquer</translation>
+    </message>
+    <message>
+        <source>Payload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Afficher</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>Cacher</translation>
     </message>
 </context>
 <context>
@@ -1181,10 +1209,6 @@ Raison: %3
         <translation>Chaîne ravitaillement</translation>
     </message>
     <message>
-        <source>Instructions</source>
-        <translation>Consignes</translation>
-    </message>
-    <message>
         <source>Stocks</source>
         <translation>Stocks</translation>
     </message>
@@ -1195,6 +1219,10 @@ Raison: %3
     <message>
         <source>Transporters</source>
         <translation>Transporteurs</translation>
+    </message>
+    <message>
+        <source>Instructions</source>
+        <translation>Consignes</translation>
     </message>
 </context>
 <context>
@@ -1458,6 +1486,77 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>Logistic</name>
+    <message>
+        <source>Psy</source>
+        <translation>Psy</translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation>NBC</translation>
+    </message>
+    <message>
+        <source>Requester:</source>
+        <translation>Demandeur:</translation>
+    </message>
+    <message>
+        <source>Rank:</source>
+        <translation>Rang:</translation>
+    </message>
+    <message>
+        <source>Current packaging:</source>
+        <translation>Dotation de conditionnement:</translation>
+    </message>
+    <message>
+        <source>Request date:</source>
+        <translation>Date de la requête:</translation>
+    </message>
+    <message>
+        <source>Handler:</source>
+        <translation>Unité de prise en charge:</translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation>Etat:</translation>
+    </message>
+    <message>
+        <source>Started:</source>
+        <translation>Début:</translation>
+    </message>
+    <message>
+        <source>Ending:</source>
+        <translation>Fin:</translation>
+    </message>
+    <message>
+        <source>Equipment:</source>
+        <translation>Equipement:</translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation>Panne:</translation>
+    </message>
+    <message>
+        <source>Injury:</source>
+        <translation>Blessure:</translation>
+    </message>
+    <message>
+        <source>Recipient(s):</source>
+        <translation>Destinatire(s):</translation>
+    </message>
+    <message>
+        <source>Transport provider:</source>
+        <translation>Fournisseur des transporteurs:</translation>
+    </message>
+    <message>
+        <source>Conveyor:</source>
+        <translation>Convoyeur:</translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation>Fournisseur:</translation>
+    </message>
+</context>
+<context>
     <name>Logistic : Push supply flow</name>
     <message>
         <source>Resource</source>
@@ -1514,12 +1613,39 @@ Raison: %3
 <context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
-        <source>Logistic requests</source>
-        <translation>Requètes logistiques</translation>
+        <source>Show completed requests</source>
+        <translation>Montrer les requêtes terminées</translation>
     </message>
     <message>
-        <source>Processing instructions</source>
-        <translation>Consignes en traitement</translation>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Inconnu</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticHistoryDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Logistic history</source>
+        <translation>Historique logistique</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <source>Reduce history to the last simulated days :</source>
+        <translation>Réduire l&apos;historique aux derniers jours simulés : </translation>
     </message>
 </context>
 <context>
@@ -1690,6 +1816,86 @@ Raison: %3
     <message>
         <source>Change Logistic Links</source>
         <translation>Changer les Liens Logistiques</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsHistoryTable</name>
+    <message>
+        <source>Previous state</source>
+        <translation>Etat précédent</translation>
+    </message>
+    <message>
+        <source>Started</source>
+        <translation>Début</translation>
+    </message>
+    <message>
+        <source>Ended</source>
+        <translation>Fin</translation>
+    </message>
+    <message>
+        <source>Handler</source>
+        <translation>Unité de prise en charge</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsSupplyTable</name>
+    <message>
+        <source>Recipient</source>
+        <translation>Destinatire</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Requested</source>
+        <translation>Demandées</translation>
+    </message>
+    <message>
+        <source>Granted</source>
+        <translation>Accordées</translation>
+    </message>
+    <message>
+        <source>Conveyed</source>
+        <translation>Convoyées</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsSupplyWidget</name>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished">Id</translation>
+    </message>
+    <message>
+        <source>Recipient(s)</source>
+        <translation>Destinataire(s)</translation>
+    </message>
+    <message>
+        <source>Supplier</source>
+        <translation>Fournisseur</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Etat</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticsRequestsTable</name>
+    <message>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <source>Requester</source>
+        <translation>Demandeur</translation>
+    </message>
+    <message>
+        <source>Handler</source>
+        <translation>Unité de prise en charge</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Etat</translation>
     </message>
 </context>
 <context>
@@ -2167,6 +2373,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>&amp;Settings</source>
         <translation>&amp;Réglages</translation>
+    </message>
+    <message>
+        <source>Logistic history</source>
+        <translation>Historique logistique</translation>
     </message>
 </context>
 <context>

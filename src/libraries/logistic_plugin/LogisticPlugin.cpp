@@ -16,6 +16,7 @@
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/Language.h"
 #include "tools/SessionConfig.h"
@@ -28,6 +29,7 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <unordered_set>
 
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
@@ -220,6 +222,67 @@ void LogisticPlugin::SetMaxLinesInFile( int maxLines )
         r->second->SetMaxLinesInFile( maxLines );
 }
 
+namespace
+{
+
+sword::EnumLogisticType GetLogisticType( LogisticPlugin::E_LogisticType type )
+{
+    switch( type )
+    {
+    case LogisticPlugin::eLogisticType_Funeral: return sword::log_funeral;
+    case LogisticPlugin::eLogisticType_Maintenance: return sword::log_maintenance;
+    case LogisticPlugin::eLogisticType_Medical: return sword::log_medical;
+    case LogisticPlugin::eLogisticType_Supply: return sword::log_supply;
+    };
+    return sword::log_unknown;
+}
+
+}  // namespace
+
+bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
+{
+    if( !msg.message().has_logistic_history_request() )
+        return false;
+    const auto& rq = msg.message().logistic_history_request();
+    sword::SimToClient reply;
+    auto ack = reply.mutable_message()->mutable_logistic_history_ack();
+    try
+    {
+        std::unordered_set< uint32_t > seen;
+        for( int i = 0; i != rq.requests().size(); ++i )
+        {
+            const uint32_t requestId = rq.requests( i ).id();
+            if( !seen.insert( requestId ).second )
+                continue;
+            auto it = consigns_.find( requestId );
+            if( it == consigns_.end() )
+                continue;
+            const auto& history = it->second->GetHistory();
+            for( auto ih = history.cbegin(); ih != history.cend(); ++ih )
+            {
+                if( ih->startTick_ < 0 || ih->status_ < 0 )
+                    continue;
+                auto st = ack->add_states();
+                st->mutable_request()->set_id( requestId );
+                st->mutable_id()->set_id( ih->id_ );
+                st->set_type( GetLogisticType( it->second->GetType() ));
+                st->set_start_tick( ih->startTick_ );
+                if( ih->endTick_ >= 0 )
+                    st->set_end_tick( ih->endTick_ );
+                if( ih->handlerId_ > 0 )
+                    st->mutable_handler()->set_id( ih->handlerId_ );
+                st->set_status( ih->status_ );
+            }
+        }
+    }
+    catch( const std::exception& e )
+    {
+        reply.set_error_msg( tools::GetExceptionMsg( e ));
+    }
+    unicaster.Send( reply );
+    return true;
+}
 
 LogisticPlugin* CreateLogisticPlugin(
     const boost::shared_ptr<const NameResolver_ABC>& nameResolver,

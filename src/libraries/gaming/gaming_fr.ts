@@ -654,54 +654,6 @@
 <context>
     <name>Logistic</name>
     <message>
-        <source>Instruction:</source>
-        <translation>Consigne:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation>Consommateur:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation>Gestionnaire:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>Etat:</translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation>Réac. mentale:</translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation>Contamination NBC:</translation>
-    </message>
-    <message>
-        <source>Not diagnosed</source>
-        <translation>Non diagnostiqué</translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation>Convoyeur:</translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation>Equipement:</translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation>Panne:</translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation>Blessure:</translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation>Fournisseur:</translation>
-    </message>
-    <message>
         <source>Logistic links</source>
         <translation>Liens logistiques</translation>
     </message>
@@ -710,56 +662,8 @@
         <translation>Liens logistiques/Supérieurs</translation>
     </message>
     <message>
-        <source>Transporters provider:</source>
-        <translation>Fournisseur des transporteurs:</translation>
-    </message>
-    <message>
-        <source>No recipients</source>
-        <translation>Pas de destinataire</translation>
-    </message>
-    <message>
-        <source>Multiple recipients</source>
-        <translation>Destinataires multiples</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation>Inconnu</translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
-        <translation>Fin de l&apos;état courant :</translation>
-    </message>
-    <message>
-        <source>Convoy:</source>
-        <translation>Convoi</translation>
-    </message>
-    <message>
-        <source>Rank:</source>
-        <translation>Rang:</translation>
-    </message>
-    <message>
-        <source>Current packaging:</source>
-        <translation>Conditionnement courant:</translation>
-    </message>
-    <message>
-        <source>Current state end:</source>
-        <translation>Fin de l&apos;état courant:</translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation>Destinataires</translation>
-    </message>
-    <message>
-        <source>requested</source>
-        <translation>demandé</translation>
-    </message>
-    <message>
-        <source>granted</source>
-        <translation>accordé</translation>
-    </message>
-    <message>
-        <source>convoyed</source>
-        <translation>convoyé</translation>
     </message>
 </context>
 <context>

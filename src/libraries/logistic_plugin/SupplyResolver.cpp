@@ -70,24 +70,27 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
+bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
     {
         if( msg.supplier().has_automat() )
         {
-            int supplierId = static_cast< int >( msg.supplier().automat().id() );
+            const uint32_t supplierId = msg.supplier().automat().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetAutomatName( supplierId, provider_ );
+            state.handlerId_ = supplierId;
         }
         else if( msg.supplier().has_formation() )
         {
-            int supplierId = static_cast< int >( msg.supplier().formation().id() );
+            const uint32_t supplierId = msg.supplier().formation().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetFormationName( msg.supplier().formation().id(), provider_ );
+            state.handlerId_ = supplierId;
         }
     }
     if( msg.has_transporters_provider() )
@@ -105,15 +108,17 @@ void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation&
             nameResolver.GetFormationName( transportId, transportProvider_ );
         }
     }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
+bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -136,6 +141,7 @@ void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
         sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
         nameResolver.GetSupplykName( eSupply, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eSupply ) );
+        state.status_ = eSupply;
     }
     if( msg.has_requests() )
     {
@@ -164,21 +170,16 @@ void SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
             }
         }
     }
+    return true;
 }
 
 bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_supply_handling_creation() )
-    {
-        ManageMessage( message.message().log_supply_handling_creation(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_supply_handling_creation(), resolver );
     if( message.message().has_log_supply_handling_update() )
-    {
-        ManageMessage( message.message().log_supply_handling_update(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_supply_handling_update(), resolver );
     return false;
 }
 

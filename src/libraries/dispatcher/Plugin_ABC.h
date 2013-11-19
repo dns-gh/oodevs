@@ -11,13 +11,30 @@
 #define __Plugin_ABC_h_
 
 #include "MessageHandler_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <string>
+
+namespace sword
+{
+    class ClientToSim;
+}
 
 namespace dispatcher
 {
     class Profile_ABC;
     class ClientPublisher_ABC;
     class Services;
+
+// Similar to ClientPublisher_ABC, but can rewrite messages before sending
+// them, mostly to add routing annotations.
+class RewritingPublisher_ABC : private boost::noncopyable
+{
+public:
+             RewritingPublisher_ABC() {}
+    virtual ~RewritingPublisher_ABC() {}
+
+    virtual void Send( sword::SimToClient& message ) = 0;
+};
 
 // =============================================================================
 /** @class  Plugin_ABC
@@ -52,6 +69,15 @@ public:
     // through the message handler chain. Therefore MessageHandler_ABC::Receive
     // will not be called for this plugin.
     virtual bool Filter( const sword::SimToClient& /*message*/ ) const
+    {
+        return false;
+    }
+
+    // Returns true if the message was handled and a response emitted. It is
+    // the handler responsibility to ensure a response is sent, even upon
+    // processing error. Handled messages are not forwarded to other plugins.
+    virtual bool HandleClientToSim( const sword::ClientToSim&, RewritingPublisher_ABC&,
+            ClientPublisher_ABC& )
     {
         return false;
     }

@@ -68,7 +68,7 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Fill( const Event& event );
-    virtual void Commit( timeline::Event& event ) const;
+    virtual void Commit( timeline::Event& event );
     //@}
 
     //! @name kernel::ContextMenuObserver_ABC< QDateTime > implementation
@@ -82,7 +82,6 @@ private:
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
     QLabel* title_;
-    QLabel* source_;
     QLabel* startDateLabel_;
     QAction* saveAction_;
     QAction* saveAsAction_;

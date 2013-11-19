@@ -356,6 +356,13 @@ message ListEnabledVisionCones {
     optional uint32 count = 2;
 }
 
+//! Asks the history of selected logistic requests.
+//!
+//! Errors are reported in SimToClient.error_msg fields.
+message LogisticHistoryRequest {
+    repeated Id requests = 1;
+}
+
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
@@ -419,6 +426,7 @@ message ClientToSim {
         optional OrderStream              order_stream                    = 24;
         //! @copybrief ListEnabledVisionCones
         optional ListEnabledVisionCones   list_enabled_vision_cones       = 25;
+        optional LogisticHistoryRequest   logistic_history_request        = 26;
     }
     /** @property context
         @brief Identifies the request matching the response

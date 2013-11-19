@@ -76,6 +76,7 @@ public:
     //@{
     virtual const std::string& GetTypeName() const;
     virtual unsigned long GetId() const;
+    virtual int GetContext() const;
     virtual QString GetName() const;
     virtual bool IsValid() const;
 

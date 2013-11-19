@@ -53,8 +53,8 @@ public:
     virtual void Purge() = 0;
     virtual void SetEntity( const kernel::Entity_ABC* entity ) = 0;
     virtual void SetPlanned( bool planned ) = 0;
-    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const = 0;
-    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0 ) const = 0;
+    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const = 0;
+    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const = 0;
     virtual void FillFrom( const actions::Action_ABC& action ) = 0;
     //@}
 

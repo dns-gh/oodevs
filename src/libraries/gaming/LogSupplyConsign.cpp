@@ -11,7 +11,6 @@
 #include "LogSupplyConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
-#include "LogConsignDisplayer_ABC.h"
 #include "SupplyRecipientResourcesRequest.h"
 #include "SupplyResourceRequest.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -37,22 +36,19 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
-                                  , const tools::Resolver_ABC< Formation_ABC >&   formationResolver
+                                  , const tools::Resolver_ABC< Formation_ABC >& formationResolver
                                   , const tools::Resolver_ABC< DotationType >& dotationResolver
                                   , const Simulation& simulation
                                   , const sword::LogSupplyHandlingCreation& message )
-    : controller_                        ( controller )
+    : LogisticsConsign_ABC               ( message.request().id(), controller, simulation, message.tick() )
     , resolver_                          ( resolver )
     , agentResolver_                     ( agentResolver )
     , formationResolver_                 ( formationResolver )
     , dotationResolver_                  ( dotationResolver )
-    , nID_                               ( message.request().id() )
     , pLogHandlingEntity_                ( controller_, FindLogEntity( message.supplier() ) )
     , pPionLogConvoying_                 ( controller_ )
     , pLogProvidingConvoyResourcesEntity_( controller_, FindLogEntity( message.transporters_provider() ) )
     , nState_                            ( eLogSupplyHandlingStatus_Termine )
-    , currentStateEndTick_               ( std::numeric_limits< unsigned int >::max() )
-    , simulation_                        ( simulation )
 {
     if( pLogHandlingEntity_ )
         pLogHandlingEntity_.ConstCast()->Get< LogSupplyConsigns >().HandleConsign( *this );
@@ -106,67 +102,6 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
         }
     }
     controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::Display
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void LogSupplyConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
-{
-    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
-
-    unsigned nbRequests = Count();
-    if( nbRequests == 0 )
-        displayer.DisplayTitle( tools::translate( "Logistic", "No recipients" ), tools::ToString( nState_ ) );
-    else if( nbRequests == 1 )
-        displayer.DisplayTitle( CreateIterator().NextElement().recipient_.GetTooltip(), tools::ToString( nState_ ) );
-    else
-        displayer.DisplayTitle( tools::translate( "Logistic", "Multiple recipients" ), tools::ToString( nState_ ) );
-
-    tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = CreateIterator();
-    while( itRecipient.HasMoreElements() )
-    {
-        QMap< QString, LogConsignDisplayer_ABC::T_OrderedValues > requests;
-        const SupplyRecipientResourcesRequest& curRecipient= itRecipient.NextElement();
-        tools::Iterator< const SupplyResourceRequest& > itRequest = curRecipient.CreateIterator();
-        while( itRequest.HasMoreElements() )
-        {
-            const SupplyResourceRequest& curRequest = itRequest.NextElement();
-            LogConsignDisplayer_ABC::T_OrderedValues& curRequestQuantities = requests[ curRequest.GetTypeName() ];
-            curRequestQuantities.reserve( 3 );
-            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "requested" ), curRequest.GetRequested() ) );
-            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "granted" ), curRequest.GetGranted() ) );
-            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "convoyed" ), curRequest.GetConvoyed() ) );
-        }
-        displayer.DisplaySubItemValues( tools::translate( "Logistic", "Recipients" ),
-                                        curRecipient.GetRecipientTooltip(),
-                                        requests );
-    }
-
-    if( pPionLogConvoying_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Convoyer:" ), extractor.GetDisplayName( *pPionLogConvoying_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
-    if( pLogHandlingEntity_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Supplier:" ), extractor.GetDisplayName( *pLogHandlingEntity_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
-    if( pLogProvidingConvoyResourcesEntity_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Transporters provider:" ), extractor.GetDisplayName( *pLogProvidingConvoyResourcesEntity_ ) );
-    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end :" ), tools::translate( "Logistic", "Unknown" ) );
-    else
-    {
-        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
-        QDateTime curDate = simulation_.GetDateTime();
-
-        QString dateDisplay;
-        if( endDate.date() != curDate.date() )
-            dateDisplay += endDate.date().toString() + " ";
-        dateDisplay += endDate.time().toString();
-
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end :" ), dateDisplay );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -236,15 +171,6 @@ unsigned int LogSupplyConsign::FindLogEntityID(const sword::ParentEntity& msg)
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::GetId
-// Created: LDC 2013-09-16
-// -----------------------------------------------------------------------------
-unsigned int LogSupplyConsign::GetId() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
@@ -253,4 +179,86 @@ bool LogSupplyConsign::RefersToAgent( unsigned int id ) const
     return ( pLogHandlingEntity_ && pLogHandlingEntity_->GetId() == id )
         || ( pPionLogConvoying_ && pPionLogConvoying_->GetId() == id )
         || ( pLogProvidingConvoyResourcesEntity_ && pLogProvidingConvoyResourcesEntity_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetConsumer
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogSupplyConsign::GetConsumer() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetHandler
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogSupplyConsign::GetHandler() const
+{
+    return pLogHandlingEntity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetConvoying
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogSupplyConsign::GetConvoying() const
+{
+    return pPionLogConvoying_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetProviding
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogSupplyConsign::GetProviding() const
+{
+    return pLogProvidingConvoyResourcesEntity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetStatus
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_LogSupplyHandlingStatus LogSupplyConsign::GetStatus() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogSupplyConsign::GetStatusDisplay() const
+{
+    return tools::ToString( nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogSupplyConsign::GetStatusDisplay( int status ) const
+{
+    if( 0 <= status && status < eNbrLogSupplyHandlingStatus )
+        return tools::ToString( static_cast< E_LogSupplyHandlingStatus >( status ) );
+    return QString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetCurrentStartedTime
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogSupplyConsign::GetCurrentStartedTime() const
+{
+    return GetStatusLastStarted( nState_ );
+}
+
+kernel::Entity_ABC* LogSupplyConsign::GetRequestHandler( uint32_t entityId ) const
+{
+    auto handler = resolver_.Find( entityId );
+    if( handler )
+        return handler;
+    return formationResolver_.Find( entityId );
 }

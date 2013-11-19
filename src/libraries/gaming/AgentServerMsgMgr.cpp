@@ -564,6 +564,55 @@ void AgentServerMsgMgr::OnReceiveLogSupplyQuotas( const sword::LogSupplyQuotas& 
         GetModel().teams_.GetFormation( message.supplied().formation().id() ).Update( message );
 }
 
+namespace
+{
+
+void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
+    const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& states )
+{
+    if( start >= end )
+        return;
+    const auto& s = states.Get( start );
+    const auto id = s.request().id();
+    switch( s.type() )
+    {
+        case sword::log_funeral:
+            model.GetFuneralConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_maintenance:
+            model.GetMaintenanceConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_medical:
+            model.GetMedicalConsign( id ).UpdateHistory( start, end, states );
+            break;
+        case sword::log_supply:
+            model.GetSupplyConsign( id ).UpdateHistory( start, end, states );
+            break;
+    }
+}
+
+}  // namespace
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveLogHistoryResponse
+// Created: MMC 2013-09-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistoryAck& message )
+{
+    // Assume states are sorted by ascending (request, state)
+    auto& model = GetModel().logistics_;
+    int i = 0, j;
+    for( j = 0; j < message.states().size(); ++j )
+    {
+        if( message.states( i ).request().id() == message.states( j ).request().id() )
+            continue;
+        UpdateLogisticHistory( model, i, j, message.states() );
+        i = j;
+    }
+    if( i != j )
+        UpdateLogisticHistory( model, i, j, message.states() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
@@ -847,32 +896,26 @@ void AgentServerMsgMgr::OnReceiveAutomatOrder( const sword::AutomatOrder& messag
     GetModel().agents_.GetAutomat( message.tasker().id() ).Update( message );
 }
 
+namespace
+{
+    template< typename T >
+    void UpdateMission( kernel::Entity_ABC& entity, kernel::Logger_ABC& logger, Profile& profile,
+                        const T& message, unsigned int clientId, unsigned long nCtx )
+    {
+        bool display = profile.DisplayMessage( clientId );
+        CheckAcknowledge( logger, entity, message, display );
+        if( display )
+            entity.Update( message, nCtx );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveOrderAck
 // Created: MGD 2010-12-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& message, unsigned int clientId )
+void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& message, unsigned int clientId, unsigned long nCtx )
 {
-    if( message.tasker().has_automat() )
-    {
-        Automat_ABC& automat = GetModel().agents_.GetAutomat( message.tasker().automat().id() );
-        bool display = GetProfile().DisplayMessage( clientId );
-        CheckAcknowledge( logger_, automat, message, display );
-        if( display )
-            automat.Update( message );
-    }
-    else if( message.tasker().has_unit() )
-    {
-        Agent_ABC& agent = GetModel().agents_.GetAgent( message.tasker().unit().id() );
-        bool display = GetProfile().DisplayMessage( clientId );
-        CheckAcknowledge( logger_, agent, message, display );
-        if( display )
-            agent.Update( message );
-    }
-    else if( message.tasker().has_crowd() )
-    {
-        CheckAcknowledge( logger_, GetModel().agents_.GetPopulation( message.tasker().crowd().id() ), message, GetProfile().DisplayMessage( clientId ) );
-    }
+    UpdateMission( GetTasker( message.tasker() ), logger_, GetProfile(), message, clientId, nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -888,9 +931,9 @@ void AgentServerMsgMgr::OnReceiveUnitOrder( const sword::UnitOrder& message )
 // Name: AgentServerMsgMgr::OnReceiveFragOrderAck
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveFragOrderAck( const sword::FragOrderAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveFragOrderAck( const sword::FragOrderAck& message, unsigned int clientId, unsigned long nCtx )
 {
-    CheckAcknowledge( logger_, message );
+    UpdateMission( GetTasker( message.tasker() ), logger_, GetProfile(), message, clientId, nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1722,9 +1765,9 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         return;
     unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
     if( wrapper.message().has_order_ack() )
-        OnReceiveOrderAck( wrapper.message().order_ack(), clientId );
+        OnReceiveOrderAck( wrapper.message().order_ack(), clientId, wrapper.context() );
     else if( wrapper.message().has_frag_order_ack() )
-        OnReceiveFragOrderAck( wrapper.message().frag_order_ack() , wrapper.context() );
+        OnReceiveFragOrderAck( wrapper.message().frag_order_ack(), clientId , wrapper.context() );
     else if( wrapper.message().has_unit_magic_action_ack() )
         OnReceiveUnitMagicActionAck( wrapper.message().unit_magic_action_ack(), clientId );
     else if( wrapper.message().has_unit_creation_request_ack() )
@@ -2020,6 +2063,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
     {
         // unused
     }
+    else if( wrapper.message().has_logistic_history_ack() )
+        OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack() );
     else
         UnhandledMessage( &wrapper.message() );
 }

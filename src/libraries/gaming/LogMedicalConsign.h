@@ -10,7 +10,7 @@
 #ifndef __LogMedicalConsign_h_
 #define __LogMedicalConsign_h_
 
-#include "clients_gui/Drawable_ABC.h"
+#include "LogisticsConsign_ABC.h"
 #include "clients_kernel/Types.h"
 #include <tools/Resolver_ABC.h>
 #include <boost/function.hpp>
@@ -29,7 +29,6 @@ namespace sword
 }
 
 class Simulation;
-class LogConsignDisplayer_ABC;
 
 // =============================================================================
 /** @class  LogMedicalConsign
@@ -37,10 +36,10 @@ class LogConsignDisplayer_ABC;
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogMedicalConsign : public gui::Drawable_ABC
+class LogMedicalConsign : public LogisticsConsign_ABC
 {
 public:
-    //! @name Operations
+    //! @name Constructor / Destructor
     //@{
              LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message );
     virtual ~LogMedicalConsign();
@@ -49,13 +48,27 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::LogMedicalHandlingUpdate& message );
-    void Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    unsigned int GetId() const;
-    bool RefersToAgent( unsigned int id ) const;
+    virtual bool RefersToAgent( unsigned int id ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    E_HumanRank GetRank() const;
+    virtual const kernel::Agent_ABC* GetConsumer() const;
+    virtual const kernel::Entity_ABC* GetHandler() const;
+    bool IsMental() const;
+    bool IsContamined() const;
+    bool IsDiagnosed() const;
+    E_HumanWound GetWound() const;
+    E_LogMedicalHandlingStatus GetStatus() const;
+    virtual QString GetStatusDisplay() const;
+    virtual QString GetStatusDisplay( int status ) const;
+    virtual QString GetCurrentStartedTime() const;
     //@}
 
 private:
+    virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
     //! @name Copy/Assignment
     //@{
     LogMedicalConsign( const LogMedicalConsign& );
@@ -65,18 +78,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const Simulation& simulation_;
-    unsigned int nID_;
     kernel::Agent_ABC& consumer_;
     kernel::Agent_ABC* pPionLogHandling_;
+    E_HumanRank rank_;
     bool    bMentalDeceased_;
     bool    bContaminated_;
     bool    diagnosed_;
     E_HumanWound wound_;
     E_LogMedicalHandlingStatus nState_;
-    unsigned int currentStateEndTick_;
     //@}
 };
 

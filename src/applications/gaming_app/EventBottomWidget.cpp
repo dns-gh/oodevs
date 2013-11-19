@@ -83,7 +83,7 @@ void EventBottomWidget::Fill( const Event& event )
 // Name: EventBottomWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventBottomWidget::Commit( timeline::Event& /* event */ ) const
+void EventBottomWidget::Commit( timeline::Event& /* event */ )
 {
     // NOTHING
 }

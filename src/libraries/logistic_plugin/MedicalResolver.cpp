@@ -42,9 +42,10 @@ void MedicalConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: MedicalConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreation& msg,
+bool MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreation& msg,
         const NameResolver_ABC& nameResolver )
 {
+    PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -62,15 +63,17 @@ void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreatio
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
         nbc_ = msg.nbc_contaminated() ? strYes : strNo;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg,
+bool MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg,
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -86,14 +89,17 @@ void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate&
     }
     if( msg.has_provider() )
     {
-        providerId_ = boost::lexical_cast< std::string >( msg.provider().id() );
+        const uint32_t providerId = msg.provider().id();
+        providerId_ = boost::lexical_cast< std::string >( providerId );
         nameResolver.GetAgentName( msg.provider().id(), provider_ );
+        state.handlerId_ = providerId;
     }
     if( msg.has_state() )
     {
         sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus eState = msg.state();
         nameResolver.GetMedicalName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
+        state.status_ = eState;
     }
     std::string strYes = tools::translate( "logistic", "yes" ).toStdString();
     std::string strNo = tools::translate( "logistic", "no" ).toStdString();
@@ -103,21 +109,25 @@ void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate&
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
         nbc_ = msg.nbc_contaminated() ? strYes : strNo;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg,
+bool MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg,
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_unit() )
     {
         unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
         nameResolver.GetAgentName( msg.unit().id(), unit_ );
     }
     state_ = tools::translate( "logistic", "instruction finished" ).toAscii().constData();
+    state.status_ = sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus_finished;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,20 +138,11 @@ bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_medical_handling_creation() )
-    {
-        ManageMessage( message.message().log_medical_handling_creation(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_medical_handling_creation(), resolver );
     if( message.message().has_log_medical_handling_update() )
-    {
-        ManageMessage( message.message().log_medical_handling_update(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_medical_handling_update(), resolver );
     if( message.message().has_log_medical_handling_destruction() )
-    {
-        ManageMessage( message.message().log_medical_handling_destruction(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_medical_handling_destruction(), resolver );
     return false;
 }
 

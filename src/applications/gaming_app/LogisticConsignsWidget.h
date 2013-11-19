@@ -10,96 +10,87 @@
 #ifndef __LogisticConsignsWidget_h_
 #define __LogisticConsignsWidget_h_
 
+#include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "LogisticConsignsWidget_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/SafePointer.h"
-#include "gaming/LogisticConsigns.h"
-#include "gaming/LogConsignDisplayer_ABC.h"
-#include "gaming/LogisticHelpers.h"
-#include "gaming/Simulation.h"
-#include <tools/ElementObserver_ABC.h>
-#include <tools/SelectionObserver_ABC.h>
-#include <boost/bind.hpp>
+
+namespace kernel
+{
+    class Controllers;
+    class Profile_ABC;
+}
+
+namespace gui
+{
+    class DisplayExtractor;
+    class RichCheckBox;
+}
+
+class LogisticsRequestsTable;
+class LogisticsRequestsDetailsTable;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  LogisticConsignsWidget
     @brief  LogisticConsignsWidget
 */
-// Created: SBO 2007-02-19
+// Created: MMC 2013-10-21
 // =============================================================================
-template< typename Consign, typename Extension >
-class LogisticConsignsWidget : public LogisticConsignsWidget_ABC
-                                 , public tools::ElementObserver_ABC< Extension >
-                                 , public tools::ElementObserver_ABC< Consign >
-                                 , public LogConsignDisplayer_ABC
-                                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
+template< typename Extension, typename Request >
+class LogisticConsignsWidget : public LogisticConsignsWidget_ABC, 
+                               public tools::ElementObserver_ABC< Extension >,
+                               public tools::ElementObserver_ABC< Request >,
+                               public tools::ElementObserver_ABC< typename Request::History >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
-    virtual ~LogisticConsignsWidget();
+    LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+        const QString& filter, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, const QStringList& requestsHeader = QStringList() )
+        : LogisticConsignsWidget_ABC( parent, controllers, extractor, filter, profile, publisher, requestsHeader ) {}
+
+    ~LogisticConsignsWidget() {}
     //@}
 
+protected:
     //! @name Operations
     //@{
-    virtual void DisplayConsign( const Consign& consign, QTreeWidgetItem* pCurrentItem );
-    virtual void DisplayTitle( const QString& key, const QString& value );
-    virtual void DisplayItem( const QString& key, const QString& value );
-    virtual void DisplaySubItemValues( const QString& key, const QString& subKey,
-                                       const QMap< QString, T_OrderedValues >& subValues );
-    void AddEntityConsignsToSet( kernel::SafePointer< kernel::Entity_ABC > entity, std::set< const Consign* >& requestedConsigns, std::set< const Consign* >& handledConsigns );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticConsignsWidget( const LogisticConsignsWidget& );            //!< Copy constructor
-    LogisticConsignsWidget& operator=( const LogisticConsignsWidget& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void showEvent( QShowEvent* );
-    virtual void NotifyUpdated( const Extension& consigns );
-    virtual void NotifyUpdated( const Consign& consigns );
-    virtual void NotifyUpdated( const Simulation::sEndTick& consigns );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void DisplayConsigns( const std::set< const Consign* >& consigns, QTreeWidgetItem& rootItem );
-    QTreeWidgetItem* FindTreeWidgetItem( const Consign& consign, QTreeWidgetItem* rootItem );
-    void UpdateConsign( const Consign& consign, QTreeWidgetItem* consignItem );
-    void UpdateConsigns();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QTreeWidgetItem* currentItem_;
-    bool needUpdating_;
-    //@}
-};
-
-// -----------------------------------------------------------------------------
-template< typename Consign, typename Extension >
-struct AddLogisticConsignsToSetFunctor
-{
-    std::set< const Consign* > requestedConsigns_;
-    std::set< const Consign* > handledConsigns_;
-
-    void Add( const kernel::Entity_ABC& entity )
+    virtual void NotifyUpdated( const Extension& consigns )
     {
-        const Extension* pConsigns = entity.Retrieve< Extension >();
-        if( pConsigns )
-        {
-            requestedConsigns_.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
-            handledConsigns_.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
-        }
+        if( selected_ && logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( *selected_, &consigns ) )
+            needUpdating_ = true;
     }
-};
-// =============================================================================
 
-#include "LogisticConsignsWidget.inl"
+    virtual void NotifyUpdated( const Request& consign )
+    {
+        SendHistoryRequest( consign );
+        DisplayRequest( consign );
+    }
+
+    virtual void NotifyUpdated( const typename Request::History& history )
+    {
+        DisplayHistory( history );
+    }
+
+    virtual void DisplayRequests()
+    {
+        Purge();
+        if( !selected_ )
+            return;
+        std::set< const Request* > consigns;
+        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, [ &consigns ]( const kernel::Entity_ABC& entity ) {
+            const Extension* pConsigns = entity.Retrieve< Extension >();
+            if( pConsigns )
+            {
+                consigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
+                consigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
+            }
+        } );
+
+        for( auto it = consigns.begin(); it != consigns.end(); ++it )
+            DisplayRequest( **it );
+    }
+    //@}
+};
 
 #endif // __LogisticConsignsWidget_h_

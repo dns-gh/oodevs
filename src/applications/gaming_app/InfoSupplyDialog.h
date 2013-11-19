@@ -16,16 +16,18 @@
 namespace kernel
 {
     class Controllers;
-    class DisplayExtractor_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
 {
     class ItemFactory_ABC;
+    class DisplayExtractor;
 }
 
 class SupplyStocksListView;
 class SupplyQuotasWidget;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  InfoSupplyDialog
@@ -39,7 +41,8 @@ class InfoSupplyDialog : public InfoDialog< SupplyStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
+             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                             , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     virtual ~InfoSupplyDialog();
     //@}
 

@@ -45,7 +45,7 @@ bool EventWidget_ABC::IsValid() const
 // Name: EventWidget_ABC::Trigger
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventWidget_ABC::Trigger() const
+void EventWidget_ABC::Trigger()
 {
     // NOTHING
 }

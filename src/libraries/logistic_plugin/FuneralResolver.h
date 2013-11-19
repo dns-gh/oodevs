@@ -36,9 +36,9 @@ public:
 private:
     virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     virtual void WriteConsign( ConsignWriter& output ) const;
-    void ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
+    bool ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
             const NameResolver_ABC& resolver );
-    void ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
+    bool ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
             const NameResolver_ABC& resolver );
 
 public:

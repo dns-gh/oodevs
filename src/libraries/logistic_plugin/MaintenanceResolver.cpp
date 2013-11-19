@@ -37,9 +37,10 @@ void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
+bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
         const NameResolver_ABC& nameResolver )
 {
+    PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -59,15 +60,17 @@ void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
         nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
+bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -84,31 +87,28 @@ void MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
     }
     if( msg.has_provider() )
     {
-        int providerId = msg.provider().id();
+        const uint32_t providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
         nameResolver.GetAgentName( providerId, provider_ );
+        state.handlerId_ = providerId;
     }
     if( msg.has_state() )
     {
         sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus eState = msg.state();
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
+        state.status_ = eState;
     }
+    return true;
 }
 
 bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_maintenance_handling_creation() )
-    {
-        ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
     if( message.message().has_log_maintenance_handling_update() )
-    {
-        ManageMessage( message.message().log_maintenance_handling_update(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_maintenance_handling_update(), resolver );
     return false;
 }
 

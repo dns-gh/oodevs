@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
     class Logger_ABC;
     class ObjectTypes;

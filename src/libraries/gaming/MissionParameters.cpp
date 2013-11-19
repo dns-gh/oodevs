@@ -34,6 +34,7 @@ MissionParameters::MissionParameters( kernel::Controller& controller, const acti
     , factory_( factory )
     , entityId_( entityId )
     , currentMission_( 0 )
+    , pLastAck_( 0 )
 {
     controller_.Register( *this );
 }
@@ -45,7 +46,6 @@ MissionParameters::MissionParameters( kernel::Controller& controller, const acti
 MissionParameters::~MissionParameters()
 {
     controller_.Unregister( *this );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -134,16 +134,45 @@ void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewpor
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
+// Name: MissionParameters::DoUpdateContext
 // Created: LGY 2013-05-14
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const sword::TaskCreationRequestAck& message )
+void MissionParameters::DoUpdateContext( const sword::TaskCreationRequestAck& message, int context )
 {
-    if( message.error_code() != sword::OrderAck_ErrorCode_no_error && currentMission_ )
+    UpdateMessage( message, context );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::DoUpdateContext
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+void MissionParameters::DoUpdateContext( const sword::FragOrderAck& message, int context )
+{
+    UpdateMessage( message, context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::UpdateMessage
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void MissionParameters::UpdateMessage( const T& message, int context )
+{
+    if( currentMission_ )
     {
-        Action_ABC* action = factory_.CreateInvalidAction( *currentMission_ );
-        action->Attach( *new ActionError( log_tools::Convert( message.error_code() ) ) );
-        Register( action->GetId(), *action );
+        if( message.error_code() == sword::OrderAck_ErrorCode_no_error )
+            pLastAck_.reset( factory_.CreateValidAction( *currentMission_, context ) );
+        else
+        {
+            Action_ABC* action = factory_.CreateInvalidAction( *currentMission_, context );
+            action->Attach( *new ActionError( log_tools::Convert( message.error_code() ) ) );
+            Register( action->GetId(), *action );
+
+            Action_ABC* ack = factory_.CreateInvalidAction( *currentMission_, context );
+            ack->Attach( *new ActionError( log_tools::Convert( message.error_code() ) ) );
+            pLastAck_.reset( ack );
+        }
         controller_.Update( *this );
     }
 }
@@ -168,4 +197,22 @@ void MissionParameters::NotifyDeleted( const actions::Action_ABC& action )
     const ActionTasker* tacker = action.Retrieve< ActionTasker >();
     if( tacker && tacker->GetTaskerId() == entityId_ )
         currentMission_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::GetEntityId
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+unsigned long MissionParameters::GetEntityId() const
+{
+    return entityId_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::GetLastMission
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+const actions::Action_ABC* MissionParameters::GetLastMission() const
+{
+    return pLastAck_.get();
 }

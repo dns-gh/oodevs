@@ -20,6 +20,7 @@
 
 namespace actions
 {
+    class Action_ABC;
     namespace gui
     {
         class InterfaceBuilder_ABC;
@@ -135,6 +136,8 @@ private slots:
     void OnDiscard();
     void OnSave();
     void OnSaveAs();
+    void GetMissionAck( const actions::Action_ABC& action );
+    void OnEventChanged();
     //@}
 
 private:
@@ -148,6 +151,8 @@ private:
     EventWidget_ABC* currentWidget_;
     EventWidget_ABC* detailWidget_;
     EventWidget_ABC* bottomWidget_;
+    QGroupBox* ackBox_;
+    QLabel* acknowledgedLabel_;
     int lastCurrentIndex_;
     std::auto_ptr< Event > event_;
     kernel::SafePointer< Event > selected_;

@@ -654,42 +654,6 @@
 <context>
     <name>Logistic</name>
     <message>
-        <source>Instruction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoy:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rank:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current packaging:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current state end:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logistic links/Superiors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -698,67 +662,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipment:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not diagnosed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Multiple recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>requested</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>granted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoyed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transporters provider:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

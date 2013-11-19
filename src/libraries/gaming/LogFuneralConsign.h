@@ -10,7 +10,7 @@
 #ifndef __LogFuneralConsign_h_
 #define __LogFuneralConsign_h_
 
-#include "clients_gui/Drawable_ABC.h"
+#include "LogisticsConsign_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Types.h"
 #include <tools/Resolver_ABC.h>
@@ -23,7 +23,6 @@ namespace kernel
     class Automat_ABC;
     class Formation_ABC;
     class Controller;
-    // class Displayer_ABC;
     class DotationType;
     class DisplayExtractor_ABC;
 }
@@ -36,7 +35,6 @@ namespace sword
 }
 
 class Simulation;
-class LogConsignDisplayer_ABC;
 
 // =============================================================================
 /** @class  LogFuneralConsign
@@ -44,7 +42,7 @@ class LogConsignDisplayer_ABC;
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogFuneralConsign : public gui::Drawable_ABC
+class LogFuneralConsign : public LogisticsConsign_ABC
 {
 public:
     //! @name Constructor / Destructor
@@ -61,13 +59,25 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::LogFuneralHandlingUpdate& message );
-    void Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    unsigned long GetId() const;
-    bool RefersToAgent( unsigned int id ) const;
+    virtual bool RefersToAgent( unsigned int id ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    E_HumanRank GetRank() const;
+    virtual const kernel::Agent_ABC* GetConsumer() const;
+    virtual const kernel::Entity_ABC* GetHandler() const;
+    const kernel::Agent_ABC* GetConvoy() const;
+    const kernel::DotationType* GetPackagingResource() const;
+    E_LogFuneralHandlingStatus GetStatus() const;
+    virtual QString GetStatusDisplay() const;
+    virtual QString GetStatusDisplay( int status ) const;
+    virtual QString GetCurrentStartedTime() const;
     //@}
 
 private:
+    kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
     //! @name Copy/Assignment
     //@{
     LogFuneralConsign( const LogFuneralConsign& );
@@ -82,19 +92,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    const Simulation& simulation_;
-    const unsigned int nID_;
     E_HumanRank rank_;
     kernel::Agent_ABC& consumer_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
     kernel::SafePointer< kernel::Agent_ABC > convoy_;
     const kernel::DotationType* packagingResource_;
-    unsigned int currentStateEndTick_;
     E_LogFuneralHandlingStatus nState_;
     //@}
 };

@@ -11,7 +11,6 @@
 #include "LogFuneralConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
-#include "LogConsignDisplayer_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -34,22 +33,19 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogFuneralConsign::LogFuneralConsign( Controller& controller, const sword::LogFuneralHandlingCreation& message, const tools::Resolver_ABC< Automat_ABC >& automatResolver,
                                       const tools::Resolver_ABC< Agent_ABC >& agentResolver,
-                                      const tools::Resolver_ABC< Formation_ABC >&   formationResolver,
+                                      const tools::Resolver_ABC< Formation_ABC >& formationResolver,
                                       const tools::Resolver_ABC< DotationType >& dotationResolver,
                                       const Simulation& simulation )
-    : controller_         ( controller )
+    : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , automatResolver_    ( automatResolver )
     , agentResolver_      ( agentResolver )
     , formationResolver_  ( formationResolver )
     , dotationResolver_   ( dotationResolver )
-    , simulation_         ( simulation )
-    , nID_                ( message.request().id() )
     , rank_               ( (E_HumanRank)message.rank() )
     , consumer_           ( agentResolver_.Get( message.unit().id() ) )
     , handler_            ( controller )
     , convoy_             ( controller )
     , packagingResource_  ( 0 )
-    , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
     , nState_             ( eLogFuneralHandlingStatus_Finished )
 {
     consumer_.Get< LogFuneralConsigns >().AddConsign( *this );
@@ -105,41 +101,6 @@ void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogFuneralConsign::Display
-// Created: AGE 2006-02-28
-// -----------------------------------------------------------------------------
-void LogFuneralConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
-{
-    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
-    displayer.DisplayTitle( consumer_.GetTooltip(), extractor.GetDisplayName( nState_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Consumer:" ), extractor.GetDisplayName( consumer_ ) );
-    if( handler_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Handler:" ), extractor.GetDisplayName( *handler_ ) );
-    if( convoy_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Convoy:" ), extractor.GetDisplayName( *convoy_ ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "Rank:" ), tools::ToString( rank_ ) );
-    if( packagingResource_ )
-        displayer.DisplayItem( tools::translate( "Logistic", "Current packaging:" ), extractor.GetDisplayName( packagingResource_->GetName() ) );
-    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
-    if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
-    else
-    {
-        unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
-        QDateTime curDate = simulation_.GetDateTime();
-
-        QString dateDisplay;
-        if( endDate.date() != curDate.date() )
-            dateDisplay += endDate.date().toString() + " ";
-        dateDisplay += endDate.time().toString();
-
-        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogFuneralConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
@@ -179,15 +140,6 @@ kernel::Entity_ABC* LogFuneralConsign::FindLogEntity(const sword::ParentEntity& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogFuneralConsign::GetId
-// Created: LDC 2013-09-16
-// -----------------------------------------------------------------------------
-unsigned long LogFuneralConsign::GetId() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogFuneralConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
@@ -196,4 +148,95 @@ bool LogFuneralConsign::RefersToAgent( unsigned int id ) const
     return consumer_.GetId() == id
         || ( handler_ && handler_->GetId() == id )
         || ( convoy_ && convoy_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetRank
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_HumanRank LogFuneralConsign::GetRank() const
+{
+    return rank_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetConsumer
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogFuneralConsign::GetConsumer() const
+{
+    return &consumer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetHandler
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogFuneralConsign::GetHandler() const
+{
+    return handler_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetConvoy
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::Agent_ABC* LogFuneralConsign::GetConvoy() const
+{
+    return convoy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetPackagingResource
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+const kernel::DotationType* LogFuneralConsign::GetPackagingResource() const
+{
+    return packagingResource_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetStatus
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+E_LogFuneralHandlingStatus LogFuneralConsign::GetStatus() const
+{
+    return nState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogFuneralConsign::GetStatusDisplay() const
+{
+    return tools::ToString( nState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetStatusDisplay
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogFuneralConsign::GetStatusDisplay( int status ) const
+{
+    if( 0 <= status && status < eNbrLogFuneralHandlingStatus )
+        return tools::ToString( static_cast< E_LogFuneralHandlingStatus >( status ) );
+    return QString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::GetCurrentStartedTime
+// Created: MMC 2013-09-16
+// -----------------------------------------------------------------------------
+QString LogFuneralConsign::GetCurrentStartedTime() const
+{
+    return GetStatusLastStarted( nState_ );
+}
+
+kernel::Entity_ABC* LogFuneralConsign::GetRequestHandler( uint32_t entityId ) const
+{
+    auto handler = automatResolver_.Find( entityId );
+    if( handler )
+        return handler;
+    return formationResolver_.Find( entityId );
 }

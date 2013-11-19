@@ -38,9 +38,10 @@ void FuneralConsignData::WriteConsign( ConsignWriter& output ) const
 // Name: FuneralConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
+bool FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
         const NameResolver_ABC& nameResolver )
 {
+    PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -51,15 +52,17 @@ void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingCreatio
     }
     if( msg.has_rank() )
         nameResolver.GetRankName( msg.rank(), rank_ );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FuneralConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
-void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
+bool FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate& msg,
         const NameResolver_ABC& nameResolver )
 {
+    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -72,15 +75,17 @@ void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate&
     {
         if( msg.handling_unit().has_automat() )
         {
-            int automatId = static_cast< int >( msg.handling_unit().automat().id() );
+            const uint32_t automatId = msg.handling_unit().automat().id();
             handlingUnitId_ = boost::lexical_cast< std::string >( automatId );
             nameResolver.GetAutomatName( automatId, handlingUnit_ );
+            state.handlerId_ = automatId;
         }
         else if( msg.handling_unit().has_formation() )
         {
-            int formationId = static_cast< int >( msg.handling_unit().formation().id() );
+            const uint32_t formationId = msg.handling_unit().formation().id();
             handlingUnitId_ = boost::lexical_cast< std::string >( formationId );
             nameResolver.GetFormationName( formationId, handlingUnit_ );
+            state.handlerId_ = formationId;
         }
     }
     if( msg.has_convoying_unit() )
@@ -102,22 +107,18 @@ void FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate&
         sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus eState = msg.state();
         nameResolver.GetFuneralName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
+        state.status_ = eState;
     }
+    return true;
 }
 
 bool FuneralConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
     if( message.message().has_log_funeral_handling_creation() )
-    {
-        ManageMessage( message.message().log_funeral_handling_creation(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_funeral_handling_creation(), resolver );
     if( message.message().has_log_funeral_handling_update() )
-    {
-        ManageMessage( message.message().log_funeral_handling_update(), resolver );
-        return true;
-    }
+        return ManageMessage( message.message().log_funeral_handling_update(), resolver );
     return false;
 }
 

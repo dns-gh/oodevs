@@ -195,6 +195,7 @@ template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnClear()
 {
     Clear();
+    Update();
     if( group_ && IsOptional() )
         group_->setChecked( false );
 }
@@ -496,5 +497,8 @@ void ListParameter< ConcreteElement >::Visit( const actions::Parameter_ABC& para
 template< typename ConcreteElement >
 bool ListParameter< ConcreteElement >::HasParameter( const Param_ABC& param ) const
 {
+    for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
+        if( it->first && it->first->HasParameter( param ) )
+            return true;
     return Param_ABC::HasParameter( param ) || potential_->HasParameter( param );
 }
