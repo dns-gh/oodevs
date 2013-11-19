@@ -3051,15 +3051,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>New actions timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New actions timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

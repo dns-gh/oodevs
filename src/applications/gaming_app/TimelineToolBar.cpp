@@ -19,13 +19,14 @@
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain )
+TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain,
+                                  const std::string& entityFilter )
     : QToolBar( parent )
     , config_( config )
+    , entityFilter_( entityFilter )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
-    horizontalView_->setCheckable( true );
     addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
     addSeparator();
@@ -101,4 +102,22 @@ void TimelineToolBar::OnSaveOrderFile()
         emit SaveOrderFileRequest( filename );
     if( filename.Extension() == ".timeline" )
         emit SaveTimelineSessionFileRequest( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::SetEntityFilter
+// Created: LGY 2013-11-19
+// -----------------------------------------------------------------------------
+void TimelineToolBar::SetEntityFilter( const std::string& filter )
+{
+    entityFilter_ = filter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetEntityFilter
+// Created: LGY 2013-11-19
+// -----------------------------------------------------------------------------
+const std::string& TimelineToolBar::GetEntityFilter() const
+{
+    return entityFilter_;
 }

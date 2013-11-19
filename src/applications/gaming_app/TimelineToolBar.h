@@ -28,8 +28,15 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain );
+             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain,
+                              const std::string& entityFilter );
     virtual ~TimelineToolBar();
+    //@}
+
+    //! @name Filters
+    //@{
+    const std::string& GetEntityFilter() const;
+    void SetEntityFilter( const std::string& filter );
     //@}
 
 signals:
@@ -62,6 +69,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     QAction* horizontalView_;
+    std::string entityFilter_;
     QString filters_;
     //@}
 };
