@@ -387,13 +387,13 @@ void EventManager::Select( const Decisions_ABC& decisions, const kernel::Entity_
 // Name: EventManager::Publish
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventManager::Publish( actions::ActionsModel& model, timeline::Event* event, bool planned ) const
+void EventManager::Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const
 {
     missionInterface_.SetPlanned( planned );
     if( currentMissionType_ == eMissionType_FragOrder )
-        missionInterface_.PublishFragOrder( model, event );
+        missionInterface_.PublishFragOrder( model, event, context );
     else
-        missionInterface_.PublishMissionOrder( model, event );
+        missionInterface_.PublishMissionOrder( model, event, context );
 }
 
 // -----------------------------------------------------------------------------

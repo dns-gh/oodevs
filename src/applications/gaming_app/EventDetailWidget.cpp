@@ -123,7 +123,7 @@ void EventDetailWidget::Fill( const Event& event )
 // Name: EventDetailWidget::Commit
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void EventDetailWidget::Commit( timeline::Event& event ) const
+void EventDetailWidget::Commit( timeline::Event& event )
 {
     assert( false ); // $$$$ ABR 2013-06-10: Not supposed to be used
     event.uuid = uuid_->text().toStdString();

@@ -96,7 +96,7 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 // Name: FragOrder::Publish
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void FragOrder::Publish( Publisher_ABC& publisher, int ) const
+void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::FragOrder message;
     if( entityTypeName_ == kernel::Automat_ABC::typeName_ )
@@ -108,5 +108,5 @@ void FragOrder::Publish( Publisher_ABC& publisher, int ) const
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }

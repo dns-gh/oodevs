@@ -94,7 +94,7 @@ void EventTaskWidget::Fill( const Event& event )
 // Name: EventTaskWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventTaskWidget::Commit( timeline::Event& event ) const
+void EventTaskWidget::Commit( timeline::Event& event )
 {
     event.name = label_->text().toStdString();
     event.info = description_->text().toStdString();

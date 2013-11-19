@@ -67,7 +67,7 @@ void EventMultimediaWidget::Fill( const Event& event )
 // Name: EventMultimediaWidget::Commit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventMultimediaWidget::Commit( timeline::Event& event ) const
+void EventMultimediaWidget::Commit( timeline::Event& event )
 {
     event.name = label_->text().toStdString();
     event.info = file_->text().toStdString();
