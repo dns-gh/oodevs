@@ -89,7 +89,6 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     alarmButton_->setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ) ) );
     alarmButton_->setFlat( true );
     alarmButton_->setFixedSize( 22, 22 );
-    alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
     QToolTip::add( alarmButton_, tools::translate( "ClockWidget", "Configure alarms" ) );
 
     vLayout->addWidget( editButton );
@@ -97,6 +96,8 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
     mainLayout->addLayout( vLayout );
 
     setLayout( mainLayout );
+
+    alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
 
     ClockEditDialog* editor = new ClockEditDialog( this, controllers, scheduler );
     AlarmsWidget* alarms = new AlarmsWidget( this, controllers, simulation );
