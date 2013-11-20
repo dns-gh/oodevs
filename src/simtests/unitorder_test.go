@@ -164,7 +164,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	c.Assert(automatOrder.Kind, Equals, swapi.AutomatOrder)
 
 	// The automat sends orders to its units
-	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, unitOrder := range data.Orders {
 			if unitOrder.TaskerId == unit.Id {
 				return unitOrder.ParentId == automatOrder.Id
@@ -172,7 +172,6 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 		}
 		return false
 	})
-	c.Assert(ok, Equals, true)
 
 	// Send again with an invalid last parameter, to check the mission has an
 	// optional additional parameter.
