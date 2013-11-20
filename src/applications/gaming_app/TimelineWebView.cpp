@@ -396,6 +396,10 @@ void TimelineWebView::NotifyUpdated( const kernel::Profile_ABC& profile )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnCreateClicked( int type )
 {
+    // Deselect current event
+    if( selected_ )
+        emit SelectEventSignal( "" );
+
     assert( type >= 0 && type < eNbrEventTypes );
     emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_, true );
 }
