@@ -65,8 +65,8 @@ namespace
         MOCK_METHOD( Purge, 0 );
         MOCK_METHOD( SetEntity, 1 );
         MOCK_METHOD( SetPlanned, 1 );
-        MOCK_METHOD( PublishFragOrder, 2 );
-        MOCK_METHOD( PublishMissionOrder, 2 );
+        MOCK_METHOD( PublishFragOrder, 3 );
+        MOCK_METHOD( PublishMissionOrder, 3 );
         MOCK_METHOD( FillFrom, 1 );
     };
 
