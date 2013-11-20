@@ -26,9 +26,12 @@ class MaintenanceStatusWidget : public LogisticStatusWidget_ABC< kernel::Mainten
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers );
     virtual ~MaintenanceStatusWidget();
     //@}
+
+private:
+    virtual void OnUpdated( const kernel::MaintenanceStates_ABC& states );
 };
 
 // =============================================================================
@@ -42,9 +45,12 @@ class MedicalStatusWidget : public LogisticStatusWidget_ABC< MedicalStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             MedicalStatusWidget( QWidget* parent, kernel::Controllers& controllers );
     virtual ~MedicalStatusWidget();
     //@}
+
+private:
+    virtual void OnUpdated( const MedicalStates& states );
 };
 
 // =============================================================================
@@ -58,9 +64,12 @@ class SupplyStatusWidget : public LogisticStatusWidget_ABC< SupplyStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             SupplyStatusWidget( QWidget* parent, kernel::Controllers& controllers );
     virtual ~SupplyStatusWidget();
     //@}
+
+private:
+    virtual void OnUpdated( const SupplyStates& states );
 };
 
 #endif // __LogisticStatusWidgets_h_

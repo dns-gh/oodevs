@@ -693,14 +693,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Working scheme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -737,14 +729,6 @@
     </message>
     <message>
         <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1093,6 +1077,13 @@
     </message>
 </context>
 <context>
+    <name>ObjectKnowledgePanel</name>
+    <message>
+        <source>Known objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Profile</name>
     <message>
         <source>Too many connections</source>
@@ -1192,14 +1183,6 @@
     </message>
     <message>
         <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

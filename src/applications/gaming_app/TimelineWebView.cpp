@@ -17,16 +17,9 @@
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTiming.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Filter_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Inhabitant_ABC.h"
-#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/EventAction.h"
@@ -46,7 +39,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign.hpp>
 #include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView constructor
@@ -128,7 +120,7 @@ void TimelineWebView::Connect()
     next.widget = timelineWidget_.get();
     auto query = boost::assign::map_list_of
         ( "lang",          tools::Language::Current() )
-        ( "sword_filter",  entityFilter_ )
+        ( "sword_filter",  "" )
         ( "sword_profile", lastProfile_ );
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
@@ -370,53 +362,14 @@ void TimelineWebView::SetProfile( const QString& profile )
     serverProfile_ = lastProfile_;
 }
 
-namespace
-{
-    std::string GetEntityFilter( const kernel::Filter_ABC& filter )
-    {
-        auto entity = filter.GetFilteredEntity();
-        if( !entity )
-            return std::string();
-        const auto& type = entity->GetTypeName();
-        std::string query;
-        if( type == kernel::Agent_ABC::typeName_ )
-            query = "u:";
-        else if( type == kernel::Automat_ABC::typeName_ )
-            query = "a:";
-        else if( type == kernel::Formation_ABC::typeName_ )
-            query = "f:";
-        else if( type == kernel::Team_ABC::typeName_ )
-            query = "p:";
-        else if( type == kernel::Inhabitant_ABC::typeName_ )
-            query = "i:";
-        else if( type == kernel::Population_ABC::typeName_ )
-            query = "c:";
-        else
-            MT_LOG_ERROR_MSG( "unsupported entity type " + type );
-        if( !query.empty() )
-            query += boost::lexical_cast< std::string >( entity->GetId() );
-        return query;
-    }
-}
-
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::NotifyUpdated
-// Created: BAX 2013-11-14
+// Name: TimelineWebView::UpdateEntityFilter
+// Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::NotifyUpdated( const kernel::Filter_ABC& filter )
+void TimelineWebView::UpdateEntityFilter( const std::string& filter )
 {
-    entityFilter_ = GetEntityFilter( filter );
     if( server_ )
-        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", entityFilter_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineWebView::NotifyCreated
-// Created: BAX 2013-11-14
-// -----------------------------------------------------------------------------
-void TimelineWebView::NotifyCreated( const kernel::Filter_ABC& filter )
-{
-    NotifyUpdated( filter );
+        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", filter ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,14 +13,22 @@
 #include "Config.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
-
+#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
 #include <timeline/api.h>
+#include <boost/lexical_cast.hpp>
 
-int TimelineDockWidget::maxTabNumber_ = -1;
+int TimelineDockWidget::maxTabNumber_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: TimelineDockWidget constructor
@@ -52,8 +60,9 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     // Content
     tabWidget_ = new QTabWidget();
     tabWidget_->setVisible( false );
+
     webView_ = new TimelineWebView( 0, config, controllers, model, *cfg_ );
-    AddView();
+    AddView( true );
 
     // Main Layout
     QWidget* mainWidget = new QWidget();
@@ -69,6 +78,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     connect( this, SIGNAL( SelectEvent( const std::string& ) ), webView_, SLOT( SelectEvent( const std::string& ) ) );
     connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
+    connect( tabWidget_, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentChanged( int ) ) );
     connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
@@ -99,6 +109,9 @@ void TimelineDockWidget::Connect()
 void TimelineDockWidget::Disconnect()
 {
     tabWidget_->setVisible( false );
+    for( int index = 1; index < tabWidget_->count(); ++index )
+        tabWidget_->removeTab( index );
+    maxTabNumber_= 0;
     if( webView_ )
         webView_->Disconnect();
 }
@@ -107,9 +120,16 @@ void TimelineDockWidget::Disconnect()
 // Name: TimelineDockWidget::AddFilteredView
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::AddView()
+void TimelineDockWidget::AddView( bool main )
 {
-    TimelineToolBar* toolBar = new TimelineToolBar( 0, config_, ++maxTabNumber_ == 0 );
+    std::string filter;
+    if( !main )
+    {
+        if( TimelineToolBar* mainToolBar = static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) )
+            filter = mainToolBar->GetEntityFilter();
+    }
+
+    TimelineToolBar* toolBar = new TimelineToolBar( 0, config_, main, filter );
     connect( toolBar, SIGNAL( CenterView() ), webView_, SLOT( OnCenterView() ) );
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );
@@ -119,8 +139,9 @@ void TimelineDockWidget::AddView()
     connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( SetLayoutOrientation( bool ) ), webView_, SLOT( OnSetLayoutOrientation( bool ) ) );
 
-    tabWidget_->addTab( toolBar, ( maxTabNumber_ == 0 ) ? tr( "Main" ) : tr( "View %1" ).arg( maxTabNumber_ ) );
-    toolbars_.push_back( std::make_pair( maxTabNumber_, toolBar ) );
+    int index = tabWidget_->addTab( toolBar, "" );
+    tabWidget_->setTabText( index, main ? tr( "Main" ): tr( "View %1" ).arg( ++maxTabNumber_ ) );
+    tabWidget_->setCurrentIndex( index );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,18 +152,67 @@ void TimelineDockWidget::RemoveCurrentView()
 {
     int currentIndex = tabWidget_->currentIndex();
     if( currentIndex != 0 )
-    {
-        QWidget* currentWidget = tabWidget_->currentWidget();
-        maxTabNumber_ = -1;
-        for( auto it = toolbars_.begin(); it != toolbars_.end(); )
-            if( it->second == currentWidget )
-                it = toolbars_.erase( it );
-            else
-            {
-                if( maxTabNumber_ < it->first )
-                    maxTabNumber_ = it->first;
-                ++it;
-            }
         tabWidget_->removeTab( currentIndex );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnCurrentChanged
+// Created: LGY 2013-11-19
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnCurrentChanged( int index )
+{
+    if( TimelineToolBar* toolbar = static_cast< TimelineToolBar* >( tabWidget_->widget( index ) ) )
+        webView_->UpdateEntityFilter( toolbar->GetEntityFilter() );
+}
+
+namespace
+{
+    std::string GetEntityFilter( const kernel::Filter_ABC& filter )
+    {
+        auto entity = filter.GetFilteredEntity();
+        if( !entity )
+            return std::string();
+        const auto& type = entity->GetTypeName();
+        std::string query;
+        if( type == kernel::Agent_ABC::typeName_ )
+            query = "u:";
+        else if( type == kernel::Automat_ABC::typeName_ )
+            query = "a:";
+        else if( type == kernel::Formation_ABC::typeName_ )
+            query = "f:";
+        else if( type == kernel::Team_ABC::typeName_ )
+            query = "p:";
+        else if( type == kernel::Inhabitant_ABC::typeName_ )
+            query = "i:";
+        else if( type == kernel::Population_ABC::typeName_ )
+            query = "c:";
+        else
+            MT_LOG_ERROR_MSG( "unsupported entity type " + type );
+        if( !query.empty() )
+            query += boost::lexical_cast< std::string >( entity->GetId() );
+        return query;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnCurrentChanged
+// Created: LGY 2013-11-19
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::NotifyCreated( const kernel::Filter_ABC& filter )
+{
+    NotifyUpdated( filter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnCurrentChanged
+// Created: LGY 2013-11-19
+// -----------------------------------------------------------------------------
+void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
+{
+    if( TimelineToolBar* main = static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) )
+    {
+        main->SetEntityFilter( GetEntityFilter( filter ) );
+        if( tabWidget_->currentIndex() == 0 )
+            webView_->UpdateEntityFilter( main->GetEntityFilter() );
     }
 }

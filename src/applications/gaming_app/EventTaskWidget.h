@@ -40,6 +40,7 @@ private slots:
     //! @name Slots
     //@{
     void OnShow();
+    void OnUrlChanged();
     //@}
 
 private:
@@ -48,10 +49,10 @@ private:
     QLineEdit* label_;
     QTextEdit* description_;
     QLineEdit* url_;
-    QCheckBox* apply_;
     QLabel* bytes_;
     QPushButton* showButton_;
     QTextEdit* payload_;
+    QLabel* payloadLabel_;
     //@}
 };
 

@@ -689,14 +689,6 @@
         <translation>Etat du système</translation>
     </message>
     <message>
-        <source>Enabled</source>
-        <translation>Activée</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Désactivée</translation>
-    </message>
-    <message>
         <source>Working scheme</source>
         <translation>Régime de travail</translation>
     </message>
@@ -734,14 +726,6 @@
     <message>
         <source>System status</source>
         <translation>Etat du système</translation>
-    </message>
-    <message>
-        <source>Enabled</source>
-        <translation>Activée</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Désactivée</translation>
     </message>
     <message>
         <source>Priorities</source>
@@ -1093,6 +1077,13 @@
     </message>
 </context>
 <context>
+    <name>ObjectKnowledgePanel</name>
+    <message>
+        <source>Known objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Profile</name>
     <message>
         <source>Too many connections</source>
@@ -1193,14 +1184,6 @@
     <message>
         <source>System status</source>
         <translation>Etat du système</translation>
-    </message>
-    <message>
-        <source>Enabled</source>
-        <translation>Activée</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Désactivée</translation>
     </message>
 </context>
 <context>

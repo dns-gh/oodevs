@@ -27,6 +27,7 @@ namespace gui
 }
 
 class Publisher_ABC;
+class MedicalStatusWidget;
 
 // =============================================================================
 /** @class  InfoMedicalDialog
@@ -40,8 +41,8 @@ class InfoMedicalDialog : public InfoDialog< MedicalStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                              , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+             InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
+                                gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     virtual ~InfoMedicalDialog();
     //@}
 

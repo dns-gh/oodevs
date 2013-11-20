@@ -25,15 +25,14 @@ EventTaskWidget::EventTaskWidget()
     label_ = new QLineEdit();
     description_ = new QTextEdit();
     url_ = new QLineEdit();
-    apply_ = new QCheckBox( tr( "Apply" ) );
-    apply_->setEnabled( false );
+    connect( url_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrlChanged() ) );
     bytes_ = new QLabel();
     bytes_->setEnabled( false );
     showButton_ = new QPushButton( tr( "Show" ) );
     connect( showButton_, SIGNAL( clicked() ), this, SLOT( OnShow() ) );
     payload_ = new QTextEdit();
-    payload_->setFixedHeight( 50 );
     payload_->setVisible( false );
+    payloadLabel_ = new QLabel( tr( "Base64 Payload" ) );
 
     QGridLayout* gridLayout = new QGridLayout( 3, 2 );
     gridLayout->setSpacing( 5 );
@@ -43,21 +42,22 @@ EventTaskWidget::EventTaskWidget()
     gridLayout->addWidget( description_, 1, 1 );
 
     QGroupBox* actionBox = new QGroupBox( tr( "Action" ) );
-    QGridLayout* actionLayout = new QGridLayout( actionBox, 4, 3 );
-    actionLayout->setColStretch( 1, 1 );
-    actionLayout->setColStretch( 2, 1 );
-    actionLayout->setMargin( 5 );
-    actionLayout->setSpacing( 5 );
-    actionLayout->addWidget( new QLabel( tr( "Url" ) ), 0, 0, Qt::AlignCenter );
-    actionLayout->addWidget( url_, 0, 1, 1, 2 );
-    actionLayout->addWidget( apply_, 1, 0, Qt::AlignCenter );
-    actionLayout->addWidget( new QLabel( tr( "Payload" ) ), 2, 0, Qt::AlignCenter );
-    actionLayout->addWidget( bytes_, 2, 1, Qt::AlignCenter );
-    actionLayout->addWidget( showButton_, 2, 2, Qt::AlignCenter );
-    actionLayout->addWidget( payload_, 4, 0, 1, 3, Qt::AlignCenter );
+    QVBoxLayout* actionLayout = new QVBoxLayout( actionBox );
+    QHBoxLayout* urlLayout = new QHBoxLayout( actionLayout );
+    urlLayout->addWidget( new QLabel( tr( "Url" ) ) );
+    urlLayout->addWidget( url_ );
+
+    QHBoxLayout* payloadLayout = new QHBoxLayout( actionLayout );
+
+    payloadLayout->addWidget( payloadLabel_ );
+    payloadLayout->addWidget( bytes_ );
+    payloadLayout->addWidget( showButton_ );
+
+    actionLayout->addWidget( payload_ );
 
     mainLayout_->addLayout( gridLayout );
     mainLayout_->addWidget( actionBox );
+    OnUrlChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -79,14 +79,13 @@ void EventTaskWidget::Fill( const Event& event )
     label_->setText( QString::fromStdString( timelineEvent.name ) );
     description_->setText( QString::fromStdString( timelineEvent.info ) );
     url_->setText( QString::fromStdString( timelineEvent.action.target ) );
-    apply_->setChecked( timelineEvent.action.apply );
     payload_->clear();
     bytes_->clear();
-    if( !timelineEvent.action.payload.empty() )
+    if( !timelineEvent.action.payload.empty() && !url_->text().isEmpty() )
     {
-        std::string data = tools::BinaryToBase64( timelineEvent.action.payload );
+        QString data = QByteArray::fromBase64( timelineEvent.action.payload.c_str() );
         bytes_->setText( QString::number( data.size() ) + QString( " bytes" ) );
-        payload_->setText( QString::fromStdString( data ) );
+        payload_->setText( data );
     }
 }
 
@@ -99,8 +98,12 @@ void EventTaskWidget::Commit( timeline::Event& event )
     event.name = label_->text().toStdString();
     event.info = description_->text().toStdString();
     event.action.target = url_->text().toStdString();
-    event.action.apply = apply_->checkState() == Qt::Checked;
-    event.action.payload = tools::Base64ToBinary( payload_->text().toStdString() );
+    event.action.apply = false;
+    if( !event.action.target.empty() )
+    {
+        QByteArray data( payload_->text().toStdString().c_str() );
+        event.action.payload = data.toBase64().data();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +115,18 @@ void EventTaskWidget::OnShow()
     bool visible = payload_->isVisible();
     showButton_->setText( visible ? tr( "Show" ) : tr( "Hide" ) );
     payload_->setVisible( !visible );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnUrlChanged
+// Created: LGY 2013-11-18
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnUrlChanged()
+{
+    bool valid = !url_->text().isEmpty();
+    showButton_->setVisible( valid );
+    bytes_->setVisible( valid );
+    payloadLabel_->setVisible( valid );
+    if( !valid )
+        payload_->setVisible( valid );
 }

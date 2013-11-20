@@ -48,8 +48,8 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
     //AddButton( unitStateDialog, MakePixmap( "composition" ), unitStateDialog->GetEquipmentToolTip(), SLOT( ToggleEquipment( bool ) ), SIGNAL( OnToggleEquipment( bool ) ) );
     AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
-    AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, factory, extractor, profile, publisher );
-    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, factory, extractor, profile, publisher );
+    AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, extractor, profile, publisher );
+    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, extractor, profile, publisher );
     AddButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, publisher );
     AddButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, publisher );
 }

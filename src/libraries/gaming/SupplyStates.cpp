@@ -109,9 +109,8 @@ Dotation* SupplyStates::GetConnectedNetworkStock() const
 void SupplyStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( "" )
-                .Display( tools::translate( "SupplyStates", "System status" ),
-                    bChainEnabled_ ? tools::translate( "SupplyStates", "Enabled" )
-                                   : tools::translate( "SupplyStates", "Disabled" ) );
+        .Display( tools::translate( "SupplyStates", "System status" ),
+            tools::translate( "SupplyStates", bChainEnabled_ ? "Enabled" : "Disabled" ) );
 }
 
 // -----------------------------------------------------------------------------

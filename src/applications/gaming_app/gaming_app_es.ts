@@ -766,19 +766,15 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Payload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base64 Payload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1127,6 +1123,10 @@ Reason: %3
         <source>Equipment availabilities</source>
         <translation>Equipos disponibles</translation>
     </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Estado de sistema</translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -1141,6 +1141,10 @@ Reason: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Equipos disponibles</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Estado de sistema</translation>
     </message>
 </context>
 <context>
@@ -1221,6 +1225,10 @@ Reason: %3
     <message>
         <source>Instructions</source>
         <translation type="unfinished">Consignas</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation type="unfinished">Estado de sistema</translation>
     </message>
 </context>
 <context>
@@ -1620,29 +1628,6 @@ Reason: %3
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LogisticHistoryDialog</name>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reduce history to the last simulated days :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2371,10 +2356,6 @@ This data can&apos;t be projected.</source>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Logistic history</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MessagePanel</name>
@@ -3074,13 +3055,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Chain status</source>
-        <translation>Estado de sistema de abastecimiento</translation>
-    </message>
-</context>
-<context>
     <name>SupplyStocksListView</name>
     <message>
         <source>Stock</source>
@@ -3233,15 +3207,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>New actions timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New actions timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

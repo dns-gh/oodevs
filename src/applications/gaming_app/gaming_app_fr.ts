@@ -768,20 +768,16 @@ Raison: %3
         <translation>Action</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Payload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show</source>
         <translation>Afficher</translation>
     </message>
     <message>
         <source>Hide</source>
         <translation>Cacher</translation>
+    </message>
+    <message>
+        <source>Base64 Payload</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1129,6 +1125,10 @@ Raison: %3
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
     </message>
+    <message>
+        <source>Chain status</source>
+        <translation>Etat de la chaîne</translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -1143,6 +1143,10 @@ Raison: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation>Etat de la chaîne</translation>
     </message>
 </context>
 <context>
@@ -1223,6 +1227,10 @@ Raison: %3
     <message>
         <source>Instructions</source>
         <translation>Consignes</translation>
+    </message>
+    <message>
+        <source>Chain status</source>
+        <translation>Etat de la chaîne</translation>
     </message>
 </context>
 <context>
@@ -1623,29 +1631,6 @@ Raison: %3
     <message>
         <source>Unknown</source>
         <translation>Inconnu</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticHistoryDialog</name>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Logistic history</source>
-        <translation>Historique logistique</translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation>Actions</translation>
-    </message>
-    <message>
-        <source>Reduce history to the last simulated days :</source>
-        <translation>Réduire l&apos;historique aux derniers jours simulés : </translation>
     </message>
 </context>
 <context>
@@ -2374,10 +2359,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>&amp;Settings</source>
         <translation>&amp;Réglages</translation>
     </message>
-    <message>
-        <source>Logistic history</source>
-        <translation>Historique logistique</translation>
-    </message>
 </context>
 <context>
     <name>MessagePanel</name>
@@ -3081,13 +3062,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Chain status</source>
-        <translation>Etat de la chaîne ravitaillement</translation>
-    </message>
-</context>
-<context>
     <name>SupplyStocksListView</name>
     <message>
         <source>Stock</source>
@@ -3240,16 +3214,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
     <message>
+        <source>New actions timeline</source>
+        <translation>Nouvelle chronologie des actions</translation>
+    </message>
+    <message>
         <source>Main</source>
         <translation>Principale</translation>
     </message>
     <message>
         <source>View %1</source>
         <translation>Vue %1</translation>
-    </message>
-    <message>
-        <source>New actions timeline</source>
-        <translation>Nouvelle chronologie des actions</translation>
     </message>
 </context>
 <context>

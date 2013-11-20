@@ -27,6 +27,7 @@ namespace gui
 
 class SupplyStocksListView;
 class SupplyQuotasWidget;
+class SupplyStatusWidget;
 class Publisher_ABC;
 
 // =============================================================================
