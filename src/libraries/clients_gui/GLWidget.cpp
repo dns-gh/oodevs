@@ -573,6 +573,8 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawPolygon( const T_PointVector& points ) const
 {
+    if( points.empty() )
+        return;
     glEnable( GL_STENCIL_TEST );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
     glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
