@@ -408,6 +408,7 @@ const (
 
 type Order struct {
 	Id          uint32
+	ParentId    uint32
 	Kind        OrderKind
 	MissionType uint32
 	TaskerId    uint32

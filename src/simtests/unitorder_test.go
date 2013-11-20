@@ -129,7 +129,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	limit21 := swapi.Point{X: -15.8066, Y: 28.3156}
 	limit22 := swapi.Point{X: -15.7941, Y: 28.3410}
 
-	_, err := client.CreateUnit(automat.Id, UnitType, from)
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
 	// Test trailing optional parameters can be left out
@@ -159,9 +159,19 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	err = client.SetAutomatMode(automat.Id, true)
 	c.Assert(err, IsNil)
 
-	order, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
+	automatOrder, err := client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
 	c.Assert(err, IsNil)
-	c.Assert(order.Kind, Equals, swapi.AutomatOrder)
+	c.Assert(automatOrder.Kind, Equals, swapi.AutomatOrder)
+
+	// The automat sends orders to its units
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, unitOrder := range data.Orders {
+			if unitOrder.TaskerId == unit.Id {
+				return unitOrder.ParentId == automatOrder.Id
+			}
+		}
+		return false
+	})
 
 	// Send again with an invalid last parameter, to check the mission has an
 	// optional additional parameter.

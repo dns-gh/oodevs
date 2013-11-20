@@ -868,12 +868,13 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	return nil
 }
 
-func (model *Model) addOrder(id, missionType, tasker uint32, kind OrderKind) error {
+func (model *Model) addOrder(id, parentId, missionType, tasker uint32, kind OrderKind) error {
 	if missionType == 0 {
 		return nil
 	}
 	order := &Order{
 		Id:          id,
+		ParentId:    parentId,
 		MissionType: missionType,
 		TaskerId:    tasker,
 		Kind:        kind,
@@ -889,7 +890,7 @@ func (model *Model) handleUnitOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), UnitOrder)
+	return model.addOrder(mm.GetId(), mm.GetParent(), mm.GetType().GetId(), mm.GetTasker().GetId(), UnitOrder)
 }
 
 func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
@@ -897,7 +898,7 @@ func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), AutomatOrder)
+	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(), mm.GetTasker().GetId(), AutomatOrder)
 }
 
 func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
@@ -905,7 +906,7 @@ func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(), mm.GetTasker().GetId(), CrowdOrder)
+	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(), mm.GetTasker().GetId(), CrowdOrder)
 }
 
 func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
@@ -913,7 +914,7 @@ func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetType().GetId(),
+	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(),
 		GetTaskerId(mm.GetTasker()), FragOrder)
 }
 
