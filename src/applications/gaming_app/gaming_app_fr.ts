@@ -1131,7 +1131,7 @@ Raison: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
+        <translation>Etat de la chaîne</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1150,7 @@ Raison: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
+        <translation>Etat de la chaîne</translation>
     </message>
 </context>
 <context>
@@ -1234,7 +1234,7 @@ Raison: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Etat de la chaîne ravitaillement</translation>
+        <translation>Etat de la chaîne</translation>
     </message>
 </context>
 <context>

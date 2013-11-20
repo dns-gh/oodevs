@@ -1129,7 +1129,7 @@ Reason: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Estado de sistema de abastecimiento</translation>
+        <translation type="unfinished">Estado de sistema</translation>
     </message>
 </context>
 <context>
@@ -1148,7 +1148,7 @@ Reason: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Estado de sistema de abastecimiento</translation>
+        <translation type="unfinished">Estado de sistema</translation>
     </message>
 </context>
 <context>
@@ -1232,7 +1232,7 @@ Reason: %3
     </message>
     <message>
         <source>Chain status</source>
-        <translation type="unfinished">Estado de sistema de abastecimiento</translation>
+        <translation type="unfinished">Estado de sistema</translation>
     </message>
 </context>
 <context>
