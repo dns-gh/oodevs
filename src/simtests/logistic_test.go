@@ -211,7 +211,7 @@ func (s *TestSuite) TestLogisticPlugin(c *C) {
  *** ; *** ; *** ;  ; Logistic combat train [23] ; Logistic combat train [23] ;  ;  ; *** `)
 }
 
-type logisticStateKey struct {
+type LogisticStateKey struct {
 	RequestId uint32
 	Id        uint32
 }
@@ -236,10 +236,10 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	states, err := client.GetLogisticHistory(handlingId, handlingId, invalidId)
 	c.Assert(err, IsNil)
 	c.Assert(len(states), Greater, 0)
-	uniqueKeys := map[logisticStateKey]struct{}{}
+	uniqueKeys := map[LogisticStateKey]struct{}{}
 	for _, s := range states {
 		c.Assert(s.RequestId, Equals, handlingId)
-		key := logisticStateKey{s.RequestId, s.Id}
+		key := LogisticStateKey{s.RequestId, s.Id}
 		_, ok := uniqueKeys[key]
 		c.Assert(ok, Equals, false)
 		uniqueKeys[key] = struct{}{}
