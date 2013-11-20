@@ -11,7 +11,6 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"swapi"
-	"time"
 )
 
 const (
@@ -165,7 +164,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	c.Assert(automatOrder.Kind, Equals, swapi.AutomatOrder)
 
 	// The automat sends orders to its units
-	ok := client.Model.WaitConditionTimeout(20*time.Second, func(data *swapi.ModelData) bool {
+	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
 		for _, unitOrder := range data.Orders {
 			if unitOrder.TaskerId == unit.Id {
 				return unitOrder.ParentId == automatOrder.Id
