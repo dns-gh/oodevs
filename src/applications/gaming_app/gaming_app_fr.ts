@@ -3240,16 +3240,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
     <message>
+        <source>New actions timeline</source>
+        <translation>Nouvelle chronologie des actions</translation>
+    </message>
+    <message>
         <source>Main</source>
         <translation>Principale</translation>
     </message>
     <message>
         <source>View %1</source>
         <translation>Vue %1</translation>
-    </message>
-    <message>
-        <source>New actions timeline</source>
-        <translation>Nouvelle chronologie des actions</translation>
     </message>
 </context>
 <context>
