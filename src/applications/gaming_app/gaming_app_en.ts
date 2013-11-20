@@ -1624,29 +1624,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>LogisticHistoryDialog</name>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Logistic history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reduce history to the last simulated days :</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -2369,10 +2346,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic history</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
