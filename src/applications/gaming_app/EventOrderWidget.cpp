@@ -160,7 +160,6 @@ void EventOrderWidget::Purge()
     SetTarget( 0 );
     PurgeComboBox( *missionTypeCombo_ );
     PurgeComboBox( *missionCombo_ );
-    Reset();
 }
 
 // -----------------------------------------------------------------------------
