@@ -760,28 +760,8 @@ Raison: %3
         <translation>Description</translation>
     </message>
     <message>
-        <source>Url</source>
-        <translation>Url</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation>Action</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Payload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Afficher</translation>
-    </message>
-    <message>
-        <source>Hide</source>
-        <translation>Cacher</translation>
+        <source>Profiles</source>
+        <translation type="unfinished">Profils</translation>
     </message>
 </context>
 <context>

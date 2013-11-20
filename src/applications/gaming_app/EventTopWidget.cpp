@@ -50,11 +50,14 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     QFont font( "Arial", 12, QFont::Bold );
     title_ = new QLabel();
     title_->setFont( font );
+    source_ = new QLabel();
+    source_->setFont( font );
 
     QHBoxLayout* headerLayout = new QHBoxLayout();
     headerLayout->setSpacing( 5 );
     headerLayout->addWidget( title_ );
     headerLayout->addStretch( 1 );
+    headerLayout->addWidget( source_ );
 
     // Dates
     beginDateTimeEdit_ = new gui::RichDateTimeEdit( "begin-date" );
@@ -116,6 +119,7 @@ EventTopWidget::~EventTopWidget()
 void EventTopWidget::Fill( const Event& event )
 {
     title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( event.GetType() ) ) );
+    source_->setText( QString::fromStdString( event.GetEvent().action.target ) );
     saveAction_->setEnabled( !event.GetEvent().done );
     saveAsAction_->setEnabled( editing_ );
 

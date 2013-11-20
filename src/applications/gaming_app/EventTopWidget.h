@@ -82,6 +82,7 @@ private:
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
     QLabel* title_;
+    QLabel* source_;
     QLabel* startDateLabel_;
     QAction* saveAction_;
     QAction* saveAsAction_;
