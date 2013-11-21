@@ -53,6 +53,8 @@ signals:
 
     void LoadTimelineSessionFileRequest( const tools::Path& path );
     void SaveTimelineSessionFileRequest( const tools::Path& path );
+
+    void EngagedFilterToggled( bool checked );
     //@}
 
 public slots:
@@ -62,6 +64,7 @@ public slots:
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
+    void OnEngagedFilterToggled( bool toggled );
     //@}
 
 private:
@@ -71,6 +74,7 @@ private:
     QAction* horizontalView_;
     std::string entityFilter_;
     QString filters_;
+    bool engaged_;
     bool horizontalMode_;
     //@}
 };

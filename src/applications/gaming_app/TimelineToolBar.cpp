@@ -26,6 +26,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     , entityFilter_( entityFilter )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
     , horizontalMode_( true )
+    , engaged_( false )
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
@@ -66,9 +67,12 @@ void TimelineToolBar::OnSwitchView()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnFilterSelection()
 {
-    // $$$$ ABR 2013-05-28: Use a better trick than a QMenu to allow multiple selection in only one click
     QMenu menu( this );
-    menu.addAction( "Add filters here" );
+    QAction* engagedFilter = new QAction( tr( "Filter engaged units" ), this );
+    connect( engagedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
+    engagedFilter->setCheckable( true );
+    engagedFilter->setChecked( engaged_ );
+    menu.addAction( engagedFilter );
     menu.exec( QCursor::pos() );
 }
 
@@ -103,6 +107,16 @@ void TimelineToolBar::OnSaveOrderFile()
         emit SaveOrderFileRequest( filename );
     if( filename.Extension() == ".timeline" )
         emit SaveTimelineSessionFileRequest( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnEngagedFilterToggled
+// Created: SLI 2013-11-20
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnEngagedFilterToggled( bool checked )
+{
+    engaged_ = checked;
+    emit EngagedFilterToggled( checked );
 }
 
 // -----------------------------------------------------------------------------

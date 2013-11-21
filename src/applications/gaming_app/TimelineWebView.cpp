@@ -602,3 +602,15 @@ void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
     auto query = boost::assign::map_list_of( "horizontal", horizontal ? "true" : "false" );
     server_->UpdateQuery( query );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnEngagedFilterToggled
+// Created: SLI 2013-11-20
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnEngagedFilterToggled( bool checked )
+{
+    if( !server_ )
+        return;
+    auto query = boost::assign::map_list_of( "sword_filter_engaged", checked ? "true" : "false" );
+    server_->UpdateQuery( query );
+}

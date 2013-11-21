@@ -127,6 +127,8 @@ private slots:
     void OnSaveOrderFileRequested( const tools::Path& filename );
     void OnLoadTimelineSessionFileRequested( const tools::Path& filename );
     void OnSaveTimelineSessionFileRequested( const tools::Path& filename );
+
+    void OnEngagedFilterToggled( bool checked );
     //@}
 
 private:
