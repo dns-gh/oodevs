@@ -130,9 +130,7 @@ func assertIsPrefixed(c *C, s, prefix string) {
 	c.Assert(strings.Join(lines, "\n"), Equals, strings.Join(prefixes, "\n"))
 }
 
-func (s *TestSuite) TestLogisticPlugin(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
-	defer sim.Stop()
+func initLogisticEvents(c *C, client *swapi.Client) {
 	data := client.Model.GetData()
 	unit := getSomeUnitByName(c, data, "ARMOR.MBT")
 
@@ -184,6 +182,12 @@ func (s *TestSuite) TestLogisticPlugin(c *C) {
 	}
 	err = client.ChangeDotation(unit.Id, []*swapi.ResourceDotation{&resource})
 	c.Assert(err, IsNil)
+}
+
+func (s *TestSuite) TestLogisticPlugin(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	initLogisticEvents(c, client)
 
 	// Expected log lines below are the minimum subset of events which must have
 	// been logged in the tested tick range. More can be logged in practice.
@@ -205,4 +209,44 @@ func (s *TestSuite) TestLogisticPlugin(c *C) {
 	assertIsPrefixed(c, logs["supply"], ""+
 		`request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed
  *** ; *** ; *** ;  ; Logistic combat train [23] ; Logistic combat train [23] ;  ;  ; *** `)
+}
+
+type LogisticStateKey struct {
+	RequestId uint32
+	Id        uint32
+}
+
+func (s *TestSuite) TestLogisticHistory(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	initLogisticEvents(c, client)
+	// Wait for some basic activity
+	client.Model.WaitTicks(3)
+
+	data := client.Model.GetData()
+	handlingId := uint32(0)
+	for id, _ := range data.MedicalHandlings {
+		handlingId = id
+		break
+	}
+	c.Assert(handlingId, Greater, uint32(0))
+
+	// Valid handling, duplicate and invalid handling
+	invalidId := uint32(123456)
+	states, err := client.GetLogisticHistory(handlingId, handlingId, invalidId)
+	c.Assert(err, IsNil)
+	c.Assert(len(states), Greater, 0)
+	uniqueKeys := map[LogisticStateKey]struct{}{}
+	for _, s := range states {
+		c.Assert(s.RequestId, Equals, handlingId)
+		key := LogisticStateKey{s.RequestId, s.Id}
+		_, ok := uniqueKeys[key]
+		c.Assert(ok, Equals, false)
+		uniqueKeys[key] = struct{}{}
+	}
+
+	// No handling
+	states, err = client.GetLogisticHistory()
+	c.Assert(err, IsNil)
+	c.Assert(len(states), Equals, 0)
 }
