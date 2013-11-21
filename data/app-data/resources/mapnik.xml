@@ -268,8 +268,7 @@
     </Rule>
   </Style>
 
-  <Style name="road-casing">
-  <!-- small -->
+  <Style name="road-casing-small">
     <Rule>
       <Filter>[MASACODE] = 20004</Filter>
       &maxscale_zoom14;
@@ -293,8 +292,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="9" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- medium -->
+  <Style name="road-casing-medium">
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
       &maxscale_zoom13;
@@ -318,8 +318,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="13" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- large -->
+  <Style name="road-casing-large">
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom12;
@@ -355,8 +356,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="19" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- motorway -->
+  <Style name="road-casing-motorway">
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom9;
@@ -623,7 +625,10 @@
   </Layer>
 
   <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-      <StyleName>road-casing</StyleName>
+      <StyleName>road-casing-small</StyleName>
+      <StyleName>road-casing-medium</StyleName>
+      <StyleName>road-casing-large</StyleName>
+      <StyleName>road-casing-motorway</StyleName>
       <StyleName>road-small</StyleName>
       <StyleName>road-medium</StyleName>
       <StyleName>road-large</StyleName>
