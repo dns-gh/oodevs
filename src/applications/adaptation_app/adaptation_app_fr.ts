@@ -2957,8 +2957,8 @@ PNG (*.png)
         <translation>Attention</translation>
     </message>
     <message>
-        <source>Switching off available without mission will remove the fragmentary order from all models.</source>
-        <translation>Décocher disponible sans mission retirera l&apos;ordre de conduite de tous les modèles.</translation>
+        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
+        <translation>Décocher &quot;disponible sans mission&quot; retirera l&apos;ordre de conduite de tous les modèles.</translation>
     </message>
 </context>
 <context>

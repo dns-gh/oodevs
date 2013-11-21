@@ -2949,7 +2949,7 @@ PNG (*.png)
         <translation type="unfinished">Warning</translation>
     </message>
     <message>
-        <source>Switching off available without mission will remove the fragmentary order from all models.</source>
+        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

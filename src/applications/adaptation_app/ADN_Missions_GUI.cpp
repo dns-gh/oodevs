@@ -344,7 +344,7 @@ void ADN_Missions_GUI::OnToggleAvailableWithoutMission( bool on )
     {
         int nResult = QMessageBox::warning( &ADN_Workspace::GetWorkspace().GetMainWindow(),
             tr( "Warning" ),
-            tr( "Switching off available without mission will remove the fragmentary order from all models." ),
+            tr( "Switching off \"available without mission\" will remove the fragmentary order from all models." ),
             QMessageBox::Ok     | QMessageBox::Default,
             QMessageBox::Cancel | QMessageBox::Escape );
         if( nResult != QMessageBox::Ok )
