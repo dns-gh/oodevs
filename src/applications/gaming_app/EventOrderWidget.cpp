@@ -155,6 +155,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Purge()
 {
+    missionInterface_->Purge();
     selectedEntity_ = 0;
     alternateSelectedEntity_ = 0;
     SetTarget( 0 );
