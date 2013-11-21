@@ -69,7 +69,7 @@ public:
 
     //! @name Filters
     //@{
-    void UpdateEntityFilter( const std::string& filter );
+    void UpdateFilters( const std::string& unitFilter, bool displayEngaged );
     //@}
 
 private:

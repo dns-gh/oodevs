@@ -19,14 +19,39 @@
 // Name: TimelineToolBar constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain,
-                                  const std::string& entityFilter )
-    : QToolBar( parent )
+TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
+    : QToolBar( 0 )
     , config_( config )
-    , entityFilter_( entityFilter )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
     , displayEngaged_( false )
-    , horizontalMode_( true ){
+    , horizontalMode_( true )
+{
+    Initialize();
+    OnSwitchView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar constructor
+// Created: SLI 2013-11-21
+// -----------------------------------------------------------------------------
+TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
+    : config_( other.config_ )
+    , entityFilter_( other.entityFilter_ )
+    , filters_( other.filters_ )
+    , displayEngaged_( other.displayEngaged_ )
+    , horizontalMode_( other.horizontalMode_ )
+{
+    Initialize();
+    addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
+    OnSwitchView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::Initialize
+// Created: SLI 2013-11-21
+// -----------------------------------------------------------------------------
+void TimelineToolBar::Initialize()
+{
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
@@ -35,9 +60,6 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
     addSeparator();
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/new_tab.png" ) ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
-    if( !isMain )
-        addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
-    OnSwitchView();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +137,7 @@ void TimelineToolBar::OnSaveOrderFile()
 void TimelineToolBar::OnEngagedFilterToggled( bool checked )
 {
     displayEngaged_ = checked;
-    emit EngagedFilterToggled( !checked );
+    emit EngagedFilterToggled( GetEngagedFilter() );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +156,13 @@ void TimelineToolBar::SetEntityFilter( const std::string& filter )
 const std::string& TimelineToolBar::GetEntityFilter() const
 {
     return entityFilter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetEngagedFilter
+// Created: SLI 2013-11-21
+// -----------------------------------------------------------------------------
+bool TimelineToolBar::GetEngagedFilter() const
+{
+    return displayEngaged_;
 }

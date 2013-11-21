@@ -119,9 +119,9 @@ void TimelineWebView::Connect()
     timeline::Configuration next = *cfg_;
     next.widget = timelineWidget_.get();
     auto query = boost::assign::map_list_of
-        ( "lang",          tools::Language::Current() )
-        ( "sword_filter",  "" )
-        ( "sword_profile", lastProfile_ )
+        ( "lang",                 tools::Language::Current() )
+        ( "sword_filter",         "" )
+        ( "sword_profile",        lastProfile_ )
         ( "sword_filter_engaged", "true" );
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
@@ -364,13 +364,14 @@ void TimelineWebView::SetProfile( const QString& profile )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::UpdateEntityFilter
+// Name: TimelineWebView::UpdateFilters
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::UpdateEntityFilter( const std::string& filter )
+void TimelineWebView::UpdateFilters( const std::string& unitFilter, bool displayEngaged )
 {
     if( server_ )
-        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", filter ) );
+        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", unitFilter )
+                                                        ( "sword_filter_engaged", displayEngaged ? "false" : "true" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -608,10 +609,10 @@ void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
 // Name: TimelineWebView::OnEngagedFilterToggled
 // Created: SLI 2013-11-20
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnEngagedFilterToggled( bool checked )
+void TimelineWebView::OnEngagedFilterToggled( bool displayEngaged )
 {
     if( !server_ )
         return;
-    auto query = boost::assign::map_list_of( "sword_filter_engaged", checked ? "true" : "false" );
+    auto query = boost::assign::map_list_of( "sword_filter_engaged", displayEngaged ? "false" : "true" );
     server_->UpdateQuery( query );
 }
