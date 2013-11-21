@@ -2932,6 +2932,14 @@ PNG (*.png)
         <source>Mission name cannot contain the following characters: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
+    </message>
+    <message>
+        <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>

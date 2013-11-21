@@ -19,6 +19,7 @@
 #include "ADN_ListView_Missions.h"
 #include "ADN_ListView_MissionTypes.h"
 #include "ADN_ListView_FragOrderTypes.h"
+#include "ADN_MainWindow.h"
 #include "ADN_MissionParameters_Table.h"
 #include "ADN_MissionParameterValues_Table.h"
 #include "ADN_Project_Data.h"
@@ -315,7 +316,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     if( eMissionType == eMissionType_FragOrder )
     {
         pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, missions, missions, vInfosConnectors, eMissionType_FragOrder );
-        connect( availableState_, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
+        connect( availableState_, SIGNAL( toggled ( bool ) ), this, SLOT( OnToggleAvailableWithoutMission( bool ) ) );
+        connect( this, SIGNAL( SendAvailableWithoutMission ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     }
     else
     {
@@ -330,6 +332,28 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 
     connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ), &data_, SLOT( OnElementDeleted( boost::shared_ptr< kernel::LocalizedString >, E_MissionType ) ) );
     return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType ], pSearchListView );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnToggleAvailableWithoutMission
+// Created: LDC 2013-11-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnToggleAvailableWithoutMission( bool on )
+{
+    if( !on )
+    {
+        int nResult = QMessageBox::warning( &ADN_Workspace::GetWorkspace().GetMainWindow(),
+            tr( "Warning" ),
+            tr( "Switching off \"available without mission\" will remove the fragmentary order from all models." ),
+            QMessageBox::Ok     | QMessageBox::Default,
+            QMessageBox::Cancel | QMessageBox::Escape );
+        if( nResult != QMessageBox::Ok )
+        {
+            availableState_->toggle();
+            return;
+        }
+    }
+    emit SendAvailableWithoutMission( on );
 }
 
 // -----------------------------------------------------------------------------

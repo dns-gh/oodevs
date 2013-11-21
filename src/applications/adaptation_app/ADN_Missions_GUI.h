@@ -86,6 +86,9 @@ private:
     QCheckBox* availableState_;
     QGroupBox* helpPanel_[ eNbrMissionTypes ];
     //@}
+    
+signals:
+    void SendAvailableWithoutMission( bool );
 
 private slots:
     //! @name slots
@@ -93,6 +96,7 @@ private slots:
     void OnGenerate( bool changeTab = true );
     void OnHelpNeeded();
     void OnChangeMission();
+    void OnToggleAvailableWithoutMission( bool );
     //@}
 };
 
