@@ -74,7 +74,7 @@ private:
     QAction* horizontalView_;
     std::string entityFilter_;
     QString filters_;
-    bool engaged_;
+    bool displayEngaged_;
     bool horizontalMode_;
     //@}
 };

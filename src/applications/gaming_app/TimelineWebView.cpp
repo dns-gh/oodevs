@@ -121,7 +121,8 @@ void TimelineWebView::Connect()
     auto query = boost::assign::map_list_of
         ( "lang",          tools::Language::Current() )
         ( "sword_filter",  "" )
-        ( "sword_profile", lastProfile_ );
+        ( "sword_profile", lastProfile_ )
+        ( "sword_filter_engaged", "true" );
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 

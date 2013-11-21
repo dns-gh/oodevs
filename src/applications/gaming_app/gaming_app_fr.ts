@@ -3307,8 +3307,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Passer en mode horizontal</translation>
     </message>
     <message>
-        <source>Filter engaged units</source>
-        <translation>Filtrer les unités embrayées</translation>
+        <source>Display engaged units</source>
+        <translation>Afficher les unités embrayées</translation>
     </message>
 </context>
 <context>

@@ -3293,8 +3293,8 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter engaged units</source>
-        <translation>Filter engaged units</translation>
+        <source>Display engaged units</source>
+        <translation>Display engaged units</translation>
     </message>
 </context>
 <context>

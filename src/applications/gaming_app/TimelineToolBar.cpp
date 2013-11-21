@@ -25,9 +25,8 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     , config_( config )
     , entityFilter_( entityFilter )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
-    , horizontalMode_( true )
-    , engaged_( false )
-{
+    , displayEngaged_( false )
+    , horizontalMode_( true ){
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
@@ -68,10 +67,10 @@ void TimelineToolBar::OnSwitchView()
 void TimelineToolBar::OnFilterSelection()
 {
     QMenu menu( this );
-    QAction* engagedFilter = new QAction( tr( "Filter engaged units" ), this );
+    QAction* engagedFilter = new QAction( tr( "Display engaged units" ), this );
     connect( engagedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
     engagedFilter->setCheckable( true );
-    engagedFilter->setChecked( engaged_ );
+    engagedFilter->setChecked( displayEngaged_ );
     menu.addAction( engagedFilter );
     menu.exec( QCursor::pos() );
 }
@@ -115,8 +114,8 @@ void TimelineToolBar::OnSaveOrderFile()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnEngagedFilterToggled( bool checked )
 {
-    engaged_ = checked;
-    emit EngagedFilterToggled( checked );
+    displayEngaged_ = checked;
+    emit EngagedFilterToggled( !checked );
 }
 
 // -----------------------------------------------------------------------------

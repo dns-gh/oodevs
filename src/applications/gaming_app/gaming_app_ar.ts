@@ -3294,7 +3294,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter engaged units</source>
+        <source>Display engaged units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
