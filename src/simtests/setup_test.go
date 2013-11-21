@@ -24,6 +24,7 @@ import (
 
 const (
 	ConnectTimeout = 40 * time.Second
+	PostTimeout    = 40 * time.Second
 )
 
 var (
@@ -124,7 +125,7 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
 	c.Assert(err, IsNil) // failed to connect to simulation
-	client.PostTimeout = 10 * time.Second
+	client.PostTimeout = PostTimeout
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
 		if !c.Failed() {
@@ -133,6 +134,36 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 		return nil
 	})
 	return client
+}
+
+func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
+
+	client := connectClient(c, sim)
+	err := client.Login(user, password)
+	c.Assert(err, IsNil) // login failed
+	ok := client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true) // model initialization timed out
+	return client
+}
+
+func connectAndWaitModelWithStep(c *C, user, password, exercise string, step int) (
+	*simu.SimProcess, *swapi.Client) {
+
+	sim := startSimOnExercise(c, exercise, 1000, false, step)
+	client := loginAndWaitModel(c, sim, user, password)
+	return sim, client
+}
+
+func connectAndWaitModel(c *C, user, password, exercise string) (
+	*simu.SimProcess, *swapi.Client) {
+
+	sim := startSimOnExercise(c, exercise, 1000, false, 0)
+	client := loginAndWaitModel(c, sim, user, password)
+	return sim, client
+}
+
+func connectAllUserAndWait(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
+	return connectAndWaitModel(c, "alluser", "alluser", exercise)
 }
 
 func addClientLogger(client *swapi.Client) {
