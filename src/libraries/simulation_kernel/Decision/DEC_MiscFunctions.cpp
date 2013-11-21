@@ -369,6 +369,23 @@ void DEC_MiscFunctions::ReportFloat( DEC_Decision_ABC& caller, int type, const s
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::ReportIntInt
+// Created: LDC 2013-11-21
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportIntInt( DEC_Decision_ABC& caller, int type, const std::string& reportId, int param1, int param2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam1( MIL_MissionParameterFactory::CreateInteger( param1 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::CreateInteger( param2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::ReportFloatFloat
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------

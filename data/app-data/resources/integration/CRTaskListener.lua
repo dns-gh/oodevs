@@ -189,6 +189,10 @@ integration.RC_Float = function( myself, typeMessage, id, list )
     DEC_RC_Float( myself, typeMessage, id, list )
 end
 
+integration.RC_Int_Int = function( myself, typeMessage, id, firstList, secondList )
+    DEC_RC_Int_Int( myself, typeMessage, id, firstList, secondList )
+end
+
 integration.RC_Float_Float = function( myself, typeMessage, id, firstList, secondList )
     DEC_RC_Float_Float( myself, typeMessage, id, firstList, secondList )
 end
