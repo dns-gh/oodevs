@@ -1417,10 +1417,7 @@ type LogisticHistoryState struct {
 }
 
 func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*LogisticHistoryState, error) {
-	ids := make([]*sword.Id, 0, len(requestId))
-	for _, rid := range requestId {
-		ids = append(ids, MakeId(rid))
-	}
+	ids := MakeIdList(requestId...).Elem
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
