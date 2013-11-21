@@ -10,6 +10,7 @@
 #include "plugins_test_pch.h"
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
+#include "logistic_plugin/ConsignArchive.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <tools/TemporaryDirectory.h>
@@ -586,4 +587,19 @@ BOOST_AUTO_TEST_CASE( TestEscapeRegex )
     BOOST_CHECK_EQUAL( "", "" );
     BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"abC123" ), tools::Path::FromUnicode( EscapeRegex( L"abC123" ) ) );
     BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"a\\^bc\\{12\\}3\\*\\\\" ), tools::Path::FromUnicode( EscapeRegex( L"a^bc{12}3*\\" ) ) );
+}
+
+BOOST_AUTO_TEST_CASE( TestConsignArchive )
+{
+    tools::TemporaryDirectory tempDir( "testlogistic-plugin-", testOptions.GetTempDir() );
+    const auto basePath = tempDir.Path() / "consign";
+    ConsignArchive ar( basePath, 10 );
+    ar.Write( "abcd", 4 );
+    ar.Write( "efgh", 4 );
+    ar.Write( "ijkl", 4 );
+    ar.Flush();
+
+    auto paths = tempDir.Path().ListFiles( false, true, true );
+    BOOST_REQUIRE_EQUAL( 2u, paths.size() );
+    BOOST_CHECK_EQUAL( "consign.1", paths[1].ToUTF8() );
 }
