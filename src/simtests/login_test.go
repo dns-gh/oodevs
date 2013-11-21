@@ -119,13 +119,13 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 
-	waitForMessages := func(timeout time.Duration, seen chan int) {
+	waitForMessages := func(timeout time.Duration, seen chan *swapi.SwordMessage) {
 		select {
 		case <-time.After(timeout):
 			break
-		case res := <-seen:
-			if res != 0 {
-				c.Fatal("messages seen before any client action")
+		case msg := <-seen:
+			if msg != nil {
+				c.Fatalf("messages seen before any client action: %v", msg)
 			}
 		}
 	}
@@ -136,10 +136,10 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	// Connect and watch incoming messages
 	client := connectClient(c, sim)
 
-	msgch := make(chan int, 1)
+	msgch := make(chan *swapi.SwordMessage)
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
 		if err != nil {
-			msgch <- 0
+			msgch <- nil
 			return true
 		}
 		if msg != nil && msg.AuthenticationToClient != nil {
@@ -156,7 +156,9 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 			return false
 		}
 
-		msgch <- 1
+		received := &swapi.SwordMessage{}
+		swapi.DeepCopy(received, msg)
+		msgch <- received
 		return true
 	}
 	client.Register(handler)
