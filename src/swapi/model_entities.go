@@ -781,6 +781,7 @@ func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]
 	}
 	if formation, ok := model.Formations[suppliedId]; ok {
 		formation.SuperiorQuotas = quotas
+		return true
 	}
 	return false
 }
