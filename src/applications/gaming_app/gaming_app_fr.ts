@@ -3310,6 +3310,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Display engaged units</source>
         <translation>Afficher les unités embrayées</translation>
     </message>
+    <message>
+        <source>Display events</source>
+        <translation>Afficher les événements</translation>
+    </message>
+    <message>
+        <source>Display tasks</source>
+        <translation>Afficher les tâches</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

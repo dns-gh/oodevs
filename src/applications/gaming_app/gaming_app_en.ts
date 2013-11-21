@@ -3296,6 +3296,14 @@ This data can&apos;t be projected.</source>
         <source>Display engaged units</source>
         <translation>Display engaged units</translation>
     </message>
+    <message>
+        <source>Display events</source>
+        <translation>Display events</translation>
+    </message>
+    <message>
+        <source>Display tasks</source>
+        <translation>Display tasks</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

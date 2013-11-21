@@ -132,6 +132,7 @@ void TimelineDockWidget::AddView( bool main )
     connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( SetLayoutOrientation( bool ) ), webView_, SLOT( OnSetLayoutOrientation( bool ) ) );
     connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_, SLOT( OnEngagedFilterToggled( bool ) ) );
+    connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_, SLOT( OnServicesFilterChanged( const std::string& ) ) );
     int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ): tr( "View %1" ).arg( ++maxTabNumber_ ) );
     tabWidget_->setCurrentIndex( index );
@@ -155,7 +156,7 @@ void TimelineDockWidget::RemoveCurrentView()
 void TimelineDockWidget::OnCurrentChanged( int index )
 {
     if( TimelineToolBar* toolbar = static_cast< TimelineToolBar* >( tabWidget_->widget( index ) ) )
-        webView_->UpdateFilters( toolbar->GetEntityFilter(), toolbar->GetEngagedFilter() );
+        webView_->UpdateFilters( toolbar->GetEntityFilter(), toolbar->GetEngagedFilter(), toolbar->GetServicesFilter() );
 }
 
 namespace
@@ -206,6 +207,6 @@ void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
     {
         main->SetEntityFilter( GetEntityFilter( filter ) );
         if( tabWidget_->currentIndex() == 0 )
-            webView_->UpdateFilters( main->GetEntityFilter(), main->GetEngagedFilter() );
+            webView_->UpdateFilters( main->GetEntityFilter(), main->GetEngagedFilter(), main->GetServicesFilter() );
     }
 }
