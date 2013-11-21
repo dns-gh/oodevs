@@ -1430,6 +1430,10 @@ This data can&apos;t be projected.</translation>
         <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

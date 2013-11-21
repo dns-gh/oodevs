@@ -26,7 +26,8 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
+            || type == eBadLogisticSubordinate || type == eBadQuotas
+            || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
             || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature
             || type == eImpossibleObjectCreation;
     }
@@ -93,6 +94,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
     errorDescriptions_[ eStockInvalidDotation ]            = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
     errorDescriptions_[ eBadLogisticSubordinate ]          = tools::translate( "ModelConsistencyDialog", "Invalid logistic subordinate for '%1' in orbat.xml. The link will be deleted at next save." );
+    errorDescriptions_[ eBadQuotas ]                       = tools::translate( "ModelConsistencyDialog", "No quotas defined for '%1' : It will not be resupplied." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );

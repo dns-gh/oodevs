@@ -1427,6 +1427,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
         <translation>Des équipements rendus ou en maintenance ont été passés à l&apos;état &quot;réparable sur place&quot;.</translation>
     </message>
+    <message>
+        <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
+        <translation>Aucun quota défini pour &apos;%1&apos; : Il ne sera pas ravitaillé.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

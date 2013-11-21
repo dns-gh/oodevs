@@ -62,6 +62,7 @@ public:
     void SerializeQuotas( xml::xostream& xos ) const;
 
     bool CleanBadSubordinates();
+    bool HasQuotas() const;
     //@}
 
 private:
@@ -76,7 +77,6 @@ private:
     void SerializeLogistics( xml::xostream& xos ) const;
 
     void DrawLink( const geometry::Point2f& where, const gui::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
-    bool IsToSerializeQuotas() const;
     bool HasMissingLogisticLinks() const;
     //@}
 

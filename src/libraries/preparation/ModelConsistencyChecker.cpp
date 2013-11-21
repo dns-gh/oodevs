@@ -741,6 +741,17 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
             AddError( eBadLogisticSubordinate, &formation );
             model_.SetConsistencyErrorsOnLoad();
         }
+        tools::Iterator< const kernel::Entity_ABC& > children = hierarchy->CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& entity = children.NextElement();
+            if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+                continue;
+            const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+            if( subordinateLogHierarchy )
+            if( !subordinateLogHierarchy->HasQuotas() )
+                AddError( eBadQuotas, &entity );
+        }
     }
 }
 
