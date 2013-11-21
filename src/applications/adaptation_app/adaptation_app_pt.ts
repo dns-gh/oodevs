@@ -1585,7 +1585,7 @@ Parked engine running</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>At least one speed is above the new max speed.
@@ -1631,7 +1631,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>This file is not in the correct file hierarchy and cannot be selected.</source>
@@ -2148,7 +2148,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>Some translations are empty or unfinished. If you continue you will have values in both %1 and %2 as reference language, and may lost some unfinished translations. Proceed anyway?</source>
@@ -2317,7 +2317,7 @@ PNG (*.png)
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
@@ -2602,7 +2602,7 @@ PNG (*.png)
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>The database you are trying to override is read-only. Please select another directory.</source>
@@ -2929,6 +2929,14 @@ PNG (*.png)
     <message>
         <source>Mission name cannot contain the following characters: %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>Switching off available without mission will remove the fragmentary order from all models.</source>
+        <translation>Décocher disponible sans mission retirera l&apos;ordre de conduite de tous les modèles.</translation>
     </message>
 </context>
 <context>
@@ -4072,7 +4080,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>This will delete all the following associated resource network :</source>
@@ -6046,7 +6054,7 @@ Click &quot;Ok&quot; to delete it.</source>
     <name>ADN_WeaponFilter</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>This will delete all the following associated weapon systems :</source>
@@ -6229,7 +6237,7 @@ Click &quot;Ok&quot; to delete it.</source>
     <name>ADN_Weapons_WizardPage</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attention</translation>
     </message>
     <message>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
