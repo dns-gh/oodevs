@@ -176,10 +176,28 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
 bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
-    if( message.message().has_log_supply_handling_creation() )
-        return ManageMessage( message.message().log_supply_handling_creation(), resolver );
-    if( message.message().has_log_supply_handling_update() )
-        return ManageMessage( message.message().log_supply_handling_update(), resolver );
+    const auto& msg = message.message();
+    if( msg.has_log_supply_handling_creation() )
+    {
+        entry_.mutable_supply()->mutable_creation()->CopyFrom(
+                msg.log_supply_handling_creation() );
+        return ManageMessage( msg.log_supply_handling_creation(), resolver );
+    }
+    if( msg.has_log_supply_handling_update() )
+    {
+        // Sub-messages are merged recursively and repeated fields are *appended*.
+        // Clear them before merging. This is fragile but saves tons of code
+        // right now.
+        entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
+        entry_.mutable_supply()->mutable_update()->MergeFrom(
+                msg.log_supply_handling_update() );
+        return ManageMessage( msg.log_supply_handling_update(), resolver );
+    }
+    if( msg.has_log_supply_handling_destruction() )
+    {
+        entry_.mutable_supply()->mutable_destruction()->CopyFrom(
+                msg.log_supply_handling_destruction() );
+    }
     return false;
 }
 

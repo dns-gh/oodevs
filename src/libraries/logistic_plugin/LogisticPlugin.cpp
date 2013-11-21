@@ -120,9 +120,11 @@ std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::Path& maintenanceFile,
-                                const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile )
-    : recorder_( new ConsignRecorder() )
+LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC >& nameResolver,
+        const tools::Path& archiveFile, const tools::Path& maintenanceFile,
+        const tools::Path& supplyFile, const tools::Path& funeralFile,
+        const tools::Path& medicalFile )
+    : recorder_( new ConsignRecorder( archiveFile, 20*1024*1024 ) )
     , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
@@ -192,6 +194,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     } 
     if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
         recorder_->Write( ev.type, it->second->ToString(), today );
+    recorder_->WriteEntry( it->second->GetHistoryEntry() );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }
@@ -286,6 +289,7 @@ LogisticPlugin* CreateLogisticPlugin(
 {
     return new LogisticPlugin(
         nameResolver,
+        config.BuildSessionChildFile( "LogisticArchive" ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "maintenancefile", "LogMaintenance" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "supplyfile", "LogSupply" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "funeralfile", "LogFuneral" ) ),

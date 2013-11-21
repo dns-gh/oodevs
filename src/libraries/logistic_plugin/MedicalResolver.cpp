@@ -134,12 +134,25 @@ bool MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruc
 bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
-    if( message.message().has_log_medical_handling_creation() )
-        return ManageMessage( message.message().log_medical_handling_creation(), resolver );
-    if( message.message().has_log_medical_handling_update() )
-        return ManageMessage( message.message().log_medical_handling_update(), resolver );
-    if( message.message().has_log_medical_handling_destruction() )
-        return ManageMessage( message.message().log_medical_handling_destruction(), resolver );
+    const auto& msg = message.message();
+    if( msg.has_log_medical_handling_creation() )
+    {
+        entry_.mutable_medical()->mutable_creation() ->CopyFrom(
+                msg.log_medical_handling_creation() );
+        return ManageMessage( msg.log_medical_handling_creation(), resolver );
+    }
+    if( msg.has_log_medical_handling_update() )
+    {
+        entry_.mutable_medical()->mutable_update() ->MergeFrom(
+                msg.log_medical_handling_update() );
+        return ManageMessage( msg.log_medical_handling_update(), resolver );
+    }
+    if( msg.has_log_medical_handling_destruction() )
+    {
+        entry_.mutable_medical()->mutable_destruction()->CopyFrom(
+                msg.log_medical_handling_destruction() );
+        return ManageMessage( msg.log_medical_handling_destruction(), resolver );
+    }
     return false;
 }
 

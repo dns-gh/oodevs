@@ -12,6 +12,7 @@
 
 #include "ConsignState.h"
 #include "LogisticPlugin.h"
+#include "protocol/Simulation.h"
 #include <boost/noncopyable.hpp>
 #include <deque>
 
@@ -47,6 +48,7 @@ public:
     int GetTick() const;
     std::string ToString() const;
     const std::deque< ConsignState >& GetHistory() const;
+    const sword::LogHistoryEntry& GetHistoryEntry() const;
     //@}
 
 protected:
@@ -68,6 +70,7 @@ protected:
     //@{
     const LogisticPlugin::E_LogisticType type_;
     std::string requestId_;
+    sword::LogHistoryEntry entry_;
     //@}
 
 private:

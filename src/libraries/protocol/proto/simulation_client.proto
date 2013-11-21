@@ -3413,6 +3413,45 @@ enum EnumLogisticType {
     log_supply      = 4;
 }
 
+//! LogHistoryEntry is a snapshot of a logistic request.
+//!
+//! Exactly one of its funeral/maintenance/medical/supply field is set
+//! with one of the possible combination of messages:
+//! - creation: for just created requests
+//! - creation + update: an ongoing request
+//! - creation + update + destruction: request before destruction
+message LogHistoryEntry {
+    message Funeral {
+        optional LogFuneralHandlingCreation        creation = 1;
+        optional LogFuneralHandlingUpdate          update = 2;
+        optional LogFuneralHandlingDestruction     destruction = 3;
+    }
+
+    message Maintenance {
+        optional LogMaintenanceHandlingCreation    creation = 1;
+        optional LogMaintenanceHandlingUpdate      update = 2;
+        optional LogMaintenanceHandlingDestruction destruction = 3;
+    }
+
+    message Medical {
+        optional LogMedicalHandlingCreation        creation = 1;
+        optional LogMedicalHandlingUpdate          update = 2;
+        optional LogMedicalHandlingDestruction     destruction = 3;
+    }
+
+    message Supply {
+        optional LogSupplyHandlingCreation         creation = 1;
+        optional LogSupplyHandlingUpdate           update = 2;
+        optional LogSupplyHandlingDestruction      destruction = 3;
+    }
+
+    required int32       tick        = 1;
+    optional Funeral     funeral     = 2;
+    optional Maintenance maintenance = 3;
+    optional Medical     medical     = 4;
+    optional Supply      supply      = 5;
+}
+
 //! Represents a snapshot of a logistic request.
 message LogisticHistoryState {
     required Id               request    = 1;

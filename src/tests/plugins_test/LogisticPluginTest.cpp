@@ -18,6 +18,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/regex.hpp>
 #include <algorithm>
 #include <cstdlib>
@@ -98,6 +99,7 @@ boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const tools::Path& tempD
 {
     boost::shared_ptr< SimpleNameResolver > nameResolver( new SimpleNameResolver() );
     return boost::shared_ptr< LogisticPlugin >( new LogisticPlugin( nameResolver,
+        tempDir / "archive",
         tempDir / "maintenance",
         tempDir / "supply",
         tempDir / "funeral",
@@ -124,8 +126,12 @@ struct LogFile
     T_Lines lines;
 };
 
-void CheckRegexps( const std::vector< LogFile >& logFiles, const tools::Path::T_Paths& files )
+void CheckRegexps( const std::vector< LogFile >& logFiles, tools::Path::T_Paths files )
 {
+    boost::remove_erase_if( files, []( const tools::Path& path ) -> bool
+        {
+            return path.BaseName().ToUTF8().find( "archive" ) != std::string::npos;
+        });
     BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
     for( size_t i = 0; i != files.size(); ++i )
     {
@@ -159,6 +165,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
             maint->mutable_request()->set_id( 7 );
             maint->mutable_unit()->set_id( 8 );
+            maint->set_tick( 200 );
             maint->mutable_equipement()->set_id( 10 );
             maint->mutable_breakdown()->set_id( 11 );
             plugin->Receive( m, day1 );
@@ -178,6 +185,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
             maint->mutable_request()->set_id( 17 );
             maint->mutable_unit()->set_id( 18 );
+            maint->set_tick( 300 );
             maint->mutable_equipement()->set_id( 20 );
             maint->mutable_breakdown()->set_id( 21 );
             plugin->Receive( m, day1 );
@@ -200,6 +208,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
             maint->mutable_request()->set_id( 7 );
+            maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
@@ -208,6 +217,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
             maint->mutable_request()->set_id( 17 );
+            maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
@@ -223,6 +233,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMedicalHandlingCreation* medic = m.mutable_message()->mutable_log_medical_handling_creation();
             medic->mutable_request()->set_id( 7 );
             medic->mutable_unit()->set_id( 8 );
+            medic->set_tick( 400 );
             medic->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             medic->set_wound( static_cast< sword::EnumHumanWound >( 0 ) );
             medic->set_nbc_contaminated( true );
@@ -267,6 +278,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingDestruction* medic = m.mutable_message()->mutable_log_medical_handling_destruction();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day3 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
@@ -281,6 +293,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
             funeral->mutable_request()->set_id( 7 );
             funeral->mutable_unit()->set_id( 8 );
+            funeral->set_tick( 300 );
             funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             plugin->Receive( m, day1 );
         }
@@ -318,6 +331,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogSupplyHandlingCreation* supply = m.mutable_message()->mutable_log_supply_handling_creation();
             supply->mutable_request()->set_id( 7 );
+            supply->set_tick( 200 );
             supply->mutable_supplier()->mutable_automat()->set_id( 8 );
             supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
             plugin->Receive( m, day1 );
@@ -459,7 +473,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
     }
     plugin.reset(); // flush
 
-    tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
+    auto files = tempDir.Path().ListFiles( true, false, true );
     std::vector< LogFile > expecteds;
     {
         T_Lines expectedLines;
@@ -549,6 +563,7 @@ void PushFuneralMessage( LogisticPlugin* plugin )
     sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
     funeral->mutable_request()->set_id( 7 );
     funeral->mutable_unit()->set_id( 8 );
+    funeral->set_tick( 100 );
     funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
     plugin->Receive( m,  bg::from_string( "2005/02/20" ) );
 }

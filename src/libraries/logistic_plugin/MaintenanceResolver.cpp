@@ -105,10 +105,24 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
-    if( message.message().has_log_maintenance_handling_creation() )
-        return ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
-    if( message.message().has_log_maintenance_handling_update() )
-        return ManageMessage( message.message().log_maintenance_handling_update(), resolver );
+    const auto& msg = message.message();
+    if( msg.has_log_maintenance_handling_creation() )
+    {
+        entry_.mutable_maintenance()->mutable_creation()->CopyFrom(
+                msg.log_maintenance_handling_creation() );
+        return ManageMessage( msg.log_maintenance_handling_creation(), resolver );
+    }
+    if( msg.has_log_maintenance_handling_update() )
+    {
+        entry_.mutable_maintenance()->mutable_update()->MergeFrom(
+                msg.log_maintenance_handling_update() );
+        return ManageMessage( msg.log_maintenance_handling_update(), resolver );
+    }
+    if( msg.has_log_maintenance_handling_destruction() )
+    {
+        entry_.mutable_maintenance()->mutable_destruction()->CopyFrom(
+                msg.log_maintenance_handling_destruction() );
+    }
     return false;
 }
 

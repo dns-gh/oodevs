@@ -30,6 +30,7 @@ bool ConsignData_ABC::UpdateConsign( const sword::SimToClient& msg,
 {
     tick_ = boost::lexical_cast< std::string >( tick );
     simTime_ = time;
+    entry_.set_tick( tick );
     return DoUpdateConsign( msg, names );
 }
 
@@ -73,3 +74,7 @@ const std::deque< ConsignState >& ConsignData_ABC::GetHistory() const
     return history_;
 }
 
+const sword::LogHistoryEntry& ConsignData_ABC::GetHistoryEntry() const
+{
+    return entry_;
+}

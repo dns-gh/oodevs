@@ -14,7 +14,14 @@
 #include <boost/ptr_container/ptr_map.hpp>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
+#include <memory>
 #include <string>
+#include <cstdint>
+
+namespace sword
+{
+    class LogHistoryEntry;
+}
 
 namespace boost
 {
@@ -34,12 +41,13 @@ namespace plugins
 namespace logistic
 {
 
+class ConsignArchive;
 class ConsignResolver_ABC;
 
 class ConsignRecorder: private boost::noncopyable
 {
 public:
-    ConsignRecorder();
+    ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize );
     virtual ~ConsignRecorder();
 
     void AddLogger( int kind, const tools::Path& path, const std::string header );
@@ -48,8 +56,11 @@ public:
     void Flush();
     void SetMaxLinesInFile( int maxLines );
 
+    void WriteEntry( const sword::LogHistoryEntry& entry );
+
 private:
     boost::ptr_map< int, ConsignResolver_ABC > loggers_;
+    std::unique_ptr< ConsignArchive > archive_;
 };
 
 }  // namespace logistic

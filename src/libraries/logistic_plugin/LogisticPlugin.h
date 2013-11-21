@@ -62,8 +62,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const tools::Path& maintenanceFile, const tools::Path& supplyFile,
-                 const tools::Path& funeralFile, const tools::Path& medicalFile );
+                 const tools::Path& archiveFile, const tools::Path& maintenanceFile,
+                 const tools::Path& supplyFile, const tools::Path& funeralFile,
+                 const tools::Path& medicalFile );
     virtual ~LogisticPlugin();
     //@}
 

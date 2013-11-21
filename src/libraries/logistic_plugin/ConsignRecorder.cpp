@@ -8,7 +8,10 @@
 // *****************************************************************************
 
 #include "ConsignRecorder.h"
+#include "ConsignArchive.h"
 #include "ConsignResolver_ABC.h"
+#include "protocol/Simulation.h"
+#include <tools/Exception.h>
 #include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -20,7 +23,8 @@ namespace plugins
 namespace logistic
 {
 
-ConsignRecorder::ConsignRecorder()
+ConsignRecorder::ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize )
+    : archive_( new ConsignArchive( archivePath, maxSize ))
 {
 }
 
@@ -49,6 +53,7 @@ void ConsignRecorder::Write( int kind, const std::string& data, const bg::date& 
 
 void ConsignRecorder::Flush()
 {
+    archive_->Flush();
     for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
         it->second->Flush();
 }
@@ -57,6 +62,16 @@ void ConsignRecorder::SetMaxLinesInFile( int maxLines )
 {
     for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
         it->second->SetMaxLinesInFile( maxLines );
+}
+
+void ConsignRecorder::WriteEntry( const sword::LogHistoryEntry& entry )
+{
+    if( !entry.IsInitialized() )
+        throw MASA_EXCEPTION( "input entry is not initialized: " + entry.ShortDebugString() );
+    std::vector< uint8_t > buffer( entry.ByteSize() );
+    if( !entry.SerializeWithCachedSizesToArray( &buffer[0] ) )
+        throw MASA_EXCEPTION( "could not serialize input message: " + entry.ShortDebugString() );
+    archive_->Write( &buffer[0], static_cast< uint32_t >( buffer.size() ));
 }
 
 }  // namespace logistic
