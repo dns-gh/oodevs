@@ -635,6 +635,9 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
 
     if( process_ && !process_->IsAlive() )
         next = idle;
+    if( cfg_.timeline.enabled )
+        if( !timeline_ || !timeline_->IsAlive() )
+            next = idle;
 
     if( next == status_ )
         return false;
