@@ -499,7 +499,8 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to, float width ) c
 {
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( width );
+    if( width >= 0.f )
+        glLineWidth( width );
     glBegin( GL_LINES );
         glVertex2f( from.X(), from.Y() );
         glVertex2f( to.X()  , to.Y() );

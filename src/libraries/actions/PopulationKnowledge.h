@@ -11,19 +11,13 @@
 #define __ActionParameterPopulationKnowledge_h_
 
 #include "Knowledge_ABC.h"
-#include "clients_kernel/PopulationKnowledge_ABC.h"
-#include <tools/Resolver_ABC.h>
-
-namespace sword
-{
-    class Id;
-}
+#include "clients_kernel/Population_ABC.h"
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
     class EntityResolver_ABC;
     class Population_ABC;
+    class Controller;
 }
 
 namespace actions {
@@ -32,19 +26,19 @@ namespace actions {
 // =============================================================================
 /** @class  PopulationKnowledge
     @brief  PopulationKnowledge
-    // $$$$ SBO 2007-05-24: watch for deletion !!!
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class PopulationKnowledge : public Knowledge_ABC< kernel::PopulationKnowledge_ABC >
+class PopulationKnowledge : public Entity< kernel::Population_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter,
-                                  const kernel::Entity_ABC* owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, const kernel::PopulationKnowledge_ABC* knowledge, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis,
+                                  const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned int id,
+                                  const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -53,7 +47,6 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
-    void CommitTo( sword::Id& asn ) const;
     //@}
 
     //! @name Helpers

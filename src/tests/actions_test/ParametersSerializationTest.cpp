@@ -26,7 +26,7 @@
 #include "actions/ObjectKnowledgeOrder.h"
 #include "actions/Path.h"
 #include "actions/Polygon.h"
-#include "actions/PopulationKnowledgeOrder.h"
+#include "actions/PopulationKnowledge.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
@@ -37,6 +37,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/Protocol.h"
@@ -523,20 +524,13 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
 {
     const std::string input( "<parameter name='test' type='crowdknowledge' value='42'/>" );
 
+
     MockPopulation population;
-    MOCK_EXPECT( resolver.FindPopulation ).with( 42u ).once().in( s ).returns( &population );
-    MockAgent owner;
-    MockPopulationKnowledge knowledge;
-    MockAgentKnowledgeConverter converter;
-    MOCK_EXPECT( converter.FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &population );
-    MOCK_EXPECT( population.GetId ).once().in( s ).returns( 42u );
-    MOCK_EXPECT( converter.FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &population );
-    MOCK_EXPECT( population.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( resolver.GetPopulation ).with( 42u ).in( s ).returns( boost::ref( population ) );
+    MOCK_EXPECT( population.GetId ).in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
-        bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
+        bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).crowdknowledge().id() );
 }
 

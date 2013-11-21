@@ -3292,6 +3292,10 @@ This data can&apos;t be projected.</source>
         <source>Switch to horizontal view</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display engaged units</source>
+        <translation>Display engaged units</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

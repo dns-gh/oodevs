@@ -70,7 +70,7 @@ void SimpleLocationDrawer::VisitPath( const geometry::Point2f& first, const T_Po
 {
     if( !points.empty() )
     {
-        tools_.DrawLine( first, points.front() );
+        tools_.DrawLine( first, points.front(), -1.f );
         tools_.DrawLines( points );
     }
 }

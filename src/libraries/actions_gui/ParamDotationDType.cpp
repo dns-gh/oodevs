@@ -79,6 +79,7 @@ bool ParamDotationDType::InternalCheckValidity() const
 // -----------------------------------------------------------------------------
 void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
 {
+    const kernel::DotationType* current = resolver_.Find( GetValue() );
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );
     Clear();
@@ -97,6 +98,13 @@ void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
     }
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
+
+    if( current )
+    {
+        int index = comboBox_->findText( current->GetName().c_str() );
+        if( index != -1 )
+            comboBox_->setCurrentIndex( index );
+    }
 }
 
 // -----------------------------------------------------------------------------

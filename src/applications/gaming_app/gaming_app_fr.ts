@@ -3306,6 +3306,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Switch to horizontal view</source>
         <translation>Passer en mode horizontal</translation>
     </message>
+    <message>
+        <source>Display engaged units</source>
+        <translation>Afficher les unités embrayées</translation>
+    </message>
 </context>
 <context>
     <name>TimelineView</name>

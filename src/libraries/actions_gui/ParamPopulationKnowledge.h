@@ -12,12 +12,12 @@
 
 #include "EntityParameter.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/Population_ABC.h"
 
 namespace kernel
 {
     class Population_ABC;
     class Entity_ABC;
-    class PopulationKnowledge_ABC;
     class AgentKnowledgeConverter_ABC;
 }
 
@@ -32,8 +32,7 @@ namespace actions
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamPopulationKnowledge : public EntityParameter< kernel::PopulationKnowledge_ABC >
-                               , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+class ParamPopulationKnowledge : public EntityParameter< kernel::Population_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,22 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
-    virtual void SetEntity( const kernel::Entity_ABC* entity );
     virtual void Visit( const actions::parameters::PopulationKnowledge& param );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::AgentKnowledgeConverter_ABC* converter_;
-    kernel::SafePointer< kernel::Entity_ABC > agent_;
     //@}
 };
 

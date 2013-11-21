@@ -28,15 +28,21 @@ class TimelineToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& config, bool isMain,
-                              const std::string& entityFilter );
+    explicit TimelineToolBar( const tools::ExerciseConfig& config );
     virtual ~TimelineToolBar();
     //@}
 
     //! @name Filters
     //@{
     const std::string& GetEntityFilter() const;
+    bool GetEngagedFilter() const;
     void SetEntityFilter( const std::string& filter );
+    //@}
+
+public:
+    //! @name Copy constructor
+    //@{
+    TimelineToolBar( const TimelineToolBar& other );
     //@}
 
 signals:
@@ -53,6 +59,8 @@ signals:
 
     void LoadTimelineSessionFileRequest( const tools::Path& path );
     void SaveTimelineSessionFileRequest( const tools::Path& path );
+
+    void EngagedFilterToggled( bool checked );
     //@}
 
 public slots:
@@ -62,6 +70,13 @@ public slots:
     void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
+    void OnEngagedFilterToggled( bool toggled );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Initialize();
     //@}
 
 private:
@@ -71,6 +86,8 @@ private:
     QAction* horizontalView_;
     std::string entityFilter_;
     QString filters_;
+    bool displayEngaged_;
+    bool horizontalMode_;
     //@}
 };
 
