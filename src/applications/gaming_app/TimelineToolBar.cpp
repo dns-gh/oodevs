@@ -25,6 +25,7 @@ TimelineToolBar::TimelineToolBar( QWidget* parent, const tools::ExerciseConfig& 
     , config_( config )
     , entityFilter_( entityFilter )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
+    , horizontalMode_( true )
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
@@ -54,9 +55,9 @@ TimelineToolBar::~TimelineToolBar()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnSwitchView()
 {
-    bool horizontal = horizontalView_->isChecked();
-    horizontalView_->setText( horizontal ? tr( "Switch to vertical view" ) : tr( "Switch to horizontal view" ) );
-    emit SetLayoutOrientation( horizontal );
+    horizontalMode_ = !horizontalMode_;
+    horizontalView_->setText( horizontalMode_ ? tr( "Switch to vertical view" ) : tr( "Switch to horizontal view" ) );
+    emit SetLayoutOrientation( horizontalMode_ );
 }
 
 // -----------------------------------------------------------------------------
