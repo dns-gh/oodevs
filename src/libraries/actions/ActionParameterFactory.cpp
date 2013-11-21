@@ -38,7 +38,6 @@
 #include "Point.h"
 #include "Polygon.h"
 #include "PopulationKnowledge.h"
-#include "PopulationKnowledgeOrder.h"
 #include "PullFlowParameters.h"
 #include "PushFlowParameters.h"
 #include "Quantity.h"
@@ -130,7 +129,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_objectknowledge() )
         return ( nullValue ) ? new parameters::ObjectKnowledge( parameter, controller_ )    : new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_crowdknowledge() )
-        return ( nullValue ) ? new parameters::PopulationKnowledge( parameter, controller_ ): new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::PopulationKnowledge( parameter, controller_ ): new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), entities_, controller_ );
     if( message.has_location() )
         return ( nullValue ) ? new parameters::Location( parameter, converter_ )            : new parameters::Location( parameter, converter_, message.location() );
     if( message.has_plannedwork() )
@@ -382,7 +381,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "agentknowledge" )
         param.reset( new parameters::Agent( parameter, xis, entities_, controller_, true ) );
     else if( type == "crowdknowledge" )
-        param.reset( new parameters::PopulationKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+        param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, controller_ ) );
     else if( type == "objectknowledge" ) 
         param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "urbanknowledge" || type == "urbanblock" )

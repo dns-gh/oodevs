@@ -22,7 +22,7 @@ using namespace parameters;
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kernel::Controller& controller )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, controller )
+    : Entity< Population_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -31,19 +31,21 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kerne
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter,
-                                          const Entity_ABC* owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, entities.FindPopulation( id ) && owner ? converter.Find( entities.GetPopulation( id ), *owner ) : 0, controller )
+PopulationKnowledge::PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis,
+                                          const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Population_ABC >( parameter, controller )
 {
-    // NOTHING
+    if( xis.has_attribute( "value" ) )
+        SetValue( &resolver.GetPopulation( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, const PopulationKnowledge_ABC* knowledge, kernel::Controller& controller )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, knowledge, controller )
+PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned int id,
+                                          const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Population_ABC >( parameter, &resolver.GetPopulation( id ), controller )
 {
     // NOTHING
 }
@@ -74,7 +76,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( *message.add_value()->mutable_crowdknowledge() );
+        CommitTo( *message.add_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,16 +86,7 @@ void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 void PopulationKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( *message.mutable_crowdknowledge() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::CommitTo
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( sword::Id& message ) const
-{
-    Knowledge_ABC< PopulationKnowledge_ABC >::CommitTo( message );
+        Entity< Population_ABC >::CommitTo( *message.mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
