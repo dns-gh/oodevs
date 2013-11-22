@@ -622,3 +622,12 @@ end
 integration.crowdAgentHasFlow = function()
     return DEC_HasFlow()
 end
+
+--- Return the crowd's brain from a crowd knowledge id
+-- @param crowd id of the crowd knowledge for the unit
+-- @param unit simulation brain of the unit having the crowd knowledge
+-- @author LMT
+-- @release 2013-11-22
+integration.getKnowledgeBrain = function( unit, crowd )
+    return DEC_GetKnowledgeBrain( unit, crowd )
+end
