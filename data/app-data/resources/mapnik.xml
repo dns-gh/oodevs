@@ -47,23 +47,16 @@
   </FontSet>
   <FontSet name="bold-fonts">
     <Font face-name="DejaVu Sans Bold"/>
-    <Font face-name="unifont Medium"/>
-  </FontSet>
-  <FontSet name="fontset-0">
-    <Font face-name="DejaVu Sans Book"/>
-    <Font face-name="unifont Medium"/>
   </FontSet>
 
   <Style name="water">
     <Rule>
-      &maxscale_zoom6;
       <PolygonSymbolizer gamma=".75" fill="#b3d1ff"/>
     </Rule>
   </Style>
 
   <Style name="forest">
     <Rule>
-      &maxscale_zoom8;
       &minscale_zoom13;
       <PolygonSymbolizer fill="#8dc56c"/>
     </Rule>
@@ -75,7 +68,6 @@
 
   <Style name="plantation">
     <Rule>
-      &maxscale_zoom8;
       &minscale_zoom13;
       <PolygonSymbolizer fill="#9ed88f"/>
     </Rule>
@@ -87,7 +79,6 @@
 
  <Style name="swamp-underlay">
     <Rule>
-      &maxscale_zoom6;
       <PolygonSymbolizer gamma=".75" fill="#b5d0c5"/>
     </Rule>
   </Style>
@@ -135,8 +126,7 @@
 
   <Style name="urban-text">
     <Rule>
-      &maxscale_zoom14;
-      <TextSymbolizer size="14" fill="#777777" fontset-name="fontset-0" halo-radius="1" wrap-width="20" ><![CDATA[[NAME]]]></TextSymbolizer>
+      <TextSymbolizer size="14" fill="#777777" fontset-name="book-fonts" halo-radius="1" wrap-width="20" ><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
   </Style>
 
@@ -177,13 +167,13 @@
 
   <Style name="cliff">
     <Rule>
-      &maxscale_zoom14;
-      <LinePatternSymbolizer file="symbols/cliff2.png" />
+      &maxscale_zoom13;
+      <LinePatternSymbolizer file="symbols/cliff.png" />
     </Rule>
     <Rule>
-      &maxscale_zoom13;
+      &maxscale_zoom14;
       &minscale_zoom14;
-      <LinePatternSymbolizer file="symbols/cliff.png" />
+      <LinePatternSymbolizer file="symbols/cliff2.png" />
     </Rule>
   </Style>
 
@@ -273,8 +263,7 @@
     </Rule>
   </Style>
 
-  <Style name="road-casing">
-  <!-- small -->
+  <Style name="road-casing-small">
     <Rule>
       <Filter>[MASACODE] = 20004</Filter>
       &maxscale_zoom14;
@@ -298,8 +287,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="9" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- medium -->
+  <Style name="road-casing-medium">
     <Rule>
       <Filter>[MASACODE] = 20003</Filter>
       &maxscale_zoom13;
@@ -323,8 +313,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="13" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- large -->
+  <Style name="road-casing-large">
     <Rule>
       <Filter>[MASACODE] = 20002</Filter>
       &maxscale_zoom12;
@@ -360,8 +351,9 @@
       &maxscale_zoom18;
       <LineSymbolizer stroke-linejoin="round" stroke="grey" stroke-width="19" stroke-linecap="round"/>
     </Rule>
+  </Style>
 
-  <!-- motorway -->
+  <Style name="road-casing-motorway">
     <Rule>
       <Filter>[MASACODE] = 20001</Filter>
       &maxscale_zoom9;
@@ -554,7 +546,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="forest" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" >
+  <Layer name="forest" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>forest</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -562,7 +554,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="plantation" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" >
+  <Layer name="plantation" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>plantation</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -570,7 +562,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="swamp" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" >
+  <Layer name="swamp" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="50000">
       <StyleName>swamp</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -587,7 +579,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="ice" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="ice" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="3000000">
       <StyleName>ice</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -595,7 +587,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="cliff" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="cliff" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="100000">
       <StyleName>cliff</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -603,7 +595,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="river" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="river" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="100000">
       <StyleName>river</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -611,7 +603,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="bridge" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="bridge" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="100000">
       <StyleName>bridge</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -628,7 +620,10 @@
   </Layer>
 
   <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
-      <StyleName>road-casing</StyleName>
+      <StyleName>road-casing-small</StyleName>
+      <StyleName>road-casing-medium</StyleName>
+      <StyleName>road-casing-large</StyleName>
+      <StyleName>road-casing-motorway</StyleName>
       <StyleName>road-small</StyleName>
       <StyleName>road-medium</StyleName>
       <StyleName>road-large</StyleName>
@@ -638,7 +633,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="tunnel" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="tunnel" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="50000">
       <StyleName>tunnel</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -646,7 +641,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="railroad" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="railroad" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="100000">
       <StyleName>railroad</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -656,6 +651,13 @@
 
   <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
       <StyleName>road-motorway</StyleName>
+      <Datasource>
+        <Parameter name="type">shape</Parameter>
+        <Parameter name="file">road.shp</Parameter>
+      </Datasource>
+  </Layer>
+
+  <Layer name="road" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="12500">
       <StyleName>road-text</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>
@@ -663,7 +665,7 @@
       </Datasource>
   </Layer>
 
-  <Layer name="urban" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+  <Layer name="urban" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" maxzoom="50000">
       <StyleName>urban-text</StyleName>
       <Datasource>
         <Parameter name="type">shape</Parameter>

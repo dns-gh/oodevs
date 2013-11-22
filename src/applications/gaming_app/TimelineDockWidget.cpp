@@ -60,6 +60,9 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     // Content
     tabWidget_ = new QTabWidget();
     tabWidget_->setVisible( false );
+    tabWidget_->setContextMenuPolicy( Qt::CustomContextMenu );
+    contextMenu_ = new QMenu( this );
+    contextMenu_->addAction( tr( "Rename view" ), this, SLOT( OnRenameTab() ) );
 
     webView_ = new TimelineWebView( 0, config, controllers, model, *cfg_ );
 
@@ -78,6 +81,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
     connect( tabWidget_, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentChanged( int ) ) );
+    connect( tabWidget_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnTabContextMenu() ) );
     connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
@@ -209,4 +213,27 @@ void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
         if( tabWidget_->currentIndex() == 0 )
             webView_->UpdateFilters( main->GetEntityFilter(), main->GetEngagedFilter(), main->GetServicesFilter() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnTabContextMenu
+// Created: SLI 2013-11-22
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnTabContextMenu()
+{
+    contextMenu_->exec( QCursor::pos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnRenameTab
+// Created: SLI 2013-11-22
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnRenameTab()
+{
+    const int index = tabWidget_->currentIndex();
+    bool ok;
+    const QString text = QInputDialog::getText( this, tr( "Rename view" ), tr( "Name" ), QLineEdit::Normal,
+                                                tabWidget_->tabText( index ), &ok );
+    if( ok && !text.isEmpty() )
+        tabWidget_->setTabText( index, text );
 }

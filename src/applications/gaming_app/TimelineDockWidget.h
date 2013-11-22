@@ -79,6 +79,8 @@ public slots:
     void AddView( bool main = false );
     void RemoveCurrentView();
     void OnCurrentChanged( int index );
+    void OnTabContextMenu();
+    void OnRenameTab();
     //@}
 
 private:
@@ -88,6 +90,7 @@ private:
     std::auto_ptr< timeline::Configuration > cfg_;
     QTabWidget* tabWidget_;
     TimelineWebView* webView_;
+    QMenu* contextMenu_;
     //@}
 
 private:
