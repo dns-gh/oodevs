@@ -745,11 +745,8 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
         while( children.HasMoreElements() )
         {
             const kernel::Entity_ABC& entity = children.NextElement();
-            if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
-                continue;
             const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
-            if( subordinateLogHierarchy )
-            if( !subordinateLogHierarchy->HasQuotas() )
+            if( subordinateLogHierarchy && !subordinateLogHierarchy->HasQuotas() )
                 AddError( eBadQuotas, &entity );
         }
     }
