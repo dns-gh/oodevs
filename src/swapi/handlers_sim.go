@@ -1036,11 +1036,12 @@ func (model *Model) handleLogMaintenanceHandlingDestruction(m *sword.SimToClient
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, ok := model.data.MaintenanceHandlings[id]; ok {
-		delete(model.data.MaintenanceHandlings, id)
-		return nil
+	size := len(model.data.MaintenanceHandlings)
+	delete(model.data.MaintenanceHandlings, id)
+	if size == len(model.data.MaintenanceHandlings) {
+		return fmt.Errorf("cannot find maintenance handling to destroy: %d", id)
 	}
-	return fmt.Errorf("cannot find maintenance handling to destroy: %d", id)
+	return nil
 }
 
 func (model *Model) handleLogMedicalHandlingCreation(m *sword.SimToClient_Content) error {
@@ -1078,11 +1079,12 @@ func (model *Model) handleLogMedicalHandlingDestruction(m *sword.SimToClient_Con
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, ok := model.data.MedicalHandlings[id]; ok {
-		delete(model.data.MedicalHandlings, id)
-		return nil
+	size := len(model.data.MedicalHandlings)
+	delete(model.data.MedicalHandlings, id)
+	if size == len(model.data.MedicalHandlings) {
+		return fmt.Errorf("cannot find medical handling to destroy: %d", id)
 	}
-	return fmt.Errorf("cannot find medical handling to destroy: %d", id)
+	return nil
 }
 
 func (model *Model) handleLogFuneralHandlingCreation(m *sword.SimToClient_Content) error {
@@ -1130,11 +1132,12 @@ func (model *Model) handleLogFuneralHandlingDestruction(m *sword.SimToClient_Con
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, ok := model.data.FuneralHandlings[id]; ok {
-		delete(model.data.FuneralHandlings, id)
-		return nil
+	size := len(model.data.FuneralHandlings)
+	delete(model.data.FuneralHandlings, id)
+	if size == len(model.data.FuneralHandlings) {
+		return fmt.Errorf("cannot find funeral handling to destroy: %d", id)
 	}
-	return fmt.Errorf("cannot find funeral handling to destroy: %d", id)
+	return nil
 }
 
 func (model *Model) handleLogSupplyHandlingCreation(m *sword.SimToClient_Content) error {
@@ -1176,9 +1179,10 @@ func (model *Model) handleLogSupplyHandlingDestruction(m *sword.SimToClient_Cont
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, ok := model.data.SupplyHandlings[id]; ok {
-		delete(model.data.SupplyHandlings, id)
-		return nil
+	size := len(model.data.SupplyHandlings)
+	delete(model.data.SupplyHandlings, id)
+	if size == len(model.data.SupplyHandlings) {
+		return fmt.Errorf("cannot find supply handling to destroy: %d", id)
 	}
-	return fmt.Errorf("cannot find supply handling to destroy: %d", id)
+	return nil
 }
