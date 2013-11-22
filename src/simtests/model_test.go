@@ -394,7 +394,7 @@ Party[-]
       Name: knowledge group[50]
       IsCrowdDefaultGroup: true
 `
-	c.Assert(dump, Equals, expected)
+	assertEqualOrDiff(c, dump, expected)
 	client.Close()
 
 	client, err := swapi.NewClient(sim.DispatcherAddr)

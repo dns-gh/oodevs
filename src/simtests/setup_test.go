@@ -11,11 +11,13 @@ package simtests
 import (
 	"flag"
 	"fmt"
+	"github.com/pmezard/go-difflib/difflib"
 	. "launchpad.net/gocheck"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"swapi"
 	"swapi/simu"
 	"testing"
@@ -220,6 +222,33 @@ func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.
 
 func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
 	return createAutomatForParty(c, client, "party")
+}
+
+func makeDiff(before, after string) (string, error) {
+	splitLines := func(s string) []string {
+		lines := []string{}
+		for _, line := range strings.Split(s, "\n") {
+			lines = append(lines, line+"\n")
+		}
+		return lines
+	}
+
+	diff := difflib.UnifiedDiff{
+		A:        splitLines(before),
+		FromFile: "before",
+		B:        splitLines(after),
+		ToFile:   "after",
+		Context:  4,
+	}
+	return difflib.GetUnifiedDiffString(diff)
+}
+
+func assertEqualOrDiff(c *C, result, expected string) {
+	if expected != result {
+		diff, err := makeDiff(expected, result)
+		c.Assert(err, IsNil)
+		c.Errorf("%s\n", diff)
+	}
 }
 
 func Test(t *testing.T) { TestingT(t) }
