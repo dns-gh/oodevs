@@ -863,14 +863,14 @@ func (c *Client) LogisticsChangeLinks(automatId uint32, superiors []uint32) erro
 		sword.UnitMagicAction_change_logistic_links)
 }
 
-func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, suppliedId uint32, quotas map[uint32]int32) error {
+func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, supplied *sword.Tasker, quotas map[uint32]int32) error {
 	params := []interface{}{MakeIdentifier(supplierId)}
 	values := []*sword.MissionParameter_Value{}
 	for dotation, qty := range quotas {
 		values = append(values, MakeList(MakeIdentifier(dotation), MakeQuantity(qty)))
 	}
 	params = append(params, MakeParameter(values...))
-	return c.sendUnitMagicAction(MakeAutomatTasker(suppliedId),
+	return c.sendUnitMagicAction(supplied,
 		MakeParameters(params...),
 		sword.UnitMagicAction_log_supply_change_quotas)
 }

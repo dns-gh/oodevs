@@ -482,28 +482,38 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 	defer sim.Stop()
 
 	// error: invalid supplied id parameter
-	err := client.LogisticsSupplyChangeQuotas(25, 42, map[uint32]int32{})
+	err := client.LogisticsSupplyChangeQuotas(25, swapi.MakeAutomatTasker(42), map[uint32]int32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid supplier id parameter
-	err = client.LogisticsSupplyChangeQuotas(42, 23, map[uint32]int32{})
+	err = client.LogisticsSupplyChangeQuotas(42, swapi.MakeAutomatTasker(23), map[uint32]int32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error : valid units id but no dotation
-	err = client.LogisticsSupplyChangeQuotas(25, 23, map[uint32]int32{})
+	err = client.LogisticsSupplyChangeQuotas(25, swapi.MakeAutomatTasker(23), map[uint32]int32{})
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// quotas model updated and no error with valid ids
 	newQuotas := map[uint32]int32{1: 100, 2: 200}
-	err = client.LogisticsSupplyChangeQuotas(25, 23, newQuotas)
+	err = client.LogisticsSupplyChangeQuotas(25, swapi.MakeAutomatTasker(23), newQuotas)
 	c.Assert(err, IsNil)
-
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		a, ok := data.Automats[23]
 		return ok && len(a.SuperiorQuotas) > 0
 	})
 	automat := client.Model.GetData().Automats[23]
 	c.Assert(automat.SuperiorQuotas, DeepEquals, newQuotas)
+
+	quotas := map[uint32]int32{7: 400}
+	formationId := uint32(25)
+	err = client.LogisticsSupplyChangeQuotas(6, swapi.MakeFormationTasker(formationId), quotas)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		a, ok := data.Formations[formationId]
+		return ok && len(a.SuperiorQuotas) > 0
+	})
+	formation := client.Model.GetData().Formations[formationId]
+	c.Assert(formation.SuperiorQuotas, DeepEquals, quotas)
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
