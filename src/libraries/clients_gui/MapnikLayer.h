@@ -23,7 +23,7 @@ namespace kernel
 
 namespace graphics
 {
-    class MapnikView;
+    class MapnikLayer;
 }
 
 namespace gui
@@ -52,7 +52,7 @@ private:
 
 private:
     kernel::Controller& controller_;
-    boost::scoped_ptr< graphics::MapnikView > layer_;
+    boost::scoped_ptr< graphics::MapnikLayer > layer_;
     tools::Path terrain_;
 };
 
