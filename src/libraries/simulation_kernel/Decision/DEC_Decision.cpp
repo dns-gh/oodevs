@@ -152,6 +152,13 @@ void RegisterPopulationFunctions( sword::Brain& brain )
 {
     // Population
     brain.RegisterFunction( "DEC_Agent_CanaliserPopulation", &DEC_AgentFunctions::ChannelPopulations );
+    brain.RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
+    brain.RegisterFunction( "DEC_CrowdKnowledge_IsValid", &DEC_KnowledgePopulationFunctions::IsValid );
+    brain.RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition  );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
+    brain.RegisterFunction( "DEC_GetKnowledgeBrain", &DEC_KnowledgePopulationFunctions::GetBrain );
+    brain.RegisterFunction( "DEC_ConnaissancePopulation_HasFlow", &DEC_KnowledgePopulationFunctions::IsFlowKnown );
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     brain.RegisterFunction( "DEC_Agent_Alert", &DEC_AgentFunctions::AlertInhabitants );
@@ -195,11 +202,6 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );    
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
     brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent", &DEC_KnowledgeAgentFunctions::ShareKnowledgesWith );
-    brain.RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
-    brain.RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition );
-    brain.RegisterFunction( "DEC_ConnaissancePopulation_HasFlow", &DEC_KnowledgePopulationFunctions::IsFlowKnown );
-    brain.RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
-    brain.RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
     brain.RegisterFunction( "DEC_ObjectKnowledge_GetObjectsInZone", &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone );
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsPositionInside", &DEC_KnowledgeFunctions::IsPositionInsideObjectOfType );
     brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
