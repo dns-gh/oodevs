@@ -762,11 +762,15 @@ func (model *ModelData) addOrder(order *Order) bool {
 	return true
 }
 
-func (model *ModelData) changeLogisticsLinks(entityId uint32, superiors []uint32) bool {
+func (model *ModelData) changeAutomatLogisticsLinks(entityId uint32, superiors []uint32) bool {
 	if automat, ok := model.Automats[entityId]; ok {
 		automat.LogSuperiors = append([]uint32{}, superiors...)
 		return true
 	}
+	return false
+}
+
+func (model *ModelData) changeFormationLogisticsLinks(entityId uint32, superiors []uint32) bool {
 	if formation, ok := model.Formations[entityId]; ok {
 		formation.LogSuperiors = append([]uint32{}, superiors...)
 		return true
@@ -774,11 +778,15 @@ func (model *ModelData) changeLogisticsLinks(entityId uint32, superiors []uint32
 	return false
 }
 
-func (model *ModelData) changeSupplyQuotas(suppliedId uint32, quotas map[uint32]int32) bool {
+func (model *ModelData) changeAutomatSupplyQuotas(suppliedId uint32, quotas map[uint32]int32) bool {
 	if automat, ok := model.Automats[suppliedId]; ok {
 		automat.SuperiorQuotas = quotas
 		return true
 	}
+	return false
+}
+
+func (model *ModelData) changeFormationSupplyQuotas(suppliedId uint32, quotas map[uint32]int32) bool {
 	if formation, ok := model.Formations[suppliedId]; ok {
 		formation.SuperiorQuotas = quotas
 		return true

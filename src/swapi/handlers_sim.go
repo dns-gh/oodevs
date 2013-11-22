@@ -751,20 +751,20 @@ func (model *Model) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Conten
 	requester := mm.GetRequester()
 	superiors := []uint32{}
 	for _, s := range mm.GetSuperior() {
-		if s.GetAutomat() != nil {
-			superiors = append(superiors, s.GetAutomat().GetId())
+		if s.Automat != nil {
+			superiors = append(superiors, s.Automat.GetId())
 		}
-		if s.GetFormation() != nil {
-			superiors = append(superiors, s.GetFormation().GetId())
+		if s.Formation != nil {
+			superiors = append(superiors, s.Formation.GetId())
 		}
 	}
 	if automat := requester.GetAutomat(); automat != nil {
-		if !model.data.changeLogisticsLinks(automat.GetId(), superiors) {
+		if !model.data.changeAutomatLogisticsLinks(automat.GetId(), superiors) {
 			return fmt.Errorf("cannot update logistic links on automat: %d",
 				automat.GetId())
 		}
 	} else if formation := requester.GetFormation(); formation != nil {
-		if !model.data.changeLogisticsLinks(formation.GetId(), superiors) {
+		if !model.data.changeFormationLogisticsLinks(formation.GetId(), superiors) {
 			return fmt.Errorf("cannot update logistic links on formation: %d",
 				formation.GetId())
 		}
@@ -803,21 +803,19 @@ func (model *Model) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
 		return ErrSkipHandler
 	}
 	quotas := map[uint32]int32{}
-	if mm.GetQuotas() != nil {
-		for _, quota := range mm.GetQuotas().GetElem() {
-			quotas[quota.GetResource().GetId()] = quota.GetQuantity()
-		}
+	for _, quota := range mm.GetQuotas().GetElem() {
+		quotas[quota.GetResource().GetId()] = quota.GetQuantity()
 	}
 	d := model.data
-	if mm.GetSupplied().GetAutomat() != nil {
-		if !d.changeSupplyQuotas(mm.GetSupplied().GetAutomat().GetId(), quotas) {
+	if automat := mm.GetSupplied().Automat; automat != nil {
+		if !d.changeAutomatSupplyQuotas(automat.GetId(), quotas) {
 			return fmt.Errorf("cannot update supply quotas on automat: %d",
-				mm.GetSupplied().GetAutomat().GetId())
+				automat.GetId())
 		}
-	} else if mm.GetSupplied().GetFormation() != nil {
-		if !d.changeSupplyQuotas(mm.GetSupplied().GetFormation().GetId(), quotas) {
+	} else if formation := mm.GetSupplied().Formation; formation != nil {
+		if !d.changeFormationSupplyQuotas(formation.GetId(), quotas) {
 			return fmt.Errorf("cannot update supply quotas on formation: %d",
-				mm.GetSupplied().GetFormation().GetId())
+				formation.GetId())
 		}
 	}
 	return nil
