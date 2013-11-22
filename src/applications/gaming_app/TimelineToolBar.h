@@ -35,6 +35,7 @@ public:
     //! @name Filters
     //@{
     const std::string& GetEntityFilter() const;
+    std::string GetServicesFilter() const;
     bool GetEngagedFilter() const;
     void SetEntityFilter( const std::string& filter );
     //@}
@@ -61,6 +62,7 @@ signals:
     void SaveTimelineSessionFileRequest( const tools::Path& path );
 
     void EngagedFilterToggled( bool checked );
+    void ServicesFilterChanged( const std::string& services );
     //@}
 
 public slots:
@@ -71,6 +73,8 @@ public slots:
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     void OnEngagedFilterToggled( bool toggled );
+    void OnEventFilterToggled( bool toggled );
+    void OnTaskFilterToggled( bool toggled );
     //@}
 
 private:
@@ -87,7 +91,10 @@ private:
     std::string entityFilter_;
     QString filters_;
     bool displayEngaged_;
+    bool displayEvents_;
+    bool displayTasks_;
     bool horizontalMode_;
+    QMenu* filterMenu_;
     //@}
 };
 

@@ -69,7 +69,7 @@ public:
 
     //! @name Filters
     //@{
-    void UpdateFilters( const std::string& unitFilter, bool displayEngaged );
+    void UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services );
     //@}
 
 private:
@@ -129,6 +129,7 @@ private slots:
     void OnSaveTimelineSessionFileRequested( const tools::Path& filename );
 
     void OnEngagedFilterToggled( bool checked );
+    void OnServicesFilterChanged( const std::string& services );
     //@}
 
 private:

@@ -122,7 +122,8 @@ void TimelineWebView::Connect()
         ( "lang",                 tools::Language::Current() )
         ( "sword_filter",         "" )
         ( "sword_profile",        lastProfile_ )
-        ( "sword_filter_engaged", "true" );
+        ( "sword_filter_engaged", "true" )
+        ( "filter_service",       "sword:true,none:true" );
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 
@@ -367,11 +368,12 @@ void TimelineWebView::SetProfile( const QString& profile )
 // Name: TimelineWebView::UpdateFilters
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::UpdateFilters( const std::string& unitFilter, bool displayEngaged )
+void TimelineWebView::UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services )
 {
     if( server_ )
         server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", unitFilter )
-                                                        ( "sword_filter_engaged", displayEngaged ? "false" : "true" ) );
+                                                        ( "sword_filter_engaged", displayEngaged ? "false" : "true" )
+                                                        ( "filter_service", services ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -614,5 +616,17 @@ void TimelineWebView::OnEngagedFilterToggled( bool displayEngaged )
     if( !server_ )
         return;
     auto query = boost::assign::map_list_of( "sword_filter_engaged", displayEngaged ? "false" : "true" );
+    server_->UpdateQuery( query );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnServicesFilterChanged
+// Created: SLI 2013-11-21
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnServicesFilterChanged( const std::string& services )
+{
+    if( !server_ )
+        return;
+    auto query = boost::assign::map_list_of( "filter_service", services );
     server_->UpdateQuery( query );
 }
