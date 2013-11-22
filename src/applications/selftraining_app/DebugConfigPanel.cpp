@@ -100,8 +100,6 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
 
     //timeline box
     timelineBox_ = new QGroupBox();
-    timelineBox_->setCheckable( true );
-    timelineBox_->setChecked( timeline );
     timelineBox_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
     connect( timelineBox_, SIGNAL( clicked( bool ) ), SLOT( OnTimelineChecked( bool ) ) );
 
@@ -115,8 +113,14 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     debugPortBox->addWidget( timelineDebugPortLabel_ );
     debugPortBox->addWidget( timelineDebugPortSpinBox_ );
 
+    oldTimeline_ = new QCheckBox();
+    oldTimeline_->setEnabled( timeline );
+    QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
+    oldTimelineLayout->addWidget( oldTimeline_ );
+
     QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
     timelineGroupLayout->addLayout( debugPortBox );
+    timelineGroupLayout->addLayout( oldTimelineLayout );
 
     //profiling group box
     profilingBox_ = new QGroupBox();
@@ -150,7 +154,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
 
     pathfinds->addLayout( dumpLayout );
     pathfinds->addLayout( filterLayout );
-    
+
     //mapnik group box
     mapnikBox_ = new QGroupBox();
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
@@ -220,8 +224,9 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnLanguageChanged()
 {
-    timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Enable Web Timeline" ) );
+    timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Timeline" ) );
     timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
+    oldTimeline_->setText( tools::translate( "DebugConfigPanel", "Enable legacy timeline" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
@@ -248,21 +253,19 @@ QString DebugConfigPanel::GetName() const
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
-    if( decCallsBox_->isChecked() || timelineBox_->isChecked() || mapnikLayerBox_->isChecked() )
+    frontend::CreateSession action( config_, exercise, session );
+    action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
+    action.SetOption( "session/config/timeline/@url", "localhost:" +
+        boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_WEB_PORT ) ) );
+    action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
+    if( decCallsBox_->isChecked() || mapnikLayerBox_->isChecked() )
     {
-        frontend::CreateSession action( config_, exercise, session );
         if( decCallsBox_->isChecked() )
             action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-        if( timelineBox_->isChecked() )
-        {
-            action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
-            action.SetOption( "session/config/timeline/@url", "localhost:" +
-                              boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_WEB_PORT ) ) );
-        }
         if( mapnikLayerBox_->isChecked() )
             action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
-        action.Commit();
     }
+    action.Commit();
 }
 
 // -----------------------------------------------------------------------------

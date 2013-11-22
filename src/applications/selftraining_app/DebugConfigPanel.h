@@ -77,6 +77,7 @@ private:
     QGroupBox* timelineBox_;
     QLabel* timelineDebugPortLabel_;
     QSpinBox* timelineDebugPortSpinBox_;
+    QCheckBox* oldTimeline_;
     int exerciseNumber_;
 
     //Integration Layer Configuration

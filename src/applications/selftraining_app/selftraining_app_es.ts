@@ -178,10 +178,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable Web Timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Debug port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -191,6 +187,14 @@
     </message>
     <message>
         <source>Activate layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable legacy timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
