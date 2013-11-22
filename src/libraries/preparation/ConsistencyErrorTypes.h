@@ -28,6 +28,7 @@ enum E_ConsistencyCheck
     eLogisticBaseNotSameTeam,
     eStockInvalidDotation,
     eBadLogisticSubordinate,
+    eBadQuotas,
     eLogisticMask,
 
     eProfileUniqueness,

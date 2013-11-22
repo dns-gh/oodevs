@@ -210,7 +210,7 @@ void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const gui::Gl
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 {
-    if( !IsToSerializeQuotas() )
+    if( !HasQuotas() )
         return;
 
     xos << xml::start( "quotas" );
@@ -284,10 +284,10 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticBaseStates::IsToSerializeQuotas
+// Name: LogisticBaseStates::HasQuotas
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
-bool LogisticBaseStates::IsToSerializeQuotas() const
+bool LogisticBaseStates::HasQuotas() const
 {
     tools::Iterator< const Dotation& > it = tools::Resolver< Dotation >::CreateIterator();
     while( it.HasMoreElements() )
