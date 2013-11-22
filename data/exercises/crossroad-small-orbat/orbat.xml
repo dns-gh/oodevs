@@ -26,7 +26,7 @@
             </automat>
           </formation>
         </formation>
-        <formation id="6" level="xxxxx" name="empty" symbol="symbols/sfgpu"/>
+        <formation id="6" level="xxxxx" logistic-level="logistic-base" name="empty" symbol="symbols/sfgpu"/>
         <formation id="25" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpuss">
           <automat engaged="true" id="26" knowledge-group="3" name="Supply logistic area  (corps) [26]" symbol="symbols/sfgpuss" type="LOG.Supply logistic area  (corps)">
             <unit command-post="true" id="27" name="Supply CP (division)" position="28RDS0777321908" type="LOG.Supply CP (division)"/>
@@ -69,6 +69,9 @@
         </logistic-base>
         <logistic-base id="25">
           <subordinate id="23"/>
+        </logistic-base>
+        <logistic-base id="6">
+          <subordinate id="25"/>
         </logistic-base>
       </logistics>
     </party>
