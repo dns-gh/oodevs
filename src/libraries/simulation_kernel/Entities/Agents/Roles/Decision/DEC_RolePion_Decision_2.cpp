@@ -157,7 +157,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions( sword::Brain& brain 
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstTerroriste", &DEC_KnowledgeAgentFunctions::IsTerrorist );
     brain.RegisterFunction( "DEC_AgentKnowledge_DisableCrowdEffect", &DEC_KnowledgeAgentFunctions::DisableCrowdEffect );
     brain.RegisterFunction( "DEC_CrowdKnowledge_CanLoadCrowdConcentration", &DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration );
-    brain.RegisterFunction( "DEC_CrowdKnowledge_IsValid", &DEC_KnowledgePopulationFunctions::IsValid );
 }
 
 // -----------------------------------------------------------------------------

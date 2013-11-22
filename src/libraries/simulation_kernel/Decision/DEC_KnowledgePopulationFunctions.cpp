@@ -19,6 +19,8 @@
 #include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
+#include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -533,3 +535,18 @@ bool DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetBrain
+// Created: LDC 2013-11-22
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_KnowledgePopulationFunctions::GetBrain( const DEC_Decision_ABC& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return &pKnowledge->GetPopulationKnown().GetDecision();
+    }
+    return 0;
+}

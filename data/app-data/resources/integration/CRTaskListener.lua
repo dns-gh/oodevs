@@ -16,11 +16,19 @@ local type_rc = 1
 local type_event = 2
 local type_warning = 3
 
-RC_WithParams = function( RC_Function, type_rc, id, list )
+RC_WithParams = function( RC_Function, type_rc, id, list, emitter )
     if list[1] then
-        return RC_Function( type_rc, id, list )
+        return RC_Function( type_rc, id, list, emitter )
     else
         return false
+    end
+end
+
+integration.reportWithSource = function( emitter, id, ... )
+    if tableRC[id] then 
+        return RC_WithParams( tableRC[id], type_rc, id, {...}, emitter )
+    else
+        return DEC_RC1( emitter, type_rc, id )
     end
 end
 
@@ -29,11 +37,7 @@ DEC_RC = function( ... )
 end
 
 integration.report = function( id, ... )
-    if tableRC[id] then 
-        return RC_WithParams( tableRC[id], type_rc, id, {...} )
-    else
-        return DEC_RC1( myself, type_rc, id )
-    end
+    integration.reportWithSource( myself, id, ... )
 end
 
 
