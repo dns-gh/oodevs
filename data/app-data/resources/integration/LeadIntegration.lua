@@ -403,7 +403,7 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
             myself.leadData.addedOrDeletedUnit = true
             local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks -- main tasks have to be given before support tasks
-            integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
+            self.bestUnits = integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
             for element, params in pairs (myself.leadData.paramsGiven) do
                 for _, param in pairs (params) do
                     if type(param) == "table" then
