@@ -3225,6 +3225,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>View %1</source>
         <translation>Vue %1</translation>
     </message>
+    <message>
+        <source>Rename view</source>
+        <translation>Renommer la vue</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
 </context>
 <context>
     <name>TimelineListView</name>

@@ -3212,6 +3212,14 @@ This data can&apos;t be projected.</source>
         <source>View %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rename view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
 </context>
 <context>
     <name>TimelineListView</name>
