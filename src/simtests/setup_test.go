@@ -12,6 +12,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/pmezard/go-difflib/difflib"
+	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
 	"os"
@@ -222,6 +223,12 @@ func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.
 
 func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
 	return createAutomatForParty(c, client, "party")
+}
+
+func readFileAsString(c *C, path string) string {
+	data, err := ioutil.ReadFile(path)
+	c.Assert(err, IsNil)
+	return string(data)
 }
 
 func makeDiff(before, after string) (string, error) {
