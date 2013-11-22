@@ -220,8 +220,7 @@ namespace
         SetValue( data, "name", event.name );
         SetValue( data, "info", event.info );
         SetValue( data, "begin", event.begin );
-        if( !event.end.empty() )
-            SetValue( data, "end", event.end );
+        SetValue( data, "end", event.end );
         SetValue( data, "done", event.done );
         if( event.action.target.empty() )
             return;
