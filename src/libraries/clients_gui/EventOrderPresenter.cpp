@@ -21,8 +21,8 @@
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Decisions_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
-#include "gaming/Decisions_ABC.h"
 #include <boost/assign.hpp>
 
 using namespace gui;
@@ -248,7 +248,7 @@ void EventOrderPresenter::Select( E_MissionType type, const std::string& mission
 // Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Select( const Decisions_ABC& decisions )
+void EventOrderPresenter::Select( const kernel::Decisions_ABC& decisions )
 {
     const kernel::Entity_ABC& entity = decisions.GetAgent();
     E_MissionType type = GetEntityType( entity );
@@ -259,7 +259,7 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions )
 // Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type )
+void EventOrderPresenter::Select( const kernel::Decisions_ABC& decisions, E_MissionType type )
 {
     Select( decisions, type, "" );
 }
@@ -268,7 +268,7 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType 
 // Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission )
+void EventOrderPresenter::Select( const kernel::Decisions_ABC& decisions, E_MissionType type, const std::string& mission )
 {
     Select( decisions, type, mission, 0 );
 }
@@ -277,7 +277,7 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType 
 // Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
+void EventOrderPresenter::Select( const kernel::Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
                                   const actions::Action_ABC* action )
 {
     const kernel::Entity_ABC& entity = decisions.GetAgent();
@@ -294,7 +294,7 @@ void EventOrderPresenter::Select( const Decisions_ABC& decisions, E_MissionType 
 // Name: EventOrderPresenter::Select
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
+void EventOrderPresenter::Select( const kernel::Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
                                   E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action )
 {
     const std::string lastMission = state_.currentMission_;

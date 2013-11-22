@@ -10,7 +10,7 @@
 #ifndef __AutomatDecisions_h_
 #define __AutomatDecisions_h_
 
-#include "Decisions_ABC.h"
+#include "clients_kernel/Decisions_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -42,7 +42,7 @@ class AutomatDecisions : public kernel::AutomatDecisions_ABC
                        , public kernel::Updatable_ABC< sword::AutomatAttributes >
                        , public kernel::Updatable_ABC< sword::AutomatOrder >
                        , public kernel::Displayable_ABC
-                       , public Decisions_ABC
+                       , public kernel::Decisions_ABC
 {
 public:
     //! @name Constructors/Destructor

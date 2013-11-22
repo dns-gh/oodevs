@@ -39,7 +39,6 @@
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MissionParameters.h"
-#include "gaming/TimelinePublisher.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 #include <boost/assign/list_of.hpp>
@@ -268,9 +267,9 @@ void EventOrderWidget::Publish( timeline::Event* event, bool planned )
 // Name: EventOrerWidget::GetTargetDecision
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
-const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
+const kernel::Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 {
-    const Decisions_ABC* decisions = 0;
+    const kernel::Decisions_ABC* decisions = 0;
     if( target_ )
     {
         if( target_->GetTypeName() == kernel::Agent_ABC::typeName_ )
@@ -324,7 +323,7 @@ E_MissionType EventOrderWidget::GetMissionType() const
 // -----------------------------------------------------------------------------
 void EventOrderWidget::SelectDefault()
 {
-    if( const Decisions_ABC* decisions = GetTargetDecision() )
+    if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions );
     else
         manager_->Select();
@@ -336,7 +335,7 @@ void EventOrderWidget::SelectDefault()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type )
 {
-    if( const Decisions_ABC* decisions = GetTargetDecision() )
+    if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type, action.GetType().GetName(), &action );
     else
         manager_->Select( type, action.GetType().GetName(), &action );
@@ -351,7 +350,7 @@ void EventOrderWidget::SelectWhenTargetOrMissionChanged()
     E_MissionType type = GetMissionType();
     if( type == eNbrMissionTypes )
         SelectDefault();
-    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+    else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
     else
         manager_->Select( type, missionCombo_->currentText().toStdString() );
@@ -366,7 +365,7 @@ void EventOrderWidget::SelectWhenMissionTypeChanged()
     E_MissionType type = GetMissionType();
     if( type == eNbrMissionTypes )
         SelectDefault();
-    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+    else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type );
     else
         manager_->Select( type );
@@ -530,7 +529,7 @@ void EventOrderWidget::ActivateMissionPanelOnUnit()
 // Name: EventOrderWidget::NotifyUpdated
 // Created: LGY 2013-08-22
 // -----------------------------------------------------------------------------
-void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
+void EventOrderWidget::NotifyUpdated( const kernel::Decisions_ABC& decisions )
 {
    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() ||
        alternateSelectedEntity_ && alternateSelectedEntity_->GetId() == decisions.GetAgent().GetId() )

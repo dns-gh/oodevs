@@ -51,7 +51,6 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Time_ABC.h"
-#include "gaming/StaticModel.h"
 
 using namespace actions::gui;
 

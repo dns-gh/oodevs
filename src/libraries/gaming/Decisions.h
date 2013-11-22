@@ -10,7 +10,7 @@
 #ifndef __Decisions_h_
 #define __Decisions_h_
 
-#include "Decisions_ABC.h"
+#include "clients_kernel/Decisions_ABC.h"
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -46,7 +46,7 @@ class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< sword::UnitAttributes >
                 , public kernel::Displayable_ABC
                 , public gui::Drawable_ABC
-                , public Decisions_ABC
+                , public kernel::Decisions_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -21,7 +21,7 @@
 #include "clients_gui/EventOrderPresenter.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
-#include "gaming/Decisions_ABC.h"
+#include "clients_kernel/Decisions_ABC.h"
 #include <boost/assign.hpp>
 #include "ENT/ENT_Tr.h"
 
@@ -142,7 +142,7 @@ namespace
         MOCK_METHOD( GetTypeName, 0 );
     };
 
-    MOCK_BASE_CLASS( MockDecisions, Decisions_ABC )
+    MOCK_BASE_CLASS( MockDecisions, kernel::Decisions_ABC )
     {
         MOCK_METHOD( CanBeOrdered, 0 );
         MOCK_METHOD( GetMissions, 0 );

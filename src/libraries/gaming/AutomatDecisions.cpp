@@ -61,7 +61,7 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
         model_ = &modelResolver_.Get( message.decisional_model() );
     if( message.has_brain_debug() )
         brainDebug_ = message.brain_debug();
-    controller_.Update( static_cast< Decisions_ABC& >( *this ) );
+    controller_.Update( static_cast< kernel::Decisions_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void AutomatDecisions::DoUpdate( const sword::AutomatOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );
-    controller_.Update( static_cast< Decisions_ABC& >( *this ) );
+    controller_.Update( static_cast< kernel::Decisions_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

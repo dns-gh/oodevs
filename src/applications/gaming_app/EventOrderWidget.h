@@ -46,6 +46,7 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Controllers;
+    class Decisions_ABC;
     class Entity_ABC;
     class EventAction;
     class Mission;
@@ -61,9 +62,7 @@ namespace tools
     template< typename T > class Iterator;
 }
 
-class Decisions_ABC;
 class Model;
-class Decisions_ABC;
 class MissionParameters;
 
 // =============================================================================
@@ -78,7 +77,7 @@ class EventOrderWidget : public EventWidget_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                       , public tools::ElementObserver_ABC< Decisions_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , public tools::ElementObserver_ABC< MissionParameters >
                        , private gui::EventOrderView_ABC
@@ -112,7 +111,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    virtual void NotifyUpdated( const Decisions_ABC& decisions );
+    virtual void NotifyUpdated( const kernel::Decisions_ABC& decisions );
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
     virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
@@ -130,7 +129,7 @@ private:
     void UpdateTriggerAction();
 
     E_MissionType GetMissionType() const;
-    const Decisions_ABC* GetTargetDecision() const;
+    const kernel::Decisions_ABC* GetTargetDecision() const;
     void SetTarget( const kernel::Entity_ABC* entity );
     void Publish( timeline::Event* event, bool planned );
     //@}
