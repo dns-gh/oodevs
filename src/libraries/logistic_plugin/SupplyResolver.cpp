@@ -73,7 +73,6 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
@@ -83,14 +82,12 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation&
             const uint32_t supplierId = msg.supplier().automat().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetAutomatName( supplierId, provider_ );
-            state.handlerId_ = supplierId;
         }
         else if( msg.supplier().has_formation() )
         {
             const uint32_t supplierId = msg.supplier().formation().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetFormationName( msg.supplier().formation().id(), provider_ );
-            state.handlerId_ = supplierId;
         }
     }
     if( msg.has_transporters_provider() )
@@ -118,7 +115,6 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation&
 bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -141,7 +137,6 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
         sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
         nameResolver.GetSupplykName( eSupply, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eSupply ) );
-        state.status_ = eSupply;
     }
     if( msg.has_requests() )
     {

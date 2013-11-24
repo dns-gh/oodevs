@@ -225,23 +225,6 @@ void LogisticPlugin::SetMaxLinesInFile( int maxLines )
     recorder_->SetMaxLinesInFile( maxLines );
 }
 
-namespace
-{
-
-sword::EnumLogisticType GetLogisticType( LogisticPlugin::E_LogisticType type )
-{
-    switch( type )
-    {
-    case LogisticPlugin::eLogisticType_Funeral: return sword::log_funeral;
-    case LogisticPlugin::eLogisticType_Maintenance: return sword::log_maintenance;
-    case LogisticPlugin::eLogisticType_Medical: return sword::log_medical;
-    case LogisticPlugin::eLogisticType_Supply: return sword::log_supply;
-    };
-    return sword::log_unknown;
-}
-
-}  // namespace
-
 bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
 {
@@ -252,31 +235,16 @@ bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
     auto ack = reply.mutable_message()->mutable_logistic_history_ack();
     try
     {
+        boost::ptr_vector< sword::LogHistoryEntry > entries;
         std::unordered_set< uint32_t > seen;
         for( int i = 0; i != rq.requests().size(); ++i )
         {
             const uint32_t requestId = rq.requests( i ).id();
             if( !seen.insert( requestId ).second )
                 continue;
-            auto it = consigns_.find( requestId );
-            if( it == consigns_.end() )
-                continue;
-            const auto& history = it->second->GetHistory();
-            for( auto ih = history.cbegin(); ih != history.cend(); ++ih )
-            {
-                if( ih->startTick_ < 0 || ih->status_ < 0 )
-                    continue;
-                auto st = ack->add_states();
-                st->mutable_request()->set_id( requestId );
-                st->mutable_id()->set_id( ih->id_ );
-                st->set_type( GetLogisticType( it->second->GetType() ));
-                st->set_start_tick( ih->startTick_ );
-                if( ih->endTick_ >= 0 )
-                    st->set_end_tick( ih->endTick_ );
-                if( ih->handlerId_ > 0 )
-                    st->mutable_handler()->set_id( ih->handlerId_ );
-                st->set_status( ih->status_ );
-            }
+            recorder_->GetHistory( requestId, entries );
+            for( auto ie = entries.cbegin(); ie != entries.cend(); ++ie )
+                ack->add_entries()->CopyFrom( *ie );
         }
     }
     catch( const std::exception& e )

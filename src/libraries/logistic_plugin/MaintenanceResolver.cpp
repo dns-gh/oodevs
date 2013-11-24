@@ -40,7 +40,6 @@ void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
         const NameResolver_ABC& nameResolver )
 {
-    PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -70,7 +69,6 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -90,14 +88,12 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
         const uint32_t providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
         nameResolver.GetAgentName( providerId, provider_ );
-        state.handlerId_ = providerId;
     }
     if( msg.has_state() )
     {
         sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus eState = msg.state();
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
-        state.status_ = eState;
     }
     return true;
 }

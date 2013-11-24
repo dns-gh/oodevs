@@ -133,6 +133,15 @@ namespace
     }
 }
 
+uint32_t protocol::GetParentEntityId( const sword::ParentEntity& parent )
+{
+    if( parent.has_automat() )
+        return parent.automat().id();
+    if( parent.has_formation() )
+        return parent.formation().id();
+    return 0;
+}
+
 void protocol::Check( bool valid, const std::string& msg, int i, int j, int k )
 {
     ::Check( valid, msg, i, j, k, false );

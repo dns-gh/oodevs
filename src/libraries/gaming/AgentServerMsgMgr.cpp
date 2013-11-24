@@ -567,28 +567,34 @@ void AgentServerMsgMgr::OnReceiveLogSupplyQuotas( const sword::LogSupplyQuotas& 
 namespace
 {
 
+int GetLogisticId( const sword::LogHistoryEntry& entry )
+{
+    if( entry.has_funeral() )
+        return entry.funeral().creation().request().id();
+    if( entry.has_maintenance() )
+        return entry.maintenance().creation().request().id();
+    if( entry.has_medical() )
+        return entry.medical().creation().request().id();
+    if( entry.has_supply() )
+        return entry.supply().creation().request().id();
+    return 0;
+}
+
 void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
-    const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& states )
+    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
 {
     if( start >= end )
         return;
     const auto& s = states.Get( start );
-    const auto id = s.request().id();
-    switch( s.type() )
-    {
-        case sword::log_funeral:
-            model.GetFuneralConsign( id ).UpdateHistory( start, end, states );
-            break;
-        case sword::log_maintenance:
-            model.GetMaintenanceConsign( id ).UpdateHistory( start, end, states );
-            break;
-        case sword::log_medical:
-            model.GetMedicalConsign( id ).UpdateHistory( start, end, states );
-            break;
-        case sword::log_supply:
-            model.GetSupplyConsign( id ).UpdateHistory( start, end, states );
-            break;
-    }
+    const auto id = GetLogisticId( s );
+    if( s.has_funeral() )
+        model.GetFuneralConsign( id ).UpdateHistory( start, end, states );
+    else if( s.has_maintenance() )
+        model.GetMaintenanceConsign( id ).UpdateHistory( start, end, states );
+    else if( s.has_medical() )
+        model.GetMedicalConsign( id ).UpdateHistory( start, end, states );
+    else if( s.has_supply() )
+        model.GetSupplyConsign( id ).UpdateHistory( start, end, states );
 }
 
 }  // namespace
@@ -602,15 +608,15 @@ void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistor
     // Assume states are sorted by ascending (request, state)
     auto& model = GetModel().logistics_;
     int i = 0, j;
-    for( j = 0; j < message.states().size(); ++j )
+    for( j = 0; j < message.entries().size(); ++j )
     {
-        if( message.states( i ).request().id() == message.states( j ).request().id() )
+        if( GetLogisticId( message.entries( i ) ) == GetLogisticId( message.entries( j ) ) )
             continue;
-        UpdateLogisticHistory( model, i, j, message.states() );
+        UpdateLogisticHistory( model, i, j, message.entries() );
         i = j;
     }
     if( i != j )
-        UpdateLogisticHistory( model, i, j, message.states() );
+        UpdateLogisticHistory( model, i, j, message.entries() );
 }
 
 // -----------------------------------------------------------------------------
