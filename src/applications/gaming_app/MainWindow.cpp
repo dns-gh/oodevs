@@ -322,7 +322,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );
     AddLayer( grid, "main,miniviews" );
-    AddLayer( weather, "main,miniviews" );
+    AddLayer( weather, "main,miniviews", tr( "Weather" ) );
     AddLayer( limits, "main,miniviews" );
     AddLayer( objectKnowledges, "main,miniviews" );
     AddLayer( populationKnowledges, "main,miniviews" );
