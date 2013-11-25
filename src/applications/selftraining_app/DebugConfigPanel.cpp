@@ -258,13 +258,10 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
     action.SetOption( "session/config/timeline/@url", "localhost:" +
         boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_WEB_PORT ) ) );
     action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
-    if( decCallsBox_->isChecked() || mapnikLayerBox_->isChecked() )
-    {
-        if( decCallsBox_->isChecked() )
-            action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-        if( mapnikLayerBox_->isChecked() )
-            action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
-    }
+    if( decCallsBox_->isChecked() )
+        action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
+    if( mapnikLayerBox_->isChecked() )
+        action.SetOption( "session/config/gaming/mapnik/@activate", "true" );
     action.Commit();
 }
 
