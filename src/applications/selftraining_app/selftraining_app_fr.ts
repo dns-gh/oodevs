@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>Enable legacy timeline</source>
-        <translation>Activer l'ancienne timeline</translation>
+        <translation>Activer l&apos;ancienne timeline</translation>
     </message>
 </context>
 <context>
