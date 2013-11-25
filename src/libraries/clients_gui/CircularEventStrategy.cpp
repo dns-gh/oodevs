@@ -226,7 +226,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     Layer_ABC::T_LayerElements extractedElements;
     RetrieveEntities( mouse, point, extractedElements );
 
-    if( Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
+    if( Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress ) ) ||                              // a layer has return true
         ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
         ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
         ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
@@ -247,14 +247,13 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::RetrieveEntities( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements )
 {
+    if( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton )
+        return;
     GlTools_ABC::T_ObjectsPicking selection;
     tools_.FillSelection( point, selection );
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
-    {
-        if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
-            continue;
-        ( *it )->ExtractElements( extractedElements, selection );
-    }
+        if( !( *it )->IsReadOnly() )
+            ( *it )->ExtractElements( extractedElements, selection );
 }
 
 // -----------------------------------------------------------------------------
