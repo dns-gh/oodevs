@@ -24,14 +24,14 @@ class ConsignRecorder::ConsignHistory
 {
 public:
     ConsignHistory( uint32_t i )
-        : id( i )
-        , destroyed( false )
+        : id_( i )
+        , destroyed_( false )
     {
     }
 
-    std::vector< ConsignArchive::Offset > records;
-    uint32_t id;
-    bool destroyed;
+    std::vector< ConsignArchive::Offset > records_;
+    uint32_t id_;
+    bool destroyed_;
 };
 
 ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
@@ -97,11 +97,11 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
         alive_.push_back( ConsignHistory( requestId ) );
         ic = consigns_.insert( std::make_pair( requestId, std::prev( alive_.end() ) )).first;
     }
-    auto& source = ic->second->destroyed ? destroyed_ : alive_;
-    ic->second->records.push_back( offset );
+    auto& source = ic->second->destroyed_ ? destroyed_ : alive_;
+    ic->second->records_.push_back( offset );
     if( destroyed )
-        ic->second->destroyed = true;
-    auto& dest = ic->second->destroyed ? destroyed_ : alive_;
+        ic->second->destroyed_ = true;
+    auto& dest = ic->second->destroyed_ ? destroyed_ : alive_;
     dest.splice( dest.end() , source, ic->second );
 
     // Remove extra entries
@@ -111,7 +111,7 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
         T_LRU& list = *lists[i];
         while( consigns_.size() > maxConsigns_ && !list.empty() )
         {
-            consigns_.erase( list.front().id );
+            consigns_.erase( list.front().id_ );
             list.pop_front();
         }
     }
@@ -126,7 +126,7 @@ void ConsignRecorder::GetHistory( uint32_t requestId,
         return;
     const ConsignHistory& c = *ic->second;
     std::vector< uint8_t > buffer;
-    for( auto it = c.records.cbegin(); it != c.records.cend(); ++it )
+    for( auto it = c.records_.cbegin(); it != c.records_.cend(); ++it )
     {
         if( !archive_->Read( it->file, it->offset, buffer ) )
             continue;
