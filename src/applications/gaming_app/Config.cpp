@@ -77,9 +77,10 @@ void Config::ReadSession()
         xis             >> xml::end // network
                     >> xml::end; // gaming
         hasTimeline_ = false;
+        timelineDebugPort_ = 0;
         xis >> xml::start( "timeline" )
                 >> xml::attribute( "url", timelineUrl_ )
-                >> xml::attribute( "debug-port", timelineDebugPort_ )
+                >> xml::optional >> xml::attribute( "debug-port", timelineDebugPort_ )
                 >> xml::optional >> xml::attribute( "enabled", hasTimeline_ );
     }
     else
