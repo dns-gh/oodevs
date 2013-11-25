@@ -12,6 +12,7 @@
 #include "ConsignResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <tools/Exception.h>
+#include <tools/Helpers.h>
 #include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -109,7 +110,7 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
 
     // Remove extra entries
     T_LRU* const lists[] = { &destroyed_, &alive_ };
-    for( int i = 0; i != sizeof( lists )/sizeof( *lists ); ++i )
+    for( int i = 0; i != COUNT_OF( lists ); ++i )
     {
         T_LRU& list = *lists[i];
         while( consigns_.size() > maxConsigns_ && !list.empty() )
