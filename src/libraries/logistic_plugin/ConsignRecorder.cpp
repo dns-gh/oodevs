@@ -103,6 +103,10 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
         ic->second->destroyed_ = true;
     auto& dest = ic->second->destroyed_ ? destroyed_ : alive_;
     dest.splice( dest.end() , source, ic->second );
+    // Despite the standard saying splice does not invalidate iterators in the
+    // 3 arguments version, MSVC believes it does in debug mode. Refresh it
+    // to avoid spurious assertions.
+    ic->second = std::prev( dest.end() );
 
     // Remove extra entries
     T_LRU* const lists[] = { &destroyed_, &alive_ };
