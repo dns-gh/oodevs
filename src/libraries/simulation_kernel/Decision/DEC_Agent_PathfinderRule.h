@@ -82,6 +82,7 @@ private:
     const double rMaxAltitude_;
     const double rAltitudeCostPerMeter_;
     const double rMaxSlope_;
+    const double rSlopeDeceleration_;
     // Fuseau
     const MIL_Fuseau* pFuseau_;
     double rMaximumFuseauDistance_;

@@ -92,6 +92,7 @@ public:
     double GetSensorRotationAngle() const;
     double GetWeight             () const;
     double GetMaxSlope           () const;
+    double GetSlopeDeceleration  () const;
     //@}
 
     //! @name Load/unload - Transport
@@ -329,6 +330,7 @@ private:
     const MIL_Time_ABC&          time_;
     const PHY_Speeds             speeds_;
           double                 rMaxSlope_;
+          double                 rSlopeDeceleration_;
     const PHY_DotationCapacities dotationCapacities_;
           T_WeaponTypeMap        weaponTypes_;
           T_SensorTypeMap        sensorTypes_;

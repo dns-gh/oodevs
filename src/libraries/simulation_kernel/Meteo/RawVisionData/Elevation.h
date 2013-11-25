@@ -51,6 +51,7 @@ public:
             int error = d_y - ( d_x >> 1 );
             while( x1 != x2 )
             {
+                MT_Vector2D origin( x1 * cellSize_, y1 * cellSize_ );
                 if( error >= 0 && ( error || ix > 0 ) )
                 {
                     error -= d_x;
@@ -58,7 +59,7 @@ public:
                 }
                 error += d_y;
                 x1 += ix;
-                if( f( MT_Vector2D( x1 * cellSize_, y1 * cellSize_ ) ) )
+                if( f( origin, MT_Vector2D( x1 * cellSize_, y1 * cellSize_ ) ) )
                     return true;
             }
         }
@@ -67,6 +68,7 @@ public:
             int error = d_x - ( d_y >> 1 );
             while( y1 != y2 )
             {
+                MT_Vector2D origin( x1 * cellSize_, y1 * cellSize_ );
                 if( error >= 0 && ( error || iy > 0 ) )
                 {
                     error -= d_y;
@@ -74,7 +76,7 @@ public:
                 }
                 error += d_x;
                 y1 += iy;
-                if( f( MT_Vector2D( x1 * cellSize_, y1 * cellSize_ ) ) )
+                if( f( origin, MT_Vector2D( x1 * cellSize_, y1 * cellSize_ ) ) )
                     return true;
             }
         }

@@ -15,10 +15,10 @@
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType )
-    : vPos_      ( vPos )
-    , nType_     ( type )
+    : vPos_( vPos )
+    , nType_( type )
     , nPointType_( nPointType )
-    , diaType_   ( szDIARepType )
+    , diaType_( szDIARepType )
 {
     // NOTHING
 }
@@ -28,10 +28,10 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint 
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
-    : vPos_                   ( vPos )
-    , nType_                  ( eTypePointPath )
-    , nPointType_             ( eTypePointNormal )
-    , nObjectTypes_           ( nObjectTypes )
+    : vPos_( vPos )
+    , nType_( eTypePointPath )
+    , nPointType_( eTypePointNormal )
+    , nObjectTypes_( nObjectTypes )
     , nObjectTypesToNextPoint_( nObjectTypesToNextPoint )
 {
     // NOTHING
@@ -135,4 +135,33 @@ unsigned int DEC_PathPoint::GetLimaID()
 const TerrainData& DEC_PathPoint::GetTypeTerrain() const
 {
     throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::IsSlopeValid
+// Created: JSR 2013-11-12
+// -----------------------------------------------------------------------------
+bool DEC_PathPoint::IsSlopeValid() const
+{
+    return slope_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetSlope
+// Created: JSR 2013-11-12
+// -----------------------------------------------------------------------------
+double DEC_PathPoint::GetSlope() const
+{
+    if( !slope_ )
+        throw MASA_EXCEPTION( "Accessing invalid slope" );
+    return *slope_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::SetSlope
+// Created: JSR 2013-11-12
+// -----------------------------------------------------------------------------
+void DEC_PathPoint::SetSlope( double slope )
+{
+    slope_ = slope;
 }

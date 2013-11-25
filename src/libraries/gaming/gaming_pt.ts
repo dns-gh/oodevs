@@ -243,6 +243,10 @@
         <source>Crowd transported:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Slope:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

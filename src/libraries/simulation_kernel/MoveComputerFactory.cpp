@@ -13,6 +13,7 @@
 #include "simulation_kernel/DefaultSpeedComputer.h"
 #include "simulation_kernel/DefaultMaxSlopeComputer.h"
 #include "simulation_kernel/DefaultMagicMoveComputer.h"
+#include "simulation_kernel/DefaultSlopeDecelerationComputer.h"
 
 using namespace moving;
 
@@ -53,7 +54,7 @@ std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMagicMoveComputer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MoveComputerFactory MoveComputerFactory::CreateSpeedComputer
+// Name: MoveComputerFactory::CreateSpeedComputer
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
 std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( const SpeedStrategy_ABC& strategy ) const
@@ -62,10 +63,19 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
 }
 
 // -----------------------------------------------------------------------------
-// Name: MoveComputerFactory MoveComputerFactory::CreateMaxSlopeComputer
+// Name: MoveComputerFactory::CreateMaxSlopeComputer
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
 std::auto_ptr< MaxSlopeComputer_ABC > MoveComputerFactory::CreateMaxSlopeComputer() const
 {
     return std::auto_ptr< MaxSlopeComputer_ABC >( new DefaultMaxSlopeComputer() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MoveComputerFactory::CreateSlopeDecelerationComputer
+// Created: JSR 2013-11-08
+// -----------------------------------------------------------------------------
+std::auto_ptr< SlopeDecelerationComputer_ABC > MoveComputerFactory::CreateSlopeDecelerationComputer() const
+{
+    return std::auto_ptr< SlopeDecelerationComputer_ABC >( new DefaultSlopeDecelerationComputer() );
 }

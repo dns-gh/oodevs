@@ -1433,10 +1433,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Max steepness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mounting duration per person</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1506,6 +1502,18 @@ Parked engine running</source>
     </message>
     <message>
         <source>Enforce resource quotas for aviation equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deceleration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slope deceleration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

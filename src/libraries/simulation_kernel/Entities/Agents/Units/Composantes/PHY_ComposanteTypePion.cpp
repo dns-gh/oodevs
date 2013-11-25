@@ -115,6 +115,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , time_                                      ( time )
     , speeds_                                    ( xis )
     , rMaxSlope_                                 ( 1. )
+    , rSlopeDeceleration_                        ( 0 )
     , dotationCapacities_                        ( "composition", xis )
     , objectData_                                ( )
     , consumptions_                              ( PHY_ConsumptionType::GetConsumptionTypes().size(), 0 )
@@ -153,11 +154,13 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
 {
-    xis >> xml::optional
-            >> xml::attribute( "max-slope", rMaxSlope_ )
+    xis >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ )
+        >> xml::optional  >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ )
         >> xml::attribute( "weight", rWeight_ );
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
         throw MASA_EXCEPTION( xis.context() + "element: max-slope not in [0..1]" );
+    if( rSlopeDeceleration_ < 0 )
+        throw MASA_EXCEPTION( xis.context() + "element: slope-deceleration < 0" );
     if( rWeight_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "element: weight <= 0" );
     InitializeWeapons         ( xis );
@@ -1640,6 +1643,15 @@ double PHY_ComposanteTypePion::GetWeight() const
 double PHY_ComposanteTypePion::GetMaxSlope() const
 {
     return rMaxSlope_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetSlopeDeceleration
+// Created: JSR 2013-11-07
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetSlopeDeceleration() const
+{
+    return rSlopeDeceleration_;
 }
 
 // -----------------------------------------------------------------------------

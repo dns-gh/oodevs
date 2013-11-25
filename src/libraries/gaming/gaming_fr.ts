@@ -243,6 +243,10 @@
         <source>Stances/Safety attitude</source>
         <translation>Postures/Ambiance sûreté</translation>
     </message>
+    <message>
+        <source>Slope:</source>
+        <translation>Pente:</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

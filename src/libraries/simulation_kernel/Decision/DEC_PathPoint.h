@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/optional.hpp>
 
 class DEC_PathPoint;
 class DEC_Representations;
@@ -66,12 +67,15 @@ public:
     virtual int GetTypeLima();
     virtual unsigned int GetLimaID();
     virtual const TerrainData& GetTypeTerrain() const;
+    bool IsSlopeValid() const;
+    double GetSlope() const;
     //@}
 
     //! @name Main
     //@{
     bool IsInObject( const TerrainData& data ) const;
     bool WillBeInObject( const TerrainData& data ) const;
+    void SetSlope( double slope );
     //@}
 
     //! @name DIA
@@ -90,6 +94,7 @@ protected:
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
+    boost::optional< double > slope_;
     //@}
 };
 

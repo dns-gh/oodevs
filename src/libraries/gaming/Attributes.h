@@ -27,9 +27,10 @@ namespace sword
 
 namespace kernel
 {
-    class Displayer_ABC;
     class Controller;
     class CoordinateConverter_ABC;
+    class DetectionMap;
+    class Displayer_ABC;
     class Entity_ABC;
     class SensorType;
     class Team_ABC;
@@ -55,8 +56,9 @@ class Attributes : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter
-                       , gui::PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             Attributes( kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::DetectionMap& elevation,
+                         const kernel::CoordinateConverter_ABC& converter, gui::PropertiesDictionary& dictionary,
+                         const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Attributes();
     //@}
 
@@ -93,12 +95,14 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::DetectionMap& elevation_;
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
     geometry::Point2f vPos_;
     int nSpeed_;
     int nAltitude_;
     int nDirection_;
+    int nSlope_;
     int nRawOpState_;
     E_OperationalStatus nOpState_;
     E_ForceRatioStatus nFightRateState_;
@@ -131,6 +135,7 @@ public:
     float fSecuritySatisfactionPercent_;
     float fHealthSatisfactionPercent_;
     int crowdTransported_;
+    const float cellDistance_;
     bool bAmbianceSafety_;
     //@}
 };
