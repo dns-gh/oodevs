@@ -160,7 +160,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
         throw MASA_EXCEPTION( xis.context() + "element: max-slope not in [0..1]" );
     if( rSlopeDeceleration_ < 0 )
-        xis.error( "element: slope-deceleration < 0" );
+        throw MASA_EXCEPTION( xis.context() + "element: slope-deceleration < 0" );
     if( rWeight_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "element: weight <= 0" );
     InitializeWeapons         ( xis );

@@ -19,7 +19,7 @@ namespace moving
 // Created: JSR 2013-11-08
 // -----------------------------------------------------------------------------
 DefaultSlopeDecelerationComputer::DefaultSlopeDecelerationComputer()
-    : slopeDeceleration_( 0 )
+    : deceleration_( 0 )
 {
     // NOTHING
 }
@@ -40,7 +40,7 @@ DefaultSlopeDecelerationComputer::~DefaultSlopeDecelerationComputer()
 void DefaultSlopeDecelerationComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
     if( component.CanMove() )
-        slopeDeceleration_ = std::max( slopeDeceleration_, component.GetType().GetSlopeDeceleration() );
+        deceleration_ = std::max( deceleration_, component.GetType().GetSlopeDeceleration() );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void DefaultSlopeDecelerationComputer::ApplyOnComponent( PHY_ComposantePion& com
 // -----------------------------------------------------------------------------
 double DefaultSlopeDecelerationComputer::GetSlopeDeceleration() const
 {
-    return slopeDeceleration_;
+    return deceleration_;
 }
 
 }

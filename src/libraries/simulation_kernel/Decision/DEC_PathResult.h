@@ -24,7 +24,6 @@ class MIL_Agent_ABC;
 class DEC_PathPoint;
 class DEC_PathType;
 class MIL_Object_ABC;
-class PHY_RawVisionData;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -91,7 +90,6 @@ private:
     //@{
     const DEC_PathType& pathType_;
     bool bSectionJustEnded_;
-    const PHY_RawVisionData& elevation_;
     //@}
 };
 

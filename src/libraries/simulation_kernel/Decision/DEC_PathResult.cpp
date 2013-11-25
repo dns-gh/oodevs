@@ -30,7 +30,6 @@
 DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
     : pathType_( pathType )
     , bSectionJustEnded_( false )
-    , elevation_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -292,9 +291,10 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
     if( !resultList_.empty() )
     {
         SlopeSpeedModifier slopeSpeedModifier;
-        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation_ ), _1, _2 );
+        const PHY_RawVisionData& elevation = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
+        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation ), _1, _2 );
         const MT_Vector2D& startPoint = resultList_.back()->GetPos();
-        Elevation( elevation_.GetCellSize() ).FindPath( startPoint, vPos, decelerationFunc );
+        Elevation( elevation.GetCellSize() ).FindPath( startPoint, vPos, decelerationFunc );
         const SlopeSpeedModifier::T_Slopes& slopes = slopeSpeedModifier.GetSlopes();
         for( auto itSlope = slopes.begin(); itSlope != slopes.end(); ++itSlope )
         {

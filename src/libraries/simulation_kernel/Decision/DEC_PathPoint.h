@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/optional.hpp>
 
 class DEC_PathPoint;
 class DEC_Representations;
@@ -93,8 +94,7 @@ protected:
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_;
     std::string diaType_;
-    double slope_;
-    bool validSlope_;
+    boost::optional< double > slope_;
     //@}
 };
 

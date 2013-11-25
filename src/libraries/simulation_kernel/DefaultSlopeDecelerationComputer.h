@@ -39,7 +39,7 @@ public:
 private:
     //! @name Attributes
     //@{
-    double slopeDeceleration_;
+    double deceleration_;
     //@}
 };
 
