@@ -10,6 +10,9 @@ package simtests
 
 import (
 	"bufio"
+	"code.google.com/p/goprotobuf/proto"
+	"crypto/sha1"
+	"fmt"
 	. "launchpad.net/gocheck"
 	"os"
 	"path/filepath"
@@ -18,6 +21,7 @@ import (
 	"strings"
 	"swapi"
 	"swapi/simu"
+	"sword"
 )
 
 // Parse the header and return a list of field matching regexps for fields
@@ -211,9 +215,12 @@ func (s *TestSuite) TestLogisticPlugin(c *C) {
  *** ; *** ; *** ;  ; Logistic combat train [23] ; Logistic combat train [23] ;  ;  ; *** `)
 }
 
-type LogisticStateKey struct {
-	RequestId uint32
-	Id        uint32
+func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
+	data, err := proto.Marshal(e)
+	c.Assert(err, IsNil)
+	h := sha1.New()
+	h.Write(data)
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
 func (s *TestSuite) TestLogisticHistory(c *C) {
@@ -233,20 +240,22 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 
 	// Valid handling, duplicate and invalid handling
 	invalidId := uint32(123456)
-	states, err := client.GetLogisticHistory(handlingId, handlingId, invalidId)
+	entries, err := client.GetLogisticHistory(handlingId, handlingId, invalidId)
 	c.Assert(err, IsNil)
-	c.Assert(len(states), Greater, 0)
-	uniqueKeys := map[LogisticStateKey]struct{}{}
-	for _, s := range states {
-		c.Assert(s.RequestId, Equals, handlingId)
-		key := LogisticStateKey{s.RequestId, s.Id}
+	c.Assert(len(entries), Greater, 0)
+	uniqueKeys := map[string]struct{}{}
+	for _, e := range entries {
+		c.Assert(e.GetMedical(), NotNil)
+		m := e.GetMedical()
+		c.Assert(m.GetCreation().GetRequest().GetId(), Equals, handlingId)
+		key := hashLogEntry(c, e)
 		_, ok := uniqueKeys[key]
 		c.Assert(ok, Equals, false)
 		uniqueKeys[key] = struct{}{}
 	}
 
 	// No handling
-	states, err = client.GetLogisticHistory()
+	entries, err = client.GetLogisticHistory()
 	c.Assert(err, IsNil)
-	c.Assert(len(states), Equals, 0)
+	c.Assert(len(entries), Equals, 0)
 }

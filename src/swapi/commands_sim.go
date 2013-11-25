@@ -1406,17 +1406,7 @@ func (c *Client) LogFinishHandlings(unitId uint32) error {
 		sword.UnitMagicAction_log_finish_handlings)
 }
 
-type LogisticHistoryState struct {
-	RequestId uint32
-	Id        uint32
-	Type      int32
-	StartTick int32
-	EndTick   int32
-	HandlerId uint32
-	Status    int32
-}
-
-func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*LogisticHistoryState, error) {
+func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEntry, error) {
 	ids := MakeIdList(requestId...).Elem
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
@@ -1427,25 +1417,19 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*LogisticHistoryStat
 			},
 		},
 	}
-	var states []*LogisticHistoryState
+	var entries []*sword.LogHistoryEntry
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetLogisticHistoryAck()
 		if reply == nil {
 			return ErrContinue
 		}
-		for _, s := range reply.GetStates() {
-			states = append(states, &LogisticHistoryState{
-				RequestId: s.GetRequest().GetId(),
-				Id:        s.GetId().GetId(),
-				Type:      int32(s.GetType()),
-				StartTick: s.GetStartTick(),
-				EndTick:   s.GetEndTick(),
-				HandlerId: s.GetHandler().GetId(),
-				Status:    s.GetStatus(),
-			})
+		for _, s := range reply.GetEntries() {
+			e := sword.LogHistoryEntry{}
+			DeepCopy(&e, s)
+			entries = append(entries, &e)
 		}
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
-	return states, err
+	return entries, err
 }
