@@ -104,8 +104,7 @@ bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
     const auto& msg = message.message();
     if( msg.has_log_maintenance_handling_creation() )
     {
-        entry_.mutable_maintenance()->mutable_creation()->CopyFrom(
-                msg.log_maintenance_handling_creation() );
+        *entry_.mutable_maintenance()->mutable_creation() = msg.log_maintenance_handling_creation();
         return ManageMessage( msg.log_maintenance_handling_creation(), resolver );
     }
     if( msg.has_log_maintenance_handling_update() )
@@ -116,8 +115,8 @@ bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
     }
     if( msg.has_log_maintenance_handling_destruction() )
     {
-        entry_.mutable_maintenance()->mutable_destruction()->CopyFrom(
-                msg.log_maintenance_handling_destruction() );
+        *entry_.mutable_maintenance()->mutable_destruction() =
+            msg.log_maintenance_handling_destruction();
     }
     return false;
 }

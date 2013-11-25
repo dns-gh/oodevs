@@ -244,7 +244,7 @@ bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
                 continue;
             recorder_->GetHistory( requestId, entries );
             for( auto ie = entries.cbegin(); ie != entries.cend(); ++ie )
-                ack->add_entries()->CopyFrom( *ie );
+                *ack->add_entries() = *ie;
         }
     }
     catch( const std::exception& e )

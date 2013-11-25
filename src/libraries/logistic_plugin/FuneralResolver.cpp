@@ -113,8 +113,7 @@ bool FuneralConsignData::DoUpdateConsign( const sword::SimToClient& message,
     const auto& msg = message.message();
     if( msg.has_log_funeral_handling_creation() )
     {
-        entry_.mutable_funeral()->mutable_creation()->CopyFrom(
-                msg.log_funeral_handling_creation() );
+        *entry_.mutable_funeral()->mutable_creation() = msg.log_funeral_handling_creation();
         return ManageMessage( msg.log_funeral_handling_creation(), resolver );
     }
     if( msg.has_log_funeral_handling_update() )
@@ -125,8 +124,7 @@ bool FuneralConsignData::DoUpdateConsign( const sword::SimToClient& message,
     }
     if( msg.has_log_funeral_handling_destruction() )
     {
-        entry_.mutable_funeral()->mutable_destruction() ->CopyFrom(
-                msg.log_funeral_handling_destruction() );
+        *entry_.mutable_funeral()->mutable_destruction() = msg.log_funeral_handling_destruction();
     }
     return false;
 }

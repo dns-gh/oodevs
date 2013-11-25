@@ -131,8 +131,7 @@ bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
     const auto& msg = message.message();
     if( msg.has_log_medical_handling_creation() )
     {
-        entry_.mutable_medical()->mutable_creation() ->CopyFrom(
-                msg.log_medical_handling_creation() );
+        *entry_.mutable_medical()->mutable_creation() = msg.log_medical_handling_creation();
         return ManageMessage( msg.log_medical_handling_creation(), resolver );
     }
     if( msg.has_log_medical_handling_update() )
@@ -143,8 +142,7 @@ bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
     }
     if( msg.has_log_medical_handling_destruction() )
     {
-        entry_.mutable_medical()->mutable_destruction()->CopyFrom(
-                msg.log_medical_handling_destruction() );
+        *entry_.mutable_medical()->mutable_destruction() = msg.log_medical_handling_destruction();
         return ManageMessage( msg.log_medical_handling_destruction(), resolver );
     }
     return false;
