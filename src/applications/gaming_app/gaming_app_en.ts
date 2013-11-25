@@ -3200,15 +3200,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New actions timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3234,16 +3234,16 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelinePanel</name>
     <message>
-        <source>Actions timeline</source>
-        <translation>Actions timeline</translation>
-    </message>
-    <message>
         <source>Global view</source>
         <translation>Global view</translation>
     </message>
     <message>
         <source>Current session</source>
         <translation>Current session</translation>
+    </message>
+    <message>
+        <source>Legacy Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
