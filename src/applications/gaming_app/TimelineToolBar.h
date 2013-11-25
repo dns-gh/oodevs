@@ -69,7 +69,6 @@ public slots:
     //! @name Slots
     //@{
     void OnSwitchView();
-    void OnFilterSelection();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     void OnEngagedFilterToggled( bool toggled );
