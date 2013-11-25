@@ -74,6 +74,22 @@ integration.getHeightForKnowledgeAgent = function( agent )
     return DEC_ConnaissanceAgent_Altitude( agent )
 end
 
+--- Returns the standard flying height of an agent (in meters)
+-- Returns 0 if the agent cannot fly
+-- @param agent The agent whose standard flying height will be returned
+-- @return An integer, the standard flying height as defined in the physical database
+integration.getStandardFlyingHeight = function( agent )
+    return DEC_Agent_GetStandardFlyingHeight( agent.source )
+end
+
+--- Returns the tactical flying height of an agent (in meters)
+-- Returns 0 if the agent cannot fly
+-- @param agent The agent whose tactical flying height will be returned
+-- @return An integer, the tactical flying height as defined in the physical database
+integration.getTacticalFlyingHeight = function( agent )
+    return DEC_Agent_GetTacticalFlyingHeight( agent.source )
+end
+
 integration.getKnowledgeAgentOperationalState = function( agent )
     return DEC_ConnaissanceAgent_EtatOps( agent )
 end
