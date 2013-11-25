@@ -18,11 +18,7 @@
 #include <boost/numeric/conversion/cast.hpp>
 
 namespace bg = boost::gregorian;
-
-namespace plugins
-{
-namespace logistic
-{
+using namespace plugins::logistic;
 
 class ConsignRecorder::ConsignHistory
 {
@@ -146,5 +142,3 @@ size_t ConsignRecorder::GetHistorySize() const
     return consigns_.size();
 }
 
-}  // namespace logistic
-}  // namespace plugins
