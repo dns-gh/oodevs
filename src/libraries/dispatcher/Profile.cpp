@@ -251,6 +251,12 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_list_enabled_vision_cones() )
         return true;
+    if( message.has_logistic_history_request() )
+        // This message is handled by the logistic plugin, we allow it here only
+        // to avoid the dispatcher to send "forbidden" errors to clients. A better
+        // fix is to make DispatcherPlugin use HandleClientToSim() so the
+        // message is filtered by the handling plugin.
+        return true;
     return false;
 }
 
