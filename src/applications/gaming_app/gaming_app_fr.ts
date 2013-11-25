@@ -2021,6 +2021,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Mapnik</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

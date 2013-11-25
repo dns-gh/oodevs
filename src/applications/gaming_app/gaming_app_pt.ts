@@ -2018,6 +2018,10 @@ This data can&apos;t be projected.</source>
         <source>Mapnik</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
