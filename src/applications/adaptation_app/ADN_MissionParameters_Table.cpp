@@ -135,8 +135,10 @@ void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& it
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popup( this );
+    if( !ADN_Workspace::GetWorkspace().GetLanguages().GetData().IsCurrentMaster() )
+        return;
 
+    Q3PopupMenu popup( this );
     popup.insertItem( tr( "Add parameter"), 0 );
     if( void* data = GetData( pt ) )
     {
