@@ -589,9 +589,10 @@ void LogisticStockEditor::SetQuotas( const LogisticHierarchiesBase& logHierarchy
         const DotationType& dotationType = *itRequired->first;
         tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
         for( int row = 0; itLogClass.HasMoreElements(); ++row )
+        {
+            const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
             if( dataModel_->item( row )->checkState() == Qt::Checked )
             {
-                const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
                 if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
                 {
                     int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
@@ -599,6 +600,7 @@ void LogisticStockEditor::SetQuotas( const LogisticHierarchiesBase& logHierarchy
                     baseStates.SetDotation( dotationType, quantity );
                 }
             }
+        }
     }
 }
 
