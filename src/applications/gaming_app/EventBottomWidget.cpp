@@ -11,7 +11,6 @@
 #include "EventBottomWidget.h"
 #include "moc_EventBottomWidget.cpp"
 #include "gaming/Event.h"
-#include "tools/ExerciseConfig.h"
 #include <timeline/api.h>
 
 namespace
@@ -28,7 +27,7 @@ namespace
 // Name: EventBottomWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventBottomWidget::EventBottomWidget( const tools::ExerciseConfig& config )
+EventBottomWidget::EventBottomWidget()
     : EventWidget_ABC()
     , detailAction_( 0 )
 {
@@ -47,13 +46,10 @@ EventBottomWidget::EventBottomWidget( const tools::ExerciseConfig& config )
     toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), tr( "Discard" ), this, SIGNAL( Discard() ) );
 
     // Details if debug
-    if( config.HasTimeline() )
-    {
 #ifdef _DEBUG
         detailAction_ = toolBar->addAction( qApp->style()->standardIcon( QStyle::SP_FileDialogInfoView ), "Details", this, SIGNAL( ShowDetail() ) );
         detailAction_->setCheckable( true );
 #endif
-    }
 
     // Layout
     mainLayout_->addWidget( toolBar );

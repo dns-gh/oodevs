@@ -58,25 +58,31 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
 void TimelineToolBar::Initialize()
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
-    addAction( MAKE_ICON( filter ), tr( "Edit filters" ), this, SLOT( OnFilterSelection() ) );
+    filterMenu_ = new QMenu( this );
+    QToolButton* button = new QToolButton( this );
+    button->setIconSet( MAKE_ICON( filter ) );
+    button->setTextLabel( tr( "Edit filters" ) );
+    button->setPopup( filterMenu_ );
+    button->setPopupMode( QToolButton::InstantPopup );
+    button->setPopupDelay( 1 );
+    addWidget( button );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
     addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
     addSeparator();
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/new_tab.png" ) ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
-    filterMenu_ = new QMenu( this );
-    //
+
     QAction* engagedFilter = new QAction( tr( "Display engaged units" ), this );
     connect( engagedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
     engagedFilter->setCheckable( true );
     engagedFilter->setChecked( displayEngaged_ );
-    //
+
     QAction* eventFilter= new QAction( tr( "Display events" ), this );
     connect( eventFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEventFilterToggled( bool ) ) );
     eventFilter->setCheckable( true );
     eventFilter->setChecked( displayEvents_ );
-    //
+
     QAction* taskFilter = new QAction( tr( "Display tasks" ), this );
     connect( taskFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnTaskFilterToggled( bool ) ) );
     taskFilter->setCheckable( true );
@@ -105,15 +111,6 @@ void TimelineToolBar::OnSwitchView()
     horizontalMode_ = !horizontalMode_;
     horizontalView_->setText( horizontalMode_ ? tr( "Switch to vertical view" ) : tr( "Switch to horizontal view" ) );
     emit SetLayoutOrientation( horizontalMode_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnFilterSelection
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineToolBar::OnFilterSelection()
-{
-    filterMenu_->exec( QCursor::pos() );
 }
 
 // -----------------------------------------------------------------------------

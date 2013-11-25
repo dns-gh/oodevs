@@ -13,11 +13,6 @@
 #include "EventWidget_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 // =============================================================================
 /** @class  EventBottomWidget
     @brief  EventBottomWidget
@@ -31,7 +26,7 @@ class EventBottomWidget : public EventWidget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EventBottomWidget( const tools::ExerciseConfig& config );
+             EventBottomWidget();
     virtual ~EventBottomWidget();
     //@}
 

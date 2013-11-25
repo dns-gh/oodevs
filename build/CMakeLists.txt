@@ -575,6 +575,7 @@ target_link_libraries( gaming_app
     ${GEODATA_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
     ${MAPNIK_LIBRARIES}
+    ${GEOS_I_LIBRARIES}
 )
 
 # launcher_dll

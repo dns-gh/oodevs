@@ -3214,10 +3214,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>New actions timeline</source>
-        <translation>Nouvelle chronologie des actions</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation>Principale</translation>
     </message>
@@ -3228,6 +3224,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Rename view</source>
         <translation>Renommer la vue</translation>
+    </message>
+    <message>       
+        <source>Timeline</source>
+        <translation>Chronologie</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3256,16 +3256,16 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TimelinePanel</name>
     <message>
-        <source>Actions timeline</source>
-        <translation>Chronologie des actions</translation>
-    </message>
-    <message>
         <source>Global view</source>
         <translation>Vue globale</translation>
     </message>
     <message>
         <source>Current session</source>
         <translation>Session courante</translation>
+    </message>
+    <message>
+        <source>Legacy Timeline</source>
+        <translation>Ancienne chronologie</translation>
     </message>
 </context>
 <context>

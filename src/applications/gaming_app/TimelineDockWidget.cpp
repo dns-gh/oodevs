@@ -44,7 +44,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     , webView_( 0 )
 {
     // Init
-    setCaption( tr( "New actions timeline" ) );
+    setCaption( tr( "Timeline" ) );
 
     // Configuration
     cfg_->url = "http://" + config.GetTimelineUrl();
@@ -234,6 +234,6 @@ void TimelineDockWidget::OnRenameTab()
     bool ok;
     const QString text = QInputDialog::getText( this, tr( "Rename view" ), tr( "Name" ), QLineEdit::Normal,
                                                 tabWidget_->tabText( index ), &ok );
-    if( ok && !text.isEmpty() )
+    if( ok && !text.stripWhiteSpace().isEmpty() )
         tabWidget_->setTabText( index, text );
 }

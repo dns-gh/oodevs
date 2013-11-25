@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    virtual bool IsVisible() const;
     virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     virtual void OnLanguageChanged();
     //@}
@@ -67,6 +68,7 @@ private:
     //! @name Member data
     //@{
     //config
+    const bool visible_;
     const tools::GeneralConfig& config_;
 
     QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based history
@@ -77,6 +79,7 @@ private:
     QGroupBox* timelineBox_;
     QLabel* timelineDebugPortLabel_;
     QSpinBox* timelineDebugPortSpinBox_;
+    QCheckBox* oldTimeline_;
     int exerciseNumber_;
 
     //Integration Layer Configuration
