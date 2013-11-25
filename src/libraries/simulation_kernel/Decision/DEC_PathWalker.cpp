@@ -354,7 +354,14 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             movingEntity_.NotifyMovingInsideObject( object );
             if( rSpeedWithinObject == 0. )
             {
-                if( !object.IsInside( itCurMoveStep->vPos_ ) )
+                bool objectIsBetweenThisAndNextStep = false;
+                for( auto it = itNextMoveStep->objectsToNextPointSet_.begin(); it != itNextMoveStep->objectsToNextPointSet_.end(); ++it )
+                    if( *it == &object )
+                    {
+                        objectIsBetweenThisAndNextStep = true;
+                        break;
+                    }
+                if( objectIsBetweenThisAndNextStep )
                 {
                     SetBlockedByObject( object, itCurMoveStep );
                     return false;
@@ -374,7 +381,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
             if( rSpeedWithinObject == 0. )
             {
-                if( !object.IsInside( itCurMoveStep->vPos_ ) )
+                if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
                 {
                     SetBlockedByObject( object, itCurMoveStep );
                     return false;
