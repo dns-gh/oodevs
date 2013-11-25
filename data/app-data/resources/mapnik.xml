@@ -247,17 +247,17 @@
 
   <Style name="road-text">
     <Rule>
-      <Filter>[MASACODE] = 20003 and [LENGTH] &lt; 5</Filter>
+      <Filter>[MASACODE] = 20003 and [LENGTH] &lt; 5 and [NAME] != "UNK"</Filter>
       &maxscale_zoom16;
       <TextSymbolizer size="12" fill="black" placement="line" fontset-name="book-fonts" halo-radius="3" halo-fill="white" minimum-distance="400"><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <Filter>[MASACODE] = 20002 and [LENGTH] &lt; 5</Filter>
+      <Filter>[MASACODE] = 20002 and [LENGTH] &lt; 5 and [NAME] != "UNK"</Filter>
       &maxscale_zoom15;
       <TextSymbolizer size="12" fill="black" placement="line" fontset-name="book-fonts" halo-radius="3" halo-fill="#fed7a5" minimum-distance="200"><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
     <Rule>
-      <Filter>[MASACODE] = 20001 and [LENGTH] &lt; 5</Filter>
+      <Filter>[MASACODE] = 20001 and [LENGTH] &lt; 5 and [NAME] != "UNK"</Filter>
       &maxscale_zoom14;
       <TextSymbolizer size="12" fill="black" fontset-name="book-fonts" halo-radius="3" halo-fill="#fa9e25" minimum-distance="200"><![CDATA[[NAME]]]></TextSymbolizer>
     </Rule>
