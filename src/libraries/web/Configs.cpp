@@ -120,7 +120,6 @@ session::Config::Config()
     rng.seed = 0;
     reports.clean_frequency = 100;
     sides.no_side_objects = true;
-    timeline.enabled = false;
     mapnik.enabled = false;
 }
 
@@ -390,7 +389,6 @@ bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tr
     modified |= TryRead( dst.rng.seed, src, "rng.seed" );
     modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
     modified |= TryRead( dst.sides.no_side_objects, src, "sides.no_side_objects" );
-    modified |= TryRead( dst.timeline.enabled, src, "timeline.enabled" );
     modified |= TryRead( dst.mapnik.enabled, src, "mapnik.enabled" );
     modified |= ReadSideConfig( dst.sides.list, src, "sides.list" );
     modified |= ReadProfileConfig( dst.profiles, src, "profiles" );
@@ -422,7 +420,6 @@ void session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "rng.seed", cfg.rng.seed );
     dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
     dst.put( "sides.no_side_objects", cfg.sides.no_side_objects );
-    dst.put( "timeline.enabled", cfg.timeline.enabled );
     dst.put( "mapnik.enabled", cfg.mapnik.enabled );
     WriteSideConfig( dst, "sides.list", cfg.sides.list );
     WriteProfileConfig( dst, "profiles.", cfg.profiles );

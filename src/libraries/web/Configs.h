@@ -149,10 +149,6 @@ struct Config
     struct
     {
         bool        enabled;
-    }               timeline;
-    struct
-    {
-        bool        enabled;
     }               mapnik;
     T_Profiles      profiles;
 };

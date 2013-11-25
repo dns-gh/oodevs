@@ -635,9 +635,8 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
 
     if( process_ && !process_->IsAlive() )
         next = idle;
-    if( cfg_.timeline.enabled )
-        if( !timeline_ || !timeline_->IsAlive() )
-            next = idle;
+    if( !timeline_ || !timeline_->IsAlive() )
+        next = idle;
 
     if( next == status_ )
         return false;
@@ -849,13 +848,10 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
 
     runtime::Scoper kill_orphaned_process( boost::bind( &runtime::Process_ABC::Kill, ptr ) );
     T_Process time;
-    if( cfg_.timeline.enabled )
-    {
-        if( !deps_.ports.WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
-            return false;
-        if( !( time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT ) ) )
-            return false;
-    }
+    if( !deps_.ports.WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
+        return false;
+    if( !( time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT ) ) )
+        return false;
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     reset_status.Reset();

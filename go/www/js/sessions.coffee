@@ -257,8 +257,7 @@ validate_settings = (ui, is_default) ->
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
         next = data.reports = {}
         return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 0, Number.MAX_VALUE, "Invalid"
-        next = data.timeline = {}
-        next.enabled = get_ui_option ui.find "#timeline_enabled"
+        data.timeline = enabled: true
         next = data.mapnik = {}
         next.enabled = get_ui_option ui.find "#mapnik_enabled"
 
@@ -794,7 +793,6 @@ default_session_settings =
         clean_frequency: 100
     timeline:
         enabled: false
-        port:    50066
     mapnik:
         enabled: false
 

@@ -154,27 +154,30 @@ namespace
             MOCK_EXPECT( node->FilterConfig );
         }
 
-        SessionPtr MakeSession( bool timeline = false )
+        SessionPtr MakeSession()
         {
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
             MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
-            cfg.timeline.enabled = timeline;
             cfg.profiles.insert( web::session::Profile( "username", "password" ) );
             SessionPaths paths( "a", "b" );
             SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
-        SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr(), bool valid = true )
+        typedef std::pair< ProcessPtr, ProcessPtr > T_Processes;
+
+        SessionPtr ReloadSession( const Tree& tree, T_Processes processes = T_Processes(), bool valid = true )
         {
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
-            if( process )
-                MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            if( process && valid )
+            if( processes.first )
+                MOCK_EXPECT( runtime.GetProcess ).once().with( processes.first->GetPid() ).returns( processes.first );
+            if( processes.first && valid )
                 MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
+            if( processes.second )
+                MOCK_EXPECT( runtime.GetProcess ).once().with( processes.second->GetPid() ).returns( processes.second );
             const Tree data = FromJson( links );
             MOCK_EXPECT( nodes.LinkExerciseTree ).once().with( mock::same( *node ), data ).returns( data );
             SessionPaths paths( "a", "b" );
@@ -189,12 +192,17 @@ namespace
             return session.Start( apps, timeline, checkpoint );
         }
 
-        ProcessPtr StartSession( Session& session, int pid, const std::string& name, const std::string& checkpoint = std::string() )
+        T_Processes StartSession( Session& session, int pid, const std::string& name, const std::string& checkpoint = std::string() )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
+            MOCK_EXPECT( ports.WaitConnected ).once().returns( true );
+            MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
+            MOCK_EXPECT( fs.WriteFile ).once().returns( true );
+            ProcessPtr timeline = boost::make_shared< MockProcess >( processPid*2, "timeline" );
+            MOCK_EXPECT( runtime.Start ).once().returns( timeline );
             BOOST_REQUIRE( StartSessionWith( session, process, checkpoint ) );
-            return process;
+            return std::make_pair( process, timeline );
         }
 
         void ExpectWebRequest( const std::string& url, int code )
@@ -212,13 +220,15 @@ namespace
             return rpy;
         }
 
-        void StopSession( Session& session, ProcessPtr process = ProcessPtr() )
+        void StopSession( Session& session, T_Processes processes = T_Processes() )
         {
-            if( process )
+            if( processes.first )
             {
                 ExpectWebRequest( "/stop", 200 );
-                MOCK_EXPECT( process->Join ).returns( true );
+                MOCK_EXPECT( processes.first->Join ).returns( true );
             }
+            if( processes.second )
+                MOCK_EXPECT( processes.second->Kill ).once().returns( true );
             BOOST_CHECK( session.Stop() );
         }
 
@@ -241,8 +251,8 @@ BOOST_FIXTURE_TEST_CASE( session_constructs, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
-    StopSession( *session, process );
+    auto processes = StartSession( *session, processPid, processName );
+    StopSession( *session, processes );
     BOOST_CHECK( !session->Stop() );
 }
 
@@ -293,7 +303,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     EqualTree ( src, "links", links );
     EqualValue( src, "size", "0" );
 
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
 
     src = session->GetProperties();
     Check( base, src );
@@ -310,7 +320,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     EqualValue( src, "size", "0" );
     EqualTree ( src, "process", "{\"pid\":\"7331\",""\"name\":\"myProcessName\"}" );
 
-    StopSession( *session, process );
+    StopSession( *session, processes );
 
     src = session->GetProperties();
     Check( base, src );
@@ -337,10 +347,10 @@ BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_starts_and_reloads, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
     const Tree save = session->Save();
-    session = ReloadSession( save, process );
-    StopSession( *session, process );
+    session = ReloadSession( save, processes );
+    StopSession( *session, processes );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_updates, Fixture )
@@ -367,9 +377,10 @@ BOOST_FIXTURE_TEST_CASE( session_updates, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
 {
     SessionPtr session = MakeSession();
-    StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
     const Tree save = session->Save();
-    session = ReloadSession( save, boost::make_shared< MockProcess >( processPid, processName + "_" ), false );
+    processes.first = boost::make_shared< MockProcess >( processPid, processName + "_" );
+    session = ReloadSession( save, processes, false );
     BOOST_CHECK( !session->Stop() );
 }
 
@@ -394,7 +405,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_process, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
     Pool pool( 2, 2 );
 
     Event waitPause, endPause;
@@ -408,7 +419,7 @@ BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_pr
     Pool_ABC::Future poll = pool.Post( boost::bind( &Session_ABC::Poll, session ) );
     waitPoll.Wait();
 
-    StopSession( *session, process );
+    StopSession( *session, processes );
     BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
 
     endPause.Signal();
@@ -423,7 +434,7 @@ BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_pr
 BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_counter, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
     Pool pool( 1, 1 );
 
     Event waitPause, endPause;
@@ -451,7 +462,7 @@ BOOST_FIXTURE_TEST_CASE( session_cannot_replay_without_one_play, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_can_replay, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
     BOOST_CHECK( replay );
 }
@@ -459,23 +470,23 @@ BOOST_FIXTURE_TEST_CASE( session_can_replay, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_cannot_restart_with_replays, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    auto processes = StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
-    StopSession( *session, process );
+    StopSession( *session, processes );
     BOOST_CHECK_THROW( session->Start( apps, apps, std::string() ), web::HttpException );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_cannot_archive_if_not_stopped, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    StartSession( *session, processPid, processName );
     BOOST_CHECK_THROW( session->Archive(), web::HttpException );
 }
 
 BOOST_FIXTURE_TEST_CASE( replay_session_cannot_be_replayed, Fixture )
 {
     SessionPtr session = MakeSession();
-    ProcessPtr process = StartSession( *session, processPid, processName );
+    StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
     BOOST_CHECK_THROW( replay->Replay(), web::HttpException );
 }
@@ -529,14 +540,14 @@ BOOST_FIXTURE_TEST_CASE( session_parses_checkpoints, Fixture )
     MOCK_EXPECT( fs.Walk ).calls( boost::bind( ReadCheckpoints, _1, _2, boost::ref( fs ), _3 ) );
     SessionPtr next = ReloadSession( save );
     CheckCheckpoints( *next );
-    ProcessPtr process = StartSession( *next, processPid, processName, "uno" );
-    StopSession( *next, process );
+    auto processes = StartSession( *next, processPid, processName, "uno" );
+    StopSession( *next, processes );
     CheckCheckpoints( *next );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_kills_sim_when_timeline_fails, Fixture )
 {
-    auto session = MakeSession( true );
+    auto session = MakeSession();
     ProcessPtr process = boost::make_shared< MockProcess >( processPid, processName );
     // unable to open target port
     MOCK_EXPECT( runtime.Start ).once().returns( process );
