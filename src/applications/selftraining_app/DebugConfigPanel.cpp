@@ -52,6 +52,7 @@ namespace
 DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
                                     bool timeline )
     : PluginConfig_ABC( parent )
+    , visible_( !!parent )
     , config_( config )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
@@ -245,6 +246,15 @@ void DebugConfigPanel::OnLanguageChanged()
 QString DebugConfigPanel::GetName() const
 {
     return tools::translate( "DebugConfigPanel", "Debug" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::IsVisible
+// Created: BAX 2013-11-25
+// -----------------------------------------------------------------------------
+bool DebugConfigPanel::IsVisible() const
+{
+    return visible_;
 }
 
 // -----------------------------------------------------------------------------
