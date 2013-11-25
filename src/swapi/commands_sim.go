@@ -1423,11 +1423,7 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEnt
 		if reply == nil {
 			return ErrContinue
 		}
-		for _, s := range reply.GetEntries() {
-			e := sword.LogHistoryEntry{}
-			DeepCopy(&e, s)
-			entries = append(entries, &e)
-		}
+		DeepCopy(&entries, reply.GetEntries())
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
