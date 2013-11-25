@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "LogisticPlugin.h"
-#include "ConsignData_ABC.h"
+#include "ConsignRecorder.h"
 #include "FuneralResolver.h"
 #include "MaintenanceResolver.h"
 #include "MedicalResolver.h"
@@ -120,9 +120,15 @@ std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::Path& maintenanceFile,
-                                const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile )
-    : nameResolver_( nameResolver )
+LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC >& nameResolver,
+        const tools::Path& archiveFile, const tools::Path& maintenanceFile,
+        const tools::Path& supplyFile, const tools::Path& funeralFile,
+        const tools::Path& medicalFile )
+    // QA brigade benchmark reported around 17000 log lines, for all logistic
+    // chains, over 55h of simulated time. This more than an order of magnitude
+    // larger, being the number of requests instead of updates.
+    : recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, 100000 ) )
+    , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
 {
@@ -133,14 +139,10 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     }
     ENT_Tr::InitTranslations();
 
-    resolvers_.insert( eLogisticType_Maintenance, std::auto_ptr< ConsignResolver_ABC >(
-                new ConsignResolver_ABC( maintenanceFile, GetMaintenanceHeader() )));
-    resolvers_.insert( eLogisticType_Supply, std::auto_ptr< ConsignResolver_ABC >(
-                new ConsignResolver_ABC( supplyFile, GetSupplyHeader() )));
-    resolvers_.insert( eLogisticType_Funeral, std::auto_ptr< ConsignResolver_ABC >(
-                new ConsignResolver_ABC( funeralFile, GetFuneralHeader() )));
-    resolvers_.insert( eLogisticType_Medical, std::auto_ptr< ConsignResolver_ABC >(
-                new ConsignResolver_ABC( medicalFile, GetMedicalHeader() )));
+    recorder_->AddLogger( eLogisticType_Maintenance, maintenanceFile, GetMaintenanceHeader() );
+    recorder_->AddLogger( eLogisticType_Supply, supplyFile, GetSupplyHeader() );
+    recorder_->AddLogger( eLogisticType_Funeral, funeralFile, GetFuneralHeader() );
+    recorder_->AddLogger( eLogisticType_Medical, medicalFile, GetMedicalHeader() );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,6 +171,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
 {
     if( message.message().has_control_begin_tick() )
     {
+        recorder_->Flush();
+
         const int tick = message.message().control_begin_tick().current_tick();
         if( tick >= 0 )
             currentTick_ = tick;
@@ -179,10 +183,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     }
 
     const auto ev = GetEventType( message );
-    auto itResolver = resolvers_.find( ev.type );
-    if( itResolver == resolvers_.end() || ev.id <= 0 )
+    if( !recorder_->HasLogger( ev.type ) || ev.id <= 0 )
         return;
-    auto resolver = itResolver->second;
 
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
@@ -194,7 +196,9 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
             consigns_.replace( it, consign );
     } 
     if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
-        resolver->Write( it->second->ToString(), today );
+        recorder_->Write( ev.type, it->second->ToString(), today );
+    recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction,
+            it->second->GetHistoryEntry() );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }
@@ -218,26 +222,8 @@ int LogisticPlugin::DebugGetConsignCount( E_LogisticType eLogisticType ) const
 // -----------------------------------------------------------------------------
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
-    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-        r->second->SetMaxLinesInFile( maxLines );
+    recorder_->SetMaxLinesInFile( maxLines );
 }
-
-namespace
-{
-
-sword::EnumLogisticType GetLogisticType( LogisticPlugin::E_LogisticType type )
-{
-    switch( type )
-    {
-    case LogisticPlugin::eLogisticType_Funeral: return sword::log_funeral;
-    case LogisticPlugin::eLogisticType_Maintenance: return sword::log_maintenance;
-    case LogisticPlugin::eLogisticType_Medical: return sword::log_medical;
-    case LogisticPlugin::eLogisticType_Supply: return sword::log_supply;
-    };
-    return sword::log_unknown;
-}
-
-}  // namespace
 
 bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
@@ -249,31 +235,16 @@ bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
     auto ack = reply.mutable_message()->mutable_logistic_history_ack();
     try
     {
+        boost::ptr_vector< sword::LogHistoryEntry > entries;
         std::unordered_set< uint32_t > seen;
         for( int i = 0; i != rq.requests().size(); ++i )
         {
             const uint32_t requestId = rq.requests( i ).id();
             if( !seen.insert( requestId ).second )
                 continue;
-            auto it = consigns_.find( requestId );
-            if( it == consigns_.end() )
-                continue;
-            const auto& history = it->second->GetHistory();
-            for( auto ih = history.cbegin(); ih != history.cend(); ++ih )
-            {
-                if( ih->startTick_ < 0 || ih->status_ < 0 )
-                    continue;
-                auto st = ack->add_states();
-                st->mutable_request()->set_id( requestId );
-                st->mutable_id()->set_id( ih->id_ );
-                st->set_type( GetLogisticType( it->second->GetType() ));
-                st->set_start_tick( ih->startTick_ );
-                if( ih->endTick_ >= 0 )
-                    st->set_end_tick( ih->endTick_ );
-                if( ih->handlerId_ > 0 )
-                    st->mutable_handler()->set_id( ih->handlerId_ );
-                st->set_status( ih->status_ );
-            }
+            recorder_->GetHistory( requestId, entries );
+            for( auto ie = entries.cbegin(); ie != entries.cend(); ++ie )
+                *ack->add_entries() = *ie;
         }
     }
     catch( const std::exception& e )
@@ -290,6 +261,7 @@ LogisticPlugin* CreateLogisticPlugin(
 {
     return new LogisticPlugin(
         nameResolver,
+        config.BuildSessionChildFile( "LogisticArchive" ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "maintenancefile", "LogMaintenance" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "supplyfile", "LogSupply" ) ),
         config.BuildSessionChildFile( xis.attribute< tools::Path >( "funeralfile", "LogFuneral" ) ),

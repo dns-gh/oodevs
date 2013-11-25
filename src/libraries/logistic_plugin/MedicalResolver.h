@@ -11,8 +11,13 @@
 #define __MedicalResolver_h_
 
 #include "ConsignData_ABC.h"
-#include "ConsignResolver_ABC.h"
 
+namespace sword
+{
+    class LogMedicalHandlingCreation;
+    class LogMedicalHandlingUpdate;
+    class LogMedicalHandlingDestruction;
+}
 
 namespace plugins
 {

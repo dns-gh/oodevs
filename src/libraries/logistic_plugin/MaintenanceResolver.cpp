@@ -11,7 +11,7 @@
 #include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "tools/FileWrapper.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::logistic;
 
@@ -40,7 +40,6 @@ void MaintenanceConsignData::WriteConsign( ConsignWriter& output ) const
 bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, 
         const NameResolver_ABC& nameResolver )
 {
-    PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
@@ -70,7 +69,6 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, 
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -90,14 +88,12 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
         const uint32_t providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
         nameResolver.GetAgentName( providerId, provider_ );
-        state.handlerId_ = providerId;
     }
     if( msg.has_state() )
     {
         sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus eState = msg.state();
         nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
-        state.status_ = eState;
     }
     return true;
 }
@@ -105,10 +101,23 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
-    if( message.message().has_log_maintenance_handling_creation() )
-        return ManageMessage( message.message().log_maintenance_handling_creation(), resolver );
-    if( message.message().has_log_maintenance_handling_update() )
-        return ManageMessage( message.message().log_maintenance_handling_update(), resolver );
+    const auto& msg = message.message();
+    if( msg.has_log_maintenance_handling_creation() )
+    {
+        *entry_.mutable_maintenance()->mutable_creation() = msg.log_maintenance_handling_creation();
+        return ManageMessage( msg.log_maintenance_handling_creation(), resolver );
+    }
+    if( msg.has_log_maintenance_handling_update() )
+    {
+        entry_.mutable_maintenance()->mutable_update()->MergeFrom(
+                msg.log_maintenance_handling_update() );
+        return ManageMessage( msg.log_maintenance_handling_update(), resolver );
+    }
+    if( msg.has_log_maintenance_handling_destruction() )
+    {
+        *entry_.mutable_maintenance()->mutable_destruction() =
+            msg.log_maintenance_handling_destruction();
+    }
     return false;
 }
 

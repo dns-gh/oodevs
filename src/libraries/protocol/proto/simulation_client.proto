@@ -3405,40 +3405,49 @@ message PopulationUpdate {
     optional Extension       extension    = 9;
 }
 
-enum EnumLogisticType {
-    log_unknown     = 0;
-    log_funeral     = 1;
-    log_maintenance = 2;
-    log_medical     = 3;
-    log_supply      = 4;
+//! LogHistoryEntry is a snapshot of a logistic request.
+//!
+//! Exactly one of its funeral/maintenance/medical/supply field is set
+//! with one of the possible combination of messages:
+//! - creation: for just created requests
+//! - creation + update: an ongoing request
+//! - creation + update + destruction: request before destruction
+message LogHistoryEntry {
+    message Funeral {
+        optional LogFuneralHandlingCreation        creation = 1;
+        optional LogFuneralHandlingUpdate          update = 2;
+        optional LogFuneralHandlingDestruction     destruction = 3;
+    }
+
+    message Maintenance {
+        optional LogMaintenanceHandlingCreation    creation = 1;
+        optional LogMaintenanceHandlingUpdate      update = 2;
+        optional LogMaintenanceHandlingDestruction destruction = 3;
+    }
+
+    message Medical {
+        optional LogMedicalHandlingCreation        creation = 1;
+        optional LogMedicalHandlingUpdate          update = 2;
+        optional LogMedicalHandlingDestruction     destruction = 3;
+    }
+
+    message Supply {
+        optional LogSupplyHandlingCreation         creation = 1;
+        optional LogSupplyHandlingUpdate           update = 2;
+        optional LogSupplyHandlingDestruction      destruction = 3;
+    }
+
+    required int32       tick        = 1;
+    optional Funeral     funeral     = 2;
+    optional Maintenance maintenance = 3;
+    optional Medical     medical     = 4;
+    optional Supply      supply      = 5;
 }
 
-//! Represents a snapshot of a logistic request.
-message LogisticHistoryState {
-    required Id               request    = 1;
-    //! State identifier, unique per request.
-    required Id               id         = 2;
-    optional EnumLogisticType type       = 3;
-    required int32            start_tick = 4;
-    optional int32            end_tick   = 5;
-    //! The handler depends on the request type:
-    //! - funeral: formation or automat identifier
-    //! - maintenance: provider identifier
-    //! - medical: provider identifier
-    //! - supply: supplied formation or automat identifier
-    required Id               handler    = 6;
-    //! The status value depends on the request type:
-    //! - funeral: an EnumLogFuneralHandlingStatus value
-    //! - maintenance: an EnumLogMaintenanceHandlingStatus value
-    //! - medical: EnumLogMedicalHandlingStatus value
-    //! - supply: EnumLogSupplyHandlingStatus value
-    required int32            status     = 7;
-}
-
-//! Returns a list of logistic requests states matching those specified
+//! Returns a list of logistic requests entries matching those specified
 //! in the LogisticHistoryRequest.
 message LogisticHistoryAck {
-    repeated LogisticHistoryState states    = 2;
+    repeated LogHistoryEntry entries = 1;
 }
 
 message SimToClient {

@@ -22,7 +22,7 @@ namespace kernel
 
 namespace sword
 {
-    class LogisticHistoryState;
+    class LogHistoryEntry;
 }
 
 namespace google
@@ -66,7 +66,7 @@ public:
     //! @name Operations
     //@{
     void UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& history );
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history );
     //@}   
 
     //! @name Types
@@ -99,6 +99,8 @@ public:
 
         void Add( const HistoryState& state )
         {
+            if( !states_.empty() )
+                states_.back().endedTick_ = state.startedTick_;
             states_.push_back( state );
         }
 

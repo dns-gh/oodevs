@@ -11,7 +11,12 @@
 #define __FuneralResolver_h_
 
 #include "ConsignData_ABC.h"
-#include "ConsignResolver_ABC.h"
+
+namespace sword
+{
+    class LogFuneralHandlingCreation;
+    class LogFuneralHandlingUpdate;
+}
 
 namespace plugins
 {

@@ -73,7 +73,6 @@ void SupplyConsignData::WriteConsign( ConsignWriter& output ) const
 bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation& msg,
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_supplier() )
@@ -83,14 +82,12 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation&
             const uint32_t supplierId = msg.supplier().automat().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetAutomatName( supplierId, provider_ );
-            state.handlerId_ = supplierId;
         }
         else if( msg.supplier().has_formation() )
         {
             const uint32_t supplierId = msg.supplier().formation().id();
             providerId_ = boost::lexical_cast< std::string >( supplierId );
             nameResolver.GetFormationName( msg.supplier().formation().id(), provider_ );
-            state.handlerId_ = supplierId;
         }
     }
     if( msg.has_transporters_provider() )
@@ -118,7 +115,6 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingCreation&
 bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& msg,
         const NameResolver_ABC& nameResolver )
 {
-    auto& state = PushState();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -141,7 +137,6 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
         sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus eSupply = msg.state();
         nameResolver.GetSupplykName( eSupply, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eSupply ) );
-        state.status_ = eSupply;
     }
     if( msg.has_requests() )
     {
@@ -176,10 +171,26 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
 bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
         const NameResolver_ABC& resolver )
 {
-    if( message.message().has_log_supply_handling_creation() )
-        return ManageMessage( message.message().log_supply_handling_creation(), resolver );
-    if( message.message().has_log_supply_handling_update() )
-        return ManageMessage( message.message().log_supply_handling_update(), resolver );
+    const auto& msg = message.message();
+    if( msg.has_log_supply_handling_creation() )
+    {
+        *entry_.mutable_supply()->mutable_creation() = msg.log_supply_handling_creation();
+        return ManageMessage( msg.log_supply_handling_creation(), resolver );
+    }
+    if( msg.has_log_supply_handling_update() )
+    {
+        // Sub-messages are merged recursively and repeated fields are *appended*.
+        // Clear them before merging. This is fragile but saves tons of code
+        // right now.
+        entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
+        entry_.mutable_supply()->mutable_update()->MergeFrom(
+                msg.log_supply_handling_update() );
+        return ManageMessage( msg.log_supply_handling_update(), resolver );
+    }
+    if( msg.has_log_supply_handling_destruction() )
+    {
+        *entry_.mutable_supply()->mutable_destruction() = msg.log_supply_handling_destruction();
+    }
     return false;
 }
 

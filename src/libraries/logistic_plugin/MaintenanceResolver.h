@@ -11,7 +11,12 @@
 #define __MaintenanceResolver_h_
 
 #include "ConsignData_ABC.h"
-#include "ConsignResolver_ABC.h"
+
+namespace sword
+{
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
+}
 
 namespace plugins
 {

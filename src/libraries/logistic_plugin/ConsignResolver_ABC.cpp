@@ -67,8 +67,14 @@ void ConsignResolver_ABC::Write( const std::string& data, const boost::gregorian
     CheckOutputFile( today );
     if( !output_.is_open() )
         return;
-    output_ << data << std::flush;
+    output_ << data;
     curLineIndex_ += boost::numeric_cast< int >( std::count( data.begin(), data.end(), '\n' ) );
+}
+
+void ConsignResolver_ABC::Flush()
+{
+    if( output_.is_open() )
+        output_.flush();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,28 +162,11 @@ void ConsignResolver_ABC::OpenFile()
 {
     if( output_.is_open() )
         output_.close();
-    if( !fileName_.IsEmpty() )
-    {
-        try
-        {
-            if( fileName_.Exists() )
-            {
-                if( !output_.is_open() )
-                    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
-            }
-            else
-            {
-                if( output_.is_open() )
-                    output_.close();
-                output_.open( fileName_, std::ios_base::out | std::ios_base::app );
-                output_ << header_;
-            }
-        }
-        catch( ... )
-        {
-            // NOTHING
-        }
-    }
+    if( fileName_.IsEmpty() )
+        return;
+    output_.open( fileName_, std::ios::out | std::ios::app | std::ios::binary );
+    if( !output_.tellp() )
+        output_ << header_;
 }
 
 // -----------------------------------------------------------------------------

@@ -30,6 +30,7 @@ bool ConsignData_ABC::UpdateConsign( const sword::SimToClient& msg,
 {
     tick_ = boost::lexical_cast< std::string >( tick );
     simTime_ = time;
+    entry_.set_tick( tick );
     return DoUpdateConsign( msg, names );
 }
 
@@ -52,24 +53,7 @@ std::string ConsignData_ABC::ToString() const
     return w.GetLine();
 }
 
-ConsignState& ConsignData_ABC::PushState()
+const sword::LogHistoryEntry& ConsignData_ABC::GetHistoryEntry() const
 {
-    const int tick = GetTick();
-    ConsignState state;
-    if( !history_.empty() )
-    {
-        // There is no undefined state, each new state terminates the previous one
-        state = history_.back();
-        state.id_++;
-        history_.back().endTick_ = tick;
-    }
-    state.startTick_ = tick;
-    history_.push_back( state );
-    return history_.back();
+    return entry_;
 }
-
-const std::deque< ConsignState >& ConsignData_ABC::GetHistory() const
-{
-    return history_;
-}
-

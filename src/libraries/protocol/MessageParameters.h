@@ -25,7 +25,9 @@ namespace sword
 {
     class CoordLatLong;
     class MissionParameters;
+    class ParentEntity;
     class Point;
+    class Tasker;
     enum Location_Geometry;
 }
 
@@ -47,6 +49,8 @@ namespace protocol
     };
 
     typedef std::pair< std::string, std::string > Extension;
+
+    uint32_t     GetParentEntityId( const sword::ParentEntity& parent );
 
     void         Check( bool valid, const std::string& msg, int i = -1, int j = -1, int k = -1 );
     void         Check( const void* pointer, const std::string& msg, int i = -1, int j = -1, int k = -1 );

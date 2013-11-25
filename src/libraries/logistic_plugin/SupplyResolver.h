@@ -14,7 +14,12 @@
 #define __SupplyResolver_h_
 
 #include "ConsignData_ABC.h"
-#include "ConsignResolver_ABC.h"
+
+namespace sword
+{
+    class LogSupplyHandlingCreation;
+    class LogSupplyHandlingUpdate;
+}
 
 namespace plugins
 {

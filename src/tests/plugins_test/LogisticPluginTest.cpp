@@ -10,6 +10,8 @@
 #include "plugins_test_pch.h"
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
+#include "logistic_plugin/ConsignArchive.h"
+#include "logistic_plugin/ConsignRecorder.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
 #include <tools/TemporaryDirectory.h>
@@ -17,6 +19,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/regex.hpp>
 #include <algorithm>
 #include <cstdlib>
@@ -97,6 +100,7 @@ boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const tools::Path& tempD
 {
     boost::shared_ptr< SimpleNameResolver > nameResolver( new SimpleNameResolver() );
     return boost::shared_ptr< LogisticPlugin >( new LogisticPlugin( nameResolver,
+        tempDir / "archive",
         tempDir / "maintenance",
         tempDir / "supply",
         tempDir / "funeral",
@@ -123,8 +127,12 @@ struct LogFile
     T_Lines lines;
 };
 
-void CheckRegexps( const std::vector< LogFile >& logFiles, const tools::Path::T_Paths& files )
+void CheckRegexps( const std::vector< LogFile >& logFiles, tools::Path::T_Paths files )
 {
+    boost::remove_erase_if( files, []( const tools::Path& path ) -> bool
+        {
+            return path.BaseName().ToUTF8().find( "archive" ) != std::string::npos;
+        });
     BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
     for( size_t i = 0; i != files.size(); ++i )
     {
@@ -158,6 +166,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
             maint->mutable_request()->set_id( 7 );
             maint->mutable_unit()->set_id( 8 );
+            maint->set_tick( 200 );
             maint->mutable_equipement()->set_id( 10 );
             maint->mutable_breakdown()->set_id( 11 );
             plugin->Receive( m, day1 );
@@ -177,6 +186,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMaintenanceHandlingCreation* maint = m.mutable_message()->mutable_log_maintenance_handling_creation();
             maint->mutable_request()->set_id( 17 );
             maint->mutable_unit()->set_id( 18 );
+            maint->set_tick( 300 );
             maint->mutable_equipement()->set_id( 20 );
             maint->mutable_breakdown()->set_id( 21 );
             plugin->Receive( m, day1 );
@@ -199,6 +209,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
             maint->mutable_request()->set_id( 7 );
+            maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
@@ -207,6 +218,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMaintenanceHandlingDestruction* maint = m.mutable_message()->mutable_log_maintenance_handling_destruction();
             maint->mutable_request()->set_id( 17 );
+            maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
@@ -222,6 +234,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogMedicalHandlingCreation* medic = m.mutable_message()->mutable_log_medical_handling_creation();
             medic->mutable_request()->set_id( 7 );
             medic->mutable_unit()->set_id( 8 );
+            medic->set_tick( 400 );
             medic->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             medic->set_wound( static_cast< sword::EnumHumanWound >( 0 ) );
             medic->set_nbc_contaminated( true );
@@ -266,6 +279,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogMedicalHandlingDestruction* medic = m.mutable_message()->mutable_log_medical_handling_destruction();
             medic->mutable_request()->set_id( 7 );
+            medic->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day3 );
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
@@ -280,6 +294,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
             funeral->mutable_request()->set_id( 7 );
             funeral->mutable_unit()->set_id( 8 );
+            funeral->set_tick( 300 );
             funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             plugin->Receive( m, day1 );
         }
@@ -317,6 +332,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             sword::SimToClient m;
             sword::LogSupplyHandlingCreation* supply = m.mutable_message()->mutable_log_supply_handling_creation();
             supply->mutable_request()->set_id( 7 );
+            supply->set_tick( 200 );
             supply->mutable_supplier()->mutable_automat()->set_id( 8 );
             supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
             plugin->Receive( m, day1 );
@@ -456,8 +472,9 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         }
         BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
+    plugin.reset(); // flush
 
-    tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
+    auto files = tempDir.Path().ListFiles( true, false, true );
     std::vector< LogFile > expecteds;
     {
         T_Lines expectedLines;
@@ -547,6 +564,7 @@ void PushFuneralMessage( LogisticPlugin* plugin )
     sword::LogFuneralHandlingCreation* funeral = m.mutable_message()->mutable_log_funeral_handling_creation();
     funeral->mutable_request()->set_id( 7 );
     funeral->mutable_unit()->set_id( 8 );
+    funeral->set_tick( 100 );
     funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
     plugin->Receive( m,  bg::from_string( "2005/02/20" ) );
 }
@@ -565,6 +583,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
     // Recreate it on multiple files
     plugin = CreateLogisticPlugin( tempDir.Path() );
     PushFuneralMessage( plugin.get() );
+    plugin.reset();
 
     tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expected;
@@ -584,4 +603,111 @@ BOOST_AUTO_TEST_CASE( TestEscapeRegex )
     BOOST_CHECK_EQUAL( "", "" );
     BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"abC123" ), tools::Path::FromUnicode( EscapeRegex( L"abC123" ) ) );
     BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"a\\^bc\\{12\\}3\\*\\\\" ), tools::Path::FromUnicode( EscapeRegex( L"a^bc{12}3*\\" ) ) );
+}
+
+BOOST_AUTO_TEST_CASE( TestConsignArchive )
+{
+    tools::TemporaryDirectory tempDir( "testlogistic-plugin-", testOptions.GetTempDir() );
+    const auto basePath = tempDir.Path() / "consign";
+    ConsignArchive ar( basePath, 10 );
+    ar.Write( "abcd", 4 );
+    ar.Write( "efgh", 4 );
+    ar.Write( "ijkl", 4 );
+    ar.Flush();
+
+    auto paths = tempDir.Path().ListFiles( false, true, true );
+    BOOST_REQUIRE_EQUAL( 2u, paths.size() );
+    BOOST_CHECK_EQUAL( "consign.2", paths[1].ToUTF8() );
+}
+
+namespace
+{
+
+void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
+        bool destroyed )
+{
+    // ConsignRecord does not understand creation/update/destruction protocol,
+    // it can be fed with any structure.
+    sword::LogHistoryEntry entry;
+    entry.set_tick( tick );
+    auto funeral = entry.mutable_funeral()->mutable_creation();
+    funeral->mutable_request()->set_id( requestId );
+    funeral->mutable_unit()->set_id( 8 );
+    funeral->set_tick( tick );
+    funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+    rec.WriteEntry( requestId, destroyed, entry );
+    rec.Flush();
+}
+
+// Turn recorded LogHistoryEntry into something easily checked.
+std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& entries,
+        size_t index )
+{
+    const auto e = entries.at( index );
+    if( !e.has_funeral() || !e.funeral().has_creation() )
+        return "";
+    auto& creation = e.funeral().creation();
+    std::stringstream ss;
+    ss << creation.request().id() << "." << creation.tick();
+    return ss.str();
+}
+
+}  // namespace
+
+BOOST_AUTO_TEST_CASE( TestConsignRecorder )
+{
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
+    const tools::Path path = tempDir.Path() / "consigns";
+    boost::ptr_vector< sword::LogHistoryEntry > entries;
+
+    ConsignRecorder rec( path, 1024*1024, 2 );
+    BOOST_CHECK_EQUAL( 0u, rec.GetHistorySize() );
+
+    // Same consign
+    AddAndFlush( rec, 1, 1, false );
+    BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
+    AddAndFlush( rec, 1, 2, false );
+    BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
+    rec.GetHistory( 1, entries ); 
+    BOOST_REQUIRE_EQUAL( 2u, entries.size() );
+    BOOST_CHECK_EQUAL( "1.1", GetHistoryTrace( entries, 0 ) );
+    BOOST_CHECK_EQUAL( "1.2", GetHistoryTrace( entries, 1 ) );
+
+    // One destroyed
+    AddAndFlush( rec, 2, 1, true );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 2, entries ); 
+    BOOST_REQUIRE_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "2.1", GetHistoryTrace( entries, 0 ) );
+
+    // Another valid -> evict the destroyed [2]
+    AddAndFlush( rec, 3, 1, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 3, entries ); 
+    BOOST_CHECK_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "3.1", GetHistoryTrace( entries, 0 ) );
+    rec.GetHistory( 2, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+
+    // Another destroyed -> removed immediately
+    AddAndFlush( rec, 4, 1, true );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 4, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+
+    // Update [1]
+    AddAndFlush( rec, 1, 3, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+
+    // A new valid one -> evict [3]
+    AddAndFlush( rec, 5, 1, false );
+    BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
+    rec.GetHistory( 1, entries ); 
+    BOOST_CHECK_EQUAL( 3u, entries.size() );
+    BOOST_CHECK_EQUAL( "1.3", GetHistoryTrace( entries, entries.size() - 1 ) );
+    rec.GetHistory( 3, entries ); 
+    BOOST_CHECK_EQUAL( 0u, entries.size() );
+    rec.GetHistory( 5, entries ); 
+    BOOST_CHECK_EQUAL( 1u, entries.size() );
+    BOOST_CHECK_EQUAL( "5.1", GetHistoryTrace( entries, entries.size() - 1 ) );
 }

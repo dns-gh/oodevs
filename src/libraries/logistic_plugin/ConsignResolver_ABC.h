@@ -50,6 +50,7 @@ public:
     //! @name Operations
     //@{
     void Write( const std::string& data, const boost::gregorian::date& today );
+    void Flush();
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     //@}
 

@@ -12,6 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "Simulation.h"
 #include "protocol/Protocol.h"
+#include "protocol/MessageParameters.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -98,20 +99,55 @@ const LogisticsConsign_ABC::History& LogisticsConsign_ABC::GetHistory() const
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------
 void LogisticsConsign_ABC::UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogisticHistoryState >& history )
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history )
 {
     history_->Clear();
     for( int i = start; i != end; ++i )
     {
         const auto& msg = history.Get( i );
-        if( !msg.status() )
-            continue;
         HistoryState state;
-        state.nStatus_ = msg.status();
-        if( msg.has_handler() )
-            state.handler_ = GetRequestHandler( msg.handler().id() );
-        state.startedTick_  = msg.start_tick();
-        state.endedTick_    = msg.end_tick();
+        if( msg.has_funeral() )
+        {
+            const auto& sub = msg.funeral();
+            if( sub.has_destruction() || !sub.has_update() )
+                // Creation messages are not really interesting
+                continue;
+            if( sub.update().has_state() )
+                state.nStatus_ = sub.update().state();
+            state.handler_ = GetRequestHandler(
+                protocol::GetParentEntityId( sub.update().handling_unit() ));
+        }
+        else if( msg.has_maintenance() )
+        {
+            const auto& sub = msg.maintenance();
+            if( sub.has_destruction() || !sub.has_update() )
+                continue;
+            if( sub.update().has_state() )
+                state.nStatus_ = sub.update().state();
+            state.handler_ = GetRequestHandler( sub.update().provider().id() );
+        }
+        else if( msg.has_medical() )
+        {
+            const auto& sub = msg.medical();
+            if( sub.has_destruction() || !sub.has_update() )
+                continue;
+            if( sub.update().has_state() )
+                state.nStatus_ = sub.update().state();
+            state.handler_ = GetRequestHandler( sub.update().provider().id() );
+        }
+        else if( msg.has_supply() )
+        {
+            const auto& sub = msg.supply();
+            if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
+                continue;
+            state.handler_ = GetRequestHandler(
+                protocol::GetParentEntityId( sub.creation().supplier() ));
+            if( sub.update().has_state() )
+                state.nStatus_ = sub.update().state();
+        }
+        else
+            continue;
+        state.startedTick_ = msg.tick();
         history_->Add( state );
     }
     controller_.Update( *history_ );

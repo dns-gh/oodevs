@@ -11,7 +11,6 @@
 #define __LogisticPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #pragma warning( push, 0 )
 #include <boost/ptr_container/ptr_map.hpp>
@@ -48,7 +47,7 @@ namespace logistic
 {
 
 class ConsignData_ABC;
-class ConsignResolver_ABC;
+class ConsignRecorder;
 class NameResolver_ABC;
 
 // =============================================================================
@@ -63,8 +62,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const tools::Path& maintenanceFile, const tools::Path& supplyFile,
-                 const tools::Path& funeralFile, const tools::Path& medicalFile );
+                 const tools::Path& archiveFile, const tools::Path& maintenanceFile,
+                 const tools::Path& supplyFile, const tools::Path& funeralFile,
+                 const tools::Path& medicalFile );
     virtual ~LogisticPlugin();
     //@}
 
@@ -86,7 +86,6 @@ public:
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
     virtual bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
-
     int DebugGetConsignCount( E_LogisticType eLogisticType ) const;
     void SetMaxLinesInFile( int maxLines );
     //@}
@@ -94,8 +93,8 @@ public:
 private:
     //! @name Member data
     //@{
-    boost::ptr_map< E_LogisticType, ConsignResolver_ABC > resolvers_;
-    boost::scoped_ptr< QApplication >           localAppli_;
+    std::unique_ptr< ConsignRecorder >          recorder_;
+    std::unique_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     boost::ptr_map< int, ConsignData_ABC >      consigns_;
     int currentTick_;
