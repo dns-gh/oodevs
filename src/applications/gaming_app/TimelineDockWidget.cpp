@@ -44,7 +44,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     , webView_( 0 )
 {
     // Init
-    setCaption( tr( "New actions timeline" ) );
+    setCaption( tr( "Timeline" ) );
 
     // Configuration
     cfg_->url = "http://" + config.GetTimelineUrl();

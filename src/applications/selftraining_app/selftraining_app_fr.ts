@@ -178,10 +178,6 @@
         <translation>Répertoire de sortie:</translation>
     </message>
     <message>
-        <source>Enable Web Timeline</source>
-        <translation>Démarrer le serveur web de timeline</translation>
-    </message>
-    <message>
         <source>Debug port</source>
         <translation>Port de debug</translation>
     </message>
@@ -192,6 +188,14 @@
     <message>
         <source>Activate layer</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable legacy timeline</source>
+        <translation>Activer l&apos;ancienne timeline</translation>
     </message>
 </context>
 <context>

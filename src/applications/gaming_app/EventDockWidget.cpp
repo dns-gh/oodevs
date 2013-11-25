@@ -74,7 +74,7 @@ EventDockWidget::EventDockWidget( QWidget* parent, kernel::Controllers& controll
 
     // Header / footer
     topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
-    bottomWidget_ = new EventBottomWidget( config );
+    bottomWidget_ = new EventBottomWidget();
 
     // Content
     EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools, simulation_, entitySymbols );

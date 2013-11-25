@@ -3201,15 +3201,15 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New actions timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3243,16 +3243,16 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelinePanel</name>
     <message>
-        <source>Actions timeline</source>
-        <translation type="unfinished">الإجراءات المخطط الزمني</translation>
-    </message>
-    <message>
         <source>Global view</source>
         <translation type="unfinished">العرض العالمي</translation>
     </message>
     <message>
         <source>Current session</source>
         <translation type="unfinished">الدورة الحالية</translation>
+    </message>
+    <message>
+        <source>Legacy Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

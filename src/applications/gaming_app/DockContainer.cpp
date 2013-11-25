@@ -195,7 +195,6 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
 
     // Timelines
-    if( config.HasTimeline() )
     {
         // New Timeline
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
@@ -206,6 +205,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),                     timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
         QObject::connect( timelineDockWidget_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), eventDockWidget_,    SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
     }
+    if( config.HasTimeline() )
     {
         // Old Timeline
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );

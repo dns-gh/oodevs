@@ -169,14 +169,12 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
 
     //debug config panel
-    if( config.IsOnDebugMode() )
-    {
-        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, hasTimeline_ ) );
-        connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
-        connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
-        connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
-        connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel, SLOT( OnExerciseNumberChanged( int ) ) );
-    }
+    auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
+    DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( parent, config_, hasTimeline_ ) );
+    connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
+    connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
+    connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
+    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();
@@ -204,7 +202,8 @@ T* ScenarioLauncherPage::AddPlugin( T* ptr )
     std::auto_ptr< T > plugin( ptr );
     if( plugin.get() && plugin->IsAvailable() )
     {
-        configTabs_->addTab( plugin.get(), "" );
+        if( plugin->IsVisible() )
+            configTabs_->addTab( plugin.get(), "" );
         plugins_.push_back( plugin.get() );
         return plugin.release();
     }
@@ -231,7 +230,8 @@ void ScenarioLauncherPage::OnLanguageChanged()
     SetTitle( tools::translate( "ScenarioLauncherPage", "Start" ) );
     progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting scenario" ) );
     for( int i = 0; i < configTabs_->count() && i < static_cast< int >( plugins_.size()); ++i )
-        configTabs_->setTabText( i, plugins_[ i ]->GetName() );
+        if( plugins_[ i ]->IsVisible() )
+            configTabs_->setTabText( i, plugins_[ i ]->GetName() );
     LauncherClientPage::OnLanguageChanged();
 }
 
