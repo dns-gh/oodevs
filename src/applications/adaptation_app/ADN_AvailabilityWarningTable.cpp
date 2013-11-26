@@ -22,7 +22,7 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objec
     setFixedHeight( 300 );
     dataModel_.setColumnCount( 1 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Percentage" );
+    horizontalHeaders << tools::translate( "ADN_AvailabilityWarningTable", "Percentage" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
