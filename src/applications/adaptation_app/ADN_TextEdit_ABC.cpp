@@ -60,7 +60,9 @@ void ADN_TextEdit_ABC::SetToolTip( const QString& toolTip )
 // -----------------------------------------------------------------------------
 void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
 {
-    const QTextCursor cursor = textCursor();
+    // Save cursor
+    int cursorPos = textCursor().position();
+    // Change background color
     blockSignals( true );
     QString str = toHtml();
     if( str.contains( "bgcolor=" ) )
@@ -69,6 +71,9 @@ void ADN_TextEdit_ABC::ChangeBackgroundColor( const QColor& color )
         str.replace( "<body", QString( "<body bgcolor=\"%1\"" ).arg( color.name() ) );
     setHtml( str );
     blockSignals( false );
+    // Restore cursor
+    QTextCursor cursor = textCursor();
+    cursor.setPosition( cursorPos, QTextCursor::MoveAnchor );
     setTextCursor( cursor );
 }
 
