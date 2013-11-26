@@ -17,6 +17,7 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -70,6 +71,12 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    float GetRadius() const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
@@ -83,7 +90,7 @@ private:
     kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
     kernel::OptionalValue< bool >                  bIsPerceived_;
     float rRelevance_;
-    float radius_;
+    boost::optional< float > radius_;
     float deadRadius_;
     //@}
 };
