@@ -74,7 +74,7 @@ public slots:
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     void OnEngagedFilterToggled( bool toggled );
-    void OnEventFilterToggled( bool toggled );
+    void OnOrderFilterToggled( bool toggled );
     void OnTaskFilterToggled( bool toggled );
     void OnFilterKeyword( const QString& keyword );
     //@}
@@ -94,10 +94,11 @@ private:
     std::string keywordFilter_;
     QString filters_;
     bool displayEngaged_;
-    bool displayEvents_;
+    bool displayOrders_;
     bool displayTasks_;
     bool horizontalMode_;
     QMenu* filterMenu_;
+    QAction* engagedFilter_;
     //@}
 };
 

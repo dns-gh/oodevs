@@ -3305,16 +3305,16 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display engaged units</source>
-        <translation>Display engaged units</translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation>Display events</translation>
-    </message>
-    <message>
         <source>Display tasks</source>
         <translation>Display tasks</translation>
+    </message>
+    <message>
+        <source>    Display orders given to engaged units</source>
+        <translation>    Display orders given to engaged units</translation>
+    </message>
+    <message>
+        <source>Display orders</source>
+        <translation>Display orders</translation>
     </message>
 </context>
 <context>

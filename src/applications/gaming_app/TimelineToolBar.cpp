@@ -26,7 +26,7 @@ TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
     , config_( config )
     , filters_( tr( "Actions files (*.ord)" )  + ";;" + tr( "Timeline session files (*.timeline)" ) )
     , displayEngaged_( false )
-    , displayEvents_( true )
+    , displayOrders_( true )
     , displayTasks_( true )
     , horizontalMode_( true )
 {
@@ -42,7 +42,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , entityFilter_( other.entityFilter_ )
     , filters_( other.filters_ )
     , displayEngaged_( other.displayEngaged_ )
-    , displayEvents_( other.displayEvents_ )
+    , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
     , horizontalMode_( other.horizontalMode_ )
 {
@@ -83,23 +83,25 @@ void TimelineToolBar::Initialize( bool main )
     addWidget( searchWidget );
     connect( searchEdit, SIGNAL( textChanged( QString ) ), this, SLOT( OnFilterKeyword( QString ) ) );
 
-    QAction* engagedFilter = new QAction( tr( "Display engaged units" ), this );
-    connect( engagedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
-    engagedFilter->setCheckable( true );
-    engagedFilter->setChecked( displayEngaged_ );
+    engagedFilter_ = new QAction( tr( "    Display orders given to engaged units" ), this );
+    connect( engagedFilter_, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
+    engagedFilter_->setCheckable( true );
+    engagedFilter_->setChecked( displayEngaged_ );
+    engagedFilter_->setEnabled( displayOrders_ );
 
-    QAction* eventFilter= new QAction( tr( "Display events" ), this );
-    connect( eventFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEventFilterToggled( bool ) ) );
-    eventFilter->setCheckable( true );
-    eventFilter->setChecked( displayEvents_ );
+    QAction* orderFilter = new QAction( tr( "Display orders" ), this );
+    connect( orderFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnOrderFilterToggled( bool ) ) );
+    orderFilter->setCheckable( true );
+    orderFilter->setChecked( displayOrders_ );
 
     QAction* taskFilter = new QAction( tr( "Display tasks" ), this );
     connect( taskFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnTaskFilterToggled( bool ) ) );
     taskFilter->setCheckable( true );
     taskFilter->setChecked( displayTasks_ );
 
-    filterMenu_->addAction( engagedFilter );
-    filterMenu_->addAction( eventFilter );
+    filterMenu_->addAction( orderFilter );
+    filterMenu_->addAction( engagedFilter_ );
+    filterMenu_->addSeparator();
     filterMenu_->addAction( taskFilter );
 
     if( !main )
@@ -172,12 +174,16 @@ void TimelineToolBar::OnEngagedFilterToggled( bool checked )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnEventFilterToggled
+// Name: TimelineToolBar::OnOrderFilterToggled
 // Created: SLI 2013-11-21
 // -----------------------------------------------------------------------------
-void TimelineToolBar::OnEventFilterToggled( bool toggled )
+void TimelineToolBar::OnOrderFilterToggled( bool toggled )
 {
-    displayEvents_ = toggled;
+    displayOrders_ = toggled;
+    engagedFilter_->setEnabled( displayOrders_ );
+    engagedFilter_->setCheckable( displayOrders_ );
+    if( !displayOrders_ )
+        engagedFilter_->setChecked( false );
     emit ServicesFilterChanged( GetServicesFilter() );
 }
 
@@ -224,7 +230,7 @@ bool TimelineToolBar::GetEngagedFilter() const
 // -----------------------------------------------------------------------------
 std::string TimelineToolBar::GetServicesFilter() const
 {
-     return "sword:" + boost::lexical_cast< std::string >( displayEvents_ )
+     return "sword:" + boost::lexical_cast< std::string >( displayOrders_ )
           + ",none:" + boost::lexical_cast< std::string >( displayTasks_ );
 }
 

@@ -3319,16 +3319,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Passer en mode horizontal</translation>
     </message>
     <message>
-        <source>Display engaged units</source>
-        <translation>Afficher les unités embrayées</translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation>Afficher les événements</translation>
-    </message>
-    <message>
         <source>Display tasks</source>
         <translation>Afficher les tâches</translation>
+    </message>
+    <message>
+        <source>    Display orders given to engaged units</source>
+        <translation>    Afficher les ordres donnés aux unités embrayées</translation>
+    </message>
+    <message>
+        <source>Display orders</source>
+        <translation>Afficher les ordres</translation>
     </message>
 </context>
 <context>
