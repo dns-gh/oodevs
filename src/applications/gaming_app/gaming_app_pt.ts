@@ -746,6 +746,14 @@ Reason: %3
         <source>Order (unit)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>

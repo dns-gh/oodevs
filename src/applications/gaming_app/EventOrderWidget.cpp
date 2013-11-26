@@ -83,9 +83,11 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
     symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
     activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
+    activateTargetButton_->setToolTip( tr( "Select" ) );
     connect( activateTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetActivated() ) );
 
     removeTargetButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
+    removeTargetButton_->setToolTip( tr( "Remove" ) );
     connect( removeTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetRemoved() ) );
 
     missionCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-combobox" );
