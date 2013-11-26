@@ -82,7 +82,7 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void Initialize();
+    void Initialize( bool main );
     //@}
 
 private:

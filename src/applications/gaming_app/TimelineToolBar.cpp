@@ -30,8 +30,7 @@ TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
     , displayTasks_( true )
     , horizontalMode_( true )
 {
-    Initialize();
-    OnSwitchView();
+    Initialize( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,16 +46,14 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , displayTasks_( other.displayTasks_ )
     , horizontalMode_( other.horizontalMode_ )
 {
-    Initialize();
-    addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
-    OnSwitchView();
+    Initialize( false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar::Initialize
 // Created: SLI 2013-11-21
 // -----------------------------------------------------------------------------
-void TimelineToolBar::Initialize()
+void TimelineToolBar::Initialize( bool main )
 {
     horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
     filterMenu_ = new QMenu( this );
@@ -66,6 +63,7 @@ void TimelineToolBar::Initialize()
     button->setPopup( filterMenu_ );
     button->setPopupMode( QToolButton::InstantPopup );
     button->setPopupDelay( 1 );
+    button->setEnabled( main );
     addWidget( button );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
 
@@ -103,6 +101,11 @@ void TimelineToolBar::Initialize()
     filterMenu_->addAction( engagedFilter );
     filterMenu_->addAction( eventFilter );
     filterMenu_->addAction( taskFilter );
+
+    if( !main )
+        addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
+
+    OnSwitchView();
 }
 
 // -----------------------------------------------------------------------------
