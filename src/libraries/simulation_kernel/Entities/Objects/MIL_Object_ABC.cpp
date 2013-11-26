@@ -32,6 +32,7 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Objects/FireAttribute.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "simulation_terrain/TER_PopulationManager.h"
@@ -150,6 +151,9 @@ void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
         GetAttribute< MineAttribute >() .Set( 1. );
     if( genObject.GetTimeLimit() > 0 )
         GetAttribute< TimeLimitedAttribute >().SetLifeTime( genObject.GetTimeLimit() );
+    const std::string& fireClass = genObject.GetFireClass();
+    if( !fireClass.empty() )
+        GetAttribute< FireAttribute >().SetFireClass( fireClass, genObject.GetMaxCombustion() );
 }
 
 // -----------------------------------------------------------------------------

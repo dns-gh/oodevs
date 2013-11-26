@@ -113,6 +113,14 @@
         <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Max combustion energy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

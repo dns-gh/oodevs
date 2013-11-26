@@ -80,6 +80,8 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
     , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
     , mining_            ( msg.has_mining() ? msg.mining() : false )
+    , fireClass_         ( msg.has_fire_class() ? msg.fire_class() : "" )
+    , maxCombustion_     ( msg.has_max_combustion() ? msg.max_combustion() : 0 )
 {
     if( type_.empty() )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
@@ -112,6 +114,8 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
     , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
     , mining_            ( msg.has_mining() ? msg.mining() : false )
+    , fireClass_         ( msg.has_fire_class() ? msg.fire_class() : "" )
+    , maxCombustion_     ( msg.has_max_combustion() ? msg.max_combustion() : 0 )
 {
     if( type_.empty() )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
@@ -166,6 +170,8 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , timeLimit_         ( rhs.timeLimit_ )
     , lodging_           ( 0 )
     , mining_            ( rhs.mining_ )
+    , fireClass_         ( rhs.fireClass_ )
+    , maxCombustion_     ( rhs.maxCombustion_ )
 {
     // NOTHING
 }
@@ -198,6 +204,8 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     timeLimit_          = rhs.timeLimit_;
     lodging_            = rhs.lodging_;
     mining_             = rhs.mining_;
+    fireClass_          = rhs.fireClass_;
+    maxCombustion_      = rhs.maxCombustion_;
     return *this;
 }
 
@@ -220,6 +228,9 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     msg.set_time_limit( timeLimit_ );
     msg.set_mining( mining_ );
     msg.set_lodging( lodging_ );
+    if( !fireClass_.empty() )
+        msg.set_fire_class( fireClass_ );
+    msg.set_max_combustion( maxCombustion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +263,9 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> altitudeModifier_
          >> timeLimit_
          >> mining_
-         >> lodging_;
+         >> lodging_
+         >> fireClass_
+         >> maxCombustion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +286,9 @@ void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << altitudeModifier_
          << timeLimit_
          << mining_
-         << lodging_;
+         << lodging_
+         << fireClass_
+         << maxCombustion_;
 }
 
 // -----------------------------------------------------------------------------
@@ -391,4 +406,22 @@ int DEC_Gen_Object::GetLodging() const
 bool DEC_Gen_Object::GetMining() const
 {
     return mining_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetMining
+// Created: LGy 2013-11-26
+// -----------------------------------------------------------------------------
+const std::string& DEC_Gen_Object::GetFireClass() const
+{
+    return fireClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetMaxCombustion
+// Created: LGy 2013-11-26
+// -----------------------------------------------------------------------------
+unsigned int DEC_Gen_Object::GetMaxCombustion() const
+{
+    return maxCombustion_;
 }

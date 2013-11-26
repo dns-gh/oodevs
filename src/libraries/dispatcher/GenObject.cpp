@@ -17,13 +17,15 @@ using namespace dispatcher;
 // Name: GenObject constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-GenObject::GenObject( const sword::PlannedWork& asn )
-    : type_              ( asn.type() )
-    , location_          ( asn.position() )
-    , typeObstacle_      ( asn.type_obstacle() )
-    , density_           ( asn.density() )
-    , tc2_               ( asn.combat_train().id() )
-    , delaiActiviteMines_( asn.activity_time() )
+GenObject::GenObject( const sword::PlannedWork& msg )
+    : type_              ( msg.type() )
+    , location_          ( msg.position() )
+    , typeObstacle_      ( msg.type_obstacle() )
+    , density_           ( msg.density() )
+    , tc2_               ( msg.combat_train().id() )
+    , delaiActiviteMines_( msg.activity_time() )
+    , fireClass_         ( msg.fire_class() )
+    , maxCombustion_     ( msg.max_combustion() )
 {
     // NOTHING
 }
@@ -63,5 +65,7 @@ void GenObject::Send( sword::PlannedWork& message ) const
     message.set_density( density_ );
     message.mutable_combat_train()->set_id( tc2_ );
     message.set_activity_time( delaiActiviteMines_ );
+    message.set_fire_class( fireClass_ );
+    message.set_max_combustion( maxCombustion_ );
     location_.Send( *message.mutable_position() );
 }

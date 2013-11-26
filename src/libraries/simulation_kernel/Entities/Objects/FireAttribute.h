@@ -73,6 +73,7 @@ public:
     int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
     MIL_BurnEffectManipulator GetBurnEffect();
     const MIL_FireClass& GetClass() const;
+    void SetFireClass( const std::string& className, unsigned int maxCombustion );
     //@}
 
     //! @name Operations

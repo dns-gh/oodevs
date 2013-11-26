@@ -71,6 +71,7 @@ public:
     bool HasAltitudeModifierCapacity() const;
     bool HasFirePropagationModifierCapacity() const;
     bool HasTimeLimitedCapacity() const;
+    bool HasBurnCapacity() const;
     bool HasLodgingCapacity() const;
     bool HasResourceNetwork() const;
     bool IsUrban() const;
