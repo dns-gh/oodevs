@@ -99,7 +99,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -153,7 +153,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -194,7 +194,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
     , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -517,6 +517,8 @@ void MIL_Population::UpdateState()
             else
                 ++itConcentration;
         }
+        if( trashedFlows_.size() > 0 || trashedConcentrations_.size() > 0 )
+        UpdateBarycenter();
     }
     catch( const std::exception& e )
     {
@@ -1361,6 +1363,7 @@ void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wound
     {
         MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, *vBarycenter_, MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
         concentrations_.push_back( pConcentration );
+        UpdateBarycenter();
     }
     else
     {
@@ -1702,7 +1705,7 @@ void MIL_Population::UpdateBarycenter()
         currentBarycenter = currentBarycenter / elements;
         vBarycenter_->rX_ = currentBarycenter.rX_;
         vBarycenter_->rY_ = currentBarycenter.rY_;
-    }
+}
 }
 
 // -----------------------------------------------------------------------------
