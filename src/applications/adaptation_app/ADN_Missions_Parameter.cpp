@@ -181,15 +181,15 @@ void ADN_Missions_Parameter::UpdateObjectsVectors()
 {
     if( type_.GetData() == eMissionParameterTypeGenObject )
     {
+        knowledgeObjects_.ResetFixedVector();
         if( genObjects_.empty() )
             genObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        knowledgeObjects_.ResetFixedVector();
     }
     else if( type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
+        genObjects_.ResetFixedVector();
         if( knowledgeObjects_.empty() )
             knowledgeObjects_.SetFixedVector( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() );
-        genObjects_.ResetFixedVector();
     }
     else
     {
