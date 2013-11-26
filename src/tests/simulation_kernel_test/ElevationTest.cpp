@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Meteo/RawVisionData/Elevation.h"
+#include "MT_Tools/MT_Vector2D.h"
 
 namespace
 {
@@ -16,13 +17,12 @@ namespace
     {
         Fixture()
             : size     ( 2 )
-            , elevation( size )
         {}
         void TestAdjacent( const MT_Vector2D& from, const MT_Vector2D& to )
         {
             MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
             MOCK_EXPECT( collector ).once().with( from, to ).returns( false );
-            elevation.FindPath( from, to, collector );
+            SplitSegmentOnGrid( size, from, to, collector );
         }
         void TestConsecutive( const MT_Vector2D& from, const MT_Vector2D& middle, const MT_Vector2D& to )
         {
@@ -30,10 +30,9 @@ namespace
             MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
             MOCK_EXPECT( collector ).once().with( from, middle ).in( s ).returns( false );
             MOCK_EXPECT( collector ).once().with( middle, to ).in( s ).returns( false );
-            elevation.FindPath( from, to, collector );
+            SplitSegmentOnGrid( size, from, to, collector );
         }
         int size;
-        Elevation elevation;
     };
 }
 
@@ -42,7 +41,7 @@ BOOST_FIXTURE_TEST_CASE( path_from_a_square_to_itself_is_empty, Fixture )
     const MT_Vector2D from( 0, 0 );
     const MT_Vector2D to( 0, 1 );
     MOCK_FUNCTOR( collector, bool( const MT_Vector2D&, const MT_Vector2D& ) );
-    elevation.FindPath( from, to, collector );
+    SplitSegmentOnGrid( size, from, to, collector );
 }
 
 BOOST_FIXTURE_TEST_CASE( path_from_a_square_to_another_adjacent_square_is_made_of_those_two_squares, Fixture )
