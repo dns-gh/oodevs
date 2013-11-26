@@ -8,46 +8,46 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "DefaultSlopeDecelerationComputer.h"
+#include "SlopeDecelerationComputer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
 namespace moving
 {
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSlopeDecelerationComputer constructor
+// Name: SlopeDecelerationComputer constructor
 // Created: JSR 2013-11-08
 // -----------------------------------------------------------------------------
-DefaultSlopeDecelerationComputer::DefaultSlopeDecelerationComputer()
+SlopeDecelerationComputer::SlopeDecelerationComputer()
     : deceleration_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSlopeDecelerationComputer destructor
+// Name: SlopeDecelerationComputer destructor
 // Created: JSR 2013-11-08
 // -----------------------------------------------------------------------------
-DefaultSlopeDecelerationComputer::~DefaultSlopeDecelerationComputer()
+SlopeDecelerationComputer::~SlopeDecelerationComputer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSlopeDecelerationComputer::ApplyOnComponent
+// Name: SlopeDecelerationComputer::ApplyOnComponent
 // Created: JSR 2013-11-08
 // -----------------------------------------------------------------------------
-void DefaultSlopeDecelerationComputer::ApplyOnComponent( PHY_ComposantePion& component )
+void SlopeDecelerationComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
     if( component.CanMove() )
         deceleration_ = std::max( deceleration_, component.GetType().GetSlopeDeceleration() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSlopeDecelerationComputer::GetSlopeDeceleration
+// Name: SlopeDecelerationComputer::GetSlopeDeceleration
 // Created: JSR 2013-11-08
 // -----------------------------------------------------------------------------
-double DefaultSlopeDecelerationComputer::GetSlopeDeceleration() const
+double SlopeDecelerationComputer::GetSlopeDeceleration() const
 {
     return deceleration_;
 }
