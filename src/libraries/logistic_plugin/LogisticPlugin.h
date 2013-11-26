@@ -36,6 +36,14 @@ namespace boost
     }
 }
 
+namespace sword
+{
+    class LogisticHistoryRequest;
+    class LogisticHistoryAck;
+    class ListLogisticRequests;
+    class ListLogisticRequestsAck;
+}
+
 namespace tools
 {
     class Path;
@@ -89,6 +97,12 @@ public:
     int DebugGetConsignCount( E_LogisticType eLogisticType ) const;
     void SetMaxLinesInFile( int maxLines );
     //@}
+
+private:
+    void HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
+            sword::LogisticHistoryAck& ack ) const;
+    void HandleListLogisticRequests( const sword::ListLogisticRequests& rq,
+            sword::ListLogisticRequestsAck& ack ) const;
 
 private:
     //! @name Member data

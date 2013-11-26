@@ -623,8 +623,20 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
 namespace
 {
 
+std::set< uint32_t > MakeSet( uint32_t u1 = 0, uint32_t u2 = 0, uint32_t u3 = 0 )
+{
+    std::set< uint32_t > ids;
+    if( u1 )
+        ids.insert( u1 );
+    if( u2 )
+        ids.insert( u2 );
+    if( u3 )
+        ids.insert( u3 );
+    return ids;
+}
+
 void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
-        bool destroyed )
+        bool destroyed, const std::set< uint32_t >& entitiesSet )
 {
     // ConsignRecord does not understand creation/update/destruction protocol,
     // it can be fed with any structure.
@@ -635,26 +647,39 @@ void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
     funeral->mutable_unit()->set_id( 8 );
     funeral->set_tick( tick );
     funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
-    rec.WriteEntry( requestId, destroyed, entry );
+    std::vector< uint32_t > entities( entitiesSet.begin(), entitiesSet.end() );
+    rec.WriteEntry( requestId, destroyed, entry, entities );
     rec.Flush();
 }
 
-// Turn recorded LogHistoryEntry into something easily checked.
-std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& entries,
-        size_t index )
+void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
+        bool destroyed )
 {
-    const auto e = entries.at( index );
-    if( !e.has_funeral() || !e.funeral().has_creation() )
-        return "";
-    auto& creation = e.funeral().creation();
+    AddAndFlush( rec, requestId, tick, destroyed, MakeSet() );
+}
+
+// Turn recorded LogHistoryEntry into something easily checked.
+std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& entries )
+{
     std::stringstream ss;
-    ss << creation.request().id() << "." << creation.tick();
+    bool first = true;
+    for( auto it = entries.cbegin(); it != entries.end(); ++it )
+    {
+        if( !it->has_funeral() || !it->funeral().has_creation() )
+            continue;
+        if( first )
+            first = false;
+        else
+            ss << ", ";
+        auto& creation = it->funeral().creation();
+        ss << creation.request().id() << "." << creation.tick();
+    }
     return ss.str();
 }
 
 }  // namespace
 
-BOOST_AUTO_TEST_CASE( TestConsignRecorder )
+BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
     const tools::Path path = tempDir.Path() / "consigns";
@@ -669,31 +694,27 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorder )
     AddAndFlush( rec, 1, 2, false );
     BOOST_CHECK_EQUAL( 1u, rec.GetHistorySize() );
     rec.GetHistory( 1, entries ); 
-    BOOST_REQUIRE_EQUAL( 2u, entries.size() );
-    BOOST_CHECK_EQUAL( "1.1", GetHistoryTrace( entries, 0 ) );
-    BOOST_CHECK_EQUAL( "1.2", GetHistoryTrace( entries, 1 ) );
+    BOOST_CHECK_EQUAL( "1.1, 1.2", GetHistoryTrace( entries ) );
 
     // One destroyed
     AddAndFlush( rec, 2, 1, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 2, entries ); 
-    BOOST_REQUIRE_EQUAL( 1u, entries.size() );
-    BOOST_CHECK_EQUAL( "2.1", GetHistoryTrace( entries, 0 ) );
+    BOOST_CHECK_EQUAL( "2.1", GetHistoryTrace( entries ) );
 
     // Another valid -> evict the destroyed [2]
     AddAndFlush( rec, 3, 1, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 3, entries ); 
-    BOOST_CHECK_EQUAL( 1u, entries.size() );
-    BOOST_CHECK_EQUAL( "3.1", GetHistoryTrace( entries, 0 ) );
+    BOOST_CHECK_EQUAL( "3.1", GetHistoryTrace( entries ) );
     rec.GetHistory( 2, entries ); 
-    BOOST_CHECK_EQUAL( 0u, entries.size() );
+    BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Another destroyed -> removed immediately
     AddAndFlush( rec, 4, 1, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 4, entries ); 
-    BOOST_CHECK_EQUAL( 0u, entries.size() );
+    BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Update [1]
     AddAndFlush( rec, 1, 3, false );
@@ -703,11 +724,45 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorder )
     AddAndFlush( rec, 5, 1, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 1, entries ); 
-    BOOST_CHECK_EQUAL( 3u, entries.size() );
-    BOOST_CHECK_EQUAL( "1.3", GetHistoryTrace( entries, entries.size() - 1 ) );
+    BOOST_CHECK_EQUAL( "1.1, 1.2, 1.3", GetHistoryTrace( entries ) );
     rec.GetHistory( 3, entries ); 
-    BOOST_CHECK_EQUAL( 0u, entries.size() );
+    BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
     rec.GetHistory( 5, entries ); 
-    BOOST_CHECK_EQUAL( 1u, entries.size() );
-    BOOST_CHECK_EQUAL( "5.1", GetHistoryTrace( entries, entries.size() - 1 ) );
+    BOOST_CHECK_EQUAL( "5.1", GetHistoryTrace( entries ) );
+}
+
+namespace
+{
+
+std::string TraceEntitiesRequests( const ConsignRecorder& rec,
+    const std::set< uint32_t >& entities )
+{
+    boost::ptr_vector< sword::LogHistoryEntry > entries;
+    GetRequestsFromEntities( rec, entities, 100, entries );
+    return GetHistoryTrace( entries );
+}
+
+}  // namespace
+
+BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
+{
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
+    const tools::Path path = tempDir.Path() / "consigns";
+
+    // request [2] should be discarded
+    ConsignRecorder rec( path, 1024*1024, 2 );
+    AddAndFlush( rec, 1, 1, false, MakeSet( 30 ));
+    AddAndFlush( rec, 2, 1, false, MakeSet( 10 ));
+    AddAndFlush( rec, 2, 1, true, MakeSet( 30 ));
+    AddAndFlush( rec, 3, 2, false, MakeSet( 10, 20 ));
+    AddAndFlush( rec, 1, 3, true, MakeSet( 20 ));
+
+    // Check history for single unit
+    BOOST_CHECK_EQUAL( "3.2", TraceEntitiesRequests( rec, MakeSet( 10 )));
+    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, MakeSet( 20 )));
+    BOOST_CHECK_EQUAL( "1.3", TraceEntitiesRequests( rec,  MakeSet( 30 )));
+    // Missing unit
+    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec,  MakeSet( 1000 )));
+    // Multiple units with one missing
+    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec,  MakeSet( 20, 30, 1000 )));
 }

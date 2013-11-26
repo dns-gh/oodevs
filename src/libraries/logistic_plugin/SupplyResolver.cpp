@@ -11,6 +11,7 @@
 #include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/MessageParameters.h"
 #include "tools/FileWrapper.h"
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
@@ -169,23 +170,34 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
 }
 
 bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
-        const NameResolver_ABC& resolver )
+        const NameResolver_ABC& resolver, std::vector< uint32_t >& entities )
 {
     const auto& msg = message.message();
     if( msg.has_log_supply_handling_creation() )
     {
-        *entry_.mutable_supply()->mutable_creation() = msg.log_supply_handling_creation();
-        return ManageMessage( msg.log_supply_handling_creation(), resolver );
+        const auto& sub = msg.log_supply_handling_creation();
+        *entry_.mutable_supply()->mutable_creation()  = sub;
+        entities.push_back( protocol::GetParentEntityId( sub.supplier() ));
+        entities.push_back( protocol::GetParentEntityId( sub.transporters_provider() ));
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_supply_handling_update() )
     {
         // Sub-messages are merged recursively and repeated fields are *appended*.
         // Clear them before merging. This is fragile but saves tons of code
         // right now.
+        const auto& sub = msg.log_supply_handling_update();
         entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
-        entry_.mutable_supply()->mutable_update()->MergeFrom(
-                msg.log_supply_handling_update() );
-        return ManageMessage( msg.log_supply_handling_update(), resolver );
+        entry_.mutable_supply()->mutable_update()->MergeFrom( sub );
+        if( sub.has_convoyer() )
+            entities.push_back( sub.convoyer().id() );
+        if( sub.has_requests() )
+        {
+            const int count = sub.requests().requests().size();
+            for( int i = 0; i != count; ++i )
+                entities.push_back( sub.requests().requests( i ).recipient().id() );
+        }
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_supply_handling_destruction() )
     {
@@ -212,6 +224,7 @@ std::string plugins::logistic::GetSupplyHeader()
     consign.conveyor_           = tools::translate( "logistic", "conveyor" ).toStdString();
     consign.state_              = tools::translate( "logistic", "state" ).toStdString();
     consign.recipientAutomats_[ 0 ] = consign.recipientAutomat_;
+
     for( int i = 0; i < 15; ++i )
     {
         SupplyConsignData::Resource resource;

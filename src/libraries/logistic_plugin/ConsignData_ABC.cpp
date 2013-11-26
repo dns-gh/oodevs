@@ -26,12 +26,13 @@ ConsignData_ABC::~ConsignData_ABC()
 }
 
 bool ConsignData_ABC::UpdateConsign( const sword::SimToClient& msg,
-        const NameResolver_ABC& names, int tick, const std::string& time )
+        const NameResolver_ABC& names, int tick, const std::string& time,
+        std::vector< uint32_t >& entities )
 {
     tick_ = boost::lexical_cast< std::string >( tick );
     simTime_ = time;
     entry_.set_tick( tick );
-    return DoUpdateConsign( msg, names );
+    return DoUpdateConsign( msg, names, entities );
 }
 
 LogisticPlugin::E_LogisticType ConsignData_ABC::GetType() const

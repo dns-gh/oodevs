@@ -3445,8 +3445,15 @@ message LogHistoryEntry {
 }
 
 //! Returns a list of logistic requests entries matching those specified
-//! in the LogisticHistoryRequest.
+//! in the LogisticHistoryRequest. Entries are sorted per request, from
+//! oldest to newest.
 message LogisticHistoryAck {
+    repeated LogHistoryEntry entries = 1;
+}
+
+//! Returns the most recent LogHistoryEntry of each request touching the
+//! entities listed in ListLogisticRequests, from newest to oldest.
+message ListLogisticRequestsAck {
     repeated LogHistoryEntry entries = 1;
 }
 
@@ -3769,6 +3776,7 @@ message SimToClient {
         //! @copybrief ListEnabledVisionConesAck
         optional ListEnabledVisionConesAck list_enabled_vision_cones_ack = 149;
         optional LogisticHistoryAck logistic_history_ack = 150;
+        optional ListLogisticRequestsAck list_logistic_requests_ack = 151;
     }
     /** @property context
         @brief Identifies the request matching the response

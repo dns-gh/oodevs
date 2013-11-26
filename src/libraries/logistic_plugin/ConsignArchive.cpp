@@ -33,7 +33,7 @@ tools::Path ConsignArchive::GetFilename( uint32_t index ) const
     return basePath_ + tools::Path::FromUTF8( ss.str() );
 }
 
-ConsignArchive::Offset ConsignArchive::Write( const void* data, uint32_t length )
+ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
 {
     if( !output_ )
     {
@@ -44,7 +44,7 @@ ConsignArchive::Offset ConsignArchive::Write( const void* data, uint32_t length 
         size_ = sizeof( version );
     }
 
-    Offset offset;
+    ConsignOffset offset;
     offset.file = index_;
     offset.offset = size_;
 
