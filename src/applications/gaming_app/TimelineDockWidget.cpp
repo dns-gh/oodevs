@@ -231,6 +231,8 @@ void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::OnTabContextMenu()
 {
+    if( tabWidget_->currentIndex() == tabWidget_->indexOf( mainView_ ) )
+        return;
     contextMenu_->exec( QCursor::pos() );
 }
 
