@@ -10,11 +10,11 @@
 #ifndef Elevation_h
 #define Elevation_h
 
-#include <boost/function.hpp>
+#include <functional>
 
 class MT_Vector2D;
 
 bool SplitSegmentOnGrid( double cellSize, MT_Vector2D from, MT_Vector2D to,
-        const boost::function< bool( MT_Vector2D, MT_Vector2D )>& f );
+        const std::function< bool( MT_Vector2D, MT_Vector2D )>& f );
 
 #endif // Elevation_h

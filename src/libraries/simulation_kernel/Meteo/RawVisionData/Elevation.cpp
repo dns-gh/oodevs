@@ -11,7 +11,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 
 bool SplitSegmentOnGrid( double cellSize, MT_Vector2D from, MT_Vector2D to,
-        const boost::function< bool( MT_Vector2D, MT_Vector2D )>& f )
+        const std::function< bool( MT_Vector2D, MT_Vector2D )>& f )
 {
     int x1 = static_cast< int >( from.rX_ / cellSize );
     int y1 = static_cast< int >( from.rY_ / cellSize );
