@@ -178,8 +178,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
             int index = terrainList.indexOf( QString::fromStdWString( currentTerrain_.ToUnicode().c_str() ) );
             terrainList_->setCurrentIndex( index + 1 );
             int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( QString::fromStdWString( currentData_.ToUnicode().c_str() ) ).arg( QString::fromStdWString( currentPhysical_.ToUnicode().c_str() ) ) );
-            if( modelIndex != -1 )
-                modelList_->setCurrentIndex( modelIndex );
+            modelList_->setCurrentIndex( modelIndex == -1 ? 0 : modelIndex );
         }
     }
     catch( ... )
