@@ -95,6 +95,7 @@ private:
     void DoUpdate( const sword::CrowdConcentrationCreation& message );
     void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
+    void Update();
     void CreateDictionary();
     void ComputeCenter();
     //@}
@@ -111,6 +112,10 @@ private:
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     kernel::OptionalValue< int > nDomination_;
+    kernel::OptionalValue< int > healthy_;
+    kernel::OptionalValue< int > wounded_;
+    kernel::OptionalValue< int > contaminated_;
+    kernel::OptionalValue< int > dead_;
     //@}
 
 };

@@ -150,6 +150,7 @@ void Population::DoUpdate( const sword::CrowdFlowUpdate& message )
 {
     static_cast< PopulationFlow& >( tools::Resolver< PopulationFlow_ABC >::Get( message.flow().id() ) ).Update( message );
     ComputeCenter();
+    Update();
     Touch();
 }
 
@@ -161,6 +162,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationUpdate& message )
 {
     static_cast< PopulationConcentration& >( tools::Resolver< PopulationConcentration_ABC >::Get( message.concentration().id() ) ).Update( message );
     ComputeCenter();
+    Update();
     Touch();
 }
 
@@ -176,6 +178,7 @@ void Population::DoUpdate( const sword::CrowdFlowCreation& message )
         entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationFlow_ABC >::Register( message.flow().id(), *entity );
         ComputeCenter();
+        Update();
         Touch();
     }
 }
@@ -192,6 +195,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
         entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationConcentration_ABC >::Register( message.concentration().id(), *entity );
         ComputeCenter();
+        Update();
         Touch();
     }
 }
@@ -209,6 +213,7 @@ void Population::DoUpdate( const sword::CrowdFlowDestruction& message )
         delete flow;
         tools::Resolver< PopulationFlow_ABC >::Remove( message.flow().id() );
         ComputeCenter();
+        Update();
         Touch();
     }
 }
@@ -226,6 +231,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
         delete concentration;
         tools::Resolver< PopulationConcentration_ABC >::Remove( message.concentration().id() );
         ComputeCenter();
+        Update();
         Touch();
     }
 }
@@ -385,6 +391,10 @@ void Population::CreateDictionary()
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_, true );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Healthy" ), healthy_, true );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Wounded" ), wounded_, true );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Contaminated" ), contaminated_, true );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Dead" ), dead_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Female" ), female_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Children" ), children_, true );
@@ -397,10 +407,10 @@ void Population::CreateDictionary()
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< Population_ABC* >( const_cast< Population* >( this ) ) ).End();
-    displayer.Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() );
-    displayer.Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() );
-    displayer.Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() );
-    displayer.Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() );
+    displayer.Display( tools::translate( "Crowd", "Contaminated:" ), contaminated_ );
+    displayer.Display( tools::translate( "Crowd", "Dead:" ), dead_ );
+    displayer.Display( tools::translate( "Crowd", "Healthy:" ), healthy_ );
+    displayer.Display( tools::translate( "Crowd", "Wounded:" ), wounded_ );
     displayer.Display( tools::translate( "Crowd", "Male:" ), male_ );
     displayer.Display( tools::translate( "Crowd", "Female:" ), female_ );
     displayer.Display( tools::translate( "Crowd", "Children:" ), children_ );
@@ -414,10 +424,10 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Population::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() )
-             .Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() )
-             .Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() )
-             .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() );
+    displayer.Display( tools::translate( "Crowd", "Contaminated:" ), contaminated_ )
+             .Display( tools::translate( "Crowd", "Dead:" ), dead_ )
+             .Display( tools::translate( "Crowd", "Healthy:" ), healthy_ )
+             .Display( tools::translate( "Crowd", "Wounded:" ), wounded_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,4 +446,17 @@ bool Population::CanAggregate() const
 bool Population::IsAggregated() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Update
+// Created: LGY 2013-11-26
+// -----------------------------------------------------------------------------
+void Population::Update()
+{
+    healthy_ = GetHealthyHumans();
+    wounded_ = GetWoundedHumans();
+    contaminated_ = GetContaminatedHumans();
+    dead_ = GetDeadHumans();
+    controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", "State" ) ) );
 }
