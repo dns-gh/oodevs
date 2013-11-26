@@ -360,10 +360,16 @@ void MIL_Army::ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automa
     unsigned int id = xis.attribute< unsigned int >( "id" );
     MIL_AutomateLOG* pLogisticSuperior = FindBrainLogistic( id, automateFactory, formationFactory );
     if( !pLogisticSuperior )
-        throw MASA_EXCEPTION( xis.context() + "Unknown logistic superior" );
+    {
+        MT_LOG_ERROR_MSG( xis.context() + "Unknown logistic superior" );
+        return;
+    }
 
     if( pLogisticSuperior->GetArmy() != *this )
-        throw MASA_EXCEPTION( xis.context() + "Invalid logistic superior (not in specified side)" );
+    {
+        MT_LOG_ERROR_MSG( xis.context() + "Invalid logistic superior (not in specified side)" );
+        return;
+    }
 
     xis >> xml::list( "subordinate", *this, &MIL_Army::ReadLogisticLinkSubordinate, automateFactory, formationFactory, *pLogisticSuperior );
 }
@@ -383,8 +389,11 @@ void MIL_Army::ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_
     {
         MIL_Automate* pSubordinate = automateFactory.Find( subordinateID );
         if( !pSubordinate )
-            throw MASA_EXCEPTION( xis.context() + "Unknown subordinate" );
-        pSubordinate->ReadLogisticLink( superior, xis );
+        {
+            MT_LOG_ERROR_MSG( xis.context() + "Unknown subordinate" );
+        }
+        else
+            pSubordinate->ReadLogisticLink( superior, xis );
     }
 }
 
