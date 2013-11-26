@@ -69,7 +69,7 @@ public:
 
     //! @name Filters
     //@{
-    void UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services );
+    void UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services, const std::string& keyword );
     //@}
 
 private:
@@ -130,6 +130,7 @@ private slots:
 
     void OnEngagedFilterToggled( bool checked );
     void OnServicesFilterChanged( const std::string& services );
+    void OnKeywordFilterChanged( const std::string& keyword );
     //@}
 
 private:
