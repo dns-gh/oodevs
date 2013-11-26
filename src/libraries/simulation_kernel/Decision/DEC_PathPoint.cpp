@@ -165,3 +165,39 @@ void DEC_PathPoint::SetSlope( double slope )
 {
     slope_ = slope;
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetPos
+// Created: JVT 02-12-04
+//-----------------------------------------------------------------------------
+const MT_Vector2D& DEC_PathPoint::GetPos() const
+{
+    return vPos_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetType
+// Created: JVT 02-12-04
+//-----------------------------------------------------------------------------
+DEC_PathPoint::E_Type DEC_PathPoint::GetType() const
+{
+    return nType_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetObjectTypes
+// Created: JVT 02-12-06
+//-----------------------------------------------------------------------------
+const TerrainData& DEC_PathPoint::GetObjectTypes() const
+{
+    return nObjectTypes_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PathPoint::GetObjectTypesToNextPoint
+// Created: JVT 02-12-06
+//-----------------------------------------------------------------------------
+const TerrainData& DEC_PathPoint::GetObjectTypesToNextPoint() const
+{
+    return nObjectTypesToNextPoint_;
+}

@@ -7,35 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __moving_SlopeDecelerationComputer_ABC_H__
-#define __moving_SlopeDecelerationComputer_ABC_H__
+#ifndef __moving_SlopeDecelerationComputer_H__
+#define __moving_SlopeDecelerationComputer_H__
 
-#include "simulation_kernel/OnComponentComputer_ABC.h"
+#include "OnComponentComputer_ABC.h"
+
+class PHY_ComposantePion;
 
 namespace moving
 {
 
 // =============================================================================
-/** @class  SlopeDecelerationComputer_ABC
-    @brief  SlopeDecelerationComputer_ABC
+/** @class  SlopeDecelerationComputer
+    @brief  SlopeDecelerationComputer
 */
 // Created: JSR 2013-11-08
+
 // =============================================================================
-class SlopeDecelerationComputer_ABC : public OnComponentComputer_ABC
+class SlopeDecelerationComputer : public OnComponentComputer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SlopeDecelerationComputer_ABC() {}
-    virtual ~SlopeDecelerationComputer_ABC() {}
+             SlopeDecelerationComputer();
+    virtual ~SlopeDecelerationComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual double GetSlopeDeceleration() const = 0;
+    virtual void ApplyOnComponent( PHY_ComposantePion& component );
+    virtual double GetSlopeDeceleration() const;
+    //@}
+private:
+    //! @name Attributes
+    //@{
+    double deceleration_;
     //@}
 };
 
 }
 
-#endif /* __moving_SlopeDecelerationComputer_ABC_H__ */
+#endif /* __moving_SlopeDecelerationComputer_H__ */

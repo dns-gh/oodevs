@@ -98,6 +98,4 @@ protected:
     //@}
 };
 
-#include "DEC_PathPoint.inl"
-
 #endif // __DEC_PathPoint_h_
