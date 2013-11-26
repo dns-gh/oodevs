@@ -359,7 +359,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             movingEntity_.NotifyMovingInsideObject( object );
             if( rSpeedWithinObject == 0. )
             {
-                if( !object.IsInside( itCurMoveStep->vPos_ ) )
+                if( itNextMoveStep->objectsToNextPointSet_.end() != itNextMoveStep->objectsToNextPointSet_.find( &object ) )
                 {
                     SetBlockedByObject( object, itCurMoveStep );
                     return false;
@@ -379,7 +379,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
             if( rSpeedWithinObject == 0. )
             {
-                if( !object.IsInside( itCurMoveStep->vPos_ ) )
+                if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
                 {
                     SetBlockedByObject( object, itCurMoveStep );
                     return false;
@@ -421,7 +421,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
 // Name: DEC_PathWalker::TryToMoveTo
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining )
+bool DEC_PathWalker::TryToMoveTo( const MT_Vector2D& vNewPosTmp, double& rTimeRemaining )
 {
     // Deplacement de vNewPos_ vers vNewPosTmp
     if( vNewPosTmp == vNewPos_ )
@@ -434,10 +434,6 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     }
 
     MT_Vector2D vNewPos( vNewPos_ );
-    bool bFirstMove = ( static_cast< float >( vNewPos_.rX_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rX_ ) &&
-                        static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rY_ ) );
-    if( bFirstMove )
-        vNewPos = (*path.GetResult().begin())->GetPos();
 
     sMoveStepCmp cmp( vNewPos );
     T_MoveStepSet moveStepSet( cmp );
@@ -530,7 +526,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
     while( rTimeRemaining > 0. )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
-        if( !TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining ) )
+        if( !TryToMoveTo( ( *itNextPathPoint_ )->GetPos(), rTimeRemaining ) )
         {
             rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return pathSet_;
