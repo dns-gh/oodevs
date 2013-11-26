@@ -213,7 +213,7 @@
     <name>ExerciseProperties</name>
     <message>
         <source>Exercise parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paramètres d&apos;exercice</translation>
     </message>
     <message>
         <source>Terrain:</source>
