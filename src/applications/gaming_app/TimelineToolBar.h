@@ -38,6 +38,7 @@ public:
     std::string GetServicesFilter() const;
     bool GetEngagedFilter() const;
     void SetEntityFilter( const std::string& filter );
+    std::string GetKeywordFilter() const;
     //@}
 
 public:
@@ -63,6 +64,7 @@ signals:
 
     void EngagedFilterToggled( bool checked );
     void ServicesFilterChanged( const std::string& services );
+    void KeywordFilterChanged( const std::string& keyword );
     //@}
 
 public slots:
@@ -74,6 +76,7 @@ public slots:
     void OnEngagedFilterToggled( bool toggled );
     void OnEventFilterToggled( bool toggled );
     void OnTaskFilterToggled( bool toggled );
+    void OnFilterKeyword( const QString& keyword );
     //@}
 
 private:
@@ -88,6 +91,7 @@ private:
     const tools::ExerciseConfig& config_;
     QAction* horizontalView_;
     std::string entityFilter_;
+    std::string keywordFilter_;
     QString filters_;
     bool displayEngaged_;
     bool displayEvents_;

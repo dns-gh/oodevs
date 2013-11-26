@@ -368,12 +368,17 @@ void TimelineWebView::SetProfile( const QString& profile )
 // Name: TimelineWebView::UpdateFilters
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::UpdateFilters( const std::string& unitFilter, bool displayEngaged, const std::string& services )
+void TimelineWebView::UpdateFilters( const std::string& unitFilter,
+                                     bool displayEngaged,
+                                     const std::string& services,
+                                     const std::string& keyword )
 {
     if( server_ )
-        server_->UpdateQuery( boost::assign::map_list_of( "sword_filter", unitFilter )
-                                                        ( "sword_filter_engaged", displayEngaged ? "false" : "true" )
-                                                        ( "filter_service", services ) );
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "sword_filter", unitFilter )
+            ( "sword_filter_engaged", displayEngaged ? "false" : "true" )
+            ( "filter_keyword", keyword )
+            ( "filter_service", services ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -601,10 +606,9 @@ void TimelineWebView::OnSavedEvents( const std::string& content, const timeline:
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
 {
-    if( !server_ )
-        return;
-    auto query = boost::assign::map_list_of( "horizontal", horizontal ? "true" : "false" );
-    server_->UpdateQuery( query );
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "horizontal", horizontal ? "true" : "false" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -613,10 +617,9 @@ void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnEngagedFilterToggled( bool displayEngaged )
 {
-    if( !server_ )
-        return;
-    auto query = boost::assign::map_list_of( "sword_filter_engaged", displayEngaged ? "false" : "true" );
-    server_->UpdateQuery( query );
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "sword_filter_engaged", displayEngaged ? "false" : "true" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -625,8 +628,18 @@ void TimelineWebView::OnEngagedFilterToggled( bool displayEngaged )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnServicesFilterChanged( const std::string& services )
 {
-    if( !server_ )
-        return;
-    auto query = boost::assign::map_list_of( "filter_service", services );
-    server_->UpdateQuery( query );
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "filter_service", services ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnKeywordFilterChanged
+// Created: BAX 2013-11-25
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnKeywordFilterChanged( const std::string& keyword )
+{
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "filter_keyword", keyword ) );
 }
