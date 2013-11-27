@@ -18,7 +18,7 @@ namespace kernel
 {
     class Population_ABC;
     class Entity_ABC;
-    class AgentKnowledgeConverter_ABC;
+    class PopulationKnowledge_ABC;
 }
 
 namespace actions
@@ -33,6 +33,7 @@ namespace actions
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamPopulationKnowledge : public EntityParameter< kernel::Population_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::PopulationKnowledge_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,6 +46,7 @@ public:
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Visit( const actions::parameters::PopulationKnowledge& param );
+    virtual void NotifyContextMenu( const kernel::PopulationKnowledge_ABC& knowledge, kernel::ContextMenu& menu );
     //@}
 };
 
