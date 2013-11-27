@@ -9,48 +9,23 @@
 
 #include "selftraining_app_pch.h"
 #include "DebugConfigPanel.h"
-#include "moc_DebugConfigPanel.cpp"
+#include "Registry.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/tools.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include "moc_DebugConfigPanel.cpp"
 
 namespace
 {
     const int maxIntegrationDir = 5;
-
-    QString ReadStringSetting( const QString& key )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( "/sword/" + key ).toString();
-    }
-
-    void WriteStringSetting( const QString& key, const QString& value )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( "/sword/" + key, value );
-    }
-
-    int ReadIntSetting( const std::string& key, int defaultValue = 0 )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        int val =  settings.value( ( "/sword/" + key ).c_str(), defaultValue ).toInt();
-        return val;
-    }
-
-    void WriteIntSetting( const std::string& key, int value )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( ( "/sword/" + key ).c_str(), value );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                                    bool timeline )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
     , visible_( !!parent )
     , config_( config )
@@ -71,7 +46,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //integration level combobox
     integrationComboBox_ = new QComboBox();
     integrationComboBox_->setEditable( true );
-    QString pathValue = ReadStringSetting( "IntegrationLayerPaths" );
+    QString pathValue = registry::ReadString( "IntegrationLayerPaths" );
     if( !pathValue.isEmpty() )
     {
         pathList_ = pathValue.split( ';' );
@@ -107,7 +82,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     timelineDebugPortLabel_ = new QLabel();
     timelineDebugPortSpinBox_ = new QSpinBox();
     timelineDebugPortSpinBox_->setRange( 0, 65535 );
-    timelineDebugPortSpinBox_->setValue( ReadIntSetting( "TimelineDebugPort" ) );
+    timelineDebugPortSpinBox_->setValue( registry::ReadInt( "TimelineDebugPort" ) );
     connect( timelineDebugPortSpinBox_, SIGNAL( valueChanged( int ) ), SLOT( OnTimelineDebugPortChanged( int ) ) );
 
     QHBoxLayout* debugPortBox = new QHBoxLayout();
@@ -115,9 +90,10 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     debugPortBox->addWidget( timelineDebugPortSpinBox_ );
 
     oldTimeline_ = new QCheckBox();
-    oldTimeline_->setEnabled( timeline );
+    oldTimeline_->setChecked( registry::ReadBool( "HasLegacyTimeline" ) );
     QHBoxLayout* oldTimelineLayout = new QHBoxLayout();
     oldTimelineLayout->addWidget( oldTimeline_ );
+    connect( oldTimeline_, SIGNAL( toggled( bool ) ), this, SLOT( OnTimelineChecked( bool ) ) );
 
     QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
     timelineGroupLayout->addLayout( debugPortBox );
@@ -161,7 +137,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QGridLayout* mapnik = new QGridLayout( mapnikBox_, 1, 1 );
     mapnik->setMargin( 10 );
     mapnikLayerBox_ = new QCheckBox();
-    mapnikLayerBox_->setChecked( ReadIntSetting( "MapnikLayer" ) != 0 );
+    mapnikLayerBox_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
@@ -213,7 +189,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
             integrationComboBox_->addItems( pathList_ );
 
             //save in registry
-            WriteStringSetting( "IntegrationLayerPaths", pathList_.join( ";" ) );
+            registry::WriteString( "IntegrationLayerPaths", pathList_.join( ";" ) );
         }
         emit IntegrationPathSelected( path );
     }
@@ -303,7 +279,7 @@ void DebugConfigPanel::OnChangeDataFilter()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
-    emit TimelineEnabled( checked );
+    registry::WriteBool( "HasLegacyTimeline", checked );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +288,7 @@ void DebugConfigPanel::OnTimelineChecked( bool checked )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
 {
-    WriteIntSetting( "TimelineDebugPort", port );
+    registry::WriteInt( "TimelineDebugPort", port );
 }
 
 // -----------------------------------------------------------------------------
@@ -326,5 +302,5 @@ void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
 
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
-    WriteIntSetting( "MapnikLayer", checked );
+    registry::WriteBool( "HasMapnikLayer", checked );
 }

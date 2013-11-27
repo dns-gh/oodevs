@@ -30,8 +30,7 @@ class DebugConfigPanel : public frontend::PluginConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                               bool timeline );
+             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -46,7 +45,6 @@ public:
 signals:
     //! @name Signals
     //@{
-    void TimelineEnabled( bool enabled );
     void IntegrationPathSelected( const tools::Path& integrationPath );
     void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
