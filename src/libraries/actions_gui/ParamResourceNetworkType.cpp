@@ -52,9 +52,9 @@ QWidget* ParamResourceNetworkType::BuildInterface( const QString& objectName, QW
         internalId_[ ++i ] = type.GetName();
         AddItem( type.GetName().c_str(), i );
     }
-    auto w = ParamComboBox< int >::BuildInterface( objectName, parent );
+    auto widget = ParamComboBox< int >::BuildInterface( objectName, parent );
     group_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    return w;
+    return widget;
 }
 
 // -----------------------------------------------------------------------------
