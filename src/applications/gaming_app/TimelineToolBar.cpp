@@ -13,6 +13,7 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/SearchLineEdit.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/lexical_cast.hpp>
 
@@ -67,11 +68,22 @@ void TimelineToolBar::Initialize()
     button->setPopupDelay( 1 );
     addWidget( button );
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), tr( "Center the view on the simulation time" ), this, SIGNAL( CenterView() ) );
+
     addSeparator();
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogOpenButton ), tr( "Load actions file" ), this, SLOT( OnLoadOrderFile() ) );
     addAction( qApp->style()->standardIcon( QStyle::SP_DialogSaveButton ), tr( "Save actions in active timeline to file" ), this, SLOT( OnSaveOrderFile() ) );
+
     addSeparator();
     addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/new_tab.png" ) ), tr( "Create a new view" ), this, SIGNAL( AddView() ) );
+
+    addSeparator();
+    auto searchWidget = new QWidget();
+    auto searchLayout = new QVBoxLayout( searchWidget );
+    auto searchEdit = new gui::SearchLineEdit( "timeline-keyword-edit", this );
+    searchLayout->setMargin( 5 );
+    searchLayout->addWidget( searchEdit );
+    addWidget( searchWidget );
+    connect( searchEdit, SIGNAL( textChanged( QString ) ), this, SLOT( OnFilterKeyword( QString ) ) );
 
     QAction* engagedFilter = new QAction( tr( "Display engaged units" ), this );
     connect( engagedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
@@ -211,4 +223,23 @@ std::string TimelineToolBar::GetServicesFilter() const
 {
      return "sword:" + boost::lexical_cast< std::string >( displayEvents_ )
           + ",none:" + boost::lexical_cast< std::string >( displayTasks_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetKeywordFilter
+// Created: BAX 2013-11-25
+// -----------------------------------------------------------------------------
+std::string TimelineToolBar::GetKeywordFilter() const
+{
+    return keywordFilter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnFilterKeyword
+// Created: BAX 2013-11-25
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnFilterKeyword( const QString& keyword )
+{
+    keywordFilter_ = keyword.toStdString();
+    emit KeywordFilterChanged( keywordFilter_ );
 }

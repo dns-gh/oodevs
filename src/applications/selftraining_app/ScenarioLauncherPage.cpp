@@ -15,6 +15,7 @@
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
+#include "Registry.h"
 #include "frontend/AdvancedConfigPanel.h"
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/Config.h"
@@ -98,18 +99,6 @@ namespace
         }
         return result;
     }
-
-    bool ReadBoolSetting( const QString& key, bool defaultValue = false )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( "/sword/" + key, defaultValue ).toBool();
-    }
-
-    void WriteBoolSetting( const QString& key, bool value )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( "/sword/" + key, value );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -124,8 +113,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , interpreter_      ( interpreter )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
-    , hasClient_        ( !ReadBoolSetting( "NoClientSelected" ) )
-    , hasTimeline_      ( ReadBoolSetting( "HasTimeline" ) )
+    , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
     , integrationDir_   ( "" )
     , exerciseNumber_   ( 1 )
 {
@@ -170,10 +158,9 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
 
     //debug config panel
     auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
-    DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( parent, config_, hasTimeline_ ) );
+    DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( parent, config_ ) );
     connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
     connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
-    connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
     connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
@@ -281,8 +268,7 @@ void ScenarioLauncherPage::OnStart()
     if( hasClient_ )
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session, profile_.GetLogin() ) );
-    if( hasTimeline_ )
-        process->Add( boost::make_shared< frontend::StartTimeline >(
+    process->Add( boost::make_shared< frontend::StartTimeline >(
         config_, exerciseName, session, exerciseNumber_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
@@ -358,7 +344,7 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const tools::Path& session, const
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
-    WriteBoolSetting( "NoClientSelected", !enabled );
+    registry::WriteBool( "NoClientSelected", !enabled );
     hasClient_ = enabled;
 }
 
@@ -379,16 +365,6 @@ void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, 
 {
     pathfindFilter_ = filter;
     dumpPathfindDirectory_ = directory;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnTimelineEnabled
-// Created: BAX 2013-04-16
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnTimelineEnabled( bool enabled )
-{
-    WriteBoolSetting( "HasTimeline", enabled );
-    hasTimeline_ = enabled;
 }
 
 // -----------------------------------------------------------------------------

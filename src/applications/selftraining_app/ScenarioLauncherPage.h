@@ -73,7 +73,6 @@ private slots:
     void OnClientEnabled( bool enabled );
     void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
-    void OnTimelineEnabled( bool enabled );
     void OnExerciseNumberChanged( int value );
     //@}
 
@@ -114,7 +113,6 @@ protected:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
-    bool                          hasTimeline_;
     int                           exerciseNumber_;
     //@}
 };
