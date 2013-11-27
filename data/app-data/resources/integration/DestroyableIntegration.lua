@@ -214,10 +214,10 @@ end
      
 integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
     local integration = integration
-    distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    pointInterception = CreateKnowledge( integration.ontology.types.point, integration.positionInterception( targetUnit, speed ) )
-    distancePointInterception = integration.distance( meKnowledge, pointInterception )
-    tempsInterception =  distancePointInterception / ( speed * 60 )
+    local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
+    local pointInterception = CreateKnowledge( integration.ontology.types.point, integration.positionInterception( targetUnit, speed ) )
+    local distancePointInterception = integration.distance( meKnowledge, pointInterception )
+    local tempsInterception =  distancePointInterception / ( speed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
             if waitInMin( meKnowledge, tempsInterception ) then
