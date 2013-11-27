@@ -24,6 +24,13 @@
     </message>
 </context>
 <context>
+    <name>LimitParameter</name>
+    <message>
+        <source>New limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ListParameter</name>
     <message>
         <source>Add</source>

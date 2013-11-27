@@ -14,6 +14,7 @@
 #include "ParamInterface_ABC.h"
 #include "actions/Limit.h"
 #include "actions/Action_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Lines.h"
@@ -69,7 +70,7 @@ QWidget* LimitParameter::BuildInterface( const QString& objectName, QWidget* par
 // -----------------------------------------------------------------------------
 bool LimitParameter::InternalCheckValidity() const
 {
-    return selected_ != 0;
+    return HasTacticalLine() || HasNewLimit();
 }
 
 // -----------------------------------------------------------------------------
@@ -136,12 +137,20 @@ void LimitParameter::Display( const QString& what )
 // -----------------------------------------------------------------------------
 void LimitParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !selected_ )
-        return;
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glColor4f( 1.f, 1.f, 1.f, 1.f );
-        selected_->GetInterfaces().Apply( &Drawable_ABC::Draw, point, viewport, tools );
-    glPopAttrib();
+    if( HasTacticalLine() )
+    {
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+            glColor4f( 1.f, 1.f, 1.f, 1.f );
+            selected_->GetInterfaces().Apply( &Drawable_ABC::Draw, point, viewport, tools );
+        glPopAttrib();
+    }
+    else if( HasNewLimit() )
+    {
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+            glColor4f( 1.f, 1.f, 1.f, 1.f );
+            tools.DrawLines( newPoints_ );
+        glPopAttrib();
+    }
 }
 
 namespace
@@ -180,13 +189,18 @@ namespace
 // -----------------------------------------------------------------------------
 void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
-    if( IsChecked() && selected_ )
+    if( IsChecked() && ( HasTacticalLine() || HasNewLimit() ) )
     {
         kernel::Lines lines;
-        if( selected_ )
+        if( HasTacticalLine() )
         {
             GeometrySerializer serializer( lines, converter_ );
             selected_->Get< kernel::Positions >().Accept( serializer );
+        }
+        else
+        {
+            for( auto it = newPoints_.begin(); it != newPoints_.end(); ++it )
+                lines.AddPoint( *it );
         }
         std::auto_ptr< actions::parameters::Limit > param( new actions::parameters::Limit( parameter_, converter_, lines ) );
         parameter.AddParameter( *param.release() );
@@ -223,6 +237,28 @@ void LimitParameter::Visit( const actions::parameters::Limit& param )
         selected_ = potential_;
         Display( potential_->GetName() );
     }
-    else
-        Display( "---" );
+    else if( param.GetPoints().size() > 1 )
+    {
+        ActivateOptionalIfNeeded( param );
+        newPoints_ = param.GetPoints();
+        Display( tools::translate( "LimitParameter", "New limit") );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::HasTacticalLine
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool LimitParameter::HasTacticalLine() const
+{
+    return selected_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::HasNewLimit
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool LimitParameter::HasNewLimit() const
+{
+    return newPoints_.size() > 1;
 }
