@@ -168,9 +168,9 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-    virtual bool ToUrbanBlock( sword::Id& ) const
-    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool ToUrbanBlockList( std::vector< MIL_UrbanObject_ABC* >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
