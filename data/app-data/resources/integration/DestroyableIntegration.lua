@@ -213,16 +213,14 @@ integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
 end
      
 integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
-    targetUnit[ myself ] = targetUnit[ myself ] or {}
     local integration = integration
-    targetUnit[ myself ].distanceCouverte = targetUnit[ myself ].distanceCouverte or integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    targetUnit[ myself ].pointInterception = CreateKnowledge( integration.ontology.types.point, integration.positionInterception( targetUnit, speed ) )
-    targetUnit[ myself ].distancePointInterception = targetUnit[ myself ].distancePointInterception or integration.distance( meKnowledge, targetUnit[ myself ].pointInterception )
-    targetUnit[ myself ].tempsInterception =  targetUnit[ myself ].tempsInterception or targetUnit[ myself ].distancePointInterception / ( speed * 60 )
-
-    if( targetUnit[ myself ].distancePointInterception <= targetUnit[ myself ].distanceCouverte ) then
+    local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
+    local pointInterception = CreateKnowledge( integration.ontology.types.point, integration.positionInterception( targetUnit, speed ) )
+    local distancePointInterception = integration.distance( meKnowledge, pointInterception )
+    local tempsInterception =  distancePointInterception / ( speed * 60 )
+    if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
-            if waitInMin( meKnowledge, targetUnit[ myself ].tempsInterception ) then
+            if waitInMin( meKnowledge, tempsInterception ) then
                 if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
                     return true
                 end
