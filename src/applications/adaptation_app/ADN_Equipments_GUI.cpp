@@ -16,14 +16,13 @@
 #include "ADN_Equipments_WeaponsListView.h"
 #include "ADN_Equipments_ActiveProtectionsListView.h"
 #include "ADN_ListView_Equipments_Objects.h"
-#include "ADN_Equipments_Speeds_GUI.h"
-#include "ADN_Equipments_Sensors_GUI.h"
-#include "ADN_Equipments_RadarsListView.h"
-#include "ADN_Equipments_Dotations_GUI.h"
-#include "ADN_Equipments_ConsumptionsTable.h"
-#include "ADN_Equipments_BreakdownsTable.h"
-#include "ADN_Equipments_Resources_Tables.h"
 #include "ADN_Equipments_AviationResourceQuotas_GUI.h"
+#include "ADN_Equipments_BreakdownsTable.h"
+#include "ADN_Equipments_ConsumptionsTable.h"
+#include "ADN_Equipments_Dotations_GUI.h"
+#include "ADN_Equipments_Resources_Tables.h"
+#include "ADN_Equipments_Sensors_GUI.h"
+#include "ADN_Equipments_Speeds_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
@@ -174,13 +173,14 @@ void ADN_Equipments_GUI::Build()
 
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
-    pSensors_ = new ADN_Equipments_Sensors_GUI( builder.GetChildName( "sensors-table" ), vInfosConnectors[ eSensors ], pSensorsGroup );
-    pSensors_->SetGoToOnDoubleClick( ::eSensors, 0 );
+    auto pSensors = new ADN_Equipments_Sensors_GUI< ADN_Equipments_Data::SensorInfos, ADN_Sensors_Data::SensorInfos >( builder.GetChildName( "sensors-table" ), vInfosConnectors[ eSensors ], pSensorsGroup );
+    pSensors->SetGoToOnDoubleClick( ::eSensors, 0 );
+    pSensors_ = pSensors;
     // Special sensors
     Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ) );
-    pRadars_ = builder.AddWidget< ADN_Equipments_RadarsListView >( "radars-list", pRadarsGroup );
-    pRadars_->SetGoToOnDoubleClick( ::eSensors, 1 );
-    vInfosConnectors[ eRadars ] = &pRadars_->GetConnector();
+    auto pRadars = new ADN_Equipments_Sensors_GUI< ADN_Equipments_Data::RadarInfos, ADN_Radars_Data::RadarInfos >( builder.GetChildName( "radars-list" ), vInfosConnectors[ eRadars ], pRadarsGroup );
+    pRadars->SetGoToOnDoubleClick( ::eSensors, 1 );
+    pRadars_ = pRadars;
     // Weapons
     Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tr( "Weapon systems" ) );
     pWeapons_ = builder.AddWidget< ADN_Equipments_WeaponsListView >( "weapons-list", pWeaponsGroup );

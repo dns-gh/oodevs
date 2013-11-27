@@ -1518,21 +1518,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>
@@ -1567,7 +1552,7 @@ Parked engine running</source>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation type="unfinished">الارتفاع (م)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add sensor</source>

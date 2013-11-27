@@ -1534,21 +1534,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation>Sensores especiales</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished">Agregar un sensor</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished">Remover sensor</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>
@@ -1578,19 +1563,19 @@ estacionado con motor encendido</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation>Sensor</translation>
+        <translation type="unfinished">Sensor</translation>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation>Altura (m)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Agregar un sensor</translation>
+        <translation type="unfinished">Agregar un sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Remover sensor</translation>
+        <translation type="unfinished">Remover sensor</translation>
     </message>
 </context>
 <context>

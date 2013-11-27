@@ -1538,21 +1538,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation>Capteurs spéciaux</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished">Ajouter un capteur</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished">Enlever un capteur</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>
@@ -1582,7 +1567,7 @@ Arrêt moteur allumé</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation>Capteur</translation>
+        <translation type="unfinished">Capteurs</translation>
     </message>
     <message>
         <source>Height (m)</source>
@@ -1590,11 +1575,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Ajouter un capteur</translation>
+        <translation type="unfinished">Ajouter un capteur</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Enlever un capteur</translation>
+        <translation type="unfinished">Enlever un capteur</translation>
     </message>
 </context>
 <context>

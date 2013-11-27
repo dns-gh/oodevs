@@ -1530,21 +1530,6 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation>Special sensors</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished">Add sensor</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished">Remove sensor</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>
@@ -1574,19 +1559,19 @@ Parked engine running</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation>Sensor</translation>
+        <translation type="unfinished">Sensor</translation>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation>Height (m)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation>Add sensor</translation>
+        <translation type="unfinished">Add sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation>Remove sensor</translation>
+        <translation type="unfinished">Remove sensor</translation>
     </message>
 </context>
 <context>
