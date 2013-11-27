@@ -235,7 +235,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::color );
 
-        if( overlined_ )
+        if( overlined_ && !tools_->IsPickingMode() )
         {
             glLineWidth( 1 );
             glColor4f( complement_.red()   / 255.f,
