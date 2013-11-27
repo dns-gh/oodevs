@@ -164,7 +164,11 @@ bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rec
 void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 {
     if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
-        view_.CenterOn( positions->Barycenter() );
+    {
+        const geometry::Point2f barycenter = positions->Barycenter();
+        if( !barycenter.IsZero() )
+            view_.CenterOn( barycenter );
+    }
 }
 
 namespace
