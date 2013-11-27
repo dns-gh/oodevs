@@ -181,7 +181,7 @@ bool ObjectType::HasBuildableDensity() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasLogistic() const
 {
-    return( capacities_.find( "logistic" ) != capacities_.end() );
+    return capacities_.find( "logistic" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ bool ObjectType::HasLogistic() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasSpawn() const
 {
-    return( capacities_.find( "spawn" ) != capacities_.end() );
+    return capacities_.find( "spawn" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ bool ObjectType::HasSpawn() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasMedicalCapacity() const
 {
-    return( capacities_.find( "medical" ) != capacities_.end() );
+    return capacities_.find( "medical" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +208,7 @@ bool ObjectType::HasMedicalCapacity() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasAltitudeModifierCapacity() const
 {
-    return( capacities_.find( "altitude-modifier" ) != capacities_.end() );
+    return capacities_.find( "altitude-modifier" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ bool ObjectType::HasAltitudeModifierCapacity() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasTimeLimitedCapacity() const
 {
-    return( capacities_.find( "time-limited" ) != capacities_.end() );
+    return capacities_.find( "time-limited" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ bool ObjectType::HasTimeLimitedCapacity() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasLodgingCapacity() const
 {
-    return( capacities_.find( "lodging" ) != capacities_.end() );
+    return capacities_.find( "lodging" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,16 @@ bool ObjectType::HasLodgingCapacity() const
 // -----------------------------------------------------------------------------
 bool ObjectType::HasResourceNetwork() const
 {
-    return( capacities_.find( "resources" ) != capacities_.end() );
+    return capacities_.find( "resources" ) != capacities_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::HasBurnCapacity
+// Created: LGY 2013-11-26
+// -----------------------------------------------------------------------------
+bool ObjectType::HasBurnCapacity() const
+{
+    return capacities_.find( "burn" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +262,7 @@ bool ObjectType::IsUrban() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeActivated() const
 {
-    return( capacities_.find( "activable" ) != capacities_.end() );
+    return capacities_.find( "activable" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------

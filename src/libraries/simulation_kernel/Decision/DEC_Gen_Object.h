@@ -61,6 +61,8 @@ public:
     int GetTimeLimit() const;
     int GetLodging() const;
     bool GetMining() const;
+    const std::string& GetFireClass() const;
+    unsigned int GetMaxCombustion() const;
     //@}
 
     //! @name Operations
@@ -92,6 +94,8 @@ private:
     int timeLimit_;
     int lodging_;
     bool mining_;
+    std::string fireClass_;
+    unsigned int maxCombustion_;
     //@}
 };
 

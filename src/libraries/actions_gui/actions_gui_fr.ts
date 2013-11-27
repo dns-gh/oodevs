@@ -170,6 +170,14 @@
         <source>Activation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire class:</source>
+        <translation>Type de feu :</translation>
+    </message>
+    <message>
+        <source>Max combustion energy</source>
+        <translation>Energie de combustion max</translation>
+    </message>
 </context>
 <context>
     <name>gui::ObstaclePrototype_ABC</name>

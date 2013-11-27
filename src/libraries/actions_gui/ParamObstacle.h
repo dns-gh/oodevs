@@ -40,6 +40,7 @@ namespace actions
         class ParamBool;
         class ParamTime;
         class ParamQuantity;
+        class ParamFireClass;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -112,6 +113,8 @@ private:
     ParamTime*                                          timeLimit_;
     ParamBool*                                          mining_;
     ParamQuantity*                                      lodging_;
+    ParamFireClass*                                     fireClass_;
+    ParamQuantity*                                      maxCombustionEnergy_;
     //@}
 };
 
