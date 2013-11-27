@@ -11,6 +11,7 @@ package swapi
 import (
 	"errors"
 	"sword"
+	"sync"
 	"time"
 )
 
@@ -61,7 +62,9 @@ type Model struct {
 	WaitTimeout time.Duration
 
 	// Shared state
-	requests chan *ModelRequest
+	requests   chan *ModelRequest
+	running    sync.WaitGroup
+	registered bool
 }
 
 func NewModel() *Model {
@@ -73,6 +76,7 @@ func NewModel() *Model {
 	}
 	model.setErrorHandler(nil)
 
+	model.running.Add(1)
 	go model.run()
 	return &model
 }
@@ -99,6 +103,8 @@ func (model *Model) SetErrorHandler(errorHandler ModelErrorHandler) {
 }
 
 func (model *Model) run() error {
+	defer model.running.Done()
+
 	for rq := range model.requests {
 		if rq.Message != nil {
 			if err := model.update(rq.Message); err != nil {
@@ -133,7 +139,11 @@ func (model *Model) run() error {
 }
 
 func (model *Model) Close() {
-	close(model.requests)
+	if !model.registered {
+		// Otherwise the handler termination closes the channel
+		close(model.requests)
+	}
+	model.running.Wait()
 }
 
 var (
@@ -241,12 +251,14 @@ func (model *Model) update(msg *SwordMessage) error {
 func (model *Model) Listen(client *Client) {
 	handler := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
+			close(model.requests)
 			return true
 		}
 		model.requests <- &ModelRequest{Message: msg}
 		return false
 	}
 	client.Register(handler)
+	model.registered = true
 }
 
 func (model *Model) waitCommand(cmd func(model *Model)) {
