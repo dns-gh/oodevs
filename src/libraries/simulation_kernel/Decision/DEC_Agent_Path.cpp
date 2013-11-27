@@ -240,7 +240,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( knowledge.CanCollideWith( queryMaker_ ) )
             {
-                if( knowledge.IsObjectInsidePathPoint( firstPointVector, queryMaker_ ) )
+                if( knowledge.IsObjectInsidePathPoint( firstPointVector, &queryMaker_ ) )
                 {
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {

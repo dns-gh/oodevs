@@ -95,7 +95,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 // Name: DEC_Population_Path::InitializePathKnowledges
 // Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
-void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathPoints*/ )
+void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     // Objects
     if( pathClass_.AvoidObjects() )
@@ -114,11 +114,20 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathP
                 knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
             }
         }
+        T_PointVector firstPointVector;
+        if( !pathPoints.empty() )
+            firstPointVector.push_back( *pathPoints.begin() );
         for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( knowledge.CanCollideWithEntity() )
             {
+                if( knowledge.IsObjectInsidePathPoint( firstPointVector, 0 ) )
+                {
+                    double rMaxSpeed = pathClass_.GetObjectCost( knowledge.GetType() );
+                    if( rMaxSpeed <= 0. || rMaxSpeed == std::numeric_limits< double >::max() || rMaxSpeed >= pathClass_.GetThreshold() )
+                        continue;
+                }
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )

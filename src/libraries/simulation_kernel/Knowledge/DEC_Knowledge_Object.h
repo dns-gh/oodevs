@@ -93,7 +93,7 @@ public:
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
-    bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const;
+    bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC* agent ) const;
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     bool IsPerceptionDistanceHacked() const;
     double GetMaxTrafficability() const;
