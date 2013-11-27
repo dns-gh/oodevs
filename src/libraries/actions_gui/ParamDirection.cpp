@@ -63,6 +63,7 @@ QWidget* ParamDirection::BuildInterface( const QString& objectName, QWidget* par
     dial_->setWrapping( true );
     dial_->setMaximumSize( 50, 50 );
     connect( dial_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
+    connect( dial_, SIGNAL( valueChanged( int ) ), SLOT( Update() ) );
     dial_->setValue( AddHalfTurn( value_ ) );
     layout->addWidget( dial_, Qt::AlignCenter );
     return group_;

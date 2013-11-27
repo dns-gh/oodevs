@@ -49,6 +49,7 @@ QWidget* ParamTime::BuildInterface( const QString& objectName, QWidget* parent )
     timeEdit_->setTime( time_ );
     timeEdit_->setDisplayFormat( "hh:mm:ss" );
     connect( timeEdit_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnChanged( const QTime& ) ) );
+    connect( timeEdit_, SIGNAL( timeChanged( const QTime& ) ), SLOT( Update() ) );
     layout->addWidget( timeEdit_ );
     return group_;
 }

@@ -67,6 +67,7 @@ QWidget* ParamDotationTypeList::BuildInterface( const QString& objectName, QWidg
         AddItem( type.GetCategoryDisplay().c_str(), type.GetName().c_str(), type.GetId() );
     }
     connect( list_, SIGNAL( clicked( const QModelIndex& ) ), SLOT( Clicked( const QModelIndex& ) ) );
+    connect( list_, SIGNAL( clicked( const QModelIndex& ) ), SLOT( Update() ) );
     layout->addWidget( list_ );
     return group_;
 }

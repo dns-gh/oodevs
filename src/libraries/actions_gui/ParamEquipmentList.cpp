@@ -88,11 +88,14 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     buttonsLayout->addWidget( removeBtn, Qt::AlignBottom);
     layout->addWidget( buttons );
     connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
+    connect( addBtn, SIGNAL( clicked() ), SLOT( Update() ) );
     connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
+    connect( removeBtn, SIGNAL( clicked() ), SLOT( Update() ) );
 
     list_ = new QListWidget( group_ );
     layout->addWidget( list_ );
     connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnRemove() ) );
+    connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( Update() ) );
 
     QWidget* pushButtons = new QWidget( group_ );
     QVBoxLayout* pushLayout = new QVBoxLayout( pushButtons );
@@ -104,7 +107,9 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     pushLayout->addWidget( downBtn, Qt::AlignBottom );
     layout->addWidget( pushButtons );
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
+    connect( upBtn, SIGNAL( clicked() ), SLOT( Update() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
+    connect( downBtn, SIGNAL( clicked() ), SLOT( Update() ) );
 
     group_->setEnabled( false );
     return group_;
