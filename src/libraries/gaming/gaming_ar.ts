@@ -400,6 +400,26 @@
         <source>Side:</source>
         <translation type="unfinished">الجانب:</translation>
     </message>
+    <message>
+        <source>State/Healthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State/Wounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State/Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State/Dead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>

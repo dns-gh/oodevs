@@ -400,6 +400,26 @@
         <source>M\F\C Repartition/Children</source>
         <translation>Répartition H\F\E/Enfants</translation>
     </message>
+    <message>
+        <source>State/Healthy</source>
+        <translation>Etat/Sains</translation>
+    </message>
+    <message>
+        <source>State/Wounded</source>
+        <translation>Etat/Blessés</translation>
+    </message>
+    <message>
+        <source>State/Contaminated</source>
+        <translation>Etat/Contaminés</translation>
+    </message>
+    <message>
+        <source>State/Dead</source>
+        <translation>Etat/Morts</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Etat</translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>
