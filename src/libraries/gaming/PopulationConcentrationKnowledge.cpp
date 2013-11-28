@@ -35,6 +35,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& 
     , concentrationId_( message.concentration().id() )
     , position_       ( converter.ConvertToXY( message.position() ) )
     , deadRadius_     ( 0 )
+    , concentration_  ( 0 )
 {
     controller_.Create( *this );
 }
@@ -68,7 +69,7 @@ void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentration
     if( message.has_pertinence() )
         rRelevance_ = static_cast< float >( message.pertinence() );
 
-    const kernel::PopulationConcentration_ABC* concentration = resolver_.FindConcentration( concentrationId_ );
+    const PopulationConcentration* concentration = GetConcentration();
     const float density = concentration ? concentration->GetDensity() : 0.f;
     if( density > 0.f && nNbrAliveHumans_.IsSet() )
     {
@@ -128,18 +129,19 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 {
     if( !viewport.IsVisible( position_ ) )
         return;
-    if( resolver_.FindConcentration( concentrationId_ ) ) // $$$$ SBO 2007-02-27: isPerceived?
+    const float radius = GetRadius();
+    if( GetConcentration() && radius > 0 ) // $$$$ SBO 2007-02-27: isPerceived?
     {
         float currentColor[ 4 ];
         glPushAttrib( GL_CURRENT_BIT );
         glGetFloatv( GL_CURRENT_COLOR, currentColor );
         currentColor[ 3 ] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
         glColor4fv( currentColor );
-        tools.DrawDisc( position_, GetRadius() );
+        tools.DrawDisc( position_, radius );
         glColor4f( COLOR_BLACK );
         tools.DrawDisc( position_, deadRadius_ );
         SelectColor( eAttitude_ );
-        tools.DrawCircle( position_, GetRadius() );
+        tools.DrawCircle( position_, radius );
         glPopAttrib();
     }
 }
@@ -170,5 +172,18 @@ float PopulationConcentrationKnowledge::GetRadius() const
 {
     if( radius_ )
         return *radius_;
-    return static_cast< const PopulationConcentration* >( resolver_.FindConcentration( concentrationId_ ) )->GetRadius();
+    if( const PopulationConcentration* concentration = GetConcentration() )
+        return concentration->GetRadius();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::GetConcentration
+// Created: SLI 2013-11-28
+// -----------------------------------------------------------------------------
+const PopulationConcentration* PopulationConcentrationKnowledge::GetConcentration() const
+{
+    if( !concentration_ )
+        concentration_ = static_cast< const PopulationConcentration* >( resolver_.FindConcentration( concentrationId_ ) );
+    return concentration_;
 }

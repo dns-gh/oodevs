@@ -34,6 +34,8 @@ namespace sword
     class CrowdConcentrationKnowledgeUpdate;
 }
 
+class PopulationConcentration;
+
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
@@ -74,6 +76,7 @@ private:
     //! @name Helpers
     //@{
     float GetRadius() const;
+    const PopulationConcentration* GetConcentration() const;
     //@}
 
 private:
@@ -92,6 +95,7 @@ private:
     float rRelevance_;
     boost::optional< float > radius_;
     float deadRadius_;
+    mutable const PopulationConcentration* concentration_;
     //@}
 };
 
