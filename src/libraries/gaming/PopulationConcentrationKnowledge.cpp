@@ -24,11 +24,6 @@
 
 using namespace kernel;
 
-namespace
-{
-    const float minimumUnknownRadius = 100;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
@@ -175,5 +170,5 @@ float PopulationConcentrationKnowledge::GetRadius() const
 {
     if( radius_ )
         return *radius_;
-    return std::min( minimumUnknownRadius, static_cast< const PopulationConcentration* >( resolver_.FindConcentration( concentrationId_ ) )->GetRadius() );
+    return static_cast< const PopulationConcentration* >( resolver_.FindConcentration( concentrationId_ ) )->GetRadius();
 }
