@@ -81,6 +81,7 @@ public slots:
     void OnCurrentChanged( int index );
     void OnTabContextMenu();
     void OnRenameTab();
+    void OnLoadRequested();
     //@}
 
 private:

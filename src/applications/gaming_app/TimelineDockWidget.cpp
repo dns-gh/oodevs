@@ -133,8 +133,10 @@ QWidget* TimelineDockWidget::AddView( bool main )
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );
     connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), this, SLOT( OnLoadRequested() ) );
     connect( toolBar, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadTimelineSessionFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), this, SLOT( OnLoadRequested() ) );
     connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( ToggleLayoutOrientation() ), webView_, SLOT( OnToggleLayoutOrientation() ) );
     connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_, SLOT( OnEngagedFilterToggled( bool ) ) );
@@ -248,4 +250,13 @@ void TimelineDockWidget::OnRenameTab()
                                                 tabWidget_->tabText( index ), &ok );
     if( ok && !text.stripWhiteSpace().isEmpty() )
         tabWidget_->setTabText( index, text );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnLoadRequested
+// Created: SLI 2013-11-28
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnLoadRequested()
+{
+    tabWidget_->setCurrentIndex( tabWidget_->indexOf( mainView_ ) );
 }
