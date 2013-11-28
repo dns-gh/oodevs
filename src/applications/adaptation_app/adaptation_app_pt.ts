@@ -1518,21 +1518,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>

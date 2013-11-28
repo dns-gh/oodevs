@@ -19,7 +19,6 @@ class ADN_Table;
 class ADN_Equipments_Data;
 class ADN_ListView_Equipments;
 class ADN_Equipments_Speeds_GUI;
-class ADN_Equipments_Sensors_GUI;
 class ADN_Equipments_RadarsListView;
 class ADN_Equipments_WeaponsListView;
 class ADN_Equipments_ActiveProtectionsListView;
@@ -203,8 +202,8 @@ private:
 
     Q3GroupBox* pBreakdownsGroup_;
     ADN_Equipments_Speeds_GUI* pSpeeds_;
-    ADN_Equipments_Sensors_GUI* pSensors_;
-    ADN_Equipments_RadarsListView* pRadars_;
+    ADN_Table* pSensors_;
+    ADN_Table* pRadars_;
     ADN_Equipments_WeaponsListView* pWeapons_;
     ADN_Equipments_ActiveProtectionsListView* pActiveProtections_;
     ADN_Equipments_Resources_Tables* pResources_;

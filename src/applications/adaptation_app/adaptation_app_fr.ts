@@ -1538,21 +1538,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation>Capteurs spéciaux</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation type="unfinished">Ajouter un capteur</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation type="unfinished">Enlever un capteur</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Resources_ListView</name>
     <message>
         <source>Resources</source>
