@@ -470,12 +470,15 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( target_ == &entity || selectedEntity_ == &entity )
-        manager_->Select();
     if( target_ == &entity )
-        target_ = 0;
+    {
+        SetTarget( 0 );
+        manager_->Select();
+    }
     if( selectedEntity_ == &entity )
         selectedEntity_ = 0;
+    if( alternateSelectedEntity_ == &entity )
+        alternateSelectedEntity_ = 0;
 }
 
 // -----------------------------------------------------------------------------
