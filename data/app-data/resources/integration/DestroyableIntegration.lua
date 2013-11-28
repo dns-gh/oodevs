@@ -43,26 +43,29 @@ end
 -- @param snipe a boolean if action is used by sniper : send a report if firing is temporarily blocked in urban area
 -- @return a boolean 'true' if action is finished, 'false' if action continues
 integration.startedDestroyingIt = function( target, snipe )
-    if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
-        target[myself].noAmmo = true
-        meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
-        return true
-    elseif target[myself].eTir == eActionTirDirect_NoCapacity and not target[myself].noCapacity then
-        target[myself].noCapacity = true
-        meKnowledge:RC( eRC_TirSansCapacite )
-        return true
-    elseif target[myself].eTir == eActionTirDirect_Impossible and not target[myself].noTir then
-        target[myself].noTir = true
-        meKnowledge:RC( eRC_TirDirectImpossible )
-        return true
-    elseif snipe and target[myself].eTir == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
-         target[myself].blocked = true
-         meKnowledge:RC( eRC_ShootingTemporarilyBlocked )
-    elseif target[myself] and target[myself].eTir and target[myself].eTir ~= 2  then
-        g_myEnemy = target.source
-        return true
+    if target[myself] then
+        if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
+            target[myself].noAmmo = true
+            meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
+            return true
+        elseif target[myself].eTir == eActionTirDirect_NoCapacity and not target[myself].noCapacity then
+            target[myself].noCapacity = true
+            meKnowledge:RC( eRC_TirSansCapacite )
+            return true
+        elseif target[myself].eTir == eActionTirDirect_Impossible and not target[myself].noTir then
+            target[myself].noTir = true
+            meKnowledge:RC( eRC_TirDirectImpossible )
+            return true
+        elseif snipe and target[myself].eTir == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
+            target[myself].blocked = true
+            meKnowledge:RC( eRC_ShootingTemporarilyBlocked )
+        elseif target[myself].eTir and target[myself].eTir ~= 2  then
+            g_myEnemy = target.source
+            return true
+        end
+        return false
     end
-  return false
+    return false
 end
 
 integration.stopDestroyingIt = function( target )
