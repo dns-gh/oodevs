@@ -37,7 +37,12 @@ integration.startRespondIt = function( target )
   end
 end
 
-integration.startedDestroyingIt = function( target )
+
+--- Manage the direct fire action, method calls at each tick during the action
+-- @param target The agent to shoot with direct fire
+-- @param snipe a boolean if action is used by sniper : send a report if firing is temporarily blocked in urban area
+-- @return a boolean 'true' if action is finished, 'false' if action continues
+integration.startedDestroyingIt = function( target, snipe )
     if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
         target[myself].noAmmo = true
         meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
@@ -50,6 +55,9 @@ integration.startedDestroyingIt = function( target )
         target[myself].noTir = true
         meKnowledge:RC( eRC_TirDirectImpossible )
         return true
+    elseif snipe and target[myself].eTir == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
+         target[myself].blocked = true
+         meKnowledge:RC( eRC_ShootingTemporarilyBlocked )
     elseif target[myself] and target[myself].eTir and target[myself].eTir ~= 2  then
         g_myEnemy = target.source
         return true
