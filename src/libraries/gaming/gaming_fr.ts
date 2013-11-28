@@ -406,15 +406,15 @@
     </message>
     <message>
         <source>State/Wounded</source>
-        <translation>Etat/Blessé</translation>
+        <translation>Etat/Blessés</translation>
     </message>
     <message>
         <source>State/Contaminated</source>
-        <translation>Etat/Contaminé</translation>
+        <translation>Etat/Contaminés</translation>
     </message>
     <message>
         <source>State/Dead</source>
-        <translation>Etat/Mort</translation>
+        <translation>Etat/Morts</translation>
     </message>
     <message>
         <source>State</source>
