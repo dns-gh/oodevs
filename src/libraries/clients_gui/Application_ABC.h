@@ -10,10 +10,17 @@
 #ifndef __Application_ABC_h_
 #define __Application_ABC_h_
 
+#include "tools/LanguageObserver_ABC.h"
+
 #pragma warning( push, 0 )
 #include <QtCore/qobject.h>
 #include <QtCore/qlocale.h>
 #pragma warning( pop )
+
+namespace tools
+{
+    class Languages;
+}
 
 namespace gui
 {
@@ -26,6 +33,8 @@ namespace gui
 // Created: HBD 2010-06-28
 // =============================================================================
 class Application_ABC : public QObject
+                      , public tools::Observer_ABC
+                      , public tools::LanguageObserver_ABC
 {
     Q_OBJECT
 
@@ -45,6 +54,7 @@ public:
 protected:
     //! @name Protected operations
     virtual void CheckLicense( const std::string& licenseName );
+    void LoadCommandLineLanguage( const tools::Languages& language, const std::string& languageCode );
 
     virtual void Initialize();
     void InitializeBugTrap();
@@ -55,6 +65,11 @@ protected:
     void DeleteTranslators();
 
     void CheckInterfaceComponentNaming( QObject* root, const tools::Path& outpath ) const;
+    //@}
+
+    //! @name LanguageObserver_ABC implementation
+    //@{
+    virtual void OnLanguageChanged();
     //@}
 
     //! @name Accessors

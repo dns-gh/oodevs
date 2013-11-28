@@ -110,7 +110,13 @@ const std::string& Language::Current()
 // -----------------------------------------------------------------------------
 void Language::SetCurrent( const std::string& language )
 {
-    current_ = language;
+    if( language.size() == 2 )
+        current_ = language;
+    else
+    {
+        MT_LOG_ERROR_MSG( "Invalid language code: " << language << ". Fall back to default language: English." );
+        current_ = "en";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -120,12 +126,5 @@ void Language::SetCurrent( const std::string& language )
 void Language::InitFromRegistry()
 {
     QSettings settings( "MASA Group", "SWORD" );
-    const QString code = settings.value( "/Common/Language", "en" ).value< QString >();
-    if( code.size() == 2 )
-        SetCurrent( code.toStdString() );
-    else
-    {
-        MT_LOG_ERROR_MSG( "Invalid language code: " << code.toStdString() << ". Fall back to default language: English." );
-        SetCurrent( "en" );
-    }
+    SetCurrent( settings.value( "/Common/Language", "en" ).value< QString >().toStdString() );
 }

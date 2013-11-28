@@ -30,12 +30,13 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "root-dir"      , po::value( &rootDir_ )->default_value( defaultRoot ), "specify global root directory"     )
+        ( "root-dir"      , po::value( &rootDir_ )->default_value( defaultRoot             ), "specify global root directory"     )
         ( "terrains-dir"  , po::value( &terrainsDir_ )->default_value( "data/terrains"     ), "specify terrains root directory"   )
         ( "models-dir"    , po::value( &modelsDir_ )->default_value( "data/models"         ), "specify models root directory"     )
         ( "population-dir", po::value( &populationDir_ )->default_value( "data/population" ), "specify population root directory" )
         ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
-        ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    );
+        ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    )
+        ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          );
     AddOptions( desc );
 }
 
@@ -321,4 +322,13 @@ Path GeneralConfig::BuildPluginDirectory( const Path& plugin ) const
 const Languages& GeneralConfig::GetLanguages() const
 {
     return *languages_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetCommandLineLanguage
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+const std::string& GeneralConfig::GetCommandLineLanguage() const
+{
+    return commandLineLanguage_;
 }

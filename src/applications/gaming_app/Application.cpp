@@ -49,6 +49,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     // Data
     observer_.reset( new tools::NullFileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
+    LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new ::Services( controllers_->controller_, *logger_ ) );

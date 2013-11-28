@@ -83,6 +83,7 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
 
     // ADN initialization
     config_.reset( new ADN_GeneralConfig( argc, argv, GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) );
+    LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     mainWindow_.reset( new ADN_MainWindow( *config_ ) );
     ADN_Workspace::CreateWorkspace( *mainWindow_, *config_ );
 

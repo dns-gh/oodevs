@@ -58,7 +58,7 @@ void Languages::Read( xml::xistream& xis )
                 languages_.push_back( tools::Language( x ) );
             })
         >> xml::end;
-    EnsureCurrentIsPresent();
+    EnsureCurrentIsSupported();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,10 +94,10 @@ const LanguagesVector& Languages::GetVector() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Languages::EnsureCurrentIsPresent
+// Name: Languages::EnsureCurrentIsSupported
 // Created: ABR 2013-10-14
 // -----------------------------------------------------------------------------
-void Languages::EnsureCurrentIsPresent() const
+void Languages::EnsureCurrentIsSupported() const
 {
     if( !Find( Language::Current() ) )
     {

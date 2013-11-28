@@ -70,6 +70,7 @@ public:
     virtual void Parse( int argc, char** argv );
 
     const Languages& GetLanguages() const;
+    const std::string& GetCommandLineLanguage() const;
     //@}
 
 protected:
@@ -94,6 +95,7 @@ private:
     const Path exerciseConfigFile_;
 
     std::auto_ptr< const Languages > languages_;
+    std::string commandLineLanguage_;
     //@}
 };
 

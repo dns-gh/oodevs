@@ -14,6 +14,7 @@
 #include "clients_kernel/Tools.h"
 #include "tools/Codec.h"
 #include "tools/Language.h"
+#include "tools/Languages.h"
 #include "tools/VersionHelper.h"
 #include "tools/Win32/BugTrap.h"
 #include "moc_Application_ABC.cpp"
@@ -212,4 +213,29 @@ void Application_ABC::CheckInterfaceComponentNaming( QObject* root, const tools:
     }
     std::map< std::string, std::pair< unsigned int, unsigned int > > map;
     CheckNamingHierarchy( *output, root, map, "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application_ABC::OnLanguageChanged
+// Created: ABR 2013-10-15
+// -----------------------------------------------------------------------------
+void Application_ABC::OnLanguageChanged()
+{
+    DeleteTranslators();
+    CreateTranslators();
+    InitializeLayoutDirection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application_ABC::LoadCommandLineLanguage
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+void Application_ABC::LoadCommandLineLanguage( const tools::Languages& languages, const std::string& languageCode )
+{
+    if( languageCode.size() == 2 )
+    {
+        tools::Language::SetCurrent( languageCode );
+        languages.EnsureCurrentIsSupported();
+        OnLanguageChanged();
+    }
 }

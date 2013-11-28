@@ -39,6 +39,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     // Data
     observer_.reset( new FileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
+    LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     controllers_.reset( new kernel::Controllers() );
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
