@@ -16,6 +16,7 @@
 #include "Numeric.h"
 #include "ObstacleType.h"
 #include "Quantity.h"
+#include "FireClass.h"
 #include "String.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -56,7 +57,9 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const sword::PlannedWork& message, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types,
+                                            const kernel::EntityResolver_ABC& entities, const sword::PlannedWork& message, kernel::Controller& controller,
+                                            const tools::StringResolver< kernel::FireClass >& resolver )
     : Parameter< std::string >( parameter )
     , type_( &types.Get( message.type() ) )
 {
@@ -82,6 +85,10 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
         AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "integer", false ), message.altitude_modifier() ), "altitude_modifier" );
     if( message.lodging() > 0 )
         AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "integer", false ), message.lodging() ), "lodging" );
+    if( message.has_fire_class() && !message.fire_class().empty() )
+        AddParam( *new FireClass( OrderParameter( tools::translate( "ActionParameter", "Fire class:" ).toStdString(), "fireclass", false ), message.fire_class(), resolver ), "fire_class" );
+    if( message.max_combustion() > 0 )
+        AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "integer", false ), message.max_combustion() ), "max_combustion_energy" );
 }
 
 
@@ -89,13 +96,14 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types,
+                                           const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver )
     : Parameter< std::string >( parameter )
     , type_( 0 )
 {
     if( xis.has_attribute( "value" ) )
         type_ = &types.Get( xis.attribute< std::string >( "value" ) );
-    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
+    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller, resolver );
     if( type_ )
         SetValue( type_->GetType() );
 }
@@ -104,13 +112,15 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types,
+                                            const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller,
+                                            const tools::StringResolver< kernel::FireClass >& resolver )
     : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "genobject", false ) )
     , type_( 0 )
 {
     if( xis.has_attribute( "value" ) )
         type_ = &types.Get( xis.attribute< std::string >( "value" ) );
-    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller );
+    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller, resolver );
     if( type_ )
         SetValue( type_->GetType() );
 }
@@ -138,7 +148,8 @@ void EngineerConstruction::AddParam( Parameter_ABC& parameter, const std::string
 // Name: EngineerConstruction::ReadParameter
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
+void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities,
+                                          Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver )
 {
     std::string type = xis.attribute< std::string >( "type" );
     boost::algorithm::to_lower( type );
@@ -168,7 +179,11 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
             AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "integer", false ), xis ), "altitude_modifier" );
         else if( identifier == "lodging" )
             AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "integer", false ), xis ), "lodging" );
+        else if( identifier == "max_combustion_energy" )
+            AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "integer", false ), xis ), "max_combustion_energy" );
     }
+    else if( type == "fireclass" )
+        AddParam( *new FireClass( OrderParameter( tools::translate( "ActionParameter", "Fire class:" ).toStdString(), "fireclass", false ), xis, resolver ), "fire_class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,11 +262,15 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
                 static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
             else if( keyName == "lodging" )
                 static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_lodging, boost::ref( message ), _1 ) );
+            else if( keyName == "max_combustion_energy" )
+                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_max_combustion, boost::ref( message ), _1 ) );
         }
         else if( keyName == "obstacle_mining" && type == "boolean" )
             static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );
         else if( keyName == "time_limit" && type == "time" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
+        else if( type == "fireclass" )
+            message.set_fire_class( static_cast< const FireClass* >( it->second )->GetValue() );
     }
 }
 

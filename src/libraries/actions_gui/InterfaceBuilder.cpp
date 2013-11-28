@@ -40,6 +40,7 @@
 #include "ParamStringField.h"
 #include "ParamTime.h"
 #include "ParamUrbanBlock.h"
+#include "ParamFireClass.h"
 
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -111,6 +112,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     AddFunctor< actions::gui::ParamObstacle >           ( "plannedwork" );
     AddFunctor< actions::gui::ParamDotationDType >      ( "resourcetype" );
     AddFunctor< actions::gui::ParamDotationTypeList >   ( "allresourcetype" );
+    AddFunctor< actions::gui::ParamFireClass >          ( "fireclass" );
 }
 
 // -----------------------------------------------------------------------------

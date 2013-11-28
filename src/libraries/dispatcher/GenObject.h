@@ -51,6 +51,8 @@ private:
     float density_;
     unsigned int tc2_;
     unsigned int delaiActiviteMines_;
+    std::string fireClass_;
+    unsigned int maxCombustion_;
     //@}
 };
 

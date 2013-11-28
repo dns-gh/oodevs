@@ -448,6 +448,10 @@ message PlannedWork {
     optional bool                              mining            = 11;
     //! The lodging capacity
     optional int32                             lodging           = 12;
+    //! The fire class
+    optional string                            fire_class        = 13;
+    //! The max combustion energy(fire class)
+    optional int32                             max_combustion    = 14;
 }
 
 /** @struct PlannedWorkList

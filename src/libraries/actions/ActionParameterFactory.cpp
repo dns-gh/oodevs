@@ -133,7 +133,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_location() )
         return ( nullValue ) ? new parameters::Location( parameter, converter_ )            : new parameters::Location( parameter, converter_, message.location() );
     if( message.has_plannedwork() )
-        return ( nullValue ) ? new parameters::EngineerConstruction( parameter )            : new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_ );
+        return ( nullValue ) ? new parameters::EngineerConstruction( parameter )            : new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_, staticModel_.objectTypes_ );
     if( message.has_nature() )
         return ( nullValue ) ? new parameters::AtlasNature( parameter )                     : new parameters::AtlasNature( parameter, message.nature(), staticModel_.atlasNatures_ );
     if( message.has_missionobjective() )
@@ -327,7 +327,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "dotationtype" || type == "resourcetype" )
         param.reset( new parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" || type == "plannedwork" )
-        param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
+        param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_, staticModel_.objectTypes_ ) );
     else if( type == "natureatlas" )
         param.reset( new parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "medicalpriorities" )

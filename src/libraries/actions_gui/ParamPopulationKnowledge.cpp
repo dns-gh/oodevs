@@ -11,6 +11,7 @@
 #include "ParamPopulationKnowledge.h"
 #include "actions/PopulationKnowledge.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/PopulationKnowledge_ABC.h"
 
 using namespace actions::gui;
 
@@ -51,4 +52,14 @@ void ParamPopulationKnowledge::CommitTo( actions::ParameterContainer_ABC& action
 void ParamPopulationKnowledge::Visit( const actions::parameters::PopulationKnowledge& param )
 {
     InternalVisit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::NotifyContextMenu
+// Created: LGY 2013-11-27
+// -----------------------------------------------------------------------------
+void ParamPopulationKnowledge::NotifyContextMenu( const kernel::PopulationKnowledge_ABC& knowledge, kernel::ContextMenu& menu )
+{
+    if( const kernel::Population_ABC* population = knowledge.GetEntity() )
+        EntityParameter< kernel::Population_ABC >::NotifyContextMenu( *population, menu );
 }

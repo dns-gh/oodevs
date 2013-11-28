@@ -39,7 +39,6 @@ FireAttribute::FireAttribute( xml::xistream& xis )
     : maxCombustionEnergy_( 0 )
     , pClass_( 0 )
 {
-
     std::string className( xml::attribute( xis, "class", std::string() ) );
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
@@ -280,4 +279,16 @@ const PHY_DotationCategory* FireAttribute::FindBestExtinguisherAgent( boost::fun
 int FireAttribute::GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const
 {
     return pClass_->GetExtinguisherHeatDecreaseRate( extinguisherAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::SetFireClass
+// Created: LGY 2011-01-25
+// -----------------------------------------------------------------------------
+void FireAttribute::SetFireClass( const std::string& className, unsigned int maxCombustion )
+{
+    pClass_ = MIL_FireClass::Find( className );
+    if( !pClass_ )
+        throw MASA_EXCEPTION( "Unknown 'Fire class' for fire object attribute" );
+    maxCombustionEnergy_ = maxCombustion;
 }

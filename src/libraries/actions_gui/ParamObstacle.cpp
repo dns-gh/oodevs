@@ -21,6 +21,7 @@
 #include "ParamQuantity.h"
 #include "ParamStringField.h"
 #include "ParamTime.h"
+#include "ParamFireClass.h"
 #include "actions/Action_ABC.h"
 #include "actions/Automat.h"
 #include "actions/Bool.h"
@@ -64,22 +65,26 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     activityTime_->SetSuffix( kernel::Units::seconds.AsString() );
     activationTime_->SetSuffix( kernel::Units::seconds.AsString() );
 
-    name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toStdString(), "string", true ), false ) );
-    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString(), true ) );
-    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString(), true ) );
-    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString(), true ) );
-    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString(), true ) );
+    name_                = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toStdString(), "string", true ), false ) );
+    timeLimit_           = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString(), true ) );
+    mining_              = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString(), true ) );
+    altitudeModifier_    = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString(), true ) );
+    lodging_             = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString(), true ) );
+    fireClass_           = static_cast< ParamFireClass* >( AddElement( "fireClass",       tr( "Fire class:" ).toStdString(), true ) );
+    maxCombustionEnergy_ = static_cast< ParamQuantity* >( AddElement( "quantity", tr( "Max combustion energy" ).toStdString(), false ) );
 
-    tc2_             ->SetKeyName( "tc2" );
-    location_        ->SetKeyName( "location" );
-    name_            ->SetKeyName( "name" );
-    activityTime_    ->SetKeyName( "activitytime" );
-    activationTime_  ->SetKeyName( "activationtime" );
-    density_         ->SetKeyName( "density" );
-    altitudeModifier_->SetKeyName( "altitude_modifier" );
-    timeLimit_       ->SetKeyName( "time_limit" );
-    mining_          ->SetKeyName( "obstacle_mining" );
-    lodging_         ->SetKeyName( "lodging" );
+    tc2_                ->SetKeyName( "tc2" );
+    location_           ->SetKeyName( "location" );
+    name_               ->SetKeyName( "name" );
+    activityTime_       ->SetKeyName( "activitytime" );
+    activationTime_     ->SetKeyName( "activationtime" );
+    density_            ->SetKeyName( "density" );
+    altitudeModifier_   ->SetKeyName( "altitude_modifier" );
+    timeLimit_          ->SetKeyName( "time_limit" );
+    mining_             ->SetKeyName( "obstacle_mining" );
+    lodging_            ->SetKeyName( "lodging" );
+    fireClass_          ->SetKeyName( "fire_class" );
+    maxCombustionEnergy_->SetKeyName( "max_combustion_energy" );
 
     altitudeModifier_->SetLimit( 0, std::numeric_limits< int >::max() );
     altitudeModifier_->SetSuffix( kernel::Units::meters.AsString() );
@@ -125,6 +130,8 @@ void ParamObstacle::RemoveFromController()
     timeLimit_->RemoveFromController();
     mining_->RemoveFromController();
     lodging_->RemoveFromController();
+    fireClass_->RemoveFromController();
+    maxCombustionEnergy_->RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -237,6 +244,18 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
         layout->addWidget( lodgingBox );
     }
 
+    // Fire class
+    {
+        QGroupBox* fireBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( fireClass_ )->BuildInterface( "FireBox", parent ) );
+        fireBox->layout()->setMargin( 0 );
+        fireBox->layout()->setSpacing( 0 );
+        layout->addWidget( fireBox );
+        QGroupBox* maxCombustionBox = static_cast< QGroupBox* >( maxCombustionEnergy_->BuildInterface( "maxCombustionBox", parent ) );
+        maxCombustionBox->layout()->setMargin( 0 );
+        maxCombustionBox->layout()->setSpacing( 0 );
+        layout->addWidget( maxCombustionBox );
+    }
+
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
     return group_;
@@ -261,6 +280,8 @@ bool ParamObstacle::InternalCheckValidity() const
         ( !typeCombo_->GetValue()->HasBuildableDensity() || density_->CheckValidity() ) &&
         ( !typeCombo_->GetValue()->HasLogistic() || tc2_->CheckValidity() ) &&
         ( !typeCombo_->GetValue()->HasTimeLimitedCapacity() || timeLimit_->CheckValidity() ) &&
+        ( !typeCombo_->GetValue()->HasBurnCapacity() || fireClass_->CheckValidity() ) &&
+        ( !typeCombo_->GetValue()->HasBurnCapacity() || maxCombustionEnergy_->CheckValidity() ) &&
         mining_->CheckValidity() &&
         location_->CheckValidity();
 }
@@ -296,6 +317,11 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             lodging_->CommitTo( *param );
         if( type->CanBeValorized() )
             mining_->CommitTo( *param );
+        if( type->HasBurnCapacity() )
+        {
+            fireClass_->CommitTo( *param );
+            maxCombustionEnergy_->CommitTo( *param );
+        }
         location_->CommitTo( *param );
         action.AddParameter( *param.release() );
     }
@@ -349,19 +375,23 @@ void ParamObstacle::OnTypeChanged()
     HideAndRemoveFromController( *timeLimit_ );
     HideAndRemoveFromController( *mining_ );
     HideAndRemoveFromController( *lodging_ );
+    HideAndRemoveFromController( *fireClass_ );
+    HideAndRemoveFromController( *maxCombustionEnergy_ );
 
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
 
-    ShowAndAddToControllerIfNeeded( *density_,          *type, &kernel::ObjectType::HasBuildableDensity );
-    ShowAndAddToControllerIfNeeded( *tc2_,              *type, &kernel::ObjectType::HasLogistic );
-    ShowAndAddToControllerIfNeeded( *activityTime_,     *type, &kernel::ObjectType::CanBeActivated );
-    ShowAndAddToControllerIfNeeded( *activationTime_,   *type, &kernel::ObjectType::CanBeActivated );
-    ShowAndAddToControllerIfNeeded( *altitudeModifier_, *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
-    ShowAndAddToControllerIfNeeded( *timeLimit_,        *type, &kernel::ObjectType::HasTimeLimitedCapacity );
-    ShowAndAddToControllerIfNeeded( *mining_,           *type, &kernel::ObjectType::CanBeValorized );
-    ShowAndAddToControllerIfNeeded( *lodging_,          *type, &kernel::ObjectType::HasLodgingCapacity );
+    ShowAndAddToControllerIfNeeded( *density_,             *type, &kernel::ObjectType::HasBuildableDensity );
+    ShowAndAddToControllerIfNeeded( *tc2_,                 *type, &kernel::ObjectType::HasLogistic );
+    ShowAndAddToControllerIfNeeded( *activityTime_,        *type, &kernel::ObjectType::CanBeActivated );
+    ShowAndAddToControllerIfNeeded( *activationTime_,      *type, &kernel::ObjectType::CanBeActivated );
+    ShowAndAddToControllerIfNeeded( *altitudeModifier_,    *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
+    ShowAndAddToControllerIfNeeded( *timeLimit_,           *type, &kernel::ObjectType::HasTimeLimitedCapacity );
+    ShowAndAddToControllerIfNeeded( *mining_,              *type, &kernel::ObjectType::CanBeValorized );
+    ShowAndAddToControllerIfNeeded( *lodging_,             *type, &kernel::ObjectType::HasLodgingCapacity );
+    ShowAndAddToControllerIfNeeded( *fireClass_,           *type, &kernel::ObjectType::HasBurnCapacity );
+    ShowAndAddToControllerIfNeeded( *maxCombustionEnergy_, *type, &kernel::ObjectType::HasBurnCapacity );
 
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn();
@@ -491,5 +521,7 @@ bool ParamObstacle::HasParameter( const Param_ABC& param ) const
         altitudeModifier_->HasParameter( param ) ||
         timeLimit_->HasParameter( param ) ||
         mining_->HasParameter( param ) ||
-        lodging_->HasParameter( param );
+        lodging_->HasParameter( param ) ||
+        fireClass_->HasParameter( param ) ||
+        maxCombustionEnergy_->HasParameter( param );
 }
