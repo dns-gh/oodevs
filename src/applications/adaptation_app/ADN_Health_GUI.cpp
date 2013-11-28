@@ -36,12 +36,15 @@ public:
         int n = 0;
         for( n = 0; n < eNbrDoctorSkills; ++n )
             horizontalHeaders << ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str();
-        horizontalHeaders << tr( "Psyop" ) << tr( "Contamination" );
+        horizontalHeaders << tools::translate( "ADN_WoundTable", "Psyop" ) << tools::translate( "ADN_WoundTable", "Contamination" );
         dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
         horizontalHeader()->setResizeMode( QHeaderView::Stretch );
 
         QStringList verticalHeaders;
-        verticalHeaders << tr( "Treatment duration" ) << tr( "Convalescence duration" ) << tr( "Seriousness distribution (%)" ) << tr( "Life span" ) ;
+        verticalHeaders << tools::translate( "ADN_WoundTable", "Treatment duration" ) 
+                        << tools::translate( "ADN_WoundTable", "Convalescence duration" ) 
+                        << tools::translate( "ADN_WoundTable", "Seriousness distribution (%)" )
+                        << tools::translate( "ADN_WoundTable", "Life span" ) ;
         dataModel_.setVerticalHeaderLabels( verticalHeaders );
         delegate_.AddDelayEditOnRow( 0 );
         delegate_.AddDelayEditOnRow( 1 );
