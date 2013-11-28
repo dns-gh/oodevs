@@ -63,6 +63,7 @@ const ExCrossroadSmallOrbat = "crossroad-small-orbat"
 const ExCrossroadSmallEmpty = "crossroad-small-empty"
 const ExCrossroadSmallLog = "crossroad-small-log"
 const ExCrossroadSmallScores = "crossroad-small-scores"
+const ExGradXYTestEmpty = "grad-x.y-test-empty"
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
