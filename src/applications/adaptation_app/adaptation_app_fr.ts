@@ -1567,7 +1567,7 @@ Arrêt moteur allumé</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation type="unfinished">Capteurs</translation>
+        <translation>Capteur</translation>
     </message>
     <message>
         <source>Height (m)</source>
@@ -1575,11 +1575,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation type="unfinished">Ajouter un capteur</translation>
+        <translation>Ajouter un capteur</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation type="unfinished">Enlever un capteur</translation>
+        <translation>Enlever un capteur</translation>
     </message>
 </context>
 <context>

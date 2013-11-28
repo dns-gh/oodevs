@@ -48,9 +48,8 @@ ADN_Equipments_Sensors_GUI< EquipmentInfo, SensorInfo >::~ADN_Equipments_Sensors
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC< SensorInfo > ADN_Equipments_Sensors_GUI::GetWorkspaceInfos
+// Name: ADN_Equipments_Sensors_GUI::GetWorkspaceInfos
 // Created: LDC 2013-11-27
 // -----------------------------------------------------------------------------
 template<>

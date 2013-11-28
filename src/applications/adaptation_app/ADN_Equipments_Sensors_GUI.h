@@ -16,7 +16,8 @@
 //*****************************************************************************
 // Created: JDY 03-07-22
 //*****************************************************************************
-template< typename EquipmentInfo, typename SensorInfo > class ADN_Equipments_Sensors_GUI : public ADN_Table
+template< typename EquipmentInfo, typename SensorInfo >
+class ADN_Equipments_Sensors_GUI : public ADN_Table
 {
 public:
     explicit ADN_Equipments_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );

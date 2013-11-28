@@ -1552,7 +1552,7 @@ Parked engine running</source>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">الارتفاع (م)</translation>
     </message>
     <message>
         <source>Add sensor</source>

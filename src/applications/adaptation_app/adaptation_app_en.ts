@@ -1559,19 +1559,19 @@ Parked engine running</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation type="unfinished">Sensor</translation>
+        <translation>Sensor</translation>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Height (m)</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation type="unfinished">Add sensor</translation>
+        <translation>Add sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation type="unfinished">Remove sensor</translation>
+        <translation>Remove sensor</translation>
     </message>
 </context>
 <context>

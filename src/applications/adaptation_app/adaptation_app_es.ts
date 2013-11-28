@@ -1563,19 +1563,19 @@ estacionado con motor encendido</translation>
     <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
-        <translation type="unfinished">Sensor</translation>
+        <translation>Sensor</translation>
     </message>
     <message>
         <source>Height (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura (m)</translation>
     </message>
     <message>
         <source>Add sensor</source>
-        <translation type="unfinished">Agregar un sensor</translation>
+        <translation>Agregar un sensor</translation>
     </message>
     <message>
         <source>Remove sensor</source>
-        <translation type="unfinished">Remover sensor</translation>
+        <translation>Remover sensor</translation>
     </message>
 </context>
 <context>
