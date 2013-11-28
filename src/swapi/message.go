@@ -247,10 +247,10 @@ func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
 		data = make([]byte, size)
 	}
 	n, err := r.io.Read(data[:size])
-	if err != nil {
+	if err != nil && (n == 0 || err != io.EOF) {
 		return nil, err
 	}
-	return data[:n], err
+	return data[:n], nil
 }
 
 func (r *Reader) Decode(msg *SwordMessage) error {

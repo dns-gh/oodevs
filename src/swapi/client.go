@@ -12,6 +12,7 @@ import (
 	"errors"
 	"io"
 	"net"
+	"sync"
 	"sync/atomic"
 	"time"
 )
@@ -83,9 +84,11 @@ type Client struct {
 	commands    chan commandRequest
 	errors      chan HandlerError
 	quit        chan bool
-	// This channel is signaled by the write() goroutine to notify termination
-	writer chan bool
-	eof    int32
+	eof         int32
+	listening   sync.WaitGroup
+	running     sync.WaitGroup
+	serving     sync.WaitGroup
+	writing     sync.WaitGroup
 }
 
 func NewClient(address string) (*Client, error) {
@@ -109,15 +112,17 @@ func NewClient(address string) (*Client, error) {
 		commands:    make(chan commandRequest, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
 		quit:        make(chan bool),
-		writer:      make(chan bool),
 	}
 	return client, nil
 }
 
 func (c *Client) Run() error {
 	errors := make(chan error)
+	c.serving.Add(1)
 	go c.serve()
+	c.writing.Add(1)
 	go c.write()
+	c.listening.Add(1)
 	go c.listen(errors)
 	if c.EnableModel {
 		c.Model.Listen(c)
@@ -130,23 +135,31 @@ func Connect(host string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	go client.Run()
+	client.running.Add(1)
+	go func() {
+		defer client.running.Done()
+		client.Run()
+	}()
 	return client, nil
 }
 
 func (c *Client) Close() {
 	// Connection might closed remotely while we set this flag.
 	atomic.StoreInt32(&c.eof, 1)
+	// Terminate the input connection
+	c.link.Close()
+	c.listening.Wait()
 	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
 	close(c.registers)
 	close(c.commands)
 	c.quit <- true
+	c.serving.Wait()
 	// Close write() inputs and close the connection
 	close(c.posts)
-	<-c.writer
-	c.link.Close()
+	c.writing.Wait()
 	c.Model.Close()
+	c.running.Wait()
 }
 
 func (c *Client) getContext() int32 {
@@ -214,6 +227,8 @@ func (c *Client) timeout(now time.Time) {
 }
 
 func (c *Client) serve() {
+	defer c.serving.Done()
+
 	closed := false
 	for {
 		select {
@@ -264,6 +279,8 @@ func (c *Client) serve() {
 }
 
 func (c *Client) listen(errors chan<- error) {
+	defer c.listening.Done()
+
 	reader := NewReader(c.link)
 	reader.SetHandler(c.RawMessageHandler)
 	for {
@@ -284,6 +301,8 @@ func (c *Client) listen(errors chan<- error) {
 }
 
 func (c *Client) write() {
+	defer c.writing.Done()
+
 	writer := NewWriter(c.link)
 	for post := range c.posts {
 		err := writer.Encode(post.message.tag, post.message.GetMessage())
@@ -292,7 +311,6 @@ func (c *Client) write() {
 		}
 	}
 	Disconnect(c.link, c.PostTimeout)
-	c.writer <- true
 }
 
 // Supplied handler will be called in two cases:
