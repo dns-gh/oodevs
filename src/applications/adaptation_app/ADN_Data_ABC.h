@@ -48,7 +48,7 @@ public:
     virtual void Initialize();
     virtual void Save() const;
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
-    virtual bool FixConsistency() const;
+    virtual bool FixConsistency();
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output ) const;
     virtual void LoadTranslations( const tools::Path& xmlFile, kernel::XmlTranslations* translations = 0 );

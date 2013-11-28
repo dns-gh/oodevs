@@ -207,7 +207,7 @@ bool ADN_Data_ABC::ApplyOnTranslations( const boost::function< bool( kernel::Loc
 // Name: ADN_Data_ABC::FixConsistency
 // Created: ABR 2013-10-10
 // -----------------------------------------------------------------------------
-bool ADN_Data_ABC::FixConsistency() const
+bool ADN_Data_ABC::FixConsistency()
 {
     translations_->MergeDuplicateTranslations();
     return false;
