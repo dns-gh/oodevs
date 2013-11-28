@@ -10,6 +10,7 @@
 #include "Stages.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/PhyLoader.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
@@ -73,7 +74,7 @@ void Stages::ReadStage( xml::xistream& xis )
     if( !key.empty() && !translation.empty() )
     {
         if( stages_.find( key ) != stages_.end() )
-            std::cout << "Warning: Stage " << key << " translation is already registered. '" << stages_[ key ] << "' will become '" << translation << "'." << std::endl;
+            MT_LOG_ERROR_MSG( "Warning: Stage " << key << " translation is already registered. '" << stages_[ key ] << "' will become '" << translation << "'." );
         stages_[ key ] = translation;
     }
 }
