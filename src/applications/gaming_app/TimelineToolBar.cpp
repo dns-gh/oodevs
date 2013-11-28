@@ -28,7 +28,6 @@ TimelineToolBar::TimelineToolBar( const tools::ExerciseConfig& config )
     , displayEngaged_( false )
     , displayOrders_( true )
     , displayTasks_( true )
-    , horizontalMode_( true )
 {
     Initialize( true );
 }
@@ -44,7 +43,6 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , displayEngaged_( other.displayEngaged_ )
     , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
-    , horizontalMode_( other.horizontalMode_ )
 {
     Initialize( false );
 }
@@ -55,7 +53,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
 // -----------------------------------------------------------------------------
 void TimelineToolBar::Initialize( bool main )
 {
-    horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), "", this, SLOT( OnSwitchView() ) );
+    horizontalView_ = addAction( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/rotate.png" ) ), tr( "Switch orientation" ), this, SIGNAL( ToggleLayoutOrientation() ) );
     filterMenu_ = new QMenu( this );
     QToolButton* button = new QToolButton( this );
     button->setIconSet( MAKE_ICON( filter ) );
@@ -106,8 +104,6 @@ void TimelineToolBar::Initialize( bool main )
 
     if( !main )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
-
-    OnSwitchView();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,17 +113,6 @@ void TimelineToolBar::Initialize( bool main )
 TimelineToolBar::~TimelineToolBar()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TimelineToolBar::OnSwitchView
-// Created: ABR 2013-10-25
-// -----------------------------------------------------------------------------
-void TimelineToolBar::OnSwitchView()
-{
-    horizontalMode_ = !horizontalMode_;
-    horizontalView_->setText( horizontalMode_ ? tr( "Switch to vertical view" ) : tr( "Switch to horizontal view" ) );
-    emit SetLayoutOrientation( horizontalMode_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -56,6 +56,7 @@ TimelineWebView::TimelineWebView( QWidget* parent,
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
     , creationSignalMapper_( 0 )
+    , horizontal_( false )
 {
     setObjectName( "timeline-webview" );
 
@@ -118,12 +119,14 @@ void TimelineWebView::Connect()
     mainLayout_->addWidget( timelineWidget_.get() );
     timeline::Configuration next = *cfg_;
     next.widget = timelineWidget_.get();
+    horizontal_ = false;
     auto query = boost::assign::map_list_of
         ( "lang",                 tools::Language::Current() )
         ( "sword_filter",         "" )
         ( "sword_profile",        lastProfile_ )
         ( "sword_filter_engaged", "true" )
-        ( "filter_service",       "sword:true,none:true" );
+        ( "filter_service",       "sword:true,none:true" )
+        ( "horizontal",           "false" );
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 
@@ -318,9 +321,7 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
         gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos() );
     }
     else
-    {
         controllers_.actions_.ContextMenu( selectedDateTime_, QCursor::pos() );
-    }
 }
 
 namespace
@@ -436,11 +437,10 @@ void TimelineWebView::OnLoadOrderFileRequested( const tools::Path& filename )
 // Name: TimelineWebView::ReadActions
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::ReadActions( xml::xistream& xis )
+void TimelineWebView::ReadActions( xml::xisubstream xis )
 {
     xis >> xml::start( "actions" )
-        >> xml::list( "action", *this, &TimelineWebView::ReadAction )
-        >> xml::end;
+            >> xml::list( "action", *this, &TimelineWebView::ReadAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -601,14 +601,17 @@ void TimelineWebView::OnSavedEvents( const std::string& content, const timeline:
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnSetLayoutOrientation
+// Name: TimelineWebView::OnToggleLayoutOrientation
 // Created: ABR 2013-10-25
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnSetLayoutOrientation( bool horizontal )
+void TimelineWebView::OnToggleLayoutOrientation()
 {
     if( server_ )
+    {
+        horizontal_ = !horizontal_;
         server_->UpdateQuery( boost::assign::map_list_of
-            ( "horizontal", horizontal ? "true" : "false" ) );
+            ( "horizontal", horizontal_ ? "true" : "false" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

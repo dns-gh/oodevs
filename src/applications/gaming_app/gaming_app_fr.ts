@@ -3311,14 +3311,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch to vertical view</source>
-        <translation>Passer en mode vertical</translation>
-    </message>
-    <message>
-        <source>Switch to horizontal view</source>
-        <translation>Passer en mode horizontal</translation>
-    </message>
-    <message>
         <source>Display tasks</source>
         <translation>Afficher les tâches</translation>
     </message>
@@ -3329,6 +3321,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Display orders</source>
         <translation>Afficher les ordres</translation>
+    </message>
+    <message>
+        <source>Switch orientation</source>
+        <translation>Changer l'orientation</translation>
     </message>
 </context>
 <context>

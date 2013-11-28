@@ -83,7 +83,7 @@ private:
 
     void SetProfile( const QString& profile );
 
-    void ReadActions( xml::xistream& xis );
+    void ReadActions( xml::xisubstream xis );
     void ReadAction( xml::xistream& xis );
     //@}
 
@@ -102,7 +102,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCenterView();
-    void OnSetLayoutOrientation( bool horizontal );
+    void OnToggleLayoutOrientation();
 
     void CreateEvent( const timeline::Event& event );
     void SelectEvent( const std::string& uuid );
@@ -152,6 +152,7 @@ private:
     std::string eventCreated_;
     QString lastProfile_;
     QString serverProfile_;
+    bool horizontal_;
     //@}
 };
 

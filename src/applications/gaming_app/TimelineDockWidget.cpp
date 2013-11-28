@@ -136,7 +136,7 @@ QWidget* TimelineDockWidget::AddView( bool main )
     connect( toolBar, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
-    connect( toolBar, SIGNAL( SetLayoutOrientation( bool ) ), webView_, SLOT( OnSetLayoutOrientation( bool ) ) );
+    connect( toolBar, SIGNAL( ToggleLayoutOrientation() ), webView_, SLOT( OnToggleLayoutOrientation() ) );
     connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_, SLOT( OnEngagedFilterToggled( bool ) ) );
     connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_, SLOT( OnServicesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_, SLOT( OnKeywordFilterChanged( const std::string& ) ) );

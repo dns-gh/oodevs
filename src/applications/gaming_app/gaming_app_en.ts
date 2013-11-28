@@ -3297,14 +3297,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch to vertical view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Switch to horizontal view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display tasks</source>
         <translation>Display tasks</translation>
     </message>
@@ -3315,6 +3307,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Display orders</source>
         <translation>Display orders</translation>
+    </message>
+    <message>
+        <source>Switch orientation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

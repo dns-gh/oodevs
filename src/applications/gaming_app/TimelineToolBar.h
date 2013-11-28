@@ -50,7 +50,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void SetLayoutOrientation( bool horizontal );
+    void ToggleLayoutOrientation();
 
     void AddView();
     void CenterView();
@@ -70,7 +70,6 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void OnSwitchView();
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     void OnEngagedFilterToggled( bool toggled );
@@ -96,7 +95,6 @@ private:
     bool displayEngaged_;
     bool displayOrders_;
     bool displayTasks_;
-    bool horizontalMode_;
     QMenu* filterMenu_;
     QAction* engagedFilter_;
     //@}
