@@ -443,11 +443,13 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
         if( names_[i] + "/Position" == option )
         {
             T_Layers::iterator oldPosition = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
-            const int newIndex = value.To< int >();
+            int newIndex = value.To< int >();
             if( oldPosition != currentLayers_.end() && newIndex < int( currentLayers_.size() ) )
             {
-                T_Layers::iterator newPosition = currentLayers_.begin() + newIndex;
-                std::swap( *oldPosition, *newPosition );
+                if( std::distance( currentLayers_.begin(), oldPosition ) < newIndex )
+                    --newIndex;
+                currentLayers_.erase( oldPosition );
+                currentLayers_.insert( currentLayers_.begin() + newIndex, layers_[i] );
                 ResetLayers();
                 return;
             }
