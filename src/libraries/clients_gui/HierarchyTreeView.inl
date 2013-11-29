@@ -16,6 +16,10 @@ HierarchyTreeView< Hierarchy >::HierarchyTreeView( const QString& objectName, ke
     : HierarchyTreeView_ABC( objectName, controllers, profile, modelObserver, symbols, parent )
     , controllers_( controllers )
 {
+    // Remove an item from the qtreeview, scrolls automatically to the top of the list
+    // Disable auto scroll for avoid this problem
+    setAutoScroll( false );
+
     controllers_.Update( *this );
 }
 
