@@ -714,6 +714,10 @@ Arrêt moteur allumé</translation>
         <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
         <translation>Des traductions de l&apos;onglet &apos;%1&apos; ont la meme clef et des valeurs de traduction différentes. La simulation n&apos;en utilisera qu&apos;une.</translation>
     </message>
+    <message>
+        <source>Invalid scan depth, should be greater than scan width.</source>
+        <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
