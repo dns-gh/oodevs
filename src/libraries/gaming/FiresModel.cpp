@@ -13,6 +13,7 @@
 #include "Simulation.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationPart_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
@@ -23,9 +24,10 @@ using namespace kernel;
 // Name: FiresModel constructor
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations, kernel::Profile_ABC& profile )
+FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< kernel::Population_ABC >& populations, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationParts, kernel::Profile_ABC& profile )
     : agents_( agents )
     , populations_( populations )
+    , populationParts_( populationParts )
     , profile_( profile )
 {
     // NOTHING
@@ -95,5 +97,18 @@ kernel::Entity_ABC* FiresModel::FindEntity( unsigned long id )
     kernel::Entity_ABC* entity = agents_.Find( id );
     if( entity )
         return entity;
+    return populationParts_.Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::FindHighLevelEntity
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* FiresModel::FindHighLevelEntity( unsigned long id )
+{
+    kernel::Entity_ABC* entity = agents_.Find( id );
+    if( entity )
+        return entity;
     return populations_.Find( id );
 }
+

@@ -85,7 +85,7 @@ const kernel::Entity_ABC* FireResultFactory::GetTarget( const sword::Explosion& 
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* FireResultFactory::GetTarget( const sword::StopUnitFire& message ) const
 {
-    return model_.fires_.FindTarget( message );
+    return model_.fires_.FindHighLevelTarget( message );
 }
     
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ const kernel::Entity_ABC* FireResultFactory::GetTarget( const sword::StopUnitFir
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* FireResultFactory::GetTarget( const sword::StopCrowdFire& message ) const
 {
-    return model_.fires_.FindTarget( message );
+    return model_.fires_.FindHighLevelTarget( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,5 +136,19 @@ AgentFireResult* FireResultFactory::CreateFireResult( const kernel::Agent_ABC* t
     const tools::Resolver<kernel::Agent_ABC, unsigned long>& agents = model_.agents_;
     if( profile_.IsPerceived( agents.Get( target->GetId() ) ) )
         return new AgentFireResult( *target, simulation_.GetDateTime(), firer );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultFactory::CreateFireResult
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+PopulationFireResult* FireResultFactory::CreateFireResult( const kernel::Population_ABC& target, const kernel::Entity_ABC* firer )
+{
+    if( model_.agents_.FindPopulation( target.GetId() ) == 0 )
+        return 0;
+    const tools::Resolver<kernel::Population_ABC, unsigned long>& crowds = model_.agents_;
+    if( profile_.IsPerceived( crowds.Get( target.GetId() ) ) )
+        return new PopulationFireResult( target, simulation_.GetDateTime(), firer );
     return 0;
 }

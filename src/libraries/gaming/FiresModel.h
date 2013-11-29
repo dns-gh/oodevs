@@ -23,6 +23,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Entity_ABC;
+    class Population_ABC;
     class PopulationPart_ABC;
     class Profile_ABC;
 }
@@ -40,7 +41,7 @@ class FiresModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations, kernel::Profile_ABC& profile );
+             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::Population_ABC >& populations, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationParts, kernel::Profile_ABC& profile );
     virtual ~FiresModel();
     //@}
 
@@ -55,6 +56,8 @@ public:
     kernel::Entity_ABC* FindFirer( const T& message );
     template< typename T >
     kernel::Entity_ABC* FindTarget( const T& message );
+    template< typename T >
+    kernel::Entity_ABC* FindHighLevelTarget( const T& message );
     //@}
 
 private:
@@ -62,6 +65,7 @@ private:
     //@{
     void AddTarget( const sword::StartUnitFire& message );
     kernel::Entity_ABC* FindEntity( unsigned long id );
+    kernel::Entity_ABC* FindHighLevelEntity( unsigned long id );
     //@}
 
     //! @name Types
@@ -76,7 +80,8 @@ private:
     T_IDs firers_;
     T_IDs targets_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
-    const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations_;
+    const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
+    const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationParts_;
     kernel::Profile_ABC& profile_;
     //@}
 };
@@ -105,6 +110,19 @@ kernel::Entity_ABC* FiresModel::FindTarget( const T& message )
     if( it == targets_.end() )
         return 0;
     return FindEntity( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::FindHighLevelTarget
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+template< typename T >
+kernel::Entity_ABC* FiresModel::FindHighLevelTarget( const T& message )
+{
+    CIT_IDs it = targets_.find( message.fire().id() );
+    if( it == targets_.end() )
+        return 0;
+    return FindHighLevelEntity( it->second );
 }
 
 // -----------------------------------------------------------------------------

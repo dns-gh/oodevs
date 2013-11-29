@@ -14,6 +14,7 @@
 #include "PopulationFireResult.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Population_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -172,8 +173,20 @@ void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::E
 // -----------------------------------------------------------------------------
 void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer )
 {
-    const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target );
-    AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer );
-    if( result )
-        agentExplosions_.push_back( result );
+    if( const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target ) )
+    {
+        AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer );
+        if( result )
+            agentExplosions_.push_back( result );
+    }
+    else
+    {
+        const kernel::Population_ABC* targetCrowd = dynamic_cast< const kernel::Population_ABC* >( target );
+        if( targetCrowd )
+        {
+            PopulationFireResult* result = factory_.CreateFireResult( *targetCrowd, firer );
+            if( result )
+                populationExplosions_.push_back( result );
+        }
+    }
 }

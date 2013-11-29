@@ -35,6 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationFireResult( const sword::CrowdFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time, const kernel::Entity_ABC* firer );
+             PopulationFireResult( const kernel::Population_ABC& target, const QDateTime& time, const kernel::Entity_ABC* firer );
     virtual ~PopulationFireResult();
     //@}
 
