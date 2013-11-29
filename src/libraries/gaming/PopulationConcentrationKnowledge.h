@@ -17,7 +17,6 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -33,8 +32,6 @@ namespace sword
     class CrowdConcentrationKnowledgeCreation;
     class CrowdConcentrationKnowledgeUpdate;
 }
-
-class PopulationConcentration;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -73,13 +70,6 @@ private:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    float GetRadius() const;
-    const PopulationConcentration* GetConcentration() const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
@@ -93,9 +83,8 @@ private:
     kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
     kernel::OptionalValue< bool >                  bIsPerceived_;
     float rRelevance_;
-    boost::optional< float > radius_;
+    float radius_;
     float deadRadius_;
-    mutable const PopulationConcentration* concentration_;
     //@}
 };
 
