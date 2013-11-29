@@ -65,7 +65,14 @@ void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentration
     if( message.has_dead() )
         nNbrDeadHumans_ = static_cast< unsigned int >( message.dead() );
     if( message.has_concentration() )
+    {
         concentrationId_ = message.concentration().id();
+        if( !concentrationId_ )
+        {
+            concentration_ = 0;
+            radius_ = boost::none;
+        }
+    }
     if( message.has_pertinence() )
         rRelevance_ = static_cast< float >( message.pertinence() );
 
