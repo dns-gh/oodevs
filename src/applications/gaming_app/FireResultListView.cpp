@@ -280,10 +280,10 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
         setHeaderHidden( count == 0 );
         SetNumberOfChildren( invisibleRootItem(), count );
         int row = 0;
-        for( auto it = agentFires.begin(); it != agentFires.end(); ++it )
+        for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
             if( *it )
                 Display( **it, topLevelItem( row++ ) );
-        for( auto it = popFires.begin(); it != popFires.end(); ++it )
+        for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
             if( *it )
                 Display( **it, topLevelItem( row++ ) );
     }
