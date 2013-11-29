@@ -152,14 +152,7 @@ void Explosions::Update( const sword::UnitFireDamages& message, const kernel::En
 {
     AgentFireResult* result = factory_.CreateFireResult( message, firer );
     if( result )
-    {
         agentExplosions_.push_back( result );
-        if( agentExplosions_.size() > 20 )
-        {
-            delete agentExplosions_.front();
-            agentExplosions_.pop_front();
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -170,14 +163,7 @@ void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::E
 {
     PopulationFireResult* result = factory_.CreateFireResult( message, firer );
     if( result )
-    {
         populationExplosions_.push_back( result );
-        if( populationExplosions_.size() > 20 )
-        {
-            delete populationExplosions_.front();
-            populationExplosions_.pop_front();
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -189,12 +175,5 @@ void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_
     const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target );
     AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer );
     if( result )
-    {
         agentExplosions_.push_back( result );
-        if( agentExplosions_.size() > 20 )
-        {
-            delete agentExplosions_.front();
-            agentExplosions_.pop_front();
-        }
-    }
 }
