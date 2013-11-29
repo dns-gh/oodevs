@@ -15,6 +15,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/ObjectNameManager.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace actions::gui;
 
@@ -45,7 +46,7 @@ Param_ABC::Param_ABC( const InterfaceBuilder_ABC& builder, const kernel::OrderPa
 Param_ABC::~Param_ABC()
 {
     if( registered_ )
-        throw MASA_EXCEPTION( "Parameter registered to action controller, unregister it manually." );
+        MT_LOG_ERROR_MSG( "Parameter registered to action controller, unregister it manually" );
 }
 
 // -----------------------------------------------------------------------------

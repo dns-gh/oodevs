@@ -125,7 +125,11 @@ void ParamObstacle::RegisterIn()
 void ParamObstacle::RemoveFromController()
 {
     location_->RemoveFromController();
+    density_->RemoveFromController();
     tc2_->RemoveFromController();
+    activityTime_->RemoveFromController();
+    activationTime_->RemoveFromController();
+    name_->RemoveFromController();
     altitudeModifier_->RemoveFromController();
     timeLimit_->RemoveFromController();
     mining_->RemoveFromController();
