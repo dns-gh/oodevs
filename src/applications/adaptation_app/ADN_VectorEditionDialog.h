@@ -10,6 +10,8 @@
 #ifndef __ADN_VectorEditionDialog_h_
 #define __ADN_VectorEditionDialog_h_
 
+#include <boost/scoped_ptr.hpp>
+
 template< typename T > class ADN_Type_Vector_ABC;
 
 // =============================================================================
@@ -75,7 +77,9 @@ private:
     //! @name Member data
     //@{
     T_EditionInfos editionInfos_;
-    QTreeWidget* treeView_;
+    QTreeView* treeView_;
+    boost::scoped_ptr< QStandardItemModel > dataModel_;
+    boost::scoped_ptr< QSortFilterProxyModel > proxyModel_;
     QPushButton* okButton_;
     QPushButton* cancelButton_;
     //@}

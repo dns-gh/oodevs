@@ -68,19 +68,14 @@ void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& packResource )
 {
-    ADN_Resources_Data::CategoryInfo* pcurResource = GetCrossedElement();
-    ADN_Resources_Data::CategoryInfo** curResource = &pcurResource;
-    std::string curProcessDuration  = processDuration_.GetData();
-    bool curTerminal                = terminal_.GetData();
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::Swap( packResource );
 
-    if( packResource.GetCrossedElement() )
-        SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( packResource.GetCrossedElement()->parentResource_.nType_ ).GetCategories() );
-    SetCrossedElement( packResource.GetCrossedElement(), false );
-    processDuration_    = packResource.processDuration_.GetData();
-    terminal_           = packResource.terminal_.GetData();
+    std::string curProcessDuration = processDuration_.GetData();
+    bool curTerminal = terminal_.GetData();
 
-    packResource.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( ( *curResource )->parentResource_.nType_ ).GetCategories() );
-    packResource.SetCrossedElement( *curResource, false );
-    packResource.processDuration_   = curProcessDuration;
-    packResource.terminal_          = curTerminal;
+    processDuration_ = packResource.processDuration_.GetData();
+    terminal_ = packResource.terminal_.GetData();
+
+    packResource.processDuration_ = curProcessDuration;
+    packResource.terminal_ = curTerminal;
 }

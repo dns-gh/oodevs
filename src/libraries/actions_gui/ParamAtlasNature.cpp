@@ -64,6 +64,7 @@ QWidget* ParamAtlasNature::BuildInterface( const QString& objectName, QWidget* p
         checkboxes_.push_back( checkBox );
     }
     connect( buttonGroup, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
+    connect( buttonGroup, SIGNAL( clicked( int ) ), SLOT( Update() ) );
     layout->addWidget( buttonGroup );
     return group_;
 }

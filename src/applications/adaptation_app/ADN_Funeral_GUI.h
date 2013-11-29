@@ -35,21 +35,29 @@ public:
     //! @name Operations
     //@{
     void Build();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
     void SwapResource( int offsetRow );
     //@}
 
-    private slots:
-        //! @name Helpers
-        //@{
-        void OnButtonUp() { SwapResource( -1 ); }
-        void OnButtonDown() { SwapResource( 1 ); }
-        //@}
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChanged();
+    void OnButtonUp() { SwapResource( -1 ); }
+    void OnButtonDown() { SwapResource( 1 ); }
+    //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Funeral_Data& data_;
     ADN_FuneralPackagingResources_GUI* resourceTable_;
+    QPushButton* moveUpButton_;
+    QPushButton* moveDownButton_;
     //@}
 };
 

@@ -748,6 +748,14 @@ Raison: %3
         <source>Order (unit)</source>
         <translation>Ordre (pion)</translation>
     </message>
+    <message>
+        <source>Select</source>
+        <translation>Selectionner</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>

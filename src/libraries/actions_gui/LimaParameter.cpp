@@ -191,6 +191,7 @@ void LimaParameter::OnMenuClick( QAction* action )
     }
     if( group_ && IsOptional() )
         group_->setChecked( true );
+    Update();
 }
 
 namespace

@@ -69,16 +69,20 @@ void ADN_Funeral_GUI::Build()
     resourceTable_->setSortingEnabled( false );
     resourceTable_->setSelectionMode( QTableView::SingleSelection );
 
-    QPushButton* moveUpButton_ = builder.AddWidget< QPushButton >( "up" );
+    moveUpButton_ = builder.AddWidget< QPushButton >( "up" );
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveUpButton_->setMaximumWidth( maxSize );
+    moveUpButton_->setEnabled( false );
 
-    QPushButton* moveDownButton_ = builder.AddWidget< QPushButton >( "down" );
+    moveDownButton_ = builder.AddWidget< QPushButton >( "down" );
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     moveDownButton_->setMaximumWidth( maxSize );
+    moveDownButton_->setEnabled( false );
 
     connect( moveUpButton_, SIGNAL( clicked() ), this, SLOT( OnButtonUp() ) );
     connect( moveDownButton_, SIGNAL( clicked() ), this, SLOT( OnButtonDown() ) );
+    connect( resourceTable_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ),
+             this, SLOT( OnSelectionChanged() ) );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -101,21 +105,32 @@ void ADN_Funeral_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Funeral_GUI::OnSelectionChanged
+// Created: ABR 2013-11-26
+// -----------------------------------------------------------------------------
+void ADN_Funeral_GUI::OnSelectionChanged()
+{
+    QModelIndexList indexes = resourceTable_->selectionModel()->selectedIndexes();
+    int row = -1;
+    if( indexes.size() == 1 )
+        row = indexes[ 0 ].row();
+    moveUpButton_->setEnabled( row != -1 && row != 0 );
+    moveDownButton_->setEnabled( row != -1 && row != resourceTable_->numRows() - 1 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Funeral_GUI::SwapResource
 // Created: MMC 2011-12-06
 // -----------------------------------------------------------------------------
 void ADN_Funeral_GUI::SwapResource( int offsetRow )
 {
-    if( !resourceTable_ )
-        return;
-
     int numRows = resourceTable_->numRows();
-    int curRow = resourceTable_->currentIndex().row();
+    const QModelIndexList selections = resourceTable_->selectionModel()->selection().indexes();
+    int curRow = selections.size() == 1 ? selections[ 0 ].row() : -1;
+    int curCol = selections.size() == 1 ? selections[ 0 ].column() : -1;
     int targetRow = curRow + offsetRow;
-
-    if( curRow < 0 || curRow >= numRows )
-        return;
-    if( targetRow < 0 || targetRow >= numRows )
+    if( curRow < 0 || curRow >= numRows ||
+        targetRow < 0 || targetRow >= numRows )
         return;
 
     ADN_FuneralPackagingResource* curPackagingResource = data_.funeralPackagingResources_[ curRow ];
@@ -126,6 +141,8 @@ void ADN_Funeral_GUI::SwapResource( int offsetRow )
         resourceTable_->clearSelection();
         resourceTable_->GetConnector().Disconnect( &data_.funeralPackagingResources_ );
         resourceTable_->GetConnector().Connect( &data_.funeralPackagingResources_ );
-        resourceTable_->selectRow( targetRow );
+        QModelIndex targetIndex = resourceTable_->model()->index( targetRow, curCol );
+        resourceTable_->selectionModel()->select( targetIndex, QItemSelectionModel::Select | QItemSelectionModel::Clear );
+        OnSelectionChanged();
     }
 }

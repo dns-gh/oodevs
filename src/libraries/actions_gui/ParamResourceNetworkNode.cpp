@@ -130,6 +130,7 @@ void ParamResourceNetworkNode::OnMenuClick( QAction* action )
     }
     if( group_ && IsOptional() )
         group_->setChecked( selected_ != 0 );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

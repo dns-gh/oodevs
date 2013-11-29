@@ -57,6 +57,7 @@ QWidget* ParamComboBox< T >::BuildInterface( const QString& objectName, QWidget*
     comboBox_->SetSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
+    connect( comboBox_, SIGNAL( activated( int ) ), SLOT( Update() ) );
     layout->addWidget( comboBox_ );
     return group_;
 }

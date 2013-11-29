@@ -35,6 +35,8 @@ public:
     T* GetCrossedElement() const;
     const ADN_Type_Vector_ABC< T >& GetVector() const;
     void SetVector( const ADN_Type_Vector_ABC< T >& vector );
+    void DisconnectName();
+    void Swap( ADN_CrossedRef< T >& other );
     using ADN_Ref_ABC::CheckValidity;
     virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     //@}
@@ -128,6 +130,33 @@ template< typename T >
 void ADN_CrossedRef< T >::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
 {
     ptr_.CheckValidity( checker, name, tab, subTab, optional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CrossedRef::DisconnectName
+// Created: ABR 2013-11-26
+// -----------------------------------------------------------------------------
+template< typename T >
+void ADN_CrossedRef< T >::DisconnectName()
+{
+    if( ptr_.GetData() )
+        strName_.Disconnect( &ptr_.GetData()->strName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CrossedRef::Swap
+// Created: ABR 2013-11-26
+// -----------------------------------------------------------------------------
+template< typename T >
+void ADN_CrossedRef< T >::Swap( ADN_CrossedRef< T >& other )
+{
+    ADN_TypePtr_InVector_ABC< T > ptrCopy( GetVector(), GetCrossedElement() );
+    DisconnectName();
+    SetVector( other.GetVector() );
+    SetCrossedElement( other.GetCrossedElement() );
+    other.DisconnectName();
+    other.SetVector( ptrCopy.GetVector() );
+    other.SetCrossedElement( ptrCopy.GetData() );
 }
 
 // -----------------------------------------------------------------------------

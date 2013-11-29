@@ -50,10 +50,9 @@ namespace ADN_Gui_Tools
             view.RemoveCurrentElement();
         else if( menuResult == 0 )
         {
-            ADN_VectorEditionDialog< SourceType, TargetType >* dialog;
-            dialog = new ADN_VectorEditionDialog< SourceType, TargetType >( view.objectName() + "_" + objectName, dialogTitle, &view );
-            dialog->AddVector( vectorName, vector, view.GetModel(), static_cast< ADN_Connector_Vector_ABC& >( view.GetConnector() ) );
-            dialog->exec();
+            ADN_VectorEditionDialog< SourceType, TargetType > dialog( view.objectName() + "_" + objectName, dialogTitle, &view );
+            dialog.AddVector( vectorName, vector, view.GetModel(), static_cast< ADN_Connector_Vector_ABC& >( view.GetConnector() ) );
+            dialog.exec();
         }
     }
 

@@ -89,13 +89,6 @@ public:
     virtual bool IsPickable() const;
     //@}
 
-    //! @name ReadOnly management // $$$$ ABR 2012-05-24: Move tools::ReadOnlyModable from Sword::tools to Tools::tools
-                                  //
-    //@{
-    virtual bool IsReadOnly() const;
-    void SetReadOnlyModes( int modes );
-    //@}
-
     //! @name Layer_ABC implementation
     //@{
     virtual QString GetName() const;
@@ -117,8 +110,6 @@ private:
     float         alpha_;
     std::string   passes_;
     bool          enabled_;
-    int           readOnlyModes_;
-    bool          readOnly_;
     //@}
 };
 

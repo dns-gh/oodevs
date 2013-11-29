@@ -71,7 +71,9 @@ QWidget* ParamHumanWoundList::BuildInterface( const QString& objectName, QWidget
     layout->addWidget( downBtn, 1, 1 );
 
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
+    connect( upBtn, SIGNAL( clicked() ), SLOT( Update() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
+    connect( downBtn, SIGNAL( clicked() ), SLOT( Update() ) );
     connect( list_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnContextMenu( const QPoint& ) ) );
     return group_;
 }
@@ -141,6 +143,7 @@ void ParamHumanWoundList::OnRemove()
     if( !index.isValid() )
         return;
     model_.removeRow( index.row() );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

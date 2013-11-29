@@ -45,6 +45,7 @@ QWidget* ParamStringField::BuildInterface( const QString& objectName, QWidget* p
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     pEdit_ = new QLineEdit( parent );
     pEdit_->setPlaceholderText( "Enter your text here" );
+    connect( pEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( Update() ) );
     layout->addWidget( pEdit_ );
     return group_;
 }

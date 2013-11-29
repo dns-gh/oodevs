@@ -48,6 +48,7 @@ QWidget* ParamDateTime::BuildInterface( const QString& objectName, QWidget* pare
     dateTimeEdit_ = new QDateTimeEdit( parent );
     dateTimeEdit_->setDateTime( date_ );
     connect( dateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
+    connect( dateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( Update() ) );
     layout->addWidget( dateTimeEdit_ );
     return group_;
 }

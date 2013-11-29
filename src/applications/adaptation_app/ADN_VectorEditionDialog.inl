@@ -24,9 +24,15 @@ ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( cons
     setMinimumSize( 400, 600 );
 
     // List
-    treeView_ = new QTreeWidget( this );
+    treeView_ = new QTreeView( this );
     treeView_->setObjectName( objectName + "_treeview" );
     treeView_->header()->setVisible( false );
+
+    dataModel_.reset( new QStandardItemModel( treeView_ ) );
+    proxyModel_.reset( new QSortFilterProxyModel( treeView_ ) );
+    proxyModel_->setSortLocaleAware( true );
+    proxyModel_->setSourceModel( dataModel_.get() );
+    treeView_->setModel( proxyModel_.get() );
 
     // Buttons
     okButton_ = new QPushButton();
@@ -67,7 +73,7 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::setVisible( bool visible
     if( visible )
     {
         treeView_->expandAll();
-        treeView_->sortItems( 0, Qt::AscendingOrder );
+        proxyModel_->sort( 0, Qt::AscendingOrder );
     }
     QDialog::setVisible( visible );
 }
@@ -79,30 +85,30 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::setVisible( bool visible
 template< typename SourceType, typename TargetType >
 void ADN_VectorEditionDialog< SourceType, TargetType >::accept()
 {
-    for( QTreeWidgetItemIterator itRoot = QTreeWidgetItemIterator( treeView_ ); *itRoot; ++itRoot )
+    for( int row = 0; row < dataModel_->rowCount(); ++row )
     {
-        QTreeWidgetItem* rootItem = *itRoot;
+        QStandardItem* rootItem = dataModel_->item( row );
         assert( rootItem );
         T_EditionInfo* vectorInfo = 0;
         for( auto itVector = editionInfos_.begin(); !vectorInfo && itVector != editionInfos_.end(); ++itVector )
-            if( ( *itVector )->name_ == rootItem->text( 0 ) )
+            if( ( *itVector )->name_ == rootItem->text() )
                 vectorInfo = &**itVector;
         if( !vectorInfo )
             continue;
 
         int addedCount = 0;
-        for( QTreeWidgetItemIterator itChild = QTreeWidgetItemIterator( itRoot ); *itChild; ++itChild )
+        for( int child = 0; child < rootItem->rowCount(); ++child )
         {
-            QTreeWidgetItem* childItem = *itChild;
+            QStandardItem* childItem = rootItem->child( child );
             assert( childItem );
-            SourceType* source = const_cast< SourceType* >( static_cast< const SourceType* >( childItem->data( 0, gui::Roles::DataRole ).value< kernel::VariantPointer >().ptr_ ) );
+            SourceType* source = const_cast< SourceType* >( static_cast< const SourceType* >( childItem->data( gui::Roles::DataRole ).value< kernel::VariantPointer >().ptr_ ) );
             if( !source )
                 continue;
-            const void* target = childItem->data( 0, gui::Roles::DataRole + 1 ).value< kernel::VariantPointer >().ptr_;
+            const void* target = childItem->data( gui::Roles::DataRole + 1 ).value< kernel::VariantPointer >().ptr_;
 
-            if( childItem->checkState( 0 ) == Qt::Checked && !target && ++addedCount )
+            if( childItem->checkState() == Qt::Checked && !target && ++addedCount )
                 vectorInfo->targetConnector_.AddItem( new TargetType( vectorInfo->source_, source ) );
-            else if( childItem->checkState( 0 ) == Qt::Unchecked && target )
+            else if( childItem->checkState() == Qt::Unchecked && target )
                 vectorInfo->targetConnector_.RemItem( const_cast< void* >( target ) );
         }
         if( addedCount > 0 )
@@ -113,11 +119,11 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::accept()
 
 namespace
 {
-    void AddVariantOnItem( QTreeWidgetItem* item, int role, const void* ptr )
+    void AddVariantOnItem( QStandardItem* item, int role, const void* ptr )
     {
         QVariant variant;
         variant.setValue( kernel::VariantPointer( ptr ) );
-        item->setData( 0, role, variant );
+        item->setData( variant, role );
     }
 }
 
@@ -130,15 +136,13 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString
 {
     editionInfos_.push_back( std::auto_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
 
-    QTreeWidgetItem* rootItem = new QTreeWidgetItem( treeView_ );
-    rootItem->setText( 0, vectorName );
+    QStandardItem* rootItem = new QStandardItem( vectorName );
     rootItem->setFlags( rootItem->flags() | Qt::ItemIsTristate );
 
     for( auto it = sourceVector.begin(); it != sourceVector.end(); ++it )
     {
         QString name = ( *it )->strName_.GetData().c_str();
-        QTreeWidgetItem* childItem = new QTreeWidgetItem( rootItem );
-        childItem->setText( 0, name );
+        QStandardItem* childItem = new QStandardItem( name );
         childItem->setFlags( childItem->flags() | Qt::ItemIsUserCheckable );
 
         AddVariantOnItem( childItem, gui::Roles::DataRole, *it );
@@ -146,13 +150,15 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString
         QList< QStandardItem* > items = targetModel.findItems( name );
         if( items.size() == 1 )
         {
-            childItem->setCheckState( 0, Qt::Checked );
+            childItem->setCheckState( Qt::Checked );
             AddVariantOnItem( childItem, gui::Roles::DataRole + 1, static_cast< ADN_StandardItem* >( items[ 0 ] )->GetData() );
         }
         else
         {
-            childItem->setCheckState( 0, Qt::Unchecked );
+            childItem->setCheckState( Qt::Unchecked );
             AddVariantOnItem( childItem, gui::Roles::DataRole + 1, 0 );
         }
+        rootItem->appendRow( childItem );
     }
+    dataModel_->appendRow( rootItem );
 }

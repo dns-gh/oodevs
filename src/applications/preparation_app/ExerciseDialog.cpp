@@ -170,7 +170,24 @@ void ExerciseDialog::Update( const Exercise& exercise )
     resources_->removeRows( 0, resources_->rowCount() );
     orderFiles_->removeRows( 0, orderFiles_->rowCount() );;
     exercise.Accept( *this );
-    OnChangeLang();
+
+    selectedLang_ = tools::Language::Current().c_str();
+    QString fullLanguage = config_.GetLanguages().Get( selectedLang_.toStdString() ).GetName().c_str();
+    auto itLang = briefings_.find( selectedLang_ );
+    if( itLang == briefings_.end() || itLang->second.isEmpty() )
+        for( auto it = config_.GetLanguages().GetVector().begin(); it != config_.GetLanguages().GetVector().end(); ++it )
+            if( it->IsSupported() && it->GetCode() != selectedLang_.toStdString() )
+            {
+                itLang = briefings_.find( it->GetCode().c_str() );
+                if( itLang != briefings_.end() && !itLang->second.isEmpty() )
+                {
+                    selectedLang_ = it->GetCode().c_str();
+                    fullLanguage = it->GetName().c_str();
+                    break;
+                }
+            }
+    briefing_->setText( briefings_[ selectedLang_ ] );
+    lang_->setCurrentText( fullLanguage );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,11 +265,7 @@ void ExerciseDialog::AddOrderFile( const tools::Path& file )
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnChangeLang()
 {
-    QString plainText = briefing_->toPlainText();
-    if( plainText.isEmpty() )
-        briefings_[ selectedLang_ ] = briefing_->toPlainText();
-    else
-        briefings_[ selectedLang_ ] = briefing_->toHtml();
+    briefings_[ selectedLang_ ] = briefing_->toPlainText().isEmpty() ? "" : briefing_->toHtml();
     selectedLang_ = lang_->GetValue();
     briefing_->setText( briefings_[ selectedLang_ ] );
 }

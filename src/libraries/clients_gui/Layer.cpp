@@ -27,8 +27,6 @@ Layer::Layer()
     , currentWidget_( 0 )
     , currentProxy_ ( 0 )
     , enabled_      ( true )
-    , readOnly_     ( false )
-    , readOnlyModes_( 0 )
 {
     // NOTHING
 }
@@ -290,24 +288,6 @@ bool Layer::IsEnabled() const
 bool Layer::IsVisible() const
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::IsReadOnly
-// Created: ABR 2012-05-23
-// -----------------------------------------------------------------------------
-bool Layer::IsReadOnly() const
-{
-    return GetCurrentMode() != -1 && ( readOnlyModes_ & GetCurrentMode() ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Layer::SetReadOnlyModes
-// Created: ABR 2012-05-23
-// -----------------------------------------------------------------------------
-void Layer::SetReadOnlyModes( int modes )
-{
-    readOnlyModes_ = modes;
 }
 
 // -----------------------------------------------------------------------------
