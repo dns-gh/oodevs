@@ -12,6 +12,7 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Types.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -64,6 +65,8 @@ private:
 private:
     //! @name Helpers
     //@{
+    bool HasTacticalLine() const;
+    bool HasNewLimit() const;
     virtual bool InternalCheckValidity() const;
     void Display( const QString& what );
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
@@ -79,6 +82,7 @@ private:
     QLabel* entityLabel_;
     const kernel::TacticalLine_ABC* potential_;
     const kernel::TacticalLine_ABC* selected_;
+    T_PointVector newPoints_;
     //@}
 };
 
