@@ -557,6 +557,7 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
             {
                 xos << xml::start( "action" );
                 action->Serialize( xos );
+                xos << xml::attribute( "time", event.GetEvent().begin );
                 xos << xml::end; //! action
             }
     }
