@@ -34,8 +34,8 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& 
     , nID_            ( message.knowledge().id() )
     , concentrationId_( message.concentration().id() )
     , position_       ( converter.ConvertToXY( message.position() ) )
-    , radius_         ( 0 )
     , deadRadius_     ( 0 )
+    , concentration_  ( 0 )
 {
     controller_.Create( *this );
 }
@@ -56,28 +56,26 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentrationKnowledgeUpdate& message )
 {
     static const float oneOnpi = 1.f / std::acos( -1.f );
-    if( message.has_attitude()  )
+    if( message.has_attitude() )
         eAttitude_ = static_cast< E_PopulationAttitude >( message.attitude() );
-    if( message.has_perceived()  )
+    if( message.has_perceived( ) )
         bIsPerceived_ = message.perceived() != 0;
-    if( message.has_alive()  )
+    if( message.has_alive() )
         nNbrAliveHumans_ = static_cast< unsigned int >( message.alive() );
-    if( message.has_dead()  )
+    if( message.has_dead() )
         nNbrDeadHumans_ = static_cast< unsigned int >( message.dead() );
-    if( message.has_concentration()  )
+    if( message.has_concentration() )
         concentrationId_ = message.concentration().id();
-    if( message.has_pertinence()  )
+    if( message.has_pertinence() )
         rRelevance_ = static_cast< float >( message.pertinence() );
 
-    const kernel::PopulationConcentration_ABC* concentration = resolver_.FindConcentration( concentrationId_ );
+    const PopulationConcentration* concentration = GetConcentration();
     const float density = concentration ? concentration->GetDensity() : 0.f;
     if( density > 0.f && nNbrAliveHumans_.IsSet() )
     {
         radius_     = std::sqrt( ( ( nNbrAliveHumans_ + nNbrDeadHumans_ ) / density ) * oneOnpi );
         deadRadius_ = std::sqrt( ( nNbrDeadHumans_ / density ) * oneOnpi );
     }
-    if( radius_ == 0 && concentration )
-        radius_ = static_cast< const PopulationConcentration* >( concentration )->GetRadius();
     controller_.Update( *this );
 }
 
@@ -131,18 +129,19 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 {
     if( !viewport.IsVisible( position_ ) )
         return;
-    if( resolver_.FindConcentration( concentrationId_ ) ) // $$$$ SBO 2007-02-27: isPerceived?
+    const float radius = GetRadius();
+    if( GetConcentration() && radius > 0 ) // $$$$ SBO 2007-02-27: isPerceived?
     {
         float currentColor[ 4 ];
         glPushAttrib( GL_CURRENT_BIT );
         glGetFloatv( GL_CURRENT_COLOR, currentColor );
         currentColor[ 3 ] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
         glColor4fv( currentColor );
-        tools.DrawDisc( position_, radius_ );
+        tools.DrawDisc( position_, radius );
         glColor4f( COLOR_BLACK );
         tools.DrawDisc( position_, deadRadius_ );
         SelectColor( eAttitude_ );
-        tools.DrawCircle( position_, radius_ );
+        tools.DrawCircle( position_, radius );
         glPopAttrib();
     }
 }
@@ -151,14 +150,10 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 // Name: PopulationConcentrationKnowledge::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
-    if( tools.IsPickingMode() )
-        tools.DrawDisc( position_, radius_ );
-    else
-        Draw( where, viewport, tools );
+    tools.DrawDisc( position_, GetRadius() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::GetNId
@@ -167,4 +162,28 @@ void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& where, con
 uint PopulationConcentrationKnowledge::GetNId() const
 {
     return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::GetRadius
+// Created: SLI 2013-11-28
+// -----------------------------------------------------------------------------
+float PopulationConcentrationKnowledge::GetRadius() const
+{
+    if( radius_ )
+        return *radius_;
+    if( const PopulationConcentration* concentration = GetConcentration() )
+        return concentration->GetRadius();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::GetConcentration
+// Created: SLI 2013-11-28
+// -----------------------------------------------------------------------------
+const PopulationConcentration* PopulationConcentrationKnowledge::GetConcentration() const
+{
+    if( !concentration_ )
+        concentration_ = static_cast< const PopulationConcentration* >( resolver_.FindConcentration( concentrationId_ ) );
+    return concentration_;
 }
