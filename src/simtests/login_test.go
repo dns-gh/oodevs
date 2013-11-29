@@ -118,6 +118,8 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
+	// http://jira.masagroup.net/browse/SWBUG-11396
+	c.Skip("unreliable")
 
 	waitForMessages := func(timeout time.Duration, seen chan *swapi.SwordMessage) {
 		select {
