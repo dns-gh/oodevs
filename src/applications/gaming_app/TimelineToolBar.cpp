@@ -81,7 +81,7 @@ void TimelineToolBar::Initialize( bool main )
     addWidget( searchWidget );
     connect( searchEdit, SIGNAL( textChanged( QString ) ), this, SLOT( OnFilterKeyword( QString ) ) );
 
-    engagedFilter_ = new QAction( tr( "    Display orders given to engaged units" ), this );
+    engagedFilter_ = new QAction( "    " + tr( "Display orders given to engaged units" ), this );
     connect( engagedFilter_, SIGNAL( toggled( bool ) ), this, SLOT( OnEngagedFilterToggled( bool ) ) );
     engagedFilter_->setCheckable( true );
     engagedFilter_->setChecked( displayEngaged_ );

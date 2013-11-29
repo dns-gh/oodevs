@@ -3315,16 +3315,16 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Afficher les tâches</translation>
     </message>
     <message>
-        <source>    Display orders given to engaged units</source>
-        <translation>    Afficher les ordres donnés aux unités embrayées</translation>
-    </message>
-    <message>
         <source>Display orders</source>
         <translation>Afficher les ordres</translation>
     </message>
     <message>
         <source>Switch orientation</source>
-        <translation>Changer l'orientation</translation>
+        <translation>Changer l&apos;orientation</translation>
+    </message>
+    <message>
+        <source>Display orders given to engaged units</source>
+        <translation>Afficher les ordres donnés aux unités embrayées</translation>
     </message>
 </context>
 <context>
