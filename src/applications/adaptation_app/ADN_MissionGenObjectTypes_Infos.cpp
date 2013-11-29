@@ -20,7 +20,7 @@ using namespace helpers;
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Data_ObjectInfos* ptr )
     : ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), ptr, true )
-    , isAllowed_( true )
+    , isAllowed_( false )
 {
     // NOTHING
 }
@@ -31,7 +31,7 @@ ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Da
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos()
     : ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true )
-    , isAllowed_( true )
+    , isAllowed_( false )
 {
     // NOTHING
 }
