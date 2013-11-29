@@ -129,6 +129,18 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
     DisplayFirer( item, result.firer_ );
     SetNumberOfChildren( item, 0 );
 
+    if( result.IsMiss() )
+    {
+        QStringList noDamage;
+        noDamage << tools::translate( "FireResultListView", "No damage" );
+        QTreeWidgetItem* subItem = new QTreeWidgetItem( noDamage );
+        QFont font = subItem->font( 0 );
+        font.setBold( true );
+        subItem->setFont( 0, font );
+        item->addChild( subItem );
+        return;
+    }
+
     QStringList equipments;
     equipments << tools::translate( "FireResultListView", "Equipments" )
         << tools::translate( "FireResultListView", "avail" )

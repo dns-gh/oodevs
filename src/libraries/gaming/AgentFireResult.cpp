@@ -12,13 +12,11 @@
 #include "Equipment.h"
 #include "protocol/Protocol.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time, const kernel::Entity_ABC* firer )
+AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time, const kernel::Entity_ABC* firer )
     : target_( resolver.Get( message.target().id() ) )
     , firer_( firer )
     , time_( time )
@@ -55,10 +53,37 @@ AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const t
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentFireResult constructor
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+AgentFireResult::AgentFireResult( const kernel::Agent_ABC& target, const QDateTime& time, const kernel::Entity_ABC* firer )
+    : target_( target )
+    , firer_( firer )
+    , time_( time )
+{
+    for( int i = 0; i < eNbrHumanWound; ++i )
+        casualties_[ i ].wound_ = E_HumanWound( i );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentFireResult destructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 AgentFireResult::~AgentFireResult()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFireResult::IsMiss
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+bool AgentFireResult::IsMiss() const
+{
+    for( int i = 0; i < eNbrHumanWound; ++i )
+    {
+        if( casualties_[ i ].troopers_ != 0 || casualties_[ i ].officers_ != 0 || casualties_[ i ].subOfficers_ != 0 )
+            return false;
+    }
+    return Count() == 0;
 }

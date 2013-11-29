@@ -103,6 +103,7 @@ template< typename T >
 void Explosions::UpdateData( const T& message )
 {
     const kernel::Entity_ABC* firer = factory_.GetFirer( message );
+    Update( factory_.GetTarget( message ), firer );
 
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
         Update( message.units_damages().elem( i ), firer );
@@ -175,6 +176,25 @@ void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::E
         {
             delete populationExplosions_.front();
             populationExplosions_.pop_front();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Explosions::Update
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer )
+{
+    const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target );
+    AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer );
+    if( result )
+    {
+        agentExplosions_.push_back( result );
+        if( agentExplosions_.size() > 20 )
+        {
+            delete agentExplosions_.front();
+            agentExplosions_.pop_front();
         }
     }
 }

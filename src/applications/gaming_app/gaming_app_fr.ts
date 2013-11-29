@@ -974,6 +974,10 @@ Raison: %3
         <source>Target</source>
         <translation>Cible</translation>
     </message>
+    <message>
+        <source>No damage</source>
+        <translation>Aucun dégât</translation>
+    </message>
 </context>
 <context>
     <name>HumansListView</name>
