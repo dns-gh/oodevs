@@ -192,7 +192,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             {
                 T_PointVector firstPointVector;
                 firstPointVector.push_back( (*resultList_.begin())->GetPos() );
-                if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, agent ) )
+                if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, &agent ) )
                     continue;
             }
             if( pObjectLocation->GetType() != TER_Localisation::eNone )

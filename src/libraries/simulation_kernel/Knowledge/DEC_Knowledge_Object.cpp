@@ -1034,13 +1034,13 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 // Name: DEC_Knowledge_Object::IsObjectInsidePathPoint
 // Created: JSR 2010-12-22
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const
+bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC* agent ) const
 {
     static const double epsilon = 1e-8;
-    if( pObjectKnown_ )
+    if( agent && pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
         {
-            E_CrossingHeight crossingHeight = agent.GetType().GetUnitType().GetCrossingHeight();
+            E_CrossingHeight crossingHeight = agent->GetType().GetUnitType().GetCrossingHeight();
             if( crossingHeight == eCrossingHeightAlways )
                 return false;
             const TER_Localisation& localisation = flood->GetLocalisation();
