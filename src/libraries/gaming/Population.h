@@ -98,6 +98,7 @@ private:
     void Update();
     void CreateDictionary();
     void ComputeCenter();
+    QString GetAttitude() const;
     //@}
 
 private:
@@ -116,6 +117,7 @@ private:
     kernel::OptionalValue< int > wounded_;
     kernel::OptionalValue< int > contaminated_;
     kernel::OptionalValue< int > dead_;
+    kernel::OptionalValue< QString > attitude_;
     //@}
 
 };

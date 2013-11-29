@@ -424,6 +424,10 @@
         <source>State</source>
         <translation>Etat</translation>
     </message>
+    <message>
+        <source>State/Mood</source>
+        <translation>Etat/Attitude</translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>
