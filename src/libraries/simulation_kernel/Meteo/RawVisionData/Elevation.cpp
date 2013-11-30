@@ -15,49 +15,41 @@ bool SplitSegmentOnGrid( double cellSize, MT_Vector2D from, MT_Vector2D to,
 {
     int x1 = static_cast< int >( from.rX_ / cellSize );
     int y1 = static_cast< int >( from.rY_ / cellSize );
-    const int x2 = static_cast< int >( to.rX_ / cellSize );
-    const int y2 = static_cast< int >( to.rY_ / cellSize );
+    int x2 = static_cast< int >( to.rX_ / cellSize );
+    int y2 = static_cast< int >( to.rY_ / cellSize );
 
     // Bresenham's line algorithm
-    const int delta_x = x2 - x1;
-    const int ix = (delta_x > 0) - (delta_x < 0);
-    const int d_x = std::abs( delta_x ) << 1;
-    const int delta_y = y2 - y1;
-    const int iy = (delta_y > 0) - (delta_y < 0);
-    const int d_y = std::abs( delta_y ) << 1;
-    if( d_x >= d_y )
+    int delta_x = x2 - x1;
+    int ix = (delta_x > 0) - (delta_x < 0);
+    int d_x = std::abs( delta_x ) << 1;
+    int delta_y = y2 - y1;
+    int iy = (delta_y > 0) - (delta_y < 0);
+    int d_y = std::abs( delta_y ) << 1;
+    const bool swap = d_x < d_y;
+    if( swap )
     {
-        int error = d_y - ( d_x >> 1 );
-        while( x1 != x2 )
-        {
-            MT_Vector2D origin( x1 * cellSize, y1 * cellSize );
-            if( error >= 0 && ( error || ix > 0 ) )
-            {
-                error -= d_x;
-                y1 += iy;
-            }
-            error += d_y;
-            x1 += ix;
-            if( f( origin, MT_Vector2D( x1 * cellSize, y1 * cellSize ) ) )
-                return true;
-        }
+        std::swap( x1, y1 );
+        std::swap( x2, y2 );
+        std::swap( d_x, d_y );
+        std::swap( ix, iy );
+        std::swap( delta_x, delta_y );
     }
-    else
+    int error = d_y - ( d_x >> 1 );
+    while( x1 != x2 )
     {
-        int error = d_x - ( d_y >> 1 );
-        while( y1 != y2 )
+        MT_Vector2D origin( x1 * cellSize, y1 * cellSize );
+        if( error >= 0 && ( error || ix > 0 ) )
         {
-            MT_Vector2D origin( x1 * cellSize, y1 * cellSize );
-            if( error >= 0 && ( error || iy > 0 ) )
-            {
-                error -= d_y;
-                x1 += ix;
-            }
-            error += d_x;
+            error -= d_x;
             y1 += iy;
-            if( f( origin, MT_Vector2D( x1 * cellSize, y1 * cellSize ) ) )
-                return true;
         }
+        error += d_y;
+        x1 += ix;
+        const bool stop = swap
+            ? f( MT_Vector2D( origin.GetY(), origin.GetX() ), MT_Vector2D( y1 * cellSize, x1 * cellSize ) )
+            : f( origin, MT_Vector2D( x1 * cellSize, y1 * cellSize ) );
+        if( stop )
+            return true;
     }
     return false;
 }
