@@ -293,14 +293,16 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
 
     auto elevationChecker = boost::bind( &IsSlopeTooSteep,
             boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
-    if( SplitSegmentOnGrid( altitudeData_.GetCellSize(), from, to, elevationChecker ) )
+    if( SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ),
+                from, to, elevationChecker ) )
         return IMPOSSIBLE_WAY( "Slope" );
 
     if( rSlopeDeceleration_ != 0 )
     {
         SlopeSpeedModifier slopeSpeedModifier;
         auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( altitudeData_ ), _1, _2 );
-        SplitSegmentOnGrid( altitudeData_.GetCellSize(), from, to, decelerationFunc );
+        SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ),
+                from, to, decelerationFunc );
         slopeSpeedModifier.ModifySpeed( rSpeed, rSlopeDeceleration_, to );
         if( rSpeed == 0 )
             return IMPOSSIBLE_WAY( "Speed on slope == 0" );

@@ -294,7 +294,8 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
         const PHY_RawVisionData& elevation = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
         auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation ), _1, _2 );
         const MT_Vector2D& startPoint = resultList_.back()->GetPos();
-        SplitSegmentOnGrid( elevation.GetCellSize(), startPoint, vPos, decelerationFunc );
+        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
+                startPoint, vPos, decelerationFunc );
         const SlopeSpeedModifier::T_Slopes& slopes = slopeSpeedModifier.GetSlopes();
         for( auto itSlope = slopes.begin(); itSlope != slopes.end(); ++itSlope )
         {
