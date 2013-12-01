@@ -145,74 +145,74 @@ func (model *Model) Close() {
 }
 
 var (
-	simToClientHandlers = []func(model *Model, m *sword.SimToClient_Content) error{
-		(*Model).handleAutomatAttributes,
-		(*Model).handleAutomatChangeKnowledgeGroup,
-		(*Model).handleAutomatChangeLogisticLinks,
-		(*Model).handleAutomatChangeSuperior,
-		(*Model).handleAutomatCreation,
-		(*Model).handleAutomatOrder,
-		(*Model).handleChangeDiplomacy,
-		(*Model).handleControlBeginTick,
-		(*Model).handleControlInformation,
-		(*Model).handleControlGlobalWeather,
-		(*Model).handleControlLocalWeatherCreation,
-		(*Model).handleControlLocalWeatherDestruction,
-		(*Model).handleControlSendCurrentStateEnd,
-		(*Model).handleCrowdConcentrationCreation,
-		(*Model).handleCrowdConcentrationDestruction,
-		(*Model).handleCrowdConcentrationUpdate,
-		(*Model).handleCrowdCreation,
-		(*Model).handleCrowdFlowCreation,
-		(*Model).handleCrowdFlowDestruction,
-		(*Model).handleCrowdFlowUpdate,
-		(*Model).handleCrowdKnowledgeCreation,
-		(*Model).handleCrowdOrder,
-		(*Model).handleCrowdUpdate,
-		(*Model).handleFormationChangeSuperior,
-		(*Model).handleFormationCreation,
-		(*Model).handleFragOrder,
-		(*Model).handleKnowledgeGroupCreation,
-		(*Model).handleKnowledgeGroupUpdate,
-		(*Model).handleLogSupplyQuotas,
-		(*Model).handleObjectCreation,
-		(*Model).handleObjectDestruction,
-		(*Model).handleObjectUpdate,
-		(*Model).handleObjectKnowledgeCreation,
-		(*Model).handlePartyCreation,
-		(*Model).handlePopulationCreation,
-		(*Model).handlePopulationUpdate,
-		(*Model).handleUnitAttributes,
-		(*Model).handleUnitChangeSuperior,
-		(*Model).handleUnitCreation,
-		(*Model).handleUnitDestruction,
-		(*Model).handleUnitKnowledgeCreation,
-		(*Model).handleUnitOrder,
-		(*Model).handleUnitPathfind,
-		(*Model).handleUnitVisionCones,
-		(*Model).handleUrbanCreation,
-		(*Model).handleUrbanUpdate,
-		(*Model).handleLogMaintenanceHandlingCreation,
-		(*Model).handleLogMaintenanceHandlingUpdate,
-		(*Model).handleLogMaintenanceHandlingDestruction,
-		(*Model).handleLogMedicalHandlingCreation,
-		(*Model).handleLogMedicalHandlingUpdate,
-		(*Model).handleLogMedicalHandlingDestruction,
-		(*Model).handleLogFuneralHandlingCreation,
-		(*Model).handleLogFuneralHandlingUpdate,
-		(*Model).handleLogFuneralHandlingDestruction,
-		(*Model).handleLogSupplyHandlingCreation,
-		(*Model).handleLogSupplyHandlingUpdate,
-		(*Model).handleLogSupplyHandlingDestruction,
+	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
+		(*ModelData).handleAutomatAttributes,
+		(*ModelData).handleAutomatChangeKnowledgeGroup,
+		(*ModelData).handleAutomatChangeLogisticLinks,
+		(*ModelData).handleAutomatChangeSuperior,
+		(*ModelData).handleAutomatCreation,
+		(*ModelData).handleAutomatOrder,
+		(*ModelData).handleChangeDiplomacy,
+		(*ModelData).handleControlBeginTick,
+		(*ModelData).handleControlInformation,
+		(*ModelData).handleControlGlobalWeather,
+		(*ModelData).handleControlLocalWeatherCreation,
+		(*ModelData).handleControlLocalWeatherDestruction,
+		(*ModelData).handleControlSendCurrentStateEnd,
+		(*ModelData).handleCrowdConcentrationCreation,
+		(*ModelData).handleCrowdConcentrationDestruction,
+		(*ModelData).handleCrowdConcentrationUpdate,
+		(*ModelData).handleCrowdCreation,
+		(*ModelData).handleCrowdFlowCreation,
+		(*ModelData).handleCrowdFlowDestruction,
+		(*ModelData).handleCrowdFlowUpdate,
+		(*ModelData).handleCrowdKnowledgeCreation,
+		(*ModelData).handleCrowdOrder,
+		(*ModelData).handleCrowdUpdate,
+		(*ModelData).handleFormationChangeSuperior,
+		(*ModelData).handleFormationCreation,
+		(*ModelData).handleFragOrder,
+		(*ModelData).handleKnowledgeGroupCreation,
+		(*ModelData).handleKnowledgeGroupUpdate,
+		(*ModelData).handleLogSupplyQuotas,
+		(*ModelData).handleObjectCreation,
+		(*ModelData).handleObjectDestruction,
+		(*ModelData).handleObjectUpdate,
+		(*ModelData).handleObjectKnowledgeCreation,
+		(*ModelData).handlePartyCreation,
+		(*ModelData).handlePopulationCreation,
+		(*ModelData).handlePopulationUpdate,
+		(*ModelData).handleUnitAttributes,
+		(*ModelData).handleUnitChangeSuperior,
+		(*ModelData).handleUnitCreation,
+		(*ModelData).handleUnitDestruction,
+		(*ModelData).handleUnitKnowledgeCreation,
+		(*ModelData).handleUnitOrder,
+		(*ModelData).handleUnitPathfind,
+		(*ModelData).handleUnitVisionCones,
+		(*ModelData).handleUrbanCreation,
+		(*ModelData).handleUrbanUpdate,
+		(*ModelData).handleLogMaintenanceHandlingCreation,
+		(*ModelData).handleLogMaintenanceHandlingUpdate,
+		(*ModelData).handleLogMaintenanceHandlingDestruction,
+		(*ModelData).handleLogMedicalHandlingCreation,
+		(*ModelData).handleLogMedicalHandlingUpdate,
+		(*ModelData).handleLogMedicalHandlingDestruction,
+		(*ModelData).handleLogFuneralHandlingCreation,
+		(*ModelData).handleLogFuneralHandlingUpdate,
+		(*ModelData).handleLogFuneralHandlingDestruction,
+		(*ModelData).handleLogSupplyHandlingCreation,
+		(*ModelData).handleLogSupplyHandlingUpdate,
+		(*ModelData).handleLogSupplyHandlingDestruction,
 	}
-	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
-		(*Model).handleProfileCreation,
-		(*Model).handleProfileDestruction,
-		(*Model).handleProfileUpdate,
+	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
+		(*ModelData).handleProfileCreation,
+		(*ModelData).handleProfileDestruction,
+		(*ModelData).handleProfileUpdate,
 	}
-	aarToClientHandlers = []func(model *Model, m *sword.AarToClient_Content) error{
-		(*Model).handleAarInformation,
-		(*Model).handleIndicator,
+	aarToClientHandlers = []func(model *ModelData, m *sword.AarToClient_Content) error{
+		(*ModelData).handleAarInformation,
+		(*ModelData).handleIndicator,
 	}
 )
 
@@ -220,7 +220,7 @@ func (model *Model) update(msg *SwordMessage) error {
 	if msg.SimulationToClient != nil {
 		m := msg.SimulationToClient.GetMessage()
 		for _, handler := range simToClientHandlers {
-			err := handler(model, m)
+			err := handler(model.data, m)
 			if err != ErrSkipHandler {
 				return err
 			}
@@ -228,7 +228,7 @@ func (model *Model) update(msg *SwordMessage) error {
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
 		for _, handler := range authToClientHandlers {
-			err := handler(model, m)
+			err := handler(model.data, m)
 			if err != ErrSkipHandler {
 				return err
 			}
@@ -236,7 +236,7 @@ func (model *Model) update(msg *SwordMessage) error {
 	} else if msg.AarToClient != nil {
 		m := msg.AarToClient.GetMessage()
 		for _, handler := range aarToClientHandlers {
-			err := handler(model, m)
+			err := handler(model.data, m)
 			if err != ErrSkipHandler {
 				return err
 			}
