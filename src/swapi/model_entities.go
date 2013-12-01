@@ -485,6 +485,8 @@ type ModelData struct {
 	Tick         int32
 	Time         time.Time
 	TickDuration int32
+	// True once the initial state has been received
+	Ready bool
 }
 
 func NewModelData() *ModelData {

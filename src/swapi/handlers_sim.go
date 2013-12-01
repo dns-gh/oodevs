@@ -39,7 +39,7 @@ func (model *Model) handleControlSendCurrentStateEnd(m *sword.SimToClient_Conten
 	if m.GetControlSendCurrentStateEnd() == nil {
 		return ErrSkipHandler
 	}
-	model.ready = true
+	model.data.Ready = true
 	return nil
 }
 

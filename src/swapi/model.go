@@ -51,8 +51,6 @@ type ModelErrorHandler func(*ModelData, *SwordMessage, error) error
 // result freely.
 type Model struct {
 	// State only touched by the run() goroutine
-	// True once the initial state has been received
-	ready        bool
 	conds        []*modelCond
 	data         *ModelData
 	errorHandler ModelErrorHandler
@@ -316,7 +314,7 @@ func (model *Model) waitCond(timeout time.Duration,
 func (model *Model) IsReady() bool {
 	ready := false
 	model.waitCommand(func(model *Model) {
-		ready = model.ready
+		ready = model.data.Ready
 	})
 	return ready
 }
@@ -324,7 +322,7 @@ func (model *Model) IsReady() bool {
 // Wait for the model to become ready, return false otherwise.
 func (model *Model) WaitReady(timeout time.Duration) bool {
 	return model.waitCond(timeout, func(model *Model) bool {
-		return model.ready
+		return model.data.Ready
 	})
 }
 
