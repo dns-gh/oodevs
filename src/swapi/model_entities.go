@@ -809,3 +809,104 @@ func (model *ModelData) removeObject(objectId uint32) bool {
 	delete(model.Objects, objectId)
 	return size != len(model.Objects)
 }
+
+var (
+	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
+		(*ModelData).handleAutomatAttributes,
+		(*ModelData).handleAutomatChangeKnowledgeGroup,
+		(*ModelData).handleAutomatChangeLogisticLinks,
+		(*ModelData).handleAutomatChangeSuperior,
+		(*ModelData).handleAutomatCreation,
+		(*ModelData).handleAutomatOrder,
+		(*ModelData).handleChangeDiplomacy,
+		(*ModelData).handleControlBeginTick,
+		(*ModelData).handleControlInformation,
+		(*ModelData).handleControlGlobalWeather,
+		(*ModelData).handleControlLocalWeatherCreation,
+		(*ModelData).handleControlLocalWeatherDestruction,
+		(*ModelData).handleControlSendCurrentStateEnd,
+		(*ModelData).handleCrowdConcentrationCreation,
+		(*ModelData).handleCrowdConcentrationDestruction,
+		(*ModelData).handleCrowdConcentrationUpdate,
+		(*ModelData).handleCrowdCreation,
+		(*ModelData).handleCrowdFlowCreation,
+		(*ModelData).handleCrowdFlowDestruction,
+		(*ModelData).handleCrowdFlowUpdate,
+		(*ModelData).handleCrowdKnowledgeCreation,
+		(*ModelData).handleCrowdOrder,
+		(*ModelData).handleCrowdUpdate,
+		(*ModelData).handleFormationChangeSuperior,
+		(*ModelData).handleFormationCreation,
+		(*ModelData).handleFragOrder,
+		(*ModelData).handleKnowledgeGroupCreation,
+		(*ModelData).handleKnowledgeGroupUpdate,
+		(*ModelData).handleLogSupplyQuotas,
+		(*ModelData).handleObjectCreation,
+		(*ModelData).handleObjectDestruction,
+		(*ModelData).handleObjectUpdate,
+		(*ModelData).handleObjectKnowledgeCreation,
+		(*ModelData).handlePartyCreation,
+		(*ModelData).handlePopulationCreation,
+		(*ModelData).handlePopulationUpdate,
+		(*ModelData).handleUnitAttributes,
+		(*ModelData).handleUnitChangeSuperior,
+		(*ModelData).handleUnitCreation,
+		(*ModelData).handleUnitDestruction,
+		(*ModelData).handleUnitKnowledgeCreation,
+		(*ModelData).handleUnitOrder,
+		(*ModelData).handleUnitPathfind,
+		(*ModelData).handleUnitVisionCones,
+		(*ModelData).handleUrbanCreation,
+		(*ModelData).handleUrbanUpdate,
+		(*ModelData).handleLogMaintenanceHandlingCreation,
+		(*ModelData).handleLogMaintenanceHandlingUpdate,
+		(*ModelData).handleLogMaintenanceHandlingDestruction,
+		(*ModelData).handleLogMedicalHandlingCreation,
+		(*ModelData).handleLogMedicalHandlingUpdate,
+		(*ModelData).handleLogMedicalHandlingDestruction,
+		(*ModelData).handleLogFuneralHandlingCreation,
+		(*ModelData).handleLogFuneralHandlingUpdate,
+		(*ModelData).handleLogFuneralHandlingDestruction,
+		(*ModelData).handleLogSupplyHandlingCreation,
+		(*ModelData).handleLogSupplyHandlingUpdate,
+		(*ModelData).handleLogSupplyHandlingDestruction,
+	}
+	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
+		(*ModelData).handleProfileCreation,
+		(*ModelData).handleProfileDestruction,
+		(*ModelData).handleProfileUpdate,
+	}
+	aarToClientHandlers = []func(model *ModelData, m *sword.AarToClient_Content) error{
+		(*ModelData).handleAarInformation,
+		(*ModelData).handleIndicator,
+	}
+)
+
+func (model *ModelData) update(msg *SwordMessage) error {
+	if msg.SimulationToClient != nil {
+		m := msg.SimulationToClient.GetMessage()
+		for _, handler := range simToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	} else if msg.AuthenticationToClient != nil {
+		m := msg.AuthenticationToClient.GetMessage()
+		for _, handler := range authToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	} else if msg.AarToClient != nil {
+		m := msg.AarToClient.GetMessage()
+		for _, handler := range aarToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	}
+	return nil
+}
