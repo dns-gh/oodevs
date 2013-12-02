@@ -399,7 +399,9 @@ QDateTime Simulation::GetDateTime() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetRealDateTime() const
 {
-    return tools::IsoStringToQDateTime( realDate_ );
+    QDateTime date = tools::IsoStringToQDateTime( realDate_ );
+    date.setTimeSpec( Qt::UTC );
+    return date.toLocalTime();
 }
 
 // -----------------------------------------------------------------------------
