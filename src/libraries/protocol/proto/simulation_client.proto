@@ -1456,13 +1456,13 @@ message SeqOfUnitHumanFireDamage {
 */
 message UnitEquipmentFireDamage {
     //! The equipment
-    required Id            equipement  = 1;
+    required Id           equipement   = 1;
     //! The number of available equipements
-    required uint32        available   = 2;
+    required int32        available    = 2;
     //! The number of unavailable equipements
-    required uint32        unavailable = 3;
+    required int32        unavailable  = 3;
     //! The number of repairable equipements
-    required uint32        repairable  = 4;
+    required int32        repairable   = 4;
 }
 
 /** @struct SeqOfUnitEquipmentFireDamage
