@@ -2166,7 +2166,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Some translations are empty or unfinished. If you continue you will have values in both %1 and %2 as reference language, and may lost some unfinished translations. Proceed anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Des traductions manquent ou ne sont pas terminées. Si vous continuez, vous aurez des valeurs à la fois en %1 et en %2 comme langue de référence, et risquez de perdre des traductions non terminées. Souhaitez-vous continuer malgré tout?</translation>
     </message>
 </context>
 <context>
