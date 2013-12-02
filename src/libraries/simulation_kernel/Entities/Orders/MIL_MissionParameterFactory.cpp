@@ -55,7 +55,7 @@
 #include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Name: MIL_MissionParameterFactory::Create
 // Created: LMT 2010-04-19
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& /*type*/ )
@@ -88,7 +88,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
@@ -178,7 +178,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgentKnowledge
+// Name: MIL_MissionParameterFactory::CreateAgentKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
@@ -188,7 +188,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDotationType
+// Name: MIL_MissionParameterFactory::CreateDotationType
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDotationType( const PHY_DotationCategory* dotationType )
@@ -198,7 +198,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateD
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateEquipmentType
+// Name: MIL_MissionParameterFactory::CreateEquipmentType
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateEquipmentType( const PHY_ComposanteTypePion* equipmentType )
@@ -208,7 +208,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateE
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( float param )
@@ -218,7 +218,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( int id )
@@ -228,7 +228,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateInteger
+// Name: MIL_MissionParameterFactory::CreateInteger
 // Created: LDC 2011-05-09
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateInteger( int id )
@@ -238,7 +238,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateI
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateObjectKnowledge
+// Name: MIL_MissionParameterFactory::CreateObjectKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
@@ -248,7 +248,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateO
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion
+// Name: MIL_MissionParameterFactory::CreatePion
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion( const DEC_Decision_ABC* pion )
@@ -258,7 +258,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgent
+// Name: MIL_MissionParameterFactory::CreateAgent
 // Created: MCO 2012-12-03
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgent( const MIL_AgentPion& pion )
@@ -267,7 +267,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge
+// Name: MIL_MissionParameterFactory::CreatePopulationKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population > populationKnowledge )
@@ -277,7 +277,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge
+// Name: MIL_MissionParameterFactory::CreatePopulationKnowledge
 // Created: ABR 2012-11-29
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( DEC_Decision_ABC* caller, int knowledgeId )
@@ -290,7 +290,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const std::string& message )
@@ -300,7 +300,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateStage
+// Name: MIL_MissionParameterFactory::CreateStage
 // Created: ABR 2012-12-18
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateStage( const std::string& message )
@@ -310,7 +310,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateS
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateTir
+// Name: MIL_MissionParameterFactory::CreateTir
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateTir( int id )
@@ -322,7 +322,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction
+// Name: MIL_MissionParameterFactory::CreateLimaFunction
 // Created: MMC 2013-10-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLimaFunction( unsigned int id )
@@ -331,7 +331,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateL
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePoint
+// Name: MIL_MissionParameterFactory::CreatePoint
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePoint( const MT_Vector2D& point )
@@ -341,7 +341,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLocation
+// Name: MIL_MissionParameterFactory::CreateLocation
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLocation( boost::shared_ptr< TER_Localisation > pLocation )
@@ -351,7 +351,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateL
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock
+// Name: MIL_MissionParameterFactory::CreateUrbanBlock
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock( MIL_UrbanObject_ABC* pUrbanblock )
@@ -361,7 +361,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateU
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetwork
+// Name: MIL_MissionParameterFactory::CreateResourceNetwork
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkNode( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
@@ -371,7 +371,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateR
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkType
+// Name: MIL_MissionParameterFactory::CreateResourceNetworkType
 // Created: ABR 2012-02-15
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkType( const PHY_ResourceNetworkType* resourceNetworkType )
@@ -393,7 +393,7 @@ void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePathConst
+// Name: MIL_MissionParameterFactory::CreatePathConst
 // Created: LDC 2009-07-08
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePathConst( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
@@ -415,7 +415,7 @@ void MIL_MissionParameterFactory::AssignPathConst( boost::shared_ptr< MIL_Missio
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath
+// Name: MIL_MissionParameterFactory::CreatePath
 // Created: LDC 2009-07-10
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath( boost::shared_ptr< MT_Vector2D > point )
@@ -425,7 +425,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection
+// Name: MIL_MissionParameterFactory::CreateDirection
 // Created: PSN
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection( boost::shared_ptr< MT_Vector2D > direction )
@@ -435,7 +435,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateD
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateGenObject
+// Name: MIL_MissionParameterFactory::CreateGenObject
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateGenObject( boost::shared_ptr< DEC_Gen_Object > param )
@@ -456,7 +456,7 @@ void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Missi
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat
+// Name: MIL_MissionParameterFactory::CreateAutomat
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat( DEC_Decision_ABC* automat )
