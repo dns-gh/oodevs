@@ -52,6 +52,7 @@ public:
     static const std::string& Current();
     static void SetCurrent( const std::string& language );
     static void InitFromRegistry();
+    static void SetCanUseInvalidCurrent( bool canUseInvalidCurrent );
     //@}
 
 private:
@@ -66,6 +67,7 @@ private:
     //! @name Static member data
     //@{
     static std::string current_;
+    static bool canUseInvalidCurrent_;
     //@}
 };
 
