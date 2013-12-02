@@ -48,6 +48,8 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, IsNil)
 
 	// Cannot order with an invalid mission identifier
 	_, err = client.SendUnitOrder(unit.Id, InvalidIdentifier, params)
