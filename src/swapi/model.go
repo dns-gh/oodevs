@@ -10,7 +10,6 @@ package swapi
 
 import (
 	"errors"
-	"sword"
 	"sync"
 	"time"
 )
@@ -51,8 +50,6 @@ type ModelErrorHandler func(*ModelData, *SwordMessage, error) error
 // result freely.
 type Model struct {
 	// State only touched by the run() goroutine
-	// True once the initial state has been received
-	ready        bool
 	conds        []*modelCond
 	data         *ModelData
 	errorHandler ModelErrorHandler
@@ -107,7 +104,7 @@ func (model *Model) run() error {
 
 	for rq := range model.requests {
 		if rq.Message != nil {
-			if err := model.update(rq.Message); err != nil {
+			if err := model.data.update(rq.Message); err != nil {
 				err = model.errorHandler(model.data, rq.Message, err)
 				if err != nil {
 					for _, cond := range model.conds {
@@ -144,107 +141,6 @@ func (model *Model) Close() {
 		close(model.requests)
 	}
 	model.running.Wait()
-}
-
-var (
-	simToClientHandlers = []func(model *Model, m *sword.SimToClient_Content) error{
-		(*Model).handleAutomatAttributes,
-		(*Model).handleAutomatChangeKnowledgeGroup,
-		(*Model).handleAutomatChangeLogisticLinks,
-		(*Model).handleAutomatChangeSuperior,
-		(*Model).handleAutomatCreation,
-		(*Model).handleAutomatOrder,
-		(*Model).handleChangeDiplomacy,
-		(*Model).handleControlBeginTick,
-		(*Model).handleControlInformation,
-		(*Model).handleControlGlobalWeather,
-		(*Model).handleControlLocalWeatherCreation,
-		(*Model).handleControlLocalWeatherDestruction,
-		(*Model).handleControlSendCurrentStateEnd,
-		(*Model).handleCrowdConcentrationCreation,
-		(*Model).handleCrowdConcentrationDestruction,
-		(*Model).handleCrowdConcentrationUpdate,
-		(*Model).handleCrowdCreation,
-		(*Model).handleCrowdFlowCreation,
-		(*Model).handleCrowdFlowDestruction,
-		(*Model).handleCrowdFlowUpdate,
-		(*Model).handleCrowdKnowledgeCreation,
-		(*Model).handleCrowdOrder,
-		(*Model).handleCrowdUpdate,
-		(*Model).handleFormationChangeSuperior,
-		(*Model).handleFormationCreation,
-		(*Model).handleFragOrder,
-		(*Model).handleKnowledgeGroupCreation,
-		(*Model).handleKnowledgeGroupUpdate,
-		(*Model).handleLogSupplyQuotas,
-		(*Model).handleObjectCreation,
-		(*Model).handleObjectDestruction,
-		(*Model).handleObjectUpdate,
-		(*Model).handleObjectKnowledgeCreation,
-		(*Model).handlePartyCreation,
-		(*Model).handlePopulationCreation,
-		(*Model).handlePopulationUpdate,
-		(*Model).handleUnitAttributes,
-		(*Model).handleUnitChangeSuperior,
-		(*Model).handleUnitCreation,
-		(*Model).handleUnitDestruction,
-		(*Model).handleUnitKnowledgeCreation,
-		(*Model).handleUnitOrder,
-		(*Model).handleUnitPathfind,
-		(*Model).handleUnitVisionCones,
-		(*Model).handleUrbanCreation,
-		(*Model).handleUrbanUpdate,
-		(*Model).handleLogMaintenanceHandlingCreation,
-		(*Model).handleLogMaintenanceHandlingUpdate,
-		(*Model).handleLogMaintenanceHandlingDestruction,
-		(*Model).handleLogMedicalHandlingCreation,
-		(*Model).handleLogMedicalHandlingUpdate,
-		(*Model).handleLogMedicalHandlingDestruction,
-		(*Model).handleLogFuneralHandlingCreation,
-		(*Model).handleLogFuneralHandlingUpdate,
-		(*Model).handleLogFuneralHandlingDestruction,
-		(*Model).handleLogSupplyHandlingCreation,
-		(*Model).handleLogSupplyHandlingUpdate,
-		(*Model).handleLogSupplyHandlingDestruction,
-	}
-	authToClientHandlers = []func(model *Model, m *sword.AuthenticationToClient_Content) error{
-		(*Model).handleProfileCreation,
-		(*Model).handleProfileDestruction,
-		(*Model).handleProfileUpdate,
-	}
-	aarToClientHandlers = []func(model *Model, m *sword.AarToClient_Content) error{
-		(*Model).handleAarInformation,
-		(*Model).handleIndicator,
-	}
-)
-
-func (model *Model) update(msg *SwordMessage) error {
-	if msg.SimulationToClient != nil {
-		m := msg.SimulationToClient.GetMessage()
-		for _, handler := range simToClientHandlers {
-			err := handler(model, m)
-			if err != ErrSkipHandler {
-				return err
-			}
-		}
-	} else if msg.AuthenticationToClient != nil {
-		m := msg.AuthenticationToClient.GetMessage()
-		for _, handler := range authToClientHandlers {
-			err := handler(model, m)
-			if err != ErrSkipHandler {
-				return err
-			}
-		}
-	} else if msg.AarToClient != nil {
-		m := msg.AarToClient.GetMessage()
-		for _, handler := range aarToClientHandlers {
-			err := handler(model, m)
-			if err != ErrSkipHandler {
-				return err
-			}
-		}
-	}
-	return nil
 }
 
 // Register a handler on supplied client and start processing messages
@@ -316,7 +212,7 @@ func (model *Model) waitCond(timeout time.Duration,
 func (model *Model) IsReady() bool {
 	ready := false
 	model.waitCommand(func(model *Model) {
-		ready = model.ready
+		ready = model.data.Ready
 	})
 	return ready
 }
@@ -324,7 +220,7 @@ func (model *Model) IsReady() bool {
 // Wait for the model to become ready, return false otherwise.
 func (model *Model) WaitReady(timeout time.Duration) bool {
 	return model.waitCond(timeout, func(model *Model) bool {
-		return model.ready
+		return model.data.Ready
 	})
 }
 

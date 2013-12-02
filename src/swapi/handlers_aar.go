@@ -12,7 +12,7 @@ import (
 	"sword"
 )
 
-func (model *Model) handleAarInformation(m *sword.AarToClient_Content) error {
+func (model *ModelData) handleAarInformation(m *sword.AarToClient_Content) error {
 	mm := m.GetAarInformation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -21,15 +21,15 @@ func (model *Model) handleAarInformation(m *sword.AarToClient_Content) error {
 	if err != nil {
 		return err
 	}
-	model.data.KnownScores = scores
+	model.KnownScores = scores
 	return nil
 }
 
-func (model *Model) handleIndicator(m *sword.AarToClient_Content) error {
+func (model *ModelData) handleIndicator(m *sword.AarToClient_Content) error {
 	mm := m.GetIndicator()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	model.data.Scores[mm.GetName()] = mm.GetValue()
+	model.Scores[mm.GetName()] = mm.GetValue()
 	return nil
 }

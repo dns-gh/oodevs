@@ -35,15 +35,15 @@ func GetTaskerId(tasker *sword.Tasker) uint32 {
 	return 0
 }
 
-func (model *Model) handleControlSendCurrentStateEnd(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlSendCurrentStateEnd(m *sword.SimToClient_Content) error {
 	if m.GetControlSendCurrentStateEnd() == nil {
 		return ErrSkipHandler
 	}
-	model.ready = true
+	model.Ready = true
 	return nil
 }
 
-func (model *Model) handleControlBeginTick(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlBeginTick(m *sword.SimToClient_Content) error {
 	mm := m.GetControlBeginTick()
 	if mm == nil {
 		return ErrSkipHandler
@@ -52,21 +52,21 @@ func (model *Model) handleControlBeginTick(m *sword.SimToClient_Content) error {
 	if err != nil {
 		return err
 	}
-	model.data.Time = t
-	model.data.Tick = mm.GetCurrentTick()
+	model.Time = t
+	model.Tick = mm.GetCurrentTick()
 	return nil
 }
 
-func (model *Model) handleControlInformation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlInformation(m *sword.SimToClient_Content) error {
 	mm := m.GetControlInformation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	model.data.TickDuration = mm.GetTickDuration()
+	model.TickDuration = mm.GetTickDuration()
 	return nil
 }
 
-func (model *Model) handlePartyCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetPartyCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -74,11 +74,11 @@ func (model *Model) handlePartyCreation(m *sword.SimToClient_Content) error {
 	party := NewParty(
 		mm.GetParty().GetId(),
 		mm.GetName())
-	model.data.Parties[party.Id] = party
+	model.Parties[party.Id] = party
 	return nil
 }
 
-func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -93,18 +93,18 @@ func (model *Model) handleUnitCreation(m *sword.SimToClient_Content) error {
 		BorrowedEquipments:  []*BorrowedEquipment{},
 		RawOperationalState: 100,
 	}
-	if !model.data.addUnit(unit) {
+	if !model.addUnit(unit) {
 		return fmt.Errorf("cannot insert created unit: %d", unit.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitAttributes()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	unit, ok := model.Units[mm.GetUnit().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find unit to update: %d",
 			mm.GetUnit().GetId())
@@ -222,7 +222,7 @@ func (model *Model) handleUnitAttributes(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleAutomatCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -237,18 +237,18 @@ func (model *Model) handleAutomatCreation(m *sword.SimToClient_Content) error {
 	if parent := mm.GetParent().GetFormation(); parent != nil {
 		automat.FormationId = parent.GetId()
 	}
-	if !model.data.addAutomat(automat) {
+	if !model.addAutomat(automat) {
 		return fmt.Errorf("cannot insert created automat: %d", automat.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleAutomatAttributes(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatAttributes(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatAttributes()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	automat, ok := model.data.Automats[mm.GetAutomat().GetId()]
+	automat, ok := model.Automats[mm.GetAutomat().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find automat to update: %d",
 			mm.GetAutomat().GetId())
@@ -267,7 +267,7 @@ func (model *Model) handleAutomatAttributes(m *sword.SimToClient_Content) error 
 	return nil
 }
 
-func (model *Model) handleFormationCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleFormationCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetFormationCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -288,7 +288,7 @@ func (model *Model) handleFormationCreation(m *sword.SimToClient_Content) error 
 		level,
 		logLevel,
 	)
-	if !model.data.addFormation(formation) {
+	if !model.addFormation(formation) {
 		return fmt.Errorf("cannot create formation %v with unknown"+
 			"parent party=%v/parent=%v", formation.Id, formation.PartyId,
 			formation.ParentId)
@@ -296,7 +296,7 @@ func (model *Model) handleFormationCreation(m *sword.SimToClient_Content) error 
 	return nil
 }
 
-func (model *Model) handleCrowdCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -306,18 +306,18 @@ func (model *Model) handleCrowdCreation(m *sword.SimToClient_Content) error {
 		mm.GetParty().GetId(),
 		mm.GetName(),
 	)
-	if !model.data.addCrowd(crowd) {
+	if !model.addCrowd(crowd) {
 		return fmt.Errorf("cannot insert created crowd: %d", crowd.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	crowd, ok := model.Crowds[mm.GetCrowd().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
@@ -355,36 +355,36 @@ func (model *Model) handleCrowdUpdate(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleCrowdFlowCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdFlowCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdFlowCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
 		return fmt.Errorf("cannot insert crowd flow %d into crowd %d",
 			mm.GetFlow().GetId(), mm.GetCrowd().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdFlowDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdFlowDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdFlowDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+	if !model.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
 		return fmt.Errorf("cannot remove crowd flow %d from crowd %d",
 			mm.GetFlow().GetId(), mm.GetCrowd().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdFlowUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdFlowUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdFlowUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	crowd, ok := model.Crowds[mm.GetCrowd().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
@@ -398,36 +398,36 @@ func (model *Model) handleCrowdFlowUpdate(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleCrowdConcentrationCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdConcentrationCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdConcentrationCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 		return fmt.Errorf("cannot insert crowd concentration %d into crowd %d",
 			mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdConcentrationDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdConcentrationDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdConcentrationDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+	if !model.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 		return fmt.Errorf("cannot remove crowd concentration %d from crowd %d",
 			mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdConcentrationUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdConcentrationUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdConcentrationUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	crowd, ok := model.data.Crowds[mm.GetCrowd().GetId()]
+	crowd, ok := model.Crowds[mm.GetCrowd().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find crowd to update: %d",
 			mm.GetCrowd().GetId())
@@ -441,7 +441,7 @@ func (model *Model) handleCrowdConcentrationUpdate(m *sword.SimToClient_Content)
 	return nil
 }
 
-func (model *Model) handlePopulationCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handlePopulationCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetPopulationCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -451,7 +451,7 @@ func (model *Model) handlePopulationCreation(m *sword.SimToClient_Content) error
 		mm.GetParty().GetId(),
 		mm.GetName(),
 	)
-	if !model.data.addPopulation(population) {
+	if !model.addPopulation(population) {
 		return fmt.Errorf("cannot insert population: %d", population.Id)
 	}
 	for _, o := range mm.GetObjects() {
@@ -460,12 +460,12 @@ func (model *Model) handlePopulationCreation(m *sword.SimToClient_Content) error
 	return nil
 }
 
-func (model *Model) handlePopulationUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handlePopulationUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetPopulationUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	population, ok := model.data.Populations[mm.GetId().GetId()]
+	population, ok := model.Populations[mm.GetId().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find population to update: %d",
 			mm.GetId().GetId())
@@ -495,12 +495,12 @@ func (model *Model) handlePopulationUpdate(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleUnitPathfind(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitPathfind(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitPathfind()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	unit, ok := model.Units[mm.GetUnit().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find pathfind source unit: %d",
 			mm.GetUnit().GetId())
@@ -514,19 +514,19 @@ func (model *Model) handleUnitPathfind(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleUnitDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.removeUnit(mm.GetUnit().GetId()) {
+	if !model.removeUnit(mm.GetUnit().GetId()) {
 		return fmt.Errorf("cannot find unit to destroy: %d",
 			mm.GetUnit().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleKnowledgeGroupCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleKnowledgeGroupCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetKnowledgeGroupCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -540,13 +540,13 @@ func (model *Model) handleKnowledgeGroupCreation(m *sword.SimToClient_Content) e
 		IsCrowdDefaultGroup: mm.GetCrowd(),
 		Enabled:             true,
 	}
-	if !model.data.addKnowledgeGroup(group) {
+	if !model.addKnowledgeGroup(group) {
 		return fmt.Errorf("cannot insert knowledge group: %d", group.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleUnitKnowledgeCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitKnowledgeCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitKnowledgeCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -557,14 +557,14 @@ func (model *Model) handleUnitKnowledgeCreation(m *sword.SimToClient_Content) er
 		UnitId:           mm.GetUnit().GetId(),
 		UnitType:         mm.GetType().GetId(),
 	}
-	if !model.data.addUnitKnowledge(knowledge) {
+	if !model.addUnitKnowledge(knowledge) {
 		return fmt.Errorf("cannot insert unit knowledge %d into group %d",
 			knowledge.Id, knowledge.KnowledgeGroupId)
 	}
 	return nil
 }
 
-func (model *Model) handleObjectKnowledgeCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleObjectKnowledgeCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetObjectKnowledgeCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -578,14 +578,14 @@ func (model *Model) handleObjectKnowledgeCreation(m *sword.SimToClient_Content) 
 		ObjectPartyId:    mm.GetObjectParty().GetId(),
 		ObjectName:       mm.GetObjectName(),
 	}
-	if !model.data.addObjectKnowledge(knowledge) {
+	if !model.addObjectKnowledge(knowledge) {
 		return fmt.Errorf("cannot insert object knowledge %d into group %d",
 			knowledge.Id, knowledge.KnowledgeGroupId)
 	}
 	return nil
 }
 
-func (model *Model) handleCrowdKnowledgeCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdKnowledgeCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdKnowledgeCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -596,19 +596,19 @@ func (model *Model) handleCrowdKnowledgeCreation(m *sword.SimToClient_Content) e
 		CrowdId:          mm.GetCrowd().GetId(),
 		PartyId:          mm.GetParty().GetId(),
 	}
-	if !model.data.addCrowdKnowledge(knowledge) {
+	if !model.addCrowdKnowledge(knowledge) {
 		return fmt.Errorf("cannot insert crowd knowledge %d into group %d",
 			knowledge.Id, knowledge.KnowledgeGroupId)
 	}
 	return nil
 }
 
-func (model *Model) handleKnowledgeGroupUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleKnowledgeGroupUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetKnowledgeGroupUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	group, ok := model.data.KnowledgeGroups[mm.GetKnowledgeGroup().GetId()]
+	group, ok := model.KnowledgeGroups[mm.GetKnowledgeGroup().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find knowledge group to update: %d",
 			mm.GetKnowledgeGroup().GetId())
@@ -628,13 +628,13 @@ func (model *Model) handleKnowledgeGroupUpdate(m *sword.SimToClient_Content) err
 	return nil
 }
 
-func (model *Model) handleControlGlobalWeather(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlGlobalWeather(m *sword.SimToClient_Content) error {
 	mm := m.GetControlGlobalWeather()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	attributes := mm.GetAttributes()
-	weather := &model.data.GlobalWeather
+	weather := &model.GlobalWeather
 	weather.Temperature = float32(attributes.GetTemperature())
 	weather.WindSpeed = float32(attributes.GetWindSpeed())
 	weather.WindDirection = attributes.GetWindDirection().GetHeading()
@@ -646,7 +646,7 @@ func (model *Model) handleControlGlobalWeather(m *sword.SimToClient_Content) err
 	return nil
 }
 
-func (model *Model) handleControlLocalWeatherCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlLocalWeatherCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetControlLocalWeatherCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -680,33 +680,33 @@ func (model *Model) handleControlLocalWeatherCreation(m *sword.SimToClient_Conte
 		BottomRight: ReadPoint(mm.GetBottomRight()),
 		Id:          mm.GetWeather().GetId(),
 	}
-	model.data.addLocalWeather(w)
+	model.addLocalWeather(w)
 	return nil
 }
 
-func (model *Model) handleControlLocalWeatherDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleControlLocalWeatherDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetControlLocalWeatherDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.removeLocalWeather(mm.GetWeather().GetId()) {
+	if !model.removeLocalWeather(mm.GetWeather().GetId()) {
 		return fmt.Errorf("cannot find local weather to destroy: %d",
 			mm.GetWeather().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleChangeDiplomacy(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleChangeDiplomacy(m *sword.SimToClient_Content) error {
 	mm := m.GetChangeDiplomacy()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	party1 := model.data.Parties[mm.GetParty1().GetId()]
+	party1 := model.Parties[mm.GetParty1().GetId()]
 	if party1 == nil {
 		return fmt.Errorf("cannot resolve diplomacy change first party: %d",
 			mm.GetParty1().GetId())
 	}
-	party2 := model.data.Parties[mm.GetParty2().GetId()]
+	party2 := model.Parties[mm.GetParty2().GetId()]
 	if party2 == nil {
 		return fmt.Errorf("cannot resolve diplomacy change second party: %d",
 			mm.GetParty2().GetId())
@@ -715,7 +715,7 @@ func (model *Model) handleChangeDiplomacy(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleUrbanCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUrbanCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetUrbanCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -725,25 +725,25 @@ func (model *Model) handleUrbanCreation(m *sword.SimToClient_Content) error {
 		mm.GetName(),
 		NewResourceNetworks(mm.GetAttributes()),
 	)
-	if !model.data.addUrban(urban) {
+	if !model.addUrban(urban) {
 		return fmt.Errorf("cannot insert urban block: %d", urban.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleUrbanUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUrbanUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetUrbanUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes())) {
+	if !model.updateUrban(mm.GetObject().GetId(), NewResourceNetworks(mm.GetAttributes())) {
 		return fmt.Errorf("cannot update urban block: %d",
 			mm.GetObject().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatChangeLogisticLinks()
 	if mm == nil {
 		return ErrSkipHandler
@@ -759,12 +759,12 @@ func (model *Model) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Conten
 		}
 	}
 	if automat := requester.GetAutomat(); automat != nil {
-		if !model.data.changeAutomatLogisticsLinks(automat.GetId(), superiors) {
+		if !model.changeAutomatLogisticsLinks(automat.GetId(), superiors) {
 			return fmt.Errorf("cannot update logistic links on automat: %d",
 				automat.GetId())
 		}
 	} else if formation := requester.GetFormation(); formation != nil {
-		if !model.data.changeFormationLogisticsLinks(formation.GetId(), superiors) {
+		if !model.changeFormationLogisticsLinks(formation.GetId(), superiors) {
 			return fmt.Errorf("cannot update logistic links on formation: %d",
 				formation.GetId())
 		}
@@ -772,12 +772,12 @@ func (model *Model) handleAutomatChangeLogisticLinks(m *sword.SimToClient_Conten
 	return nil
 }
 
-func (model *Model) handleAutomatChangeKnowledgeGroup(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatChangeKnowledgeGroup(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatChangeKnowledgeGroup()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	d := model.data
+	d := model
 	_, ok := d.Parties[mm.GetParty().GetId()]
 	if !ok {
 		return fmt.Errorf("unknown party: %d", mm.GetParty().GetId())
@@ -797,7 +797,7 @@ func (model *Model) handleAutomatChangeKnowledgeGroup(m *sword.SimToClient_Conte
 	return nil
 }
 
-func (model *Model) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
 	mm := m.GetLogSupplyQuotas()
 	if mm == nil {
 		return ErrSkipHandler
@@ -806,7 +806,7 @@ func (model *Model) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
 	for _, quota := range mm.GetQuotas().GetElem() {
 		quotas[quota.GetResource().GetId()] = quota.GetQuantity()
 	}
-	d := model.data
+	d := model
 	if automat := mm.GetSupplied().Automat; automat != nil {
 		if !d.changeAutomatSupplyQuotas(automat.GetId(), quotas) {
 			return fmt.Errorf("cannot update supply quotas on automat: %d",
@@ -821,26 +821,26 @@ func (model *Model) handleLogSupplyQuotas(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleUnitChangeSuperior(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitChangeSuperior(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitChangeSuperior()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	unitId := mm.GetUnit().GetId()
 	automatId := mm.GetParent().GetId()
-	if err := model.data.changeUnitAutomat(unitId, automatId); err != nil {
+	if err := model.changeUnitAutomat(unitId, automatId); err != nil {
 		return fmt.Errorf("cannot change %d unit automat to %d: %s",
 			unitId, automatId, err)
 	}
 	return nil
 }
 
-func (model *Model) handleAutomatChangeSuperior(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatChangeSuperior(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatChangeSuperior()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	d := model.data
+	d := model
 	automatId := mm.GetAutomat().GetId()
 	formationId := mm.GetSuperior().GetFormation().GetId()
 	if err := d.changeAutomatFormation(automatId, formationId); err != nil {
@@ -850,12 +850,12 @@ func (model *Model) handleAutomatChangeSuperior(m *sword.SimToClient_Content) er
 	return nil
 }
 
-func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleFormationChangeSuperior(m *sword.SimToClient_Content) error {
 	mm := m.GetFormationChangeSuperior()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	d := model.data
+	d := model
 	formationId := mm.GetFormation().GetId()
 	partyId := mm.GetSuperior().GetParty().GetId()
 	parentId := mm.GetSuperior().GetFormation().GetId()
@@ -866,7 +866,8 @@ func (model *Model) handleFormationChangeSuperior(m *sword.SimToClient_Content) 
 	return nil
 }
 
-func (model *Model) addOrder(id, parentId, missionType, tasker uint32, kind OrderKind) error {
+func addOrder(model *ModelData, id, parentId, missionType, tasker uint32,
+	kind OrderKind) error {
 	if missionType == 0 {
 		return nil
 	}
@@ -877,51 +878,54 @@ func (model *Model) addOrder(id, parentId, missionType, tasker uint32, kind Orde
 		TaskerId:    tasker,
 		Kind:        kind,
 	}
-	if !model.data.addOrder(order) {
+	if !model.addOrder(order) {
 		return fmt.Errorf("cannot insert order %d", order.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleUnitOrder(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitOrder(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitOrder()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), mm.GetParent(), mm.GetType().GetId(), mm.GetTasker().GetId(), UnitOrder)
+	return addOrder(model, mm.GetId(), mm.GetParent(), mm.GetType().GetId(),
+		mm.GetTasker().GetId(), UnitOrder)
 }
 
-func (model *Model) handleAutomatOrder(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleAutomatOrder(m *sword.SimToClient_Content) error {
 	mm := m.GetAutomatOrder()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(), mm.GetTasker().GetId(), AutomatOrder)
+	return addOrder(model, mm.GetId(), 0, mm.GetType().GetId(),
+		mm.GetTasker().GetId(), AutomatOrder)
 }
 
-func (model *Model) handleCrowdOrder(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleCrowdOrder(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdOrder()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(), mm.GetTasker().GetId(), CrowdOrder)
+	return addOrder(model, mm.GetId(), 0, mm.GetType().GetId(),
+		mm.GetTasker().GetId(), CrowdOrder)
 }
 
-func (model *Model) handleFragOrder(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleFragOrder(m *sword.SimToClient_Content) error {
 	mm := m.GetFragOrder()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	return model.addOrder(mm.GetId(), 0, mm.GetType().GetId(),
+	return addOrder(model, mm.GetId(), 0, mm.GetType().GetId(),
 		GetTaskerId(mm.GetTasker()), FragOrder)
 }
 
-func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitVisionCones()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit, ok := model.data.Units[mm.GetUnit().GetId()]
+	unit, ok := model.Units[mm.GetUnit().GetId()]
 	if !ok {
 		return fmt.Errorf("cannot find unit for which vision cones must be updated: %d",
 			mm.GetUnit().GetId())
@@ -947,7 +951,7 @@ func (model *Model) handleUnitVisionCones(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleObjectCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleObjectCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetObjectCreation()
 	if mm == nil {
 		return ErrSkipHandler
@@ -957,18 +961,18 @@ func (model *Model) handleObjectCreation(m *sword.SimToClient_Content) error {
 		mm.GetType().GetId(),
 		mm.GetName(),
 	)
-	if !model.data.addObject(object) {
+	if !model.addObject(object) {
 		return fmt.Errorf("cannot insert created object: %d", object.Id)
 	}
 	return nil
 }
 
-func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleObjectUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetObjectUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	object, ok := model.data.Objects[mm.GetObject().GetId()]
+	object, ok := model.Objects[mm.GetObject().GetId()]
 	if !ok {
 		return ErrSkipHandler // can be an urban bloc
 	}
@@ -989,38 +993,38 @@ func (model *Model) handleObjectUpdate(m *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (model *Model) handleObjectDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleObjectDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetObjectDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.data.removeObject(mm.GetObject().GetId()) {
+	if !model.removeObject(mm.GetObject().GetId()) {
 		return fmt.Errorf("cannot find object to destroy: %d",
 			mm.GetObject().GetId())
 	}
 	return nil
 }
 
-func (model *Model) handleLogMaintenanceHandlingCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMaintenanceHandlingCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMaintenanceHandlingCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, found := model.data.MaintenanceHandlings[id]; found {
+	if _, found := model.MaintenanceHandlings[id]; found {
 		return fmt.Errorf("maintenance handling to create already exists: %d", id)
 	}
-	model.data.MaintenanceHandlings[id] = &MaintenanceHandling{Id: id}
+	model.MaintenanceHandlings[id] = &MaintenanceHandling{Id: id}
 	return nil
 }
 
-func (model *Model) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMaintenanceHandlingUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if h, ok := model.data.MaintenanceHandlings[id]; ok {
+	if h, ok := model.MaintenanceHandlings[id]; ok {
 		h.Provider = &MaintenanceHandlingProvider{
 			Id:    mm.GetProvider().GetId(),
 			State: mm.GetState(),
@@ -1030,40 +1034,40 @@ func (model *Model) handleLogMaintenanceHandlingUpdate(m *sword.SimToClient_Cont
 	return fmt.Errorf("cannot find maintenance handling to update: %d", id)
 }
 
-func (model *Model) handleLogMaintenanceHandlingDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMaintenanceHandlingDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMaintenanceHandlingDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	size := len(model.data.MaintenanceHandlings)
-	delete(model.data.MaintenanceHandlings, id)
-	if size == len(model.data.MaintenanceHandlings) {
+	size := len(model.MaintenanceHandlings)
+	delete(model.MaintenanceHandlings, id)
+	if size == len(model.MaintenanceHandlings) {
 		return fmt.Errorf("cannot find maintenance handling to destroy: %d", id)
 	}
 	return nil
 }
 
-func (model *Model) handleLogMedicalHandlingCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMedicalHandlingCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMedicalHandlingCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, found := model.data.MedicalHandlings[id]; found {
+	if _, found := model.MedicalHandlings[id]; found {
 		return fmt.Errorf("medical handling to create already exists: %d", id)
 	}
-	model.data.MedicalHandlings[id] = &MedicalHandling{Id: id}
+	model.MedicalHandlings[id] = &MedicalHandling{Id: id}
 	return nil
 }
 
-func (model *Model) handleLogMedicalHandlingUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMedicalHandlingUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMedicalHandlingUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if h, ok := model.data.MedicalHandlings[id]; ok {
+	if h, ok := model.MedicalHandlings[id]; ok {
 		h.Provider = &MedicalHandlingProvider{
 			Id:    mm.GetProvider().GetId(),
 			State: mm.GetState(),
@@ -1073,30 +1077,30 @@ func (model *Model) handleLogMedicalHandlingUpdate(m *sword.SimToClient_Content)
 	return fmt.Errorf("cannot find medical handling to update: %d", id)
 }
 
-func (model *Model) handleLogMedicalHandlingDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogMedicalHandlingDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetLogMedicalHandlingDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	size := len(model.data.MedicalHandlings)
-	delete(model.data.MedicalHandlings, id)
-	if size == len(model.data.MedicalHandlings) {
+	size := len(model.MedicalHandlings)
+	delete(model.MedicalHandlings, id)
+	if size == len(model.MedicalHandlings) {
 		return fmt.Errorf("cannot find medical handling to destroy: %d", id)
 	}
 	return nil
 }
 
-func (model *Model) handleLogFuneralHandlingCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogFuneralHandlingCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetLogFuneralHandlingCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, found := model.data.FuneralHandlings[id]; found {
+	if _, found := model.FuneralHandlings[id]; found {
 		return fmt.Errorf("funeral handling to create already exists: %d", id)
 	}
-	model.data.FuneralHandlings[id] = &FuneralHandling{
+	model.FuneralHandlings[id] = &FuneralHandling{
 		Id:     mm.GetRequest().GetId(),
 		UnitId: mm.GetUnit().GetId(),
 	}
@@ -1110,13 +1114,13 @@ func GetParentEntityId(parentEntity *sword.ParentEntity) uint32 {
 	return parentEntity.GetFormation().GetId()
 }
 
-func (model *Model) handleLogFuneralHandlingUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogFuneralHandlingUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetLogFuneralHandlingUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if h, ok := model.data.FuneralHandlings[id]; ok {
+	if h, ok := model.FuneralHandlings[id]; ok {
 		h.Handler = &FuneralHandlingHandler{
 			State: mm.GetState(),
 			Id:    GetParentEntityId(mm.GetHandlingUnit()),
@@ -1126,30 +1130,30 @@ func (model *Model) handleLogFuneralHandlingUpdate(m *sword.SimToClient_Content)
 	return fmt.Errorf("cannot find funeral handling to update: %d", id)
 }
 
-func (model *Model) handleLogFuneralHandlingDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogFuneralHandlingDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetLogFuneralHandlingDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	size := len(model.data.FuneralHandlings)
-	delete(model.data.FuneralHandlings, id)
-	if size == len(model.data.FuneralHandlings) {
+	size := len(model.FuneralHandlings)
+	delete(model.FuneralHandlings, id)
+	if size == len(model.FuneralHandlings) {
 		return fmt.Errorf("cannot find funeral handling to destroy: %d", id)
 	}
 	return nil
 }
 
-func (model *Model) handleLogSupplyHandlingCreation(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogSupplyHandlingCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetLogSupplyHandlingCreation()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if _, found := model.data.SupplyHandlings[id]; found {
+	if _, found := model.SupplyHandlings[id]; found {
 		return fmt.Errorf("supply handling to create already exists: %d", id)
 	}
-	model.data.SupplyHandlings[id] = &SupplyHandling{
+	model.SupplyHandlings[id] = &SupplyHandling{
 		Id:         mm.GetRequest().GetId(),
 		SupplierId: GetParentEntityId(mm.GetSupplier()),
 		ProviderId: GetParentEntityId(mm.GetTransportersProvider()),
@@ -1157,13 +1161,13 @@ func (model *Model) handleLogSupplyHandlingCreation(m *sword.SimToClient_Content
 	return nil
 }
 
-func (model *Model) handleLogSupplyHandlingUpdate(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogSupplyHandlingUpdate(m *sword.SimToClient_Content) error {
 	mm := m.GetLogSupplyHandlingUpdate()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	if h, ok := model.data.SupplyHandlings[id]; ok {
+	if h, ok := model.SupplyHandlings[id]; ok {
 		h.Convoy = &SupplyHandlingConvoy{
 			ConvoyerId: mm.GetConvoyer().GetId(),
 			State:      mm.GetState(),
@@ -1173,15 +1177,15 @@ func (model *Model) handleLogSupplyHandlingUpdate(m *sword.SimToClient_Content) 
 	return fmt.Errorf("cannot find supply handling to update: %d", id)
 }
 
-func (model *Model) handleLogSupplyHandlingDestruction(m *sword.SimToClient_Content) error {
+func (model *ModelData) handleLogSupplyHandlingDestruction(m *sword.SimToClient_Content) error {
 	mm := m.GetLogSupplyHandlingDestruction()
 	if mm == nil {
 		return ErrSkipHandler
 	}
 	id := mm.GetRequest().GetId()
-	size := len(model.data.SupplyHandlings)
-	delete(model.data.SupplyHandlings, id)
-	if size == len(model.data.SupplyHandlings) {
+	size := len(model.SupplyHandlings)
+	delete(model.SupplyHandlings, id)
+	if size == len(model.SupplyHandlings) {
 		return fmt.Errorf("cannot find supply handling to destroy: %d", id)
 	}
 	return nil
