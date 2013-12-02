@@ -70,6 +70,7 @@ public:
     virtual bool IsMentalDiseased() const;
     virtual bool IsAnEmergency() const;
     virtual const MIL_Agent_ABC& GetPion() const;
+    virtual bool ShouldGoBackToWar() const;
     //@}
 
     //! @name Main

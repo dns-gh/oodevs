@@ -58,6 +58,7 @@ public:
     virtual bool IsMentalDiseased() const = 0;
     virtual bool IsAnEmergency() const = 0;
     virtual const MIL_Agent_ABC& GetPion() const = 0;
+    virtual bool ShouldGoBackToWar() const = 0;
     //@}
 
     //! @name Main
