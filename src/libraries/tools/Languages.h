@@ -37,12 +37,12 @@ public:
     //@{
     const Language& Get( const std::string& code ) const;
     const LanguagesVector& GetVector() const;
+    void EnsureCurrentIsSupported() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void EnsureCurrentIsPresent() const;
     const Language* Find( const std::string& code ) const;
     void Read( xml::xistream& xis );
     //@}

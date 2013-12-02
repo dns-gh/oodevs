@@ -41,6 +41,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     // Data
     config_.reset( new Config() );
     config_->Parse( argc, argv );
+    LoadCommandLineLanguage( config_->GetLanguages(), config_->GetCommandLineLanguage() );
     fileLoaderObserver_.reset( new tools::NullFileLoaderObserver() );
     fileLoader_.reset( new tools::DefaultLoader( *fileLoaderObserver_ ) );
     controllers_.reset( new kernel::Controllers() );
@@ -147,15 +148,4 @@ Launcher& Application::GetLauncher() const
 QWidget* Application::GetMainWindow()
 {
     return mainWindow_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::OnLanguageChanged
-// Created: ABR 2013-10-15
-// -----------------------------------------------------------------------------
-void Application::OnLanguageChanged()
-{
-    DeleteTranslators();
-    CreateTranslators();
-    InitializeLayoutDirection();
 }
