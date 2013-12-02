@@ -9,6 +9,12 @@
     <property name="test.port" value="35000"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
 
+    <target name="clean">
+        <delete dir="${out.dir}"/>
+        <delete dir="${lib.dir}/../pkg"/>
+        <delete dir="${lib.dir}/../src"/>
+    </target>
+
     <target name="update">
         <update name="golang" version="1.1.1"/>
         <update name="golibs"/>
