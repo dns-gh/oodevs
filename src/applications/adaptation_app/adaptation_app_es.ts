@@ -6388,6 +6388,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Life span</source>
         <translation type="unfinished">Esperanza de vida</translation>
     </message>
+    <message>
+        <source>Return after treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

@@ -30,7 +30,7 @@ public:
     {
         setSortingEnabled( true );
         dataModel_.setColumnCount( eNbrDoctorSkills + 2 );
-        dataModel_.setRowCount( 4 );
+        dataModel_.setRowCount( 5 );
 
         QStringList horizontalHeaders;
         int n = 0;
@@ -44,12 +44,14 @@ public:
         verticalHeaders << tools::translate( "ADN_WoundTable", "Treatment duration" ) 
                         << tools::translate( "ADN_WoundTable", "Convalescence duration" ) 
                         << tools::translate( "ADN_WoundTable", "Seriousness distribution (%)" )
-                        << tools::translate( "ADN_WoundTable", "Life span" ) ;
+                        << tools::translate( "ADN_WoundTable", "Life span" )
+                        << tools::translate( "ADN_WoundTable", "Return after treatment" );
         dataModel_.setVerticalHeaderLabels( verticalHeaders );
         delegate_.AddDelayEditOnRow( 0 );
         delegate_.AddDelayEditOnRow( 1 );
         delegate_.AddDoubleSpinBoxOnRow( 2, 0, 100 );
         delegate_.AddDelayEditOnRow( 3 );
+        delegate_.AddCheckBoxOnRow( 4 );
 
         ADN_Health_Data* health = static_cast< ADN_Health_Data* >( data );
         if( !health )
@@ -61,16 +63,23 @@ public:
             AddItem( 1, n, data, &wound.restingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
             AddItem( 2, n, data, &wound.rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
             AddItem( 3, n, data, &wound.lifeExpectancy_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+            auto item = AddItem( 4, n, data, &wound.goBackToWar_, ADN_StandardItem::eBool );
+            item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
         }
         AddItem( 0, n, data, &health->shockTreatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
         AddItem( 1, n, data, &health->shockRestingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
         AddItem( 2, n, data, &health->rShockPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-        AddItem( 3, n, &data, QString() );
+        AddItem( 3, n, data, QString() );
+        auto item = AddItem( 4, n, data, &health->shockGoBackToWar_, ADN_StandardItem::eBool );
+        item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
 
-        AddItem( 0, n+1, &data, &health->contaminationTreatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
-        AddItem( 1, n+1, &data, &health->contaminationRestingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
-        AddItem( 2, n+1, &data, QString() );
-        AddItem( 3, n+1, &data, QString() );
+        ++n;
+        AddItem( 0, n, data, &health->contaminationTreatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 1, n, data, &health->contaminationRestingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 2, n, data, QString() );
+        AddItem( 3, n, data, QString() );
+        item = AddItem( 4, n, data, &health->contaminatedGoBackToWar_, ADN_StandardItem::eBool );
+        item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
     }
 
 protected slots:

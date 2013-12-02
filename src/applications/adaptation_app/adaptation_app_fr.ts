@@ -6402,6 +6402,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Life span</source>
         <translation>Durée de vie</translation>
     </message>
+    <message>
+        <source>Return after treatment</source>
+        <translation>Retour après traitement</translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

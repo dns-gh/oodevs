@@ -38,6 +38,7 @@ public:
         ADN_Type_Time treatTime_;
         ADN_Type_Time restingTime_;
         ADN_Type_Double rPercentage_;
+        ADN_Type_Bool goBackToWar_;
     };
 
 // *****************************************************************************
@@ -68,9 +69,11 @@ public:
     ADN_Type_Time shockTreatTime_;
     ADN_Type_Time shockRestingTime_;
     ADN_Type_Double rShockPercentage_;
+    ADN_Type_Bool shockGoBackToWar_;
 
     ADN_Type_Time contaminationTreatTime_;
     ADN_Type_Time contaminationRestingTime_;
+    ADN_Type_Bool contaminatedGoBackToWar_;
     ADN_Type_Double diagnosisLifeExpectancyFactor_;
 
     T_AvailabilityWarning_Vector vChangeOverWarnings_;

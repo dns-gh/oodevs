@@ -24,6 +24,7 @@ ADN_Health_Data::WoundInfo::WoundInfo()
     , treatTime_( "0s" )
     , restingTime_( "0s" )
     , rPercentage_( 0. )
+    , goBackToWar_( false )
 {
     // NOTHING
 }
@@ -37,7 +38,8 @@ void ADN_Health_Data::WoundInfo::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "life-expectancy", lifeExpectancy_ )
           >> xml::attribute( "caring-time", treatTime_ )
           >> xml::attribute( "resting-time", restingTime_ )
-          >> xml::attribute( "percentage", rPercentage_ );
+          >> xml::attribute( "percentage", rPercentage_ )
+          >> xml::optional >> xml::attribute( "back-to-war", goBackToWar_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,9 +51,10 @@ void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output, int n ) co
     output << xml::start( "injury" )
              << xml::attribute( "category", ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) ) )
              << xml::attribute( "life-expectancy", lifeExpectancy_ )
-             << xml::attribute( "caring-time",     treatTime_ )
-             << xml::attribute( "resting-time",    restingTime_ )
-             << xml::attribute( "percentage",      rPercentage_ )
+             << xml::attribute( "caring-time", treatTime_ )
+             << xml::attribute( "resting-time", restingTime_ )
+             << xml::attribute( "percentage", rPercentage_ )
+             << xml::attribute( "back-to-war", goBackToWar_ )
            << xml::end;
 }
 
@@ -66,8 +69,10 @@ ADN_Health_Data::ADN_Health_Data()
     , shockTreatTime_          ( "0s" )
     , shockRestingTime_        ( "0s" )
     , rShockPercentage_        ( 0 )
+    , shockGoBackToWar_        ( true )
     , contaminationTreatTime_  ( "0s" )
     , contaminationRestingTime_( "0s" )
+    , contaminatedGoBackToWar_ ( false )
     , diagnosisLifeExpectancyFactor_( 2.0 )
 {
     // NOTHING
@@ -103,12 +108,14 @@ void ADN_Health_Data::ReadInjury( xml::xistream& input )
     {
         input >> xml::attribute( "caring-time", shockTreatTime_ )
               >> xml::attribute( "resting-time", shockRestingTime_ )
-              >> xml::attribute( "percentage", rShockPercentage_ );
+              >> xml::attribute( "percentage", rShockPercentage_ )
+              >> xml::optional >> xml::attribute( "back-to-war", shockGoBackToWar_ );
     }
     else if( category == "contaminated" )
     {
         input >> xml::attribute( "caring-time", contaminationTreatTime_ )
-              >> xml::attribute( "resting-time", contaminationRestingTime_ );
+              >> xml::attribute( "resting-time", contaminationRestingTime_ )
+              >> xml::optional >> xml::attribute( "back-to-war", contaminatedGoBackToWar_ );
     }
     else
     {
@@ -183,11 +190,13 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output ) const
                     << xml::attribute( "caring-time", shockTreatTime_ )
                     << xml::attribute( "resting-time", shockRestingTime_ )
                     << xml::attribute( "percentage", rShockPercentage_ )
+                    << xml::attribute( "back-to-war", shockGoBackToWar_ )
                 << xml::end
                 << xml::start( "injury" )
                     << xml::attribute( "category", "contaminated" )
                     << xml::attribute( "caring-time", contaminationTreatTime_ )
                     << xml::attribute( "resting-time", contaminationRestingTime_ )
+                    << xml::attribute( "back-to-war", contaminatedGoBackToWar_ )
                 << xml::end
             << xml::end
             << xml::start( "resource-availability-alerts" );
