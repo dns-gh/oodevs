@@ -553,8 +553,9 @@ end
 -- comments: pause movement
 -- ****************************************************************************
 integration.deselectMoveToIt = function( objective )
-    if objective[ myself ].moveAction then -- Temp : Wait deselect to be done before destroy
-        DEC_PauseAction( objective[ myself ].moveAction )
+    local myObjective = objective[ myself ]
+    if myObjective and myObjective.moveAction then -- Temp : Wait deselect to be done before destroy
+        DEC_PauseAction( myObjective.moveAction )
     end
 end
 
