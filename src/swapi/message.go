@@ -234,18 +234,10 @@ func DecodeMessage(msg *SwordMessage, tag uint32, data []byte) error {
 }
 
 func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
-	hsize := uint32(0)
-	err := binary.Read(r.io, binary.BigEndian, &hsize)
+	err := binary.Read(r.io, binary.BigEndian, header)
 	if err != nil {
 		return nil, err
 	}
-	htag := uint32(0)
-	err = binary.Read(r.io, binary.BigEndian, &htag)
-	if err != nil {
-		return nil, err
-	}
-	header.Size = hsize
-	header.Tag = htag
 	size := int(header.Size - 4)
 	if size > MaxMessageSize {
 		return nil, fmt.Errorf("packet size too big %d", size)
@@ -254,7 +246,7 @@ func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
 	if int(size) > cap(buffer) {
 		data = make([]byte, size)
 	}
-	n, err := r.io.Read(data[:size])
+	n, err := io.ReadFull(r.io, data[:size])
 	if err != nil && (n == 0 || err != io.EOF) {
 		return nil, err
 	}
