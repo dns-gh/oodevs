@@ -623,7 +623,9 @@ const MIL_Agent_ABC& PHY_Human::GetPion() const
 // -----------------------------------------------------------------------------
 bool PHY_Human::ShouldGoBackToWar() const
 {
-    return !( IsWounded() || IsContaminated() );
+    return pWound_->ShouldGoBackToWar()
+        && ( !IsContaminated() || PHY_HumanWound::ShouldContaminatedGoBackToWar() )
+        && ( !IsMentalDiseased() || PHY_HumanWound::ShouldMentalDiseasedGoBackToWar() );
 }
 
 // -----------------------------------------------------------------------------

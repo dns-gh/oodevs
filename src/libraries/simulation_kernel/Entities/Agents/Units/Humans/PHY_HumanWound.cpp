@@ -27,13 +27,15 @@ unsigned int PHY_HumanWound::nContaminatedRestingTime_ = 0;
 unsigned int PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 unsigned int PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 double PHY_HumanWound::rMentalDiseaseFactor_ = 0;
+bool PHY_HumanWound::shouldContaminatedGoBackToWar_ = false;
+bool PHY_HumanWound::shouldMentalDiseasedGoBacktoWar_ = true;
 
-const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, sword::unwounded             );
-const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"     , eWoundedU3 , sword::wounded_urgency_3       );
-const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"     , eWoundedU2 , sword::wounded_urgency_2       );
-const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword::wounded_urgency_1       );
-const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::wounded_extreme_urgency );
-const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::dead                   );
+const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, sword::unwounded, true );
+const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"     , eWoundedU3 , sword::wounded_urgency_3, false );
+const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"     , eWoundedU2 , sword::wounded_urgency_2, false );
+const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword::wounded_urgency_1, false );
+const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::wounded_extreme_urgency, false );
+const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::dead, true );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::Initialize
@@ -97,7 +99,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
     auto it = humanWounds_.find( injuryType );
     if( it != humanWounds_.end() )
     {
-        const PHY_HumanWound& wound = *it->second;
+        PHY_HumanWound& wound =  const_cast< PHY_HumanWound& >( *it->second );
         if( wound == killed_ || wound == notWounded_ )
             return;
         double rValue = xis.attribute< double >( "percentage" );
@@ -105,21 +107,22 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
             throw MASA_EXCEPTION( xis.context() + "injury: percentage not in [0..100]" );
         rValue /= 100.;
         rFactorSum += rValue;
-        const_cast< PHY_HumanWound& >( wound ).rWoundedFactor_ = rValue;
+        wound.rWoundedFactor_ = rValue;
         if( tools::ReadTimeAttribute( xis, "life-expectancy", rValue ) )
         {
             if( rValue <= 0 )
                 throw MASA_EXCEPTION( xis.context() + "injury: life-expectancy <= 0" );
-            const_cast< PHY_HumanWound& >( wound ).nLifeExpectancy_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
+            wound.nLifeExpectancy_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         }
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
             throw MASA_EXCEPTION( xis.context() + "injury: caring-time < 0" );
-        const_cast< PHY_HumanWound& >( wound ).nHealingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
+        wound.nHealingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         tools::ReadTimeAttribute( xis, "resting-time", rValue );
         if( rValue < 0 )
             throw MASA_EXCEPTION( xis.context() + "injury: resting-time < 0" );
-        const_cast< PHY_HumanWound& >( wound ).nRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
+        wound.nRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
+        xis >> xml::optional >> xml::attribute( "back-to-war", wound.shouldGoBackToWar_ );
     }
     else if( injuryType == "mental" )
     {
@@ -135,7 +138,8 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
         rValue = xis.attribute< double >( "percentage" );
         if( rValue < 0 || rValue > 100 )
             throw MASA_EXCEPTION( xis.context() + "injury: percentage not in [0..100]" );
-        rMentalDiseaseFactor_ = rValue / 100.;
+        rMentalDiseaseFactor_ = rValue / 100.;        
+        xis >> xml::optional >> xml::attribute( "back-to-war", shouldMentalDiseasedGoBacktoWar_ );
     }
     else if( injuryType == "contaminated" )
     {
@@ -148,6 +152,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
         if( rValue < 0 )
             throw MASA_EXCEPTION( xis.context() + "injury: resting-time < 0" );
         nContaminatedRestingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
+        xis >> xml::optional >> xml::attribute( "back-to-war", shouldContaminatedGoBackToWar_ );
     }
     else
         throw MASA_EXCEPTION( xis.context() + "injury: unknown category" );
@@ -166,7 +171,7 @@ void PHY_HumanWound::Terminate()
 // Name: PHY_HumanWound constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID )
+PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID, bool backToWar )
     : strName_        ( strName )
     , nWound_         ( nWound )
     , nAsnID_         ( nAsnID )
@@ -174,6 +179,7 @@ PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, cons
     , nLifeExpectancy_( 0 )
     , nHealingTime_   ( 0 )
     , nRestingTime_   ( 0 )
+    , shouldGoBackToWar_( backToWar )
 {
     // NOTHING
 }
@@ -428,10 +434,37 @@ unsigned int PHY_HumanWound::GetRestingTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::ShouldGoBackToWar
+// Created: LDC 2013-12-02
+// -----------------------------------------------------------------------------
+bool PHY_HumanWound::ShouldGoBackToWar() const
+{
+    return shouldGoBackToWar_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::ChooseMentalDisease
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
 bool PHY_HumanWound::ChooseMentalDisease()
 {
     return MIL_Random::rand_oi( 0., 1. ) <= rMentalDiseaseFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::ShouldContaminatedGoBackToWar
+// Created: LDC 2013-12-02
+// -----------------------------------------------------------------------------
+bool PHY_HumanWound::ShouldContaminatedGoBackToWar()
+{
+    return shouldContaminatedGoBackToWar_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::ShouldMentalDiseasedGoBackToWar
+// Created: LDC 2013-12-02
+// -----------------------------------------------------------------------------
+bool PHY_HumanWound::ShouldMentalDiseasedGoBackToWar()
+{
+    return shouldMentalDiseasedGoBacktoWar_;
 }

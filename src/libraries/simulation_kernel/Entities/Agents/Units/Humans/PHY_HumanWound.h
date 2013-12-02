@@ -66,6 +66,8 @@ public:
     static bool ChooseMentalDisease();
     static const PHY_HumanWound& ChooseRandomWound();
     static const PHY_HumanWound* GetRandomWoundSeriousness();
+    static bool ShouldContaminatedGoBackToWar();
+    static bool ShouldMentalDiseasedGoBackToWar();
     //@}
 
     //! @name Accessors
@@ -77,6 +79,7 @@ public:
     unsigned int GetLifeExpectancy() const;
     unsigned int GetHealingTime() const;
     unsigned int GetRestingTime() const;
+    bool ShouldGoBackToWar() const;
     //@}
 
     //! @name Operators
@@ -110,7 +113,7 @@ private:
     //@}
 
 private:
-     PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID );
+     PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID, bool backToWar );
     ~PHY_HumanWound();
 
     //! @name Init
@@ -127,6 +130,7 @@ private:
     unsigned int nLifeExpectancy_;
     unsigned int nHealingTime_;
     unsigned int nRestingTime_;
+    bool shouldGoBackToWar_;
 
 private:
     static T_HumanWoundMap humanWounds_;
@@ -138,6 +142,8 @@ private:
     static unsigned int nMentalDiseaseHealingTime_;
     static unsigned int nMentalDiseaseRestingTime_;
     static double rMentalDiseaseFactor_;
+    static bool shouldContaminatedGoBackToWar_;
+    static bool shouldMentalDiseasedGoBacktoWar_;
 };
 
 namespace boost
