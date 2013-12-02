@@ -87,7 +87,6 @@ private:
     void Update( const Exercise& exercise );
     void AddResource( const QString& name, const tools::Path& file );
     void AddOrderFile( const tools::Path& file );
-    virtual QSize sizeHint() const;
     //@}
 
     //! @name Types
