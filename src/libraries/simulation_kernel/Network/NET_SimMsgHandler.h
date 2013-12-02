@@ -18,6 +18,7 @@ namespace sword
     class ClientToSim;
     class DispatcherToSim;
     class MagicAction;
+    class MagicActionAck;
     class MissionParameters;
 }
 
@@ -52,7 +53,7 @@ private:
     void OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& message );
     void OnReceiveCtrlClientAnnouncement( const std::string& from );
     void OnReceiveMagicAction( const sword::MagicAction& msg, uint32_t ctx, uint32_t clientId );
-    void OnReceiveDebugError( const sword::MissionParameters& params );
+    void OnReceiveDebugError( const sword::MissionParameters& params, sword::MagicActionAck& ack );
     //@}
 
     //! @name Types

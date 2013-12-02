@@ -178,7 +178,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             type == sword::MagicAction::local_weather_destruction )
             server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
         else if( enableTestCommands_ && type == sword::MagicAction::debug_internal )
-            OnReceiveDebugError( msg.parameters() );
+            OnReceiveDebugError( msg.parameters(), ack() );
     }
     catch( const std::exception& e )
     {
@@ -209,19 +209,25 @@ int RecursionOfDeath( int count, char* data )
 
 } // namespace
 
-void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& params )
+void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& params,
+        sword::MagicActionAck& ack )
 {
     protocol::CheckCount( params, 2 );
     const std::string& command = protocol::GetString( params, 0 );
-    const std::string& err = protocol::GetString( params, 1 );
     if( command == "trigger_error" )
     {
+        const std::string& err = protocol::GetString( params, 1 );
         if( err == "null_pointer" )
             NullPointerError();
         else if( err == "stack_overflow" )
             RecursionOfDeath( 0, nullptr );
         else
             throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
+    }
+    else if( command == "echo" )
+    {
+        const std::string& input = protocol::GetString( params, 1 );
+        ack.mutable_result()->add_elem()->add_value()->set_acharstr( input );
     }
     else
         throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
