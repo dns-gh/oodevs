@@ -128,6 +128,9 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
             FillGenObjects( vector );
         else
         {
+            for( auto it = vector.begin(); it != vector.end(); ++it )
+                if( *it )
+                    ( *it )->isAllowed_ = false;
             input >> xml::start( "objects" )
                       >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceGenObjects, this, _1, boost::ref( vector ) ) )
                   >> xml::end;
