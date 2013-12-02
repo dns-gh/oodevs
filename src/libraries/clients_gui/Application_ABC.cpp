@@ -233,7 +233,13 @@ void Application_ABC::OnLanguageChanged()
 void Application_ABC::LoadCommandLineLanguage( const tools::Languages& languages, const std::string& languageCode )
 {
     if( languageCode.empty() )
+    {
+        // If no command line language, ensure registry language is supported
+        if( !languages.EnsureCurrentIsSupported() )
+            // if it's not supported, fall back to English so reload translators
+            OnLanguageChanged();
         return;
+    }
     tools::Language::SetCurrent( languageCode );
     languages.EnsureCurrentIsSupported();
     OnLanguageChanged();

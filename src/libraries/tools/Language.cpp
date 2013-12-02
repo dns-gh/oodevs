@@ -20,6 +20,7 @@
 using namespace tools;
 
 std::string Language::current_ = "en";
+bool Language::canUseInvalidCurrent_ = false;
 
 // -----------------------------------------------------------------------------
 // Name: Language constructor
@@ -110,10 +111,10 @@ const std::string& Language::Current()
 // -----------------------------------------------------------------------------
 void Language::SetCurrent( const std::string& language )
 {
-    if( language.size() == 2 )
+    if( language.size() == 2 || canUseInvalidCurrent_ )
         current_ = language;
     else
-        MT_LOG_ERROR_MSG( "Invalid language code: " << language << "." );
+        MT_LOG_ERROR_MSG( "Invalid language code: " << language );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,4 +125,13 @@ void Language::InitFromRegistry()
 {
     QSettings settings( "MASA Group", "SWORD" );
     SetCurrent( settings.value( "/Common/Language", "en" ).value< QString >().toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Language::SetCanUseInvalidCurrent
+// Created: ABR 2013-12-02
+// -----------------------------------------------------------------------------
+void Language::SetCanUseInvalidCurrent( bool canUseInvalidCurrent )
+{
+    canUseInvalidCurrent_ = canUseInvalidCurrent;
 }

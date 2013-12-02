@@ -37,7 +37,7 @@ public:
     //@{
     const Language& Get( const std::string& code ) const;
     const LanguagesVector& GetVector() const;
-    void EnsureCurrentIsSupported() const;
+    bool EnsureCurrentIsSupported() const;
     //@}
 
 private:

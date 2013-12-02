@@ -58,7 +58,6 @@ void Languages::Read( xml::xistream& xis )
                 languages_.push_back( tools::Language( x ) );
             })
         >> xml::end;
-    EnsureCurrentIsSupported();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +96,7 @@ const LanguagesVector& Languages::GetVector() const
 // Name: Languages::EnsureCurrentIsSupported
 // Created: ABR 2013-10-14
 // -----------------------------------------------------------------------------
-void Languages::EnsureCurrentIsSupported() const
+bool Languages::EnsureCurrentIsSupported() const
 {
     if( !Find( Language::Current() ) )
     {
@@ -105,5 +104,7 @@ void Languages::EnsureCurrentIsSupported() const
         if( !Find( "en" ) )
             MT_LOG_ERROR_MSG( "Default language 'English' not found in Languages.xml." );
         Language::SetCurrent( "en" );
+        return false;
     }
+    return true;
 }
