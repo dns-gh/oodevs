@@ -232,10 +232,9 @@ void Application_ABC::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void Application_ABC::LoadCommandLineLanguage( const tools::Languages& languages, const std::string& languageCode )
 {
-    if( languageCode.size() == 2 )
-    {
-        tools::Language::SetCurrent( languageCode );
-        languages.EnsureCurrentIsSupported();
-        OnLanguageChanged();
-    }
+    if( languageCode.empty() )
+        return;
+    tools::Language::SetCurrent( languageCode );
+    languages.EnsureCurrentIsSupported();
+    OnLanguageChanged();
 }

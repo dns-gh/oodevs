@@ -113,10 +113,7 @@ void Language::SetCurrent( const std::string& language )
     if( language.size() == 2 )
         current_ = language;
     else
-    {
-        MT_LOG_ERROR_MSG( "Invalid language code: " << language << ". Fall back to default language: English." );
-        current_ = "en";
-    }
+        MT_LOG_ERROR_MSG( "Invalid language code: " << language << "." );
 }
 
 // -----------------------------------------------------------------------------
