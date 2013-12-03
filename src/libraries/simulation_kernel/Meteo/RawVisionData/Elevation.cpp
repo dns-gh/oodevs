@@ -10,54 +10,59 @@
 #include "Elevation.h"
 #include "MT_Tools/MT_Vector2D.h"
 
-bool SplitSegmentOnGrid( double cellSize, MT_Vector2D from, MT_Vector2D to,
+bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,
         const std::function< bool( MT_Vector2D, MT_Vector2D )>& f )
 {
-    int x1 = static_cast< int >( from.rX_ / cellSize );
-    int y1 = static_cast< int >( from.rY_ / cellSize );
-    const int x2 = static_cast< int >( to.rX_ / cellSize );
-    const int y2 = static_cast< int >( to.rY_ / cellSize );
+    int x1 = static_cast< int >( from.rX_ );
+    int y1 = static_cast< int >( from.rY_ );
+    int x2 = static_cast< int >( to.rX_ );
+    int y2 = static_cast< int >( to.rY_ );
 
     // Bresenham's line algorithm
-    const int delta_x = x2 - x1;
-    const int ix = (delta_x > 0) - (delta_x < 0);
-    const int d_x = std::abs( delta_x ) << 1;
-    const int delta_y = y2 - y1;
-    const int iy = (delta_y > 0) - (delta_y < 0);
-    const int d_y = std::abs( delta_y ) << 1;
-    if( d_x >= d_y )
+    int delta_x = x2 - x1;
+    int d_x = std::abs( delta_x ) << 1;
+    int delta_y = y2 - y1;
+    int d_y = std::abs( delta_y ) << 1;
+    const bool flip = d_x < d_y;
+    if( flip )
     {
-        int error = d_y - ( d_x >> 1 );
-        while( x1 != x2 )
-        {
-            MT_Vector2D origin( x1 * cellSize, y1 * cellSize );
-            if( error >= 0 && ( error || ix > 0 ) )
-            {
-                error -= d_x;
-                y1 += iy;
-            }
-            error += d_y;
-            x1 += ix;
-            if( f( origin, MT_Vector2D( x1 * cellSize, y1 * cellSize ) ) )
-                return true;
-        }
+        std::swap( x1, y1 );
+        std::swap( x2, y2 );
+        std::swap( d_x, d_y );
+        std::swap( delta_x, delta_y );
     }
-    else
+    int ix = (delta_x > 0) - (delta_x < 0);
+    int iy = (delta_y > 0) - (delta_y < 0);
+    int error = d_y - ( d_x >> 1 );
+
+    int x = x1;
+    int y = y1;
+    // counter to avoid a (x % cellSize) in the main loop
+    int cellPart = std::abs( x % cellSize );
+    if( ix < 0 != x < 0 )
+        cellPart = ( cellSize - cellPart ) % cellSize;
+    auto prev = from;
+    while( x != x2 )
     {
-        int error = d_x - ( d_y >> 1 );
-        while( y1 != y2 )
+        if( error >= 0 && ( error || ix > 0 ) )
         {
-            MT_Vector2D origin( x1 * cellSize, y1 * cellSize );
-            if( error >= 0 && ( error || iy > 0 ) )
-            {
-                error -= d_y;
-                x1 += ix;
-            }
-            error += d_x;
-            y1 += iy;
-            if( f( origin, MT_Vector2D( x1 * cellSize, y1 * cellSize ) ) )
-                return true;
+            error -= d_x;
+            y += iy;
         }
+        error += d_y;
+        x += ix;
+        cellPart++;
+        if( cellPart != cellSize && x != x2 )
+            continue;
+        cellPart = 0;
+        auto next = x == x2
+            ? to
+            : flip
+                ? MT_Vector2D( y, x )
+                : MT_Vector2D( x, y );
+        if( f( prev, next ) )
+            return true;
+        prev = next;
     }
     return false;
 }
