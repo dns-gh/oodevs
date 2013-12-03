@@ -319,7 +319,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC* army, const MIL_O
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_UrbanObject_ABC* parent )
 {
     MIL_UrbanObject_ABC* pObject = factory_.CreateUrbanObject( sink_, xis, parent );
-    if( pObject->IsBlock() )
+    if( pObject && pObject->IsBlock() )
     {
         const UrbanPhysicalCapacity* pPhysical = pObject->Retrieve< UrbanPhysicalCapacity >();
         if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetRoofShape() ) ) )
