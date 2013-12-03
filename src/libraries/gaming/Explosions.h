@@ -13,7 +13,9 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
 #include <boost/ptr_container/ptr_deque.hpp>
+#pragma warning( pop )
 
 namespace sword
 {

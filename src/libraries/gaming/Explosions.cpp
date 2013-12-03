@@ -63,30 +63,17 @@ const boost::ptr_deque< PopulationFireResult >& Explosions::GetPopulationExplosi
 // -----------------------------------------------------------------------------
 void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
 {
-    bool changed = false;
-    for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); )
-    {
-        const AgentFireResult& result = *it;
-        if( &result.target_ == &agent || result.firer_ == &agent )
+    const size_t before = agentExplosions_.size() + populationExplosions_.size();
+    agentExplosions_.erase_if( [&]( const AgentFireResult& result ) -> bool
         {
-            changed = true;
-            it = agentExplosions_.erase( it );
-        }
-        else
-            ++it;
-    }
-    for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); )
-    {
-        const PopulationFireResult& result = *it;
-        if( result.firer_ == &agent )
+            return &result.target_ == &agent || result.firer_ == &agent;
+        });
+    populationExplosions_.erase_if( [&]( const PopulationFireResult& result ) -> bool
         {
-            changed = true;
-            it = populationExplosions_.erase( it );
-        }
-        else
-            ++it;
-    }
-    if( changed )
+            return result.firer_ == &agent;
+        });
+    const size_t after = agentExplosions_.size() + populationExplosions_.size();
+    if( before != after )
         controller_.Update( *this );
 }
 
