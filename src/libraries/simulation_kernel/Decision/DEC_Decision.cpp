@@ -1147,6 +1147,17 @@ bool UrbanBlockFunctionBM( sword::Brain& brain, directia::tools::binders::Script
     return false;
 }
 
+bool UrbanBlockListFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< MIL_UrbanObject_ABC* > value;
+    if( element.ToUrbanBlockList( value ) )
+    {
+        knowledgeCreateFunction( refMission, brain.GetScriptRef( "integration.ontology.types.urbanBlock" ), name, value, true );
+        return true;
+    }
+    return false;
+}
+
 bool DotationTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_DotationCategory* value = 0;
@@ -1569,6 +1580,7 @@ void InitFunctions()
         functorsBM[ "MedicalPriorities" ] = MedicalPrioritiesFunctionBM;
         functorsBM[ "PlannedWorkList" ] = GenObjectListFunctionBM;
         functorsBM[ "UrbanKnowledge" ] = UrbanBlockFunctionBM;
+        functorsBM[ "UrbanKnowledgeList" ] = UrbanBlockListFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
         functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;
         functorsBM[ "PhaseLine" ] = PhaseLineFunctionBM;

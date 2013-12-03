@@ -130,6 +130,7 @@ public:
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const = 0;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const = 0;
     virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const = 0;
+    virtual bool ToUrbanBlockList( std::vector< MIL_UrbanObject_ABC* >& ) const = 0;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;

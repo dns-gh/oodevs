@@ -329,6 +329,15 @@ bool MIL_BaseParameter::ToUrbanBlock( MIL_UrbanObject_ABC*& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToUrbanBlockList
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToUrbanBlockList( std::vector< MIL_UrbanObject_ABC* >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToList
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------

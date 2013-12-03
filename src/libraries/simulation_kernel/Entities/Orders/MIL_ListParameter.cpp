@@ -277,6 +277,22 @@ bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToUrbanBlockList
+// Created: ABR 2013-11-28
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToUrbanBlockList( std::vector< MIL_UrbanObject_ABC* >& result ) const
+{
+    for( auto it = list_.begin(); it != list_.end(); ++it )
+    {
+        MIL_UrbanObject_ABC* param;
+        if( !(*it)->ToUrbanBlock( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::ToResourceNetworkNodeList
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
