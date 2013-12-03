@@ -26,14 +26,6 @@ print_error = (text) ->
 print_license_error = (text, no_timeout) ->
     display_error "session_error", session_error_template, text, no_timeout
 
-Handlebars.registerHelper "can_play", (data, options) ->
-    valid  = convert_to_boolean data.first_time
-    valid |= convert_to_boolean data.replay.root?.length
-    valid &= data.sim_license
-    if valid
-        return options.fn this
-    return options.inverse this
-
 Handlebars.registerHelper "each_pair", (src, options) ->
     ret = ""
     for k, v of src
@@ -327,6 +319,17 @@ get_replay_root = (collection, data) ->
     return unless id?.length
     return collection.get id
 
+is_status_in = (d, values) ->
+    for it in values
+        if d.status == it
+            return true
+    return false
+
+has_license_for = (d, licenses) ->
+    if d.replay.root?.length
+        return check_license "sword-replayer", licenses.model
+    return check_license "sword-runtime", licenses.model
+
 class SessionList extends Backbone.Collection
     model: SessionItem
     order: "name"
@@ -439,30 +442,53 @@ class SessionItemView extends Backbone.View
         return unless @error_popover?
         @error_popover.popover "hide"
 
-    render: =>
-        @$el.empty()
-        delete @error_popover
-        return if @is_skip_render @model
-
-        data = $.extend {}, @model.attributes
+    get_ui_data: ->
+        data = _.extend {}, @model.attributes
         if data.start_time?.length
             start = new Date data.start_time
             current = new Date data.current_time
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
-        data.can_display_log = !_.isEmpty data.logs
-        data.can_link = data.status != "playing" || data.start_time
-        data.sim_license = true
-        data.replay_license = true
-        data.sim_license = check_license "sword-runtime", licenses.model
-        data.replay_license = check_license "sword-replayer", licenses.model
+        data.buttons = @get_ui_buttons data
+        return data
+
+    get_ui_buttons: (d) ->
+        if convert_to_boolean d.busy
+            return busy: true
+        has_replays = !_.isEmpty d.replay.list
+        is_first = convert_to_boolean d.first_time
+        is_idle = is_status_in d, ["stopped", "archived", "waiting"]
+        is_live = is_status_in d, ["playing", "paused", "replaying"]
+        join:               is_live
+        play:               is_status_in d, ["stopped", "paused", "waiting"]
+        play_disabled:      (has_replays && !is_live) || !has_license_for d, licenses
+        play_dropdown:      !has_replays && !_.isEmpty d.checkpoints.list
+        pause:              is_status_in d, ["playing"]
+        replay:             !is_first && is_status_in d, ["stopped", "playing", "paused"]
+        stop:               is_live
+        restore:            is_status_in d, ["archived"]
+        edit:               is_status_in d, ["stopped", "waiting"]
+        clone:              !has_replays
+        download:           is_idle
+        log:                !_.isEmpty d.logs
+        archive:            is_status_in d, ["stopped"]
+        archive_disabled:   has_replays
+        delete:             is_idle
+        delete_disabled:    has_replays
+
+    render: =>
+        @$el.empty()
+        delete @error_popover
+        return if @is_skip_render @model
+        data = @get_ui_data()
         @$el.html session_template data
         @error_popover = @$el.find(".error-btn")
         @error_popover.popover
             content:   data.last_error
             title:     "Error"
             placement: "bottom"
+        set_spinner @$el.find(".busy")
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
             next = "sword://#{location.host}/?" + $.param

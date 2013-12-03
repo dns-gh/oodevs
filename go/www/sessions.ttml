@@ -284,109 +284,97 @@
 </script>
 <!-- session_play_btn -->
 [[ define "session_play_btn" ]]
-{{#is_option status stopped="" waiting=""}}
-    {{#count checkpoints.list}}
-        {{#count replay.list}}
-            <a class="btn disabled">
-                <i class="icon-play"></i>
-            </a>
-        {{else}}
-            <a class="btn dropdown-toggle {{#count replay.list}} disabled{{/count}}{{#unless sim_license}} disabled{{/unless}}" data-toggle="dropdown">
-                <i class="icon-play"></i>
-                <span class="caret"></span>
-            </a>
-        {{/count}}
-        <ul class="dropdown-menu">
-            [[ if .reset ]]
-            <li><a class="play emu_btn">From Scratch</a></li>
-            <li class="divider"></li>
-            [[ end ]]
-            {{#each checkpoints.list}}
-            <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
-            {{/each}}
-        </ul>
-    {{else}}
-        [[ if .reset ]][[ else ]]{{#can_play .}}[[ end ]]
-        {{#is_option status waiting="" replaying=""}}
-        <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}{{#unless replay_license}} disabled{{/unless}}"><i class="icon-play"></i></a>
-        {{else}}
-            <a title="Play" class="btn play{{#count replay.list}} disabled{{/count}}{{#unless sim_license}} disabled{{/unless}}"><i class="icon-play"></i></a>
-        {{/is_option}}
-        [[ if .reset ]][[ else ]]{{/can_play}}[[ end ]]
-    {{/count}}
-{{/is_option}}
-{{#is_option status paused=""}}
-<a title="Play" class="btn play"><i class="icon-play"></i></a>
-{{/is_option}}
+{{#if buttons.play}}
+<a class="btn{{#if buttons.play_disabled}} disabled{{/if}}{{#if buttons.play_dropdown}} dropdown-toggle" data-toggle="dropdown{{else}} play{{/if}}">
+    <i class="icon-play"></i>
+    {{#if buttons.play_dropdown}}
+    <span class="caret"></span>
+    {{/if}}
+</a>
+{{#if buttons.play_dropdown}}
+<ul class="dropdown-menu">
+    [[ if .reset ]]
+    <li><a class="play emu_btn">From Scratch</a></li>
+    <li class="divider"></li>
+    [[ end ]]
+    {{#each checkpoints.list}}
+        <li><a class="play emu_btn" name="{{.}}">{{.}}</a></li>
+    {{/each}}
+</ul>
+{{/if}}
+{{/if}}
 [[ end ]]
-<!-- session_goto_btn -->
-[[ define "session_goto_btn" ]]
-{{#is_option status playing="" paused="" replaying=""}}
-<a title="Join" class="btn link{{#unless can_link}} disabled{{/unless}}"><i class="icon-share"></i></a>
-{{/is_option}}
+<!-- session_join_btn -->
+[[ define "session_join_btn" ]]
+{{#if buttons.join}}
+<a title="Join" class="btn link"><i class="icon-share"></i></a>
+{{/if}}
 [[ end ]]
 <!-- session_pause_btn -->
 [[ define "session_pause_btn" ]]
-{{#is_option status playing=""}}
+{{#if buttons.pause}}
 <a title="Pause" class="btn pause"><i class="icon-pause"></i></a>
-{{/is_option}}
-[[ end ]]
-<!-- session_restore_btn -->
-[[ define "session_restore_btn" ]]
-{{#is_option status archived=""}}
-<a title="Restore" class="btn restore"><i class="icon-eject"></i></a>
-{{/is_option}}
-[[ end ]]
-<!-- session_stop_btn -->
-[[ define "session_stop_btn" ]]
-{{#is_option status playing="" paused="" replaying=""}}
-<a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
-{{/is_option}}
+{{/if}}
 [[ end ]]
 <!-- session_replay_btn -->
 [[ define "session_replay_btn" ]]
-{{#is_option status stopped="" playing="" paused=""}}
-{{#bool first_time}}
-{{else}}
+{{#if buttons.replay}}
 <a title="Replay" class="btn replay"><i class="icon-repeat"></i></a>
-{{/bool}}
-{{/is_option}}
+{{/if}}
+[[ end ]]
+<!-- session_stop_btn -->
+[[ define "session_stop_btn" ]]
+{{#if buttons.stop}}
+<a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_restore_btn -->
+[[ define "session_restore_btn" ]]
+{{#if buttons.restore}}
+<a title="Restore" class="btn restore"><i class="icon-eject"></i></a>
+{{/if}}
 [[ end ]]
 <!-- session_edit_btn -->
 [[ define "session_edit_btn" ]]
-{{#is_option status stopped="" waiting=""}}
+{{#if buttons.edit}}
 <a title="Settings..." class="btn edit"><i class="icon-cog"></i> </a>
-{{/is_option}}
-[[ end ]]
-<!-- session_log_btn -->
-[[ define "session_log_btn" ]]
-{{#if can_display_log}}
-<a title="Logs..." href="?pg=logs&session={{{id}}}" class="btn log"><i class="icon-file-text-alt"></i></a>
 {{/if}}
 [[ end ]]
 <!-- session_clone_btn -->
 [[ define "session_clone_btn" ]]
-{{#is_option status playing="" paused="" stopped=""}}
+{{#if buttons.clone}}
 <a title="Clone" class="btn clone"><i class="icon-plus-sign"></i></a>
-{{/is_option}}
+{{/if}}
 [[ end ]]
 <!-- session_download_btn -->
 [[ define "session_download_btn" ]]
-{{#is_option status stopped="" waiting=""}}
+{{#if buttons.download}}
 <a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
-{{/is_option}}
+{{/if}}
+[[ end ]]
+<!-- session_log_btn -->
+[[ define "session_log_btn" ]]
+{{#if buttons.log}}
+<a title="Logs..." href="?pg=logs&session={{{id}}}" class="btn log"><i class="icon-file-text-alt"></i></a>
+{{/if}}
 [[ end ]]
 <!-- session_archive_btn -->
 [[ define "session_archive_btn" ]]
-{{#is_option status stopped=""}}
-<a title="Archive" class="btn archive{{#count replay.list}} disabled{{/count}}"><i class="icon-hdd"></i></a>
-{{/is_option}}
+{{#if buttons.archive}}
+<a title="Archive" class="btn archive{{#if buttons.archive_disabled}} disabled{{/if}}"><i class="icon-hdd"></i></a>
+{{/if}}
 [[ end ]]
 <!-- session_delete_btn -->
 [[ define "session_delete_btn" ]]
-{{#is_option status stopped="" archived="" waiting=""}}
-<a title="Delete" class="btn delete{{#count replay.list}} disabled{{/count}}"><i class="icon-trash"></i></a>
-{{/is_option}}
+{{#if buttons.delete}}
+<a title="Delete" class="btn delete{{#if buttons.delete_disabled}} disabled{{/if}}"><i class="icon-trash"></i></a>
+{{/if}}
+[[ end ]]
+<!-- session_spin_btn -->
+[[ define "session_spin_btn" ]]
+{{#if buttons.busy}}
+<a class="btn disabled spin_btn busy"></a>
+{{/if}}
 [[ end ]]
 <!-- Session Template -->
 <script type="text/template" id="session_plugins">
@@ -445,19 +433,20 @@
             {{/is_option}}
             <div class="session_top_right">
                 <div class="btn-group">
-                    [[ template "session_goto_btn" . ]]
+                    [[ template "session_join_btn" . ]]
                     [[ if ne .user.type "player" ]]
-                    [[ template "session_play_btn" . ]]
-                    [[ template "session_pause_btn" . ]]
-                    [[ template "session_replay_btn" . ]]
-                    [[ template "session_stop_btn" . ]]
-                    [[ template "session_restore_btn" . ]]
-                    [[ template "session_edit_btn" . ]]
-                    [[ template "session_clone_btn" . ]]
-                    [[ template "session_download_btn" . ]]
-                    [[ template "session_log_btn" . ]]
-                    [[ template "session_archive_btn" . ]]
-                    [[ template "session_delete_btn" . ]]
+                        [[ template "session_play_btn" . ]]
+                        [[ template "session_pause_btn" . ]]
+                        [[ template "session_replay_btn" . ]]
+                        [[ template "session_stop_btn" . ]]
+                        [[ template "session_restore_btn" . ]]
+                        [[ template "session_edit_btn" . ]]
+                        [[ template "session_clone_btn" . ]]
+                        [[ template "session_download_btn" . ]]
+                        [[ template "session_log_btn" . ]]
+                        [[ template "session_archive_btn" . ]]
+                        [[ template "session_delete_btn" . ]]
+                        [[ template "session_spin_btn" . ]]
                     [[ end ]]
                 </div>
             </div>

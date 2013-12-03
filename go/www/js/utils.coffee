@@ -125,11 +125,6 @@ Handlebars.registerHelper "is_positive", (value, options) ->
         return options.fn this
     return options.inverse this
 
-Handlebars.registerHelper "count", (value, options) ->
-    if value?.length
-        return options.fn this
-    return options.inverse this
-
 Handlebars.registerHelper "iterate_pair", (list, options) ->
     ret = ""
     while list?.length > 1
