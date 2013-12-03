@@ -424,6 +424,10 @@
         <source>State</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>State/Mood</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>

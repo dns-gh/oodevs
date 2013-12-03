@@ -143,6 +143,26 @@ unsigned int Population::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Population::GetAttitude
+// Created: SLI 2013-11-29
+// -----------------------------------------------------------------------------
+QString Population::GetAttitude() const
+{
+    // $$$$ _RC_ SLI 2013-11-29: Every population element has the same attitude, so the first we find is good enough
+    {
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            return it.NextElement().GetAttitude();
+    }
+    {
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            return it.NextElement().GetAttitude();
+    }
+    return tools::ToString( ePopulationAttitude_Calme );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
@@ -395,6 +415,7 @@ void Population::CreateDictionary()
     dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Wounded" ), wounded_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Contaminated" ), contaminated_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Dead" ), dead_, true );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "State/Mood" ), attitude_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Female" ), female_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Children" ), children_, true );
@@ -458,5 +479,6 @@ void Population::Update()
     wounded_ = GetWoundedHumans();
     contaminated_ = GetContaminatedHumans();
     dead_ = GetDeadHumans();
+    attitude_ = GetAttitude();
     controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", "State" ) ) );
 }
