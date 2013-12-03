@@ -28,6 +28,8 @@ class Simulation;
 
 namespace kernel
 {
+    class Agent_ABC;
+    class Population_ABC;
     class Profile_ABC;
 }
 
@@ -49,10 +51,15 @@ public:
     //! @name Operations
     //@{
     virtual AgentFireResult*      CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer );
+    virtual AgentFireResult*      CreateFireResult( const kernel::Agent_ABC* target, const kernel::Entity_ABC* firer );
     virtual PopulationFireResult* CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer );
+    virtual PopulationFireResult* CreateFireResult( const kernel::Population_ABC& target, const kernel::Entity_ABC* firer );
     const kernel::Entity_ABC*     GetFirer( const sword::Explosion& message ) const;
     const kernel::Entity_ABC*     GetFirer( const sword::StopUnitFire& message ) const;
     const kernel::Entity_ABC*     GetFirer( const sword::StopCrowdFire& message ) const;
+    const kernel::Entity_ABC*     GetTarget( const sword::Explosion& message ) const;
+    const kernel::Entity_ABC*     GetTarget( const sword::StopUnitFire& message ) const;
+    const kernel::Entity_ABC*     GetTarget( const sword::StopCrowdFire& message ) const;
     //@}
 
 private:

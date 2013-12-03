@@ -36,3 +36,18 @@ PopulationFireResult::~PopulationFireResult()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFireResult constructor
+// Created: LDC 2013-11-29
+// -----------------------------------------------------------------------------
+PopulationFireResult::PopulationFireResult( const kernel::Population_ABC& target, const QDateTime& time, const kernel::Entity_ABC* firer )
+    : target_( target )
+    , firer_( firer )
+    , deadPeople_( 0 )
+    , woundedPeople_( 0 )
+    , scatteredPeople_( 0 )
+    , time_( time )
+{
+        // NOTHING
+}

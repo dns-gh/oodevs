@@ -44,10 +44,18 @@ public:
                               const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
                               const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
                               const QDateTime& time, const kernel::Entity_ABC* firer );
+             AgentFireResult( const kernel::Agent_ABC& target,
+                              const QDateTime& time,
+                              const kernel::Entity_ABC* firer );
     virtual ~AgentFireResult();
     //@}
 
 public:
+    //! @name Methods
+    //@{
+    bool IsMiss() const;
+    //@}
+
     //! @name Member data
     //@{
     const kernel::Agent_ABC& target_;

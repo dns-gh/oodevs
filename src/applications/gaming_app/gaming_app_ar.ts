@@ -980,6 +980,10 @@ Reason: %3
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No damage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HumansListView</name>

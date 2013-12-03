@@ -81,6 +81,7 @@ private:
 
     void Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer );
     void Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer );
+    void Update( const kernel::Entity_ABC* target, const kernel::Entity_ABC* firer );
     //@}
 
 private:
