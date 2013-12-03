@@ -64,18 +64,6 @@ FireResultListView::~FireResultListView()
 
 namespace
 {
-    template< typename T >
-    int GetCount( const T& explosions )
-    {
-        int c = 0;
-        for( T::const_iterator it = explosions.begin(); it != explosions.end(); ++it )
-        {
-            if( *it )
-                ++c;
-        }
-        return c;
-    }
-
     void SetNumberOfChildren( QTreeWidgetItem* item, int number )
     {
         if( item )
@@ -274,17 +262,15 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
 {
     if( selected_ && selected_->Retrieve< Explosions >() == &results )
     {
-        const Explosions::T_AgentFires& agentFires = results.GetAgentExplosions();
-        const Explosions::T_PopulationFires& popFires = results.GetPopulationExplosions();
-        const int count = GetCount( agentFires ) + GetCount( popFires );
+        const auto& agentFires = results.GetAgentExplosions();
+        const auto& popFires = results.GetPopulationExplosions();
+        const int count = static_cast< int >( agentFires.size() + popFires.size() );
         setHeaderHidden( count == 0 );
         SetNumberOfChildren( invisibleRootItem(), count );
         int row = 0;
         for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
-            if( *it )
-                Display( **it, topLevelItem( row++ ) );
+            Display( *it, topLevelItem( row++ ) );
         for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
-            if( *it )
-                Display( **it, topLevelItem( row++ ) );
+            Display( *it, topLevelItem( row++ ) );
     }
 }
