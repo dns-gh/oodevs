@@ -543,7 +543,10 @@ void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
 void EventOrderWidget::NotifyUpdated( const actions::gui::Param_ABC& param )
 {
     if( missionInterface_->HasParameter( param ) )
+    {
         UpdateTriggerAction();
+        emit EventChanged();
+    }
 }
 
 // -----------------------------------------------------------------------------
