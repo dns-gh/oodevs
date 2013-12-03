@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>parked on self-prepared area</source>
-        <translation>poste amenagé</translation>
+        <translation>poste aménagé</translation>
     </message>
     <message>
         <source>parked on engineer-prepared area</source>
