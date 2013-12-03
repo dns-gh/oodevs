@@ -63,25 +63,36 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
     return offset;
 }
 
-bool ConsignArchive::Read( uint32_t file, uint32_t offset, std::vector< uint8_t >& output ) const
+void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
+        const std::function< void( std::vector< uint8_t >& )>& callback ) const
 {
-    // Not awesome, but I am not sure caching files would help much. It would
-    // be better to batch requests per files, in order to avoid seeking, short
-    // of delegating all this to a proper database.
-    tools::Ifstream fp( GetFilename( file ), std::ios::in | std::ios::binary );    
-    if( !fp.is_open() )
-        return false;
-    fp.seekg( offset, std::ios::beg );
-    uint32_t length = 0;
-    fp.read( reinterpret_cast< char* >( &length ), sizeof( length ) );
-    if( fp.gcount() != sizeof( length ) || !fp || !length )
-        return false;
-    length = ntohl( length );
-    output.resize( length );
-    fp.read( reinterpret_cast< char* >( &output[0] ), length );
-    if( fp.gcount() != length || !fp )
-        return false;
-    return true;
+    std::vector< uint8_t > output;
+
+    uint32_t file = 0;
+    tools::Ifstream fp;
+    for( auto it = offsets.cbegin(); it != offsets.cend(); ++it )
+    {
+        if( file != it->file )
+        {
+            file = it->file;
+            fp.close();
+            fp.clear();
+            fp.open( GetFilename( file ), std::ios::in | std::ios::binary );    
+        }
+        if( !fp.is_open() )
+            continue;
+        fp.seekg( it->offset, std::ios::beg );
+        uint32_t length = 0;
+        fp.read( reinterpret_cast< char* >( &length ), sizeof( length ) );
+        if( fp.gcount() != sizeof( length ) || !fp || !length )
+            continue;
+        length = ntohl( length );
+        output.resize( length );
+        fp.read( reinterpret_cast< char* >( &output[0] ), length );
+        if( fp.gcount() != length || !fp )
+            continue;
+        callback( output );
+    }
 }
 
 void ConsignArchive::Flush()

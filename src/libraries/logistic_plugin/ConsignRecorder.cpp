@@ -191,7 +191,10 @@ void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
     }
     std::sort_heap( offsets.begin(), offsets.end(), CompareLess );
 
+    // Make sure to seek in increasing offset order
+    std::reverse( offsets.begin(), offsets.end() );
     AppendEntries( offsets, entries );
+    std::reverse( entries.base().begin(), entries.base().end() );
 }
 
 void ConsignRecorder::GetHistory( uint32_t requestId,
@@ -201,22 +204,19 @@ void ConsignRecorder::GetHistory( uint32_t requestId,
     const auto ic = consigns_.find( requestId );
     if( ic == consigns_.end() )
         return;
+    // records_ is naturally sorted by ascending (file, offset)
     AppendEntries( ic->second->records_, entries );
 }
 
 void ConsignRecorder::AppendEntries( const std::vector< ConsignOffset >& offsets, 
     boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
-    std::vector< uint8_t > buffer;
-    for( auto it = offsets.cbegin(); it != offsets.cend(); ++it )
+    archive_->ReadMany( offsets, [&]( std::vector< uint8_t >& buffer )
     {
-        if( !archive_->Read( it->file, it->offset, buffer ) )
-            continue;
         std::auto_ptr< sword::LogHistoryEntry > entry( new sword::LogHistoryEntry() );
-        if( !entry->ParseFromArray( &buffer[0], static_cast< int >( buffer.size() )))
-            continue;
-        entries.push_back( entry );
-    }
+        if( entry->ParseFromArray( &buffer[0], static_cast< int >( buffer.size() )))
+            entries.push_back( entry );
+    });
 }
 
 size_t ConsignRecorder::GetHistorySize() const
