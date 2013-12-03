@@ -31,19 +31,15 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     , controllers_( controllers )
     , exercise_( exercise )
     , config_( config )
-    , resources_( new QStandardItemModel( this) )
-    , orderFiles_( new QStandardItemModel( this) )
+    , resources_( new QStandardItemModel( this ) )
+    , orderFiles_( new QStandardItemModel( this ) )
 {
+    setMinimumSize( 600, 600 );
     gui::SubObjectName subObject( "ExerciseDialog" );
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    QGridLayout* grid = new QGridLayout( this );
-    grid->setMargin( 5 );
-    grid->setRowStretch( 0, 1 );
-    grid->setRowStretch( 1, 10 );
-    grid->setRowStretch( 2, 5 );
-    grid->setRowStretch( 3, 1 );
-    grid->setRowStretch( 4, 1 );
+    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    mainLayout->setMargin( 5 );
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "briefingBox", tr( "Briefing" ), this );
         gui::SubObjectName subObject( "briefingBox" );
@@ -65,9 +61,10 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
         briefing_ = new gui::RichWidget< QTextEdit >( "briefing" );
+        briefing_->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
         vLayout->addWidget( briefing_ );
         briefing_->setTextFormat( Qt::RichText );
-        grid->addWidget( box, 0, 0, 1, 2 );
+        mainLayout->addWidget( box, 2 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "filesBox", tr( "Files" ) );
@@ -75,6 +72,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         QHBoxLayout* layout = new QHBoxLayout();
         box->setLayout( layout );
         resourcesView_ = new gui::RichTreeView( "resourcesView" );
+        resourcesView_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Ignored );
         layout->addWidget( resourcesView_ );
         resourcesView_->setModel( resources_ );
         resources_->setColumnCount( 2 );
@@ -92,7 +90,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteResource() ) );
-        grid->addWidget( box, 1, 0, 1, 2 );
+        mainLayout->addWidget( box, 1 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "orderFilesBox", tr( "Order files" ) );
@@ -100,6 +98,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         QHBoxLayout* layout = new QHBoxLayout();
         box->setLayout( layout );
         orderFilesView_ = new gui::RichTreeView( "orderFilesView" );
+        orderFilesView_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Ignored );
         layout->addWidget( orderFilesView_ );
         orderFilesView_->setModel( orderFiles_ );
         QStringList headers( tr( "File" ) );
@@ -115,7 +114,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteOrderFile() ) );
-        grid->addWidget( box, 2, 0, 1, 2 );
+        mainLayout->addWidget( box, 1 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "parameters", tr( "Parameters" ) );
@@ -126,15 +125,17 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( infiniteDotationsCheckBox_ );
         humanEvolutionCheckBox_ = new gui::RichCheckBox( "humanEvolutionCheckBox", tr( "Human factors automatic evolution" ) );
         vLayout->addWidget( humanEvolutionCheckBox_ );
-        grid->addWidget( box, 3, 0, 1, 2 );
+        mainLayout->addWidget( box );
     }
     {
         QHBoxLayout* box = new QHBoxLayout();
+        box->setSpacing( 5 );
         gui::RichPushButton* ok = new gui::RichPushButton( "ok", tr( "Ok" ) );
         gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
+        box->addStretch( 1 );
         box->addWidget( ok );
         box->addWidget( cancel );
-        grid->addLayout( box, 5, 1 );
+        mainLayout->addLayout( box );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
@@ -339,15 +340,6 @@ void ExerciseDialog::OnToggleDisplayMode( bool toggled )
     briefings_[ selectedLang_ ] = briefing_->text();
     briefing_->setTextFormat( toggled ? Qt::PlainText : Qt::RichText );
     briefing_->setText( briefings_[ selectedLang_ ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseDialog::sizeHint
-// Created: SBO 2010-03-09
-// -----------------------------------------------------------------------------
-QSize ExerciseDialog::sizeHint() const
-{
-    return QSize( 400, 400 );
 }
 
 // -----------------------------------------------------------------------------
