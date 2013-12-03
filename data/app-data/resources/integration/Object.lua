@@ -56,8 +56,13 @@ integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
 
-integration.buildObjectInstantaneously = function( object )
-    integration.pionRC( eRC_FinTravauxObjet, object.source )
+--- Returns the instantaneously object built
+-- @param object Object to build instantaneously
+-- @param withoutReport Boolean if set to true don't display a report to indicate the beginning of the work
+integration.buildObjectInstantaneously = function( object, withoutReport )
+    if not withoutReport then
+        integration.pionRC( eRC_FinTravauxObjet, object.source )
+    end
     return DEC_ObjectKnowledge_BuildInstantaneously( myself, object.source )
 end
 
