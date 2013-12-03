@@ -172,3 +172,12 @@ void WeatherPanel::OnSunSetChanged( const QTime &date )
 {
     sunrise_->setMaximumTime( date );
 }
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::NotifyUpdated
+// Created: SLI 2013-12-02
+// -----------------------------------------------------------------------------
+void WeatherPanel::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    Show();
+}
