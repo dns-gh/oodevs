@@ -30,6 +30,8 @@
 
 #define MASA_ORDER_EXCEPTION( ErrorId ) \
     MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::##ErrorId )
+#define MASA_ORDER_EXCEPTION_MSG( ErrorId, Message ) \
+    NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::##ErrorId, __FILE__, __FUNCTION__, __LINE__, Message )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor
@@ -58,16 +60,17 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 //-----------------------------------------------------------------------------
 uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 {
-    // Check if the agent can receive this order (automate must be debraye)
-    if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
-        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
+    if( pion_.GetAutomate().IsEngaged() )
+        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "automat is engaged" );
+    if( pion_.IsDead() )
+        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "unit is dead" );
     if( pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
     {
         MIL_Report::PostEvent( pion_, report::eRC_TransportedUnitCannotReceiveOrder );
-        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "unit is transported" );
     }
     if( pion_.IsImmobilized() )
-        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "unit is immobilized" );
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
     // Instanciate and check the new mission
@@ -99,7 +102,7 @@ uint32_t MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
     if( pion_.GetAutomate().IsEngaged() )
-        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "automat is engaged" );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
         throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
