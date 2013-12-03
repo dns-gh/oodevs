@@ -11,8 +11,8 @@
 
     <target name="clean">
         <delete dir="${out.dir}"/>
-        <delete dir="${lib.dir}/../pkg"/>
-        <delete dir="${lib.dir}/../src"/>
+        <delete dir="${lib.dir}/pkg"/>
+        <delete dir="${lib.dir}/src"/>
     </target>
 
     <target name="update">
