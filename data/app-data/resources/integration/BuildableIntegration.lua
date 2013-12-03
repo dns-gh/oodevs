@@ -67,8 +67,8 @@ end
 --- Build instantaneously an object
 -- @param object Object to build instantaneously
 -- @param objectType Object type to build
--- @param withOutReport Boolean if set to true don't display a report to indicate the beginning of the work
-integration.startBuildItInstantaneously = function( object, objectType, withOutReport )
+-- @param withoutReport Boolean if set to true don't display a report to indicate the beginning of the work
+integration.startBuildItInstantaneously = function( object, objectType, withoutReport )
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
@@ -86,7 +86,7 @@ integration.startBuildItInstantaneously = function( object, objectType, withOutR
             object.knowledge = CreateKnowledge( objectType, arg )
         end
     end
-    if not withOutReport then
+    if not withoutReport then
         integration.pionRC( eRC_DebutTravaux )
     end
 end
@@ -184,9 +184,9 @@ end
 -- -----------------------------------------------------------------------------
 --- Remove instantaneously an object
 -- @param object Object to remove instantaneously
--- @param withOutReport Boolean if set to true don't display a report to indicate the beginning of the work
-integration.removeObjectInstantaneously = function( object, withOutReport )
-    if not withOutReport then
+-- @param withoutReport Boolean if set to true don't display a report to indicate the beginning of the work
+integration.removeObjectInstantaneously = function( object, withoutReport )
+    if not withoutReport then
         integration.pionRC( eRC_FinTravauxObjet, object.source )
     end
     DEC_DetruireObjetSansDelais( object.source )

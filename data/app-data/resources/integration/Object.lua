@@ -58,9 +58,9 @@ end
 
 --- Returns the instantaneously object built
 -- @param object Object to build instantaneously
--- @param withOutReport Boolean if set to true don't display a report to indicate the beginning of the work
-integration.buildObjectInstantaneously = function( object, withOutReport )
-    if not withOutReport then
+-- @param withoutReport Boolean if set to true don't display a report to indicate the beginning of the work
+integration.buildObjectInstantaneously = function( object, withoutReport )
+    if not withoutReport then
         integration.pionRC( eRC_FinTravauxObjet, object.source )
     end
     return DEC_ObjectKnowledge_BuildInstantaneously( myself, object.source )
