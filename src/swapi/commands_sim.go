@@ -614,14 +614,8 @@ func createKnowledgeMagicActionMessage(params *sword.MissionParameters, knowledg
 	}
 }
 
-func (c *Client) TeleportUnit(unitId uint32, location Point) error {
+func (c *Client) Teleport(unitId uint32, location Point) error {
 	return c.sendUnitMagicAction(MakeUnitTasker(unitId),
-		MakeParameters(MakePointParam(location)),
-		sword.UnitMagicAction_move_to)
-}
-
-func (c *Client) TeleportCrowd(crowdId uint32, location Point) error {
-	return c.sendUnitMagicAction(MakeCrowdTasker(crowdId),
 		MakeParameters(MakePointParam(location)),
 		sword.UnitMagicAction_move_to)
 }

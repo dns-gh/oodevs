@@ -257,7 +257,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 
 	// Reset movement, the flow is destroyed
 	knownElements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
-	err = client.TeleportCrowd(crowd.Id, to)
+	err = client.Teleport(crowd.Id, to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		elements := data.Crowds[crowd.Id].CrowdElements

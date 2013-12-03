@@ -77,7 +77,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	err = client.ChangePosture(11, sword.UnitAttributes_parked_on_self_prepared_area)
 	c.Assert(err, IsNil)
 	// vision cones sent after position changes
-	check(client.TeleportUnit(11, swapi.Point{X: -15.8219, Y: 28.2456}))
+	check(client.Teleport(11, swapi.Point{X: -15.8219, Y: 28.2456}))
 	// vision cones sent after direction changes
 	// $$$$ MCO : we need a magic action
 	// vision cones sent after speed changes
