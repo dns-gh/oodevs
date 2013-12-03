@@ -76,11 +76,12 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void AddView( bool main = false );
+    QWidget* AddView( bool main = false );
     void RemoveCurrentView();
     void OnCurrentChanged( int index );
     void OnTabContextMenu();
     void OnRenameTab();
+    void OnLoadRequested();
     //@}
 
 private:
@@ -91,6 +92,7 @@ private:
     QTabWidget* tabWidget_;
     TimelineWebView* webView_;
     QMenu* contextMenu_;
+    QWidget* mainView_;
     //@}
 
 private:

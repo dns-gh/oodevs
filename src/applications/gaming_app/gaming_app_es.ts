@@ -3312,23 +3312,19 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch to vertical view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Switch to horizontal view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display engaged units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display tasks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display orders given to engaged units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

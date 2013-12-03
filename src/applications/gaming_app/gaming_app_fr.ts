@@ -3319,24 +3319,20 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch to vertical view</source>
-        <translation>Passer en mode vertical</translation>
-    </message>
-    <message>
-        <source>Switch to horizontal view</source>
-        <translation>Passer en mode horizontal</translation>
-    </message>
-    <message>
-        <source>Display engaged units</source>
-        <translation>Afficher les unités embrayées</translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation>Afficher les événements</translation>
-    </message>
-    <message>
         <source>Display tasks</source>
         <translation>Afficher les tâches</translation>
+    </message>
+    <message>
+        <source>Display orders</source>
+        <translation>Afficher les ordres</translation>
+    </message>
+    <message>
+        <source>Switch orientation</source>
+        <translation>Changer l&apos;orientation</translation>
+    </message>
+    <message>
+        <source>Display orders given to engaged units</source>
+        <translation>Afficher les ordres donnés aux unités embrayées</translation>
     </message>
 </context>
 <context>
