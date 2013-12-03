@@ -258,4 +258,23 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	entries, err = client.GetLogisticHistory()
 	c.Assert(err, IsNil)
 	c.Assert(len(entries), Equals, 0)
+
+	// List requests for invalid unit
+	entries, err = client.ListLogisticRequests(-1, 12345)
+	c.Assert(err, IsNil)
+	c.Assert(entries, HasLen, 0)
+
+	// List requests for a valid unit
+	unitIds := []uint32{}
+	for id, _ := range data.Units {
+		unitIds = append(unitIds, id)
+	}
+	entries, err = client.ListLogisticRequests(-1, unitIds...)
+	c.Assert(err, IsNil)
+	c.Assert(len(entries), Greater, 1)
+
+	// List requests with maxcount
+	entries, err = client.ListLogisticRequests(1, unitIds...)
+	c.Assert(err, IsNil)
+	c.Assert(entries, HasLen, 1)
 }

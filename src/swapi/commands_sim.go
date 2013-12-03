@@ -1449,3 +1449,34 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEnt
 	err := <-c.postSimRequest(msg, handler)
 	return entries, err
 }
+
+func (c *Client) ListLogisticRequests(maxCount int, entityId ...uint32) (
+	[]*sword.LogHistoryEntry, error) {
+
+	ids := MakeIdList(entityId...).Elem
+	var count *uint32
+	if maxCount >= 0 {
+		count = proto.Uint32(uint32(maxCount))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ListLogisticRequests: &sword.ListLogisticRequests{
+					Entities: ids,
+					MaxCount: count,
+				},
+			},
+		},
+	}
+	var entries []*sword.LogHistoryEntry
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetListLogisticRequestsAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		DeepCopy(&entries, reply.GetEntries())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return entries, err
+}
