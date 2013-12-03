@@ -131,7 +131,7 @@ func assertIsPrefixed(c *C, s, prefix string) {
 	if len(lines) > len(prefixes) {
 		lines = lines[:len(prefixes)]
 	}
-	c.Assert(strings.Join(lines, "\n"), Equals, strings.Join(prefixes, "\n"))
+	assertEqualOrDiff(c, strings.Join(lines, "\n"), strings.Join(prefixes, "\n"))
 }
 
 func initLogisticEvents(c *C, client *swapi.Client) {
