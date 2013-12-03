@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="party" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="3" level="xxxx" name="Formation [3]" symbol="symbols/sfgpu"/>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="knowledge group"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
+</orbat>

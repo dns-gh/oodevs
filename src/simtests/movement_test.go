@@ -33,6 +33,26 @@ func CreateCombiVW(c *C, client *swapi.Client, pos swapi.Point) *swapi.Unit {
 	return unit
 }
 
+func checkSpeed(c *C, client *swapi.Client, from, to swapi.Point, expectedSpeed int32) {
+	unit := CreateCombiVW(c, client, from)
+	_, err := client.SendUnitOrder(unit.Id, MissionMoveTestId,
+		swapi.MakeParameters(swapi.MakeHeading(0), nil, nil, nil,
+			swapi.MakePointParam(to)))
+	c.Assert(err, IsNil)
+	speed := int32(0)
+	tick := client.Model.GetTick()
+	waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
+		if m.Tick < tick+3 {
+			return false
+		}
+		speed = m.Units[unit.Id].Speed
+		return true
+	})
+	tolerance := int32(3)
+	c.Assert(speed, Greater, expectedSpeed-tolerance)
+	c.Assert(speed, Lesser, expectedSpeed+tolerance)
+}
+
 func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExGradXYTestEmpty)
 	defer sim.Stop()
@@ -44,23 +64,7 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 		if !upward {
 			from, to = to, from
 		}
-		unit := CreateCombiVW(c, client, from)
-		_, err := client.SendUnitOrder(unit.Id, MissionMoveTestId,
-			swapi.MakeParameters(swapi.MakeHeading(0), nil, nil, nil,
-				swapi.MakePointParam(to)))
-		c.Assert(err, IsNil)
-		speed := int32(0)
-		tick := client.Model.GetTick()
-		waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
-			if m.Tick < tick+3 {
-				return false
-			}
-			speed = m.Units[unit.Id].Speed
-			return true
-		})
-		tolerance := int32(3)
-		c.Assert(speed, Greater, expectedSpeed-tolerance)
-		c.Assert(speed, Lesser, expectedSpeed+tolerance)
+		checkSpeed(c, client, from, to, expectedSpeed)
 	}
 
 	// Speed formula is like:
@@ -77,4 +81,19 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	checkSlopeSpeed(28.3023, 90, true)
 	// Does not accelerate when moving downward
 	checkSlopeSpeed(28.3023, 130, false)
+}
+
+func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExLandOfStripesEmpty)
+	defer sim.Stop()
+
+	// 10km/h forest
+	lngForest, latForest := -15.732, 28.4374
+	checkSpeed(c, client, swapi.Point{X: lngForest, Y: latForest},
+		swapi.Point{X: lngForest - 0.05, Y: latForest}, 10)
+
+	// 90km/h urbain
+	lngUrbain, latUrbain := -15.732, 28.3568
+	checkSpeed(c, client, swapi.Point{X: lngUrbain, Y: latUrbain},
+		swapi.Point{X: lngUrbain - 0.05, Y: latUrbain}, 90)
 }
