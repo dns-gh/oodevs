@@ -780,6 +780,7 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 Session::T_Process StartTimeline( const SessionDependencies& deps,
                                   const Path& app,
                                   const Path& root,
+                                  const Path& output,
                                   int base )
 {
     const Path config = root / "timeline.run";
@@ -789,7 +790,7 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
         ( MakeOption( "serve", base + TIMELINE_WEB_PORT ) )
         ( MakeOption( "run", Utf8( config ) ) );
     return deps.runtime.Start( Utf8( app ), options,
-        Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
+        Utf8( Path( app ).remove_filename() ), Utf8( output / "timeline.log" ) );
 }
 }
 
