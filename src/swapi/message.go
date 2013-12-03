@@ -246,7 +246,7 @@ func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
 	if int(size) > cap(buffer) {
 		data = make([]byte, size)
 	}
-	n, err := r.io.Read(data[:size])
+	n, err := io.ReadFull(r.io, data[:size])
 	if err != nil && (n == 0 || err != io.EOF) {
 		return nil, err
 	}

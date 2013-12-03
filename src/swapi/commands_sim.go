@@ -1313,6 +1313,26 @@ func (c *Client) TriggerError(kind string) error {
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
+func (c *Client) Echo(s string) (string, error) {
+	params := MakeParameters(MakeString("echo"), MakeString(s))
+	msg := createMagicAction(params, sword.MagicAction_debug_internal)
+	echo := ""
+	err := <-c.postSimRequest(msg, func(msg *sword.SimToClient_Content) error {
+		err := defaultMagicHandler(msg)
+		if err != nil {
+			return err
+		}
+		reply := msg.GetMagicActionAck()
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		echo = value.GetACharStr()
+		return nil
+	})
+	return echo, err
+}
+
 type ObjectMagicEnumerator interface {
 	Enum() *sword.ObjectMagicAction_Type
 }
