@@ -18,6 +18,7 @@ namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
+    class ModelLoaded;
 }
 
 namespace gui
@@ -45,6 +46,7 @@ class WeatherWidget;
 class WeatherPanel : public gui::WeatherPanel
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< WeatherModel >
+                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT
 
@@ -69,6 +71,7 @@ private:
     //@{
     virtual void NotifyUpdated( const WeatherModel& model );
     virtual void NotifyDeleted( const WeatherModel& model );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
     //@}
 
 private:
