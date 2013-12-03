@@ -12,8 +12,8 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include <deque>
 #include <boost/noncopyable.hpp>
+#include <boost/ptr_container/ptr_deque.hpp>
 
 namespace sword
 {
@@ -57,16 +57,10 @@ public:
     //@}
 
 public:
-    //! @name Types
-    //@{
-    typedef std::deque< AgentFireResult* > T_AgentFires;
-    typedef std::deque< PopulationFireResult* > T_PopulationFires;
-    //@}
-
     //! @name Operations
     //@{
-    const T_AgentFires& GetAgentExplosions() const;
-    const T_PopulationFires& GetPopulationExplosions() const;
+    const boost::ptr_deque< AgentFireResult >& GetAgentExplosions() const;
+    const boost::ptr_deque< PopulationFireResult >& GetPopulationExplosions() const;
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     //@}
 
@@ -90,8 +84,8 @@ private:
     kernel::Controller& controller_;
     FireResultFactory& factory_;
 
-    T_AgentFires       agentExplosions_;
-    T_PopulationFires  populationExplosions_;
+    boost::ptr_deque< AgentFireResult > agentExplosions_;
+    boost::ptr_deque< PopulationFireResult > populationExplosions_;
     //@}
 };
 

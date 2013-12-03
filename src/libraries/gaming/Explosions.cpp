@@ -37,17 +37,13 @@ Explosions::Explosions( Controller& controller, FireResultFactory& factory )
 Explosions::~Explosions()
 {
     controller_.Unregister( *this );
-    for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); ++it )
-        delete *it;
-    for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); ++it )
-        delete *it;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Explosions::GetAgentExplosions
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-const Explosions::T_AgentFires& Explosions::GetAgentExplosions() const
+const boost::ptr_deque< AgentFireResult >& Explosions::GetAgentExplosions() const
 {
     return agentExplosions_;
 }
@@ -56,7 +52,7 @@ const Explosions::T_AgentFires& Explosions::GetAgentExplosions() const
 // Name: Explosions::GetPopulationExplosions
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-const Explosions::T_PopulationFires& Explosions::GetPopulationExplosions() const
+const boost::ptr_deque< PopulationFireResult >& Explosions::GetPopulationExplosions() const
 {
     return populationExplosions_;
 }
@@ -70,11 +66,10 @@ void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
     bool changed = false;
     for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); )
     {
-        AgentFireResult*& result = *it;
-        if( &result->target_ == &agent || result->firer_ == &agent )
+        const AgentFireResult& result = *it;
+        if( &result.target_ == &agent || result.firer_ == &agent )
         {
             changed = true;
-            delete result;
             it = agentExplosions_.erase( it );
         }
         else
@@ -82,11 +77,10 @@ void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
     }
     for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); )
     {
-        PopulationFireResult*& result = *it;
-        if( result->firer_ == &agent )
+        const PopulationFireResult& result = *it;
+        if( result.firer_ == &agent )
         {
             changed = true;
-            delete result;
             it = populationExplosions_.erase( it );
         }
         else
