@@ -379,6 +379,8 @@ class SessionList extends Backbone.Collection
 contains = (txt, value) ->
     return txt.toLowerCase().indexOf(value) >= 0
 
+is_close_to = (el, selector) -> el.closest(selector).length > 0
+
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
@@ -389,6 +391,7 @@ class SessionItemView extends Backbone.View
         @model.bind 'change', @render
         @filters = obj.filters
         @search  = obj.search
+        $("body").click @on_click
         @render()
 
     events:
@@ -430,8 +433,15 @@ class SessionItemView extends Backbone.View
             return false if @is_searched item.collection.get id
         return true
 
+    on_click: (e) =>
+        el = $ e.target
+        return if is_close_to el, ".popover, ##{@model.id} .error-btn"
+        return unless @error_popover?
+        @error_popover.popover "hide"
+
     render: =>
         @$el.empty()
+        delete @error_popover
         return if @is_skip_render @model
 
         data = $.extend {}, @model.attributes
@@ -448,9 +458,10 @@ class SessionItemView extends Backbone.View
         data.sim_license = check_license "sword-runtime", licenses.model
         data.replay_license = check_license "sword-replayer", licenses.model
         @$el.html session_template data
-        @$el.find(".error-btn").popover
-            content: data.last_error
-            title: "Error"
+        @error_popover = @$el.find(".error-btn")
+        @error_popover.popover
+            content:   data.last_error
+            title:     "Error"
             placement: "bottom"
         @$el.find(".link").click (evt) =>
             return if is_disabled evt
