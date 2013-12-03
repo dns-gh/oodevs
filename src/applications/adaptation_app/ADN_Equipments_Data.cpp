@@ -30,7 +30,7 @@ ADN_Equipments_Data::AmbulanceInfos::AmbulanceInfos()
     : transportSkills_()
     , bTransportNBC_( false )
     , bTransportShock_( false )
-    , rCapacity_( 0 )
+    , nCapacity_( 0 )
     , loadTimePerPerson_( "0s" )
     , unloadTimePerPerson_( "0s" )
 {
@@ -44,7 +44,7 @@ ADN_Equipments_Data::AmbulanceInfos::AmbulanceInfos()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
 {
-    rCapacity_ = src.rCapacity_.GetData();
+    nCapacity_ = src.nCapacity_.GetData();
     loadTimePerPerson_ = src.loadTimePerPerson_.GetData();
     unloadTimePerPerson_ = src.unloadTimePerPerson_.GetData();
     for( int n = 0; n < eNbrDoctorSkills; ++n )
@@ -60,7 +60,7 @@ void ADN_Equipments_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
 void ADN_Equipments_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
 {
     std::string woundedTransport;
-    input >> xml::attribute( "capacity", rCapacity_ )
+    input >> xml::attribute( "capacity", nCapacity_ )
           >> xml::attribute( "man-loading-time", loadTimePerPerson_ )
           >> xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
           >> xml::optional >> xml::attribute( "wounded-transport", woundedTransport )
@@ -89,7 +89,7 @@ void ADN_Equipments_Data::AmbulanceInfos::WriteArchive( const std::string& secti
             woundedTransports += ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) );
         }
     output << xml::start( section )
-            << xml::attribute( "capacity", rCapacity_ )
+            << xml::attribute( "capacity", nCapacity_ )
             << xml::attribute( "man-loading-time", loadTimePerPerson_ )
             << xml::attribute( "man-unloading-time", unloadTimePerPerson_ )
             << xml::attribute( "wounded-transport", woundedTransports );

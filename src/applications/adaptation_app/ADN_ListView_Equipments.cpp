@@ -94,7 +94,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eHasAviationResourceQuotas]->Connect( &pInfos->bAviationResourcesQuotas_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eHasAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulance_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rCapacity_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.nCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.loadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.unloadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eAmbulanceTransportNBC]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.bTransportNBC_, bConnect );
@@ -103,7 +103,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
         vItemConnectors_[ADN_Equipments_GUI::eAmbulanceTransportSkills + n]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.transportSkills_[n], bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eHasRAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulanceReleve_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eRAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.rCapacity_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eRAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.nCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eRAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.loadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eRAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.unloadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eRAmbulanceTransportNBC]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.bTransportNBC_, bConnect );

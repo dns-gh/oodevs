@@ -115,7 +115,7 @@ void ADN_Equipments_GUI::Build()
     // Crowd transport groupbox
     builder.PushSubName( "crowd-transport" );
     ADN_GroupBox* pCrowdGroupBox = builder.AddGroupBox( pTroopGroupBox, "crowd-transport", tr( "Crowd transport" ), vInfosConnectors[ eCanCarryCrowd ], 3 );
-    builder.AddField< ADN_EditLine_Int >( pCrowdGroupBox, "capacity", tr( "Capacity" ), vInfosConnectors[ eCrowdCapacity ], 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pCrowdGroupBox, "capacity", tr( "Capacity" ), vInfosConnectors[ eCrowdCapacity ], tr( "persons" ), eGreaterZero );
     builder.AddField< ADN_TimeField >( pCrowdGroupBox, "embark-time-per-person", tr( "Embark time per person" ), vInfosConnectors[ eCrowdEmbarkingTimePerPerson ] );
     builder.AddField< ADN_TimeField >( pCrowdGroupBox, "disembark-time-per-person", tr( "Disembark time per person" ), vInfosConnectors[ eCrowdDisembarkingTimePerPerson ] );
     builder.PopSubName(); //! crowd-transport
@@ -348,7 +348,7 @@ QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objec
 
     Q3VBox* box = new Q3VBox( pAmbulanceGroup );
     QWidget* pHolder = builder.AddFieldHolder( box );
-    builder.AddField< ADN_EditLine_Double >( pHolder, "capacity", tr( "Capacity" ), vInfosConnectors[ nIndex + 1 ], 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pHolder, "capacity", tr( "Capacity" ), vInfosConnectors[ nIndex + 1 ], tr( "persons"), eGreaterZero );
     pHolder = builder.AddFieldHolder( box );
     builder.AddField< ADN_TimeField >( pHolder, "loading-duration-per-person", tr( "Loading duration per person" ), vInfosConnectors[ nIndex + 2 ] );
     pHolder = builder.AddFieldHolder( box );

@@ -50,7 +50,7 @@ public:
         ADN_Type_Bool transportSkills_[ eNbrDoctorSkills ];
         ADN_Type_Bool bTransportNBC_;
         ADN_Type_Bool bTransportShock_;
-        ADN_Type_Double rCapacity_;
+        ADN_Type_Int nCapacity_;
         ADN_Type_Time loadTimePerPerson_;
         ADN_Type_Time unloadTimePerPerson_;
     };

@@ -1532,6 +1532,10 @@ estacionado con motor encendido</translation>
         <source>Slope deceleration</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>persons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_ListView</name>
