@@ -15,8 +15,6 @@
 namespace boost
 {
     template< typename T > class shared_ptr;
-    class shared_mutex;
-    template< typename T > class upgrade_lock;
 }
 
 namespace host
@@ -61,7 +59,7 @@ struct PortFactory_ABC : public boost::noncopyable
     //@{
     virtual Port Create() = 0;
     virtual Port Create( int port ) = 0;
-    virtual bool WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port ) = 0;
+    virtual bool WaitConnected( int port ) = 0;
     //@}
 };
 }

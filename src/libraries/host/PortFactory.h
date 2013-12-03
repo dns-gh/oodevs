@@ -41,7 +41,7 @@ public:
     //@{
     virtual Port Create();
     virtual Port Create( int port );
-    virtual bool WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port );
+    virtual bool WaitConnected( int port );
     //@}
 
 private:

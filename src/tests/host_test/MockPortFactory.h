@@ -27,7 +27,7 @@ namespace mocks
     {
         MOCK_METHOD_EXT( Create, 0, host::Port(), Create0 );
         MOCK_METHOD_EXT( Create, 1, host::Port( int ), Create1 );
-        MOCK_METHOD( WaitConnected, 2 );
+        MOCK_METHOD( WaitConnected, 1 );
     };
 };
 

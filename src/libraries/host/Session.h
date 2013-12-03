@@ -200,17 +200,18 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    bool StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock );
-    bool ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Status next );
-    bool Archive( boost::upgrade_lock< boost::shared_mutex >& lock );
+    bool StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse );
     void ClearOutput( const Path& path );
     void ParseCheckpoints();
     void ParseExerciseProperties();
-    T_Process StartSimulation( boost::upgrade_lock< boost::shared_mutex >& lock,
-                               Status next,
+    bool SendStatus( Status next );
+    T_Process StartSimulation( const web::session::Config& cfg,
                                const std::string& checkpoint,
                                bool replay,
-                               const Path& app );
+                               const Path& output,
+                               const Path& app ) const;
+    struct PrivateState;
+    boost::shared_ptr< PrivateState > PrepareStart( const std::string& checkpoint );
     //@}
 
 private:
@@ -232,9 +233,10 @@ private:
     T_Process timeline_;
     boost::shared_ptr< node::Token > running_;
     Status status_;
+    bool busy_;
     bool polling_;
-    size_t counter_;
     bool sizing_;
+    size_t counter_;
     size_t size_;
     T_Clients clients_;
     std::string start_time_;

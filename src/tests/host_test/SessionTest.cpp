@@ -419,6 +419,7 @@ BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_pr
     Pool_ABC::Future poll = pool.Post( boost::bind( &Session_ABC::Poll, session ) );
     waitPoll.Wait();
 
+    // stop has priority even with send states in flight
     StopSession( *session, processes );
     BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
 

@@ -9,11 +9,12 @@
 
 #include "Session.h"
 
+#include "Error.h"
 #include "Node_ABC.h"
 #include "NodeController_ABC.h"
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
-#include "Error.h"
+
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
@@ -26,14 +27,15 @@
 #include "web/Client_ABC.h"
 #include "web/HttpException.h"
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/algorithm/string/join.hpp>
 #include <boost/range/algorithm.hpp>
+#include <boost/thread/condition_variable.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -199,9 +201,10 @@ Session::Session( const SessionDependencies& deps,
     , process_     ()
     , timeline_    ()
     , status_      ( GetIdleStatus( !replay_.is_nil() ) )
+    , busy_        ( false )
     , polling_     ( false )
-    , counter_     ( 0 )
     , sizing_      ( false )
+    , counter_     ( 0 )
     , size_        ( 0 )
     , clients_     ()
     , start_time_  ()
@@ -235,9 +238,10 @@ Session::Session( const SessionDependencies& deps,
     , timeline_    ( AcquireProcess( tree, "timeline", deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_, !replay_.is_nil() ) )
+    , busy_        ( false )
     , polling_     ( false )
-    , counter_     ( 0 )
     , sizing_      ( false )
+    , counter_     ( 0 )
     , size_        ( Get< size_t >( tree, "size" ) )
     , clients_     ()
     , start_time_  ()
@@ -423,6 +427,7 @@ Tree Session::GetProperties() const
 {
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     Tree tree = GetProperties( false );
+    tree.put( "busy", busy_ );
     tree.put( "start_time", start_time_ );
     tree.put( "current_time", current_time_ );
     tree.put( "timeline.port", port_->Get() + TIMELINE_WEB_PORT );
@@ -574,103 +579,62 @@ std::string GetConfiguration( const Config& cfg, int base )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::StopProcess
-// Created: BAX 2012-06-20
+// Name: Session::StopWith
+// Created: BAX 2013-12-03
 // -----------------------------------------------------------------------------
-bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
+bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse )
 {
-    T_Process copy;
+    const bool replay = IsReplay();
+    Status next = STATUS_STOPPED;
+    bool valid = false;
+    switch( status_ )
+    {
+        case STATUS_STOPPED:
+        case STATUS_WAITING:
+            return false;
+        case STATUS_PLAYING:
+        case STATUS_PAUSED:
+            valid = !replay;
+            break;
+        case STATUS_REPLAYING:
+            valid = true;
+            next = STATUS_WAITING;
+            break;
+    }
+    if( busy_ || !valid )
+        throw web::HttpException( web::FORBIDDEN );
+    T_Process sword;
+    sword.swap( process_ );
+    if( timeline_ )
+        timeline_->Kill();
+    timeline_.reset();
     Node_ABC::T_Token token;
-    {
-        const std::string last_error = GetLastError( deps_.fs, GetOutput() );
-        boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
-        last_error_ = last_error;
-        status_ = GetIdleStatus( IsReplay() );
-        copy.swap( process_ );
-        if( timeline_ )
-            timeline_->Kill();
-        timeline_.reset();
-        token.swap( running_ );
-        clients_.clear();
-    }
-    if( !copy || !copy->IsAlive() )
-        return true;
+    token.swap( running_ );
+    clients_.clear();
+    busy_ = true;
+    mutex.unlock();
 
-    const bool replay = IsReplay();
-    bool done = false;
-    if( !replay )
+    if( sword && sword->IsAlive() )
     {
-        deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
-        done = copy->Join( 15 * 1000 );
+        bool done = false;
+        if( !replay )
+        {
+            deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
+            done = sword->Join( 15 * 1000 );
+        }
+        if( !done )
+            sword->Kill();
+        sword->Join( 5 * 1000 );
     }
-    if( !done )
-        copy->Kill();
-    copy->Join( 5 * 1000 );
-    if( !replay )
+    const auto last_error = GetLastError( deps_.fs, GetOutput() );
+
+    mutex.lock();
+    last_error_ = last_error;
+    if( parse && !replay )
         ParseCheckpoints();
+    status_ = next;
+    busy_ = false;
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Archive
-// Created: BAX 2012-08-06
-// -----------------------------------------------------------------------------
-bool Session::Archive( boost::upgrade_lock< boost::shared_mutex >& lock )
-{
-    if( status_ != STATUS_STOPPED )
-        throw web::HttpException( web::FORBIDDEN );
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    status_ = STATUS_ARCHIVED;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::ModifyStatus
-// Created: BAX 2012-06-20
-// -----------------------------------------------------------------------------
-bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Session::Status next )
-{
-    const bool replay = IsReplay();
-    const Session::Status idle = GetIdleStatus( replay );
-
-    if( process_ && !process_->IsAlive() )
-        next = idle;
-    if( !timeline_ || !timeline_->IsAlive() )
-        next = idle;
-
-    if( next == status_ )
-        return false;
-
-    if( next == idle )
-        return StopProcess( lock );
-
-    if( replay )
-        throw web::HttpException( web::FORBIDDEN );
-
-    if( next == STATUS_ARCHIVED )
-        if( !replays_.empty() )
-            throw web::HttpException( web::FORBIDDEN );
-        else
-            return Archive( lock );
-
-    const size_t counter = counter_++;
-    const int pid = GetPid( process_ );
-    lock.unlock();
-
-    const std::string url = GetUrl( next );
-    if( url.empty() )
-        return false;
-
-    Client_ABC::T_Response response = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, Client_ABC::T_Parameters() );
-    if( response->GetStatus() != 200 )
-        return false;
-
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    if( counter + 1 != counter_ || GetPid( process_ ) != pid )
-        return false;
-
-    std::swap( status_, next );
-    return status_ != next;
 }
 
 // -----------------------------------------------------------------------------
@@ -679,8 +643,41 @@ bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Se
 // -----------------------------------------------------------------------------
 bool Session::Stop()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    return ModifyStatus( lock, GetIdleStatus( IsReplay() ) );
+    boost::unique_lock< boost::shared_mutex > mutex( access_ );
+    return StopWith( mutex, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::SetRemoteStatus
+// Created: BAX 2013-12-03
+// -----------------------------------------------------------------------------
+bool Session::SendStatus( Status next )
+{
+    int pid = -1;
+    size_t counter = 0;
+    {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        if( status_ != STATUS_PLAYING && status_ != STATUS_PAUSED )
+            throw web::HttpException( web::FORBIDDEN );
+        if( status_ == next )
+            return false;
+        pid = GetPid( process_ );
+        counter = ++counter_;
+    }
+
+    const std::string url = GetUrl( next );
+    if( url.empty() )
+        return false;
+
+    auto reply = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, Client_ABC::T_Parameters() );
+    if( reply->GetStatus() != 200 )
+        return false;
+
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    if( pid != GetPid( process_ ) || counter != counter_ )
+        return false;
+    status_ = next;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -689,8 +686,7 @@ bool Session::Stop()
 // -----------------------------------------------------------------------------
 bool Session::Pause()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_PAUSED );
+    return SendStatus( STATUS_PAUSED );
 }
 
 namespace
@@ -702,24 +698,12 @@ std::string MakeOption( const std::string& option, const T& value )
 }
 }
 
-// -----------------------------------------------------------------------------
-// Name: Session::StartSimulation
-// Created: BAX 2012-04-19
-// -----------------------------------------------------------------------------
-Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_mutex >& lock,
-                                             Status next,
+Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
                                              const std::string& checkpoint,
                                              bool replay,
-                                             const Path& app )
+                                             const Path& output,
+                                             const Path& app ) const
 {
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    status_ = next;
-    start_time_.clear();
-    current_time_.clear();
-    last_error_.clear();
-    const Path output = GetOutput();
-    if( !replay && checkpoint.empty() )
-        ClearOutput( output );
     deps_.fs.MakePaths( output );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8( GetRoot() / "debug" ) ) )
@@ -735,7 +719,7 @@ Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_
         options.push_back( MakeOption( "session-file", file ) );
         options.push_back( "--no-log" );
     }
-    deps_.fs.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
+    deps_.fs.WriteFile( output / file, GetConfiguration( cfg, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
     return deps_.runtime.Start( Utf8( app ),
@@ -807,13 +791,72 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
     return deps.runtime.Start( Utf8( app ), options,
         Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
 }
-
-void Reset( boost::upgrade_lock< boost::shared_mutex >& lock,
-            Session::Status& status, Session::Status next )
-{
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    status = next;
 }
+
+struct Session::PrivateState
+{
+    web::session::Config cfg;
+    Node_ABC::T_Token token;
+    Path output;
+    Status next;
+    boost::optional< bool > immediate;
+    bool replay;
+    bool first;
+    bool soft;
+};
+
+// -----------------------------------------------------------------------------
+// Name: Session::PrepareStart
+// Created: BAX 2013-12-03
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Session::PrivateState > Session::PrepareStart( const std::string& checkpoint )
+{
+    auto data = boost::make_shared< PrivateState >();
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    data->cfg = cfg_;
+    data->output = GetOutput();
+    data->next = cfg_.time.paused ? STATUS_PAUSED : STATUS_PLAYING;
+    data->replay = IsReplay();
+    data->first = first_time_;
+    data->soft = false;
+    bool valid = false;
+    switch( status_ )
+    {
+        case STATUS_PLAYING:
+        case STATUS_REPLAYING:
+            data->immediate = false;
+            return data;
+        case STATUS_PAUSED:
+            data->soft = true;
+            return data;
+        case STATUS_STOPPED:
+            valid = true;
+            break;
+        case STATUS_WAITING:
+            valid = true;
+            data->next = STATUS_REPLAYING;
+            break;
+    }
+    valid &= replays_.empty();
+    if( busy_ || !valid )
+        throw web::HttpException( web::FORBIDDEN );
+    if( !data->replay )
+    {
+        const auto now = boost::posix_time::second_clock::local_time();
+        data->token = node_->StartSession( now, data->first || !checkpoint.empty() );
+        if( !data->token )
+        {
+            data->immediate = false;
+            return data;
+        }
+    }
+    busy_ = true;
+    start_time_.clear();
+    current_time_.clear();
+    last_error_.clear();
+    if( !data->replay && checkpoint.empty() )
+        ClearOutput( data->output );
+    return data;
 }
 
 // -----------------------------------------------------------------------------
@@ -822,43 +865,36 @@ void Reset( boost::upgrade_lock< boost::shared_mutex >& lock,
 // -----------------------------------------------------------------------------
 bool Session::Start( const Path& app, const Path& timeline, const std::string& checkpoint )
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    auto data = PrepareStart( checkpoint );
+    if( data->immediate )
+        return *data->immediate;
+    if( data->soft )
+        return SendStatus( STATUS_PLAYING );
 
-    const bool replay = IsReplay();
-    const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
-    if( process_ )
-        return ModifyStatus( lock, next );
-
-    if( !replays_.empty() )
-        throw web::HttpException( web::FORBIDDEN );
-
-    Node_ABC::T_Token token;
-    if( !replay )
-    {
-        const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-        token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
-        if( !token )
-            return false;
-    }
-
-    runtime::Scoper reset_status( boost::bind( &Reset, boost::ref( lock ), boost::ref( status_ ), status_ ) );
-    auto ptr = StartSimulation( lock, next, checkpoint, replay, app );
-    if( !ptr )
+    runtime::Scoper resetBusy( [&] {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        busy_ = false;
+    } );
+    auto sword = StartSimulation( data->cfg, checkpoint, data->replay, data->output, app );
+    if( !sword )
         return false;
 
-    runtime::Scoper kill_orphaned_process( boost::bind( &runtime::Process_ABC::Kill, ptr ) );
-    T_Process time;
-    if( !deps_.ports.WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
-        return false;
-    if( !( time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT ) ) )
+    runtime::Scoper killSword( [&] {
+        sword->Kill();
+    } );
+    if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT ) )
         return false;
 
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    reset_status.Reset();
-    kill_orphaned_process.Reset();
-    process_    = ptr;
-    timeline_   = time;
-    running_    = token;
+    T_Process time = StartTimeline( deps_, timeline, GetRoot(), data->output, port_->Get() + DISPATCHER_PORT );
+    if( !time )
+        return false;
+
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    killSword.Reset();
+    status_ = data->next;
+    process_ = sword;
+    timeline_ = time;
+    running_ = data->token;
     first_time_ = false;
     return true;
 }
@@ -894,17 +930,14 @@ Path Session::GetOutput() const
 // -----------------------------------------------------------------------------
 bool Session::Refresh()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    return ModifyStatus( lock, status_ );
-}
-
-namespace
-{
-void ResetBool( boost::upgrade_lock< boost::shared_mutex >& lock, bool& value, bool next )
-{
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    value = next;
-}
+    {
+        boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+        bool stop = process_  && !process_->IsAlive();
+        stop |= timeline_ && !timeline_->IsAlive();
+        if( !stop )
+            return false;
+    }
+    return Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -913,23 +946,29 @@ void ResetBool( boost::upgrade_lock< boost::shared_mutex >& lock, bool& value, b
 // -----------------------------------------------------------------------------
 bool Session::RefreshSize()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    if( sizing_ )
-        return false;
-    if( IsReplay() )
-        return false;
-    sizing_ = true;
-    runtime::Scoper unsize( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( sizing_ ), false ) );
-    lock.unlock();
+    {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        if( sizing_ )
+            return false;
+        if( IsReplay() )
+            return false;
+        sizing_ = true;
+    }
+    runtime::Scoper endSize( [&] {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        sizing_ = false;
+    } );
 
     const size_t next = deps_.fs.GetDirectorySize( paths_.root )
                       + deps_.fs.GetDirectorySize( GetOutput() );
-    lock.lock();
-    const bool modified = next != size_;
-    size_ = next;
-    sizing_ = false;
-    lock.unlock();
-
+    bool modified = false;
+    {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        endSize.Reset();
+        modified = next != size_;
+        size_ = next;
+        sizing_ = false;
+    }
     if( modified )
         node_->UpdateSessionSize( id_, next );
     return modified;
@@ -951,42 +990,57 @@ const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":
 // -----------------------------------------------------------------------------
 bool Session::Poll()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    if( polling_ )
-        return false;
-    if( !process_ || !process_->IsAlive() )
+    int pid;
+    {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        if( polling_ )
+            return false;
+        if( !process_ || !process_->IsAlive() )
+            return false;
+        pid = GetPid( process_ );
+        polling_ = true;
+    }
+
+    runtime::Scoper endPoll( [&] {
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        polling_ = false;
+    } );
+    auto reply = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
+    if( reply->GetStatus() != 200 )
         return false;
 
-    polling_ = true;
-    const size_t counter = counter_++;
-    const int pid = GetPid( process_ );
-    runtime::Scoper unpoll( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( polling_ ), false ) );
-    lock.unlock();
-
-    Client_ABC::T_Response response = deps_.client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
-    if( response->GetStatus() != 200 )
-        return false;
-
-    const Tree data = FromJson( response->GetBody() );
-    Session::Status state = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
-    if( state == STATUS_COUNT )
+    const Tree data = FromJson( reply->GetBody() );
+    Status status = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
+    if( status == STATUS_COUNT )
         return false;
 
     const std::string start = RoundTripIsoTime( Get< std::string >( data, "start_time" ) );
     const std::string current = RoundTripIsoTime( Get< std::string >( data, "current_time" ) );
     std::vector< std::string > clients;
-    Tree::const_assoc_iterator cai = data.find( "clients" );
+    auto cai = data.find( "clients" );
     if( cai != data.not_found() )
-        for( Tree::const_iterator it = cai->second.begin(); it != cai->second.end(); ++it )
+        for( auto it = cai->second.begin(); it != cai->second.end(); ++it )
             clients.push_back( boost::xpressive::regex_replace( it->second.data(), portRegex, "" ) );
 
-    lock.lock();
-    if( counter + 1 != counter_ || GetPid( process_ ) != pid )
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    if( pid != GetPid( process_ ) )
         return false;
     start_time_ = start;
     current_time_ = current;
     std::swap( clients_, clients );
-    return ModifyStatus( lock, state );
+    std::swap( status_, status );
+    return status_ != status;
+}
+
+namespace
+{
+    void WaitReady( const bool* busy, boost::unique_lock< boost::shared_mutex >& mutex )
+    {
+        boost::condition_variable_any condition;
+        const auto predicate = [&] { return *busy; };
+        while( !condition.timed_wait( mutex, boost::posix_time::milliseconds( 50 ), predicate ) )
+            continue;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -995,14 +1049,32 @@ bool Session::Poll()
 // -----------------------------------------------------------------------------
 void Session::Remove()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    const bool replay = IsReplay();
-    ModifyStatus( lock, GetIdleStatus( replay ) );
-    if( !replay )
+    Status next = STATUS_STOPPED;
+    {
+        boost::unique_lock< boost::shared_mutex > mutex( access_ );
+        WaitReady( &busy_, mutex );
+        switch( status_ )
+        {
+            case STATUS_REPLAYING:
+                next = STATUS_WAITING;
+                // nobreak
+            case STATUS_PLAYING:
+            case STATUS_PAUSED:
+                StopWith( mutex, false );
+                break;
+        }
+        busy_ = true;
+    }
+
+    if( !IsReplay() )
         deps_.fs.Remove( GetOutput() );
     node_->UnlinkExercise( links_ );
     node_->RemoveSession( id_ );
     deps_.fs.Remove( GetRoot() );
+
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    status_ = next;
+    busy_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1030,10 +1102,11 @@ bool Session::Update( const Tree& cfg )
 // -----------------------------------------------------------------------------
 bool Session::Archive()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( status_ != STATUS_STOPPED )
         throw web::HttpException( web::FORBIDDEN );
-    return ModifyStatus( lock, STATUS_ARCHIVED );
+    status_ = STATUS_ARCHIVED;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1042,10 +1115,11 @@ bool Session::Archive()
 // -----------------------------------------------------------------------------
 bool Session::Restore()
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( status_ != STATUS_ARCHIVED )
         throw web::HttpException( web::FORBIDDEN );
-    return ModifyStatus( lock, STATUS_STOPPED );
+    status_ = STATUS_STOPPED;
+    return true;
 }
 
 namespace

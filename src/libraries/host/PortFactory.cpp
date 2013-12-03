@@ -14,7 +14,6 @@
 #include <boost/format.hpp>
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/thread/condition_variable.hpp>
 #include <boost/thread/thread.hpp>
 
 using namespace host;
@@ -126,21 +125,20 @@ void PortFactory::Release( int port )
     ports_.erase( port );
 }
 
-bool PortFactory::WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port )
+bool PortFactory::WaitConnected( int port )
 {
     aio::io_service service;
     const tcp::endpoint endpoint( aio::ip::address::from_string( "127.0.0.1" ), static_cast< uint16_t >( port ) );
     tcp::socket socket( service );
     boost::system::error_code ec;
-    boost::condition_variable_any any;
-    const boost::posix_time::ptime deadline = boost::posix_time::microsec_clock::local_time()
-                                            + boost::posix_time::seconds( 10 );
+    auto deadline = boost::posix_time::microsec_clock::local_time()
+                  + boost::posix_time::seconds( 10 );
     while( boost::posix_time::microsec_clock::local_time() < deadline )
     {
         socket.connect( endpoint, ec );
         if( !ec )
             return true;
-        any.timed_wait( lock, boost::posix_time::milliseconds( 100 ) );
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
     }
     return false;
 }
