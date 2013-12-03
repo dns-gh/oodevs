@@ -115,6 +115,9 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	if mm.Position != nil {
 		unit.Position = ReadPoint(mm.GetPosition())
 	}
+	if mm.Speed != nil {
+		unit.Speed = *mm.Speed
+	}
 	if mm.BrainDebug != nil {
 		unit.DebugBrain = *mm.BrainDebug
 	}

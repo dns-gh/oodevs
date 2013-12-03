@@ -229,6 +229,7 @@ type Unit struct {
 	Name                string
 	Pc                  bool
 	Position            Point
+	Speed               int32
 	PathPoints          uint32
 	DebugBrain          bool
 	EquipmentDotations  map[uint32]*EquipmentDotation
