@@ -41,8 +41,6 @@
 #include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bpt = boost::posix_time;
-
 namespace
 {
     QString MakeLink( const tools::Path& file )
@@ -233,15 +231,6 @@ void ScenarioLauncherPage::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::BuildSessionName
-// Created: SBO 2009-12-09
-// -----------------------------------------------------------------------------
-std::string ScenarioLauncherPage::BuildSessionName() const
-{
-    return bpt::to_iso_string( bpt::second_clock::local_time() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage::OnStart
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
@@ -250,9 +239,9 @@ void ScenarioLauncherPage::OnStart()
     if( !CanBeStarted() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const tools::Path exerciseName = exercise_->GetName();
-
-    const tools::Path session = session_.IsEmpty() ? tools::Path::FromUTF8( BuildSessionName() ) : session_;
-    CreateSession( exerciseName, session );
+    const auto session = BuildSessionName();
+    if( session.second )
+        CreateSession( exerciseName, session.first );
 
     std::map< std::string, std::string > arguments = boost::assign::map_list_of
             ( "checkpoint", checkpoint_.ToUTF8().c_str() )
@@ -264,12 +253,12 @@ void ScenarioLauncherPage::OnStart()
 
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartExercise >(
-        config_, exerciseName, session, arguments, true, "" ) );
+        config_, exerciseName, session.first, arguments, true, "" ) );
     if( hasClient_ )
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session, profile_.GetLogin() ) );
+            config_, exerciseName, session.first, profile_.GetLogin() ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session, exerciseNumber_ ) );
+        config_, exerciseName, session.first, exerciseNumber_ ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();
@@ -279,17 +268,32 @@ void ScenarioLauncherPage::OnStart()
 // Name: ScenarioLauncherPage::CreateSession
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const tools::Path& session )
+void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const tools::Path& session ) const
 {
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
         action.Commit();
     }
+    BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
+        plugin->Commit( exercise, session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::BuildSessionName
+// Created: SBO 2009-12-09
+// -----------------------------------------------------------------------------
+std::pair< tools::Path, bool > ScenarioLauncherPage::BuildSessionName() const
+{
+    if( ! session_.IsEmpty() )
+        return std::make_pair( session_, true );
+    if( config_.GetSession().IsEmpty() )
     {
-        BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
-            plugin->Commit( exercise, session );
+        return std::make_pair( tools::Path::FromUTF8(
+            boost::posix_time::to_iso_string(
+                boost::posix_time::second_clock::local_time() ) ), true );
     }
+    return std::make_pair( config_.GetSession(), false );
 }
 
 // -----------------------------------------------------------------------------

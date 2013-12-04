@@ -41,7 +41,11 @@ public:
     bool CheckFeature( Feature feature ) const;
     bool HasFeature( Feature feature ) const;
     bool IsOnDebugMode() const;
+    const tools::Path& GetSession() const;
     //@}
+
+private:
+    tools::Path session_;
 };
 
 #endif // __Config_h_
