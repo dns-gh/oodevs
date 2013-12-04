@@ -14,6 +14,7 @@
 #include "protocol/Simulation.h"
 #include <boost/noncopyable.hpp>
 #include <cstdint>
+#include <vector>
 
 namespace plugins
 {
