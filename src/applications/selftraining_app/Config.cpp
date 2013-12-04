@@ -55,7 +55,6 @@ Config::Config()
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "pouet", po::value( &tmp_ ), "test, to remove" ) // $$$$ ABR 2013-03-12: TODO REMOVE
         ( "debug", "activate debug mode" );
     AddOptions( desc );
 }

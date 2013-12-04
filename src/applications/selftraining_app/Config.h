@@ -42,8 +42,6 @@ public:
     bool HasFeature( Feature feature ) const;
     bool IsOnDebugMode() const;
     //@}
-
-    tools::Path tmp_;
 };
 
 #endif // __Config_h_
