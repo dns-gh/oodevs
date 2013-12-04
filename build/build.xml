@@ -861,6 +861,15 @@
             <arg value="--exclude=SimToClient.Content.KnowledgeGroupUpdateAck.KnowledgeGroupAck.ErrorCode"/>
             <arg value="--exclude=SimToClient.Content.KnowledgeGroupCreationAck.KnowledgeGroupAck.ErrorCode"/>
             <arg value="--exclude=SimToClient.Content.KnowledgeGroupMagicActionAck.KnowledgeGroupAck.ErrorCode"/>
+
+            <!-- We change uint32 fields of UnitEquipmentFireDamage to int32 because the values sent
+                 are actually signed integers -->
+            <arg value="--exclude=SimToClient.Content.StopUnitFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByUnitFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.Explosion.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.StopCrowdFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByCrowdFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+
             <!-- New magic actions are fine -->
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>

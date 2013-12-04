@@ -16,7 +16,7 @@ using namespace extractors;
 namespace
 {
     const unsigned nEquipmentStates = 3;
-    typedef google::protobuf::uint32( UnitEquipmentFireDamage::*UnitEquipmentFireDamageMemberFn )() const;
+    typedef google::protobuf::int32( UnitEquipmentFireDamage::*UnitEquipmentFireDamageMemberFn )() const;
     UnitEquipmentFireDamageMemberFn equipmentData[nEquipmentStates] =
     {
         &UnitEquipmentFireDamage::available,
