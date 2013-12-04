@@ -824,6 +824,8 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
     }
     for( auto it = stocks_.vLogThresholds_.begin(); it != stocks_.vLogThresholds_.end(); ++it )
         ( *it )->CheckValidity( checker, strName_.GetData(), eUnits, -1, tools::translate( "ADN_Units_Data", "Stock" ).toStdString() );
+    if( rProbeLength_.GetData() < rProbeWidth_.GetData() )
+        checker.AddError( eInvalidProbe, strName_.GetData(), eUnits, -1 );
 }
 
 // -----------------------------------------------------------------------------

@@ -698,6 +698,10 @@ Parked engine running</source>
         <source>Some translations on tab &apos;%1&apos; have the same key and different translation values. Only one will be used by the simulation.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid scan depth, should be greater than scan width.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
