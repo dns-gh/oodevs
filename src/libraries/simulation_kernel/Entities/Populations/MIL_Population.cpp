@@ -1267,6 +1267,7 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
     UpdateState();
     UpdateBarycenter();
     orderManager_->CancelMission();
+    SetAttitude( GetDefaultAttitude() );
     bHasDoneMagicMove_ = true;
 }
 
