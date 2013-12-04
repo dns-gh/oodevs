@@ -753,13 +753,13 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	defer sim.Stop()
 
 	// Check unit damages messages
-	var damagesError error
+	var damagesErrors []error
 	handlerId := client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
 		if err != nil {
 			return true
 		}
 		if err := checkUnitsFireDamages(msg); err != nil {
-			damagesError = err
+			damagesErrors = append(damagesErrors, err)
 		}
 		return false
 	})
@@ -833,7 +833,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	client.Unregister(handlerId)
-	c.Assert(damagesError, IsNil)
+	c.Assert(damagesErrors, IsNil)
 }
 
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
