@@ -203,7 +203,7 @@ target_link_libraries( 3a
 )
 
 # clients_kernel
-add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol )
+add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( clients_kernel
     ent
     sword_tools
@@ -217,7 +217,7 @@ add_target( clients_kernel_test tests "tests/clients_kernel_test" OPTIONS test )
 target_link_libraries( clients_kernel_test clients_kernel )
 
 # actions
-add_target( actions common "libraries/actions" OPTIONS qt3 qt protocol )
+add_target( actions common "libraries/actions" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( actions
     clients_gui
     clients_kernel
@@ -525,7 +525,7 @@ add_target( client_proxy_test tests "tests/client_proxy_test" OPTIONS protocol t
 target_link_libraries( client_proxy_test client_proxy )
 
 # clients_gui
-add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol )
+add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( clients_gui
     clients_kernel
     htmlhelp
@@ -542,7 +542,7 @@ target_link_libraries( clients_gui
 )
 
 # frontend
-add_target( frontend clients "libraries/frontend" OPTIONS qt3 qt protocol )
+add_target( frontend clients "libraries/frontend" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( frontend
     clients_gui
 )
@@ -555,7 +555,7 @@ target_link_libraries( actions_gui
 )
 
 # gaming
-add_target( gaming clients "libraries/gaming" OPTIONS qt3 qt protocol )
+add_target( gaming clients "libraries/gaming" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( gaming
     actions
     clients_gui
@@ -565,7 +565,7 @@ target_link_libraries( gaming
 )
 
 # gaming_app
-add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol executable )
+add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol executable qtwarnings )
 target_link_libraries( gaming_app
     actions_gui
     gaming
@@ -603,7 +603,7 @@ target_link_libraries( launcher_test_app
 
 # preparation
 # fixme need qt gui
-add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol )
+add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol qtwarnings )
 target_link_libraries( preparation
     clients_gui
     geostore
@@ -612,7 +612,7 @@ target_link_libraries( preparation
 )
 
 # preparation_app
-add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable )
+add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable qtwarnings )
 target_link_libraries( preparation_app
     actions_gui
     frontend
@@ -621,14 +621,14 @@ target_link_libraries( preparation_app
 )
 
 # selftraining_app
-add_target( selftraining_app clients "applications/selftraining_app" OPTIONS qt3 qt executable )
+add_target( selftraining_app clients "applications/selftraining_app" OPTIONS qt3 qt executable qtwarnings )
 target_link_libraries( selftraining_app
     clients_gui
     launcher_dll
 )
 
 # adaptation_app
-add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt executable )
+add_target( adaptation_app clients "applications/adaptation_app" OPTIONS qt3 qt executable qtwarnings )
 target_link_libraries( adaptation_app
     clients_gui
     ${EXCEL_LIBRARIES}
