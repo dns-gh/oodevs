@@ -169,7 +169,7 @@ bool Compare( ConsignOffset o1, ConsignOffset o2 )
 
 bool ReverseCompare( ConsignOffset o1, ConsignOffset o2 )
 {
-    return o1.file > o2.file || ( o1.file == o2.file ) && o1.offset > o2.offset;
+    return Compare( o2, o1 );
 }
 
 }  // namespace
