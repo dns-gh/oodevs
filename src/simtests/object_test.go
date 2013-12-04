@@ -83,6 +83,47 @@ func createObstacleAttributeParameter(activated bool, activation,
 	)
 }
 
+// Registers a handler to be called with the next object added to the model
+// until it is destroyed or the handler returns true. The last call notifying
+// the destruction is done with a nil Object.
+func watchNextObject(model *swapi.Model,
+	handler func(model *swapi.ModelData, obj *swapi.Object) bool) chan error {
+
+	done := make(chan error)
+	objects := model.GetData().Objects
+	objectId := uint32(0)
+	model.RegisterHandler(func(model *swapi.ModelData, err error) bool {
+		if err != nil {
+			done <- err
+			return true
+		}
+		result := false
+		if objectId == 0 {
+			if len(objects) == len(model.Objects) {
+				return false
+			}
+			for id, obj := range model.Objects {
+				if objects[id] == nil {
+					objectId = obj.Id
+					break
+				}
+			}
+		} else {
+			if model.Objects[objectId] == nil {
+				result = true
+			}
+		}
+		if handler(model, model.Objects[objectId]) {
+			result = true
+		}
+		if result {
+			done <- nil
+		}
+		return result
+	})
+	return done
+}
+
 func checkBetween(c *C, value, minInclusive, maxInclusive int32) {
 	c.Assert(value, Greater, minInclusive-1)
 	c.Assert(value, Lesser, maxInclusive+1)
@@ -123,56 +164,59 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	})
 
 	// Create mined area, activated after a delay
-	delay := int32(120) // 120 seconds
-	object, err = client.CreateObject("mined area (linear and destructible)",
-		party.Id, location, createObstacleAttributeParameter(false, delay, 0))
-	c.Assert(err, IsNil)
-	c.Assert(object, NotNil)
-	c.Assert(object.Activated, Equals, false)
+	duration := int32(0)
+	done := watchNextObject(client.Model, func(model *swapi.ModelData,
+		object *swapi.Object) bool {
 
-	tick := client.Model.GetData().Tick
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.Objects[object.Id].Activated {
-			tick = data.Tick - tick
+		if duration == 0 {
+			duration = model.Tick
+		}
+		if object != nil && object.Activated {
+			duration = model.Tick - duration
 			return true
 		}
 		return false
 	})
+	delay := int32(120) // 120 seconds
+	object, err = client.CreateObject("mined area (linear and destructible)",
+		party.Id, location, createObstacleAttributeParameter(false, delay, 0))
+	c.Assert(err, IsNil)
+	c.Assert(object.Activated, Equals, false)
+
 	// Check delay
-	checkTime(c, data.TickDuration, delay, tick)
+	err = <-done
+	c.Assert(err, IsNil)
+	checkTime(c, data.TickDuration, delay, duration)
 
 	// Create mined area, activated by default with an activity time
+	duration = int32(0)
+	done = watchNextObject(client.Model, func(model *swapi.ModelData,
+		object *swapi.Object) bool {
+
+		if object != nil {
+			if duration == 0 && object.Activated {
+				duration = model.Tick
+			} else if duration != 0 && !object.Activated {
+				duration = model.Tick - duration
+				return true
+			}
+		}
+		return false
+	})
 	object, err = client.CreateObject("mined area (linear and destructible)",
 		party.Id, location, createObstacleAttributeParameter(true, 0, delay))
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
 
-	tick = 0
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.Objects[object.Id].Activated {
-			tick = data.Tick
-			return true
-		}
-		return false
-	})
-
-	// Wait area is disabled
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if !data.Objects[object.Id].Activated {
-			tick = data.Tick - tick
-			return true
-		}
-		return false
-	})
 	// Check delay
-	checkTime(c, data.TickDuration, delay, tick)
+	err = <-done
+	checkTime(c, data.TickDuration, delay, duration)
 }
 
 func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
-	model := client.Model
-	data := model.GetData()
+	data := client.Model.GetData()
 	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
 
 	// Get a party identifier
@@ -185,22 +229,28 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 		swapi.MakeIdentifier(uint32(sword.ObjectMagicAction_time_limit)), // attribute type
 		swapi.MakeQuantity(delay),                                        // activity time
 	)
+
+	duration := int32(0)
+	done := watchNextObject(client.Model, func(model *swapi.ModelData,
+		object *swapi.Object) bool {
+
+		if duration == 0 {
+			duration = model.Tick
+		}
+		if object == nil {
+			duration = model.Tick - duration
+		}
+		return object == nil
+	})
 	object, err := client.CreateObject("mined area (linear and destructible)",
 		party.Id, location, params)
 	c.Assert(err, IsNil)
 	c.Assert(object, NotNil)
-	tick := client.Model.GetData().Tick
 
-	// Wait object is destroyed
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if data.Objects[object.Id] == nil {
-			tick = data.Tick - tick
-			return true
-		}
-		return false
-	})
 	// Check delay
-	checkTime(c, data.TickDuration, delay, tick)
+	err = <-done
+	c.Assert(err, IsNil)
+	checkTime(c, data.TickDuration, delay, duration)
 }
 
 func (s *TestSuite) TestBypassAttribute(c *C) {
