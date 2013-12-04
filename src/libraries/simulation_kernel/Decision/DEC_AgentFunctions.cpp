@@ -916,9 +916,11 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
     if( pKnowledge && pKnowledge->IsValid())
     {
         result.reset( new MT_Vector2D() );
-        DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
+        bool valid = DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
                 callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
                 callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed(), *result );
+        if( !valid )
+            result.reset();
     }
     return result;
 }
