@@ -9,7 +9,6 @@
 package simtests
 
 import (
-	"fmt"
 	. "launchpad.net/gocheck"
 	"swapi"
 	"sword"
@@ -84,12 +83,14 @@ func createObstacleAttributeParameter(activated bool, activation,
 	)
 }
 
-func CheckTime(duration, expected, tick int32) error {
+func checkBetween(c *C, value, minInclusive, maxInclusive int32) {
+	c.Assert(value, Greater, minInclusive-1)
+	c.Assert(value, Lesser, maxInclusive+1)
+}
+
+func checkTime(c *C, duration, expected, tick int32) {
 	value := expected / duration
-	if tick >= value && tick <= value+2 {
-		return nil
-	}
-	return fmt.Errorf("Difference between the expected and actual duration")
+	checkBetween(c, tick, value, value+2)
 }
 
 func (s *TestSuite) TestObstacleAttribute(c *C) {
@@ -138,7 +139,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 		return false
 	})
 	// Check delay
-	c.Assert(CheckTime(client.Model.GetData().TickDuration, delay, tick), IsNil)
+	checkTime(c, data.TickDuration, delay, tick)
 
 	// Create mined area, activated by default with an activity time
 	object, err = client.CreateObject("mined area (linear and destructible)",
@@ -164,7 +165,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 		return false
 	})
 	// Check delay
-	c.Assert(CheckTime(client.Model.GetData().TickDuration, delay, tick), IsNil)
+	checkTime(c, data.TickDuration, delay, tick)
 }
 
 func (s *TestSuite) TestTimeLimitAttribute(c *C) {
@@ -199,7 +200,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 		return false
 	})
 	// Check delay
-	c.Assert(CheckTime(client.Model.GetData().TickDuration, delay, tick), IsNil)
+	checkTime(c, data.TickDuration, delay, tick)
 }
 
 func (s *TestSuite) TestBypassAttribute(c *C) {
