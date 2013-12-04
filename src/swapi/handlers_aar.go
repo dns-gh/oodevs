@@ -9,6 +9,8 @@
 package swapi
 
 import (
+	"encoding/xml"
+	"fmt"
 	"sword"
 )
 
@@ -17,11 +19,20 @@ func (model *ModelData) handleAarInformation(m *sword.AarToClient_Content) error
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	scores, err := ReadScores([]byte(mm.GetInformation()))
+	data := []byte(mm.GetInformation())
+	name := xml.Name{}
+	err := xml.Unmarshal(data, &name)
 	if err != nil {
-		return err
+		return fmt.Errorf("invalid xml in aar information: %s\n", err)
 	}
-	model.KnownScores = scores
+	switch name.Local {
+	case "scores":
+		scores, err := ReadScores(data)
+		if err != nil {
+			return err
+		}
+		model.KnownScores = scores
+	}
 	return nil
 }
 
