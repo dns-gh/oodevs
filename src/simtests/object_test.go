@@ -334,6 +334,7 @@ func (s *TestSuite) TestEngineerPreparedObject(c *C) {
 	park := func(client *swapi.Client) uint32 {
 		unit, err := client.CreateUnit(automat.Id, UnitType, swapi.Point{X: -15.8193, Y: 28.3457})
 		c.Assert(err, IsNil)
+		c.Assert(unit, NotNil)
 		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 			return data.Units[unit.Id].RawOperationalState != 0
 		})
