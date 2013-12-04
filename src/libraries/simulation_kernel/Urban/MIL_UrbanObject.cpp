@@ -185,7 +185,7 @@ void MIL_UrbanObject::ComputeConvexHull()
     }
     T_PointVector hull;
     ComputeHull( vertices, hull );
-    if( !hull.empty() )
+    if( hull.size() > 2 )
         Initialize( TER_Localisation( TER_Localisation::ePolygon , hull ) );
 }
 
@@ -249,7 +249,7 @@ void MIL_UrbanObject::ReadLocalisation( xml::xistream& xis )
     xis >> xml::optional >> xml::start( "footprint" )
             >> xml::list( "point", *this, &MIL_UrbanObject::ReadPoint, pointVector )
         >> xml::end;
-    if( !pointVector.empty() )
+    if( pointVector.size() > 2 )
         Initialize( TER_Localisation( TER_Localisation::ePolygon , pointVector ) );
 }
 
