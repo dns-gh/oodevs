@@ -45,7 +45,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsDefault() const;
     virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" );
     virtual const kernel::MaterialCompositionType& GetMaterial() const;
@@ -55,6 +54,8 @@ public:
     virtual unsigned int GetOccupation() const;
     virtual unsigned int GetHeight() const;
     virtual float GetTrafficability() const;
+    const std::string& GetInvalidMaterial() const;
+    const std::string& GetInvalidRoofShape() const;
     //@}
 
 protected:
@@ -76,6 +77,8 @@ protected:
     unsigned int                        parkingFloors_;
     kernel::UnitedValue< unsigned int > occupation_;
     kernel::UnitedValue< float >        trafficability_;
+    mutable std::string                 invalidMaterial_;
+    mutable std::string                 invalidRoofType_;
     //@}
 };
 

@@ -1428,6 +1428,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Des équipements rendus ou en maintenance ont été passés à l&apos;état &quot;réparable sur place&quot;.</translation>
     </message>
     <message>
+        <source>Unknown material &quot;%1&quot;. It will be replaced by default material at next save.</source>
+        <translation>Matériau &quot;%1&quot; inconnu. Il sera remplacé par la valeur par défaut à la prochaine sauvegarde.</translation>
+    </message>
+    <message>
+        <source>Unknown roof shape &quot;%1&quot;. It will be replaced by default roof shape at next save.</source>
+        <translation>Type de toit &quot;%1&quot; inconnu. Il sera remplacé par la valeur par défaut à la prochaine sauvegarde.</translation>
+    </message>
+    <message>
         <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
         <translation>Aucun quota défini pour &apos;%1&apos; : Il ne sera pas ravitaillé.</translation>
     </message>

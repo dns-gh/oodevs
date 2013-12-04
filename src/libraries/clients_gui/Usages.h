@@ -42,7 +42,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsDefault() const;
     virtual void Add( const std::string& usage, unsigned int proportion );
     virtual void Remove( const std::string& usage );
     virtual unsigned int Find( const std::string& usage ) const;
