@@ -457,25 +457,28 @@ class SessionItemView extends Backbone.View
         if convert_to_boolean d.busy
             return busy: true
         has_replays = !_.isEmpty d.replay.list
+        is_replay = d.replay.root?.length > 0
         is_first = convert_to_boolean d.first_time
         is_idle = is_status_in d, ["stopped", "archived", "waiting"]
         is_live = is_status_in d, ["playing", "paused", "replaying"]
-        join:               is_live
-        play:               is_status_in d, ["stopped", "paused", "waiting"]
-        play_disabled:      (has_replays && !is_live) || !has_license_for d, licenses
-        play_dropdown:      !has_replays && !_.isEmpty d.checkpoints.list
-        pause:              is_status_in d, ["playing"]
-        replay:             !is_first && is_status_in d, ["stopped", "playing", "paused"]
-        stop:               is_live
-        restore:            is_status_in d, ["archived"]
-        edit:               is_status_in d, ["stopped", "waiting"]
-        clone:              !has_replays
-        download:           is_idle
-        log:                !_.isEmpty d.logs
-        archive:            is_status_in d, ["stopped"]
-        archive_disabled:   has_replays
-        delete:             is_idle
-        delete_disabled:    has_replays
+        data =
+            join:               is_live
+            play:               is_status_in d, ["stopped", "paused", "waiting"]
+            play_disabled:      (has_replays && !is_live) || !has_license_for d, licenses
+            play_dropdown:      !has_replays && !_.isEmpty d.checkpoints.list
+            pause:              is_status_in d, ["playing"]
+            replay:             !is_first && is_status_in d, ["stopped", "playing", "paused"]
+            stop:               is_live
+            restore:            is_status_in d, ["archived"]
+            edit:               is_status_in d, ["stopped", "waiting"]
+            clone:              !has_replays
+            download:           is_idle
+            log:                !is_replay && !_.isEmpty d.logs
+            archive:            is_status_in d, ["stopped"]
+            archive_disabled:   has_replays
+            delete:             is_idle
+            delete_disabled:    has_replays
+        return data
 
     render: =>
         @$el.empty()
