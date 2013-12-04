@@ -717,9 +717,52 @@ func (s *TestSuite) TestUnitChangeSuperior(c *C) {
 	CheckUnitSuperior(client.Model, c, u2.Id, a1.Id, a2.Id)
 }
 
+func checkUnitFireDamages(msg *sword.UnitsFireDamages) error {
+	if msg == nil {
+		return nil
+	}
+	for _, d := range msg.Elem {
+		for _, eq := range d.Equipments.Elem {
+			// Damages cannot recreate/repair units
+			if *eq.Available > 0 || *eq.Unavailable < 0 || *eq.Repairable < 0 {
+				return fmt.Errorf("invalid damage message: %v", msg)
+			}
+		}
+	}
+	return nil
+}
+
+func checkUnitsFireDamages(msg *swapi.SwordMessage) error {
+	if msg.SimulationToClient == nil {
+		return nil
+	}
+	m := msg.SimulationToClient.GetMessage()
+	switch {
+	case m.Explosion != nil:
+		return checkUnitFireDamages(m.Explosion.UnitsDamages)
+	case m.StopCrowdFire != nil:
+		return checkUnitFireDamages(m.StopCrowdFire.UnitsDamages)
+	case m.StopUnitFire != nil:
+		return checkUnitFireDamages(m.StopUnitFire.UnitsDamages)
+	}
+	return nil
+}
+
 func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
+
+	// Check unit damages messages
+	var damagesError error
+	handlerId := client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+		if err != nil {
+			return true
+		}
+		if err := checkUnitsFireDamages(msg); err != nil {
+			damagesError = err
+		}
+		return false
+	})
 
 	f1 := CreateFormation(c, client, 1)
 	f2 := CreateFormation(c, client, 2)
@@ -788,6 +831,9 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 	const dotation120mmHightExplosiveShellGuided = 34
 	err = client.CreateFireOrderOnUnit(reporter.Id, targetKnowledge.Id, dotation120mmHightExplosiveShellGuided, 1)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	client.Unregister(handlerId)
+	c.Assert(damagesError, IsNil)
 }
 
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
