@@ -373,4 +373,11 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckAttitude(data.Crowds[crowd.Id], Excited)
 	})
+
+	// Teleport and check attitude returned to Peaceful
+	err = client.Teleport(crowd.Id, to)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)
+	})
 }
