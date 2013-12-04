@@ -1038,7 +1038,7 @@ namespace
     void WaitReady( const bool* busy, boost::unique_lock< boost::shared_mutex >& mutex )
     {
         boost::condition_variable_any condition;
-        const auto predicate = [&] { return *busy; };
+        const auto predicate = [&] { return !*busy; };
         while( !condition.timed_wait( mutex, boost::posix_time::milliseconds( 50 ), predicate ) )
             continue;
     }

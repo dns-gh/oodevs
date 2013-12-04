@@ -454,6 +454,66 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
     BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
 }
 
+BOOST_FIXTURE_TEST_CASE( session_can_be_removed, Fixture )
+{
+    SessionPtr session = MakeSession();
+    auto processes = StartSession( *session, processPid, processName );
+    ExpectWebRequest( "/stop", 200 );
+    MOCK_EXPECT( processes.first->Join ).returns( true );
+    MOCK_EXPECT( processes.second->Kill ).once().returns( true );
+    MOCK_EXPECT( node->UnlinkExercise ).once();
+    MOCK_EXPECT( node->RemoveSession ).once().with( defaultId );
+    session->Remove();
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_removal_eventually_succeeds, Fixture )
+{
+    SessionPtr session = MakeSession();
+    Pool pool( 1, 2 );
+
+    ProcessPtr process = boost::make_shared< MockProcess >( processPid, processName );
+    MOCK_EXPECT( runtime.Start ).once().returns( process );
+    MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
+    MOCK_EXPECT( fs.WriteFile ).once().returns( true );
+    ProcessPtr timeline = boost::make_shared< MockProcess >( processPid*2, "timeline" );
+    MOCK_EXPECT( runtime.Start ).once().returns( timeline );
+
+    Event waiting, connected, started, removed;
+    MOCK_EXPECT( ports.WaitConnected ).once().calls( [&] (int) -> bool {
+        waiting.Signal();
+        connected.Wait();
+        return true;
+    } );
+
+    bool hasStarted = false;
+    auto start = pool.Post( [&] {
+        hasStarted = StartSessionWith( *session, process, "" );
+        started.Signal();
+    } );
+
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+    waiting.Wait();
+    auto remove = pool.Post( [&] {
+        session->Remove();
+        removed.Signal();
+    } );
+
+    waiting.Wait();
+    ExpectWebRequest( "/stop", 200 );
+    MOCK_EXPECT( process->Join ).returns( true );
+    MOCK_EXPECT( timeline->Kill ).once().returns( true );
+    MOCK_EXPECT( node->UnlinkExercise ).once();
+    MOCK_EXPECT( node->RemoveSession ).once().with( defaultId );
+
+    connected.Signal();
+    started.Wait();
+    BOOST_REQUIRE( hasStarted );
+
+    removed.Wait();
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+}
+
 BOOST_FIXTURE_TEST_CASE( session_cannot_replay_without_one_play, Fixture )
 {
     SessionPtr session = MakeSession();
