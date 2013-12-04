@@ -41,7 +41,7 @@ void App::OnBeforeCommandLineProcessing( const CefString& /*process_type*/,
 {
     // see http://www.magpcss.org/ceforum/viewtopic.php?f=14&t=10760
     // unfortunately winhttp-proxy-resolver does not work
-    if( getenv( "TIMELINE_DISABLE_PROXY" ) )
+    if( !getenv( "TIMELINE_ENABLE_PROXY" ) )
         command_line->AppendSwitch( "no-proxy-server" );
 }
 
