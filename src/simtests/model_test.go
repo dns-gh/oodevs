@@ -301,3 +301,35 @@ func (s *TestSuite) TestModelIsolation(c *C) {
 	updated := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
 	c.Assert(updated, Equals, expected)
 }
+
+func (s *TestSuite) TestModelHandlers(c *C) {
+	model := swapi.NewModel()
+	defer model.Close()
+
+	// Test RegisterHandler timeout
+	done := make(chan error, 1)
+	model.RegisterHandlerTimeout(100*time.Millisecond,
+		func(model *swapi.ModelData, err error) bool {
+			if err != nil {
+				done <- err
+				close(done)
+			}
+			return err != nil
+		})
+	err := <-done
+	c.Assert(err, Equals, swapi.ErrTimeout)
+
+	// Test unregistering a model handler
+	done = make(chan error, 1)
+	id := model.RegisterHandlerTimeout(0,
+		func(model *swapi.ModelData, err error) bool {
+			if err != nil {
+				done <- err
+				close(done)
+			}
+			return err != nil
+		})
+	model.UnregisterHandler(id)
+	err = <-done
+	c.Assert(err, Equals, swapi.ErrConnectionClosed)
+}

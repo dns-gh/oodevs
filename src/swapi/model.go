@@ -18,6 +18,8 @@ var (
 	ErrInvalidTime = errors.New("invalid time")
 )
 
+type ModelHandler func(model *ModelData, err error) bool
+
 type modelCmd struct {
 	done chan int
 	cmd  func(model *Model)
@@ -53,6 +55,9 @@ type Model struct {
 	conds        []*modelCond
 	data         *ModelData
 	errorHandler ModelErrorHandler
+	handlerId    int32
+	handlers     map[int32]ModelHandler
+	timeouts     map[int32]time.Time
 
 	// State only touched by caller routines
 	condId      int
@@ -67,6 +72,8 @@ type Model struct {
 func NewModel() *Model {
 	model := Model{
 		WaitTimeout: 60 * time.Second,
+		handlers:    map[int32]ModelHandler{},
+		timeouts:    map[int32]time.Time{},
 		requests:    make(chan *ModelRequest, 128),
 		conds:       []*modelCond{},
 		data:        NewModelData(),
@@ -99,36 +106,77 @@ func (model *Model) SetErrorHandler(errorHandler ModelErrorHandler) {
 	})
 }
 
-func (model *Model) run() error {
-	defer model.running.Done()
+func (model *Model) remove(handlerId int32) {
+	delete(model.handlers, handlerId)
+	delete(model.timeouts, handlerId)
+}
 
-	for rq := range model.requests {
-		if rq.Message != nil {
-			if err := model.data.update(rq.Message); err != nil {
-				err = model.errorHandler(model.data, rq.Message, err)
-				if err != nil {
-					for _, cond := range model.conds {
-						cond.done <- 0
+func (model *Model) run() error {
+	defer func() {
+		for _, handler := range model.handlers {
+			handler(model.data, ErrConnectionClosed)
+		}
+		model.running.Done()
+	}()
+
+	ticker := time.NewTicker(1 * time.Second)
+	for {
+		select {
+		case rq, ok := <-model.requests:
+			if !ok {
+				return nil
+			}
+			if rq.Message != nil {
+				if err := model.data.update(rq.Message); err != nil {
+					err = model.errorHandler(model.data, rq.Message, err)
+					if err != nil {
+						for _, cond := range model.conds {
+							cond.done <- 0
+						}
+						return err
 					}
-					return err
+				}
+
+				// Execute handlers
+				removed := []int32{}
+				for id, handler := range model.handlers {
+					if handler(model.data, nil) {
+						removed = append(removed, id)
+					}
+				}
+				for _, id := range removed {
+					model.remove(id)
+				}
+
+				//Execute conditions
+				for i := 0; i != len(model.conds); {
+					if model.conds[i].cond(model) {
+						model.conds[i].done <- 1
+						model.conds = append(model.conds[:i], model.conds[i+1:]...)
+						continue
+					}
+					i++
+				}
+			} else if rq.Command != nil {
+				rq.Command.cmd(model)
+				rq.Command.done <- 1
+			} else if rq.Cond != nil {
+				if rq.Cond.cond(model) {
+					rq.Cond.done <- 1
+				} else {
+					model.conds = append(model.conds, rq.Cond)
 				}
 			}
-			for i := 0; i != len(model.conds); {
-				if model.conds[i].cond(model) {
-					model.conds[i].done <- 1
-					model.conds = append(model.conds[:i], model.conds[i+1:]...)
-					continue
+		case now := <-ticker.C:
+			removed := []int32{}
+			for id, timeout := range model.timeouts {
+				if now.After(timeout) {
+					removed = append(removed, id)
 				}
-				i++
 			}
-		} else if rq.Command != nil {
-			rq.Command.cmd(model)
-			rq.Command.done <- 1
-		} else if rq.Cond != nil {
-			if rq.Cond.cond(model) {
-				rq.Cond.done <- 1
-			} else {
-				model.conds = append(model.conds, rq.Cond)
+			for _, id := range removed {
+				model.handlers[id](model.data, ErrTimeout)
+				model.remove(id)
 			}
 		}
 	}
@@ -166,6 +214,39 @@ func (model *Model) waitCommand(cmd func(model *Model)) {
 	}
 	model.requests <- c
 	<-c.Command.done
+}
+
+// Registers a handler to be called upon ModelData updates. If timeout is non-nul,
+// the handler will be called with ErrTimeout after supplied duration. It will
+// be called with ErrConnectionClosed upon Model termination.
+// Returned identifier can be used with UnregisterHandler.
+func (model *Model) RegisterHandlerTimeout(timeout time.Duration,
+	handler ModelHandler) int32 {
+
+	id := int32(0)
+	model.waitCommand(func(model *Model) {
+		id = model.handlerId
+		model.handlerId++
+		model.handlers[id] = handler
+		if timeout > 0 {
+			model.timeouts[id] = time.Now().Add(timeout)
+		}
+	})
+	return id
+}
+
+func (model *Model) RegisterHandler(handler ModelHandler) int32 {
+	return model.RegisterHandlerTimeout(model.WaitTimeout, handler)
+}
+
+func (model *Model) UnregisterHandler(id int32) {
+	model.waitCommand(func(model *Model) {
+		handler := model.handlers[id]
+		if handler != nil {
+			handler(model.data, ErrConnectionClosed)
+			model.remove(id)
+		}
+	})
 }
 
 // Post and wait for a condition to be validated. Return false on
