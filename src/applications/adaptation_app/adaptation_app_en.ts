@@ -6383,6 +6383,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Life span</source>
         <translation>Life span</translation>
     </message>
+    <message>
+        <source>Return after treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

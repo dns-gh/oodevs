@@ -154,7 +154,7 @@ void PHY_MedicalHumanState::NotifyHandledByMedical()
 {
     assert( pHuman_ );
     pHuman_->NotifyHandledByMedical();
-    bShouldGoBackToWar_ = !( pHuman_->IsWounded() || pHuman_->IsContaminated() );
+    bShouldGoBackToWar_ = pHuman_->ShouldGoBackToWar();
 }
 
 // -----------------------------------------------------------------------------

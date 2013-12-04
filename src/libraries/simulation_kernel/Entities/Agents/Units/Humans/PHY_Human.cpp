@@ -618,6 +618,17 @@ const MIL_Agent_ABC& PHY_Human::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::ShouldGoBackToWar
+// Created: LDC 2013-12-02
+// -----------------------------------------------------------------------------
+bool PHY_Human::ShouldGoBackToWar() const
+{
+    return pWound_->ShouldGoBackToWar()
+        && ( !IsContaminated() || PHY_HumanWound::ShouldContaminatedGoBackToWar() )
+        && ( !IsMentalDiseased() || PHY_HumanWound::ShouldMentalDiseasedGoBackToWar() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::SetState
 // Created: ABR 2011-08-29
 // -----------------------------------------------------------------------------

@@ -6371,6 +6371,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Life span</source>
         <translation type="unfinished">مدى الحياة</translation>
     </message>
+    <message>
+        <source>Return after treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
