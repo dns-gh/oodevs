@@ -24,7 +24,11 @@ end
 -- @author MGD
 -- @release 2010-02-15
 integration.animationLevel = function( object )
-    return DEC_ConnaissanceObjet_NiveauAnimation( object.source ) * 100
+    if DEC_ConnaissanceObjet_PeutEtreAnime( object.source ) then
+        return DEC_ConnaissanceObjet_NiveauAnimation( object.source ) * 100 -- /!\ return 1 if object cannot be animated.
+    else
+        return 0
+    end
 end
 
 integration.startAnimateIt = function( object )
