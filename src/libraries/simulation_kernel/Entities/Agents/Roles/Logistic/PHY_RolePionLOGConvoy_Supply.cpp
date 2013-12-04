@@ -73,11 +73,9 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int 
 // Name: PHY_RolePionLOGConvoy_Supply::Update
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
+void PHY_RolePionLOGConvoy_Supply::Update( bool /*bIsDead*/ )
 {
-    if( bIsDead )
-        if( MIL_AgentPion* pionPc = owner_.GetAutomate().GetPionPC() )
-            owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pionPc );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
