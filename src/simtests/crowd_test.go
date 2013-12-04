@@ -257,7 +257,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 
 	// Reset movement, the flow is destroyed
 	knownElements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
-	err = client.Teleport(crowd.Id, to)
+	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		elements := data.Crowds[crowd.Id].CrowdElements
@@ -375,7 +375,7 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	})
 
 	// Teleport and check attitude returned to Peaceful
-	err = client.Teleport(crowd.Id, to)
+	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), to)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)

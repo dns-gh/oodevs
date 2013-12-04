@@ -425,11 +425,11 @@ func (s *TestSuite) TestTeleport(c *C) {
 	pos := swapi.Point{X: -15.8219, Y: 28.2456}
 
 	// No tasker
-	err = client.Teleport(0, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(0), pos)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot teleport unit if its automat is engaged
-	err = client.Teleport(unit.Id, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
 	c.Assert(err, IsSwordError, "error_automat_engaged")
 
 	// Should work with disengaged unit
@@ -437,7 +437,7 @@ func (s *TestSuite) TestTeleport(c *C) {
 	c.Assert(err, IsNil)
 
 	// Teleport unit
-	err = client.Teleport(unit.Id, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
 	c.Assert(err, IsNil)
 
 	// Check unit position
