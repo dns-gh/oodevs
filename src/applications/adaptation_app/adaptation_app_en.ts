@@ -1532,6 +1532,10 @@ Parked engine running</translation>
         <source>Slope deceleration</source>
         <translation>Slope deceleration</translation>
     </message>
+    <message>
+        <source>persons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_ListView</name>

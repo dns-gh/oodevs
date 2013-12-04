@@ -1540,6 +1540,10 @@ Arrêt moteur allumé</translation>
         <source>Slope deceleration</source>
         <translation>Ralentissement dû à la pente</translation>
     </message>
+    <message>
+        <source>persons</source>
+        <translation>personnes</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_ListView</name>
