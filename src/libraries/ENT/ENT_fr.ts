@@ -941,7 +941,7 @@
     </message>
     <message>
         <source>Fragmentary Orders</source>
-        <translation></translation>
+        <translation>Ordres de conduite</translation>
     </message>
     <message>
         <source>Activated</source>

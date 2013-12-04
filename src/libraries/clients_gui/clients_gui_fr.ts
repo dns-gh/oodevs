@@ -214,11 +214,11 @@
     <name>EventManager</name>
     <message>
         <source>&lt;Select frag order&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Selectionner l&apos;ordre de conduite&gt;</translation>
     </message>
     <message>
         <source>&lt;Select mission&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Selectionner la mission&gt;</translation>
     </message>
 </context>
 <context>
@@ -1423,15 +1423,15 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>no spatial reference</source>
-        <translation type="unfinished"></translation>
+        <translation>pas de référence spatiale</translation>
     </message>
     <message>
         <source>spatial reference must be WGS84</source>
-        <translation type="unfinished"></translation>
+        <translation>la référence spatiale doit être WGS84</translation>
     </message>
     <message>
         <source>Cannot load SHP feature %1 : %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger la feature SHP %1 : %2</translation>
     </message>
 </context>
 <context>
