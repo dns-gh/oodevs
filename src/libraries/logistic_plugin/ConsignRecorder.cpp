@@ -161,9 +161,15 @@ void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& ent
 namespace
 {
 
-bool CompareLess( ConsignOffset o1, ConsignOffset o2 )
+bool Compare( ConsignOffset o1, ConsignOffset o2 )
 {
-    return o1.file > o2.file || o1.offset > o2.offset;
+    return o1.file < o2.file || ( o1.file == o2.file ) && o1.offset < o2.offset;
+}
+
+
+bool ReverseCompare( ConsignOffset o1, ConsignOffset o2 )
+{
+    return o1.file > o2.file || ( o1.file == o2.file ) && o1.offset > o2.offset;
 }
 
 }  // namespace
@@ -182,17 +188,18 @@ void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
         if( ic == consigns_.end() )
             continue;
         offsets.push_back( ic->second->records_.back() );
-        std::push_heap( offsets.begin(), offsets.end(), CompareLess );
+        // The comparison is reversed to pop the smallest element
+        std::push_heap( offsets.begin(), offsets.end(), ReverseCompare );
         if( offsets.size() > maxCount )
         {
-            std::pop_heap( offsets.begin(), offsets.end(), CompareLess );
+            std::pop_heap( offsets.begin(), offsets.end(), ReverseCompare );
             offsets.pop_back();
         }
     }
-    std::sort_heap( offsets.begin(), offsets.end(), CompareLess );
 
-    // Make sure to seek in increasing offset order
-    std::reverse( offsets.begin(), offsets.end() );
+    // Make sure to seek in increasing offset order. A quick test shows that
+    // std::sort is faster than std::sort_heap.
+    std::sort( offsets.begin(), offsets.end(), Compare );
     AppendEntries( offsets, entries );
     std::reverse( entries.base().begin(), entries.base().end() );
 }
