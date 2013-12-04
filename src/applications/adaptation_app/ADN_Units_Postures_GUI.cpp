@@ -29,9 +29,9 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( const QString& objectName, ADN_C
 
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Stance" )
-                      << tr( "Time to activate" )
-                      << tr( "Time to deactivate" );
+    horizontalHeaders << tools::translate( "ADN_Units_Postures_GUI", "Stance" )
+                      << tools::translate( "ADN_Units_Postures_GUI", "Time to activate" )
+                      << tools::translate( "ADN_Units_Postures_GUI", "Time to deactivate" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
