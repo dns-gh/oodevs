@@ -1305,23 +1305,22 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters&
 
 namespace
 {
+    unsigned int Update( unsigned int& oldValue, unsigned int& number )
+    {
+        const unsigned int newValue = std::min( oldValue, number );
+        number -= newValue;
+        oldValue -= newValue;
+        return newValue;
+    }
     void ChangeHealthState( MIL_PopulationElement_ABC& element, unsigned int& healthy, unsigned int& contaminated, unsigned int& wounded, unsigned int& dead, float ratio )
     {
-        unsigned int elementTotal = element.GetAllHumans();
+        const unsigned int elementTotal = element.GetAllHumans();
         element.PullHumans( elementTotal );
         unsigned int newNumber = static_cast< unsigned int >( ratio * elementTotal );
-        unsigned int newDead = std::min( dead, newNumber );
-        newNumber -= newDead;
-        dead -= newDead;
-        unsigned int newWounded = std::min( wounded, newNumber );
-        newNumber -= newWounded;
-        wounded -= newWounded;
-        unsigned int newContaminated = std::min( contaminated, newNumber );
-        newNumber -= newContaminated;
-        contaminated -= newContaminated;
-        unsigned int newHealthy = std::min( healthy, newNumber );
-        newNumber -= newHealthy;
-        healthy -= newHealthy;
+        const unsigned int newDead = Update( dead, newNumber );
+        const unsigned int newWounded = Update( wounded, newNumber );
+        const unsigned int newContaminated = Update( contaminated, newNumber );
+        const unsigned int newHealthy = Update( healthy, newNumber );
         element.PushHumans( MIL_PopulationHumans( newHealthy, newContaminated, newWounded, newDead ) );
     }
 }
@@ -1343,12 +1342,11 @@ namespace
 void MIL_Population::OnReceiveMsgChangeHealthState( const sword::MissionParameters& msg )
 {
     protocol::CheckCount( msg, 4 );
-    unsigned int healthy = GetParameter( msg, 0 );
-    unsigned int wounded = GetParameter( msg, 1 );
-    unsigned int contaminated = GetParameter( msg, 2 );
-    unsigned int dead = GetParameter( msg, 3 );
-    unsigned int total = healthy + wounded + contaminated + dead;
-    protocol::Check( total > 0, "at least one parameter must be positive" );
+    const unsigned int healthy = GetParameter( msg, 0 );
+    const unsigned int wounded = GetParameter( msg, 1 );
+    const unsigned int contaminated = GetParameter( msg, 2 );
+    const unsigned int dead = GetParameter( msg, 3 );
+    protocol::Check( healthy + wounded + contaminated + dead > 0, "at least one parameter must be positive" );
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
 

@@ -28,7 +28,7 @@ namespace sword
 // =============================================================================
 /** @class  DEC_Decision
     @brief  DEC_Decision
-    Template T must be a subcless of MIL_Entity_ABC
+    Template T must be a subclass of MIL_Entity_ABC
 */
 // Created: LDC 2009-02-27
 // =============================================================================
