@@ -319,11 +319,7 @@ get_replay_root = (collection, data) ->
     return unless id?.length
     return collection.get id
 
-is_status_in = (d, values) ->
-    for it in values
-        if d.status == it
-            return true
-    return false
+is_status_in = (d, values) -> _.contains values, d.status
 
 has_license_for = (d, licenses) ->
     if d.replay.root?.length
