@@ -18,7 +18,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_PopulationManager.h"
-#include <boost/serialization/set.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
 #pragma warning( push, 0 )

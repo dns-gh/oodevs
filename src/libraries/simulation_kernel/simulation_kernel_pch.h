@@ -35,6 +35,7 @@
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/serialization/set.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/type_traits.hpp>
 

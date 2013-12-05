@@ -23,7 +23,6 @@
 #include "Checkpoints/SerializationTools.h"
 #include "protocol/ClientSenders.h"
 #include <boost/range/algorithm.hpp>
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 

@@ -28,7 +28,6 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include "Tools/NET_AsnException.h"
-#include <boost/serialization/set.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 
