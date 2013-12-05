@@ -18,7 +18,7 @@
 
 namespace xml
 {
-    class xistream;
+    class xisubstream;
 }
 
 namespace indicators
@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( xml::xistream& xis );
+    void Load( xml::xisubstream xis );
     void Purge();
     //@}
 

@@ -78,7 +78,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const PrimitiveParameter* > T_Parameters;
+    typedef std::vector< boost::shared_ptr< PrimitiveParameter > > T_Parameters;
     //@}
 
 private:

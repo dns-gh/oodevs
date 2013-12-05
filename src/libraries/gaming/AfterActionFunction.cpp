@@ -38,8 +38,8 @@ AfterActionFunction::AfterActionFunction( xml::xistream& xis )
     name_ = xis.attribute< std::string >( "name" ).c_str();
     xis >> xml::start( "descriptions" )
           >> xml::list( "description", *this, &AfterActionFunction::ReadDescription )
-        >> xml::end;
-    xis >> xml::start( "parameters" )
+        >> xml::end
+        >> xml::start( "parameters" )
           >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
         >> xml::end;
     if( displayName_.isEmpty() )
