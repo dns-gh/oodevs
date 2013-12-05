@@ -18,7 +18,6 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationCollision )
 

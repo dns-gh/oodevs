@@ -37,7 +37,6 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
-#include <boost/serialization/set.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor

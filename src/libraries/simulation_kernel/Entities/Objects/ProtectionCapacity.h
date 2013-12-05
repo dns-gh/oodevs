@@ -56,7 +56,7 @@ private:
     //@{
     std::size_t maxSize_;
     bool bGeniePrepared_;
-    std::vector< const MIL_Agent_ABC* > container_;
+    std::set< const MIL_Agent_ABC* > agents_;
     //@}
 };
 

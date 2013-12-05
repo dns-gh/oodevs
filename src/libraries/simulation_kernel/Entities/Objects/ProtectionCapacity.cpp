@@ -12,8 +12,6 @@
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include <boost/range/algorithm_ext/erase.hpp>
-#include <boost/range/algorithm.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
 
@@ -22,8 +20,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity( xml::xistream& xis )
-    : maxSize_        ( xis.attribute< std::size_t >( "max-size" ) )
-    , bGeniePrepared_ ( xis.attribute< bool >( "geniePrepared" ) )
+    : maxSize_       ( xis.attribute< std::size_t >( "max-size" ) )
+    , bGeniePrepared_( xis.attribute< bool >( "geniePrepared" ) )
 {
     // NOTHING
 }
@@ -33,7 +31,7 @@ ProtectionCapacity::ProtectionCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity()
-    : maxSize_      ( 0 )
+    : maxSize_       ( 0 )
     , bGeniePrepared_( false )
 {
     // NOTHING
@@ -44,7 +42,7 @@ ProtectionCapacity::ProtectionCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity( const ProtectionCapacity& from )
-    : maxSize_      ( from.maxSize_ )
+    : maxSize_       ( from.maxSize_ )
     , bGeniePrepared_( from.bGeniePrepared_ )
 {
     // NOTHING
@@ -68,6 +66,7 @@ void ProtectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & maxSize_
+         & agents_
          & bGeniePrepared_;
 }
 
@@ -98,12 +97,14 @@ void ProtectionCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    assert( boost::find( container_, &agent ) != container_.end() );
+    auto it = agents_.find( &agent );
+    if( it == agents_.end() )
+        return;
+    agents_.erase( it );
     if( bGeniePrepared_ )
         agent.GetRole< PHY_RoleInterface_Posture >().UnsetPosturePostePrepareGenie();
     else
         agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 1. );
-    boost::remove_erase( container_, &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +113,8 @@ void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    assert( boost::find( container_, &agent ) != container_.end() );
+    if( agents_.find( &agent ) == agents_.end() )
+        return;
     if( bGeniePrepared_ )
         agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();
     else
@@ -125,7 +127,6 @@ void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Age
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    assert( boost::find( container_, &agent ) == container_.end() );
-    if( container_.size() < maxSize_ )
-        container_.push_back( &agent );
+    if( agents_.size() < maxSize_ )
+        agents_.insert( &agent );
 }

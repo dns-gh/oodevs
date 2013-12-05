@@ -26,7 +26,6 @@
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
 

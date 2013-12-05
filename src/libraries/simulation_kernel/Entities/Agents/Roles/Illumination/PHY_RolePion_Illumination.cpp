@@ -13,7 +13,6 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
 

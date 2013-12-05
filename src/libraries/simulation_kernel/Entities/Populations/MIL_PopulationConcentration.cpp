@@ -29,7 +29,6 @@
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/make_shared.hpp>
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 

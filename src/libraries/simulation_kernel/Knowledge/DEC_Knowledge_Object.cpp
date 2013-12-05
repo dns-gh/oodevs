@@ -49,7 +49,6 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/serialization/optional.hpp>
-#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
 
