@@ -11,11 +11,8 @@
 #define __Primitive_h_
 
 #include <boost/shared_ptr.hpp>
-#pragma warning( push, 0 )
-#pragma warning( push, 0 )
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <QtCore/qstring.h>
-#pragma warning( pop )
-#pragma warning( pop )
 
 namespace kernel
 {
@@ -78,7 +75,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const PrimitiveParameter* > T_Parameters;
+    typedef boost::ptr_vector< PrimitiveParameter > T_Parameters;
     //@}
 
 private:

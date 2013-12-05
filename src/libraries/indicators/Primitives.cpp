@@ -38,15 +38,14 @@ Primitives::~Primitives()
 // Name: Primitives::Load
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void Primitives::Load( xml::xistream& xis )
+void Primitives::Load( xml::xisubstream xis )
 {
     xis >> xml::start( "primitives" )
             >> xml::list( "primitive", [&]( xml::xistream& x )
                 {
                     Primitive* primitive = new Primitive( x, *types_ );
                     Register( primitive->GetName(), *primitive );
-                } )
-        >> xml::end;
+                } );
 }
 
 // -----------------------------------------------------------------------------
