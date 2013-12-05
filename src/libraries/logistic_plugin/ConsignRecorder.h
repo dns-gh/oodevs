@@ -19,6 +19,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <unordered_map>
 
@@ -46,8 +47,11 @@ namespace logistic
 {
 
 class ConsignArchive;
+struct ConsignOffset;
 class ConsignResolver_ABC;
 
+// Indexes and persists the modification history of logistic requests. History
+// entries can be retrieved from requests or referenced entities identifiers.
 class ConsignRecorder: private boost::noncopyable
 {
 public:
@@ -60,9 +64,23 @@ public:
     void Flush();
     void SetMaxLinesInFile( int maxLines );
 
-    void WriteEntry( uint32_t requestId, bool destroyed, const sword::LogHistoryEntry& entry );
+    void WriteEntry( uint32_t requestId, bool destroyed, const sword::LogHistoryEntry& entry,
+           std::vector< uint32_t >& entities );
+    // Returns the list of requests referencing supplied entities.
+    void GetRequestIdsFromEntities( const std::set< uint32_t >& entities,
+            std::set< uint32_t >& requests ) const;
+    // Returns top maxCount entries of recently updated requests.
+    void GetRequests( const std::set< uint32_t >& requestIds, size_t maxCount,
+            boost::ptr_vector< sword::LogHistoryEntry>& entries ) const;
+    // Returns all entries of a given request.
     void GetHistory( uint32_t requestId, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const;
     size_t GetHistorySize() const;
+
+private:
+    // Append entries referenced by supplied offsets to "entries", in the same
+    // order.
+    void AppendEntries( const std::vector< ConsignOffset >& offsets, 
+        boost::ptr_vector< sword::LogHistoryEntry >& entries ) const;
 
 private:
     boost::ptr_map< int, ConsignResolver_ABC > loggers_;
@@ -78,7 +96,13 @@ private:
     T_LRU destroyed_;
     std::unordered_map< uint32_t, T_LRU::iterator > consigns_;
     size_t maxConsigns_;
+
+    // Map entity (unit, formation, whatever) identifiers to requests
+    std::multimap< uint32_t, uint32_t > entityConsigns_;
 };
+
+void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,
+        size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries );
 
 }  // namespace logistic
 }  // namespace plugins

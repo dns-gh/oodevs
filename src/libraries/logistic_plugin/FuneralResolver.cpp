@@ -11,6 +11,7 @@
 #include "ConsignWriter.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/MessageParameters.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::logistic;
@@ -108,19 +109,25 @@ bool FuneralConsignData::ManageMessage( const ::sword::LogFuneralHandlingUpdate&
 }
 
 bool FuneralConsignData::DoUpdateConsign( const sword::SimToClient& message,
-        const NameResolver_ABC& resolver )
+        const NameResolver_ABC& resolver, std::vector< uint32_t >& entities )
 {
     const auto& msg = message.message();
     if( msg.has_log_funeral_handling_creation() )
     {
-        *entry_.mutable_funeral()->mutable_creation() = msg.log_funeral_handling_creation();
-        return ManageMessage( msg.log_funeral_handling_creation(), resolver );
+        const auto& sub = msg.log_funeral_handling_creation();
+        *entry_.mutable_funeral()->mutable_creation() = sub;
+        entities.push_back( sub.unit().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_funeral_handling_update() )
     {
-        entry_.mutable_funeral()->mutable_update()->MergeFrom(
-                msg.log_funeral_handling_update() );
-        return ManageMessage( msg.log_funeral_handling_update(), resolver );
+        const auto& sub = msg.log_funeral_handling_update();
+        entry_.mutable_funeral()->mutable_update()->MergeFrom( sub );
+        if( sub.has_handling_unit() )
+            entities.push_back( protocol::GetParentEntityId( sub.handling_unit() ));
+        if( sub.has_convoying_unit() )
+            entities.push_back( sub.convoying_unit().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_funeral_handling_destruction() )
     {

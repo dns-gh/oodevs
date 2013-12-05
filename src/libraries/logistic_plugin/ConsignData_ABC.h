@@ -13,6 +13,8 @@
 #include "LogisticPlugin.h"
 #include "protocol/Simulation.h"
 #include <boost/noncopyable.hpp>
+#include <cstdint>
+#include <vector>
 
 namespace plugins
 {
@@ -37,8 +39,10 @@ public:
     //@}
 
     // Returns true if the consign was updated and a log entry should be added.
+    // "entities" is filled with the identifiers of entities referenced by
+    // the request message.
     bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
-           int tick, const std::string& time );
+           int tick, const std::string& time, std::vector< uint32_t >& entities );
 
     //! @name Operations
     //@{
@@ -49,7 +53,8 @@ public:
     //@}
 
 private:
-    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
+           std::vector< uint32_t >& entities ) = 0;
     virtual void WriteConsign( ConsignWriter& w ) const = 0;
 
 public:

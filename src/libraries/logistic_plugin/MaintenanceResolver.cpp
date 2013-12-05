@@ -99,19 +99,23 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
 }
 
 bool MaintenanceConsignData::DoUpdateConsign( const sword::SimToClient& message,
-        const NameResolver_ABC& resolver )
+        const NameResolver_ABC& resolver, std::vector< uint32_t >& entities )
 {
     const auto& msg = message.message();
     if( msg.has_log_maintenance_handling_creation() )
     {
-        *entry_.mutable_maintenance()->mutable_creation() = msg.log_maintenance_handling_creation();
-        return ManageMessage( msg.log_maintenance_handling_creation(), resolver );
+        const auto& sub = msg.log_maintenance_handling_creation();
+        *entry_.mutable_maintenance()->mutable_creation() = sub;
+        entities.push_back( sub.unit().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_maintenance_handling_update() )
     {
-        entry_.mutable_maintenance()->mutable_update()->MergeFrom(
-                msg.log_maintenance_handling_update() );
-        return ManageMessage( msg.log_maintenance_handling_update(), resolver );
+        const auto& sub = msg.log_maintenance_handling_update();
+        entry_.mutable_maintenance()->mutable_update()->MergeFrom( sub );
+        entities.push_back( sub.unit().id() );
+        entities.push_back( sub.provider().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_maintenance_handling_destruction() )
     {

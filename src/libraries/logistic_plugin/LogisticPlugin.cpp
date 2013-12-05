@@ -44,6 +44,7 @@ namespace
 
 int localAppliArgc( 1 );
 char* localAppliArgv[] = { " " };
+const size_t maxReturnedEntries = 500;
 
 enum E_ConsignEvent
 {
@@ -195,10 +196,11 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         else
             consigns_.replace( it, consign );
     } 
-    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
+    std::vector< uint32_t > entities;
+    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_, entities ) )
         recorder_->Write( ev.type, it->second->ToString(), today );
     recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction,
-            it->second->GetHistoryEntry() );
+            it->second->GetHistoryEntry(), entities );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }
@@ -228,24 +230,21 @@ void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
 {
-    if( !msg.message().has_logistic_history_request() )
-        return false;
-    const auto& rq = msg.message().logistic_history_request();
     sword::SimToClient reply;
-    auto ack = reply.mutable_message()->mutable_logistic_history_ack();
     try
     {
-        boost::ptr_vector< sword::LogHistoryEntry > entries;
-        std::unordered_set< uint32_t > seen;
-        for( int i = 0; i != rq.requests().size(); ++i )
+        if( msg.message().has_logistic_history_request() )
         {
-            const uint32_t requestId = rq.requests( i ).id();
-            if( !seen.insert( requestId ).second )
-                continue;
-            recorder_->GetHistory( requestId, entries );
-            for( auto ie = entries.cbegin(); ie != entries.cend(); ++ie )
-                *ack->add_entries() = *ie;
+            HandleLogisticHistoryRequest( msg.message().logistic_history_request(),
+                *reply.mutable_message()->mutable_logistic_history_ack() );
         }
+        else if( msg.message().has_list_logistic_requests() )
+        {
+            HandleListLogisticRequests( msg.message().list_logistic_requests(),
+                *reply.mutable_message()->mutable_list_logistic_requests_ack() );
+        }
+        else
+            return false;
     }
     catch( const std::exception& e )
     {
@@ -253,6 +252,38 @@ bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
     }
     unicaster.Send( reply );
     return true;
+}
+
+void LogisticPlugin::HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
+        sword::LogisticHistoryAck& ack ) const
+{
+    boost::ptr_vector< sword::LogHistoryEntry > entries;
+    std::unordered_set< uint32_t > seen;
+    for( int i = 0; i != rq.requests().size(); ++i )
+    {
+        const uint32_t requestId = rq.requests( i ).id();
+        if( !seen.insert( requestId ).second )
+            continue;
+        recorder_->GetHistory( requestId, entries );
+        for( auto ie = entries.cbegin(); ie != entries.cend(); ++ie )
+            *ack.add_entries() = *ie;
+    }
+}
+
+void LogisticPlugin::HandleListLogisticRequests( const sword::ListLogisticRequests& rq,
+        sword::ListLogisticRequestsAck& ack ) const
+{
+    size_t maxCount = maxReturnedEntries;
+    if( rq.has_max_count() )
+        maxCount = rq.max_count();
+    std::set< uint32_t > entities;
+    for( int i = 0; i != rq.entities().size(); ++i )
+        entities.insert( rq.entities( i ).id() );
+
+    boost::ptr_vector< sword::LogHistoryEntry > entries;
+    GetRequestsFromEntities( *recorder_, entities, maxCount, entries );
+    for( auto ie = entries.begin(); ie != entries.end(); ie++ )
+        *ack.add_entries() = *ie;
 }
 
 LogisticPlugin* CreateLogisticPlugin(

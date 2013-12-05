@@ -126,19 +126,24 @@ bool MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruc
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 bool MedicalConsignData::DoUpdateConsign( const sword::SimToClient& message,
-        const NameResolver_ABC& resolver )
+        const NameResolver_ABC& resolver, std::vector< uint32_t >& entities )
 {
     const auto& msg = message.message();
     if( msg.has_log_medical_handling_creation() )
     {
-        *entry_.mutable_medical()->mutable_creation() = msg.log_medical_handling_creation();
-        return ManageMessage( msg.log_medical_handling_creation(), resolver );
+        const auto& sub = msg.log_medical_handling_creation();
+        *entry_.mutable_medical()->mutable_creation() = sub;
+        entities.push_back( sub.unit().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_medical_handling_update() )
     {
-        entry_.mutable_medical()->mutable_update() ->MergeFrom(
-                msg.log_medical_handling_update() );
-        return ManageMessage( msg.log_medical_handling_update(), resolver );
+        const auto& sub = msg.log_medical_handling_update();
+        entry_.mutable_medical()->mutable_update() ->MergeFrom( sub );
+        entities.push_back( sub.unit().id() );
+        if( sub.has_provider() )
+            entities.push_back( sub.provider().id() );
+        return ManageMessage( sub, resolver );
     }
     if( msg.has_log_medical_handling_destruction() )
     {
