@@ -57,7 +57,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
 
     QLabel* color = new QLabel( grid );
     QPixmap tmp( 10 , 10 );
-    tmp.fill( QColor( "yellow" ).lighter( 150 ) );
+    tmp.fill( QColor( "yellow" ) );
     color->setPixmap( tmp );
     color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "Nominal superior" ), grid );
@@ -66,7 +66,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     nominalSuperiorCombo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
-    tmp.fill( QColor( "yellow" ) );
+    tmp.fill( QColor( "yellow" ).lighter( 150 ) );
     color->setPixmap( tmp );
     label = new QLabel( tr( "Current superior" ), grid );
     currentSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( "currentSuperiorCombo", grid );
