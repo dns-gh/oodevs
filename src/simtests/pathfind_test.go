@@ -42,7 +42,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	})
 
 	// Teleport unit
-	err = client.TeleportUnit(unit.Id, to)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), to)
 	c.Assert(err, IsNil)
 
 	// Wait its path is reset

@@ -414,7 +414,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	c.Assert(crowd, NotNil)
 }
 
-func (s *TestSuite) TestTeleportUnit(c *C) {
+func (s *TestSuite) TestTeleport(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
@@ -425,11 +425,11 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	pos := swapi.Point{X: -15.8219, Y: 28.2456}
 
 	// No tasker
-	err = client.TeleportUnit(0, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(0), pos)
 	c.Assert(err, IsSwordError, "error_invalid_unit")
 
 	// Cannot teleport unit if its automat is engaged
-	err = client.TeleportUnit(unit.Id, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
 	c.Assert(err, IsSwordError, "error_automat_engaged")
 
 	// Should work with disengaged unit
@@ -437,7 +437,7 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	// Teleport unit
-	err = client.TeleportUnit(unit.Id, pos)
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), pos)
 	c.Assert(err, IsNil)
 
 	// Check unit position
