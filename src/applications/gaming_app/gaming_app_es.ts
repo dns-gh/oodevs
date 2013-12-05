@@ -1014,6 +1014,15 @@ Reason: %3
         <source>Impossible to create file in specified directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm file replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Would you like to replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IndicatorPlot</name>
