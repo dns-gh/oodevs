@@ -23,6 +23,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
+    class Ghost_ABC;
     class Population_ABC;
     class Object_ABC;
     class ObjectKnowledge_ABC;
@@ -45,6 +46,7 @@ class HighlightColorModifier : public QObject
                              , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                             , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
@@ -79,6 +81,7 @@ private slots:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
