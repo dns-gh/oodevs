@@ -241,8 +241,7 @@ func (model *Model) RegisterHandler(handler ModelHandler) int32 {
 
 func (model *Model) UnregisterHandler(id int32) {
 	model.waitCommand(func(model *Model) {
-		handler := model.handlers[id]
-		if handler != nil {
+		if handler := model.handlers[id]; handler != nil {
 			handler(model.data, ErrConnectionClosed)
 			model.remove(id)
 		}
