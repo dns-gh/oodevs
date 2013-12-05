@@ -44,7 +44,6 @@ public:
     //! @name Accessors
     //@{
     bool Connected() const;
-    bool TimedOut() const;
     //@}
 
 private:

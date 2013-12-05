@@ -18,11 +18,10 @@ using namespace frontend;
 
 struct SimulationMonitor::TimeOut : private boost::noncopyable
 {
-    explicit TimeOut( unsigned int duration ) : duration_( duration ) { Start(); }
-    void Start()
-    {
-        start_ = boost::posix_time::microsec_clock::universal_time();
-    }
+    explicit TimeOut( unsigned int duration )
+        : duration_( duration )
+        , start_   ( boost::posix_time::microsec_clock::universal_time() )
+    {}
     bool Expired() const
     {
         return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
@@ -37,7 +36,7 @@ struct SimulationMonitor::TimeOut : private boost::noncopyable
 // -----------------------------------------------------------------------------
 SimulationMonitor::SimulationMonitor( const std::string& host )
     : tools::ClientNetworker( host, true )
-    , timeOut_( new TimeOut( 60000 ) )
+    , timeOut_  ( new TimeOut( 60000 ) )
     , connected_( false )
 {
     RegisterMessage( *this, &SimulationMonitor::HandleAarToClient );
@@ -102,16 +101,7 @@ void SimulationMonitor::ConnectionWarning( const std::string& endpoint, const st
 // -----------------------------------------------------------------------------
 bool SimulationMonitor::Connected() const
 {
-    return connected_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationMonitor::TimedOut
-// Created: SBO 2010-11-12
-// -----------------------------------------------------------------------------
-bool SimulationMonitor::TimedOut() const
-{
-    return timeOut_.get() && timeOut_->Expired();
+    return connected_ || timeOut_->Expired();
 }
 
 // -----------------------------------------------------------------------------

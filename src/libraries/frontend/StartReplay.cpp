@@ -55,7 +55,7 @@ void StartReplay::Start()
     SpawnCommand::Start();
     const std::string host = configManipulator_->GetValue< std::string >( "session/config/gaming/network/@server" );
     SimulationMonitor monitor( host );
-    while( !monitor.Connected() && !monitor.TimedOut() )
+    while( !monitor.Connected() )
     {
         monitor.Update();
         boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
