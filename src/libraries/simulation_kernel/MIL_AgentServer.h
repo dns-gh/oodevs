@@ -206,6 +206,12 @@ private:
     ProcessMonitor* pProcessMonitor_;
     std::auto_ptr< MIL_ObjectFactory > pObjectFactory_;
     double pathfindTime_;
+    // Ensures a paused simulation reloaded from a checkpoint remains in the
+    // checkpoint state and does not tick.
+    // $$$$ PMD: there are certainly cleaner ways to achieve this but this one
+    // works and allows us to write tests before fiddling with simulation timer
+    // loop.
+    bool updateState_;
     //@}
 
 private:

@@ -37,6 +37,11 @@ message ControlCheckPointSaveNow {
     //! Checkpoint name, contains only alphanumeric characters, spaces
     //! or underscores.
     optional string name = 1;
+    //! If true, the simulation state will be sent like it is upon new
+    //! connections, right after the ControlCheckPointSaveBegin message.
+    //! Note: this option is currently only used for testing purpose,
+    //! its behaviour may change in future versions.
+    optional bool   send_state = 2;
 }
 
 //! Engage or disengage an automat.

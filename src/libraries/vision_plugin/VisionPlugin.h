@@ -10,7 +10,7 @@
 #ifndef plugins_vision_VisionPlugin_h
 #define plugins_vision_VisionPlugin_h
 
-#include "dispatcher/Plugin_ABC.h"
+#include "dispatcher/PluginContainer.h"
 #include <boost/scoped_ptr.hpp>
 #include <map>
 
@@ -57,15 +57,13 @@ namespace vision
 */
 // Created: MCO 2013-08-21
 // =============================================================================
-class VisionPlugin : public dispatcher::Plugin_ABC
+class VisionPlugin : public dispatcher::PluginContainer
 {
 public:
              VisionPlugin( const dispatcher::Model_ABC& model, tools::MessageDispatcher_ABC& dispatcher,
                            dispatcher::SimulationPublisher_ABC& simulation, dispatcher::AuthenticatedLinkResolver_ABC& resolver );
     virtual ~VisionPlugin();
 
-    virtual bool Filter( const sword::SimToClient& message ) const;
-    virtual void Receive( const sword::SimToClient& message );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& publisher, const std::string& link, bool uncounted );
 
 private:
@@ -77,8 +75,11 @@ private:
     bool Validate( dispatcher::ClientPublisher_ABC& publisher, const sword::ControlEnableVisionCones& message, int context, unsigned int client ) const;
     void Register( dispatcher::ClientPublisher_ABC& publisher, const sword::Id& unitId, bool activate );
     void Register( dispatcher::ClientPublisher_ABC& publisher, bool activate );
+    void NotifyFilterChanged();
 
-    void Update();
+    virtual void Update();
+
+    virtual bool ForwardSimToClient( const sword::SimToClient& message );
 
 private:
     const dispatcher::Model_ABC& model_;

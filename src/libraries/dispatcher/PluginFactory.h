@@ -53,6 +53,7 @@ namespace dispatcher
     class CompositeRegistrable;
     class PluginFactory_ABC;
     class Services;
+    class CheckpointFilterPlugin;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -98,10 +99,11 @@ private:
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     boost::shared_ptr< ClientsNetworker > clients_;
-    PluginContainer& handler_;
+    PluginContainer& rootHandler_;
     CompositeRegistrable& registrables_;
     boost::ptr_vector< PluginFactory_ABC > factories_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
+    boost::shared_ptr< CheckpointFilterPlugin > checkpointFilter_;
     boost::shared_ptr< plugins::order::OrderPlugin > pOrder_;
     const Services& services_;
     //@}

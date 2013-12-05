@@ -132,7 +132,7 @@ void MIL_CheckPointManager::Update()
     if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
     const tools::Path name = BuildCheckPointName();
-    if( SaveCheckPoint( name, "" ).empty() )
+    if( SaveCheckPoint( name, "", false, 0, 0 ).empty() )
         RotateCheckPoints( name );
     nLastCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
@@ -310,9 +310,20 @@ struct CheckpointGuard: boost::noncopyable
 } // namespace
 
 std::string MIL_CheckPointManager::SaveCheckPoint( const tools::Path& checkpointName,
-        const tools::Path& userName )
+        const tools::Path& userName, bool sendState, unsigned int clientId,
+        unsigned int ctx )
 {
     CheckpointGuard guard( checkpointName );
+    if( sendState )
+    {
+        MT_LOG_INFO_MSG( "Sending simulation state" );
+        client::ControlSendCurrentStateBegin()
+            .Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
+        MIL_AgentServer::GetWorkspace().SendStateToNewClient();
+        client::ControlSendCurrentStateEnd()
+            .Send( NET_Publisher_ABC::Publisher(), ctx, clientId );
+        MT_LOG_INFO_MSG( "Simulation state sent" );
+    }
     MIL_Config& cfg = MIL_AgentServer::GetWorkspace().GetConfig();
     cfg.BuildCheckpointChildFile( "", checkpointName ).CreateDirectories();
     const std::string orbatErr = SaveOrbatCheckPoint( checkpointName );
@@ -342,7 +353,8 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow(
                     ", spaces and underscores are allowed" );
             checkpointName = userName;
         }
-        const std::string err = SaveCheckPoint( checkpointName, userName );
+        const std::string err = SaveCheckPoint( checkpointName, userName,
+                msg.send_state(), clientId, ctx );
         if( !err.empty() )
             ack().set_error_msg( err );
         ack().set_name( checkpointName.ToUTF8() );

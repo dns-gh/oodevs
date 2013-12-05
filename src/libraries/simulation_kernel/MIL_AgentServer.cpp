@@ -118,6 +118,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , pObjectFactory_       ( new MIL_ObjectFactory() )
     , pathfindTime_         ( 0 )
+    , updateState_          ( false )
 {
     MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
@@ -136,6 +137,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
     {
+        updateState_ = !config_.GetPausedAtStartup();
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
         pEntityManager_->Synchronize();
     }
@@ -260,7 +262,13 @@ void MIL_AgentServer::OnTimer()
     nSimTime_ += nTimeStepDuration_;
     nRealTime_ += nTimeStepDuration_;
     lastStep_ = clock();
-    MainSimLoop();
+    if( updateState_ )
+        MainSimLoop();
+    else
+    {
+        updateState_ = true;
+        Wait();
+    }
     ++nCurrentTimeStep_;
     if( config_.GetEndTick() && nCurrentTimeStep_ > config_.GetEndTick() )
         nSimState_ = eSimStopped;
