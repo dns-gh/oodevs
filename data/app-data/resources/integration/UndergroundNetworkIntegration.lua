@@ -32,6 +32,7 @@ integration.DisableUndergroundNetwork = function( self )
 end
 
 integration.StartPassThroughUndergroundNetwork = function( exitIssue )
+    integration.setStealth( true ) -- when entering into the network, the agent is hidden.
     exitIssue[myself] = exitIssue[myself] or {}
     exitIssue[myself].actionPassThrough = DEC_StartTraverserReseauSouterrain( exitIssue.source )
     actionCallbacks[ exitIssue[myself].actionPassThrough ] = function( arg ) exitIssue[myself].actionPassThroughState = arg end
@@ -53,6 +54,7 @@ integration.UpdatePassThroughUndergroundNetwork = function( exitIssue )
     end
 end
 integration.StopPassThroughUndergroundNetwork = function( exitIssue )
+    integration.setStealth( false ) -- the agent is no more hidden.
     exitIssue[myself] = exitIssue[myself] or {}
     exitIssue[myself].actionPassThrough = DEC__StopAction( exitIssue[myself].actionPassThrough )
     exitIssue[myself].actionPassThroughState = nil
