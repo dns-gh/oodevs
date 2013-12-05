@@ -23,7 +23,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IndirectFire::IndirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
     : Fire_ABC( resolver.Get( message.firing_unit().id() ) )
-    , id_( message.fire().id() )
     , target_( converter.ConvertToXY( message.target().position() ) )
 {
     if( !message.target().has_position() )
@@ -51,6 +50,5 @@ void IndirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC
             glLineWidth( 3.f );
             tools.DrawCurvedArrow( where, target_, 0.2f, 10.f );
         glPopAttrib();
-
     }
 }

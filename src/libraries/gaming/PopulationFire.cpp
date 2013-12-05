@@ -20,7 +20,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationFire::PopulationFire( const sword::StartCrowdFire& message, const tools::Resolver_ABC< Population_ABC >& resolver )
     : Fire_ABC( resolver.Get( message.firing_crowd().id() ) )
-    , id_( message.fire().id() )
 {
     // NOTHING
 }

@@ -42,19 +42,6 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationFire( const PopulationFire& );            //!< Copy constructor
-    PopulationFire& operator=( const PopulationFire& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    unsigned int id_;
-    //@}
 };
 
 #endif // __PopulationFire_h_

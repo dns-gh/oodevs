@@ -47,7 +47,6 @@ public:
 private:
     //! @name Member data
     //@{
-    unsigned int id_;
     geometry::Point2f target_;
     //@}
 };

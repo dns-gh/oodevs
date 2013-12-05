@@ -50,10 +50,9 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
-    unsigned int id_;
     geometry::Point2f position_;
     bool isTarget_;
     kernel::Controller& controller_;

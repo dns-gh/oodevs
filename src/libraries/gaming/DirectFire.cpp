@@ -27,7 +27,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
-    , id_( message.fire().id() )
     , isTarget_( false )
     , controller_( controller )
 {
@@ -44,14 +43,13 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
 
     const Positions* position = 0;
     if( isTarget_ )
-        position = agentResolver.Get( message.firing_unit().id() ).Retrieve< Positions >();
+        position = GetOrigin().Retrieve< Positions >();
     else
     {
         if( message.target().has_crowd() && target->GetTypeName() == PopulationFlow_ABC::typeName_ )
         {
             const PopulationFlow_ABC* populationFlow = static_cast< const PopulationFlow_ABC* >( target );
-            const Entity_ABC* firer = agentResolver.Find( message.firing_unit().id() );
-            const Positions* firerPosition = ( firer ) ? firer->Retrieve< Positions >() : 0;
+            const Positions* firerPosition = GetOrigin().Retrieve< Positions >();
             if( firerPosition )
                 position_ = populationFlow->GetNearestPosition( firerPosition->GetPosition() );
         }
