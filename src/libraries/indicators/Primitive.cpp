@@ -58,7 +58,7 @@ Primitive::~Primitive()
 // -----------------------------------------------------------------------------
 void Primitive::ReadParameter( xml::xistream& xis )
 {
-    parameters_.push_back( boost::make_shared< PrimitiveParameter >( xis, types_ ) );
+    parameters_.push_back( new PrimitiveParameter( xis, types_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +95,8 @@ QString Primitive::GetPrototype() const
 QString Primitive::BuildParameterList() const
 {
     std::vector< std::string > list;
-    BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        list.push_back( parameter->GetName().toStdString() ); // $$$$ ABR 2012-08-14: Do NOT use .toStdString() here or it will crash
+    BOOST_FOREACH( const auto& parameter, parameters_ )
+        list.push_back( parameter.GetName().toStdString() ); // $$$$ ABR 2012-08-14: Do NOT use .toStdString() here or it will crash
     return list.empty() ? "" : ( " " + boost::join( list, ", " ) + " " ).c_str();
 }
 
@@ -133,6 +133,6 @@ boost::shared_ptr< Element_ABC > Primitive::Instanciate( const std::string& inpu
     auto resolver = boost::make_shared< ElementTypeResolver >();
     auto element = boost::make_shared< Function >( input, name_, category_, types_.Instanciate( type_, resolver ) );
     BOOST_FOREACH( const auto& parameter, parameters_ )
-        parameter->Declare( *element, resolver );
+        parameter.Declare( *element, resolver );
     return element;
 }
