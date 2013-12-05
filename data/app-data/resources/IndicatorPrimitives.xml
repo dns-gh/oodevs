@@ -1,576 +1,630 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
 <primitives>
-    <primitive category="extract" name="operational-state" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit operational state, in the interval [0,1].]]></comment>
-			<comment lang="fr"><![CDATA[Etat opérationnel de l'unité, dans un intervalle de [0,1].]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="force-ratio" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns 1 if unit's force ratio is of specified types.]]></comment>
-			<comment lang="fr"><![CDATA[Renvoie 1 si le rapport de force de l'unité est parmi les types spécifiés.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-	    <parameters>
-            <parameter name="types" type="list(force-ratio-type)" attribute="types"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="direct-fire-power" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit direct-fire power.]]></comment>
-			<comment lang="fr"><![CDATA[Puissance de tir direct de l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="indirect-fire-power" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit indirect-fire power.]]></comment>
-			<comment lang="fr"><![CDATA[Puissance de tir indirect de l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="close-combat-power" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit close-combat power.]]></comment>
-			<comment lang="fr"><![CDATA[Puissance de l'unité en combat rapproché.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="engineering-power" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit engineering power.]]></comment>
-			<comment lang="fr"><![CDATA[Puissance de Génie de l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="position" type="list(key,position)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit position.]]></comment>
-			<comment lang="fr"><![CDATA[Position de l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="resources" type="list(key,resources)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of specified resources.]]></comment>
-			<comment lang="fr"><![CDATA[Dotations des ressources spécifiées.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="resources" type="list(resource-type)" attribute="resources"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="equipments" type="list(key,equipments)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of specified equipments into specified states.]]></comment>
-			<comment lang="fr"><![CDATA[Nombre d'équipements spécifiés dans les états spécifiés.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="equipments" type="list(equipment-type)" attribute="equipments"/>
-            <parameter name="states" type="list(equipment-state)" attribute="states"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="humans" type="list(key,humans)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of personel into specified states.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité de personnes dans l'état spécifié.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
-            <parameter name="states" type="list(human-state)" attribute="states"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="populations" type="list(key,populations)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of population into specified states.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité des populations dans les états spécifiés.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="states" type="list(population-state)" attribute="states"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="crowd-states" type="list(key,crowds)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of crowd into specified states.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité de foules dans l'état spécifié.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="states" type="list(crowd-state)" attribute="states"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="satisfactions" type="list(key,satisfaction-states)">
-		<comments>
-        	<comment lang="en"><![CDATA[Satisfaction values into specified types.]]></comment>
-			<comment lang="fr"><![CDATA[Valeurs de satisfactions dans l'état spécifié.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="types" type="list(satisfaction-type)" attribute="type"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="population-in-selected-blocks" type="list(key,populations)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of population into specified urban blocks.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité de populations dans les blocs urbains spécifiés.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="blocks" type="list(urban-block)" attribute="blocks"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="infrastructures-functional-states" type="list(key,structural-states)">
-		<comments>
-        	<comment lang="en"><![CDATA[Functional state values of urban blocks.]]></comment>
-			<comment lang="fr"><![CDATA[Valeurs des états fonctionnels des blocs urbains]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="resource-networks-functional-states" type="list(key,functional-states)">
-		<comments>
-        	<comment lang="en"><![CDATA[Functional state values of the resource networks in urban blocks.]]></comment>
-			<comment lang="fr"><![CDATA[Valeurs des états fonctionnels des réseaux de ressources dans les blocs urbains.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="stocks" type="list(key,resources)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of stocks with ressources of specified types.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité de stocks ayant les types de ressource spécifiés.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-		<parameters>
-            <parameter name="resources" type="list(resource-type)" attribute="types"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="ambulances" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of available ambulances of specified types.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité d'ambulances disponibles du type spécifié.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-		<parameters>
-            <parameter name="ambulance-types" type="list(ambulance-type)" attribute="types"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="maintenances" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of available maintenance vehicule into specified type.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité de véhicules de maintenance disponibles dans le type spécifié.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-		<parameters>
-            <parameter name="maintenance-types" type="list(maintenance-type)" attribute="types"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="waiting-for-medical" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Number of wounded waiting for medical in units.]]></comment>
-			<comment lang="fr"><![CDATA[Nombre de blessés dans les unités en attente de soins médicaux.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="maintenance-handling-unit" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Units carrying maintenance operations.]]></comment>
-			<comment lang="fr"><![CDATA[Unités en cours d'opérations de maintenance.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="direct-fire-unit" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Units firing direct fires.]]></comment>
-			<comment lang="fr"><![CDATA[Unités effectuant des tirs directs.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="indirect-fire-unit" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Units firing indirect fires.]]></comment>
-			<comment lang="fr"><![CDATA[Unités effectuant des tirs indirects]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="direct-fire-targets" type="list(key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Units hit by direct fires.]]></comment>
-			<comment lang="fr"><![CDATA[Unités touchées par tir direct.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="indirect-fire-positions" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Target position of indirect fires]]></comment>
-			<comment lang="fr"><![CDATA[Position des cibles des tirs indirects.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-	<primitive category="extract" name="damage-indirect-fires" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Units that did damages by indirect fires]]></comment>
-			<comment lang="fr"><![CDATA[Unités ayant provoqué des dommages par tir indirect.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>		
-    <primitive category="extract" name="fire-component-damage" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of specified equipments damaged by direct fires by unit.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité d'équipement spécifié endommagés par des tirs directs de l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="equipments" type="list(equipment-type)" attribute="components"/>
-			<parameter name="states" type="list(equipment-state)" attribute="states"/>
-			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
-			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="fire-component-loss" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of specified equipments damaged by direct fires on unit.]]></comment>
-			<comment lang="fr"><![CDATA[Quantité d'équipement spécifié endommagés par des tirs directs sur l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="equipments" type="list(equipment-type)" attribute="components"/>
-			<parameter name="states" type="list(equipment-state)" attribute="states"/>
-			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
-			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="fire-human-damage" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of dead or wound people made by direct fires.]]></comment>
-			<comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par tir direct.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
-			<parameter name="states" type="list(human-state)" attribute="states"/>
-			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
-			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="fire-human-loss" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of dead or wound people made by direct fires on unit.]]></comment>
-			<comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par des tirs directs sur l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
-			<parameter name="states" type="list(human-state)" attribute="states"/>
-			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
-			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
-        </parameters>
-    </primitive>
-	<primitive category="extract" name="fire-human-damages-by-crowd-fires" type="list(key,damage)">
-		<comments>
-        	<comment lang="en"><![CDATA[Amount of dead or wound people made by crowd fires on unit.]]></comment>
-			<comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par des tirs croisés sur l'unité.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
-			<parameter name="states" type="list(human-state)" attribute="states"/>
-			<parameter name="fire-types" type="list(fire-type)" attribute="fire-types"/>
-			<parameter name="fratricide" type="fratricide" attribute="fratricide"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="detecting-unit" type="list(key,key)">
-		<comments>
-        	<comment lang="en"><![CDATA[Whether a specified unit is detected or not with specified perception level(s).]]></comment>
-			<comment lang="fr"><![CDATA[Si l'unité spécifié est détectée ou non par le(s) niveau(x) de perception spécifié(s).]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="detected-unit" type="unit" attribute="detected"/>
-            <parameter name="perception-level" type="list(perception-level)" attribute="visibility"/>
-        </parameters>
-    </primitive>
-    <primitive category="extract" name="mounted" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[Unit mounted state (0: unmounted, 1: mounted)]]></comment>
-			<comment lang="fr"><![CDATA[Etat de montage de l'unité (0: démonté, 1: monté)]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="contaminated" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[The contamination flag at the unit level (0: not contaminated, 1: contaminated)]]></comment>
-			<comment lang="fr"><![CDATA[L'état de contamination de l'unité (0: non contaminé, 1: contaminé)]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="extract" name="nbc-dose" type="list(key,float)">
-		<comments>
-        	<comment lang="en"><![CDATA[The toxic doses absorbed by units]]></comment>
-			<comment lang="fr"><![CDATA[Les doses toxiques absorbées par l'unité]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-    </primitive>
-    <primitive category="transform" name="distance" type="float">
-		<comments>
-        	<comment lang="en"><![CDATA[Computes distance between specified positions.]]></comment>
-			<comment lang="fr"><![CDATA[Calcule les ditances entre les positions spécifiées.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="position1" type="position"/>
-            <parameter name="position2" type="position"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="contains" type="list(bool)">
-		<comments>
-        	<comment lang="en"><![CDATA[Tests if area contains specified position.]]></comment>
-			<comment lang="fr"><![CDATA[Determine si la zone contient la position spécifiée.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="area" type="zone"/>
-            <parameter name="position" type="list(position)"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="filter" type="list(_1)">
-		<comments>
-        	<comment lang="en"><![CDATA[Filters provided elements to keep only input matching 'true' filter entries.]]></comment>
-			<comment lang="fr"><![CDATA[Elements du filtre fournis pour garder seulement ceux qui correspondent aux entrés "vrai" du filtre.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="filter" type="list(bool)"/>
-            <parameter name="elements" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="is-one-of" type="list(bool)">
-		<comments>
-        	<comment lang="en"><![CDATA[Tests if elements are in list.]]></comment>
-			<comment lang="fr"><![CDATA[Détermine si l'élément appartient à la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="needles" type="list(key)"/>
-            <parameter name="haystack" type="list(key)" attribute="select"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="derivate" type="list(_1)">
-		<comments>
-        	<comment lang="en"><![CDATA[Computes difference between current and previous value.]]></comment>
-			<comment lang="fr"><![CDATA[Calcule la différence entre la valeur courante et la précédente.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="value" type="list(_1)"/>
-            <parameter name="period" type="unsigned" attribute="period"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="integrate" type="list(_1)">
-		<comments>
-        	<comment lang="en"><![CDATA[Computes sum between current and previous value.]]></comment>
-			<comment lang="fr"><![CDATA[Calcule la somme entre la valeur courante et la précédente.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="value" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="domain" type="list(_1)">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns selected value for all elements from domain.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la valeur selectionnée pour tous les éléments de du domaine.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="value" type="list(key,_1)"/>
-            <parameter name="domain" type="list(key)" attribute="select"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="compare" type="list(bool)">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns test result.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne les résultats du test.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="test" type="operator" attribute="operator"/>
-            <parameter name="operand1" type="_1"/>
-            <parameter name="operand2" type="_2"/>
-        </parameters>
-    </primitive>
-    <primitive category="transform" name="compose" type="list(key,_1)">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns inner join of inputs (values of 'input 1' matching elements from 'input 2').]]></comment>
-			<comment lang="fr"><![CDATA[Retourne les connections internes des entrées( valeurs de "input 1" corre"spondant à "input 2".]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="input1" type="list(key,_1)"/>
-            <parameter name="input2" type="list(key)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="select" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns input value for selected element.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la valeur d'entrée de l'élément selectionné.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="value" type="list(key,_1)"/>
-            <parameter name="element" type="key" attribute="key"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="count" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns number of elements in list.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne le nombre d'éléments de la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="elements" type="list(key,_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="minimum" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns minimum value from list.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la valeur minimale de la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="values" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="maximum" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns maximum value from list.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la valeur maximale de la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="values" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="sum" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns the sum of values in list.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la somme des éléments de la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="values" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="mean" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns the mean of values in list.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne la moyenne des éléments de la liste.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="values" type="list(_1)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="threshold" type="_2">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns the elements from 'values' which elements from "input" is below than the threshold.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne les éléments de 'values' correspondant aux élements de 'input' inférieurs à leurs seuils définis dans "thresholds".]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="thresholds" type="list(_1)" attribute="thresholds"/>
-            <parameter name="values" type="list(_1)" attribute="values"/>
-            <parameter name="input" type="list(_2)"/>
-        </parameters>
-    </primitive>
-    <primitive category="reduce" name="product" type="_1">
-		<comments>
-        	<comment lang="en"><![CDATA[Returns the product of parameters.]]></comment>
-			<comment lang="fr"><![CDATA[Retourne le produit des paramètres.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="input1" type="list(_1)"/>
-            <parameter name="input2" type="list(_2)"/>
-        </parameters>
-    </primitive>
-    <!-- results -->
-    <primitive category="result" name="indicator" type="float">
-		<comments>
-        	<comment lang="en"><![CDATA[Use the formula as an indicator with given name.]]></comment>
-			<comment lang="fr"><![CDATA[Utilise la formule comme indicateur avec le nom donné.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="name" type="string" attribute="name"/>
-            <parameter name="input" type="_1"/>
-        </parameters>
-    </primitive>
-    <primitive category="result" name="plot" type="float">
-		<comments>
-        	<comment lang="en"><![CDATA[Plots the formula value as a graph.]]></comment>
-			<comment lang="fr"><![CDATA[Affiche la représentation de la formule dans un graphe.]]></comment>
-			<comment lang="es"></comment>
-			<comment lang="ar"></comment>
-		</comments>
-        <parameters>
-            <parameter name="input" type="_1"/>
-        </parameters>
-    </primitive>
+  <primitive category="extract" name="operational-state" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit operational state, in the interval [0,1].]]></comment>
+      <comment lang="fr"><![CDATA[Etat opérationnel de l'unité, dans un intervalle de [0,1].]]></comment>
+      <comment lang="es"><![CDATA[Estado operacional de la unidad, intervalo [0,1].]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Estado operacional da unidade, intervalo [0,1].]]></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="force-ratio" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Returns 1 if unit's force ratio is of specified types.]]></comment>
+      <comment lang="fr"><![CDATA[Renvoie 1 si le rapport de force de l'unité est parmi les types spécifiés.]]></comment>
+      <comment lang="es"><![CDATA[Retorna 1 si la relación de fuerza de la unidad es de los  tipos especificados]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Retorna 1 se a taxa de força da unidade é de tipos especificados.]]></comment>
+    </comments>
+    <parameters>
+      <parameter name="types" type="list(force-ratio-type)" attribute="types" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="direct-fire-power" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit direct-fire power.]]></comment>
+      <comment lang="fr"><![CDATA[Puissance de tir direct de l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Potencia de fuego directo de la unidad]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Poder de fogo direto da unidade.]]></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="indirect-fire-power" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit indirect-fire power.]]></comment>
+      <comment lang="fr"><![CDATA[Puissance de tir indirect de l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Potencia de fuego indirecto de la unidad.]]></comment>
+      <comment lang="pt"><![CDATA[Poder de fogo indireto da unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="close-combat-power" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit close-combat power.]]></comment>
+      <comment lang="fr"><![CDATA[Puissance de l'unité en combat rapproché.]]></comment>
+      <comment lang="es"><![CDATA[Potencia de combate cercano de la unidad]]></comment>
+      <comment lang="pt"><![CDATA[Poder de combate aproximado da unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="engineering-power" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit engineering power.]]></comment>
+      <comment lang="fr"><![CDATA[Puissance de Génie de l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Capacidad de ingeniería de la unidad]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Capacidade de Engenharia da unidade]]></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="position" type="list(key,position)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit position.]]></comment>
+      <comment lang="fr"><![CDATA[Position de l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Posición de la unidad.]]></comment>
+      <comment lang="pt"><![CDATA[Posição da unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="resources" type="list(key,resources)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of specified resources.]]></comment>
+      <comment lang="fr"><![CDATA[Dotations des ressources spécifiées.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de recursos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Quantidade de recurso especificado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="resources" type="list(resource-type)" attribute="resources" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="equipments" type="list(key,equipments)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of specified equipments into specified states.]]></comment>
+      <comment lang="fr"><![CDATA[Nombre d'équipements spécifiés dans les états spécifiés.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de equipos especificados en el estado especificado.]]></comment>
+      <comment lang="pt"><![CDATA[Quantidade de equipamentos especificados no estado especificado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="equipments" type="list(equipment-type)" attribute="equipments" />
+      <parameter name="states" type="list(equipment-state)" attribute="states" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="humans" type="list(key,humans)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of personel into specified states.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité de personnes dans l'état spécifié.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de personal en los estados especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Número de pessoal nos estados especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="ranks" type="list(human-rank)" attribute="ranks" />
+      <parameter name="states" type="list(human-state)" attribute="states" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="populations" type="list(key,populations)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of population into specified states.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité des populations dans les états spécifiés.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de población en los estados especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Número de população nos estados especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="states" type="list(population-state)" attribute="states" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="crowd-states" type="list(key,crowds)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of crowd into specified states.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité de foules dans l'état spécifié.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de muchedumbre en los estados especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Número de multidão nos estados especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="states" type="list(crowd-state)" attribute="states" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="satisfactions" type="list(key,satisfaction-states)">
+    <comments>
+      <comment lang="en"><![CDATA[Satisfaction values into specified types.]]></comment>
+      <comment lang="fr"><![CDATA[Valeurs de satisfactions dans l'état spécifié.]]></comment>
+      <comment lang="es"><![CDATA[Valores de satisfacción en los tipos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Valores de satisfação entre os tipos especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="types" type="list(satisfaction-type)" attribute="type" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="population-in-selected-blocks" type="list(key,populations)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of population into specified urban blocks.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité de populations dans les blocs urbains spécifiés.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de población en los bloques urbanos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Número de população em blocos urbanos especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="blocks" type="list(urban-block)" attribute="blocks" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="infrastructures-functional-states" type="list(key,structural-states)">
+    <comments>
+      <comment lang="en"><![CDATA[Functional state values of urban blocks.]]></comment>
+      <comment lang="fr"><![CDATA[Valeurs des états fonctionnels des blocs urbains]]></comment>
+      <comment lang="es"><![CDATA[Valores de estados funcionales de bloques urbanos]]></comment>
+      <comment lang="pt"><![CDATA[Valores dos estados funcionais do blocos urbanos]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="resource-networks-functional-states" type="list(key,functional-states)">
+    <comments>
+      <comment lang="en"><![CDATA[Functional state values of the resource networks in urban blocks.]]></comment>
+      <comment lang="fr"><![CDATA[Valeurs des états fonctionnels des réseaux de ressources dans les blocs urbains.]]></comment>
+      <comment lang="es"><![CDATA[Valores de estados funcionales de la red de recursos en bloques urbanos.]]></comment>
+      <comment lang="pt"><![CDATA[Valores dos estados funcionais da rede dos recursos de blocos urbanos.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="stocks" type="list(key,resources)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of stocks with ressources of specified types.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité de stocks ayant les types de ressource spécifiés.]]></comment>
+      <comment lang="es"><![CDATA[Stock de los recursos de los tipos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Estoque dos recursos dos tipos especificados.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="resources" type="list(resource-type)" attribute="types" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="ambulances" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of available ambulances of specified types.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité d'ambulances disponibles du type spécifié.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de ambulancias disponibles de los tipos especificados.]]></comment>
+      <comment lang="pt"><![CDATA[Quantidade de ambulâncias disponíveis do tipo especificado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="ambulance-types" type="list(ambulance-type)" attribute="types" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="maintenances" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of available maintenance vehicule into specified type.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité de véhicules de maintenance disponibles dans le type spécifié.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de vehículos de mantenimiento disponibles del tipo especificado.]]></comment>
+      <comment lang="pt"><![CDATA[Número de veículos de manutenção disponível do tipo especificado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="maintenance-types" type="list(maintenance-type)" attribute="types" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="waiting-for-medical" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Number of wounded waiting for medical in units.]]></comment>
+      <comment lang="fr"><![CDATA[Nombre de blessés dans les unités en attente de soins médicaux.]]></comment>
+      <comment lang="es"><![CDATA[Número de heridos esperando en ls unidades por atención médica.]]></comment>
+      <comment lang="pt"><![CDATA[Número de feridos em unidades aguardando atendimento médico.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="maintenance-handling-unit" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Units carrying maintenance operations.]]></comment>
+      <comment lang="fr"><![CDATA[Unités en cours d'opérations de maintenance.]]></comment>
+      <comment lang="es"><![CDATA[Unidades realizando operaciones de mantenimiento.]]></comment>
+      <comment lang="pt"><![CDATA[Unidades fazendo operaçoes de manutenção.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="direct-fire-unit" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Units firing direct fires.]]></comment>
+      <comment lang="fr"><![CDATA[Unités effectuant des tirs directs.]]></comment>
+      <comment lang="es"><![CDATA[Unidades disparando fuegos directos.]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Unidades disparando fogos diretos.]]></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="indirect-fire-unit" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Units firing indirect fires.]]></comment>
+      <comment lang="fr"><![CDATA[Unités effectuant des tirs indirects]]></comment>
+      <comment lang="es"><![CDATA[Unidades disparando fuegos indirectos]]></comment>
+      <comment lang="ar"></comment>
+      <comment lang="pt"><![CDATA[Unidades disparando fogos indiretos.]]></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="direct-fire-targets" type="list(key)">
+    <comments>
+      <comment lang="en"><![CDATA[Units hit by direct fires.]]></comment>
+      <comment lang="fr"><![CDATA[Unités touchées par tir direct.]]></comment>
+      <comment lang="es">Unidades alcanzadas por fuegos directos</comment>
+      <comment lang="pt">Unidades atingidas por fogos diretos.</comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="indirect-fire-positions" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Target position of indirect fires]]></comment>
+      <comment lang="fr"><![CDATA[Position des cibles des tirs indirects.]]></comment>
+      <comment lang="es"><![CDATA[Posicion de los blancos de fuegos indirectos.]]></comment>
+      <comment lang="pt"><![CDATA[Posição do alvo de fogos indiretos]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="damage-indirect-fires" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Units that did damages by indirect fires]]></comment>
+      <comment lang="fr"><![CDATA[Unités ayant provoqué des dommages par tir indirect.]]></comment>
+      <comment lang="es"><![CDATA[Unidades que provocaron daños mediante fuego indirecto]]></comment>
+      <comment lang="pt"><![CDATA[Unidades de ter causado danos pelo fogo indireto.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="fire-component-damage" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of specified equipments damaged by direct fires by unit.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité d'équipement spécifié endommagés par des tirs directs de l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de equipos especificados dañados por fuegos directos de la unidad.]]></comment>
+      <comment lang="pt"><![CDATA[Quantidade de equipamentos danificados por fogo directo da unidade especificada.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="equipments" type="list(equipment-type)" attribute="components" />
+      <parameter name="states" type="list(equipment-state)" attribute="states" />
+      <parameter name="fire-types" type="list(fire-type)" attribute="fire-types" />
+      <parameter name="fratricide" type="fratricide" attribute="fratricide" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="fire-component-loss" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of specified equipments damaged by direct fires on unit.]]></comment>
+      <comment lang="fr"><![CDATA[Quantité d'équipement spécifié endommagés par des tirs directs sur l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de equipos especificados dañados por fuego directo sobre la unidad]]></comment>
+      <comment lang="pt"><![CDATA[Quantidade de equipamentos danificados por impactos de fogo directos na unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="equipments" type="list(equipment-type)" attribute="components" />
+      <parameter name="states" type="list(equipment-state)" attribute="states" />
+      <parameter name="fire-types" type="list(fire-type)" attribute="fire-types" />
+      <parameter name="fratricide" type="fratricide" attribute="fratricide" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="fire-human-damage" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of dead or wound people made by direct fires.]]></comment>
+      <comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par tir direct.]]></comment>
+      <comment lang="es"><![CDATA[Número de personas muertas o heridas producto de fuego directo.]]></comment>
+      <comment lang="pt"><![CDATA[Número de pessoas mortas ou feridas por fogo direto.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="ranks" type="list(human-rank)" attribute="ranks" />
+      <parameter name="states" type="list(human-state)" attribute="states" />
+      <parameter name="fire-types" type="list(fire-type)" attribute="fire-types" />
+      <parameter name="fratricide" type="fratricide" attribute="fratricide" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="fire-human-loss" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of dead or wound people made by direct fires on unit.]]></comment>
+      <comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par des tirs directs sur l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de bajas producto de fuego directo en la unidad.]]></comment>
+      <comment lang="pt"><![CDATA[Número de vítimas de fogo direto na unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="ranks" type="list(human-rank)" attribute="ranks" />
+      <parameter name="states" type="list(human-state)" attribute="states" />
+      <parameter name="fire-types" type="list(fire-type)" attribute="fire-types" />
+      <parameter name="fratricide" type="fratricide" attribute="fratricide" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="fire-human-damages-by-crowd-fires" type="list(key,damage)">
+    <comments>
+      <comment lang="en"><![CDATA[Amount of dead or wound people made by crowd fires on unit.]]></comment>
+      <comment lang="fr"><![CDATA[Nombre de personnes mortes ou blessées par des tirs croisés sur l'unité.]]></comment>
+      <comment lang="es"><![CDATA[Cantidad de bajas por fuego de muchedumbre sobre la unidad]]></comment>
+      <comment lang="pt"><![CDATA[Número de baixas  pelos fogos de multidão na unidade.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="ranks" type="list(human-rank)" attribute="ranks" />
+      <parameter name="states" type="list(human-state)" attribute="states" />
+      <parameter name="fire-types" type="list(fire-type)" attribute="fire-types" />
+      <parameter name="fratricide" type="fratricide" attribute="fratricide" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="detecting-unit" type="list(key,key)">
+    <comments>
+      <comment lang="en"><![CDATA[Whether a specified unit is detected or not with specified perception level(s).]]></comment>
+      <comment lang="fr"><![CDATA[Si l'unité spécifié est détectée ou non par le(s) niveau(x) de perception spécifié(s).]]></comment>
+      <comment lang="es"><![CDATA[Si la unidad es detectada o no con los niveles depercepción especificados]]></comment>
+      <comment lang="pt"><![CDATA[Se for detectada uma unidade especificada ou não com o nível de percepção especificado (s).]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="detected-unit" type="unit" attribute="detected" />
+      <parameter name="perception-level" type="list(perception-level)" attribute="visibility" />
+    </parameters>
+  </primitive>
+  <primitive category="extract" name="mounted" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[Unit mounted state (0: unmounted, 1: mounted)]]></comment>
+      <comment lang="fr"><![CDATA[Etat de montage de l'unité (0: démonté, 1: monté)]]></comment>
+      <comment lang="es"><![CDATA[Embarcado ( 0: desembarcado, 1: embarcado)]]></comment>
+      <comment lang="pt"><![CDATA[Embarcado ( 0: desembarcado, 1: embarcado)]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="contaminated" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[The contamination flag at the unit level (0: not contaminated, 1: contaminated)]]></comment>
+      <comment lang="fr"><![CDATA[L'état de contamination de l'unité (0: non contaminé, 1: contaminé)]]></comment>
+      <comment lang="es"><![CDATA[Estado de contaminación de la unidad ( 0: no contamido, 1: contaminado)]]></comment>
+      <comment lang="pt"><![CDATA[O estado de contaminação da unidade (0: não contaminada 1: contaminada)]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="extract" name="nbc-dose" type="list(key,float)">
+    <comments>
+      <comment lang="en"><![CDATA[The toxic doses absorbed by units]]></comment>
+      <comment lang="fr"><![CDATA[Les doses toxiques absorbées par l'unité]]></comment>
+      <comment lang="es"><![CDATA[Dosis tóxicas absorvidas por las unidades]]></comment>
+      <comment lang="pt"><![CDATA[As doses tóxicas absorvidas pela unidade]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+  </primitive>
+  <primitive category="transform" name="distance" type="float">
+    <comments>
+      <comment lang="en"><![CDATA[Computes distance between specified positions.]]></comment>
+      <comment lang="fr"><![CDATA[Calcule les ditances entre les positions spécifiées.]]></comment>
+      <comment lang="es"><![CDATA[Calcula la distancia entre posiciones especificadas.]]></comment>
+      <comment lang="pt"><![CDATA[Calcula a distância entre as posições especificadas.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="position1" type="position" />
+      <parameter name="position2" type="position" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="contains" type="list(bool)">
+    <comments>
+      <comment lang="en"><![CDATA[Tests if area contains specified position.]]></comment>
+      <comment lang="fr"><![CDATA[Determine si la zone contient la position spécifiée.]]></comment>
+      <comment lang="es"><![CDATA[Determina si el área contiene la posición especificada.]]></comment>
+      <comment lang="pt"><![CDATA[Determina se o campo contém a posição especificada.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="area" type="zone" />
+      <parameter name="position" type="list(position)" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="filter" type="list(_1)">
+    <comments>
+      <comment lang="en"><![CDATA[Filters provided elements to keep only input matching 'true' filter entries.]]></comment>
+      <comment lang="fr"><![CDATA[Elements du filtre fournis pour garder seulement ceux qui correspondent aux entrés "vrai" du filtre.]]></comment>
+      <comment lang="es"><![CDATA[Elementos de los filtros provistos para mantener sólamente las entradas del filtro que corresponde al valor "verdadero"]]></comment>
+      <comment lang="pt"><![CDATA[Elementos do filtro fornecido para manter apenas aqueles que correspondem ao filtro "verdadeiro".]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="filter" type="list(bool)" />
+      <parameter name="elements" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="is-one-of" type="list(bool)">
+    <comments>
+      <comment lang="en"><![CDATA[Tests if elements are in list.]]></comment>
+      <comment lang="fr"><![CDATA[Détermine si l'élément appartient à la liste.]]></comment>
+      <comment lang="es"><![CDATA[Comprueba si los elementos estan en la lista.]]></comment>
+      <comment lang="pt"><![CDATA[Determina se o elemento pertence à lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="needles" type="list(key)" />
+      <parameter name="haystack" type="list(key)" attribute="select" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="derivate" type="list(_1)">
+    <comments>
+      <comment lang="en"><![CDATA[Computes difference between current and previous value.]]></comment>
+      <comment lang="fr"><![CDATA[Calcule la différence entre la valeur courante et la précédente.]]></comment>
+      <comment lang="es"><![CDATA[Calcula la diferencia entre el valor actual y el previo.]]></comment>
+      <comment lang="pt"><![CDATA[Calcula a diferença entre o valor actual e a anterior.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="value" type="list(_1)" />
+      <parameter name="period" type="unsigned" attribute="period" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="integrate" type="list(_1)">
+    <comments>
+      <comment lang="en"><![CDATA[Computes sum between current and previous value.]]></comment>
+      <comment lang="fr"><![CDATA[Calcule la somme entre la valeur courante et la précédente.]]></comment>
+      <comment lang="es"><![CDATA[Calcula la suma entre el valor actual y el valor previo.]]></comment>
+      <comment lang="pt"><![CDATA[Calcula a soma entre o valor atual eo anterior.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="value" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="domain" type="list(_1)">
+    <comments>
+      <comment lang="en"><![CDATA[Returns selected value for all elements from domain.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la valeur selectionnée pour tous les éléments de du domaine.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el valor seleccionado para todos los elementos del dominio.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o valor selecionado para todos os elementos do domínio.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="value" type="list(key,_1)" />
+      <parameter name="domain" type="list(key)" attribute="select" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="compare" type="list(bool)">
+    <comments>
+      <comment lang="en"><![CDATA[Returns test result.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne les résultats du test.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve los resultado de prueba.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna os resultados do teste.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="test" type="operator" attribute="operator" />
+      <parameter name="operand1" type="_1" />
+      <parameter name="operand2" type="_2" />
+    </parameters>
+  </primitive>
+  <primitive category="transform" name="compose" type="list(key,_1)">
+    <comments>
+      <comment lang="en"><![CDATA[Returns inner join of inputs (values of 'input 1' matching elements from 'input 2').]]></comment>
+      <comment lang="fr"><![CDATA[Retourne les connections internes des entrées( valeurs de "input 1" corre"spondant à "input 2").]]></comment>
+      <comment lang="es"><![CDATA[Retorna las conexiones internas de las entradas (valores de 'input 1' que corresponden a las de 'input2').]]></comment>
+      <comment lang="pt"><![CDATA[Retorna as ligações internas das entradas (valores de "input 1" correspondente a "input 2").]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="input1" type="list(key,_1)" />
+      <parameter name="input2" type="list(key)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="select" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns input value for selected element.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la valeur d'entrée de l'élément selectionné.]]></comment>
+      <comment lang="es"><![CDATA[Retorna el valor de entrada para el elemento seleccionado]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o valor de entrada do elemento selecionado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="value" type="list(key,_1)" />
+      <parameter name="element" type="key" attribute="key" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="count" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns number of elements in list.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne le nombre d'éléments de la liste.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el número de elementos en la lista.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o número de elementos na lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="elements" type="list(key,_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="minimum" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns minimum value from list.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la valeur minimale de la liste.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el menor valor de la lista]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o valor mínimo na lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="values" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="maximum" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns maximum value from list.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la valeur maximale de la liste.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el valor máximo de la lista.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o valor máximo da lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="values" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="sum" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the sum of values in list.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la somme des éléments de la liste.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve la suma de valores en la lista.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna a soma dos valores na lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="values" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="mean" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the mean of values in list.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne la moyenne des éléments de la liste.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el promedio de los valores en la lista.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna a média dos elementos da lista.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="values" type="list(_1)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="threshold" type="_2">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the elements from 'values' which elements from "input" is below than the threshold.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne les éléments de 'values' correspondant aux élements de 'input' inférieurs à leurs seuils définis dans "thresholds".]]></comment>
+      <comment lang="es"><![CDATA[Devuelve los elementos de 'values' que corresponden a elementos en 'input' que están por debajo del valor 'threshold'.]]></comment>
+      <comment lang="pt"><![CDATA[Retorna os elementos de "values" que correspondem a elementos de 'input' abaixo dos limites definidos em "thresholds".]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="thresholds" type="list(_1)" attribute="thresholds" />
+      <parameter name="values" type="list(_1)" attribute="values" />
+      <parameter name="input" type="list(_2)" />
+    </parameters>
+  </primitive>
+  <primitive category="reduce" name="product" type="_1">
+    <comments>
+      <comment lang="en"><![CDATA[Returns the product of parameters.]]></comment>
+      <comment lang="fr"><![CDATA[Retourne le produit des paramètres.]]></comment>
+      <comment lang="es"><![CDATA[Devuelve el producto de los prámetros]]></comment>
+      <comment lang="pt"><![CDATA[Retorna o produto dos parâmetros.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="input1" type="list(_1)" />
+      <parameter name="input2" type="list(_2)" />
+    </parameters>
+  </primitive>
+  <!-- results -->
+  <primitive category="result" name="indicator" type="float">
+    <comments>
+      <comment lang="en"><![CDATA[Use the formula as an indicator with given name.]]></comment>
+      <comment lang="fr"><![CDATA[Utilise la formule comme indicateur avec le nom donné.]]></comment>
+      <comment lang="es"><![CDATA[Usar la fórmula como indicador con el nombre dado.]]></comment>
+      <comment lang="pt"><![CDATA[Utilize a fórmula como um indicador com o nome dado.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="name" type="string" attribute="name" />
+      <parameter name="input" type="_1" />
+    </parameters>
+  </primitive>
+  <primitive category="result" name="plot" type="float">
+    <comments>
+      <comment lang="en"><![CDATA[Plots the formula value as a graph.]]></comment>
+      <comment lang="fr"><![CDATA[Affiche la représentation de la formule dans un graphe.]]></comment>
+      <comment lang="es"><![CDATA[Graficar los valores de la fórmula.]]></comment>
+      <comment lang="pt"><![CDATA[Mostra a representação da fórmula num gráfico.]]></comment>
+      <comment lang="ar"></comment>
+    </comments>
+    <parameters>
+      <parameter name="input" type="_1" />
+    </parameters>
+  </primitive>
 </primitives>

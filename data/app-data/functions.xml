@@ -1,1124 +1,964 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <functions>
   <function name="Operational state">
     <descriptions>
-      <description name="Operational state" lang="en">
-        <![CDATA[Operational state of the selected unit]]>
-      </description>
-      <description name="Etat op�rationnel" lang="fr">
-        <![CDATA[Etat op�rationnel de l'unit� s�lectionn�e]]>
-      </description>
+      <description name="Operational state" lang="en"><![CDATA[Operational state of the selected unit]]></description>
+      <description name="Etat opérationnel" lang="fr"><![CDATA[Etat opérationnel de l'unité sélectionnée]]></description>
+      <description name="Estado operacional" lang="es"><![CDATA[Estado operacional de la unidad seleccionada]]></description>
+      <description name="Estado operacional" lang="pt"><![CDATA[Estado operacional da unidade selecionada]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Unit" type="unit"/>
+      <parameter name="Unit" type="unit" />
     </parameters>
     <indicator>
-      <extract function='operational-states' id='1'/>
-      <reduce function='select' type='float' input='1' key='${Unit}' id='2'/>
-      <result function='plot' type='float' input='2'/>
+      <extract function="operational-states" id="1" />
+      <reduce function="select" type="float" input="1" key="${Unit}" id="2" />
+      <result function="plot" type="float" input="2" />
     </indicator>
   </function>
-  
   <function name="Mean operational state">
     <descriptions>
-      <description name="Mean operational state" lang="en">
-        <![CDATA[Mean operational state of the selected units]]>
-      </description>
-      <description name="Etat op�rationnel moyen" lang="fr">
-        <![CDATA[Etat op�rationnel moyen des unit�s s�lectionn�es]]>
-      </description>
+      <description name="Mean operational state" lang="en"><![CDATA[Mean operational state of the selected units]]></description>
+      <description name="Etat opérationnel moyen" lang="fr"><![CDATA[Etat opérationnel moyen des unités sélectionnées]]></description>
+      <description name="Estado operacional promedio" lang="es"><![CDATA[Estado operacional promedio de las unidades seleccionadas]]></description>
+      <description name="Estado operacional médio" lang="pt"><![CDATA[Estado operacional médio das unidades selecionadas]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='operational-states' id='1'/>
-      <transform function='domain' type='float' select='${Units}' input='1' id='2'/>
-      <reduce function='mean' type='float' input='2' id='3'/>
-      <result function='plot' type='float' input='3'/>
+      <extract function="operational-states" id="1" />
+      <transform function="domain" type="float" select="${Units}" input="1" id="2" />
+      <reduce function="mean" type="float" input="2" id="3" />
+      <result function="plot" type="float" input="3" />
     </indicator>
   </function>
-  
   <function name="Distance between units">
     <descriptions>
-      <description name="Distance between units" lang="en">
-        <![CDATA[Distance between the selected units]]>
-      </description>
-      <description name="Distance entre les unit�s" lang="fr">
-        <![CDATA[Distance entre les unit�s s�lectionn�es]]>
-      </description>
+      <description name="Distance between units" lang="en"><![CDATA[Distance between the selected units]]></description>
+      <description name="Distance entre les unités" lang="fr"><![CDATA[Distance entre les unités sélectionnées]]></description>
+      <description name="Distancia entre unidades" lang="es"><![CDATA[Distancia entre las unidades seleccionadas]]></description>
+      <description name="Distância entre as unidades" lang="pt"><![CDATA[Distância entre as unidades selecionadas]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Unit 1" type="unit"/>
-      <parameter name="Unit 2" type="unit"/>
+      <parameter name="Unit 1" type="unit" />
+      <parameter name="Unit 2" type="unit" />
     </parameters>
     <indicator>
-      <extract function='position' id='1'/>
-      <reduce function='select' type='position' input='1' key='${Unit 1}' id='2'/>
-      <reduce function='select' type='position' input='1' key='${Unit 2}' id='3'/>
-      <transform function='distance' input='2,3' id='4'/>
-      <result function='plot' type='float' input='4'/>
+      <extract function="position" id="1" />
+      <reduce function="select" type="position" input="1" key="${Unit 1}" id="2" />
+      <reduce function="select" type="position" input="1" key="${Unit 2}" id="3" />
+      <transform function="distance" input="2,3" id="4" />
+      <result function="plot" type="float" input="4" />
     </indicator>
   </function>
-  
   <function name="Number of direct fires">
     <descriptions>
-      <description name="Number of direct fires" lang="en">
-        <![CDATA[Number of simultaneous direct fires on the theater.]]>
-      </description>
-      <description name="Nombre de tirs directs" lang="fr">
-        <![CDATA[Nombre de tirs directs simultan�s sur le th�atre des op�rations.]]>
-      </description>
+      <description name="Number of direct fires" lang="en"><![CDATA[Number of simultaneous direct fires on the theater.]]></description>
+      <description name="Nombre de tirs directs" lang="fr"><![CDATA[Nombre de tirs directs simultanés sur le théatre des opérations.]]></description>
+      <description name="Número de fuegos directos" lang="es"><![CDATA[Número de fuegos directos simultáneos en el teatro de operaciones]]></description>
+      <description name="Número de fogos diretos" lang="pt"><![CDATA[Número de fogos diretos simultâneos no teatro de operações]]></description>
     </descriptions>
-    <parameters/>
+    <parameters />
     <indicator>
-      <extract function='direct-fire-units' id='fires'/>
-      <reduce type='unsigned long' function='count' input='fires' id='count'/>
-      <result function='plot' type='unsigned' input='count'/>
+      <extract function="direct-fire-units" id="fires" />
+      <reduce type="unsigned long" function="count" input="fires" id="count" />
+      <result function="plot" type="unsigned" input="count" />
     </indicator>
   </function>
-
   <function name="Number of indirect fires">
     <descriptions>
-      <description name="Number of indirect fires" lang="en">
-        <![CDATA[Number of simultaneous indirect fires on the theater.]]>
-      </description>
-      <description name="Nombre de tirs indirects" lang="fr">
-        <![CDATA[Nombre de tirs indirects simultan�s sur le th�atre des op�rations.]]>
-      </description>
+      <description name="Number of indirect fires" lang="en"><![CDATA[Number of simultaneous indirect fires on the theater.]]></description>
+      <description name="Nombre de tirs indirects" lang="fr"><![CDATA[Nombre de tirs indirects simultanés sur le théatre des opérations.]]></description>
+      <description name="Número de fuegos indirectos" lang="es"><![CDATA[Número de fuegos indirectos simultáneos sobre el teatro de operaciones.]]></description>
+      <description name="Número de fogos indiretos" lang="pt"><![CDATA[Número de fogos indiretos simultâneos no teatro de operações]]></description>
     </descriptions>
-    <parameters/>
+    <parameters />
     <indicator>
-      <extract function='indirect-fire-units' id='fires'/>
-      <reduce type='unsigned long' function='count' input='fires' id='count'/>
-      <result function='plot' type='unsigned' input='count'/>
+      <extract function="indirect-fire-units" id="fires" />
+      <reduce type="unsigned long" function="count" input="fires" id="count" />
+      <result function="plot" type="unsigned" input="count" />
     </indicator>
-  </function>  
-  
+  </function>
   <function name="Total resources for units">
     <descriptions>
-      <description name="Total resources for units" lang="en">
-        <![CDATA[Total number of resources for the selected units.]]>
-      </description>
-      <description name="Ressources totales par unit�s" lang="fr">
-        <![CDATA[Nombre total de ressources pour une liste d'unit�s.]]>
-      </description>
+      <description name="Total resources for units" lang="en"><![CDATA[Total number of resources for the selected units.]]></description>
+      <description name="Ressources totales par unités" lang="fr"><![CDATA[Nombre total de ressources pour une liste d'unités.]]></description>
+      <description name="Total de recursos de la unidades" lang="es"><![CDATA[Número total de recursos de las unidades seleccionadas]]></description>
+      <description name="Total de recursos das unidades" lang="pt"><![CDATA[Número total de recursos para as unidades selecionadas.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Dotations' type='dotation list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Dotations" type="dotation list" />
     </parameters>
     <indicator>
-        <extract function='resources' id='1' dotations='${Dotations}'/>
-        <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-        <reduce type='int' function='sum' input='2' id='3'/>
-        <result function='plot' input='3' type='int'/>
+      <extract function="resources" id="1" dotations="${Dotations}" />
+      <transform function="domain" type="int" select="${Units}" input="1" id="2" />
+      <reduce type="int" function="sum" input="2" id="3" />
+      <result function="plot" input="3" type="int" />
     </indicator>
-    </function>
-	
+  </function>
   <function name="Resource consumptions for units">
     <descriptions>
-      <description name="Resource consumptions for units" lang="en">
-        <![CDATA[Resources consumptions for the selected units.]]>
-    </description>
-      <description name="Ressources consomm�es par les unit�s" lang="fr">
-        <![CDATA[Consomation de resources pour les unit�s selectionn�es.]]>
-      </description>
+      <description name="Resource consumptions for units" lang="en"><![CDATA[Resources consumptions for the selected units.]]></description>
+      <description name="Ressources consommées par les unités" lang="fr"><![CDATA[Consomation de resources pour les unités selectionnées.]]></description>
+      <description name="Recursos consumidos por las unidades" lang="es"><![CDATA[Consumo de recursos de las unidades seleccionadas.]]></description>
+      <description name="Consumo de recursos das unidades" lang="pt"><![CDATA[Consumo de recursos das unidades selecionadas]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Dotations' type='dotation list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Dotations" type="dotation list" />
     </parameters>
     <indicator>
-        <extract function='resources' id='resources' dotations='${Dotations}'/>
-        <transform type='int' function='derivate' input='resources' id='resources-var'/>
-        <constant type='int' value='0' id='zero'/>
-        <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>
-        <transform function='filter' type='int' input='test,resources-var' id='consumptions'/>
-        <transform function='domain' type='int' select='${Units}' input='consumptions' id='domained'/>
-        <reduce type='int' function='sum' input='domained' id='sum'/>
-        <transform function='integrate' id='total' input='sum' type='int'/>
-        <constant type='int' value='-1' id='minus'/>
-        <reduce type='int' function='product' input='minus,total' id='final'/>
-        <result function='plot' input='final' type='int'/>
+      <extract function="resources" id="resources" dotations="${Dotations}" />
+      <transform type="int" function="derivate" input="resources" id="resources-var" />
+      <constant type="int" value="0" id="zero" />
+      <transform function="compare" type="bool" operator="less" input="resources-var,zero" id="test" />
+      <transform function="filter" type="int" input="test,resources-var" id="consumptions" />
+      <transform function="domain" type="int" select="${Units}" input="consumptions" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <transform function="integrate" id="total" input="sum" type="int" />
+      <constant type="int" value="-1" id="minus" />
+      <reduce type="int" function="product" input="minus,total" id="final" />
+      <result function="plot" input="final" type="int" />
     </indicator>
   </function>
-
   <function name="Humans killed">
-  <descriptions>
-      <description name="Humans killed" lang="en">
-        <![CDATA[Humans killed in a unit list.]]>
-      </description>
-        <description name="Personnel d�c�d�" lang="fr">
-          <![CDATA[Personnel d�c�d� pour une liste d'unit�s.]]>
-        </description>
-      </descriptions>
+    <descriptions>
+      <description name="Humans killed" lang="en"><![CDATA[Humans killed in a unit list.]]></description>
+      <description name="Personnel décédé" lang="fr"><![CDATA[Personnel décédé pour une liste d'unités.]]></description>
+      <description name="Efectivos muertos" lang="es"><![CDATA[Efectivos muertos de la lista de unidades]]></description>
+      <description name="Efetivos mortos" lang="pt"><![CDATA[Efetivos mortos na lista de unidades]]></description>
+    </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='dead' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="dead" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Operational humans">
     <descriptions>
-      <description name="Operational humans" lang="en">
-        <![CDATA[Operational humans for a unit list.]]>
-      </description>
-      <description name="Personnel disponible" lang="fr">
-        <![CDATA[Personnel disponible pour une liste d'unit�s.]]>
-      </description>
+      <description name="Operational humans" lang="en"><![CDATA[Operational humans for a unit list.]]></description>
+      <description name="Personnel disponible" lang="fr"><![CDATA[Personnel disponible pour une liste d'unités.]]></description>
+      <description name="Personal operativo" lang="es"><![CDATA[Personal operativo en la lista de unidades]]></description>
+      <description name="Pessoal disponível" lang="pt"><![CDATA[Pessoal disponível na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='operational' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="operational" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-    </function>
-
+  </function>
   <function name="Injured humans">
     <descriptions>
-      <description name="Injured humans" lang="en">
-        <![CDATA[Injured humans for a unit list.]]>
-      </description>
-      <description name="Personnel bless�" lang="fr">
-        <![CDATA[Personnel bless� pour une liste d'unit�s.]]>
-      </description>
+      <description name="Injured humans" lang="en"><![CDATA[Injured humans for a unit list.]]></description>
+      <description name="Personnel blessé" lang="fr"><![CDATA[Personnel blessé pour une liste d'unités.]]></description>
+      <description name="Personal herido" lang="es"><![CDATA[Personal herido de la lista de unidades.]]></description>
+      <description name="Pessoal ferido" lang="pt"><![CDATA[Pessoal ferido na lista de unidades.]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='wounded' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="wounded" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Injured humans U1">
     <descriptions>
-      <description name="Injured humans U1" lang="en">
-        <![CDATA[Injured humans with U1 level for a unit list.]]>
-      </description>
-      <description name="Personnel bless� U1" lang="fr">
-        <![CDATA[Personnel bless� de niveau U1 pour une liste d'unit�s.]]>
-      </description>
+      <description name="Injured humans U1" lang="en"><![CDATA[Injured humans with U1 level for a unit list.]]></description>
+      <description name="Personnel blessé U1" lang="fr"><![CDATA[Personnel blessé de niveau U1 pour une liste d'unités.]]></description>
+      <description name="Personal de gravedad U1" lang="es"><![CDATA[Personal herido con gravedad U1]]></description>
+      <description name="Pessoal ferido U1" lang="pt"><![CDATA[pessoas gravemente feridas U1]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='wounded-u1' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="wounded-u1" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Injured humans U2">
     <descriptions>
-      <description name="Injured humans U2" lang="en">
-        <![CDATA[Injured humans with U2 level for a unit list.]]>
-      </description>
-      <description name="Personnel bless� U2" lang="fr">
-        <![CDATA[Personnel bless� de niveau U2 pour une liste d'unit�s.]]>
-      </description>
+      <description name="Injured humans U2" lang="en"><![CDATA[Injured humans with U2 level for a unit list.]]></description>
+      <description name="Personnel blessé U2" lang="fr"><![CDATA[Personnel blessé de niveau U2 pour une liste d'unités.]]></description>
+      <description name="Personal de gravedad U2" lang="es"><![CDATA[Personal herido con gravedad U2]]></description>
+      <description name="Pessoal ferido U2" lang="pt"><![CDATA[Pessoal gravemente ferido U2]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='wounded-u2' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="wounded-u2" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Injured humans U3">
     <descriptions>
-      <description name="Injured humans U3" lang="en">
-        <![CDATA[Injured humans with U3 level for a unit list.]]>
-      </description>
-      <description name="Personnel bless� U3" lang="fr">
-        <![CDATA[Personnel bless� de niveau U3 pour une liste d'unit�s.]]>
-      </description>
+      <description name="Injured humans U3" lang="en"><![CDATA[Injured humans with U3 level for a unit list.]]></description>
+      <description name="Personnel blessé U3" lang="fr"><![CDATA[Personnel blessé de niveau U3 pour une liste d'unités.]]></description>
+      <description name="Personal de gravedad U3" lang="es"><![CDATA[Personal herido con gravedad U3]]></description>
+      <description name="Pessoal ferido U3" lang="pt"><![CDATA[Pessoal gravemente ferido U3]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='wounded-u3' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="wounded-u3" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Injured humans UE">
     <descriptions>
-      <description name="Injured humans UE" lang="en">
-        <![CDATA[Injured humans with UE level for a unit list.]]>
-      </description>
-      <description name="Personnel bless� UE" lang="fr">
-        <![CDATA[Personnel bless� de niveau UE pour une liste d'unit�s.]]>
-      </description>
+      <description name="Injured humans UE" lang="en"><![CDATA[Injured humans with UE level for a unit list.]]></description>
+      <description name="Personnel blessé UE" lang="fr"><![CDATA[Personnel blessé de niveau UE pour une liste d'unités.]]></description>
+      <description name="Personal de gravedad UE" lang="es"><![CDATA[Personal herido con gravedad U2]]></description>
+      <description name="Pessoal ferido UE" lang="pt"><![CDATA[Pessoal gravemente ferido UE]]></description>
     </descriptions>
     <parameters>
-      <parameter name="Units" type="unit list"/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='humans' states='wounded-ue' ranks='officer,sub-officer,troopers' id='humans'/>
-      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-      <reduce type='int' function='sum' input='domained' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="humans" states="wounded-ue" ranks="officer,sub-officer,troopers" id="humans" />
+      <transform function="domain" type="int" select="${Units}" input="humans" id="domained" />
+      <reduce type="int" function="sum" input="domained" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Available equipment for units">
     <descriptions>
-      <description name="Available equipment for units" lang="en">
-        <![CDATA[Amount of available equipment for the selected units.]]>
-      </description>
-      <description name="Equipements disponibles par unit�s" lang="fr">
-        <![CDATA[Quantit� d'�quipements en �tat disponible pour une liste d'unit�s.]]>
-      </description>
+      <description name="Available equipment for units" lang="en"><![CDATA[Amount of available equipment for the selected units.]]></description>
+      <description name="Equipements disponibles par unités" lang="fr"><![CDATA[Quantité d'équipements en état disponible pour une liste d'unités.]]></description>
+      <description name="Equipos disponibles en las unidades" lang="es"><![CDATA[Cantidad de equipos disponibles en las unidades seleccionadas]]></description>
+      <description name="Equipamentos disponíveis nas unidades" lang="pt"><![CDATA[Número de equipamentos disponíveis em unidades selecionadas]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='equipments' states='available' id='1' equipments='${Equipment}'/>
-      <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-      <reduce type='int' function='sum' input='2' id='3'/>
-      <result function='plot' input='3' type='int'/>
+      <extract function="equipments" states="available" id="1" equipments="${Equipment}" />
+      <transform function="domain" type="int" select="${Units}" input="1" id="2" />
+      <reduce type="int" function="sum" input="2" id="3" />
+      <result function="plot" input="3" type="int" />
     </indicator>
   </function>
-
   <function name="Destroyed equipment for units">
     <descriptions>
-      <description name="Destroyed equipment for units" lang="en">
-        <![CDATA[Number of destroyed equipment for the unit list.]]>
-      </description>
-      <description name="Equipements d�truits par unit�s" lang="fr">
-        <![CDATA[Quantit� d'�quipements d�truits pour une liste d'unit�s.]]>
-      </description>
+      <description name="Destroyed equipment for units" lang="en"><![CDATA[Number of destroyed equipment for the unit list.]]></description>
+      <description name="Equipements détruits par unités" lang="fr"><![CDATA[Quantité d'équipements détruits pour une liste d'unités.]]></description>
+      <description name="Equipos destruídos en las unidades" lang="es"><![CDATA[Número de equipos destruídos de la lista de unidades ]]></description>
+      <description name="Equipamento destruídos nas unidades" lang="pt"><![CDATA[Número de equipamentos destruídos na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='equipments' states='unavailable' id='1' equipments='${Equipment}'/>
-      <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-      <reduce type='int' function='sum' input='2' id='3'/>
-      <result function='plot' input='3' type='int'/>
+      <extract function="equipments" states="unavailable" id="1" equipments="${Equipment}" />
+      <transform function="domain" type="int" select="${Units}" input="1" id="2" />
+      <reduce type="int" function="sum" input="2" id="3" />
+      <result function="plot" input="3" type="int" />
     </indicator>
-    </function>
-
+  </function>
   <function name="Number of direct fires for units">
     <descriptions>
-      <description name="Number of direct fires for units" lang="en">
-        <![CDATA[Number of simultaneous direct fires for a unit list.]]>
-      </description>
-      <description name="Nombre de tirs directs pour une liste d'unit�s" lang="fr">
-        <![CDATA[Nombre de tirs directs simultan�s pour une liste d'unit�s.]]>
-      </description>
+      <description name="Number of direct fires for units" lang="en"><![CDATA[Number of simultaneous direct fires for a unit list.]]></description>
+      <description name="Nombre de tirs directs pour une liste d'unités" lang="fr"><![CDATA[Nombre de tirs directs simultanés pour une liste d'unités.]]></description>
+      <description name="Número de fuegos directos de las unidades" lang="es"><![CDATA[Número de fuegos diretos simultáneos de la lista de unidades]]></description>
+      <description name="Número de fogos diretos nas unidades" lang="pt"><![CDATA[Número de fogos diretos na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='direct-fire-units' id='fires'/>
-      <transform function='is-one-of' type='unsigned int' select='${Units}' input='fires' id='selected-fires'/>
-      <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='unsigned int' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='unsigned'/>
+      <extract function="direct-fire-units" id="fires" />
+      <transform function="is-one-of" type="unsigned int" select="${Units}" input="fires" id="selected-fires" />
+      <transform function="filter" type="unsigned int" input="selected-fires,fires" id="the-fires" />
+      <reduce type="unsigned int" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="unsigned" />
     </indicator>
   </function>
-  
   <function name="Number of direct fires in zone">
     <descriptions>
-      <description name="Number of direct fires in zone" lang="en">
-        <![CDATA[Number of direct fires within the selected zone.]]>
-      </description>
-      <description name="Nombre de tirs directs dans zone" lang="fr">
-        <![CDATA[Nombre de tirs directs dans la zone d�sign�e.]]>
-      </description>
+      <description name="Number of direct fires in zone" lang="en"><![CDATA[Number of direct fires within the selected zone.]]></description>
+      <description name="Nombre de tirs directs dans zone" lang="fr"><![CDATA[Nombre de tirs directs dans la zone désignée.]]></description>
+      <description name="Número de fuegos directos en la zona" lang="es"><![CDATA[Número de fuegos directos dentro de la zona seleccionada]]></description>
+      <description name="Número de fogos diretos na zona" lang="pt"><![CDATA[Número de fogos diretos na zona selecionada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='direct-fire-targets' id='fires'/>
-      <extract function='positions' id='positions'/>
-      <constant type='zone' value='${Zone}' id='zone'/>
-      <transform function='compose' type='position' input='positions,fires' id='fire-positions'/>
-      <transform function='contains' input='zone,fire-positions' id='selected-fires'/>
-      <transform function='filter' type='float' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='unsigned int' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='float'/>
+      <extract function="direct-fire-targets" id="fires" />
+      <extract function="positions" id="positions" />
+      <constant type="zone" value="${Zone}" id="zone" />
+      <transform function="compose" type="position" input="positions,fires" id="fire-positions" />
+      <transform function="contains" input="zone,fire-positions" id="selected-fires" />
+      <transform function="filter" type="float" input="selected-fires,fires" id="the-fires" />
+      <reduce type="unsigned int" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="float" />
     </indicator>
   </function>
-  
   <function name="Number of indirect fires for units">
     <descriptions>
-      <description name="Number of indirect fires for units" lang="en">
-        <![CDATA[Number of simultaneous indirect fires for a units list.]]>
-      </description>
-      <description name="Nombre de tirs indirects pour une liste d'unit�s" lang="fr">
-        <![CDATA[Nombre de tirs indirects simultan�s pour une liste d'unit�s.]]>
-      </description>
+      <description name="Number of indirect fires for units" lang="en"><![CDATA[Number of simultaneous indirect fires for a units list.]]></description>
+      <description name="Nombre de tirs indirects pour une liste d'unités" lang="fr"><![CDATA[Nombre de tirs indirects simultanés pour une liste d'unités.]]></description>
+      <description name="Número de fuegos indirectos de la unidades" lang="es"><![CDATA[Número de fuegos indirectos simultâneos de la lista de unidades]]></description>
+      <description name="Número de fogos indiretos nas unidades" lang="pt"><![CDATA[Número de fogos indiretos simultaneos na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='indirect-fire-units' id='fires'/>
-      <transform function='is-one-of' type='unsigned int' select='${Units}' input='fires' id='selected-fires'/>
-      <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='unsigned int' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='unsigned'/>
+      <extract function="indirect-fire-units" id="fires" />
+      <transform function="is-one-of" type="unsigned int" select="${Units}" input="fires" id="selected-fires" />
+      <transform function="filter" type="unsigned int" input="selected-fires,fires" id="the-fires" />
+      <reduce type="unsigned int" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="unsigned" />
     </indicator>
   </function>
- 
   <function name="Number of indirect fires in zone">
     <descriptions>
-      <description name="Number of indirect fires in zone" lang="en">
-        <![CDATA[Number of indirect fires by units located within the selected zone.]]>
-      </description>
-      <description name="Nombre de tirs indirects dans zone" lang="fr">
-        <![CDATA[Nombre de tirs indirects dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Number of indirect fires in zone" lang="en"><![CDATA[Number of indirect fires by units located within the selected zone.]]></description>
+      <description name="Nombre de tirs indirects dans zone" lang="fr"><![CDATA[Nombre de tirs indirects dans la zone spécifiée.]]></description>
+      <description name="Número de fuegos indirectos en la zona" lang="es"><![CDATA[Número de fuegos indirectos de las unidades en la zona seleccionada.]]></description>
+      <description name="Número de fogo indiretos na zona" lang="pt"><![CDATA[Número de fogos indiretos das unidades na zona selecionada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='indirect-fire-positions' id='fires'/>
-      <constant type='zone' value='${Zone}' id='zone'/>
-      <transform function='contains' input='zone,fires' id='selected-fires'/>
-      <transform function='filter' type='position' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='position' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='float'/>
+      <extract function="indirect-fire-positions" id="fires" />
+      <constant type="zone" value="${Zone}" id="zone" />
+      <transform function="contains" input="zone,fires" id="selected-fires" />
+      <transform function="filter" type="position" input="selected-fires,fires" id="the-fires" />
+      <reduce type="position" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="float" />
     </indicator>
-  </function> 
-  
+  </function>
   <function name="Available equipment in zone">
     <descriptions>
-      <description name="Available equipment in zone" lang="en">
-        <![CDATA[Amount of available equipment located within the selected zone.]]>
-      </description>
-      <description name="Equipements disponibles dans zone" lang="fr">
-        <![CDATA[Quantit� d'�quipements en �tat disponible dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Available equipment in zone" lang="en"><![CDATA[Amount of available equipment located within the selected zone.]]></description>
+      <description name="Equipements disponibles dans zone" lang="fr"><![CDATA[Quantité d'équipements en état disponible dans la zone spécifiée.]]></description>
+      <description name="Equipos disponibles en la zona" lang="es"><![CDATA[Cantidad de equipos disponibles ubicados en la zona seleccionada]]></description>
+      <description name="Equipamentos disponíveis na área" lang="pt"><![CDATA[Quantidade de equipamentos disponíveis localizado dentro da zona seleccionada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Zone" type="zone" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-        <extract function='equipments' states='available' id='equipments' equipments='${Equipment}'/>
-        <extract function='position' id='positions'/>
-        <constant type='zone' value='${Zone}' id='inputzone'/>
-        <transform function='contains' input='inputzone,positions' id='selected-units'/>
-        <transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>
-        <reduce type='int' function='sum' input='filtered-positions' id='sum'/>
-        <result function='plot' input='sum' type='int'/>
+      <extract function="equipments" states="available" id="equipments" equipments="${Equipment}" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-positions" input="selected-units,equipments" type="int" />
+      <reduce type="int" function="sum" input="filtered-positions" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-    </function>
-
+  </function>
   <function name="Unavailable equipment in zone">
     <descriptions>
-      <description name="Unavailable equipment in zone" lang="en">
-        <![CDATA[Amount of unavailable, repairable, repairing or captured equipment located within the selected zone.]]>
-      </description>
-      <description name="Equipements non disponibles dans zone" lang="fr">
-        <![CDATA[Quantit� d'�quipements en �tat non disponible, r�parable, en r�paration ou captur� dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Unavailable equipment in zone" lang="en"><![CDATA[Amount of unavailable, repairable, repairing or captured equipment located within the selected zone.]]></description>
+      <description name="Equipements non disponibles dans zone" lang="fr"><![CDATA[Quantité d'équipements en état non disponible, réparable, en réparation ou capturé dans la zone spécifiée.]]></description>
+      <description name="Equipos no disponibles en la zona" lang="es"><![CDATA[Equipos no disponibles, reparables, en reparación o capturdos ubicados en la zona seleccionada]]></description>
+      <description name="Equipamentos indisponíveis na zona" lang="pt"><![CDATA[Quantidade de equipamento indisponível, em reparação ou capturados e localizado dentro da zona seleccionada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Zone" type="zone" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-        <extract function='equipments' states='unavailable,repairable,repairing,captured' id='equipments' equipments='${Equipment}'/>
-        <extract function='position' id='positions'/>
-        <constant type='zone' value='${Zone}' id='inputzone'/>
-        <transform function='contains' input='inputzone,positions' id='selected-units'/>
-        <transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>
-        <reduce type='int' function='sum' input='filtered-positions' id='sum'/>
-        <result function='plot' input='sum' type='int'/>
+      <extract function="equipments" states="unavailable,repairable,repairing,captured" id="equipments" equipments="${Equipment}" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-positions" input="selected-units,equipments" type="int" />
+      <reduce type="int" function="sum" input="filtered-positions" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Operational humans in zone">
     <descriptions>
-      <description name="Operational humans in zone" lang="en">
-        <![CDATA[Operational humans for units in selected zone.]]>
-      </description>
-      <description name="Personnel disponible dans zone" lang="fr">
-        <![CDATA[Personnel disponible dans la zone sp�cifi�z.]]>
-      </description>
+      <description name="Operational humans in zone" lang="en"><![CDATA[Operational humans for units in selected zone.]]></description>
+      <description name="Personnel disponible dans zone" lang="fr"><![CDATA[Personnel disponible dans la zone spécifiéz.]]></description>
+      <description name="Personal disponible en la zona" lang="es"><![CDATA[Personal de las unidades disponible en la zona]]></description>
+      <description name="Pessoal disponível na zona" lang="pt"><![CDATA[Pessoal disponível na zona selecionada]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-    </parameters>	 
-	<indicator>
-      <extract function='humans' states='operational' ranks='officer,sub-officer,troopers' id='humans'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='inputzone'/>
-      <transform function='contains' input='inputzone,positions' id='selected-units'/>
-      <transform function='filter' id='filtered-positions' input='selected-units,humans' type='int'/>
-      <reduce type='int' function='sum' input='filtered-positions' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <parameter name="Zone" type="zone" />
+    </parameters>
+    <indicator>
+      <extract function="humans" states="operational" ranks="officer,sub-officer,troopers" id="humans" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-positions" input="selected-units,humans" type="int" />
+      <reduce type="int" function="sum" input="filtered-positions" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Humans killed by direct fires">
     <descriptions>
-      <description name="Humans killed by direct fires" lang="en">
-        <![CDATA[Humans killed by direct fires.]]>
-      </description>
-      <description name="Pertes humaines par tirs directs" lang="fr">
-        <![CDATA[Pertes humaines par tirs directs.]]>
-      </description>
+      <description name="Humans killed by direct fires" lang="en"><![CDATA[Humans killed by direct fires.]]></description>
+      <description name="Pertes humaines par tirs directs" lang="fr"><![CDATA[Pertes humaines par tirs directs.]]></description>
+      <description name="Personas muertas por fuego directo" lang="es"><![CDATA[Humanos muertos por fuego directo]]></description>
+      <description name="Humanos mortos pelo fogo directo" lang="pt"><![CDATA[Humanos mortos pelo fogo directo]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-    </parameters>	 
+      <parameter name="Units" type="unit list" />
+    </parameters>
     <indicator>
-      <extract function='fire-human-loss' id='damages' fire-types='direct' ranks='officer,sub-officer,troopers' states='dead'/>
-      <transform function='domain' type='int' select='${Units}' input='damages' id='domained-damages'/>
-      <reduce type='int' function='sum' input='domained-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-human-loss" id="damages" fire-types="direct" ranks="officer,sub-officer,troopers" states="dead" />
+      <transform function="domain" type="int" select="${Units}" input="damages" id="domained-damages" />
+      <reduce type="int" function="sum" input="domained-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Humans killed by direct fires in zone">
     <descriptions>
-      <description name="Humans killed by direct fires in zone" lang="en">
-        <![CDATA[Humans killed by direct fires in selected zone.]]>
-      </description>
-      <description name="Pertes humaines par tirs directs dans zone" lang="fr">
-        <![CDATA[Pertes humaines par tirs directs dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Humans killed by direct fires in zone" lang="en"><![CDATA[Humans killed by direct fires in selected zone.]]></description>
+      <description name="Pertes humaines par tirs directs dans zone" lang="fr"><![CDATA[Pertes humaines par tirs directs dans la zone spécifiée.]]></description>
+      <description name="Personas muertas por fuego directo en zona" lang="es"><![CDATA[Humanos muertos por fuego directo en la zona seleccionada]]></description>
+      <description name="Humanos mortos pelo fogo directo na area" lang="pt"><![CDATA[Humanos mortos pelo fogo directo na area selecionada]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-    </parameters>	 
+      <parameter name="Zone" type="zone" />
+    </parameters>
     <indicator>
-      <extract function='fire-human-loss' id='damages' fire-types='direct' states='dead'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-human-loss" id="damages" fire-types="direct" states="dead" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
   <function name="Humans killed by direct friendly fires">
     <descriptions>
-      <description name="Humans killed by direct friendly fires" lang="en">
-        <![CDATA[Humans killed by direct friendly fires.]]>
-      </description>
-      <description name="Pertes humaines par tirs directs fratricides" lang="fr">
-        <![CDATA[Pertes humaines par tirs directs fratricides.]]>
-      </description>
+      <description name="Humans killed by direct friendly fires" lang="en"><![CDATA[Humans killed by direct friendly fires.]]></description>
+      <description name="Pertes humaines par tirs directs fratricides" lang="fr"><![CDATA[Pertes humaines par tirs directs fratricides.]]></description>
+      <description name="Humanos muertos por fuego directo amigo" lang="es"><![CDATA[Humanos muertos por fuego directo amigo.]]></description>
+      <description name="Humanos mortos pelo fogo directo amigo" lang="pt"><![CDATA[Humanos mortos pelo fogo directo amigo.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-    </parameters>	 
+      <parameter name="Units" type="unit list" />
+    </parameters>
     <indicator>
-      <extract function='fire-human-loss' id='damages' fire-types='direct' fratricide='true' states='dead'/>
-      <transform function='domain' type='int' select='${Units}' input='damages' id='domained-damages'/>
-      <reduce type='float' function='sum' input='domained-damages' id='sum'/>
-      <result function='plot' input='sum' type='float'/>
+      <extract function="fire-human-loss" id="damages" fire-types="direct" fratricide="true" states="dead" />
+      <transform function="domain" type="int" select="${Units}" input="damages" id="domained-damages" />
+      <reduce type="float" function="sum" input="domained-damages" id="sum" />
+      <result function="plot" input="sum" type="float" />
     </indicator>
-  </function>  
-  
+  </function>
   <function name="Unavailable equipment for units">
     <descriptions>
-      <description name="Unavailable equipment for units" lang="en">
-        <![CDATA[Amount of unavailable, repairable, repairing or captured equipment for the selected units.]]>
-      </description>
-      <description name="Equipements indisponibles par unit�s" lang="fr">
-        <![CDATA[Nombre d'�quipements en �tat non disponible, r�parable, en r�paration ou captur� pour une liste d'unit�s.]]>
-      </description>
+      <description name="Unavailable equipment for units" lang="en"><![CDATA[Amount of unavailable, repairable, repairing or captured equipment for the selected units.]]></description>
+      <description name="Equipements indisponibles par unités" lang="fr"><![CDATA[Nombre d'équipements en état non disponible, réparable, en réparation ou capturé pour une liste d'unités.]]></description>
+      <description name="Equipo no disponible en las unidades" lang="es"><![CDATA[Cantidad de equipos no disponibles, reparables, en reparación o capturados de las unidades seleccionadas]]></description>
+      <description name="Equipe não disponível em unidades" lang="pt"><![CDATA[Quantidade de equipamento não disponível, reparáveis​​, reparos ou capturados em unidades selecionadas.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='equipments' states='unavailable,repairable,repairing,captured' id='1' equipments='${Equipment}'/>
-      <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-      <reduce type='int' function='sum' input='2' id='3'/>
-      <result function='plot' input='3' type='int'/>
+      <extract function="equipments" states="unavailable,repairable,repairing,captured" id="1" equipments="${Equipment}" />
+      <transform function="domain" type="int" select="${Units}" input="1" id="2" />
+      <reduce type="int" function="sum" input="2" id="3" />
+      <result function="plot" input="3" type="int" />
     </indicator>
   </function>
-
   <function name="Available evacuation ambulance">
     <descriptions>
-      <description name="Available evacuation ambulance" lang="en">
-        <![CDATA[Number of available evacuation ambulance.]]>
-      </description>
-      <description name="Ambulances d'�vacuation disponibles" lang="fr">
-        <![CDATA[Nombre d'ambulances d'�vacuation disponibles.]]>
-      </description>
+      <description name="Available evacuation ambulance" lang="en"><![CDATA[Number of available evacuation ambulance.]]></description>
+      <description name="Ambulances d'évacuation disponibles" lang="fr"><![CDATA[Nombre d'ambulances d'évacuation disponibles.]]></description>
+      <description name="Ambulancias de evacuación disponibles" lang="es"><![CDATA[Número de ambulancias de evacuación disponibles.]]></description>
+      <description name="Ambulâncias de evacuação disponíveis." lang="pt"><![CDATA[Quantidade de Ambulâncias de evacuação disponíveis.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='ambulances' types='releve' id='ambulances'/>
-      <transform function='domain' type='int' select='${Units}' input='ambulances' id='domained-ambulances'/>
-      <reduce type='int' function='sum' input='domained-ambulances' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="ambulances" types="releve" id="ambulances" />
+      <transform function="domain" type="int" select="${Units}" input="ambulances" id="domained-ambulances" />
+      <reduce type="int" function="sum" input="domained-ambulances" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-
- <function name="Available haulers and mechanics">
+  <function name="Available haulers and mechanics">
     <descriptions>
-      <description name="Available haulers and mechanics" lang="en">
-        <![CDATA[Number of available haulers and mechanics.]]>
-      </description>
-      <description name="Remorqueurs et v�hicules de r�paration disponibles" lang="fr">
-        <![CDATA[Nombre de remorqueurs et v�hicules de r�paration disponibles.]]>
-      </description>
+      <description name="Available haulers and mechanics" lang="en"><![CDATA[Number of available haulers and mechanics.]]></description>
+      <description name="Remorqueurs et véhicules de réparation disponibles" lang="fr"><![CDATA[Nombre de remorqueurs et véhicules de réparation disponibles.]]></description>
+      <description name="Transportes y mecánicos disponibles" lang="es"><![CDATA[Número de transportes y mecánicos disponibles.]]></description>
+      <description name="Transportadores e mecânicos disponíveis" lang="pt"><![CDATA[Número de transportadores e mecânicos disponíveis]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='maintenances' id='maintenance'/>
-      <transform function='domain' type='int' select='${Units}' input='maintenance' id='domained-maintenance'/>
-      <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="maintenances" id="maintenance" />
+      <transform function="domain" type="int" select="${Units}" input="maintenance" id="domained-maintenance" />
+      <reduce type="int" function="sum" input="domained-maintenance" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Available mechanics">
     <descriptions>
-      <description name="Available mechanics" lang="en">
-        <![CDATA[Number of available mechanics.]]>
-      </description>
-      <description name="V�hicules de r�paration disponibles" lang="fr">
-        <![CDATA[Nombre de v�hicules de r�paration disponibles.]]>
-      </description>
+      <description name="Available mechanics" lang="en"><![CDATA[Number of available mechanics.]]></description>
+      <description name="Véhicules de réparation disponibles" lang="fr"><![CDATA[Nombre de véhicules de réparation disponibles.]]></description>
+      <description name="Mecánicos disponibles" lang="es"><![CDATA[Número de mecánicos disponibles]]></description>
+      <description name="Mecânicos disponíveis" lang="pt"><![CDATA[Número de mecânicos disponíveis]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='maintenances' types='repairers' id='maintenance'/>
-      <transform function='domain' type='int' select='${Units}' input='maintenance' id='domained-maintenance'/>
-      <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="maintenances" types="repairers" id="maintenance" />
+      <transform function="domain" type="int" select="${Units}" input="maintenance" id="domained-maintenance" />
+      <reduce type="int" function="sum" input="domained-maintenance" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-	
   <function name="Available haulers">
     <descriptions>
-      <description name="Available haulers" lang="en">
-        <![CDATA[Number of available haulers.]]>
-      </description>
-      <description name="Remorqueurs disponibles" lang="fr">
-        <![CDATA[Nombre de remorqueurs disponibles.]]>
-      </description>
+      <description name="Available haulers" lang="en"><![CDATA[Number of available haulers.]]></description>
+      <description name="Remorqueurs disponibles" lang="fr"><![CDATA[Nombre de remorqueurs disponibles.]]></description>
+      <description name="Transportes disponibles" lang="es"><![CDATA[Número de transportes disponibles]]></description>
+      <description name="Transportadores disponíveis" lang="pt"><![CDATA[Número de transportadores disponíveis]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='maintenances' types='haulers' id='maintenance'/>
-      <transform function='domain' type='int' select='${Units}' input='maintenance' id='domained-maintenance'/>
-      <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="maintenances" types="haulers" id="maintenance" />
+      <transform function="domain" type="int" select="${Units}" input="maintenance" id="domained-maintenance" />
+      <reduce type="int" function="sum" input="domained-maintenance" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Available stocks">
     <descriptions>
-      <description name="Available stocks" lang="en">
-        <![CDATA[Number of available stocks from specified type.]]>
-      </description>
-      <description name="Stocks disponibles" lang="fr">
-        <![CDATA[Quantit� de stocks du type sp�cifi� disponible.]]>
-      </description>
+      <description name="Available stocks" lang="en"><![CDATA[Number of available stocks from specified type.]]></description>
+      <description name="Stocks disponibles" lang="fr"><![CDATA[Quantité de stocks du type spécifié disponible.]]></description>
+      <description name="Stock disponible" lang="es"><![CDATA[Número de stocks disponibles del tipo especificado]]></description>
+      <description name="Estoques disponíveis" lang="pt"><![CDATA[Número de estoques disponíveis do tipo especificado.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-      <parameter name='Dotations' type='dotation list'/>	  
+      <parameter name="Units" type="unit list" />
+      <parameter name="Dotations" type="dotation list" />
     </parameters>
     <indicator>
-      <extract function='stocks' types='${Dotations}' id='stocks'/>
-      <transform function='domain' type='int' select='${Units}' input='stocks' id='domained-stocks'/>
-      <reduce type='int' function='sum' input='domained-stocks' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="stocks" types="${Dotations}" id="stocks" />
+      <transform function="domain" type="int" select="${Units}" input="stocks" id="domained-stocks" />
+      <reduce type="int" function="sum" input="domained-stocks" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>  
- 
+  </function>
   <function name="Wounded waiting for medical attention">
     <descriptions>
-      <description name="Wounded waiting for medical attention" lang="en">
-        <![CDATA[Number of wounded waiting for medical attention.]]>
-      </description>
-      <description name="Personnel en attente de soins" lang="fr">
-        <![CDATA[Nombre de personnel en attente de soins.]]>
-      </description>
+      <description name="Wounded waiting for medical attention" lang="en"><![CDATA[Number of wounded waiting for medical attention.]]></description>
+      <description name="Personnel en attente de soins" lang="fr"><![CDATA[Nombre de personnel en attente de soins.]]></description>
+      <description name="Heridos esperando atención médica" lang="es"><![CDATA[Número de heridos esperando atención médica]]></description>
+      <description name="Feridos esperando por atendimento médico" lang="pt"><![CDATA[Númerio de feridos esperando por atendimiento médico]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='waiting-for-medical' id='wounded'/>
-      <transform function='domain' type='int' select='${Units}' input='wounded' id='domained-wounded'/>
-      <reduce type='int' function='sum' input='domained-wounded' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="waiting-for-medical" id="wounded" />
+      <transform function="domain" type="int" select="${Units}" input="wounded" id="domained-wounded" />
+      <reduce type="int" function="sum" input="domained-wounded" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>   
- 
+  </function>
   <function name="Wounded waiting for medical attention in zone">
     <descriptions>
-      <description name="Wounded waiting for medical attention in zone" lang="en">
-        <![CDATA[Number of wounded waiting for medical attention in selected zone.]]>
-      </description>
-      <description name="Personnel en attente de soins dans zone" lang="fr">
-        <![CDATA[Nombre de personnel en attente de soins dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Wounded waiting for medical attention in zone" lang="en"><![CDATA[Number of wounded waiting for medical attention in selected zone.]]></description>
+      <description name="Personnel en attente de soins dans zone" lang="fr"><![CDATA[Nombre de personnel en attente de soins dans la zone spécifiée.]]></description>
+      <description name="Heridos esperando por atención médica en la zona" lang="es"><![CDATA[Número de heridos esperando por atención médica en la zona]]></description>
+      <description name="Feridos à espera de atendimento médico na zona" lang="pt"><![CDATA[Número de feridos à espera de atendimento médico na zona seleccionada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='waiting-for-medical' id='wounded'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='inputzone'/>
-      <transform function='contains' input='inputzone,positions' id='selected-units'/>
-      <transform function='filter' id='filtered-wounded' input='selected-units,wounded' type='int'/>
-      <reduce type='int' function='sum' input='filtered-wounded' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="waiting-for-medical" id="wounded" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-wounded" input="selected-units,wounded" type="int" />
+      <reduce type="int" function="sum" input="filtered-wounded" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>  
- 
+  </function>
   <function name="Dead people in crowd">
     <descriptions>
-      <description name="Dead people in crowd list" lang="en">
-        <![CDATA[Number of dead people in crowd list.]]>
-      </description>
-      <description name="Personnes d�c�d�es parmi une liste de foules" lang="fr">
-        <![CDATA[Nombre de personnes d�c�d�es parmi une liste de foules.]]>
-      </description>
+      <description name="Dead people in crowd list" lang="en"><![CDATA[Number of dead people in crowd list.]]></description>
+      <description name="Personnes décédées parmi une liste de foules" lang="fr"><![CDATA[Nombre de personnes décédées parmi une liste de foules.]]></description>
+      <description name="Muertos de lista de muchedumbres" lang="es"><![CDATA[Número de muertos de la lista de muchedumbres]]></description>
+      <description name="Pessoas mortas na lista de multidão" lang="pt"><![CDATA[Número de pessoas mortas na lista de multidão]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Crowds' type='crowd list'/>
+      <parameter name="Crowds" type="crowd list" />
     </parameters>
     <indicator>
-      <extract function='crowd-states' states='dead' id='crowds'/>
-	  <transform function='domain' type='int' select='${Crowds}' input='crowds' id='domained-crowds'/>
-      <reduce type='int' function='sum' input='domained-crowds' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="crowd-states" states="dead" id="crowds" />
+      <transform function="domain" type="int" select="${Crowds}" input="crowds" id="domained-crowds" />
+      <reduce type="int" function="sum" input="domained-crowds" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>   
- 
+  </function>
   <function name="Dead people in population">
     <descriptions>
-      <description name="Dead people in population" lang="en">
-        <![CDATA[Number of dead people in population.]]>
-      </description>
-      <description name="Personnes d�c�d�es parmi la population" lang="fr">
-        <![CDATA[Nombre de personnes d�c�d�es parmi la population couvrante.]]>
-      </description>
+      <description name="Dead people in population" lang="en"><![CDATA[Number of dead people in population.]]></description>
+      <description name="Personnes décédées parmi la population" lang="fr"><![CDATA[Nombre de personnes décédées parmi la population couvrante.]]></description>
+      <description name="Muertos en la población" lang="es"><![CDATA[Cantidad de muertes en la población]]></description>
+      <description name="Pessoas mortas na população" lang="pt"><![CDATA[Número de pessoas mortas na população]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Population' type='population list'/>
+      <parameter name="Population" type="population list" />
     </parameters>
     <indicator>
-      <extract function='population-states' states='dead' id='populations'/>
-	  <transform function='domain' type='int' select='${Population}' input='populations' id='domained-populations'/>
-      <reduce type='int' function='sum' input='domained-populations' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="population-states" states="dead" id="populations" />
+      <transform function="domain" type="int" select="${Population}" input="populations" id="domained-populations" />
+      <reduce type="int" function="sum" input="domained-populations" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>   
-  
+  </function>
   <function name="Population health satisfaction">
     <descriptions>
-      <description name="Population health satisfaction" lang="en">
-        <![CDATA[Satisfaction values of population.]]>
-      </description>
-      <description name="Indice de satisfaction de sant� des populations" lang="fr">
-        <![CDATA[Indices de satisfaction de sant� pour les populations couvrantes.]]>
-      </description>
+      <description name="Population health satisfaction" lang="en"><![CDATA[Satisfaction values of population.]]></description>
+      <description name="Indice de satisfaction de santé des populations" lang="fr"><![CDATA[Indices de satisfaction de santé pour les populations couvrantes.]]></description>
+      <description name="Satisfacción de la población con servicio de salud" lang="es"><![CDATA[Valores de satisfacción de la población]]></description>
+      <description name="Satisfação da população com serviços de saúde" lang="pt"><![CDATA[Valores de satisfação de população.]]></description>
     </descriptions>
-    <parameters/>
+    <parameters />
     <indicator>
-      <extract function='satisfactions' type='health' id='populations'/>
-      <reduce type='int' function='sum' input='populations' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="satisfactions" type="health" id="populations" />
+      <reduce type="int" function="sum" input="populations" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function> 
- 
+  </function>
   <function name="Number of people in urban blocks">
     <descriptions>
-      <description name="Number of people in urban blocks" lang="en">
-        <![CDATA[Number of people in a specified list of urban blocks.]]>
-      </description>
-      <description name="Nombre d'occupants dans des blocs urbains" lang="fr">
-        <![CDATA[Nombre d'occupants dans une liste de blocs urbains.]]>
-      </description>
-    </descriptions>
-        <parameters>
-      <parameter name='Urban blocks' type='urban block list'/>
-    </parameters>
-    <indicator>
-      <extract function='population-in-selected-blocks' blocks='${Urban blocks}' id='populations'/>
-      <reduce type='int' function='sum' input='populations' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
-    </indicator>
-  </function>  
- 
- <function name="Functional state of infrastructures">
-    <descriptions>
-      <description name="Functional state of infrastructures" lang="en">
-        <![CDATA[Functional state of infrastructures in urban blocks specified in input.]]>
-      </description>
-      <description name="Etats fonctionnels infrastructures " lang="fr">
-        <![CDATA[Etats fonctionnels des infrastructures des blocs urbains sp�cifi�s en entr�e.]]>
-      </description>
+      <description name="Number of people in urban blocks" lang="en"><![CDATA[Number of people in a specified list of urban blocks.]]></description>
+      <description name="Nombre d'occupants dans des blocs urbains" lang="fr"><![CDATA[Nombre d'occupants dans une liste de blocs urbains.]]></description>
+      <description name="Número de personas en bloques urbanos" lang="es"><![CDATA[Número de personas en los bloques urbanos especificados]]></description>
+      <description name="Número de pessoas em blocos urbanos" lang="pt"><![CDATA[Número de pessoas em uma lista especificada de blocos urbanos.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Urban blocks' type='urban block list'/>
+      <parameter name="Urban blocks" type="urban block list" />
     </parameters>
     <indicator>
-      <extract function='infrastructures-functional-states' id='structural-states'/>
-      <transform function='domain' type='int' select='${Urban blocks}' input='structural-states' id='domained-structural-states'/>	  
-      <reduce type='float' function='mean' input='domained-structural-states' id='mean'/>
-      <result function='plot' input='mean' type='float'/>
+      <extract function="population-in-selected-blocks" blocks="${Urban blocks}" id="populations" />
+      <reduce type="int" function="sum" input="populations" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function> 
- 
+  </function>
+  <function name="Functional state of infrastructures">
+    <descriptions>
+      <description name="Functional state of infrastructures" lang="en"><![CDATA[Functional state of infrastructures in urban blocks specified in input.]]></description>
+      <description name="Etats fonctionnels infrastructures " lang="fr"><![CDATA[Etats fonctionnels des infrastructures des blocs urbains spécifiés en entrée.]]></description>
+      <description name="Estado funcional de las infraestructuras" lang="es"><![CDATA[Estado funcional de las infraestrucutras en los bloques urbanos]]></description>
+      <description name="Estado funcional das infraestruturas" lang="pt"><![CDATA[Estado funcional das infraestruturas em blocos urbanos especificados na entrada.]]></description>
+    </descriptions>
+    <parameters>
+      <parameter name="Urban blocks" type="urban block list" />
+    </parameters>
+    <indicator>
+      <extract function="infrastructures-functional-states" id="structural-states" />
+      <transform function="domain" type="int" select="${Urban blocks}" input="structural-states" id="domained-structural-states" />
+      <reduce type="float" function="mean" input="domained-structural-states" id="mean" />
+      <result function="plot" input="mean" type="float" />
+    </indicator>
+  </function>
   <function name="Equipment lost">
     <descriptions>
-      <description name="Equipment destroyed by direct fire on unit list" lang="en">
-        <![CDATA[Amount of equipment destroyed by direct fires on unit list.]]>
-      </description>
-      <description name="Nombre de composants d�truits sur liste d'unit�s" lang="fr">
-        <![CDATA[Nombre de composants d�truits par tir direct sur une liste d'unit�s.]]>
-      </description>
+      <description name="Equipment destroyed by direct fire on unit list" lang="en"><![CDATA[Amount of equipment destroyed by direct fires on unit list.]]></description>
+      <description name="Nombre de composants détruits sur liste d'unités" lang="fr"><![CDATA[Nombre de composants détruits par tir direct sur une liste d'unités.]]></description>
+      <description name="Equipos destruídos por fuego directo en la lista de unidades" lang="es"><![CDATA[Cantidad de equipos destruidos por fuego directo en la lista de unidades]]></description>
+      <description name="Equipamentos destruídos pelo fogo direto na lista de unidades" lang="pt"><![CDATA[Equipamentos destruídos pelo fogo direto na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>	
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='direct' states='unavailable'/>
-      <transform function='domain' type='int' select='${Units}' input='damages' id='domained-damages'/>
-      <reduce type='float' function='sum' input='domained-damages' id='sum'/>
-      <result function='plot' input='sum' type='float'/>
+      <extract function="fire-component-loss" components="${Equipment}" id="damages" fire-types="direct" states="unavailable" />
+      <transform function="domain" type="int" select="${Units}" input="damages" id="domained-damages" />
+      <reduce type="float" function="sum" input="domained-damages" id="sum" />
+      <result function="plot" input="sum" type="float" />
     </indicator>
-  </function>   
-
+  </function>
   <function name="Equipment lost in zone">
     <descriptions>
-      <description name="Equipment destroyed by direct fire in zone" lang="en">
-        <![CDATA[Amount of equipment destroyed by direct fires in specified zone.]]>
-      </description>
-      <description name="Nombre de composants d�truits dans la zone" lang="fr">
-        <![CDATA[Nombre de composants d�truits par tir direct dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Equipment destroyed by direct fire in zone" lang="en"><![CDATA[Amount of equipment destroyed by direct fires in specified zone.]]></description>
+      <description name="Nombre de composants détruits dans la zone" lang="fr"><![CDATA[Nombre de composants détruits par tir direct dans la zone spécifiée.]]></description>
+      <description name="Equipos destruídos por fuego directo en zona" lang="es"><![CDATA[Cantidad de equipos destruídos por fuego directo en la zona]]></description>
+      <description name="Equipamentos destruídos pelo fogo direto na área" lang="pt"><![CDATA[Quantidade de equipamentos destruídos pelo fogo direto na área]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>	
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Zone" type="zone" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='direct' states='unavailable'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-component-loss" components="${Equipment}" id="damages" fire-types="direct" states="unavailable" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>   
-  
+  </function>
   <function name="Humans killed by crowd fire">
     <descriptions>
-      <description name="Humans killed by crowd fire" lang="en">
-        <![CDATA[Number of human killed by crowd fires on unit list.]]>
-      </description>
-      <description name="Pertes humaines par tirs de foule" lang="fr">
-        <![CDATA[Nombre d'humains tu�s par tirs de foule sur la liste d'unit�s.]]>
-      </description>
+      <description name="Humans killed by crowd fire" lang="en"><![CDATA[Number of human killed by crowd fires on unit list.]]></description>
+      <description name="Pertes humaines par tirs de foule" lang="fr"><![CDATA[Nombre d'humains tués par tirs de foule sur la liste d'unités.]]></description>
+      <description name="Personas muertas por fuego de muchedumbre" lang="es"><![CDATA[Numero de personas asesinadas por fuego de muchedumbre]]></description>
+      <description name="Humanos mortos pelo fogo da multidão" lang="pt"><![CDATA[Número de seres humanos mortos pelo fogo da multidão]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>	
+      <parameter name="Units" type="unit list" />
     </parameters>
-	<indicator>
-      <extract function='fire-human-loss-by-crowd-fire' id='damages' states='dead'/>
-      <transform function='domain' type='int' select='${Units}' input='damages' id='domained-damages'/>
-      <reduce type='int' function='sum' input='domained-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+    <indicator>
+      <extract function="fire-human-loss-by-crowd-fire" id="damages" states="dead" />
+      <transform function="domain" type="int" select="${Units}" input="damages" id="domained-damages" />
+      <reduce type="int" function="sum" input="domained-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>    
-  
+  </function>
   <function name="Humans killed by crowd fire in zone">
     <descriptions>
-      <description name="Humans killed by crowd fire in zone" lang="en">
-        <![CDATA[Number of human killed by crowd fires in specified zone.]]>
-      </description>
-      <description name="Pertes humaines par tir de foule dans une zone" lang="fr">
-        <![CDATA[Nombre d'humains tu�s par tir de foule dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Humans killed by crowd fire in zone" lang="en"><![CDATA[Number of human killed by crowd fires in specified zone.]]></description>
+      <description name="Pertes humaines par tir de foule dans une zone" lang="fr"><![CDATA[Nombre d'humains tués par tir de foule dans la zone spécifiée.]]></description>
+      <description name="Humanos muertos por fuego de muchedumbre en zona" lang="es"><![CDATA[Número de humanos asesinados por fuego de muchedumbre en zona.]]></description>
+      <description name="Humanos mortos pelo fogo de multidão na zona" lang="pt"><![CDATA[Número de humanos mortos pelo fogo de multidão na zona]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>	
-    </parameters>
-	<indicator>
-      <extract function='fire-human-loss-by-crowd-fire' id='damages' states='dead'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='inputzone'/>
-      <transform function='contains' input='inputzone,positions' id='selected-units'/>
-      <transform function='filter' id='filtered-damages' input='selected-units,damages' type='int'/>
-      <reduce type='int' function='sum' input='filtered-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
-    </indicator>
-  </function> 
-  
- <function name="Functional state of resource-networks">
-    <descriptions>
-      <description name="Functional state of resource-networks" lang="en">
-        <![CDATA[Functional state of infrastructures in urban blocks specified in input.]]>
-      </description>
-      <description name="Etats fonctionnels des r�seaux de ressources " lang="fr">
-        <![CDATA[Etats fonctionnels des r�seaux de ressources des blocs urbains sp�cifi�s en entr�e.]]>
-      </description>
-    </descriptions>
-    <parameters>
-      <parameter name='Urban blocks' type='urban block list'/>
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='resource-networks-functional-states' id='functional-states'/>
-      <transform function='domain' type='int' select='${Urban blocks}' input='functional-states' id='domained-functional-states'/>	  
-      <reduce type='float' function='mean' input='domained-functional-states' id='mean'/>
-      <result function='plot' input='mean' type='float'/>
+      <extract function="fire-human-loss-by-crowd-fire" id="damages" states="dead" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-damages" input="selected-units,damages" type="int" />
+      <reduce type="int" function="sum" input="filtered-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function> 
-  
+  </function>
+  <function name="Functional state of resource-networks">
+    <descriptions>
+      <description name="Functional state of resource-networks" lang="en"><![CDATA[Functional state of infrastructures in urban blocks specified in input.]]></description>
+      <description name="Etats fonctionnels des réseaux de ressources " lang="fr"><![CDATA[Etats fonctionnels des réseaux de ressources des blocs urbains spécifiés en entrée.]]></description>
+      <description name="Estado funcional de la red de recursos" lang="es"><![CDATA[Estado funcional de las infraestructuras en los bloques urbanos especificados.]]></description>
+      <description name="Estado funcional da rede de recursos" lang="pt"><![CDATA[Estado funcional dos bloqos urbanos]]></description>
+    </descriptions>
+    <parameters>
+      <parameter name="Urban blocks" type="urban block list" />
+    </parameters>
+    <indicator>
+      <extract function="resource-networks-functional-states" id="functional-states" />
+      <transform function="domain" type="int" select="${Urban blocks}" input="functional-states" id="domained-functional-states" />
+      <reduce type="float" function="mean" input="domained-functional-states" id="mean" />
+      <result function="plot" input="mean" type="float" />
+    </indicator>
+  </function>
   <function name="Number of indirect fires that caused damages for a unit list">
     <descriptions>
-      <description name="Number of indirect fires that caused damages for a unit list" lang="en">
-        <![CDATA[Number of indirect fires that caused damaged for a unit list.]]>
-      </description>
-      <description name="Nombre de tirs indirects ayant caus� des d�g�ts pour une liste d'unit�s" lang="fr">
-        <![CDATA[Nombre de tirs indirects ayant caus� des d�g�ts sur une liste d'unit�s.]]>
-      </description>
+      <description name="Number of indirect fires that caused damages for a unit list" lang="en"><![CDATA[Number of indirect fires that caused damaged for a unit list.]]></description>
+      <description name="Nombre de tirs indirects ayant causé des dégâts pour une liste d'unités" lang="fr"><![CDATA[Nombre de tirs indirects ayant causé des dégâts sur une liste d'unités.]]></description>
+      <description name="Número de fuegos indirectos que causaron daños en la lista de unidades" lang="es"><![CDATA[Número de fuegos indirectos que causaron daños en la lista de unidades]]></description>
+      <description name="Número de fogos indiretos que causou danos na lista de unidades" lang="pt"><![CDATA[Número de fogos indiretos que causou danos na lista de unidades]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='damage-indirect-fires' id='fires'/>
-      <transform function='is-one-of' type='unsigned int' select='${Units}' input='fires' id='selected-fires'/>
-      <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='unsigned int' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='unsigned'/>
+      <extract function="damage-indirect-fires" id="fires" />
+      <transform function="is-one-of" type="unsigned int" select="${Units}" input="fires" id="selected-fires" />
+      <transform function="filter" type="unsigned int" input="selected-fires,fires" id="the-fires" />
+      <reduce type="unsigned int" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="unsigned" />
     </indicator>
-  </function> 
-  
+  </function>
   <function name="Number of indirect fires that caused damages in zone">
     <descriptions>
-      <description name="Number of indirect fires that caused damaged in zone" lang="en">
-        <![CDATA[Number of indirect fires that caused damaged in specified zone.]]>
-      </description>
-      <description name="Nombre de tirs indirects ayant caus� des d�g�ts dans une zone" lang="fr">
-        <![CDATA[Nombre de tirs indirects ayant caus� des d�g�ts dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Number of indirect fires that caused damaged in zone" lang="en"><![CDATA[Number of indirect fires that caused damaged in specified zone.]]></description>
+      <description name="Nombre de tirs indirects ayant causé des dégâts dans une zone" lang="fr"><![CDATA[Nombre de tirs indirects ayant causé des dégâts dans la zone spécifiée.]]></description>
+      <description name="Número de fuegos indirectos que causaron daños en la zona" lang="es"><![CDATA[Número de fuegos indirectos que causaron daños en la zona especificada.]]></description>
+      <description name="Número de fogos indiretos que causou danos na área especificada" lang="pt"><![CDATA[Número de fogos indiretos que causou danos na área especificada]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='damage-indirect-fires' id='fires'/>
-      <extract function='indirect-fire-positions' id='positions'/>
-      <constant type='zone' value='${Zone}' id='inputzone'/>	  
-      <transform function='contains' input='inputzone,positions' id='selected-fires'/>
-      <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>
-      <reduce type='unsigned int' function='count' input='the-fires' id='count'/>
-      <result function='plot' input='count' type='unsigned'/>
+      <extract function="damage-indirect-fires" id="fires" />
+      <extract function="indirect-fire-positions" id="positions" />
+      <constant type="zone" value="${Zone}" id="inputzone" />
+      <transform function="contains" input="inputzone,positions" id="selected-fires" />
+      <transform function="filter" type="unsigned int" input="selected-fires,fires" id="the-fires" />
+      <reduce type="unsigned int" function="count" input="the-fires" id="count" />
+      <result function="plot" input="count" type="unsigned" />
     </indicator>
   </function>
-  
-    <function name="Equipment incapacitated by indirect fires in zone">
+  <function name="Equipment incapacitated by indirect fires in zone">
     <descriptions>
-      <description name="Equipment incapacitated by indirect fire in zone (loss)" lang="en">
-        <![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]>
-      </description>
-      <description name="Nombre de composants indisponibles dans zone (pertes)" lang="fr">
-        <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unit�s.]]>
-      </description>
+      <description name="Equipment incapacitated by indirect fire in zone (loss)" lang="en"><![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]></description>
+      <description name="Nombre de composants indisponibles dans zone (pertes)" lang="fr"><![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]></description>
+      <description name="Equipos no operativos por fuego indirecto en la zona" lang="es"><![CDATA[Cantidad de equipos inoperativos por fuego indirecto en la zona]]></description>
+      <description name="Equipamentos inoperantes por fogo indireto na área" lang="pt"><![CDATA[Quantidad de equipamentos inoperantes por fogo indireto na área]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Zone" type="zone" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-component-loss" components="${Equipment}" id="damages" fire-types="indirect" states="unavailable,repairable" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
-  </function>   
-  
+  </function>
   <function name="Equipment damaged by indirect fires in zone">
     <descriptions>
-      <description name="Equipment incapacitated by indirect fires in zone (damages)" lang="en">
-        <![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]>
-      </description>
-      <description name="Nombre de composants indisponibles par tirs indirects dans zone (d�g�ts)" lang="fr">
-        <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unit�s.]]>
-      </description>
+      <description name="Equipment incapacitated by indirect fires in zone (damages)" lang="en"><![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]></description>
+      <description name="Nombre de composants indisponibles par tirs indirects dans zone (dégâts)" lang="fr"><![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]></description>
+      <description name="Equipo inoperativo por fuego indirecto en zona" lang="es"><![CDATA[Cantidad de equipos inoperativos de la lista de unidades en la zona]]></description>
+      <description name="Equipamentos danificados por fogo indireto na área" lang="pt"><![CDATA[Equipamentos danificados por fogo indireto na área]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-      <parameter name='Equipment' type='equipment list'/>
+      <parameter name="Zone" type="zone" />
+      <parameter name="Equipment" type="equipment list" />
     </parameters>
     <indicator>
-      <extract function='fire-component-damages' components='${Equipment}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
-    </indicator>
-  </function>   
-  
-    <function name="Humans incapacitated by indirect fires in zone">
-    <descriptions>
-      <description name="Humans incapacitated by indirect fires in zone (loss)" lang="en">
-        <![CDATA[Humans incapacitated by indirect fires in zone.]]>
-      </description>
-      <description name="Nombre d'humains invalides par tirs indirects dans zone (pertes)" lang="fr">
-        <![CDATA[Pertes humaines par tirs directs dans zone.]]>
-      </description>
-    </descriptions>
-    <parameters>
-      <parameter name='Zone' type='zone'/>
-    </parameters>	 
-    <indicator>
-      <extract function='fire-human-loss' id='damages' fire-types='indirect' states='dead,wounded_u1,wounded_u2,wounded_u3,wounded_ue'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-component-damages" components="${Equipment}" id="damages" fire-types="indirect" states="unavailable,repairable" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
+  <function name="Humans incapacitated by indirect fires in zone">
+    <descriptions>
+      <description name="Humans incapacitated by indirect fires in zone (loss)" lang="en"><![CDATA[Humans incapacitated by indirect fires in zone.]]></description>
+      <description name="Nombre d'humains invalides par tirs indirects dans zone (pertes)" lang="fr"><![CDATA[Pertes humaines par tirs directs dans zone.]]></description>
+      <description name="Personas discapacitados por fuego indirecto en la zona (pérdida)" lang="es"><![CDATA[Personas discapacitados por fuego indirecto en la zona (pérdida)]]></description>
+      <description name="Seres humanos incapacitados por fogos indiretos na zona" lang="pt"><![CDATA[Seres humanos incapacitados por fogos indiretos na zona]]></description>
+    </descriptions>
+    <parameters>
+      <parameter name="Zone" type="zone" />
+    </parameters>
+    <indicator>
+      <extract function="fire-human-loss" id="damages" fire-types="indirect" states="dead,wounded_u1,wounded_u2,wounded_u3,wounded_ue" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
+    </indicator>
+  </function>
   <function name="Humans incapacitated by crowd fires in zone">
     <descriptions>
-      <description name="Humans incapacitated by crowd fires in zone (loss)" lang="en">
-        <![CDATA[Humans incapacitated by crowd fires in zone.]]>
-      </description>
-      <description name="Nombre d'humains invalides par tirs de foule dans la zone sp�cifi�e (pertes)" lang="fr">
-        <![CDATA[Nombre d'humains invalides par tirs de foule dans la zone sp�cifi�e.]]>
-      </description>
+      <description name="Humans incapacitated by crowd fires in zone (loss)" lang="en"><![CDATA[Humans incapacitated by crowd fires in zone.]]></description>
+      <description name="Nombre d'humains invalides par tirs de foule dans la zone spécifiée (pertes)" lang="fr"><![CDATA[Nombre d'humains invalides par tirs de foule dans la zone spécifiée.]]></description>
+      <description name="Número de personas discapacitadas por fuego de muchedumbre en la zona especificada (pérdidas)" lang="es"><![CDATA[Número de personas discapacitadas por fuego de muchedumbre en la zona especificada]]></description>
+      <description name="Número de seres humanos com deficiência por fogo de multidão na área especificada." lang="pt"><![CDATA[Número de seres humanos com deficiência por fogo de multidão na área especificada.]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Zone' type='zone'/>
-    </parameters>	 
+      <parameter name="Zone" type="zone" />
+    </parameters>
     <indicator>
-      <extract function='fire-human-loss-by-crowd-fires' id='damages' states='dead,wounded_u1,wounded_u2,wounded_u3,wounded_ue'/>
-      <extract function='position' id='positions'/>
-      <constant type='zone' value='${Zone}' id='circle'/>
-      <transform function='contains' input='circle,positions' id='selected-units'/>
-      <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>
-      <reduce type='int' function='sum' input='the-damages' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
+      <extract function="fire-human-loss-by-crowd-fires" id="damages" states="dead,wounded_u1,wounded_u2,wounded_u3,wounded_ue" />
+      <extract function="position" id="positions" />
+      <constant type="zone" value="${Zone}" id="circle" />
+      <transform function="contains" input="circle,positions" id="selected-units" />
+      <transform function="filter" type="float" input="selected-units,damages" id="the-damages" />
+      <reduce type="int" function="sum" input="the-damages" id="sum" />
+      <result function="plot" input="sum" type="int" />
     </indicator>
   </function>
-  
   <function name="Direct fire power">
-  <descriptions>
-      <description name="Direct fire power" lang="en">
-        <![CDATA[Direct fire power for a unit list.]]>
-      </description>
-        <description name="Puissance de feu en tir direct" lang="fr">
-          <![CDATA[Indicateur de puissance en tir direct pour une liste d'unit�s.]]>
-        </description>
-      </descriptions>
+    <descriptions>
+      <description name="Direct fire power" lang="en"><![CDATA[Direct fire power for a unit list.]]></description>
+      <description name="Puissance de feu en tir direct" lang="fr"><![CDATA[Indicateur de puissance en tir direct pour une liste d'unités.]]></description>
+      <description name="Potencia de fuego directo" lang="es"><![CDATA[Potencia de fuego directo para una lista de unidades]]></description>
+      <description name="Poder de fogo direto" lang="pt"><![CDATA[Poder de fogo direto para uma lista de unidades.]]></description>
+    </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='direct-fire-power' id='power'/>
-      <transform function='domain' type='float' select='${Units}' input='power' id='domained'/>
-      <reduce type='float' function='mean' input='domained' id='mean'/>
-      <result function='plot' input='mean' type='float'/>
+      <extract function="direct-fire-power" id="power" />
+      <transform function="domain" type="float" select="${Units}" input="power" id="domained" />
+      <reduce type="float" function="mean" input="domained" id="mean" />
+      <result function="plot" input="mean" type="float" />
     </indicator>
   </function>
-  
   <function name="Direct fire power of units in zone">
-  <descriptions>
-      <description name="Direct fire power for a unit list in zone" lang="en">
-        <![CDATA[Direct fire power for a unit list in zone.]]>
-      </description>
-        <description name="Puissance de feu en tir direct pour une liste d'unit�s dans zone" lang="fr">
-          <![CDATA[Indicateur de puissance en tir direct pour une liste d'unit�s dans zone.]]>
-        </description>
-      </descriptions>
+    <descriptions>
+      <description name="Direct fire power for a unit list in zone" lang="en"><![CDATA[Direct fire power for a unit list in zone.]]></description>
+      <description name="Puissance de feu en tir direct pour une liste d'unités dans zone" lang="fr"><![CDATA[Indicateur de puissance en tir direct pour une liste d'unités dans zone.]]></description>
+      <description name="Potencia de fuego directo de una lista de unidades en la zona" lang="es"><![CDATA[Potencia de fuego directo de una lista de unidades en la zona]]></description>
+      <description name="Poder de fogo directo para uma lista de unidades na área" lang="pt"><![CDATA[Poder de fogo directo para uma lista de unidades na área]]></description>
+    </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
-	  <parameter name='Zone' type='zone'/>
+      <parameter name="Units" type="unit list" />
+      <parameter name="Zone" type="zone" />
     </parameters>
     <indicator>
-      <extract function='direct-fire-power' id='power'/>
-      <extract function='positions' id='positions'/>
-      <constant type='zone' value='${Zone}' id='zone'/>
-	  <transform function='contains' input='zone,positions' id='selected-units'/>
-      <transform function='filter' id='filtered-power' input='selected-units,power' type='int'/>
-      <transform function='domain' type='int' select='${Units}' input='filtered-power' id='domained-power'/>
-	  <reduce type='float' function='sum' input='domained-power' id='sum'/>
-	  <result function='plot' input='sum' type='float'/>
+      <extract function="direct-fire-power" id="power" />
+      <extract function="positions" id="positions" />
+      <constant type="zone" value="${Zone}" id="zone" />
+      <transform function="contains" input="zone,positions" id="selected-units" />
+      <transform function="filter" id="filtered-power" input="selected-units,power" type="int" />
+      <transform function="domain" type="int" select="${Units}" input="filtered-power" id="domained-power" />
+      <reduce type="float" function="sum" input="domained-power" id="sum" />
+      <result function="plot" input="sum" type="float" />
     </indicator>
-  </function>  
-  
+  </function>
   <function name="Number of units in favorable force ratio types for a unit list">
     <descriptions>
-      <description name="Number of units in favorable force ratio types for a unit list" lang="en">
-        <![CDATA[Number of units in favorable force ratio types for a unit list.]]>
-      </description>
-      <description name="Nombre d'unit�s disposant d'un rapport de force favorable" lang="fr">
-        <![CDATA[Nombre d'unit�s disposant d'un rapport de force favorable.]]>
-      </description>
+      <description name="Number of units in favorable force ratio types for a unit list" lang="en"><![CDATA[Number of units in favorable force ratio types for a unit list.]]></description>
+      <description name="Nombre d'unités disposant d'un rapport de force favorable" lang="fr"><![CDATA[Nombre d'unités disposant d'un rapport de force favorable.]]></description>
+      <description name="Número de unidades con relación de fuerza favorable" lang="es"><![CDATA[Número de unidades con relación de fuerza favorable]]></description>
+      <description name="Número de unidades com relação de poder positivo" lang="pt"><![CDATA[Número de unidades com relação de poder positivo]]></description>
     </descriptions>
     <parameters>
-      <parameter name='Units' type='unit list'/>
+      <parameter name="Units" type="unit list" />
     </parameters>
     <indicator>
-      <extract function='force-ratio' id='ratio' types='favorable'/>
-      <transform function='domain' type='int' select='${Units}' input='ratio' id='domained-ratio'/>
-      <reduce type='unsigned int' function='sum' input='domained-ratio' id='sum'/>
-      <result function='plot' input='sum' type='unsigned'/>
+      <extract function="force-ratio" id="ratio" types="favorable" />
+      <transform function="domain" type="int" select="${Units}" input="ratio" id="domained-ratio" />
+      <reduce type="unsigned int" function="sum" input="domained-ratio" id="sum" />
+      <result function="plot" input="sum" type="unsigned" />
     </indicator>
-  </function> 
-  
+  </function>
 </functions>
-
