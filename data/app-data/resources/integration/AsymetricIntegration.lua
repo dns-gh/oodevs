@@ -40,7 +40,9 @@ end
 integration.startAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
     local nbIntervention = 1
-    if suicide then nbIntervention = 10 end -- $$$$ Hard coded value (same as max amout of ammo)
+    if suicide then
+        nbIntervention = DEC_Agent_GetAgentDotation( myself, dotation ) 
+    end 
     meKnowledge:RC( eRC_ExecutionAttentat )
     target[myself].attackAction = DEC_StartTirIndirectSurPosition( dotation, nbIntervention, target:getPosition() )
     actionCallbacks[ target[myself].attackAction ] = function( arg ) target[myself].attackState = arg end
