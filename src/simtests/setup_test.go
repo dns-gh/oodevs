@@ -18,7 +18,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"swapi"
 	"swapi/simu"
 	"testing"
@@ -121,6 +120,12 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 	opts.ExerciseName = exercise
 	opts.SessionName = session
 	opts.CheckpointName = checkpoint
+
+	s, err := simu.ReadSessionFile(opts.GetSessionFile())
+	c.Assert(err, IsNil)
+	s.Paused = paused
+	err = simu.WriteSessionFile(s, opts.GetSessionFile())
+	c.Assert(err, IsNil)
 
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil) // failed to start the simulation
@@ -234,18 +239,10 @@ func readFileAsString(c *C, path string) string {
 }
 
 func makeDiff(before, after string) (string, error) {
-	splitLines := func(s string) []string {
-		lines := []string{}
-		for _, line := range strings.Split(s, "\n") {
-			lines = append(lines, line+"\n")
-		}
-		return lines
-	}
-
 	diff := difflib.UnifiedDiff{
-		A:        splitLines(before),
+		A:        difflib.SplitLines(before),
 		FromFile: "before",
-		B:        splitLines(after),
+		B:        difflib.SplitLines(after),
 		ToFile:   "after",
 		Context:  4,
 	}

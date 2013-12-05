@@ -1200,7 +1200,8 @@ func (c *Client) ListEnabledVisionCones(start uint32, count uint32) (*sword.List
 }
 
 // Returns the checkpoint name or an error.
-func (c *Client) CreateCheckpoint(name string) (string, error) {
+func (c *Client) CreateCheckpoint(name string, sendState bool) (string, *ModelData, error) {
+
 	var n *string
 	if len(name) > 0 {
 		n = proto.String(name)
@@ -1209,15 +1210,52 @@ func (c *Client) CreateCheckpoint(name string) (string, error) {
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ControlCheckpointSaveNow: &sword.ControlCheckPointSaveNow{
-					Name: n,
+					Name:      n,
+					SendState: proto.Bool(sendState),
 				},
 			},
 		},
 	}
+
+	var snapshot *ModelData
+	var snapshotErr error
+	if sendState {
+		handlerId := c.Register(func(msg *SwordMessage, ctx int32, err error) bool {
+			if err != nil {
+				snapshotErr = err
+				return true
+			}
+			if msg.SimulationToClient == nil {
+				return false
+			}
+			m := msg.SimulationToClient.GetMessage()
+			if m.GetControlSendCurrentStateBegin() != nil {
+				snapshot = NewModelData()
+				return false
+			}
+			if snapshot != nil {
+				err := snapshot.update(msg)
+				if err != nil {
+					snapshotErr = err
+					return true
+				}
+			}
+			if m.GetControlSendCurrentStateEnd() != nil {
+				return true
+			}
+			return false
+		})
+		defer c.Unregister(handlerId)
+	}
+
 	checkpoint := ""
 	err := <-c.postSimRequest(msg, func(msg *sword.SimToClient_Content) error {
 		reply := msg.GetControlCheckpointSaveNowAck()
 		if reply == nil {
+			if msg.GetControlSendCurrentStateBegin() != nil ||
+				msg.GetControlSendCurrentStateEnd() != nil {
+				return ErrContinue
+			}
 			return unexpected(msg)
 		}
 		if e := reply.GetErrorMsg(); len(e) > 0 {
@@ -1226,7 +1264,13 @@ func (c *Client) CreateCheckpoint(name string) (string, error) {
 		checkpoint = reply.GetName()
 		return nil
 	})
-	return checkpoint, err
+	if snapshotErr != nil {
+		err = snapshotErr
+	}
+	if err == nil && sendState && snapshot == nil {
+		err = fmt.Errorf("no snapshot received")
+	}
+	return checkpoint, snapshot, err
 }
 
 func (c *Client) RecoverTransporters(unitId uint32) error {

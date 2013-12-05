@@ -35,6 +35,14 @@ func GetTaskerId(tasker *sword.Tasker) uint32 {
 	return 0
 }
 
+func (model *ModelData) handleControlSendCurrentStateBegin(m *sword.SimToClient_Content) error {
+	if m.GetControlSendCurrentStateBegin() == nil {
+		return ErrSkipHandler
+	}
+	model.Reset()
+	return nil
+}
+
 func (model *ModelData) handleControlSendCurrentStateEnd(m *sword.SimToClient_Content) error {
 	if m.GetControlSendCurrentStateEnd() == nil {
 		return ErrSkipHandler
