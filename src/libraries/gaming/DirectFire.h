@@ -53,9 +53,10 @@ public:
 private:
     //! @name Member data
     //@{
-    geometry::Point2f position_;
-    bool isTarget_;
     kernel::Controller& controller_;
+    const kernel::Entity_ABC& target_;
+    bool isTarget_;
+    geometry::Point2f position_;
     //@}
 };
 

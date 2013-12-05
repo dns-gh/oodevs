@@ -51,7 +51,7 @@ public:
 protected:
     //! @name accessors
     //@{
-    const kernel::Entity_ABC& GetOrigin();
+    const kernel::Entity_ABC& GetOrigin() const;
     //@}
 
 private:

@@ -21,45 +21,42 @@
 
 using namespace kernel;
 
+namespace
+{
+    const kernel::Entity_ABC& GetTarget( const sword::StartUnitFire& message,
+        const tools::Resolver_ABC< Agent_ABC >& agentResolver,
+        const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver )
+    {
+        if( message.target().has_unit() )
+            return agentResolver.Get( message.target().unit().id() );
+        if( message.target().has_crowd_element() )
+            return populationResolver.Get( message.target().crowd_element().id() );
+        throw MASA_EXCEPTION( "DirectFire on position..." );
+    }
+    geometry::Point2f GetPosition( const kernel::Entity_ABC& entity )
+    {
+        return entity.Get< Positions >().GetPosition();
+    }
+    geometry::Point2f GetPosition( const kernel::Entity_ABC& target, const kernel::Entity_ABC& firer )
+    {
+        return target.GetTypeName() == PopulationFlow_ABC::typeName_
+            ? static_cast< const PopulationFlow_ABC& >( target ).GetNearestPosition( GetPosition( firer ) )
+            : GetPosition( target );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
+DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller,
+        const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
-    , isTarget_( false )
     , controller_( controller )
+    , target_( GetTarget( message, agentResolver, populationResolver ) )
+    , isTarget_( target_.GetId() == entityId )
+    , position_( isTarget_ ? GetPosition( GetOrigin() ) : GetPosition( target_, GetOrigin() ) )
 {
-    const kernel::Entity_ABC* target = 0;
-
-    if( message.target().has_unit() )
-        target = agentResolver.Find( message.target().unit().id() );
-    else if( message.target().has_crowd_element() )
-        target = populationResolver.Find( message.target().crowd_element().id() );
-    if( !target )
-        throw MASA_EXCEPTION( "DirectFire on position..." );
-
-    isTarget_ = target->GetId() == entityId;
-
-    const Positions* position = 0;
-    if( isTarget_ )
-        position = GetOrigin().Retrieve< Positions >();
-    else
-    {
-        if( message.target().has_crowd() && target->GetTypeName() == PopulationFlow_ABC::typeName_ )
-        {
-            const PopulationFlow_ABC* populationFlow = static_cast< const PopulationFlow_ABC* >( target );
-            const Positions* firerPosition = GetOrigin().Retrieve< Positions >();
-            if( firerPosition )
-                position_ = populationFlow->GetNearestPosition( firerPosition->GetPosition() );
-        }
-        else
-            position = target->Retrieve< Positions >();
-    }
-
-    if( position )
-        position_ = position->GetPosition();
-
     controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStart ) );
 }
 
@@ -78,11 +75,10 @@ DirectFire::~DirectFire()
 // -----------------------------------------------------------------------------
 void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( !position_.IsZero() && viewport.IsVisible( geometry::Rectangle2f( where, position_ ) ))
-    {
-        if( isTarget_ )
-            tools.DrawArrow( position_, where );
-        else
-            tools.DrawArrow( where, position_ );
-    }
+    if( ! viewport.IsVisible( geometry::Rectangle2f( position_, where ) ) )
+        return;
+    if( isTarget_ )
+        tools.DrawArrow( position_, where );
+    else
+        tools.DrawArrow( where, position_ );
 }
