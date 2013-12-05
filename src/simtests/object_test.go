@@ -129,9 +129,8 @@ func checkBetween(c *C, value, minInclusive, maxInclusive int32) {
 	c.Assert(value, Lesser, maxInclusive+1)
 }
 
-func checkTime(c *C, duration, expected, tick int32) {
-	value := expected / duration
-	checkBetween(c, tick, value, value+2)
+func checkElapsedTicks(c *C, ticks, expectedTicks int32) {
+	checkBetween(c, ticks, expectedTicks, expectedTicks+2)
 }
 
 func (s *TestSuite) TestObstacleAttribute(c *C) {
@@ -186,7 +185,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 	// Check delay
 	err = <-done
 	c.Assert(err, IsNil)
-	checkTime(c, data.TickDuration, delay, duration)
+	checkElapsedTicks(c, duration, delay/data.TickDuration)
 
 	// Create mined area, activated by default with an activity time
 	duration = int32(0)
@@ -210,7 +209,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 
 	// Check delay
 	err = <-done
-	checkTime(c, data.TickDuration, delay, duration)
+	checkElapsedTicks(c, duration, delay/data.TickDuration)
 }
 
 func (s *TestSuite) TestTimeLimitAttribute(c *C) {
@@ -250,7 +249,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 	// Check delay
 	err = <-done
 	c.Assert(err, IsNil)
-	checkTime(c, data.TickDuration, delay, duration)
+	checkElapsedTicks(c, duration, delay/data.TickDuration)
 }
 
 func (s *TestSuite) TestBypassAttribute(c *C) {
