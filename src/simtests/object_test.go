@@ -308,3 +308,60 @@ func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
 		return data.Objects[object.Id].Construction == 5
 	})
 }
+
+func (s *TestSuite) TestEngineerPreparedObject(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
+
+	party := data.FindPartyByName("party1")
+	CreateFormation(c, client, party.Id)
+	automat := createAutomatForParty(c, client, "party1")
+	c.Assert(party, NotNil)
+
+	object, err := client.CreateObject("firing post", party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Objects[object.Id].Construction == 100
+	})
+
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+
+	park := func(client *swapi.Client) uint32 {
+		unit, err := client.CreateUnit(automat.Id, UnitType, swapi.Point{X: -15.8193, Y: 28.3457})
+		c.Assert(err, IsNil)
+		c.Assert(unit, NotNil)
+		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+			return data.Units[unit.Id].RawOperationalState != 0
+		})
+		params := swapi.MakeParameters(
+			swapi.MakeHeading(0),
+			nil, nil, nil,
+			swapi.MakeObject(object.Id))
+		_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
+		c.Assert(err, IsNil)
+		return unit.Id
+	}
+	unitId1 := park(client)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unitId1].Posture.New == sword.UnitAttributes_parked_on_engineer_prepared_area
+	})
+	unitId2 := park(client)
+	// The firing post has a max size of 1: the second unit cannot park inside it
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unitId2].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
+	})
+
+	sim, client = checkpointAndRestart(c, sim, client)
+	defer sim.Stop()
+
+	unitId3 := park(client)
+	// The object is still full
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unitId3].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
+	})
+}
