@@ -762,7 +762,19 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
        self.Feedback( self.feedbacks.done )
        return
     end
-    
+
+    if self.params.everyoneMustBeAble and self.params.everyoneMustBeAble ~= NIL then
+        local mainTasks = explode( ";", self.params.mainTasks )
+        for i = 1, #self.parameters.commandingEntities do
+            for j = 1, #mainTasks do
+                if not integration.RetrievePionTask( self.parameters.commandingEntities[i], mainTasks[j] ) then
+                    Activate( self.skill.links.RC, 1, { RC = eRC_EveryoneMustBeAble } )
+                    myself.feedback = true
+                end
+            end
+        end
+    end
+
     if self.params.allInFront and self.params.allInFront ~= NIL then
         self.nbrFront = #self.parameters.commandingEntities -- All platoons in front
     else
