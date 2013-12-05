@@ -102,7 +102,10 @@ void LogisticsRequestsHistoryTable::AddRequest( const QString& state, const QStr
 // -----------------------------------------------------------------------------
 void LogisticsRequestsHistoryTable::AddItem( int row, int col, QString text )
 {
-    QStandardItem* item = new QStandardItem( text );
+    QStandardItem* item = new QStandardItem();
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+    item->setData( QVariant( text ), Qt::DisplayRole );
+
     if( col == 1 || col == 2 )
         item->setTextAlignment( Qt::AlignCenter );
     else
