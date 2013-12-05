@@ -29,7 +29,6 @@ InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& cont
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, publisher )
                 , tools::translate( "InfoFuneralDialog", "Instructions" ) );
-    setMinimumWidth( 400 );
 }
 
 // -----------------------------------------------------------------------------

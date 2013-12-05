@@ -43,15 +43,6 @@ InfoCompositionDialog::~InfoCompositionDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoCompositionDialog::sizeHint
-// Created: SBO 2007-02-19
-// -----------------------------------------------------------------------------
-QSize InfoCompositionDialog::sizeHint() const
-{
-    return QSize( 500, 300 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfoCompositionDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------

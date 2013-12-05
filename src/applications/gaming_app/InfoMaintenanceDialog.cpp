@@ -41,7 +41,6 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
         , tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMaintenanceDialog", "Chain status" ) );
-    setMinimumWidth( 420 );
 }
 
 // -----------------------------------------------------------------------------
