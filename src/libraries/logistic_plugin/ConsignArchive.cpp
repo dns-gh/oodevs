@@ -9,6 +9,7 @@
 
 #include "ConsignArchive.h"
 #include <tools/StdFileWrapper.h>
+#include <boost/make_shared.hpp>
 #include <winsock2.h>
 #include <sstream>
 
@@ -37,8 +38,8 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
 {
     if( !output_ )
     {
-        output_.reset( new tools::Ofstream( GetFilename( ++index_ ),
-                    std::ios::out | std::ios::binary | std::ios::trunc ));
+        output_.reset( new tools::Fstream( GetFilename( ++index_ ),
+                    std::ios::out | std::ios::in | std::ios::binary | std::ios::trunc ));
         uint8_t version = 0;
         output_->write( reinterpret_cast< const char* >( &version ), sizeof( version ) );
         size_ = sizeof( version );
@@ -49,6 +50,8 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
     offset.offset = size_;
 
     const uint32_t len = htonl( length );
+    // Need to seek before writing because of interleaved reads/writes
+    output_->seekg( 0, output_->end );
     output_->write( reinterpret_cast< const char* >( &len ), sizeof( len ) );
     output_->write( reinterpret_cast< const char* >( data ), length );
 
@@ -63,33 +66,48 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
     return offset;
 }
 
+boost::shared_ptr< tools::Fstream > ConsignArchive::GetFile( uint32_t index ) const
+{
+    if( index == index_ && output_ )
+    {
+        // If we do not reuse the current file we might race with data not
+        // flushed to disk yet.
+        return boost::shared_ptr< tools::Fstream >( output_.get(), [&]( tools::Fstream* ) {});
+    }
+    else
+    {
+        return boost::make_shared< tools::Fstream >( GetFilename( index ),
+               std::ios::in | std::ios::binary );    
+    }
+}
+
+
 void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
         const std::function< void( std::vector< uint8_t >& )>& callback ) const
 {
     std::vector< uint8_t > output;
 
     uint32_t file = 0;
-    tools::Ifstream fp;
+    boost::shared_ptr< tools::Fstream > fp;
     for( auto it = offsets.cbegin(); it != offsets.cend(); ++it )
     {
         if( file != it->file )
         {
             file = it->file;
-            fp.close();
-            fp.clear();
-            fp.open( GetFilename( file ), std::ios::in | std::ios::binary );    
+            fp = GetFile( file );
         }
-        if( !fp.is_open() )
+        if( !fp->is_open() )
             continue;
-        fp.seekg( it->offset, std::ios::beg );
+        fp->clear();
+        fp->seekg( it->offset, std::ios::beg );
         uint32_t length = 0;
-        fp.read( reinterpret_cast< char* >( &length ), sizeof( length ) );
-        if( fp.gcount() != sizeof( length ) || !fp || !length )
+        fp->read( reinterpret_cast< char* >( &length ), sizeof( length ) );
+        if( fp->gcount() != sizeof( length ) || !fp || !length )
             continue;
         length = ntohl( length );
         output.resize( length );
-        fp.read( reinterpret_cast< char* >( &output[0] ), length );
-        if( fp.gcount() != length || !fp )
+        fp->read( reinterpret_cast< char* >( &output[0] ), length );
+        if( fp->gcount() != length || !fp )
             continue;
         callback( output );
     }
