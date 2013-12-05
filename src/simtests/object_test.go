@@ -356,7 +356,7 @@ func (s *TestSuite) TestEngineerPreparedObject(c *C) {
 		return data.Units[unitId2].Posture.New == sword.UnitAttributes_parked_on_self_prepared_area
 	})
 
-	sim, client = checkpointAndRestart(c, sim, client)
+	sim, client = checkpointAndCompare(c, sim, client, false)
 	defer sim.Stop()
 
 	unitId3 := park(client)

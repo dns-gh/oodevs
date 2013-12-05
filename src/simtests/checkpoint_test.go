@@ -240,13 +240,30 @@ func checkpointAndRestart(c *C, sim *simu.SimProcess, client *swapi.Client) (
 	return sim, client, snapshot
 }
 
-// Create a checkpoint from sim, stop it, reload the checkpoint, compare the
-// new state with the previous one, the stop the new simulation process.
-func checkpointAndCompare(c *C, sim *simu.SimProcess, client *swapi.Client) {
+// Create a checkpoint from sim, stop it, reload the checkpoint, and compare the
+// new state with the previous one. If stop is true, stop the simulation,
+// otherwise return it in a running state.
+func checkpointAndCompare(c *C, sim *simu.SimProcess, client *swapi.Client, stop bool) (
+	*simu.SimProcess, *swapi.Client) {
+
 	sim, client, before := checkpointAndRestart(c, sim, client)
-	defer sim.Stop()
+	valid := false
+	defer func() {
+		if !valid || stop {
+			sim.Stop()
+		}
+	}()
 	after := client.Model.GetData()
 	compareModels(c, before, after, sim.Opts.GetSessionDir())
+	if !stop {
+		valid = true
+		client.Resume(0)
+	}
+	return sim, client
+}
+
+func checkpointCompareAndStop(c *C, sim *simu.SimProcess, client *swapi.Client) {
+	checkpointAndCompare(c, sim, client, true)
 }
 
 // Test SimProcess --checkpoint. This should be with other SimProcess tests but
@@ -285,7 +302,7 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 	_, err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
 
-	checkpointAndCompare(c, sim, client)
+	checkpointCompareAndStop(c, sim, client)
 }
 
 func (s *TestSuite) TestCheckpointUnit(c *C) {
@@ -309,7 +326,7 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 
-	checkpointAndCompare(c, sim, client)
+	checkpointCompareAndStop(c, sim, client)
 }
 
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
@@ -350,5 +367,5 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 		return false
 	})
 
-	checkpointAndCompare(c, sim, client)
+	checkpointCompareAndStop(c, sim, client)
 }
