@@ -16,6 +16,7 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
@@ -107,6 +108,15 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Automat_ABC& entit
 // Created: MMC 2013-09-05
 // -----------------------------------------------------------------------------
 void HighlightColorModifier::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    UpdateContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::NotifyContextMenu
+// Created: JSR 2013-12-05
+// -----------------------------------------------------------------------------
+void HighlightColorModifier::NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu )
 {
     UpdateContextMenu( entity, menu );
 }
