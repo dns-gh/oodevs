@@ -321,6 +321,7 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
 // -----------------------------------------------------------------------------
 void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 {
+    setAutoScroll( true );
     QTreeView::dragMoveEvent( pEvent );
     kernel::Entity_ABC* target = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( pEvent->pos() ) );
     bool accept = false;
@@ -339,6 +340,7 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
         pEvent->accept();
     else
         pEvent->ignore();
+    setAutoScroll( false );
 }
 
 // -----------------------------------------------------------------------------
