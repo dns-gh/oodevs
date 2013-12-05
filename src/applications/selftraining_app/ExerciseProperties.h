@@ -71,6 +71,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    class AutoResizedCombo;
     virtual void OnLanguageChanged();
     void ReadBriefingText( xml::xistream& xis );
     //@}
@@ -84,8 +85,8 @@ private:
     QLabel* parametersLabel_;
     QLabel* briefingImage_;
     QTextEdit* briefingText_;
-    QComboBox* terrainList_;
-    QComboBox* modelList_;
+    AutoResizedCombo* terrainList_;
+    AutoResizedCombo* modelList_;
     bool dataChanged_;
     tools::Path currentData_;
     tools::Path currentPhysical_;
