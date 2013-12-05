@@ -167,6 +167,8 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
 
     if( group_ && IsOptional() )
         group_->setChecked( true );
+
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +184,7 @@ void ListParameter< ConcreteElement >::OnDeleteSelectedItem()
             list_->selectionModel()->select( list_->selectionModel()->currentIndex(), QItemSelectionModel::Deselect );
             DeleteItem( model_.itemFromIndex( list_->selectionModel()->currentIndex() ) );
             model_.removeRow( list_->selectionModel()->currentIndex().row() );
+            Update();
         }
     if( group_ && IsOptional() )
         group_->setChecked( model_.rowCount() != 0 );
@@ -432,7 +435,6 @@ void ListParameter< ConcreteElement >::OnMenuClick()
     newParam->SetName( CreateNextNameAndId() );
     AddElement( *newParam );
     CreatePotential();
-    Update();
 }
 
 // -----------------------------------------------------------------------------
