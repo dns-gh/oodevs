@@ -174,6 +174,7 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 			sort.Sort(&resourcesSorter{u.ResourceDotations})
 			// Pathfinds are not restored?
 			u.PathPoints = 0
+			u.Speed = 0
 		}
 		return n
 	}
