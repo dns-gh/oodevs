@@ -233,15 +233,15 @@
     </message>
     <message>
         <source>The selected terrain is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>Le terrain selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
-Voulez-vous vraiment le remplacer ?</translation>
+Do you want to replace it?</source>
+        <translation>Le terrain sélectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
+Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>The selected model is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>Le modèle selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
-Voulez-vous vraiment le remplacer ?</translation>
+Do you want to replace it?</source>
+        <translation>Le modèle sélectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
+Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
@@ -296,9 +296,8 @@ Voulez-vous vraiment le remplacer ?</translation>
     </message>
     <message>
         <source>%1 already exists.
-Do you want to overwrite it?</source>
-        <translation>%1 existe.
-Voulez-vous l&apos;écraser ?</translation>
+Do you want to replace it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

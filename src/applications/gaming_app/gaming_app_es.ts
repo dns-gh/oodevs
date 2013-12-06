@@ -1020,7 +1020,7 @@ Reason: %3
     </message>
     <message>
         <source>%1 already exists.
-Do you want to overwrite it?</source>
+Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

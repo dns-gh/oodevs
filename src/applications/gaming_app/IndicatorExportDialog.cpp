@@ -112,7 +112,7 @@ void IndicatorExportDialog::OnAccept()
         const tools::Path filepath( file_->text().toStdString().c_str() );
         if( filepath.Exists() )
             if( QMessageBox::warning( QApplication::activeWindow(), tools::translate( "IndicatorExportDialog", "Confirm file replace" ),
-                tools::translate( "IndicatorExportDialog", "%1 already exists.\nDo you want to overwrite it?" ).arg( filepath.FileName().ToUTF8().c_str() ),
+                tools::translate( "IndicatorExportDialog", "%1 already exists.\nDo you want to replace it?" ).arg( filepath.FileName().ToUTF8().c_str() ),
                 QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
                 return;
         tools::Ofstream file( filepath );
