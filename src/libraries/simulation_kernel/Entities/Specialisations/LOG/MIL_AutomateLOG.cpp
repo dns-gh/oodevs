@@ -460,6 +460,8 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SupplyDestroyConvoyPion( MIL_AgentPion& convoyPion )
 {
+    if( convoyPion.IsImmobilized() )
+        return;
     PHY_RoleInterface_Supply* itf = convoyPion.RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )
         itf->UnassignConvoy();

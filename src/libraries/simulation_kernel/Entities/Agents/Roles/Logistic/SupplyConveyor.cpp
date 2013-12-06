@@ -142,7 +142,7 @@ void SupplyConveyor::LendTo( MIL_AgentPion& borrower )
 // -----------------------------------------------------------------------------
 void SupplyConveyor::UndoLend()
 {
-    if( borrower_ )
+    if( borrower_ && composante_->GetOperationalState() > 0 )
     {
         pion_->GetRole< PHY_RoleInterface_Composantes >().RetrieveLentComposante( *borrower_, *composante_ );
         pion_->GetRole< PHY_RoleInterface_Supply      >().StartUsingForLogistic ( *composante_ );
