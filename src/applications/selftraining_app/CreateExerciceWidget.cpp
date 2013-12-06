@@ -176,7 +176,7 @@ void CreateExerciceWidget::Update()
 // Name: CreateExerciceWidget::UpdateExercises
 // Created: ABR 2011-04-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
+void CreateExerciceWidget::UpdateExercises( QString selectedItem )
 {
     //models
     editModelList_->clear();
