@@ -783,6 +783,7 @@ void DEC_Knowledge_Object::CopyFrom( const DEC_Knowledge_Object& object )
     bPerceptionDistanceHacked_ = object.bPerceptionDistanceHacked_;
     bSkipPreparation_ = object.bSkipPreparation_;
     reconByAgentTypes_ = object.reconByAgentTypes_;
+    UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::CopyFrom, _1, boost::cref( object ) ) );
     nAttributesUpdated_ = eAttr_AllAttributes;
 }
 

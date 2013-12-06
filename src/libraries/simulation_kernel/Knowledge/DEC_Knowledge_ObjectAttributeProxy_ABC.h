@@ -27,10 +27,11 @@ public:
     const T* GetAttribute() const { return pAttribute_; }
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
     template< typename Source >
     bool ForceUpdateAttributeFromObject( const Source& source );
+    virtual bool CopyFrom( const DEC_Knowledge_Object& knowledge );
     //@}
 
     //! @name Network
@@ -118,6 +119,22 @@ bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::ForceUpdateAttributeFromObject
     if( !pAttribute_ )
         pAttribute_ = new T();
     return pAttribute_->Update( *pNewData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::CopyFrom
+// Created: JSR 2013-12-06
+// -----------------------------------------------------------------------------
+template< typename T >
+bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::CopyFrom( const DEC_Knowledge_Object& knowledge )
+{
+    const T* pNewData = knowledge.RetrieveAttribute< T >();
+    if( !pNewData )
+        return false;
+    if( !pAttribute_ )
+        pAttribute_ = new T();
+    *pAttribute_ = *pNewData;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
