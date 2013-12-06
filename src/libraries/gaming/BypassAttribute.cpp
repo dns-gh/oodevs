@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( Controller& controller, bool hasSinglePointPos /*= false*/ )
+BypassAttribute::BypassAttribute( Controller& controller, bool hasSinglePointPos )
     : controller_( controller )
     , nBypassConstructionPercentage_ ( 0 )
     , hasSinglePointPos_( hasSinglePointPos )

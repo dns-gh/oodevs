@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, bool hasSinglePointPos /*= false */ )
+ConstructionAttribute::ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, bool hasSinglePointPos )
     : controller_( controller )
     , resolver_ ( resolver )
     , construction_ ( 0 )

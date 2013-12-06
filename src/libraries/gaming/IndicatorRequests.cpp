@@ -53,7 +53,7 @@ void IndicatorRequests::Purge()
 // Name: IndicatorRequests::CreateRequest
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_ABC& definition, const QString& name /*= QString()*/ )
+IndicatorRequest& IndicatorRequests::CreateRequest( const IndicatorDefinition_ABC& definition, const QString& name )
 {
     requests_.push_back( new IndicatorRequest( controller_, definition, publisher_, name ) );
     controller_.Update( *this );

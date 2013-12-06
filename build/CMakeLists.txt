@@ -555,7 +555,7 @@ target_link_libraries( actions_gui
 )
 
 # gaming
-add_target( gaming clients "libraries/gaming" OPTIONS qt3 qt protocol qtwarnings )
+add_target( gaming clients "libraries/gaming" OPTIONS qt3 qt protocol )
 target_link_libraries( gaming
     actions
     clients_gui

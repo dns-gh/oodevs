@@ -28,7 +28,7 @@ Dotation::Dotation()
 // Name: Dotation constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const DotationType& type, unsigned int quantity /* =0 */, float thresholdPercentage /*= 0.f*/ )
+Dotation::Dotation( const DotationType& type, unsigned int quantity, float thresholdPercentage )
     : type_               ( &type )
     , quantity_           ( quantity )
     , thresholdPercentage_( thresholdPercentage )
