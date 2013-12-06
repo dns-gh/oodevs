@@ -263,10 +263,6 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Ecraser le fichier existant ?</translation>
     </message>
     <message>
-        <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>Le fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
-    </message>
-    <message>
         <source>Exercise</source>
         <translation>Exercice</translation>
     </message>
@@ -297,6 +293,12 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Model name:</source>
         <translation>Nom du modèle :</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
+        <translation>%1 existe.
+Voulez-vous l&apos;écraser ?</translation>
     </message>
 </context>
 <context>

@@ -1018,13 +1018,13 @@ Raison: %3
     </message>
     <message>
         <source>Confirm file replace</source>
-        <translation>Confirmer l'enregistrement</translation>
+        <translation>Confirmer l&apos;enregistrement</translation>
     </message>
     <message>
         <source>%1 already exists.
-Would you like to replace it?</source>
-        <translation type>%1 existe déjà.
-Voulez-vous le remplacer ?</translation>
+Do you want to overwrite it?</source>
+        <translation type>%1 existe.
+Voulez-vous l&apos;écraser ?</translation>
     </message>
 </context>
 <context>

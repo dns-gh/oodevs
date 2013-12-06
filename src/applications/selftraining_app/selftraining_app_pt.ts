@@ -291,7 +291,8 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A file called %1 already exists. Do you want to overwrite it?</source>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

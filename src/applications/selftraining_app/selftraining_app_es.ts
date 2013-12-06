@@ -261,10 +261,6 @@ Do really you want to replace it ?</source>
         <translation>¿Sobreescribir archivo?</translation>
     </message>
     <message>
-        <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>El archivo  %1 ya existe. ¿Desea sobreescribirlo?</translation>
-    </message>
-    <message>
         <source>Exercise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -294,6 +290,11 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Model name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

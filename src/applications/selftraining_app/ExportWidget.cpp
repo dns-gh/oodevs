@@ -525,7 +525,7 @@ bool ExportWidget::BrowseClicked()
     package_.second = filename.FileName();
     if( filename.Exists() )
         return QMessageBox::question( this, tools::translate( "ExportWidget", "Overwrite File?" ),
-                            tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( QString::fromStdWString( filename.ToUnicode().c_str() ) ),
+                            tools::translate( "ExportWidget", "%1 already exists.\nDo you want to overwrite it?" ).arg( QString::fromStdWString( filename.ToUnicode().c_str() ) ),
                             QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes;
     return true;
 }
