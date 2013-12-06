@@ -65,7 +65,6 @@ enum SessionPort
     DIA_DEBUGGER_PORT,
     NETWORK_LOGGER_PORT,
     TIMELINE_PORT,
-    TIMELINE_WEB_PORT,
     SESSION_PORT_COUNT,
 };
 
@@ -430,7 +429,7 @@ Tree Session::GetProperties() const
     tree.put( "busy", busy_ );
     tree.put( "start_time", start_time_ );
     tree.put( "current_time", current_time_ );
-    tree.put( "timeline.port", port_->Get() + TIMELINE_WEB_PORT );
+    tree.put( "timeline.port", port_->Get() + TIMELINE_PORT );
     PutList( tree, "clients", clients_ );
     PutList( tree, "checkpoints.list", checkpoints_ );
     PutList( tree, "replay.list", replays_ );
@@ -737,12 +736,6 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 
     std::string output;
     output += "[";
-    Tree login;
-    login.put( "type", "USER_LOGIN" );
-    login.put( "user.login.username", "" );
-    login.put( "user.login.password", "" );
-    output += ToJson( login ) + ",";
-
     Tree create;
     create.put( "type", "SESSION_CREATE" );
     create.put( "session.create.uuid", uuid );
@@ -787,7 +780,6 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
     WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT );
     std::vector< std::string > options = boost::assign::list_of
         ( MakeOption( "port",  base + TIMELINE_PORT ) )
-        ( MakeOption( "serve", base + TIMELINE_WEB_PORT ) )
         ( MakeOption( "run", Utf8( config ) ) );
     return deps.runtime.Start( Utf8( app ), options,
         Utf8( Path( app ).remove_filename() ), Utf8( output / "timeline.log" ) );
