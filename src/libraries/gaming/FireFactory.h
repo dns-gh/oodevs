@@ -10,6 +10,8 @@
 #ifndef __FireFactory_h_
 #define __FireFactory_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class StartUnitFire;
@@ -19,6 +21,7 @@ namespace sword
 namespace kernel
 {
     class Controller;
+    class Profile_ABC;
 }
 
 class Fire_ABC;
@@ -30,12 +33,12 @@ class Model;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class FireFactory
+class FireFactory : boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireFactory( Model& model, kernel::Controller& controller );
+             FireFactory( Model& model, kernel::Controller& controller, const kernel::Profile_ABC& profile );
     virtual ~FireFactory();
     //@}
 
@@ -46,17 +49,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FireFactory( const FireFactory& );            //!< Copy constructor
-    FireFactory& operator=( const FireFactory& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     Model& model_;
     kernel::Controller& controller_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

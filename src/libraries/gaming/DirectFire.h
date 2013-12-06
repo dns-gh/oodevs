@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class Profile_ABC;
     class Entity_ABC;
     class PopulationPart_ABC;
     class Agent_ABC;
@@ -38,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const sword::StartUnitFire& message,
-                         kernel::Controller& controller,
+                         kernel::Controller& controller, const kernel::Profile_ABC& profile,
                          const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
                          const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationResolver,
                          unsigned long entityId );
@@ -51,9 +52,13 @@ public:
     //@}
 
 private:
+    geometry::Point2f ComputePosition( const kernel::Entity_ABC& entity ) const;
+
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::Profile_ABC& profile_;
     const kernel::Entity_ABC& target_;
     bool isTarget_;
     geometry::Point2f position_;

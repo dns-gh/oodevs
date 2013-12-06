@@ -88,7 +88,7 @@ public:
     //! @name Constructors/Destructor/Accessor
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
-                         SimulationController& simulationController, Network& network, const kernel::Profile_ABC& profile,
+                         SimulationController& simulationController, Network& network, ProfileFilter& profile,
                          Config& config, LoggerProxy& logger, const QString& license );
     virtual ~MainWindow();
     //@}
@@ -141,9 +141,9 @@ private:
     StaticModel& staticModel_;
     Model& model_;
     Network& network_;
-    QString profile_;
+    QString login_;
     Config& config_;
-    std::auto_ptr< ProfileFilter > pProfile_;
+    const kernel::Profile_ABC& profile_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;

@@ -23,9 +23,10 @@
 // Name: FireFactory constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireFactory::FireFactory( Model& model, kernel::Controller& controller )
+FireFactory::FireFactory( Model& model, kernel::Controller& controller, const kernel::Profile_ABC& profile )
     : model_( model )
     , controller_( controller )
+    , profile_( profile )
 {
     // NOTHING
 }
@@ -46,7 +47,7 @@ FireFactory::~FireFactory()
 Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message, unsigned long id )
 {
     if( message.target().has_unit() || message.target().has_crowd() )
-        return new DirectFire( message, controller_, model_.agents_, model_.agents_, id );
+        return new DirectFire( message, controller_, profile_, model_.agents_, model_.agents_, id );
     if( message.target().has_position() )
         return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
     throw MASA_EXCEPTION( "Invalid target type" );

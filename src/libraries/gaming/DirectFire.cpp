@@ -17,6 +17,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -49,10 +50,11 @@ namespace
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller,
+DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller& controller, const kernel::Profile_ABC& profile,
         const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
     , controller_( controller )
+    , profile_( profile )
     , target_( GetTarget( message, agentResolver, populationResolver ) )
     , isTarget_( target_.GetId() == entityId )
     , position_( isTarget_ ? GetPosition( GetOrigin() ) : GetPosition( target_, GetOrigin() ) )
@@ -69,16 +71,32 @@ DirectFire::~DirectFire()
     controller_.Update( gui::SoundEvent( &GetOrigin(), "directfire", gui::SoundEvent::eStop ) );
 }
 
+namespace
+{
+    void DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools )
+    {
+        if( viewport.IsVisible( geometry::Rectangle2f( from, to ) ) )
+            tools.DrawArrow( from, to );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsVisible( geometry::Rectangle2f( position_, where ) ) )
-        return;
     if( isTarget_ )
-        tools.DrawArrow( position_, where );
+        DrawArrow( ComputePosition( GetOrigin() ), where, viewport, tools );
     else
-        tools.DrawArrow( where, position_ );
+        DrawArrow( where, ComputePosition( target_ ), viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFire::ComputePosition
+// Created: MCO 2013-12-06
+// -----------------------------------------------------------------------------
+geometry::Point2f DirectFire::ComputePosition( const kernel::Entity_ABC& entity ) const
+{
+    return profile_.IsVisible( entity ) ? GetPosition( entity ) : position_;
 }

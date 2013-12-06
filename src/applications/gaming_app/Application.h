@@ -39,6 +39,7 @@ class Config;
 class LoggerProxy;
 class Services;
 class RcEntityResolver_ABC;
+class ProfileFilter;
 
 // =============================================================================
 /** @class  Application
@@ -82,6 +83,7 @@ private:
     std::auto_ptr< Simulation >                        simulation_;
     std::auto_ptr< SimulationController >              simulationController_;
     std::auto_ptr< Profile >                           profile_;
+    std::auto_ptr< ProfileFilter >                     filter_;
     std::auto_ptr< kernel::Workers >                   workers_;
     std::auto_ptr< LoggerProxy >                       logger_;
     std::auto_ptr< Network >                           network_;
