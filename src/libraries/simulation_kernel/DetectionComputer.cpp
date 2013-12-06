@@ -78,5 +78,7 @@ void DetectionComputer::SetUnderground( bool underground )
 // -----------------------------------------------------------------------------
 bool DetectionComputer::CanBeSeen()
 {
-    return ( bAlreadySeen_ || ( !bIsUnderground_ && !bIsStealth_ ) );
+    if( bIsUnderground_ )
+        return false;
+    return bAlreadySeen_ || !bIsStealth_;
 }
