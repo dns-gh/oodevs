@@ -1023,7 +1023,7 @@ Raison: %3
     <message>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
-        <translation type>%1 existe.
+        <translation>%1 existe.
 Voulez-vous l&apos;écraser ?</translation>
     </message>
 </context>
