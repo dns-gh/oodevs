@@ -825,7 +825,7 @@ void ModelConsistencyChecker::CheckEquipmentState()
 // Name: ModelConsistencyChecker::AddError
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
-void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional /*= ""*/ )
+void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional )
 {
     kernel::SafePointer< kernel::Entity_ABC >* safePtr = new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity );
     T_Parent::AddError( type, safePtr, optional );

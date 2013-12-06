@@ -19,7 +19,7 @@ namespace
 // Name: CircleFormation constructor
 // Created: JSR 2012-07-02
 // -----------------------------------------------------------------------------
-CircleFormation::CircleFormation( const geometry::Point2f& center, unsigned int numberOfAgents, float radius /*= 100.f*/)
+CircleFormation::CircleFormation( const geometry::Point2f& center, unsigned int numberOfAgents, float radius )
     : center_( geometry::Vector2f( center.X(), center.Y() ) )
     , radius_( radius )
     , current_( 0 )

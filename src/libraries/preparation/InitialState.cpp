@@ -273,7 +273,7 @@ void InitialState::Initialize()
 // Name: InitialState::FillResources
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator, unsigned factor /*= 1*/ )
+void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator, unsigned factor )
 {
     while( resourcesIterator.HasMoreElements() )
     {

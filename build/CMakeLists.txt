@@ -603,7 +603,7 @@ target_link_libraries( launcher_test_app
 
 # preparation
 # fixme need qt gui
-add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol qtwarnings )
+add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol )
 target_link_libraries( preparation
     clients_gui
     geostore
