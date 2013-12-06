@@ -128,7 +128,6 @@ bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::ForceUpdateAttributeFromObject
 template< typename T >
 bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::CopyFrom( const DEC_Knowledge_Object& knowledge )
 {
-    //ForceUpdateAttributeFromObject( knowledge );
     const T* pNewData = knowledge.RetrieveAttribute< T >();
     if( !pNewData )
         return false;
