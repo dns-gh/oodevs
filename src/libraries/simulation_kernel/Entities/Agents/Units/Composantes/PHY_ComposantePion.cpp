@@ -1040,7 +1040,6 @@ void PHY_ComposantePion::StartUsingForLogistic()
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::StopUsingForLogistic()
 {
-    assert( bUsedForLogistic_ );
     bUsedForLogistic_ = false;
 }
 
