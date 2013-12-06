@@ -165,6 +165,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const kernel::ObjectKnowledge_ABC& ele
 {
     if( ! IsVisible() || &element != subSelected_ )
         return;
+    display_->Clear();
     display_->Hide();
     element.Display( *display_ );
 }

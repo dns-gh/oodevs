@@ -31,7 +31,8 @@ public:
     //@{
     virtual bool UpdateOnPerceptionLevel( const DEC_Knowledge_Object& knowledge, const DEC_Knowledge_ObjectMagicPerception& magicPerception ) = 0;
     virtual bool UpdateOnPerception     ( const DEC_Knowledge_Object& knowledge, const DEC_Knowledge_ObjectPerception& perception ) = 0;
-    virtual bool UpdateOnCollision      ( const DEC_Knowledge_Object& knowledge, const DEC_Knowledge_ObjectCollision& collision  ) = 0;
+    virtual bool UpdateOnCollision      ( const DEC_Knowledge_Object& knowledge, const DEC_Knowledge_ObjectCollision& collision ) = 0;
+    virtual bool CopyFrom               ( const DEC_Knowledge_Object& knowledge ) = 0;
     //@}
 
     //! @name Network
