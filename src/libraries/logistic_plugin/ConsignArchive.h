@@ -12,7 +12,7 @@
 
 #include <tools/Path.h>
 #include <boost/noncopyable.hpp>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 #include <cstdint>
 
 namespace tools
@@ -59,7 +59,7 @@ private:
     uint32_t maxSize_;
     uint32_t size_;
     uint32_t index_;
-    std::unique_ptr< tools::Fstream > output_;
+    boost::shared_ptr< tools::Fstream > output_;
 };
 
 } // namespace logistic

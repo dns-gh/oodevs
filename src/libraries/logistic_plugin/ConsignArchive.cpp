@@ -72,7 +72,7 @@ boost::shared_ptr< tools::Fstream > ConsignArchive::GetFile( uint32_t index ) co
     {
         // If we do not reuse the current file we might race with data not
         // flushed to disk yet.
-        return boost::shared_ptr< tools::Fstream >( output_.get(), [&]( tools::Fstream* ) {});
+        return output_;
     }
     else
     {
