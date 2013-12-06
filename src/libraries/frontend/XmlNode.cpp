@@ -262,7 +262,7 @@ bool XmlNode::HasNode( const std::string& path )
 // Name: XmlNode::GetChildNode
 // Created: RPD 2011-04-12
 // -----------------------------------------------------------------------------
-XmlNode* XmlNode::GetChildNode( const std::string& path, bool parent /*= false*/ )
+XmlNode* XmlNode::GetChildNode( const std::string& path, bool parent )
 {
     std::string element = NextElement( path );
     T_Nodes::iterator it = children_.find( element );

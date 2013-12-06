@@ -542,7 +542,7 @@ target_link_libraries( clients_gui
 )
 
 # frontend
-add_target( frontend clients "libraries/frontend" OPTIONS qt3 qt protocol qtwarnings )
+add_target( frontend clients "libraries/frontend" OPTIONS qt3 qt protocol )
 target_link_libraries( frontend
     clients_gui
 )

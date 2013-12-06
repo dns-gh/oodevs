@@ -137,7 +137,7 @@ namespace
 namespace frontend
 {
     // -----------------------------------------------------------------------------
-    void CreateExercise( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical /*= tools::Path()*/ )
+    void CreateExercise( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical )
     {
         const tools::Path dir = config.GetExerciseDir( name );
         dir.CreateDirectories();
@@ -145,7 +145,7 @@ namespace frontend
     }
 
     // -----------------------------------------------------------------------------
-    void EditExerciseParameters( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical /*= tools::Path()*/ )
+    void EditExerciseParameters( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical )
     {
         CreateExerciseXml( config.GetExerciseDir( name ) / "exercise.xml", terrain, model, physical, true );
     }
