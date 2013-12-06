@@ -126,7 +126,7 @@ private:
 // Created: ABR 2013-06-13
 // -----------------------------------------------------------------------------
 template< typename T >
-Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target /*= 0*/ )
+Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target )
 {
     Action_ABC* action = factory_.CreateAction( target, order );
     Register( action->GetId(), *action );
