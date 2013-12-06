@@ -325,8 +325,8 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
     start = function( entity, pathType, waypoints )
         return integration.startMoveToIt( entity, pathType, waypoints ) 
     end,
-    started = function( entity, pathType )
-        return integration.updateMoveToIt( entity, pathType )
+    started = function( entity, pathType, waypoints )
+        return integration.updateMoveToIt( entity, pathType, waypoints )
     end, 
     stop = function( entity, pathType, waypoints )
         if waypoints and #waypoints > 0 then
@@ -416,11 +416,15 @@ end
 -- make agent mount or dismount depending on terrain traficability
 --
 -- ****************************************************************************
-integration.updateMoveToIt = function( objective, pathType )
+integration.updateMoveToIt = function( objective, pathType, waypoints )
     local etat = objective[ myself ].etat
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
+
+    if not objective[ myself ].moveAction then
+        integration.startMoveToIt( objective, pathType, waypoints )
+    end
 
     -- --------------------------------------------------------------------------------
     -- End of movement, check if objective is traficable
