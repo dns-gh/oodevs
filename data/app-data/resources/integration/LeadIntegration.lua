@@ -531,6 +531,47 @@ integration.manageEndMission = function( self )
     end
 end
 
+--- Manage dynamic tasks for Lead skills
+-- @param self: The leading skill
+-- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param disengageTask : the name of the disengage task given to the non operational entities
+-- @author LMT
+-- @release 2013-08-13
+integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
+    local integration = integration
+    local myself = myself
+    myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
+    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
+        if self.companyTask.readyToGiveDynamicTasks then
+            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
+            if dynamicEntitiesAndTasks then
+                for i=1, #dynamicEntitiesAndTasks do
+                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
+                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
+
+                    for _, entity in pairs( dynamicEntities or emptyTable ) do
+                       integration.ListenFrontElement( entity )
+                        if not myself.leadData.dynamicEntityTasks[entity] then
+                            myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
+                        end
+                    end
+                    
+                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
+                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
+                                             or eEtatEchelon_None
+                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
+                    if myself.leadData.dynamicEchelonTasks[dynamicEchelon] then
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = myself.leadData.dynamicEchelonTasks[dynamicEchelon]..";"..dynamicTasks
+                    else
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = dynamicTasks
+                    end
+                end
+            end
+        end
+    end
+end
+
 -- Distribute obstacles among units 
 -- @author NMI
 -- @release 2013-05-15
@@ -818,47 +859,6 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Ceux qui n'ont toujours pas de mission recoivent la mission par d�faut
     if giveDefaultTask then
         integration.issueMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_Reserve, nil, false, findBestsFunction, disengageTask )
-    end
-end
-
---- Manage dynamic tasks for Lead skills
--- @param self: The leading skill
--- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
--- @param disengageTask : the name of the disengage task given to the non operational entities
--- @author LMT
--- @release 2013-08-13
-integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
-    local integration = integration
-    local myself = myself
-    myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
-    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
-        if self.companyTask.readyToGiveDynamicTasks then
-            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
-            if dynamicEntitiesAndTasks then
-                for i=1, #dynamicEntitiesAndTasks do
-                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
-                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
-
-                    for _, entity in pairs( dynamicEntities or emptyTable ) do
-                       integration.ListenFrontElement( entity )
-                        if not myself.leadData.dynamicEntityTasks[entity] then
-                            myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
-                        end
-                    end
-                    
-                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
-                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
-                                             or eEtatEchelon_None
-                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
-                    if myself.leadData.dynamicEchelonTasks[dynamicEchelon] then
-                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = myself.leadData.dynamicEchelonTasks[dynamicEchelon]..";"..dynamicTasks
-                    else
-                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = dynamicTasks
-                    end
-                end
-            end
-        end
     end
 end
 
