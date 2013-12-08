@@ -186,6 +186,8 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	}
 	err = client.ChangeDotation(unit.Id, []*swapi.ResourceDotation{&resource})
 	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(1)
 }
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {
