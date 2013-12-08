@@ -137,8 +137,14 @@ func (s *TestSuite) TestCheckpointSendState(c *C) {
 	check(true)
 }
 
-// Used to normalize units dotations order
-// TODO: fix this at simulation or gosword model level
+// Used to normalize units dotations order. It is not easy to fix server-side
+// because simulation states come from two different sources:
+// - From the simulation itself upon checkpoint
+// - From the dispatcher upon reconnection
+// Unifying both might not be desirable, the simulation has some concept of
+// dotation group, probably used for logistic purpose, which the dispatcher
+// does not know about. Keeping this normalization code here looks like the
+// best tradeof for now.
 type resourcesSorter struct {
 	resources []*swapi.ResourceDotation
 }
