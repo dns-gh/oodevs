@@ -150,8 +150,9 @@ func (model *Model) run() error {
 
 				//Execute conditions
 				for i := 0; i != len(model.conds); {
-					if model.conds[i].cond(model) {
-						model.conds[i].done <- 1
+					it := model.conds[i]
+					if it.cond(model) {
+						it.done <- 1
 						model.conds = append(model.conds[:i], model.conds[i+1:]...)
 						continue
 					}
