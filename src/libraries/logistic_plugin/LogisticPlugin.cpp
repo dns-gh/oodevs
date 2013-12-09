@@ -12,6 +12,7 @@
 #include "FuneralResolver.h"
 #include "MaintenanceResolver.h"
 #include "MedicalResolver.h"
+#include "NameResolver.h"
 #include "SupplyResolver.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr_Gen.h"
@@ -29,6 +30,7 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
 #include <unordered_set>
 
 namespace bpt = boost::posix_time;
@@ -286,17 +288,19 @@ void LogisticPlugin::HandleListLogisticRequests( const sword::ListLogisticReques
         *ack.add_entries() = *ie;
 }
 
-LogisticPlugin* CreateLogisticPlugin(
-    const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-    const tools::SessionConfig& config, xml::xistream& xis )
+boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
+    const dispatcher::Model_ABC& model,
+    const kernel::StaticModel& staticModel,
+    const tools::SessionConfig& config )
 {
-    return new LogisticPlugin(
-        nameResolver,
+    auto names = boost::make_shared< NameResolver >( model, staticModel );
+    return boost::make_shared< LogisticPlugin >( 
+        names,
         config.BuildSessionChildFile( "LogisticArchive" ),
-        config.BuildSessionChildFile( xis.attribute< tools::Path >( "maintenancefile", "LogMaintenance" ) ),
-        config.BuildSessionChildFile( xis.attribute< tools::Path >( "supplyfile", "LogSupply" ) ),
-        config.BuildSessionChildFile( xis.attribute< tools::Path >( "funeralfile", "LogFuneral" ) ),
-        config.BuildSessionChildFile( xis.attribute< tools::Path >( "medicalfile", "LogMedical" ) ) );
+        config.BuildSessionChildFile( "LogMaintenance" ),
+        config.BuildSessionChildFile( "LogSupply" ),
+        config.BuildSessionChildFile( "LogFuneral" ),
+        config.BuildSessionChildFile( "LogMedical" ) );
 }
 
 }  // namespace logistic
