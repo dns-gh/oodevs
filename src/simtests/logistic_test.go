@@ -86,16 +86,15 @@ func readLogisticFile(c *C, path string) string {
 // logistic chains files. Keys are chain names.
 func readAndRewriteLogFiles(c *C, opts *simu.SimOpts) map[string]string {
 	// List logistic files and sort them
-	s, err := simu.ReadSessionFile(opts.GetSessionFile())
 	prefixes := map[string]string{
-		"funeral":     s.LogisticPlugin.FuneralFile,
-		"maintenance": s.LogisticPlugin.MaintenanceFile,
-		"medical":     s.LogisticPlugin.MedicalFile,
-		"supply":      s.LogisticPlugin.SupplyFile,
+		"funeral":     "LogFuneral",
+		"maintenance": "LogMaintenance",
+		"medical":     "LogMedical",
+		"supply":      "LogSupply",
 	}
 	files := map[string][]string{}
 	sessionDir := opts.GetSessionDir()
-	err = filepath.Walk(sessionDir, func(path string, fi os.FileInfo, err error) error {
+	err := filepath.Walk(sessionDir, func(path string, fi os.FileInfo, err error) error {
 		if err != nil || fi.IsDir() {
 			return err
 		}
@@ -187,7 +186,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	err = client.ChangeDotation(unit.Id, []*swapi.ResourceDotation{&resource})
 	c.Assert(err, IsNil)
 
-	client.Model.WaitTicks(1)
+	client.Model.WaitTicks(2)
 }
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {

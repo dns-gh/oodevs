@@ -47,7 +47,6 @@ func (s *TestSuite) TestCreateDefaultSession(c *C) {
 func (s *TestSuite) TestWriteSession(c *C) {
 	session := CreateDefaultSession()
 	session.GamingServer = "masagroup.net"
-	session.LogisticPlugin = NewLogisticPlugin("vc100")
 	session.EndTick = 42
 	session.Paused = true
 	session.TimeFactor = 999
@@ -59,9 +58,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
   <config>
     <dispatcher>
       <network client="localhost:10000" server="masagroup.net"></network>
-      <plugins>
-        <logistic library="logistic_plugin-vc100-mt.dll" funeralfile="LogFuneral" maintenancefile="LogMaintenance" medicalfile="LogMedical" supplyfile="LogSupply"></logistic>
-      </plugins>
+      <plugins></plugins>
     </dispatcher>
     <gaming>
       <network server="masagroup.net"></network>
