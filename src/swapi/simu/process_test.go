@@ -21,7 +21,6 @@ import (
 )
 
 var (
-	projectRoot string
 	application string
 	rootdir     string
 	rundir      string
@@ -31,8 +30,6 @@ var (
 )
 
 func init() {
-	flag.StringVar(&projectRoot, "projectRoot", os.Getenv("GOSWORD_ROOT"),
-		"path to gosword project root directory")
 	flag.StringVar(&application, "application", "",
 		"path to simulation_app executable")
 	flag.StringVar(&rootdir, "root-dir", "",
@@ -60,6 +57,11 @@ func (s *TestSuite) TestSimOpts(c *C) {
 
 func MakeOpts() *SimOpts {
 	opts := SimOpts{}
+	projectRoot := ""
+	if cwd, err := os.Getwd(); err == nil {
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", "..", ".."))
+	}
+
 	if len(application) > 0 {
 		opts.Executable = application
 	} else if len(projectRoot) > 0 {

@@ -15,7 +15,6 @@ import (
 )
 
 func init() {
-	flag.String("projectRoot", "", "")
 	flag.String("application", "", "")
 	flag.String("root-dir", "", "")
 	flag.String("run-dir", "", "")
