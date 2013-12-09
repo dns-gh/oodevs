@@ -76,13 +76,14 @@ private slots:
     void OnExerciseNumberChanged( int value );
     //@}
 
-protected:
+private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
     virtual void Update();
-    virtual std::string BuildSessionName() const;
-    void CreateSession( const tools::Path& exercise, const tools::Path& session );
+
+    void CreateSession( const tools::Path& exercise, const tools::Path& session ) const;
+    std::pair< tools::Path, bool > BuildSessionName() const;
     template< typename T >
     T* AddPlugin( T* plugin );
     bool CanBeStarted() const;
@@ -93,7 +94,7 @@ protected:
     typedef std::vector< frontend::PluginConfig_ABC* > T_Plugins;
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
     const Config&                 config_;

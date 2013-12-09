@@ -55,7 +55,7 @@ Config::Config()
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "pouet", po::value( &tmp_ ), "test, to remove" ) // $$$$ ABR 2013-03-12: TODO REMOVE
+        ( "session", po::value( &session_ ), "specify session name" )
         ( "debug", "activate debug mode" );
     AddOptions( desc );
 }
@@ -110,4 +110,13 @@ bool Config::HasFeature( Feature feature ) const
 bool Config::IsOnDebugMode() const
 {
     return IsSet( "debug" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetSession
+// Created: MCO 2013-12-04
+// -----------------------------------------------------------------------------
+const tools::Path& Config::GetSession() const
+{
+    return session_;
 }
