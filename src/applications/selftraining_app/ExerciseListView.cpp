@@ -129,7 +129,7 @@ bool ExerciseListView::Exists( const tools::Path& exercise ) const
 // Name: ExerciseListView::FindExerciseItem
 // Created: LGY 2012-05-30k
 // -----------------------------------------------------------------------------
-QStandardItem* ExerciseListView::FindExerciseItem( const QString& path, QStandardItem* parent /*= 0*/ ) const
+QStandardItem* ExerciseListView::FindExerciseItem( const QString& path, QStandardItem* parent ) const
 {
     if( !parent )
         parent = model_.invisibleRootItem();
@@ -187,7 +187,7 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
 // Name: ExerciseListView::FindExerciseItem
 // Created: NPT 2012-09-26
 // -----------------------------------------------------------------------------
-QStandardItem* ExerciseListView::FindExerciseItem( const frontend::Exercise_ABC& exercise, QStandardItem* parent /*= 0*/ ) const
+QStandardItem* ExerciseListView::FindExerciseItem( const frontend::Exercise_ABC& exercise, QStandardItem* parent ) const
 {
     if( !parent )
         parent = model_.invisibleRootItem();

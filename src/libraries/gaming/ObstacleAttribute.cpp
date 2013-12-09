@@ -21,7 +21,7 @@
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::Controller& controller, bool singlePointPos /*= false*/ )
+ObstacleAttribute::ObstacleAttribute( kernel::Controller& controller, bool singlePointPos )
     : controller_( controller )
     , hasSinglePointPos_( singlePointPos )
 {

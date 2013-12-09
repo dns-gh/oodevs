@@ -16,7 +16,7 @@
 // Name: InitialStateEquipment::InitialStateEquipment
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, unsigned int currentBreakdown /*= 0*/ )
+InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, unsigned int currentBreakdown )
     : name_            ( name )
     , state_           ( state )
     , breakdowns_      ( breakdowns )

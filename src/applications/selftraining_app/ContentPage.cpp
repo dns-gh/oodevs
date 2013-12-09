@@ -14,7 +14,7 @@
 // Name: ContentPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ContentPage::ContentPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags /*= 0*/, const QString title /*= QString()*/ )
+ContentPage::ContentPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags, const QString title )
     : Page_ABC( pages, previous, buttonFlags )
 {
     if( !title.isEmpty() )

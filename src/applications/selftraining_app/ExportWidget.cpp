@@ -349,7 +349,7 @@ void ExportWidget::OnModelNameChanged( const QString& /*text*/ )
 // Name: ExportWidget::Update
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-void ExportWidget::Update( QListWidgetItem* item /*= 0*/ )
+void ExportWidget::Update( QListWidgetItem* item )
 {
     if( !item ) // No item, refresh lists
     {

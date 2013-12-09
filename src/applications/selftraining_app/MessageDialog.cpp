@@ -38,7 +38,7 @@ namespace
 // Name: MessageDialog constructor
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
-MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 /*= -1*/ )
+MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
     : QDialog( parent, Qt::Dialog )
 {
     setWindowTitle( title );
