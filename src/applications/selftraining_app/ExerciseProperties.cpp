@@ -23,15 +23,18 @@
 
 namespace fc = frontend::commands;
 
-class ExerciseProperties::AutoResizedCombo : public QComboBox
+namespace
 {
-    void showPopup()
+    class AutoResizedCombo : public QComboBox
     {
-        auto view = this->view();
-        view->setMinimumWidth( view->sizeHintForColumn( 0 ) );
-        QComboBox::showPopup();
-    }
-};
+        void showPopup()
+        {
+            auto w = view();
+            w->setMinimumWidth( w->sizeHintForColumn( 0 ) );
+            QComboBox::showPopup();
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseProperties constructor
