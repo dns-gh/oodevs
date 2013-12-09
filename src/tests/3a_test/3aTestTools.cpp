@@ -9,6 +9,8 @@
 
 #include "3a_test_pch.h"
 #include "3aTestTools.h"
+#include <geocoord/geodetic.h>
+#include <geocoord/mgrs.h>
 
 using namespace sword;
 

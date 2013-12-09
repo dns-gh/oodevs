@@ -13,8 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include "3a/Attributes.h"
 #include "protocol/Protocol.h"
-#include <geocoord/geodetic.h>
-#include <geocoord/mgrs.h>
 
 struct MockClientPublisher;
 

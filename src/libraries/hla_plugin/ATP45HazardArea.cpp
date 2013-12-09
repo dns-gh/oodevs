@@ -21,8 +21,6 @@
 #include "protocol/proto/common.pb.h"
 #pragma warning( pop )
 
-#include <geocoord/Geodetic.h>
-#include <geocoord/PlanarCartesian.h>
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
 #include <hla/AttributeIdentifier.h>

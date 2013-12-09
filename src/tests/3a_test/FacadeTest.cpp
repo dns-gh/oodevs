@@ -18,11 +18,9 @@
 #include "3a/Task.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
-#include <geocoord/geodetic.h>
-#include <geocoord/mgrs.h>
-#include <vector>
 #include <boost/foreach.hpp>
 #include <boost/assign.hpp>
+#include <vector>
 
 using namespace sword;
 
