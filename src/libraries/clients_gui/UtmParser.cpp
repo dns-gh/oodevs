@@ -9,14 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "UtmParser.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
-#pragma warning( push )
-#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
 
 using namespace gui;
 
@@ -24,7 +20,7 @@ using namespace gui;
 // Name: UtmParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-UtmParser::UtmParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter )
     : controllers_( controllers )
     , converter_( converter )
 {
@@ -57,7 +53,7 @@ bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStrin
             strContent = zone_.c_str() + strContent;
         if( strContent.length() < 15 )
             strContent = Fill( strContent );
-        result = converter_.ConvertToXY( strContent.toStdString() );
+        result = converter_( strContent.toStdString() );
         hint.append( strContent );
         return true;
     }

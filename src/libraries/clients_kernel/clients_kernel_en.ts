@@ -69,6 +69,10 @@
         <source>Local coordinates</source>
         <translation>Local coordinates</translation>
     </message>
+    <message>
+        <source>UTM South American 1969, Brazil</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayExtractor_ABC</name>

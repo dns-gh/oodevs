@@ -47,6 +47,7 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
 
     AddField( parent, 155, CoordinateSystems::E_Local, true );
     AddField( parent, 105, CoordinateSystems::E_Mgrs, true );
+    AddField( parent, 105, CoordinateSystems::E_SanC, false );
     AddField( parent, 155, CoordinateSystems::E_Wgs84Dd, true );
     AddField( parent, 215, CoordinateSystems::E_Wgs84Dms, false );
     pMenu_->insertSeparator();
@@ -125,6 +126,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         pElevation_->setText( elev );
 
         coordinateFields_[ CoordinateSystems::E_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
+        coordinateFields_[ CoordinateSystems::E_SanC ]->setText( converter_.ConvertTo( position, "SAN-C" ).c_str() );
 
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%L1 Lon:%L2" ).arg( latLong.Y(), 0, 'g', 6 )

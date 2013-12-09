@@ -14,21 +14,13 @@
 #include "View_ABC.h"
 #include "FeatureNameParser.h"
 #include "LocationsLayer.h"
-#include "LocationParser_ABC.h"
-#include "UtmParser.h"
-#include "XYParser.h"
-#include "Wgs84DdParser.h"
-#include "Wgs84DmsParser.h"
-#include "FeatureNameParser.h"
 #include "LocationEditorBox.h"
-#include "LocationParsers.h"
 #include "RichLineEdit.h"
 #include "RichWidget.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "resources.h"
-#include <boost/bind.hpp>
 
 using namespace gui;
 

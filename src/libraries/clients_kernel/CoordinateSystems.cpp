@@ -21,6 +21,7 @@ using namespace kernel;
 CoordinateSystems::CoordinateSystems()
     : systems_( boost::assign::map_list_of
                 ( E_Mgrs,     tools::translate( "CoordinateSystems", "UTM MGRS" ) )
+                ( E_SanC,     tools::translate( "CoordinateSystems", "UTM South American 1969, Brazil" ) )
                 ( E_Wgs84Dd,  tools::translate( "CoordinateSystems", "LatLong WGS84 DD" ) )
                 ( E_Wgs84Dms, tools::translate( "CoordinateSystems", "LatLong WGS84 DMS" ) )
                 ( E_Local,    tools::translate( "CoordinateSystems", "Local coordinates" ) ) )

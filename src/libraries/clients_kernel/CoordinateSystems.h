@@ -28,6 +28,7 @@ public:
     enum Projection
     {
         E_Mgrs,
+        E_SanC,
         E_Wgs84Dd,
         E_Wgs84Dms,
         E_Local

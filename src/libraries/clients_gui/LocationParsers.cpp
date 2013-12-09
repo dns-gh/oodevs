@@ -13,6 +13,7 @@
 #include "XYParser.h"
 #include "Wgs84DdParser.h"
 #include "Wgs84DmsParser.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 
 using namespace gui;
@@ -25,7 +26,8 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
     : controllers_( controllers )
     , converter_( converter )
 {
-    parsers_[ kernel::CoordinateSystems::E_Mgrs ].reset( new UtmParser( controllers_, converter_ ) );
+    parsers_[ kernel::CoordinateSystems::E_Mgrs ].reset( new UtmParser( controllers_, [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); } ) );
+    parsers_[ kernel::CoordinateSystems::E_SanC ].reset( new UtmParser( controllers_, [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); } ) );
     parsers_[ kernel::CoordinateSystems::E_Local ].reset( new XyParser() );
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dd ].reset( new Wgs84DdParser( converter_ ) );
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dms ].reset( new Wgs84DmsParser( converter_ ) );
@@ -96,7 +98,10 @@ LocationParser_ABC& LocationParsers::GetParser( int parserId )
 // -----------------------------------------------------------------------------
 void LocationParsers::AddParser( LocationParser_ABC* parser, int id )
 {
-    if( id != kernel::CoordinateSystems::E_Mgrs && id != kernel::CoordinateSystems::E_Local &&
-        id !=kernel::CoordinateSystems::E_Wgs84Dd && id != kernel::CoordinateSystems::E_Wgs84Dms )
+    if( id != kernel::CoordinateSystems::E_Mgrs &&
+        id != kernel::CoordinateSystems::E_SanC &&
+        id != kernel::CoordinateSystems::E_Local &&
+        id !=kernel::CoordinateSystems::E_Wgs84Dd &&
+        id != kernel::CoordinateSystems::E_Wgs84Dms )
         parsers_[ id ].reset( parser );
 }
