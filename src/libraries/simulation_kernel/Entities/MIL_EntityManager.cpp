@@ -1225,7 +1225,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 {
     const auto& params = msg.parameters();
     const int count = protocol::GetCount( params );
-    protocol::Check( count > 1, "at least 2 parameters expected" ); 
+    protocol::Check( count > 1, "at least 2 parameters expected" );
     const auto automatType = protocol::GetIdentifier( params, 0 );
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( automatType );
     if( !pType )
@@ -1423,23 +1423,31 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
     try
     {
         unsigned int taskerId = TaskerToId( message.tasker() );
+        bool sentAck = false;
+        auto sendAck = [&]( uint32_t id ) {
+            ack().set_id( id );
+            ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+            sentAck = true;
+        };
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
         {
             ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
-            ack().set_id( pAutomate->OnReceiveFragOrder( message ) );
+            pAutomate->OnReceiveFragOrder( message, sendAck );
         }
         else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ) )
         {
             ack().mutable_tasker()->mutable_crowd()->set_id( taskerId );
-            ack().set_id( pPopulation->OnReceiveFragOrder( message ) );
+            pPopulation->OnReceiveFragOrder( message, sendAck );
         }
         else if( MIL_AgentPion* pPion = FindAgentPion ( taskerId ) )
         {
             ack().mutable_tasker()->mutable_unit()->set_id( taskerId );
-            ack().set_id( pPion->OnReceiveFragOrder( message ) );
+            pPion->OnReceiveFragOrder( message, sendAck );
         }
         else
             throw MASA_BADUNIT_ORDER( "invalid automat, crowd or unit: " << taskerId );
+        if( sentAck )
+            return;
     }
     catch( const NET_AsnException< OrderAck::ErrorCode >& e )
     {

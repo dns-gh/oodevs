@@ -1198,9 +1198,9 @@ uint32_t MIL_Population::OnReceiveOrder( const sword::CrowdOrder& msg )
 // Name: MIL_Population::OnReceiveFragOrder
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-uint32_t MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg )
+void MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    return orderManager_->OnReceiveFragOrder( msg );
+    orderManager_->OnReceiveFragOrder( msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------

@@ -163,7 +163,7 @@ public:
                                    unsigned int clientId );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
     uint32_t OnReceiveOrder( const sword::UnitOrder& msg );
-    uint32_t OnReceiveFragOrder( const sword::FragOrder& msg );
+    void OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
     void OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId );
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     void SetExtensions( const MIL_DictionaryExtensions& ext );

@@ -1216,9 +1216,9 @@ uint32_t MIL_Automate::OnReceiveOrder( const sword::AutomatOrder& msg )
 // Name: MIL_Automate::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-uint32_t MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg )
+void MIL_Automate::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    return pOrderManager_->OnReceiveFragOrder( msg );
+    pOrderManager_->OnReceiveFragOrder( msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------
