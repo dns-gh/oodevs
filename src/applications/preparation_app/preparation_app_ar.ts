@@ -1428,6 +1428,14 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unknown material &quot;%1&quot;. It will be replaced by default material at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown roof shape &quot;%1&quot;. It will be replaced by default roof shape at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -325,7 +325,11 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( xml::xistream& xis, MIL_Ur
     {
         const UrbanPhysicalCapacity* pPhysical = pObject->Retrieve< UrbanPhysicalCapacity >();
         if( pPhysical && ( !PHY_MaterialCompositionType::Find( pPhysical->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetRoofShape() ) ) )
-            MT_LOG_INFO_MSG( "The architecture of the urban block '" << pObject->GetUrbanId() << "' ('" << pObject->GetName() << "') is not consistent with the architecture described in the urban file" );
+        {
+            MT_LOG_ERROR_MSG( "The architecture of the urban block '" << pObject->GetUrbanId() << "' ('" << pObject->GetName() << "') is not consistent with the architecture described in the urban file" );
+            delete pObject;
+            return 0;
+        }
         if( pObject->GetLocalisation().GetPoints().empty() )
         {
             MT_LOG_ERROR_MSG( MT_FormatString( "Urban block %d ignored for lack of geometry", pObject->GetUrbanId() ) );

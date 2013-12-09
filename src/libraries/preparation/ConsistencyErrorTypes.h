@@ -61,6 +61,8 @@ enum E_ConsistencyCheck
     eEquipmentState,
     eOthers,
     eImpossibleObjectCreation,
+    eUnknownMaterial,
+    eUnknownRoofShape,
     eOthersMask,
 };
 
