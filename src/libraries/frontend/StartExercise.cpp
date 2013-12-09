@@ -105,7 +105,7 @@ void StartExercise::Start()
     boost::this_thread::sleep( boost::posix_time::milliseconds( 1000 ) );
     const std::string host = configManipulator_->GetValue< std::string >( "session/config/gaming/network/@server" );
     SimulationMonitor monitor( host );
-    while( !monitor.Connected() && !monitor.TimedOut() )
+    while( !monitor.Connected() )
     {
         monitor.Update();
         percentage_ = std::min< unsigned int >( percentage_ + 1, 99 );
