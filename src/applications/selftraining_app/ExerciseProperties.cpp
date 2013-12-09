@@ -23,6 +23,19 @@
 
 namespace fc = frontend::commands;
 
+namespace
+{
+    class AutoResizedCombo : public QComboBox
+    {
+        void showPopup()
+        {
+            auto w = view();
+            w->setMinimumWidth( w->sizeHintForColumn( 0 ) );
+            QComboBox::showPopup();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseProperties constructor
 // Created: SBO 2010-11-12
@@ -60,10 +73,10 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, co
     {
         parametersLabel_ = new QLabel();
 
-        terrainList_ = new QComboBox();
+        terrainList_ = new AutoResizedCombo();
         connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
 
-        modelList_ = new QComboBox();
+        modelList_ = new AutoResizedCombo();
         connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
 
         QGroupBox* box = new QGroupBox();
