@@ -901,7 +901,6 @@
         <update name="depends" version="2.2.6000"/>
         <update name="flexlm"/>
         <update name="gdal"/>
-        <update name="geocoord"/>
         <update name="geometry"/>
         <update name="geos"/>
         <update name="glew"/>
