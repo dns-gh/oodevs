@@ -12,12 +12,12 @@
 
 #include <tools/Path.h>
 #include <boost/noncopyable.hpp>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 #include <cstdint>
 
 namespace tools
 {
-    class Ofstream;
+    class Fstream;
 }
 
 namespace sword
@@ -52,13 +52,14 @@ public:
 
 private:
     tools::Path GetFilename( uint32_t index ) const;
+    boost::shared_ptr< tools::Fstream > GetFile( uint32_t index ) const;
 
 private:
     tools::Path basePath_;
     uint32_t maxSize_;
     uint32_t size_;
     uint32_t index_;
-    std::unique_ptr< tools::Ofstream > output_;
+    boost::shared_ptr< tools::Fstream > output_;
 };
 
 } // namespace logistic
