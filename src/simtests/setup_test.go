@@ -267,8 +267,8 @@ var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
 	log.Println("application", application)
-	log.Println("rootdir", rootdir)
-	log.Println("rundir", rundir)
-	log.Println("testPort", testPort)
+	log.Println("root-dir", rootdir)
+	log.Println("run-dir", rundir)
+	log.Println("test-port", testPort)
 	log.Println("platform", platform)
 }
