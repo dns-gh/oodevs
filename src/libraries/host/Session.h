@@ -30,6 +30,11 @@ namespace posix_time
 }
 }
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     struct FileSystem_ABC;
@@ -70,6 +75,7 @@ struct SessionDependencies
                          const web::Plugins& plugins,
                          const NodeController_ABC& nodes,
                          const UuidFactory_ABC& uuids,
+                         cpplog::BaseLogger& log,
                          web::Client_ABC& client,
                          runtime::Pool_ABC& pool,
                          PortFactory_ABC& ports )
@@ -78,6 +84,7 @@ struct SessionDependencies
         , plugins( plugins )
         , nodes  ( nodes )
         , uuids  ( uuids )
+        , log    ( log )
         , client ( client )
         , pool   ( pool )
         , ports  ( ports )
@@ -89,6 +96,7 @@ struct SessionDependencies
     const web::Plugins& plugins;
     const NodeController_ABC& nodes;
     const UuidFactory_ABC& uuids;
+    cpplog::BaseLogger& log;
     web::Client_ABC& client;
     runtime::Pool_ABC& pool;
     PortFactory_ABC& ports;

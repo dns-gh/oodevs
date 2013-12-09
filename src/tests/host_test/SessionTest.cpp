@@ -27,6 +27,7 @@
 
 #include "MockClient.h"
 #include "MockFileSystem.h"
+#include "MockLog.h"
 #include "MockNode.h"
 #include "MockNodeController.h"
 #include "MockPool.h"
@@ -124,6 +125,7 @@ namespace
         MockFileSystem& fs;
         MockClient client;
         MockRuntime runtime;
+        MockLog log;
         MockNodeController nodes;
         MockPortFactory ports;
         MockPool pool;
@@ -163,7 +165,7 @@ namespace
             cfg.name = defaultName;
             cfg.profiles.insert( web::session::Profile( "username", "password" ) );
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
+            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, log, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
 
@@ -181,7 +183,7 @@ namespace
             const Tree data = FromJson( links );
             MOCK_EXPECT( nodes.LinkExerciseTree ).once().with( mock::same( *node ), data ).returns( data );
             SessionPaths paths( "a", "b" );
-            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
+            SessionDependencies deps( fs, runtime, plugins, nodes, uuids, log, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 

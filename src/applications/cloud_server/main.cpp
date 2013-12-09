@@ -276,10 +276,11 @@ struct SessionFactory : public SessionFactory_ABC
                     const web::Plugins& plugins,
                     const UuidFactory_ABC& uuids,
                     const NodeController_ABC& nodes,
+                    cpplog::BaseLogger& log,
                     PortFactory_ABC& ports,
                     web::Client_ABC& client,
                     Pool_ABC& pool )
-        : deps( fs, runtime, plugins, nodes, uuids, client, pool, ports )
+        : deps( fs, runtime, plugins, nodes, uuids, log, client, pool, ports )
     {
         // NOTHING
     }
@@ -368,7 +369,7 @@ struct Facade : SqlFacade
         fnodes.observer = &nodes;
         NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
             Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), cfg.ports.tcp, pool, proxy );
-        SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
+        SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, log, ports, client, pool );
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( plugins, log, agent, users, true );

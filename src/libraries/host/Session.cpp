@@ -37,6 +37,8 @@
 #include <boost/thread/condition_variable.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include <cpplog/cpplog.hpp>
+
 #ifdef _MSC_VER
 #   pragma warning( push )
 #   pragma warning( disable : 4702 )
@@ -878,17 +880,26 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
     } );
     auto sword = StartSimulation( data->cfg, checkpoint, data->replay, data->output, app );
     if( !sword )
+    {
+        LOG_ERROR( deps_.log ) << "[session] Unable to start simulation " << id_;
         return false;
+    }
 
     runtime::Scoper killSword( [&] {
         sword->Kill();
     } );
     if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT ) )
+    {
+        LOG_ERROR( deps_.log ) << "[session] Unable to connect to simulation " << id_;
         return false;
+    }
 
     T_Process time = StartTimeline( deps_, timeline, GetRoot(), data->output, port_->Get() + DISPATCHER_PORT );
     if( !time )
+    {
+        LOG_ERROR( deps_.log ) << "[session] Unable to start timeline " << id_;
         return false;
+    }
 
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     killSword.Reset();
