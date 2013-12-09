@@ -57,7 +57,7 @@ bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStrin
             strContent = zone_.c_str() + strContent;
         if( strContent.length() < 15 )
             strContent = Fill( strContent );
-        result = converter_.ConvertToXY( std::string( strContent.toStdString() ) );
+        result = converter_.ConvertToXY( strContent.toStdString() );
         hint.append( strContent );
         return true;
     }
@@ -73,13 +73,15 @@ bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStrin
 // -----------------------------------------------------------------------------
 QString UtmParser::Fill( QString value )
 {
-    int missing = 15 - int( value.length() );
+    int missing = 15 - value.length();
     if( missing <= 0 || missing > 10 )
         return value;
     const int northMissing = missing / 2;
-    QString north; north.fill( '0', northMissing );
+    QString north;
+    north.fill( '0', northMissing );
     const int eastMissing  = missing - northMissing;
-    QString east; east.fill( '0', eastMissing );
+    QString east;
+    east.fill( '0', eastMissing );
     value.insert( 10 - northMissing, north );
     value.insert( 15 - eastMissing, east );
     return value;

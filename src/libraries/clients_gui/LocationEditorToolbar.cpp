@@ -109,7 +109,8 @@ void LocationEditorToolbar::CreateBookmark()
     {
         const std::string utm = converter_.ConvertToMgrs( menuPoint_ );
         bool ok = false;
-        const QString name = QInputDialog::getText( tr( "Create bookmark" ), tr( "Enter text to name the bookmark: " ), RichLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
+        const QString name = QInputDialog::getText( tr( "Create bookmark" ),
+            tr( "Enter text to name the bookmark: " ), RichLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
@@ -142,7 +143,8 @@ void LocationEditorToolbar::GotoBookmark( int index )
         }
         catch( ... )
         {
-            const int result = QMessageBox::critical( topLevelWidget(), tr( "Error" ), tr( "The bookmark location is not valid.\nDo you want to remove it?" ), QMessageBox::Yes, QMessageBox::No );
+            const int result = QMessageBox::critical( topLevelWidget(), tr( "Error" ),
+                tr( "The bookmark location is not valid.\nDo you want to remove it?" ), QMessageBox::Yes, QMessageBox::No );
             if( result == QMessageBox::Yes )
                 bookmarks_.erase( bookmarks_.begin() + index );
         }
@@ -166,8 +168,7 @@ void LocationEditorToolbar::ClearBookmarks()
 // -----------------------------------------------------------------------------
 bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
 {
-    bool parseSucceed = locBox_->GetPosition( result );
-    return parseSucceed;
+    return locBox_->GetPosition( result );
 }
 
 // -----------------------------------------------------------------------------

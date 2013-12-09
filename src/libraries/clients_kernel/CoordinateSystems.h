@@ -38,14 +38,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             CoordinateSystems();
-    virtual ~CoordinateSystems();
+    CoordinateSystems();
     //@}
 
     //! @name Setters/Getters
     //@{
     void SetDefault( Projection projection );
     const Projection GetDefault() const;
+
     const std::map< int, QString >& GetSystems() const;
     //@}
 
