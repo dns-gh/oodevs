@@ -899,7 +899,6 @@
         <update name="buildtools"/>
         <update name="cmake"/>
         <update name="depends" version="2.2.6000"/>
-        <update name="excel"/>
         <update name="flexlm"/>
         <update name="gdal"/>
         <update name="geocoord"/>
