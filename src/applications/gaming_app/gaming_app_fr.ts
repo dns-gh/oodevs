@@ -1016,6 +1016,16 @@ Raison: %3
         <source>Impossible to create file in specified directory</source>
         <translation>Impossible de créer le fichier à l&apos;endroit spécifié</translation>
     </message>
+    <message>
+        <source>Confirm file replace</source>
+        <translation>Confirmer l&apos;enregistrement</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
+        <translation>%1 existe.
+Voulez-vous l&apos;écraser ?</translation>
+    </message>
 </context>
 <context>
     <name>IndicatorPlot</name>

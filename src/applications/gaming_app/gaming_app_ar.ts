@@ -1014,6 +1014,15 @@ Reason: %3
         <source>Can not save indicator file :</source>
         <translation type="unfinished">لا يمكن حفظ الملف المؤشر:</translation>
     </message>
+    <message>
+        <source>Confirm file replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IndicatorPlot</name>

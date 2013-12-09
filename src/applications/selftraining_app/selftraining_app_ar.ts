@@ -293,8 +293,9 @@ Do really you want to replace it ?</source>
         <translation type="unfinished">الكتابة فوق الملف؟</translation>
     </message>
     <message>
-        <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation type="unfinished">يوجد ملف يسمى %1 مسبقاً. هل تريد الكتابة فوقه؟</translation>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

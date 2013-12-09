@@ -1014,6 +1014,16 @@ Reason: %3
         <source>Can not save indicator file :</source>
         <translation>Can not save indicator file :</translation>
     </message>
+    <message>
+        <source>Confirm file replace</source>
+        <translation>Confirm file replace</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to overwrite it?</source>
+        <translation>%1 already exists.
+Do you want to overwrite it?</translation>
+    </message>
 </context>
 <context>
     <name>IndicatorPlot</name>

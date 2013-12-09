@@ -84,7 +84,7 @@ void IndicatorExportDialog::Export()
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::OnBrowse()
 {
-    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tools::translate( "Scores", "Export data" ), "", tools::translate( "Scores", "CSV (*.csv)" ) );
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tools::translate( "Scores", "Export data" ), "", tools::translate( "Scores", "CSV (*.csv)" ), 0, QFileDialog::DontConfirmOverwrite );
     if( filename.IsEmpty() )
         return;
     if( filename.Extension() != ".csv" )
@@ -109,7 +109,13 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
-        tools::Ofstream file( file_->text().toStdString().c_str() );
+        const tools::Path filepath( file_->text().toStdString().c_str() );
+        if( filepath.Exists() )
+            if( QMessageBox::warning( QApplication::activeWindow(), tools::translate( "IndicatorExportDialog", "Confirm file replace" ),
+                tools::translate( "IndicatorExportDialog", "%1 already exists.\nDo you want to overwrite it?" ).arg( filepath.FileName().ToUTF8().c_str() ),
+                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
+                return;
+        tools::Ofstream file( filepath );
         if( !file )
             throw MASA_EXCEPTION( tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ).toStdString() );
         const std::string sep = separator_->text().toStdString();
