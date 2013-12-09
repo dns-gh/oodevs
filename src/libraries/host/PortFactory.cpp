@@ -132,7 +132,7 @@ bool PortFactory::WaitConnected( int port )
     tcp::socket socket( service );
     boost::system::error_code ec;
     auto deadline = boost::posix_time::microsec_clock::local_time()
-                  + boost::posix_time::seconds( 10 );
+                  + boost::posix_time::minutes( 1 );
     while( boost::posix_time::microsec_clock::local_time() < deadline )
     {
         socket.connect( endpoint, ec );
