@@ -17,6 +17,12 @@
 
 using namespace tools::zipextractor;
 
+Archive::Archive( const tools::Path& filename )
+    : file_( new zip::izipfile( filename.ToUnicode() ) )
+{
+    // NOTHING
+}
+
 namespace
 {
     class ZipExtractor: private boost::noncopyable
@@ -107,10 +113,15 @@ void tools::zipextractor::InstallPackageFile( const tools::Path& filename, const
 
 void tools::zipextractor::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
 {
-    zip::izipfile archive( filename.ToUnicode() );
-    if( !archive.isOk() )
+    Archive a( filename );
+    ReadPackageFile( a, "content.xml", f );
+}
+
+void tools::zipextractor::ReadPackageFile( Archive& archive, const tools::Path& name, const std::function< void( std::istream& ) >& f )
+{
+    if( !archive.file_->isOk() )
         return;
-    zip::izipstream zipStream( archive, "content.xml" );
+    zip::izipstream zipStream( *archive.file_, name.ToUTF8().c_str() );
     if( ! zipStream.bad() )
         f( zipStream );
 }
