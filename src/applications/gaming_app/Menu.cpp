@@ -32,7 +32,6 @@
 #include "gaming/Profile.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
-#include <tools/VersionHelper.h>
 
 using namespace gui;
 
@@ -281,7 +280,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->SetModes( eModes_None, eModes_All, true );
     menu->insertItem( tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, QString( tools::AppProjectVersion() ), license ), SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, license ), SLOT( exec() ) );
     addMenu( menu );
 
     controllers_.Register( *this );

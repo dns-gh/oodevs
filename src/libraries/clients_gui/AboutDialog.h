@@ -26,7 +26,7 @@ class AboutDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AboutDialog( QWidget* parent, const QString& line, const QString& license );
+             AboutDialog( QWidget* parent, const QString& license );
     virtual ~AboutDialog();
     //@}
 
