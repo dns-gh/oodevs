@@ -92,7 +92,7 @@ func watchNextObject(model *swapi.Model,
 	done := make(chan error)
 	objects := model.GetData().Objects
 	objectId := uint32(0)
-	model.RegisterHandler(func(model *swapi.ModelData, err error) bool {
+	model.RegisterHandler(func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
 		if err != nil {
 			done <- err
 			return true

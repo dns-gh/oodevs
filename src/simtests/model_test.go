@@ -309,7 +309,7 @@ func (s *TestSuite) TestModelHandlers(c *C) {
 	// Test RegisterHandler timeout
 	done := make(chan error, 1)
 	model.RegisterHandlerTimeout(100*time.Millisecond,
-		func(model *swapi.ModelData, err error) bool {
+		func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
 			if err != nil {
 				done <- err
 				close(done)
@@ -322,7 +322,7 @@ func (s *TestSuite) TestModelHandlers(c *C) {
 	// Test unregistering a model handler
 	done = make(chan error, 1)
 	id := model.RegisterHandlerTimeout(0,
-		func(model *swapi.ModelData, err error) bool {
+		func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
 			if err != nil {
 				done <- err
 				close(done)

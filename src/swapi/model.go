@@ -18,7 +18,7 @@ var (
 	ErrInvalidTime = errors.New("invalid time")
 )
 
-type ModelHandler func(model *ModelData, err error) bool
+type ModelHandler func(model *ModelData, msg *SwordMessage, err error) bool
 
 type modelCmd struct {
 	done chan int
@@ -114,7 +114,7 @@ func (model *Model) remove(handlerId int32) {
 func (model *Model) run() error {
 	defer func() {
 		for _, handler := range model.handlers {
-			handler(model.data, ErrConnectionClosed)
+			handler(model.data, nil, ErrConnectionClosed)
 		}
 		model.running.Done()
 	}()
@@ -140,7 +140,7 @@ func (model *Model) run() error {
 				// Execute handlers
 				removed := []int32{}
 				for id, handler := range model.handlers {
-					if handler(model.data, nil) {
+					if handler(model.data, rq.Message, nil) {
 						removed = append(removed, id)
 					}
 				}
@@ -175,7 +175,7 @@ func (model *Model) run() error {
 				}
 			}
 			for _, id := range removed {
-				model.handlers[id](model.data, ErrTimeout)
+				model.handlers[id](model.data, nil, ErrTimeout)
 				model.remove(id)
 			}
 		}
@@ -216,10 +216,11 @@ func (model *Model) waitCommand(cmd func(model *Model)) {
 	<-c.Command.done
 }
 
-// Registers a handler to be called upon ModelData updates. If timeout is non-nul,
-// the handler will be called with ErrTimeout after supplied duration. It will
-// be called with ErrConnectionClosed upon Model termination.
-// Returned identifier can be used with UnregisterHandler.
+// Registers a handler to be called upon ModelData updates, after the message
+// changes have been applied. If timeout is non-nul, the handler will be called
+// with ErrTimeout after supplied duration. It will be called with
+// ErrConnectionClosed upon Model termination. Returned identifier can be used
+// with UnregisterHandler.
 func (model *Model) RegisterHandlerTimeout(timeout time.Duration,
 	handler ModelHandler) int32 {
 
@@ -242,7 +243,7 @@ func (model *Model) RegisterHandler(handler ModelHandler) int32 {
 func (model *Model) UnregisterHandler(id int32) {
 	model.waitCommand(func(model *Model) {
 		if handler := model.handlers[id]; handler != nil {
-			handler(model.data, ErrConnectionClosed)
+			handler(model.data, nil, ErrConnectionClosed)
 			model.remove(id)
 		}
 	})
