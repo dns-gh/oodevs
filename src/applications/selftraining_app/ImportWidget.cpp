@@ -123,7 +123,7 @@ void ImportWidget::InstallExercise()
         packageProgress_->setValue( 0 );
         packageProgress_->setMaximum( packageContent_->count() );
         setCursor( Qt::WaitCursor );
-        tools::zipextractor::InstallPackageFile( path, config_.GetRootDir(), Progress( packageProgress_ ) );
+        tools::zipextractor::InstallPackageFiles( path, config_.GetRootDir(), Progress( packageProgress_ ) );
         setCursor( Qt::ArrowCursor );
         packageProgress_->hide();
     }

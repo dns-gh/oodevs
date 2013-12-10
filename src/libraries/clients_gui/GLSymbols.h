@@ -75,7 +75,7 @@ private:
     //@{
     SvglRenderer& renderer_;
     tools::Path symbolsPath_;
-    std::auto_ptr< tools::zipextractor::InputArchive > zipFile_;
+    std::auto_ptr< tools::zipextractor::InputArchive > archive_;
     T_Symbols                      symbols_;
     T_AlphaSymbols                 alphaSymbols_;
     std::vector< std::string >     notFoundSymbols_;

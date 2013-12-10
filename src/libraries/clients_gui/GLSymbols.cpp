@@ -25,7 +25,7 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
-    , zipFile_ ( new tools::zipextractor::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
+    , archive_ ( new tools::zipextractor::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
 {
     // NOTHING
 }
@@ -94,10 +94,10 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
             else
             {
                 svg::Node_ABC* node = 0;
-                tools::zipextractor::ReadPackageFile( *zipFile_, symbolFile,
-                    [&]( std::istream& zipStream )
+                archive_->ReadPackageFile( symbolFile,
+                    [&]( std::istream& s )
                     {
-                        xml::xistreamstream xis( zipStream );
+                        xml::xistreamstream xis( s );
                         node = renderer_.Compile( xis, lod );
                     } );
                 return node;

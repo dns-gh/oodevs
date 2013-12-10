@@ -395,7 +395,7 @@ namespace
     {
         tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
         if( file.good() )
-            tools::zipextractor::WritePackageFile( archive, name,
+            archive.WritePackageFile( name,
                 [&]( std::ostream& s )
                 {
                     Copy( file, s );
@@ -542,7 +542,7 @@ void ExportWidget::WriteContent( tools::zipextractor::OutputArchive& archive ) c
             << xml::content( "version", tools::AppProjectVersion() )
             << xml::end;
         std::istringstream input( xos.str() );
-        tools::zipextractor::WritePackageFile( archive, "content.xml",
+        archive.WritePackageFile( "content.xml",
             [&]( std::ostream& s )
             {
                 Copy( input, s );
