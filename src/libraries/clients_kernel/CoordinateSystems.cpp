@@ -35,8 +35,6 @@ CoordinateSystems::CoordinateSystems()
 // -----------------------------------------------------------------------------
 void CoordinateSystems::SetDefault( CoordinateSystems::Projection projection )
 {
-    if( default_ < E_Mgrs || default_ > E_Local )
-        throw MASA_EXCEPTION( "Unknown projection" );
     default_ = projection;
 }
 
