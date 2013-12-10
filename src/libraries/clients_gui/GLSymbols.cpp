@@ -25,7 +25,7 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
-    , zipFile_ ( new tools::zipextractor::Archive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
+    , zipFile_ ( new tools::zipextractor::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
 {
     // NOTHING
 }

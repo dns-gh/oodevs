@@ -17,8 +17,24 @@
 
 using namespace tools::zipextractor;
 
-Archive::Archive( const tools::Path& filename )
+InputArchive::InputArchive( const tools::Path& filename )
     : file_( new zip::izipfile( filename.ToUnicode() ) )
+{
+    // NOTHING
+}
+
+InputArchive::~InputArchive()
+{
+    // NOTHING
+}
+
+OutputArchive::OutputArchive( const tools::Path& filename )
+    : file_( new zip::ozipfile( filename.ToUnicode() ) )
+{
+    // NOTHING
+}
+
+OutputArchive::~OutputArchive()
 {
     // NOTHING
 }
@@ -113,15 +129,21 @@ void tools::zipextractor::InstallPackageFile( const tools::Path& filename, const
 
 void tools::zipextractor::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
 {
-    Archive a( filename );
+    InputArchive a( filename );
     ReadPackageFile( a, "content.xml", f );
 }
 
-void tools::zipextractor::ReadPackageFile( Archive& archive, const tools::Path& name, const std::function< void( std::istream& ) >& f )
+void tools::zipextractor::ReadPackageFile( InputArchive& archive, const tools::Path& name, const std::function< void( std::istream& ) >& f )
 {
     if( !archive.file_->isOk() )
         return;
-    zip::izipstream zipStream( *archive.file_, name.ToUTF8().c_str() );
-    if( ! zipStream.bad() )
-        f( zipStream );
+    zip::izipstream s( *archive.file_, name.ToUTF8().c_str() );
+    if( ! s.bad() )
+        f( s );
+}
+
+void tools::zipextractor::WritePackageFile( OutputArchive& archive, const tools::Path& name, const std::function< void( std::ostream& ) >& f )
+{
+    zip::ozipstream s( *archive.file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
+    f( s );
 }

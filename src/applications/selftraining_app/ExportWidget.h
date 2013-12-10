@@ -18,11 +18,11 @@ namespace tools
 {
     class GeneralConfig;
     class Loader_ABC;
-}
 
-namespace zip
+namespace zipextractor
 {
-    class ozipfile;
+    class OutputArchive;
+}
 }
 
 namespace frontend
@@ -95,8 +95,8 @@ private:
     QTextEdit* GetCurrentDescription() const;
     QString GetCurrentPackage() const;
     bool BrowseClicked();
-    void InternalExportPackage( zip::ozipfile& archive );
-    void WriteContent( zip::ozipfile& archive ) const;
+    void InternalExportPackage( tools::zipextractor::OutputArchive& archive );
+    void WriteContent( tools::zipextractor::OutputArchive& archive ) const;
     //@}
 
 private:
