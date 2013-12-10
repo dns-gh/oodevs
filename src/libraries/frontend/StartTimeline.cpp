@@ -43,12 +43,6 @@ namespace
         tools::Ofstream output( run );
         output << "[";
 
-        bpt::ptree login;
-        login.put( "type", "USER_LOGIN" );
-        login.put( "user.login.username", "" );
-        login.put( "user.login.password", "" );
-        WriteTo( output, login, false );
-
         bpt::ptree create;
         create.put( "type", "SESSION_CREATE" );
         create.put( "session.create.uuid", ::uuid );
@@ -95,7 +89,6 @@ StartTimeline::StartTimeline( const tools::GeneralConfig& config,
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
     AddArgument( "port", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_PORT ) ) );
-    AddArgument( "serve", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_WEB_PORT ) ) );
     const tools::Path root = ConfigurationManipulator::GetSessionXml( config, exercise, session ).Parent();
     const tools::Path log = root / "timeline.log";
     AddArgument( "log", log.ToUTF8() );

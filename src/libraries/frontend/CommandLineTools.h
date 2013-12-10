@@ -19,7 +19,6 @@ namespace frontend
         SIMULATION_PORT,
         DISPATCHER_PORT,
         TIMELINE_PORT,
-        TIMELINE_WEB_PORT,
         NUM_PORTS,
     };
 
