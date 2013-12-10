@@ -429,11 +429,12 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             }
 
             for( auto it = currentCapacities.begin(); it != currentCapacities.end(); ++it )
-            {
-                CIT_StockCapacities maxIt = maxCapacities.find( it->first );
-                if( maxIt == maxCapacities.end() || it->second.first > maxIt->second.first || it->second.second > maxIt->second.second )
-                    AddError( eStockMaxExceeded, &agent, it->first );
-            }
+                if( it->second.first > 0 || it->second.second > 0 )
+                {
+                    CIT_StockCapacities maxIt = maxCapacities.find( it->first );
+                    if( maxIt == maxCapacities.end() || it->second.first > maxIt->second.first || it->second.second > maxIt->second.second )
+                        AddError( eStockMaxExceeded, &agent, it->first );
+                }
         }
     }
 }
