@@ -64,7 +64,9 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config, kernel::Profile_ABC& profile )
+Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation,
+        kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config,
+        kernel::Profile_ABC& profile, const kernel::Profile_ABC& filter )
     : EntityResolverFacade( static_cast< kernel::Model_ABC& >( *this ) )
     , controllers_             ( controllers )
     , static_                  ( staticModel )
@@ -78,7 +80,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , agentFactory_            ( *new AgentFactory( controllers, *this, staticModel, publisher, workers ) )
     , objectFactory_           ( *new ObjectFactory( controllers, *this, staticModel, simulation ) )
     , logisticFactory_         ( *new LogisticConsignFactory( controllers, *this, staticModel, simulation ) )
-    , fireFactory_             ( *new FireFactory( *this, controllers_.controller_ ) )
+    , fireFactory_             ( *new FireFactory( *this, controllers_.controller_, filter ) )
     , tacticalLineFactory_     ( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_      ( *new FireResultFactory( *this, simulation, profile ) )
     , userProfileFactory_      ( *new UserProfileFactory( *this, controllers, publisher ) )

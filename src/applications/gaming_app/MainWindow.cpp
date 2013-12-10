@@ -133,19 +133,19 @@ namespace
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
-                        Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger, const QString& license )
+                        Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, const QString& license )
     : QMainWindow()
     , controllers_     ( controllers )
     , staticModel_     ( staticModel )
     , model_           ( model )
     , network_         ( network )
     , config_          ( config )
+    , profile_         ( filter )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
     , glProxy_         ( new gui::GlProxy( logger ) )
     , connected_       ( false )
     , onPlanif_        ( false )
-    , pProfile_        ( new ProfileFilter( controllers, p ) )
     , icons_           ( 0 )
     , dockContainer_   ( 0 )
 {
@@ -155,8 +155,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, *pProfile_ ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, *pProfile_ ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
 
     // Symbols
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
@@ -184,11 +184,11 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
     //sound player
-    firePlayer_.reset( new FirePlayer( controllers, *pProfile_, simulation ) );
+    firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
 
     // Misc
     lighting_.reset( new SimulationLighting( controllers, this ) );
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, filter );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
@@ -196,29 +196,29 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, firePlayer_.get() ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
     // First layers
     parameters_ = new gui::ParametersLayer( *glProxy_ );
     gui::LocationsLayer* locationsLayer      = new gui::LocationsLayer( *glProxy_ );
     gui::TerrainPicker* picker               = new gui::TerrainPicker( this );
-    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, *pProfile_ );
-    AutomatsLayer* automatsLayer             = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model_.agents_ );
-    FormationLayer* formationLayer           = new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile_ );
+    AutomatsLayer* automatsLayer             = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    FormationLayer* formationLayer           = new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
 
     // Misc
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, *pProfile_, *selector_ );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, *pProfile_, network.GetCommands(), config, *parameters_ );
+    new Dialogs( this, controllers, model_, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config, *parameters_ );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons_, model_.userProfileFactory_ );
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, profile_, *icons_, model_.userProfileFactory_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, *pProfile_,
+    dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
                                              *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
@@ -227,7 +227,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Tool bars
     AddToolBar( *this, new SIMControlToolbar( this, controllers, simulationController, network, dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
-    AddToolBar( *this, new EventToolbar( this, controllers, *pProfile_ ), eModes_Default );
+    AddToolBar( *this, new EventToolbar( this, controllers, profile_ ), eModes_Default );
     AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
     addToolBarBreak();
@@ -284,28 +284,28 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 {
     gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
-    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
+    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer* mapnik               = config_.HasMapnik() ? new gui::MapnikLayer( controllers_.controller_ ) : 0;
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, *parameters_, model_.tacticalLineFactory_, *glProxy_, *pProfile_ );
-    gui::Layer& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, picker );
-    gui::Layer& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, *parameters_, model_.tacticalLineFactory_, *glProxy_, profile_ );
+    gui::Layer& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, picker );
+    gui::Layer& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
     gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, *pProfile_ );
+    gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
+    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_ );
+    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, profile_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
@@ -485,11 +485,11 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         {
             dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
-            if( profile_.isEmpty() )
-                profile_ = tools::translate( "LoginDialog", "Anonymous" );
+            if( login_.isEmpty() )
+                login_ = tools::translate( "LoginDialog", "Anonymous" );
         }
         QString planifName = appName + QString( " - [%1@%2][%3]" )
-                            .arg( profile_ )
+                            .arg( login_ )
                             .arg( simulation.GetSimulationHost().c_str() )
                             .arg( ExtractExerciceName( config_.GetExerciseFile() ));
         if( planifName_ != planifName )
@@ -500,7 +500,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         planifName_ = appName + tr( " - Not connected" ) ;
         controllers_.actions_.Select( SelectionStub() );
         connected_ = false;
-        profile_ = "";
+        login_ = "";
         Close();
     }
     setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
@@ -533,13 +533,13 @@ void MainWindow::NotifyUpdated( const Profile& profile )
 {
     if( ! profile.IsLoggedIn() )
     {
-        profile_ = profile.GetLogin();
+        login_ = profile.GetLogin();
         static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT( show() ) );
     }
-        else
-        profile_ = profile.GetLogin();
+    else
+        login_ = profile.GetLogin();
 }
 
 // -----------------------------------------------------------------------------

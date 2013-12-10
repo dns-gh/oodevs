@@ -9,8 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Fires.h"
-#include "IndirectFire.h"
-#include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
 #include "clients_gui/GlTools_ABC.h"

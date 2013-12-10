@@ -21,6 +21,7 @@
 #include "gaming/Simulation.h"
 #include "gaming/SimulationController.h"
 #include "gaming/Profile.h"
+#include "gaming/ProfileFilter.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "clients_gui/VerticalHeaderTableView.h"
@@ -62,9 +63,10 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     const std::string& login = config_->GetLogin();
     const std::string& pwd = config_->GetPassword();
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), login, config_->IsLoginInCommandLine() ) );
+    filter_.reset( new ProfileFilter( *controllers_, *profile_ ) );
     if( !pwd.empty() )
         profile_->SetCredentials( login, pwd );
-    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_, *profile_ ) );
+    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_, *profile_, *filter_ ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
 
     // Network
@@ -77,7 +79,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     qApp->setLibraryPaths( libList );
 
     // GUI
-    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_, *network_, *profile_, *config_, *logger_, GetExpiration() );
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_, *network_, *filter_, *config_, *logger_, GetExpiration() );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 
