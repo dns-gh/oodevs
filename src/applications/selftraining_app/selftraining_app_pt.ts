@@ -231,12 +231,12 @@
     </message>
     <message>
         <source>The selected terrain is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
+Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The selected model is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
+Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -292,7 +292,7 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>%1 already exists.
-Do you want to overwrite it?</source>
+Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
