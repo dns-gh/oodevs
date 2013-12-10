@@ -480,7 +480,7 @@ unsigned int DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_AgentDataDetection::HasChanged() const
 {
-    return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ || bRefugeeManagedUpdated_;
+    return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ || bRefugeeManagedUpdated_ || bDeadUpdated_;
 }
 
 // -----------------------------------------------------------------------------
