@@ -17,13 +17,11 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Controllers;
 }
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  UtmParser
     @brief  UtmParser
@@ -35,10 +33,12 @@ class UtmParser : public LocationParser_ABC
                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                 , private boost::noncopyable
 {
+    typedef std::function< geometry::Point2f( const std::string& ) > T_Converter;
+
 public:
     //! @name Constructors/Destructor
     //@{
-             UtmParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
+             UtmParser( kernel::Controllers& controllers, const T_Converter& converter );
     virtual ~UtmParser();
     //@}
 
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::CoordinateConverter_ABC& converter_;
+    const T_Converter converter_;
     std::string zone_;
     //@}
 };

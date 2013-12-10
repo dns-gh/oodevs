@@ -12,8 +12,9 @@
 #include "CoordinateSystems.h"
 #include "tools/ExerciseConfig.h"
 #include "Tools.h"
-#include <boost/format.hpp>
 #include <geocoord/Geoid.h>
+#include <geocoord/Datums.h>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;
@@ -170,6 +171,30 @@ std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& pos ) co
                                                        % boost::lexical_cast< int >( utm_.GetEasting() ) );
 }
 
+namespace
+{
+    const geocoord::MGRS::Parameters MakeParameters( const std::string& code )
+    {
+        const geocoord::Datum* datum = geocoord::Datums::Find( code );
+        if( datum )
+            return geocoord::MGRS::Parameters( *datum );
+        throw MASA_EXCEPTION( "unable to find coordinate datum " + code );
+    }
+}
+
+std::string CoordinateConverter::ConvertTo( const geometry::Point2f& p, const std::string& code ) const
+{
+    const geometry::Point2f translated = p - translation_;
+    planar_.Set( translated.X(), translated.Y() );
+    return geocoord::MGRS( planar_, MakeParameters( code ) ).GetString();
+}
+
+geometry::Point2f CoordinateConverter::ConvertFrom( const std::string& pos, const std::string& code ) const
+{
+    planar_.SetCoordinates( geocoord::MGRS( pos, MakeParameters( code ) ) );
+    return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::SetGeodeticCoordinates
 // Created: AME 2010-02-23
@@ -213,6 +238,9 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
     {
     case CoordinateSystems::E_Mgrs:
         positionStr = ConvertToMgrs( position );
+        break;
+    case CoordinateSystems::E_SanC:
+        positionStr = ConvertTo( position, "SAN-C" );
         break;
     case CoordinateSystems::E_Wgs84Dd:
         {

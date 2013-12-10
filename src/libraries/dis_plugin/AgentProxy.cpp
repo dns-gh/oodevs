@@ -24,8 +24,6 @@
 #include "tic/Platform_ABC.h"
 #include "tic/PlatformAdapter.h"
 #include "tic/PlatformDelegate_ABC.h"
-#include <geocoord/MGRS.h>
-#include <geocoord/Geodetic.h>
 
 using namespace plugins::dis;
 

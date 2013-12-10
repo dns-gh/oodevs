@@ -76,7 +76,7 @@ LocationEditorBox::~LocationEditorBox()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorBox::FillProjMenu
+// Name: LocationEditorBox::FillDefaultMenu
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 void LocationEditorBox::FillDefaultMenu()
@@ -202,13 +202,13 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
         return false;
 
     QStringList hint;
-    bool parsing_succeed = false;
+    bool success = false;
     bool oneParameter = false;
     if( parsers_->GetParser( parserSelected_ ).GetNumberOfParameters() == 1  )
     {
         oneParameter = true;
-        parsing_succeed = parsers_->Parse( parserSelected_, singleField_->text(), result, hint );
-        if( !hint.isEmpty() && parsing_succeed )
+        success = parsers_->Parse( parserSelected_, singleField_->text(), result, hint );
+        if( !hint.isEmpty() && success )
         {
             if( hint.count() == 1 )
                 singleField_->setText( hint[ 0 ] );
@@ -225,15 +225,15 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
     }
     else
     {
-        parsing_succeed = parsers_->Parse( parserSelected_, longitude_->text(), latitude_->text(), result, hint );
-        if( parsing_succeed )
+        success = parsers_->Parse( parserSelected_, longitude_->text(), latitude_->text(), result, hint );
+        if( success )
         {
             longitude_->setText( hint[ 0 ] );
             latitude_->setText( hint[ 1 ] );
         }
     }
-       SetAspect( oneParameter, !parsing_succeed );
-    return parsing_succeed;
+    SetAspect( oneParameter, !success );
+    return success;
 }
 
 // -----------------------------------------------------------------------------

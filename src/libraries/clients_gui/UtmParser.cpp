@@ -9,14 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "UtmParser.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
-#pragma warning( push )
-#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
 
 using namespace gui;
 
@@ -24,7 +20,7 @@ using namespace gui;
 // Name: UtmParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-UtmParser::UtmParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter )
     : controllers_( controllers )
     , converter_( converter )
 {
@@ -57,7 +53,7 @@ bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStrin
             strContent = zone_.c_str() + strContent;
         if( strContent.length() < 15 )
             strContent = Fill( strContent );
-        result = converter_.ConvertToXY( std::string( strContent.toStdString() ) );
+        result = converter_( strContent.toStdString() );
         hint.append( strContent );
         return true;
     }
@@ -73,13 +69,15 @@ bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStrin
 // -----------------------------------------------------------------------------
 QString UtmParser::Fill( QString value )
 {
-    int missing = 15 - int( value.length() );
+    int missing = 15 - value.length();
     if( missing <= 0 || missing > 10 )
         return value;
     const int northMissing = missing / 2;
-    QString north; north.fill( '0', northMissing );
+    QString north;
+    north.fill( '0', northMissing );
     const int eastMissing  = missing - northMissing;
-    QString east; east.fill( '0', eastMissing );
+    QString east;
+    east.fill( '0', eastMissing );
     value.insert( 10 - northMissing, north );
     value.insert( 15 - eastMissing, east );
     return value;

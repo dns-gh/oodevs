@@ -28,6 +28,7 @@ public:
     enum Projection
     {
         E_Mgrs,
+        E_SanC,
         E_Wgs84Dd,
         E_Wgs84Dms,
         E_Local
@@ -38,14 +39,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             CoordinateSystems();
-    virtual ~CoordinateSystems();
+    CoordinateSystems();
     //@}
 
     //! @name Setters/Getters
     //@{
     void SetDefault( Projection projection );
     const Projection GetDefault() const;
+
     const std::map< int, QString >& GetSystems() const;
     //@}
 
