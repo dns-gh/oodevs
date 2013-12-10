@@ -535,47 +535,6 @@ integration.manageEndMission = function( self )
     end
 end
 
---- Manage dynamic tasks for Lead skills
--- @param self: The leading skill
--- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
--- @param disengageTask : the name of the disengage task given to the non operational entities
--- @author LMT
--- @release 2013-08-13
-integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
-    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
-    local integration = integration
-    local myself = myself
-    myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
-    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
-        if self.companyTask.readyToGiveDynamicTasks then
-            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
-            if dynamicEntitiesAndTasks then
-                for i=1, #dynamicEntitiesAndTasks do
-                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
-                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
-
-                    for _, entity in pairs( dynamicEntities or emptyTable ) do
-                       integration.ListenFrontElement( entity )
-                        if not myself.leadData.dynamicEntityTasks[entity] then
-                            myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
-                        end
-                    end
-                    
-                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
-                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
-                                             or eEtatEchelon_None
-                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
-                    if myself.leadData.dynamicEchelonTasks[dynamicEchelon] then
-                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = myself.leadData.dynamicEchelonTasks[dynamicEchelon]..";"..dynamicTasks
-                    else
-                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = dynamicTasks
-                    end
-                end
-            end
-        end
-    end
-end
-
 -- Distribute obstacles among units 
 -- @author NMI
 -- @release 2013-05-15
@@ -878,6 +837,47 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
 end
 
+--- Manage dynamic tasks for Lead skills
+-- @param self: The leading skill
+-- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
+-- @param disengageTask : the name of the disengage task given to the non operational entities
+-- @author LMT
+-- @release 2013-08-13
+integration.manageDynamicTask = function(self, findBestsFunction, disengageTask)
+    myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
+    local integration = integration
+    local myself = myself
+    myself.leadData.dynamicEchelonTasks = myself.leadData.dynamicEchelonTasks or {}
+    if self.companyTask.isDynamic and self.companyTask:isDynamic() then
+        if self.companyTask.readyToGiveDynamicTasks then
+            local dynamicEntitiesAndTasks = self.companyTask:readyToGiveDynamicTasks( self )
+            if dynamicEntitiesAndTasks then
+                for i=1, #dynamicEntitiesAndTasks do
+                    local dynamicEntities = dynamicEntitiesAndTasks[i].entities
+                    local dynamicTasks = dynamicEntitiesAndTasks[i].tasks
+
+                    for _, entity in pairs( dynamicEntities or emptyTable ) do
+                       integration.ListenFrontElement( entity )
+                        if not myself.leadData.dynamicEntityTasks[entity] then
+                            myself.leadData.dynamicEntityTasks[entity] = dynamicTasks
+                        end
+                    end
+                    
+                    local dynamicEchelon = dynamicEntitiesAndTasks[i].echelon 
+                                             or ( dynamicEntities[ 1 ] and integration.getEchelonState( dynamicEntities[ 1 ].source ) )
+                                             or eEtatEchelon_None
+                    integration.issueMission ( self, dynamicTasks, #dynamicEntities, dynamicEchelon, dynamicEntities, false, findBestsFunction, disengageTask )
+                    if myself.leadData.dynamicEchelonTasks[dynamicEchelon] then
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = myself.leadData.dynamicEchelonTasks[dynamicEchelon]..";"..dynamicTasks
+                    else
+                        myself.leadData.dynamicEchelonTasks[dynamicEchelon] = dynamicTasks
+                    end
+                end
+            end
+        end
+    end
+end
+
 --- Generic activate for Lead skills
 -- @param self: The leading skill
 -- @param findBestsFunction: The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
@@ -978,7 +978,8 @@ end
 -- @param self: The leading skill
 -- @author NMI
 -- @release 2013-07-05
-integration.leadDelayActivate = function( self, disengageTask )  
+integration.leadDelayActivate = function( self, disengageTask, performBlockingActions )  
+    local performBlockingActions = performBlockingActions or false
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -1005,7 +1006,13 @@ integration.leadDelayActivate = function( self, disengageTask )
 
     -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
     -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée
-    if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) 
+    if performBlockingActions then
+        self.orderUnitsToDisengage = meKnowledge:delayingSubordinateIsNotSafe( myself.leadData.pionsLima1 )
+    else
+        self.orderUnitsToDisengage = meKnowledge:screeningSubordinateIsMovingBackward()
+    end
+    meKnowledge.arrivedUnits = meKnowledge.arrivedUnits or {}
+    if ( not self.decrocher and self.orderUnitsToDisengage ) 
         and meKnowledge.arrivedUnits
         and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
         local fragOrder = integration.createFragOrder("Disengage")
@@ -1014,13 +1021,11 @@ integration.leadDelayActivate = function( self, disengageTask )
         meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
 
         -- Keep only the operational units
-
         for index, entity in pairs( meKnowledge.pionsToAwait ) do
             if not exists( self.operationnalEntities, entity ) then
                 meKnowledge.pionsToAwait[ index ] = nil
             end
         end
-
         for k,v in pairs( meKnowledge.arrivedUnits ) do 
             meKnowledge.arrivedUnits[ k ] = nil
         end
@@ -1029,8 +1034,11 @@ integration.leadDelayActivate = function( self, disengageTask )
         for k,v in pairs( meKnowledge.pionsToAwait ) do
             meKnowledge.pionsToAwaitSource[k.source] = v.source
         end
-
-        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = myself.leadData.pionsLima1 } )
+        local entities = {}
+        for _, entity in pairs( myself.leadData.pionsLima1 ) do
+            entities[ #entities + 1 ] = entity
+        end
+        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = entities } )
         self.decrocher = true
         self.screenPosition = false
         myself.screenUnitDisengage = nil
