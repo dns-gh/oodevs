@@ -28,7 +28,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     , controllers_( controllers )
     , options_( controllers.options_ )
     , coordinateSystems_( coordSystems )
-    , previousCoordinateSystem_( kernel::CoordinateSystems::E_Mgrs )
+    , previousCoordinateSystem_( coordSystems.GetDefault() )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
     listCoordSys_ = new RichWidget< QComboBox >( "listCoordSys" );
