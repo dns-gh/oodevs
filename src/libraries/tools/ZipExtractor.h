@@ -10,39 +10,20 @@
 #ifndef __ZipExtractor_h_
 #define __ZipExtractor_h_
 
-#include <boost/noncopyable.hpp>
-
-namespace zip
-{
-    class izipfile;
-}
-
 namespace tools
 {
-class Path;
+    class Path;
 
 namespace zipextractor
 {
 
-class ZipExtractor: private boost::noncopyable
-{
-public:
-     ZipExtractor( zip::izipfile& archive );
-    ~ZipExtractor();
-
-    bool Next();
-    tools::Path GetCurrentFileName() const;
-    void ExtractCurrentFile( tools::Path destination );
-
-private:
-    zip::izipfile& archive_;
-    std::vector< char > buffer_;
-};
-
-// Extract the whole archive
 void ExtractArchive( const Path& archivePath, const Path& destination );
 
-}  // namespace zipextractor
-}  // namespace tools
+void ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f );
+void InstallPackageFile( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f );
+void ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f );
+
+}
+}
 
 #endif // __ZipExtractor_h_

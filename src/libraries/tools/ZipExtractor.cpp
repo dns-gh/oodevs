@@ -11,62 +11,61 @@
 #include "ZipExtractor.h"
 #include <tools/Path.h>
 #include "FileWrapper.h"
-#pragma warning( push )
-#pragma warning( disable: 4244 )
+#pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 
-namespace tools
-{
-namespace zipextractor
-{
+using namespace tools::zipextractor;
 
-ZipExtractor::ZipExtractor( zip::izipfile& archive )
-    : archive_( archive )
-    , buffer_( 64*1024 )
+namespace
 {
-    // Reset enumeration
-    archive_.closeInZip();
-}
-
-ZipExtractor::~ZipExtractor()
-{
-}
-
-bool ZipExtractor::Next()
-{
-    return archive_.isOk() && archive_.browse();
-}
-
-tools::Path ZipExtractor::GetCurrentFileName() const
-{
-    return Path::FromUTF8( archive_.getCurrentFileName() );
-}
-
-void ZipExtractor::ExtractCurrentFile( tools::Path dest )
-{
-    dest.SystemComplete();
-    if( dest.FileName() == "." )
-        return;
-
-    if( !dest.Parent().Exists() )
-        dest.Parent().CreateDirectories();
-    tools::Ofstream output( dest, std::ios_base::out | std::ios_base::binary );
-
-    for( ;; )
+    class ZipExtractor: private boost::noncopyable
     {
-        int read = archive_.read( &buffer_[0], static_cast< int >( buffer_.size() ));
-        if( read <= 0 )
-            break;
-        output.write( &buffer_[0], static_cast< std::streamsize >( read ));
-    }
+    public:
+         ZipExtractor( zip::izipfile& archive )
+            : archive_( archive )
+            , buffer_( 64*1024 )
+        {
+            // Reset enumeration
+            archive_.closeInZip();
+        }
+
+        bool Next()
+        {
+            return archive_.isOk() && archive_.browse();
+        }
+
+        tools::Path GetCurrentFileName() const
+        {
+            return tools::Path::FromUTF8( archive_.getCurrentFileName() );
+        }
+
+        void ExtractCurrentFile( tools::Path dest )
+        {
+            dest.SystemComplete();
+            if( dest.FileName() == "." )
+                return;
+
+            if( !dest.Parent().Exists() )
+                dest.Parent().CreateDirectories();
+            tools::Ofstream output( dest, std::ios_base::out | std::ios_base::binary );
+
+            for( ;; )
+            {
+                int read = archive_.read( &buffer_[0], static_cast< int >( buffer_.size() ));
+                if( read <= 0 )
+                    break;
+                output.write( &buffer_[0], static_cast< std::streamsize >( read ));
+            }
+        }
+
+    private:
+        zip::izipfile& archive_;
+        std::vector< char > buffer_;
+    };
 }
 
-// -----------------------------------------------------------------------------
-// Name: ExtractArchive
-// Created: ABR 2013-01-21
-// -----------------------------------------------------------------------------
-void ExtractArchive( const Path& archivePath, const Path& destination )
+void tools::zipextractor::ExtractArchive( const Path& archivePath, const Path& destination )
 {
     zip::izipfile archive( archivePath.ToUnicode() );
     ZipExtractor extractor( archive );
@@ -77,5 +76,41 @@ void ExtractArchive( const Path& archivePath, const Path& destination )
     }
 }
 
-    } //! namespace zipextractor
-} //! namespace tools
+void tools::zipextractor::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f )
+{
+    zip::izipfile archive( filename.ToUnicode() );
+    if( ! archive.isOk() )
+        return;
+    while( archive.browse() )
+    {
+        const std::string name = archive.getCurrentFileName();
+        if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
+            f( tools::Path::FromUTF8( name ) );
+    }
+}
+
+void tools::zipextractor::InstallPackageFile( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f )
+{
+    zip::izipfile archive( filename.ToUnicode() );
+    if( ! archive.isOk() )
+        return;
+    ZipExtractor ex( archive );
+    while( ex.Next() )
+    {
+        const tools::Path name = ex.GetCurrentFileName();
+        if( name == "content.xml" )
+            continue;
+        ex.ExtractCurrentFile( destination / name );
+        f();
+    }
+}
+
+void tools::zipextractor::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
+{
+    zip::izipfile archive( filename.ToUnicode() );
+    if( !archive.isOk() )
+        return;
+    zip::izipstream zipStream( archive, "content.xml" );
+    if( ! zipStream.bad() )
+        f( zipStream );
+}

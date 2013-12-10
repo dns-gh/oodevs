@@ -11,10 +11,6 @@
 #include "commands.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 )
-#include <zipstream/zipstream.h>
-#pragma warning( pop )
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
@@ -196,33 +192,6 @@ namespace frontend
         tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
             return config.GetExerciseDir( exercise ).ListElements( boost::bind( &IsOther, _1 ), false );
-        }
-
-        tools::Path::T_Paths ListPackageFiles( const tools::Path& filename )
-        {
-            tools::Path::T_Paths list;
-            zip::izipfile archive( filename.ToUnicode() );
-            if( archive.isOk() )
-                while( archive.browse() )
-                {
-                    const std::string name = archive.getCurrentFileName();
-                    if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
-                        list.push_back( tools::Path::FromUTF8( name ) );
-                }
-            archive.close();
-            return list;
-        }
-
-        void InstallPackageFile( zip::izipfile& archive, const tools::Path& filename, const tools::Path& destination )
-        {
-            tools::zipextractor::ZipExtractor ex( archive );
-            while( ex.Next() )
-            {
-                if( ex.GetCurrentFileName() != filename )
-                    continue;
-                ex.ExtractCurrentFile( destination / filename );
-                break;
-            }
         }
 
         bool ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise )

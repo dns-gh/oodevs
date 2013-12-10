@@ -10,21 +10,9 @@
 #ifndef __commands_h_
 #define __commands_h_
 
-#include "tools/ZipExtractor.h"
-
-namespace boost
-{
-    template< typename T > class function0;
-}
-
 namespace tools
 {
     class GeneralConfig;
-}
-
-namespace zip
-{
-    class izipfile;
 }
 
 namespace frontend
@@ -42,23 +30,6 @@ namespace frontend
         tools::Path::T_Paths ListScripts         ( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListOrders          ( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise );
-        tools::Path::T_Paths ListPackageFiles    ( const tools::Path& filename );
-
-        void InstallPackageFile( zip::izipfile& archive, const tools::Path& filename, const tools::Path& destination );
-        template< typename Functor >
-        void InstallPackageFile( zip::izipfile& archive, const tools::Path& destination, Functor callback )
-        {
-            tools::zipextractor::ZipExtractor ex( archive );
-            tools::Path name;
-            while( ex.Next() )
-            {
-                name = ex.GetCurrentFileName();
-                if( name == "content.xml" )
-                    continue;
-                ex.ExtractCurrentFile( destination / name );
-                callback();
-            }
-        }
 
         tools::Path::T_Paths RemoveCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise,
                                                const tools::Path& session, const tools::Path::T_Paths& checkpoints );
