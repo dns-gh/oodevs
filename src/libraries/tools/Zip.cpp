@@ -82,7 +82,7 @@ void OutputArchive::WriteFile( const tools::Path& name, const std::function< voi
 
 namespace
 {
-    const tools::Path content = "content.xml"; // $$$$ SBO 2008-03-17: hard coded!
+    const tools::Path content = "content.xml";
 }
 
 void tools::zip::ExtractArchive( const tools::Path& archivePath, const tools::Path& destination )
@@ -94,7 +94,7 @@ void tools::zip::ExtractArchive( const tools::Path& archivePath, const tools::Pa
 void tools::zip::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& viewer )
 {
     InputArchive a( filename );
-    a.ExtractFiles( "", // $$$$ MCO 2013-12-11: 
+    a.ExtractFiles( "",
         [&]( const tools::Path& file ) -> bool
         {
             if( file != content )
