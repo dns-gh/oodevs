@@ -23,10 +23,11 @@
 #include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "MT_Tools/MT_Logger.h"
-#include "saver_plugin/SaverPlugin.h"
-#include "script_plugin/ScriptPlugin.h"
-#include "score_plugin/ScorePlugin.h"
+#include "logistic_plugin/LogisticPlugin.h"
 #include "order_plugin/OrderPlugin.h"
+#include "saver_plugin/SaverPlugin.h"
+#include "score_plugin/ScorePlugin.h"
+#include "script_plugin/ScriptPlugin.h"
 #include "vision_plugin/VisionPlugin.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
@@ -116,6 +117,7 @@ void PluginFactory::Instanciate()
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
                 staticModel_, config_, services_ ) );
+    checkpointFilter_->Add( logistic::CreateLogisticPlugin( *model_, staticModel_, config_ ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

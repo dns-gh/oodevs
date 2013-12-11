@@ -352,6 +352,7 @@ target_link_libraries( dispatcher
     clients_kernel
     indicators
     logger_plugin
+    logistic_plugin
     messenger_plugin
     meteo
     order_plugin
@@ -386,14 +387,6 @@ add_target( hla_plugin_test tests "tests/hla_plugin_test" OPTIONS protocol test 
 target_link_libraries( hla_plugin_test hla_plugin )
 add_dependencies( hla_plugin_test hla_plugin_dll )
 
-# logistic_plugin_dll
-add_target( logistic_plugin_dll plugins "libraries/logistic_plugin_dll" OPTIONS protocol plugin shared )
-masa_add_target_definition( logistic_plugin_dll LOGISTIC_PLUGIN_DLL_EXPORTS )
-target_link_libraries( logistic_plugin_dll
-    clients_kernel
-    logistic_plugin
-)
-
 # web_control_plugin_dll
 add_target( web_control_plugin_dll plugins "libraries/web_control_plugin_dll" OPTIONS protocol plugin shared )
 masa_add_target_definition( web_control_plugin_dll WEB_CONTROL_PLUGIN_DLL_EXPORTS )
@@ -417,7 +410,6 @@ target_link_libraries( timeline_plugin_dll
 set( PLUGINS_DLL
     dis_plugin_dll
     hla_plugin_dll
-    logistic_plugin_dll
     timeline_plugin_dll
     web_control_plugin_dll
     )

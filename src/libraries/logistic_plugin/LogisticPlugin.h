@@ -49,6 +49,16 @@ namespace tools
     class Path;
 }
 
+namespace dispatcher
+{
+    class Model_ABC;
+}
+
+namespace kernel
+{
+    class StaticModel;
+}
+
 namespace plugins
 {
 namespace logistic
@@ -116,9 +126,10 @@ private:
     //@}
 };
 
-LogisticPlugin* CreateLogisticPlugin(
-    const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-    const tools::SessionConfig& config, xml::xistream& xis );
+boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
+    const dispatcher::Model_ABC& model,
+    const kernel::StaticModel& staticModel,
+    const tools::SessionConfig& config );
 
 }
 }
