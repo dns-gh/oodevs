@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
 #include "moc_ADN_MainWindow.cpp"
+
 #include "ADN_ConsistencyDialog.h"
 #include "ADN_Enums.h"
 #include "ADN_GeneralConfig.h"
@@ -25,11 +26,14 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_WorkspaceElement.h"
+
+#include "clients_gui/AboutDialog.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/GlContext.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
+
 #include "tools/Language.h"
 #include "tools/VersionHelper.h"
 
@@ -137,7 +141,7 @@ ADN_MainWindow::ADN_MainWindow( const ADN_GeneralConfig& config )
     menuProject->insertSeparator();
     menuProject->addAction( actionClose_ );
     menuProject->insertSeparator();
-    menuProject->addAction( actionExportHtml_ ); 
+    menuProject->addAction( actionExportHtml_ );
     menuProject->addAction( actionConsistencyAnalysis_ );
     menuProject->addAction( actionOptional_ );
     menuProject->insertSeparator();
@@ -506,8 +510,8 @@ void ADN_MainWindow::OnExportHtml()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OnAbout()
 {
-    QMessageBox::about( this , tr( "Sword Adaptation Tool" ),
-        QString( "Sword Adaptation Tool\n%1\nCopyright (c) MASA Group %2" ).arg( tools::AppProjectVersion() ).arg( QDateTime::currentDateTime().date().year() ) );
+    gui::AboutDialog about( this, QString() );
+    about.exec();
 }
 
 namespace
