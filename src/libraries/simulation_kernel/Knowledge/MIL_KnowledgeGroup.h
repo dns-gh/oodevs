@@ -152,6 +152,7 @@ public:
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( MIL_Object_ABC& objectKnown );
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( boost::shared_ptr< DEC_Knowledge_Object >& object );
+    void AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown );
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown );
