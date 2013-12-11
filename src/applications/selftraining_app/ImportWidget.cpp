@@ -144,15 +144,14 @@ bool ImportWidget::IsButtonEnabled() const
 // -----------------------------------------------------------------------------
 bool ImportWidget::ReadPackageContentFile()
 {
-    bool read = false;
     try
     {
-        tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
-        tools::zip::ReadPackageContentFile( path,
-            [&]( std::istream& zipStream )
+        tools::zip::ReadPackageContentFile(
+            tools::Path::FromUnicode( package_->text().toStdWString() ),
+            [&]( std::istream& s )
             {
                 std::string name, description, version;
-                xml::xistreamstream xis( zipStream );
+                xml::xistreamstream xis( s );
                 xis >> xml::start( "content" )
                         >> xml::content( "name", name )
                         >> xml::content( "description", description )
@@ -167,12 +166,13 @@ bool ImportWidget::ReadPackageContentFile()
                 packageVersion_->setPalette( *palette );
                 packageVersion_->setText( version.c_str() );
                 packageDescription_->setText( description.c_str() );
-                read = true;
             } );
     }
-    catch( const xml::exception& )
-    {}
-    return read;
+    catch( std::exception& )
+    {
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

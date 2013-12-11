@@ -115,14 +115,12 @@ BOOST_AUTO_TEST_CASE( zipstream_reads_package_invalid_file )
 {
     tools::zip::InputArchive a( BOOST_RESOLVE( "package.zip" ) );
     MOCK_FUNCTOR( f, void( std::istream& ) );
-    a.ReadPackageFile( "invalid file", f );
+    BOOST_CHECK_THROW( a.ReadPackageFile( "invalid file", f ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( zipstream_reads_invalid_package_files, InvalidArchiveFixture )
 {
-    tools::zip::InputArchive a( path );
-    MOCK_FUNCTOR( f, void( std::istream& ) );
-    a.ReadPackageFile( "invalid file", f );
+    BOOST_CHECK_THROW( tools::zip::InputArchive a( path ), std::exception );
 }
 
 BOOST_AUTO_TEST_CASE( zipstream_writes_package_files )
@@ -155,4 +153,10 @@ BOOST_AUTO_TEST_CASE( zipstream_writes_package_files )
         ExpectFileContent( a, "file1", "this is the file content" );
         ExpectFileContent( a, "data/file2", "this is the other file content" );
     }
+}
+
+BOOST_AUTO_TEST_CASE( zipstream_writes_invalid_package_files )
+{
+    tools::TemporaryDirectory dir( "zipstream-", temp_directory );
+    BOOST_CHECK_THROW( tools::zip::OutputArchive a( dir.Path() / "***" ), std::exception );
 }

@@ -20,7 +20,8 @@ using namespace tools::zip;
 InputArchive::InputArchive( const tools::Path& filename )
     : file_( new ::zip::izipfile( filename.ToUnicode() ) )
 {
-    // NOTHING
+    if( !file_->isOk() )
+        throw MASA_EXCEPTION( "failed to open zip archive '" + filename.ToUTF8() + "'" );
 }
 
 InputArchive::~InputArchive()
@@ -30,17 +31,17 @@ InputArchive::~InputArchive()
 
 void InputArchive::ReadPackageFile( const tools::Path& name, const std::function< void( std::istream& ) >& f )
 {
-    if( !file_->isOk() )
-        return;
     ::zip::izipstream s( *file_, name.ToUTF8().c_str() );
-    if( ! s.bad() )
-        f( s );
+    if( s.bad() )
+        throw MASA_EXCEPTION( "file '" + name.ToUTF8() + "' not found in zip archive" );
+    f( s );
 }
 
 OutputArchive::OutputArchive( const tools::Path& filename )
     : file_( new ::zip::ozipfile( filename.ToUnicode() ) )
 {
-    // NOTHING
+    if( !file_->isOk() )
+        throw MASA_EXCEPTION( "failed to create zip archive '" + filename.ToUTF8() + "'" );
 }
 
 OutputArchive::~OutputArchive()
@@ -51,6 +52,8 @@ OutputArchive::~OutputArchive()
 void OutputArchive::WritePackageFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f )
 {
     ::zip::ozipstream s( *file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
+    if( s.bad() )
+        throw MASA_EXCEPTION( "file '" + name.ToUTF8() + "' cannot be added to zip archive" );
     f( s );
 }
 
