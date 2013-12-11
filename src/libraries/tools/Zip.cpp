@@ -37,6 +37,29 @@ void InputArchive::ReadPackageFile( const tools::Path& name, const std::function
     f( s );
 }
 
+void InputArchive::ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& f )
+{
+    std::vector< char > buffer( 64 * 1024 );
+    while( file_->isOk() && file_->browse() )
+    {
+        const auto file = tools::Path::FromUTF8( file_->getCurrentFileName() );
+        if( ! f( file ) )
+            continue;
+        const auto dest = ( destination / file ).SystemComplete();
+        if( dest.FileName() == "." )
+            continue;
+        dest.Parent().CreateDirectories();
+        tools::Ofstream output( dest, std::ios_base::out | std::ios_base::binary );
+        for( ;; )
+        {
+            int read = file_->read( &buffer[0], static_cast< int >( buffer.size() ) );
+            if( read <= 0 )
+                break;
+            output.write( &buffer[0], static_cast< std::streamsize >( read ) );
+        }
+    }
+}
+
 OutputArchive::OutputArchive( const tools::Path& filename )
     : file_( new ::zip::ozipfile( filename.ToUnicode() ) )
 {
@@ -59,85 +82,38 @@ void OutputArchive::WritePackageFile( const tools::Path& name, const std::functi
 
 namespace
 {
-    class Extractor : private boost::noncopyable
-    {
-    public:
-         Extractor( const tools::Path& archivePath )
-            : archive_( archivePath.ToUnicode() )
-            , buffer_( 64*1024 )
-        {}
-
-        bool Next()
-        {
-            return archive_.isOk() && archive_.browse();
-        }
-
-        tools::Path GetCurrentFileName() const
-        {
-            return tools::Path::FromUTF8( archive_.getCurrentFileName() );
-        }
-
-        void ExtractCurrentFile( const tools::Path& dest )
-        {
-            dest.SystemComplete();
-            if( dest.FileName() == "." )
-                return;
-
-            dest.Parent().CreateDirectories();
-            tools::Ofstream output( dest, std::ios_base::out | std::ios_base::binary );
-
-            for( ;; )
-            {
-                int read = archive_.read( &buffer_[0], static_cast< int >( buffer_.size() ));
-                if( read <= 0 )
-                    break;
-                output.write( &buffer_[0], static_cast< std::streamsize >( read ));
-            }
-        }
-
-    private:
-        ::zip::izipfile archive_;
-        std::vector< char > buffer_;
-    };
-}
-
-namespace
-{
     const tools::Path content = "content.xml"; // $$$$ SBO 2008-03-17: hard coded!
 }
 
-void tools::zip::ExtractArchive( const Path& archivePath, const Path& destination )
+void tools::zip::ExtractArchive( const tools::Path& archivePath, const tools::Path& destination )
 {
-    Extractor extractor( archivePath );
-    while( extractor.Next() )
-    {
-        auto output = destination / extractor.GetCurrentFileName();
-        extractor.ExtractCurrentFile( output );
-    }
+    InputArchive a( archivePath );
+    a.ExtractFiles( destination, [&]( const tools::Path& ) { return true; } );
 }
 
 void tools::zip::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f )
 {
-    Extractor extractor( filename );
-    while( extractor.Next() )
-    {
-        const tools::Path name = extractor.GetCurrentFileName();
-        if( name != content )
-            f( name );
-    }
+    InputArchive a( filename );
+    a.ExtractFiles( "", // $$$$ MCO 2013-12-11: 
+        [&]( const tools::Path& file ) -> bool
+        {
+            if( file != content )
+                f( file );
+            return false;
+        } );
 }
 
 void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f )
 {
-    Extractor extractor( filename );
-    while( extractor.Next() )
-    {
-        const tools::Path name = extractor.GetCurrentFileName();
-        if( name == content )
-            continue;
-        extractor.ExtractCurrentFile( destination / name );
-        f();
-    }
+    InputArchive a( filename );
+    a.ExtractFiles( destination,
+        [&]( const tools::Path& file ) -> bool
+        {
+            if( file == content )
+                return false;
+            f();
+            return true;
+        } );
 }
 
 void tools::zip::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )

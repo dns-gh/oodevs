@@ -32,6 +32,7 @@ public:
     ~InputArchive();
 
     void ReadPackageFile( const tools::Path& name, const std::function< void( std::istream& ) >& f );
+    void ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& f );
 
     boost::scoped_ptr< ::zip::izipfile > file_;
 };
@@ -47,7 +48,7 @@ public:
     boost::scoped_ptr< ::zip::ozipfile > file_;
 };
 
-void ExtractArchive( const Path& archivePath, const Path& destination );
+void ExtractArchive( const tools::Path& archivePath, const tools::Path& destination );
 
 void ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f );
 void InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f );

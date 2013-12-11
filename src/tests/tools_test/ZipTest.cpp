@@ -40,8 +40,7 @@ BOOST_AUTO_TEST_CASE( zipstream_extracts_archive )
 BOOST_FIXTURE_TEST_CASE( zipstream_extracts_invalid_archive, InvalidArchiveFixture )
 {
     tools::TemporaryDirectory dir( "zipstream-", temp_directory );
-    tools::zip::ExtractArchive( path, dir.Path() );
-    BOOST_CHECK( dir.Path().ListElements().empty() );
+    BOOST_CHECK_THROW( tools::zip::ExtractArchive( path, dir.Path() ), std::exception );
 }
 
 BOOST_AUTO_TEST_CASE( zipstream_lists_package_files )
@@ -59,7 +58,7 @@ BOOST_FIXTURE_TEST_CASE( zipstream_lists_invalid_package_files, InvalidArchiveFi
 {
     tools::TemporaryDirectory dir( "zipstream-", temp_directory );
     MOCK_FUNCTOR( f, void( const tools::Path& ) );
-    tools::zip::ListPackageFiles( path, f );
+    BOOST_CHECK_THROW( tools::zip::ListPackageFiles( path, f ), std::exception );
 }
 
 BOOST_AUTO_TEST_CASE( zipstream_installs_package_files )
@@ -83,12 +82,8 @@ BOOST_AUTO_TEST_CASE( zipstream_installs_package_files )
 BOOST_FIXTURE_TEST_CASE( zipstream_installs_invalid_package_files, InvalidArchiveFixture )
 {
     tools::TemporaryDirectory dir( "zipstream-", temp_directory );
-    {
-        MOCK_FUNCTOR( f, void() );
-        tools::zip::InstallPackageFiles( path, dir.Path(), f );
-    }
-    MOCK_FUNCTOR( f, bool( const tools::Path& ) );
-    BOOST_CHECK_EQUAL( 0u, dir.Path().ListElements( f ).size() );
+    MOCK_FUNCTOR( f, void() );
+    BOOST_CHECK_THROW( tools::zip::InstallPackageFiles( path, dir.Path(), f ), std::exception );
 }
 
 namespace
