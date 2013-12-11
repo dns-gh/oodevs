@@ -10,42 +10,10 @@
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Meteo/RawVisionData/Elevation.h"
 #include "MT_Tools/MT_Vector2D.h"
-#pragma warning( push, 0 )
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
+#include <tools/BoostTest.h>
 
 namespace
 {
-
-// TODO: move it in tools, reuse in terrain
-std::string PrefixAndEscapeLines( const std::string& prefix, const std::string& data )
-{
-    std::vector< std::string > lines;
-    boost::split( lines, data, boost::is_any_of( "\n" ) );
-    std::stringstream prefixed;
-    for( auto it = lines.cbegin(); it != lines.cend(); ++it )
-    {
-        if( it->empty() )
-            continue;
-        prefixed << prefix << "\"" << *it << "\\n\"\n";
-    }
-    return prefixed.str();
-}
-
-// TODO: move it in tools, reuse in terrain
-std::string CheckOutput( const std::string& out, const std::string& expected )
-{
-    if( out == expected )
-        return "";
-    const char* prefix = "            ";
-    std::stringstream err;
-    err << "Unexpected output:\n";
-    err << PrefixAndEscapeLines( prefix, out );
-    err << "!=\n";
-    err << PrefixAndEscapeLines( prefix, expected );
-    return err.str();
-}
 
 std::string CheckSplit( int32_t cellSize, double x1, double y1, double x2, double y2,
         const std::function< bool( MT_Vector2D, MT_Vector2D)>& f, std::string expected )
@@ -64,7 +32,7 @@ std::string CheckSplit( int32_t cellSize, double x1, double y1, double x2, doubl
     const bool res = SplitOnMajorGridLines( cellSize, from, to, callback );
     if( res )
         output << "STOP\n";
-    return CheckOutput( output.str(), expected );
+    return tools::CheckOutput( output.str(), expected );
 }
 
 bool DummyCallback( MT_Vector2D, MT_Vector2D )
