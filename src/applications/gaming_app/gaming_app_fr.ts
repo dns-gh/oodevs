@@ -56,7 +56,7 @@
     </message>
     <message>
         <source>orders</source>
-        <translation type="unfinished"></translation>
+        <translation>ordres</translation>
     </message>
 </context>
 <context>
@@ -137,11 +137,11 @@
     </message>
     <message>
         <source>Start date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de début</translation>
     </message>
     <message>
         <source>End date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de fin</translation>
     </message>
 </context>
 <context>
@@ -458,7 +458,7 @@
     </message>
     <message>
         <source>Create Knowledge Group</source>
-        <translation type="unfinished">Créer un groupe de connaissance</translation>
+        <translation>Créer un groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -676,16 +676,20 @@ Raison: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Discard</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Trigger</source>
         <translation>Déclencher</translation>
     </message>
     <message>
         <source>Copy and trigger</source>
         <translation>Copier et déclencher</translation>
+    </message>
+    <message>
+        <source>Clear parameters</source>
+        <translation>Effacer les paramètres</translation>
+    </message>
+    <message>
+        <source>Show/hide details</source>
+        <translation>Afficher/cacher les détails</translation>
     </message>
 </context>
 <context>
@@ -703,35 +707,8 @@ Raison: %3
         <translation>Supprimer</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
-    </message>
-    <message>
-        <source>Order acknowledged</source>
-        <translation>Ordre executé</translation>
-    </message>
-</context>
-<context>
-    <name>EventMultimediaWidget</name>
-    <message>
-        <source>Browse...</source>
-        <translation type="unfinished">Parcourir...</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation type="unfinished">Profils</translation>
-    </message>
-    <message>
-        <source>Select output directory</source>
-        <translation type="unfinished"></translation>
+        <source>Display</source>
+        <translation>Afficher</translation>
     </message>
 </context>
 <context>
@@ -756,12 +733,20 @@ Raison: %3
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Order acknowledged</source>
+        <translation>Ordre executé</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
 </context>
 <context>
     <name>EventTaskWidget</name>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Label</translation>
     </message>
     <message>
         <source>Description</source>
@@ -785,7 +770,7 @@ Raison: %3
     </message>
     <message>
         <source>Base64 Payload</source>
-        <translation type="unfinished"></translation>
+        <translation>Données Base64</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1003,7 @@ Raison: %3
     </message>
     <message>
         <source>Confirm file replace</source>
-        <translation>Confirmer l'enregistrement</translation>
+        <translation>Confirmer l&apos;enregistrement</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -1871,7 +1856,7 @@ Voulez-vous le remplacer ?</translation>
     <name>LogisticsRequestsSupplyWidget</name>
     <message>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <source>Recipient(s)</source>
@@ -2041,7 +2026,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Mapnik</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapnik</translation>
     </message>
     <message>
         <source>Weather</source>
@@ -2775,11 +2760,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Deactivate brain debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver le decisionnel</translation>
     </message>
     <message>
         <source>Activate brain debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le decisionnel</translation>
     </message>
 </context>
 <context>
@@ -2982,11 +2967,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Go to start (Alt+A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller au début (Alt+A)</translation>
     </message>
     <message>
         <source>Go to end (Alt+Z)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à la fin (Alt+Z)</translation>
     </message>
 </context>
 <context>
@@ -3137,7 +3122,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Create formation</source>
-        <translation type="unfinished">Créer une formation</translation>
+        <translation>Créer une formation</translation>
     </message>
 </context>
 <context>
@@ -3236,10 +3221,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation>Principale</translation>
     </message>
@@ -3330,7 +3311,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>orders</source>
-        <translation type="unfinished"></translation>
+        <translation>ordres</translation>
     </message>
     <message>
         <source>Display tasks</source>
@@ -3385,6 +3366,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>An error occurred during &apos;SaveEvents&apos; request: %1</source>
         <translation>Une erreur s&apos;est produite pendant la requete &apos;Enregistrer la session courante de la timeline dans un fichier&apos;: %1</translation>
+    </message>
+    <message>
+        <source>Invalid timeline binary &apos;%1&apos;</source>
+        <translation type="unfinished">Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3447,7 +3432,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Finish logistic handlings</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminer les requêtes logistiques</translation>
     </message>
     <message>
         <source>Delete unit</source>

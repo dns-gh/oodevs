@@ -674,15 +674,19 @@ Reason: %3
 <context>
     <name>EventBottomWidget</name>
     <message>
-        <source>Discard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trigger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copy and trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show/hide details</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -701,34 +705,7 @@ Reason: %3
         <translation type="unfinished">Eliminar</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order acknowledged</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>EventMultimediaWidget</name>
-    <message>
-        <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select output directory</source>
+        <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -752,6 +729,14 @@ Reason: %3
     </message>
     <message>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order acknowledged</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3228,10 +3213,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3376,6 +3357,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>An error occurred during &apos;SaveEvents&apos; request: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

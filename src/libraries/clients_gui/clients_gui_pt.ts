@@ -221,6 +221,13 @@
     </message>
 </context>
 <context>
+    <name>EventPresenter</name>
+    <message>
+        <source>Read only</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Menu</name>
     <message>
         <source>Increase symbol size</source>
