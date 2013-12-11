@@ -14,6 +14,7 @@ import (
 	"sort"
 	"strings"
 	"swapi"
+	"swtest"
 	"time"
 )
 
@@ -269,7 +270,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	dump := printParties(&prettyPrinter{HideUnstable: true},
 		model.GetData()).GetOutput()
 	expected := readFileAsString(c, "testdata/model.txt")
-	assertEqualOrDiff(c, dump, expected)
+	swtest.AssertEqualOrDiff(c, dump, expected)
 	client.Close()
 
 	client, err := swapi.NewClient(sim.DispatcherAddr)

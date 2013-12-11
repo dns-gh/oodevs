@@ -18,6 +18,7 @@ import (
 	"strings"
 	"swapi"
 	"swapi/simu"
+	"swtest"
 	"time"
 )
 
@@ -207,7 +208,7 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 		[]byte(n2), 0644)
 	c.Assert(err, IsNil)
 
-	assertEqualOrDiff(c, n2, n1)
+	swtest.AssertEqualOrDiff(c, n2, n1)
 }
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (

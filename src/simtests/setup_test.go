@@ -11,7 +11,6 @@ package simtests
 import (
 	"flag"
 	"fmt"
-	"github.com/pmezard/go-difflib/difflib"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
@@ -265,25 +264,6 @@ func readFileAsString(c *C, path string) string {
 	data, err := ioutil.ReadFile(path)
 	c.Assert(err, IsNil)
 	return string(data)
-}
-
-func makeDiff(before, after string) (string, error) {
-	diff := difflib.UnifiedDiff{
-		A:        difflib.SplitLines(before),
-		FromFile: "before",
-		B:        difflib.SplitLines(after),
-		ToFile:   "after",
-		Context:  4,
-	}
-	return difflib.GetUnifiedDiffString(diff)
-}
-
-func assertEqualOrDiff(c *C, result, expected string) {
-	if expected != result {
-		diff, err := makeDiff(expected, result)
-		c.Assert(err, IsNil)
-		c.Errorf("%s\n", diff)
-	}
 }
 
 func Test(t *testing.T) { TestingT(t) }

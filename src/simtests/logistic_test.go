@@ -22,6 +22,7 @@ import (
 	"swapi"
 	"swapi/simu"
 	"sword"
+	"swtest"
 )
 
 // Parse the header and return a list of field matching regexps for fields
@@ -130,7 +131,7 @@ func assertIsPrefixed(c *C, s, prefix string) {
 	if len(lines) > len(prefixes) {
 		lines = lines[:len(prefixes)]
 	}
-	assertEqualOrDiff(c, strings.Join(lines, "\n"), strings.Join(prefixes, "\n"))
+	swtest.AssertEqualOrDiff(c, strings.Join(lines, "\n"), strings.Join(prefixes, "\n"))
 }
 
 func initLogisticEvents(c *C, client *swapi.Client) {
