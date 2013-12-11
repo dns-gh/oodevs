@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
@@ -92,7 +92,7 @@ namespace
     {
         MOCK_FUNCTOR( f, void( std::string ) );
         MOCK_EXPECT( f ).once().with( content );
-        a.ReadPackageFile( p,
+        a.ReadFile( p,
             [&]( std::istream& s )
             {
                 f( std::string( std::istreambuf_iterator< char >( s ), std::istreambuf_iterator< char >() ) );
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( zipstream_reads_package_invalid_file )
 {
     tools::zip::InputArchive a( BOOST_RESOLVE( "package.zip" ) );
     MOCK_FUNCTOR( f, void( std::istream& ) );
-    BOOST_CHECK_THROW( a.ReadPackageFile( "invalid file", f ), std::exception );
+    BOOST_CHECK_THROW( a.ReadFile( "invalid file", f ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( zipstream_reads_invalid_package_files, InvalidArchiveFixture )
@@ -124,12 +124,12 @@ BOOST_AUTO_TEST_CASE( zipstream_writes_package_files )
     const auto path = dir.Path() / "package.zip";
     {
         tools::zip::OutputArchive a( path );
-        a.WritePackageFile( "file1",
+        a.WriteFile( "file1",
             [&]( std::ostream& s )
             {
                 s << "this is the file content";
             } );
-        a.WritePackageFile( "data/file2",
+        a.WriteFile( "data/file2",
             [&]( std::ostream& s )
             {
                 s << "this is the other file content";

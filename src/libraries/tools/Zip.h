@@ -31,7 +31,7 @@ public:
     explicit InputArchive( const tools::Path& filename );
     ~InputArchive();
 
-    void ReadPackageFile( const tools::Path& name, const std::function< void( std::istream& ) >& f );
+    void ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& f );
     void ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& f );
 
     boost::scoped_ptr< ::zip::izipfile > file_;
@@ -43,7 +43,7 @@ public:
     explicit OutputArchive( const tools::Path& filename );
     ~OutputArchive();
 
-    void WritePackageFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f );
+    void WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f );
 
     boost::scoped_ptr< ::zip::ozipfile > file_;
 };

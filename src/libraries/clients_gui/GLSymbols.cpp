@@ -94,7 +94,7 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
             else
             {
                 svg::Node_ABC* node = 0;
-                archive_->ReadPackageFile( symbolFile,
+                archive_->ReadFile( symbolFile,
                     [&]( std::istream& s )
                     {
                         xml::xistreamstream xis( s );

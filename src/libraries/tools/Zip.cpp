@@ -29,7 +29,7 @@ InputArchive::~InputArchive()
     // NOTHING
 }
 
-void InputArchive::ReadPackageFile( const tools::Path& name, const std::function< void( std::istream& ) >& f )
+void InputArchive::ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& f )
 {
     ::zip::izipstream s( *file_, name.ToUTF8().c_str() );
     if( s.bad() )
@@ -72,7 +72,7 @@ OutputArchive::~OutputArchive()
     // NOTHING
 }
 
-void OutputArchive::WritePackageFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f )
+void OutputArchive::WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f )
 {
     ::zip::ozipstream s( *file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
     if( s.bad() )
@@ -119,5 +119,5 @@ void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::
 void tools::zip::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
 {
     InputArchive a( filename );
-    a.ReadPackageFile( content, f );
+    a.ReadFile( content, f );
 }

@@ -395,7 +395,7 @@ namespace
     {
         tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
         if( file.good() )
-            archive.WritePackageFile( name,
+            archive.WriteFile( name,
                 [&]( std::ostream& s )
                 {
                     Copy( file, s );
@@ -534,7 +534,7 @@ void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
     std::string description = GetCurrentDescription()->toPlainText().toStdString();
     if( description.empty() )
         description = "Packaged scenario of " + package.toStdString() + ".";
-    archive.WritePackageFile( "content.xml",
+    archive.WriteFile( "content.xml",
         [&]( std::ostream& s )
         {
             xml::xostreamstream xos( s );
