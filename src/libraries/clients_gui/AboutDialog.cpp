@@ -29,7 +29,7 @@ using namespace gui;
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
 AboutDialog::AboutDialog( QWidget* parent, const QString& license )
-    : QDialog( parent, 0, true, Qt::WStyle_Splash )
+    : QDialog( parent, 0, true, Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint )
 {
     SubObjectName subObject( "AboutDialog" );
     setCaption( tools::translate( "Application", "About" ) );
@@ -42,6 +42,7 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& license )
 
     QVBoxLayout* vbox = new QVBoxLayout( this );
     vbox->setMargin( 0 );
+    vbox->setContentsMargins( 0, 0, 0, 8 );
 
     QLabel* pixLabel = new QLabel();
     pixLabel->setPixmap( pixmap );
@@ -61,12 +62,8 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& license )
     label->setAlignment( Qt::TextSingleLine | Qt::AlignCenter );
     label->setTextInteractionFlags( Qt::TextSelectableByMouse );
 
-    RichPushButton* button = new RichPushButton( "close", tr( "Close" ) );
-    connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
-
     vbox->addWidget( pixLabel, 1, Qt::AlignCenter );
     vbox->addWidget( label, 0, Qt::AlignCenter );
-    vbox->addWidget( button, 0, Qt::AlignCenter );
     setMaximumSize( 64, 64 );
 }
 

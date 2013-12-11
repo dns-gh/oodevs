@@ -405,10 +405,6 @@
         <source>&lt;br&gt;License will expire on </source>
         <translation>&lt;br&gt;La licence expire le </translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
 </context>
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
