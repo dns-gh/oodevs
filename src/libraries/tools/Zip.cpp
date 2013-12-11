@@ -29,21 +29,21 @@ InputArchive::~InputArchive()
     // NOTHING
 }
 
-void InputArchive::ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& f )
+void InputArchive::ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& reader )
 {
     ::zip::izipstream s( *file_, name.ToUTF8().c_str() );
     if( s.bad() )
         throw MASA_EXCEPTION( "file '" + name.ToUTF8() + "' not found in zip archive" );
-    f( s );
+    reader( s );
 }
 
-void InputArchive::ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& f )
+void InputArchive::ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& filter )
 {
     std::vector< char > buffer( 64 * 1024 );
     while( file_->isOk() && file_->browse() )
     {
         const auto file = tools::Path::FromUTF8( file_->getCurrentFileName() );
-        if( ! f( file ) )
+        if( ! filter( file ) )
             continue;
         const auto dest = ( destination / file ).SystemComplete();
         if( dest.FileName() == "." )
@@ -72,12 +72,12 @@ OutputArchive::~OutputArchive()
     // NOTHING
 }
 
-void OutputArchive::WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f )
+void OutputArchive::WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& writer )
 {
     ::zip::ozipstream s( *file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
     if( s.bad() )
         throw MASA_EXCEPTION( "file '" + name.ToUTF8() + "' cannot be added to zip archive" );
-    f( s );
+    writer( s );
 }
 
 namespace
@@ -91,19 +91,19 @@ void tools::zip::ExtractArchive( const tools::Path& archivePath, const tools::Pa
     a.ExtractFiles( destination, [&]( const tools::Path& ) { return true; } );
 }
 
-void tools::zip::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f )
+void tools::zip::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& viewer )
 {
     InputArchive a( filename );
     a.ExtractFiles( "", // $$$$ MCO 2013-12-11: 
         [&]( const tools::Path& file ) -> bool
         {
             if( file != content )
-                f( file );
+                viewer( file );
             return false;
         } );
 }
 
-void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f )
+void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& notifier )
 {
     InputArchive a( filename );
     a.ExtractFiles( destination,
@@ -111,13 +111,13 @@ void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::
         {
             if( file == content )
                 return false;
-            f();
+            notifier();
             return true;
         } );
 }
 
-void tools::zip::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
+void tools::zip::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& reader )
 {
     InputArchive a( filename );
-    a.ReadFile( content, f );
+    a.ReadFile( content, reader );
 }

@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __ZipExtractor_h_
-#define __ZipExtractor_h_
+#ifndef tools_Zip_h
+#define tools_Zip_h
 
 #include <boost/scoped_ptr.hpp>
+#include <iosfwd>
 
 namespace zip
 {
@@ -31,9 +32,11 @@ public:
     explicit InputArchive( const tools::Path& filename );
     ~InputArchive();
 
-    void ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& f );
-    void ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& f );
+    void ReadFile( const tools::Path& name, const std::function< void( std::istream& ) >& reader );
+    // filter will be called for each file and must return true to actually have it extracted
+    void ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& filter );
 
+private:
     boost::scoped_ptr< ::zip::izipfile > file_;
 };
 
@@ -43,18 +46,19 @@ public:
     explicit OutputArchive( const tools::Path& filename );
     ~OutputArchive();
 
-    void WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f );
+    void WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& writer );
 
+private:
     boost::scoped_ptr< ::zip::ozipfile > file_;
 };
 
 void ExtractArchive( const tools::Path& archivePath, const tools::Path& destination );
 
-void ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f );
-void InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f );
-void ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f );
+void ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& viewer );
+void InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& notifier );
+void ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& reader );
 
 }
 }
 
-#endif // __ZipExtractor_h_
+#endif // tools_Zip_h
