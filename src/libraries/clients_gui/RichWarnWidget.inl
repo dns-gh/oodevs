@@ -78,17 +78,15 @@ void RichWarnWidget< T >::OnDone()
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QPalette RichWarnWidget< T >::CreatePalette() const
+QPalette RichWarnWidget< T >::CreatePalette( const QColor& color = Qt::red ) const
 {
     QPalette p = palette();
-
-    p.setColor( QPalette::WindowText, Qt::red );
-    p.setColor( QPalette::Text, Qt::red );
-    p.setColor( QPalette::ButtonText, Qt::red );
-    p.setColor( QPalette::BrightText, Qt::red );
-
-    p.setColor( QPalette::Light, Qt::red );
-    p.setColor( QPalette::Midlight, Qt::red );
+    p.setColor( QPalette::WindowText, color );
+    p.setColor( QPalette::Text, color );
+    p.setColor( QPalette::ButtonText, color );
+    p.setColor( QPalette::BrightText, color );
+    p.setColor( QPalette::Light, color );
+    p.setColor( QPalette::Midlight, color );
     return p;
 }
 
@@ -97,9 +95,11 @@ QPalette RichWarnWidget< T >::CreatePalette() const
 // Created: ABR 2013-10-31
 // -----------------------------------------------------------------------------
 template< typename T >
-void RichWarnWidget< T >::EnableStaticWarning( bool warn )
+void RichWarnWidget< T >::EnableStaticWarning( bool warn, const QColor& color = QColor() )
 {
-    setPalette( ( warn ) ? warningPalette_ : originalPalette_ );
+    setPalette( warn
+                ? color.isValid() ? CreatePalette( color ) : warningPalette_
+                : originalPalette_ );
 }
 
 /*
