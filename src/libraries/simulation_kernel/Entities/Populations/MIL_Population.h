@@ -176,7 +176,7 @@ public:
     //! @name Network
     //@{
     uint32_t OnReceiveOrder( const sword::CrowdOrder& msg );
-    uint32_t OnReceiveFragOrder( const sword::FragOrder& msg );
+    void     OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState() const;
     void UpdateNetwork();

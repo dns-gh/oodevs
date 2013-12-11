@@ -60,20 +60,20 @@ uint32_t MIL_PopulationOrderManager::OnReceiveMission( const sword::CrowdOrder& 
 // Name: MIL_PopulationOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-uint32_t MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
+void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
 {
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
-    uint32_t id = AcquireId();
+    const uint32_t id = AcquireId();
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
     auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
     frag->SetParameters( population_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
+    sendAck( id );
     frag->Send( population_ );
-    return id;
 }
 
 // -----------------------------------------------------------------------------

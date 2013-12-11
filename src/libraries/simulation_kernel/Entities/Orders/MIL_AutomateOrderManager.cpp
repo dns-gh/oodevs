@@ -82,7 +82,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type
 // Name: MIL_AutomateOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-uint32_t MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
+void MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
 {
     if( automate_.IsSurrendered() )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
@@ -93,13 +93,13 @@ uint32_t MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& a
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
-    uint32_t id = AcquireId();
+    const uint32_t id = AcquireId();
     DEC_Representations& representation = automate_.GetRole<DEC_Representations>();
     auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
     frag->SetParameters( automate_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
+    sendAck( id );
     frag->Send( automate_ );
-    return id;
 }
 
 // -----------------------------------------------------------------------------

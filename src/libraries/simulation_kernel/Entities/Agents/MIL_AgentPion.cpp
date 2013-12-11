@@ -873,9 +873,9 @@ uint32_t MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
 // Name: MIL_AgentPion::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-uint32_t MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg )
+void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    return pOrderManager_->OnReceiveFragOrder( msg );
+    pOrderManager_->OnReceiveFragOrder( msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------
