@@ -8,17 +8,17 @@
 // *****************************************************************************
 
 #include "tools_pch.h"
-#include "ZipExtractor.h"
+#include "Zip.h"
 #include <tools/Path.h>
 #include "FileWrapper.h"
 #pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 
-using namespace tools::zipextractor;
+using namespace tools::zip;
 
 InputArchive::InputArchive( const tools::Path& filename )
-    : file_( new zip::izipfile( filename.ToUnicode() ) )
+    : file_( new ::zip::izipfile( filename.ToUnicode() ) )
 {
     // NOTHING
 }
@@ -32,13 +32,13 @@ void InputArchive::ReadPackageFile( const tools::Path& name, const std::function
 {
     if( !file_->isOk() )
         return;
-    zip::izipstream s( *file_, name.ToUTF8().c_str() );
+    ::zip::izipstream s( *file_, name.ToUTF8().c_str() );
     if( ! s.bad() )
         f( s );
 }
 
 OutputArchive::OutputArchive( const tools::Path& filename )
-    : file_( new zip::ozipfile( filename.ToUnicode() ) )
+    : file_( new ::zip::ozipfile( filename.ToUnicode() ) )
 {
     // NOTHING
 }
@@ -50,16 +50,16 @@ OutputArchive::~OutputArchive()
 
 void OutputArchive::WritePackageFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f )
 {
-    zip::ozipstream s( *file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
+    ::zip::ozipstream s( *file_, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
     f( s );
 }
 
 namespace
 {
-    class ZipExtractor: private boost::noncopyable
+    class Extractor : private boost::noncopyable
     {
     public:
-         ZipExtractor( const tools::Path& archivePath )
+         Extractor( const tools::Path& archivePath )
             : archive_( archivePath.ToUnicode() )
             , buffer_( 64*1024 )
         {}
@@ -93,7 +93,7 @@ namespace
         }
 
     private:
-        zip::izipfile archive_;
+        ::zip::izipfile archive_;
         std::vector< char > buffer_;
     };
 }
@@ -103,9 +103,9 @@ namespace
     const tools::Path content = "content.xml"; // $$$$ SBO 2008-03-17: hard coded!
 }
 
-void tools::zipextractor::ExtractArchive( const Path& archivePath, const Path& destination )
+void tools::zip::ExtractArchive( const Path& archivePath, const Path& destination )
 {
-    ZipExtractor extractor( archivePath );
+    Extractor extractor( archivePath );
     while( extractor.Next() )
     {
         auto output = destination / extractor.GetCurrentFileName();
@@ -113,9 +113,9 @@ void tools::zipextractor::ExtractArchive( const Path& archivePath, const Path& d
     }
 }
 
-void tools::zipextractor::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f )
+void tools::zip::ListPackageFiles( const tools::Path& filename, const std::function< void( const tools::Path& ) >& f )
 {
-    ZipExtractor extractor( filename );
+    Extractor extractor( filename );
     while( extractor.Next() )
     {
         const tools::Path name = extractor.GetCurrentFileName();
@@ -124,9 +124,9 @@ void tools::zipextractor::ListPackageFiles( const tools::Path& filename, const s
     }
 }
 
-void tools::zipextractor::InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f )
+void tools::zip::InstallPackageFiles( const tools::Path& filename, const tools::Path& destination, const std::function< void() >& f )
 {
-    ZipExtractor extractor( filename );
+    Extractor extractor( filename );
     while( extractor.Next() )
     {
         const tools::Path name = extractor.GetCurrentFileName();
@@ -137,7 +137,7 @@ void tools::zipextractor::InstallPackageFiles( const tools::Path& filename, cons
     }
 }
 
-void tools::zipextractor::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
+void tools::zip::ReadPackageContentFile( const tools::Path& filename, const std::function< void( std::istream& ) >& f )
 {
     InputArchive a( filename );
     a.ReadPackageFile( content, f );

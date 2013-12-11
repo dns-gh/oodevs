@@ -11,7 +11,7 @@
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/ZipExtractor.h"
+#include "tools/Zip.h"
 #include "MT_Tools/MT_Logger.h"
 #include <svgl/Node_ABC.h>
 
@@ -25,7 +25,7 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
-    , archive_ ( new tools::zipextractor::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
+    , archive_ ( new tools::zip::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
 {
     // NOTHING
 }

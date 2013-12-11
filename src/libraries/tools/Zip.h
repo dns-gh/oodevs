@@ -22,7 +22,7 @@ namespace tools
 {
     class Path;
 
-namespace zipextractor
+namespace zip
 {
 
 class InputArchive
@@ -33,7 +33,7 @@ public:
 
     void ReadPackageFile( const tools::Path& name, const std::function< void( std::istream& ) >& f );
 
-    boost::scoped_ptr< zip::izipfile > file_;
+    boost::scoped_ptr< ::zip::izipfile > file_;
 };
 
 class OutputArchive
@@ -44,7 +44,7 @@ public:
 
     void WritePackageFile( const tools::Path& name, const std::function< void( std::ostream& ) >& f );
 
-    boost::scoped_ptr< zip::ozipfile > file_;
+    boost::scoped_ptr< ::zip::ozipfile > file_;
 };
 
 void ExtractArchive( const Path& archivePath, const Path& destination );

@@ -85,7 +85,7 @@
 #include "clients_kernel/LanguageController.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
-#include "tools/ZipExtractor.h"
+#include "tools/Zip.h"
 #include <boost/foreach.hpp>
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;
@@ -577,8 +577,9 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename )
 
     // Unzip symbols.pak if not already in the working directory
     if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
-        tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
-                                             dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
+        tools::zip::ExtractArchive(
+            tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
+            dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
 
     // Clean local directories
     GetLanguages().GetData().CleanLocalDirectories();

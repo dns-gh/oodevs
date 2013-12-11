@@ -17,7 +17,7 @@
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/VersionHelper.h"
-#include "tools/ZipExtractor.h"
+#include "tools/Zip.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace fc = frontend::commands;
@@ -123,7 +123,7 @@ void ImportWidget::InstallExercise()
         packageProgress_->setValue( 0 );
         packageProgress_->setMaximum( packageContent_->count() );
         setCursor( Qt::WaitCursor );
-        tools::zipextractor::InstallPackageFiles( path, config_.GetRootDir(), Progress( packageProgress_ ) );
+        tools::zip::InstallPackageFiles( path, config_.GetRootDir(), Progress( packageProgress_ ) );
         setCursor( Qt::ArrowCursor );
         packageProgress_->hide();
     }
@@ -148,7 +148,7 @@ bool ImportWidget::ReadPackageContentFile()
     try
     {
         tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
-        tools::zipextractor::ReadPackageContentFile( path,
+        tools::zip::ReadPackageContentFile( path,
             [&]( std::istream& zipStream )
             {
                 std::string name, description, version;
@@ -199,7 +199,7 @@ void ImportWidget::SelectPackage( const tools::Path& filename )
         packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            tools::zipextractor::ListPackageFiles( filename,
+            tools::zip::ListPackageFiles( filename,
                 [&]( const tools::Path& name )
                 {
                     packageContent_->addItem( name.ToUTF8().c_str() );

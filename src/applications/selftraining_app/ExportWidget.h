@@ -19,7 +19,7 @@ namespace tools
     class GeneralConfig;
     class Loader_ABC;
 
-namespace zipextractor
+namespace zip
 {
     class OutputArchive;
 }
@@ -95,8 +95,8 @@ private:
     QTextEdit* GetCurrentDescription() const;
     QString GetCurrentPackage() const;
     bool BrowseClicked();
-    void InternalExportPackage( tools::zipextractor::OutputArchive& archive );
-    void WriteContent( tools::zipextractor::OutputArchive& archive ) const;
+    void InternalExportPackage( tools::zip::OutputArchive& archive );
+    void WriteContent( tools::zip::OutputArchive& archive ) const;
     //@}
 
 private:

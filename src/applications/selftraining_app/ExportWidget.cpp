@@ -21,7 +21,7 @@
 #include "tools/VersionHelper.h"
 #include "tools/FileWrapper.h"
 #include <tools/Helpers.h>
-#include <tools/ZipExtractor.h>
+#include <tools/Zip.h>
 #include <xeumeuleu/xml.h>
 
 namespace fc = frontend::commands;
@@ -391,7 +391,7 @@ namespace
         std::copy( it, end, out );
     }
 
-    void CopyFile( const tools::Path& root, const tools::Path& name, tools::zipextractor::OutputArchive& archive, QProgressBar* progress )
+    void CopyFile( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, QProgressBar* progress )
     {
         tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
         if( file.good() )
@@ -403,7 +403,7 @@ namespace
                 } );
     }
 
-    void BrowseDirectory( const tools::Path& root, const tools::Path& name, tools::zipextractor::OutputArchive& archive, bool recursive, QProgressBar* progress )
+    void BrowseDirectory( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, bool recursive, QProgressBar* progress )
     {
         for( auto it = root.begin(); it != root.end(); ++it )
         {
@@ -416,7 +416,7 @@ namespace
         }
     }
 
-    void Serialize( const tools::Path& base, const tools::Path& name, tools::zipextractor::OutputArchive& archive, bool recursive, QProgressBar* progress, const tools::Path& exportName = "" )
+    void Serialize( const tools::Path& base, const tools::Path& name, tools::zip::OutputArchive& archive, bool recursive, QProgressBar* progress, const tools::Path& exportName = "" )
     {
         const tools::Path root = base / name;
         if( !root.Exists() )
@@ -427,7 +427,7 @@ namespace
             BrowseDirectory( root, exportName != "" ? exportName : name, archive, recursive, progress );
     }
 
-    void BrowseChildren( const tools::Path& base, QStandardItem* item, tools::zipextractor::OutputArchive& archive, QProgressBar* progress, bool recursive )
+    void BrowseChildren( const tools::Path& base, QStandardItem* item, tools::zip::OutputArchive& archive, QProgressBar* progress, bool recursive )
     {
         int row = 0;
         while( row < item->rowCount() )
@@ -443,7 +443,7 @@ namespace
         }
     }
 
-    void BrowseFiles( const tools::Path& base, const QStandardItemModel& model, tools::zipextractor::OutputArchive& archive, QProgressBar* progress )
+    void BrowseFiles( const tools::Path& base, const QStandardItemModel& model, tools::zip::OutputArchive& archive, QProgressBar* progress )
     {
         for( int row = 0; row < model.rowCount(); ++row )
         {
@@ -498,7 +498,7 @@ void ExportWidget::ExportPackage()
 {
     if( BrowseClicked() )
     {
-        tools::zipextractor::OutputArchive archive( package_.first / package_.second );
+        tools::zip::OutputArchive archive( package_.first / package_.second );
         InternalExportPackage( archive );
     }
 }
@@ -525,7 +525,7 @@ bool ExportWidget::BrowseClicked()
 // Name: ExportWidget::WriteContent
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-void ExportWidget::WriteContent( tools::zipextractor::OutputArchive& archive ) const
+void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
 {
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
@@ -554,7 +554,7 @@ void ExportWidget::WriteContent( tools::zipextractor::OutputArchive& archive ) c
 // Name: ExportWidget::InternalExportPackage
 // Created: ABR 2011-11-03
 // -----------------------------------------------------------------------------
-void ExportWidget::InternalExportPackage( tools::zipextractor::OutputArchive& archive )
+void ExportWidget::InternalExportPackage( tools::zip::OutputArchive& archive )
 {
     progress_->show();
     setCursor( Qt::WaitCursor );
