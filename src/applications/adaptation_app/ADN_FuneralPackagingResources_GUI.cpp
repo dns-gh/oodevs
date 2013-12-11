@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_FuneralPackagingResources_GUI.h"
+#include "moc_ADN_FuneralPackagingResources_GUI.cpp"
 
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
@@ -154,4 +155,5 @@ void ADN_FuneralPackagingResources_GUI::RemoveCurrentDotation()
 {
     assert( GetSelectedData() != 0 );
     static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ).RemItem( GetSelectedData() );
+    emit CurrentRemoved();
 }

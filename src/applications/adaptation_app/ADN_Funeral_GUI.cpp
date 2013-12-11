@@ -83,6 +83,7 @@ void ADN_Funeral_GUI::Build()
     connect( moveDownButton_, SIGNAL( clicked() ), this, SLOT( OnButtonDown() ) );
     connect( resourceTable_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ),
              this, SLOT( OnSelectionChanged() ) );
+    connect( resourceTable_, SIGNAL( CurrentRemoved() ), this, SLOT( OnSelectionChanged() ) );
 
     // -------------------------------------------------------------------------
     // Layouts
