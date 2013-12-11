@@ -11,6 +11,7 @@
 #define __EventDetailWidget_h_
 
 #include "EventWidget_ABC.h"
+#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventDetailWidget
@@ -18,25 +19,21 @@
 */
 // Created: ABR 2013-05-31
 // =============================================================================
-class EventDetailWidget : public EventWidget_ABC
+class EventDetailWidget : public EventWidget_ABC< gui::EventView_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventDetailWidget();
+             EventDetailWidget( gui::EventPresenter& presenter );
     virtual ~EventDetailWidget();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
+    virtual void Purge();
+    virtual void Build( const gui::EventViewState& state );
     //@}
 
 private:

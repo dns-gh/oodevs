@@ -11,6 +11,7 @@
 #define __EventReportWidget_h_
 
 #include "EventWidget_ABC.h"
+#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventReportWidget
@@ -18,21 +19,15 @@
 */
 // Created: ABR 2013-05-29
 // =============================================================================
-class EventReportWidget : public EventWidget_ABC
+class EventReportWidget : public EventWidget_ABC< gui::EventView_ABC >
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventReportWidget();
+             EventReportWidget( gui::EventPresenter& presenter );
     virtual ~EventReportWidget();
-    //@}
-
-private:
-    //! @name EventWidget_ABC implementation
-    //@{
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
     //@}
 };
 

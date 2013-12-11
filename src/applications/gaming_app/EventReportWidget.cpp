@@ -9,15 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "EventReportWidget.h"
-#include "ENT/ENT_Tr.h"
-#include <timeline/api.h>
+#include "moc_EventReportWidget.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: EventReportWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventReportWidget::EventReportWidget()
-    : EventWidget_ABC()
+EventReportWidget::EventReportWidget( gui::EventPresenter& presenter )
+    : EventWidget_ABC< gui::EventView_ABC >( presenter )
 {
     mainLayout_->addWidget( new QLabel( "Report Widget" ) );
 }
@@ -29,22 +28,4 @@ EventReportWidget::EventReportWidget()
 EventReportWidget::~EventReportWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventReportWidget::Fill
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventReportWidget::Fill( const kernel::Event& /*event*/ )
-{
-    // TODO
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventReportWidget::Commit
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventReportWidget::Commit( timeline::Event& event )
-{
-    event.action.target = "sword://client";
 }

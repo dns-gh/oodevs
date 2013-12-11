@@ -11,6 +11,7 @@
 #define __EventTopWidget_h_
 
 #include "EventWidget_ABC.h"
+#include "clients_gui/EventView_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace gui
@@ -31,7 +32,7 @@ namespace kernel
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventTopWidget : public EventWidget_ABC
+class EventTopWidget : public EventWidget_ABC< gui::EventView_ABC >
                      , public tools::Observer_ABC
                      , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
@@ -40,35 +41,23 @@ class EventTopWidget : public EventWidget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EventTopWidget( const kernel::Time_ABC& simulation, kernel::ActionController& actionController );
+             EventTopWidget( gui::EventPresenter& presenter,
+                             const kernel::Time_ABC& simulation,
+                             kernel::ActionController& actionController );
     virtual ~EventTopWidget();
     //@}
 
-signals:
-    //! @name Signals
+public:
+    //! @name EventWidget_ABC implementation
     //@{
-    void Save();
-    void SaveAs();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void SetBeginDateTime( const QDateTime& dateTime );
-
-    void OnEditingChanged( bool editing );
-
-    void OnBeginDateTimeChanged( const QDateTime& dateTime );
-    void OnHasEndTimeChanged( int state );
-    void OnBeginDateTimeSelected();
-    void OnEndDateTimeSelected();
+    virtual void Purge();
     //@}
 
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
+    virtual void Update( const gui::EventViewState& state );
+    virtual void BlockSignals( bool blocked );
     //@}
 
     //! @name kernel::ContextMenuObserver_ABC< QDateTime > implementation
@@ -76,11 +65,20 @@ private:
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnBeginDateTimeSelected();
+    void OnEndDateTimeSelected();
+    void OnEndDateActivated( int );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const kernel::Time_ABC& simulation_;
     kernel::ActionController& actionController_;
+
     QLabel* title_;
     QLabel* startDateLabel_;
     QAction* saveAction_;
@@ -90,7 +88,6 @@ private:
     QCheckBox* hasEndDateTimeCheckbox_;
 
     QDateTime selectedDateTime_;
-    bool editing_;
     //@}
 };
 

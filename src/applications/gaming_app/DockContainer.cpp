@@ -33,12 +33,14 @@
 #include "Properties.h"
 #include "TimelinePanel.h"
 #include "TimelineDockWidget.h"
+#include "TimelineWebView.h"
 #include "ResourceLinksDialog.h"
 #include "ScorePanel.h"
 
 #include "actions_gui/InterfaceBuilder.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/EventPresenter.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiniViews.h"
@@ -200,10 +202,8 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
         timelineDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
-        QObject::connect( eventDockWidget_,    SIGNAL( CreateEvent( const timeline::Event& ) ),                 timelineDockWidget_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
-        QObject::connect( eventDockWidget_,    SIGNAL( EditEvent( const timeline::Event& ) ),                   timelineDockWidget_, SIGNAL( EditEvent( const timeline::Event& ) ) );
-        QObject::connect( eventDockWidget_,    SIGNAL( DeleteEvent( const std::string& ) ),                     timelineDockWidget_, SIGNAL( DeleteEvent( const std::string& ) ) );
-        QObject::connect( timelineDockWidget_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), eventDockWidget_,    SLOT( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
+        eventDockWidget_->GetPresenter().SetTimelineHandler( timelineDockWidget_->GetWebView() );
+        QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
     if( config.HasTimeline() )
     {

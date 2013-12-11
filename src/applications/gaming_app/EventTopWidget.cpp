@@ -10,23 +10,20 @@
 #include "gaming_app_pch.h"
 #include "EventTopWidget.h"
 #include "moc_EventTopWidget.cpp"
+#include "clients_gui/EventPresenter.h"
+#include "clients_gui/EventViewState.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichDateTimeEdit.h"
 #include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Event.h"
 #include "clients_kernel/Time_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "ENT/ENT_Tr.h"
-#include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 
 namespace
 {
-    QPixmap MakePixmap( const tools::Path& name )
-    {
-        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gaming" ) / name + ".png" ) );
-    }
     QWidget* CreateStretcher()
     {
         QWidget* empty = new QWidget();
@@ -39,13 +36,14 @@ namespace
 // Name: EventTopWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::ActionController& actionController )
-    : EventWidget_ABC()
+EventTopWidget::EventTopWidget( gui::EventPresenter& presenter,
+                                const kernel::Time_ABC& simulation,
+                                kernel::ActionController& actionController )
+    : EventWidget_ABC< gui::EventView_ABC >( presenter )
     , simulation_( simulation )
     , actionController_( actionController )
     , saveAction_( 0 )
     , saveAsAction_( 0 )
-    , editing_( false )
 {
     // Header
     QFont font( "Arial", 12, QFont::Bold );
@@ -59,11 +57,12 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
 
     // Dates
     beginDateTimeEdit_ = new gui::RichDateTimeEdit( "begin-date" );
-    hasEndDateTimeCheckbox_ = new QCheckBox();
+    hasEndDateTimeCheckbox_ = new gui::RichCheckBox( "end-date-checkbox" );
     hasEndDateTimeCheckbox_->setText( tr( "End" ) );
     endDateTimeEdit_ = new gui::RichDateTimeEdit( "end-date" );
-    connect( beginDateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), this, SLOT( OnBeginDateTimeChanged( const QDateTime& ) ) );
-    connect( hasEndDateTimeCheckbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnHasEndTimeChanged( int ) ) );
+    connect( beginDateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), &presenter, SLOT( OnBeginDateChanged( const QDateTime& ) ) );
+    connect( endDateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), &presenter, SLOT( OnEndDateChanged( const QDateTime& ) ) );
+    connect( hasEndDateTimeCheckbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnEndDateActivated( int ) ) );
 
     QHBoxLayout* startDateLayout = new QHBoxLayout();
     startDateLabel_ = new QLabel();
@@ -88,9 +87,9 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     toolBar->addWidget( dateWidget );
     toolBar->addWidget( CreateStretcher() );
     saveAction_ = toolBar->addAction( MAKE_ICON( save ),
-        tr( "Save" ), this, SIGNAL( Save() ) );
+        tr( "Save" ), &presenter, SLOT( OnSaveClicked() ) );
     saveAsAction_ = toolBar->addAction( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/clone.png" ) ),
-        tr( "Save as copy" ), this, SIGNAL( SaveAs() ) );
+        tr( "Save as copy" ), &presenter, SLOT( OnSaveAsClicked() ) );
 
     // Layout
     mainLayout_->addLayout( headerLayout );
@@ -110,77 +109,51 @@ EventTopWidget::~EventTopWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventTopWidget::Fill
-// Created: ABR 2013-05-30
+// Name: EventTopWidget::Purge
+// Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventTopWidget::Fill( const kernel::Event& event )
+void EventTopWidget::Purge()
 {
-    title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( event.GetType() ) ) );
-    saveAction_->setEnabled( !event.GetEvent().done );
-    saveAsAction_->setEnabled( editing_ );
+    title_->clear();
+    saveAction_->setEnabled( false );
+    saveAsAction_->setEnabled( false );
+    hasEndDateTimeCheckbox_->setChecked( false );
+    beginDateTimeEdit_->setDateTime( simulation_.GetDateTime() );
+    endDateTimeEdit_->setDateTime( simulation_.GetDateTime() );
+}
 
-    // Date time
-    bool canHaveEndTime = ( event.GetType() == eEventTypes_Task || event.GetType() == eEventTypes_Multimedia );
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::Update
+// Created: ABR 2013-11-21
+// -----------------------------------------------------------------------------
+void EventTopWidget::Update( const gui::EventViewState& state )
+{
+    E_EventTypes type = ( state.event_ ) ? state.event_->GetType() : eNbrEventTypes;
+    const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";
+    const std::string& endDate = ( state.event_ ) ? state.event_->GetEvent().end : "";
+
+    title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( type ) ) );
+
+    saveAction_->setEnabled( state.save_ );
+    saveAsAction_->setEnabled( state.saveAs_ );
+
+    bool canHaveEndTime = type == eEventTypes_Task || type == eEventTypes_Multimedia;
     hasEndDateTimeCheckbox_->setVisible( canHaveEndTime );
     endDateTimeEdit_->setVisible( canHaveEndTime );
     startDateLabel_->setText( canHaveEndTime ? tr( "Start" ) : "" );
 
-    const timeline::Event& timelineEvent = event.GetEvent();
-    beginDateTimeEdit_->setDateTime( ( timelineEvent.begin.empty() ) ? simulation_.GetDateTime() : QDateTime::fromString( QString::fromStdString( timelineEvent.begin ), EVENT_DATE_FORMAT ) );
-    if( timelineEvent.end.empty() )
+    beginDateTimeEdit_->setDateTime( beginDate.empty() ? simulation_.GetDateTime() : QDateTime::fromString( QString::fromStdString( beginDate ), EVENT_DATE_FORMAT ) );
+    if( endDate.empty() )
     {
         hasEndDateTimeCheckbox_->setCheckState( Qt::Unchecked );
-        endDateTimeEdit_->setEnabled( false );
         endDateTimeEdit_->setDateTime( beginDateTimeEdit_->dateTime() );
     }
     else
     {
         hasEndDateTimeCheckbox_->setCheckState( Qt::Checked );
-        endDateTimeEdit_->setEnabled( true );
-        endDateTimeEdit_->setDateTime( QDateTime::fromString( QString::fromStdString( timelineEvent.end ), EVENT_DATE_FORMAT ) );
+        endDateTimeEdit_->setDateTime( QDateTime::fromString( QString::fromStdString( endDate ), EVENT_DATE_FORMAT ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTopWidget::Commit
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventTopWidget::Commit( timeline::Event& event )
-{
-    event.done = false;
-    event.begin = beginDateTimeEdit_->dateTime().toString( EVENT_DATE_FORMAT ).toStdString();
-    event.end = ( hasEndDateTimeCheckbox_->checkState() == Qt::Checked ) ? endDateTimeEdit_->dateTime().toString( EVENT_DATE_FORMAT ).toStdString() : "";
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTopWidget::OnEditingChanged
-// Created: ABR 2013-07-04
-// -----------------------------------------------------------------------------
-void EventTopWidget::OnEditingChanged( bool editing )
-{
-    editing_ = editing;
-    saveAsAction_->setEnabled( editing_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTopWidget::OnBeginDateTimeChanged
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-void EventTopWidget::OnBeginDateTimeChanged( const QDateTime& dateTime )
-{
-    endDateTimeEdit_->setMinimumDateTime( dateTime );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTopWidget::OnHasEndTimeChanged
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-void EventTopWidget::OnHasEndTimeChanged( int state )
-{
-    bool hasEndTime = state == Qt::Checked;
-    endDateTimeEdit_->setEnabled( hasEndTime );
-    if( hasEndTime )
-        endDateTimeEdit_->setDateTime( beginDateTimeEdit_->dateTime() );
+    endDateTimeEdit_->setMinimumDateTime( beginDateTimeEdit_->dateTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +177,7 @@ void EventTopWidget::NotifyContextMenu( const QDateTime& dateTime, kernel::Conte
 // -----------------------------------------------------------------------------
 void EventTopWidget::OnBeginDateTimeSelected()
 {
-    beginDateTimeEdit_->setDateTime( selectedDateTime_ );
+    presenter_.OnBeginDateChanged( selectedDateTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,15 +186,28 @@ void EventTopWidget::OnBeginDateTimeSelected()
 // -----------------------------------------------------------------------------
 void EventTopWidget::OnEndDateTimeSelected()
 {
-    hasEndDateTimeCheckbox_->setCheckState( Qt::Checked );
-    endDateTimeEdit_->setDateTime( selectedDateTime_ );
+    presenter_.OnEndDateActivated( true );
+    presenter_.OnEndDateChanged( selectedDateTime_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventTopWidget::SetBeginDateTime
-// Created: ABR 2013-06-19
+// Name: EventTopWidget::OnEndDateActivated
+// Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
-void EventTopWidget::SetBeginDateTime( const QDateTime& dateTime )
+void EventTopWidget::OnEndDateActivated( int status )
 {
-    beginDateTimeEdit_->setDateTime( dateTime );
+    presenter_.OnEndDateActivated( status == Qt::Checked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::BlockSignals
+// Created: ABR 2013-11-22
+// -----------------------------------------------------------------------------
+void EventTopWidget::BlockSignals( bool blocked )
+{
+    saveAction_->blockSignals( blocked );
+    saveAsAction_->blockSignals( blocked );
+    beginDateTimeEdit_->blockSignals( blocked );
+    endDateTimeEdit_->blockSignals( blocked );
+    hasEndDateTimeCheckbox_->blockSignals( blocked );
 }

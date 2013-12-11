@@ -10,13 +10,15 @@
 #ifndef __EventDockWidget_h_
 #define __EventDockWidget_h_
 
-#include "clients_gui/RichDockWidget.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "clients_gui/EventView_ABC.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
+#include <boost/scoped_ptr.hpp>
 
 namespace actions
 {
@@ -30,6 +32,8 @@ namespace actions
 namespace gui
 {
     class EntitySymbols;
+    class EventPresenter;
+    struct EventViewState;
     class GlTools_ABC;
     class Viewport_ABC;
 }
@@ -56,7 +60,7 @@ namespace tools
 
 class EventBottomWidget;
 class EventTopWidget;
-class EventWidget_ABC;
+template< typename T > class EventWidget_ABC;
 class Model;
 
 // =============================================================================
@@ -66,6 +70,7 @@ class Model;
 // Created: ABR 2013-07-02
 // =============================================================================
 class EventDockWidget : public gui::RichDockWidget
+                      , public gui::EventView_ABC
                       , public kernel::ContextMenuObserver_ABC< kernel::Event >
                       , public tools::ElementObserver_ABC< kernel::Event >
                       , public tools::SelectionObserver< kernel::Event >
@@ -76,28 +81,30 @@ class EventDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             EventDockWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
-                              const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                              const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools, const gui::EntitySymbols& entitySymbols );
+             EventDockWidget( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              Model& model,
+                              const tools::ExerciseConfig& config,
+                              const kernel::Time_ABC& simulation,
+                              actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                              const kernel::Profile_ABC& profile,
+                              gui::GlTools_ABC& tools,
+                              const gui::EntitySymbols& entitySymbols );
     virtual ~EventDockWidget();
     //@}
     //! @name Operations
     //@{
-    void Draw( gui::Viewport_ABC& viewport );
+    virtual void Draw( gui::Viewport_ABC& viewport );
+    gui::EventPresenter& GetPresenter() const;
     //@}
 
 private:
-    //! @name Helpers
+    //! @name EventView_ABC implementation
     //@{
-    void SetEventType( E_EventTypes type );
-    void Commit( timeline::Event& event );
-    void Purge();
-    void Fill();
-    virtual void closeEvent( QCloseEvent * event );
-    void SetContentVisible( bool visible );
-    void SetEditing( bool editing );
-    void Configure( E_EventTypes type, bool editing );
-    void StartEdition( const kernel::Event& event );
+    virtual void Purge();
+    virtual void Build( const gui::EventViewState& state );
+    virtual void Update( const gui::EventViewState& state );
+    virtual void BlockSignals( bool blocked );
     //@}
 
     //! @name Observers implementation
@@ -114,50 +121,30 @@ private:
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
-signals:
-    //! @name Signals
+    //! @name Helpers
     //@{
-    void CreateEvent( const timeline::Event& );
-    void DeleteEvent( const std::string& uuid );
-    void EditEvent( const timeline::Event& );
-    void BeginDateChanged( const QDateTime& );
-    void EditingChanged( bool );
+    template< typename T >
+    void AddSubView( E_EventTypes type, T* view );
+    virtual void closeEvent( QCloseEvent * event );
+    void SetContentVisible( bool visible );
+    void ApplyToViews( const boost::function< void( gui::EventView_ABC* ) >& functor );
+    void ApplyToViewsNoEmit( const boost::function< void( gui::EventView_ABC* ) >& functor );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
     void OnEditClicked();
     void OnDeleteClicked();
-
-    void OnTrigger();
-    void OnShowDetail();
-    void OnDiscard();
-    void OnSave();
-    void OnSaveAs();
-    void GetMissionAck( const actions::Action_ABC& action );
-    void OnEventChanged();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::EventFactory& factory_;
-    const kernel::Time_ABC& simulation_;
-    QWidget* mainWidget_;
-    QStackedWidget* stack_;
-    EventWidget_ABC* topWidget_;
-    EventWidget_ABC* currentWidget_;
-    EventWidget_ABC* detailWidget_;
-    EventWidget_ABC* bottomWidget_;
-    QGroupBox* ackBox_;
-    QLabel* acknowledgedLabel_;
-    int lastCurrentIndex_;
-    std::auto_ptr< kernel::Event > event_;
+    boost::scoped_ptr< gui::EventPresenter > presenter_;
     kernel::SafePointer< kernel::Event > selected_;
-    bool editing_;
-    E_EventTypes lastOrder_;
+    QStackedWidget* stack_;
+    std::vector< gui::EventView_ABC* > views_;
     //@}
 };
 
