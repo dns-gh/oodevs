@@ -41,22 +41,12 @@ var (
 )
 
 const (
-	ServerProto = iota
-	ServerWeb
+	ServerWeb = iota
 )
 
 const (
 	serverConfig = `
 [
-    {
-        "type": "USER_LOGIN",
-        "user": {
-            "login": {
-                "username": "",
-                "password": ""
-            }
-        }
-    },
     {
         "type": "SESSION_CREATE",
         "session": {
@@ -148,8 +138,7 @@ func StartServer(c *C, cfg string) *exec.Cmd {
 	_, err := os.Stat(server)
 	c.Assert(err, IsNil)
 	cmd := exec.Command(server,
-		"--port", strconv.Itoa(*Port+ServerProto),
-		"--serve", strconv.Itoa(*Port+ServerWeb),
+		"--port", strconv.Itoa(*Port+ServerWeb),
 		"--run", cfg,
 		"--log", filepath.Join(*RunDir, "timeline.log"),
 	)
