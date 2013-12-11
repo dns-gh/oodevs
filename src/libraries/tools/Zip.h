@@ -10,7 +10,7 @@
 #ifndef tools_Zip_h
 #define tools_Zip_h
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <iosfwd>
 
 namespace zip
@@ -37,7 +37,7 @@ public:
     void ExtractFiles( const tools::Path& destination, const std::function< bool( const tools::Path& ) >& filter );
 
 private:
-    boost::scoped_ptr< ::zip::izipfile > file_;
+    std::unique_ptr< ::zip::izipfile > file_;
 };
 
 class OutputArchive
@@ -49,7 +49,7 @@ public:
     void WriteFile( const tools::Path& name, const std::function< void( std::ostream& ) >& writer );
 
 private:
-    boost::scoped_ptr< ::zip::ozipfile > file_;
+    std::unique_ptr< ::zip::ozipfile > file_;
 };
 
 void ExtractArchive( const tools::Path& archivePath, const tools::Path& destination );
