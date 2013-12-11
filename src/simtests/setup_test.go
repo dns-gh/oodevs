@@ -134,6 +134,33 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 	return sim
 }
 
+func checkOrderAckSequences(c *C, client *swapi.Client) {
+	client.Model.RegisterHandlerTimeout(0,
+		func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
+
+			if err != nil {
+				return true
+			}
+			if msg.SimulationToClient == nil {
+				return false
+			}
+			m := msg.SimulationToClient.GetMessage()
+			id := uint32(0)
+			switch {
+			case m == nil:
+			case m.OrderAck != nil:
+				id = m.OrderAck.GetId()
+			case m.FragOrderAck != nil:
+				id = m.FragOrderAck.GetId()
+			}
+			if id != 0 {
+				_, ok := model.Orders[id]
+				c.Check(ok, Equals, false) // the order arrives before the ack!
+			}
+			return false
+		})
+}
+
 func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
 	c.Assert(err, IsNil) // failed to connect to simulation
@@ -145,6 +172,7 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 		}
 		return nil
 	})
+	checkOrderAckSequences(c, client)
 	return client
 }
 
@@ -267,8 +295,8 @@ var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
 	log.Println("application", application)
-	log.Println("rootdir", rootdir)
-	log.Println("rundir", rundir)
-	log.Println("testPort", testPort)
+	log.Println("root-dir", rootdir)
+	log.Println("run-dir", rundir)
+	log.Println("test-port", testPort)
 	log.Println("platform", platform)
 }
