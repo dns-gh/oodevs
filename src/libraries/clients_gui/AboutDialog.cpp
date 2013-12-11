@@ -10,13 +10,17 @@
 #include "clients_gui_pch.h"
 #include "AboutDialog.h"
 #include "moc_AboutDialog.cpp"
+
 #include "ItemFactory_ABC.h"
 #include "RichLabel.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
 #include "Tools.h"
 #include "ImageWrapper.h"
+
 #include "tools/GeneralConfig.h"
+#include "tools/VersionHelper.h"
+#include "tools/Version.h"
 
 using namespace gui;
 
@@ -24,8 +28,8 @@ using namespace gui;
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
-AboutDialog::AboutDialog( QWidget* parent, const QString& line, const QString& license )
-    : QDialog( parent, 0, true, Qt::WStyle_Splash )
+AboutDialog::AboutDialog( QWidget* parent, const QString& license )
+    : QDialog( parent, 0, true, Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint )
 {
     SubObjectName subObject( "AboutDialog" );
     setCaption( tools::translate( "Application", "About" ) );
@@ -36,28 +40,31 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& line, const QString& l
         ? tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" )
         : tools::GeneralConfig::BuildResourceChildFile( filename ) );
 
-    setMinimumSize( pixmap.width(), pixmap.height() + 50 );
-    Q3VBox* vbox = new Q3VBox( this );
-    {
-        QLabel* label = new QLabel( vbox );
-        label->setPixmap( pixmap );
-    }
-    Q3HBox* hbox = new Q3HBox( vbox );
-    hbox->setMaximumHeight( 50 );
+    QVBoxLayout* vbox = new QVBoxLayout( this );
+    vbox->setMargin( 0 );
+    vbox->setContentsMargins( 0, 0, 0, 8 );
+
+    QLabel* pixLabel = new QLabel();
+    pixLabel->setPixmap( pixmap );
+
     QString message;
-    message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
+    message = QString( "%1 - %2<br/> [%3] <br/> %4 <br/> <a href=\"http://%5\">%6</a>" )
             .arg( tools::translate( "Application", "SWORD" ) )
-            .arg( line )
+            .arg( tools::AppProjectVersion() )
+            .arg( QString::fromStdString( tools::GetFullVersion( "missing" ) ) )
             .arg( tools::translate( "Application", "%1 MASA Group" ).arg( QDateTime::currentDateTime().date().year() ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) );
 
     if( !license.isEmpty() )
         message += tr( "<br>License will expire on " ) + license;
-    RichLabel* label = new RichLabel( "aboutLabel", message, hbox );
+    RichLabel* label = new RichLabel( "aboutLabel", message );
     label->setAlignment( Qt::TextSingleLine | Qt::AlignCenter );
-    RichPushButton* button = new RichPushButton( "close", tr( "Close" ), hbox );
-    connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
+    label->setTextInteractionFlags( Qt::TextSelectableByMouse );
+
+    vbox->addWidget( pixLabel, 1, Qt::AlignCenter );
+    vbox->addWidget( label, 0, Qt::AlignCenter );
+    setMaximumSize( 64, 64 );
 }
 
 // -----------------------------------------------------------------------------

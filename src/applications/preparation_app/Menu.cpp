@@ -36,7 +36,6 @@
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichMenu.h"
 #include "tools/GeneralConfig.h"
-#include <tools/VersionHelper.h>
 
 int Menu::filtersIndex_ = 7;
 
@@ -191,7 +190,7 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         gui::RichMenu* menu = new gui::RichMenu( "aide", this, controllers_, tools::translate( "Menu", "&?" ) );
         menu->SetModes( eModes_None, eModes_All, true );
         menu->InsertItem( "1", tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
-        gui::AboutDialog* about = new gui::AboutDialog( this, QString( tools::AppProjectVersion() ), license );
+        gui::AboutDialog* about = new gui::AboutDialog( this, license );
         menu->InsertItem( "2", tools::translate( "Menu", "About" ), about, SLOT( open() ) );
         addMenu( menu->FillMenu() );
     }

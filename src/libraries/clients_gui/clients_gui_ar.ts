@@ -403,10 +403,6 @@
         <source>&lt;br&gt;License will expire on </source>
         <translation type="unfinished">&lt;br&gt;ستنتهي مدة صلاحية الترخيص في</translation>
     </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished">قم بإغلاق</translation>
-    </message>
 </context>
 <context>
     <name>gui::ActivityTimePrototype_ABC</name>
