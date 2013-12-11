@@ -11,12 +11,9 @@
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Zip.h"
 #include "MT_Tools/MT_Logger.h"
-#pragma warning( push, 0 )
-#include <zipstream/zipstream.h>
-#pragma warning( pop )
 #include <svgl/Node_ABC.h>
-#include <zipstream/zipstream.h>
 
 using namespace geometry;
 using namespace gui;
@@ -28,8 +25,7 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
-    , zipFile_ ( new zip::izipfile( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ).ToUnicode() ) )
-    , symbolsPath_()
+    , archive_ ( new tools::zip::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
 {
     // NOTHING
 }
@@ -97,9 +93,14 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
             }
             else
             {
-                zip::izipstream zipStream( *zipFile_, symbolFile.ToUTF8().c_str() );
-                xml::xistreamstream xis( zipStream );
-                return renderer_.Compile( xis, lod );
+                svg::Node_ABC* node = 0;
+                archive_->ReadFile( symbolFile,
+                    [&]( std::istream& s )
+                    {
+                        xml::xistreamstream xis( s );
+                        node = renderer_.Compile( xis, lod );
+                    } );
+                return node;
             }
         }
         catch( ... )

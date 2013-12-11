@@ -16,7 +16,6 @@
 namespace gui
 {
     class SvglRenderer;
-    class GLSymbols;
 }
 
 namespace kernel

@@ -10,7 +10,6 @@
 #include "tools_test_pch.h"
 #include "tools/VersionHelper.h"
 #include <tools/Path.h>
-#include "tools/zipextractor.h"
 
 BOOST_AUTO_TEST_CASE( version_comparison )
 {

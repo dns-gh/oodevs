@@ -17,14 +17,14 @@ namespace svg
     class Node_ABC;
 }
 
-namespace zip
-{
-    class izipfile;
-}
-
 namespace tools
 {
     class ExerciseConfig;
+
+namespace zip
+{
+    class InputArchive;
+}
 }
 
 namespace gui
@@ -75,7 +75,7 @@ private:
     //@{
     SvglRenderer& renderer_;
     tools::Path symbolsPath_;
-    std::auto_ptr< zip::izipfile > zipFile_;
+    std::auto_ptr< tools::zip::InputArchive > archive_;
     T_Symbols                      symbols_;
     T_AlphaSymbols                 alphaSymbols_;
     std::vector< std::string >     notFoundSymbols_;

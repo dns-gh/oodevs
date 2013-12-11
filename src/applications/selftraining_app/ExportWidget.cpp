@@ -21,11 +21,8 @@
 #include "tools/VersionHelper.h"
 #include "tools/FileWrapper.h"
 #include <tools/Helpers.h>
+#include <tools/Zip.h>
 #include <xeumeuleu/xml.h>
-#pragma warning( push )
-#pragma warning( disable: 4244 4267 )
-#include <zipstream/ozipstream.h>
-#pragma warning( pop )
 
 namespace fc = frontend::commands;
 
@@ -394,47 +391,43 @@ namespace
         std::copy( it, end, out );
     }
 
-    void CopyFile( const tools::Path& root, const tools::Path& name, zip::ozipfile& zos, QProgressBar* progress )
+    void CopyFile( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, QProgressBar* progress )
     {
         tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
         if( file.good() )
-        {
-            zip::ozipstream stream( zos, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
-            Copy( file, stream );
-            AddProgress( progress, 10 );
-        }
+            archive.WriteFile( name,
+                [&]( std::ostream& s )
+                {
+                    Copy( file, s );
+                    AddProgress( progress, 10 );
+                } );
     }
 
-    void BrowseDirectory( const tools::Path& root, const tools::Path& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress )
+    void BrowseDirectory( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, bool recursive, QProgressBar* progress )
     {
         for( auto it = root.begin(); it != root.end(); ++it )
         {
-            const tools::Path& child = *it;
-            if( child.IsRegularFile() )
-            {
-                const tools::Path& file = child.FileName();
-                CopyFile( root / file, name / file, zos, progress );
-            }
-            else if( recursive && child.IsDirectory() && child.FileName() != ".svn" )
-            {
-                BrowseDirectory( child, name / child.FileName(), zos, recursive, progress );
-            }
+            const tools::Path& file = it->FileName();
+            if( it->IsRegularFile() )
+                CopyFile( root / file, name / file, archive, progress );
+            else if( recursive && it->IsDirectory() )
+                BrowseDirectory( *it, name / file, archive, recursive, progress );
             AddProgress( progress, 2 );
         }
     }
 
-    void Serialize( const tools::Path& base, const tools::Path& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress, const tools::Path& exportName = "" )
+    void Serialize( const tools::Path& base, const tools::Path& name, tools::zip::OutputArchive& archive, bool recursive, QProgressBar* progress, const tools::Path& exportName = "" )
     {
         const tools::Path root = base / name;
         if( !root.Exists() )
             return;
         if( !root.IsDirectory() )
-            CopyFile( root, name, zos, progress );
+            CopyFile( root, name, archive, progress );
         else
-            BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive, progress );
+            BrowseDirectory( root, exportName != "" ? exportName : name, archive, recursive, progress );
     }
 
-    void BrowseChildren( const tools::Path& base, QStandardItem* item, zip::ozipfile& zos, QProgressBar* progress, bool recursive )
+    void BrowseChildren( const tools::Path& base, QStandardItem* item, tools::zip::OutputArchive& archive, QProgressBar* progress, bool recursive )
     {
         int row = 0;
         while( row < item->rowCount() )
@@ -443,14 +436,14 @@ namespace
             if( child && child->checkState() == Qt::Checked )
             {
                 tools::Path file = tools::Path::FromUnicode( child->text().toStdWString() ) ;
-                Serialize( base, file, zos, recursive, progress );
+                Serialize( base, file, archive, recursive, progress );
             }
             AddProgress( progress, 2 );
             ++row;
         }
     }
 
-    void BrowseFiles( const tools::Path& base, const QStandardItemModel& model, zip::ozipfile& zos, QProgressBar* progress )
+    void BrowseFiles( const tools::Path& base, const QStandardItemModel& model, tools::zip::OutputArchive& archive, QProgressBar* progress )
     {
         for( int row = 0; row < model.rowCount(); ++row )
         {
@@ -463,9 +456,9 @@ namespace
                     if( item && item->checkState() == Qt::Checked )
                     {
                         tools::Path file = tools::Path::FromUnicode( item->text().toStdWString() );
-                        Serialize( base, file, zos, item->IsRecursive(), progress );
+                        Serialize( base, file, archive, item->IsRecursive(), progress );
                         if( item->hasChildren() )
-                            BrowseChildren( base, item, zos, progress, true );
+                            BrowseChildren( base, item, archive, progress, true );
                     }
                     AddProgress( progress, 2 );
                 }
@@ -505,10 +498,8 @@ void ExportWidget::ExportPackage()
 {
     if( BrowseClicked() )
     {
-        tools::Path file = package_.first / package_.second;
-        zip::ozipfile archive( file.ToUnicode() );
-        if( archive.isOk() )
-            InternalExportPackage( archive );
+        tools::zip::OutputArchive archive( package_.first / package_.second );
+        InternalExportPackage( archive );
     }
 }
 
@@ -534,35 +525,32 @@ bool ExportWidget::BrowseClicked()
 // Name: ExportWidget::WriteContent
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-void ExportWidget::WriteContent( zip::ozipfile& archive ) const
+void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
 {
-    xml::xostringstream xos;
-    QString text = GetCurrentSelection();
-    if( !text.isEmpty() )
-    {
-        std::string description = GetCurrentDescription()->toPlainText().toStdString();
-        QString package = GetCurrentPackage();
-
-        if( description.empty() )
-            description = "Packaged scenario of " + std::string( package.toStdString() ) + ".";
-        xos << xml::start( "content" )
-            << xml::content( "name", package.toStdString() )
-            << xml::content( "description", description )
-            << xml::content( "version", tools::AppProjectVersion() )
-            << xml::end;
+    const QString text = GetCurrentSelection();
+    if( text.isEmpty() )
+        return;
+    const QString package = GetCurrentPackage();
+    std::string description = GetCurrentDescription()->toPlainText().toStdString();
+    if( description.empty() )
+        description = "Packaged scenario of " + package.toStdString() + ".";
+    archive.WriteFile( "content.xml",
+        [&]( std::ostream& s )
         {
-            std::istringstream input( xos.str() );
-            zip::ozipstream output( archive, "content.xml" );
-            Copy( input, output );
-        }
-    }
+            xml::xostreamstream xos( s );
+            xos << xml::start( "content" )
+                << xml::content( "name", package.toStdString() )
+                << xml::content( "description", description )
+                << xml::content( "version", tools::AppProjectVersion() )
+                << xml::end;
+        } );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExportWidget::InternalExportPackage
 // Created: ABR 2011-11-03
 // -----------------------------------------------------------------------------
-void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
+void ExportWidget::InternalExportPackage( tools::zip::OutputArchive& archive )
 {
     progress_->show();
     setCursor( Qt::WaitCursor );

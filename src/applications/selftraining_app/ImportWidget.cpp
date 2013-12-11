@@ -17,10 +17,8 @@
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/VersionHelper.h"
+#include "tools/Zip.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <zipstream/izipstream.h>
-#pragma warning( pop )
 
 namespace fc = frontend::commands;
 
@@ -120,18 +118,14 @@ void ImportWidget::InstallExercise()
 {
     if( packageContent_->count() )
     {
-        tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
-        zip::izipfile archive( path.ToUnicode() );
-        if( archive.isOk() )
-        {
-            packageProgress_->show();
-            packageProgress_->setValue( 0 );
-            packageProgress_->setMaximum( packageContent_->count() );
-            setCursor( Qt::WaitCursor );
-            fc::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
-            setCursor( Qt::ArrowCursor );
-            packageProgress_->hide();
-        }
+        const tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
+        packageProgress_->show();
+        packageProgress_->setValue( 0 );
+        packageProgress_->setMaximum( packageContent_->count() );
+        setCursor( Qt::WaitCursor );
+        tools::zip::InstallPackageFiles( path, config_.GetRootDir(), Progress( packageProgress_ ) );
+        setCursor( Qt::ArrowCursor );
+        packageProgress_->hide();
     }
 }
 
@@ -150,33 +144,31 @@ bool ImportWidget::IsButtonEnabled() const
 // -----------------------------------------------------------------------------
 bool ImportWidget::ReadPackageContentFile()
 {
-    tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
-    zip::izipfile archive( path.ToUnicode() );
-    if( !archive.isOk() )
-        return false;
-    zip::izipstream zipStream( archive, "content.xml" );
-    if( zipStream.bad() )
-        return false;
     try
     {
-        std::string name, description, version;
-        xml::xistreamstream xis( zipStream );
-        xis >> xml::start( "content" )
-                >> xml::content( "name", name )
-                >> xml::content( "description", description )
-                >> xml::optional
-                >> xml::content( "version", version )
-            >> xml::end;
-        packageName_->setText( name.c_str() );
-        isValidVersion_ = tools::CheckVersion( version, tools::AppProjectVersion() );
-        QPalette* palette = new QPalette();
-        if( !isValidVersion_ )
-            palette->setColor( QPalette::Text, Qt::red );
-        packageVersion_->setPalette( *palette );
-        packageVersion_->setText( version.c_str() );
-        packageDescription_->setText( description.c_str() );
+        tools::zip::ReadPackageContentFile(
+            tools::Path::FromUnicode( package_->text().toStdWString() ),
+            [&]( std::istream& s )
+            {
+                std::string name, description, version;
+                xml::xistreamstream xis( s );
+                xis >> xml::start( "content" )
+                        >> xml::content( "name", name )
+                        >> xml::content( "description", description )
+                        >> xml::optional
+                        >> xml::content( "version", version )
+                    >> xml::end;
+                packageName_->setText( name.c_str() );
+                isValidVersion_ = tools::CheckVersion( version, tools::AppProjectVersion() );
+                QPalette* palette = new QPalette();
+                if( !isValidVersion_ )
+                    palette->setColor( QPalette::Text, Qt::red );
+                packageVersion_->setPalette( *palette );
+                packageVersion_->setText( version.c_str() );
+                packageDescription_->setText( description.c_str() );
+            } );
     }
-    catch( const xml::exception& )
+    catch( std::exception& )
     {
         return false;
     }
@@ -207,7 +199,11 @@ void ImportWidget::SelectPackage( const tools::Path& filename )
         packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            packageContent_->addItems( fc::PathListToQStringList( fc::ListPackageFiles( filename ) ) );
+            tools::zip::ListPackageFiles( filename,
+                [&]( const tools::Path& name )
+                {
+                    packageContent_->addItem( name.ToUTF8().c_str() );
+                } );
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }
