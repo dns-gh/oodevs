@@ -122,6 +122,7 @@ private:
     void OnOrderClicked( const kernel::Entity_ABC* entity );
     void SetTarget( unsigned long id );
     void OnTargetChanged( const kernel::Entity_ABC* entity );
+    void AddReplaceTargetToMenu( kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -129,7 +130,8 @@ private slots:
     //@{
     void OnMissionTypeChanged( const QString& missionType );
     void OnOrderClicked();
-    void OnOrderUnitClicked();
+    void OnOrderAutomatClicked();
+    void OnReplaceTargetClicked();
     void OnTargetActivated() const;
     void OnTargetRemoved();
     //@}
@@ -159,7 +161,7 @@ private:
     boost::scoped_ptr< actions::gui::MissionInterface_ABC > missionInterface_;
 
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedUnit_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedAutomat_;
     kernel::SafePointer< kernel::Entity_ABC > target_;
 
     bool isBuilding_;

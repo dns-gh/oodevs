@@ -712,15 +712,7 @@ Reason: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Recipient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order (unit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -737,6 +729,18 @@ Reason: %3
     </message>
     <message>
         <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace order recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New order (unit)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

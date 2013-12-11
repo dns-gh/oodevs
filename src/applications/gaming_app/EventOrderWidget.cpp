@@ -78,7 +78,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     , entitySymbols_( entitySymbols )
     , target_( controllers )
     , selectedEntity_( controllers )
-    , selectedEngagedUnit_( controllers )
+    , selectedEngagedAutomat_( controllers )
     , missionCombo_( 0 )
     , missionTypeCombo_( 0 )
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
@@ -173,7 +173,7 @@ void EventOrderWidget::Purge()
 {
     SetTarget( 0 );
     selectedEntity_ = 0;
-    selectedEngagedUnit_ = 0;
+    selectedEngagedAutomat_ = 0;
     missionTypeCombo_->clear();
     missionCombo_->clear();
 }
@@ -284,31 +284,49 @@ void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventOrderWidget::AddReplaceTargetToMenu
+// Created: ABR 2013-12-11
+// -----------------------------------------------------------------------------
+void EventOrderWidget::AddReplaceTargetToMenu( kernel::ContextMenu& menu )
+{
+    if( isVisible() &&
+        ( !target_ ||
+          target_->GetTypeName() == selectedEntity_->GetTypeName() &&
+          target_->GetId() != selectedEntity_->GetId() ) )
+        menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 4 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::NotifyContextMenu
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
+    selectedEntity_ = &agent;
+    selectedEngagedAutomat_ = 0;
     if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
         if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
         {
-            const kernel::Entity_ABC* selectedEntity = 0;
-            if( decisions->IsEmbraye() && profile_.CanBeOrdered( *automat ) )
-                selectedEntity = automat;
-            else if( profile_.CanBeOrdered( agent ) )
-                selectedEntity = &agent;
-
-            if( !selectedEntity )
-                return;
-            selectedEntity_ = selectedEntity;
-
-            QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( OnOrderClicked() ), false, 2 );
             if( decisions->IsEmbraye() )
             {
-                action->setIcon( MAKE_PIXMAP( lock ) );
-                selectedEngagedUnit_ = &agent;
-                menu.InsertItem( "Order", tr( "Order (unit)" ), this, SLOT( OnOrderUnitClicked() ), false, 3 );
+                if( profile_.CanBeOrdered( *automat ) )
+                {
+                    selectedEngagedAutomat_ = automat;
+                    QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderAutomatClicked() ), false, 2 );
+                    action->setIcon( MAKE_PIXMAP( lock ) );
+                }
+                if( profile_.CanBeOrdered( agent ) )
+                {
+                    menu.InsertItem( "Order", tr( "New order (unit)" ), this, SLOT( OnOrderClicked() ), false, 3 );
+                    AddReplaceTargetToMenu( menu );
+                }
             }
+            else if( profile_.CanBeOrdered( agent ) )
+            {
+                menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+                AddReplaceTargetToMenu( menu );
+            }
+            AddReplaceTargetToMenu( menu );
         }
 }
 
@@ -319,12 +337,14 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
 void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
     selectedEntity_ = &automat;
+    selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( automat ) )
     {
         const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >();
-        QAction* action = menu.InsertItem( "Order", tr( "Order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+        QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
         if( decisions && decisions->IsEmbraye() )
             action->setIcon( MAKE_PIXMAP( lock ) );
+        AddReplaceTargetToMenu( menu );
     }
 }
 
@@ -335,8 +355,12 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
 void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& population, kernel::ContextMenu& menu )
 {
     selectedEntity_ = &population;
+    selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( population ) )
-        menu.InsertItem( "Mission", tr( "Order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+    {
+        menu.InsertItem( "Mission", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+        AddReplaceTargetToMenu( menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -347,11 +371,11 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( target_ == &entity ||
         selectedEntity_ == &entity ||
-        selectedEngagedUnit_ == &entity )
+        selectedEngagedAutomat_ == &entity )
     {
         OnTargetChanged( 0 );
         selectedEntity_ = 0;
-        selectedEngagedUnit_ = 0;
+        selectedEngagedAutomat_ = 0;
     }
 }
 
@@ -464,8 +488,7 @@ void EventOrderWidget::OnOrderClicked( const kernel::Entity_ABC* entity )
 {
     if( !entity )
         return;
-    if( !isVisible() )
-        presenter_.StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
+    presenter_.StartCreation( eEventTypes_Order, simulation_.GetDateTime() );
     OnTargetChanged( entity );
 }
 
@@ -477,18 +500,27 @@ void EventOrderWidget::OnOrderClicked()
 {
     OnOrderClicked( selectedEntity_ );
     selectedEntity_ = 0;
-    selectedEngagedUnit_ = 0;
+    selectedEngagedAutomat_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::OnOrderUnitClicked
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventOrderWidget::OnOrderUnitClicked()
+void EventOrderWidget::OnOrderAutomatClicked()
 {
-    OnOrderClicked( selectedEngagedUnit_ );
+    OnOrderClicked( selectedEngagedAutomat_ );
     selectedEntity_ = 0;
-    selectedEngagedUnit_ = 0;
+    selectedEngagedAutomat_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::OnReplaceTargetClicked
+// Created: ABR 2013-12-11
+// -----------------------------------------------------------------------------
+void EventOrderWidget::OnReplaceTargetClicked()
+{
+    OnTargetChanged( selectedEntity_ );
 }
 
 // -----------------------------------------------------------------------------

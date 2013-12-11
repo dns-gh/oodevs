@@ -714,16 +714,8 @@ Raison: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Order</source>
-        <translation>Ordre</translation>
-    </message>
-    <message>
         <source>Recipient</source>
         <translation>Destinataire</translation>
-    </message>
-    <message>
-        <source>Order (unit)</source>
-        <translation>Ordre (pion)</translation>
     </message>
     <message>
         <source>Select</source>
@@ -740,6 +732,18 @@ Raison: %3
     <message>
         <source>Error</source>
         <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Replace order recipient</source>
+        <translation>Remplacer le destinataire de l&apos;ordre</translation>
+    </message>
+    <message>
+        <source>New order</source>
+        <translation>Nouvel ordre</translation>
+    </message>
+    <message>
+        <source>New order (unit)</source>
+        <translation>Nouvel ordre (pion)</translation>
     </message>
 </context>
 <context>
