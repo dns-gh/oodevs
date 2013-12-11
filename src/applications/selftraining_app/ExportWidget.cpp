@@ -527,27 +527,23 @@ bool ExportWidget::BrowseClicked()
 // -----------------------------------------------------------------------------
 void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
 {
-    QString text = GetCurrentSelection();
-    if( !text.isEmpty() )
-    {
-        std::string description = GetCurrentDescription()->toPlainText().toStdString();
-        QString package = GetCurrentPackage();
-
-        if( description.empty() )
-            description = "Packaged scenario of " + package.toStdString() + ".";
-        xml::xostringstream xos;
-        xos << xml::start( "content" )
-            << xml::content( "name", package.toStdString() )
-            << xml::content( "description", description )
-            << xml::content( "version", tools::AppProjectVersion() )
-            << xml::end;
-        std::istringstream input( xos.str() );
-        archive.WritePackageFile( "content.xml",
-            [&]( std::ostream& s )
-            {
-                Copy( input, s );
-            } );
-    }
+    const QString text = GetCurrentSelection();
+    if( text.isEmpty() )
+        return;
+    const QString package = GetCurrentPackage();
+    std::string description = GetCurrentDescription()->toPlainText().toStdString();
+    if( description.empty() )
+        description = "Packaged scenario of " + package.toStdString() + ".";
+    archive.WritePackageFile( "content.xml",
+        [&]( std::ostream& s )
+        {
+            xml::xostreamstream xos( s );
+            xos << xml::start( "content" )
+                << xml::content( "name", package.toStdString() )
+                << xml::content( "description", description )
+                << xml::content( "version", tools::AppProjectVersion() )
+                << xml::end;
+        } );
 }
 
 // -----------------------------------------------------------------------------
