@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __EventBuilder_ABC_h_
-#define __EventBuilder_ABC_h_
+#ifndef __EventOrderView_ABC_h_
+#define __EventOrderView_ABC_h_
+
+#include "EventView_ABC.h"
 
 namespace gui
 {
@@ -20,7 +22,7 @@ namespace gui
 */
 // Created: LGY 2013-10-03
 // =============================================================================
-class EventOrderView_ABC : private boost::noncopyable
+class EventOrderView_ABC : public EventView_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -31,10 +33,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Build( const EventOrderViewState& state ) = 0;
+    virtual void Build( const gui::EventOrderViewState& state ) = 0;
     //@}
 };
 
-}
+} //! namespace gui
 
-#endif // __EventBuilder_ABC_h_
+#endif // __EventOrderView_ABC_h_

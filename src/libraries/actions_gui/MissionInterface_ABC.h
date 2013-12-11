@@ -13,6 +13,12 @@
 #include "ENT/ENT_Tr.h"
 #include <boost/noncopyable.hpp>
 
+namespace gui
+{
+    class GlTools_ABC;
+    class Viewport_ABC;
+}
+
 namespace kernel
 {
     class OrderType;
@@ -28,9 +34,12 @@ namespace actions
 {
     class ActionsModel;
     class Action_ABC;
-namespace gui
-{
-    class InterfaceBuilder_ABC;
+
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+        class Param_ABC;
+
 // =============================================================================
 /** @class  MissionInterface_ABC
     @brief  MissionInterface_ABC
@@ -49,18 +58,21 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsFilling() const = 0;
+    virtual bool HasParameter( const Param_ABC& parameter ) const = 0;
+    virtual void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const = 0;
+    virtual bool CheckValidity() = 0;
     virtual void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type ) = 0;
+    virtual void Rebuild( InterfaceBuilder_ABC& builder ) = 0;
     virtual void Purge() = 0;
     virtual void SetEntity( const kernel::Entity_ABC* entity ) = 0;
-    virtual void SetPlanned( bool planned ) = 0;
-    virtual void PublishFragOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const = 0;
-    virtual void PublishMissionOrder( actions::ActionsModel& model, timeline::Event* event = 0, int context = 0 ) const = 0;
     virtual void FillFrom( const actions::Action_ABC& action ) = 0;
+    virtual void CommitTo( actions::Action_ABC& action ) const = 0;
     //@}
-
 };
 
-}
-}
+    } //! namespace gui
+
+} //! namespace actions
 
 #endif // __MissionInterface_ABC_h_
