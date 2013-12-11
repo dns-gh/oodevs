@@ -270,6 +270,8 @@ namespace
     bool IsSlopeTooSteep( const PHY_RawVisionData& data, const MT_Vector2D& from, const MT_Vector2D& to, double maxSquareSlope )
     {
         const double delta = data.GetAltitude( to ) - data.GetAltitude( from );
+        // SLI 2013-12-11: beware of the square in the formula, negative slope (delta)
+        // becomes positive and prevent vehicule to take a segment with a downslope superior than maxSquareSlope
         return delta * delta > from.SquareDistance( to ) * maxSquareSlope;
     }
 }
