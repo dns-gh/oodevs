@@ -62,13 +62,13 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     , type_ ( xis.attribute< std::string >( "type" ) )
     , config_ ( config )
     , description_( xis, tools::Language::Current() )
-    , label_()
-    , stringValue_()
-    , integerValue_()
-    , booleanValue_()
-    , timeValue_()
-    , enumerationValue_()
-    , fileList_()
+    , label_( 0 )
+    , stringValue_( 0 )
+    , integerValue_( 0 )
+    , booleanValue_( 0 )
+    , timeValue_( 0 )
+    , enumerationValue_( 0 )
+    , fileList_( 0 )
 {
     bool display = xis.attribute< bool >( "display", true );
 
@@ -118,7 +118,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     else if( type_ == "file_list" )
     {
         fileList_ = new FileList( tools::translate( "PluginSetting", "Files" ), parent, "?", "");
-        fileList_->SetFilesDelimited(xis.attribute< std::string >( "default" ) );
+        fileList_->SetFilesDelimited( xis.attribute< std::string >( "default" ) );
         propertyLayout->addWidget( fileList_ );
     }
     else if( type_ == "enumeration" )

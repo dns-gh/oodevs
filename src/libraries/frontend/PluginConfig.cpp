@@ -63,8 +63,9 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     box_->setChecked( false );
     box_->setFlat( true );
     xis >> xml::start( "settings" )
-        >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
-        >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
+            >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
+            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ )
+        >> xml::end;
 
     view_ = new QScrollArea();
     view_->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -200,6 +201,7 @@ void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
     boxLayout->setMargin( 5 );
 
     xis >> xml::start( "settings" )
-        >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )
-        >> xml::list( "group", *this, &PluginConfig::ReadGroup, box );
+            >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )
+            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box )
+        >> xml::end;
 }

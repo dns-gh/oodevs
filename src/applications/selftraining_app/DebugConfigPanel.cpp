@@ -9,12 +9,13 @@
 
 #include "selftraining_app_pch.h"
 #include "DebugConfigPanel.h"
+#include "moc_DebugConfigPanel.cpp"
 #include "Registry.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/tools.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
-#include "moc_DebugConfigPanel.cpp"
+#include <QScrollArea>
 
 namespace
 {
@@ -142,12 +143,22 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     //general Layout
+    QGroupBox* box = new QGroupBox();
+    QVBoxLayout* layout = new QVBoxLayout( box );
+    layout->addWidget( topBox_ );
+    layout->addWidget( timelineBox_ );
+    layout->addWidget( profilingBox_ );
+    layout->addWidget( pathfindsBox_ );
+    layout->addWidget( mapnikBox_ );
+    layout->setAlignment( Qt::AlignTop );
+    QScrollArea* scroll = new QScrollArea();
+    scroll->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    scroll->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    scroll->setWidgetResizable( true );
+    scroll->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    scroll->setWidget( box );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
-    mainLayout->addWidget( topBox_ );
-    mainLayout->addWidget( timelineBox_ );
-    mainLayout->addWidget( profilingBox_ );
-    mainLayout->addWidget( pathfindsBox_ );
-    mainLayout->addWidget( mapnikBox_ );
+    mainLayout->addWidget( scroll );
     mainLayout->setAlignment( Qt::AlignTop );
 }
 
