@@ -2044,6 +2044,14 @@ This data can&apos;t be projected.</source>
         <source>Weather</source>
         <translation type="unfinished">Weather</translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation>Sound</translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation>Orbat</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

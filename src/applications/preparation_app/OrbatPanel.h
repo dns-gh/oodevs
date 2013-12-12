@@ -24,6 +24,8 @@ namespace gui
     class ColorButton;
 }
 
+namespace preparation
+{
 // =============================================================================
 /** @class  OrbatPanel
     @brief  Orbat panel
@@ -62,5 +64,7 @@ private:
     gui::ColorButton* pGhostColor_;
     //@}
 };
+
+}
 
 #endif // __OrbatPanel_h_

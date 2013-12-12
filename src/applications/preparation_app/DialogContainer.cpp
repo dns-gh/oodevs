@@ -41,7 +41,6 @@
 #include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
-
 #include <vector>
 #include <string>
 
@@ -68,8 +67,8 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LongNameEditor( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, 0 );
-    prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer );
+    prefDialog_->AddPage( tr( "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );

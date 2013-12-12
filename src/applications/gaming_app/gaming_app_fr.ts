@@ -2047,6 +2047,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Weather</source>
         <translation>Météo</translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation>Son</translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation>ODB</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

@@ -35,7 +35,6 @@
 #include "ToolbarContainer.h"
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
-#include "OrbatPanel.h"
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/CircularEventStrategy.h"

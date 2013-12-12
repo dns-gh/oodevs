@@ -15,6 +15,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: OrbatPanel constructor
 // Created: LGY 2011-10-21
@@ -90,7 +92,6 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
         container->addWidget( box );
         container->addStretch( 1 );
     }
-
 
     if( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() == "" )
         controllers_.options_.Change( "Color/Neutralized", pNColor_->GetColor().name() );

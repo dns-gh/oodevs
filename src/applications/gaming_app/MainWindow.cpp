@@ -93,6 +93,7 @@
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/MiscLayer.h"
+#include "clients_gui/OrbatPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
@@ -102,6 +103,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionMenu.h"
+#include "clients_gui/SoundPanel.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/TerrainPicker.h"
@@ -194,7 +196,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, firePlayer_.get() ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d ) );
+    preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
+    preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
