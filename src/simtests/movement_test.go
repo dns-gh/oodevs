@@ -82,7 +82,7 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	// Does not accelerate when moving downward
 	checkSlopeSpeed(28.3023, 130, false)
 	// Downslope can stop the move too
-	checkSpeed(c, client, swapi.Point{X:-15.7153,Y:28.257}, swapi.Point{X:-15.7787,Y:28.2258}, 0)
+	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257}, swapi.Point{X: -15.7787, Y: 28.2258}, 0)
 }
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
