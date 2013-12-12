@@ -60,14 +60,7 @@ struct EventOrderViewState
     //@{
     void Purge()
     {
-        target_ = 0;
-        types_.clear();
-        currentType_ = eMissionType_Pawn;
-        missions_.clear();
-        currentMission_.clear();
-        disabledMissions_.clear();
-        invalid_ = false;
-        missionSelector_ = false;
+        *this = EventOrderViewState();
     }
     //@}
 

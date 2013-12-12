@@ -55,13 +55,7 @@ struct EventTaskViewState
     //@{
     void Purge()
     {
-        label_.clear();
-        description_.clear();
-        url_.clear();
-        payload_.clear();
-        isUrlValid_ = false;
-        isPayloadVisible_ = false;
-        bytes_ = 0;
+        *this = EventTaskViewState();
     }
     //@}
 

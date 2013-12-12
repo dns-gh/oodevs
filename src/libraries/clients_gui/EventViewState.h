@@ -71,17 +71,7 @@ struct EventViewState
     //@{
     void Purge()
     {
-        event_.reset();
-        mode_ = eEventDockModes_None;
-        trigger_ = false;
-        save_ = false;
-        saveAs_ = false;
-        clear_ = false;
-        raise_ = false;
-        detail_ = false;
-        bottomToolBar_ = false;
-        warningColor_ = Qt::transparent;
-        warning_.clear();
+        *this = EventViewState();
     }
     //@}
 
