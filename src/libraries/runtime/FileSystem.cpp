@@ -296,7 +296,7 @@ std::string FileSystem::ReadFile( const Path& path ) const
 {
     try
     {
-        boost::filesystem::ifstream ifs( path );
+        boost::filesystem::ifstream ifs( path, std::ifstream::binary );
         if( !ifs.fail() )
             return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
@@ -317,7 +317,7 @@ void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, 
     try
     {
         char buffer[ 4 * 1024 ];
-        boost::filesystem::ifstream ifs( path );
+        boost::filesystem::ifstream ifs( path, std::ifstream::binary );
         if( ifs.fail() )
             return;
         if( limitSize )
@@ -620,6 +620,7 @@ struct Packer : public Packer_ABC
         ArchiveEntry* entry = ptr.get();
         archive_entry_copy_pathname_w( entry, file.wstring().c_str() );
         archive_entry_set_filetype( entry, AE_IFREG );
+        archive_entry_set_size( entry, size );
         archive_write_header( dst_.get(), entry );
         Copy( data, size );
         archive_write_finish_entry( dst_.get() );
