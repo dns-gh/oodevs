@@ -34,6 +34,7 @@ namespace gui
     class FormationLayer;
     class GlProxy;
     class GlSelector;
+    class GraphicPreferences;
     class HelpSystem;
     class Layer;
     class LightingProxy;
@@ -144,6 +145,7 @@ private:
     QString login_;
     Config& config_;
     const kernel::Profile_ABC& profile_;
+    std::auto_ptr< gui::GraphicPreferences > graphicPreferences_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;

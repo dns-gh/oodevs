@@ -49,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer );
+                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences );
     virtual ~PreferencesDialog();
     //@}
 
@@ -58,7 +58,6 @@ public:
     virtual QSize sizeHint () const;
     virtual void showEvent( QShowEvent * event );
     virtual void reject();
-    GraphicPreferences& GetPreferences() const;
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );

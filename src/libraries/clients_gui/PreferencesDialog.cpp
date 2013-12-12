@@ -35,7 +35,7 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer )
+                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
@@ -75,7 +75,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     list_ = new PreferencesList( "preferencesList", box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    pGraphicPrefPanel_       = new GraphicsPanel( this, controllers );
+    pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
     layersPanel_             = new LayersPanel( this, controllers, selector );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
 
@@ -142,17 +142,6 @@ void PreferencesDialog::showEvent( QShowEvent * event )
 void PreferencesDialog::reject()
 {
     OnCancel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::GetPreferences
-// Created: SBO 2006-05-04
-// -----------------------------------------------------------------------------
-GraphicPreferences& PreferencesDialog::GetPreferences() const
-{
-    if( !pGraphicPrefPanel_ )
-        throw MASA_EXCEPTION( "Graphic preference panel not initialized" );
-    return pGraphicPrefPanel_->GetPreferences();
 }
 
 // -----------------------------------------------------------------------------

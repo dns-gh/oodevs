@@ -81,6 +81,7 @@
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlSelector.h"
+#include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
@@ -137,19 +138,20 @@ namespace
 MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
                         Network& network, ProfileFilter& filter, Config& config, LoggerProxy& logger, const QString& license )
     : QMainWindow()
-    , controllers_     ( controllers )
-    , staticModel_     ( staticModel )
-    , model_           ( model )
-    , network_         ( network )
-    , config_          ( config )
-    , profile_         ( filter )
-    , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
-    , pColorController_( new ColorController( controllers_ ) )
-    , glProxy_         ( new gui::GlProxy( logger ) )
-    , connected_       ( false )
-    , onPlanif_        ( false )
-    , icons_           ( 0 )
-    , dockContainer_   ( 0 )
+    , controllers_       ( controllers )
+    , staticModel_       ( staticModel )
+    , model_             ( model )
+    , network_           ( network )
+    , config_            ( config )
+    , profile_           ( filter )
+    , graphicPreferences_( new gui::GraphicPreferences( controllers ) )
+    , pPainter_          ( new gui::ElevationPainter( staticModel_.detection_ ) )
+    , pColorController_  ( new ColorController( controllers_ ) )
+    , glProxy_           ( new gui::GlProxy( logger ) )
+    , connected_         ( false )
+    , onPlanif_          ( false )
+    , icons_             ( 0 )
+    , dockContainer_     ( 0 )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
@@ -196,7 +198,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d ) );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
@@ -287,7 +289,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
                                gui::Elevation2dLayer& elevation2dLayer )
 {
     gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
+    gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, *graphicPreferences_, picker );
     gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile_, model_.actions_, simulation );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& eventLayer           = *new gui::MiscLayer< EventDockWidget >( dockContainer_->GetEventDockWidget() );
