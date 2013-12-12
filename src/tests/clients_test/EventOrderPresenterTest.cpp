@@ -14,18 +14,18 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Decisions_ABC.h"
-#include "clients_kernel/Event.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/TimelinePublisher.h"
+#include "clients_gui/Event.h"
 #include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventOrderView_ABC.h"
 #include "clients_gui/EventOrderViewState.h"
-#include "actions_gui/MissionInterface_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
+#include "actions_gui/MissionInterface_ABC.h"
+#include "clients_gui/TimelinePublisher.h"
 
 namespace gui
 {
@@ -198,14 +198,14 @@ namespace
         }
 
         kernel::AgentTypes agentTypes;
-        kernel::TimelinePublisher timelinePublisher;
+        gui::TimelinePublisher timelinePublisher;
         MockInterfaceBuilder interfaceBuilder;
         MockMissionInterface missionInterface;
 
         MockEventOrderView orderView;
         gui::EventOrderPresenter orderPresenter;
         gui::EventOrderViewState state;
-        boost::shared_ptr< kernel::Event > orderEvent;
+        boost::shared_ptr< gui::Event > orderEvent;
 
         MockEntity entity;
         MockDecisions decisions;

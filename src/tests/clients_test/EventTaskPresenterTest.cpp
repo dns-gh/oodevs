@@ -10,7 +10,7 @@
 #include "clients_test_pch.h"
 
 #include "MockEventTools.h"
-#include "clients_kernel/Event.h"
+#include "clients_gui/Event.h"
 #include "clients_gui/EventTaskPresenter.h"
 #include "clients_gui/EventTaskView_ABC.h"
 #include "clients_gui/EventTaskViewState.h"
@@ -70,7 +70,7 @@ namespace
         MockEventTaskView taskView;
         gui::EventTaskPresenter taskPresenter;
         gui::EventTaskViewState state;
-        boost::shared_ptr< kernel::Event > taskEvent;
+        boost::shared_ptr< gui::Event > taskEvent;
 
         void InitializePresenter()
         {

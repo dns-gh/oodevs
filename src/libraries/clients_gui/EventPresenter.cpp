@@ -10,12 +10,12 @@
 #include "clients_gui_pch.h"
 #include "EventPresenter.h"
 #include "moc_EventPresenter.cpp"
+#include "Event.h"
 #include "EventViewState.h"
 #include "EventOrderPresenter.h"
 #include "EventView_ABC.h"
 #include "TimelineHandler_ABC.h"
-#include "clients_kernel/Event.h"
-#include "clients_kernel/EventFactory.h"
+#include "EventFactory.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 
@@ -35,7 +35,7 @@ using namespace gui;
 // Created: ABR 2013-11-19
 // -----------------------------------------------------------------------------
 EventPresenter::EventPresenter( EventView_ABC& view,
-                                const kernel::EventFactory& factory )
+                                const EventFactory& factory )
     : view_( view )
     , factory_( factory )
     , state_( new EventViewState() )
@@ -110,7 +110,7 @@ void EventPresenter::SetTimelineHandler( const boost::shared_ptr< TimelineHandle
 // Name: EventPresenter::IsCurrentEvent
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-bool EventPresenter::IsCurrentEvent( const kernel::Event& event )
+bool EventPresenter::IsCurrentEvent( const gui::Event& event )
 {
     return event_ && event_->GetEvent().uuid == event.GetEvent().uuid;
 }
@@ -156,7 +156,7 @@ void EventPresenter::StartCreation( E_EventTypes type, const QDateTime& beginDat
 // Name: EventPresenter::StartEdition
 // Created: ABR 2013-11-19
 // -----------------------------------------------------------------------------
-void EventPresenter::StartEdition( const kernel::Event& event,
+void EventPresenter::StartEdition( const gui::Event& event,
                                    bool raise,
                                    bool purge /* = true */ )
 {
@@ -185,7 +185,7 @@ void EventPresenter::OnEventContentChanged()
 // Name: EventPresenter::OnEventUpdated
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventPresenter::OnEventUpdated( const kernel::Event& event )
+void EventPresenter::OnEventUpdated( const gui::Event& event )
 {
     if( IsCurrentEvent( event ) )
         StartEdition( event, false );
@@ -195,7 +195,7 @@ void EventPresenter::OnEventUpdated( const kernel::Event& event )
 // Name: EventPresenter::OnEventDeleted
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventPresenter::OnEventDeleted( const kernel::Event& event )
+void EventPresenter::OnEventDeleted( const gui::Event& event )
 {
     if( IsCurrentEvent( event ) )
         BuildView( eEventDockModes_EditTriggered, false, state_->warningColor_, state_->warning_ );

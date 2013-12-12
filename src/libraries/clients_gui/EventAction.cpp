@@ -7,23 +7,26 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "EventAction.h"
-#include "ActionController.h"
-#include "Controllers.h"
-#include "Entity_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 #include <timeline/api.h>
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: EventAction constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventAction::EventAction( E_EventTypes type, const timeline::Event& event, actions::ActionsModel& model, Controllers& controllers )
+EventAction::EventAction( E_EventTypes type,
+                          const timeline::Event& event,
+                          actions::ActionsModel& model,
+                          kernel::Controllers& controllers )
     : Event( type, event )
     , model_( model )
     , controllers_( controllers )
@@ -149,7 +152,7 @@ QString EventAction::GetTooltip() const
 // Name: EventAction::Select
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventAction::Select( ActionController& eventController, ActionController& actionController ) const
+void EventAction::Select( kernel::ActionController& eventController, kernel::ActionController& actionController ) const
 {
     eventController.Select( static_cast< const Event& >( *this ) );
     if( action_ && event_ && event_->done )

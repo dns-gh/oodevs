@@ -10,8 +10,8 @@
 #ifndef __EventViewState_h_
 #define __EventViewState_h_
 
-#include "ENT/ENT_Enums.h"
-#include "clients_kernel/Event.h"
+#include "Event.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <boost/shared_ptr.hpp>
 
 namespace gui
@@ -40,7 +40,7 @@ struct EventViewState
     {
         // NOTHING
     }
-    EventViewState( boost::shared_ptr< kernel::Event > event,
+    EventViewState( boost::shared_ptr< gui::Event > event,
                     E_EventDockModes mode = eEventDockModes_None,
                     bool trigger = false,
                     bool save = false,
@@ -87,7 +87,7 @@ struct EventViewState
 
     //! @name Member data
     //@{
-    boost::shared_ptr< kernel::Event > event_;
+    boost::shared_ptr< gui::Event > event_;
     E_EventDockModes mode_;
     bool trigger_;
     bool save_;

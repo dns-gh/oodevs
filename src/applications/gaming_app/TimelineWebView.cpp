@@ -17,13 +17,13 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTiming.h"
+#include "clients_gui/EventAction.h"
+#include "clients_gui/EventsModel.h"
+#include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/EventAction.h"
-#include "clients_kernel/EventsModel.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TimelinePublisher.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
@@ -183,9 +183,9 @@ void TimelineWebView::Disconnect()
 // Name: TimelineWebView::GetOrCreateEvent
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-kernel::Event& TimelineWebView::GetOrCreateEvent( const timeline::Event& event )
+gui::Event& TimelineWebView::GetOrCreateEvent( const timeline::Event& event )
 {
-    kernel::Event* gamingEvent = model_.events_.Find( event.uuid );
+    gui::Event* gamingEvent = model_.events_.Find( event.uuid );
     if( !gamingEvent )
         gamingEvent = model_.events_.Create( event );
     else
@@ -292,7 +292,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
     selected_ = event;
     if( selected_ )
     {
-        kernel::Event& gamingEvent = GetOrCreateEvent( *selected_ );
+        gui::Event& gamingEvent = GetOrCreateEvent( *selected_ );
         gamingEvent.Select( controllers_.eventActions_, controllers_.actions_ );
     }
     else if( hadSelection )
@@ -308,7 +308,7 @@ void TimelineWebView::OnSelectedEvent( boost::shared_ptr< timeline::Event > even
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnActivatedEvent( const timeline::Event& event )
 {
-    kernel::Event& gamingEvent = GetOrCreateEvent( event );
+    gui::Event& gamingEvent = GetOrCreateEvent( event );
     gamingEvent.Activate( controllers_.eventActions_ );
 }
 
@@ -321,7 +321,7 @@ void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > e
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
     if( event )
     {
-        kernel::Event& gamingEvent = GetOrCreateEvent( *event );
+        gui::Event& gamingEvent = GetOrCreateEvent( *event );
         gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos() );
     }
     else
@@ -555,9 +555,9 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
     schemaWriter.WriteExerciseSchema( xos, "orders" );
     for( auto it = events.begin(); it != events.end(); ++it )
     {
-        kernel::Event& event = GetOrCreateEvent( *it );
+        gui::Event& event = GetOrCreateEvent( *it );
         if( event.GetType() == eEventTypes_Order )
-            if( const actions::Action_ABC* action = static_cast< kernel::EventAction& >( event ).GetAction() )
+            if( const actions::Action_ABC* action = static_cast< gui::EventAction& >( event ).GetAction() )
             {
                 xos << xml::start( "action" );
                 action->Serialize( xos );

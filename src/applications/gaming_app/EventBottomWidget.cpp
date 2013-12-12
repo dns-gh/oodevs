@@ -10,11 +10,11 @@
 #include "gaming_app_pch.h"
 #include "EventBottomWidget.h"
 #include "moc_EventBottomWidget.cpp"
+#include "clients_gui/Event.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLabel.h"
-#include "clients_kernel/Event.h"
 #include "tools/ExerciseConfig.h"
 #include <timeline/api.h>
 

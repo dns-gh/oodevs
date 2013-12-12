@@ -14,11 +14,12 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionParameterFactory.h"
 
+#include "clients_gui/EventFactory.h"
+
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/EventFactory.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Tools.h"
@@ -128,7 +129,7 @@ public:
     MockPublisher publisher;
     ActionPublisher actionPublisher;
     actions::ActionsModel actionsModel;
-    kernel::EventFactory eventFactory;
+    gui::EventFactory eventFactory;
 };
 
 #endif // __MockEventTools_h_

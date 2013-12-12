@@ -210,6 +210,17 @@
     </message>
 </context>
 <context>
+    <name>EventFactory</name>
+    <message>
+        <source>New order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New task</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EventOrderPresenter</name>
     <message>
         <source>&lt;Select frag order&gt;</source>

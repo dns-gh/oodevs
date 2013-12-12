@@ -7,14 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __EventFactory_h_
-#define __EventFactory_h_
+#ifndef __EventsModel_h_
+#define __EventsModel_h_
 
+#include "Event.h"
+#include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
-namespace actions
+namespace kernel
 {
-    class ActionsModel;
+    class Controller;
 }
 
 namespace timeline
@@ -22,42 +24,43 @@ namespace timeline
     struct Event;
 }
 
-namespace kernel
+namespace gui
 {
-    class Controller;
-    class Controllers;
-    class Event;
+    class EventFactory;
 
 // =============================================================================
-/** @class  EventFactory
-    @brief  EventFactory
+/** @class  EventsModel
+    @brief  EventsModel
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventFactory : private boost::noncopyable
+class EventsModel : public tools::StringResolver< Event >
+                  , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventFactory( actions::ActionsModel& actionsModel, Controllers& controllers );
-    virtual ~EventFactory();
+             EventsModel( const EventFactory& factory, kernel::Controller& controller );
+    virtual ~EventsModel();
     //@}
 
     //! @name Operations
     //@{
-    Event* Create( const timeline::Event& event ) const;
-    Event* Create( E_EventTypes type, const timeline::Event* event = 0 ) const;
+    Event* Create( const timeline::Event& event );
+    void Update( const timeline::Event& event );
+    void Destroy( const std::string& uuid );
+    void Purge();
     //@}
 
 private:
     //! @name Member data
     //@{
-    actions::ActionsModel& actionsModel_;
-    Controllers& controllers_;
+    const EventFactory& factory_;
+    kernel::Controller& controller_;
     //@}
 };
 
-} //! namespace kernel
+} //! namespace gui
 
-#endif // __EventFactory_h_
+#endif // __EventsModel_h_

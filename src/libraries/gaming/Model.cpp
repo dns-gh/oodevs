@@ -51,10 +51,10 @@
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
+#include "clients_gui/EventFactory.h"
+#include "clients_gui/EventsModel.h"
+#include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/EventFactory.h"
-#include "clients_kernel/EventsModel.h"
-#include "clients_kernel/TimelinePublisher.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 
@@ -111,9 +111,9 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new kernel::EventFactory( actions_, controllers ) )
-    , events_                  ( *new kernel::EventsModel( eventFactory_, controllers.controller_ ) )
-    , timelinePublisher_       ( *new kernel::TimelinePublisher() )
+    , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
+    , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
+    , timelinePublisher_       ( *new gui::TimelinePublisher() )
 {
     symbolsFactory_.Load( config );
 }

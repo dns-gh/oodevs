@@ -16,11 +16,15 @@
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
 
+namespace gui
+{
+    class Event;
+}
+
 namespace kernel
 {
     class Controllers;
     class ContextMenu;
-    class Event;
     class Profile_ABC;
 }
 
@@ -79,7 +83,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    kernel::Event& GetOrCreateEvent( const timeline::Event& event );
+    gui::Event& GetOrCreateEvent( const timeline::Event& event );
 
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Profile_ABC& profile );

@@ -19,12 +19,12 @@
 #include "EventSupervisorActionWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
+#include "clients_gui/Event.h"
+#include "clients_gui/EventFactory.h"
 #include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Event.h"
-#include "clients_kernel/EventFactory.h"
 #include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
@@ -261,7 +261,7 @@ void EventDockWidget::OnDeleteClicked()
 // Name: EventDockWidget::NotifyActivated
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyActivated( const kernel::Event& event )
+void EventDockWidget::NotifyActivated( const gui::Event& event )
 {
     presenter_->StartEdition( event, true );
 }
@@ -270,7 +270,7 @@ void EventDockWidget::NotifyActivated( const kernel::Event& event )
 // Name: EventDockWidget::NotifySelected
 // Created: BAX 2013-09-17
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifySelected( const kernel::Event* event )
+void EventDockWidget::NotifySelected( const gui::Event* event )
 {
     if( event )
         presenter_->StartEdition( *event, false );
@@ -280,7 +280,7 @@ void EventDockWidget::NotifySelected( const kernel::Event* event )
 // Name: EventDockWidget::NotifyContextMenu
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyContextMenu( const kernel::Event& event, kernel::ContextMenu& menu )
+void EventDockWidget::NotifyContextMenu( const gui::Event& event, kernel::ContextMenu& menu )
 {
     selected_ = &event;
     menu.InsertItem( "Command", event.GetEvent().done ? tr( "Display") : tr( "Edit" ),
@@ -293,7 +293,7 @@ void EventDockWidget::NotifyContextMenu( const kernel::Event& event, kernel::Con
 // Name: EventDockWidget::NotifyDeleted
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyDeleted( const kernel::Event& event )
+void EventDockWidget::NotifyDeleted( const gui::Event& event )
 {
     presenter_->OnEventDeleted( event );
 }
@@ -302,7 +302,7 @@ void EventDockWidget::NotifyDeleted( const kernel::Event& event )
 // Name: EventDockWidget::NotifyUpdated
 // Created: ABR 2013-06-18
 // -----------------------------------------------------------------------------
-void EventDockWidget::NotifyUpdated( const kernel::Event& event )
+void EventDockWidget::NotifyUpdated( const gui::Event& event )
 {
     presenter_->OnEventUpdated( event );
 }

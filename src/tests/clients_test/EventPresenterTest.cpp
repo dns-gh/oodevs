@@ -24,7 +24,7 @@
 
 namespace gui
 {
-    std::ostream& operator<<( std::ostream& os, const kernel::Event& event )
+    std::ostream& operator<<( std::ostream& os, const gui::Event& event )
     {
         os << "Event " << "{ "
            << ENT_Tr::ConvertFromEventType( event.GetType() ) << ", "
@@ -74,7 +74,7 @@ namespace
                lhs.action.apply  == rhs.action.apply  &&
                lhs.action.payload == rhs.action.payload;
     }
-    bool operator==( const kernel::Event& lhs, const kernel::Event& rhs )
+    bool operator==( const gui::Event& lhs, const gui::Event& rhs )
     {
         return lhs.GetType() == rhs.GetType() &&
                lhs.GetEvent() == rhs.GetEvent();
@@ -157,8 +157,8 @@ namespace
         boost::shared_ptr< MockTimelineHandler > timelineHandler;
         boost::shared_ptr< MockSubPresenter > orderPresenter;
         boost::shared_ptr< MockSubPresenter > taskPresenter;
-        boost::shared_ptr< kernel::Event > orderEvent;
-        boost::shared_ptr< kernel::Event > taskEvent;
+        boost::shared_ptr< gui::Event > orderEvent;
+        boost::shared_ptr< gui::Event > taskEvent;
 
         void CheckPurge()
         {
