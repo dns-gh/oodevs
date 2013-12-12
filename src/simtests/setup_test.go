@@ -133,6 +133,44 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 	return sim
 }
 
+func MakeReplayOpts() *simu.ReplayOpts {
+	opts := simu.ReplayOpts{}
+	projectRoot := ""
+	if cwd, err := os.Getwd(); err == nil {
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
+	}
+
+	if len(application) > 0 {
+		// Assume replayer_app lives along with the simulation
+		opts.Executable = filepath.Join(filepath.Dir(application), "replayer_app.exe")
+	} else if len(projectRoot) > 0 {
+		opts.Executable = filepath.Join(projectRoot, "run", platform, "replayer_app.exe")
+	}
+	if len(rootdir) > 0 {
+		opts.RootDir = rootdir
+	} else if len(projectRoot) > 0 {
+		opts.RootDir = filepath.Join(projectRoot, "data")
+	}
+	if len(rundir) > 0 {
+		opts.RunDir = &rundir
+	}
+	opts.ExerciseName = "crossroad-small-empty"
+	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", testPort+5)
+	opts.ConnectTimeout = ConnectTimeout
+	return &opts
+}
+
+func startReplay(c *C, simOpts *simu.SimOpts) *simu.ReplayProcess {
+
+	opts := MakeReplayOpts()
+	opts.ExerciseName = simOpts.ExerciseName
+	opts.SessionName = simOpts.SessionName
+
+	replay, err := simu.StartReplay(opts)
+	c.Assert(err, IsNil)
+	return replay
+}
+
 func checkOrderAckSequences(c *C, client *swapi.Client) {
 	client.Model.RegisterHandlerTimeout(0,
 		func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
@@ -184,11 +222,15 @@ func NewAdminOpts(exercise string) *ClientOpts {
 	}
 }
 
-func connectClient(c *C, sim *simu.SimProcess, opts *ClientOpts) *swapi.Client {
+type Simulator interface {
+	GetClientAddr() string
+}
+
+func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	if opts == nil {
 		opts = &ClientOpts{}
 	}
-	client, err := swapi.NewClient(sim.DispatcherAddr)
+	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.Logger = opts.Logger
 	client.PostTimeout = PostTimeout
@@ -216,7 +258,7 @@ func AddLogger(opts *ClientOpts) *ClientOpts {
 	return opts
 }
 
-func loginAndWaitModel(c *C, sim *simu.SimProcess, opts *ClientOpts) *swapi.Client {
+func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	client := connectClient(c, sim, opts)
 	err := client.Login(opts.User, opts.Password)
 	c.Assert(err, IsNil)

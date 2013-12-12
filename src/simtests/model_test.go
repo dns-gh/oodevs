@@ -273,7 +273,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	swtest.AssertEqualOrDiff(c, dump, expected)
 	client.Close()
 
-	client, err := swapi.NewClient(sim.DispatcherAddr)
+	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.EnableModel = false
 	go client.Run()

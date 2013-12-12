@@ -21,10 +21,10 @@ func (s *TestSuite) TestReplayerData(c *C) {
 	// Create new formation and wait a bit
 	party := getSomeParty(c, client.Model.GetData())
 	formation := CreateFormation(c, client, party.Id)
-	client.Model.WaitTicks(4)
+	client.Model.WaitTicks(1)
 	sim.Stop()
 
-	// Replay messages and find the tick the formationwas created.
+	// Replay messages and find the tick the formation was created.
 	creationTick := int32(0)
 	found := false
 	handler := func(frame replay.Frame, msg *sword.SimToClient) error {
@@ -63,4 +63,20 @@ func (s *TestSuite) TestReplayerData(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(firstFrame, Greater, int32(0))
 	c.Assert(found, Equals, false)
+
+	// Start a replay, login a client, the formation is not there
+	replay := startReplay(c, sim.Opts)
+	defer replay.Kill()
+	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
+	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
+
+	// The replayer operates step-by-step, fast forward to creation tick
+	err = client.SkipToTick(creationTick)
+	c.Assert(err, IsNil)
+	c.Assert(client.Model.GetFormation(formation.Id), NotNil)
+
+	// Move back before creation tick
+	err = client.SkipToTick(creationTick - 1)
+	c.Assert(err, IsNil)
+	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
 }

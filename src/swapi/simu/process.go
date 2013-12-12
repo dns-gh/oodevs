@@ -10,203 +10,49 @@ package simu
 
 import (
 	"errors"
-	"io/ioutil"
+	"io"
 	"log"
 	"net"
-	"os"
 	"os/exec"
-	"path/filepath"
-	"swapi"
 	"sync"
 	"time"
 )
 
-type SimOpts struct {
-	Executable     string
-	RunDir         *string
-	RootDir        string
-	DataDir        string
-	SessionName    string
-	ExerciseName   string
-	CheckpointName string
-	DebugDir       string
-	// Enable simulation internal testing commands
-	TestCommands bool
-
-	// Network address:port of dispatcher server, default to session if empty.
-	DispatcherAddr string
-
-	// Network address:port of simulation server, default to session if empty.
-	SimulationAddr string
-
-	// Delay after which the simulation process will be terminated if the
-	// startup function fails to connect to its dispatcher server.
-	ConnectTimeout time.Duration
-
-	// Tail log files, output to log module
-	EnableTailing bool
-	// Prefix the tail output with supplied string
-	TailPrefix string
-}
-
-func CheckPaths(directory bool, paths ...string) error {
-	for _, path := range paths {
-		fi, err := os.Stat(path)
-		if err != nil {
-			return errors.New("'" + path + "' is invalid " + err.Error())
-		}
-		if fi.IsDir() != directory {
-			if directory {
-				return errors.New("'" + path + "' is not a directory")
-			} else {
-				return errors.New("'" + path + "' is not a file")
-			}
-		}
-	}
-	return nil
-}
-
-func IsFile(paths ...string) error      { return CheckPaths(false, paths...) }
-func IsDirectory(paths ...string) error { return CheckPaths(true, paths...) }
-
-func (o *SimOpts) Check() error {
-	err := IsFile(o.Executable)
-	if err != nil {
-		return err
-	}
-	if o.RunDir == nil {
-		p := filepath.Dir(o.Executable)
-		o.RunDir = &p
-	}
-	return IsDirectory(*o.RunDir, o.RootDir, o.DataDir)
-}
-
-func (o *SimOpts) GetExerciseDir() string {
-	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
-}
-
-func (o *SimOpts) GetSessionDir() string {
-	return filepath.Join(o.GetExerciseDir(), "sessions", o.SessionName)
-}
-
-func (o *SimOpts) GetSessionFile() string {
-	return filepath.Join(o.GetSessionDir(), "session.xml")
-}
-
-func (o *SimOpts) GetReplayDir() string {
-	return filepath.Join(o.GetSessionDir(), "record")
-}
-
-func (o *SimOpts) GetProfilesFile() string {
-	return filepath.Join(o.GetExerciseDir(), "profiles.xml")
-}
-
-func (o *SimOpts) GetSimLogPath() string {
-	return filepath.Join(o.GetSessionDir(), "Sim.log")
-}
-
-func (o *SimOpts) GetDispatcherLogPath() string {
-	return filepath.Join(o.GetSessionDir(), "Dispatcher.log")
-}
-
-func (o *SimOpts) GetProtoLogPath() string {
-	return filepath.Join(o.GetSessionDir(), "Protobuf.log")
-}
-
-// Write the input session at a suitable place in the configured exercise
-// and set SimOpts.SessionName accordingly
-func (o *SimOpts) WriteSession(session *Session) error {
-	if len(o.ExerciseName) <= 0 {
-		return errors.New("exercise name is not set")
-	}
-	exDir := o.GetExerciseDir()
-	sessionPath, err := WriteNewSessionFile(session, exDir)
-	if err != nil {
-		return err
-	}
-	sessionDir := filepath.Dir(sessionPath)
-	o.DebugDir = filepath.Join(sessionDir, "debug")
-	o.SessionName = filepath.Base(sessionDir)
-	return nil
-}
-
-func ListDmpFiles(path string) ([]string, error) {
-	dmps := []string{}
-	entries, err := ioutil.ReadDir(path)
-	if err != nil {
-		return dmps, err
-	}
-	for _, d := range entries {
-		if filepath.Ext(d.Name()) == ".dmp" {
-			dmps = append(dmps, filepath.Join(path, d.Name()))
-		}
-	}
-	return dmps, nil
-}
-
-type SimProcess struct {
+type ServerProcess struct {
 	cmd    *exec.Cmd
 	tailch chan int // terminate tail goroutine
 	// Passed channel will be signalled once the process ends
-	waitqueue  chan chan int
-	sessionDir string
-	quitAll    sync.WaitGroup
+	waitqueue chan chan int
+	quitAll   sync.WaitGroup
 
-	Opts           *SimOpts
-	DispatcherAddr string
+	ClientAddr string
+}
+
+// Return an address where a client can connect.
+func (s *ServerProcess) GetClientAddr() string {
+	return s.ClientAddr
 }
 
 // Return true if the process exited on success, false otherwise
-func (sim *SimProcess) Success() bool {
-	if sim != nil && sim.cmd != nil && sim.cmd.ProcessState != nil {
-		return sim.cmd.ProcessState.Success()
+func (s *ServerProcess) Success() bool {
+	if s != nil && s.cmd != nil && s.cmd.ProcessState != nil {
+		return s.cmd.ProcessState.Success()
 	}
 	return false
 }
 
-func (sim *SimProcess) Kill() {
-	if sim != nil {
-		sim.cmd.Process.Kill()
-		sim.Wait(time.Duration(0))
+func (s *ServerProcess) Kill() {
+	if s != nil {
+		s.cmd.Process.Kill()
+		s.Wait(time.Duration(0))
 	}
 }
 
-func logAndStop(host string) error {
-	client, err := swapi.NewClient(host)
-	if err == nil {
-		client.EnableModel = false
-		go client.Run()
-		defer client.Close()
-		key, err := client.GetAuthenticationKey()
-		if err == nil {
-			err = client.LoginWithAuthenticationKey("", "", key)
-		}
-		if err == nil {
-			err = client.Stop()
-		}
-	}
-	return err
-}
-
-// Connect to the simulation and execute a Login/Stop sequence using
-// supervisor.
-func (sim *SimProcess) Stop() error {
-	if sim == nil {
-		return errors.New("simulation is stopped already")
-	}
-	logAndStop(sim.DispatcherAddr)
-	if sim.Wait(10 * time.Second) {
-		return nil
-	}
-	sim.Kill()
-	return errors.New("Wait timed out")
-}
-
-// Return true if the simulation stopped before the timeout. Wait indefinitely
+// Return true if the server stopped before the timeout. Wait indefinitely
 // if the timeout is zero.
-func (sim *SimProcess) Wait(d time.Duration) bool {
+func (s *ServerProcess) Wait(d time.Duration) bool {
 	waitch := make(chan int, 1)
-	sim.waitqueue <- waitch
+	s.waitqueue <- waitch
 
 	timeoutch := make(chan int)
 	go func() {
@@ -226,16 +72,23 @@ func (sim *SimProcess) Wait(d time.Duration) bool {
 	return true
 }
 
+type disconnector func(link io.ReadWriter, timeout time.Duration) bool
+
 // Repeatedly try to connect to host. Fail if no connection can be made
-// before timeout.
-func waitForNetwork(waitch chan error, host string, timeout time.Duration) {
+// before timeout. If a connection succeeds and disconnectFn is supplied,
+// it will be called to let a chance to close the connection gracefully.
+// The callback must return true if the connection was closed properly.
+func waitForNetwork(waitch chan error, host string, timeout time.Duration,
+	disconnectFn disconnector) {
 	const minLoopDelay = 500 * time.Millisecond
 	end := time.Now().Add(timeout)
 	for {
 		start := time.Now()
 		conn, err := net.Dial("tcp", host)
 		if err == nil {
-			swapi.Disconnect(conn, 5*time.Second)
+			if disconnectFn != nil {
+				disconnectFn(conn, 5*time.Second)
+			}
 			conn.Close()
 			waitch <- nil
 			return
@@ -251,58 +104,23 @@ func waitForNetwork(waitch chan error, host string, timeout time.Duration) {
 	waitch <- errors.New("connection timed out")
 }
 
-// Start a simulation using supplied options. On success, the simulation
+// Start a server process using supplied options. On success, the server
 // process will be ready to receive incoming connections. On error, the
-// simulation might still be returned if the connection timed out or the
+// server might still be returned if the connection timed out or the
 // process terminated before a connection can be made.
-func StartSim(opts *SimOpts) (*SimProcess, error) {
-	err := opts.Check()
-	if err != nil {
-		return nil, err
-	}
-	sessionDir := filepath.Join(opts.RootDir, "exercises", opts.ExerciseName,
-		"sessions", opts.SessionName)
-	session, err := ReadSessionFile(filepath.Join(sessionDir, "session.xml"))
-	if err != nil {
-		return nil, err
-	}
-	gamingServer := session.GamingServer
+func StartServer(executable, addr, runDir string, args []string, logFiles []string,
+	logPrefix string, connectTimeout time.Duration, disconnectFn disconnector) (
+	*ServerProcess, error) {
 
-	args := []string{
-		"--root-dir=" + opts.RootDir,
-		"--data-dir=" + opts.DataDir,
-		"--exercise=" + opts.ExerciseName,
-		"--session=" + opts.SessionName,
-		"--verbose",
+	cmd := exec.Command(executable, args...)
+	cmd.Dir = runDir
+	s := ServerProcess{
+		cmd:        cmd,
+		tailch:     make(chan int, 1),
+		waitqueue:  make(chan chan int, 1),
+		ClientAddr: addr,
 	}
-	if len(opts.DispatcherAddr) > 0 {
-		args = append(args, "--dispatcher-address="+opts.DispatcherAddr)
-		gamingServer = opts.DispatcherAddr
-	}
-	if len(opts.SimulationAddr) > 0 {
-		args = append(args, "--simulation-address="+opts.SimulationAddr)
-	}
-	if len(opts.CheckpointName) > 0 {
-		args = append(args, "--checkpoint="+opts.CheckpointName)
-	}
-	if len(opts.DebugDir) > 0 {
-		args = append(args, "--debug-dir="+opts.DebugDir)
-	}
-	if opts.TestCommands {
-		args = append(args, "--test-commands")
-	}
-
-	cmd := exec.Command(opts.Executable, args...)
-	cmd.Dir = *opts.RunDir
-	sim := SimProcess{
-		cmd:            cmd,
-		tailch:         make(chan int, 1),
-		waitqueue:      make(chan chan int, 1),
-		sessionDir:     sessionDir,
-		Opts:           opts,
-		DispatcherAddr: gamingServer,
-	}
-	err = cmd.Start()
+	err := cmd.Start()
 
 	// Process.Wait() cannot be called concurrently, so always wait for process
 	// termination and handle wait requests. Callers wanting to wait for
@@ -311,8 +129,8 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		waitch := make(chan int)
 		go func() {
 			cmd.Wait()
-			sim.tailch <- 1
-			sim.quitAll.Wait()
+			s.tailch <- 1
+			s.quitAll.Wait()
 			waitch <- 1
 		}()
 
@@ -320,7 +138,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		pendings := []chan int{}
 		for {
 			select {
-			case ch := <-sim.waitqueue:
+			case ch := <-s.waitqueue:
 				if terminated {
 					ch <- 1
 				} else {
@@ -335,47 +153,41 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		}
 	}()
 
-	if opts.EnableTailing {
-		sim.quitAll.Add(1)
-		logFiles := []string{
-			opts.GetSimLogPath(),
-			opts.GetDispatcherLogPath(),
-		}
+	if len(logFiles) > 0 {
+		s.quitAll.Add(1)
 		go func() {
-			prefix := opts.TailPrefix
-			if len(prefix) > 0 {
-				prefix = prefix + ": "
+			if len(logPrefix) > 0 {
+				logPrefix = logPrefix + ": "
 			}
-			defer sim.quitAll.Done()
-			TailFiles(logFiles, sim.tailch, func(line string) bool {
-				log.Printf(prefix + line)
+			defer s.quitAll.Done()
+			TailFiles(logFiles, s.tailch, func(line string) bool {
+				log.Printf(logPrefix + line)
 				return false
 			})
 		}()
 	}
 
-	connectTimeout := opts.ConnectTimeout
 	if connectTimeout <= 0 {
 		connectTimeout = 10 * time.Second
 	}
 
-	// Wait for either the simulation to terminate, fails to open a server
+	// Wait for either the server to terminate, fails to open a server
 	// socket, or succeeds. Fails in the two first cases.
 	netch := make(chan error)
-	go waitForNetwork(netch, gamingServer, connectTimeout)
+	go waitForNetwork(netch, addr, connectTimeout, disconnectFn)
 	procch := make(chan int, 1)
-	sim.waitqueue <- procch
+	s.waitqueue <- procch
 	select {
 	case err := <-netch:
 		if err != nil {
-			sim.Kill()
-			return &sim, err
+			s.Kill()
+			return &s, err
 		}
 		break
 	case <-procch:
-		if !sim.Success() {
-			return &sim, errors.New("failed to start simulation")
+		if !s.Success() {
+			return &s, errors.New("failed to start server process")
 		}
 	}
-	return &sim, err
+	return &s, err
 }

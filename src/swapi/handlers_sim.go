@@ -307,6 +307,18 @@ func (model *ModelData) handleFormationCreation(m *sword.SimToClient_Content) er
 	return nil
 }
 
+func (model *ModelData) handleFormationDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetFormationDestruction()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	if !model.removeFormation(mm.GetFormation().GetId()) {
+		return fmt.Errorf("cannot find formation to destroy: %d",
+			mm.GetFormation().GetId())
+	}
+	return nil
+}
+
 func (model *ModelData) handleCrowdCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdCreation()
 	if mm == nil {
