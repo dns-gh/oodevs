@@ -383,33 +383,16 @@ namespace
         qApp->processEvents();
     }
 
-    void Copy( std::istream& file, std::ostream& output )
-    {
-        std::istreambuf_iterator< char > it( file );
-        std::istreambuf_iterator< char > end;
-        std::ostreambuf_iterator< char > out( output );
-        std::copy( it, end, out );
-    }
-
-    void CopyFile( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, QProgressBar* progress )
-    {
-        tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
-        if( file.good() )
-            archive.WriteFile( name,
-                [&]( std::ostream& s )
-                {
-                    Copy( file, s );
-                    AddProgress( progress, 10 );
-                } );
-    }
-
     void BrowseDirectory( const tools::Path& root, const tools::Path& name, tools::zip::OutputArchive& archive, bool recursive, QProgressBar* progress )
     {
         for( auto it = root.begin(); it != root.end(); ++it )
         {
             const tools::Path& file = it->FileName();
             if( it->IsRegularFile() )
-                CopyFile( root / file, name / file, archive, progress );
+            {
+                archive.StoreFile( name / file, root / file );
+                AddProgress( progress, 10 );
+            }
             else if( recursive && it->IsDirectory() )
                 BrowseDirectory( *it, name / file, archive, recursive, progress );
             AddProgress( progress, 2 );
@@ -422,7 +405,10 @@ namespace
         if( !root.Exists() )
             return;
         if( !root.IsDirectory() )
-            CopyFile( root, name, archive, progress );
+            {
+                archive.StoreFile( name, root );
+                AddProgress( progress, 10 );
+            }
         else
             BrowseDirectory( root, exportName != "" ? exportName : name, archive, recursive, progress );
     }
@@ -537,12 +523,11 @@ void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
     archive.WriteFile( "content.xml",
         [&]( std::ostream& s )
         {
-            xml::xostreamstream xos( s );
-            xos << xml::start( "content" )
-                << xml::content( "name", package.toStdString() )
-                << xml::content( "description", description )
-                << xml::content( "version", tools::AppProjectVersion() )
-                << xml::end;
+            xml::xostreamstream( s )
+                << xml::start( "content" )
+                    << xml::content( "name", package.toStdString() )
+                    << xml::content( "description", description )
+                    << xml::content( "version", tools::AppProjectVersion() );
         } );
 }
 

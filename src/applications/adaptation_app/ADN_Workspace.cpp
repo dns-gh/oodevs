@@ -85,7 +85,7 @@
 #include "clients_kernel/LanguageController.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Zip.h"
+#include <tools/Zip.h>
 #include <boost/foreach.hpp>
 
 ADN_Workspace* ADN_Workspace::pWorkspace_ = 0;

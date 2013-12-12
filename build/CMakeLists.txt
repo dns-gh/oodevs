@@ -67,8 +67,8 @@ masa_set_external_library( SVGL_LIBRARIES             svgl_d svgl )
 masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
-masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
 masa_set_external_library( MAPNIK_LIBRARIES           mapnik_d mapnik )
+masa_set_external_library( MINIZIP_LIBRARIES          minizipd minizip )
 
 masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
 masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
@@ -280,7 +280,9 @@ target_link_libraries( protocol_test sword_tools )
 
 # tools_test
 add_target( tools_test tests "tests/tools_test" OPTIONS protocol test )
-target_link_libraries( tools_test sword_tools ${ZIPSTREAM_LIBRARIES} )
+target_link_libraries( tools_test sword_tools
+    ${MINIZIP_LIBRARIES}
+)
 
 function( add_plugin target )
     masa_extract_options( options ${ARGN} )
@@ -530,7 +532,7 @@ target_link_libraries( clients_gui
     ${SPATIALCONTAINER_LIBRARIES}
     ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
-    ${ZIPSTREAM_LIBRARIES}
+    ${MINIZIP_LIBRARIES}
 )
 
 # frontend
