@@ -11,8 +11,8 @@
 #include "EventMultimediaWidget.h"
 #include "moc_EventMultimediaWidget.cpp"
 #include "clients_gui/FileDialog.h"
+#include "clients_kernel/Event.h"
 #include "ENT/ENT_Tr.h"
-#include "gaming/Event.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 
@@ -57,7 +57,7 @@ EventMultimediaWidget::~EventMultimediaWidget()
 // Name: EventMultimediaWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventMultimediaWidget::Fill( const Event& event )
+void EventMultimediaWidget::Fill( const kernel::Event& event )
 {
     file_->setText( "" );
     label_->setText( QString::fromStdString( event.GetEvent().name ) );

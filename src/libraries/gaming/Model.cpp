@@ -17,8 +17,6 @@
 #include "AgentsModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
-#include "EventFactory.h"
-#include "EventsModel.h"
 #include "FireFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
@@ -44,7 +42,6 @@
 #include "TacticalLineFactory.h"
 #include "TeamFactory.h"
 #include "TeamsModel.h"
-#include "TimelinePublisher.h"
 #include "UrbanBlockDetectionMap.h"
 #include "UrbanKnowledgeFactory.h"
 #include "UrbanModel.h"
@@ -55,6 +52,9 @@
 #include "actions/ActionParameterFactory.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/EventFactory.h"
+#include "clients_kernel/EventsModel.h"
+#include "clients_kernel/TimelinePublisher.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 
@@ -111,9 +111,9 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new EventFactory( actions_, controllers ) )
-    , events_                  ( *new EventsModel( eventFactory_, controllers.controller_ ) )
-    , timelinePublisher_       ( *new TimelinePublisher() )
+    , eventFactory_            ( *new kernel::EventFactory( actions_, controllers ) )
+    , events_                  ( *new kernel::EventsModel( eventFactory_, controllers.controller_ ) )
+    , timelinePublisher_       ( *new kernel::TimelinePublisher() )
 {
     symbolsFactory_.Load( config );
 }

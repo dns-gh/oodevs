@@ -10,11 +10,13 @@
 #ifndef __EventManager_h_
 #define __EventManager_h_
 
+#include "EventOrderViewState.h"
 #include "ENT/ENT_Tr.h"
 
 namespace kernel
 {
     class AgentTypes;
+    class Decisions_ABC;
     class Entity_ABC;
 }
 
@@ -34,26 +36,24 @@ namespace timeline
     struct Event;
 }
 
-class Decisions_ABC;
-
 namespace gui
 {
-    class EventBuilder_ABC;
+    class EventOrderView_ABC;
 // =============================================================================
-/** @class  EventManager
+/** @class  EventOrderPresenter
     @brief  Event manager
 */
 // Created: LGY 2013-10-03
 // =============================================================================
-class EventManager : private boost::noncopyable
+class EventOrderPresenter : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EventManager( EventBuilder_ABC& builder, const kernel::AgentTypes& agentTypes,
-                           actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                           actions::gui::MissionInterface_ABC& missionInterface );
-            ~EventManager();
+             EventOrderPresenter( EventOrderView_ABC& builder, const kernel::AgentTypes& agentTypes,
+                                  actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                                  actions::gui::MissionInterface_ABC& missionInterface );
+            ~EventOrderPresenter();
     //@}
 
     //! @name Operations
@@ -62,10 +62,10 @@ public:
     void Select( E_MissionType type );
     void Select( E_MissionType type, const std::string& mission );
     void Select( E_MissionType type, const std::string& mission, const actions::Action_ABC* action );
-    void Select( const Decisions_ABC& decisions );
-    void Select( const Decisions_ABC& decisions, E_MissionType type );
-    void Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
-    void Select( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
+    void Select( const kernel::Decisions_ABC& decisions );
+    void Select( const kernel::Decisions_ABC& decisions, E_MissionType type );
+    void Select( const kernel::Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
+    void Select( const kernel::Decisions_ABC& decisions, E_MissionType type, const std::string& mission,
                  const actions::Action_ABC* action );
 
     void Publish( actions::ActionsModel& model, timeline::Event* event, bool planned, int context ) const;
@@ -75,21 +75,21 @@ public:
 private:
     //! @name Operations
     //@{
-    void Select( const Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
+    void Select( const kernel::Decisions_ABC& decisions, const kernel::Entity_ABC& entity, E_MissionType type,
                  E_MissionType entityType, const std::string& mission, const actions::Action_ABC* action );
-    void Build( const Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
+    void Build( const kernel::Decisions_ABC& decisions, E_MissionType type, const std::string& mission );
     //@}
 
 private:
     //! @name Member data
     //@{
-    EventBuilder_ABC& builder_;
+    EventOrderView_ABC& view_;
     const kernel::AgentTypes& agentTypes_;
-    E_MissionType currentMissionType_;
-    std::string currentMission_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
-    bool planningMode_;
     actions::gui::MissionInterface_ABC& missionInterface_;
+
+    EventOrderViewState state_;
+    bool planningMode_;
     //@}
 };
 

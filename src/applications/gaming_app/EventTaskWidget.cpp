@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "EventTaskWidget.h"
 #include "moc_EventTaskWidget.cpp"
+#include "clients_kernel/Event.h"
 #include "ENT/ENT_Tr.h"
-#include "gaming/Event.h"
 #include <timeline/api.h>
 #include <tools/Base64Converters.h>
 
@@ -73,7 +73,7 @@ EventTaskWidget::~EventTaskWidget()
 // Name: EventTaskWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventTaskWidget::Fill( const Event& event )
+void EventTaskWidget::Fill( const kernel::Event& event )
 {
     const timeline::Event& timelineEvent = event.GetEvent();
     label_->setText( QString::fromStdString( timelineEvent.name ) );

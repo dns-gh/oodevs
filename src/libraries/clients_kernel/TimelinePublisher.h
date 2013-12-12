@@ -11,6 +11,10 @@
 #define __TimelinePublisher_h_
 
 #include "protocol/ServerPublisher_ABC.h"
+#include <boost/noncopyable.hpp>
+
+namespace kernel
+{
 
 // =============================================================================
 /** @class  TimelinePublisher
@@ -44,15 +48,12 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::string currentPayload_;
     //@}
 };
+
+} //! namespace kernel
 
 #endif // __TimelinePublisher_h_

@@ -17,7 +17,6 @@ namespace kernel
     class Mission;
     class FragOrder;
     class Entity_ABC;
-}
 
 // =============================================================================
 /** @class  Decisions_ABC
@@ -44,5 +43,7 @@ public:
     virtual const kernel::Entity_ABC& GetAgent() const = 0;
     //@}
 };
+
+} //! namespace kernel
 
 #endif // __Decisions_ABC_h_

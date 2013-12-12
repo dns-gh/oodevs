@@ -211,7 +211,7 @@
     </message>
 </context>
 <context>
-    <name>EventManager</name>
+    <name>EventOrderPresenter</name>
     <message>
         <source>&lt;Select frag order&gt;</source>
         <translation>&lt;Selectionner l&apos;ordre de conduite&gt;</translation>

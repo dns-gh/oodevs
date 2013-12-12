@@ -14,17 +14,16 @@
 #include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
-namespace kernel
-{
-    class Controller;
-}
-
 namespace timeline
 {
     struct Event;
 }
 
-class EventFactory;
+
+namespace kernel
+{
+    class Controller;
+    class EventFactory;
 
 // =============================================================================
 /** @class  EventsModel
@@ -39,7 +38,7 @@ class EventsModel : public tools::StringResolver< Event >
 public:
     //! @name Constructors/Destructor
     //@{
-             EventsModel( const EventFactory& factory, kernel::Controller& controller );
+             EventsModel( const EventFactory& factory, Controller& controller );
     virtual ~EventsModel();
     //@}
 
@@ -55,8 +54,10 @@ private:
     //! @name Member data
     //@{
     const EventFactory& factory_;
-    kernel::Controller& controller_;
+    Controller& controller_;
     //@}
 };
+
+} //! namespace kernel
 
 #endif // __EventsModel_h_

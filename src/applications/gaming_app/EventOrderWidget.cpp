@@ -17,7 +17,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_gui/EventManager.h"
+#include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWarnWidget.h"
@@ -25,20 +25,20 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
+#include "clients_kernel/EventAction.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/TimelinePublisher.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
-#include "gaming/EventAction.h"
 #include "gaming/Model.h"
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MissionParameters.h"
-#include "gaming/TimelinePublisher.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 #include <boost/assign/list_of.hpp>
@@ -72,7 +72,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
     , missionCombo_( 0 )
     , planningMode_( false )
-    , manager_( new gui::EventManager( *this, model.static_.types_, interfaceBuilder, *missionInterface_ ) )
+    , manager_( new gui::EventOrderPresenter( *this, model.static_.types_, interfaceBuilder, *missionInterface_ ) )
     , context_( 0 )
 {
     // Top
@@ -179,9 +179,9 @@ void EventOrderWidget::Reset()
 // Name: EventOrderWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Fill( const Event& event )
+void EventOrderWidget::Fill( const kernel::Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
+    const kernel::EventAction& eventAction = static_cast< const kernel::EventAction& >( event );
     const actions::Action_ABC* action = eventAction.GetAction();
     if( action != 0 )
     {
@@ -267,9 +267,9 @@ void EventOrderWidget::Publish( timeline::Event* event, bool planned )
 // Name: EventOrerWidget::GetTargetDecision
 // Created: ABR 2013-06-07
 // -----------------------------------------------------------------------------
-const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
+const kernel::Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 {
-    const Decisions_ABC* decisions = 0;
+    const kernel::Decisions_ABC* decisions = 0;
     if( target_ )
     {
         if( target_->GetTypeName() == kernel::Agent_ABC::typeName_ )
@@ -323,7 +323,7 @@ E_MissionType EventOrderWidget::GetMissionType() const
 // -----------------------------------------------------------------------------
 void EventOrderWidget::SelectDefault()
 {
-    if( const Decisions_ABC* decisions = GetTargetDecision() )
+    if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions );
     else
         manager_->Select();
@@ -335,7 +335,7 @@ void EventOrderWidget::SelectDefault()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type )
 {
-    if( const Decisions_ABC* decisions = GetTargetDecision() )
+    if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type, action.GetType().GetName(), &action );
     else
         manager_->Select( type, action.GetType().GetName(), &action );
@@ -350,7 +350,7 @@ void EventOrderWidget::SelectWhenTargetOrMissionChanged()
     E_MissionType type = GetMissionType();
     if( type == eNbrMissionTypes )
         SelectDefault();
-    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+    else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
     else
         manager_->Select( type, missionCombo_->currentText().toStdString() );
@@ -365,7 +365,7 @@ void EventOrderWidget::SelectWhenMissionTypeChanged()
     E_MissionType type = GetMissionType();
     if( type == eNbrMissionTypes )
         SelectDefault();
-    else if( const Decisions_ABC* decisions = GetTargetDecision() )
+    else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type );
     else
         manager_->Select( type );
@@ -529,7 +529,7 @@ void EventOrderWidget::ActivateMissionPanelOnUnit()
 // Name: EventOrderWidget::NotifyUpdated
 // Created: LGY 2013-08-22
 // -----------------------------------------------------------------------------
-void EventOrderWidget::NotifyUpdated( const Decisions_ABC& decisions )
+void EventOrderWidget::NotifyUpdated( const kernel::Decisions_ABC& decisions )
 {
    if( selectedEntity_ && selectedEntity_->GetId() == decisions.GetAgent().GetId() ||
        alternateSelectedEntity_ && alternateSelectedEntity_->GetId() == decisions.GetAgent().GetId() )
@@ -576,60 +576,52 @@ void EventOrderWidget::OnPlanningModeToggled( bool value )
 // Name: EventOrderWidget::Build
 // Created: LGY 2013-08-29
 // -----------------------------------------------------------------------------
-void EventOrderWidget::Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                              const std::vector< std::string >& missions, const std::string& currentMission,
-                              const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector )
+void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 {
     missionTypeCombo_->blockSignals( true );
     // CLEAR
     missionTypeCombo_->clear();
     // FILL
-    for( auto it = types.begin(); it != types.end(); ++it )
+    for( auto it = state.types_.begin(); it != state.types_.end(); ++it )
         missionTypeCombo_->addItem( QString::fromStdString( ENT_Tr::ConvertFromMissionType( *it ) ),
                                     QVariant( static_cast< unsigned int >( *it ) ) );
     // SELECT
     missionTypeCombo_->setCurrentIndex( missionTypeCombo_->findText(
-        QString::fromStdString( ENT_Tr::ConvertFromMissionType( currentType ) ) ) );
+        QString::fromStdString( ENT_Tr::ConvertFromMissionType( state.currentType_ ) ) ) );
     missionTypeCombo_->blockSignals( false );
     missionCombo_->blockSignals( true );
     // CLEAR
     missionCombo_->clear();
     // FILL
-    for( auto it = missions.begin(); it != missions.end(); ++it )
+    for( auto it = state.missions_.begin(); it != state.missions_.end(); ++it )
     {
         const std::string& name = *it;
         missionCombo_->addItem( name.c_str() );
         QBrush missionColor = defaultColor;
-        if( name == currentMission )
+        if( name == state.currentMission_ )
         {
-            if( invalid )
+            if( state.invalid_ )
                 missionColor = invalidColor;
-            else if( missionSelector )
+            else if( state.missionSelector_ )
                 missionColor = disabledColor;
         }
         else
-            missionColor = std::find( disabledMissions.begin(), disabledMissions.end(), name ) == disabledMissions.end()
+            missionColor = std::find( state.disabledMissions_.begin(), state.disabledMissions_.end(), name ) == state.disabledMissions_.end()
                 ? defaultColor
                 : disabledColor;
         missionCombo_->setItemData( missionCombo_->count() - 1, missionColor, Qt::ForegroundRole );
     }
     // SELECT
-    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( currentMission ) ) );
+    missionCombo_->setCurrentIndex( missionCombo_->findText( QString::fromStdString( state.currentMission_ ) ) );
     // Disable invalid mission
-    if( invalid || missionSelector)
+    if( state.invalid_ || state.missionSelector_ )
         missionCombo_->setItemData( missionCombo_->currentIndex(), Qt::NoItemFlags, Qt::UserRole - 1 );
-    missionCombo_->EnableStaticWarning( invalid );
-    targetGroupBox_->EnableStaticWarning( invalid );
-    targetLabel_->EnableStaticWarning( invalid );
+    missionCombo_->EnableStaticWarning( state.invalid_ );
+    targetGroupBox_->EnableStaticWarning( state.invalid_ );
+    targetLabel_->EnableStaticWarning( state.invalid_ );
     missionCombo_->blockSignals( false );
-}
 
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::UpdateActions
-// Created: ABR 2013-11-14
-// -----------------------------------------------------------------------------
-void EventOrderWidget::UpdateActions()
-{
+    // Update actions
     UpdateTriggerAction();
     emit EventChanged();
 }

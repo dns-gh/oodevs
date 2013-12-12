@@ -10,7 +10,7 @@
 #ifndef __PopulationDecisions_h_
 #define __PopulationDecisions_h_
 
-#include "Decisions_ABC.h"
+#include "clients_kernel/Decisions_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -37,7 +37,7 @@ namespace sword
 class PopulationDecisions : public kernel::Extension_ABC
                           , public kernel::Updatable_ABC< sword::CrowdOrder >
                           , public kernel::Updatable_ABC< sword::CrowdUpdate >
-                          , public Decisions_ABC
+                          , public kernel::Decisions_ABC
 {
 public:
     //! @name Constructors/Destructor

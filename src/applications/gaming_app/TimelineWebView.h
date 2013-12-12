@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controllers;
     class ContextMenu;
+    class Event;
     class Profile_ABC;
 }
 
@@ -37,7 +38,6 @@ namespace tools
 }
 
 class Config;
-class Event;
 class Model;
 
 // =============================================================================
@@ -75,7 +75,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    Event& GetOrCreateEvent( const timeline::Event& event );
+    kernel::Event& GetOrCreateEvent( const timeline::Event& event );
 
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Profile_ABC& profile );

@@ -14,9 +14,9 @@
 #include "clients_gui/RichDateTimeEdit.h"
 #include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Event.h"
 #include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
-#include "gaming/Event.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 
@@ -113,7 +113,7 @@ EventTopWidget::~EventTopWidget()
 // Name: EventTopWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventTopWidget::Fill( const Event& event )
+void EventTopWidget::Fill( const kernel::Event& event )
 {
     title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( event.GetType() ) ) );
     saveAction_->setEnabled( !event.GetEvent().done );

@@ -67,7 +67,7 @@ private slots:
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Fill( const Event& event );
+    virtual void Fill( const kernel::Event& event );
     virtual void Commit( timeline::Event& event );
     //@}
 

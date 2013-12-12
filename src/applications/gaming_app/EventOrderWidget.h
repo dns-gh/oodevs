@@ -12,7 +12,7 @@
 
 #include "EventWidget_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_gui/EventBuilder_ABC.h"
+#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
@@ -33,7 +33,8 @@ namespace actions
 namespace gui
 {
     class EntitySymbols;
-    class EventManager;
+    class EventOrderPresenter;
+    struct EventOrderViewState;
     class GlTools_ABC;
     class RichGroupBox;
     class RichLabel;
@@ -45,7 +46,9 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Controllers;
+    class Decisions_ABC;
     class Entity_ABC;
+    class EventAction;
     class Mission;
     class OrderType;
     class Population_ABC;
@@ -59,10 +62,7 @@ namespace tools
     template< typename T > class Iterator;
 }
 
-class Decisions_ABC;
-class EventAction;
 class Model;
-class Decisions_ABC;
 class MissionParameters;
 
 // =============================================================================
@@ -77,10 +77,10 @@ class EventOrderWidget : public EventWidget_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                       , public tools::ElementObserver_ABC< Decisions_ABC >
+                       , public tools::ElementObserver_ABC< kernel::Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , public tools::ElementObserver_ABC< MissionParameters >
-                       , private gui::EventBuilder_ABC
+                       , private gui::EventOrderView_ABC
 {
     Q_OBJECT
 
@@ -98,7 +98,7 @@ private:
     //@{
     virtual void Purge();
     virtual void Reset();
-    virtual void Fill( const Event& event );
+    virtual void Fill( const kernel::Event& event );
     virtual void Commit( timeline::Event& event );
     virtual void Trigger();
     virtual bool IsValid() const;
@@ -111,19 +111,15 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    virtual void NotifyUpdated( const Decisions_ABC& decisions );
+    virtual void NotifyUpdated( const kernel::Decisions_ABC& decisions );
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
-    //@}
-
-    //! @name EventBuilder_ABC implementation
-    //@{
-    virtual void Build( const std::vector< E_MissionType >& types, E_MissionType currentType,
-                    const std::vector< std::string >& missions, const std::string& currentMission,
-                    const std::vector< std::string >& disabledMissions, bool invalid, bool missionSelector );
-    virtual void UpdateActions();
     virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
 
+    //! @name EventOrderView_ABC implementation
+    //@{
+    virtual void Build( const gui::EventOrderViewState& state );
+    //@}
 
     //! @name Helpers
     //@{
@@ -133,7 +129,7 @@ private:
     void UpdateTriggerAction();
 
     E_MissionType GetMissionType() const;
-    const Decisions_ABC* GetTargetDecision() const;
+    const kernel::Decisions_ABC* GetTargetDecision() const;
     void SetTarget( const kernel::Entity_ABC* entity );
     void Publish( timeline::Event* event, bool planned );
     //@}
@@ -193,7 +189,7 @@ private:
     const kernel::Entity_ABC* target_;
 
     bool planningMode_;
-    boost::scoped_ptr< gui::EventManager > manager_;
+    boost::scoped_ptr< gui::EventOrderPresenter > manager_;
     int context_;
     //@}
 };

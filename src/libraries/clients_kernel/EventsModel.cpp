@@ -7,16 +7,19 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "EventsModel.h"
+#include "Controller.h"
 #include "EventFactory.h"
 #include <timeline/api.h>
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: EventsModel constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventsModel::EventsModel( const EventFactory& factory, kernel::Controller& controller )
+EventsModel::EventsModel( const EventFactory& factory, Controller& controller )
     : StringResolver()
     , factory_( factory )
     , controller_( controller )

@@ -9,8 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "EventSupervisorActionWidget.h"
+#include "clients_kernel/Event.h"
 #include "ENT/ENT_Tr.h"
-#include "gaming/Event.h"
 #include <timeline/api.h>
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ EventSupervisorActionWidget::~EventSupervisorActionWidget()
 // Name: EventSupervisorActionWidget::Fill
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventSupervisorActionWidget::Fill( const Event& /*event*/ )
+void EventSupervisorActionWidget::Fill( const kernel::Event& /*event*/ )
 {
     // NOTHING
 }
