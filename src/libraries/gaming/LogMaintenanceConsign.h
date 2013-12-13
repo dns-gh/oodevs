@@ -45,21 +45,22 @@ public:
     //@{
              LogMaintenanceConsign( kernel::Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
                                     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
-                                    const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation );
+                                    const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation,
+                                    kernel::Agent_ABC& consumer );
     virtual ~LogMaintenanceConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::LogMaintenanceHandlingUpdate& message );
+    void Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned int id ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual const kernel::Agent_ABC* GetConsumer() const;
-    virtual const kernel::Entity_ABC* GetHandler() const;
+    virtual kernel::Agent_ABC* GetConsumer() const;
+    virtual kernel::Entity_ABC* GetHandler() const;
     const kernel::ComponentType* GetEquipment() const;
     const kernel::BreakdownType* GetBreakdown() const;
     bool IsDiagnosed() const;
@@ -82,7 +83,7 @@ private:
     //@{
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     kernel::Agent_ABC& consumer_;
-    kernel::Agent_ABC* pPionLogHandling_;
+    kernel::Entity_ABC* pPionLogHandling_;
     const kernel::ComponentType* equipmentType_;
     const kernel::BreakdownType* breakdownType_;
     bool diagnosed_;

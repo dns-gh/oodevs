@@ -440,7 +440,7 @@ void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingDestruction( const sword:
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingUpdate( const sword::LogMaintenanceHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMaintenanceConsign( message.request().id() ).Update( message );
+    GetModel().logistics_.UpdateMaintenanceConsign( message );
     GetModel().agents_.GetAgent( message.unit().id() ).Get< Equipments >().Update( message );
 }
 
@@ -477,7 +477,7 @@ void AgentServerMsgMgr::OnReceiveLogMedicalHandlingDestruction( const sword::Log
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogMedicalHandlingUpdate( const sword::LogMedicalHandlingUpdate& message )
 {
-    GetModel().logistics_.GetMedicalConsign( message.request().id() ).Update( message );
+    GetModel().logistics_.UpdateMedicalConsign( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -513,7 +513,7 @@ void AgentServerMsgMgr::OnReceiveLogFuneralHandlingDestruction( const sword::Log
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogFuneralHandlingUpdate( const sword::LogFuneralHandlingUpdate& message )
 {
-    GetModel().logistics_.GetFuneralConsign( message.request().id() ).Update( message );
+    GetModel().logistics_.UpdateFuneralConsign( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ void AgentServerMsgMgr::OnReceiveLogSupplyHandlingDestruction( const sword::LogS
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogSupplyHandlingUpdate( const sword::LogSupplyHandlingUpdate& message )
 {
-    GetModel().logistics_.GetSupplyConsign( message.request().id() ).Update( message );
+    GetModel().logistics_.UpdateSupplyConsign( message );
 }
 
 // -----------------------------------------------------------------------------

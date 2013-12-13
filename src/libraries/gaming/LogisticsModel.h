@@ -18,6 +18,19 @@ namespace sword
     class LogMedicalHandlingCreation;
     class LogSupplyHandlingCreation;
     class LogFuneralHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
+    class LogMedicalHandlingUpdate;
+    class LogFuneralHandlingUpdate;
+    class LogSupplyHandlingUpdate;
+    class ParentEntity;
+}
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
+    class DotationType;
 }
 
 class LogMaintenanceConsign;
@@ -40,7 +53,11 @@ class LogisticsModel : public tools::Resolver< LogMaintenanceConsign >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsModel( LogisticConsignFactory_ABC& factory );
+             LogisticsModel( LogisticConsignFactory_ABC& factory, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
+                             const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                             const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                             const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                             kernel::Controller& controller );
     virtual ~LogisticsModel();
     //@}
 
@@ -49,18 +66,22 @@ public:
     void Purge();
 
     void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
     LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
     void DeleteMaintenanceConsign( unsigned long id );
 
     void CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message );
+    void UpdateMedicalConsign( const sword::LogMedicalHandlingUpdate& message );
     LogMedicalConsign& GetMedicalConsign( unsigned long id );
     void DeleteMedicalConsign( unsigned long id );
 
     void CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message );
+    void UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& message );
     LogSupplyConsign& GetSupplyConsign( unsigned long id );
     void DeleteSupplyConsign( unsigned long id );
 
     void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
+    void UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate& message );
     LogFuneralConsign& GetFuneralConsign( unsigned long id );
     void DeleteFuneralConsign( unsigned long id );
 
@@ -78,12 +99,29 @@ private:
     //@{
     template< typename Type >
     void Delete( unsigned long id );
+    template< typename M, typename C, typename E >
+    void CreateConsign( const M& message, const std::function< C*( const M&, kernel::Agent_ABC& ) >& create );
+    template< typename C, typename E >
+    void DeleteConsign( unsigned long id );
+    template< typename M, typename C, typename E >
+    void UpdateConsign( const M& message );
+    kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
     //@}
 
 private:
     //! @name Member data
     //@{
     LogisticConsignFactory_ABC& factory_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
     //@}
 };
 

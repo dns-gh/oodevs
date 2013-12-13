@@ -91,7 +91,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , objects_                 ( *new ObjectsModel( objectFactory_ ) )
     , teams_                   ( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_         ( *new KnowledgeGroupsModel( knowledgeGroupFactory_ ) )
-    , logistics_               ( *new LogisticsModel( logisticFactory_ ) )
+    , logistics_               ( *new LogisticsModel( logisticFactory_, agents_, agents_, teams_, staticModel.objectTypes_ ) )
     , limits_                  ( *new LimitsModel( tacticalLineFactory_ ) )
     , fires_                   ( *new FiresModel( agents_, agents_, agents_, profile ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this, profile ) )
