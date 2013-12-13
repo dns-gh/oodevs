@@ -1345,10 +1345,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Max weight carried</source>
         <translation type="unfinished"></translation>
     </message>

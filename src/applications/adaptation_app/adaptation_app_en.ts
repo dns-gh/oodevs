@@ -1317,10 +1317,6 @@ Parked engine running</translation>
         <translation>Supply system</translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation>Carrier</translation>
-    </message>
-    <message>
         <source>Max weight carried</source>
         <translation>Max weight carried</translation>
     </message>
