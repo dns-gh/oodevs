@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Model.h"
-#include "ActionPublisher.h"
 #include "AfterActionModel.h"
 #include "AgentFactory.h"
 #include "AgentKnowledgeConverter.h"
@@ -50,6 +49,7 @@
 #include "WeatherModel.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
+#include "actions/ActionPublisher.h"
 #include "actions/ActionsModel.h"
 #include "clients_gui/EventFactory.h"
 #include "clients_gui/EventsModel.h"
@@ -96,7 +96,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fires_                   ( *new FiresModel( agents_, agents_, agents_, profile ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this, profile ) )
     , profiles_                ( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher, controllers.controller_ ) )
+    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new actions::ActionPublisher( publisher, controllers_ ), publisher, controllers.controller_ ) )
     , folk_                    ( *new FolkModel( controllers.controller_ ) )
     , aar_                     ( *new AfterActionModel( controllers.controller_, publisher ) )
     , drawings_                ( *new DrawingsModel( controllers, drawingFactory_, *this ) )

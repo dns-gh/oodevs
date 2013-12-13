@@ -7,11 +7,13 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "actions_pch.h"
 #include "ActionPublisher.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "protocol/Protocol.h"
+
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: ActionPublisher constructor

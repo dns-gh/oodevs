@@ -13,6 +13,7 @@
 #include "actions/ActionFactory.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionParameterFactory.h"
+#include "actions/ActionPublisher.h"
 
 #include "clients_gui/EventFactory.h"
 
@@ -26,8 +27,6 @@
 #include "clients_kernel/Time_ABC.h"
 
 #include "ENT/ENT_Tr.h"
-
-#include "gaming/ActionPublisher.h"
 
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -127,7 +126,7 @@ public:
     MockTime time;
     actions::ActionFactory actionFactory;
     MockPublisher publisher;
-    ActionPublisher actionPublisher;
+    actions::ActionPublisher actionPublisher;
     actions::ActionsModel actionsModel;
     gui::EventFactory eventFactory;
 };
