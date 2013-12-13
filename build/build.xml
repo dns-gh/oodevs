@@ -5,7 +5,7 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <target name="update">
-        <update name="python"/>
+        <update name="python" version="2.7.3-3"/>
     </target>
 
     <macrodef name="compare-proto">
