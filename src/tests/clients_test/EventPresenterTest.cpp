@@ -14,6 +14,7 @@
 #include "clients_gui/EventView_ABC.h"
 #include "clients_gui/EventViewState.h"
 #include "clients_kernel/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 
 #include <boost/lexical_cast.hpp>
 #pragma warning( push )

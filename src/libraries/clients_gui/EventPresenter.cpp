@@ -16,6 +16,7 @@
 #include "EventView_ABC.h"
 #include "EventFactory.h"
 #include "clients_kernel/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 

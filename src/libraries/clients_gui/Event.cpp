@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Event.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include <timeline/api.h>
 
 using namespace gui;

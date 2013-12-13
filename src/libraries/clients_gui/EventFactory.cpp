@@ -10,8 +10,9 @@
 #include "clients_gui_pch.h"
 #include "EventFactory.h"
 #include "EventAction.h"
-#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/TimelineHelpers.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 #include <timeline/api.h>
 

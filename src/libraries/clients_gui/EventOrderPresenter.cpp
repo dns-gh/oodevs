@@ -30,6 +30,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Decisions_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
