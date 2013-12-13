@@ -30,7 +30,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/range/algorithm.hpp>
@@ -408,10 +407,10 @@ Tree Session::GetProperties( bool save ) const
     if( save )
         tree.put_child( "links", links_ );
     else
-        BOOST_FOREACH( const Tree::value_type& it, links_ )
+        for( auto it = links_.begin(); it != links_.end(); ++it )
         {
-            tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
-            tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
+            tree.put( it->first + ".name",     Get< std::string >( it->second, "name" ) );
+            tree.put( it->first + ".checksum", Get< std::string >( it->second, "checksum" ) );
         }
     return tree;
 }
@@ -482,8 +481,8 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
     if( !cfg.enabled )
         return;
     tree.put( prefix + "<xmlattr>.library", Utf8( cfg.library ) );
-    BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
-        tree.put( prefix + XpathToXml( value.first ), value.second );
+    for( auto it = cfg.parameters.cbegin(); it != cfg.parameters.cend(); ++it )
+        tree.put( prefix + XpathToXml( it->first ), it->second );
 }
 
 void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
@@ -508,8 +507,8 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     WriteLogConfiguration( tree, prefix + "log.<xmlattr>.", cfg );
     WriteLogConfiguration( tree, prefix + "messages.<xmlattr>.", cfg );
     WriteLogConfiguration( tree, prefix + "debug.<xmlattr>.", cfg );
-    BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
-        WritePlugin( tree, prefix + "plugins." + value.first + ".", value.second );
+    for( auto it = cfg.plugins.cbegin(); it != cfg.plugins.cend(); ++it )
+        WritePlugin( tree, prefix + "plugins." + it->first + ".", it->second );
 }
 
 void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConfig& cfg )
@@ -1161,7 +1160,7 @@ void Session::ClearOutput( const Path& path )
         return;
     const Path output = deps_.fs.MakeAnyPath( paths_.trash );
     deps_.fs.Rename( path, output / "_" );
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
+    async_.Post( [&, output] { deps_.fs.Remove( output ); } );
 }
 
 namespace
@@ -1222,8 +1221,9 @@ void Session::DetachReplay( const Session_ABC& replay )
 void Session::ParseCheckpoints()
 {
     checkpoints_.clear();
-    deps_.fs.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
-                  boost::cref( deps_.fs ), _1, boost::ref( checkpoints_ ) ) );
+    deps_.fs.Walk( GetOutput() / "checkpoints", false, [&]( const runtime::Path& path ) {
+        return Attach( deps_.fs, path, checkpoints_ );
+    } );
 }
 
 // -----------------------------------------------------------------------------
