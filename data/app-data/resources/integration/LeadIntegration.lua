@@ -401,22 +401,26 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     -- if a unit has been removed from automaton, we dispatch again the missions
     for i, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
-            myself.leadData.addedOrDeletedUnit = true
-            local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks -- main tasks have to be given before support tasks
-            self.bestUnits = integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
-            for element, params in pairs (myself.leadData.paramsGiven) do
-                for _, param in pairs (params) do
-                    if type(param) == "table" then
-                        for _, paramElement in pairs (param) do
-                            if paramElement == entity then
-                                local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
-                                integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
+            if self.params.restartMissionIfDead and self.params.restartMissionIfDead ~= NIL then
+                self:create()
+            else
+                myself.leadData.addedOrDeletedUnit = true
+                local tasks = myself.leadData.dynamicEntityTasks[entity] or self.params.mainTasks -- main tasks have to be given before support tasks
+                self.bestUnits = integration.issueMission ( self, self.params.mainTasks, 1, eEtatEchelon_First, pionsSE, false, findBestsFunction, disengageTask )
+                for element, params in pairs (myself.leadData.paramsGiven) do
+                    for _, param in pairs (params) do
+                        if type(param) == "table" then
+                            for _, paramElement in pairs (param) do
+                                if paramElement == entity then
+                                    local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
+                                    integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
+                                end
                             end
                         end
-                    end
-                    if param == entity then
-                        local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
-                        integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
+                        if param == entity then
+                            local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
+                            integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
+                        end
                     end
                 end
             end
