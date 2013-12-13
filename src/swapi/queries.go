@@ -92,3 +92,13 @@ func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bo
 	}
 	return false
 }
+
+func (d *ModelData) IsKnowledgeGroupInProfile(id uint32, profile *Profile) bool {
+	knowledgeGroup, ok := d.KnowledgeGroups[id]
+	return ok && d.IsPartyInProfile(knowledgeGroup.PartyId, profile)
+}
+
+func (d *ModelData) IsObjectInProfile(id uint32, profile *Profile) bool {
+	object, ok := d.Objects[id]
+	return ok && (object.PartyId == 0 || d.IsPartyInProfile(object.PartyId, profile))
+}
