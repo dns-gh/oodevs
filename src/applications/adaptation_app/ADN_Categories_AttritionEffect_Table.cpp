@@ -60,7 +60,7 @@ void ADN_Categories_AttritionEffect_Table::AddRow( int row, void* data )
     if( !pAttrition )
         return;
 
-    AddItem( row, 0, data, ADN_Tr::ConvertFromEquipmentState_ADN( pAttrition->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
+    AddItem( row, 0, data, ADN_Tr::ConvertFromEquipmentState_ADN( pAttrition->nEquipmentState_.GetData(), ENT_Tr::eToTr ).c_str() );
     AddItem( row, 1, data, &pAttrition->nInjuredPercentage_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pAttrition->nDeadPercentage_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

@@ -189,11 +189,11 @@ void ADN_Resources_AttritionGraph::Update()
             GraphData visuUndamaged( 6 );
             visuUndamaged.strName_ = tr( "Undamaged" );
             GraphData visuNoEvac( 6 );
-            visuNoEvac.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_FixableInPlace, ENT_Tr_ABC::eToTr ).c_str();
+            visuNoEvac.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_FixableInPlace, ENT_Tr::eToTr ).c_str();
             GraphData visuWithEvac( 6 );
-            visuWithEvac.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_FixableWithEvac, ENT_Tr_ABC::eToTr ).c_str();
+            visuWithEvac.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_FixableWithEvac, ENT_Tr::eToTr ).c_str();
             GraphData visuDestroyed( 6 );
-            visuDestroyed.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_Destroyed, ENT_Tr_ABC::eToTr ).c_str();
+            visuDestroyed.strName_ = ADN_Tr::ConvertFromEquipmentState_ADN( eEquipmentState_ADN_Destroyed, ENT_Tr::eToTr ).c_str();
 
             visuUndamaged.value_ = ( int )( 100.0 - rDestroyed - rReparableWithoutEvacuation - rReparableWithEvacuation );
             visuNoEvac.value_ = ( int )rReparableWithoutEvacuation;

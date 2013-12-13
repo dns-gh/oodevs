@@ -2305,33 +2305,6 @@ This data can&apos;t be projected.</translation>
     </message>
 </context>
 <context>
-    <name>ScoreVariablesList</name>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Value</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Del</source>
-        <translation>Del</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Paste</translation>
-    </message>
-</context>
-<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>

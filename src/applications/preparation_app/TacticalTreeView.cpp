@@ -25,7 +25,6 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Positions.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/EntityCommunications.h"
 #include "preparation/Formation.h"
@@ -282,7 +281,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Formation_ABC& formation
 
     kernel::ContextMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
     for( int level = static_cast< int >( eNatureLevel_xxxxx ); level > 0; level-- )
-        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnChangeLevel( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +362,7 @@ void TacticalTreeView::AddFormationMenu( kernel::ContextMenu& menu, E_NatureLeve
 {
     kernel::ContextMenu* subMenu = menu.SubMenu( "Command", tr( "Create formation" ), false, 3 );
     for( int level = static_cast< int >( root ); level > 0; level-- )
-        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, level );
+        subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, level );
 }
 
 // -----------------------------------------------------------------------------

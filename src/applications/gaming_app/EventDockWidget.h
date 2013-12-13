@@ -11,7 +11,7 @@
 #define __EventDockWidget_h_
 
 #include "clients_gui/RichDockWidget.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"

@@ -10,7 +10,7 @@
 #ifndef __AgentTypes_h_
 #define __AgentTypes_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 

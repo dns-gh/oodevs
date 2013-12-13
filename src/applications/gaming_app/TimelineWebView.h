@@ -10,7 +10,7 @@
 #ifndef __TimelineWebView_h_
 #define __TimelineWebView_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>

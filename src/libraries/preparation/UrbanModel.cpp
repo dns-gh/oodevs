@@ -23,7 +23,7 @@
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "geostore/Geostore.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"

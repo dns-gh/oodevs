@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LimaFunction.h"
 #include "MT_Tools/MT_Logger.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 

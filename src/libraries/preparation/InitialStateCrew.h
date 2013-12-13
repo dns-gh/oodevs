@@ -10,7 +10,7 @@
 #ifndef __InitialStateCrew_h_
 #define __InitialStateCrew_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace xml
 {

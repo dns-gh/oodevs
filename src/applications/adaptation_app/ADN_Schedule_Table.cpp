@@ -30,7 +30,7 @@ ADN_Schedule_Table::ADN_Schedule_Table( const QString& objectName, ADN_Connector
     verticalHeader()->setVisible( false );
 
     for( unsigned int i = 0; i < unsigned int( eNbrDays ); ++i )
-        days_ << ADN_Tr::ConvertFromDays( static_cast< E_Days>( i ), ENT_Tr_ABC::eToTr ).c_str();
+        days_ << ADN_Tr::ConvertFromDays( static_cast< E_Days>( i ), ENT_Tr::eToTr ).c_str();
 
     delegate_.AddComboBoxOnColumn( 0, days_ );
     delegate_.AddTimeEditOnColumn( 1 );

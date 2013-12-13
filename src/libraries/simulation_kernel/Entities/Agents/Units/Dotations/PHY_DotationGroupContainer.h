@@ -10,7 +10,7 @@
 #ifndef __PHY_DotationGroupContainer_h_
 #define __PHY_DotationGroupContainer_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Map.h>
 #include <tools/Set.h>
 #include <boost/serialization/export.hpp>

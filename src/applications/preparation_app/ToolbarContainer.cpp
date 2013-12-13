@@ -15,7 +15,7 @@
 #include "TerrainToolBar.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/DisplayToolbar.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "preparation/StaticModel.h"
 
 // -----------------------------------------------------------------------------

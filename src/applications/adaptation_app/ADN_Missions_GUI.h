@@ -79,12 +79,12 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_ListView* listViews_[ eNbrMissionTypes ];
-    QTabWidget* missionTabs_[ eNbrMissionTypes ];
+    ADN_ListView* listViews_[ eNbrMissionType ];
+    QTabWidget* missionTabs_[ eNbrMissionType ];
     ADN_Missions_Data& data_;
-    ADN_HtmlViewer* missionViewers_[ eNbrMissionTypes ];
+    ADN_HtmlViewer* missionViewers_[ eNbrMissionType ];
     QCheckBox* availableState_;
-    QGroupBox* helpPanel_[ eNbrMissionTypes ];
+    QGroupBox* helpPanel_[ eNbrMissionType ];
     //@}
     
 signals:

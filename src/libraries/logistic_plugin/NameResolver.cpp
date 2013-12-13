@@ -18,7 +18,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Tr.h"
 
 namespace plugins
 {

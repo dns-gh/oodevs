@@ -17,7 +17,7 @@
 
 namespace tools
 {
-    class Path; 
+    class Path;
 }
 
 namespace sword
@@ -41,7 +41,7 @@ enum E_KeyPoint
     eKeyPointCrossroads,
     eKeyPointBridge,
     eKeyPointLima,
-    eNbrKeyPoints
+    eNbrKeyPoint
 };
 
 //=============================================================================

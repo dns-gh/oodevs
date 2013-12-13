@@ -287,7 +287,7 @@ QString tools::ToString( E_FireAvailability nType )
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_NatureLevel nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */  )
+QString tools::ToString( E_NatureLevel nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */  )
 {
     return ENT_Tr::ConvertFromNatureLevel( nType, conversion ).c_str();
 }
@@ -377,7 +377,7 @@ QString tools::ToString( E_LogFuneralHandlingStatus nType )
 // Name: tools::ToString
 // Created: AGE 2008-02-05
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_DotationFamily nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToSim */ )
+QString tools::ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToSim */ )
 {
     return ENT_Tr::ConvertFromDotationFamily( nType, conversion ).c_str();
 }
@@ -404,7 +404,7 @@ QString tools::ToString( E_AgentNbcSuit nType )
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
+QString tools::ToString( E_HumanRank nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
     return ENT_Tr::ConvertFromHumanRank( nType, conversion ).c_str();
 }
@@ -413,7 +413,7 @@ QString tools::ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion 
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
+QString tools::ToString( E_HumanState nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
     return ENT_Tr::ConvertFromHumanState( nType, conversion ).c_str();
 }
@@ -422,7 +422,7 @@ QString tools::ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion
 // Name: tools::ToString
 // Created: ABR 2011-07-25
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_HumanLocation nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
+QString tools::ToString( E_HumanLocation nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
     return ENT_Tr::ConvertFromHumanLocation( nType, conversion ).c_str();
 }
@@ -431,7 +431,7 @@ QString tools::ToString( E_HumanLocation nType, ENT_Tr_ABC::E_Conversion convers
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
+QString tools::ToString( E_EquipmentState nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
     return ENT_Tr::ConvertFromEquipmentState( nType, conversion ).c_str();
 }
@@ -440,7 +440,7 @@ QString tools::ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conver
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-QString tools::ToString( E_InjuriesSeriousness nType, ENT_Tr_ABC::E_Conversion conversion /* = ENT_Tr_ABC::eToTr */ )
+QString tools::ToString( E_InjuriesSeriousness nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToTr */ )
 {
     return ENT_Tr::ConvertFromInjuriesSeriousness( nType, conversion ).c_str();
 }

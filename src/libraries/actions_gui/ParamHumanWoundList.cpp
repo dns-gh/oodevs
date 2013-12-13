@@ -17,7 +17,6 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Tools.h"
-#include "Ent/ENT_Tr_Gen.h"
 
 using namespace actions::gui;
 
@@ -167,8 +166,8 @@ void ParamHumanWoundList::OnContextMenu( const QPoint& point )
     }
     if( items->count() )
         menu->insertItem( tr( "Add..." ), items );
-    
-    //context menu on selected item 
+
+    //context menu on selected item
     const QModelIndex index = list_->selectionModel()->currentIndex();
     if( index.isValid() )
     {

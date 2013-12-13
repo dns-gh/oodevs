@@ -971,5 +971,13 @@
         <source>No ammunition</source>
         <translation>No ammunition</translation>
     </message>
+    <message>
+        <source>Preparation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Gaming</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

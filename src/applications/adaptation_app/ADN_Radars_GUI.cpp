@@ -66,8 +66,8 @@ void ADN_Radars_GUI::Build()
     for( int n = 0; n < eNbrConsumptionType; ++n )
     {
         builder.AddField< ADN_CheckBox >( pDetectableActivitiesGroup,
-                                          ADN_Tr::ConvertFromConsumptionType( static_cast< E_ConsumptionType >( n ), ADN_Tr::eToSim ).c_str(),
-                                          ADN_Tr::ConvertFromConsumptionType( static_cast< E_ConsumptionType >( n ), ADN_Tr::eToTr ).c_str(),
+                                          ADN_Tr::ConvertFromConsumptionType( static_cast< E_ConsumptionType >( n ), ENT_Tr::eToSim ).c_str(),
+                                          ADN_Tr::ConvertFromConsumptionType( static_cast< E_ConsumptionType >( n ), ENT_Tr::eToTr ).c_str(),
                                           vConnectors[ eHasDetectableActivities + 1 + n ] );
     }
 

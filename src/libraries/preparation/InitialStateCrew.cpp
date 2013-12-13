@@ -115,7 +115,7 @@ InitialStateCrew::~InitialStateCrew()
 void InitialStateCrew::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "human" )
-        << xml::attribute( "rank", ENT_Tr::ConvertFromHumanRank( rank_, ENT_Tr_ABC::eToSim ) )
+        << xml::attribute( "rank", ENT_Tr::ConvertFromHumanRank( rank_, ENT_Tr::eToSim ) )
         //<< xml::attribute( "rank", tools::ToString( rank_ ) )
         << xml::attribute( "state", SaveInjury( state_, currentSeriousness_ ) );
         //<< xml::attribute( "state", tools::ToString( state_ ) );

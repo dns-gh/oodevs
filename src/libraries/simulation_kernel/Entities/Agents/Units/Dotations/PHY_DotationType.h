@@ -12,7 +12,7 @@
 #ifndef __PHY_DotationType_h_
 #define __PHY_DotationType_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace xml
 {
@@ -59,7 +59,7 @@ public:
     const std::string& GetName() const;
           unsigned int GetID  () const;
     //@}
-    
+
     //! @name Operators
     //@{
     bool operator==( const PHY_DotationType& rhs ) const;

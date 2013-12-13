@@ -11,7 +11,7 @@
 #define __MissionType_h_
 
 #include "OrderType.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

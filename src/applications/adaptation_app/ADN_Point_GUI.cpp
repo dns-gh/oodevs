@@ -58,7 +58,7 @@ void ADN_Point_GUI::AddRow( int row, void* data )
     if( !data )
         return;
 
-    AddItem( row, 0, data, ADN_Tr::ConvertFromKeyPoint( point->nTypeTerrain_, ADN_Tr::eToApp ).c_str(), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, ADN_Tr::ConvertFromKeyPoint( point->nTypeTerrain_, ENT_Tr::eToApp ).c_str(), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &point->nDistance_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }
 
@@ -75,7 +75,7 @@ void ADN_Point_GUI::OnContextMenu( const QPoint& pt )
     if( GetSelectedData() != 0 )
         menu.insertItem( tr( "Remove point" ), 100 );
 
-    for( int n = 0; n < eNbrKeyPoints; ++n )
+    for( int n = 0; n < eNbrKeyPoint; ++n )
     {
         if( !Contains( (E_KeyPoint)n ) )
             subMenu.insertItem( ADN_Tr::ConvertFromKeyPoint( (E_KeyPoint)n ).c_str(), n );
@@ -94,7 +94,7 @@ void ADN_Point_GUI::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Point_GUI::AddNewElement( E_KeyPoint nKeyPoint )
 {
-    assert( nKeyPoint >= 0 && nKeyPoint < eNbrKeyPoints );
+    assert( nKeyPoint >= 0 && nKeyPoint < eNbrKeyPoint );
     PointInfos* pNewInfo = new PointInfos();
     pNewInfo->nTypeTerrain_ = nKeyPoint;
 

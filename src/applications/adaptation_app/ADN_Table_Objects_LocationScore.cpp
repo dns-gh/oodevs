@@ -64,7 +64,7 @@ void ADN_Table_Objects_LocationScore::OnContextMenu( const QPoint& pt )
     // Get the list of the possible munitions
     for( int i = 0; i < eNbrLocation; ++i )
     {
-        std::string strTerrainName = ENT_Tr::ConvertFromLocation( (E_Location)i, ENT_Tr_ABC::eToTr );
+        std::string strTerrainName = ENT_Tr::ConvertFromLocation( (E_Location)i, ENT_Tr::eToTr );
         if( Contains( strTerrainName ) )
             continue;
 
@@ -110,7 +110,7 @@ bool ADN_Table_Objects_LocationScore::Contains( const std::string& strMunitionNa
     while( ADN_StandardItem* pItem =  static_cast< ADN_StandardItem* >( dataModel_.item( i, 1 ) ) )
     {
         ScoreLocationInfos* pInfos = static_cast< ScoreLocationInfos* >( pItem->GetData() );
-        if( pInfos->nLocation_.Convert( ENT_Tr_ABC::eToTr ) == strMunitionName )
+        if( pInfos->nLocation_.Convert( ENT_Tr::eToTr ) == strMunitionName )
             return true;
         ++i;
     }
@@ -127,6 +127,6 @@ void ADN_Table_Objects_LocationScore::AddRow( int row, void* data )
     ScoreLocationInfos* pCurComposante = static_cast< ScoreLocationInfos* >( data );
     if( !pCurComposante )
         return;
-    AddItem( row, 0, data, QString::fromStdString( pCurComposante->nLocation_.Convert( ENT_Tr_ABC::eToTr ) ), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, QString::fromStdString( pCurComposante->nLocation_.Convert( ENT_Tr::eToTr ) ), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pCurComposante->nScore_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

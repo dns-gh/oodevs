@@ -16,7 +16,6 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies constructor

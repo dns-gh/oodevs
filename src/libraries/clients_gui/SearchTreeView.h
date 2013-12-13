@@ -52,7 +52,7 @@ public:
     //@{
     template< typename EnumType >
     void AddEnumFilter( const QString& text, EnumType maxValue, CheckComboBox::T_Extractor extractor,
-                        const std::string& (*converter)( EnumType, ENT_Tr_ABC::E_Conversion ), const QString& noneText = "" );
+                        const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ), const QString& noneText = "" );
 
     template< typename KernelType, typename Identifier >
     void AddResolverFilter( const QString& text, const tools::Resolver_ABC< KernelType, Identifier >& resolver,

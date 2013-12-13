@@ -15,7 +15,7 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Map.h>
 
 namespace sword

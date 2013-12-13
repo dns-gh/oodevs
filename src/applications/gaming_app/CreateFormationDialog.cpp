@@ -19,7 +19,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog constructor
@@ -59,7 +59,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
         currentEntity_ = &entity;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
         for( int levelIt = static_cast< int >( level ); levelIt > 0; --levelIt )
-            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
     }
 }
 

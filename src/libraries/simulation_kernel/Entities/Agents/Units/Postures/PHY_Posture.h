@@ -13,7 +13,7 @@
 #define __PHY_Posture_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace sword
 {

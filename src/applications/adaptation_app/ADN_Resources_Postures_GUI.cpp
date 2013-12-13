@@ -52,6 +52,6 @@ void ADN_Resources_Postures_GUI::AddRow( int row, void* data )
     ModificatorPostureInfos* pPostureInfo = static_cast< ModificatorPostureInfos* >( data );
     if( !pPostureInfo )
         return;
-    AddItem( row, 0, data, QString::fromStdString( ENT_Tr::ConvertFromUnitPosture( pPostureInfo->eType_, ENT_Tr_ABC::eToTr ) ), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, QString::fromStdString( ENT_Tr::ConvertFromUnitPosture( pPostureInfo->eType_, ENT_Tr::eToTr ) ), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pPostureInfo->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

@@ -17,7 +17,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_gui/EntityHierarchies.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace sword
 {
@@ -172,7 +172,7 @@ std::string AgentHierarchies< I >::GetStaticSymbol() const
 {
     return staticSymbol_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies::GetMoveSymbol
 // Created: LDC 2013-04-19

@@ -11,8 +11,10 @@
 #define __Kernel_Tools_h_
 
 #include "Types.h"
-#include "ENT/ENT_Tr_ABC.h"
+#include "ENT/ENT_Tr.h"
 #pragma warning( push, 0 )
+#include <QApplication>
+#include <QTranslator>
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
 #pragma warning( pop )
@@ -63,7 +65,7 @@ namespace tools
     QString ToString( E_PopulationRoe nType );
     QString ToString( E_MeetingEngagementStatus nType );
     QString ToString( E_FireAvailability nType );
-    QString ToString( E_NatureLevel nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_NatureLevel nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
     QString ToString( E_UnitExperience nType );
     QString ToString( E_UnitMorale nType );
     QString ToString( E_UnitStress nType );
@@ -75,12 +77,12 @@ namespace tools
     QString ToString( E_LogFuneralHandlingStatus nType );
     QString ToString( E_LocationType nType );
     QString ToString( E_AgentNbcSuit nType );
-    QString ToString( E_DotationFamily nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToSim );
-    QString ToString( E_EquipmentState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
-    QString ToString( E_HumanRank nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
-    QString ToString( E_HumanState nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
-    QString ToString( E_HumanLocation nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
-    QString ToString( E_InjuriesSeriousness nType, ENT_Tr_ABC::E_Conversion conversion = ENT_Tr_ABC::eToTr );
+    QString ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToSim );
+    QString ToString( E_EquipmentState nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
+    QString ToString( E_HumanRank nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
+    QString ToString( E_HumanState nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
+    QString ToString( E_HumanLocation nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
+    QString ToString( E_InjuriesSeriousness nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToTr );
 
     QString Unknown();
 

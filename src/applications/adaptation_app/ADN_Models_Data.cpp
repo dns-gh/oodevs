@@ -24,7 +24,7 @@ namespace
 {
     std::string MakePluralFromEntityType( E_EntityType type )
     {
-        std::string result = ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim );
+        std::string result = ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim );
         if( type != eEntityType_Population )
             result += 's';
         return result;
@@ -179,7 +179,7 @@ namespace
 ADN_Models_Data::ModelInfos::ModelInfos()
     : missions_ ( dummy )
     , isMasalife_( false )
-    , type_( eNbrEntityTypes )
+    , type_( eNbrEntityType )
 {
     assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
 }
@@ -331,7 +331,7 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
 ADN_Models_Data::ADN_Models_Data()
     : ADN_Data_ABC( eModels )
 {
-    for( int i = 0; i < eNbrEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityType; ++i )
         vModels_[ i ].AddUniquenessChecker( eError, duplicateName_, &ADN_Tools::NameExtractor );
 }
 
@@ -401,11 +401,11 @@ void ADN_Models_Data::ReadModels( xml::xistream& input, E_EntityType type )
 void ADN_Models_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "models" );
-    for( int i = 0; i < eNbrEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityType; ++i )
     {
         E_EntityType type = static_cast< E_EntityType >( i );
         input >> xml::start( MakePluralFromEntityType( type ) )
-                >> xml::list( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), *this, &ADN_Models_Data::ReadModels, type )
+                >> xml::list( ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim ), *this, &ADN_Models_Data::ReadModels, type )
               >> xml::end;
         vModels_[ i ].CheckValidity();
     }
@@ -418,19 +418,19 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::WriteArchive( xml::xostream& output ) const
 {
-    for( int i = 0; i < eNbrEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityType; ++i )
         if( vModels_[ i ].GetErrorStatus() == eError )
             throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
                                   .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ADN_Tr::ConvertFromEntityType( static_cast< E_EntityType >( i ) ).c_str() ).toStdString() );
     output << xml::start( "models" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Models" );
-    for( int i = 0; i < eNbrEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityType; ++i )
     {
         E_EntityType type = static_cast< E_EntityType >( i );
         output << xml::start( MakePluralFromEntityType( type ) );
         for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
-            ( *it )->WriteArchive( ADN_Tr::ConvertFromEntityType( type, ADN_Tr::eToSim ), output );
+            ( *it )->WriteArchive( ADN_Tr::ConvertFromEntityType( type, ENT_Tr::eToSim ), output );
         output << xml::end;
     }
     output << xml::end;
@@ -494,7 +494,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
 void ADN_Models_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     ADN_Data_ABC::CheckDatabaseValidity( checker );
-    for( int i = 0; i < eNbrEntityTypes; ++i )
+    for( int i = 0; i < eNbrEntityType; ++i )
         for( auto it = vModels_[ i ].begin(); it != vModels_[ i ].end(); ++it )
             ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, i );
 }

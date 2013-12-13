@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
-    ADN_FileChooser* DIAFileChooser_[ eNbrEntityTypes ];
+    ADN_FileChooser* DIAFileChooser_[ eNbrEntityType ];
     //@}
 };
 

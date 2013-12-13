@@ -28,7 +28,7 @@ EventAction::EventAction( E_EventTypes type, const timeline::Event& event, actio
     , model_( model )
     , controllers_( controllers )
     , action_( controllers )
-    , missionType_( eNbrMissionTypes )
+    , missionType_( eNbrMissionType )
 {
     Event::Update();
 }

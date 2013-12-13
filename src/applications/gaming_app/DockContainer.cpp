@@ -37,7 +37,7 @@
 #include "ScorePanel.h"
 
 #include "actions_gui/InterfaceBuilder.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/Logger.h"
@@ -61,7 +61,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               const Simulation& simulation, const Config& config, ProfileFilter& profile,
                               gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
                               gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
-                              gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols, 
+                              gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols,
                               IndicatorExportDialog& indicatorExportDialog )
     : timelineDockWidget_( 0 )
 {

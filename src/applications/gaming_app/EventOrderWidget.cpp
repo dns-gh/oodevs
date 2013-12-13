@@ -313,7 +313,7 @@ E_MissionType EventOrderWidget::GetMissionType() const
 {
     QVariant variant = missionTypeCombo_->itemData( missionTypeCombo_->currentIndex() );
     if( !variant.isValid() )
-        return eNbrMissionTypes;
+        return eNbrMissionType;
     return static_cast< E_MissionType >( variant.toUInt() );
 }
 
@@ -348,7 +348,7 @@ void EventOrderWidget::SelectWhenEventExist( const actions::ActionWithTarget_ABC
 void EventOrderWidget::SelectWhenTargetOrMissionChanged()
 {
     E_MissionType type = GetMissionType();
-    if( type == eNbrMissionTypes )
+    if( type == eNbrMissionType )
         SelectDefault();
     else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type, missionCombo_->currentText().toStdString() );
@@ -363,7 +363,7 @@ void EventOrderWidget::SelectWhenTargetOrMissionChanged()
 void EventOrderWidget::SelectWhenMissionTypeChanged()
 {
     E_MissionType type = GetMissionType();
-    if( type == eNbrMissionTypes )
+    if( type == eNbrMissionType )
         SelectDefault();
     else if( const kernel::Decisions_ABC* decisions = GetTargetDecision() )
         manager_->Select( *decisions, type );

@@ -25,7 +25,7 @@ class ADN_Models_WizardPage : public ADN_WizardPage< ADN_Models_Data::ModelInfos
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Models_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_EntityType entityType = eNbrEntityTypes )
+             ADN_Models_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_EntityType entityType = eNbrEntityType )
                  : ADN_WizardPage< ADN_Models_Data::ModelInfos >( existingItems, pageTitle, pParent )
                  , entityType_( entityType )
              {

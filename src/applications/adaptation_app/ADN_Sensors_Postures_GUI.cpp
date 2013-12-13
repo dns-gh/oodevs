@@ -38,7 +38,7 @@ ADN_Sensors_Postures_GUI::~ADN_Sensors_Postures_GUI()
 void ADN_Sensors_Postures_GUI::InternalEmit()
 {
     if( ADN_Sensors_Data::ModificatorPostureInfos* data = static_cast< ADN_Sensors_Data::ModificatorPostureInfos* >( GetSelectedData() ) )
-        emit ContentChanged(  ENT_Tr::ConvertFromUnitPosture( data->eType_, ENT_Tr_ABC::eToTr ), data->rCoeff_.GetData() );
+        emit ContentChanged(  ENT_Tr::ConvertFromUnitPosture( data->eType_, ENT_Tr::eToTr ), data->rCoeff_.GetData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +51,6 @@ void ADN_Sensors_Postures_GUI::AddRow( int row, void* data )
     if( !pInfos )
         return;
 
-    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfos->eType_, ENT_Tr_ABC::eToTr ).c_str(), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfos->eType_, ENT_Tr::eToTr ).c_str(), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfos->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

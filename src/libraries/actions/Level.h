@@ -11,7 +11,7 @@
 #define __ActionParameterLevel_h_
 
 #include "Parameter.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Resolver_ABC.h>
 #include <boost/function.hpp>
 

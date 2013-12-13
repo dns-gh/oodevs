@@ -15,7 +15,7 @@
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 

@@ -10,7 +10,7 @@
 #ifndef __ReadOnlyModable_h_
 #define __ReadOnlyModable_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

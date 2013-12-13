@@ -16,7 +16,6 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

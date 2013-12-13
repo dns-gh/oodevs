@@ -13,7 +13,7 @@
 #include "clients_gui/ChangeSuperior_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/TacticalTreeView.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace gui
 {

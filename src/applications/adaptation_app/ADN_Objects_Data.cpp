@@ -450,17 +450,17 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( pCategory )
         {
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToSim ) )
             {
                 ammoCategory_ = pCategory;
                 useAmmo_ = true;
             }
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr_ABC::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr::eToSim ) )
             {
                 mineCategory_ = pCategory;
                 useMine_ = true;
             }
-            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr_ABC::eToSim ) )
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr::eToSim ) )
             {
                 explosiveCategory_ = pCategory;
                 useExplo_ = true;

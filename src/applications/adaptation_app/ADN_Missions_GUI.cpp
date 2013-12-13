@@ -125,7 +125,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     // -------------------------------------------------------------------------
     ADN_Missions_Data::T_Mission_Vector& missions = data_.GetMissions( eMissionType );
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( std::string( ENT_Tr::ConvertFromMissionType( eMissionType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
+    builder.PushSubName( std::string( ENT_Tr::ConvertFromMissionType( eMissionType, ENT_Tr::eToSim ) + "-tab" ).c_str() );
     builder.PushSubName( "definition-tab" );
 
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -362,7 +362,7 @@ void ADN_Missions_GUI::OnToggleAvailableWithoutMission( bool on )
 // -----------------------------------------------------------------------------
 E_MissionType ADN_Missions_GUI::GetCurrentType() const
 {
-    assert( pTabWidget_->currentIndex() >= 0 && pTabWidget_->currentIndex() < eNbrMissionTypes );
+    assert( pTabWidget_->currentIndex() >= 0 && pTabWidget_->currentIndex() < eNbrMissionType );
     return static_cast< E_MissionType >( pTabWidget_->currentIndex() );
 }
 

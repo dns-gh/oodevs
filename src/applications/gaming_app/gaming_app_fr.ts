@@ -1018,7 +1018,7 @@ Raison: %3
     </message>
     <message>
         <source>Confirm file replace</source>
-        <translation>Confirmer l'enregistrement</translation>
+        <translation>Confirmer l&apos;enregistrement</translation>
     </message>
     <message>
         <source>%1 already exists.

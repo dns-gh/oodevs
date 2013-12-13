@@ -13,7 +13,7 @@
 #include "Localisation.h"
 #include "Agent_ABC.h"
 #include "DecisionalState.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "protocol/SimulationSenders.h"
 #include <tools/Resolver.h>
 #include <map>

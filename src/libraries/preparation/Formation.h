@@ -13,7 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

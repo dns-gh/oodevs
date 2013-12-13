@@ -17,7 +17,7 @@ typename ADN_Type_Enum< T, nb >::T_Converter ADN_Type_Enum< T, nb >::converter_ 
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
 template< class T, int nb >
-const std::string& ADN_Type_Enum< T, nb >::Convert( ENT_Tr_ABC::E_Conversion nConversion ) const
+const std::string& ADN_Type_Enum< T, nb >::Convert( ENT_Tr::E_Conversion nConversion ) const
 {
     assert( converter_ );
     return converter_( data_, nConversion );
@@ -177,7 +177,7 @@ void ADN_Type_Enum< T, nb >::Initialize( ADN_Connector_ABC& dest ) const
     {
         assert( converter_ );
         for( int i = 0; i < nb; ++i )
-            combo->AddEnumValue( converter_( static_cast< T >( i ), ENT_Tr_ABC::eToTr ), sortAlphabetically_ ? -1 : i );
+            combo->AddEnumValue( converter_( static_cast< T >( i ), ENT_Tr::eToTr ), sortAlphabetically_ ? -1 : i );
     }
     dest.SetData( &const_cast< ADN_Type_Enum< T, nb >* >( this )->data_ );
 }

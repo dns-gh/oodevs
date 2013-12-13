@@ -19,7 +19,7 @@
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
 
@@ -68,7 +68,7 @@ namespace
 }
 
 QPixmap MakePixmap( const std::string& name )
-{    
+{
     return QPixmap( QString( "resources/images/gui/" ) + QString::fromStdString( name ) + QString( ".png" ) );
 }
 

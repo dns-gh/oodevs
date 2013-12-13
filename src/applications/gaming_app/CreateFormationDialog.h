@@ -11,7 +11,7 @@
 #define __CreateFormationDialog_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Observer_ABC.h>
 
 namespace actions

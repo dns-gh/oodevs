@@ -22,7 +22,7 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "preparation/ResourceNetworkAttribute.h"
 #include "preparation/StaticModel.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 using namespace kernel;
 

@@ -35,7 +35,7 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/bind.hpp>
 
 const QString UrbanTreeView::mimeType_( typeid( kernel::UrbanObject_ABC ).name() );

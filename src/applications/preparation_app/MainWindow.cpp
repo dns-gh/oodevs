@@ -109,7 +109,6 @@
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "MT_Tools/MT_Logger.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
@@ -741,7 +740,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
         return;
     SetNeedsSaving( needsSaving );
     QString filename;
-    QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr_ABC::eToTr ).c_str();
+    QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr::eToTr ).c_str();
     if( model_.IsLoaded() && isVisible() )
     {
         filename = model_.exercise_->GetName().isEmpty()

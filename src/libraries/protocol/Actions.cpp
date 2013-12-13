@@ -8,7 +8,7 @@
 // *****************************************************************************
 #include "Actions.h"
 #include "Simulation.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Helpers.h>
 
 #define ENUM( name, ... )                                                               \

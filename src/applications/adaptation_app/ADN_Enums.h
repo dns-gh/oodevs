@@ -12,7 +12,7 @@
 #ifndef __ADN_Enums_h_
 #define __ADN_Enums_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 enum E_WorkspaceElements
 {
@@ -50,48 +50,48 @@ enum E_WorkspaceElements
 
 enum E_CategoriesElements
 {
-    eArmors                 = 0,
-    eLogisticSupplyClasses  = 1,
-    eNatures                = 2,
-    eVolumes                = 3,
+    eArmors,
+    eLogisticSupplyClasses,
+    eNatures,
+    eVolumes,
     eNbrCategoriesElements
 };
 
 enum E_LogElements
 {
-    eMaintenance    = 0,
-    eSupply         = 1,
-    eHealth         = 2,
-    eFuneral        = 3,
+    eMaintenance,
+    eSupply,
+    eHealth,
+    eFuneral,
     eNbrLogElements
 };
 
 enum E_ConsumptionType
 {
-    eEngineStopped  = 0,
-    eEngineStarted  = 1,
-    eMoving         = 2,
-    eWorking        = 3,
+    eEngineStopped,
+    eEngineStarted,
+    eMoving,
+    eWorking,
     eNbrConsumptionType
 };
 
 enum E_VisionObject
 {
-    eVisionGround = 0,
+    eVisionGround,
     eVisionEmpty,
     eVisionForest,
     eVisionUrban,
-    eNbrVisionObjects
+    eNbrVisionObject
 };
 
 enum E_KeyPoint
 {
-    eKeyPointForest = 0,
+    eKeyPointForest,
     eKeyPointUrban,
     eKeyPointCrossroads,
     eKeyPointBridge,
     eKeyPointLima,
-    eNbrKeyPoints
+    eNbrKeyPoint
 };
 
 enum E_AgentTypePion
@@ -370,38 +370,38 @@ enum E_TypeMunitionTirIndirect
 
 enum E_MissionParameterType
 {
-    eMissionParameterTypeAgent                  = 0,
-    eMissionParameterTypeAutomate               = 1,
-    eMissionParameterTypeBool                   = 2,
-    eMissionParameterTypeNumeric                = 3,
-    eMissionParameterTypeString                 = 4,
-    eMissionParameterTypeDirection              = 5,
-    eMissionParameterTypeGDH                    = 6,
-    eMissionParameterTypeEnumeration            = 7,
-    eMissionParameterTypeNatureAtlas            = 8,
-    eMissionParameterTypeAgentKnowledge         = 9,
-    eMissionParameterTypeObjectKnowledge        = 10,
-    eMissionParameterTypePopulationKnowledge    = 11,
-    eMissionParameterTypeGenObject              = 12,
-    eMissionParameterTypePath                   = 13,
-    eMissionParameterTypePoint                  = 14,
-    eMissionParameterTypePolygon                = 15,
-    eMissionParameterTypeLocation               = 16,
-    eMissionParameterTypeEquipmentType          = 17,
-    eMissionParameterTypeDotationType           = 18,
-    eMissionParameterTypeMaintenancePriorities  = 19,
-    eMissionParameterTypeMedicalPriorities      = 20,
-    eMissionParameterTypeIndirectFire           = 21,
-    eMissionParameterTypeLimit                  = 22,
-    eMissionParameterTypePhaseLine              = 23,
-    eMissionParameterTypeUrbanBlock             = 24,
-    eMissionParameterTypeLocationComposite      = 25,
-    eMissionParameterTypeResourceNetworkNode    = 26,
-    eMissionParameterTypeResourceNetworkType    = 27,
-    eMissionParameterTypeStage                  = 28,
-    eMissionParameterTypeLimaFunction           = 29,
+    eMissionParameterTypeAgent,
+    eMissionParameterTypeAutomate,
+    eMissionParameterTypeBool,
+    eMissionParameterTypeNumeric,
+    eMissionParameterTypeString,
+    eMissionParameterTypeDirection,
+    eMissionParameterTypeGDH,
+    eMissionParameterTypeEnumeration,
+    eMissionParameterTypeNatureAtlas,
+    eMissionParameterTypeAgentKnowledge,
+    eMissionParameterTypeObjectKnowledge,
+    eMissionParameterTypePopulationKnowledge,
+    eMissionParameterTypeGenObject,
+    eMissionParameterTypePath,
+    eMissionParameterTypePoint,
+    eMissionParameterTypePolygon,
+    eMissionParameterTypeLocation,
+    eMissionParameterTypeEquipmentType,
+    eMissionParameterTypeDotationType,
+    eMissionParameterTypeMaintenancePriorities,
+    eMissionParameterTypeMedicalPriorities,
+    eMissionParameterTypeIndirectFire,
+    eMissionParameterTypeLimit,
+    eMissionParameterTypePhaseLine,
+    eMissionParameterTypeUrbanBlock,
+    eMissionParameterTypeLocationComposite,
+    eMissionParameterTypeResourceNetworkNode,
+    eMissionParameterTypeResourceNetworkType,
+    eMissionParameterTypeStage,
+    eMissionParameterTypeLimaFunction,
 
-    eNbrMissionParameterType                    = 30
+    eNbrMissionParameterType
 };
 
 enum E_ConstructorType
@@ -421,31 +421,31 @@ enum E_PropagationModel
 
 enum E_EntityType
 {
-    eEntityType_Pawn       = 0,
-    eEntityType_Automat    = 1,
-    eEntityType_Population = 2,
-    eNbrEntityTypes        = 3
+    eEntityType_Pawn,
+    eEntityType_Automat,
+    eEntityType_Population,
+    eNbrEntityType
 };
 
 enum E_Days
 {
-    eDays_Monday    = 0,
-    eDays_Tuesday   = 1,
-    eDays_Wednesday = 2,
-    eDays_Thursday  = 3,
-    eDays_Friday    = 4,
-    eDays_Saturday  = 5,
-    eDays_Sunday    = 6,
-    eNbrDays        = 7
+    eDays_Monday,
+    eDays_Tuesday,
+    eDays_Wednesday,
+    eDays_Thursday,
+    eDays_Friday,
+    eDays_Saturday,
+    eDays_Sunday,
+    eNbrDays
 };
 
 enum E_ContextParameters
 {
-    eContextParameters_Heading = 0,
-    eContextParameters_Limas   = 1,
-    eContextParameters_Limit1  = 2,
-    eContextParameters_Limit2  = 3,
-    eNbrContextParameters      = 4
+    eContextParameters_Heading,
+    eContextParameters_Limas,
+    eContextParameters_Limit1,
+    eContextParameters_Limit2,
+    eNbrContextParameters
 };
 
 #endif // __ADN_Enums_h_
