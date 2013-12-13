@@ -631,6 +631,8 @@ bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool p
         ParseCheckpoints();
     status_ = next;
     busy_ = false;
+    mutex.unlock();
+
     return true;
 }
 
