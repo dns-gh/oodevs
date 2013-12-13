@@ -978,8 +978,7 @@ end
 -- @param self: The leading skill
 -- @author NMI
 -- @release 2013-07-05
-integration.leadDelayActivate = function( self, disengageTask, performBlockingActions )  
-    local performBlockingActions = performBlockingActions or false
+integration.leadDelayActivate = function( self, disengageTask )  
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -1006,7 +1005,7 @@ integration.leadDelayActivate = function( self, disengageTask, performBlockingAc
 
     -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
     -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée
-    if performBlockingActions then
+    if self.params.performBlockingActions then
         self.orderUnitsToDisengage = meKnowledge:delayingSubordinateIsNotSafe( myself.leadData.pionsLima1 )
     else
         self.orderUnitsToDisengage = meKnowledge:screeningSubordinateIsMovingBackward()
