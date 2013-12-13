@@ -47,7 +47,7 @@ public:
     virtual bool        Rename( const Path& src, const Path& dst ) const;
     virtual bool        WriteFile( const Path& path, const std::string& content ) const;
     virtual std::string ReadFile( const Path& path ) const;
-    virtual void        ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, int limitSize ) const;
+    virtual void        LimitedReadFile( io::Writer_ABC& sink, const Path& path, int limit ) const;
     virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const;
     virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const;
     virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const;

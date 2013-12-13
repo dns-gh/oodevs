@@ -312,7 +312,7 @@ std::string FileSystem::ReadFile( const Path& path ) const
 // Name: FileSystem::ReadFileWithLimitSize
 // Created: NPT 2013-07-25
 // -----------------------------------------------------------------------------
-void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, int limitSize ) const
+void FileSystem::LimitedReadFile( io::Writer_ABC& sink, const Path& path, int limit ) const
 {
     try
     {
@@ -320,12 +320,12 @@ void FileSystem::ReadFileWithLimitSize( io::Writer_ABC& sink, const Path& path, 
         boost::filesystem::ifstream ifs( path, std::ifstream::binary );
         if( ifs.fail() )
             return;
-        if( limitSize )
+        if( limit )
         {
             ifs.seekg ( 0, ifs.end );
             int fileSize = (int)ifs.tellg();
             ifs.seekg ( 0, ifs.beg );
-            int pos = std::max( fileSize - limitSize, 0 );
+            int pos = std::max( fileSize - limit, 0 );
             if( pos > 0 )
             {
                 ifs.seekg( pos );
@@ -669,7 +669,7 @@ struct GzipWriter : public io::Writer_ABC
             const size_t chunk = output_.size() - defstream.avail_out;
             if( chunk )
                 writer_.Write( &output_[0], chunk );
-            
+
             ptr = end - defstream.avail_in;
             last = false;
         }

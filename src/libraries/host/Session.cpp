@@ -369,17 +369,6 @@ bool Session::HasReplays() const
     return !replays_.empty();
 }
 
-namespace
-{
-    bool AddLogFile( const FileSystem_ABC& fs, const runtime::Path& path, Tree& tree )
-    {
-        if( fs.IsFile( path ) &&
-            path.extension() == ".log" && boost::count( path.string(), '.' ) == 1 )
-            tree.put( runtime::Utf8( path.filename() ), true );
-        return true;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Session::AvailableLogs
 // Created: NPT 2013-07-10
@@ -387,8 +376,15 @@ namespace
 Tree Session::AvailableLogs() const
 {
     Tree tree;
-    deps_.fs.Walk( GetOutput(), false,
-        boost::bind( &AddLogFile, boost::cref( deps_.fs ), _1, boost::ref( tree ) ) );
+    const auto adder = [&]( const runtime::Path& path ) -> bool {
+        if( deps_.fs.IsFile( path ) &&
+            path.extension() == ".log" &&
+            boost::count( path.string(), '.' ) == 1 )
+            tree.put( runtime::Utf8( path.filename() ), true );
+        return true;
+    };
+    deps_.fs.Walk( GetOutput(), false, adder );
+    deps_.fs.Walk( GetRoot(), false, adder );
     return tree;
 }
 
@@ -775,7 +771,6 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 Session::T_Process StartTimeline( const SessionDependencies& deps,
                                   const Path& app,
                                   const Path& root,
-                                  const Path& output,
                                   int base )
 {
     const Path config = root / "timeline.run";
@@ -784,7 +779,7 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
         ( MakeOption( "port",  base + TIMELINE_PORT ) )
         ( MakeOption( "run", Utf8( config ) ) );
     return deps.runtime.Start( Utf8( app ), options,
-        Utf8( Path( app ).remove_filename() ), Utf8( output / "timeline.log" ) );
+        Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
 }
 }
 
@@ -886,7 +881,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
         return false;
     }
 
-    T_Process time = StartTimeline( deps_, timeline, GetRoot(), data->output, port_->Get() + DISPATCHER_PORT );
+    T_Process time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT );
     if( !time )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to start timeline " << id_;
@@ -1243,14 +1238,15 @@ void Session::NotifyNode()
 // Name: Session::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
+bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int limit, bool deflate ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( access_ );
-    dst.SetName( logFile );
-    io::Writer_ABC& sink = dst.OpenWriter();
-    if( !deps_.fs.Exists( GetOutput() / logFile ) )
+    dst.SetName( file );
+    auto& sink = dst.OpenWriter();
+    auto input = GetRoot() / file;
+    if( !deps_.fs.Exists( input  ) )
+        input = GetOutput() / file;
+    if( !deps_.fs.Exists( input ) )
         return false;
-
-    deps_.fs.ReadFileWithLimitSize( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, GetOutput() / logFile, limitSize );
+    deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, input, limit );
     return true;
 }
