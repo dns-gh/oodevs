@@ -13,7 +13,7 @@
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventView_ABC.h"
 #include "clients_gui/EventViewState.h"
-#include "clients_gui/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHandler_ABC.h"
 
 #include <boost/lexical_cast.hpp>
 #pragma warning( push )
@@ -106,7 +106,7 @@ namespace
         MOCK_METHOD( BlockSignals, 1 );
         MOCK_METHOD( Draw, 1 );
     };
-    MOCK_BASE_CLASS( MockTimelineHandler, gui::TimelineHandler_ABC )
+    MOCK_BASE_CLASS( MockTimelineHandler, kernel::TimelineHandler_ABC )
     {
         MOCK_METHOD( CreateEvent, 1 );
         MOCK_METHOD( SelectEvent, 1 );

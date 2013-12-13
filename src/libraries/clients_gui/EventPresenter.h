@@ -33,6 +33,7 @@ namespace actions
 namespace kernel
 {
     class AgentTypes;
+    class TimelineHandler_ABC;
 }
 
 class QDateTime;
@@ -45,7 +46,6 @@ namespace gui
     class EventOrderView_ABC;
     class EventView_ABC;
     struct EventViewState;
-    class TimelineHandler_ABC;
 
 // =============================================================================
 /** @class  EventPresenter
@@ -82,7 +82,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void SetTimelineHandler( const boost::shared_ptr< TimelineHandler_ABC >& timelineHandler );
+    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler );
     void OnWarningChanged( const std::string& warning, const QColor& warningColor );
     //@}
 
@@ -144,7 +144,7 @@ private:
     const EventFactory& factory_;
     boost::scoped_ptr< EventViewState > state_;
     boost::shared_ptr< Event > event_;
-    boost::shared_ptr< TimelineHandler_ABC > timelineHandler_;
+    boost::shared_ptr< kernel::TimelineHandler_ABC > timelineHandler_;
     T_Presenters presenters_;
     //@}
 };

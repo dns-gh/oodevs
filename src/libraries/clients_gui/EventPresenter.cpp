@@ -14,8 +14,8 @@
 #include "EventViewState.h"
 #include "EventOrderPresenter.h"
 #include "EventView_ABC.h"
-#include "TimelineHandler_ABC.h"
 #include "EventFactory.h"
+#include "clients_kernel/TimelineHandler_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 
@@ -101,7 +101,7 @@ void EventPresenter::CheckEvent() const
 // Name: EventPresenter::SetTimelineHandler
 // Created: ABR 2013-12-06
 // -----------------------------------------------------------------------------
-void EventPresenter::SetTimelineHandler( const boost::shared_ptr< TimelineHandler_ABC >& timelineHandler )
+void EventPresenter::SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler )
 {
     timelineHandler_ = timelineHandler;
 }

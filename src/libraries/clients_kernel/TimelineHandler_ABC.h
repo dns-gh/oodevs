@@ -17,7 +17,7 @@ namespace timeline
     struct Event;
 }
 
-namespace gui
+namespace kernel
 {
 
 // =============================================================================
@@ -45,6 +45,6 @@ public:
     //@}
 };
 
-} //! namespace gui
+} //! namespace kernel
 
 #endif // __TimelineHandler_ABC_h_
