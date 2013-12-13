@@ -24,6 +24,7 @@ namespace kernel
     class AutomatType;
     class Automat_ABC;
     class Controller;
+    class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
     class FragOrderType;
@@ -33,6 +34,7 @@ namespace kernel
     class StaticModel;
     class Resolver_ABC;
     class Time_ABC;
+    class TimelineHandler_ABC;
 }
 
 namespace xml
@@ -54,6 +56,7 @@ namespace actions
     class Action_ABC;
     class ActionFactory_ABC;
     class ActionsFilter_ABC;
+    class ActionPublisher;
     class CreationListener_ABC;
 
     namespace parameters
@@ -73,11 +76,26 @@ class ActionsModel : public tools::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher, kernel::Controller& controller );
+             ActionsModel( ActionFactory_ABC& factory,
+                           Publisher_ABC& defaultPublisher,
+                           kernel::Controllers& controllers,
+                           const kernel::Time_ABC& simulation );
     virtual ~ActionsModel();
     //@}
 
     //! @name Operations
+    //@{
+    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler );
+
+    void Destroy( const Action_ABC& action );
+    void Purge( const ActionsFilter_ABC* filter = 0 );
+    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
+    void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
+    void Publish( const Action_ABC& action, int context );
+    void PublishForce( const Action_ABC& action );
+    //@}
+
+    //! @name Creation operations
     //@{
     template< typename T >
     Action_ABC* CreateAction( const T& order, const kernel::Entity_ABC* target = 0 );
@@ -96,12 +114,6 @@ public:
     Action_ABC* CreateObjectMagicAction( const std::string& action, unsigned long targetId );
     Action_ABC* CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
     Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object );
-    void Destroy( const Action_ABC& action );
-    void Purge( const ActionsFilter_ABC* filter = 0 );
-    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
-    void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
-    void Publish( const Action_ABC& action, int context );
-    void PublishForce( const Action_ABC& action );
     //@}
 
 private:
@@ -116,8 +128,8 @@ private:
     //@{
     kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
-    Publisher_ABC& publisher_;
     Publisher_ABC& defaultPublisher_;
+    std::unique_ptr< ActionPublisher > publisher_;
     //@}
 };
 
@@ -145,6 +157,6 @@ Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration 
     return action;
 }
 
-}
+} //! namespace actions
 
 #endif // __ActionsModel_h_

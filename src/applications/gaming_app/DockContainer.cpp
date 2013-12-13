@@ -37,6 +37,7 @@
 #include "ResourceLinksDialog.h"
 #include "ScorePanel.h"
 
+#include "actions/ActionsModel.h"
 #include "actions_gui/InterfaceBuilder.h"
 #include "ENT/ENT_Enums.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -202,6 +203,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
         timelineDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
+        model.actions_.SetTimelineHandler( timelineDockWidget_->GetWebView() );
         eventDockWidget_->GetPresenter().SetTimelineHandler( timelineDockWidget_->GetWebView() );
         QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
