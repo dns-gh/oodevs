@@ -1571,7 +1571,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Recipient(s):</source>
-        <translation>Destinatire(s):</translation>
+        <translation>Destinataire(s):</translation>
     </message>
     <message>
         <source>Transport provider:</source>
@@ -1848,7 +1848,7 @@ Voulez-vous le remplacer ?</translation>
     <name>LogisticsRequestsSupplyTable</name>
     <message>
         <source>Recipient</source>
-        <translation>Destinatire</translation>
+        <translation>Destinataire</translation>
     </message>
     <message>
         <source>Resource</source>
