@@ -19,7 +19,7 @@ const (
 )
 
 func (s *TestSuite) TestAutomatFragOrder(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -57,7 +57,7 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 }
 
 func (s *TestSuite) TestCrowdFragOrder(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -96,7 +96,7 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 }
 
 func (s *TestSuite) TestUnitFragOrder(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}

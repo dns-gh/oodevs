@@ -37,7 +37,7 @@ func CreateCrowd(c *C, client *swapi.Client) *swapi.Crowd {
 }
 
 func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	healthy, wounded, dead := int32(10), int32(11), int32(12)
 
@@ -63,7 +63,7 @@ func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 }
 
 func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	crowd := CreateCrowd(c, client)
@@ -94,7 +94,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 }
 
 func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	crowd := CreateCrowd(c, client)
@@ -117,7 +117,7 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 }
 
 func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	healthy, wounded, contaminated, dead := int32(10), int32(11), int32(0), int32(12)
 
@@ -148,7 +148,7 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 }
 
 func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 
@@ -194,7 +194,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 }
 
 func (s *TestSuite) TestCrowdReloadBrain(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 	tasker := swapi.MakeCrowdTasker(crowd.Id)
@@ -235,7 +235,7 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 }
 
 func (s *TestSuite) TestCrowdElements(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 
@@ -271,7 +271,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 }
 
 func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 
@@ -325,7 +325,7 @@ const (
 )
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 

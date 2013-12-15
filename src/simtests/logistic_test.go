@@ -191,7 +191,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 }
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	initLogisticEvents(c, client)
 
@@ -226,7 +226,7 @@ func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
 }
 
 func (s *TestSuite) TestLogisticHistory(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	initLogisticEvents(c, client)
 	// Wait for some basic activity

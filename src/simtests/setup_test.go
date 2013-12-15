@@ -206,18 +206,20 @@ func NewAllUserOpts(exercise string) *ClientOpts {
 	}
 }
 
-func connectAndWaitModel(c *C, user, password, exercise string) (
-	*simu.SimProcess, *swapi.Client) {
-
-	sim := startSimOnExercise(c, exercise, 1000, false, 0)
-	client := loginAndWaitModel(c, sim, user, password)
-	return sim, client
+func NewAdminOpts(exercise string) *ClientOpts {
+	return &ClientOpts{
+		Exercise: exercise,
+		User:     "admin",
+		Password: "",
+	}
 }
 
-func connectAllUserAndWait(c *C, opts *ClientOpts) (
+func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 
-	return connectAndWaitModel(c, opts.User, opts.Password, opts.Exercise)
+	sim := startSimOnExercise(c, opts.Exercise, 1000, false, 0)
+	client := loginAndWaitModel(c, sim, opts.User, opts.Password)
+	return sim, client
 }
 
 func addClientLogger(client *swapi.Client) {

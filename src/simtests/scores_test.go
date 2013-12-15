@@ -17,7 +17,7 @@ func (s *TestSuite) TestScores(c *C) {
 	scoreEq := "available-equipments"
 	scoreDist := "cp-distance"
 
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallScores)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallScores))
 	defer sim.Stop()
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {

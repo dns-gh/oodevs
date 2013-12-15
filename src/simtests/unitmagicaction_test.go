@@ -90,7 +90,7 @@ func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
 }
 
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -116,7 +116,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 }
 
 func (s *TestSuite) TestCreateFormation(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallEmpty))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// Test with invalid tasker
@@ -169,7 +169,12 @@ func Nearby(pointA, pointB swapi.Point) bool {
 }
 
 func (s *TestSuite) TestCreateUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "user", "user", ExCrossroadSmallOrbat)
+	opts := ClientOpts{
+		User:     "user",
+		Password: "user",
+		Exercise: ExCrossroadSmallOrbat,
+	}
+	sim, client := connectAndWaitModel(c, &opts)
 	defer sim.Stop()
 	data := client.Model.GetData()
 
@@ -275,7 +280,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 }
 
 func (s *TestSuite) TestDeleteUnit(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -307,7 +312,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 }
 
 func (s *TestSuite) TestCreateAutomat(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 
@@ -365,7 +370,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 		c.Assert(err, IsSwordError, expected)
 	}
 
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	pos := swapi.Point{X: 0, Y: 0}
@@ -415,7 +420,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 }
 
 func (s *TestSuite) TestTeleport(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -447,7 +452,7 @@ func (s *TestSuite) TestTeleport(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid automat id
@@ -478,7 +483,7 @@ func (s *TestSuite) TestLogisticsChangeLinks(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid supplied id parameter
@@ -517,7 +522,7 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid supplier parameter
@@ -535,7 +540,7 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid supplier parameter
@@ -662,7 +667,7 @@ func CreateUnit(c *C, client *swapi.Client, automatId uint32) *swapi.Unit {
 }
 
 func (s *TestSuite) TestUnitChangeSuperior(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -749,7 +754,7 @@ func checkUnitsFireDamages(msg *swapi.SwordMessage) error {
 }
 
 func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// Check unit damages messages
@@ -837,7 +842,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 }
 
 func (s *TestSuite) TestPcChangeSuperior(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -872,7 +877,7 @@ func (s *TestSuite) TestPcChangeSuperior(c *C) {
 }
 
 func (s *TestSuite) TestAutomatChangeSuperior(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -916,7 +921,7 @@ func (s *TestSuite) TestAutomatChangeSuperior(c *C) {
 }
 
 func (s *TestSuite) TestFormationChangeSuperior(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	//create 2 formations
@@ -959,7 +964,7 @@ func (s *TestSuite) TestFormationChangeSuperior(c *C) {
 }
 
 func (s *TestSuite) TestDebugBrain(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -1057,7 +1062,7 @@ func MakeTransferCondition(from uint32, to uint32, lent int32) func(*swapi.Model
 }
 
 func (s *TestSuite) TestTransferEquipment(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid parameters count
@@ -1128,7 +1133,7 @@ func (s *TestSuite) TestTransferEquipment(c *C) {
 }
 
 func (s *TestSuite) TestSurrender(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	isSurrendered := func(data *swapi.ModelData, automatId, partyId uint32) bool {
@@ -1279,7 +1284,7 @@ const (
 
 // Deprecated
 func (s *TestSuite) TestUnitCreateWounds(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1350,7 +1355,7 @@ func (s *TestSuite) TestUnitCreateWounds(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeHumanState(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1440,7 +1445,7 @@ func (s *TestSuite) TestUnitChangeHumanState(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeDotation(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1520,7 +1525,7 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1604,7 +1609,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 }
 
 func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1675,7 +1680,7 @@ func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangePosture(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// Error: invalid parameter count
@@ -1705,7 +1710,7 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1754,7 +1759,7 @@ func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeHumanFactors(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1858,7 +1863,7 @@ func CheckAwayEquipment(c *C, client *swapi.Client, awayEquipmentId, transported
 }
 
 func (s *TestSuite) TestUnitRecoverTransporters(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	awayEquipmentId := uint32(15)
@@ -1882,7 +1887,7 @@ func (s *TestSuite) TestUnitRecoverTransporters(c *C) {
 }
 
 func (s *TestSuite) TestDeleteUnitWithAwayEquipments(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	awayEquipmentId := uint32(15)
@@ -1910,7 +1915,7 @@ func (s *TestSuite) TestDeleteUnitWithAwayEquipments(c *C) {
 }
 
 func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	transported, carrier := CreateTransportedAndCarrier(c, client)
 	awayEquipmentId := uint32(15)
@@ -1953,7 +1958,7 @@ func (s *TestSuite) TestUnitRecoverTransportersWithDestroyedEquipments(c *C) {
 }
 
 func (s *TestSuite) TestTransferAwayEquipment(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	pos := swapi.Point{X: -15.9219, Y: 28.3456}
 	awayEquipmentId := uint32(15)
@@ -1995,7 +2000,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 }
 
 func (s *TestSuite) TestUnitReloadBrain(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -2039,7 +2044,7 @@ func (s *TestSuite) TestUnitReloadBrain(c *C) {
 }
 
 func (s *TestSuite) TestLoadUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// some prerequisites
@@ -2091,7 +2096,7 @@ func (s *TestSuite) TestLoadUnit(c *C) {
 }
 
 func (s *TestSuite) TestUnloadUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// some prerequisites
@@ -2144,7 +2149,7 @@ func (s *TestSuite) TestUnloadUnit(c *C) {
 }
 
 func (s *TestSuite) TestDestroyUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// some prerequisites
@@ -2190,7 +2195,7 @@ func (s *TestSuite) TestDestroyUnit(c *C) {
 }
 
 func (s *TestSuite) TestLogFinishHandlings(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// invalid unit

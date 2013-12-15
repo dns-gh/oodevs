@@ -15,7 +15,7 @@ import (
 
 func (s *TestSuite) TestPauseStopResume(c *C) {
 	c.Skip("unreliable")
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	model := client.Model
 
@@ -78,7 +78,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 }
 
 func (s *TestSuite) TestControlRights(c *C) {
-	sim, client := connectAndWaitModel(c, "alluser", "alluser", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	err := client.Pause()

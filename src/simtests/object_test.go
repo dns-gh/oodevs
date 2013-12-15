@@ -15,7 +15,7 @@ import (
 )
 
 func (s *TestSuite) TestCreateEmptyObject(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -44,7 +44,7 @@ func (s *TestSuite) TestCreateEmptyObject(c *C) {
 }
 
 func (s *TestSuite) TestDestroyEmptyObject(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -134,7 +134,7 @@ func checkElapsedTicks(c *C, ticks, expectedTicks int32) {
 }
 
 func (s *TestSuite) TestObstacleAttribute(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -213,7 +213,7 @@ func (s *TestSuite) TestObstacleAttribute(c *C) {
 }
 
 func (s *TestSuite) TestTimeLimitAttribute(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})
@@ -253,7 +253,7 @@ func (s *TestSuite) TestTimeLimitAttribute(c *C) {
 }
 
 func (s *TestSuite) TestBypassAttribute(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -288,7 +288,7 @@ func (s *TestSuite) TestBypassAttribute(c *C) {
 }
 
 func (s *TestSuite) TestAltitudeAttribute(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -322,7 +322,7 @@ func (s *TestSuite) TestAltitudeAttribute(c *C) {
 }
 
 func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -360,7 +360,7 @@ func (s *TestSuite) TestUpdateConstructionAttribute(c *C) {
 }
 
 func (s *TestSuite) TestEngineerPreparedObject(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	location := swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456})

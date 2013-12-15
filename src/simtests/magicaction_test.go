@@ -26,7 +26,7 @@ const (
 )
 
 func (s *TestSuite) TestChangeDiplomacy(c *C) {
-	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	//check with no parameters
@@ -66,7 +66,7 @@ func (s *TestSuite) TestChangeDiplomacy(c *C) {
 }
 
 func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	point := swapi.Point{X: -15.8241, Y: 28.3241}
 
@@ -120,7 +120,7 @@ func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 }
 
 func (s *TestSuite) TestResourceNetworkChange(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid parameters count, 2 parameters expected
@@ -200,7 +200,7 @@ func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
 }
 
 func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// error: invalid parameters count, parameters expected
@@ -281,7 +281,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 	}
 
 	// The command is ignored if the simulation was not started with --test-commands
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	err := client.TriggerError("null_pointer")
 	c.Assert(err, IsNil)
