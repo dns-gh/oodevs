@@ -93,6 +93,10 @@ func (o *SimOpts) GetSessionFile() string {
 	return filepath.Join(o.GetSessionDir(), "session.xml")
 }
 
+func (o *SimOpts) GetReplayDir() string {
+	return filepath.Join(o.GetSessionDir(), "record")
+}
+
 func (o *SimOpts) GetProfilesFile() string {
 	return filepath.Join(o.GetExerciseDir(), "profiles.xml")
 }

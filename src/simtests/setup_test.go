@@ -230,6 +230,14 @@ const (
 	CrowdType = "Standard Crowd"
 )
 
+func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
+	for _, party := range model.Parties {
+		return party
+	}
+	c.Fatal("no party found")
+	return nil
+}
+
 func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
 	data := client.Model.GetData()
 
