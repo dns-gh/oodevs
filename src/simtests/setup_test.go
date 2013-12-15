@@ -184,18 +184,11 @@ func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password string) *swapi
 	return client
 }
 
-func connectAndWaitModelWithStep(c *C, user, password, exercise string, step int) (
-	*simu.SimProcess, *swapi.Client) {
-
-	sim := startSimOnExercise(c, exercise, 1000, false, step)
-	client := loginAndWaitModel(c, sim, user, password)
-	return sim, client
-}
-
 type ClientOpts struct {
 	Exercise string
 	User     string
 	Password string
+	Step     int
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -217,7 +210,7 @@ func NewAdminOpts(exercise string) *ClientOpts {
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 
-	sim := startSimOnExercise(c, opts.Exercise, 1000, false, 0)
+	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
 	client := loginAndWaitModel(c, sim, opts.User, opts.Password)
 	return sim, client
 }

@@ -338,7 +338,9 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
-	sim, client := connectAndWaitModelWithStep(c, "admin", "", ExCrossroadSmallLog, 300)
+	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
 	defer sim.Stop()
 
 	// Find the supply base
