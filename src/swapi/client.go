@@ -28,6 +28,7 @@ var (
 )
 
 type MessageHandler func(msg *SwordMessage, context int32, err error) bool
+type MessageLogger func(in bool, msg *SwordMessage)
 
 type MessagePost struct {
 	message SwordMessage
@@ -69,6 +70,9 @@ type Client struct {
 	PostTimeout time.Duration
 	// Receive input binary payloads, must be registered before calling Run()
 	RawMessageHandler RawMessageHandler
+	// Called on every inbound or outbound message. The handler will be
+	// from different goroutines, and must be set before calling Run().
+	Logger MessageLogger
 
 	// context and clientId are only read and set by the serve goroutine
 	context     int32
@@ -130,16 +134,20 @@ func (c *Client) Run() error {
 	return <-errors
 }
 
-func Connect(host string) (*Client, error) {
-	client, err := NewClient(host)
-	if err != nil {
-		return nil, err
-	}
+func ConnectClient(client *Client) {
 	client.running.Add(1)
 	go func() {
 		defer client.running.Done()
 		client.Run()
 	}()
+}
+
+func Connect(host string) (*Client, error) {
+	client, err := NewClient(host)
+	if err != nil {
+		return nil, err
+	}
+	ConnectClient(client)
 	return client, nil
 }
 
@@ -296,6 +304,9 @@ func (c *Client) listen(errors chan<- error) {
 			c.quit <- false
 			return
 		}
+		if c.Logger != nil {
+			c.Logger(true, &msg)
+		}
 		c.events <- msg
 	}
 }
@@ -305,6 +316,9 @@ func (c *Client) write() {
 
 	writer := NewWriter(c.link)
 	for post := range c.posts {
+		if c.Logger != nil {
+			c.Logger(false, &post.message)
+		}
 		err := writer.Encode(post.message.tag, post.message.GetMessage())
 		if err != nil {
 			c.errors <- HandlerError{post.context, err}

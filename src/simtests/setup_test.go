@@ -9,6 +9,7 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -159,26 +160,12 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 		})
 }
 
-func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
-	client, err := swapi.Connect(sim.DispatcherAddr)
-	c.Assert(err, IsNil) // failed to connect to simulation
-	client.PostTimeout = PostTimeout
-	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
-		err error) error {
-		if !c.Failed() {
-			c.Check(err, IsNil)
-		}
-		return nil
-	})
-	checkOrderAckSequences(c, client)
-	return client
-}
-
 type ClientOpts struct {
 	Exercise string
 	User     string
 	Password string
 	Step     int
+	Logger   swapi.MessageLogger
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -197,8 +184,40 @@ func NewAdminOpts(exercise string) *ClientOpts {
 	}
 }
 
+func connectClient(c *C, sim *simu.SimProcess, opts *ClientOpts) *swapi.Client {
+	if opts == nil {
+		opts = &ClientOpts{}
+	}
+	client, err := swapi.NewClient(sim.DispatcherAddr)
+	c.Assert(err, IsNil)
+	client.Logger = opts.Logger
+	client.PostTimeout = PostTimeout
+	swapi.ConnectClient(client)
+	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
+		err error) error {
+		if !c.Failed() {
+			c.Check(err, IsNil)
+		}
+		return nil
+	})
+	checkOrderAckSequences(c, client)
+	return client
+}
+
+func AddLogger(opts *ClientOpts) *ClientOpts {
+	opts.Logger = func(in bool, msg *swapi.SwordMessage) {
+		prefix := "in "
+		if !in {
+			prefix = "out"
+		}
+		fmt.Fprintf(os.Stderr, "%s %v\n", prefix,
+			proto.CompactTextString(msg.GetMessage()))
+	}
+	return opts
+}
+
 func loginAndWaitModel(c *C, sim *simu.SimProcess, opts *ClientOpts) *swapi.Client {
-	client := connectClient(c, sim)
+	client := connectClient(c, sim, opts)
 	err := client.Login(opts.User, opts.Password)
 	c.Assert(err, IsNil)
 	ok := client.Model.WaitReady(10 * time.Second)
@@ -212,17 +231,6 @@ func connectAndWaitModel(c *C, opts *ClientOpts) (
 	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
 	client := loginAndWaitModel(c, sim, opts)
 	return sim, client
-}
-
-func addClientLogger(client *swapi.Client) {
-	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
-		if err != nil {
-			return true
-		}
-		log.Println(msg)
-		return false
-	}
-	client.Register(handler)
 }
 
 func waitCondition(c *C, model *swapi.Model, cond func(data *swapi.ModelData) bool) {
