@@ -26,7 +26,7 @@ const (
 )
 
 func (s *TestSuite) TestChangeDiplomacy(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	//check with no parameters

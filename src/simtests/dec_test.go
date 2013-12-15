@@ -21,7 +21,7 @@ func getRandomUnit(c *C, client *swapi.Client) *swapi.Unit {
 }
 
 func (s *TestSuite) TestExecScript(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	unit := getRandomUnit(c, client)
 
@@ -76,7 +76,7 @@ func checkScript(c *C, client *swapi.Client, script string, keys map[string]inte
 }
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// Floating point division by zero used to trigger exceptions in the sim
@@ -91,7 +91,7 @@ end
 }
 
 func (s *TestSuite) TestDecUnit(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	unit := CreateUnit(c, client, automat.Id)

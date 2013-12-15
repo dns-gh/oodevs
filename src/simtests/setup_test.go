@@ -192,6 +192,20 @@ func connectAndWaitModelWithStep(c *C, user, password, exercise string, step int
 	return sim, client
 }
 
+type ClientOpts struct {
+	Exercise string
+	User     string
+	Password string
+}
+
+func NewAllUserOpts(exercise string) *ClientOpts {
+	return &ClientOpts{
+		Exercise: exercise,
+		User:     "alluser",
+		Password: "alluser",
+	}
+}
+
 func connectAndWaitModel(c *C, user, password, exercise string) (
 	*simu.SimProcess, *swapi.Client) {
 
@@ -200,8 +214,10 @@ func connectAndWaitModel(c *C, user, password, exercise string) (
 	return sim, client
 }
 
-func connectAllUserAndWait(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
-	return connectAndWaitModel(c, "alluser", "alluser", exercise)
+func connectAllUserAndWait(c *C, opts *ClientOpts) (
+	*simu.SimProcess, *swapi.Client) {
+
+	return connectAndWaitModel(c, opts.User, opts.Password, opts.Exercise)
 }
 
 func addClientLogger(client *swapi.Client) {

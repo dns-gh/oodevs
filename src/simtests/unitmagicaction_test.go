@@ -90,7 +90,7 @@ func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
 }
 
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -116,7 +116,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 }
 
 func (s *TestSuite) TestCreateFormation(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// Test with invalid tasker
@@ -275,7 +275,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 }
 
 func (s *TestSuite) TestDeleteUnit(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -307,7 +307,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 }
 
 func (s *TestSuite) TestCreateAutomat(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 
@@ -365,7 +365,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 		c.Assert(err, IsSwordError, expected)
 	}
 
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	pos := swapi.Point{X: 0, Y: 0}
@@ -415,7 +415,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 }
 
 func (s *TestSuite) TestTeleport(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -959,7 +959,7 @@ func (s *TestSuite) TestFormationChangeSuperior(c *C) {
 }
 
 func (s *TestSuite) TestDebugBrain(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -1705,7 +1705,7 @@ func (s *TestSuite) TestUnitChangePosture(c *C) {
 }
 
 func (s *TestSuite) TestUnitChangeAdhesions(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	f1 := CreateFormation(c, client, 1)
@@ -1995,7 +1995,7 @@ func (s *TestSuite) TestTransferAwayEquipment(c *C) {
 }
 
 func (s *TestSuite) TestUnitReloadBrain(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}

@@ -23,7 +23,7 @@ import (
 )
 
 func (s *TestSuite) TestCheckpointMessages(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	check := func(input, errmsg string) {

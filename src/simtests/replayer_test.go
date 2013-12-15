@@ -15,7 +15,7 @@ import (
 )
 
 func (s *TestSuite) TestReplayerData(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
+	sim, client := connectAllUserAndWait(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// Create new formation and wait a bit
