@@ -29,7 +29,7 @@ func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 			DisconnectionRequest: &sword.DisconnectionRequest{},
 		},
 	}
-	err := w.Encode(ClientToAuthenticationTag, msg)
+	_, err := w.Encode(ClientToAuthenticationTag, msg)
 	if err != nil {
 		return true
 	}

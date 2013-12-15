@@ -149,13 +149,12 @@ func EncodePayload(dst io.Writer, tag uint32, data []byte) (int, error) {
 	return 4 + int(header.Size), err
 }
 
-func (w *Writer) Encode(tag uint32, msg proto.Message) error {
+func (w *Writer) Encode(tag uint32, msg proto.Message) (int, error) {
 	data, err := proto.Marshal(msg)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	_, err = EncodePayload(w.io, tag, data)
-	return err
+	return EncodePayload(w.io, tag, data)
 }
 
 type RawMessageHandler func(size, tag uint32, data []byte)
@@ -253,15 +252,15 @@ func (r *Reader) Parse(header *Header, buffer []byte) ([]byte, error) {
 	return data[:n], nil
 }
 
-func (r *Reader) Decode(msg *SwordMessage) error {
+func (r *Reader) Decode(msg *SwordMessage) (int, error) {
 	header := Header{}
 	data, err := r.Parse(&header, r.cache)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	r.cache = data
 	if r.handler != nil {
 		r.handler(header.Size, header.Tag, r.cache)
 	}
-	return DecodeMessage(msg, header.Tag, r.cache)
+	return int(4 + header.Size), DecodeMessage(msg, header.Tag, r.cache)
 }

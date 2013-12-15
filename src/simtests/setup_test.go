@@ -247,7 +247,7 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 }
 
 func AddLogger(opts *ClientOpts) *ClientOpts {
-	opts.Logger = func(in bool, msg *swapi.SwordMessage) {
+	opts.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
 		prefix := "in "
 		if !in {
 			prefix = "out"
