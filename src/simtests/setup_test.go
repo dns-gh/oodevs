@@ -174,16 +174,6 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	return client
 }
 
-func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
-
-	client := connectClient(c, sim)
-	err := client.Login(user, password)
-	c.Assert(err, IsNil) // login failed
-	ok := client.Model.WaitReady(10 * time.Second)
-	c.Assert(ok, Equals, true) // model initialization timed out
-	return client
-}
-
 type ClientOpts struct {
 	Exercise string
 	User     string
@@ -207,11 +197,20 @@ func NewAdminOpts(exercise string) *ClientOpts {
 	}
 }
 
+func loginAndWaitModel(c *C, sim *simu.SimProcess, opts *ClientOpts) *swapi.Client {
+	client := connectClient(c, sim)
+	err := client.Login(opts.User, opts.Password)
+	c.Assert(err, IsNil)
+	ok := client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true)
+	return client
+}
+
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 
 	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
-	client := loginAndWaitModel(c, sim, opts.User, opts.Password)
+	client := loginAndWaitModel(c, sim, opts)
 	return sim, client
 }
 

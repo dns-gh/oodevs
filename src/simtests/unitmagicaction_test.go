@@ -274,7 +274,11 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Read-only user can create unit (wut?)
 	client.Close()
-	client = loginAndWaitModel(c, sim, "user-readonly", "user-readonly")
+	opts = ClientOpts{
+		User:     "user-readonly",
+		Password: "user-readonly",
+	}
+	client = loginAndWaitModel(c, sim, &opts)
 	u, err = client.CreateUnit(automat.Id, unitType, pos)
 	c.Assert(err, IsNil)
 }

@@ -166,7 +166,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	client.Register(handler)
 
 	// Trigger simulation_client messages
-	other := loginAndWaitModel(c, sim, "alluser", "alluser")
+	other := loginAndWaitModel(c, sim, NewAllUserOpts(""))
 	createAutomat(c, other)
 	waitForMessages(2*time.Second, msgch)
 

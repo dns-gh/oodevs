@@ -70,7 +70,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 	// Must have supervisor rights
 	check("", ".*rights check failed.*")
 	client.Close()
-	client = loginAndWaitModel(c, sim, "admin", "")
+	client = loginAndWaitModel(c, sim, NewAdminOpts(""))
 
 	// No checkpoint name
 	check("", "")
@@ -214,7 +214,11 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
-	client := loginAndWaitModel(c, sim, user, password)
+	opts := ClientOpts{
+		User:     user,
+		Password: password,
+	}
+	client := loginAndWaitModel(c, sim, &opts)
 	return sim, client
 }
 
