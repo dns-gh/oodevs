@@ -191,7 +191,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
     if( pObject->IsUniversal() )
         universalObjects_.push_back( pObject );
     pObject->SendCreation();
-    if( pObject->GetArmy() )
+    if( pObject->GetArmy() && !pObject->IsUniversal() )
     {
         auto knowledges = pObject->GetArmy()->GetKnowledgeGroups();
         for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
