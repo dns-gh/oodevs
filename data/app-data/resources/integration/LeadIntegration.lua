@@ -1005,7 +1005,13 @@ integration.leadDelayActivate = function( self, disengageTask )
 
     -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
     -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée
-    if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) 
+    if self.params.performBlockingActions then
+        self.orderUnitsToDisengage = meKnowledge:delayingSubordinateIsNotSafe( myself.leadData.pionsLima1 )
+    else
+        self.orderUnitsToDisengage = meKnowledge:screeningSubordinateIsMovingBackward()
+    end
+    meKnowledge.arrivedUnits = meKnowledge.arrivedUnits or {}
+    if ( not self.decrocher and self.orderUnitsToDisengage ) 
         and meKnowledge.arrivedUnits
         and #meKnowledge.arrivedUnits >= tableSize( myself.leadData.pionsLima1 ) then
         local fragOrder = integration.createFragOrder("Disengage")
@@ -1014,13 +1020,11 @@ integration.leadDelayActivate = function( self, disengageTask )
         meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
 
         -- Keep only the operational units
-
         for index, entity in pairs( meKnowledge.pionsToAwait ) do
             if not exists( self.operationnalEntities, entity ) then
                 meKnowledge.pionsToAwait[ index ] = nil
             end
         end
-
         for k,v in pairs( meKnowledge.arrivedUnits ) do 
             meKnowledge.arrivedUnits[ k ] = nil
         end
@@ -1029,8 +1033,11 @@ integration.leadDelayActivate = function( self, disengageTask )
         for k,v in pairs( meKnowledge.pionsToAwait ) do
             meKnowledge.pionsToAwaitSource[k.source] = v.source
         end
-
-        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = myself.leadData.pionsLima1 } )
+        local entities = {}
+        for _, entity in pairs( myself.leadData.pionsLima1 ) do
+            entities[ #entities + 1 ] = entity
+        end
+        Activate( self.skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = entities } )
         self.decrocher = true
         self.screenPosition = false
         myself.screenUnitDisengage = nil
