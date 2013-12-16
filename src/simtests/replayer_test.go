@@ -68,6 +68,7 @@ func (s *TestSuite) TestReplayerData(c *C) {
 	replay := startReplay(c, sim.Opts)
 	defer replay.Kill()
 	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
+	defer client.Close()
 	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
 
 	// The replayer operates step-by-step, fast forward to creation tick
