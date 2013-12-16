@@ -971,5 +971,21 @@
         <source>No ammunition</source>
         <translation>No ammunition</translation>
     </message>
+    <message>
+        <source>Display triggered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit triggered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit planned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

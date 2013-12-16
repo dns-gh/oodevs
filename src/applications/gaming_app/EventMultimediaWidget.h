@@ -11,6 +11,7 @@
 #define __EventMultimediaWidget_h_
 
 #include "EventWidget_ABC.h"
+#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventMultimediaWidget
@@ -18,42 +19,15 @@
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventMultimediaWidget : public EventWidget_ABC
+class EventMultimediaWidget : public EventWidget_ABC< gui::EventView_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventMultimediaWidget();
+             EventMultimediaWidget( gui::EventPresenter& presenter );
     virtual ~EventMultimediaWidget();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name EventWidget_ABC implementation
-    //@{
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
-    virtual bool IsValid() const;
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnBrowse();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QLineEdit* label_;
-    QLineEdit* file_;
-    QPushButton* browse_;
-    QComboBox* profiles_;
     //@}
 };
 

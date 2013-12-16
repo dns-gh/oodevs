@@ -9,16 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "EventSupervisorActionWidget.h"
-#include "clients_kernel/Event.h"
-#include "ENT/ENT_Tr.h"
-#include <timeline/api.h>
+#include "moc_EventSupervisorActionWidget.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: EventSupervisorActionWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventSupervisorActionWidget::EventSupervisorActionWidget()
-    : EventWidget_ABC()
+EventSupervisorActionWidget::EventSupervisorActionWidget( gui::EventPresenter& presenter )
+    : EventWidget_ABC< gui::EventView_ABC >( presenter )
 {
     mainLayout_->addWidget( new QLabel( "Supervisor Widget" ) );
 }
@@ -30,22 +28,4 @@ EventSupervisorActionWidget::EventSupervisorActionWidget()
 EventSupervisorActionWidget::~EventSupervisorActionWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventSupervisorActionWidget::Fill
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventSupervisorActionWidget::Fill( const kernel::Event& /*event*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventSupervisorActionWidget::Commit
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventSupervisorActionWidget::Commit( timeline::Event& event )
-{
-    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

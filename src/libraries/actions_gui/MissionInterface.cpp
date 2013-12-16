@@ -72,12 +72,11 @@ namespace
 // -----------------------------------------------------------------------------
 MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
-    , ParamInterface_ABC()
     , config_( config )
     , entity_( controllers )
     , order_( 0 )
-    , planned_( false )
     , type_( eNbrMissionTypes )
+    , filling_( false )
 {
     setObjectName( name );
     setMinimumSize( 280, 50 );
@@ -217,6 +216,7 @@ void MissionInterface::CommitTo( actions::Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void MissionInterface::FillFrom( const actions::Action_ABC& action )
 {
+    filling_ = true;
     auto itAction = action.CreateIterator();
     for( auto it = parameters_.begin(); it != parameters_.end() && itAction.HasMoreElements(); ++it )
     {
@@ -225,6 +225,7 @@ void MissionInterface::FillFrom( const actions::Action_ABC& action )
         if( ( *it )->GetName() == actionParam.GetName() )
             actionParam.Accept( **it );
     }
+    filling_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,15 +285,6 @@ int MissionInterface::GetIndex( Param_ABC* param ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface::SetPlanned
-// Created: ABR 2013-06-04
-// -----------------------------------------------------------------------------
-void MissionInterface::SetPlanned( bool planned )
-{
-    planned_ = planned;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionInterface::HasParameter
 // Created: ABR 2013-11-13
 // -----------------------------------------------------------------------------
@@ -302,4 +294,13 @@ bool MissionInterface::HasParameter( const Param_ABC& parameter ) const
         if( ( *it )->HasParameter( parameter ) )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::IsFilling
+// Created: ABR 2013-12-05
+// -----------------------------------------------------------------------------
+bool MissionInterface::IsFilling() const
+{
+    return filling_;
 }

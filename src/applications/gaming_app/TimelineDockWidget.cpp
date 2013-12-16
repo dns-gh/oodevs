@@ -39,24 +39,11 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
                                         const Config& config,
                                         Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
-    , cfg_( new timeline::Configuration() )
     , config_( config )
-    , webView_( 0 )
     , mainView_( 0 )
 {
     // Init
     setCaption( tr( "Timeline" ) );
-
-    // Configuration
-    cfg_->url = "http://" + config.GetTimelineUrl();
-    int timelineDebugPort = config.GetTimelineDebugPort();
-    if( timelineDebugPort != 0 )
-        cfg_->debug_port = timelineDebugPort;
-    cfg_->rundir = "cef";
-    cfg_->binary = "cef/timeline_client.exe";
-    cfg_->external = true;
-    if( !cfg_->binary.IsRegularFile() )
-        MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
 
     // Content
     tabWidget_ = new QTabWidget();
@@ -65,8 +52,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     tabWidget_->setMovable( true );
     contextMenu_ = new QMenu( this );
     contextMenu_->addAction( tr( "Rename view" ), this, SLOT( OnRenameTab() ) );
-
-    webView_ = new TimelineWebView( 0, config, controllers, model, *cfg_ );
+    webView_.reset( new TimelineWebView( 0, config, controllers, model ) );
 
     // Main Layout
     QWidget* mainWidget = new QWidget();
@@ -74,17 +60,12 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     mainLayout->setMargin( 0 );
     mainLayout->setSpacing( 0 );
     mainLayout->addWidget( tabWidget_ );
-    mainLayout->addWidget( webView_, 1 );
+    mainLayout->addWidget( webView_.get(), 1 );
     setWidget( mainWidget );
 
     // Connections
-    connect( this, SIGNAL( CreateEvent( const timeline::Event& ) ), webView_, SLOT( CreateEvent( const timeline::Event& ) ) );
-    connect( this, SIGNAL( SelectEvent( const std::string& ) ), webView_, SLOT( SelectEvent( const std::string& ) ) );
-    connect( this, SIGNAL( EditEvent( const timeline::Event& ) ), webView_, SLOT( EditEvent( const timeline::Event& ) ) );
-    connect( this, SIGNAL( DeleteEvent( const std::string& ) ), webView_, SLOT( DeleteEvent( const std::string& ) ) );
     connect( tabWidget_, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentChanged( int ) ) );
     connect( tabWidget_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnTabContextMenu() ) );
-    connect( webView_, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ), this, SIGNAL( StartCreation( E_EventTypes, const QDateTime&, bool ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +75,15 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
 TimelineDockWidget::~TimelineDockWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::GetWebView
+// Created: ABR 2013-12-06
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< TimelineWebView >& TimelineDockWidget::GetWebView() const
+{
+    return webView_;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,19 +119,19 @@ void TimelineDockWidget::Disconnect()
 QWidget* TimelineDockWidget::AddView( bool main )
 {
     TimelineToolBar* toolBar = main ? new TimelineToolBar( config_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
-    connect( toolBar, SIGNAL( CenterView() ), webView_, SLOT( OnCenterView() ) );
+    connect( toolBar, SIGNAL( CenterView() ), webView_.get(), SLOT( OnCenterView() ) );
     connect( toolBar, SIGNAL( AddView() ), this, SLOT( AddView() ) );
     connect( toolBar, SIGNAL( RemoveCurrentView() ), this, SLOT( RemoveCurrentView() ) );
-    connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), webView_.get(), SLOT( OnLoadOrderFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( LoadOrderFileRequest( const tools::Path& ) ), this, SLOT( OnLoadRequested() ) );
-    connect( toolBar, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
-    connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnLoadTimelineSessionFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( SaveOrderFileRequest( const tools::Path& ) ), webView_.get(), SLOT( OnSaveOrderFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), webView_.get(), SLOT( OnLoadTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( LoadTimelineSessionFileRequest( const tools::Path& ) ), this, SLOT( OnLoadRequested() ) );
-    connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_, SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
-    connect( toolBar, SIGNAL( ToggleLayoutOrientation() ), webView_, SLOT( OnToggleLayoutOrientation() ) );
-    connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_, SLOT( OnEngagedFilterToggled( bool ) ) );
-    connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_, SLOT( OnServicesFilterChanged( const std::string& ) ) );
-    connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_, SLOT( OnKeywordFilterChanged( const std::string& ) ) );
+    connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_.get(), SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
+    connect( toolBar, SIGNAL( ToggleLayoutOrientation() ), webView_.get(), SLOT( OnToggleLayoutOrientation() ) );
+    connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_.get(), SLOT( OnEngagedFilterToggled( bool ) ) );
+    connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnServicesFilterChanged( const std::string& ) ) );
+    connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ): tr( "View %1" ).arg( ++maxTabNumber_ ) );
     tabWidget_->setCurrentIndex( index );

@@ -12,6 +12,12 @@
 
 #include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  ActionPublisher

@@ -19,12 +19,6 @@ namespace kernel
     class Filter_ABC;
 }
 
-namespace timeline
-{
-    struct Configuration;
-    struct Event;
-}
-
 namespace tools
 {
     class ExerciseConfig;
@@ -57,20 +51,13 @@ public:
     //@{
     void Connect();
     void Disconnect();
-
-    virtual void NotifyCreated( const kernel::Filter_ABC& filter );
-    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    const boost::shared_ptr< TimelineWebView >& GetWebView() const;
     //@}
 
-signals:
-    //! @name Signals
+    //! @name ElementObserver_ABC implementation
     //@{
-    void CreateEvent( const timeline::Event& );
-    void SelectEvent( const std::string& );
-    void EditEvent( const timeline::Event& );
-    void DeleteEvent( const std::string& );
-
-    void StartCreation( E_EventTypes, const QDateTime&, bool );
+    virtual void NotifyCreated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     //@}
 
 public slots:
@@ -88,11 +75,10 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
-    std::auto_ptr< timeline::Configuration > cfg_;
     QTabWidget* tabWidget_;
-    TimelineWebView* webView_;
     QMenu* contextMenu_;
     QWidget* mainView_;
+    boost::shared_ptr< TimelineWebView > webView_;
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #include "TimelineWebView.h"
 
 #include "moc_TimelineWebView.cpp"
+#include "Config.h"
 #include "TimelineToolBar.h"
 
 #include "actions/Action_ABC.h"
@@ -45,19 +46,28 @@
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
 TimelineWebView::TimelineWebView( QWidget* parent,
-                                  const tools::ExerciseConfig& config,
+                                  const Config& config,
                                   kernel::Controllers& controllers,
-                                  Model& model,
-                                  timeline::Configuration& cfg )
+                                  Model& model )
     : QWidget( parent )
     , config_( config )
     , controllers_( controllers )
     , model_( model )
     , server_( 0 )
-    , cfg_( new timeline::Configuration( cfg ) )
+    , cfg_( new timeline::Configuration() )
     , creationSignalMapper_( 0 )
     , horizontal_( false )
 {
+    cfg_->url = "http://" + config.GetTimelineUrl();
+    int timelineDebugPort = config.GetTimelineDebugPort();
+    if( timelineDebugPort != 0 )
+        cfg_->debug_port = timelineDebugPort;
+    cfg_->rundir = "cef";
+    cfg_->binary = "cef/timeline_client.exe";
+    cfg_->external = true;
+    if( !cfg_->binary.IsRegularFile() )
+        MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
+
     setObjectName( "timeline-webview" );
 
     mainLayout_ = new QVBoxLayout( this );
@@ -130,11 +140,6 @@ void TimelineWebView::Connect()
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 
-    connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
-    connect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
-    connect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
-    connect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
-
     connect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
@@ -156,11 +161,6 @@ void TimelineWebView::Disconnect()
 {
     if( !server_ )
         return;
-
-    disconnect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
-    disconnect( this, SIGNAL( SelectEventSignal( const std::string& ) ), server_.get(), SLOT( SelectEvent( const std::string& ) ) );
-    disconnect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( UpdateEvent( const timeline::Event& ) ) );
-    disconnect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
     disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
@@ -209,7 +209,8 @@ void TimelineWebView::OnCenterView()
 void TimelineWebView::CreateEvent( const timeline::Event& event )
 {
     eventCreated_ = event.uuid;
-    emit CreateEventSignal( event );
+    if( server_ )
+        server_->CreateEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,7 +219,8 @@ void TimelineWebView::CreateEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineWebView::SelectEvent( const std::string& uuid )
 {
-    emit SelectEventSignal( uuid );
+    if( server_ )
+        server_->SelectEvent( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +229,8 @@ void TimelineWebView::SelectEvent( const std::string& uuid )
 // -----------------------------------------------------------------------------
 void TimelineWebView::EditEvent( const timeline::Event& event )
 {
-    emit EditEventSignal( event );
+    if( server_ )
+        server_->UpdateEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +240,8 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
     controllers_.eventActions_.DeselectAll();
-    emit DeleteEventSignal( uuid );
+    if( server_ )
+        server_->DeleteEvent( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +255,7 @@ void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeli
     model_.events_.Create( event );
     if( !eventCreated_.empty() && event.uuid == eventCreated_ )
     {
-        emit SelectEventSignal( event.uuid );
+        SelectEvent( event.uuid );
         eventCreated_ = "";
     }
 }
@@ -408,10 +412,10 @@ void TimelineWebView::OnCreateClicked( int type )
 {
     // Deselect current event
     if( selected_ )
-        emit SelectEventSignal( "" );
+        SelectEvent( "" );
 
     assert( type >= 0 && type < eNbrEventTypes );
-    emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_, true );
+    emit StartCreation( static_cast< E_EventTypes >( type ), selectedDateTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -420,7 +424,7 @@ void TimelineWebView::OnCreateClicked( int type )
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnKeyUp( int key )
 {
-    if( selected_ && key == VK_DELETE )
+    if( selected_ && !selected_->done && key == VK_DELETE )
         DeleteEvent( selected_->uuid );
 }
 
@@ -480,7 +484,7 @@ void TimelineWebView::ReadAction( xml::xistream& xis )
     const actions::ActionTiming& timing = action->Get< actions::ActionTiming >();
     event.begin = timing.GetTime().toString( EVENT_DATE_FORMAT ).toStdString();
     //event.done = false;
-    emit CreateEventSignal( event );
+    CreateEvent( event );
 }
 
 // -----------------------------------------------------------------------------
