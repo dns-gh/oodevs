@@ -49,6 +49,9 @@ func ListSegmentDirs(recordsDir string) ([]string, error) {
 		return nil, fmt.Errorf("%s does not look like a replay directory", recordsDir)
 	}
 	entries, err := ioutil.ReadDir(recordsDir)
+	if err != nil {
+		return nil, err
+	}
 	dirs := []string{}
 	for _, e := range entries {
 		if e.IsDir() {
