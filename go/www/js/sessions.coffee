@@ -469,7 +469,7 @@ class SessionItemView extends Backbone.View
             edit:               is_status_in d, ["stopped", "waiting"]
             clone:              !has_replays
             download:           is_idle
-            log:                !is_replay && !_.isEmpty d.logs
+            log:                !_.isEmpty d.logs
             archive:            is_status_in d, ["stopped"]
             archive_disabled:   has_replays
             delete:             is_idle

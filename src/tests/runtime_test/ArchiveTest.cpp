@@ -71,7 +71,7 @@ namespace
                 return path != "echowin32.exe";
             } );
             VirtualDevice file;
-            fs.ReadFileWithLimitSize( file, input / "echowin32.exe", 0 );
+            fs.LimitedReadFile( file, input / "echowin32.exe", 0 );
             packer->PackEntry( "echowin32.exe", &file.buffer_[0], file.buffer_.size() );
         }
         {

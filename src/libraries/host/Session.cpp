@@ -30,7 +30,6 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/range/algorithm.hpp>
@@ -369,17 +368,6 @@ bool Session::HasReplays() const
     return !replays_.empty();
 }
 
-namespace
-{
-    bool AddLogFile( const FileSystem_ABC& fs, const runtime::Path& path, Tree& tree )
-    {
-        if( fs.IsFile( path ) &&
-            path.extension() == ".log" && boost::count( path.string(), '.' ) == 1 )
-            tree.put( runtime::Utf8( path.filename() ), true );
-        return true;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Session::AvailableLogs
 // Created: NPT 2013-07-10
@@ -387,8 +375,15 @@ namespace
 Tree Session::AvailableLogs() const
 {
     Tree tree;
-    deps_.fs.Walk( GetOutput(), false,
-        boost::bind( &AddLogFile, boost::cref( deps_.fs ), _1, boost::ref( tree ) ) );
+    const auto adder = [&]( const runtime::Path& path ) -> bool {
+        if( deps_.fs.IsFile( path ) &&
+            path.extension() == ".log" &&
+            boost::count( path.string(), '.' ) == 1 )
+            tree.put( runtime::Utf8( path.filename() ), true );
+        return true;
+    };
+    deps_.fs.Walk( GetOutput(), false, adder );
+    deps_.fs.Walk( GetRoot(), false, adder );
     return tree;
 }
 
@@ -412,10 +407,10 @@ Tree Session::GetProperties( bool save ) const
     if( save )
         tree.put_child( "links", links_ );
     else
-        BOOST_FOREACH( const Tree::value_type& it, links_ )
+        for( auto it = links_.begin(); it != links_.end(); ++it )
         {
-            tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
-            tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
+            tree.put( it->first + ".name",     Get< std::string >( it->second, "name" ) );
+            tree.put( it->first + ".checksum", Get< std::string >( it->second, "checksum" ) );
         }
     return tree;
 }
@@ -486,8 +481,8 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
     if( !cfg.enabled )
         return;
     tree.put( prefix + "<xmlattr>.library", Utf8( cfg.library ) );
-    BOOST_FOREACH( const web::session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
-        tree.put( prefix + XpathToXml( value.first ), value.second );
+    for( auto it = cfg.parameters.cbegin(); it != cfg.parameters.cend(); ++it )
+        tree.put( prefix + XpathToXml( it->first ), it->second );
 }
 
 void WriteLogConfiguration( Tree& tree, const std::string& prefix, const Config& cfg )
@@ -512,8 +507,8 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     WriteLogConfiguration( tree, prefix + "log.<xmlattr>.", cfg );
     WriteLogConfiguration( tree, prefix + "messages.<xmlattr>.", cfg );
     WriteLogConfiguration( tree, prefix + "debug.<xmlattr>.", cfg );
-    BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
-        WritePlugin( tree, prefix + "plugins." + value.first + ".", value.second );
+    for( auto it = cfg.plugins.cbegin(); it != cfg.plugins.cend(); ++it )
+        WritePlugin( tree, prefix + "plugins." + it->first + ".", it->second );
 }
 
 void WriteRngConfiguration( Tree& tree, const std::string& prefix, const RngConfig& cfg )
@@ -635,6 +630,8 @@ bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool p
         ParseCheckpoints();
     status_ = next;
     busy_ = false;
+    mutex.unlock();
+
     return true;
 }
 
@@ -775,7 +772,6 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 Session::T_Process StartTimeline( const SessionDependencies& deps,
                                   const Path& app,
                                   const Path& root,
-                                  const Path& output,
                                   int base )
 {
     const Path config = root / "timeline.run";
@@ -784,7 +780,7 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
         ( MakeOption( "port",  base + TIMELINE_PORT ) )
         ( MakeOption( "run", Utf8( config ) ) );
     return deps.runtime.Start( Utf8( app ), options,
-        Utf8( Path( app ).remove_filename() ), Utf8( output / "timeline.log" ) );
+        Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
 }
 }
 
@@ -886,7 +882,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
         return false;
     }
 
-    T_Process time = StartTimeline( deps_, timeline, GetRoot(), data->output, port_->Get() + DISPATCHER_PORT );
+    T_Process time = StartTimeline( deps_, timeline, GetRoot(), port_->Get() + DISPATCHER_PORT );
     if( !time )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to start timeline " << id_;
@@ -1164,7 +1160,7 @@ void Session::ClearOutput( const Path& path )
         return;
     const Path output = deps_.fs.MakeAnyPath( paths_.trash );
     deps_.fs.Rename( path, output / "_" );
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
+    async_.Post( [&, output] { deps_.fs.Remove( output ); } );
 }
 
 namespace
@@ -1225,8 +1221,9 @@ void Session::DetachReplay( const Session_ABC& replay )
 void Session::ParseCheckpoints()
 {
     checkpoints_.clear();
-    deps_.fs.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
-                  boost::cref( deps_.fs ), _1, boost::ref( checkpoints_ ) ) );
+    deps_.fs.Walk( GetOutput() / "checkpoints", false, [&]( const runtime::Path& path ) {
+        return Attach( deps_.fs, path, checkpoints_ );
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -1243,14 +1240,15 @@ void Session::NotifyNode()
 // Name: Session::DownloadLog
 // Created: NPT 2013-07-10
 // -----------------------------------------------------------------------------
-bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& logFile, int limitSize, bool deflate ) const
+bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int limit, bool deflate ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( access_ );
-    dst.SetName( logFile );
-    io::Writer_ABC& sink = dst.OpenWriter();
-    if( !deps_.fs.Exists( GetOutput() / logFile ) )
+    dst.SetName( file );
+    auto& sink = dst.OpenWriter();
+    auto input = GetRoot() / file;
+    if( !deps_.fs.Exists( input  ) )
+        input = GetOutput() / file;
+    if( !deps_.fs.Exists( input ) )
         return false;
-
-    deps_.fs.ReadFileWithLimitSize( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, GetOutput() / logFile, limitSize );
+    deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeGzipFilter( sink ) : sink, input, limit );
     return true;
 }
