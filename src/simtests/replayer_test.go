@@ -44,10 +44,10 @@ func (s *TestSuite) TestReplayerData(c *C) {
 	c.Assert(creationTick, Greater, int32(0))
 
 	// The formation should not be in the first keyframe
-	firstFrame := int32(0)
+	firstFrame := int32(-1)
 	found = false
 	keyHandler := func(frame replay.KeyFrame, msg *sword.SimToClient) error {
-		if firstFrame == 0 {
+		if firstFrame < 0 {
 			firstFrame = frame.FrameNum
 		} else if firstFrame != frame.FrameNum {
 			return nil
