@@ -191,14 +191,11 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
     if( pObject->IsUniversal() )
         universalObjects_.push_back( pObject );
     pObject->SendCreation();
-    if( pObject->GetArmy() )
+    if( pObject->GetArmy() && !pObject->IsUniversal() )
     {
         auto knowledges = pObject->GetArmy()->GetKnowledgeGroups();
         for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
-        {
-            if( auto bbKg = it->second->GetKnowledge() )
-                bbKg->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
-         }
+            it->second->AddEphemeralObjectKnowledge( *pObject );
     }
 }
 

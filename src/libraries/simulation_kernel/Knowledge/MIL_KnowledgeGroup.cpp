@@ -39,6 +39,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -1080,6 +1081,18 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObj
     if( knowledgeBlackBoard_ )
         return knowledgeBlackBoard_->CreateKnowledgeObject( object );
     return boost::shared_ptr< DEC_Knowledge_Object >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::AddEphemeralObjectKnowledge
+// Created: JSR 2013-12-11
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::AddEphemeralObjectKnowledge( MIL_Object_ABC& objectKnown )
+{
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        ( *it )->AddEphemeralObjectKnowledge( objectKnown );
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( objectKnown );
 }
 
 // -----------------------------------------------------------------------------
