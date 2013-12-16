@@ -254,6 +254,17 @@
     </message>
 </context>
 <context>
+    <name>EventFactory</name>
+    <message>
+        <source>New order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New task</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Formatter</name>
     <message>
         <source> - </source>

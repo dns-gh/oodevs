@@ -62,6 +62,7 @@ void EventAction::Purge()
         if( controllers_.eventActions_.IsSelected( action_ ) )
             controllers_.eventActions_.DeselectAll();
         model_.Destroy( *action_ );
+        action_ = 0;
     }
 }
 

@@ -12,6 +12,7 @@
 #include "Controller.h"
 #include "Controllers.h"
 #include "EventAction.h"
+#include "Tools.h"
 #include "ENT/ENT_Tr.h"
 #include <timeline/api.h>
 
@@ -64,14 +65,21 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
     switch( type )
     {
     case eEventTypes_Order:
-    case eEventTypes_SupervisorAction:
         result = new EventAction( type, ( event ) ? *event : dummyEvent, actionsModel_, controllers_ );
+        if( !event )
+        {
+            result->GetEvent().action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+            result->GetEvent().name = tools::translate( "EventFactory", "New order" );
+        }
         break;
-    case eEventTypes_Report:
     case eEventTypes_Task:
-    case eEventTypes_Multimedia:
         result = new Event(  type, ( event ) ? *event : dummyEvent );
+        if( !event )
+            result->GetEvent().name = tools::translate( "EventFactory", "New task" );
         break;
+    case eEventTypes_SupervisorAction:
+    case eEventTypes_Report:
+    case eEventTypes_Multimedia:
     default:
         assert( false );
     }
