@@ -145,7 +145,6 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Natures_Data::NatureInfos > ptr_;
-        ADN_Type_Bool bIsCarrier_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
     };

@@ -122,7 +122,6 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eLogCarryVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rVolume_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptr_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eMaintenanceUnloadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTime_, bConnect );

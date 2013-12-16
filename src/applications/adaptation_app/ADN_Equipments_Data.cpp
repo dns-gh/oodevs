@@ -403,7 +403,6 @@ bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::LogSupplyInfos::LogSupplyInfos()
     : ptr_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
-    , bIsCarrier_( false )
     , rWeight_( 0 )
     , rVolume_( 0 )
 {
@@ -416,7 +415,6 @@ ADN_Equipments_Data::LogSupplyInfos::LogSupplyInfos()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 {
-    bIsCarrier_ = src.bIsCarrier_.GetData();
     rWeight_ = src.rWeight_.GetData();
     rVolume_ = src.rVolume_.GetData();
     ptr_ = src.ptr_.GetData();
@@ -434,7 +432,6 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "mass", rWeight_ )
             >> xml::attribute( "volume", rVolume_ )
           >> xml::end;
-    bIsCarrier_ = ptr_.GetData() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -443,14 +440,16 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "supply-functions" );
-    if( bIsCarrier_.GetData() && ptr_.GetData() )
-        output << xml::start( "carrying" )
-                << xml::attribute( "nature", ptr_ )
-                << xml::attribute( "mass", rWeight_ )
-                << xml::attribute( "volume", rVolume_ )
+    if( ptr_.GetData() )
+    {
+        output << xml::start( "supply-functions" );
+            output << xml::start( "carrying" )
+                   << xml::attribute( "nature", ptr_ )
+                   << xml::attribute( "mass", rWeight_ )
+                   << xml::attribute( "volume", rVolume_ )
+                   << xml::end
                << xml::end;
-    output << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------

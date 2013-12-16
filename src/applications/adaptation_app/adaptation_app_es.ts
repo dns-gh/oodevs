@@ -1189,10 +1189,6 @@ estacionado con motor encendido</translation>
         <translation>Capacidad</translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation>Transporte</translation>
-    </message>
-    <message>
         <source>Mining time</source>
         <translation>Tiempo de minado</translation>
     </message>

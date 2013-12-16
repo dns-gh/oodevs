@@ -383,13 +383,10 @@ QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& v
     builder.PushSubName( "supply" );
 
     ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tr( "Supply system" ), vInfosConnectors[ eIsLogSupply ], 1 );
-    QWidget* pHolder = new QWidget( pSupplyGroup );
-    new Q3GridLayout( pHolder, 0, 3, 5, 5 );
-    ADN_GroupBox* pCarrierGroup = builder.AddGroupBox( pSupplyGroup, "carrier", tr( "Carrier" ), vInfosConnectors[ eIsLogCarrier ], 3 );
 
-    builder.AddField< ADN_EditLine_Double >( pCarrierGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pCarrierGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
-    builder.AddField< ADN_ComboBox_Vector >( pCarrierGroup, "resource-nature-carried", tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
+    builder.AddField< ADN_ComboBox_Vector >( pSupplyGroup, "resource-nature-carried", tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
 
     builder.PopSubName(); //! supply
     builder.PopSubName(); //! log-tab

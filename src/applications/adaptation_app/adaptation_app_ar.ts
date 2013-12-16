@@ -1305,10 +1305,6 @@ Parked engine running</source>
         <translation type="unfinished">نظام العرض</translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation type="unfinished">الناقل</translation>
-    </message>
-    <message>
         <source>Max weight carried</source>
         <translation type="unfinished">ماكس الوزن التي تقوم</translation>
     </message>
