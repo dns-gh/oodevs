@@ -169,6 +169,7 @@ QWidget* Param_ABC::BuildInterface( const QString& objectName, QWidget* parent )
     group_->setCheckable( IsOptional() );
     if( group_->isCheckable() )
         group_->setChecked( false );
+    connect( group_, SIGNAL( clicked() ), this, SLOT( Update() ) );
     return group_;
 }
 

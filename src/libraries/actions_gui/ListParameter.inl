@@ -167,7 +167,6 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
 
     if( group_ && IsOptional() )
         group_->setChecked( true );
-
     Update();
 }
 
@@ -188,6 +187,7 @@ void ListParameter< ConcreteElement >::OnDeleteSelectedItem()
         }
     if( group_ && IsOptional() )
         group_->setChecked( model_.rowCount() != 0 );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,9 +198,9 @@ template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnClear()
 {
     Clear();
-    Update();
     if( group_ && IsOptional() )
         group_->setChecked( false );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Event.h"
 #include "clients_kernel/Time_ABC.h"
+#include "tools/GeneralConfig.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
@@ -83,14 +84,13 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::Acti
     QToolBar* toolBar = new QToolBar();
     toolBar->setStyleSheet("QToolBar { border: 0px }");
     toolBar->setIconSize( QSize( 30, 30 ) );
-    QLabel* label = new QLabel();
-    label->setPixmap( MakePixmap( "actions_designmode" ) );
-    toolBar->addWidget( label );
     toolBar->addWidget( CreateStretcher() );
     toolBar->addWidget( dateWidget );
     toolBar->addWidget( CreateStretcher() );
-    saveAction_ = toolBar->addAction( MAKE_ICON( save ), tr( "Save" ), this, SIGNAL( Save() ) );
-    saveAsAction_ = toolBar->addAction( MAKE_ICON( saveas ), tr( "Save as copy" ), this, SIGNAL( SaveAs() ) );
+    saveAction_ = toolBar->addAction( MAKE_ICON( save ),
+        tr( "Save" ), this, SIGNAL( Save() ) );
+    saveAsAction_ = toolBar->addAction( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/clone.png" ) ),
+        tr( "Save as copy" ), this, SIGNAL( SaveAs() ) );
 
     // Layout
     mainLayout_->addLayout( headerLayout );

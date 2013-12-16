@@ -37,9 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void EnableStaticWarning( bool warn );
+    virtual void EnableStaticWarning( bool warn, const QColor& color = QColor() );
     virtual void Warn( int msec = 3000 );
-    virtual QPalette CreatePalette() const;
+    virtual QPalette CreatePalette( const QColor& color = Qt::red ) const;
     //@}
 
     //! @name RichWarnWidget_ABC implementation

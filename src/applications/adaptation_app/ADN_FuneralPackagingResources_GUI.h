@@ -24,9 +24,14 @@
 class ADN_FuneralPackagingResources_GUI
     : public ADN_Table
 {
+    Q_OBJECT
+
 public:
     explicit ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
     virtual ~ADN_FuneralPackagingResources_GUI();
+
+signals:
+    void CurrentRemoved();
 
 private:
     virtual void OnContextMenu( const QPoint& pt );
