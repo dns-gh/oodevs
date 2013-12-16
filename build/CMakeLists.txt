@@ -635,7 +635,6 @@ add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
 target_link_libraries( clients_test
     actions
     preparation
-    gaming
 )
 
 # client_sample_app
