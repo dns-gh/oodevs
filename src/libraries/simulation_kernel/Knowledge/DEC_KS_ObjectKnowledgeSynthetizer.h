@@ -67,6 +67,7 @@ private:
     void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeToUpdate( MIL_Object_ABC& objectKnown ) const;
     void UpdateKnowledgeRelevance( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void UpdateUniversalKnowledge( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     void CleanKnowledgeObject( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
     //@}
 
