@@ -10,30 +10,36 @@
 #include "gaming_app_pch.h"
 #include "EventTaskWidget.h"
 #include "moc_EventTaskWidget.cpp"
-#include "clients_kernel/Event.h"
 #include "ENT/ENT_Tr.h"
-#include <timeline/api.h>
-#include <tools/Base64Converters.h>
+#include "clients_gui/EventPresenter.h"
+#include "clients_gui/EventTaskPresenter.h"
+#include "clients_gui/EventTaskViewState.h"
+#include "clients_gui/EventViewState.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: EventTaskWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventTaskWidget::EventTaskWidget()
-    : EventWidget_ABC()
+EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
+    : EventWidget_ABC< gui::EventTaskView_ABC >( presenter )
 {
+    // Presenter
+    taskPresenter_ = boost::make_shared< gui::EventTaskPresenter >( *this );
+    presenter_.AddSubPresenter( eEventTypes_Task, taskPresenter_ );
+
+    // Editors
     label_ = new QLineEdit();
     description_ = new QTextEdit();
     url_ = new QLineEdit();
-    connect( url_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrlChanged() ) );
     bytes_ = new QLabel();
     bytes_->setEnabled( false );
     showButton_ = new QPushButton( tr( "Show" ) );
-    connect( showButton_, SIGNAL( clicked() ), this, SLOT( OnShow() ) );
     payload_ = new QTextEdit();
     payload_->setVisible( false );
     payloadLabel_ = new QLabel( tr( "Base64 Payload" ) );
 
+    // Layouts
     QGridLayout* gridLayout = new QGridLayout( 3, 2 );
     gridLayout->setSpacing( 5 );
     gridLayout->addWidget( new QLabel( tr( "Label" ) ), 0, 0 );
@@ -44,10 +50,10 @@ EventTaskWidget::EventTaskWidget()
     QGroupBox* actionBox = new QGroupBox( tr( "Action" ) );
     QVBoxLayout* actionLayout = new QVBoxLayout( actionBox );
     QHBoxLayout* urlLayout = new QHBoxLayout( actionLayout );
+    QHBoxLayout* payloadLayout = new QHBoxLayout( actionLayout );
+
     urlLayout->addWidget( new QLabel( tr( "Url" ) ) );
     urlLayout->addWidget( url_ );
-
-    QHBoxLayout* payloadLayout = new QHBoxLayout( actionLayout );
 
     payloadLayout->addWidget( payloadLabel_ );
     payloadLayout->addWidget( bytes_ );
@@ -57,7 +63,18 @@ EventTaskWidget::EventTaskWidget()
 
     mainLayout_->addLayout( gridLayout );
     mainLayout_->addWidget( actionBox );
-    OnUrlChanged();
+
+    // Connections
+    connect( label_,       SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnLabelChanged( const QString& ) ) );
+    connect( url_,         SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnUrlChanged( const QString& ) ) );
+    connect( showButton_,  SIGNAL( clicked() ),                     taskPresenter_.get(), SLOT( OnShowClicked() ) );
+    connect( description_, SIGNAL( textChanged() ),                 this,                 SLOT( OnDescriptionChanged() ) );
+    connect( payload_,     SIGNAL( textChanged() ),                 this,                 SLOT( OnPayloadChanged() ) );
+    // We want theses slots to be called after those from task presenter
+    connect( label_,       SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( url_,         SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( description_, SIGNAL( textChanged() ),                 &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( payload_,     SIGNAL( textChanged() ),                 &presenter_, SLOT( OnEventContentChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,63 +87,100 @@ EventTaskWidget::~EventTaskWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventTaskWidget::Fill
-// Created: ABR 2013-05-30
+// Name: EventTaskWidget::Purge
+// Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventTaskWidget::Fill( const kernel::Event& event )
+void EventTaskWidget::Purge()
 {
-    const timeline::Event& timelineEvent = event.GetEvent();
-    label_->setText( QString::fromStdString( timelineEvent.name ) );
-    description_->setText( QString::fromStdString( timelineEvent.info ) );
-    url_->setText( QString::fromStdString( timelineEvent.action.target ) );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::SaveCursor
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::SaveCursor( QTextEdit& textEdit )
+{
+    cursorPos_ = textEdit.textCursor().position();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::RestoreCursor
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::RestoreCursor( QTextEdit& textEdit )
+{
+    if( cursorPos_ < 0 )
+        return;
+    QTextCursor cursor = textEdit.textCursor();
+    cursor.setPosition( cursorPos_, QTextCursor::MoveAnchor );
+    textEdit.setTextCursor( cursor );
+    cursorPos_ = -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnDescriptionChanged
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnDescriptionChanged()
+{
+    SaveCursor( *description_ );
+    taskPresenter_->OnDescriptionChanged( description_->text() );
+    RestoreCursor( *description_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::OnPayloadChanged
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::OnPayloadChanged()
+{
+    SaveCursor( *payload_ );
+    taskPresenter_->OnPayloadChanged( payload_->text() );
+    RestoreCursor( *payload_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::BlockSignals
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::BlockSignals( bool blocked )
+{
+    label_->blockSignals( blocked );
+    description_->blockSignals( blocked );
+    url_->blockSignals( blocked );
+    payload_->blockSignals( blocked );
+    bytes_->blockSignals( blocked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::Build
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::Build( const gui::EventViewState& state )
+{
+    if( state.event_ )
+        taskPresenter_->FillFromEvent( state.event_->GetEvent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTaskWidget::Build
+// Created: ABR 2013-12-10
+// -----------------------------------------------------------------------------
+void EventTaskWidget::Build( const gui::EventTaskViewState& state )
+{
+    label_->setText( QString::fromStdString( state.label_ ) );
+    description_->setText( QString::fromStdString( state.description_ ) );
+    url_->setText( QString::fromStdString( state.url_ ) );
     payload_->clear();
     bytes_->clear();
-    if( !timelineEvent.action.payload.empty() && !url_->text().isEmpty() )
-    {
-        QString data = QByteArray::fromBase64( timelineEvent.action.payload.c_str() );
-        bytes_->setText( QString::number( data.size() ) + QString( " bytes" ) );
-        payload_->setText( data );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::Commit
-// Created: ABR 2013-05-30
-// -----------------------------------------------------------------------------
-void EventTaskWidget::Commit( timeline::Event& event )
-{
-    event.name = label_->text().toStdString();
-    event.info = description_->text().toStdString();
-    event.action.target = url_->text().toStdString();
-    event.action.apply = false;
-    if( !event.action.target.empty() )
-    {
-        QByteArray data( payload_->text().toStdString().c_str() );
-        event.action.payload = data.toBase64().data();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::OnShow
-// Created: LGY 2013-11-18
-// -----------------------------------------------------------------------------
-void EventTaskWidget::OnShow()
-{
-    bool visible = payload_->isVisible();
-    showButton_->setText( visible ? tr( "Show" ) : tr( "Hide" ) );
-    payload_->setVisible( !visible );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::OnUrlChanged
-// Created: LGY 2013-11-18
-// -----------------------------------------------------------------------------
-void EventTaskWidget::OnUrlChanged()
-{
-    bool valid = !url_->text().isEmpty();
-    showButton_->setVisible( valid );
-    bytes_->setVisible( valid );
-    payloadLabel_->setVisible( valid );
-    if( !valid )
-        payload_->setVisible( valid );
+    if( state.bytes_ != 0 )
+        bytes_->setText( QString::number( state.bytes_ ) + QString( " bytes" ) );
+    if( !state.payload_.empty() && !state.url_.empty() )
+        payload_->setText( QString::fromStdString( state.payload_ ) );
+    showButton_->setText( state.isPayloadVisible_ ? tr( "Hide" ) : tr( "Show" ) );
+    showButton_->setVisible( state.isUrlValid_ );
+    bytes_->setVisible( state.isUrlValid_ );
+    payloadLabel_->setVisible( state.isUrlValid_ );
+    payload_->setVisible( state.isUrlValid_ && state.isPayloadVisible_ );
 }

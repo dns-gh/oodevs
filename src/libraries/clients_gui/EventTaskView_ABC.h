@@ -7,36 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __EventOrderView_ABC_h_
-#define __EventOrderView_ABC_h_
+#ifndef __EventTaskView_ABC_h_
+#define __EventTaskView_ABC_h_
 
 #include "EventView_ABC.h"
 
 namespace gui
 {
-    struct EventOrderViewState;
+    struct EventTaskViewState;
 
 // =============================================================================
-/** @class  EventOrderView_ABC
-    @brief  Event order view declaration
+/** @class  EventTaskView_ABC
+    @brief  Event task view declaration
 */
-// Created: LGY 2013-10-03
+// Created: ABR 2013-10-03
 // =============================================================================
-class EventOrderView_ABC : public EventView_ABC
+class EventTaskView_ABC : public EventView_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderView_ABC() {}
-    virtual ~EventOrderView_ABC() {}
+             EventTaskView_ABC() {}
+    virtual ~EventTaskView_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Build( const gui::EventOrderViewState& state ) = 0;
+    virtual void Build( const gui::EventTaskViewState& state ) = 0;
     //@}
 };
 
 } //! namespace gui
 
-#endif // __EventOrderView_ABC_h_
+#endif // __EventTaskView_ABC_h_

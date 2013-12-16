@@ -12,17 +12,9 @@
 
 namespace gui
 {
+    class EventPresenter;
+    struct EventViewState;
     class Viewport_ABC;
-}
-
-namespace kernel
-{
-    class Event;
-}
-
-namespace timeline
-{
-    struct Event;
 }
 
 // =============================================================================
@@ -31,36 +23,40 @@ namespace timeline
 */
 // Created: ABR 2013-05-30
 // =============================================================================
+template< typename T > // T must inherit EventView_ABC
 class EventWidget_ABC : public QWidget
+                      , public T
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventWidget_ABC( QWidget* parent = 0 );
-    virtual ~EventWidget_ABC();
+    explicit EventWidget_ABC( gui::EventPresenter& presenter, QWidget* parent = 0 )
+        : QWidget( parent )
+        , presenter_( presenter )
+        , mainLayout_( 0 )
+    {
+        mainLayout_ = new QVBoxLayout( this );
+        mainLayout_->setMargin( 0 );
+        mainLayout_->setSpacing( 0 );
+    }
     //@}
 
     //! @name Operations
     //@{
-    virtual void Purge();
-    virtual void Reset();
-    virtual void Update();
-    virtual bool IsValid() const;
-    virtual void Trigger();
-    virtual void Draw( gui::Viewport_ABC& viewport );
-    //@}
+    virtual void Purge() {}
+    virtual void Build( const gui::EventViewState& /*state*/ ) {}
+    virtual void Update( const gui::EventViewState& /*state*/ ) {}
 
-    //! @name Abstract operations
-    //@{
-    virtual void Fill( const kernel::Event& event ) = 0;
-    virtual void Commit( timeline::Event& event ) = 0;
+    virtual void BlockSignals( bool /*blocked*/ ) {}
+    virtual void Draw( gui::Viewport_ABC& /*viewport*/ ) {}
     //@}
 
 protected:
     //! @name Member data
     //@{
     QVBoxLayout* mainLayout_;
+    gui::EventPresenter& presenter_;
     //@}
 };
 

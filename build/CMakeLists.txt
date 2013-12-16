@@ -632,7 +632,11 @@ target_link_libraries( loadtester_app sword_tools )
 
 # clients_test
 add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
-target_link_libraries( clients_test preparation )
+target_link_libraries( clients_test
+    actions
+    preparation
+    gaming
+)
 
 # client_sample_app
 add_target( client_sample_app samples "samples/client_sample_app" OPTIONS protocol executable )

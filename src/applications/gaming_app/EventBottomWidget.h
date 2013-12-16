@@ -11,7 +11,15 @@
 #define __EventBottomWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_gui/EventView_ABC.h"
+
+namespace gui
+{
+    class EventPresenter;
+    struct EventViewState;
+    class RichGroupBox;
+    class RichLabel;
+}
 
 // =============================================================================
 /** @class  EventBottomWidget
@@ -19,43 +27,41 @@
 */
 // Created: ABR 2013-05-30
 // =============================================================================
-class EventBottomWidget : public EventWidget_ABC
+class EventBottomWidget : public EventWidget_ABC< gui::EventView_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventBottomWidget();
+             EventBottomWidget( gui::EventPresenter& presenter );
     virtual ~EventBottomWidget();
     //@}
 
-signals:
-    //! @name Signals
+public:
+    //! @name EventWidget_ABC implementation
     //@{
-    void Discard();
-    void ShowDetail();
-    void Trigger();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnEnableTriggerEvent( bool enable );
+    virtual void Purge();
     //@}
 
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
+    virtual void Update( const gui::EventViewState& state );
+    virtual void BlockSignals( bool blocked );
     //@}
 
 private:
     //! @name Member data
     //@{
+    gui::RichGroupBox* warningBox_;
+    gui::RichLabel* warningLabel_;
+
     QAction* detailAction_;
+    QAction* clearAction_;
+    QAction* triggerAction_;
     QToolButton* triggerButton_;
+    QToolBar* toolBar_;
     //@}
 };
 

@@ -490,4 +490,14 @@ enum E_FuncLimaType
     eLimaFuncNbr         // Keep this at the end of the enum! No !
 };
 
+enum E_EventDockModes
+{
+    eEventDockModes_None             = 0,
+    eEventDockModes_DisplayTriggered = 1,
+    eEventDockModes_EditTriggered    = 2,
+    eEventDockModes_EditPlanned      = 3,
+    eEventDockModes_Create           = 4,
+    eNbrEventDockModes               = 5
+};
+
 #endif // __ENT_Enums_Gen_h_

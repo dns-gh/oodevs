@@ -20,12 +20,10 @@
 
 namespace actions
 {
-    class Action_ABC;
-    class ActionWithTarget_ABC;
     namespace gui
     {
         class InterfaceBuilder_ABC;
-        class MissionInterface;
+        class MissionInterface_ABC;
         class Param_ABC;
     }
 }
@@ -48,9 +46,6 @@ namespace kernel
     class Controllers;
     class Decisions_ABC;
     class Entity_ABC;
-    class EventAction;
-    class Mission;
-    class OrderType;
     class Population_ABC;
     class Profile_ABC;
     class Time_ABC;
@@ -59,7 +54,6 @@ namespace kernel
 namespace tools
 {
     class ExerciseConfig;
-    template< typename T > class Iterator;
 }
 
 class Model;
@@ -71,7 +65,7 @@ class MissionParameters;
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventOrderWidget : public EventWidget_ABC
+class EventOrderWidget : public EventWidget_ABC< gui::EventOrderView_ABC >
                        , public tools::Observer_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -80,16 +74,21 @@ class EventOrderWidget : public EventWidget_ABC
                        , public tools::ElementObserver_ABC< kernel::Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , public tools::ElementObserver_ABC< MissionParameters >
-                       , private gui::EventOrderView_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
-                               actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
-                               gui::GlTools_ABC& tools, const kernel::Time_ABC& simulation, const gui::EntitySymbols& entitySymbols );
+             EventOrderWidget( gui::EventPresenter& presenter,
+                               kernel::Controllers& controllers,
+                               Model& model,
+                               const tools::ExerciseConfig& config,
+                               actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                               const kernel::Profile_ABC& profile,
+                               gui::GlTools_ABC& tools,
+                               const kernel::Time_ABC& simulation,
+                               const gui::EntitySymbols& entitySymbols );
     virtual ~EventOrderWidget();
     //@}
 
@@ -97,12 +96,14 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Purge();
-    virtual void Reset();
-    virtual void Fill( const kernel::Event& event );
-    virtual void Commit( timeline::Event& event );
-    virtual void Trigger();
-    virtual bool IsValid() const;
+    virtual void Build( const gui::EventViewState& state );
     virtual void Draw( gui::Viewport_ABC& viewport );
+    virtual void BlockSignals( bool blocked );
+    //@}
+
+    //! @name gui::EventOrderView_ABC implementation
+    //@{
+    virtual void Build( const gui::EventOrderViewState& state );
     //@}
 
     //! @name Observers implementation
@@ -116,50 +117,23 @@ private:
     virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
 
-    //! @name EventOrderView_ABC implementation
-    //@{
-    virtual void Build( const gui::EventOrderViewState& state );
-    //@}
-
     //! @name Helpers
     //@{
-    void SelectDefault();
-    void SelectWhenEventExist( const actions::ActionWithTarget_ABC& action, E_MissionType type );
-
-    void UpdateTriggerAction();
-
-    E_MissionType GetMissionType() const;
-    const kernel::Decisions_ABC* GetTargetDecision() const;
-    void SetTarget( const kernel::Entity_ABC* entity );
-    void Publish( timeline::Event* event, bool planned );
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool purge );
-    void EnableTriggerEvent( bool enable );
-    void GetMissionAck( const actions::Action_ABC& action );
-    void EventChanged();
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnPlanningModeToggled( bool );
+    void OnOrderClicked( const kernel::Entity_ABC* entity );
+    void SetTarget( unsigned long id );
+    void OnTargetChanged( const kernel::Entity_ABC* entity );
+    void AddReplaceTargetToMenu( kernel::ContextMenu& menu );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void SelectWhenMissionTypeChanged();
-    void SelectWhenTargetOrMissionChanged();
-    void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
+    void OnMissionTypeChanged( const QString& missionType );
+    void OnOrderClicked();
+    void OnOrderAutomatClicked();
+    void OnReplaceTargetClicked();
     void OnTargetActivated() const;
     void OnTargetRemoved();
-
-    void ActivateMissionPanel();
-    void ActivateMissionPanelOnUnit();
     //@}
 
 private:
@@ -172,25 +146,26 @@ private:
     gui::GlTools_ABC& tools_;
     const kernel::Time_ABC& simulation_;
     const gui::EntitySymbols& entitySymbols_;
+    boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 
-    gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
-    QVBoxLayout* missionComboLayout_;
-    gui::RichWarnWidget< QComboBox >* missionCombo_;
-    QStandardItemModel missionModel_;
     gui::RichGroupBox* targetGroupBox_;
     gui::RichLabel* targetLabel_;
     gui::RichLabel* symbolLabel_;
     QPushButton* activateTargetButton_;
     QPushButton* removeTargetButton_;
-    boost::scoped_ptr< actions::gui::MissionInterface > missionInterface_;
 
-    const kernel::Entity_ABC* selectedEntity_;
-    const kernel::Entity_ABC* alternateSelectedEntity_;
-    const kernel::Entity_ABC* target_;
+    gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
+    QVBoxLayout* missionComboLayout_;
+    gui::RichWarnWidget< QComboBox >* missionCombo_;
+    QStandardItemModel missionModel_;
+    boost::scoped_ptr< actions::gui::MissionInterface_ABC > missionInterface_;
 
-    bool planningMode_;
-    boost::scoped_ptr< gui::EventOrderPresenter > manager_;
-    int context_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedAutomat_;
+    kernel::SafePointer< kernel::Entity_ABC > target_;
+
+    bool isBuilding_;
+    bool isUpdatingParent_;
     //@}
 };
 

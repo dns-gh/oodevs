@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "EventDetailWidget.h"
-#include "clients_kernel/Event.h"
+#include "clients_gui/EventViewState.h"
 #include "protocol/Protocol.h"
 #include <timeline/api.h>
 #include <tools/Base64Converters.h>
@@ -18,7 +18,8 @@
 // Name: EventDetailWidget constructor
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-EventDetailWidget::EventDetailWidget()
+EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
+    : EventWidget_ABC< gui::EventView_ABC >( presenter )
 {
     uuid_ = new QLineEdit();
     uuid_->setReadOnly( true );
@@ -80,12 +81,32 @@ EventDetailWidget::~EventDetailWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDetailWidget::Fill
-// Created: ABR 2013-05-31
+// Name: EventDetailWidget::Purge
+// Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventDetailWidget::Fill( const kernel::Event& event )
+void EventDetailWidget::Purge()
 {
-    const timeline::Event& timelineEvent = event.GetEvent();
+    uuid_->clear();
+    name_->clear();
+    info_->clear();
+    begin_->clear();
+    end_->clear();
+    done_->setCheckState( Qt::Unchecked );
+    target_->clear();
+    apply_->setCheckState( Qt::Unchecked );
+    payloadBase64_->clear();
+    payloadString_->clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDetailWidget::Build
+// Created: ABR 2013-11-21
+// -----------------------------------------------------------------------------
+void EventDetailWidget::Build( const gui::EventViewState& state )
+{
+    if( !state.event_ )
+        return;
+    const timeline::Event& timelineEvent = state.event_->GetEvent();
     uuid_->setText( QString::fromStdString( timelineEvent.uuid ) );
     name_->setText( QString::fromStdString( timelineEvent.name ) );
     info_->setText( QString::fromStdString( timelineEvent.info ) );
@@ -117,22 +138,4 @@ void EventDetailWidget::Fill( const kernel::Event& event )
         payloadBase64_->setText( "" );
         payloadString_->setText( "" );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventDetailWidget::Commit
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-void EventDetailWidget::Commit( timeline::Event& event )
-{
-    assert( false ); // $$$$ ABR 2013-06-10: Not supposed to be used
-    event.uuid = uuid_->text().toStdString();
-    event.name = name_->text().toStdString();
-    event.info = info_->text().toStdString();
-    event.begin = begin_->text().toStdString();
-    event.end = end_->text().toStdString();
-    event.done = done_->checkState() == Qt::Checked;
-    event.action.target = target_->text().toStdString();
-    event.action.apply = apply_->checkState() == Qt::Checked;
-    event.action.payload = tools::Base64ToBinary( payloadBase64_->text().toStdString() );
 }

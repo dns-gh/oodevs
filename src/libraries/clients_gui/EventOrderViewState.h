@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef EventOrderViewState_h
-#define EventOrderViewState_h
+#ifndef __EventOrderViewState_h_
+#define __EventOrderViewState_h_
 
 #include "ENT/ENT_Tr.h"
 #include <string>
@@ -25,22 +25,26 @@ namespace gui
 // =============================================================================
 struct EventOrderViewState
 {
+    //! @name Constructors
+    //@{
     EventOrderViewState()
-        : currentType_( eMissionType_Pawn )
+        : target_( 0 )
+        , currentType_( eMissionType_Pawn )
         , invalid_( false )
         , missionSelector_( false )
     {
         // NOTHING
     }
-
-    EventOrderViewState( const std::vector< E_MissionType >& types,
+    EventOrderViewState( unsigned long target,
+                         const std::vector< E_MissionType >& types,
                          E_MissionType currentType,
                          const std::vector< std::string >& missions,
                          const std::string& currentMission,
                          const std::vector< std::string >& disabledMissions,
                          bool invalid,
                          bool missionSelector )
-        : types_( types )
+        : target_( target )
+        , types_( types )
         , currentType_( currentType )
         , missions_( missions )
         , currentMission_( currentMission )
@@ -50,9 +54,13 @@ struct EventOrderViewState
     {
         // NOTHING
     }
+    //@}
 
+    //! @name Operations
+    //@{
     void Purge()
     {
+        target_ = 0;
         types_.clear();
         currentType_ = eMissionType_Pawn;
         missions_.clear();
@@ -61,7 +69,11 @@ struct EventOrderViewState
         invalid_ = false;
         missionSelector_ = false;
     }
+    //@}
 
+    //! @name Member data
+    //@{
+    unsigned long target_;
     std::vector< E_MissionType > types_;
     E_MissionType currentType_;
     std::vector< std::string > missions_;
@@ -69,8 +81,9 @@ struct EventOrderViewState
     std::vector< std::string > disabledMissions_;
     bool invalid_;
     bool missionSelector_;
+    //@}
 };
 
 } //! namespace gui
 
-#endif // EventOrderViewState_h
+#endif // __EventOrderViewState_h_

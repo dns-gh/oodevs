@@ -11,6 +11,7 @@
 #define __TimelineWebView_h_
 
 #include "ENT/ENT_Enums_Gen.h"
+#include "clients_gui/TimelineHandler_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
@@ -50,14 +51,17 @@ class TimelineWebView : public QWidget
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< QDateTime >
                       , public tools::ElementObserver_ABC< kernel::Profile_ABC >
+                      , public gui::TimelineHandler_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWebView( QWidget* parent, const tools::ExerciseConfig& config, kernel::Controllers& controllers,
-                              Model& model, timeline::Configuration& cfg );
+             TimelineWebView( QWidget* parent,
+                              const Config& config,
+                              kernel::Controllers& controllers,
+                              Model& model );
     virtual ~TimelineWebView();
     //@}
 
@@ -87,15 +91,18 @@ private:
     void ReadAction( xml::xistream& xis );
     //@}
 
+    //! @name TimelineHandler_ABC implementation
+    //@{
+    virtual void CreateEvent( const timeline::Event& event );
+    virtual void SelectEvent( const std::string& uuid );
+    virtual void EditEvent( const timeline::Event& event );
+    virtual void DeleteEvent( const std::string& uuid );
+    //@}
+
 signals:
     //! @name Signals
     //@{
-    void CreateEventSignal( const timeline::Event& event );
-    void SelectEventSignal( const std::string& uuid );
-    void EditEventSignal( const timeline::Event& event );
-    void DeleteEventSignal( const std::string& uuid );
-
-    void StartCreation( E_EventTypes type, const QDateTime& dateTime, bool );
+    void StartCreation( E_EventTypes type, const QDateTime& dateTime );
     //@}
 
 private slots:
@@ -103,11 +110,6 @@ private slots:
     //@{
     void OnCenterView();
     void OnToggleLayoutOrientation();
-
-    void CreateEvent( const timeline::Event& event );
-    void SelectEvent( const std::string& uuid );
-    void EditEvent( const timeline::Event& event );
-    void DeleteEvent( const std::string& uuid );
 
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnEditedEvent( const timeline::Event& event, const timeline::Error& error );
