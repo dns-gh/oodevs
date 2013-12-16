@@ -274,6 +274,7 @@ ADN_Objects_Data_ObjectInfos* ADN_Objects_Data_ObjectInfos::CreateCopy()
     xml::xostringstream xos;
     try
     {
+        FixConsistency();
         WriteArchive( xos );
     }
     catch( std::exception& e )
