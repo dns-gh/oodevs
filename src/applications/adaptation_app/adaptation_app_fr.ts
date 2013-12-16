@@ -1193,10 +1193,6 @@ Arrêt moteur allumé</translation>
         <translation>Capacité</translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation>Transporteur</translation>
-    </message>
-    <message>
         <source>Mining time</source>
         <translation>Temps de valorisation</translation>
     </message>

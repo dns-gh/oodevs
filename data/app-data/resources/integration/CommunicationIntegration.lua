@@ -238,6 +238,15 @@ integration.isMissionAgentAvailable = function( entity, targetTaskName )
     return DEC_IsMissionPionAvailable( entity, targetTaskName )
 end
 
+--- Returns true if the provided fragmentary order is available
+--- to the agent, false otherwise
+-- @param entity : C++ source of an agent
+-- @param fragOrderName : string, the name of the fragmentary order
+-- @return boolean, the availability as defined in the physical database
+integration.isFragOrderAvailable = function( entity, fragOrderName )
+    return DEC_IsFragOrderAvailable( entity, fragOrderName )
+end
+
 masalife.brain.communication.setMessageTreatment( "TaskDone",
     function( message )
         local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
