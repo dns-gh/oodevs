@@ -41,6 +41,7 @@ public:
     //! @name Publisher_ABC implementation
     //@{
     virtual void Send( const sword::ClientToSim& message );
+    virtual void Register( T_Handler handler );
     virtual void Send( const sword::ClientToAuthentication& message );
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );

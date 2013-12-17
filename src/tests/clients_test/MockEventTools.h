@@ -48,6 +48,7 @@ MOCK_BASE_CLASS( MockPublisher, Publisher_ABC )
     MOCK_METHOD( Send, 1, void( const sword::ClientToReplay& ),         ClientToReplay );
     MOCK_METHOD( Send, 1, void( const sword::ClientToAar& ),            ClientToAar );
     MOCK_METHOD( Send, 1, void( const sword::ClientToMessenger& ),      ClientToMessenger );
+    MOCK_METHOD( Register, 1 );
 };
 
 MOCK_BASE_CLASS( MockEntityResolver, kernel::EntityResolver_ABC )

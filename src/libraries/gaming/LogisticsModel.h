@@ -23,6 +23,8 @@ namespace sword
     class LogFuneralHandlingUpdate;
     class LogSupplyHandlingUpdate;
     class ParentEntity;
+    class LogisticHistoryAck;
+    class LogHistoryEntry;
 }
 
 namespace kernel
@@ -31,6 +33,15 @@ namespace kernel
     class Automat_ABC;
     class Formation_ABC;
     class DotationType;
+    class Controller;
+}
+
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
 }
 
 class LogMaintenanceConsign;
@@ -63,28 +74,26 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    virtual void Purge();
 
-    void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
-    void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
-    LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
+    virtual void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    virtual void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
     void DeleteMaintenanceConsign( unsigned long id );
 
-    void CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message );
-    void UpdateMedicalConsign( const sword::LogMedicalHandlingUpdate& message );
-    LogMedicalConsign& GetMedicalConsign( unsigned long id );
+    virtual void CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message );
+    virtual void UpdateMedicalConsign( const sword::LogMedicalHandlingUpdate& message );
     void DeleteMedicalConsign( unsigned long id );
 
-    void CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message );
-    void UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& message );
-    LogSupplyConsign& GetSupplyConsign( unsigned long id );
+    virtual void CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message );
+    virtual void UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& message );
     void DeleteSupplyConsign( unsigned long id );
 
-    void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
-    void UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate& message );
-    LogFuneralConsign& GetFuneralConsign( unsigned long id );
+    virtual void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
+    virtual void UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate& message );
     void DeleteFuneralConsign( unsigned long id );
 
+    virtual kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
+    virtual void UdpateLogisticHistory( const sword::LogisticHistoryAck& message );
     void DestroyAgent( unsigned long id );
     //@}
 
@@ -105,10 +114,14 @@ private:
     void DeleteConsign( unsigned long id );
     template< typename M, typename C, typename E >
     void UpdateConsign( const M& message );
-    kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
+    template< typename Type >
+    void UpdateConsign( unsigned long id, int start, int end,
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states  );
+    void UpdateLogisticHistory( int start, int end,
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     LogisticConsignFactory_ABC& factory_;

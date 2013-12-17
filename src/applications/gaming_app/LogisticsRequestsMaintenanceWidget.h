@@ -16,6 +16,7 @@
 
 class LogMaintenanceConsigns;
 class Publisher_ABC;
+class Model;
 
 // =============================================================================
 /** @class  LogisticsRequestsMaintenanceWidget
@@ -29,7 +30,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsMaintenanceWidget( QWidget* parent, kernel::Controllers& controllers,
-                                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
+                                                 Model& model );
     virtual ~LogisticsRequestsMaintenanceWidget();
     //@}
 

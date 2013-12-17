@@ -75,6 +75,7 @@ class UserProfileFactory_ABC;
 class UserProfilesModel;
 class WeatherModel;
 class UrbanModel;
+class HistoryLogisticsModel;
 
 // =============================================================================
 /** @class  Model
@@ -140,6 +141,7 @@ public:
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
     LogisticsModel& logistics_;
+    HistoryLogisticsModel& historyLogistics_;
     LimitsModel& limits_;
     FiresModel& fires_;
     WeatherModel& weather_;

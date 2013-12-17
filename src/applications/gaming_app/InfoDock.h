@@ -13,17 +13,11 @@
 #include "clients_gui/RichDockWidget.h"
 #include <tools/SelectionObserver_ABC.h>
 
-namespace actions
-{
-    class ActionsModel;
-}
-
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
     class Profile_ABC;
-    class Time_ABC;
 }
 
 namespace gui
@@ -33,8 +27,10 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class StaticModel;
+class Model;
 class Publisher_ABC;
+class Simulation;
+
 
 // =============================================================================
 /** @class  InfoDock
@@ -47,9 +43,9 @@ class InfoDock : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons
-                       , gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel
-                       , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, Publisher_ABC& publisher );
+             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
+                       gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model,
+                       const Simulation& simulation, Publisher_ABC& publisher );
     virtual ~InfoDock();
     //@}
 };

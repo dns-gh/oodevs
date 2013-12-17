@@ -39,6 +39,7 @@
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
 #include "WeatherModel.h"
+#include "HistoryLogisticsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -115,6 +116,15 @@ void AgentServerMsgMgr::Send( const sword::ClientToSim& wrapper )
 {
     if( ! host_.empty() && services_.RequireService( sword::service_simulation ) )
         sender_.Send( host_, wrapper );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Register
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Register( T_Handler handler )
+{
+    handlers_.push_back( handler );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,59 +574,30 @@ void AgentServerMsgMgr::OnReceiveLogSupplyQuotas( const sword::LogSupplyQuotas& 
         GetModel().teams_.GetFormation( message.supplied().formation().id() ).Update( message );
 }
 
-namespace
-{
-
-int GetLogisticId( const sword::LogHistoryEntry& entry )
-{
-    if( entry.has_funeral() )
-        return entry.funeral().creation().request().id();
-    if( entry.has_maintenance() )
-        return entry.maintenance().creation().request().id();
-    if( entry.has_medical() )
-        return entry.medical().creation().request().id();
-    if( entry.has_supply() )
-        return entry.supply().creation().request().id();
-    return 0;
-}
-
-void UpdateLogisticHistory( LogisticsModel& model, int start, int end,
-    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
-{
-    if( start >= end )
-        return;
-    const auto& s = states.Get( start );
-    const auto id = GetLogisticId( s );
-    if( s.has_funeral() )
-        model.GetFuneralConsign( id ).UpdateHistory( start, end, states );
-    else if( s.has_maintenance() )
-        model.GetMaintenanceConsign( id ).UpdateHistory( start, end, states );
-    else if( s.has_medical() )
-        model.GetMedicalConsign( id ).UpdateHistory( start, end, states );
-    else if( s.has_supply() )
-        model.GetSupplyConsign( id ).UpdateHistory( start, end, states );
-}
-
-}  // namespace
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveLogHistoryResponse
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistoryAck& message )
+void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistoryAck& message, unsigned int messageClientId )
 {
-    // Assume states are sorted by ascending (request, state)
-    auto& model = GetModel().logistics_;
-    int i = 0, j;
-    for( j = 0; j < message.entries().size(); ++j )
+    if( profile_ && profile_->DisplayMessage( messageClientId ) )
     {
-        if( GetLogisticId( message.entries( i ) ) == GetLogisticId( message.entries( j ) ) )
-            continue;
-        UpdateLogisticHistory( model, i, j, message.entries() );
-        i = j;
+        GetModel().logistics_.UdpateLogisticHistory( message );
+        GetModel().historyLogistics_.UdpateLogisticHistory( message );
     }
-    if( i != j )
-        UpdateLogisticHistory( model, i, j, message.entries() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveListLogisticRequestsAck
+// Created: LGY 2013-12-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveListLogisticRequestsAck( const sword::ListLogisticRequestsAck& message, unsigned int messageClientId )
+{
+    if( profile_ && profile_->DisplayMessage( messageClientId ) )
+    {
+        GetModel().historyLogistics_.Purge();
+        GetModel().historyLogistics_.Fill( message );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -2001,14 +1982,15 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
     else if( wrapper.message().has_control_enable_vision_cones_ack() )
         CheckAcknowledge( logger_, wrapper.message().control_enable_vision_cones_ack() );
     else
-        OnReceiveSimToClient2( from, wrapper );
+        OnReceiveSimToClient2( from, wrapper, clientId );
+    UpdateHanders( wrapper );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveSimToClient2
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::SimToClient& wrapper )
+void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::SimToClient& wrapper, unsigned int clientId )
 {
     // break in two parts to prevent "fatal error C1061: compiler limit : blocks nested too deeply"
     if( wrapper.message().has_crowd_knowledge_creation() )
@@ -2070,7 +2052,9 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         // unused
     }
     else if( wrapper.message().has_logistic_history_ack() )
-        OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack() );
+        OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack(), clientId );
+    else if( wrapper.message().has_list_logistic_requests_ack() )
+        OnReceiveListLogisticRequestsAck( wrapper.message().list_logistic_requests_ack(), clientId );
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -2409,4 +2393,16 @@ unsigned long AgentServerMsgMgr::GetNbMessagesSent() const
 void AgentServerMsgMgr::OnReceiveFormationChangeSuperior ( const sword::FormationChangeSuperior& message )
 {
     GetModel().teams_.GetFormation( message.formation().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::UpdateHanders
+// Created: LGY 2013-01-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::UpdateHanders( const sword::SimToClient& message )
+{
+     unsigned int clientId = message.has_client_id() ? message.client_id() : 0u;
+     if( profile_ && profile_->DisplayMessage( clientId ) )
+        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
+            (*it)( message );
 }

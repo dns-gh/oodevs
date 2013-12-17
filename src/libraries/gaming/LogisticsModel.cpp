@@ -164,15 +164,6 @@ void LogisticsModel::UpdateMaintenanceConsign( const sword::LogMaintenanceHandli
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsModel::GetMaintenanceConsign
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-LogMaintenanceConsign& LogisticsModel::GetMaintenanceConsign( unsigned long id )
-{
-    return tools::Resolver< LogMaintenanceConsign >::Get( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticsModel::DeleteMaintenanceConsign
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
@@ -198,15 +189,6 @@ void LogisticsModel::CreateMedicalConsign( const sword::LogMedicalHandlingCreati
 void LogisticsModel::UpdateMedicalConsign( const sword::LogMedicalHandlingUpdate& message )
 {
     UpdateConsign< sword::LogMedicalHandlingUpdate, LogMedicalConsign, LogMedicalConsigns >( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsModel::GetMedicalConsign
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-LogMedicalConsign& LogisticsModel::GetMedicalConsign( unsigned long id )
-{
-    return tools::Resolver< LogMedicalConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,15 +247,6 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
         consign->Update( message, pPionLogConvoying );
         controller_.Update( *consign );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsModel::GetSupplyConsign
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-LogSupplyConsign& LogisticsModel::GetSupplyConsign( unsigned long id )
-{
-    return tools::Resolver< LogSupplyConsign >::Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,15 +311,6 @@ void LogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsModel::GetFuneralConsign
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-LogFuneralConsign& LogisticsModel::GetFuneralConsign( unsigned long id )
-{
-    return tools::Resolver< LogFuneralConsign >::Get( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticsModel::DeleteFuneralConsign
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
@@ -408,4 +372,73 @@ kernel::Entity_ABC* LogisticsModel::FindLogEntity( const sword::ParentEntity& ms
     else if( msg.has_formation() )
         retval = formationResolver_.Find( msg.formation().id() );
     return retval;
+}
+
+namespace
+{
+    int GetLogisticId( const sword::LogHistoryEntry& entry )
+    {
+        if( entry.has_funeral() )
+            return entry.funeral().creation().request().id();
+        if( entry.has_maintenance() )
+            return entry.maintenance().creation().request().id();
+        if( entry.has_medical() )
+            return entry.medical().creation().request().id();
+        if( entry.has_supply() )
+            return entry.supply().creation().request().id();
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::Update
+// Created: LGY 2013-12-12
+// -----------------------------------------------------------------------------
+template< typename Type >
+void LogisticsModel::UpdateConsign( unsigned long id, int start, int end,
+    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
+{
+    Type* consign = tools::Resolver< Type >::Find( id );
+    if( consign )
+        consign->UpdateHistory( start, end, states );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::UpdateLogisticHistory
+// Created: LGY 2013-12-12
+// -----------------------------------------------------------------------------
+void LogisticsModel::UpdateLogisticHistory( int start, int end,
+    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
+{
+    if( start >= end )
+        return;
+    const auto& s = states.Get( start );
+    const auto id = GetLogisticId( s );
+
+    if( s.has_funeral() )
+        UpdateConsign< LogFuneralConsign >( id, start, end, states );
+    else if( s.has_maintenance() )
+        UpdateConsign< LogMaintenanceConsign >( id, start, end, states );
+    else if( s.has_medical() )
+        UpdateConsign< LogMedicalConsign >( id, start, end, states );
+    else if( s.has_supply() )
+        UpdateConsign< LogSupplyConsign >( id, start, end, states );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsModel::DestroyAgent
+// Created: LDC 2013-09-16
+// -----------------------------------------------------------------------------
+void LogisticsModel::UdpateLogisticHistory( const sword::LogisticHistoryAck& message )
+{
+    int i = 0, j;
+    for( j = 0; j < message.entries().size(); ++j )
+    {
+        if( GetLogisticId( message.entries( i ) ) == GetLogisticId( message.entries( j ) ) )
+            continue;
+        UpdateLogisticHistory(  i, j, message.entries() );
+        i = j;
+    }
+    if( i != j )
+        UpdateLogisticHistory( i, j, message.entries() );
 }

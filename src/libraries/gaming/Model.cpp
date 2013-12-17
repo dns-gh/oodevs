@@ -39,6 +39,7 @@
 #include "Simulation.h"
 #include "StaticModel.h"
 #include "SurfaceFactory.h"
+#include "HistoryLogisticsModel.h"
 #include "TacticalLineFactory.h"
 #include "TeamFactory.h"
 #include "TeamsModel.h"
@@ -91,7 +92,8 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , objects_                 ( *new ObjectsModel( objectFactory_ ) )
     , teams_                   ( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_         ( *new KnowledgeGroupsModel( knowledgeGroupFactory_ ) )
-    , logistics_               ( *new LogisticsModel( logisticFactory_, agents_, agents_, teams_, staticModel.objectTypes_ ) )
+    , logistics_               ( *new LogisticsModel( logisticFactory_, agents_, agents_, teams_, staticModel.objectTypes_, controllers.controller_ ) )
+    , historyLogistics_        ( *new HistoryLogisticsModel( logisticFactory_, agents_, agents_, teams_, staticModel.objectTypes_, controllers.controller_ ) )
     , limits_                  ( *new LimitsModel( tacticalLineFactory_ ) )
     , fires_                   ( *new FiresModel( agents_, agents_, agents_, profile ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this, profile ) )
@@ -226,6 +228,7 @@ Model::~Model()
     delete &fires_;
     delete &limits_;
     delete &logistics_;
+    delete &historyLogistics_;
     delete &knowledgeGroups_;
     delete &teams_;
     delete &objects_;

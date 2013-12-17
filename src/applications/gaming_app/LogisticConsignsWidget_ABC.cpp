@@ -22,6 +22,9 @@
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/RichCheckBox.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "gaming/Model.h"
+#include "gaming/HistoryLogisticsModel.h"
+#include "protocol/Protocol.h"
 
 #include "ENT/ENT_Enums_Gen.h"
 
@@ -31,12 +34,13 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Name: LogisticConsignsWidget_ABC constructor
 // Created: MMC 2012-10-29
 // -----------------------------------------------------------------------------
-LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor
-                                                      , const QString& filter, const kernel::Profile_ABC& profile, Publisher_ABC& publisher
-                                                      , const QStringList& requestsHeader /*= QStringList()*/ )
+LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                                                        const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model,
+                                                        const QStringList& requestsHeader /*= QStringList()*/ )
     : QWidget( parent )
     , controllers_( controllers )
     , extractor_( extractor )
+    , historyModel_( model.historyLogistics_ )
     , profile_( profile )
     , publisher_( publisher )
     , selected_( controllers )
@@ -55,18 +59,13 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     completedCheckbox_ = new gui::RichCheckBox( "completedRequestsCheckbox", tools::translate( "LogisticConsignsWidget_ABC", "Show completed requests" ) );
     completedCheckbox_->setFocusPolicy( Qt::NoFocus );
     connect( completedCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( OnCompletedFilter() ) );
-    // The history filtering is partially implemented but does not seem to work,
-    // even if logistic requests are not destroyed. I am leaving it here, hidden,
-    // until I figure out if it is broken by design or not.
-    completedCheckbox_->setVisible( false );
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
-    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, filter );
+    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader );
     connect( requestsTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                   , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     connect( requestsTable_->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) )
                                              , SLOT( OnRequestsTableSelected( const QModelIndex&, const QModelIndex& ) ) );
-    requestsTable_->SetFilterActivated( !completedCheckbox_->isChecked() );
 
     detailsTable_ = new LogisticsRequestsDetailsTable( "Logistics requests details", this );
     connect( detailsTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
@@ -98,6 +97,7 @@ LogisticConsignsWidget_ABC::~LogisticConsignsWidget_ABC()
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::Purge()
 {
+    requestSelected_ = 0;
     requestsTable_->Purge();
     PurgeDetail();
 }
@@ -113,47 +113,22 @@ void LogisticConsignsWidget_ABC::PurgeDetail()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticConsignsWidget_ABC::showEvent
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
-void LogisticConsignsWidget_ABC::showEvent( QShowEvent* event )
-{
-    const kernel::Entity_ABC* entity = selected_;
-    NotifySelected( entity );
-    QWidget::showEvent( event );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget_ABC::NotifySelected
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    requestSelected_ = 0;
     selected_ = entity;
-    Purge();
-    if( entity )
-    {
-        DisplayRequests();
-        SendHistoryRequests();
-        requestsTable_->SelectRequest();
-        requestSelected_ = requestsTable_->GetCurrentRequest();
-        requestsTable_->SetFilterActivated( !completedCheckbox_->isChecked() );
-    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticConsignsWidget_ABC::NotifyUpdated
-// Created: MMC 2013-09-16
+// Name: LogisticConsignsWidget_ABC::SelectRequest
+// Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void LogisticConsignsWidget_ABC::NotifyUpdated( const Simulation::sEndTick& )
+void LogisticConsignsWidget_ABC::SelectRequest()
 {
-    if( needUpdating_ )
-    {
-        DisplayRequests();
-        SendHistoryRequests();
-        needUpdating_ = false;
-    }
+    requestsTable_->SelectRequest();
+    requestSelected_ = requestsTable_->GetCurrentRequest();
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +188,8 @@ void LogisticConsignsWidget_ABC::OnRequestsTableSelected( const QModelIndex& cur
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::OnCompletedFilter()
 {
-    requestsTable_->SetFilterActivated( !completedCheckbox_->isChecked() );
+    Purge();
+    Fill( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,15 +257,12 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticConsignsWidget_ABC::SendHistoryRequest
+// Name: LogisticConsignsWidget_ABC::IsHistoryChecked
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------
-void LogisticConsignsWidget_ABC::SendHistoryRequest( const LogisticsConsign_ABC& consign )
+bool LogisticConsignsWidget_ABC::IsHistoryChecked() const
 {
-    sword::ClientToSim msg;
-    msg.mutable_message()->mutable_logistic_history_request()
-        ->add_requests()->set_id( consign.GetId() );
-    publisher_.Send( msg );
+    return completedCheckbox_->isChecked();
 }
 
 // -----------------------------------------------------------------------------

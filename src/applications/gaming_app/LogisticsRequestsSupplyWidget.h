@@ -16,6 +16,7 @@
 class LogSupplyConsigns;
 class LogisticsRequestsSupplyTable;
 class Publisher_ABC;
+class Model;
 
 // =============================================================================
 /** @class  LogisticsRequestsSupplyWidget
@@ -30,15 +31,20 @@ class LogisticsRequestsSupplyWidget : public LogisticConsignsWidget< LogSupplyCo
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers,
-                                            gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+             LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                                            const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model );
     virtual ~LogisticsRequestsSupplyWidget();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Purge();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void Purge();
     virtual void PurgeDetail();
     virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );

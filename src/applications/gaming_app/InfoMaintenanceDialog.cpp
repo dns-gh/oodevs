@@ -23,8 +23,10 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
-                                              gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+                                              gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                              Publisher_ABC& publisher, Model& model )
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
+    , widget_( 0 )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     QWidget* pHaulersRepairersWidget = new QWidget( tabs );
@@ -37,8 +39,8 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers ) );
 
-    tabs->addTab( new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, publisher )
-        , tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
+    widget_ = new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, publisher, model );
+    tabs->addTab( widget_, tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMaintenanceDialog", "Chain status" ) );
     setMinimumWidth( 420 );
@@ -95,4 +97,22 @@ void InfoMaintenanceDialog::NotifyUpdated( const Equipments& /*equipement*/ )
 {
     if( selected_ )
         InfoDialog< kernel::MaintenanceStates_ABC >::NotifyUpdated( selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMaintenanceDialog::Purge
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoMaintenanceDialog::Purge()
+{
+    widget_->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMaintenanceDialog::Fill
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoMaintenanceDialog::Fill( const kernel::Entity_ABC& entity )
+{
+    widget_->Fill( entity );
 }

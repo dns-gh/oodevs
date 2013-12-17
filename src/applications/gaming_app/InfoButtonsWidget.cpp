@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "InfoButtonsWidget.h"
+#include "moc_InfoButtonsWidget.cpp"
 #include "icons.h"
 #include "InfoCompositionDialog.h"
 #include "InfoMaintenanceDialog.h"
@@ -16,8 +17,21 @@
 #include "InfoSupplyDialog.h"
 #include "InfoFuneralDialog.h"
 #include "UnitStateDialog.h"
+#include "LogisticDialog_ABC.h"
+#include "gaming/LogMaintenanceConsign.h"
+#include "gaming/LogMedicalConsign.h"
+#include "gaming/LogSupplyConsign.h"
+#include "gaming/LogFuneralConsign.h"
+#include "gaming/LogisticHelpers.h"
+#include "gaming/Model.h"
+#include "gaming/Simulation.h"
+#include "gaming/LogisticConsigns.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/ImageWrapper.h"
 #include "tools/GeneralConfig.h"
+#include "protocol/ServerPublisher_ABC.h"
+#include "protocol/Protocol.h"
 
 namespace
 {
@@ -31,11 +45,17 @@ namespace
 // Name: InfoButtonsWidget constructor
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
-InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                    , gui::DisplayExtractor& extractor, const StaticModel& staticModel
-                                    , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile
-                                    , Publisher_ABC& publisher )
+InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                      gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
+                                      const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : Q3GroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
+    , controllers_( controllers )
+    , publisher_  ( publisher )
+    , simulation_ ( simulation )
+    , element_    ( 0 )
+    , hasChanged_ ( false )
+    , timer_      ( 0 )
+    , lastTick_   ( 0 )
 {
     setFlat( true );
     setFixedWidth( 100 );
@@ -44,14 +64,26 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     setInsideMargin( 0 );
     setInsideSpacing( 0 );
 
-    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, staticModel, actionsModel, simulation, profile );
+    timer_ = new QTimer( this );
+    timer_->start( 1000 );
+
+    connect( timer_, SIGNAL( timeout() ), SLOT( OnUpdate() ) );
+
+    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, model.static_, model.actions_, simulation, profile );
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
-    //AddButton( unitStateDialog, MakePixmap( "composition" ), unitStateDialog->GetEquipmentToolTip(), SLOT( ToggleEquipment( bool ) ), SIGNAL( OnToggleEquipment( bool ) ) );
     AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
-    AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, extractor, profile, publisher );
-    AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, extractor, profile, publisher );
-    AddButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, publisher );
-    AddButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, publisher );
+
+    AddLogisticButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, extractor, profile, publisher, model );
+    AddLogisticButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, extractor, profile, publisher, model );
+    AddLogisticButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, publisher, model );
+    AddLogisticButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, publisher, model );
+
+    publisher_.Register( [&]( const sword::SimToClient& message ) {
+        if( message.message().has_list_logistic_requests_ack() )
+            FillRequests( message.message().list_logistic_requests_ack() ); }
+    );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +92,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
 // -----------------------------------------------------------------------------
 InfoButtonsWidget::~InfoButtonsWidget()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 namespace
@@ -92,35 +124,37 @@ void InfoButtonsWidget::AddButton( const QPixmap& pixmap, kernel::Controllers& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoButtonsWidget::AddButton
+// Name: InfoButtonsWidget::AddLogisticButton
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 template< typename Dialog >
-void InfoButtonsWidget::AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                 , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
 {
     QPushButton* btn = CreateButton( this, pixmap );
-    QDialog* dialog = new Dialog( topLevelWidget(), controllers, factory, extractor, profile, publisher );
+    Dialog* dialog = new Dialog( topLevelWidget(), controllers, factory, extractor, profile, publisher, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
     connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    logisticDialogs_.push_back( dialog );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoButtonsWidget::AddButton
+// Name: InfoButtonsWidget::AddLogisticButton
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 template< typename Dialog >
-void InfoButtonsWidget::AddButton( const QPixmap& pixmap, kernel::Controllers& controllers
-                                 , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers
+                                 , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
 {
     QPushButton* btn = CreateButton( this, pixmap );
-    QDialog* dialog = new Dialog( topLevelWidget(), controllers, extractor, profile, publisher );
+    Dialog* dialog = new Dialog( topLevelWidget(), controllers, extractor, profile, publisher, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
     connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    logisticDialogs_.push_back( dialog );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +168,160 @@ void InfoButtonsWidget::AddButton( QDialog* dialog, const QPixmap& pixmap, const
     connect( btn, SIGNAL( toggled( bool ) ), dialog, toggleSlot );
     connect( dialog, toggleSignal, btn, SLOT( setOn( bool ) ) );
     connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifySelected
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
+{
+    element_ = element;
+    for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
+        (*it)->Purge();
+    entities_.clear();
+    if( element_ )
+    {
+        for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
+            (*it)->Fill( *element_ );
+
+        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element, [&]( const kernel::Entity_ABC& entity ) {
+            entities_.insert( entity.GetId() );
+        } );
+        if( !entities_.empty() )
+        {
+            sword::ClientToSim msg;
+            auto request = msg.mutable_message()->mutable_list_logistic_requests();
+            for( auto it = entities_.begin(); it != entities_.end(); ++it )
+                request->add_entities()->set_id( *it );
+            publisher_.Send( msg );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::FillRequests
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*message*/ )
+{
+    if( element_ )
+        for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
+            (*it)->Fill( *element_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::Update
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void InfoButtonsWidget::Update( const Extension& consigns )
+{
+    if( element_ && logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( *element_, &consigns ) )
+        hasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogMedicalConsigns& consigns )
+{
+    Update( consigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogFuneralConsigns& consigns )
+{
+    Update( consigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogSupplyConsigns& consigns )
+{
+    Update( consigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogMaintenanceConsigns& consigns )
+{
+    Update( consigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::UpdateConsign
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::UpdateConsign( const LogisticsConsign_ABC& consign )
+{
+    if( element_ )
+    {
+        if(  kernel::Agent_ABC* entity = consign.GetConsumer() )
+            hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
+        if(  kernel::Entity_ABC* entity = consign.GetHandler() )
+            hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogMedicalConsign& consign )
+{
+    UpdateConsign( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogMaintenanceConsign& consign )
+{
+    UpdateConsign( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogSupplyConsign& consign )
+{
+    UpdateConsign( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::NotifyUpdated
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::NotifyUpdated( const LogFuneralConsign& consign )
+{
+    UpdateConsign( consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::OnUpdate
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::OnUpdate()
+{
+    if( element_ && hasChanged_ )
+    {
+        unsigned int tick = simulation_.GetCurrentTick();
+        if( lastTick_ < tick )
+        {
+            NotifySelected( element_ );
+            hasChanged_ = false;
+            lastTick_ = tick;
+        }
+    }
 }
