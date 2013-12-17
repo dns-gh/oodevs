@@ -15,7 +15,6 @@
 #include "NameResolver.h"
 #include "SupplyResolver.h"
 #include "clients_kernel/Tools.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -36,7 +35,7 @@
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
 
-namespace plugins 
+namespace plugins
 {
 namespace logistic
 {
@@ -179,7 +178,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         const int tick = message.message().control_begin_tick().current_tick();
         if( tick >= 0 )
             currentTick_ = tick;
-        const std::string time = message.message().control_begin_tick().date_time().data();        
+        const std::string time = message.message().control_begin_tick().date_time().data();
         if( !time.empty() )
             simTime_ = time;
         return;
@@ -197,7 +196,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
             it = consigns_.insert( ev.id, consign ).first;
         else
             consigns_.replace( it, consign );
-    } 
+    }
     std::vector< uint32_t > entities;
     if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_, entities ) )
         recorder_->Write( ev.type, it->second->ToString(), today );
@@ -294,7 +293,7 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
     const tools::SessionConfig& config )
 {
     auto names = boost::make_shared< NameResolver >( model, staticModel );
-    return boost::make_shared< LogisticPlugin >( 
+    return boost::make_shared< LogisticPlugin >(
         names,
         config.BuildSessionChildFile( "LogisticArchive" ),
         config.BuildSessionChildFile( "LogMaintenance" ),

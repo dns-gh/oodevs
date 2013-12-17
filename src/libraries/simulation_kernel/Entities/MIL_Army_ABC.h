@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 #include "Tristate.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/serialization/export.hpp>
 #include <map>
 

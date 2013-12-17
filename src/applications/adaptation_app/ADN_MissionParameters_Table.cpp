@@ -41,7 +41,7 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectN
     verticalHeader()->setVisible( false );
 
     for( unsigned int i = 0; i < unsigned int( eNbrMissionParameterType ); ++i )
-        parameterTypes_ << ADN_Tr::ConvertFromMissionParameterType( static_cast< E_MissionParameterType >( i ), ENT_Tr_ABC::eToTr ).c_str();
+        parameterTypes_ << ADN_Tr::ConvertFromMissionParameterType( static_cast< E_MissionParameterType >( i ), ENT_Tr::eToTr ).c_str();
 
     delegate_.AddLocalizedLineEditOnColumn( 0 );
     delegate_.AddLineEditOnColumn( 1, "[A-Za-z0-9_]*" );

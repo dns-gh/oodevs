@@ -110,7 +110,6 @@ const ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& ADN_Wor
     return static_cast< ADN_WorkspaceElement< ADN_##ELEMENT##_Data, ADN_##ELEMENT##_GUI >& >( *elements_[ e##ELEMENT ] );   \
 }                                                                                                                           \
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::CreateWorkspace
 // Created: ABR 2013-09-11
@@ -439,13 +438,13 @@ namespace
     class TempDirectory : private boost::noncopyable
     {
     public:
-        TempDirectory( ADN_Project_Data::WorkDirInfos& dirInfos ) 
+        TempDirectory( ADN_Project_Data::WorkDirInfos& dirInfos )
             : dirInfos_( dirInfos )
-        { 
+        {
             dirInfos_.UseTempDirectory( true );
             directory_ = dirInfos_.GetTempDirectory();
         }
-        ~TempDirectory() 
+        ~TempDirectory()
         {
             dirInfos_.UseTempDirectory( false );
         }
@@ -758,7 +757,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Missions_Mission* infos = dynamic_cast< ADN_Missions_Mission* >( data ) )
     {
         QStringList& list = result[ eModels ];
-        for( int i = 0; i < eNbrEntityTypes; ++i )
+        for( int i = 0; i < eNbrEntityType; ++i )
             list << GetModels().GetData().GetModelsThatUse( static_cast< E_EntityType >( i ), *infos );
         return result;
     }
@@ -766,7 +765,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Missions_FragOrder* infos = dynamic_cast< ADN_Missions_FragOrder* >( data ) )
     {
         QStringList& list = result[ eModels ];
-        for( int i = 0; i < eNbrEntityTypes; ++i )
+        for( int i = 0; i < eNbrEntityType; ++i )
             list << GetModels().GetData().GetModelsThatUse( static_cast< E_EntityType >( i ), *infos );
         return result;
     }

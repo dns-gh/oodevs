@@ -75,7 +75,7 @@ MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel
     , config_( config )
     , entity_( controllers )
     , order_( 0 )
-    , type_( eNbrMissionTypes )
+    , type_( eNbrMissionType )
     , filling_( false )
 {
     setObjectName( name );
@@ -121,7 +121,7 @@ void MissionInterface::Purge()
 {
     entity_ = 0;
     order_ = 0;
-    type_ = eNbrMissionTypes;
+    type_ = eNbrMissionType;
     PurgeParameters();
 }
 

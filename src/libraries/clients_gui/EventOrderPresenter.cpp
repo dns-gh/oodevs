@@ -408,7 +408,7 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
     state_->currentType_ = type;
 
     // Retrieve types
-    for( int i = 0; i < eNbrMissionTypes; ++i )
+    for( int i = 0; i < eNbrMissionType; ++i )
         state_->types_.push_back( static_cast< E_MissionType >( i ) );
 
     // Retrieve missions

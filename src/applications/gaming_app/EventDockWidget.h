@@ -10,7 +10,7 @@
 #ifndef __EventDockWidget_h_
 #define __EventDockWidget_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_gui/EventView_ABC.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ActivationObserver_ABC.h"

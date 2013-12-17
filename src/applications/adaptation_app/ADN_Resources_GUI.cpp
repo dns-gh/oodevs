@@ -142,7 +142,7 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToSim ).c_str() );
+    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToSim ).c_str() );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -214,7 +214,7 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
     assert( nType == static_cast< int >( vListViews_.size() - 1) );
 
     // Main page
-    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() );
     builder.PopSubName(); //! tab name
 }
 
@@ -239,7 +239,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ).c_str() );
+    builder.PushSubName( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToSim ).c_str() );
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -393,7 +393,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     assert( eDotationFamily_Munition == vListViews_.size() - 1 );
 
     // Main page
-    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str() );
     builder.PopSubName(); //! tab name
 
     IndirectTypeChanged();

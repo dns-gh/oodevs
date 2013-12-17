@@ -19,7 +19,7 @@
 #include "clients_kernel/RoofShapeType.h"
 #include "tools/Iterator.h"
 #include <tools/Resolver.h>
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor

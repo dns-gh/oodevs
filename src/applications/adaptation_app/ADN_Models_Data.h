@@ -116,7 +116,7 @@ private:
     void WriteArchive( xml::xostream& output ) const;
 
 private:
-    T_ModelInfos_Vector vModels_[ eNbrEntityTypes ];
+    T_ModelInfos_Vector vModels_[ eNbrEntityType ];
     std::vector< std::wstring > sourcePaths_;
 };
 

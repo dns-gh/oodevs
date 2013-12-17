@@ -841,7 +841,7 @@ void ADN_Resources_Data::WriteArchive( xml::xostream& output ) const
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
             if( ( *it )->categories_.GetErrorStatus() == eError )
                 throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Invalid data on tab '%1', subtab '%2'" )
-                                      .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromDotationFamily( ( *it )->nType_, ENT_Tr_ABC::eToTr ).c_str() ).toStdString() );
+                                      .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromDotationFamily( ( *it )->nType_, ENT_Tr::eToTr ).c_str() ).toStdString() );
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
     }
 

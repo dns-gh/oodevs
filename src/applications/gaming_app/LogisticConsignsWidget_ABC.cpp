@@ -23,7 +23,7 @@
 #include "clients_gui/RichCheckBox.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 

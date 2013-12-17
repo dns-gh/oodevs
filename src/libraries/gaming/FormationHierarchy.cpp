@@ -13,7 +13,6 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Team_ABC.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;

@@ -290,8 +290,8 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
             if( it1 != it2 && ( *it1 )->day_.GetData() == ( *it2 )->day_.GetData() &&
                 !CheckTime( ( *it1 )->from_.GetData(), ( *it1 )->to_.GetData(), ( *it2 )->from_.GetData(), ( *it2 )->to_.GetData() ) )
                 return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
-                                         "- " + ( *it1 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
-                                         "- " + ( *it2 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
+                                         "- " + ( *it1 )->day_.Convert( ENT_Tr::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
+                                         "- " + ( *it2 )->day_.Convert( ENT_Tr::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
     repartition_.CheckNoError( strName_.GetData().c_str() );
     return "";
 }
@@ -369,7 +369,6 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& inp
     else
         ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eInhabitants, -1, tools::translate( "ADN_Inhabitants_Data", "Consumptions" ).toStdString() );
 }
-
 
 // =============================================================================
 // ADN_Inhabitants_Data

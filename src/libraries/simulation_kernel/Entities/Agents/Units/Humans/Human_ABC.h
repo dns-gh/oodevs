@@ -11,7 +11,7 @@
 #define __Human_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 class MIL_AutomateLOG;
 class PHY_HumanRank;

@@ -14,7 +14,7 @@
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

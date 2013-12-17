@@ -423,7 +423,7 @@ void ADN_Objects_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 {
-    pMaxAgentSpeed_->setEnabled( pSpeedImpactCombo_->currentText() == ADN_Tr::ConvertFromSpeedImpact( eSpeedImpact_VitesseMaxAgent, ENT_Tr_ABC::eToTr ).c_str() );
+    pMaxAgentSpeed_->setEnabled( pSpeedImpactCombo_->currentText() == ADN_Tr::ConvertFromSpeedImpact( eSpeedImpact_VitesseMaxAgent, ENT_Tr::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 #define __Formation_ABC_h_
 
 #include "Entity_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

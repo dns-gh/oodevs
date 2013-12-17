@@ -11,7 +11,6 @@
 #include "meteo/Meteo.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Lighting.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -63,7 +62,7 @@ void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
 {
     xis >> xml::start( "source-posture-modifiers" )
-            >> xml::list( "distance-modifier", *this, &SensorType::ReadPostureFactor )    
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadPostureFactor )
         >> xml::end;
 }
 
@@ -74,7 +73,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
 void SensorType::InitializePrecipitationFactors( xml::xistream& xis )
 {
     xis >> xml::start( "precipitation-modifiers" )
-            >> xml::list( "distance-modifier", *this, &SensorType::ReadPrecipitationModifier ) 
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadPrecipitationModifier )
         >> xml::end;
 }
 
@@ -85,7 +84,7 @@ void SensorType::InitializePrecipitationFactors( xml::xistream& xis )
 void SensorType::InitializeLightingFactors( xml::xistream& xis )
 {
     xis >> xml::start( "visibility-modifiers" )
-            >> xml::list( "distance-modifier", *this, &SensorType::ReadLightingModifier ) 
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadLightingModifier )
         >> xml::end;
 }
 
@@ -144,7 +143,7 @@ namespace
         if( postureMap.empty() )
         {
             postureMap[ "Mouvement" ] = 0;
-            postureMap[ "MouvementDiscret" ] = 1; 
+            postureMap[ "MouvementDiscret" ] = 1;
             postureMap[ "Arret" ] = 2;
             postureMap[ "PosteReflexe"] = 3;
             postureMap[ "Poste" ] = 4;

@@ -73,7 +73,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( std::string( ADN_Tr::ConvertFromEntityType( eEntityType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
+    builder.PushSubName( std::string( ADN_Tr::ConvertFromEntityType( eEntityType, ENT_Tr::eToSim ) + "-tab" ).c_str() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements,static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder

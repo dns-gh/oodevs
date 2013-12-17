@@ -13,7 +13,7 @@
 #define __PHY_DotationGroup_h_
 
 #include "MIL.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Map.h>
 
 namespace xml

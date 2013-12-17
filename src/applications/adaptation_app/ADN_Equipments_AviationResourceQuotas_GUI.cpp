@@ -25,25 +25,25 @@ ADN_Equipments_AviationResourceQuotas_GUI::ADN_Equipments_AviationResourceQuotas
     setShowGrid( false );
 
     dataModel_.setColumnCount( eNbrAmmunitionType + 1 );
-    dataModel_.setRowCount( eNbrAviationRanges );
+    dataModel_.setRowCount( eNbrAviationRange );
     QStringList horizontalHeaders;
     for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
     {
         if( i == eNbrAmmunitionType )
             horizontalHeaders.append( ( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Carburant ) + " (%)" ).c_str() );
         else
-            horizontalHeaders.append( ( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr_ABC::eToTr ) + " (%)" ).c_str() );
+            horizontalHeaders.append( ( ENT_Tr::ConvertFromAmmunitionType( static_cast< E_AmmunitionType >( i ), ENT_Tr::eToTr ) + " (%)" ).c_str() );
         delegate_.AddColorOnColumn( i, 0., 100. );
         delegate_.AddSpinBoxOnColumn( i );
     }
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     QStringList verticalHeaders;
-    for( int i = 0; i < eNbrAviationRanges; ++i )
-        verticalHeaders.append( ENT_Tr::ConvertFromAviationRange( static_cast< E_AviationRange >( i ), ENT_Tr_ABC::eToTr ).c_str() );
+    for( int i = 0; i < eNbrAviationRange; ++i )
+        verticalHeaders.append( ENT_Tr::ConvertFromAviationRange( static_cast< E_AviationRange >( i ), ENT_Tr::eToTr ).c_str() );
     dataModel_.setVerticalHeaderLabels( verticalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setDefaultSectionSize( 24 );
-    setMinimumHeight( ( eNbrAviationRanges + 1 ) * 24  + 6);
+    setMinimumHeight( ( eNbrAviationRange + 1 ) * 24  + 6);
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void ADN_Equipments_AviationResourceQuotas_GUI::AddRow( int row, void* data )
     for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
         AddItem( row, i, data, &infos->resourceQuotas_[ i ], ADN_StandardItem::eInt, Qt::ItemIsEditable );
     QStringList verticalHeaders;
-    for( int i = 0; i < eNbrAviationRanges; ++i )
-        verticalHeaders.append( ENT_Tr::ConvertFromAviationRange( static_cast< E_AviationRange >( i ), ENT_Tr_ABC::eToTr ).c_str() );
+    for( int i = 0; i < eNbrAviationRange; ++i )
+        verticalHeaders.append( ENT_Tr::ConvertFromAviationRange( static_cast< E_AviationRange >( i ), ENT_Tr::eToTr ).c_str() );
     dataModel_.setVerticalHeaderLabels( verticalHeaders );
 }

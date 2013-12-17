@@ -12,7 +12,7 @@
 #ifndef __weather_PHY_Lighting_h_
 #define __weather_PHY_Lighting_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
 #include <map>
 #include <string>

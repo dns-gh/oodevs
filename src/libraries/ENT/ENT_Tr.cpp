@@ -7,9 +7,57 @@
 //
 // *****************************************************************************
 
-#include "ENT_Tr_Gen.h"
+#include "ENT_Tr.h"
+#include "ENT_Private.h"
 
-ENT_Tr::T_ConverterLocationType ENT_Tr::LocationTypeConverter_[] =
+#include <tools/Helpers.h>
+#include <boost/static_assert.hpp>
+
+namespace
+{
+// Typedefs
+typedef ENT_Tr::Converter< E_LocationType > T_ConverterLocationType;
+typedef ENT_Tr::Converter< E_DotationFamily > T_ConverterDotationFamily;
+typedef ENT_Tr::Converter< E_AmmunitionType > T_ConverterAmmunitionType;
+typedef ENT_Tr::Converter< E_NatureLevel > T_ConverterNatureLevel;
+typedef ENT_Tr::Converter< E_Diplomacy > T_ConverterDiplomacy;
+typedef ENT_Tr::Converter< E_ForceRatioStatus > T_ConverterForceRatioStatus;
+typedef ENT_Tr::Converter< E_MeetingEngagementStatus > T_ConverterMeetingEngagementStatus;
+typedef ENT_Tr::Converter< E_OperationalStatus > T_ConverterOperationalStatus;
+typedef ENT_Tr::Converter< E_Roe > T_ConverterRoe;
+typedef ENT_Tr::Converter< E_UnitPosture > T_ConverterUnitPosture;
+typedef ENT_Tr::Converter< E_FireAvailability > T_ConverterFireAvailability;
+typedef ENT_Tr::Converter< E_PopulationRoe > T_ConverterPopulationRoe;
+typedef ENT_Tr::Converter< E_UnitTiredness > T_ConverterUnitTiredness;
+typedef ENT_Tr::Converter< E_UnitMorale > T_ConverterUnitMorale;
+typedef ENT_Tr::Converter< E_UnitExperience > T_ConverterUnitExperience;
+typedef ENT_Tr::Converter< E_UnitStress > T_ConverterUnitStress;
+typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
+typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
+typedef ENT_Tr::Converter< E_LogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
+typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
+typedef ENT_Tr::Converter< E_LogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
+typedef ENT_Tr::Converter< E_LogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
+typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
+typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
+typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
+typedef ENT_Tr::Converter< E_CrossingType > T_ConverterCrossingType;
+typedef ENT_Tr::Converter< E_HumanWound > T_ConverterHumanWound;
+typedef ENT_Tr::Converter< E_HumanRank > T_ConverterHumanRank;
+typedef ENT_Tr::Converter< E_HumanState > T_ConverterHumanState;
+typedef ENT_Tr::Converter< E_HumanLocation > T_ConverterHumanLocation;
+typedef ENT_Tr::Converter< E_EquipmentState > T_ConverterEquipmentState;
+typedef ENT_Tr::Converter< E_InjuriesSeriousness > T_ConverterInjuriesSeriousness;
+typedef ENT_Tr::Converter< E_GhostType > T_ConverterGhostType;
+typedef ENT_Tr::Converter< E_NbcState > T_ConverterNbcState;
+typedef ENT_Tr::Converter< E_Modes > T_ConverterModes;
+typedef ENT_Tr::Converter< E_AgentNbcSuit > T_ConverterAgentNbcSuit;
+typedef ENT_Tr::Converter< E_AviationRange > T_ConverterAviationRange;
+typedef ENT_Tr::Converter< E_LayerTypes > T_ConverterLayerTypes;
+typedef ENT_Tr::Converter< E_EventTypes > T_ConverterEventTypes;
+typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
+
+T_ConverterLocationType LocationTypeConverter_[] =
 {
     T_ConverterLocationType( "circle", QT_TRANSLATE_NOOP( "ENT_Tr", "circle" ), eLocationType_Circle ),
     T_ConverterLocationType( "ellipse", QT_TRANSLATE_NOOP( "ENT_Tr", "ellipse" ), eLocationType_Ellipse ),
@@ -21,7 +69,7 @@ ENT_Tr::T_ConverterLocationType ENT_Tr::LocationTypeConverter_[] =
     T_ConverterLocationType( "", "", (E_LocationType)-1 )
 };
 
-ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
+T_ConverterDotationFamily DotationFamilyConverter_[] =
 {
     T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "Ammunition" ), eDotationFamily_Munition ),
     T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "Fuel" ), eDotationFamily_Carburant ),
@@ -36,7 +84,7 @@ ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
     T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 
-ENT_Tr::T_ConverterAmmunitionType ENT_Tr::AmmunitionTypeConverter_[] =
+T_ConverterAmmunitionType AmmunitionTypeConverter_[] =
 {
     T_ConverterAmmunitionType( "Obus",       QT_TRANSLATE_NOOP( "ENT_Tr", "Shell" ),       eAmmunitionType_Obus ),
     T_ConverterAmmunitionType( "MissileSol", QT_TRANSLATE_NOOP( "ENT_Tr", "Missile" ),     eAmmunitionType_MissileSol ),
@@ -46,7 +94,7 @@ ENT_Tr::T_ConverterAmmunitionType ENT_Tr::AmmunitionTypeConverter_[] =
     T_ConverterAmmunitionType( "", "", (E_AmmunitionType)-1 )
 };
 
-ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
+T_ConverterNatureLevel NatureLevelConverter_[] =
 {
     T_ConverterNatureLevel( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eNatureLevel_None ),
     T_ConverterNatureLevel( "b", QT_TRANSLATE_NOOP( "ENT_Tr", "b" ), eNatureLevel_b ),
@@ -65,7 +113,7 @@ ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
     T_ConverterNatureLevel( "", "", (E_NatureLevel)-1 )
 };
 
-ENT_Tr::T_ConverterDiplomacy ENT_Tr::DiplomacyConverter_[] =
+T_ConverterDiplomacy DiplomacyConverter_[] =
 {
     T_ConverterDiplomacy( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "unknown" ), eDiplomacy_Inconnu ),
     T_ConverterDiplomacy( "ami", QT_TRANSLATE_NOOP( "ENT_Tr", "friendly" ), eDiplomacy_Ami ),
@@ -74,7 +122,7 @@ ENT_Tr::T_ConverterDiplomacy ENT_Tr::DiplomacyConverter_[] =
     T_ConverterDiplomacy( "", "", (E_Diplomacy)-1 )
 };
 
-ENT_Tr::T_ConverterForceRatioStatus ENT_Tr::ForceRatioStatusConverter_[] =
+T_ConverterForceRatioStatus ForceRatioStatusConverter_[] =
 {
     T_ConverterForceRatioStatus( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eForceRatioStatus_None ),
     T_ConverterForceRatioStatus( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "even" ), eForceRatioStatus_Neutre ),
@@ -83,7 +131,7 @@ ENT_Tr::T_ConverterForceRatioStatus ENT_Tr::ForceRatioStatusConverter_[] =
     T_ConverterForceRatioStatus( "", "", (E_ForceRatioStatus)-1 )
 };
 
-ENT_Tr::T_ConverterMeetingEngagementStatus ENT_Tr::MeetingEngagementStatusConverter_[] =
+T_ConverterMeetingEngagementStatus MeetingEngagementStatusConverter_[] =
 {
     T_ConverterMeetingEngagementStatus( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eMeetingEngagementStatus_None ),
     T_ConverterMeetingEngagementStatus( "etat esquive", QT_TRANSLATE_NOOP( "ENT_Tr", "withdrawing" ), eMeetingEngagementStatus_EtatEsquive ),
@@ -92,7 +140,7 @@ ENT_Tr::T_ConverterMeetingEngagementStatus ENT_Tr::MeetingEngagementStatusConver
     T_ConverterMeetingEngagementStatus( "", "", (E_MeetingEngagementStatus)-1 )
 };
 
-ENT_Tr::T_ConverterOperationalStatus ENT_Tr::OperationalStatusConverter_[] =
+T_ConverterOperationalStatus OperationalStatusConverter_[] =
 {
     T_ConverterOperationalStatus( "detruit totalement", QT_TRANSLATE_NOOP( "ENT_Tr", "totally destroyed" ), eOperationalStatus_DetruitTotalement ),
     T_ConverterOperationalStatus( "detruit tactiquement", QT_TRANSLATE_NOOP( "ENT_Tr", "tactically destroyed" ), eOperationalStatus_DetruitTactiquement ),
@@ -100,7 +148,7 @@ ENT_Tr::T_ConverterOperationalStatus ENT_Tr::OperationalStatusConverter_[] =
     T_ConverterOperationalStatus( "", "", (E_OperationalStatus)-1 )
 };
 
-ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
+T_ConverterRoe RoeConverter_[] =
 {
     T_ConverterRoe( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "free fire" ), eRoe_TirLibre ),
     T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "retaliation only" ), eRoe_TirSurRiposte ),
@@ -108,7 +156,7 @@ ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
     T_ConverterRoe( "", "", (E_Roe)-1 )
 };
 
-ENT_Tr::T_ConverterUnitPosture ENT_Tr::UnitPostureConverter_[] =
+T_ConverterUnitPosture UnitPostureConverter_[] =
 {
     T_ConverterUnitPosture( "posture mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "moving" ), eUnitPosture_PostureMouvement ),
     T_ConverterUnitPosture( "posture mouvement discret", QT_TRANSLATE_NOOP( "ENT_Tr", "infiltrating" ), eUnitPosture_PostureMouvementDiscret ),
@@ -120,7 +168,7 @@ ENT_Tr::T_ConverterUnitPosture ENT_Tr::UnitPostureConverter_[] =
     T_ConverterUnitPosture( "", "", (E_UnitPosture)-1 )
 };
 
-ENT_Tr::T_ConverterFireAvailability ENT_Tr::FireAvailabilityConverter_[] =
+T_ConverterFireAvailability FireAvailabilityConverter_[] =
 {
     T_ConverterFireAvailability( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eFireAvailability_None ),
     T_ConverterFireAvailability( "pret au tir", QT_TRANSLATE_NOOP( "ENT_Tr", "ready to fire" ), eFireAvailability_PretAuTir ),
@@ -128,7 +176,7 @@ ENT_Tr::T_ConverterFireAvailability ENT_Tr::FireAvailabilityConverter_[] =
     T_ConverterFireAvailability( "", "", (E_FireAvailability)-1 )
 };
 
-ENT_Tr::T_ConverterPopulationRoe ENT_Tr::PopulationRoeConverter_[] =
+T_ConverterPopulationRoe PopulationRoeConverter_[] =
 {
     T_ConverterPopulationRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), ePopulationRoe_None ),
     T_ConverterPopulationRoe( "emploi force interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "force shall not be used" ), ePopulationRoe_EmploiForceInterdit ),
@@ -137,7 +185,7 @@ ENT_Tr::T_ConverterPopulationRoe ENT_Tr::PopulationRoeConverter_[] =
     T_ConverterPopulationRoe( "", "", (E_PopulationRoe)-1 )
 };
 
-ENT_Tr::T_ConverterUnitTiredness ENT_Tr::UnitTirednessConverter_[] =
+T_ConverterUnitTiredness UnitTirednessConverter_[] =
 {
     T_ConverterUnitTiredness( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "not tired" ), eUnitTiredness_Normal ),
     T_ConverterUnitTiredness( "fatigue", QT_TRANSLATE_NOOP( "ENT_Tr", "tired" ), eUnitTiredness_Fatigue ),
@@ -145,7 +193,7 @@ ENT_Tr::T_ConverterUnitTiredness ENT_Tr::UnitTirednessConverter_[] =
     T_ConverterUnitTiredness( "", "", (E_UnitTiredness)-1 )
 };
 
-ENT_Tr::T_ConverterUnitMorale ENT_Tr::UnitMoraleConverter_[] =
+T_ConverterUnitMorale UnitMoraleConverter_[] =
 {
     T_ConverterUnitMorale( "fanatique", QT_TRANSLATE_NOOP( "ENT_Tr", "fanatical" ), eUnitMorale_Fanatique ),
     T_ConverterUnitMorale( "bon", QT_TRANSLATE_NOOP( "ENT_Tr", "high" ), eUnitMorale_Bon ),
@@ -154,7 +202,7 @@ ENT_Tr::T_ConverterUnitMorale ENT_Tr::UnitMoraleConverter_[] =
     T_ConverterUnitMorale( "", "", (E_UnitMorale)-1 )
 };
 
-ENT_Tr::T_ConverterUnitExperience ENT_Tr::UnitExperienceConverter_[] =
+T_ConverterUnitExperience UnitExperienceConverter_[] =
 {
     T_ConverterUnitExperience( "veteran", QT_TRANSLATE_NOOP( "ENT_Tr", "veteran" ), eUnitExperience_Veteran ),
     T_ConverterUnitExperience( "experimente", QT_TRANSLATE_NOOP( "ENT_Tr", "experienced" ), eUnitExperience_Experimente ),
@@ -162,7 +210,7 @@ ENT_Tr::T_ConverterUnitExperience ENT_Tr::UnitExperienceConverter_[] =
     T_ConverterUnitExperience( "", "", (E_UnitExperience)-1 )
 };
 
-ENT_Tr::T_ConverterUnitStress ENT_Tr::UnitStressConverter_[] =
+T_ConverterUnitStress UnitStressConverter_[] =
 {
     T_ConverterUnitStress( "calm", QT_TRANSLATE_NOOP( "ENT_Tr", "calm" ), eUnitStress_Calm ),
     T_ConverterUnitStress( "worried", QT_TRANSLATE_NOOP( "ENT_Tr", "worried" ), eUnitStress_Worried ),
@@ -170,7 +218,7 @@ ENT_Tr::T_ConverterUnitStress ENT_Tr::UnitStressConverter_[] =
     T_ConverterUnitStress( "", "", (E_UnitStress)-1 )
 };
 
-ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
+T_ConverterLightingType LightingTypeConverter_[] =
 {
     T_ConverterLightingType( "JourSansNuage"         , QT_TRANSLATE_NOOP( "ENT_Tr", "Very sunny day" ),      eLightingType_JourSansNuage ),
     T_ConverterLightingType( "JourPeuNuageux"        , QT_TRANSLATE_NOOP( "ENT_Tr", "Sunny day" ),           eLightingType_JourPeuNuageux ),
@@ -186,7 +234,7 @@ ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
     T_ConverterLightingType( "", "", (E_LightingType)-1 )
 };
 
-ENT_Tr::T_ConverterWeatherType ENT_Tr::WeatherTypeConverter_[] =
+T_ConverterWeatherType WeatherTypeConverter_[] =
 {
     T_ConverterWeatherType( "pas de precipitation", QT_TRANSLATE_NOOP( "ENT_Tr", "No rainfall" ), eWeatherType_None ),
     T_ConverterWeatherType( "tempete sable", QT_TRANSLATE_NOOP( "ENT_Tr", "Sand storm" ), eWeatherType_SandStorm ),
@@ -198,7 +246,7 @@ ENT_Tr::T_ConverterWeatherType ENT_Tr::WeatherTypeConverter_[] =
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
 };
 
-ENT_Tr::T_ConverterLogMaintenanceHandlingStatus ENT_Tr::LogMaintenanceHandlingStatusConverter_[] =
+T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[] =
 {
     T_ConverterLogMaintenanceHandlingStatus( "deplacement vers chaine", QT_TRANSLATE_NOOP( "ENT_Tr", "moving toward logistic system" ), eLogMaintenanceHandlingStatus_DeplacementVersChaine ),
     T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite remorqueur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available tow-truck" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur ),
@@ -216,7 +264,7 @@ ENT_Tr::T_ConverterLogMaintenanceHandlingStatus ENT_Tr::LogMaintenanceHandlingSt
     T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterLogSupplyHandlingStatus ENT_Tr::LogSupplyHandlingStatusConverter_[] =
+T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
 {
     T_ConverterLogSupplyHandlingStatus( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy waiting for trucks" ), eLogSupplyHandlingStatus_ConvoiEnAttenteCamions ),
     T_ConverterLogSupplyHandlingStatus( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy setting up" ), eLogSupplyHandlingStatus_ConvoiConstitution ),
@@ -229,7 +277,7 @@ ENT_Tr::T_ConverterLogSupplyHandlingStatus ENT_Tr::LogSupplyHandlingStatusConver
     T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConverter_[] =
+T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
 {
     T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
     T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller ),
@@ -255,7 +303,7 @@ ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConv
     T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterLogFuneralHandlingStatus ENT_Tr::LogFuneralHandlingStatusConverter_[] =
+T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
 {
     T_ConverterLogFuneralHandlingStatus( "waiting for handling", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for handling" ), eLogFuneralHandlingStatus_WaitingForHandling ),
     T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting unpackaged" ), eLogFuneralHandlingStatus_TransportingUnpackaged ),
@@ -267,14 +315,14 @@ ENT_Tr::T_ConverterLogFuneralHandlingStatus ENT_Tr::LogFuneralHandlingStatusConv
     T_ConverterLogFuneralHandlingStatus( "", "", (E_LogFuneralHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterObstacleActivation ENT_Tr::ObstacleActivationConverter_[] =
+T_ConverterObstacleActivation ObstacleActivationConverter_[] =
 {
     T_ConverterObstacleActivation( "activated", QT_TRANSLATE_NOOP( "ENT_Tr", "Activated" ), eObstacleActivation_Activated ),
     T_ConverterObstacleActivation( "deactivated", QT_TRANSLATE_NOOP( "ENT_Tr", "Deactivated" ), eObstacleActivation_Deactivated ),
     T_ConverterObstacleActivation( "", "", (E_ObstacleActivation)-1 )
 };
 
-ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
+T_ConverterPopulationAttitude PopulationAttitudeConverter_[] =
 {
     T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "quiet" ), ePopulationAttitude_Calme ),
     T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitated" ), ePopulationAttitude_Agitee ),
@@ -283,7 +331,7 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
 
-ENT_Tr::T_ConverterLocation ENT_Tr::LocationConverter_[] =
+T_ConverterLocation LocationConverter_[] =
 {
     T_ConverterLocation( "unknown",        QT_TRANSLATE_NOOP( "ENT_Tr", "unknown" ),        eLocation_Unknown            ),
     T_ConverterLocation( "forest",         QT_TRANSLATE_NOOP( "ENT_Tr", "forest" ),         eLocation_Forest             ),
@@ -316,7 +364,7 @@ ENT_Tr::T_ConverterLocation ENT_Tr::LocationConverter_[] =
     T_ConverterLocation( "", "", (E_Location)-1 )
 };
 
-ENT_Tr::T_ConverterCrossingType ENT_Tr::CrossingTypeConverter_[] =
+T_ConverterCrossingType CrossingTypeConverter_[] =
 {
     T_ConverterCrossingType( "bridge"        , QT_TRANSLATE_NOOP( "ENT_Tr", "bridge" )        , eBridge ),
     T_ConverterCrossingType( "highway"       , QT_TRANSLATE_NOOP( "ENT_Tr", "highway" )       , eHighway ),
@@ -327,7 +375,7 @@ ENT_Tr::T_ConverterCrossingType ENT_Tr::CrossingTypeConverter_[] =
     T_ConverterCrossingType( "", "", ( E_CrossingType ) - 1 )
 };
 
-ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
+T_ConverterHumanWound HumanWoundConverter_[] =
 {
     T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "unwounded" ), eHumanWound_NonBlesse ),
     T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "dead" ), eHumanWound_Mort ),
@@ -338,7 +386,7 @@ ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
     T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
 };
 
-ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
+T_ConverterHumanRank HumanRankConverter_[] =
 {
     T_ConverterHumanRank( "Officier", QT_TRANSLATE_NOOP( "ENT_Tr", "Officer" ), eHumanRank_Officier ),
     T_ConverterHumanRank( "SousOfficier", QT_TRANSLATE_NOOP( "ENT_Tr", "Warrant officer" ), eHumanRank_SousOfficer ),
@@ -346,7 +394,7 @@ ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
     T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
 };
 
-ENT_Tr::T_ConverterHumanState ENT_Tr::HumanStateConverter_ [] =
+T_ConverterHumanState HumanStateConverter_ [] =
 {
     T_ConverterHumanState( "healthy", QT_TRANSLATE_NOOP( "ENT_Tr", "Healthy" ), eHumanState_Healthy ),
     T_ConverterHumanState( "injured", QT_TRANSLATE_NOOP( "ENT_Tr", "Injured" ), eHumanState_Injured ),
@@ -354,7 +402,7 @@ ENT_Tr::T_ConverterHumanState ENT_Tr::HumanStateConverter_ [] =
     T_ConverterHumanState( "", "", ( E_HumanState ) - 1 )
 };
 
-ENT_Tr::T_ConverterHumanLocation ENT_Tr::HumanLocationConverter_ [] =
+T_ConverterHumanLocation HumanLocationConverter_ [] =
 {
     T_ConverterHumanLocation( "battlefield", QT_TRANSLATE_NOOP( "ENT_Tr", "On battlefield" ), eHumanLocation_Battlefield ),
     T_ConverterHumanLocation( "maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "Assigned to maintenance" ), eHumanLocation_Maintenance ),
@@ -363,7 +411,7 @@ ENT_Tr::T_ConverterHumanLocation ENT_Tr::HumanLocationConverter_ [] =
     T_ConverterHumanLocation( "", "", ( E_HumanLocation ) - 1 )
 };
 
-ENT_Tr::T_ConverterEquipmentState ENT_Tr::EquipmentStateConverter_ [] =
+T_ConverterEquipmentState EquipmentStateConverter_ [] =
 {
     T_ConverterEquipmentState( "Disponible",              QT_TRANSLATE_NOOP( "ENT_Tr", "Available" ), eEquipmentState_Available ),
     T_ConverterEquipmentState( "Detruit",                 QT_TRANSLATE_NOOP( "ENT_Tr", "Destroyed" ), eEquipmentState_Destroyed ),
@@ -374,7 +422,7 @@ ENT_Tr::T_ConverterEquipmentState ENT_Tr::EquipmentStateConverter_ [] =
     T_ConverterEquipmentState( "", "", ( E_EquipmentState ) - 1 )
 };
 
-ENT_Tr::T_ConverterInjuriesSeriousness ENT_Tr::InjuriesSeriousnessConverter_ [] =
+T_ConverterInjuriesSeriousness InjuriesSeriousnessConverter_ [] =
 {
     T_ConverterInjuriesSeriousness( "U1", QT_TRANSLATE_NOOP( "ENT_Tr", "U1" ), eInjuriesSeriousness_U1 ),
     T_ConverterInjuriesSeriousness( "U2", QT_TRANSLATE_NOOP( "ENT_Tr", "U2" ), eInjuriesSeriousness_U2 ),
@@ -383,7 +431,7 @@ ENT_Tr::T_ConverterInjuriesSeriousness ENT_Tr::InjuriesSeriousnessConverter_ [] 
     T_ConverterInjuriesSeriousness( "", "", ( E_InjuriesSeriousness ) - 1 )
 };
 
-ENT_Tr::T_ConverterGhostType ENT_Tr::GhostTypeConverter_ [] =
+T_ConverterGhostType GhostTypeConverter_ [] =
 {
     T_ConverterGhostType( "agent",   QT_TRANSLATE_NOOP( "ENT_Tr", "Agent" ),   eGhostType_Agent ),
     T_ConverterGhostType( "automat", QT_TRANSLATE_NOOP( "ENT_Tr", "Automat" ), eGhostType_Automat ),
@@ -391,28 +439,30 @@ ENT_Tr::T_ConverterGhostType ENT_Tr::GhostTypeConverter_ [] =
     T_ConverterGhostType( "", "", ( E_GhostType ) - 1 )
 };
 
-ENT_Tr::T_ConverterNbcState ENT_Tr::NbcStateConverter_ [] =
+T_ConverterNbcState NbcStateConverter_ [] =
 {
     T_ConverterNbcState( "liquid",  QT_TRANSLATE_NOOP( "ENT_Tr", "Liquid" ),  eNbcState_Liquid ),
     T_ConverterNbcState( "gaseous", QT_TRANSLATE_NOOP( "ENT_Tr", "Gaseous" ), eNbcState_Gaseous ),
     T_ConverterNbcState( "", "", ( E_NbcState ) - 1 )
 };
 
-ENT_Tr::T_ConverterModes ENT_Tr::ModesConverter_ [] =
+T_ConverterModes ModesConverter_ [] =
 {
     T_ConverterModes( "none",        QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),        eModes_None          ),
     T_ConverterModes( "default",     QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),     eModes_Default       ),
     T_ConverterModes( "prepare",     QT_TRANSLATE_NOOP( "ENT_Tr", "Prepare" ),     eModes_Prepare       ),
     T_ConverterModes( "terrain",     QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),     eModes_Terrain       ),
     T_ConverterModes( "living_area", QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ), eModes_LivingArea    ),
-    T_ConverterModes( "game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming          ),
+    T_ConverterModes( "preparation", QT_TRANSLATE_NOOP( "ENT_Tr", "Preparation" ), eModes_Preparation   ),
+    T_ConverterModes( "game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming        ),
     T_ConverterModes( "planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning      ),
     T_ConverterModes( "replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay        ),
+    T_ConverterModes( "all_gaming",  QT_TRANSLATE_NOOP( "ENT_Tr", "All Gaming" ),  eModes_AllGaming     ),
     T_ConverterModes( "all",         QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),         eModes_All           ),
     T_ConverterModes( "", "", ( E_Modes ) - 1 )
 };
 
-ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
+T_ConverterAgentNbcSuit AgentNbcSuitConverter_[] =
 {
     T_ConverterAgentNbcSuit( "none",   QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),    eAgentNone ),
     T_ConverterAgentNbcSuit( "level1", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 1" ), eAgentNbcSuitLevel1 ),
@@ -423,7 +473,7 @@ ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
     T_ConverterAgentNbcSuit( "", "", (E_AgentNbcSuit)-1 )
 };
 
-ENT_Tr::T_ConverterAviationRange ENT_Tr::AviationRangeConverter_[] =
+T_ConverterAviationRange AviationRangeConverter_[] =
 {
     T_ConverterAviationRange( "short range",   QT_TRANSLATE_NOOP( "ENT_Tr", "Short range" ),  eAviationRange_ShortRange ),
     T_ConverterAviationRange( "medium range",  QT_TRANSLATE_NOOP( "ENT_Tr", "Medium range" ), eAviationRange_MediumRange ),
@@ -432,7 +482,7 @@ ENT_Tr::T_ConverterAviationRange ENT_Tr::AviationRangeConverter_[] =
     T_ConverterAviationRange( "", "", (E_AviationRange)-1 )
 };
 
-ENT_Tr::T_ConverterLayerTypes ENT_Tr::LayerTypesConverter_[] =
+T_ConverterLayerTypes LayerTypesConverter_[] =
 {
     T_ConverterLayerTypes( "units",             QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),             eLayerTypes_Agent ),
     T_ConverterLayerTypes( "objects",           QT_TRANSLATE_NOOP( "ENT_Tr", "Objects" ),           eLayerTypes_Objects ),
@@ -451,7 +501,7 @@ ENT_Tr::T_ConverterLayerTypes ENT_Tr::LayerTypesConverter_[] =
     T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
 };
 
-ENT_Tr::T_ConverterEventTypes ENT_Tr::EventTypesConverter_[] =
+T_ConverterEventTypes EventTypesConverter_[] =
 {
     T_ConverterEventTypes( "order",             QT_TRANSLATE_NOOP( "ENT_Tr", "Order" ),             eEventTypes_Order ),
     T_ConverterEventTypes( "supervisor_action", QT_TRANSLATE_NOOP( "ENT_Tr", "Supervisor action" ), eEventTypes_SupervisorAction ),
@@ -461,7 +511,7 @@ ENT_Tr::T_ConverterEventTypes ENT_Tr::EventTypesConverter_[] =
     T_ConverterEventTypes( "", "", (E_EventTypes)-1 )
 };
 
-ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
+T_ConverterMissionType MissionTypeConverter_[] =
 {
     T_ConverterMissionType( "unit",      QT_TRANSLATE_NOOP( "ENT_Tr", "Unit missions" ),      eMissionType_Pawn ),
     T_ConverterMissionType( "automat",   QT_TRANSLATE_NOOP( "ENT_Tr", "Automat missions" ),   eMissionType_Automat ),
@@ -469,6 +519,11 @@ ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
     T_ConverterMissionType( "frag-order", QT_TRANSLATE_NOOP( "ENT_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
     T_ConverterMissionType( "", "", (E_MissionType)-1 )
 };
+}
+
+#define INIT_TR( NAME )\
+    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
+    InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
 
 ENT_Tr::T_ConverterEventDockModes ENT_Tr::EventDockModesConverter_[] =
 {
@@ -481,51 +536,51 @@ ENT_Tr::T_ConverterEventDockModes ENT_Tr::EventDockModesConverter_[] =
 };
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::InitTranslations
+// Name: InitTranslations
 // Created: AGR
 //-----------------------------------------------------------------------------
 void ENT_Tr::InitTranslations()
 {
-    InitTr( LocationTypeConverter_, "ENT_Tr" );
-    InitTr( DotationFamilyConverter_, "ENT_Tr" );
-    InitTr( AmmunitionTypeConverter_, "ENT_Tr" );
-    InitTr( NatureLevelConverter_, "ENT_Tr" );
-    InitTr( DiplomacyConverter_, "ENT_Tr" );
-    InitTr( ForceRatioStatusConverter_, "ENT_Tr" );
-    InitTr( MeetingEngagementStatusConverter_, "ENT_Tr" );
-    InitTr( OperationalStatusConverter_, "ENT_Tr" );
-    InitTr( RoeConverter_, "ENT_Tr" );
-    InitTr( UnitPostureConverter_, "ENT_Tr" );
-    InitTr( FireAvailabilityConverter_, "ENT_Tr" );
-    InitTr( PopulationRoeConverter_, "ENT_Tr" );
-    InitTr( UnitTirednessConverter_, "ENT_Tr" );
-    InitTr( UnitMoraleConverter_, "ENT_Tr" );
-    InitTr( UnitExperienceConverter_, "ENT_Tr" );
-    InitTr( UnitStressConverter_, "ENT_Tr" );
-    InitTr( LightingTypeConverter_, "ENT_Tr" );
-    InitTr( WeatherTypeConverter_, "ENT_Tr" );
-    InitTr( LogMaintenanceHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( LogSupplyHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( LogFuneralHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( ObstacleActivationConverter_, "ENT_Tr" );
-    InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
-    InitTr( LocationConverter_, "ENT_Tr" );
-    InitTr( CrossingTypeConverter_, "ENT_Tr" );
-    InitTr( HumanWoundConverter_, "ENT_Tr" );
-    InitTr( HumanRankConverter_, "ENT_Tr" );
-    InitTr( HumanStateConverter_, "ENT_Tr" );
-    InitTr( HumanLocationConverter_, "ENT_Tr" );
-    InitTr( EquipmentStateConverter_, "ENT_Tr" );
-    InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
-    InitTr( GhostTypeConverter_, "ENT_Tr" );
-    InitTr( NbcStateConverter_, "ENT_Tr" );
-    InitTr( ModesConverter_, "ENT_Tr" );
-    InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
-    InitTr( AviationRangeConverter_, "ENT_Tr" );
-    InitTr( LayerTypesConverter_, "ENT_Tr" );
-    InitTr( EventTypesConverter_, "ENT_Tr" );
-    InitTr( MissionTypeConverter_, "ENT_Tr" );
+    INIT_TR( AgentNbcSuit );
+    INIT_TR( AmmunitionType );
+    INIT_TR( AviationRange );
+    INIT_TR( CrossingType );
+    INIT_TR( Diplomacy );
+    INIT_TR( DotationFamily );
+    INIT_TR( EquipmentState );
+    INIT_TR( EventTypes );
+    INIT_TR( FireAvailability );
+    INIT_TR( ForceRatioStatus );
+    INIT_TR( GhostType );
+    INIT_TR( HumanLocation );
+    INIT_TR( HumanRank );
+    INIT_TR( HumanState );
+    INIT_TR( HumanWound );
+    INIT_TR( InjuriesSeriousness );
+    INIT_TR( LayerTypes );
+    INIT_TR( LightingType );
+    INIT_TR( Location );
+    INIT_TR( LocationType );
+    INIT_TR( LogFuneralHandlingStatus );
+    INIT_TR( LogMaintenanceHandlingStatus );
+    INIT_TR( LogMedicalHandlingStatus );
+    INIT_TR( LogSupplyHandlingStatus );
+    INIT_TR( MeetingEngagementStatus );
+    INIT_TR( MissionType );
+    INIT_TR( Modes );
+    INIT_TR( NatureLevel );
+    INIT_TR( NbcState );
+    INIT_TR( ObstacleActivation );
+    INIT_TR( OperationalStatus );
+    INIT_TR( PopulationAttitude );
+    INIT_TR( PopulationRoe );
+    INIT_TR( Roe );
+    INIT_TR( UnitExperience );
+    INIT_TR( UnitMorale );
+    INIT_TR( UnitPosture );
+    INIT_TR( UnitStress );
+    INIT_TR( UnitTiredness );
+    INIT_TR( WeatherType );
     InitTr( EventDockModesConverter_, "ENT_Tr" );
 }
 
@@ -533,135 +588,135 @@ void ENT_Tr::InitTranslations()
 // Name: ENT_Tr::ConvertFromLocationType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLocationType( E_LocationType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLocationType( E_LocationType nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LocationTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LocationTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromDotationFamily
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDotationFamily( E_DotationFamily nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromDotationFamily( E_DotationFamily nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( DotationFamilyConverter_, nValue, nConverterType );
+    return InverseFindInConverter( DotationFamilyConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromAmmunitionType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAmmunitionType( E_AmmunitionType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromAmmunitionType( E_AmmunitionType nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AmmunitionTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( AmmunitionTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromNatureLevel
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
+    return InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromDiplomacy
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDiplomacy( E_Diplomacy nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromDiplomacy( E_Diplomacy nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( DiplomacyConverter_, nValue, nConverterType );
+    return InverseFindInConverter( DiplomacyConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromForceRatioStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromForceRatioStatus( E_ForceRatioStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromForceRatioStatus( E_ForceRatioStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( ForceRatioStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( ForceRatioStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromMeetingEngagementStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MeetingEngagementStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( MeetingEngagementStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromOperationalStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromOperationalStatus( E_OperationalStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromOperationalStatus( E_OperationalStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( OperationalStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( OperationalStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromRoe
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromRoe( E_Roe nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromRoe( E_Roe nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( RoeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( RoeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromUnitPosture
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitPosture( E_UnitPosture nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromUnitPosture( E_UnitPosture nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( UnitPostureConverter_, nValue, nConverterType );
+    return InverseFindInConverter( UnitPostureConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromFireAvailability
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromFireAvailability( E_FireAvailability nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromFireAvailability( E_FireAvailability nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( FireAvailabilityConverter_, nValue, nConverterType );
+    return InverseFindInConverter( FireAvailabilityConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromPopulationRoe
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationRoe( E_PopulationRoe nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromPopulationRoe( E_PopulationRoe nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( PopulationRoeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( PopulationRoeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromUnitTiredness
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitTiredness( E_UnitTiredness nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromUnitTiredness( E_UnitTiredness nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( UnitTirednessConverter_, nValue, nConverterType );
+    return InverseFindInConverter( UnitTirednessConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromUnitMorale
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitMorale( E_UnitMorale nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromUnitMorale( E_UnitMorale nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( UnitMoraleConverter_, nValue, nConverterType );
+    return InverseFindInConverter( UnitMoraleConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromUnitExperience
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( UnitExperienceConverter_, nValue, nConverterType );
+    return InverseFindInConverter( UnitExperienceConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -670,7 +725,7 @@ const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, E
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromUnitStress( E_UnitStress nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( UnitStressConverter_, nValue, nConverterType );
+    return InverseFindInConverter( UnitStressConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -679,142 +734,142 @@ const std::string& ENT_Tr::ConvertFromUnitStress( E_UnitStress nValue, E_Convers
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromLightingType( E_LightingType nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LightingTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LightingTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromWeatherType
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLogMaintenanceHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LogMaintenanceHandlingStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LogMaintenanceHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLogSupplyHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LogSupplyHandlingStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LogSupplyHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLogMedicalHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LogMedicalHandlingStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LogMedicalHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLogFuneralHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LogFuneralHandlingStatusConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LogFuneralHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromObstacleActivation
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObstacleActivation( E_ObstacleActivation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromObstacleActivation( E_ObstacleActivation nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( ObstacleActivationConverter_, nValue, nConverterType );
+    return InverseFindInConverter( ObstacleActivationConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromPopulationAttitude
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLocation
 // Created: PHC
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLocation( E_Location nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLocation( E_Location nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LocationConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LocationConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromCrossingType
 // Created: LGY 2011-07-19
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromCrossingType( E_CrossingType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromCrossingType( E_CrossingType nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( CrossingTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( CrossingTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromHumanWound
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
+    return InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromHumanRank
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
+    return InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromHumanState
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanState( E_HumanState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromHumanState( E_HumanState nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( HumanStateConverter_, nValue, nConverterType );
+    return InverseFindInConverter( HumanStateConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromHumanLocation
 // Created: ABR 2011-07-25
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanLocation( E_HumanLocation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromHumanLocation( E_HumanLocation nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( HumanLocationConverter_, nValue, nConverterType );
+    return InverseFindInConverter( HumanLocationConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromEquipmentState
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( EquipmentStateConverter_, nValue, nConverterType );
+    return InverseFindInConverter( EquipmentStateConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromInjuriesSeriousness
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness nValue, ENT_Tr::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
+    return InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -823,7 +878,7 @@ const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromGhostType( E_GhostType nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( GhostTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( GhostTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -832,7 +887,7 @@ const std::string& ENT_Tr::ConvertFromGhostType( E_GhostType nValue, E_Conversio
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( NbcStateConverter_, nValue, nConverterType );
+    return InverseFindInConverter( NbcStateConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -841,7 +896,7 @@ const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion 
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( ModesConverter_, nValue, nConverterType );
+    return InverseFindInConverter( ModesConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -850,7 +905,7 @@ const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConve
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AgentNbcSuitConverter_, nValue, nConverterType );
+    return InverseFindInConverter( AgentNbcSuitConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -859,7 +914,7 @@ const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Con
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromAviationRange( E_AviationRange nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AviationRangeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( AviationRangeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -868,7 +923,7 @@ const std::string& ENT_Tr::ConvertFromAviationRange( E_AviationRange nValue, E_C
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( LayerTypesConverter_, nValue, nConverterType );
+    return InverseFindInConverter( LayerTypesConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -877,7 +932,7 @@ const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversi
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( EventTypesConverter_, nValue, nConverterType );
+    return InverseFindInConverter( EventTypesConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -886,7 +941,7 @@ const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversi
 // -----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MissionTypeConverter_, nValue, nConverterType );
+    return InverseFindInConverter( MissionTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -904,7 +959,7 @@ const std::string& ENT_Tr::ConvertFromEventDockModes( E_EventDockModes nValue, E
 //-----------------------------------------------------------------------------
 E_LocationType ENT_Tr::ConvertToLocationType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LocationTypeConverter_, strName );
+    return FindInConverter( LocationTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -913,7 +968,7 @@ E_LocationType ENT_Tr::ConvertToLocationType( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_DotationFamily ENT_Tr::ConvertToDotationFamily( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( DotationFamilyConverter_, strName );
+    return FindInConverter( DotationFamilyConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -922,7 +977,7 @@ E_DotationFamily ENT_Tr::ConvertToDotationFamily( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_AmmunitionType ENT_Tr::ConvertToAmmunitionType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AmmunitionTypeConverter_, strName );
+    return FindInConverter( AmmunitionTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -931,7 +986,7 @@ E_AmmunitionType ENT_Tr::ConvertToAmmunitionType( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( NatureLevelConverter_, strName );
+    return FindInConverter( NatureLevelConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -940,7 +995,7 @@ E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_Diplomacy ENT_Tr::ConvertToDiplomacy( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( DiplomacyConverter_, strName );
+    return FindInConverter( DiplomacyConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -949,7 +1004,7 @@ E_Diplomacy ENT_Tr::ConvertToDiplomacy( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_ForceRatioStatus ENT_Tr::ConvertToForceRatioStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( ForceRatioStatusConverter_, strName );
+    return FindInConverter( ForceRatioStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -958,7 +1013,7 @@ E_ForceRatioStatus ENT_Tr::ConvertToForceRatioStatus( const std::string& strName
 //-----------------------------------------------------------------------------
 E_MeetingEngagementStatus ENT_Tr::ConvertToMeetingEngagementStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( MeetingEngagementStatusConverter_, strName );
+    return FindInConverter( MeetingEngagementStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -967,7 +1022,7 @@ E_MeetingEngagementStatus ENT_Tr::ConvertToMeetingEngagementStatus( const std::s
 //-----------------------------------------------------------------------------
 E_OperationalStatus ENT_Tr::ConvertToOperationalStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( OperationalStatusConverter_, strName );
+    return FindInConverter( OperationalStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -976,7 +1031,7 @@ E_OperationalStatus ENT_Tr::ConvertToOperationalStatus( const std::string& strNa
 //-----------------------------------------------------------------------------
 E_Roe ENT_Tr::ConvertToRoe( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( RoeConverter_, strName );
+    return FindInConverter( RoeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -985,7 +1040,7 @@ E_Roe ENT_Tr::ConvertToRoe( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_UnitPosture ENT_Tr::ConvertToUnitPosture( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( UnitPostureConverter_, strName );
+    return FindInConverter( UnitPostureConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -994,7 +1049,7 @@ E_UnitPosture ENT_Tr::ConvertToUnitPosture( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_FireAvailability ENT_Tr::ConvertToFireAvailability( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( FireAvailabilityConverter_, strName );
+    return FindInConverter( FireAvailabilityConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1003,7 +1058,7 @@ E_FireAvailability ENT_Tr::ConvertToFireAvailability( const std::string& strName
 //-----------------------------------------------------------------------------
 E_PopulationRoe ENT_Tr::ConvertToPopulationRoe( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( PopulationRoeConverter_, strName );
+    return FindInConverter( PopulationRoeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1012,7 +1067,7 @@ E_PopulationRoe ENT_Tr::ConvertToPopulationRoe( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_UnitTiredness ENT_Tr::ConvertToUnitTiredness( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( UnitTirednessConverter_, strName );
+    return FindInConverter( UnitTirednessConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1021,7 +1076,7 @@ E_UnitTiredness ENT_Tr::ConvertToUnitTiredness( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_UnitMorale ENT_Tr::ConvertToUnitMorale( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( UnitMoraleConverter_, strName );
+    return FindInConverter( UnitMoraleConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1030,7 +1085,7 @@ E_UnitMorale ENT_Tr::ConvertToUnitMorale( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( UnitExperienceConverter_, strName );
+    return FindInConverter( UnitExperienceConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1039,7 +1094,7 @@ E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_UnitStress ENT_Tr::ConvertToUnitStress( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( UnitStressConverter_, strName );
+    return FindInConverter( UnitStressConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1048,7 +1103,7 @@ E_UnitStress ENT_Tr::ConvertToUnitStress( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_LightingType ENT_Tr::ConvertToLightingType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LightingTypeConverter_, strName );
+    return FindInConverter( LightingTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1057,7 +1112,7 @@ E_LightingType ENT_Tr::ConvertToLightingType( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( WeatherTypeConverter_, strName );
+    return FindInConverter( WeatherTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1066,7 +1121,7 @@ E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_LogMaintenanceHandlingStatus ENT_Tr::ConvertToLogMaintenanceHandlingStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LogMaintenanceHandlingStatusConverter_, strName );
+    return FindInConverter( LogMaintenanceHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1075,7 +1130,7 @@ E_LogMaintenanceHandlingStatus ENT_Tr::ConvertToLogMaintenanceHandlingStatus( co
 //-----------------------------------------------------------------------------
 E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LogSupplyHandlingStatusConverter_, strName );
+    return FindInConverter( LogSupplyHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1084,7 +1139,7 @@ E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::s
 //-----------------------------------------------------------------------------
 E_LogMedicalHandlingStatus ENT_Tr::ConvertToLogMedicalHandlingStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LogMedicalHandlingStatusConverter_, strName );
+    return FindInConverter( LogMedicalHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1093,7 +1148,7 @@ E_LogMedicalHandlingStatus ENT_Tr::ConvertToLogMedicalHandlingStatus( const std:
 //-----------------------------------------------------------------------------
 E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LogFuneralHandlingStatusConverter_, strName );
+    return FindInConverter( LogFuneralHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1102,7 +1157,7 @@ E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std:
 //-----------------------------------------------------------------------------
 E_ObstacleActivation ENT_Tr::ConvertToObstacleActivation( const std::string& strName, E_Conversion mode /* = eToSim */ )
 {
-    return ENT_Tr::FindInConverter( ObstacleActivationConverter_, strName, mode );
+    return FindInConverter( ObstacleActivationConverter_, strName, mode );
 }
 
 //-----------------------------------------------------------------------------
@@ -1111,7 +1166,7 @@ E_ObstacleActivation ENT_Tr::ConvertToObstacleActivation( const std::string& str
 //-----------------------------------------------------------------------------
 E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
+    return FindInConverter( PopulationAttitudeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1120,7 +1175,7 @@ E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& str
 //-----------------------------------------------------------------------------
 E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LocationConverter_, strName );
+    return FindInConverter( LocationConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1129,7 +1184,7 @@ E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( CrossingTypeConverter_, strName );
+    return FindInConverter( CrossingTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1138,7 +1193,7 @@ E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
 //-----------------------------------------------------------------------------
 E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName, E_Conversion mode )
 {
-    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName, mode );
+    return FindInConverter( HumanWoundConverter_, strName, mode );
 }
 
 //-----------------------------------------------------------------------------
@@ -1147,7 +1202,7 @@ E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName, E_Conversi
 //-----------------------------------------------------------------------------
 E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( HumanRankConverter_, strName );
+    return FindInConverter( HumanRankConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1156,7 +1211,7 @@ E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_HumanState ENT_Tr::ConvertToHumanState( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( HumanStateConverter_, strName );
+    return FindInConverter( HumanStateConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1165,7 +1220,7 @@ E_HumanState ENT_Tr::ConvertToHumanState( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_HumanLocation ENT_Tr::ConvertToHumanLocation( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( HumanLocationConverter_, strName );
+    return FindInConverter( HumanLocationConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1174,7 +1229,7 @@ E_HumanLocation ENT_Tr::ConvertToHumanLocation( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_EquipmentState ENT_Tr::ConvertToEquipmentState( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( EquipmentStateConverter_, strName );
+    return FindInConverter( EquipmentStateConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1183,7 +1238,7 @@ E_EquipmentState ENT_Tr::ConvertToEquipmentState( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( InjuriesSeriousnessConverter_, strName );
+    return FindInConverter( InjuriesSeriousnessConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1192,7 +1247,7 @@ E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& s
 // -----------------------------------------------------------------------------
 E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( GhostTypeConverter_, strName );
+    return FindInConverter( GhostTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1201,7 +1256,7 @@ E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( NbcStateConverter_, strName );
+    return FindInConverter( NbcStateConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1210,7 +1265,7 @@ E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( ModesConverter_, strName );
+    return FindInConverter( ModesConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1219,7 +1274,7 @@ E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AgentNbcSuitConverter_, strName );
+    return FindInConverter( AgentNbcSuitConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1228,7 +1283,7 @@ E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_AviationRange ENT_Tr::ConvertToAviationRange( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AviationRangeConverter_, strName );
+    return FindInConverter( AviationRangeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1237,7 +1292,7 @@ E_AviationRange ENT_Tr::ConvertToAviationRange( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( LayerTypesConverter_, strName );
+    return FindInConverter( LayerTypesConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1246,7 +1301,7 @@ E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversion mode )
 {
-    return ENT_Tr::FindInConverter( EventTypesConverter_, strName, mode );
+    return FindInConverter( EventTypesConverter_, strName, mode );
 }
 
 // -----------------------------------------------------------------------------
@@ -1255,7 +1310,7 @@ E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversio
 // -----------------------------------------------------------------------------
 E_MissionType ENT_Tr::ConvertToMissionType( const std::string& strName, E_Conversion mode )
 {
-    return ENT_Tr::FindInConverter( MissionTypeConverter_, strName, mode );
+    return FindInConverter( MissionTypeConverter_, strName, mode );
 }
 
 // -----------------------------------------------------------------------------

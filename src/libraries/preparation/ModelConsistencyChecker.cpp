@@ -64,7 +64,6 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/EntityType.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"

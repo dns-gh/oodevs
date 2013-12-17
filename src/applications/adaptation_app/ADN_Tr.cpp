@@ -18,13 +18,49 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tr.h"
+
 #include "ENT/ENT_Tr.h"
+#include "ENT/ENT_Private.h"
+
+#include <tools/Helpers.h>
+
+#include <boost/static_assert.hpp>
+
+using namespace ENT_Tr;
+
+namespace
+{
+typedef Converter< E_Location >                 T_ConverterLocation;
+typedef Converter< E_ConsumptionType >          T_ConverterConsumptionType;
+typedef Converter< E_VisionObject >             T_ConverterVisionObject;
+typedef Converter< E_KeyPoint >                 T_ConverterKeyPoint;
+typedef Converter< E_AgentTypePion >            T_ConverterAgentTypePion;
+typedef Converter< E_AgentTypeAutomate >        T_ConverterAgentTypeAutomate;
+typedef Converter< E_NatureAtlasType >          T_ConverterNatureAtlasType;
+typedef Converter< E_SpeedImpact >              T_ConverterSpeedImpact;
+typedef Converter< E_CrossingHeight >           T_ConverterCrossingHeight;
+typedef Converter< E_SensorWeatherModifiers >   T_ConverterSensorWeatherModifiers;
+typedef Converter< E_DoctorSkills >             T_ConverterDoctorSkills;
+typedef Converter< E_ProtectionType >           T_ConverterProtectionType;
+typedef Converter< E_BreakdownType >            T_ConverterBreakdownType;
+typedef Converter< E_BreakdownNTI >             T_ConverterBreakdownNTI;
+typedef Converter< E_RadarType >                T_ConverterRadarType;
+typedef Converter< E_EquipmentState_ADN >       T_ConverterEquipmentState;
+typedef Converter< E_TypeMunitionTirIndirect >  T_ConverterTypeMunitionTirIndirect;
+typedef Converter< E_MissionParameterType >     T_ConverterMissionParameterType;
+typedef Converter< E_SupplyConvoyType >         T_ConverterSupplyConvoyType;
+typedef Converter< E_ConstructorType >          T_ConverterConstructorType;
+typedef Converter< E_PropagationModel >         T_ConverterPropagationModel;
+typedef Converter< E_WorkspaceElements >        T_ConverterWorkspaceElements;
+typedef Converter< E_Days >                     T_ConverterDays;
+typedef Converter< E_ContextParameters >        T_ConverterContextParameters;
+typedef Converter< E_EntityType >               T_ConverterEntityType;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
-ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::munitionTirIndirectConverter_[] =
+T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_[] =
 {
     T_ConverterTypeMunitionTirIndirect( "explosif",  QT_TRANSLATE_NOOP( "ADN_Tr", "explosive" ),          eTypeMunitionTirIndirect_Explosif ),
     T_ConverterTypeMunitionTirIndirect( "fumigene",  QT_TRANSLATE_NOOP( "ADN_Tr", "smoke" ),              eTypeMunitionTirIndirect_Fumigene ),
@@ -34,7 +70,7 @@ ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::munitionTirIndirectConverter_
     T_ConverterTypeMunitionTirIndirect( "", "", (E_TypeMunitionTirIndirect)-1 )
 };
 
-ADN_Tr::T_ConverterConsumptionType ADN_Tr::consumptionTypeConverter_[] =
+T_ConverterConsumptionType ConsumptionTypeConverter_[] =
 {
     T_ConverterConsumptionType( "ArretMoteurEteint" , QT_TRANSLATE_NOOP( "ADN_Tr" , "Parked, engine stopped" ), eEngineStopped ) ,
     T_ConverterConsumptionType( "ArretMoteurAllume" , QT_TRANSLATE_NOOP( "ADN_Tr" , "Parked, engine running" ), eEngineStarted ) ,
@@ -43,7 +79,7 @@ ADN_Tr::T_ConverterConsumptionType ADN_Tr::consumptionTypeConverter_[] =
     T_ConverterConsumptionType( "" , "" , (E_ConsumptionType)-1 )
 };
 
-ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
+T_ConverterVisionObject VisionObjectConverter_[] =
 {
     T_ConverterVisionObject( "Sol"   , QT_TRANSLATE_NOOP("ADN_Tr" ,"Ground"),     eVisionGround ),
     T_ConverterVisionObject( "Vide"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"Empty"),      eVisionEmpty  ),
@@ -52,7 +88,7 @@ ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
     T_ConverterVisionObject( "", "", (E_VisionObject)-1 )
 };
 
-ADN_Tr::T_ConverterKeyPoint ADN_Tr::keyPointConverter_[] =
+T_ConverterKeyPoint KeyPointConverter_[] =
 {
     T_ConverterKeyPoint( "forest",     QT_TRANSLATE_NOOP( "ADN_Tr" , "forest" ),     eKeyPointForest ),
     T_ConverterKeyPoint( "urban area", QT_TRANSLATE_NOOP( "ADN_Tr" , "urban area" ), eKeyPointUrban ),
@@ -62,7 +98,7 @@ ADN_Tr::T_ConverterKeyPoint ADN_Tr::keyPointConverter_[] =
     T_ConverterKeyPoint( "" , "" , (E_KeyPoint)-1 )
 };
 
-ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
+T_ConverterAgentTypePion AgentTypePionConverter_[] =
 {
     T_ConverterAgentTypePion( "Pion INF"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Infantry" ),                           eAgentTypePionINF ),
     T_ConverterAgentTypePion( "Pion ASA"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Anti air" ),                           eAgentTypePionASA ),
@@ -95,7 +131,7 @@ ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
     T_ConverterAgentTypePion( "", "", (E_AgentTypePion)-1 )
 };
 
-ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
+T_ConverterAgentTypeAutomate AgentTypeAutomateConverter_[] =
 {
     T_ConverterAgentTypeAutomate( "Automate SGTIA"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Combined Arms" ),                      eAgentTypeAutomateSGTIA ),
     T_ConverterAgentTypeAutomate( "Automate INF"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Infantry" ),                           eAgentTypeAutomateINF ),
@@ -127,7 +163,7 @@ ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
     T_ConverterAgentTypeAutomate( "", "", (E_AgentTypeAutomate)-1 )
 };
 
-ADN_Tr::T_ConverterNatureAtlasType ADN_Tr::natureAtlasTypeConverter_[] =
+T_ConverterNatureAtlasType NatureAtlasTypeConverter_[] =
 {
     T_ConverterNatureAtlasType( "PC"               ,QT_TRANSLATE_NOOP("ADN_Tr" ,"CP"),                  eNatureAtlas_PC             ),
     T_ConverterNatureAtlasType( "ASS"              ,QT_TRANSLATE_NOOP("ADN_Tr" ,"Ground artillery"),    eNatureAtlas_ASS            ),
@@ -144,7 +180,7 @@ ADN_Tr::T_ConverterNatureAtlasType ADN_Tr::natureAtlasTypeConverter_[] =
     T_ConverterNatureAtlasType( "", "", (E_NatureAtlasType)-1 )
 };
 
-ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
+T_ConverterSpeedImpact SpeedImpactConverter_[] =
 {
     T_ConverterSpeedImpact( "AuPlusLent",        QT_TRANSLATE_NOOP( "ADN_Tr", "Slowest" ),           eSpeedImpact_AuPlusLent ),
     T_ConverterSpeedImpact( "VitesseMaxObjet",   QT_TRANSLATE_NOOP( "ADN_Tr", "Object, Max speed" ), eSpeedImpact_VitesseMaxObjet ),
@@ -153,7 +189,7 @@ ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
     T_ConverterSpeedImpact( "", "", (E_SpeedImpact)-1 )
 };
 
-ADN_Tr::T_ConverterCrossingHeight ADN_Tr::crossingHeightConverter_[] =
+T_ConverterCrossingHeight CrossingHeightConverter_[] =
 {
     T_ConverterCrossingHeight( "0m",  QT_TRANSLATE_NOOP( "ADN_Tr", "0m" ),  eCrossingHeight_Never ),
     T_ConverterCrossingHeight( "1m",  QT_TRANSLATE_NOOP( "ADN_Tr", "1m" ),  eCrossingHeight_LowAreas ),
@@ -161,7 +197,7 @@ ADN_Tr::T_ConverterCrossingHeight ADN_Tr::crossingHeightConverter_[] =
     T_ConverterCrossingHeight( "", "", (E_CrossingHeight)-1 )
 };
 
-ADN_Tr::T_ConverterSensorWeatherModifiers ADN_Tr::sensorWeatherModifiersConverter_[] =
+T_ConverterSensorWeatherModifiers SensorWeatherModifiersConverter_[] =
 {
     T_ConverterSensorWeatherModifiers( "PasDePrecipitation", QT_TRANSLATE_NOOP( "ADN_Tr", "No rainfall" ), eSensorWeatherModifiers_PasDePrecipitation ),
     T_ConverterSensorWeatherModifiers( "TempeteDeSable",     QT_TRANSLATE_NOOP( "ADN_Tr", "Sand storm" ),  eSensorWeatherModifiers_TempeteSable ),
@@ -173,7 +209,7 @@ ADN_Tr::T_ConverterSensorWeatherModifiers ADN_Tr::sensorWeatherModifiersConverte
     T_ConverterSensorWeatherModifiers( "", "", (E_SensorWeatherModifiers)-1 )
 };
 
-ADN_Tr::T_ConverterDoctorSkills ADN_Tr::doctorSkillsConverter_[] =
+T_ConverterDoctorSkills DoctorSkillsConverter_[] =
 {
     T_ConverterDoctorSkills( "U1", QT_TRANSLATE_NOOP( "ADN_Tr", "Wounded seriousness level 1" ), eDoctorSkills_U1 ),
     T_ConverterDoctorSkills( "U2", QT_TRANSLATE_NOOP( "ADN_Tr", "Wounded seriousness level 2" ), eDoctorSkills_U2 ),
@@ -182,21 +218,21 @@ ADN_Tr::T_ConverterDoctorSkills ADN_Tr::doctorSkillsConverter_[] =
     T_ConverterDoctorSkills( "", "", (E_DoctorSkills)-1 )
 };
 
-ADN_Tr::T_ConverterProtectionType ADN_Tr::protectionTypeConverter_[] =
+T_ConverterProtectionType ProtectionTypeConverter_[] =
 {
     T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "Equipment" ), eProtectionType_Material ),
     T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "Human" ),     eProtectionType_Human ),
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 
-ADN_Tr::T_ConverterBreakdownType ADN_Tr::breakdownTypeConverter_[] =
+T_ConverterBreakdownType BreakdownTypeConverter_[] =
 {
     T_ConverterBreakdownType( "EA", QT_TRANSLATE_NOOP( "ADN_Tr", "Eletronic" ), eBreakdownType_EA ),
     T_ConverterBreakdownType( "M",  QT_TRANSLATE_NOOP( "ADN_Tr", "Mobility" ),  eBreakdownType_M ),
     T_ConverterBreakdownType( "", "", (E_BreakdownType)-1 )
 };
 
-ADN_Tr::T_ConverterBreakdownNTI ADN_Tr::breakdownNTIConverter_[] =
+T_ConverterBreakdownNTI BreakdownNTIConverter_[] =
 {
     T_ConverterBreakdownNTI( "NTI1", QT_TRANSLATE_NOOP( "ADN_Tr", "Seriousness level 1" ), eBreakdownNTI_NTI1 ),
     T_ConverterBreakdownNTI( "NTI2", QT_TRANSLATE_NOOP( "ADN_Tr", "Seriousness level 2" ), eBreakdownNTI_NTI2 ),
@@ -204,14 +240,14 @@ ADN_Tr::T_ConverterBreakdownNTI ADN_Tr::breakdownNTIConverter_[] =
     T_ConverterBreakdownNTI( "", "", (E_BreakdownNTI)-1 )
 };
 
-ADN_Tr::T_ConverterSupplyConvoyType ADN_Tr::supplyConvoyTypeConverter_[] =
+T_ConverterSupplyConvoyType SupplyConvoyTypeConverter_[] =
 {
     T_ConverterSupplyConvoyType( "real", QT_TRANSLATE_NOOP( "ADN_Tr", "Real" ), eSupplyConvoy_Real ),
     T_ConverterSupplyConvoyType( "virtual", QT_TRANSLATE_NOOP( "ADN_Tr", "Virtual" ), eSupplyConvoy_Virtual ),
     T_ConverterSupplyConvoyType( "", "", (E_SupplyConvoyType)-1 )
 };
 
-ADN_Tr::T_ConverterRadarType ADN_Tr::radarTypeConverter_[] =
+T_ConverterRadarType RadarTypeConverter_[] =
 {
     T_ConverterRadarType( "radar",          QT_TRANSLATE_NOOP( "ADN_Tr", "radar" ),           eRadarType_Radar ),
     T_ConverterRadarType( "ecoute",         QT_TRANSLATE_NOOP( "ADN_Tr", "listening" ),       eRadarType_Ecoute ),
@@ -219,7 +255,7 @@ ADN_Tr::T_ConverterRadarType ADN_Tr::radarTypeConverter_[] =
     T_ConverterRadarType( "", "", (E_RadarType)-1 )
 };
 
-ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
+T_ConverterEquipmentState EquipmentState_ADNConverter_[] =
 {
     T_ConverterEquipmentState( "ReparableAvecEvacuation", QT_TRANSLATE_NOOP("ADN_Tr", "Maintenance support needed" ), eEquipmentState_ADN_FixableWithEvac ),
     T_ConverterEquipmentState( "ReparableSurPlace"      , QT_TRANSLATE_NOOP("ADN_Tr", "On site fixable"),             eEquipmentState_ADN_FixableInPlace ),
@@ -227,7 +263,7 @@ ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
     T_ConverterEquipmentState( "", "", (E_EquipmentState_ADN)-1 )
 };
 
-ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[] =
+T_ConverterMissionParameterType MissionParameterTypeConverter_[] =
 {
     T_ConverterMissionParameterType( "Agent",                 QT_TRANSLATE_NOOP("ADN_Tr", "Agent" ),                  eMissionParameterTypeAgent ),
     T_ConverterMissionParameterType( "Automat",               QT_TRANSLATE_NOOP("ADN_Tr", "Automat" ),                eMissionParameterTypeAutomate ),
@@ -263,7 +299,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
 
-ADN_Tr::T_ConverterConstructorType ADN_Tr::constructorTypeConverter_[] =
+T_ConverterConstructorType ConstructorTypeConverter_[] =
 {
     T_ConverterConstructorType( "raw",     QT_TRANSLATE_NOOP("ADN_Tr", "Raw" ), eRaw ),
     T_ConverterConstructorType( "density", QT_TRANSLATE_NOOP("ADN_Tr", "Density" ), eDensity ),
@@ -271,7 +307,7 @@ ADN_Tr::T_ConverterConstructorType ADN_Tr::constructorTypeConverter_[] =
     T_ConverterConstructorType( "", "", ( E_ConstructorType )-1 )
 };
 
-ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
+T_ConverterPropagationModel PropagationModelConverter_[] =
 {
     T_ConverterPropagationModel( "shapefile-input", QT_TRANSLATE_NOOP("ADN_Tr", "Shapefile input" ), eInputShap ),
     T_ConverterPropagationModel( "fire",  QT_TRANSLATE_NOOP("ADN_Tr", "Fire" ), eFire ),
@@ -280,7 +316,7 @@ ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
     T_ConverterPropagationModel( "", "", (E_PropagationModel)-1 )
 };
 
-ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
+T_ConverterWorkspaceElements WorkspaceElementsConverter_[] =
 {
     T_ConverterWorkspaceElements( "categories",       QT_TRANSLATE_NOOP("ADN_Tr", "Categories" ),           eCategories ),
     T_ConverterWorkspaceElements( "symbols",          QT_TRANSLATE_NOOP("ADN_Tr", "Symbols" ),              eSymbols ),
@@ -314,7 +350,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
 };
 
-ADN_Tr::T_ConverterDays ADN_Tr::daysConverter_[] =
+T_ConverterDays DaysConverter_[] =
 {
     T_ConverterDays( "monday",    QT_TRANSLATE_NOOP( "ADN_Tr", "Monday" ),    eDays_Monday ),
     T_ConverterDays( "tuesday",   QT_TRANSLATE_NOOP( "ADN_Tr", "Tuesday" ),   eDays_Tuesday ),
@@ -327,7 +363,7 @@ ADN_Tr::T_ConverterDays ADN_Tr::daysConverter_[] =
     T_ConverterDays( "", "", (E_Days)-1 )
 };
 
-ADN_Tr::T_ConverterContextParameters ADN_Tr::contextParametersConverter_[] =
+T_ConverterContextParameters ContextParametersConverter_[] =
 {
     T_ConverterContextParameters( "dangerDirection_",   QT_TRANSLATE_NOOP( "ADN_Tr", "Danger direction" ),  eContextParameters_Heading ),
     T_ConverterContextParameters( "phaseLines_",        QT_TRANSLATE_NOOP( "ADN_Tr", "Phase lines" ),       eContextParameters_Limas ),
@@ -337,7 +373,7 @@ ADN_Tr::T_ConverterContextParameters ADN_Tr::contextParametersConverter_[] =
     T_ConverterContextParameters( "", "", (E_ContextParameters)-1 )
 };
 
-ADN_Tr::T_ConverterEntityType ADN_Tr::entityTypeConverter_[] =
+T_ConverterEntityType EntityTypeConverter_[] =
 {
     T_ConverterEntityType( "unit",    QT_TRANSLATE_NOOP( "ADN_Tr", "Unit" ),    eEntityType_Pawn ),
     T_ConverterEntityType( "automat", QT_TRANSLATE_NOOP( "ADN_Tr", "Automat" ), eEntityType_Automat ),
@@ -345,6 +381,7 @@ ADN_Tr::T_ConverterEntityType ADN_Tr::entityTypeConverter_[] =
 
     T_ConverterEntityType( "", "", (E_EntityType)-1 )
 };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
@@ -352,7 +389,7 @@ ADN_Tr::T_ConverterEntityType ADN_Tr::entityTypeConverter_[] =
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromConsumptionType( E_ConsumptionType nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( consumptionTypeConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( ConsumptionTypeConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +398,7 @@ const std::string& ADN_Tr::ConvertFromConsumptionType( E_ConsumptionType nValue,
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromVisionObject( E_VisionObject nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( visionObjectConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( VisionObjectConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +407,7 @@ const std::string& ADN_Tr::ConvertFromVisionObject( E_VisionObject nValue, E_Con
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromKeyPoint( E_KeyPoint nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( keyPointConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( KeyPointConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -379,7 +416,7 @@ const std::string& ADN_Tr::ConvertFromKeyPoint( E_KeyPoint nValue, E_Conversion 
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromAgentTypePion( E_AgentTypePion nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( agentTypePionConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( AgentTypePionConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -388,7 +425,7 @@ const std::string& ADN_Tr::ConvertFromAgentTypePion( E_AgentTypePion nValue, E_C
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromAgentTypeAutomate( E_AgentTypeAutomate nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( agentTypeAutomateConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( AgentTypeAutomateConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,7 +434,7 @@ const std::string& ADN_Tr::ConvertFromAgentTypeAutomate( E_AgentTypeAutomate nVa
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromNatureAtlasType( E_NatureAtlasType nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( natureAtlasTypeConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( NatureAtlasTypeConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,7 +443,7 @@ const std::string& ADN_Tr::ConvertFromNatureAtlasType( E_NatureAtlasType nValue,
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromSpeedImpact( E_SpeedImpact nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( speedImpactConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( SpeedImpactConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +452,7 @@ const std::string& ADN_Tr::ConvertFromSpeedImpact( E_SpeedImpact nValue, E_Conve
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromCrossingHeight( E_CrossingHeight nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( crossingHeightConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( CrossingHeightConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,7 +461,7 @@ const std::string& ADN_Tr::ConvertFromCrossingHeight( E_CrossingHeight nValue, E
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( sensorWeatherModifiersConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( SensorWeatherModifiersConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -433,7 +470,7 @@ const std::string& ADN_Tr::ConvertFromSensorWeatherModifiers( E_SensorWeatherMod
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromDoctorSkills( E_DoctorSkills nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( doctorSkillsConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( DoctorSkillsConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -442,7 +479,7 @@ const std::string& ADN_Tr::ConvertFromDoctorSkills( E_DoctorSkills nValue, E_Con
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromProtectionType( E_ProtectionType nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( protectionTypeConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( ProtectionTypeConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -451,7 +488,7 @@ const std::string& ADN_Tr::ConvertFromProtectionType( E_ProtectionType nValue, E
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( breakdownTypeConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( BreakdownTypeConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -460,7 +497,7 @@ const std::string& ADN_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_C
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( breakdownNTIConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( BreakdownNTIConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -469,7 +506,7 @@ const std::string& ADN_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Con
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromRadarType( E_RadarType nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( radarTypeConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( RadarTypeConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -478,7 +515,7 @@ const std::string& ADN_Tr::ConvertFromRadarType( E_RadarType nValue, E_Conversio
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromEquipmentState_ADN( E_EquipmentState_ADN nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( equipmentStateConverter_, nValue, nConversion );
+    return ENT_Tr::InverseFindInConverter( EquipmentState_ADNConverter_, nValue, nConversion );
 }
 
 //-----------------------------------------------------------------------------
@@ -487,7 +524,7 @@ const std::string& ADN_Tr::ConvertFromEquipmentState_ADN( E_EquipmentState_ADN n
 //-----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( munitionTirIndirectConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( TypeMunitionTirIndirectConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -496,7 +533,7 @@ const std::string& ADN_Tr::ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTir
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterType nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( missionParameterTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( MissionParameterTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +542,7 @@ const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterTy
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromSupplyConvoyType( E_SupplyConvoyType nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( supplyConvoyTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( SupplyConvoyTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -514,7 +551,7 @@ const std::string& ADN_Tr::ConvertFromSupplyConvoyType( E_SupplyConvoyType nValu
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromConstructorType( E_ConstructorType nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( constructorTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( ConstructorTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -523,7 +560,7 @@ const std::string& ADN_Tr::ConvertFromConstructorType( E_ConstructorType nValue,
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( propagationModelConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( PropagationModelConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -532,7 +569,7 @@ const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValu
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( workspaceElementsConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( WorkspaceElementsConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -541,7 +578,7 @@ const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nVal
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromDays( E_Days nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( daysConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( DaysConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -550,7 +587,7 @@ const std::string& ADN_Tr::ConvertFromDays( E_Days nValue, E_Conversion nConvert
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromContextParameters( E_ContextParameters nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( contextParametersConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( ContextParametersConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -559,7 +596,7 @@ const std::string& ADN_Tr::ConvertFromContextParameters( E_ContextParameters nVa
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromEntityType( E_EntityType nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::InverseFindInConverter( entityTypeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( EntityTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -568,7 +605,7 @@ const std::string& ADN_Tr::ConvertFromEntityType( E_EntityType nValue, E_Convers
 // -----------------------------------------------------------------------------
 E_ConsumptionType ADN_Tr::ConvertToConsumptionType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( consumptionTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( ConsumptionTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -577,7 +614,7 @@ E_ConsumptionType ADN_Tr::ConvertToConsumptionType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_VisionObject ADN_Tr::ConvertToVisionObject( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( visionObjectConverter_, strName );
+    return ENT_Tr::FindInConverter( VisionObjectConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -586,7 +623,7 @@ E_VisionObject ADN_Tr::ConvertToVisionObject( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_KeyPoint ADN_Tr::ConvertToKeyPoint( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( keyPointConverter_, strName );
+    return ENT_Tr::FindInConverter( KeyPointConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -595,7 +632,7 @@ E_KeyPoint ADN_Tr::ConvertToKeyPoint( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_AgentTypePion ADN_Tr::ConvertToAgentTypePion( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( agentTypePionConverter_, strName );
+    return ENT_Tr::FindInConverter( AgentTypePionConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -604,7 +641,7 @@ E_AgentTypePion ADN_Tr::ConvertToAgentTypePion( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_AgentTypeAutomate ADN_Tr::ConvertToAgentTypeAutomate( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( agentTypeAutomateConverter_, strName );
+    return ENT_Tr::FindInConverter( AgentTypeAutomateConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -613,7 +650,7 @@ E_AgentTypeAutomate ADN_Tr::ConvertToAgentTypeAutomate( const std::string& strNa
 // -----------------------------------------------------------------------------
 E_NatureAtlasType ADN_Tr::ConvertToNatureAtlasType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( natureAtlasTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( NatureAtlasTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -622,7 +659,7 @@ E_NatureAtlasType ADN_Tr::ConvertToNatureAtlasType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_SpeedImpact ADN_Tr::ConvertToSpeedImpact( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( speedImpactConverter_, strName );
+    return ENT_Tr::FindInConverter( SpeedImpactConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -631,7 +668,7 @@ E_SpeedImpact ADN_Tr::ConvertToSpeedImpact( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_CrossingHeight ADN_Tr::ConvertToCrossingHeight( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( crossingHeightConverter_, strName );
+    return ENT_Tr::FindInConverter( CrossingHeightConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -640,7 +677,7 @@ E_CrossingHeight ADN_Tr::ConvertToCrossingHeight( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_SensorWeatherModifiers ADN_Tr::ConvertToSensorWeatherModifiers( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( sensorWeatherModifiersConverter_, strName );
+    return ENT_Tr::FindInConverter( SensorWeatherModifiersConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -649,7 +686,7 @@ E_SensorWeatherModifiers ADN_Tr::ConvertToSensorWeatherModifiers( const std::str
 // -----------------------------------------------------------------------------
 E_DoctorSkills ADN_Tr::ConvertToDoctorSkills( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( doctorSkillsConverter_, strName );
+    return ENT_Tr::FindInConverter( DoctorSkillsConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -658,7 +695,7 @@ E_DoctorSkills ADN_Tr::ConvertToDoctorSkills( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_ProtectionType ADN_Tr::ConvertToProtectionType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( protectionTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( ProtectionTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -667,7 +704,7 @@ E_ProtectionType ADN_Tr::ConvertToProtectionType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_BreakdownType ADN_Tr::ConvertToBreakdownType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( breakdownTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( BreakdownTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -676,7 +713,7 @@ E_BreakdownType ADN_Tr::ConvertToBreakdownType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_BreakdownNTI ADN_Tr::ConvertToBreakdownNTI( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( breakdownNTIConverter_, strName );
+    return ENT_Tr::FindInConverter( BreakdownNTIConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -685,7 +722,7 @@ E_BreakdownNTI ADN_Tr::ConvertToBreakdownNTI( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( radarTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( RadarTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -694,7 +731,7 @@ E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_EquipmentState_ADN ADN_Tr::ConvertToEquipmentState_ADN( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( equipmentStateConverter_, strName );
+    return ENT_Tr::FindInConverter( EquipmentState_ADNConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -703,7 +740,7 @@ E_EquipmentState_ADN ADN_Tr::ConvertToEquipmentState_ADN( const std::string& str
 //-----------------------------------------------------------------------------
 E_TypeMunitionTirIndirect ADN_Tr::ConvertToTypeMunitionTirIndirect( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( munitionTirIndirectConverter_, strName );
+    return ENT_Tr::FindInConverter( TypeMunitionTirIndirectConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -712,7 +749,7 @@ E_TypeMunitionTirIndirect ADN_Tr::ConvertToTypeMunitionTirIndirect( const std::s
 // -----------------------------------------------------------------------------
 E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( missionParameterTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( MissionParameterTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -721,7 +758,7 @@ E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string&
 // -----------------------------------------------------------------------------
 E_SupplyConvoyType ADN_Tr::ConvertToSupplyConvoyType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( supplyConvoyTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( SupplyConvoyTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -730,7 +767,7 @@ E_SupplyConvoyType ADN_Tr::ConvertToSupplyConvoyType( const std::string& strName
 // -----------------------------------------------------------------------------
 E_ConstructorType ADN_Tr::ConvertToConstructorType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( constructorTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( ConstructorTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -739,7 +776,7 @@ E_ConstructorType ADN_Tr::ConvertToConstructorType( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_PropagationModel ADN_Tr::ConvertToPropagationModel( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( propagationModelConverter_, strName );
+    return ENT_Tr::FindInConverter( PropagationModelConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -748,7 +785,7 @@ E_PropagationModel ADN_Tr::ConvertToPropagationModel( const std::string& strName
 // -----------------------------------------------------------------------------
 E_WorkspaceElements ADN_Tr::ConvertToWorkspaceElements( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( workspaceElementsConverter_, strName );
+    return ENT_Tr::FindInConverter( WorkspaceElementsConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -757,7 +794,7 @@ E_WorkspaceElements ADN_Tr::ConvertToWorkspaceElements( const std::string& strNa
 // -----------------------------------------------------------------------------
 E_Days ADN_Tr::ConvertToDays( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( daysConverter_, strName );
+    return ENT_Tr::FindInConverter( DaysConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -766,7 +803,7 @@ E_Days ADN_Tr::ConvertToDays( const std::string& strName )
 // -----------------------------------------------------------------------------
 E_ContextParameters ADN_Tr::ConvertToContextParameters( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( contextParametersConverter_, strName );
+    return ENT_Tr::FindInConverter( ContextParametersConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -775,8 +812,12 @@ E_ContextParameters ADN_Tr::ConvertToContextParameters( const std::string& strNa
 // -----------------------------------------------------------------------------
 E_EntityType ADN_Tr::ConvertToEntityType( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( entityTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( EntityTypeConverter_, strName );
 }
+
+#define INIT_TR( NAME )\
+    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
+    InitTr( ( NAME ## Converter_ ), "ADN_Tr" );
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
@@ -784,28 +825,28 @@ E_EntityType ADN_Tr::ConvertToEntityType( const std::string& strName )
 // -----------------------------------------------------------------------------
 void ADN_Tr::InitTranslations()
 {
-    InitTr( consumptionTypeConverter_, "ADN_Tr" );
-    InitTr( visionObjectConverter_, "ADN_Tr" );
-    InitTr( keyPointConverter_, "ADN_Tr" );
-    InitTr( agentTypePionConverter_, "ADN_Tr" );
-    InitTr( agentTypeAutomateConverter_, "ADN_Tr" );
-    InitTr( natureAtlasTypeConverter_, "ADN_Tr" );
-    InitTr( speedImpactConverter_, "ADN_Tr" );
-    InitTr( crossingHeightConverter_, "ADN_Tr" );
-    InitTr( sensorWeatherModifiersConverter_, "ADN_Tr" );
-    InitTr( doctorSkillsConverter_, "ADN_Tr" );
-    InitTr( protectionTypeConverter_, "ADN_Tr" );
-    InitTr( breakdownTypeConverter_, "ADN_Tr" );
-    InitTr( breakdownNTIConverter_, "ADN_Tr" );
-    InitTr( radarTypeConverter_, "ADN_Tr" );
-    InitTr( equipmentStateConverter_, "ADN_Tr" );
-    InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
-    InitTr( missionParameterTypeConverter_, "ADN_Tr" );
-    InitTr( supplyConvoyTypeConverter_, "ADN_Tr" );
-    InitTr( constructorTypeConverter_, "ADN_Tr" );
-    InitTr( propagationModelConverter_, "ADN_Tr" );
-    InitTr( workspaceElementsConverter_, "ADN_Tr" );
-    InitTr( daysConverter_, "ADN_Tr" );
-    InitTr( contextParametersConverter_, "ADN_Tr" );
-    InitTr( entityTypeConverter_, "ADN_Tr" );
+    INIT_TR( AgentTypeAutomate );
+    INIT_TR( AgentTypePion );
+    INIT_TR( BreakdownNTI );
+    INIT_TR( BreakdownType );
+    INIT_TR( ConstructorType );
+    INIT_TR( ConsumptionType );
+    INIT_TR( ContextParameters );
+    INIT_TR( CrossingHeight );
+    INIT_TR( Days );
+    INIT_TR( DoctorSkills );
+    INIT_TR( EntityType );
+    INIT_TR( EquipmentState_ADN );
+    INIT_TR( KeyPoint );
+    INIT_TR( MissionParameterType );
+    INIT_TR( NatureAtlasType );
+    INIT_TR( PropagationModel );
+    INIT_TR( ProtectionType );
+    INIT_TR( RadarType );
+    INIT_TR( SensorWeatherModifiers );
+    INIT_TR( SpeedImpact );
+    INIT_TR( SupplyConvoyType );
+    INIT_TR( TypeMunitionTirIndirect );
+    INIT_TR( VisionObject );
+    INIT_TR( WorkspaceElements );
 }

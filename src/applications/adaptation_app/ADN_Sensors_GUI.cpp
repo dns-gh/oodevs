@@ -46,7 +46,7 @@ public:
         int materialsSize = static_cast< int >( materials.size() );
 
         setNumRows( 2 );
-        int totalTableSize = static_cast< int >( 6 + sizesSize + materialsSize + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObjects + eNbrUnitPosture * 2 );
+        int totalTableSize = static_cast< int >( 6 + sizesSize + materialsSize + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObject + eNbrUnitPosture * 2 );
         dataModel_.setColumnCount( totalTableSize );
         setSortingEnabled( true );
         setShowGrid( true );
@@ -82,7 +82,7 @@ public:
 
         AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
         AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Illumination modifiers" ), ENT_Tr::ConvertFromLightingType, eNbrLightingType );
-        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Environment modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Environment modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObject );
         AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "UrbanBlock material modifiers" ), materials );
         AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
         AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
@@ -91,12 +91,12 @@ public:
     //@}
 
     template< typename T >
-    void AddHeaders( int& nCol, const char* szName, const std::string& (*pConverter)(T, ENT_Tr_ABC::E_Conversion), uint nVectorSize )
+    void AddHeaders( int& nCol, const char* szName, const std::string& (*pConverter)(T, ENT_Tr::E_Conversion), uint nVectorSize )
     {
         AddBoldGridCol( nCol );
         AddItem( 0, nCol, 1, nVectorSize, this, szName );
         for( unsigned int n = 0; n < nVectorSize; ++n )
-            AddItem( 1, nCol + n, this, (*pConverter)( static_cast< T >( n ), ENT_Tr_ABC::eToTr ).c_str() );
+            AddItem( 1, nCol + n, this, (*pConverter)( static_cast< T >( n ), ENT_Tr::eToTr ).c_str() );
         nCol += nVectorSize;
     }
 
@@ -285,7 +285,6 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Set the connectors.
     pTargetListView->SetItemConnectors( vTargetConnectors );
 
-
     // disaster
     ADN_GroupBox* pCollisions = builder.AddGroupBox( 0, "can-detect-disasters", tr( "Can detect disasters" ), vConnectors[ eCanDetectDiasters ], 1, Qt::Vertical );
     pCollisions->setMinimumHeight( 150 );
@@ -387,10 +386,10 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 
     // Alat parameters
     Q3GroupBox* pAlatGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Survey durations for army aviation" ) );
-    for( int n = 1; n < eNbrVisionObjects; ++n )
+    for( int n = 1; n < eNbrVisionObject; ++n )
         builder.AddField< ADN_TimeField >( pAlatGroup,
-        ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ), ENT_Tr_ABC::eToSim ).c_str(),
-        ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ), ENT_Tr_ABC::eToTr ).c_str(),
+        ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ), ENT_Tr::eToSim ).c_str(),
+        ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ), ENT_Tr::eToTr ).c_str(),
         data_.GetAlatInfos().surveyTimes_[ n - 1 ], tr( "/ha" ) );
 
     // Cobra parameters
@@ -452,7 +451,7 @@ QWidget* ADN_Sensors_GUI::CreateAgentDetectionTable()
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrLightingType );
-        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObject );
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
         pTable->AddCells( &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );

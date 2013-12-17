@@ -353,7 +353,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                         ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
 
-        for( int type = 0; type < eNbrMissionTypes; ++type )
+        for( int type = 0; type < eNbrMissionType; ++type )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
                                             ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), eMissions, type );
     }
@@ -382,7 +382,7 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
 
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         FillMultiUsersList( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
                             ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), result );
 

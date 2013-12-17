@@ -14,7 +14,6 @@
 #include "Options.h"
 #include "Settings.h"
 #include "Tools.h"
-#include "ENT/ENT_Tr_Gen.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4127 )
 #include <QtCore/qsettings.h>

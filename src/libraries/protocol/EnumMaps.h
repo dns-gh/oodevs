@@ -10,7 +10,7 @@
 #ifndef PROTOCOL_ENUM_MAPS
 #define PROTOCOL_ENUM_MAPS
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #pragma warning( push, 0 )
 #include "protocol/proto/simulation_client.pb.h"
 #pragma warning( pop )

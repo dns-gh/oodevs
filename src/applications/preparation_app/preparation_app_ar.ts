@@ -2291,33 +2291,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>ScoreVariablesList</name>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished">القيمة</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished">إضافة</translation>
-    </message>
-    <message>
-        <source>Del</source>
-        <translation type="unfinished">لأن</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation type="unfinished">لصق</translation>
-    </message>
-</context>
-<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>

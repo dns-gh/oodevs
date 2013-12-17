@@ -11,7 +11,7 @@
 #include "LocationEditorToolbar.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar constructor

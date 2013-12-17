@@ -25,7 +25,7 @@ class ADN_Missions_WizardPage : public ADN_WizardPage< ADN_Missions_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_MissionType entityType = eNbrMissionTypes )
+             ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_MissionType entityType = eNbrMissionType )
                  : ADN_WizardPage< ADN_Missions_ABC >( existingItems, pageTitle, pParent )
                  , entityType_( entityType )
              {

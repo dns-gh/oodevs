@@ -52,7 +52,7 @@ EntitySymbolEditor::EntitySymbolEditor( QGridLayout* layout, int row, kernel::Co
 
     // Configuration
     for( unsigned int i = 0; i < unsigned int( eNbrNatureLevel ); ++i )
-        levelNames_ << tools::ToString( static_cast< E_NatureLevel >( i ), ENT_Tr_ABC::eToSim );
+        levelNames_ << tools::ToString( static_cast< E_NatureLevel >( i ), ENT_Tr::eToSim );
     OnSelectionChanged( 0 );
 }
 

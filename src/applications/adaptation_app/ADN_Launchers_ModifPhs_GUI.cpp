@@ -30,7 +30,7 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( const QString& objectNam
     QStringList headers;
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
-        headers.append( ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( i ), ENT_Tr_ABC::eToTr).c_str() );
+        headers.append( ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( i ), ENT_Tr::eToTr).c_str() );
         delegate_.AddColorOnColumn( i, 0., 100. );
         delegate_.AddDoubleSpinBoxOnColumn( i, 0, 100, 1, 5 );
     }
@@ -65,7 +65,7 @@ void ADN_Launchers_ModifPhs_GUI::AddRow( int row, void* data )
     for( int col = 0; col < eNbrUnitPosture; ++col )
     {
         AddItem( row, col, data, pLine->operator[]( col ), ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-        headers.append( ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( col ), ENT_Tr_ABC::eToTr).c_str() );
+        headers.append( ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( col ), ENT_Tr::eToTr).c_str() );
     }
     dataModel_.setVerticalHeaderLabels( headers );
 }

@@ -10,7 +10,7 @@
 #ifndef __ADN_Sensors_DetectionAlgorithmPrevision_h_
 #define __ADN_Sensors_DetectionAlgorithmPrevision_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Sensors_Data.h"
 

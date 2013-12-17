@@ -290,7 +290,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
     PurgePath( GetTemporaryPath() );
 
     input >> xml::start( "missions" );
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         input >> xml::start( missionsVector_[ type ].first )
                 >> xml::list( type == eMissionType_FragOrder ? "fragorder" : "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, static_cast< E_MissionType >( type ) ) )
               >> xml::end;
@@ -300,7 +300,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 
     for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
         it->second.CheckValidity();
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         CopyImageToTempDir( static_cast< E_MissionType >( type ) );
 }
 
@@ -370,7 +370,7 @@ bool ADN_Missions_Data::FixConsistency()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
 {
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         if( missionsVector_[ type ].second.GetErrorStatus() == eError )
             throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
                                   .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str() ).toStdString() );
@@ -379,13 +379,13 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
     output << xml::start( "missions" );
     tools::SchemaWriter schemaWriter;
     schemaWriter.WritePhysicalSchema( output, "Missions" );
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         WriteMissions( output, missionsVector_[ type ].first, missionsVector_[ type ].second );
     output << xml::end;
 
     // save mission sheets
     const tools::LanguagesVector& languages = ADN_Workspace::GetWorkspace().GetLanguages().GetData().GetActiveLanguages();
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
     {
         WriteMissionSheets( static_cast< E_MissionType >( type ), missionsVector_[ type ].second, ADN_Workspace::GetWorkspace().GetLanguages().GetData().Master() );
         for( auto it = languages.begin(); it != languages.end(); ++it )
@@ -398,7 +398,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output ) const
     toDeleteMissionSheets.clear();
 
     // save Images in temp directory
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         CopyImageFromTempDir( static_cast< E_MissionType >( type ) );
 }
 
@@ -439,7 +439,7 @@ ADN_Missions_ABC* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mis
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC* ADN_Missions_Data::FindMission( int missionType, const std::string& strName ) const
 {
-    assert( missionType >= 0 && missionType < eNbrMissionTypes );
+    assert( missionType >= 0 && missionType < eNbrMissionType );
     return FindMission( missionsVector_[ missionType ].second, strName );
 }
 
@@ -485,7 +485,7 @@ QStringList ADN_Missions_Data::GetMissionsThatUse( E_MissionType type, ADN_Objec
 QStringList ADN_Missions_Data::GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object )
 {
     QStringList result;
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         FillUsingMission( object.strName_.GetData(), missionsVector_[ type ].second, result, ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ) );
     return result;
 }
@@ -526,7 +526,7 @@ namespace
 void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     ADN_Data_ABC::CheckDatabaseValidity( checker );
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
         for( auto it = missionsVector_[ type ].second.begin(); it != missionsVector_[ type ].second.end(); ++it )
         {
             if( type != eMissionType_FragOrder )
@@ -550,7 +550,7 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
     std::vector< ADN_Missions_ABC* > missionThatNeedANewId;
 
     // Check for duplicate id
-    for( int type = 0; type < eNbrMissionTypes; ++type )
+    for( int type = 0; type < eNbrMissionType; ++type )
     {
         const ADN_Missions_Data::T_Mission_Vector& vector = missionsVector_[ type ].second;
         for( auto it = vector.begin(); it != vector.end(); ++it )
@@ -565,7 +565,7 @@ void ADN_Missions_Data::CheckAndFixLoadingErrors() const
             // look for others with same id in each vector
             std::map< int, std::vector< ADN_Missions_ABC* > > missionsMap;
             size_t count = 0;
-            for( int secondType = type; secondType < eNbrMissionTypes; ++secondType )
+            for( int secondType = type; secondType < eNbrMissionType; ++secondType )
             {
                 missionsMap[ secondType ] = missionsVector_[ secondType ].second.FindElements( boost::bind( &ADN_Tools::IdCompare< ADN_Missions_ABC >, _1, boost::cref( id ) ) );
                 count += missionsMap[ secondType ].size();

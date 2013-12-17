@@ -10,7 +10,7 @@
 #ifndef __Layer_ABC_h_
 #define __Layer_ABC_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"

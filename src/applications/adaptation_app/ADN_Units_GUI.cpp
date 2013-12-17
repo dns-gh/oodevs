@@ -165,7 +165,7 @@ void ADN_Units_GUI::Build()
         pSymbolLayout->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
         CreateUnitSymbolWidget( builder, "symbols"       , pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetSamplePixmap,  &ADN_Symbols_Data::SymbolsUnit::GetSymbol       , labelSymbol_      , unitSymbolWidget_ );
         CreateUnitSymbolWidget( builder, "move-symbols"  , pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetMovePixmap,    &ADN_Symbols_Data::SymbolsUnit::GetMoveSymbol   , labelMoveSymbol_  , unitSymbolMoveWidget_ );
-        CreateUnitSymbolWidget( builder, "static-symbols", pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetStaticPixmap,  &ADN_Symbols_Data::SymbolsUnit::GetStaticSymbol , labelStaticSymbol_, unitSymbolStaticWidget_ );    
+        CreateUnitSymbolWidget( builder, "static-symbols", pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetStaticPixmap,  &ADN_Symbols_Data::SymbolsUnit::GetStaticSymbol , labelStaticSymbol_, unitSymbolStaticWidget_ );
         SetOnlyApp6SymbolVisible();
     }
 
@@ -296,11 +296,11 @@ void ADN_Units_GUI::OnNameChanged()
 void ADN_Units_GUI::OnTypeChanged()
 {
     QString strType = pTypeCombo_->currentText();
-    if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi, ENT_Tr_ABC::eToTr ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr_ABC::eToTr ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionOrganization, ENT_Tr_ABC::eToTr ).c_str() )
+    if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement, ENT_Tr::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement, ENT_Tr::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi, ENT_Tr::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionOrganization, ENT_Tr::eToTr ).c_str() )
     {
         // insert stock category list if not exist yet
         ADN_Units_Data::UnitInfos* pInfos = (ADN_Units_Data::UnitInfos*)pListView_->GetCurrentData();
@@ -399,7 +399,7 @@ void ADN_Units_GUI::UpdateValidators()
 // -----------------------------------------------------------------------------
 void ADN_Units_GUI::CreateUnitSymbolWidget( ADN_GuiBuilder& builder, const std::string widgetName, QWidget* parent,
                                             ADN_UnitSymbolWidget::T_PixmapExtractor pixmapAccessor,
-                                            ADN_UnitSymbolWidget::T_StringExtractor stringAccessor, 
+                                            ADN_UnitSymbolWidget::T_StringExtractor stringAccessor,
                                             QLabel*& pLabel, ADN_UnitSymbolWidget*& pSymbolWidget )
 {
     pLabel = new QLabel( parent );

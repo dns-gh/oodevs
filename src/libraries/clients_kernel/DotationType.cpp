@@ -78,7 +78,7 @@ const std::string& DotationType::GetName() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryDisplay() const
 {
-    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToTr ).toStdString();
+    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr::eToTr ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ const std::string DotationType::GetCategoryDisplay() const
 // -----------------------------------------------------------------------------
 const std::string DotationType::GetCategoryName() const
 {
-    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr_ABC::eToSim ).toStdString();
+    return tools::ToString( static_cast< E_DotationFamily >( categoryId_ ), ENT_Tr::eToSim ).toStdString();
 }
 
 // -----------------------------------------------------------------------------

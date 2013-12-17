@@ -23,7 +23,7 @@
 #include "icons.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 

@@ -11,7 +11,7 @@
 #define __FormationFactory_h_
 
 #include "FormationFactory_ABC.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

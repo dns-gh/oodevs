@@ -106,7 +106,7 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
         }
         ADN_Tools::SortMenu( *pSubMenu );
 
-        targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr_ABC::eToTr ).c_str(), pSubMenu );
+        targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
     menu.insertItem( tools::translate( "ADN_Equipments_Resources_ListView", "Add resource"), &targetMenu ,0 );
