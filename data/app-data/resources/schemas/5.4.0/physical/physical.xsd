@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:include schemaLocation="tools.xsd"/>
+  <xs:simpleType name="XmlOrXsltFile">
+    <xs:restriction base="xs:string">
+      <xs:pattern value=".*\.xml|.*\.xslt"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="FileReference">
+    <xs:attribute name="file" type="XmlOrXsltFile"/>
+  </xs:complexType>
+  <xs:complexType name="PathReference">
+    <xs:attribute name="path" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="physical">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="active-protections" type="FileReference"/>
+        <xs:element name="automats" type="FileReference"/>
+        <xs:element name="breakdowns" type="FileReference"/>
+        <xs:element name="communications" type="FileReference"/>
+        <xs:element name="components" type="FileReference"/>
+        <xs:element name="decisional" type="FileReference"/>
+        <xs:element name="drawing-templates" type="FileReference"/>
+        <xs:element name="resource-natures" type="FileReference"/>
+        <xs:element name="resources" type="FileReference"/>
+        <xs:element name="extensions" type="FileReference" minOccurs="0"/>
+        <xs:element name="filters" type="FileReference" minOccurs="0"/>
+        <xs:element name="fires" type="FileReference"/>
+        <xs:element name="health" type="FileReference"/>
+        <xs:element name="human-factors" type="FileReference"/>
+        <xs:element name="inhabitants" type="FileReference" minOccurs="0"/>
+        <xs:element name="knowledge-groups" type="FileReference"/>
+        <xs:element name="launchers" type="FileReference"/>
+        <xs:element name="maintenance" type="FileReference"/>
+        <xs:element name="missions" type="FileReference"/>
+        <xs:element name="models" type="FileReference"/>
+        <xs:element name="nbc" type="FileReference"/>
+        <xs:element name="object-names" type="FileReference"/>
+        <xs:element name="objects" type="FileReference"/>
+        <xs:element name="pathfinder" type="FileReference"/>
+        <xs:element name="populations" type="FileReference"/>
+        <xs:element name="protections" type="FileReference"/>
+        <xs:element name="reports" type="FileReference"/>
+        <xs:element name="resource-networks" type="FileReference"/>
+        <xs:element name="scores" type="FileReference"/>
+        <xs:element name="sensors" type="FileReference"/>
+        <xs:element name="supply" type="FileReference"/>
+        <xs:element name="symbols" type="FileReference"/>
+        <xs:element name="units" type="FileReference"/>
+        <xs:element name="urban" type="FileReference"/>
+        <xs:element name="volumes" type="FileReference"/>
+        <xs:element name="weapon-systems" type="FileReference"/>
+        <xs:element name="urban-templates" type="FileReference"/>
+        <xs:element name="logistic-supply-classes" type="FileReference"/>
+        <xs:element name="funeral" type="FileReference"/>
+        <xs:element name="disasters" type="FileReference"/>
+        <xs:element name="units-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="automata-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="crowds-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="fragorders-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="symbols-directory" type="PathReference"/>
+        <xs:element name="mission-sheets-xsl" type="FileReference"/>
+        <xs:element name="stages" type="FileReference"/>
+        <xs:element name="languages" type="FileReference"/>
+        <xs:element name="locales-directory" type="PathReference"/>
+      </xs:all>
+      <xs:attribute name="model-version" type="T_Version"/>
+      <xs:attribute name="read-only" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

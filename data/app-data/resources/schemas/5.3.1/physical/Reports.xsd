@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="reports">
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="report">
+					<xs:complexType>
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="parameter">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="value">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+												<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="label" type="xs:string"/>
+									<xs:attribute name="type" type="T_ReportParameterType" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="message" type="xs:string" use="required"/>
+						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="key" type="xs:string" use="optional"/>
+						<xs:attribute name="category" type="T_ReportCategory" use="required"/>
+						<xs:attribute name="client-function-trigger" type="T_ReportClientFunctionTrigger" use="optional">
+							<xs:annotation>
+								<xs:documentation source="Déclenchement d'action particulière côté client." xml:lang="fr"/>
+								<xs:documentation source="Triggers specific action on the client side." xml:lang="en"/>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>			
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:simpleType name="T_Geometry">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="circle"/>
+			<xs:enumeration value="line"/>
+			<xs:enumeration value="point"/>
+			<xs:enumeration value="polygon"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_App6Symbol">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15" fixed="true"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ConsumptionMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ArretMoteurEteint"/>
+			<xs:enumeration value="ArretMoteurAllume"/>
+			<xs:enumeration value="Deplacement"/>
+			<xs:enumeration value="EnTravaux"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ValueUnit">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="raw"/>
+			<xs:enumeration value="density"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_TerrainType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="highway"/>
+			<xs:enumeration value="secondary road"/>
+			<xs:enumeration value="country road"/>
+			<xs:enumeration value="street"/>
+			<xs:enumeration value="crossroad"/>
+			<xs:enumeration value="main road"/>
+			<xs:enumeration value="railroad"/>
+			<xs:enumeration value="bridge"/>
+			<xs:enumeration value="underground"/>
+			<xs:enumeration value="suburb"/>
+			<xs:enumeration value="forest edge"/>
+			<xs:enumeration value="forest"/>
+			<xs:enumeration value="urban area"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_UnitSpeedPolicy">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AuPlusLent"/>
+			<xs:enumeration value="VitesseMaxObjet"/>
+			<xs:enumeration value="VitesseMaxAgent"/>
+			<xs:enumeration value="VitesseBlocUrbain"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_IntegralPercentage">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="object" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="T_Object">
+		<xs:complexContent>
+			<xs:extension base="T_ObjectCapacities">
+				<xs:attribute name="point-size" type="xs:double" use="optional"/>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="type" type="xs:string" use="required"/>
+				<xs:attribute name="description" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="T_ObjectCapacities">
+		<xs:all>
+			<xs:element name="geometries" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="geometry" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="type" type="T_Geometry" use="optional"/>
+								<xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="activable" minOccurs="0"/>
+			<xs:element name="disaster" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="model" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="attrition" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="attrition-surface" type="T_NonNegativeDouble"/>
+					<xs:attribute name="category" type="xs:string"/>
+					<xs:attribute name="ph" type="T_ZeroToOneDouble"/>
+					<!-- resource name -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="urban-destruction" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="urban-modifier" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="material-type" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:double" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="avoidable" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="distance" type="xs:double"/>
+					<!-- meters -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="bypassable" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="bypass-speed" type="xs:double"/>
+					<!-- km/h -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="constructor" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="buildable" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="resources" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="resource" minOccurs="0">
+													<!-- implementation restriction -->
+													<xs:complexType>
+														<xs:attribute name="count" type="xs:positiveInteger"/>
+														<xs:attribute name="name" type="xs:string"/>
+														<!-- resource name -->
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="improvable" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="resources" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="resource" minOccurs="0">
+													<!-- implementation restriction -->
+													<xs:complexType>
+														<xs:attribute name="count" type="xs:positiveInteger"/>
+														<xs:attribute name="name" type="xs:string"/>
+														<!-- resource name -->
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="default-consumption-mode" type="T_ConsumptionMode"/>
+					<xs:attribute name="unit-type" type="T_ValueUnit"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="delay" minOccurs="0"/>
+			<xs:element name="detection" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="acquisition-times" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="acquisition-time" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:attribute name="level" type="xs:string"/>
+											<xs:attribute name="time" type="T_Time"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="spawn" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="object" type="xs:string"/>
+					<xs:attribute name="action-range" type="xs:double"/>
+					<xs:attribute name="nbc" type="xs:boolean"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="heuristic" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="terrain" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="type" type="T_TerrainType"/>
+								<xs:attribute name="value" type="xs:positiveInteger"/>
+								<!-- km/h? -->
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="interact-with-enemy" minOccurs="0"/>
+			<xs:element name="mobility" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="default-speed" type="xs:double"/>
+					<xs:attribute name="max-unit-percentage-speed" type="T_IntegralPercentage"/>
+					<xs:attribute name="unit-speed-impact-mode" type="T_UnitSpeedPolicy"/>
+					<!-- km/h or -1 -->
+					<!-- always 0? -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="trafficability" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="default" type="xs:boolean"/>
+					<xs:attribute name="max-weight" type="xs:double" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="population-filter" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="density" type="xs:double"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="time-limited" minOccurs="0"/>
+			<xs:element name="protection" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="geniePrepared" type="xs:boolean"/>
+					<xs:attribute name="max-size" type="xs:positiveInteger"/>
+					<!-- WTF? -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="interference" minOccurs="0"/>
+			<xs:element name="perception" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="blinded" type="xs:boolean"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="scattering" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="human-by-time-step" type="xs:positiveInteger"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="attitude-modifier" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="attitude" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="contamination" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="max-toxic" type="xs:integer"/>
+					<!-- danger level, maximum? can be -1 -->
+					<!-- only read by simulation, not used -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="decontamination" minOccurs="0"/>
+			<xs:element name="intoxication" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="max-toxic" type="xs:integer"/>
+					<!-- danger level, maximum? can be -1 -->
+					<!-- only read by simulation, not used -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="propagation" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="model" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="interaction-height" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="height" type="xs:nonNegativeInteger"/>
+					<!-- meters -->
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="workable" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="max-animator" type="xs:nonNegativeInteger"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="logistic" minOccurs="0"/>
+			<xs:element name="supply" minOccurs="0"/>
+			<xs:element name="supply-route" minOccurs="0"/>
+			<xs:element name="bridging" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="type" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="lodging" minOccurs="0"/>
+			<xs:element name="structural" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="value" type="xs:nonNegativeInteger"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="fire-propagation-modifier" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="modifier">
+							<xs:complexType>
+								<xs:attribute name="fire-class" type="xs:string"/>
+								<xs:attribute name="ignition-threshold" type="xs:nonNegativeInteger"/>
+								<xs:attribute name="max-combustion-energy" type="xs:nonNegativeInteger"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resources" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="node" minOccurs="0">
+							<xs:complexType>
+								<xs:attribute name="resource-type" type="xs:string"/>
+								<xs:attribute name="production" type="xs:positiveInteger"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="burn" minOccurs="0"/>
+			<xs:element name="flood" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="injuries" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="injury" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:attribute name="type" type="T_WoundType" use="required"/>
+											<xs:attribute name="percentage" type="T_ZeroToOneDouble" use="required"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="altitude-modifier" minOccurs="0"/>
+			<xs:element name="universal" minOccurs="0"/>
+			<xs:element name="stock" minOccurs="0"/>
+			<xs:element name="underground-network" minOccurs="0"/>
+			<xs:element name="fire-forbidden" minOccurs="0"/>
+			<xs:element name="border" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="object" type="T_Object"/>
+</xs:schema>

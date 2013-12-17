@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.8.2">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:element name="exercise">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="meta" minOccurs="0"/>
+				<xs:element ref="model"/>
+				<xs:element ref="population" minOccurs="0"/>
+				<xs:element ref="terrain"/>
+				<xs:element name="orbat" type="T_FileReference">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for orbat definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="knowledges" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for knowledges definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="profiles" type="T_FileReference">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for profiles definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="settings" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for exercise settings.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="scores" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for scores definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="success-factors" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for success factors definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="weather" type="T_FileReference">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for weather definition.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="urban" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for urban model.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="urbanstate" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used to specialise urban blocks (for compatibility with former versions).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="action-planning" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for action planning.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="drawings" type="T_FileReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the file to be used for action planning.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="model-version" type="T_Version" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines model version used for exercise generation.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="valid" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>Indicates if the exercise is valid and can be launched</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="meta">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the display name of the exercise.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="user-version" type="T_Version" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the exercise data user version. This attribute is optional.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="briefing">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines elements to be displayed as a briefing.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="image" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines path of image file to be used for briefing (relative to current exercise root directory).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines text to be displayed for briefing.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines language which applies to briefing text (fr, en...).</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="textUnicity">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Checks that only one text is defined for each language.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="text"/>
+						<xs:field xpath="@lang"/>
+					</xs:unique>
+				</xs:element>
+				<xs:element name="resources">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines resource files associated to the exercise.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines a resource file associated to the exercise.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="file" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">File path relative to current exercise root directory.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="name" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Display name for the resource.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="orders" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines order files associated to the exercise.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="order" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines an order file associated to the exercise.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="file" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">File path relative to current exercise root directory.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="model">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the model to be used from model directory.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="dataset" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the model dataset (decisional model + physical models) to be used.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="physical" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the physical model to be used among the physical models available for the dataset.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="population">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the population model to use from the population directory.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the population model to be used.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="terrain">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the terrain to be used from terrain directory.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the terrain name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
