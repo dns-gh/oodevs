@@ -130,6 +130,12 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	// unknown population
 	c.Assert(d.IsPopulationInProfile(1, p), Equals, false)
 
+	// unknown object
+	c.Assert(d.IsObjectInProfile(1, p), Equals, false)
+
+	// unknown knowledge group
+	c.Assert(d.IsKnowledgeGroupInProfile(1, p), Equals, false)
+
 	// read-only crowd
 	fill(&p.ReadOnlyCrowds, 1)
 	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
@@ -159,6 +165,22 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 		PartyId: 1,
 	}
 	d.Crowds[c0.Id] = c0
+	kg0 := &KnowledgeGroup{
+		Id:      1,
+		PartyId: 1,
+	}
+	d.KnowledgeGroups[kg0.Id] = kg0
+	o1 := &Object{
+		Id:      1,
+		PartyId: 1,
+	}
+	d.Objects[o1.Id] = o1
+	o2 := &Object{
+		Id:      2,
+		PartyId: 0,
+	}
+	d.Objects[o2.Id] = o2
+
 	fill(&p.ReadOnlyParties, 1)
 	c.Assert(d.IsUnitInProfile(1, p), Equals, true)
 	c.Assert(d.IsAutomatInProfile(1, p), Equals, true)
@@ -167,6 +189,9 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	c.Assert(d.IsPopulationInProfile(1, p), Equals, true)
 	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
 	c.Assert(d.IsPartyInProfile(1, p), Equals, true)
+	c.Assert(d.IsKnowledgeGroupInProfile(1, p), Equals, true)
+	c.Assert(d.IsObjectInProfile(1, p), Equals, true)
+	c.Assert(d.IsObjectInProfile(2, p), Equals, true)
 	fill(&p.ReadOnlyParties)
 
 	// read-write party
@@ -178,6 +203,9 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	c.Assert(d.IsPopulationInProfile(1, p), Equals, true)
 	c.Assert(d.IsCrowdInProfile(1, p), Equals, true)
 	c.Assert(d.IsPartyInProfile(1, p), Equals, true)
+	c.Assert(d.IsKnowledgeGroupInProfile(1, p), Equals, true)
+	c.Assert(d.IsObjectInProfile(1, p), Equals, true)
+	c.Assert(d.IsObjectInProfile(2, p), Equals, true)
 	fill(&p.ReadWriteParties)
 
 	// unknown party
@@ -188,4 +216,7 @@ func (s *TestSuite) TestIsSomethingInProfile(c *C) {
 	c.Assert(d.IsPopulationInProfile(1, p), Equals, false)
 	c.Assert(d.IsCrowdInProfile(1, p), Equals, false)
 	c.Assert(d.IsPartyInProfile(1, p), Equals, false)
+	c.Assert(d.IsKnowledgeGroupInProfile(1, p), Equals, false)
+	c.Assert(d.IsObjectInProfile(1, p), Equals, false)
+	c.Assert(d.IsObjectInProfile(2, p), Equals, true) // object without party is available for any profile
 }
