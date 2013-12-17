@@ -261,7 +261,7 @@ func dump(data []byte) string {
 func createMessage(tag uint32, msg proto.Message) ([]byte, error) {
 	buffer := bytes.Buffer{}
 	writer := swapi.NewWriter(&buffer)
-	err := writer.Encode(tag, msg)
+	_, err := writer.Encode(tag, msg)
 	if err != nil {
 		return nil, err
 	}
