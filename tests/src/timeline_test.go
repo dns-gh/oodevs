@@ -186,6 +186,7 @@ func GetEvents(c *C, uuid string) []interface{} {
 	req.Header.Set("Accept", "application/json")
 	client := http.Client{}
 	rpy, err := client.Do(req)
+	c.Assert(err, IsNil)
 	defer rpy.Body.Close()
 	data, err := ioutil.ReadAll(rpy.Body)
 	c.Assert(err, IsNil)
