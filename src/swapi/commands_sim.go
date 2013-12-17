@@ -1041,6 +1041,21 @@ func (c *Client) AddObjectKnowledgeInKnowledgeGroup(groupId, entityId uint32,
 	return created, nil
 }
 
+func (c *Client) AddCrowdKnowledgeInKnowledgeGroup(groupId, entityId uint32,
+	perceptionLevel int32) (*CrowdKnowledge, error) {
+
+	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
+	if err != nil {
+		return nil, err
+	}
+	created := c.Model.GetCrowdKnowledge(id)
+	if created == nil {
+		return nil, fmt.Errorf("created crowd knowledge %d/%d is not available "+
+			"after ack", groupId, id)
+	}
+	return created, nil
+}
+
 func (c *Client) ChangeKnowledgeGroupTest(automatId uint32,
 	params *sword.MissionParameters) error {
 	return c.sendUnitMagicAction(MakeAutomatTasker(automatId), params,

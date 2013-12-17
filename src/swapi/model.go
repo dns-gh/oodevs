@@ -444,6 +444,18 @@ func (model *Model) GetUnitKnowledge(id uint32) *UnitKnowledge {
 	return k
 }
 
+func (model *Model) GetCrowdKnowledge(id uint32) *CrowdKnowledge {
+	var k *CrowdKnowledge
+	model.waitCommand(func(model *Model) {
+		knowledge, ok := model.data.CrowdKnowledges[id]
+		if ok {
+			k = &CrowdKnowledge{}
+			DeepCopy(k, knowledge)
+		}
+	})
+	return k
+}
+
 func (model *Model) GetTick() int32 {
 	tick := int32(0)
 	model.waitCommand(func(model *Model) {
