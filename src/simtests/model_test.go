@@ -273,6 +273,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	swtest.AssertEqualOrDiff(c, dump, expected)
 	client.Close()
 
+	// Do not enable the model, it is there but get no updates
 	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.EnableModel = false
@@ -282,6 +283,15 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	c.Assert(client.Model, NotNil)
 	ok := client.Model.WaitReady(2 * time.Second)
 	c.Assert(ok, Equals, false)
+	client.Close()
+
+	// Terminate the simulation before the client, the model should continue
+	// to handle queries, not panic.
+	client = connectClient(c, sim, NewAllUserOpts(ExCrossroadSmallOrbat))
+	err = sim.Stop()
+	c.Assert(err, IsNil)
+	data := client.Model.GetData()
+	c.Assert(data, NotNil)
 }
 
 func (s *TestSuite) TestModelIsolation(c *C) {
