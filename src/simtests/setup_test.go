@@ -98,15 +98,12 @@ func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
 	return opts, session
 }
 
-func startSimOnExercise(c *C, exercise string, endTick int, paused bool,
-	step int) *simu.SimProcess {
-
+func startSimOnExercise(c *C, cfg *ClientOpts) *simu.SimProcess {
 	opts, session := makeOptsAndSession()
-	opts.ExerciseName = exercise
-
-	session.Paused = paused
-	if step > 0 {
-		session.TimeStep = step
+	opts.ExerciseName = cfg.Exercise
+	session.Paused = cfg.Paused
+	if cfg.Step > 0 {
+		session.TimeStep = cfg.Step
 	}
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
@@ -203,6 +200,7 @@ type ClientOpts struct {
 	User     string
 	Password string
 	Step     int
+	Paused   bool
 	Logger   swapi.MessageLogger
 }
 
@@ -269,8 +267,7 @@ func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
-
-	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
+	sim := startSimOnExercise(c, opts)
 	client := loginAndWaitModel(c, sim, opts)
 	return sim, client
 }
