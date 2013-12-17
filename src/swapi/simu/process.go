@@ -122,7 +122,7 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 	}
 	err := cmd.Start()
 	if err != nil {
-		return &s, err
+		return nil, err
 	}
 
 	// Process.Wait() cannot be called concurrently, so always wait for process
