@@ -12,7 +12,6 @@
 
 #include "ModalDialog.h"
 #include "SoundManager.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include <tools/Observer_ABC.h>
 
 namespace kernel
@@ -34,7 +33,6 @@ namespace gui
     class PreferencePanel_ABC;
     class CoordinateSystemsPanel;
     class Painter_ABC;
-    class SoundPlayer;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -44,7 +42,6 @@ namespace gui
 // =============================================================================
 class PreferencesDialog : public ModalDialog
                         , public tools::Observer_ABC
-                        , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -52,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundPlayer* soundPlayer );
+                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences );
     virtual ~PreferencesDialog();
     //@}
 
@@ -61,13 +58,11 @@ public:
     virtual QSize sizeHint () const;
     virtual void showEvent( QShowEvent * event );
     virtual void reject();
-    GraphicPreferences& GetPreferences() const;
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );
 
     void PurgeDialog();
-    void BuildPreparationSettings();
     //@}
 
 private slots:
@@ -78,19 +73,21 @@ private slots:
     //@}
 
 signals:
+    //! @name Signals
+    //@{
     void OnAddRaster();
+    //@}
 
 private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyModeChanged( E_Modes newMode );
+    void BuildSettings();
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< PreferencePanel_ABC* > T_Pages;
-    typedef T_Pages::iterator                  IT_Pages;
     //@}
 
 private:
@@ -103,10 +100,8 @@ private:
     LayersPanel* layersPanel_;
     GraphicsPanel* pGraphicPrefPanel_;
     CoordinateSystemsPanel* pCoordinateSystemsPanel_;
-    E_Modes oldMode_;
     LightingProxy& lighting_;
     Elevation2dLayer& elevation2dLayer_;
-    SoundPlayer* soundPlayer_;
     //@}
 };
 

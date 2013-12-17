@@ -10,7 +10,7 @@
 #ifndef __FormationModel_h_
 #define __FormationModel_h_
 
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Resolver.h>
 #include <tools/ElementObserver_ABC.h>
 #include <boost/noncopyable.hpp>

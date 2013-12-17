@@ -18,9 +18,9 @@ using namespace gui;
 // Name: GraphicsPanel constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers )
+GraphicsPanel::GraphicsPanel( QWidget* parent, GraphicPreferences& preferences )
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
-    , preferences_( *new GraphicPreferences( controllers ) )
+    , preferences_( preferences )
 {
     SubObjectName subObject( "GraphicsPanel" );
     Q3VBox* container = new Q3VBox( this );
@@ -34,16 +34,7 @@ GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers 
 // -----------------------------------------------------------------------------
 GraphicsPanel::~GraphicsPanel()
 {
-    delete &preferences_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicsPanel::GetPreferences
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-GraphicPreferences& GraphicsPanel::GetPreferences()
-{
-    return preferences_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

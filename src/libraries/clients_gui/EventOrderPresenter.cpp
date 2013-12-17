@@ -189,7 +189,7 @@ namespace
                                        const kernel::OrderType& orderType,
                                        const kernel::Entity_ABC& entity )
     {
-        if( type == eNbrMissionTypes )
+        if( type == eNbrMissionType )
             throw MASA_EXCEPTION( "Can't create action with an invalid type" );
         if( type == eMissionType_FragOrder )
             return actionsFactory.CreateAction( &entity, static_cast< const kernel::FragOrderType& >( orderType ) );
@@ -408,7 +408,7 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
     state_->currentType_ = type;
 
     // Retrieve types
-    for( int i = 0; i < eNbrMissionTypes; ++i )
+    for( int i = 0; i < eNbrMissionType; ++i )
         state_->types_.push_back( static_cast< E_MissionType >( i ) );
 
     // Retrieve missions

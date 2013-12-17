@@ -2033,6 +2033,14 @@ This data can&apos;t be projected.</source>
         <source>Weather</source>
         <translation type="unfinished">الطقس</translation>
     </message>
+    <message>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation>أوربات</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

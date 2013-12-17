@@ -18,7 +18,6 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 

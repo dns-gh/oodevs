@@ -24,7 +24,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "preparation/Agent.h"
 #include "preparation/GhostHierarchies.h"
-#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: SymbolDialog constructor

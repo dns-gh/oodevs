@@ -394,7 +394,7 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_Time surveyTimes_[ eNbrVisionObjects - 1 ];
+        ADN_Type_Time surveyTimes_[ eNbrVisionObject - 1 ];
     };
 
 //*****************************************************************************

@@ -18,7 +18,7 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

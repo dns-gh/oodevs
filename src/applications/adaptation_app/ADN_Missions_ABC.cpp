@@ -27,7 +27,7 @@
 ADN_Missions_ABC::ADN_Missions_ABC()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
     , needSheetSaving_( false )
-    , type_( eNbrMissionTypes )
+    , type_( eNbrMissionType )
 {
     assert( false ); // $$$$ ABR 2013-08-23: useless constructor, needed by ADN_Wizard...
 }
@@ -71,7 +71,7 @@ ADN_Missions_ABC::~ADN_Missions_ABC()
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::Initialize()
 {
-    std::string context = ENT_Tr::ConvertFromMissionType( type_, ENT_Tr_ABC::eToSim );
+    std::string context = ENT_Tr::ConvertFromMissionType( type_, ENT_Tr::eToSim );
     if( type_ != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context ) );
@@ -392,8 +392,8 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 {
     std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter( type_ ) );
 
-    spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToTr );
-    spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToSim );
+    spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToTr );
+    spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr::eToSim );
     spNew->type_ = parameterType;
     spNew->isOptional_ = optional;
     spNew->isContext_ = true;

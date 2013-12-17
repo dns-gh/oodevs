@@ -558,7 +558,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     }
 
     // initialize environment modificator infos
-    for( i = 0; i< eNbrVisionObjects; ++i )
+    for( i = 0; i< eNbrVisionObject; ++i )
     {
         ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos( static_cast< E_VisionObject >( i) );
         vModifEnvironments_.AddItem( pInfo );
@@ -635,7 +635,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
         pCopy->vModifWeather_[ i ]->rCoeff_ = vModifWeather_[ i ]->rCoeff_.GetData();
 
     // initialize environment modificator infos
-    for( i= 0; i < eNbrVisionObjects; ++i )
+    for( i= 0; i < eNbrVisionObject; ++i )
         pCopy->vModifEnvironments_[ i ]->rCoeff_ = vModifEnvironments_[ i ]->rCoeff_.GetData();
 
     // initialize posture modificator infos
@@ -1018,7 +1018,7 @@ void ADN_Sensors_Data::SensorInfos::CheckDatabaseValidity( ADN_ConsistencyChecke
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::ALATInfos::ALATInfos()
 {
-    for( int n = 1; n < eNbrVisionObjects; ++n )
+    for( int n = 1; n < eNbrVisionObject; ++n )
         surveyTimes_[ n - 1 ] = "0s";
 }
 
@@ -1059,7 +1059,7 @@ void ADN_Sensors_Data::ALATInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "alat-monitoring-times" );
-    for( int n = 1; n < eNbrVisionObjects; ++n )
+    for( int n = 1; n < eNbrVisionObject; ++n )
         output << xml::start( "alat-monitoring-time" )
                 << xml::attribute( "terrain", ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ) ) )
                 << xml::attribute( "time", surveyTimes_[ n-1 ] )

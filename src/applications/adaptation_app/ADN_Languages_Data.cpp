@@ -281,7 +281,7 @@ void ADN_Languages_Data::CleanLocalDirectories() const
 {
     tools::Path::T_Paths localPaths;
     localPaths.push_back( ADN_Workspace::GetWorkspace().GetProject().GetLocalDir() );
-    for( int i = 0; i < eNbrMissionTypes; ++i )
+    for( int i = 0; i < eNbrMissionType; ++i )
         localPaths.push_back( ADN_Workspace::GetWorkspace().GetProject().GetLocalMissionDir( static_cast< E_MissionType >( i ) ) );
 
     for( auto itLocalPath = localPaths.begin(); itLocalPath != localPaths.end(); ++itLocalPath )

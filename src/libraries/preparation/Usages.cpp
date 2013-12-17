@@ -11,7 +11,7 @@
 #include "Usages.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 

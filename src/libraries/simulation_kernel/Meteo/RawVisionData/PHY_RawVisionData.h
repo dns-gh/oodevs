@@ -46,7 +46,7 @@ public:
         eVisionForest     = 0x1,
         eVisionUrban      = 0x2,
         eVisionGround     = 0x4,
-        eNbrVisionObjects = 4
+        eNbrVisionObject = 4
     };
 
 public:

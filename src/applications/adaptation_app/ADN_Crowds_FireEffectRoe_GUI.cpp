@@ -54,7 +54,7 @@ void ADN_Crowds_FireEffectRoe_GUI::AddRow( int row, void* data )
     FireEffectRoeInfos* info = static_cast< FireEffectRoeInfos* >( data );
     if( !info )
         return;
-    AddItem( row, 0, data, QString( ENT_Tr::ConvertFromPopulationRoe( info->nRoe_, ENT_Tr_ABC::eToTr ).c_str() ), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, QString( ENT_Tr::ConvertFromPopulationRoe( info->nRoe_, ENT_Tr::eToTr ).c_str() ), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &info->rAttritionSurface_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 2, data, &info->rPH_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

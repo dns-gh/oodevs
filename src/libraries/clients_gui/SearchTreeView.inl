@@ -20,7 +20,7 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename EnumType >
     void SearchTreeView_ABC::AddEnumFilter( const QString& text, EnumType maxValue, CheckComboBox::T_Extractor extractor,
-                                            const std::string& (*converter)( EnumType, ENT_Tr_ABC::E_Conversion ), const QString& noneText /* = "" */ )
+                                            const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ), const QString& noneText /* = "" */ )
     {
         // Label
         QLabel* label = new QLabel( text );

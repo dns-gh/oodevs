@@ -11,7 +11,7 @@
 #define __ADN_Type_Enum_h_
 
 #include "ADN_Connector_Vector_ABC.h"
-#include "ENT/ENT_Tr_ABC.h"
+#include "ENT/ENT_Tr.h"
 #include "ADN_Tr.h"
 #include "ADN_ComboBox.h"
 
@@ -22,7 +22,7 @@ template< class T, int nb >
 class ADN_Type_Enum : public ADN_Connector_ABC
 {
 public:
-    typedef typename const std::string& (*T_Converter)( T, ENT_Tr_ABC::E_Conversion );
+    typedef typename const std::string& (*T_Converter)( T, ENT_Tr::E_Conversion );
 
     explicit ADN_Type_Enum();
     explicit ADN_Type_Enum( const T& value );
@@ -50,7 +50,7 @@ public:
 
     void SetAlphabeticalSort( bool sort );
     static void SetConverter( typename ADN_Type_Enum::T_Converter enumConverter );
-    const std::string& Convert( ENT_Tr_ABC::E_Conversion nConversion = ENT_Tr_ABC::eToSim ) const;
+    const std::string& Convert( ENT_Tr::E_Conversion nConversion = ENT_Tr::eToSim ) const;
 
 protected:
     virtual void SetDataPrivate( void *data );

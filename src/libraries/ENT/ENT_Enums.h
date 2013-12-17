@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ENT_Enums_Gen_h_
-#define __ENT_Enums_Gen_h_
+#ifndef __ENT_Enums_h_
+#define __ENT_Enums_h_
 
 enum E_LayerTypes
 {
@@ -25,7 +25,8 @@ enum E_LayerTypes
     eLayerTypes_Parties,
     eLayerTypes_Drawers,
     eLayerTypes_Knowledges,
-    eLayerTypes_Inhabitants
+    eLayerTypes_Inhabitants,
+    eNbrLayerTypes
 };
 
 enum E_LocationType
@@ -42,17 +43,17 @@ enum E_LocationType
 
 enum E_DotationFamily
 {
-    eDotationFamily_Munition        = 0,
-    eDotationFamily_Carburant       = 1,
-    eDotationFamily_Explosif        = 2,
-    eDotationFamily_Mine            = 3,
-    eDotationFamily_Barbele         = 4,
-    eDotationFamily_Piece           = 5,
-    eDotationFamily_Ration          = 6,
-    eDotationFamily_AgentExtincteur = 7,
-    eDotationFamily_Energy          = 8,
-    eDotationFamily_Funeraire       = 9,
-    eNbrDotationFamily              = 10
+    eDotationFamily_Munition,
+    eDotationFamily_Carburant,
+    eDotationFamily_Explosif,
+    eDotationFamily_Mine,
+    eDotationFamily_Barbele,
+    eDotationFamily_Piece,
+    eDotationFamily_Ration,
+    eDotationFamily_AgentExtincteur,
+    eDotationFamily_Energy,
+    eDotationFamily_Funeraire,
+    eNbrDotationFamily
 };
 
 enum E_AmmunitionType
@@ -67,21 +68,21 @@ enum E_AmmunitionType
 
 enum E_NatureLevel
 {
-    eNatureLevel_None  = 0,
-    eNatureLevel_b     = 1,
-    eNatureLevel_o     = 2,
-    eNatureLevel_c     = 3,
-    eNatureLevel_oo    = 4,
-    eNatureLevel_ooo   = 5,
-    eNatureLevel_i     = 6,
-    eNatureLevel_ii    = 7,
-    eNatureLevel_iii   = 8,
-    eNatureLevel_x     = 9,
-    eNatureLevel_xx    = 10,
-    eNatureLevel_xxx   = 11,
-    eNatureLevel_xxxx  = 12,
-    eNatureLevel_xxxxx = 13,
-    eNbrNatureLevel    = 14
+    eNatureLevel_None,
+    eNatureLevel_b,
+    eNatureLevel_o,
+    eNatureLevel_c,
+    eNatureLevel_oo,
+    eNatureLevel_ooo,
+    eNatureLevel_i,
+    eNatureLevel_ii,
+    eNatureLevel_iii,
+    eNatureLevel_x,
+    eNatureLevel_xx,
+    eNatureLevel_xxx,
+    eNatureLevel_xxxx,
+    eNatureLevel_xxxxx,
+    eNbrNatureLevel
 };
 
 enum E_Diplomacy
@@ -191,18 +192,18 @@ enum E_UnitStress
 
 enum E_LightingType
 {
-    eLightingType_JourSansNuage          = 0,
-    eLightingType_JourPeuNuageux         = 1,
-    eLightingType_JourMoyennementNuageux = 2,
-    eLightingType_JourAssezNuageux       = 3,
-    eLightingType_JourTresNuageux        = 4,
-    eLightingType_NuitPleineLune         = 5,
-    eLightingType_NuitTroisQuartDeLune   = 6,
-    eLightingType_NuitDemiLune           = 7,
-    eLightingType_NuitQuartDeLune        = 8,
-    eLightingType_NuitNouvelleLune       = 9,
-    eLightingType_Eclairant              = 10,
-    eNbrLightingType                     = 11
+    eLightingType_JourSansNuage,
+    eLightingType_JourPeuNuageux,
+    eLightingType_JourMoyennementNuageux,
+    eLightingType_JourAssezNuageux,
+    eLightingType_JourTresNuageux,
+    eLightingType_NuitPleineLune,
+    eLightingType_NuitTroisQuartDeLune,
+    eLightingType_NuitDemiLune,
+    eLightingType_NuitQuartDeLune,
+    eLightingType_NuitNouvelleLune,
+    eLightingType_Eclairant,
+    eNbrLightingType
 };
 
 enum E_WeatherType
@@ -348,13 +349,13 @@ enum E_CrossingType
 
 enum E_EquipmentState
 {
-    eEquipmentState_Available                = 0,
-    eEquipmentState_Destroyed                = 1,
-    eEquipmentState_RepairableWithEvacuation = 2,
-    eEquipmentState_OnSiteFixable            = 3,
-    eEquipmentState_InMaintenance            = 4,
-    eEquipmentState_Prisonner                = 5,
-    eNbrEquipmentState                       = 6
+    eEquipmentState_Available,
+    eEquipmentState_Destroyed,
+    eEquipmentState_RepairableWithEvacuation,
+    eEquipmentState_OnSiteFixable,
+    eEquipmentState_InMaintenance,
+    eEquipmentState_Prisonner,
+    eNbrEquipmentState
 };
 
 enum E_HumanWound
@@ -370,51 +371,51 @@ enum E_HumanWound
 
 enum E_HumanRank
 {
-    eHumanRank_Officier    = 0,
-    eHumanRank_SousOfficer = 1,
-    eHumanRank_Mdr         = 2,
-    eNbrHumanRank          = 3
+    eHumanRank_Officier,
+    eHumanRank_SousOfficer,
+    eHumanRank_Mdr,
+    eNbrHumanRank
 };
 
 enum E_HumanState // $$$$ ABR 2011-07-19: Here to replace HumanWounds
 {
-    eHumanState_Healthy = 0,
-    eHumanState_Injured = 1,
-    eHumanState_Dead    = 2,
-    eNbrHumanState      = 3
+    eHumanState_Healthy,
+    eHumanState_Injured,
+    eHumanState_Dead,
+    eNbrHumanState
 };
 
 enum E_HumanLocation
 {
-    eHumanLocation_Battlefield = 0,
-    eHumanLocation_Maintenance = 1,
-    eHumanLocation_Medical     = 2,
-    eHumanLocation_Funeral     = 3,
-    eNbrHumanLocation          = 4
+    eHumanLocation_Battlefield,
+    eHumanLocation_Maintenance,
+    eHumanLocation_Medical,
+    eHumanLocation_Funeral,
+    eNbrHumanLocation
 };
 
 enum E_InjuriesSeriousness
 {
-    eInjuriesSeriousness_U1 = 0,
-    eInjuriesSeriousness_U2 = 1,
-    eInjuriesSeriousness_U3 = 2,
-    eInjuriesSeriousness_UE = 3,
-    eNbrInjuriesSeriousness = 4
+    eInjuriesSeriousness_U1,
+    eInjuriesSeriousness_U2,
+    eInjuriesSeriousness_U3,
+    eInjuriesSeriousness_UE,
+    eNbrInjuriesSeriousness
 };
 
 enum E_GhostType
 {
-    eGhostType_Agent   = 0,
-    eGhostType_Automat = 1,
-    eGhostType_Invalid = 2,
-    eNbrGhostType      = 3
+    eGhostType_Agent,
+    eGhostType_Automat,
+    eGhostType_Invalid,
+    eNbrGhostType
 };
 
 enum E_NbcState
 {
-    eNbcState_Liquid  = 0,
-    eNbcState_Gaseous = 1,
-    eNbrNbcState      = 2
+    eNbcState_Liquid,
+    eNbcState_Gaseous,
+    eNbrNbcState
 };
 
 enum E_Modes
@@ -433,7 +434,9 @@ enum E_Modes
     eModes_Replay       = 0x0004 << 4,
     eModes_AllGaming    = 0x000F << 4,
 
-    eModes_All          = 0xFFFF        // Filter
+    eModes_All          = 0xFFFF,       // Filter
+
+    eNbrModes = 11 // hardcoded
 };
 
 enum E_AgentNbcSuit
@@ -459,45 +462,45 @@ enum E_EventTypes
 
 enum E_MissionType
 {
-    eMissionType_Pawn       = 0,
-    eMissionType_Automat    = 1,
-    eMissionType_Population = 2,
-    eMissionType_FragOrder  = 3,
-    eNbrMissionTypes        = 4
+    eMissionType_Pawn,
+    eMissionType_Automat,
+    eMissionType_Population,
+    eMissionType_FragOrder,
+    eNbrMissionType
 };
 
 enum E_AviationRange
 {
-    eAviationRange_ShortRange   = 0,
-    eAviationRange_MediumRange  = 1,
-    eAviationRange_LongRange    = 2,
-    eAviationRange_NoAmmunition = 3,
-    eNbrAviationRanges          = 4
+    eAviationRange_ShortRange,
+    eAviationRange_MediumRange,
+    eAviationRange_LongRange,
+    eAviationRange_NoAmmunition,
+    eNbrAviationRange
 };
 
 enum E_FuncLimaType
 {
-    eLimaFuncLD     = 0, // Ligne de débouché
-    eLimaFuncLCA    = 1, // Ligne de changement d'attitude
-    eLimaFuncLC     = 2, // Ligne de coordination
-    eLimaFuncLI     = 3, // Ligne à interdire
-    eLimaFuncLO     = 4, // Ligne d'objectif
-    eLimaFuncLCAR   = 5, // Ligne de coup d'arrêt
-    eLimaFuncLR     = 6, // Ligne de recueil
-    eLimaFuncLDM    = 7, // Ligne de début de mission
-    eLimaFuncLFM    = 8, // Ligne de fin de mission
-    eLimaFuncLIA    = 9, // Ligne d'identification acceuil
-    eLimaFuncNbr         // Keep this at the end of the enum! No !
+    eLimaFuncLD,    // Ligne de débouché
+    eLimaFuncLCA,   // Ligne de changement d'attitude
+    eLimaFuncLC,    // Ligne de coordination
+    eLimaFuncLI,    // Ligne à interdire
+    eLimaFuncLO,    // Ligne d'objectif
+    eLimaFuncLCAR,  // Ligne de coup d'arrêt
+    eLimaFuncLR,    // Ligne de recueil
+    eLimaFuncLDM,   // Ligne de début de mission
+    eLimaFuncLFM,   // Ligne de fin de mission
+    eLimaFuncLIA,   // Ligne d'identification acceuil
+    eLimaFuncNbr    // Keep this at the end of the enum! No !
 };
 
 enum E_EventDockModes
 {
-    eEventDockModes_None             = 0,
-    eEventDockModes_DisplayTriggered = 1,
-    eEventDockModes_EditTriggered    = 2,
-    eEventDockModes_EditPlanned      = 3,
-    eEventDockModes_Create           = 4,
-    eNbrEventDockModes               = 5
+    eEventDockModes_None,
+    eEventDockModes_DisplayTriggered,
+    eEventDockModes_EditTriggered,
+    eEventDockModes_EditPlanned,
+    eEventDockModes_Create,
+    eNbrEventDockModes
 };
 
-#endif // __ENT_Enums_Gen_h_
+#endif __ENT_Enums_h_

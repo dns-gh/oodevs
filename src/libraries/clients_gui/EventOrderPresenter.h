@@ -12,7 +12,7 @@
 
 #include "EventSubPresenter_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/scoped_ptr.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4251 )

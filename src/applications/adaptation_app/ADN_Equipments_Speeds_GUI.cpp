@@ -127,7 +127,7 @@ void ADN_Equipments_Speeds_GUI::AddRow( int row, void* data )
     SpeedInfos* infos = static_cast< SpeedInfos* >( data );
     if( !infos )
         return;
-    QString typeTerrain = ENT_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr_ABC::eToTr ).c_str();
+    QString typeTerrain = ENT_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr::eToTr ).c_str();
     AddItem( row, 0, data, typeTerrain );
     AddItem( row, 1, data, &infos->rSpeed_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 2, data, &infos->nConstruction_, ADN_StandardItem::eInt, Qt::ItemIsEditable );

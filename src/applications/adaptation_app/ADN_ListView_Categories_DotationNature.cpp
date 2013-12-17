@@ -18,7 +18,6 @@
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 #include "ADN_WorkspaceElement.h"
-#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature

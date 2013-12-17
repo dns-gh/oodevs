@@ -12,7 +12,7 @@
 
 #include "Formation_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "ENT/ENT_Tr_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace sword
 {

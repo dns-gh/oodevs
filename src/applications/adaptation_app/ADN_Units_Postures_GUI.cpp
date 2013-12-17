@@ -59,7 +59,7 @@ void ADN_Units_Postures_GUI::AddRow( int row, void* data )
     if( !pInfo )
         return;
 
-    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfo->nPosture_, ENT_Tr_ABC::eToTr ).c_str() );
+    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfo->nPosture_, ENT_Tr::eToTr ).c_str() );
     AddItem( row, 1, data, &pInfo->timeToActivate_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pInfo->timeToDeactivate_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
 }

@@ -22,7 +22,6 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
 

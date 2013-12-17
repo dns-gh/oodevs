@@ -1474,17 +1474,6 @@ This data can&apos;t be projected.</translation>
     </message>
 </context>
 <context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Edition</source>
-        <translation>Edition</translation>
-    </message>
-    <message>
-        <source>Ghost:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PerformanceDialog</name>
     <message>
         <source>Performance dialog</source>
@@ -2305,33 +2294,6 @@ This data can&apos;t be projected.</translation>
     </message>
 </context>
 <context>
-    <name>ScoreVariablesList</name>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Value</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Del</source>
-        <translation>Del</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Paste</translation>
-    </message>
-</context>
-<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
@@ -2932,6 +2894,17 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Weather parameters</source>
         <translation>Weather parameters</translation>
+    </message>
+</context>
+<context>
+    <name>preparation::OrbatPanel</name>
+    <message>
+        <source>Edition</source>
+        <translation>Edition</translation>
+    </message>
+    <message>
+        <source>Ghost:</source>
+        <translation>Ghost:</translation>
     </message>
 </context>
 <context>

@@ -13,7 +13,7 @@
 #include "ArmyFactory_ABC.h"
 #include "MT_Tools/MT_Converter.h"
 #include "MT_Tools/MT_String.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 class AutomateFactory_ABC;
 class FormationFactory_ABC;

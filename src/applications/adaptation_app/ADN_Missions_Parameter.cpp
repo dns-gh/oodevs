@@ -27,7 +27,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter(E_MissionType type)
     , isContext_( false )
     , missionType_( type )
 {
-    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr_ABC::eToSim );
+    std::string context = ENT_Tr::ConvertFromMissionType( type, ENT_Tr::eToSim );
     if( type != eMissionType_FragOrder )
         context += "-missions";
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eMissions, context + "-parameters" ) );
@@ -137,7 +137,6 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
         }
     }
 }
-
 
 void ADN_Missions_Parameter::FillChoices()
 {

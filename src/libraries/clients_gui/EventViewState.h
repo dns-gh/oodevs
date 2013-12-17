@@ -10,7 +10,7 @@
 #ifndef __EventViewState_h_
 #define __EventViewState_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "clients_kernel/Event.h"
 #include <boost/shared_ptr.hpp>
 

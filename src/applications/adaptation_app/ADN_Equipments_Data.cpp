@@ -1526,7 +1526,7 @@ void ADN_Equipments_Data::EquipmentInfos::Initialize()
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
         vSpeeds_.AddItem( new SpeedInfos( static_cast< E_Location >( iTerrain ) ) );
 
-    for( int iRange = 0; iRange < eNbrAviationRanges; ++iRange )
+    for( int iRange = 0; iRange < eNbrAviationRange; ++iRange )
         vAviationResourceQuotas_.AddItem( new AviationResourceQuotasInfos( static_cast< E_AviationRange >( iRange ) ) );
 }
 
@@ -1569,7 +1569,7 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     }
 
     pCopy->bAviationResourcesQuotas_ = bAviationResourcesQuotas_.GetData();
-    for( int iRange = 0; iRange < eNbrAviationRanges; ++iRange )
+    for( int iRange = 0; iRange < eNbrAviationRange; ++iRange )
         for( int i = 0; i < eNbrAmmunitionType + 1; ++i )
             pCopy->vAviationResourceQuotas_[ iRange ]->resourceQuotas_[ i ] = vAviationResourceQuotas_[ iRange ]->resourceQuotas_[ i ].GetData();
 

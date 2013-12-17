@@ -321,7 +321,7 @@ QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& v
     {
         QWidget* pHolder = builder.AddFieldHolder( pCureDoctorGroup );
         builder.AddField< ADN_CheckBox >( pHolder,
-            ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ), ADN_Tr::eToSim ).c_str(),
+            ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ), ENT_Tr::eToSim ).c_str(),
             ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) ).c_str(),
             vInfosConnectors[ eDoctorSkills + n ] );
     }
@@ -359,7 +359,7 @@ QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objec
     {
         pHolder = builder.AddFieldHolder( pSkillsBox );
         builder.AddField< ADN_CheckBox >( pHolder,
-            ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ), ADN_Tr::eToSim ).c_str(), 
+            ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ), ENT_Tr::eToSim ).c_str(),
             ADN_Tr::ConvertFromDoctorSkills( static_cast< E_DoctorSkills >( n ) ).c_str(),
             vInfosConnectors[ nIndex + 6 + n ] );
     }
@@ -481,7 +481,7 @@ namespace
             QStringList horizontalHeaders;
             horizontalHeaders.append( tr( "Equipment" ) );
             for( unsigned int n = 0; n < eNbrLocation; ++n )
-                horizontalHeaders.append( ENT_Tr::ConvertFromLocation( static_cast< E_Location >( n ), ADN_Tr::eToTr ).c_str() );
+                horizontalHeaders.append( ENT_Tr::ConvertFromLocation( static_cast< E_Location >( n ), ENT_Tr::eToTr ).c_str() );
             dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
             horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
             verticalHeader()->setVisible( false );

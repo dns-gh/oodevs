@@ -23,7 +23,7 @@
 ADN_GUI_ABC::ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
     : pMainWidget_ ( 0 )
     , pListView_( 0 )
-    , strClassName_( ADN_Tr::ConvertFromWorkspaceElement( workspaceElement, ADN_Tr::eToSim ).c_str() )
+    , strClassName_( ADN_Tr::ConvertFromWorkspaceElement( workspaceElement, ENT_Tr::eToSim ).c_str() )
 {
     // NOTHING
 }

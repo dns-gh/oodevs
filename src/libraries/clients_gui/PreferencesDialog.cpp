@@ -20,10 +20,8 @@
 #include "LayersPanel.h"
 #include "InhabitantPanel.h"
 #include "resources.h"
-#include "OrbatPanel.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
-#include "SoundPanel.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
 #include "clients_kernel/ModeController.h"
@@ -37,15 +35,13 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, SoundPlayer* soundPlayer )
+                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer, GraphicPreferences& preferences )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
     , pGraphicPrefPanel_( 0 )
-    , oldMode_ ( eModes_None )
-    , lighting_ ( lighting )
+    , lighting_         ( lighting )
     , elevation2dLayer_ ( elevation2dLayer )
-    , soundPlayer_( soundPlayer )
 {
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
@@ -79,7 +75,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     list_ = new PreferencesList( "preferencesList", box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    pGraphicPrefPanel_       = new GraphicsPanel( this, controllers );
+    pGraphicPrefPanel_       = new GraphicsPanel( this, preferences );
     layersPanel_             = new LayersPanel( this, controllers, selector );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
 
@@ -95,6 +91,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
     connect( this, SIGNAL( OnAddRaster() ), parent, SLOT( OnAddRaster() ) );
 
+    BuildSettings();
     hide();
     controllers_.modes_.Register( *this );
 }
@@ -148,23 +145,12 @@ void PreferencesDialog::reject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesDialog::GetPreferences
-// Created: SBO 2006-05-04
-// -----------------------------------------------------------------------------
-GraphicPreferences& PreferencesDialog::GetPreferences() const
-{
-    if( !pGraphicPrefPanel_ )
-        throw MASA_EXCEPTION( "Graphic preference panel not initialized" );
-       return pGraphicPrefPanel_->GetPreferences();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PreferencesDialog::OnOk
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
 void PreferencesDialog::OnOk()
 {
-    for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
+    for( auto it = pages_.begin(); it != pages_.end(); ++it )
         (*it)->Commit();
     hide();
 }
@@ -175,7 +161,7 @@ void PreferencesDialog::OnOk()
 // -----------------------------------------------------------------------------
 void PreferencesDialog::OnCancel()
 {
-    for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
+    for( auto it = pages_.begin(); it != pages_.end(); ++it )
         (*it)->Reset();
     hide();
 }
@@ -190,29 +176,6 @@ void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool d
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesDialog::NotifyModeChanged
-// Created: NPT 2013-07-15
-// -----------------------------------------------------------------------------
-void PreferencesDialog::NotifyModeChanged( E_Modes newMode )
-{
-    if( ( newMode & eModes_AllGaming ) != 0 && oldMode_ != eModes_AllGaming )
-    {
-        oldMode_ = eModes_AllGaming;
-        PurgeDialog();
-        BuildPreparationSettings();
-        if( soundPlayer_ )
-            AddPage( tr( "Sound" ), *new SoundPanel( this, controllers_, *soundPlayer_ ) );
-        AddPage( tr( "Orbat" ), *new OrbatPanel( this, controllers_ ) );
-    }
-    else if( ( newMode & eModes_Preparation ) != 0 && oldMode_ != eModes_Preparation )
-    {
-        oldMode_ = eModes_Preparation;
-        PurgeDialog();
-        BuildPreparationSettings();
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PreferencesDialog::PurgeDialog
 // Created: NPT 2013-07-15
 // -----------------------------------------------------------------------------
@@ -223,10 +186,10 @@ void PreferencesDialog::PurgeDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesDialog::BuildPreparationSettings
+// Name: PreferencesDialog::BuildSettings
 // Created: NPT 2013-07-15
 // -----------------------------------------------------------------------------
-void PreferencesDialog::BuildPreparationSettings()
+void PreferencesDialog::BuildSettings()
 {
     AddPage( tools::translate( "PreferencesDialog", "Coordinate System" ), *pCoordinateSystemsPanel_ );
     AddPage( tools::translate( "PreferencesDialog", "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers_ ) );

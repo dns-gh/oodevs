@@ -31,7 +31,6 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/Decisions_ABC.h"
 #include "tools/GeneralConfig.h"
-#include "ENT/ENT_Tr_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalTreeView constructor
@@ -90,7 +89,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
         currentEntity_ = &entity;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
         for( int levelIt = static_cast< int >( eNatureLevel_xxxxx ); levelIt > 0; --levelIt )
-            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr_ABC::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
     }
     NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }

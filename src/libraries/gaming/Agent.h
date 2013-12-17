@@ -16,7 +16,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Resolver_ABC.h>
 
 namespace sword

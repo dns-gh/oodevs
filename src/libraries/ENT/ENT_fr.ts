@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Planning</source>
-        <translation>Plannification</translation>
+        <translation>Planification</translation>
     </message>
     <message>
         <source>Replay</source>
@@ -970,6 +970,14 @@
     <message>
         <source>No ammunition</source>
         <translation>Sans munitions</translation>
+    </message>
+    <message>
+        <source>Preparation</source>
+        <translation>Préparation</translation>
+    </message>
+    <message>
+        <source>All Gaming</source>
+        <translation>Tout jeu</translation>
     </message>
     <message>
         <source>Display triggered</source>

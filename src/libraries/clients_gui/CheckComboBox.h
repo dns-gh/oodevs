@@ -10,7 +10,7 @@
 #ifndef __gui_CheckComboBox_h_
 #define __gui_CheckComboBox_h_
 
-#include "ENT/ENT_Tr_ABC.h"
+#include "ENT/ENT_Tr.h"
 #include "RichLineEdit.h"
 #include "RichWidget.h"
 #include <tools/Resolver_ABC.h>
@@ -105,7 +105,7 @@ public:
     //! @name Filling operations
     //@{
     template< typename EnumType >
-    void FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr_ABC::E_Conversion ) );
+    void FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ) );
     template< typename KernelType, typename Identifier >
     void FillFromResolver( const tools::Resolver_ABC< KernelType, Identifier >& resolver, const std::string& (KernelType::* converter )() const );
     void FillFromStringList( const std::vector< std::string >& vector );
@@ -180,13 +180,13 @@ public:
 // Created: ABR 2012-06-19
 // -----------------------------------------------------------------------------
 template< typename EnumType >
-void CheckComboBox::FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr_ABC::E_Conversion ) )
+void CheckComboBox::FillFromEnum( EnumType nbrMax, const std::string& (*converter)( EnumType, ENT_Tr::E_Conversion ) )
 {
     int row = 0;
     //AddItem( row, allText_ );
     AddItem( row, noneText_ );
     for( int i = 0; i < static_cast< int >( nbrMax ); ++i )
-        AddItem( row, converter( static_cast< EnumType >( i ), ENT_Tr_ABC::eToTr ).c_str() );
+        AddItem( row, converter( static_cast< EnumType >( i ), ENT_Tr::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

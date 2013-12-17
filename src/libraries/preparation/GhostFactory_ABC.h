@@ -11,7 +11,7 @@
 #define __GhostFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 namespace kernel
 {

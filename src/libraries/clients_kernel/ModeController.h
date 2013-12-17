@@ -10,7 +10,7 @@
 #ifndef __kernel_ModeController_h_
 #define __kernel_ModeController_h_
 
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "Controllers.h"
 #include <tools/SortedInterfaceContainer.h>
 #include <tools/Observer_ABC.h>

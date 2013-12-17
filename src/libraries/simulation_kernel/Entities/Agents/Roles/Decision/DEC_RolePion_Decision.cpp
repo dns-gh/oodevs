@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_RolePion_Decision.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include "Entities/Actions/PHY_ActionRecoLima.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"

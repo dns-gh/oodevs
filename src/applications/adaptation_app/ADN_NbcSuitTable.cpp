@@ -49,7 +49,7 @@ void ADN_NbcSuitTable::AddRow( int row, void* data )
     ADN_Disasters_Data::NbcSuitRatioInfos* pEventInfos = static_cast< ADN_Disasters_Data::NbcSuitRatioInfos* >( data );
     if( !pEventInfos )
         return;
-    AddItem( row, 0, data, ENT_Tr::ConvertFromAgentNbcSuit( pEventInfos->eType_, ENT_Tr_ABC::eToTr ).c_str(), Qt::ItemIsSelectable);
+    AddItem( row, 0, data, ENT_Tr::ConvertFromAgentNbcSuit( pEventInfos->eType_, ENT_Tr::eToTr ).c_str(), Qt::ItemIsSelectable);
     AddItem( row, 1, data, &pEventInfos->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     setRowHidden( row, pEventInfos->eType_ == eAgentNone );
 }

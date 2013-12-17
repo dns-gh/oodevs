@@ -24,7 +24,6 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

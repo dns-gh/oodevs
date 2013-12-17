@@ -15,7 +15,7 @@
 #include "Postures/PostureTime_ABC.h"
 #include "Dotations/PHY_DotationCapacities.h"
 #include "MT_Tools/MT_Scipio_enum.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/Map.h>
 
 namespace xml

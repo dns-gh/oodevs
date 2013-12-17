@@ -46,6 +46,6 @@ void ADN_WeatherFireEffects_Table::AddRow( int row, void* data )
     ADN_WeatherFireEffects* pInfos = static_cast< ADN_WeatherFireEffects* >( data );
     if( !pInfos )
         return;
-    AddItem( row, 0, data, ADN_Tr::ConvertFromSensorWeatherModifiers( pInfos->weatherType_, ENT_Tr_ABC::eToTr ).c_str() );
+    AddItem( row, 0, data, ADN_Tr::ConvertFromSensorWeatherModifiers( pInfos->weatherType_, ENT_Tr::eToTr ).c_str() );
     AddItem( row, 1, data, &pInfos->heatDecreaseRate_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

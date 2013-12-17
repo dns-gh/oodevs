@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
 #include "MT_Tools/MT_Logger.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )

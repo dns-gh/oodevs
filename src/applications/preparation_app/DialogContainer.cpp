@@ -41,7 +41,6 @@
 #include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
-
 #include <vector>
 #include <string>
 
@@ -52,7 +51,7 @@
 DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, const kernel::Profile_ABC& profile,
                                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                                   const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer )
+                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer, gui::GraphicPreferences& preferences )
     : QObject( parent )
 {
     gui::SubObjectName subObject( "DialogContainer" );
@@ -68,8 +67,8 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LongNameEditor( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, 0 );
-    prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, preferences );
+    prefDialog_->AddPage( tr( "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );

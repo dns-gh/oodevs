@@ -15,7 +15,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichWidget.h"
 #include "clients_kernel/Controllers.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 
 #define ICON_RIGHT gui::Icon( "resources/images/preparation/double_arrow_right.png" )
 #define ICON_LEFT  gui::Icon( "resources/images/preparation/double_arrow_left.png" )

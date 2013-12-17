@@ -21,7 +21,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ContextMenu.h"
-#include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include <boost/assign/list_of.hpp>
 
