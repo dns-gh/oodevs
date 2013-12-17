@@ -236,7 +236,7 @@ void LogisticsRequestsTable::FindRequestsIds( std::set< unsigned int >& requests
 {
     for( int i = 0; i < model()->rowCount(); ++i )
     {
-        const LogisticsConsign_ABC* pRequest = GetRequest( model()->index( 0, i ) );
+        const LogisticsConsign_ABC* pRequest = GetRequest( model()->index( i, 0 ) );
         if( pRequest )
             requests.insert( pRequest->GetId() );
     }
