@@ -162,41 +162,40 @@ func (s *resourcesSorter) Less(i, j int) bool {
 	return s.resources[i].Type < s.resources[j].Type
 }
 
+// Bugs nonwithstanding, models are not exactly the same across reloads,
+// this function rewrites some fields to not interfere with the comparison.
+func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
+	n := &swapi.ModelData{}
+	swapi.DeepCopy(n, model)
+	// Tick and time are not part of checkpoint data and requires a tick
+	// to be set.
+	n.Tick = 0
+	n.TickDuration = 0
+	n.Time = time.Time{}
+	// Orders are not restored upon checkpoint (bug?)
+	n.Orders = nil
+	n.Profiles = nil
+	for _, u := range n.Units {
+		sort.Sort(&resourcesSorter{u.ResourceDotations})
+		// Pathfinds are not restored?
+		u.PathPoints = 0
+		u.Speed = 0
+	}
+	return n
+}
+
+func stringifyModel(model *swapi.ModelData) string {
+	cfg := spew.NewDefaultConfig()
+	cfg.SortKeys = true
+	s := cfg.Sdump(model)
+	s = regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`).ReplaceAllString(s, "")
+	return s
+}
+
 // Compare m1 and m2 for quasi-equality, fail and display a diff on mismatch.
 func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
-	// Bugs nonwithstanding, models are not exactly the same across reloads,
-	// this function rewrites some fields to not interfere with the comparison.
-	normalize := func(model *swapi.ModelData) *swapi.ModelData {
-		n := &swapi.ModelData{}
-		swapi.DeepCopy(n, model)
-		// Tick and time are not part of checkpoint data and requires a tick
-		// to be set.
-		n.Tick = 0
-		n.TickDuration = 0
-		n.Time = time.Time{}
-		// Orders are not restored upon checkpoint (bug?)
-		n.Orders = nil
-		n.Profiles = nil
-		for _, u := range n.Units {
-			sort.Sort(&resourcesSorter{u.ResourceDotations})
-			// Pathfinds are not restored?
-			u.PathPoints = 0
-			u.Speed = 0
-		}
-		return n
-	}
-
-	regex := regexp.MustCompile(`\(0x[0-9a-zA-Z]+\)`)
-	stringify := func(model *swapi.ModelData) string {
-		cfg := spew.NewDefaultConfig()
-		cfg.SortKeys = true
-		s := cfg.Sdump(model)
-		s = regex.ReplaceAllString(s, "")
-		return s
-	}
-
-	n1 := stringify(normalize(m1))
-	n2 := stringify(normalize(m2))
+	n1 := stringifyModel(normalizeModel(m1))
+	n2 := stringifyModel(normalizeModel(m2))
 	if n1 == n2 {
 		return
 	}
