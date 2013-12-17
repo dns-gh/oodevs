@@ -109,7 +109,6 @@ used to exercise swapi.Model update against real world scenarii.
 	// Get information about input data compression ratio
 	compressionCh := make(chan *compressionInfo, 32)
 	addRawMessageHandler(client, compressionCh)
-	go client.Run()
 
 	var logWriter *bufio.Writer
 	if len(*logfile) > 0 {
@@ -121,12 +120,9 @@ used to exercise swapi.Model update against real world scenarii.
 		logWriter = bufio.NewWriterSize(logfp, 1024)
 		defer logWriter.Flush()
 	}
-	termination := make(chan int)
-	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
-		if err != nil {
-			termination <- 1
-			return true
-		}
+	termination := make(chan int, 2)
+
+	client.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
 		if msg != nil && logWriter != nil {
 			s, err := json.MarshalIndent(msg.GetMessage(), "", "")
 			if err != nil {
@@ -138,14 +134,18 @@ used to exercise swapi.Model update against real world scenarii.
 					s[i] = space
 				}
 			}
+			prefix := "in"
+			if !in {
+				prefix = "out"
+			}
+			logWriter.WriteString(fmt.Sprintf("%s=%d ", prefix, size))
 			_, err = logWriter.Write(s)
 			if err != nil {
 				log.Fatalf("error: cannot write message to log file: %s", err)
 			}
 			logWriter.WriteString("\n")
 		}
-		return false
-	})
+	}
 
 	// Get tick information
 	tickCh := make(chan tickInfo, 8)
@@ -191,6 +191,15 @@ used to exercise swapi.Model update against real world scenarii.
 		}
 	}()
 
+	swapi.ConnectClient(client)
+	// Detect server-side termination
+	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+		if err != nil {
+			termination <- 1
+		}
+		return err != nil
+	})
+
 	log.Printf("logging in as %s\n", *user)
 	err = client.Login(*user, *password)
 	if err != nil {
@@ -203,4 +212,5 @@ used to exercise swapi.Model update against real world scenarii.
 		}
 	}
 	<-termination
+	client.Close()
 }
