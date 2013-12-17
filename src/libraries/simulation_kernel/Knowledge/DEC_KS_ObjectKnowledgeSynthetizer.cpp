@@ -193,6 +193,16 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateUniversalKnowledge
+// Created: JSR 2013-12-16
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::UpdateUniversalKnowledge( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+{
+    assert( pBlackBoard_ );
+    knowledge->UpdateUniversalKnowledge();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance
 // Created: NLD 2005-10-19
 // -----------------------------------------------------------------------------
@@ -213,6 +223,10 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 
     // Ephemeral knowledges
     ProcessEphemeralKnowledges();
+
+    // Universal objects
+    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > universalFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateUniversalKnowledge, this, _1 );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( universalFunctor );
 
     // Objects to forget
     ProcessObjectsToForget();

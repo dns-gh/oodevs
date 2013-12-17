@@ -478,6 +478,16 @@ void DEC_Knowledge_Object::UpdateFromCrowdPerception()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::UpdateUniversalKnowledge
+// Created: JSR 2013-12-16
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::UpdateUniversalKnowledge()
+{
+    if( pObjectKnown_ && pObjectKnown_->IsUniversal() )
+        Update( PHY_PerceptionLevel::identified_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::UpdateLocalisationPartially
 // Created: JCR 2009-12-09
 // -----------------------------------------------------------------------------

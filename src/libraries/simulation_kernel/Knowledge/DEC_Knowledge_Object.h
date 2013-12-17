@@ -86,6 +86,7 @@ public:
     void Update( const DEC_Knowledge_ObjectCollision& collision );
     void Update( const DEC_Knowledge_Object& knowledge, int currentTimeStep );
     void UpdateFromCrowdPerception();
+    void UpdateUniversalKnowledge();
     bool Clean() const;
     void CleanObjectKnown();
     bool IsValid() const;
