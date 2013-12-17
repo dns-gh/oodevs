@@ -187,7 +187,8 @@ bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
         // Clear them before merging. This is fragile but saves tons of code
         // right now.
         const auto& sub = msg.log_supply_handling_update();
-        entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
+        if( sub.has_requests() )
+            entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
         entry_.mutable_supply()->mutable_update()->MergeFrom( sub );
         if( sub.has_convoyer() )
             entities.push_back( sub.convoyer().id() );
