@@ -826,7 +826,6 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
         self.nbrFront = self.companyTask:getNbrFront() -- Ask how many platoon will be in the front group. Number giving by the user or by default.
     end
     self.progressionInAOR = {}
-    self.progressionInDangerDirection = {}
 
     for _, unit in pairs( self.parameters.commandingEntities ) do
       unit:setHasMission(false)
@@ -956,15 +955,6 @@ integration.leadActivate = function( self, findBestsFunction )
             local sub = CreateKnowledge( integration.ontology.types.agent, subordinate )
             Activate( self.skill.links.issueSlowDownOrder , 1, { subordinate = sub } )
         end
-    end
-
-    if not self.params.SECanBeFirst then
-       for i = 1, #self.parameters.commandingEntities do
-            local entity = self.parameters.commandingEntities[i]
-            self.progressionInDangerDirection[entity] = integration.getPositionAlongDangerDirection(entity, entity:getPosition())
-        end
-         -- The second echelon is not allowed to go in front of the first echelon
-        Activate( self.skill.links.coordinationManagerBetweenEchelon , 1, { FirstEchelon = pionsPE, SecondEchelon = pionsSE, progressionInDangerDirection = self.progressionInDangerDirection } )
     end
     
     if not self.params.noCoordination then
