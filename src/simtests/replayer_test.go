@@ -137,21 +137,21 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 
 	if false {
 		// resource dotation error
-		_, err = client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 2)
+		_, err = client.CreateUnitKnowledge(kg.Id, unit.Id, 2)
 		c.Assert(err, IsNil)
 		skip(step)
 	}
 
 	if false {
 		// resource dotation error
-		_, err = client.AddObjectKnowledgeInKnowledgeGroup(kg.Id, object.Id, 2)
+		_, err = client.CreateObjectKnowledge(kg.Id, object.Id, 2)
 		c.Assert(err, IsNil)
 		skip(step)
 	}
 
 	if false {
 		// resource dotation error
-		_, err = client.AddCrowdKnowledgeInKnowledgeGroup(kg.Id, crowd.Id, 2)
+		_, err = client.CreateCrowdKnowledge(kg.Id, crowd.Id, 2)
 		c.Assert(err, IsNil)
 		skip(step)
 	}
