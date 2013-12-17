@@ -121,6 +121,9 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 		ClientAddr: addr,
 	}
 	err := cmd.Start()
+	if err != nil {
+		return nil, err
+	}
 
 	// Process.Wait() cannot be called concurrently, so always wait for process
 	// termination and handle wait requests. Callers wanting to wait for
