@@ -55,12 +55,14 @@ func init() {
 	}
 }
 
-const ExCrossroadSmallOrbat = "crossroad-small-orbat"
-const ExCrossroadSmallEmpty = "crossroad-small-empty"
-const ExCrossroadSmallLog = "crossroad-small-log"
-const ExCrossroadSmallScores = "crossroad-small-scores"
-const ExGradXYTestEmpty = "grad-x.y-test-empty"
-const ExLandOfStripesEmpty = "land-of-stripes-empty"
+const (
+	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
+	ExCrossroadSmallEmpty  = "crossroad-small-empty"
+	ExCrossroadSmallLog    = "crossroad-small-log"
+	ExCrossroadSmallScores = "crossroad-small-scores"
+	ExGradXYTestEmpty      = "grad-x.y-test-empty"
+	ExLandOfStripesEmpty   = "land-of-stripes-empty"
+)
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
