@@ -716,18 +716,6 @@ Reason: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Recipient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Order acknowledged</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3129,6 +3117,21 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Create logistic base</source>
         <translation>Create logistic base</translation>
+    </message>
+</context>
+<context>
+    <name>TaskerWidget</name>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -11,6 +11,7 @@
 #include "EventOrderWidget.h"
 #include "moc_EventOrderWidget.cpp"
 #include "icons.h"
+#include "TaskerWidget.h"
 
 #include "actions/ActionError.h"
 #include "actions/ActionWithTarget_ABC.h"
@@ -19,8 +20,6 @@
 
 #include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/GLToolColors.h"
-#include "clients_gui/ImageWrapper.h"
-#include "clients_gui/RichGroupBox.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/EventAction.h"
 #include "clients_gui/EventPresenter.h"
@@ -29,8 +28,6 @@
 #include "clients_gui/EventViewState.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_gui/Tools.h"
-#include "clients_gui/RichLabel.h"
-#include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWarnWidget.h"
 
 #include "clients_kernel/AgentTypes.h"
@@ -48,9 +45,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/MissionParameters.h"
 
-#include "tools/GeneralConfig.h"
 #include <timeline/api.h>
-#include <boost/assign/list_of.hpp>
 #include <boost/make_shared.hpp>
 
 namespace
@@ -80,10 +75,8 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     , profile_( profile )
     , tools_( tools )
     , simulation_( simulation )
-    , entitySymbols_( entitySymbols )
-    , target_( 0 )
-    , selectedEntity_( 0 )
-    , selectedEngagedAutomat_( 0 )
+    , selectedEntity_( controllers )
+    , selectedEngagedAutomat_( controllers )
     , missionCombo_( 0 )
     , missionTypeCombo_( 0 )
     , missionInterface_( new actions::gui::MissionInterface( 0, "event-mission-interface", controllers, config ) )
@@ -99,20 +92,14 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
                                                                       controllers );
     presenter_.AddSubPresenter( eEventTypes_Order, orderPresenter_ );
 
+    // Tasker
+    taskerWidget_ = new TaskerWidget( controllers, entitySymbols );
+
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
     missionComboLayout_ = new QVBoxLayout();
     missionComboLayout_->setMargin( 0 );
     missionComboLayout_->setSpacing( 0 );
-    targetLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
-    activateTargetButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
-    activateTargetButton_->setToolTip( tr( "Select" ) );
-    connect( activateTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetActivated() ) );
-
-    removeTargetButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
-    removeTargetButton_->setToolTip( tr( "Remove" ) );
-    connect( removeTargetButton_, SIGNAL( clicked() ), this, SLOT( OnTargetRemoved() ) );
 
     missionCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-combobox" );
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel( missionCombo_ );
@@ -121,21 +108,6 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     missionCombo_->setModel( proxy );
     missionComboLayout_->addWidget( missionCombo_ );
 
-    targetGroupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
-    QHBoxLayout* internalTargetLayout = new QHBoxLayout( targetGroupBox_ );
-    internalTargetLayout->setContentsMargins( 5, 0, 5, 5 );
-    QWidget* symbolWidget = new QWidget();
-    QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
-    symbolLayout->setMargin( 0 );
-    symbolLayout->addWidget( symbolLabel_ );
-    symbolLayout->addWidget( targetLabel_ );
-    internalTargetLayout->addWidget( symbolWidget, 10, Qt::AlignCenter );
-    internalTargetLayout->addWidget( activateTargetButton_, 1, Qt::AlignRight );
-    internalTargetLayout->addWidget( removeTargetButton_, 1, Qt::AlignRight );
-
-    QHBoxLayout* targetLayout = new QHBoxLayout();
-    targetLayout->addWidget( targetGroupBox_ );
-
     QHBoxLayout* topLayout = new QHBoxLayout();
     topLayout->setSpacing( 5 );
     topLayout->addWidget( missionTypeCombo_ );
@@ -143,11 +115,12 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
 
     // Layout
     mainLayout_->setSpacing( 5 );
-    mainLayout_->addLayout( targetLayout );
+    mainLayout_->addWidget( taskerWidget_ );
     mainLayout_->addLayout( topLayout );
     mainLayout_->addWidget( static_cast< actions::gui::MissionInterface* >( missionInterface_.get() ), 1 );
 
     // Connections
+    connect( taskerWidget_, SIGNAL( ClearClicked() ), this, SLOT( OnClearTaskerClicked() ) );
     connect( missionTypeCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
              this, SLOT( OnMissionTypeChanged( const QString& ) ) );
     connect( missionCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
@@ -176,7 +149,7 @@ EventOrderWidget::~EventOrderWidget()
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Purge()
 {
-    SetTarget( 0 );
+    taskerWidget_->SetTasker( 0 );
     selectedEntity_ = 0;
     selectedEngagedAutomat_ = 0;
     missionTypeCombo_->clear();
@@ -221,8 +194,8 @@ void EventOrderWidget::Build( const gui::EventViewState& state )
     if( const actions::Action_ABC* action = eventAction.GetAction() )
     {
         const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
-        SetTarget( mission->GetEntityId() );
-        orderPresenter_->FillFromAction( *action, eventAction.GetMissionType(), target_, GetDecisions( target_ ) );
+        kernel::Entity_ABC* tasker = model_.agents_.FindAllAgent( mission->GetEntityId() );
+        orderPresenter_->FillFromAction( *action, eventAction.GetMissionType(), tasker, GetDecisions( tasker ) );
     }
 }
 
@@ -233,7 +206,7 @@ void EventOrderWidget::Build( const gui::EventViewState& state )
 void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 {
     // Target
-    SetTarget( state.target_ );
+    taskerWidget_->SetTasker( model_.agents_.FindAllAgent( state.target_ ) );
     // Mission type
     {
         // CLEAR
@@ -275,8 +248,7 @@ void EventOrderWidget::Build( const gui::EventOrderViewState& state )
         if( state.invalid_ || state.missionSelector_ )
             missionCombo_->setItemData( missionCombo_->currentIndex(), Qt::NoItemFlags, Qt::UserRole - 1 );
         missionCombo_->EnableStaticWarning( state.invalid_ );
-        targetGroupBox_->EnableStaticWarning( state.invalid_ );
-        targetLabel_->EnableStaticWarning( state.invalid_ );
+        taskerWidget_->EnableStaticWarning( state.invalid_ );
     }
 }
 
@@ -287,9 +259,9 @@ void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 void EventOrderWidget::AddReplaceTargetToMenu( kernel::ContextMenu& menu )
 {
     if( isVisible() &&
-        ( !target_ ||
-          target_->GetTypeName() == selectedEntity_->GetTypeName() &&
-          target_->GetId() != selectedEntity_->GetId() ) )
+        ( !taskerWidget_->GetTasker() ||
+          taskerWidget_->GetTasker()->GetTypeName() == selectedEntity_->GetTypeName() &&
+          taskerWidget_->GetTasker()->GetId() != selectedEntity_->GetId() ) )
         menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 4 );
 }
 
@@ -364,7 +336,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( target_ == &entity ||
+    if( taskerWidget_->GetTasker() == &entity ||
         selectedEntity_ == &entity ||
         selectedEngagedAutomat_ == &entity )
     {
@@ -380,8 +352,8 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyUpdated( const gui::Decisions_ABC& decisions )
 {
-    if( target_ == &decisions.GetAgent() )
-        OnTargetChanged( target_ );
+    if( taskerWidget_->GetTasker() == &decisions.GetAgent() )
+        OnTargetChanged( taskerWidget_->GetTasker() );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,7 +372,7 @@ void EventOrderWidget::NotifyUpdated( const actions::gui::Param_ABC& param )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyUpdated( const MissionParameters& extension )
 {
-    if( target_ && target_->GetId() == extension.GetEntityId() )
+    if( taskerWidget_->GetTasker() && taskerWidget_->GetTasker()->GetId() == extension.GetEntityId() )
     {
         const actions::Action_ABC* action = extension.GetLastMission();
         if( action && action->GetContext() == orderPresenter_->GetLastContext() )
@@ -420,28 +392,6 @@ void EventOrderWidget::NotifyUpdated( const MissionParameters& extension )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::SetTarget
-// Created: ABR 2013-06-06
-// -----------------------------------------------------------------------------
-void EventOrderWidget::SetTarget( unsigned long id )
-{
-    target_ = model_.agents_.FindAllAgent( id );
-    bool hasTarget = target_ != 0;
-    targetLabel_->setText( hasTarget ? target_->GetName() : "---" );
-    activateTargetButton_->setEnabled( hasTarget );
-    removeTargetButton_->setEnabled( hasTarget );
-    QPixmap pixmap;
-    if( hasTarget )
-        if( auto symbol = target_->Retrieve< kernel::TacticalHierarchies >() )
-        {
-            pixmap = entitySymbols_.GetSymbol( *target_, symbol->GetSymbol(), symbol->GetLevel(),
-                                                QSize( 64, 64 ), gui::EntitySymbols::eColorWithModifier );
-            pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
-        }
-    symbolLabel_->setPixmap( pixmap );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventOrderWidget::OnTargetChanged
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
@@ -452,27 +402,12 @@ void EventOrderWidget::OnTargetChanged( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnTargetRemoved
-// Created: NPT 2013-07-30
+// Name: EventOrderWidget::OnClearTaskerClicked
+// Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
-void EventOrderWidget::OnTargetRemoved()
+void EventOrderWidget::OnClearTaskerClicked()
 {
-    if( !target_ )
-        throw MASA_EXCEPTION( "Can't remove an unset target" );
     OnTargetChanged( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::OnTargetActivated
-// Created: ABR 2013-10-31
-// -----------------------------------------------------------------------------
-void EventOrderWidget::OnTargetActivated() const
-{
-    if( !target_ )
-        throw MASA_EXCEPTION( "Can't activate an unset target" );
-    target_->Select( controllers_.actions_ );
-    target_->MultipleSelect( controllers_.actions_, boost::assign::list_of( target_ ) );
-    target_->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -535,6 +470,5 @@ void EventOrderWidget::BlockSignals( bool blocked )
 {
     missionCombo_->blockSignals( blocked );
     missionTypeCombo_->blockSignals( blocked );
-    activateTargetButton_->blockSignals( blocked );
-    removeTargetButton_->blockSignals( blocked );
+    taskerWidget_->BlockSignals( blocked );
 }

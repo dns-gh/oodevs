@@ -58,6 +58,7 @@ namespace tools
 
 class Model;
 class MissionParameters;
+class TaskerWidget;
 
 // =============================================================================
 /** @class  EventOrderWidget
@@ -120,7 +121,6 @@ private:
     //! @name Helpers
     //@{
     void OnOrderClicked( const kernel::Entity_ABC* entity );
-    void SetTarget( unsigned long id );
     void OnTargetChanged( const kernel::Entity_ABC* entity );
     void AddReplaceTargetToMenu( kernel::ContextMenu& menu );
     //@}
@@ -132,8 +132,7 @@ private slots:
     void OnOrderClicked();
     void OnOrderAutomatClicked();
     void OnReplaceTargetClicked();
-    void OnTargetActivated() const;
-    void OnTargetRemoved();
+    void OnClearTaskerClicked();
     //@}
 
 private:
@@ -145,27 +144,17 @@ private:
     const kernel::Profile_ABC& profile_;
     gui::GlTools_ABC& tools_;
     const kernel::Time_ABC& simulation_;
-    const gui::EntitySymbols& entitySymbols_;
     boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 
-    gui::RichGroupBox* targetGroupBox_;
-    gui::RichLabel* targetLabel_;
-    gui::RichLabel* symbolLabel_;
-    QPushButton* activateTargetButton_;
-    QPushButton* removeTargetButton_;
-
+    TaskerWidget* taskerWidget_;
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
     gui::RichWarnWidget< QComboBox >* missionCombo_;
     QStandardItemModel missionModel_;
     boost::scoped_ptr< actions::gui::MissionInterface_ABC > missionInterface_;
 
-    const kernel::Entity_ABC* selectedEntity_;
-    const kernel::Entity_ABC* selectedEngagedAutomat_;
-    const kernel::Entity_ABC* target_;
-
-    bool isBuilding_;
-    bool isUpdatingParent_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedAutomat_;
     //@}
 };
 
