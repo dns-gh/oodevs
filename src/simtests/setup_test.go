@@ -104,6 +104,7 @@ func startSimOnExercise(c *C, exercise string, endTick int, paused bool,
 	opts, session := makeOptsAndSession()
 	opts.ExerciseName = exercise
 
+	session.EndTick = endTick
 	session.Paused = paused
 	if step > 0 {
 		session.TimeStep = step
@@ -124,6 +125,7 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 
 	s, err := simu.ReadSessionFile(opts.GetSessionFile())
 	c.Assert(err, IsNil)
+	s.EndTick = endTick
 	s.Paused = paused
 	err = simu.WriteSessionFile(s, opts.GetSessionFile())
 	c.Assert(err, IsNil)
