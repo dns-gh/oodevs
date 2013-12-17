@@ -495,11 +495,12 @@ enum E_FuncLimaType
 
 enum E_EventDockModes
 {
-    eEventDockModes_None             = 0,
-    eEventDockModes_DisplayTriggered = 1,
-    eEventDockModes_EditTriggered    = 2,
-    eEventDockModes_EditPlanned      = 3,
-    eEventDockModes_Create           = 4,
-    eNbrEventDockModes               = 5
+    eEventDockModes_None,
+    eEventDockModes_DisplayTriggered,
+    eEventDockModes_EditTriggered,
+    eEventDockModes_EditPlanned,
+    eEventDockModes_Create,
+    eNbrEventDockModes
 };
 
+#endif __ENT_Enums_h_

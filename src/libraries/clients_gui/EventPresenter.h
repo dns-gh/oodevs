@@ -11,7 +11,7 @@
 #define __EventPresenter_h_
 
 #include "EventSubPresenter_ABC.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>

@@ -74,6 +74,7 @@ namespace ENT_Tr
     const std::string& ConvertFromLayerType( E_LayerTypes, E_Conversion = eToTr );
     const std::string& ConvertFromEventType( E_EventTypes, E_Conversion = eToTr );
     const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
+    const std::string& ConvertFromEventDockModes( E_EventDockModes, E_Conversion = eToTr );
 
     // ConvertTo functions
     E_LocationType ConvertToLocationType( const std::string& );
@@ -116,6 +117,7 @@ namespace ENT_Tr
     E_LayerTypes ConvertToLayerType( const std::string& );
     E_EventTypes ConvertToEventType( const std::string&, E_Conversion = eToTr );
     E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );
+    E_EventDockModes ConvertToEventDockModes( const std::string&, E_Conversion = eToTr );
 }
 
 #endif // __ENT_Tr_h_
