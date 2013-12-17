@@ -71,6 +71,7 @@ private slots:
     //@{
     void OnChangeSuperior();
     void OnCreateFormation( int level );
+    void OnCreateLogisticBase( int level );
     void ChangeDisplay( int mode );
     virtual void OnActivate( const QModelIndex& index );
     //@}
@@ -81,6 +82,7 @@ private:
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     virtual bool ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const;
+    void CreateFormation( int level, bool isLogisticBase );
     //@}
 
 private:

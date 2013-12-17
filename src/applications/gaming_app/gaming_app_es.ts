@@ -518,6 +518,10 @@ Reason: %3
         <source>Create formation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Create logistic base</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreationPanels</name>
@@ -3126,6 +3130,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Create formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create logistic base</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

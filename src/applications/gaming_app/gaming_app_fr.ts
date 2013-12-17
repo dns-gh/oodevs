@@ -520,6 +520,10 @@ Raison: %3
         <source>Create formation</source>
         <translation>Créer une formation</translation>
     </message>
+    <message>
+        <source>Create logistic base</source>
+        <translation>Créer une base logistique</translation>
+    </message>
 </context>
 <context>
     <name>CreationPanels</name>
@@ -3135,6 +3139,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Create formation</source>
         <translation>Créer une formation</translation>
+    </message>
+    <message>
+        <source>Create logistic base</source>
+        <translation>Créer une base logistique</translation>
     </message>
 </context>
 <context>
