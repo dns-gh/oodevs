@@ -35,7 +35,6 @@
 #include "ToolbarContainer.h"
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
-#include "OrbatPanel.h"
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/CircularEventStrategy.h"
@@ -84,6 +83,7 @@
 #include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
+#include "clients_gui/GraphicPreferences.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -141,24 +141,25 @@ namespace
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_      ( controllers )
-    , staticModel_      ( staticModel )
-    , model_            ( model )
-    , config_           ( config )
-    , loading_          ( false )
-    , needsSaving_      ( false )
-    , modelBuilder_     ( new ModelBuilder( controllers, model ) )
-    , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
-    , colorController_  ( new ColorController( controllers_ ) )
-    , glProxy_          ( new gui::GlProxy( logger ) )
-    , lighting_         ( new gui::LightingProxy( this ) )
-    , strategy_         ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
-    , dockContainer_    ( 0 )
-    , dialogContainer_  ( 0 )
-    , toolbarContainer_ ( 0 )
-    , progressDialog_   ( 0 )
-    , menu_             ( 0 )
-    , icons_            ( 0 )
+    , controllers_       ( controllers )
+    , staticModel_       ( staticModel )
+    , model_             ( model )
+    , config_            ( config )
+    , loading_           ( false )
+    , needsSaving_       ( false )
+    , graphicPreferences_( new gui::GraphicPreferences( controllers ) )
+    , modelBuilder_      ( new ModelBuilder( controllers, model ) )
+    , pPainter_          ( new gui::ElevationPainter( staticModel_.detection_ ) )
+    , colorController_   ( new ColorController( controllers_ ) )
+    , glProxy_           ( new gui::GlProxy( logger ) )
+    , lighting_          ( new gui::LightingProxy( this ) )
+    , strategy_          ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
+    , dockContainer_     ( 0 )
+    , dialogContainer_   ( 0 )
+    , toolbarContainer_  ( 0 )
+    , progressDialog_    ( 0 )
+    , menu_              ( 0 )
+    , icons_             ( 0 )
 {
     gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
@@ -208,7 +209,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_,
-                                                 *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_, elevation2d ) );
+                                                 *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_, elevation2d, *graphicPreferences_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, model_, staticModel_, config_, *symbols,
@@ -304,8 +305,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
                                gui::Elevation2dLayer& elevation2d )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
-    gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
-    gui::Layer& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
+    gui::Layer& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, *graphicPreferences_, picker );
     ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
     gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
@@ -329,6 +329,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
     // Drawing order
+    gui::PreferencesDialog& preferences = dialogContainer_->GetPrefDialog();
     AddLayer( *glProxy_, preferences, defaultLayer );
     AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tr( "Elevation" ) );
     AddLayer( *glProxy_, preferences, raster,                   "main",                         tr( "Raster" ) );

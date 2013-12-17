@@ -22,7 +22,6 @@ namespace kernel
 namespace gui
 {
     class ColorButton;
-}
 
 // =============================================================================
 /** @class  OrbatPanel
@@ -69,5 +68,7 @@ private:
     gui::ColorButton* pMostlyHealthyColor_;
     //@}
 };
+
+}
 
 #endif // __OrbatPanel_h_

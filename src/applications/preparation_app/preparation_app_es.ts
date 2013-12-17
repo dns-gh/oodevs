@@ -1470,17 +1470,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Edition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ghost:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PerformanceDialog</name>
     <message>
         <source>Performance dialog</source>
@@ -2927,6 +2916,17 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Weather parameters</source>
         <translation type="unfinished">Parámetros de clima</translation>
+    </message>
+</context>
+<context>
+    <name>preparation::OrbatPanel</name>
+    <message>
+        <source>Edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ghost:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

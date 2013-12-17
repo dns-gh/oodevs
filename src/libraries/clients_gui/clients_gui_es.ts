@@ -251,49 +251,6 @@
     </message>
 </context>
 <context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds health state color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Healthy:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contaminated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wounded:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dead:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mostly healthy:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Coordinate System</source>
@@ -1524,6 +1481,49 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::OrbatPanel</name>
+    <message>
+        <source>Operational state color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralized:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactically destroyed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Totally destroyed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds health state color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mostly healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::PopulationPanel</name>
     <message>
         <source>Information</source>
@@ -1606,14 +1606,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Orbat</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

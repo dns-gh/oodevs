@@ -15,6 +15,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
+using namespace preparation;
+
 // -----------------------------------------------------------------------------
 // Name: OrbatPanel constructor
 // Created: LGY 2011-10-21

@@ -37,6 +37,7 @@ namespace gui
     class HelpSystem;
     class EntitySymbols;
     class Elevation2dLayer;
+    class GraphicPreferences;
 }
 
 class ColorController;
@@ -140,6 +141,7 @@ private:
     bool                 loading_;
     bool                 needsSaving_;
 
+    std::auto_ptr< gui::GraphicPreferences >     graphicPreferences_;
     std::auto_ptr< ModelBuilder >                modelBuilder_;
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

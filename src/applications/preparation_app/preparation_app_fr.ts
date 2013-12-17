@@ -1471,17 +1471,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Edition</source>
-        <translation>Edition</translation>
-    </message>
-    <message>
-        <source>Ghost:</source>
-        <translation>Fantôme:</translation>
-    </message>
-</context>
-<context>
     <name>PerformanceDialog</name>
     <message>
         <source>Performance dialog</source>
@@ -2929,6 +2918,17 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Weather parameters</source>
         <translation>Paramètres météo</translation>
+    </message>
+</context>
+<context>
+    <name>preparation::OrbatPanel</name>
+    <message>
+        <source>Edition</source>
+        <translation>Edition</translation>
+    </message>
+    <message>
+        <source>Ghost:</source>
+        <translation>Fantôme:</translation>
     </message>
 </context>
 <context>
