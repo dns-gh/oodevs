@@ -851,6 +851,7 @@ var (
 		(*ModelData).handleCrowdUpdate,
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
+		(*ModelData).handleFormationDestruction,
 		(*ModelData).handleFragOrder,
 		(*ModelData).handleKnowledgeGroupCreation,
 		(*ModelData).handleKnowledgeGroupUpdate,

@@ -47,7 +47,7 @@ func getSomePopulation(c *C, data *swapi.ModelData) *swapi.Population {
 }
 
 func (s *TestSuite) TestChangeHealthState(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
@@ -87,7 +87,7 @@ func (s *TestSuite) TestChangeHealthState(c *C) {
 }
 
 func (s *TestSuite) TestPopulationChangeAdhesions(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()

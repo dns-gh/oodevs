@@ -11,6 +11,7 @@ package simu
 import (
 	. "launchpad.net/gocheck"
 	"path"
+	"swtest"
 )
 
 func (s *TestSuite) TestParsingError(c *C) {
@@ -46,6 +47,10 @@ func (s *TestSuite) TestCreateDefaultSession(c *C) {
 
 func (s *TestSuite) TestWriteSession(c *C) {
 	session := CreateDefaultSession()
+	session.Recorder = &RecorderPlugin{
+		FragmentFreq: 201,
+		KeyframeFreq: 101,
+	}
 	session.GamingServer = "masagroup.net"
 	session.EndTick = 42
 	session.Paused = true
@@ -58,7 +63,9 @@ func (s *TestSuite) TestWriteSession(c *C) {
   <config>
     <dispatcher>
       <network client="localhost:10000" server="masagroup.net"></network>
-      <plugins></plugins>
+      <plugins>
+        <recorder fragmentfreq="201" keyframefreq="101"></recorder>
+      </plugins>
     </dispatcher>
     <gaming>
       <network server="masagroup.net"></network>
@@ -87,7 +94,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
     <name>test</name>
   </meta>
 </session>`
-	c.Assert(string(data), Equals, expected)
+	swtest.AssertEqualOrDiff(c, string(data), expected)
 }
 
 func createTestSession() *Session {

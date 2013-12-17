@@ -181,7 +181,6 @@ func (model *Model) run() error {
 			}
 		}
 	}
-	return nil
 }
 
 func (model *Model) Close() {

@@ -24,10 +24,23 @@ type LogOpts struct {
 	Unit  string
 }
 
+type RecorderPlugin struct {
+	FragmentFreq int `xml:"fragmentfreq,attr"`
+	KeyframeFreq int `xml:"keyframefreq,attr"`
+}
+
+func NewRecordPlugin() *RecorderPlugin {
+	return &RecorderPlugin{
+		FragmentFreq: 200,
+		KeyframeFreq: 100,
+	}
+}
+
 type Session struct {
 	GamingServer string
 	EndTick      int
 	Paused       bool
+	Recorder     *RecorderPlugin
 	SimLog       LogOpts
 	TimeFactor   int
 	TimeStep     int
@@ -51,6 +64,10 @@ func (s *Session) syncSession(x *xmlSession) error {
 	s.GamingServer = x.GamingNetwork.Server
 	s.EndTick = x.Sim.Time.EndTick
 	s.Paused = ReadBool(x.Sim.Time.Paused)
+	s.Recorder = nil
+	if p := x.Dispatcher.Plugins.Recorder; p != nil {
+		s.Recorder = p
+	}
 	s.SimLog.Count = x.Sim.Debug.LogFiles
 	if s.SimLog.Count == 1 {
 		s.SimLog.Count = 0
@@ -65,6 +82,10 @@ func (s *Session) syncSession(x *xmlSession) error {
 func (s *Session) syncXml(x *xmlSession) error {
 	x.GamingNetwork.Server = s.GamingServer
 	x.Dispatcher.Network.Server = s.GamingServer
+	x.Dispatcher.Plugins.Recorder = nil
+	if p := s.Recorder; p != nil {
+		x.Dispatcher.Plugins.Recorder = p
+	}
 	x.Sim.Debug.LogFiles = s.SimLog.Count
 	if x.Sim.Debug.LogFiles == 1 {
 		x.Sim.Debug.LogFiles = 0
@@ -88,6 +109,7 @@ type xmlDispatcherNetwork struct {
 }
 
 type xmlPlugins struct {
+	Recorder *RecorderPlugin `xml:"recorder,omitempty"`
 }
 
 type xmlDispatcherConfig struct {

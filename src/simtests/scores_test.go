@@ -17,7 +17,7 @@ func (s *TestSuite) TestScores(c *C) {
 	scoreEq := "available-equipments"
 	scoreDist := "cp-distance"
 
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallScores)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallScores))
 	defer sim.Stop()
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -56,7 +56,7 @@ func (s *TestSuite) TestScores(c *C) {
 
 	// Log with another user, the score values are received but not the definitions,
 	// despite them being restricted to the admin user.
-	client = loginAndWaitModel(c, sim, "alluser", "alluser")
+	client = loginAndWaitModel(c, sim, NewAllUserOpts(""))
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.Scores) > 1
 	})

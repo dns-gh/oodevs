@@ -9,9 +9,9 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"flag"
 	"fmt"
-	"github.com/pmezard/go-difflib/difflib"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
@@ -133,6 +133,44 @@ func startSimOnCheckpoint(c *C, exercise, session, checkpoint string, endTick in
 	return sim
 }
 
+func MakeReplayOpts() *simu.ReplayOpts {
+	opts := simu.ReplayOpts{}
+	projectRoot := ""
+	if cwd, err := os.Getwd(); err == nil {
+		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
+	}
+
+	if len(application) > 0 {
+		// Assume replayer_app lives along with the simulation
+		opts.Executable = filepath.Join(filepath.Dir(application), "replayer_app.exe")
+	} else if len(projectRoot) > 0 {
+		opts.Executable = filepath.Join(projectRoot, "run", platform, "replayer_app.exe")
+	}
+	if len(rootdir) > 0 {
+		opts.RootDir = rootdir
+	} else if len(projectRoot) > 0 {
+		opts.RootDir = filepath.Join(projectRoot, "data")
+	}
+	if len(rundir) > 0 {
+		opts.RunDir = &rundir
+	}
+	opts.ExerciseName = "crossroad-small-empty"
+	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", testPort+5)
+	opts.ConnectTimeout = ConnectTimeout
+	return &opts
+}
+
+func startReplay(c *C, simOpts *simu.SimOpts) *simu.ReplayProcess {
+
+	opts := MakeReplayOpts()
+	opts.ExerciseName = simOpts.ExerciseName
+	opts.SessionName = simOpts.SessionName
+
+	replay, err := simu.StartReplay(opts)
+	c.Assert(err, IsNil)
+	return replay
+}
+
 func checkOrderAckSequences(c *C, client *swapi.Client) {
 	client.Model.RegisterHandlerTimeout(0,
 		func(model *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
@@ -160,10 +198,43 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 		})
 }
 
-func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
-	client, err := swapi.Connect(sim.DispatcherAddr)
-	c.Assert(err, IsNil) // failed to connect to simulation
+type ClientOpts struct {
+	Exercise string
+	User     string
+	Password string
+	Step     int
+	Logger   swapi.MessageLogger
+}
+
+func NewAllUserOpts(exercise string) *ClientOpts {
+	return &ClientOpts{
+		Exercise: exercise,
+		User:     "alluser",
+		Password: "alluser",
+	}
+}
+
+func NewAdminOpts(exercise string) *ClientOpts {
+	return &ClientOpts{
+		Exercise: exercise,
+		User:     "admin",
+		Password: "",
+	}
+}
+
+type Simulator interface {
+	GetClientAddr() string
+}
+
+func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
+	if opts == nil {
+		opts = &ClientOpts{}
+	}
+	client, err := swapi.NewClient(sim.GetClientAddr())
+	c.Assert(err, IsNil)
+	client.Logger = opts.Logger
 	client.PostTimeout = PostTimeout
+	swapi.ConnectClient(client)
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
 		if !c.Failed() {
@@ -175,45 +246,33 @@ func connectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	return client
 }
 
-func loginAndWaitModel(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
+func AddLogger(opts *ClientOpts) *ClientOpts {
+	opts.Logger = func(in bool, size int, msg *swapi.SwordMessage) {
+		prefix := "in "
+		if !in {
+			prefix = "out"
+		}
+		fmt.Fprintf(os.Stderr, "%s %v\n", prefix,
+			proto.CompactTextString(msg.GetMessage()))
+	}
+	return opts
+}
 
-	client := connectClient(c, sim)
-	err := client.Login(user, password)
-	c.Assert(err, IsNil) // login failed
+func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
+	client := connectClient(c, sim, opts)
+	err := client.Login(opts.User, opts.Password)
+	c.Assert(err, IsNil)
 	ok := client.Model.WaitReady(10 * time.Second)
-	c.Assert(ok, Equals, true) // model initialization timed out
+	c.Assert(ok, Equals, true)
 	return client
 }
 
-func connectAndWaitModelWithStep(c *C, user, password, exercise string, step int) (
+func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 
-	sim := startSimOnExercise(c, exercise, 1000, false, step)
-	client := loginAndWaitModel(c, sim, user, password)
+	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
+	client := loginAndWaitModel(c, sim, opts)
 	return sim, client
-}
-
-func connectAndWaitModel(c *C, user, password, exercise string) (
-	*simu.SimProcess, *swapi.Client) {
-
-	sim := startSimOnExercise(c, exercise, 1000, false, 0)
-	client := loginAndWaitModel(c, sim, user, password)
-	return sim, client
-}
-
-func connectAllUserAndWait(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
-	return connectAndWaitModel(c, "alluser", "alluser", exercise)
-}
-
-func addClientLogger(client *swapi.Client) {
-	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
-		if err != nil {
-			return true
-		}
-		log.Println(msg)
-		return false
-	}
-	client.Register(handler)
 }
 
 func waitCondition(c *C, model *swapi.Model, cond func(data *swapi.ModelData) bool) {
@@ -230,6 +289,14 @@ const (
 	// Standard Crowd
 	CrowdType = "Standard Crowd"
 )
+
+func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
+	for _, party := range model.Parties {
+		return party
+	}
+	c.Fatal("no party found")
+	return nil
+}
 
 func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
 	data := client.Model.GetData()
@@ -265,25 +332,6 @@ func readFileAsString(c *C, path string) string {
 	data, err := ioutil.ReadFile(path)
 	c.Assert(err, IsNil)
 	return string(data)
-}
-
-func makeDiff(before, after string) (string, error) {
-	diff := difflib.UnifiedDiff{
-		A:        difflib.SplitLines(before),
-		FromFile: "before",
-		B:        difflib.SplitLines(after),
-		ToFile:   "after",
-		Context:  4,
-	}
-	return difflib.GetUnifiedDiffString(diff)
-}
-
-func assertEqualOrDiff(c *C, result, expected string) {
-	if expected != result {
-		diff, err := makeDiff(expected, result)
-		c.Assert(err, IsNil)
-		c.Errorf("%s\n", diff)
-	}
 }
 
 func Test(t *testing.T) { TestingT(t) }

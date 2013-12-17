@@ -25,7 +25,7 @@ const (
 // mission is not really expected to work successfully at this point, unit
 // may not move because of the terrain type and so forth.
 func (s *TestSuite) TestGenericMission(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -121,7 +121,7 @@ func (s *TestSuite) TestGenericMission(c *C) {
 
 // Test we can send a automat mission and get a successful acknowledgement.
 func (s *TestSuite) TestAutomatMission(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -190,7 +190,7 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 
 // Test we can send a crowd mission and get a successful acknowledgement.
 func (s *TestSuite) TestCrowdMission(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	data := client.Model.GetData()
 	from := swapi.Point{X: -15.9219, Y: 28.3456}

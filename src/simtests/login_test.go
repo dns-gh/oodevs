@@ -20,7 +20,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	defer sim.Stop()
 
 	// Test invalid login
-	client := connectClient(c, sim)
+	client := connectClient(c, sim, nil)
 	c.Assert(client.GetClientId(), Equals, int32(0))
 	err := client.Login("foo", "bar")
 	c.Assert(err, IsSwordError, "invalid_login")
@@ -28,13 +28,13 @@ func (s *TestSuite) TestLogin(c *C) {
 	client.Close()
 
 	// Test invalid version
-	client = connectClient(c, sim)
+	client = connectClient(c, sim, nil)
 	err = client.LoginWithVersion("admin", "user", "1.0", "")
 	c.Assert(err, IsSwordError, "mismatched_protocol_version")
 	client.Close()
 
 	// Test valid login
-	client = connectClient(c, sim)
+	client = connectClient(c, sim, nil)
 	err = client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
 	c.Assert(client.GetClientId(), Not(Equals), int32(0))
@@ -49,7 +49,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	client.Close()
 
 	// Test retrieve authentication key
-	client = connectClient(c, sim)
+	client = connectClient(c, sim, nil)
 	key, err := client.GetAuthenticationKey()
 	c.Assert(key, Not(IsNil))
 	c.Assert(err, IsNil)
@@ -70,7 +70,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	client.Close()
 
 	// Test supervisor login
-	client = connectClient(c, sim)
+	client = connectClient(c, sim, nil)
 	key, err = client.GetAuthenticationKey()
 	c.Assert(key, Not(IsNil))
 	c.Assert(err, IsNil)
@@ -85,7 +85,7 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 	// Authenticate a maximum of clients
 	clients := []*swapi.Client{}
 	for {
-		client := connectClient(c, sim)
+		client := connectClient(c, sim, nil)
 		if client.Login("admin", "") != nil {
 			client.Close()
 			break
@@ -96,7 +96,7 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 	c.Assert(len(clients), Greater, 0)
 
 	// Authenticate client with an authentication key
-	client := connectClient(c, sim)
+	client := connectClient(c, sim, nil)
 	key, err := client.GetAuthenticationKey()
 	c.Assert(key, Not(IsNil))
 	c.Assert(err, IsNil)
@@ -111,7 +111,7 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 	clients = clients[:last]
 
 	// Reconnect one client
-	client = connectClient(c, sim)
+	client = connectClient(c, sim, nil)
 	err = client.Login("admin", "")
 	c.Assert(err, IsNil)
 	clients = append(clients, client)
@@ -136,7 +136,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	defer sim.Stop()
 
 	// Connect and watch incoming messages
-	client := connectClient(c, sim)
+	client := connectClient(c, sim, nil)
 
 	msgch := make(chan *swapi.SwordMessage)
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
@@ -166,7 +166,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	client.Register(handler)
 
 	// Trigger simulation_client messages
-	other := loginAndWaitModel(c, sim, "alluser", "alluser")
+	other := loginAndWaitModel(c, sim, NewAllUserOpts(""))
 	createAutomat(c, other)
 	waitForMessages(2*time.Second, msgch)
 
@@ -176,7 +176,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 }
 
 func connectAndWait(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
-	client := connectClient(c, sim)
+	client := connectClient(c, sim, nil)
 	err := client.Login(user, password)
 	c.Assert(err, IsNil)
 	ok := client.Model.WaitReady(10 * time.Second)
@@ -297,7 +297,7 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// Delete valid profile
 	err = admin.DeleteProfile("user2")
 	c.Assert(err, IsNil)
-	user2 := connectClient(c, sim)
+	user2 := connectClient(c, sim, nil)
 	err = user2.Login("user2", "user2")
 	c.Assert(err, IsSwordError, "invalid_login")
 	user2.Close()
@@ -316,12 +316,12 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(admin.Model.GetProfile(userProfile.Login), NotNil)
 	admin.Close()
 	// And taken in account for removed...
-	user2 = connectClient(c, sim)
+	user2 = connectClient(c, sim, nil)
 	err = user2.Login("user2", "user2")
 	c.Assert(err, IsSwordError, "invalid_login")
 	user2.Close()
 	// ... and created profiles
-	user = connectClient(c, sim)
+	user = connectClient(c, sim, nil)
 	err = user.Login(userProfile.Login, userProfile.Password)
 	c.Assert(err, IsNil)
 	user.Close()

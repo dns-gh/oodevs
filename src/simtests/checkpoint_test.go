@@ -18,11 +18,12 @@ import (
 	"strings"
 	"swapi"
 	"swapi/simu"
+	"swtest"
 	"time"
 )
 
 func (s *TestSuite) TestCheckpointMessages(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	check := func(input, errmsg string) {
@@ -69,7 +70,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 	// Must have supervisor rights
 	check("", ".*rights check failed.*")
 	client.Close()
-	client = loginAndWaitModel(c, sim, "admin", "")
+	client = loginAndWaitModel(c, sim, NewAdminOpts(""))
 
 	// No checkpoint name
 	check("", "")
@@ -94,7 +95,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointSendState(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	check := func(sendState bool) {
@@ -207,13 +208,17 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 		[]byte(n2), 0644)
 	c.Assert(err, IsNil)
 
-	assertEqualOrDiff(c, n2, n1)
+	swtest.AssertEqualOrDiff(c, n2, n1)
 }
 
 func loadCheckpointAndWaitModel(c *C, user, password, exercise, session, checkpoint string) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnCheckpoint(c, exercise, session, checkpoint, 1000, true)
-	client := loginAndWaitModel(c, sim, user, password)
+	opts := ClientOpts{
+		User:     user,
+		Password: password,
+	}
+	client := loginAndWaitModel(c, sim, &opts)
 	return sim, client
 }
 
@@ -278,7 +283,7 @@ func checkpointCompareAndStop(c *C, sim *simu.SimProcess, client *swapi.Client) 
 // from a running exercise and reload it.
 // There will be other tests to check the checkpoint content.
 func (s *TestSuite) TestCheckpointRestart(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
@@ -295,7 +300,7 @@ func (s *TestSuite) TestCheckpointRestart(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointCrowd(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
@@ -313,7 +318,7 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointUnit(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
@@ -337,7 +342,9 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
-	sim, client := connectAndWaitModelWithStep(c, "admin", "", ExCrossroadSmallLog, 300)
+	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
 	defer sim.Stop()
 
 	// Find the supply base

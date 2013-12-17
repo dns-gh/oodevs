@@ -15,9 +15,9 @@ import (
 )
 
 func (s *TestSuite) TestUnitVisionCones(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
-	client2 := loginAndWaitModel(c, sim, "admin", "")
+	client2 := loginAndWaitModel(c, sim, NewAdminOpts(""))
 	client2.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
 		if msg != nil && msg.SimulationToClient != nil {
 			// should not receive vision cones updates on another client
@@ -103,7 +103,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 }
 
 func (s *TestSuite) TestListVisionCones(c *C) {
-	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	check := func(ack *sword.ListEnabledVisionConesAck, all bool, units []uint32, start uint32, count uint32) {

@@ -20,7 +20,7 @@ import (
 
 func CheckSimFailed(c *C, err error, sim *simu.SimProcess) {
 	c.Assert(err, NotNil) // simulation should not have started
-	c.Assert(err, ErrorMatches, "(?s).*failed to start simulation.*")
+	c.Assert(err, ErrorMatches, "(?s).*failed to start server process.*")
 
 	if sim.Success() {
 		c.Fatal("simulation should have exited on error")

@@ -14,6 +14,7 @@ import (
 	"sort"
 	"strings"
 	"swapi"
+	"swtest"
 	"time"
 )
 
@@ -262,17 +263,17 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 }
 
 func (s *TestSuite) TestModelInitialization(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 
 	dump := printParties(&prettyPrinter{HideUnstable: true},
 		model.GetData()).GetOutput()
 	expected := readFileAsString(c, "testdata/model.txt")
-	assertEqualOrDiff(c, dump, expected)
+	swtest.AssertEqualOrDiff(c, dump, expected)
 	client.Close()
 
-	client, err := swapi.NewClient(sim.DispatcherAddr)
+	client, err := swapi.NewClient(sim.GetClientAddr())
 	c.Assert(err, IsNil)
 	client.EnableModel = false
 	go client.Run()
@@ -284,7 +285,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 }
 
 func (s *TestSuite) TestModelIsolation(c *C) {
-	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
