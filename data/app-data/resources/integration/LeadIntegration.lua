@@ -356,15 +356,29 @@ integration.issueMission = function( self, tasks, nbrFront, echelon, entities, i
     local bestUnits = findBestsFunction( entities, tasks, self.companyTask, self.parameters, nbrFront, context, isMain ) --Save the nbrFront best couple unit/tasks
     self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
     integration.setEchelon( bestUnits, echelon )
-    local nBestUnits = #bestUnits
-    for i = 1, nBestUnits do
+    local hqUnit = integration.query.getPCUnit()
+    for i = 1, #bestUnits do
         local elem = bestUnits[i]
         if not integration.isLogisticConvoy( elem.entity.source ) then
             myself.leadData.paramsGiven[ elem.entity ] = elem.params
+            if elem.entity == hqUnit then
+                self.hqTask = elem.taskName
+            end
             meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
         end
     end
     return bestUnits
+end
+
+local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
+    if unit == hqUnit then
+        for i = 1, #self.bestUnits do
+            if self.bestUnits[i].entity == param then
+                return true
+            end
+        end
+    end
+    return false
 end
 
 local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask )
@@ -397,9 +411,10 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     end
 
     local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
+    local hqUnit = integration.query.getPCUnit()
 
     -- if a unit has been removed from automaton, we dispatch again the missions
-    for i, entity in pairs( oldEntities ) do
+    for _, entity in pairs( oldEntities ) do
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
             if self.params.restartMissionIfDead and self.params.restartMissionIfDead ~= NIL then
                 self:create()
@@ -415,6 +430,8 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
                                     local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
                                     integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
                                 end
+                            elseif isHQTaskUsingRelievingUnit( self, hqUnit, element, paramElement ) then
+                                integration.issueMission ( self, self.hqTask, 1, integration.getEchelonState( element.source ), {element}, false, findBestsFunction, disengageTask )
                             end
                         end
                         if param == entity then
