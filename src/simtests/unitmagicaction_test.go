@@ -799,7 +799,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Adding the target in reporter's knowledges
 	const identifiedLevel = 0
-	targetKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(a1.KnowledgeGroupId, target.Id, identifiedLevel)
+	targetKnowledge, err := client.CreateUnitKnowledge(a1.KnowledgeGroupId, target.Id, identifiedLevel)
 	c.Assert(err, IsNil)
 
 	// Launching a magic strike with good parameters

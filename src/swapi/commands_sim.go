@@ -1011,7 +1011,7 @@ func (c *Client) addKnowledgeInKnowledgeGroup(groupId, entityId uint32,
 	return id, err
 }
 
-func (c *Client) AddUnitKnowledgeInKnowledgeGroup(groupId uint32, entityId uint32,
+func (c *Client) CreateUnitKnowledge(groupId, entityId uint32,
 	perceptionLevel int32) (*UnitKnowledge, error) {
 
 	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
@@ -1026,7 +1026,7 @@ func (c *Client) AddUnitKnowledgeInKnowledgeGroup(groupId uint32, entityId uint3
 	return created, nil
 }
 
-func (c *Client) AddObjectKnowledgeInKnowledgeGroup(groupId, entityId uint32,
+func (c *Client) CreateObjectKnowledge(groupId, entityId uint32,
 	perceptionLevel int32) (*ObjectKnowledge, error) {
 
 	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
@@ -1036,6 +1036,21 @@ func (c *Client) AddObjectKnowledgeInKnowledgeGroup(groupId, entityId uint32,
 	created := c.Model.GetObjectKnowledge(id)
 	if created == nil {
 		return nil, fmt.Errorf("created object knowledge %d/%d is not available "+
+			"after ack", groupId, id)
+	}
+	return created, nil
+}
+
+func (c *Client) CreateCrowdKnowledge(groupId, entityId uint32,
+	perceptionLevel int32) (*CrowdKnowledge, error) {
+
+	id, err := c.addKnowledgeInKnowledgeGroup(groupId, entityId, perceptionLevel)
+	if err != nil {
+		return nil, err
+	}
+	created := c.Model.GetCrowdKnowledge(id)
+	if created == nil {
+		return nil, fmt.Errorf("created crowd knowledge %d/%d is not available "+
 			"after ack", groupId, id)
 	}
 	return created, nil

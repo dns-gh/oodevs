@@ -172,11 +172,11 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: invalid perception
-	_, err = client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 42)
+	_, err = client.CreateUnitKnowledge(kg.Id, unit.Id, 42)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// add a unit in knowledge group and check
-	unitKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(kg.Id, unit.Id, 2)
+	unitKnowledge, err := client.CreateUnitKnowledge(kg.Id, unit.Id, 2)
 	c.Assert(err, IsNil)
 	c.Assert(unitKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(unitKnowledge.UnitId, Equals, unit.Id)
@@ -185,7 +185,7 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	location := swapi.MakePointLocation(unit.Position)
 	object, err := client.CreateObject("jamming area", kg.PartyId, location)
 	c.Assert(err, IsNil)
-	objectKnowledge, err := client.AddObjectKnowledgeInKnowledgeGroup(kg.Id, object.Id, 2)
+	objectKnowledge, err := client.CreateObjectKnowledge(kg.Id, object.Id, 2)
 	c.Assert(err, IsNil)
 	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(objectKnowledge.ObjectId, Equals, object.Id)

@@ -28,6 +28,6 @@ func AssertEqualOrDiff(c *C, result, expected string) {
 	if expected != result {
 		diff, err := makeDiff(expected, result)
 		c.Assert(err, IsNil)
-		c.Errorf("%s\n", diff)
+		c.Errorf("\n%s\n", diff)
 	}
 }

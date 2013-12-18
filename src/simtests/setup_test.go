@@ -55,12 +55,14 @@ func init() {
 	}
 }
 
-const ExCrossroadSmallOrbat = "crossroad-small-orbat"
-const ExCrossroadSmallEmpty = "crossroad-small-empty"
-const ExCrossroadSmallLog = "crossroad-small-log"
-const ExCrossroadSmallScores = "crossroad-small-scores"
-const ExGradXYTestEmpty = "grad-x.y-test-empty"
-const ExLandOfStripesEmpty = "land-of-stripes-empty"
+const (
+	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
+	ExCrossroadSmallEmpty  = "crossroad-small-empty"
+	ExCrossroadSmallLog    = "crossroad-small-log"
+	ExCrossroadSmallScores = "crossroad-small-scores"
+	ExGradXYTestEmpty      = "grad-x.y-test-empty"
+	ExLandOfStripesEmpty   = "land-of-stripes-empty"
+)
 
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
@@ -98,16 +100,12 @@ func makeOptsAndSession() (*simu.SimOpts, *simu.Session) {
 	return opts, session
 }
 
-func startSimOnExercise(c *C, exercise string, endTick int, paused bool,
-	step int) *simu.SimProcess {
-
+func startSimOnExercise(c *C, cfg *ClientOpts) *simu.SimProcess {
 	opts, session := makeOptsAndSession()
-	opts.ExerciseName = exercise
-
-	session.EndTick = endTick
-	session.Paused = paused
-	if step > 0 {
-		session.TimeStep = step
+	opts.ExerciseName = cfg.Exercise
+	session.Paused = cfg.Paused
+	if cfg.Step > 0 {
+		session.TimeStep = cfg.Step
 	}
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
@@ -205,6 +203,7 @@ type ClientOpts struct {
 	User     string
 	Password string
 	Step     int
+	Paused   bool
 	Logger   swapi.MessageLogger
 }
 
@@ -271,8 +270,7 @@ func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
-
-	sim := startSimOnExercise(c, opts.Exercise, 1000, false, opts.Step)
+	sim := startSimOnExercise(c, opts)
 	client := loginAndWaitModel(c, sim, opts)
 	return sim, client
 }

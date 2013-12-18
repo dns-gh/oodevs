@@ -549,11 +549,6 @@ func (model *ModelData) addFormation(f *Formation) bool {
 }
 
 func (model *ModelData) removeFormation(formationId uint32) bool {
-	size := len(model.Formations)
-	delete(model.Formations, formationId)
-	if size == len(model.Formations) {
-		return false
-	}
 	for _, f := range model.Formations {
 		if f.ParentId == formationId {
 			return false
@@ -564,7 +559,9 @@ func (model *ModelData) removeFormation(formationId uint32) bool {
 			return false
 		}
 	}
-	return true
+	size := len(model.Formations)
+	delete(model.Formations, formationId)
+	return size != len(model.Formations)
 }
 
 func (model *ModelData) addAutomat(a *Automat) bool {
@@ -576,17 +573,14 @@ func (model *ModelData) addAutomat(a *Automat) bool {
 }
 
 func (model *ModelData) removeAutomat(automatId uint32) bool {
-	size := len(model.Automats)
-	delete(model.Automats, automatId)
-	if size == len(model.Automats) {
-		return false
-	}
 	for _, u := range model.Units {
 		if u.AutomatId == automatId {
 			return false
 		}
 	}
-	return true
+	size := len(model.Automats)
+	delete(model.Automats, automatId)
+	return size != len(model.Automats)
 }
 
 func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
@@ -680,6 +674,12 @@ func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	return true
 }
 
+func (model *ModelData) removeCrowd(id uint32) bool {
+	size := len(model.Crowds)
+	delete(model.Crowds, id)
+	return size != len(model.Crowds)
+}
+
 func (model *ModelData) addPopulation(population *Population) bool {
 	if _, ok := model.Parties[population.PartyId]; !ok {
 		return false
@@ -718,12 +718,39 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 	return true
 }
 
+func (model *ModelData) removeKnowledgeGroup(id uint32) bool {
+	for _, u := range model.UnitKnowledges {
+		if u.KnowledgeGroupId == id {
+			return false
+		}
+	}
+	for _, o := range model.ObjectKnowledges {
+		if o.KnowledgeGroupId == id {
+			return false
+		}
+	}
+	for _, c := range model.CrowdKnowledges {
+		if c.KnowledgeGroupId == id {
+			return false
+		}
+	}
+	size := len(model.KnowledgeGroups)
+	delete(model.KnowledgeGroups, id)
+	return size != len(model.KnowledgeGroups)
+}
+
 func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
 	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
 		return false
 	}
 	model.UnitKnowledges[knowledge.Id] = knowledge
 	return true
+}
+
+func (model *ModelData) removeUnitKnowledge(id uint32) bool {
+	size := len(model.UnitKnowledges)
+	delete(model.UnitKnowledges, id)
+	return size != len(model.UnitKnowledges)
 }
 
 func (model *ModelData) addObjectKnowledge(knowledge *ObjectKnowledge) bool {
@@ -734,12 +761,24 @@ func (model *ModelData) addObjectKnowledge(knowledge *ObjectKnowledge) bool {
 	return true
 }
 
+func (model *ModelData) removeObjectKnowledge(id uint32) bool {
+	size := len(model.ObjectKnowledges)
+	delete(model.ObjectKnowledges, id)
+	return size != len(model.ObjectKnowledges)
+}
+
 func (model *ModelData) addCrowdKnowledge(knowledge *CrowdKnowledge) bool {
 	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
 		return false
 	}
 	model.CrowdKnowledges[knowledge.Id] = knowledge
 	return true
+}
+
+func (model *ModelData) removeCrowdKnowledge(id uint32) bool {
+	size := len(model.CrowdKnowledges)
+	delete(model.CrowdKnowledges, id)
+	return size != len(model.CrowdKnowledges)
 }
 
 func (model *ModelData) addLocalWeather(weather *LocalWeather) {
@@ -830,11 +869,12 @@ var (
 		(*ModelData).handleAutomatChangeLogisticLinks,
 		(*ModelData).handleAutomatChangeSuperior,
 		(*ModelData).handleAutomatCreation,
+		(*ModelData).handleAutomatDestruction,
 		(*ModelData).handleAutomatOrder,
 		(*ModelData).handleChangeDiplomacy,
 		(*ModelData).handleControlBeginTick,
-		(*ModelData).handleControlInformation,
 		(*ModelData).handleControlGlobalWeather,
+		(*ModelData).handleControlInformation,
 		(*ModelData).handleControlLocalWeatherCreation,
 		(*ModelData).handleControlLocalWeatherDestruction,
 		(*ModelData).handleControlSendCurrentStateBegin,
@@ -843,10 +883,12 @@ var (
 		(*ModelData).handleCrowdConcentrationDestruction,
 		(*ModelData).handleCrowdConcentrationUpdate,
 		(*ModelData).handleCrowdCreation,
+		(*ModelData).handleCrowdDestruction,
 		(*ModelData).handleCrowdFlowCreation,
 		(*ModelData).handleCrowdFlowDestruction,
 		(*ModelData).handleCrowdFlowUpdate,
 		(*ModelData).handleCrowdKnowledgeCreation,
+		(*ModelData).handleCrowdKnowledgeDestruction,
 		(*ModelData).handleCrowdOrder,
 		(*ModelData).handleCrowdUpdate,
 		(*ModelData).handleFormationChangeSuperior,
@@ -854,12 +896,26 @@ var (
 		(*ModelData).handleFormationDestruction,
 		(*ModelData).handleFragOrder,
 		(*ModelData).handleKnowledgeGroupCreation,
+		(*ModelData).handleKnowledgeGroupDestruction,
 		(*ModelData).handleKnowledgeGroupUpdate,
+		(*ModelData).handleLogFuneralHandlingCreation,
+		(*ModelData).handleLogFuneralHandlingDestruction,
+		(*ModelData).handleLogFuneralHandlingUpdate,
+		(*ModelData).handleLogMaintenanceHandlingCreation,
+		(*ModelData).handleLogMaintenanceHandlingDestruction,
+		(*ModelData).handleLogMaintenanceHandlingUpdate,
+		(*ModelData).handleLogMedicalHandlingCreation,
+		(*ModelData).handleLogMedicalHandlingDestruction,
+		(*ModelData).handleLogMedicalHandlingUpdate,
+		(*ModelData).handleLogSupplyHandlingCreation,
+		(*ModelData).handleLogSupplyHandlingDestruction,
+		(*ModelData).handleLogSupplyHandlingUpdate,
 		(*ModelData).handleLogSupplyQuotas,
 		(*ModelData).handleObjectCreation,
 		(*ModelData).handleObjectDestruction,
-		(*ModelData).handleObjectUpdate,
 		(*ModelData).handleObjectKnowledgeCreation,
+		(*ModelData).handleObjectKnowledgeDestruction,
+		(*ModelData).handleObjectUpdate,
 		(*ModelData).handlePartyCreation,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
@@ -868,23 +924,12 @@ var (
 		(*ModelData).handleUnitCreation,
 		(*ModelData).handleUnitDestruction,
 		(*ModelData).handleUnitKnowledgeCreation,
+		(*ModelData).handleUnitKnowledgeDestruction,
 		(*ModelData).handleUnitOrder,
 		(*ModelData).handleUnitPathfind,
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
-		(*ModelData).handleLogMaintenanceHandlingCreation,
-		(*ModelData).handleLogMaintenanceHandlingUpdate,
-		(*ModelData).handleLogMaintenanceHandlingDestruction,
-		(*ModelData).handleLogMedicalHandlingCreation,
-		(*ModelData).handleLogMedicalHandlingUpdate,
-		(*ModelData).handleLogMedicalHandlingDestruction,
-		(*ModelData).handleLogFuneralHandlingCreation,
-		(*ModelData).handleLogFuneralHandlingUpdate,
-		(*ModelData).handleLogFuneralHandlingDestruction,
-		(*ModelData).handleLogSupplyHandlingCreation,
-		(*ModelData).handleLogSupplyHandlingUpdate,
-		(*ModelData).handleLogSupplyHandlingDestruction,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,

@@ -20,20 +20,19 @@ func CheckHumans(healthy, wounded, dead, contaminated int32, crowd *swapi.Crowd)
 		crowd.Dead == dead && crowd.Contaminated == contaminated
 }
 
-func CreateCrowd(c *C, client *swapi.Client) *swapi.Crowd {
-	pos := swapi.Point{X: 0, Y: 0}
-	crowdName := "crowd"
-	healthy, wounded, dead := int32(10), int32(11), int32(12)
-
-	party := client.Model.GetData().FindPartyByName("party")
+func CreateCrowdFromParty(c *C, client *swapi.Client, name string) *swapi.Crowd {
+	party := client.Model.GetData().FindPartyByName(name)
 	c.Assert(party, NotNil)
-
 	// Create crowd in party
-	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, pos, healthy,
-		wounded, dead, crowdName)
+	pos := swapi.Point{X: 0, Y: 0}
+	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, pos, 10, 11, 12, "crowd")
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 	return crowd
+}
+
+func CreateCrowd(c *C, client *swapi.Client) *swapi.Crowd {
+	return CreateCrowdFromParty(c, client, "party")
 }
 
 func (s *TestSuite) TestCrowdTotalDestruction(c *C) {

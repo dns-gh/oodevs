@@ -10,7 +10,10 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"math/rand"
+	"swapi"
 	"swapi/replay"
+	"swapi/simu"
 	"sword"
 )
 
@@ -80,4 +83,114 @@ func (s *TestSuite) TestReplayerData(c *C) {
 	err = client.SkipToTick(creationTick - 1)
 	c.Assert(err, IsNil)
 	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
+}
+
+type ModelDump struct {
+	tick  int32
+	model *swapi.ModelData
+}
+
+func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
+	cfg := NewAdminOpts(ExCrossroadSmallEmpty)
+	cfg.Paused = true
+	sim, client := connectAndWaitModel(c, cfg)
+	defer sim.Stop()
+	defer client.Close()
+	dumps := []ModelDump{}
+	skip := func(n int32) {
+		tick := client.Model.GetTick()
+		if tick == 0 {
+			tick++ // looks like a bug
+		}
+		client.Resume(uint32(n))
+		client.Model.WaitUntilTick(tick + n)
+		dump := ModelDump{tick: client.Model.GetTick()}
+		dump.model = client.Model.GetData()
+		dumps = append(dumps, dump)
+	}
+	skip(step)
+
+	party := getSomeParty(c, client.Model.GetData())
+	formation := CreateFormation(c, client, party.Id)
+	skip(step)
+
+	automat := CreateAutomat(c, client, formation.Id, 0)
+	skip(step)
+
+	unit := CreateUnit(c, client, automat.Id)
+	_ = unit
+	skip(step)
+
+	crowd := CreateCrowdFromParty(c, client, party.Name)
+	_ = crowd
+	skip(step)
+
+	object, err := client.CreateObject("jamming area", party.Id, swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456}))
+	_ = object
+	c.Assert(err, IsNil)
+	skip(step)
+
+	kg, err := client.CreateKnowledgeGroup(party.Id, "Standard")
+	_ = kg
+	c.Assert(err, IsNil)
+	skip(step)
+
+	if false {
+		// resource dotation error
+		_, err = client.CreateUnitKnowledge(kg.Id, unit.Id, 2)
+		c.Assert(err, IsNil)
+		skip(step)
+	}
+
+	if false {
+		// resource dotation error
+		_, err = client.CreateObjectKnowledge(kg.Id, object.Id, 2)
+		c.Assert(err, IsNil)
+		skip(step)
+	}
+
+	if false {
+		// resource dotation error
+		_, err = client.CreateCrowdKnowledge(kg.Id, crowd.Id, 2)
+		c.Assert(err, IsNil)
+		skip(step)
+	}
+
+	return sim.Opts, dumps
+}
+
+func replayDumps(c *C, step int32, cfg *simu.SimOpts, dumps []ModelDump) {
+	replay := startReplay(c, cfg)
+	defer replay.Kill()
+	client := loginAndWaitModel(c, replay, NewAdminOpts(""))
+	defer client.Close()
+	for _, d := range dumps {
+		client.SkipToTick(d.tick - step/2)
+		model := client.Model.GetData()
+		compareModels(c, d.model, model, cfg.GetSessionDir())
+	}
+}
+
+func (s *TestSuite) TestReplayerModels(c *C) {
+	step := int32(4)
+	cfg, dumps := getReplayDumps(c, step)
+	replayDumps(c, step, cfg, dumps)
+	// play ticks in reverse order
+	j := len(dumps) - 1
+	for i := 0; i*2 < len(dumps); i++ {
+		dumps[i], dumps[j] = dumps[j], dumps[i]
+		j--
+	}
+	replayDumps(c, step, cfg, dumps)
+	// play ticks in random order
+	rd := rand.New(rand.NewSource(0))
+	max := len(dumps) - 1
+	for i := range dumps {
+		if i == max {
+			break
+		}
+		j := i + rd.Intn(max-i)
+		dumps[i], dumps[j] = dumps[j], dumps[i]
+	}
+	replayDumps(c, step, cfg, dumps)
 }
