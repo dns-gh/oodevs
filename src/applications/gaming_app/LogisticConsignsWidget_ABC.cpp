@@ -73,7 +73,8 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
     historyTable_ = new LogisticsRequestsHistoryTable( "Logistics requests history", this );
-
+    connect( historyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
+                                                 , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     pLayout->addLayout( pCheckBoxLayout );
     pLayout->addWidget( requestsTable_ );
     pDetailLayout_->addWidget( detailsTable_ );

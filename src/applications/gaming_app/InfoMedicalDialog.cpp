@@ -43,7 +43,6 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
         , tools::translate( "InfoMedicalDialog", "Instructions" ) );
     tabs->addTab( ambulancesDoctorsWidget, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMedicalDialog", "Chain status" ) );
-    setMinimumWidth( 450 );
 }
 
 // -----------------------------------------------------------------------------

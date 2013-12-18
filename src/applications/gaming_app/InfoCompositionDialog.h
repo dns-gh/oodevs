@@ -39,11 +39,6 @@ public:
     virtual ~InfoCompositionDialog();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual QSize sizeHint() const;
-    //@}
-
 private:
      //! @name Helpers
     //@{
