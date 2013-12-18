@@ -65,13 +65,12 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
                                                                       unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY, rDetectionRange )
-    , phs_            ( PHY_Posture::GetPostureCount(), 1. )
-    , rDispersionCoef_( 0 )
+    , rNeutralizationCoef_( xis.attribute< double >( "neutralization-ratio" ) )
+    , rDispersionCoef_    ( xis.attribute< double >( "dispersion-factor", 0 ) )
+    , phs_                ( PHY_Posture::GetPostureCount(), 1. )
 {
-    rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );
     if( rNeutralizationCoef_ < 1. )
         throw MASA_EXCEPTION( xis.context() + "neutralization-ratio < 1" );
-    rDispersionCoef_ = xis.attribute< double >( "dispersion-factor" );
     if( !dotationCategory.HasAttritions() )
         throw MASA_EXCEPTION( xis.context() + "Dotation has no attritions defined" );
     xis >> xml::list( "ph", *this, &PHY_DotationCategory_IndirectFire::ReadPh );
@@ -192,9 +191,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
     MT_Vector2D vRotatedFireDirection = vFireDirection;
     vRotatedFireDirection.Rotate90();
 
-    double itm1 = std::max( 0., rInterventionTypeFired - 1 );
-    double dispersionFactor = 1 + itm1 * rDispersionCoef_;
-    double phFactor = rInterventionTypeFired / dispersionFactor;
+    const double itm1 = std::max( 0., rInterventionTypeFired - 1 );
+    const double dispersionFactor = 1 + itm1 * rDispersionCoef_;
+    const double phFactor = rInterventionTypeFired / dispersionFactor;
 
     vFireDirection        *= ( rDispersionX_ +  rDispersionX_ * itm1 * rDispersionCoef_ );
     vRotatedFireDirection *= ( rDispersionY_ +  rDispersionY_ * itm1 * rDispersionCoef_ );

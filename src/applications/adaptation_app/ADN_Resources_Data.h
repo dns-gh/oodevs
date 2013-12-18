@@ -125,16 +125,18 @@ public:
 
         // For explosive ammo
         ADN_Type_Double rNeutralizationRatio_;
-        ADN_Type_Double rDispersionFactor_;
+        ADN_Type_Double rExplosiveDispersion_;
         T_ModificatorPostureInfos_Vector vModifStance_;
 
         // For flare
         ADN_Type_Time flareDeployTime_;
         ADN_Type_Time flareLifeTime_;
+        ADN_Type_Double rFlareDispersion_;
 
         // For smoke
         ADN_Type_Time smokeDeployTime_;
         ADN_Type_Time smokeLifeTime_;
+        ADN_Type_Double rSmokeDispersion_;
 
         // For mine
         ADN_Type_Int nMineNumber_;
