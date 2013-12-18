@@ -338,14 +338,6 @@ namespace
         unsigned long id_;
         mutable std::vector< unsigned int > toDelete_;
     };
-    template< typename T >
-    void DeleteDeletedAgentConsigns( tools::Resolver< T >& model, unsigned long id )
-    {
-        DeleteAgentFunctor< T > functor( id );
-        model.Apply( functor );
-        for( auto it = functor.toDelete_.begin(); it!= functor.toDelete_.end(); ++it )
-            model.Delete( *it );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -354,10 +346,25 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticsModel::DestroyAgent( unsigned long id )
 {
-    DeleteDeletedAgentConsigns< LogMaintenanceConsign >( *this, id );
-    DeleteDeletedAgentConsigns< LogMedicalConsign >( *this, id );
-    DeleteDeletedAgentConsigns< LogSupplyConsign >( *this, id );
-    DeleteDeletedAgentConsigns< LogFuneralConsign >( *this, id );
+    DeleteAgentFunctor< LogMaintenanceConsign > maintenanceFunctor( id );
+    tools::Resolver< LogMaintenanceConsign >::Apply( maintenanceFunctor );
+    for( auto it = maintenanceFunctor.toDelete_.begin(); it!= maintenanceFunctor.toDelete_.end(); ++it )
+        DeleteMaintenanceConsign( *it );
+
+    DeleteAgentFunctor< LogMedicalConsign > medicalFunctor( id );
+    tools::Resolver< LogMedicalConsign >::Apply( medicalFunctor );
+    for( auto it = medicalFunctor.toDelete_.begin(); it!= medicalFunctor.toDelete_.end(); ++it )
+        DeleteMedicalConsign( *it );
+
+    DeleteAgentFunctor< LogSupplyConsign > supplyFunctor( id );
+    tools::Resolver< LogSupplyConsign >::Apply( supplyFunctor );
+    for( auto it = supplyFunctor.toDelete_.begin(); it!= supplyFunctor.toDelete_.end(); ++it )
+        DeleteSupplyConsign( *it );
+
+    DeleteAgentFunctor< LogFuneralConsign > funeralFunctor( id );
+    tools::Resolver< LogFuneralConsign >::Apply( funeralFunctor );
+    for( auto it = funeralFunctor.toDelete_.begin(); it!= funeralFunctor.toDelete_.end(); ++it )
+        DeleteFuneralConsign( *it );
 }
 
 // -----------------------------------------------------------------------------

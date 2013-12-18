@@ -149,7 +149,6 @@ void HistoryLogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingU
         if( message.has_requests() )
         {
             consign->DeleteAll();
-            std::string toto = message.DebugString();
             BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests().requests() )
             {
                 SupplyRecipientResourcesRequest* request = new SupplyRecipientResourcesRequest( dotationResolver_, automatResolver_, data );

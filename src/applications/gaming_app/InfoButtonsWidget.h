@@ -44,6 +44,7 @@ class LogFuneralConsign;
 class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogisticsConsign_ABC;
+class LogisticsModel;
 
 // =============================================================================
 /** @class  InfoButtonsWidget
@@ -119,6 +120,7 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const Simulation& simulation_;
+    LogisticsModel& historyModel_;
     std::vector< LogisticDialog_ABC* > logisticDialogs_;
     const kernel::Entity_ABC* element_;
     std::set< unsigned long > entities_;

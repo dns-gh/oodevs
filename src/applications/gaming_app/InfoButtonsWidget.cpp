@@ -26,6 +26,7 @@
 #include "gaming/Model.h"
 #include "gaming/Simulation.h"
 #include "gaming/LogisticConsigns.h"
+#include "gaming/HistoryLogisticsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/ImageWrapper.h"
@@ -49,13 +50,14 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
                                       gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
                                       const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
     : Q3GroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
-    , controllers_( controllers )
-    , publisher_  ( publisher )
-    , simulation_ ( simulation )
-    , element_    ( 0 )
-    , hasChanged_ ( false )
-    , timer_      ( 0 )
-    , lastTick_   ( 0 )
+    , controllers_ ( controllers )
+    , publisher_   ( publisher )
+    , simulation_  ( simulation )
+    , element_     ( 0 )
+    , hasChanged_  ( false )
+    , timer_       ( 0 )
+    , lastTick_    ( 0 )
+    , historyModel_( model.historyLogistics_ )
 {
     setFlat( true );
     setFixedWidth( 100 );
@@ -179,6 +181,7 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
     element_ = element;
     for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
         (*it)->Purge();
+    historyModel_.Purge();
     entities_.clear();
     if( element_ )
     {
