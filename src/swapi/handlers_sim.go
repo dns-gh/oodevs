@@ -774,7 +774,7 @@ func (model *ModelData) handleControlLocalWeatherCreation(m *sword.SimToClient_C
 		BottomRight: ReadPoint(mm.GetBottomRight()),
 		Id:          mm.GetWeather().GetId(),
 	}
-	model.addLocalWeather(w)
+	model.LocalWeathers[w.Id] = w
 	return nil
 }
 

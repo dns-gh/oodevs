@@ -537,14 +537,14 @@ func (model *ModelData) FindPartyByName(name string) *Party {
 }
 
 func (model *ModelData) addFormation(f *Formation) bool {
-	_, ok := model.Formations[f.ParentId]
-	if !ok {
-		_, ok = model.Parties[f.PartyId]
+	if _, ok := model.Formations[f.ParentId]; !ok {
+		if _, ok = model.Parties[f.PartyId]; !ok {
+			return false
+		}
 	}
-	if ok {
-		model.Formations[f.Id] = f
-	}
-	return ok
+	size := len(model.Formations)
+	model.Formations[f.Id] = f
+	return size != len(model.Formations)
 }
 
 func (model *ModelData) removeFormation(formationId uint32) bool {
@@ -567,8 +567,9 @@ func (model *ModelData) addAutomat(a *Automat) bool {
 	if _, ok := model.Formations[a.FormationId]; !ok {
 		return false
 	}
+	size := len(model.Automats)
 	model.Automats[a.Id] = a
-	return true
+	return size != len(model.Automats)
 }
 
 func (model *ModelData) removeAutomat(automatId uint32) bool {
@@ -587,11 +588,9 @@ func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
 	if !ok {
 		return false
 	}
-	if _, ok := crowd.CrowdElements[elementId]; ok {
-		return false
-	}
+	size := len(crowd.CrowdElements)
 	crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0}
-	return true
+	return size != len(crowd.CrowdElements)
 }
 
 func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
@@ -608,8 +607,9 @@ func (model *ModelData) addUnit(unit *Unit) bool {
 	if _, ok := model.Automats[unit.AutomatId]; !ok {
 		return false
 	}
+	size := len(model.Units)
 	model.Units[unit.Id] = unit
-	return true
+	return size != len(model.Units)
 }
 
 func (model *ModelData) removeUnit(unitId uint32) bool {
@@ -669,8 +669,9 @@ func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	if _, ok := model.Parties[crowd.PartyId]; !ok {
 		return false
 	}
+	size := len(model.Crowds)
 	model.Crowds[crowd.Id] = crowd
-	return true
+	return size != len(model.Crowds)
 }
 
 func (model *ModelData) removeCrowd(id uint32) bool {
@@ -683,24 +684,21 @@ func (model *ModelData) addPopulation(population *Population) bool {
 	if _, ok := model.Parties[population.PartyId]; !ok {
 		return false
 	}
+	size := len(model.Populations)
 	model.Populations[population.Id] = population
-	return true
+	return size != len(model.Populations)
 }
 
 func (model *ModelData) addProfile(profile *Profile) bool {
-	if _, ok := model.Profiles[profile.Login]; ok {
-		return false
-	}
+	size := len(model.Profiles)
 	model.Profiles[profile.Login] = profile
-	return true
+	return size != len(model.Profiles)
 }
 
 func (model *ModelData) updateProfile(login string, profile *Profile) bool {
-	if _, ok := model.Profiles[login]; !ok {
-		return false
-	}
+	size := len(model.Profiles)
 	model.Profiles[login] = profile
-	return true
+	return size == len(model.Profiles)
 }
 
 func (model *ModelData) removeProfile(login string) bool {
@@ -713,6 +711,7 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 	if _, ok := model.Parties[group.PartyId]; !ok {
 		return false
 	}
+	// FIXME checking conflicts break replayer tests
 	model.KnowledgeGroups[group.Id] = group
 	return true
 }
@@ -742,8 +741,9 @@ func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
 	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
 		return false
 	}
+	size := len(model.UnitKnowledges)
 	model.UnitKnowledges[knowledge.Id] = knowledge
-	return true
+	return size != len(model.UnitKnowledges)
 }
 
 func (model *ModelData) removeUnitKnowledge(id uint32) bool {
@@ -756,8 +756,9 @@ func (model *ModelData) addObjectKnowledge(knowledge *ObjectKnowledge) bool {
 	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
 		return false
 	}
+	size := len(model.ObjectKnowledges)
 	model.ObjectKnowledges[knowledge.Id] = knowledge
-	return true
+	return size != len(model.ObjectKnowledges)
 }
 
 func (model *ModelData) removeObjectKnowledge(id uint32) bool {
@@ -770,19 +771,15 @@ func (model *ModelData) addCrowdKnowledge(knowledge *CrowdKnowledge) bool {
 	if _, ok := model.KnowledgeGroups[knowledge.KnowledgeGroupId]; !ok {
 		return false
 	}
+	size := len(model.CrowdKnowledges)
 	model.CrowdKnowledges[knowledge.Id] = knowledge
-	return true
+	return size != len(model.CrowdKnowledges)
 }
 
 func (model *ModelData) removeCrowdKnowledge(id uint32) bool {
 	size := len(model.CrowdKnowledges)
 	delete(model.CrowdKnowledges, id)
 	return size != len(model.CrowdKnowledges)
-}
-
-func (model *ModelData) addLocalWeather(weather *LocalWeather) {
-	// check conflicts ?
-	model.LocalWeathers[weather.Id] = weather
 }
 
 func (model *ModelData) removeLocalWeather(id uint32) bool {
@@ -792,11 +789,9 @@ func (model *ModelData) removeLocalWeather(id uint32) bool {
 }
 
 func (model *ModelData) addUrban(urban *Urban) bool {
-	if _, ok := model.Urbans[urban.Id]; ok {
-		return false
-	}
+	size := len(model.Urbans)
 	model.Urbans[urban.Id] = urban
-	return true
+	return size != len(model.Urbans)
 }
 
 func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*ResourceNetwork) bool {
@@ -808,11 +803,9 @@ func (model *ModelData) updateUrban(id uint32, resourceNetworks map[string]*Reso
 }
 
 func (model *ModelData) addOrder(order *Order) bool {
-	if _, ok := model.Orders[order.Id]; ok {
-		return false
-	}
+	size := len(model.Orders)
 	model.Orders[order.Id] = order
-	return true
+	return size != len(model.Orders)
 }
 
 func (model *ModelData) changeAutomatLogisticsLinks(entityId uint32, superiors []uint32) bool {
@@ -848,11 +841,9 @@ func (model *ModelData) changeFormationSupplyQuotas(suppliedId uint32, quotas ma
 }
 
 func (model *ModelData) addObject(object *Object) bool {
-	if _, ok := model.Objects[object.Id]; ok {
-		return false
-	}
+	size := len(model.Objects)
 	model.Objects[object.Id] = object
-	return true
+	return size != len(model.Objects)
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
