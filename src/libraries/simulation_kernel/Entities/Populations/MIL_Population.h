@@ -224,8 +224,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
-    typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
+    typedef std::vector< boost::shared_ptr< MIL_PopulationConcentration > > T_ConcentrationVector;
+    typedef std::vector< boost::shared_ptr< MIL_PopulationFlow > > T_FlowVector;
     //@}
 
 private:
