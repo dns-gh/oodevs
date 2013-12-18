@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"runtime"
+	"server"
 )
 
 type Options struct {
@@ -58,5 +59,9 @@ func StartHttpProxy(options *Options) error {
 }
 
 func StartTcpProxy(options *Options) error {
-	return NewTcpProxy(options).Run()
+	http := options.http
+	if options.override != 0 {
+		http = options.override
+	}
+	return server.NewTcpProxy(http, options.tcp, options.verbose, options.ssl, nil).Run()
 }
