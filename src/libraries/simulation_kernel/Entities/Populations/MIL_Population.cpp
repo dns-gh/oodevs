@@ -473,6 +473,25 @@ void MIL_Population::UpdateDecision( float duration )
     }
 }
 
+namespace
+{
+    template< typename T >
+    void Update( T& elements, T& trashed )
+    {
+        for( auto it = elements.begin(); it != elements.end(); )
+        {
+            auto element = *it;
+            if( !element->Update() )
+            {
+                it = elements.erase( it );
+                trashed.push_back( element );
+            }
+            else
+                ++it;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::UpdateState
 // Created: NLD 2005-10-04
@@ -483,31 +502,9 @@ void MIL_Population::UpdateState()
     {
         trashedConcentrations_.clear();
         trashedFlows_.clear();
-        // Flows
-        for( auto itFlow = flows_.begin(); itFlow != flows_.end(); )
-        {
-            auto pFlow = *itFlow;
-            if( !pFlow->Update() )
-            {
-                itFlow = flows_.erase( itFlow );
-                trashedFlows_.push_back( pFlow );
-            }
-            else
-                ++itFlow;
-        }
-        // Concentrations
-        for( auto itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
-        {
-            auto pConcentration = *itConcentration;
-            if( !pConcentration->Update() )
-            {
-                itConcentration = concentrations_.erase( itConcentration );
-                trashedConcentrations_.push_back( pConcentration );
-            }
-            else
-                ++itConcentration;
-        }
-        if( trashedFlows_.size() > 0 || trashedConcentrations_.size() > 0 )
+        Update( flows_, trashedFlows_ );
+        Update( concentrations_, trashedConcentrations_ );
+        if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
             UpdateBarycenter();
     }
     catch( const std::exception& e )
