@@ -1150,7 +1150,7 @@ end
 integration.leadDestroy = function ( self, setEchelonNone )
     local integration = integration
     if self.companyTask.destroy then
-        self.companyTask:destroy()
+        self.companyTask:destroy( self.params, self.parameters )
     end
     local entities = self.parameters.commandingEntities
     if setEchelonNone then
