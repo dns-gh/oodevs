@@ -11,7 +11,7 @@
 #define __EventViewState_h_
 
 #include "Event.h"
-#include "ENT/ENT_Enums_Gen.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/shared_ptr.hpp>
 
 namespace gui
