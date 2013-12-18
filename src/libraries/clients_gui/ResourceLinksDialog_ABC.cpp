@@ -19,7 +19,6 @@
 #include "RichPushButton.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"
-#include "tools.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -27,6 +26,7 @@
 #include "clients_kernel/Model_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 

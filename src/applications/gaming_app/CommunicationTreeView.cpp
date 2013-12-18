@@ -24,6 +24,7 @@
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/SignalAdapter.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"

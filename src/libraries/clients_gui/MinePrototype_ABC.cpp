@@ -9,10 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "MinePrototype_ABC.h"
-#include "clients_kernel/Units.h"
-#include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace kernel;
 using namespace gui;

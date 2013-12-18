@@ -15,8 +15,9 @@
 #include "RichLabel.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
-#include "Tools.h"
 #include "ImageWrapper.h"
+
+#include "clients_kernel/Tools.h"
 
 #include "tools/GeneralConfig.h"
 #include "tools/VersionHelper.h"

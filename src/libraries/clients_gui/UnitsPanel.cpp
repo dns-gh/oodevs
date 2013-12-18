@@ -12,14 +12,14 @@
 #include "moc_UnitsPanel.cpp"
 
 #include "DragAndDropHelpers.h"
-#include "Tools.h"
 #include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "UnitTreeView.h"
 #include "UnitPreviewIcon.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_gui/SubObjectName.h"
-
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

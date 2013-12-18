@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeShapeFileLoader.h"
-#include "Tools.h"
+
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Tools.h"
+
 #pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
 #pragma warning( pop )

@@ -14,15 +14,17 @@
 #include "ContourLinesObserver.h"
 #include "ImageWrapper.h"
 #include "RichSpinBox.h"
-#include "Tools.h"
-#include "TerrainProfiler.h"
 #include "SubObjectName.h"
+#include "TerrainProfiler.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
-#include "clients_kernel/DisplayableModesObserver_ABC.h"
+
 #include "tools/GeneralConfig.h"
 
 using namespace gui;

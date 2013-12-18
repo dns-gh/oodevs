@@ -11,10 +11,14 @@
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
 #include "Registry.h"
+
 #include "clients_gui/FileDialog.h"
-#include "clients_gui/tools.h"
+
+#include "clients_kernel/tools.h"
+
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+
 #include <QScrollArea>
 
 namespace

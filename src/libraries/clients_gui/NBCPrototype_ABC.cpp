@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
-#include "clients_kernel/NBCAgent.h"
-#include "clients_kernel/VariantPointer.h"
 #include "RichLabel.h"
-#include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/VariantPointer.h"
+
 #include <tools/Iterator.h>
 
 using namespace kernel;

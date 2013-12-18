@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "FirePropagationModifierPrototype_ABC.h"
-#include "Tools.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

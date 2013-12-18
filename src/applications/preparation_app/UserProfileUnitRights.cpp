@@ -12,7 +12,7 @@
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
-#include "clients_kernel/Tools.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights constructor

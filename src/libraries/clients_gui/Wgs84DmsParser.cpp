@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "Wgs84DmsParser.h"
+
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

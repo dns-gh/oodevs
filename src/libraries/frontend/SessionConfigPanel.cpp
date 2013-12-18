@@ -9,16 +9,19 @@
 
 #include "frontend_pch.h"
 #include "SessionConfigPanel.h"
-#include "clients_gui/tools.h"
+#include "moc_SessionConfigPanel.cpp"
+
+#include "clients_kernel/Tools.h"
+
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+
 #pragma warning( push, 0 )
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qspinbox.h>
 #pragma warning( pop )
 
-#include "moc_SessionConfigPanel.cpp"
 
 using namespace frontend;
 

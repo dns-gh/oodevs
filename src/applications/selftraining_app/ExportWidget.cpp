@@ -11,17 +11,23 @@
 #include "ExportWidget.h"
 #include "moc_ExportWidget.cpp"
 #include "ExerciseListView.h"
+
 #include "clients_gui/FileDialog.h"
-#include "clients_gui/tools.h"
+
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/tools.h"
+
 #include "frontend/commands.h"
 #include "frontend/ListViewHelper.h"
+
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/VersionHelper.h"
 #include "tools/FileWrapper.h"
+
 #include <tools/Helpers.h>
 #include <tools/Zip.h>
+
 #include <xeumeuleu/xml.h>
 
 namespace fc = frontend::commands;

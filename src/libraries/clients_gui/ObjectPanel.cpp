@@ -9,16 +9,17 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectPanel.h"
-#include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/ObjectType.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/Units.h"
-#include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/StockAttribute_ABC.h"
 #include "DisplayBuilder.h"
-#include "Tools.h"
+
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/StockAttribute_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace kernel;
 using namespace gui;

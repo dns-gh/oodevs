@@ -96,12 +96,6 @@ namespace tools
     E_FuncLimaType          LimaTypeFromShortString ( const QString& type );
     E_FuncLimaType          LimaTypeFromXmlString   ( const QString& type );
     QString                 LimaTypeShortToXmlString( const QString& shortType );
-
-    bool IsCommandPost( const kernel::Entity_ABC& entity );
-    bool IsEngaged( const kernel::Entity_ABC& entity );
-
-    bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
-    bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
 }
 
 #endif // __Kernel_Tools_h_

@@ -12,7 +12,11 @@
 #include "RichCheckBox.h"
 #include "SubObjectName.h"
 #include "Tools.h"
+
+#include "clients_kernel/Tools.h"
+
 #include "tools/GeneralConfig.h"
+
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -61,7 +65,7 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 void InputPropagationPrototype_ABC::FillInPaths()
 {
     tools::Path path = root_ / "data/propagations";
-    tools::Path::T_Paths files = path.ListElements( boost::bind( &IsPropagationDir, _1 ), true );
+    tools::Path::T_Paths files = path.ListElements( boost::bind( &tools::IsPropagationDir, _1 ), true );
 
     for( auto it = files.begin(); it != files.end(); ++it )
         propagationFiles_->AddItem( it->ToUTF8(), it->ToUTF8() );

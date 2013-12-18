@@ -14,10 +14,13 @@
 #include "RichCheckBox.h"
 #include "SizeButton.h"
 #include "SubObjectName.h"
-#include "Tools.h"
+
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
+
 #include "ENT/Ent_Tr.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;

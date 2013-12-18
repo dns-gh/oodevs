@@ -10,10 +10,13 @@
 #include "selftraining_app_pch.h"
 #include "OrbatConfigPanel.h"
 #include "moc_OrbatConfigPanel.cpp"
-#include "clients_gui/tools.h"
+
+#include "clients_kernel/Tools.h"
+
 #include "frontend/Exercise_ABC.h"
 #include "frontend/commands.h"
 #include "frontend/CreateSession.h"
+
 #include <boost/lexical_cast.hpp>
 #include <vector>
 
