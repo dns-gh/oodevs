@@ -13,7 +13,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/noncopyable.hpp>
 
-namespace kernel
+namespace gui
 {
 
 // =============================================================================
@@ -54,6 +54,6 @@ private:
     //@}
 };
 
-} //! namespace kernel
+} //! namespace gui
 
 #endif // __TimelinePublisher_h_

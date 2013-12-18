@@ -33,19 +33,19 @@ namespace actions
 namespace kernel
 {
     class AgentTypes;
-    class Event;
-    class EventFactory;
+    class TimelineHandler_ABC;
 }
 
 class QDateTime;
 
 namespace gui
 {
+    class Event;
+    class EventFactory;
     class EventOrderPresenter;
     class EventOrderView_ABC;
     class EventView_ABC;
     struct EventViewState;
-    class TimelineHandler_ABC;
 
 // =============================================================================
 /** @class  EventPresenter
@@ -66,7 +66,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EventPresenter( EventView_ABC& view,
-                             const kernel::EventFactory& factory );
+                             const EventFactory& factory );
     virtual ~EventPresenter();
     //@}
 
@@ -82,7 +82,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void SetTimelineHandler( const boost::shared_ptr< TimelineHandler_ABC >& timelineHandler );
+    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler );
     void OnWarningChanged( const std::string& warning, const QColor& warningColor );
     //@}
 
@@ -91,13 +91,13 @@ public slots:
     //@{
     void StartCreation( E_EventTypes type,
                         const QDateTime& beginDate );
-    void StartEdition( const kernel::Event& event,
+    void StartEdition( const gui::Event& event,
                        bool raise,
                        bool purge = true );
 
     void OnEventContentChanged();
-    void OnEventUpdated( const kernel::Event& event );
-    void OnEventDeleted( const kernel::Event& event );
+    void OnEventUpdated( const gui::Event& event );
+    void OnEventDeleted( const gui::Event& event );
 
     void OnBeginDateChanged( const QDateTime& begin );
     void OnEndDateActivated( bool activated );
@@ -114,7 +114,7 @@ private:
     //! @name Helpers
     //@{
     void CheckEvent() const;
-    bool IsCurrentEvent( const kernel::Event& event );
+    bool IsCurrentEvent( const gui::Event& event );
     void InternalPurge();
 
     void BuildView( E_EventDockModes mode,
@@ -141,10 +141,10 @@ private:
     //! @name Member data
     //@{
     EventView_ABC& view_;
-    const kernel::EventFactory& factory_;
+    const EventFactory& factory_;
     boost::scoped_ptr< EventViewState > state_;
-    boost::shared_ptr< kernel::Event > event_;
-    boost::shared_ptr< TimelineHandler_ABC > timelineHandler_;
+    boost::shared_ptr< Event > event_;
+    boost::shared_ptr< kernel::TimelineHandler_ABC > timelineHandler_;
     T_Presenters presenters_;
     //@}
 };

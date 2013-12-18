@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Model.h"
-#include "ActionPublisher.h"
 #include "AfterActionModel.h"
 #include "AgentFactory.h"
 #include "AgentKnowledgeConverter.h"
@@ -50,11 +49,12 @@
 #include "WeatherModel.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
+#include "actions/ActionPublisher.h"
 #include "actions/ActionsModel.h"
+#include "clients_gui/EventFactory.h"
+#include "clients_gui/EventsModel.h"
+#include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/EventFactory.h"
-#include "clients_kernel/EventsModel.h"
-#include "clients_kernel/TimelinePublisher.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 
@@ -96,7 +96,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fires_                   ( *new FiresModel( agents_, agents_, agents_, profile ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this, profile ) )
     , profiles_                ( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher, controllers.controller_ ) )
+    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new actions::ActionPublisher( publisher, controllers_ ), publisher, controllers.controller_ ) )
     , folk_                    ( *new FolkModel( controllers.controller_ ) )
     , aar_                     ( *new AfterActionModel( controllers.controller_, publisher ) )
     , drawings_                ( *new DrawingsModel( controllers, drawingFactory_, *this ) )
@@ -111,9 +111,9 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new kernel::EventFactory( actions_, controllers ) )
-    , events_                  ( *new kernel::EventsModel( eventFactory_, controllers.controller_ ) )
-    , timelinePublisher_       ( *new kernel::TimelinePublisher() )
+    , eventFactory_            ( *new gui::EventFactory( actions_, controllers ) )
+    , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
+    , timelinePublisher_       ( *new gui::TimelinePublisher() )
 {
     symbolsFactory_.Load( config );
 }

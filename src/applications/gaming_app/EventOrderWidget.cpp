@@ -18,10 +18,12 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/EntitySymbols.h"
+#include "clients_gui/EventAction.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventOrderViewState.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_gui/TimelinePublisher.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWarnWidget.h"
@@ -29,12 +31,10 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
-#include "clients_kernel/EventAction.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Time_ABC.h"
-#include "clients_kernel/TimelinePublisher.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/AutomatDecisions.h"
@@ -220,7 +220,7 @@ void EventOrderWidget::Build( const gui::EventViewState& state )
 {
     if( !state.event_ || !state.event_->GetType() == eEventTypes_Order )
         return;
-    const kernel::EventAction& eventAction = static_cast< const kernel::EventAction& >( *state.event_ );
+    const gui::EventAction& eventAction = static_cast< const gui::EventAction& >( *state.event_ );
     if( const actions::Action_ABC* action = eventAction.GetAction() )
     {
         const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );

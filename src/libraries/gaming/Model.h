@@ -22,12 +22,9 @@ namespace kernel
 {
     class AgentKnowledgeConverter_ABC;
     class Controllers;
-    class EventFactory;
-    class EventsModel;
     class ObjectKnowledgeConverter_ABC;
     class Profile_ABC;
     class SymbolFactory;
-    class TimelinePublisher;
     class Workers;
 }
 
@@ -36,6 +33,13 @@ namespace actions
     class ActionFactory_ABC;
     class ActionsModel;
     class ParameterFactory_ABC;
+}
+
+namespace gui
+{
+    class EventFactory;
+    class EventsModel;
+    class TimelinePublisher;
 }
 
 class AfterActionModel;
@@ -159,9 +163,9 @@ public:
     SurfaceFactory& surfaceFactory_;
     FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
-    const kernel::EventFactory& eventFactory_;
-    kernel::EventsModel& events_;
-    kernel::TimelinePublisher& timelinePublisher_;
+    const gui::EventFactory& eventFactory_;
+    gui::EventsModel& events_;
+    gui::TimelinePublisher& timelinePublisher_;
     //@}
 };
 

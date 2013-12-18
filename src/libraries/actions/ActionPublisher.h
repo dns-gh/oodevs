@@ -19,6 +19,9 @@ namespace kernel
     class Controllers;
 }
 
+namespace actions
+{
+
 // =============================================================================
 /** @class  ActionPublisher
     @brief  Proxy to Publisher_ABC filtering publication in design mode
@@ -65,5 +68,7 @@ private:
     bool design_;
     //@}
 };
+
+} //! namespace actions
 
 #endif // __ActionPublisher_h_

@@ -254,17 +254,6 @@
     </message>
 </context>
 <context>
-    <name>EventFactory</name>
-    <message>
-        <source>New order</source>
-        <translation>Nouvel ordre</translation>
-    </message>
-    <message>
-        <source>New task</source>
-        <translation>Nouvelle tâche</translation>
-    </message>
-</context>
-<context>
     <name>Formatter</name>
     <message>
         <source> - </source>

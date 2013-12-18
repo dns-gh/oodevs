@@ -10,17 +10,21 @@
 #ifndef __TimelineWebView_h_
 #define __TimelineWebView_h_
 
-#include "ENT/ENT_Enums.h"
-#include "clients_gui/TimelineHandler_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/TimelineHandler_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
+
+namespace gui
+{
+    class Event;
+}
 
 namespace kernel
 {
     class Controllers;
     class ContextMenu;
-    class Event;
     class Profile_ABC;
 }
 
@@ -51,7 +55,7 @@ class TimelineWebView : public QWidget
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< QDateTime >
                       , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                      , public gui::TimelineHandler_ABC
+                      , public kernel::TimelineHandler_ABC
 {
     Q_OBJECT
 
@@ -79,7 +83,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    kernel::Event& GetOrCreateEvent( const timeline::Event& event );
+    gui::Event& GetOrCreateEvent( const timeline::Event& event );
 
     virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Profile_ABC& profile );
