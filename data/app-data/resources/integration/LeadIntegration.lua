@@ -429,9 +429,9 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
                                 if paramElement == entity then
                                     local tasks = myself.leadData.dynamicEntityTasks[entity] or tasksForSE
                                     integration.issueMission ( self, tasks, 1, integration.getEchelonState(element.source), {element}, false, findBestsFunction, disengageTask )
+                                elseif isHQTaskUsingRelievingUnit( self, hqUnit, element, paramElement ) then
+                                    integration.issueMission ( self, self.hqTask, 1, integration.getEchelonState( element.source ), {element}, false, findBestsFunction, disengageTask )
                                 end
-                            elseif isHQTaskUsingRelievingUnit( self, hqUnit, element, paramElement ) then
-                                integration.issueMission ( self, self.hqTask, 1, integration.getEchelonState( element.source ), {element}, false, findBestsFunction, disengageTask )
                             end
                         end
                         if param == entity then
