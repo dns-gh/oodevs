@@ -76,6 +76,13 @@
     </message>
 </context>
 <context>
+    <name>AutomatDecisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation>Mission de l&apos;automate:</translation>
+    </message>
+</context>
+<context>
     <name>Block</name>
     <message>
         <source>Density:</source>

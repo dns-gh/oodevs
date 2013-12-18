@@ -13,7 +13,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Decisions_ABC.h"
+#include "clients_gui/Decisions_ABC.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Mission.h"
@@ -118,13 +118,15 @@ namespace
         MOCK_METHOD( Activate, 1 );
         MOCK_METHOD( GetTypeName, 0 );
     };
-    MOCK_BASE_CLASS( MockDecisions, kernel::Decisions_ABC )
+    MOCK_BASE_CLASS( MockDecisions, gui::Decisions_ABC )
     {
         MOCK_METHOD( CanBeOrdered, 0 );
+        MOCK_METHOD( IsDebugActivated, 0 );
         MOCK_METHOD( GetMissions, 0 );
         MOCK_METHOD( GetFragOrders, 0 );
         MOCK_METHOD( GetCurrentMission, 0 );
         MOCK_METHOD( GetAgent, 0 );
+        MOCK_METHOD( GetModelName, 0 );
     };
 
     const xml::xistringstream xis( "<missions>"

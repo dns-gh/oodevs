@@ -41,7 +41,7 @@
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

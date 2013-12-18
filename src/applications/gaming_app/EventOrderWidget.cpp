@@ -11,9 +11,13 @@
 #include "EventOrderWidget.h"
 #include "moc_EventOrderWidget.cpp"
 #include "icons.h"
+
 #include "actions/ActionError.h"
 #include "actions/ActionWithTarget_ABC.h"
+
 #include "actions_gui/MissionInterface.h"
+
+#include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/GLToolColors.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichGroupBox.h"
@@ -24,25 +28,26 @@
 #include "clients_gui/EventOrderViewState.h"
 #include "clients_gui/EventViewState.h"
 #include "clients_gui/TimelinePublisher.h"
+#include "clients_gui/Tools.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWarnWidget.h"
+
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Time_ABC.h"
+
 #include "ENT/ENT_Tr.h"
+
 #include "gaming/AgentsModel.h"
-#include "gaming/AutomatDecisions.h"
-#include "gaming/Decisions.h"
 #include "gaming/Model.h"
-#include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MissionParameters.h"
+
 #include "tools/GeneralConfig.h"
 #include <timeline/api.h>
 #include <boost/assign/list_of.hpp>
@@ -196,19 +201,11 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
 
 namespace
 {
-    const kernel::Decisions_ABC* GetDecisions( const kernel::Entity_ABC* entity )
+    const gui::Decisions_ABC* GetDecisions( const kernel::Entity_ABC* entity )
     {
-        const kernel::Decisions_ABC* decisions = 0;
         if( entity )
-        {
-            if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
-                decisions = entity->Retrieve< Decisions >();
-            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-                decisions = static_cast< const AutomatDecisions* >( entity->Retrieve< kernel::AutomatDecisions_ABC >() );
-            if( entity->GetTypeName() == kernel::Population_ABC::typeName_ )
-                decisions = entity->Retrieve< PopulationDecisions >();
-        }
-        return decisions;
+            return entity->Retrieve< gui::Decisions_ABC >();
+        return 0;
     }
 }
 
@@ -305,29 +302,28 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
     selectedEntity_ = &agent;
     selectedEngagedAutomat_ = 0;
     if( const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-        if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
+    {
+        if( tools::IsEngaged( *automat ) )
         {
-            if( decisions->IsEmbraye() )
+            if( profile_.CanBeOrdered( *automat ) )
             {
-                if( profile_.CanBeOrdered( *automat ) )
-                {
-                    selectedEngagedAutomat_ = automat;
-                    QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderAutomatClicked() ), false, 2 );
-                    action->setIcon( MAKE_PIXMAP( lock ) );
-                }
-                if( profile_.CanBeOrdered( agent ) )
-                {
-                    menu.InsertItem( "Order", tr( "New order (unit)" ), this, SLOT( OnOrderClicked() ), false, 3 );
-                    AddReplaceTargetToMenu( menu );
-                }
+                selectedEngagedAutomat_ = automat;
+                QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderAutomatClicked() ), false, 2 );
+                action->setIcon( MAKE_PIXMAP( lock ) );
             }
-            else if( profile_.CanBeOrdered( agent ) )
+            if( profile_.CanBeOrdered( agent ) )
             {
-                menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+                menu.InsertItem( "Order", tr( "New order (unit)" ), this, SLOT( OnOrderClicked() ), false, 3 );
                 AddReplaceTargetToMenu( menu );
             }
+        }
+        else if( profile_.CanBeOrdered( agent ) )
+        {
+            menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
             AddReplaceTargetToMenu( menu );
         }
+        AddReplaceTargetToMenu( menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -340,9 +336,8 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
     selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( automat ) )
     {
-        const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >();
         QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
-        if( decisions && decisions->IsEmbraye() )
+        if( tools::IsEngaged( automat ) )
             action->setIcon( MAKE_PIXMAP( lock ) );
         AddReplaceTargetToMenu( menu );
     }
@@ -383,7 +378,7 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 // Name: EventOrderWidget::NotifyUpdated
 // Created: LGY 2013-08-22
 // -----------------------------------------------------------------------------
-void EventOrderWidget::NotifyUpdated( const kernel::Decisions_ABC& decisions )
+void EventOrderWidget::NotifyUpdated( const gui::Decisions_ABC& decisions )
 {
     if( target_ == &decisions.GetAgent() )
         OnTargetChanged( target_ );

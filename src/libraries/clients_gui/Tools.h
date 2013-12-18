@@ -24,6 +24,7 @@ namespace tools
     bool IsPropagationDir( const tools::Path& dir );
     bool IsCommandPost( const kernel::Entity_ABC& entity );
     bool IsEngaged( const kernel::Entity_ABC& entity );
+    bool IsSuperiorEngaged( const kernel::Entity_ABC& entity );
     bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
     bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
 

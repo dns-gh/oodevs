@@ -9,10 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "Tools.h"
+#include "AutomatDecisions.h"
 
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 #include <tools/Path.h>
 
@@ -30,8 +31,16 @@ bool tools::IsCommandPost( const kernel::Entity_ABC& entity )
 
 bool tools::IsEngaged( const kernel::Entity_ABC& entity )
 {
-    if( const kernel::AutomatDecisions_ABC* decisions = entity.Retrieve< kernel::AutomatDecisions_ABC >() )
-        return decisions->IsEmbraye();
+    if( const gui::AutomatDecisions* decisions =
+        static_cast< const gui::AutomatDecisions* >( entity.Retrieve< gui::Decisions_ABC >() ) )
+        return decisions->IsEngaged();
+    return false;
+}
+
+bool tools::IsSuperiorEngaged( const kernel::Entity_ABC& entity )
+{
+    if( const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior() )
+        return tools::IsEngaged( *superior );
     return false;
 }
 
