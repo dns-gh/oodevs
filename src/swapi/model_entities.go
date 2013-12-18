@@ -193,7 +193,6 @@ type HumanDotation struct {
 }
 
 type ResourceDotation struct {
-	Type      uint32
 	Quantity  int32
 	Threshold float32
 }
@@ -237,7 +236,7 @@ type Unit struct {
 	BorrowedEquipments  []*BorrowedEquipment
 	PartySurrenderedTo  uint32
 	HumanDotations      []*HumanDotation
-	ResourceDotations   []*ResourceDotation
+	ResourceDotations   map[uint32]*ResourceDotation
 	Posture             Posture
 	VisionCones         VisionCones
 	TransporterId       uint32

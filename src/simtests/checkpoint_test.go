@@ -14,7 +14,6 @@ import (
 	. "launchpad.net/gocheck"
 	"path/filepath"
 	"regexp"
-	"sort"
 	"strings"
 	"swapi"
 	"swapi/simu"
@@ -138,30 +137,6 @@ func (s *TestSuite) TestCheckpointSendState(c *C) {
 	check(true)
 }
 
-// Used to normalize units dotations order. It is not easy to fix server-side
-// because simulation states come from two different sources:
-// - From the simulation itself upon checkpoint
-// - From the dispatcher upon reconnection
-// Unifying both might not be desirable, the simulation has some concept of
-// dotation group, probably used for logistic purpose, which the dispatcher
-// does not know about. Keeping this normalization code here looks like the
-// best tradeof for now.
-type resourcesSorter struct {
-	resources []*swapi.ResourceDotation
-}
-
-func (s *resourcesSorter) Len() int {
-	return len(s.resources)
-}
-
-func (s *resourcesSorter) Swap(i, j int) {
-	s.resources[i], s.resources[j] = s.resources[j], s.resources[i]
-}
-
-func (s *resourcesSorter) Less(i, j int) bool {
-	return s.resources[i].Type < s.resources[j].Type
-}
-
 // Compare m1 and m2 for quasi-equality, fail and display a diff on mismatch.
 func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 	// Bugs nonwithstanding, models are not exactly the same across reloads,
@@ -178,7 +153,6 @@ func compareModels(c *C, m1, m2 *swapi.ModelData, debugDir string) {
 		n.Orders = nil
 		n.Profiles = nil
 		for _, u := range n.Units {
-			sort.Sort(&resourcesSorter{u.ResourceDotations})
 			// Pathfinds are not restored?
 			u.PathPoints = 0
 			u.Speed = 0
