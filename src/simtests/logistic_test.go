@@ -175,7 +175,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 	// Generate supply activity
 	c.Assert(unit.ResourceDotations, NotNil)
 	c.Assert(unit.ResourceDotations[1], DeepEquals,
-		&swapi.ResourceDotation{
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
