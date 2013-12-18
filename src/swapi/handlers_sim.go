@@ -99,7 +99,7 @@ func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 		EquipmentDotations:  map[uint32]*EquipmentDotation{},
 		LentEquipments:      []*LentEquipment{},
 		BorrowedEquipments:  []*BorrowedEquipment{},
-		ResourceDotations:   map[uint32]*ResourceDotation{},
+		ResourceDotations:   map[uint32]ResourceDotation{},
 		RawOperationalState: 100,
 	}
 	if !model.addUnit(unit) {
@@ -185,7 +185,7 @@ func (model *ModelData) handleUnitAttributes(m *sword.SimToClient_Content) error
 	}
 	if resourceDotations := mm.GetResourceDotations(); resourceDotations != nil {
 		for _, dotation := range resourceDotations.GetElem() {
-			unit.ResourceDotations[dotation.GetType().GetId()] = &ResourceDotation{
+			unit.ResourceDotations[dotation.GetType().GetId()] = ResourceDotation{
 				Quantity:  dotation.GetQuantity(),
 				Threshold: dotation.GetThreshold()}
 		}

@@ -1469,12 +1469,12 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	secondDotation := u1.ResourceDotations[secondDotationId]
 
 	c.Assert(firstDotation, DeepEquals,
-		&swapi.ResourceDotation{
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
 	c.Assert(secondDotation, DeepEquals,
-		&swapi.ResourceDotation{
+		swapi.ResourceDotation{
 			Quantity:  8000,
 			Threshold: 10,
 		})
@@ -1509,8 +1509,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return *data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
-			*data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
+		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
+			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
 	})
 
 	// Change 1 dotation
@@ -1519,8 +1519,8 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return *data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
-			*data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
+		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
+			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
 	})
 
 	// Change dotation with a huge quantity
@@ -1529,7 +1529,7 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		dotation := *data.Units[u1.Id].ResourceDotations[firstDotationId]
+		dotation := data.Units[u1.Id].ResourceDotations[firstDotationId]
 		return dotation.Quantity == int32(1000)
 	})
 }
@@ -2296,7 +2296,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
 	c.Assert(unit.ResourceDotations, NotNil)
 	c.Assert(unit.ResourceDotations[1], DeepEquals,
-		&swapi.ResourceDotation{
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
@@ -2306,7 +2306,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.ChangeDotation(unitId, map[uint32]*swapi.ResourceDotation{1: &resource})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if *data.Units[unitId].ResourceDotations[1] != resource {
+		if data.Units[unitId].ResourceDotations[1] != resource {
 			return false
 		}
 		for _, h := range data.SupplyHandlings {
@@ -2325,7 +2325,7 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
 	c.Assert(client.Model.GetUnit(unitId).ResourceDotations[1], DeepEquals,
-		&swapi.ResourceDotation{
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})

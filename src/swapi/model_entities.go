@@ -236,7 +236,7 @@ type Unit struct {
 	BorrowedEquipments  []*BorrowedEquipment
 	PartySurrenderedTo  uint32
 	HumanDotations      []*HumanDotation
-	ResourceDotations   map[uint32]*ResourceDotation
+	ResourceDotations   map[uint32]ResourceDotation
 	Posture             Posture
 	VisionCones         VisionCones
 	TransporterId       uint32
