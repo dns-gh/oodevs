@@ -1117,7 +1117,7 @@ func (c *Client) ChangeHumanState(unitId uint32, humans []*HumanDotation) error 
 		sword.UnitMagicAction_change_human_state)
 }
 
-func (c *Client) ChangeDotation(unitId uint32, resources []*ResourceDotation) error {
+func (c *Client) ChangeDotation(unitId uint32, resources map[uint32]*ResourceDotation) error {
 	params := MakeParameters()
 	if len(resources) != 0 {
 		params = MakeParameters(MakeResourcesDotation(resources))

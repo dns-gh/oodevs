@@ -363,11 +363,11 @@ func MakeHumansDotation(humans []*HumanDotation) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
-func MakeResourcesDotation(resources []*ResourceDotation) *sword.MissionParameter {
+func MakeResourcesDotation(resources map[uint32]*ResourceDotation) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
-	for _, v := range resources {
+	for k, v := range resources {
 		params := []*sword.MissionParameter_Value{
-			{Identifier: proto.Uint32(v.Type)},
+			{Identifier: proto.Uint32(k)},
 			{Quantity: proto.Int32(v.Quantity)},
 			{AReal: proto.Float32(v.Threshold)},
 		}
