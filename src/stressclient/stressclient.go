@@ -63,6 +63,7 @@ sending and checking echo messages of approximatively --payload characters.
 Note that echo messages are broadcast to all clients, and roundtrip between
 the dispatcher and the simulation. The simulation must be started with
 --test-command for the echoes to be accepted.
+
 `)
 		flag.PrintDefaults()
 	}
@@ -96,14 +97,13 @@ the dispatcher and the simulation. The simulation must be started with
 		ticker := time.NewTicker(1 * time.Second)
 		for {
 			select {
-			case <-ticker.C:
+			case now := <-ticker.C:
 				if !started {
 					continue
 				}
-				now := time.Now()
 				duration := now.Sub(start)
-				inrate := float64(received) / (1024. * float64(duration) / float64(time.Second))
-				outrate := float64(sent) / (1024. * float64(duration) / float64(time.Second))
+				inrate := float64(received) / (1024 * float64(duration) / float64(time.Second))
+				outrate := float64(sent) / (1024 * float64(duration) / float64(time.Second))
 				log.Printf("in: %d %.1f kb/s, out: %d %.1f kb/s\n",
 					in, inrate, out, outrate)
 				sent = 0
