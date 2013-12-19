@@ -39,6 +39,7 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire:
 PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
                                                                                     unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY, rDetectionRange )
+    , rDispersionCoef_( xis.attribute< double >( "dispersion-factor", 0 ) )
 {
     std::string setupTime, lifeTime;
     xis >> xml::attribute( "setup-time", setupTime )
@@ -71,8 +72,9 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
     MT_Vector2D vRotatedFireDirection = vFireDirection;
     vRotatedFireDirection.Rotate90();
 
-    vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
-    vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
+    const double itm1 = std::max( 0., rInterventionTypeFired - 1 );
+    vFireDirection        *= ( rDispersionX_ +  rDispersionX_ * itm1 * rDispersionCoef_ );
+    vRotatedFireDirection *= ( rDispersionY_ +  rDispersionY_ * itm1 * rDispersionCoef_ );
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     const double deploymentDuration = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );

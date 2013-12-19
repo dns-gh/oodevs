@@ -43,6 +43,7 @@ public:
     //@}
 
 private:
+    double rDispersionCoef_;
     double rDeploymentDuration_;
     double rLifeDuration_;
 };
