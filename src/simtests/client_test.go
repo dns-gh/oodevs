@@ -17,7 +17,7 @@ import (
 )
 
 func (s *TestSuite) TestPostTimeout(c *C) {
-	sim := startSimOnExercise(c, ExCrossroadSmallEmpty, 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 	client := connectClient(c, sim, nil)
 	err := client.Login("admin", "")

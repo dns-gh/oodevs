@@ -799,7 +799,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Adding the target in reporter's knowledges
 	const identifiedLevel = 0
-	targetKnowledge, err := client.AddUnitKnowledgeInKnowledgeGroup(a1.KnowledgeGroupId, target.Id, identifiedLevel)
+	targetKnowledge, err := client.CreateUnitKnowledge(a1.KnowledgeGroupId, target.Id, identifiedLevel)
 	c.Assert(err, IsNil)
 
 	// Launching a magic strike with good parameters
@@ -1462,68 +1462,74 @@ func (s *TestSuite) TestUnitChangeDotation(c *C) {
 	})
 
 	u1 = client.Model.GetUnit(u1.Id)
-	firstDotation := u1.ResourceDotations[0]
-	secondDotation := u1.ResourceDotations[1]
+	firstDotationId := uint32(1)
+	secondDotationId := uint32(3)
+
+	firstDotation := u1.ResourceDotations[firstDotationId]
+	secondDotation := u1.ResourceDotations[secondDotationId]
 
 	c.Assert(firstDotation, DeepEquals,
-		&swapi.ResourceDotation{
-			Type:      1,
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
 	c.Assert(secondDotation, DeepEquals,
-		&swapi.ResourceDotation{
-			Type:      3,
+		swapi.ResourceDotation{
 			Quantity:  8000,
 			Threshold: 10,
 		})
 
 	// Error: Invalid parameters count
-	err := client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{})
+	err := client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters count, 1 parameter expected")
 
-	resource := swapi.ResourceDotation{
-		Type: 1245,
-	}
+	resource := swapi.ResourceDotation{}
 
 	// Error: Invalid dotation category
-	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{1245: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[0\] must be a valid dotation category identifier`)
-	resource.Type = 1
 
 	// Error: Quantity must be positive
 	resource.Quantity = -123
-	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
 	resource.Quantity = 1000
 
 	// Error: Threshold must be a number between 0 and 100
 	resource.Threshold = 123
-	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[2\] must be a number between 0 and 100`)
 	resource.Threshold = 50
 
-	// Change dotation
+	// Change 2 dotations
 	resource2 := swapi.ResourceDotation{
-		Type:      3,
 		Threshold: 100,
 	}
-
-	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource, &resource2})
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource, secondDotationId: &resource2})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return *data.Units[u1.Id].ResourceDotations[0] == resource &&
-			*data.Units[u1.Id].ResourceDotations[1] == resource2
+		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
+			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
+	})
+
+	// Change 1 dotation
+	resource.Threshold = 42
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[u1.Id].ResourceDotations[firstDotationId] == resource &&
+			data.Units[u1.Id].ResourceDotations[secondDotationId] == resource2
 	})
 
 	// Change dotation with a huge quantity
 	resource.Quantity = 123456789
-	err = client.ChangeDotation(u1.Id, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(u1.Id, map[uint32]*swapi.ResourceDotation{firstDotationId: &resource})
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		dotation := *data.Units[u1.Id].ResourceDotations[0]
+		dotation := data.Units[u1.Id].ResourceDotations[firstDotationId]
 		return dotation.Quantity == int32(1000)
 	})
 }
@@ -2289,20 +2295,18 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	// supply
 	c.Assert(client.Model.GetData().SupplyHandlings, HasLen, 0)
 	c.Assert(unit.ResourceDotations, NotNil)
-	c.Assert(unit.ResourceDotations[0], DeepEquals,
-		&swapi.ResourceDotation{
-			Type:      1,
+	c.Assert(unit.ResourceDotations[1], DeepEquals,
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
 	resource := swapi.ResourceDotation{
-		Type:      1,
 		Threshold: 10,
 	}
-	err = client.ChangeDotation(unitId, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(unitId, map[uint32]*swapi.ResourceDotation{1: &resource})
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		if *data.Units[unitId].ResourceDotations[0] != resource {
+		if data.Units[unitId].ResourceDotations[1] != resource {
 			return false
 		}
 		for _, h := range data.SupplyHandlings {
@@ -2320,9 +2324,8 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	err = client.LogFinishHandlings(23)
 	c.Assert(err, IsNil)
 	client.Model.WaitTicks(2)
-	c.Assert(client.Model.GetUnit(unitId).ResourceDotations[0], DeepEquals,
-		&swapi.ResourceDotation{
-			Type:      1,
+	c.Assert(client.Model.GetUnit(unitId).ResourceDotations[1], DeepEquals,
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})

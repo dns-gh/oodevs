@@ -174,17 +174,15 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 
 	// Generate supply activity
 	c.Assert(unit.ResourceDotations, NotNil)
-	c.Assert(unit.ResourceDotations[0], DeepEquals,
-		&swapi.ResourceDotation{
-			Type:      1,
+	c.Assert(unit.ResourceDotations[1], DeepEquals,
+		swapi.ResourceDotation{
 			Quantity:  3200,
 			Threshold: 10,
 		})
 	resource := swapi.ResourceDotation{
-		Type:      1,
 		Threshold: 10,
 	}
-	err = client.ChangeDotation(unit.Id, []*swapi.ResourceDotation{&resource})
+	err = client.ChangeDotation(unit.Id, map[uint32]*swapi.ResourceDotation{1: &resource})
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(2)

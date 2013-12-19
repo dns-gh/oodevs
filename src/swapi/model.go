@@ -64,9 +64,9 @@ type Model struct {
 	WaitTimeout time.Duration
 
 	// Shared state
-	requests   chan *ModelRequest
-	running    sync.WaitGroup
-	registered bool
+	requests  chan *ModelRequest
+	running   sync.WaitGroup
+	listening sync.WaitGroup
 }
 
 func NewModel() *Model {
@@ -184,10 +184,9 @@ func (model *Model) run() error {
 }
 
 func (model *Model) Close() {
-	if !model.registered {
-		// Otherwise the handler termination closes the channel
-		close(model.requests)
-	}
+	// Wait for all listeners to be gone
+	model.listening.Wait()
+	close(model.requests)
 	model.running.Wait()
 }
 
@@ -195,14 +194,14 @@ func (model *Model) Close() {
 func (model *Model) Listen(client *Client) {
 	handler := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
-			close(model.requests)
+			model.listening.Done()
 			return true
 		}
 		model.requests <- &ModelRequest{Message: msg}
 		return false
 	}
+	model.listening.Add(1)
 	client.Register(handler)
-	model.registered = true
 }
 
 func (model *Model) waitCommand(cmd func(model *Model)) {
@@ -438,6 +437,18 @@ func (model *Model) GetUnitKnowledge(id uint32) *UnitKnowledge {
 		knowledge, ok := model.data.UnitKnowledges[id]
 		if ok {
 			k = &UnitKnowledge{}
+			DeepCopy(k, knowledge)
+		}
+	})
+	return k
+}
+
+func (model *Model) GetCrowdKnowledge(id uint32) *CrowdKnowledge {
+	var k *CrowdKnowledge
+	model.waitCommand(func(model *Model) {
+		knowledge, ok := model.data.CrowdKnowledges[id]
+		if ok {
+			k = &CrowdKnowledge{}
 			DeepCopy(k, knowledge)
 		}
 	})

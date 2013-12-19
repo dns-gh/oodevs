@@ -16,7 +16,7 @@ import (
 )
 
 func (s *TestSuite) TestLogin(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// Test invalid login
@@ -79,7 +79,7 @@ func (s *TestSuite) TestLogin(c *C) {
 }
 
 func (s *TestSuite) TestMaxConnections(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// Authenticate a maximum of clients
@@ -132,7 +132,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 		}
 	}
 
-	sim := startSimOnExercise(c, ExCrossroadSmallOrbat, 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
 
 	// Connect and watch incoming messages
@@ -191,7 +191,7 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 		c.Assert(p.Supervisor, Equals, supervisor)
 	}
 
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	// The dispatcher sends connected user lists upon authentication, which
@@ -219,7 +219,7 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 }
 
 func (s *TestSuite) TestProfileEditing(c *C) {
-	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false, 0)
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
 
 	userProfile := &swapi.Profile{
