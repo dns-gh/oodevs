@@ -41,13 +41,15 @@ class LogMedicalConsign : public LogisticsConsign_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message );
+             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
+                                const Simulation& simulation, const sword::LogMedicalHandlingCreation& message,
+                                kernel::Agent_ABC& consumer );
     virtual ~LogMedicalConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::LogMedicalHandlingUpdate& message );
+    void Update( const sword::LogMedicalHandlingUpdate& message, kernel::Entity_ABC* handler );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned int id ) const;
     //@}
@@ -55,8 +57,8 @@ public:
     //! @name Accessors
     //@{
     E_HumanRank GetRank() const;
-    virtual const kernel::Agent_ABC* GetConsumer() const;
-    virtual const kernel::Entity_ABC* GetHandler() const;
+    virtual kernel::Agent_ABC* GetConsumer() const;
+    virtual kernel::Entity_ABC* GetHandler() const;
     bool IsMental() const;
     bool IsContamined() const;
     bool IsDiagnosed() const;
@@ -80,7 +82,7 @@ private:
     //@{
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     kernel::Agent_ABC& consumer_;
-    kernel::Agent_ABC* pPionLogHandling_;
+    kernel::Entity_ABC* pPionLogHandling_;
     E_HumanRank rank_;
     bool    bMentalDeceased_;
     bool    bContaminated_;

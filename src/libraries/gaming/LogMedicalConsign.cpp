@@ -29,10 +29,12 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message )
+LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver,
+                                      const Simulation& simulation, const sword::LogMedicalHandlingCreation& message,
+                                      kernel::Agent_ABC& consumer )
     : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , resolver_           ( resolver )
-    , consumer_           ( resolver_.Get( message.unit().id() ) )
+    , consumer_           ( consumer )
     , pPionLogHandling_   ( 0 )
     , wound_              ( E_HumanWound( message.wound() ) )
     , bMentalDeceased_    ( message.mental_wound() )
@@ -41,7 +43,7 @@ LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tool
     , nState_             ( eLogMedicalHandlingStatus_Termine )
     , rank_               ( (E_HumanRank)message.rank() )
 {
-    consumer_.Get< LogMedicalConsigns >().AddConsign( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,25 +52,16 @@ LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tool
 // -----------------------------------------------------------------------------
 LogMedicalConsign::~LogMedicalConsign()
 {
-    consumer_.Get< LogMedicalConsigns >().RemoveConsign( *this );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
+void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, kernel::Entity_ABC* handler )
 {
-    if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
-    {
-        if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
-        pPionLogHandling_ = resolver_.Find( message.provider().id() );
-        if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
-    }
+    pPionLogHandling_ = handler;
     if( message.has_mental_wound() )
         bMentalDeceased_ = message.mental_wound();
     if( message.has_nbc_contaminated() )
@@ -83,7 +76,6 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
     if( message.has_diagnosed() )
         diagnosed_ = message.diagnosed();
-    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +128,7 @@ E_HumanRank LogMedicalConsign::GetRank() const
 // Name: LogMedicalConsign::GetConsumer
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Agent_ABC* LogMedicalConsign::GetConsumer() const
+kernel::Agent_ABC* LogMedicalConsign::GetConsumer() const
 {
     return &consumer_;
 }
@@ -145,7 +137,7 @@ const kernel::Agent_ABC* LogMedicalConsign::GetConsumer() const
 // Name: LogMedicalConsign::GetHandler
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* LogMedicalConsign::GetHandler() const
+kernel::Entity_ABC* LogMedicalConsign::GetHandler() const
 {
     return pPionLogHandling_;
 }

@@ -38,10 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message, kernel::Agent_ABC& consumer );
     virtual LogSupplyConsign*      CreateSupplyConsign     ( const sword::LogSupplyHandlingCreation& message );
-    virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message );
-    virtual LogFuneralConsign*     CreateFuneralConsign    ( const sword::LogFuneralHandlingCreation& message );
+    virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message, kernel::Agent_ABC& consumer );
+    virtual LogFuneralConsign*     CreateFuneralConsign    ( const sword::LogFuneralHandlingCreation& message, kernel::Agent_ABC& consumer );
     //@}
 
 private:

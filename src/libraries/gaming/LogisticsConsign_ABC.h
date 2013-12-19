@@ -59,8 +59,8 @@ public:
     virtual bool RefersToAgent( unsigned int id ) const = 0;
     virtual QString GetCurrentStartedTime() const = 0;
     virtual QString GetStatusDisplay() const = 0;
-    virtual const kernel::Agent_ABC* GetConsumer() const = 0;
-    virtual const kernel::Entity_ABC* GetHandler() const = 0;
+    virtual kernel::Agent_ABC* GetConsumer() const = 0;
+    virtual kernel::Entity_ABC* GetHandler() const = 0;
     //@}
 
     //! @name Operations

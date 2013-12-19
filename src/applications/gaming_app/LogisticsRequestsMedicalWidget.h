@@ -29,7 +29,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsMedicalWidget( QWidget* parent, kernel::Controllers& controllers,
-                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
+                                             Model& model );
     virtual ~LogisticsRequestsMedicalWidget();
     //@}
 

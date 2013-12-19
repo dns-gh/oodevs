@@ -20,15 +20,16 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers
-                                    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
     : InfoDialog_Base( parent, tools::translate( "InfoFuneralDialog", "Funeral system" ) )
     , controllers_( controllers )
     , selected_( controllers )
+    , widget_( 0 )
 {
     controllers_.Register( *this );
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, publisher )
-                , tools::translate( "InfoFuneralDialog", "Instructions" ) );
+    widget_ =  new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, publisher, model );
+    tabs->addTab( widget_, tools::translate( "InfoFuneralDialog", "Instructions" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,4 +83,22 @@ void InfoFuneralDialog::NotifyUpdated( const Troops& /*troops*/ )
 {
     if( selected_ )
         SetEnabled( selected_ && ShouldDisplay( *selected_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoFuneralDialog::Purge
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoFuneralDialog::Purge()
+{
+    widget_->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoFuneralDialog::Fill
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoFuneralDialog::Fill( const kernel::Entity_ABC& entity )
+{
+    widget_->Fill( entity );
 }

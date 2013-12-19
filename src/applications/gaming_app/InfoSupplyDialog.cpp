@@ -28,9 +28,11 @@ using namespace EntityHelpers;
 // Name: InfoSupplyDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                                    gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                    Publisher_ABC& publisher, Model& model )
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
+    , widget_( 0 )
 {
     tabs_ = new QTabWidget( RootWidget() );
 
@@ -43,8 +45,8 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     statusLayout->addWidget( new SupplyStatusWidget( this, controllers ) );
 
     supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
-    tabs_->addTab( new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, publisher )
-        , tools::translate( "InfoSupplyDialog", "Instructions" ) );
+    widget_ = new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, publisher, model );
+    tabs_->addTab( widget_, tools::translate( "InfoSupplyDialog", "Instructions" ) );
     tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
     tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );
@@ -111,4 +113,22 @@ void InfoSupplyDialog::NotifyUpdated( const SupplyStates& /*supplyStates*/ )
 {
     if( selected_ )
         InfoDialog< SupplyStates >::NotifySelected( selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::Purge
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoSupplyDialog::Purge()
+{
+    widget_->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::Fill
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoSupplyDialog::Fill( const kernel::Entity_ABC& entity )
+{
+    widget_->Fill( entity );
 }

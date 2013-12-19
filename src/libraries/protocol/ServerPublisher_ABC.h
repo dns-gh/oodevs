@@ -17,6 +17,7 @@ namespace sword
     class ClientToAuthentication;
     class ClientToReplay;
     class ClientToSim;
+    class SimToClient;
 }
 
 // =============================================================================
@@ -27,6 +28,12 @@ namespace sword
 // =============================================================================
 class Publisher_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::function< void( const sword::SimToClient& ) > T_Handler;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,6 +49,7 @@ public:
     virtual void Send( const sword::ClientToAar& message ) = 0;
     virtual void Send( const sword::ClientToMessenger& message ) = 0;
 
+    virtual void Register( T_Handler handler ) = 0;
     //@}
 };
 

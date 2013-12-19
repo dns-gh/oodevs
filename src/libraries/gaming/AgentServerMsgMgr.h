@@ -192,6 +192,7 @@ namespace sword
     class UrbanKnowledgeUpdate;
     class UrbanUpdate;
     class ConnectedProfileList;
+    class ListLogisticRequestsAck;
 }
 
 namespace tools
@@ -231,10 +232,11 @@ public:
     void Disconnect();
 
     virtual void Send( const sword::ClientToSim& message );
+    virtual void Register( T_Handler handler );
     virtual void Send( const sword::ClientToAuthentication& message );
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
-    virtual void Send( const sword::ClientToMessenger& message ) ;
+    virtual void Send( const sword::ClientToMessenger& message );
 
     void SetElements( Model& model, Profile& profile );
     void Reconnect( const std::string& login, const std::string& password );
@@ -255,7 +257,7 @@ private:
     //! @name Message callbacks
     //@{
     void OnReceiveSimToClient              ( const std::string& from, const sword::SimToClient& message );
-    void OnReceiveSimToClient2             ( const std::string& from, const sword::SimToClient& message );
+    void OnReceiveSimToClient2             ( const std::string& from, const sword::SimToClient& message, unsigned int clientId );
     void OnReceiveMsgAuthenticationToClient( const std::string& from, const sword::AuthenticationToClient& message );
     void OnReceiveMsgReplayToClient        ( const std::string& from, const sword::ReplayToClient& message );
     void OnReceiveMsgAarToClient           ( const std::string& from, const sword::AarToClient& message );
@@ -358,7 +360,8 @@ private:
     void OnReceiveLogFuneralHandlingUpdate            ( const sword::LogFuneralHandlingUpdate&        message );
 
     // Log
-    void OnReceiveLogisticHistoryAck         ( const sword::LogisticHistoryAck& message );
+    void OnReceiveLogisticHistoryAck         ( const sword::LogisticHistoryAck& message, unsigned int clientId );
+    void OnReceiveListLogisticRequestsAck    ( const sword::ListLogisticRequestsAck& message, unsigned int clientId );
 
     // Limas / Limits
     void OnReceiveLimitCreationRequestAck    ( const sword::LimitCreationRequestAck&    message);
@@ -493,6 +496,9 @@ private:
     void OnReceiveUrbanKnowledgeUpdate     ( const sword::UrbanKnowledgeUpdate&             message );
     void OnReceiveUrbanKnowledgeDestruction( const sword::UrbanKnowledgeDestruction&        message );
 
+    // Handlers
+    void UpdateHanders( const sword::SimToClient& message );
+
     // Burn surface
     void OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx );
     //@}
@@ -514,6 +520,7 @@ private:
     //! @name Types
     //@{
     typedef std::set< boost::shared_ptr< sword::Listener > > T_Listeners;
+    typedef std::vector< T_Handler > T_Handlers;
     //@}
 
     //! @name Member data
@@ -528,6 +535,7 @@ private:
     kernel::Logger_ABC&       logger_;
     CommandHandler&           commands_;
     T_Listeners               listeners_;
+    T_Handlers                handlers_;
     //@}
 };
 

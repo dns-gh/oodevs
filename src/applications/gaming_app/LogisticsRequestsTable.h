@@ -40,7 +40,7 @@ class LogisticsRequestsTable : public gui::RichWidget< QTableView >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders, const QString filter );
+             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -53,7 +53,6 @@ public:
     virtual void SelectRequest( const LogisticsConsign_ABC* consign = 0 );
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
-    void SetFilterActivated( bool activated );
     void FindRequestsIds( std::set< unsigned int >& requests );
     //@}
 

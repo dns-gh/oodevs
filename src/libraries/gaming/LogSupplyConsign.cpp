@@ -37,21 +37,19 @@ using namespace kernel;
 LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
                                   , const tools::Resolver_ABC< Formation_ABC >& formationResolver
-                                  , const tools::Resolver_ABC< DotationType >& dotationResolver
+
                                   , const Simulation& simulation
                                   , const sword::LogSupplyHandlingCreation& message )
     : LogisticsConsign_ABC               ( message.request().id(), controller, simulation, message.tick() )
     , resolver_                          ( resolver )
     , agentResolver_                     ( agentResolver )
     , formationResolver_                 ( formationResolver )
-    , dotationResolver_                  ( dotationResolver )
     , pLogHandlingEntity_                ( controller_, FindLogEntity( message.supplier() ) )
     , pPionLogConvoying_                 ( controller_ )
     , pLogProvidingConvoyResourcesEntity_( controller_, FindLogEntity( message.transporters_provider() ) )
     , nState_                            ( eLogSupplyHandlingStatus_Termine )
 {
-    if( pLogHandlingEntity_ )
-        pLogHandlingEntity_.ConstCast()->Get< LogSupplyConsigns >().HandleConsign( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,48 +58,23 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
 // -----------------------------------------------------------------------------
 LogSupplyConsign::~LogSupplyConsign()
 {
-    for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
-        it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *this );
-    if( pLogHandlingEntity_ )
-        pLogHandlingEntity_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
-    if( pPionLogConvoying_ )
-        pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::OnReceiveMsgUpdate
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
+void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying )
 {
-    if( message.has_convoyer() && ( !pPionLogConvoying_ || message.convoyer().id() != int( pPionLogConvoying_->GetId() ) ) )
-    {
-        if( pPionLogConvoying_ )
-            pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pPionLogConvoying_ = agentResolver_.Find( message.convoyer().id() );
-        if( pPionLogConvoying_ )
-            pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().HandleConsign( *this );
-    }
+    pPionLogConvoying_ = pionLogConvoying;
+
     if( message.has_state()  )
         nState_ = E_LogSupplyHandlingStatus( message.state() );
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
-    if( message.has_requests() )
-    {
-        for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
-            it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *this );
-        DeleteAll();
-        BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests().requests() )
-        {
-            SupplyRecipientResourcesRequest* tmp = new SupplyRecipientResourcesRequest( dotationResolver_, resolver_, data );
-            Register( data.recipient().id(), *tmp );
-            tmp->recipient_.Get< LogSupplyConsigns >().AddConsign( *this );
-        }
-    }
-    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,20 +130,6 @@ kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const sword::ParentEntity& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::FindLogEntityID
-// Created: AHC 2010-10-13
-// -----------------------------------------------------------------------------
-unsigned int LogSupplyConsign::FindLogEntityID(const sword::ParentEntity& msg)
-{
-    unsigned int retval = 0;
-    if( msg.has_automat() )
-        retval = msg.automat().id() ;
-    else if( msg.has_formation() )
-        retval = msg.formation().id() ;
-    return retval;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
@@ -185,7 +144,7 @@ bool LogSupplyConsign::RefersToAgent( unsigned int id ) const
 // Name: LogSupplyConsign::GetConsumer
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Agent_ABC* LogSupplyConsign::GetConsumer() const
+kernel::Agent_ABC* LogSupplyConsign::GetConsumer() const
 {
     return 0;
 }
@@ -194,18 +153,18 @@ const kernel::Agent_ABC* LogSupplyConsign::GetConsumer() const
 // Name: LogSupplyConsign::GetHandler
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* LogSupplyConsign::GetHandler() const
+kernel::Entity_ABC* LogSupplyConsign::GetHandler() const
 {
-    return pLogHandlingEntity_;
+    return pLogHandlingEntity_.ConstCast();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::GetConvoying
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Agent_ABC* LogSupplyConsign::GetConvoying() const
+kernel::Agent_ABC* LogSupplyConsign::GetConvoying() const
 {
-    return pPionLogConvoying_;
+    return pPionLogConvoying_.ConstCast();
 }
 
 // -----------------------------------------------------------------------------

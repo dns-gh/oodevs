@@ -15,62 +15,14 @@
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 
-// =============================================================================
-/** @class  RequestsSortFilterProxyModel
-    @brief  RequestsSortFilterProxyModel
-*/
-// Created: MMC 2013-09-11
-// =============================================================================
-namespace
-{
-    class RequestsSortFilterProxyModel : public QSortFilterProxyModel
-    {
-    public:
-        RequestsSortFilterProxyModel( QObject* parent, QString requestToSkip ) 
-            : QSortFilterProxyModel( parent )
-            , requestToSkip_( requestToSkip )
-            , filter_( false )
-        {
-            // NOTHING
-        }
-        virtual ~RequestsSortFilterProxyModel() 
-        {
-            // NOTHING
-        }
-
-        //! @name Accessors
-        void SetFilterActivated( bool activated )
-        {
-            filter_ = activated;
-            invalidateFilter();
-        }
-        //@}
-
-    protected:
-        virtual bool filterAcceptsRow( int source_row, const QModelIndex& /*source_parent*/ ) const
-        {
-            if( !filter_ )
-                return true;
-            QModelIndex curIndex = sourceModel()->index( source_row, 3 );
-            if( !curIndex.isValid() )
-                return true;
-            return sourceModel()->data( curIndex ).toString() != requestToSkip_;
-        }
-
-    private:
-        QString requestToSkip_;
-        bool filter_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable constructor
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders, const QString filter )
+LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders )
     : gui::RichWidget< QTableView >( objectName, parent )
     , dataModel_ ( parent )
-    , proxyModel_( new RequestsSortFilterProxyModel( parent, filter ) )
+    , proxyModel_( new QSortFilterProxyModel( parent ) )
     , delegate_  ( parent )
     , horizontalHeaders_( horizontalHeaders )
 {
@@ -217,15 +169,6 @@ const LogisticsConsign_ABC* LogisticsRequestsTable::GetCurrentRequest() const
     if( selectionModel() && selectionModel()->currentIndex().isValid() )
         return GetRequest( selectionModel()->currentIndex() );
     return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::SetFilterActivated
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-void LogisticsRequestsTable::SetFilterActivated( bool activated )
-{
-    static_cast< RequestsSortFilterProxyModel* >( proxyModel_ )->SetFilterActivated( activated );
 }
 
 // -----------------------------------------------------------------------------

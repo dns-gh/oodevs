@@ -23,7 +23,6 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Controller;
-    class DotationType;
     class Entity_ABC;
     class Formation_ABC;
     class DisplayExtractor_ABC;
@@ -53,22 +52,22 @@ public:
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
                                const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
-                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const Simulation& simulation, const sword::LogSupplyHandlingCreation& message );
+                               const Simulation& simulation, const sword::LogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::LogSupplyHandlingUpdate& message );
+    void Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned int id ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual const kernel::Agent_ABC* GetConsumer() const;
-    virtual const kernel::Entity_ABC* GetHandler() const;
-    const kernel::Agent_ABC* GetConvoying() const;
+    virtual kernel::Agent_ABC* GetConsumer() const;
+    virtual kernel::Entity_ABC* GetHandler() const;
+    kernel::Agent_ABC* GetConvoying() const;
     const kernel::Entity_ABC* GetProviding() const;
     E_LogSupplyHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
@@ -87,7 +86,6 @@ private:
     //! @name Tools
     //@{
     kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg);
-    unsigned int FindLogEntityID(const sword::ParentEntity& msg);
     //@}
 
 private:
@@ -96,7 +94,6 @@ private:
     const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
-    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     kernel::SafePointer< kernel::Entity_ABC > pLogHandlingEntity_;
     kernel::SafePointer< kernel::Agent_ABC > pPionLogConvoying_;
     kernel::SafePointer< kernel::Entity_ABC > pLogProvidingConvoyResourcesEntity_;

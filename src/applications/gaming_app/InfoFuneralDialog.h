@@ -11,6 +11,7 @@
 #define __InfoFuneralDialog_h_
 
 #include "InfoDialog.h"
+#include "LogisticDialog_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "gaming/Troops.h"
 
@@ -26,6 +27,8 @@ namespace gui
 }
 
 class Publisher_ABC;
+class LogisticsRequestsFuneralWidget;
+class Model;
 
 // =============================================================================
 /** @class  InfoFuneralDialog
@@ -37,13 +40,21 @@ class InfoFuneralDialog : public InfoDialog_Base
                         , public tools::Observer_ABC
                         , public tools::SelectionObserver< kernel::Entity_ABC >
                         , public tools::ElementObserver_ABC< Troops >
+                        , public LogisticDialog_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers
-                              , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                                const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model );
     virtual ~InfoFuneralDialog();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    virtual void Fill( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -55,8 +66,12 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    LogisticsRequestsFuneralWidget* widget_;
+    //@}
 };
 
 #endif // __InfoFuneralDialog_h_

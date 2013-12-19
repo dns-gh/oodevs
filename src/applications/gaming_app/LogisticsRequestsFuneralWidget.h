@@ -16,6 +16,7 @@
 
 class LogFuneralConsigns;
 class Publisher_ABC;
+class Model;
 
 // =============================================================================
 /** @class  LogisticsRequestsFuneralWidget
@@ -30,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsFuneralWidget( QWidget* parent, kernel::Controllers& controllers,
-                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model );
     virtual ~LogisticsRequestsFuneralWidget();
     //@}
 

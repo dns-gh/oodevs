@@ -18,14 +18,17 @@
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/LogMedicalConsign.h"
+#include "gaming/LogisticsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMedicalDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
-                                      gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+                                      gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                      Publisher_ABC& publisher, Model& model )
     : InfoDialog< MedicalStates >( parent, controllers, tools::translate( "InfoMedicalDialog", "Medical system" ) )
+    , widget_( 0 )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     QVBoxLayout* ambulancesDoctorsLayout = new QVBoxLayout();
@@ -39,8 +42,8 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MedicalStatusWidget( tabs, controllers ) );
 
-    tabs->addTab( new LogisticsRequestsMedicalWidget( tabs, controllers, extractor, profile, publisher )
-        , tools::translate( "InfoMedicalDialog", "Instructions" ) );
+    widget_= new LogisticsRequestsMedicalWidget( tabs, controllers, extractor, profile, publisher, model );
+    tabs->addTab( widget_, tools::translate( "InfoMedicalDialog", "Instructions" ) );
     tabs->addTab( ambulancesDoctorsWidget, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMedicalDialog", "Chain status" ) );
 }
@@ -96,4 +99,22 @@ void InfoMedicalDialog::NotifyUpdated( const Troops& /*troops*/ )
 {
     if( selected_ )
         InfoDialog< MedicalStates >::NotifyUpdated( selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMedicalDialog::Purge
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoMedicalDialog::Purge()
+{
+    widget_->Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMedicalDialog::Fill
+// Created: LGY 2013-12-11
+// -----------------------------------------------------------------------------
+void InfoMedicalDialog::Fill( const kernel::Entity_ABC& entity )
+{
+    widget_->Fill( entity );
 }
