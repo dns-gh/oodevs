@@ -10,7 +10,6 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"math"
 	"swapi"
 	"sword"
 )
@@ -21,10 +20,6 @@ const (
 	// Resource type with smoke effect with a 1 dispersion factor
 	ResourceTypeWithSmokeDispersion = uint32(107)
 )
-
-func Distance(pointA, pointB swapi.Point) float64 {
-	return math.Sqrt(math.Pow(pointA.X-pointB.X, 2) + math.Pow(pointA.Y-pointB.Y, 2))
-}
 
 func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))

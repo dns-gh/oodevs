@@ -218,7 +218,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.Units[u.Id].Position, pos)
+		return isNearby(data.Units[u.Id].Position, pos)
 	})
 
 	pos = swapi.Point{X: -15.8219, Y: 28.2456}
@@ -231,7 +231,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.Units[u.Id].Position, pos)
+		return isNearby(data.Units[u.Id].Position, pos)
 	})
 
 	automat, err = client.CreateAutomat(formation.Id, AutomatType, kg.Id)
@@ -301,7 +301,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return !Nearby(data.Units[unit.Id].Position, unit.Position)
+		return !isNearby(data.Units[unit.Id].Position, unit.Position)
 	})
 
 	// Blast it
@@ -446,7 +446,7 @@ func (s *TestSuite) TestTeleport(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(data.Units[unit.Id].Position, pos)
+		return isNearby(data.Units[unit.Id].Position, pos)
 	})
 }
 

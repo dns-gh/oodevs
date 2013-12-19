@@ -38,7 +38,11 @@ func (checker *isSwordErrorChecker) Check(params []interface{},
 	return err.Name == s, ""
 }
 
-func Close(f1, f2 float64) bool {
+func Distance(pointA, pointB swapi.Point) float64 {
+	return math.Sqrt(math.Pow(pointA.X-pointB.X, 2) + math.Pow(pointA.Y-pointB.Y, 2))
+}
+
+func isClose(f1, f2 float64) bool {
 	return math.Abs(f1-f2) < 1e-6
 }
 
@@ -60,12 +64,11 @@ func (checker *isCloseChecker) Check(params []interface{},
 	if !ok {
 		return false, "second point is not a float64"
 	}
-	return Close(p1, p2), ""
+	return isClose(p1, p2), ""
 }
 
-func Nearby(pointA, pointB swapi.Point) bool {
-	return Close(pointA.X, pointB.X) &&
-		Close(pointA.Y, pointB.Y)
+func isNearby(pointA, pointB swapi.Point) bool {
+	return isClose(Distance(pointA, pointB), 0)
 }
 
 type isNearbyChecker struct {
@@ -86,5 +89,5 @@ func (checker *isNearbyChecker) Check(params []interface{},
 	if !ok {
 		return false, "second point is not a swapi.Point"
 	}
-	return Nearby(p1, p2), ""
+	return isNearby(p1, p2), ""
 }
