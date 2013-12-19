@@ -12,8 +12,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KS_Sharing.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_Knowledge_Agent.h"
+#include "DEC_Knowledge_Object.h"
+#include "DEC_Knowledge_Population.h"
 #include "MIL_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Sharing )
@@ -113,10 +117,10 @@ void DEC_KS_Sharing::CleanDeletedAgentKnowledges()
 
 namespace
 {
-    class sKnowledgeSharer : boost::noncopyable
+    class sAgentKnowledgeSharer : boost::noncopyable
     {
     public:
-        sKnowledgeSharer( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
+        sAgentKnowledgeSharer( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, const DEC_KS_Sharing::sShareSource& shareSource )
             : knowledgeGroup_( knowledgeGroup )
             , blackBoard_    ( blackBoard )
             , shareSource_   ( shareSource )
@@ -141,6 +145,71 @@ namespace
               DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard_;
         const DEC_KS_Sharing::sShareSource&            shareSource_;
     };
+
+    class sPopulationKnowledgeSharer : boost::noncopyable
+    {
+    public:
+        sPopulationKnowledgeSharer( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgePopulation& blackBoard,
+                                    const DEC_KS_Sharing::sShareSource& shareSource )
+            : knowledgeGroup_( knowledgeGroup )
+            , blackBoard_    ( blackBoard )
+            , shareSource_   ( shareSource )
+        {}
+
+        void operator() ( DEC_Knowledge_Population& knowledge, int currentTimeStep)
+        {
+            MT_Vector2D point = knowledge.GetClosestPoint( shareSource_.vSharedCircleCenter_ );
+            if( point.Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
+                return;
+
+            MIL_Population& population = knowledge.GetPopulationKnown();
+            boost::shared_ptr< DEC_Knowledge_Population > pNewKnowledge = blackBoard_.GetKnowledgePopulation( population );
+            DEC_Knowledge_Population* newKnowledge = pNewKnowledge.get();
+            if( !newKnowledge )
+                newKnowledge = &blackBoard_.CreateKnowledgePopulation( *knowledgeGroup_, population );
+            newKnowledge->Update( knowledge, currentTimeStep );
+        }
+
+    private:
+        boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
+        DEC_BlackBoard_CanContainKnowledgePopulation& blackBoard_;
+        const DEC_KS_Sharing::sShareSource&            shareSource_;
+    };
+
+    class sObjectKnowledgeSharer : boost::noncopyable
+    {
+    public:
+        sObjectKnowledgeSharer( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, DEC_BlackBoard_CanContainKnowledgeObject& blackBoard,
+                                    const DEC_KS_Sharing::sShareSource& shareSource )
+            : knowledgeGroup_( knowledgeGroup )
+            , blackBoard_    ( blackBoard )
+            , shareSource_   ( shareSource )
+        {}
+
+        void operator() ( DEC_Knowledge_Object& knowledge, int currentTimeStep)
+        {
+            MT_Vector2D point;
+            if( !knowledge.GetLocalisation().ComputeNearestPoint( shareSource_.vSharedCircleCenter_, point ) )
+                return;
+
+            if( point.Distance( shareSource_.vSharedCircleCenter_ ) > shareSource_.rSharedCircleRadius_ )
+                return;
+
+            MIL_Object_ABC* object = knowledge.GetObjectKnown();
+            if( object )
+            {
+                boost::shared_ptr< DEC_Knowledge_Object > pNewKnowledge = blackBoard_.GetKnowledgeObject( *object );
+                if( !pNewKnowledge.get() )
+                    pNewKnowledge = blackBoard_.CreateKnowledgeObject( *object );
+                pNewKnowledge->Update( knowledge, currentTimeStep );
+            }
+        }
+
+    private:
+        boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup_;
+        DEC_BlackBoard_CanContainKnowledgeObject& blackBoard_;
+        const DEC_KS_Sharing::sShareSource&            shareSource_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -158,8 +227,12 @@ void DEC_KS_Sharing::Talk( int currentTimeStep )
         auto bbKg = itShareSource->second.pShareSource_->GetKnowledge();
         if( bbKg )
         {
-            sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
-            bbKg->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func, currentTimeStep );
+            sAgentKnowledgeSharer agentFunc( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
+            bbKg->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( agentFunc, currentTimeStep );
+            sPopulationKnowledgeSharer populationFunc( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgePopulationContainer(), itShareSource->second );
+            bbKg->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( populationFunc, currentTimeStep );
+            sObjectKnowledgeSharer objectFunc( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeObjectContainer(), itShareSource->second );
+            bbKg->GetKnowledgeObjectContainer().ApplyOnKnowledgesObjectRef( objectFunc, currentTimeStep );
         }
     }
     shareSources_.erase( shareSources_.begin(), itShareSourceEnd );
