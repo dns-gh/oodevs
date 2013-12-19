@@ -1305,7 +1305,9 @@ func (model *ModelData) handleFireEffectCreation(m *sword.SimToClient_Content) e
 			Points: points,
 		},
 	}
-	model.FireEffects[effect.Id] = effect
+	if !model.addFireEffect(effect) {
+		return fmt.Errorf("cannot insert fire effect %d", effect.Id)
+	}
 	return nil
 }
 
@@ -1315,10 +1317,8 @@ func (model *ModelData) handleFireEffectDestruction(m *sword.SimToClient_Content
 		return ErrSkipHandler
 	}
 	id := mm.GetFireEffect().GetId()
-	size := len(model.FireEffects)
-	delete(model.FireEffects, id)
-	if size == len(model.FireEffects) {
-		return fmt.Errorf("cannot find fire effect to destroy: %d", id)
+	if !model.removeFireEffect(id) {
+		return fmt.Errorf("cannot destroy fire effect %d", id)
 	}
 	return nil
 }

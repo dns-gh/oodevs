@@ -865,6 +865,18 @@ func (model *ModelData) removeObject(objectId uint32) bool {
 	return size != len(model.Objects)
 }
 
+func (model *ModelData) addFireEffect(effect *FireEffect) bool {
+	size := len(model.FireEffects)
+	model.FireEffects[effect.Id] = effect
+	return size != len(model.FireEffects)
+}
+
+func (model *ModelData) removeFireEffect(effectId uint32) bool {
+	size := len(model.FireEffects)
+	delete(model.FireEffects, effectId)
+	return size != len(model.FireEffects)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleAutomatAttributes,
