@@ -10,6 +10,7 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
+	"math"
 	"swapi"
 )
 
@@ -35,4 +36,55 @@ func (checker *isSwordErrorChecker) Check(params []interface{},
 		return false, "matched value must be a string"
 	}
 	return err.Name == s, ""
+}
+
+func Close(f1, f2 float64) bool {
+	return math.Abs(f1-f2) < 1e-6
+}
+
+type isCloseChecker struct {
+	*CheckerInfo
+}
+
+var IsClose Checker = &isCloseChecker{
+	&CheckerInfo{Name: "IsClose", Params: []string{"obtained", "expected"}},
+}
+
+func (checker *isCloseChecker) Check(params []interface{},
+	names []string) (bool, string) {
+	p1, ok := params[0].(float64)
+	if !ok {
+		return false, "first point is not a float64"
+	}
+	p2, ok := params[1].(float64)
+	if !ok {
+		return false, "second point is not a float64"
+	}
+	return Close(p1, p2), ""
+}
+
+func Nearby(pointA, pointB swapi.Point) bool {
+	return Close(pointA.X, pointB.X) &&
+		Close(pointA.Y, pointB.Y)
+}
+
+type isNearbyChecker struct {
+	*CheckerInfo
+}
+
+var IsNearby Checker = &isNearbyChecker{
+	&CheckerInfo{Name: "IsNearby", Params: []string{"obtained", "expected"}},
+}
+
+func (checker *isNearbyChecker) Check(params []interface{},
+	names []string) (bool, string) {
+	p1, ok := params[0].(swapi.Point)
+	if !ok {
+		return false, "first point is not a swapi.Point"
+	}
+	p2, ok := params[1].(swapi.Point)
+	if !ok {
+		return false, "second point is not a swapi.Point"
+	}
+	return Nearby(p1, p2), ""
 }

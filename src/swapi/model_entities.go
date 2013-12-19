@@ -457,6 +457,17 @@ type SupplyHandling struct {
 	Convoy     *SupplyHandlingConvoy
 }
 
+type Location struct {
+	Type   sword.Location_Geometry
+	Points []*Point
+}
+
+type FireEffect struct {
+	Id       uint32
+	Type     sword.StartFireEffect_EnumFireEffectType
+	Location *Location
+}
+
 type ModelData struct {
 	Parties              map[uint32]*Party
 	Formations           map[uint32]*Formation
@@ -476,6 +487,7 @@ type ModelData struct {
 	MedicalHandlings     map[uint32]*MedicalHandling
 	FuneralHandlings     map[uint32]*FuneralHandling
 	SupplyHandlings      map[uint32]*SupplyHandling
+	FireEffects          map[uint32]*FireEffect
 	LocalWeathers        map[uint32]*LocalWeather
 	GlobalWeather        Weather
 	// Available scores definitions
@@ -510,6 +522,7 @@ func NewModelData() *ModelData {
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
 		SupplyHandlings:      map[uint32]*SupplyHandling{},
+		FireEffects:          map[uint32]*FireEffect{},
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
 	}
@@ -920,6 +933,8 @@ var (
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
+		(*ModelData).handleFireEffectCreation,
+		(*ModelData).handleFireEffectDestruction,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,

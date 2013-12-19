@@ -163,11 +163,6 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	}
 }
 
-func Nearby(pointA, pointB swapi.Point) bool {
-	return math.Abs(pointA.X-pointB.X) < 1e-6 &&
-		math.Abs(pointA.Y-pointB.Y) < 1e-6
-}
-
 func (s *TestSuite) TestCreateUnit(c *C) {
 	opts := ClientOpts{
 		User:     "user",
