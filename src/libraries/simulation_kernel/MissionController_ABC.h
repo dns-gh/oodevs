@@ -11,11 +11,11 @@
 #define __MissionController_ABC_h_
 
 #include <tools/Resolver.h>
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 class MIL_Mission_ABC;
 class MIL_AgentPion;
-class AgentFactory_ABC;
 class PopulationFactory_ABC;
 
 // =============================================================================
@@ -35,10 +35,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory ) = 0;
+    virtual void Initialize( const tools::Resolver< MIL_AgentPion >& resolver, const PopulationFactory_ABC& populationFactory ) = 0;
     virtual void SendFullState() = 0;
-    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
-    virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
+    virtual void Start( const boost::shared_ptr< MIL_Mission_ABC >& mission ) = 0;
+    virtual void Stop( const boost::shared_ptr< MIL_Mission_ABC >& mission ) = 0;
     virtual uint32_t AcquireId() = 0;
     //@}
 

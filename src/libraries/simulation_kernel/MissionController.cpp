@@ -66,44 +66,38 @@ void MissionController::save( MIL_CheckPointOutArchive& file, const unsigned int
 // Name: MissionController::Start
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::Start( boost::shared_ptr< MIL_Mission_ABC > mission )
+void MissionController::Start( const boost::shared_ptr< MIL_Mission_ABC >& mission )
 {
-    if( mission.get() )
-    {
-        unsigned int id = mission->GetOwnerId();
-        if( id != 0 )
-        {
-            Stop( mission );
-            missions_[ id ] = mission ;
-        }
-    }
+    if( !mission )
+        return;
+    Stop( mission );
+    missions_[ mission->GetOwnerId() ] = mission;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionController::Stop
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::Stop( boost::shared_ptr< MIL_Mission_ABC > mission )
+void MissionController::Stop( const boost::shared_ptr< MIL_Mission_ABC >& mission )
 {
-    if( mission.get() )
-    {
-        unsigned int id = mission->GetOwnerId();
-        if( id != 0 )
-            missions_.erase( id );
-    }
+    if( !mission )
+        return;
+    missions_.erase( mission->GetOwnerId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionController::Initialize
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory )
+void MissionController::Initialize( const tools::Resolver< MIL_AgentPion >& resolver, const PopulationFactory_ABC& populationFactory )
 {
-    BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
+    BOOST_FOREACH( const auto& mission, missions_ )
+    {
         if( MIL_AgentPion* pion = resolver.Find( mission.first ) )
             pion->GetOrderManager().ReplaceMission( mission.second );
         else if( MIL_Population* population = populationFactory.Find( mission.first ) )
             population->GetOrderManager().ReplaceMission( mission.second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,10 +106,11 @@ void MissionController::Initialize( tools::Resolver< MIL_AgentPion >& resolver, 
 // -----------------------------------------------------------------------------
 void MissionController::SendFullState()
 {
-    if( loaded_ )
-        BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
-            if( mission.second )
-                 mission.second->Send();
+    if( !loaded_ )
+        return;
+    BOOST_FOREACH( const auto& mission, missions_ )
+        if( mission.second )
+            mission.second->Send();
 }
 
 // -----------------------------------------------------------------------------

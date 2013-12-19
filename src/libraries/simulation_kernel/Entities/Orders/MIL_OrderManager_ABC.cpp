@@ -74,7 +74,7 @@ void MIL_OrderManager_ABC::Update()
 // Name: MIL_OrderManager_ABC::ReplaceMission
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pNewMission )
+void MIL_OrderManager_ABC::ReplaceMission( const boost::shared_ptr< MIL_Mission_ABC >& pNewMission )
 {
     pNextMission_ = pNewMission;
 }
