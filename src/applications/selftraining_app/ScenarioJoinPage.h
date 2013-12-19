@@ -77,11 +77,13 @@ private:
     ProgressPage* progressPage_;
     QLineEdit* host_;
     QSpinBox* port_;
+    QSpinBox* timeline_;
     ExerciseList* exercises_;
     const frontend::Exercise_ABC* exercise_;
 
     QLabel* hostLabel_;
     QLabel* portLabel_;
+    QLabel* timelineLabel_;
     //@}
 };
 

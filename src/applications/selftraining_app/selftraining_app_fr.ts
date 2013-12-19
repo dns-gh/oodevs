@@ -598,12 +598,16 @@ Do you want to replace it?</source>
         <translation>Connexion à l&apos;hôte</translation>
     </message>
     <message>
-        <source>Host:</source>
-        <translation>Hôte: </translation>
+        <source>Host</source>
+        <translation>Hôte</translation>
     </message>
     <message>
-        <source>Port:</source>
-        <translation>Port: </translation>
+        <source>Port</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <source>Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
