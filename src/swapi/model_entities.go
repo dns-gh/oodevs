@@ -459,13 +459,13 @@ type SupplyHandling struct {
 
 type Location struct {
 	Type   sword.Location_Geometry
-	Points []*Point
+	Points []Point
 }
 
 type FireEffect struct {
 	Id       uint32
 	Type     sword.StartFireEffect_EnumFireEffectType
-	Location *Location
+	Location Location
 }
 
 type ModelData struct {
@@ -894,6 +894,8 @@ var (
 		(*ModelData).handleCrowdKnowledgeDestruction,
 		(*ModelData).handleCrowdOrder,
 		(*ModelData).handleCrowdUpdate,
+		(*ModelData).handleFireEffectCreation,
+		(*ModelData).handleFireEffectDestruction,
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
@@ -933,8 +935,6 @@ var (
 		(*ModelData).handleUnitVisionCones,
 		(*ModelData).handleUrbanCreation,
 		(*ModelData).handleUrbanUpdate,
-		(*ModelData).handleFireEffectCreation,
-		(*ModelData).handleFireEffectDestruction,
 	}
 	authToClientHandlers = []func(model *ModelData, m *sword.AuthenticationToClient_Content) error{
 		(*ModelData).handleProfileCreation,

@@ -1290,9 +1290,9 @@ func (model *ModelData) handleFireEffectCreation(m *sword.SimToClient_Content) e
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	points := []*Point{}
+	points := []Point{}
 	for _, p := range mm.GetLocation().GetCoordinates().GetElem() {
-		points = append(points, &Point{
+		points = append(points, Point{
 			X: *p.Longitude,
 			Y: *p.Latitude,
 		})
@@ -1300,7 +1300,7 @@ func (model *ModelData) handleFireEffectCreation(m *sword.SimToClient_Content) e
 	effect := &FireEffect{
 		Id:   mm.GetFireEffect().GetId(),
 		Type: mm.GetType(),
-		Location: &Location{
+		Location: Location{
 			Type:   mm.GetLocation().GetType(),
 			Points: points,
 		},

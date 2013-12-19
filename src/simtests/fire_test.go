@@ -26,23 +26,29 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	defer sim.Stop()
 	point := swapi.Point{X: -15.8241, Y: 28.3241}
 
+	getEffectEllipse := func() (float64, float64) {
+		var effect swapi.FireEffect
+		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+			for _, e := range data.FireEffects {
+				effect = *e
+				return true
+			}
+			return false
+		})
+		c.Assert(effect, NotNil)
+		c.Assert(effect.Type, Equals, sword.StartFireEffect_smoke)
+		c.Assert(effect.Location.Type, Equals, sword.Location_ellipse)
+		c.Assert(effect.Location.Points, HasLen, 3)
+		c.Assert(point, IsNearby, effect.Location.Points[0])
+		return Distance(point, effect.Location.Points[1]),
+			Distance(point, effect.Location.Points[2])
+	}
+
 	// firing 1 round of smoke ammunition with a dispersion factor of 0
 	err := client.CreateFireOnLocation(point, ResourceTypeWithSmokeNoDispersion, 1)
 	c.Assert(err, IsNil)
 
-	var major1, minor1 float64
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, effect := range data.FireEffects {
-			c.Assert(effect.Type, Equals, sword.StartFireEffect_smoke)
-			c.Assert(effect.Location.Type, Equals, sword.Location_ellipse)
-			c.Assert(effect.Location.Points, HasLen, 3)
-			c.Assert(point, IsNearby, *effect.Location.Points[0])
-			major1 = Distance(point, *effect.Location.Points[1])
-			minor1 = Distance(point, *effect.Location.Points[2])
-			return true
-		}
-		return false
-	})
+	major1, minor1 := getEffectEllipse()
 
 	// waiting for the effect to end
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -52,20 +58,7 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	// firing 2 rounds of the same smoke ammunition
 	err = client.CreateFireOnLocation(point, ResourceTypeWithSmokeNoDispersion, 2)
 	c.Assert(err, IsNil)
-
-	var major2, minor2 float64
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, effect := range data.FireEffects {
-			c.Assert(effect.Type, Equals, sword.StartFireEffect_smoke)
-			c.Assert(effect.Location.Type, Equals, sword.Location_ellipse)
-			c.Assert(effect.Location.Points, HasLen, 3)
-			c.Assert(point, IsNearby, *effect.Location.Points[0])
-			major2 = Distance(point, *effect.Location.Points[1])
-			minor2 = Distance(point, *effect.Location.Points[2])
-			return true
-		}
-		return false
-	})
+	major2, minor2 := getEffectEllipse()
 	// effect is the same because dispersion factor is 0
 	c.Assert(major1, Equals, major2)
 	c.Assert(minor1, Equals, minor2)
@@ -78,19 +71,7 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	// firing 1 round of a different smoke ammunition with a dispersion factor of 1
 	err = client.CreateFireOnLocation(point, ResourceTypeWithSmokeDispersion, 1)
 	c.Assert(err, IsNil)
-
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, effect := range data.FireEffects {
-			c.Assert(effect.Type, Equals, sword.StartFireEffect_smoke)
-			c.Assert(effect.Location.Type, Equals, sword.Location_ellipse)
-			c.Assert(effect.Location.Points, HasLen, 3)
-			c.Assert(point, IsNearby, *effect.Location.Points[0])
-			major2 = Distance(point, *effect.Location.Points[1])
-			minor2 = Distance(point, *effect.Location.Points[2])
-			return true
-		}
-		return false
-	})
+	major2, minor2 = getEffectEllipse()
 	// effect is the same because 1 round doesn't get altered by dispersion factor
 	c.Assert(major1, Equals, major2)
 	c.Assert(minor1, Equals, minor2)
@@ -103,19 +84,7 @@ func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	// firing 2 rounds of this different smoke ammunition with a dispersion factor of 1
 	err = client.CreateFireOnLocation(point, ResourceTypeWithSmokeDispersion, 2)
 	c.Assert(err, IsNil)
-
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, effect := range data.FireEffects {
-			c.Assert(effect.Type, Equals, sword.StartFireEffect_smoke)
-			c.Assert(effect.Location.Type, Equals, sword.Location_ellipse)
-			c.Assert(effect.Location.Points, HasLen, 3)
-			c.Assert(point, IsNearby, *effect.Location.Points[0])
-			major2 = Distance(point, *effect.Location.Points[1])
-			minor2 = Distance(point, *effect.Location.Points[2])
-			return true
-		}
-		return false
-	})
+	major2, minor2 = getEffectEllipse()
 	// effect is increased by the number of rounds (when dispersion factor is 1)
 	c.Assert(2*major1, IsClose, major2)
 	c.Assert(2*minor1, IsClose, minor2)
