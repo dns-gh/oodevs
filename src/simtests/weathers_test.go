@@ -96,10 +96,10 @@ func CheckWeather(remote, local *swapi.LocalWeather, c *C) {
 	// overwrite lighting which is not supported yet
 	remote.Lightning = local.Lightning
 	// ignore precision issues when comparing points
-	if Nearby(remote.TopLeft, local.TopLeft) {
+	if isNearby(remote.TopLeft, local.TopLeft) {
 		remote.TopLeft = local.TopLeft
 	}
-	if Nearby(remote.BottomRight, local.BottomRight) {
+	if isNearby(remote.BottomRight, local.BottomRight) {
 		remote.BottomRight = local.BottomRight
 	}
 	c.Assert(remote, DeepEquals, local)

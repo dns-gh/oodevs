@@ -58,6 +58,7 @@ func init() {
 const (
 	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
 	ExCrossroadSmallEmpty  = "crossroad-small-empty"
+	ExCrossroadSmallTest   = "crossroad-small-test"
 	ExCrossroadSmallLog    = "crossroad-small-log"
 	ExCrossroadSmallScores = "crossroad-small-scores"
 	ExGradXYTestEmpty      = "grad-x.y-test-empty"

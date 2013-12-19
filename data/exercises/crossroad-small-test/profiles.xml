@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.1/exercise/profiles.xsd">
+  <profile name="admin" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="2"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="user1" password="user1" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="user2" password="user2" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="2"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="alluser" password="alluser" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="2"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>

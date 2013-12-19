@@ -1284,3 +1284,41 @@ func (model *ModelData) handleLogSupplyHandlingDestruction(m *sword.SimToClient_
 	}
 	return nil
 }
+
+func (model *ModelData) handleFireEffectCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetStartFireEffect()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	points := []Point{}
+	for _, p := range mm.GetLocation().GetCoordinates().GetElem() {
+		points = append(points, Point{
+			X: *p.Longitude,
+			Y: *p.Latitude,
+		})
+	}
+	effect := &FireEffect{
+		Id:   mm.GetFireEffect().GetId(),
+		Type: mm.GetType(),
+		Location: Location{
+			Type:   mm.GetLocation().GetType(),
+			Points: points,
+		},
+	}
+	if !model.addFireEffect(effect) {
+		return fmt.Errorf("cannot insert fire effect %d", effect.Id)
+	}
+	return nil
+}
+
+func (model *ModelData) handleFireEffectDestruction(m *sword.SimToClient_Content) error {
+	mm := m.GetStopFireEffect()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	id := mm.GetFireEffect().GetId()
+	if !model.removeFireEffect(id) {
+		return fmt.Errorf("cannot destroy fire effect %d", id)
+	}
+	return nil
+}

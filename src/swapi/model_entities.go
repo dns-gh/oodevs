@@ -457,6 +457,17 @@ type SupplyHandling struct {
 	Convoy     *SupplyHandlingConvoy
 }
 
+type Location struct {
+	Type   sword.Location_Geometry
+	Points []Point
+}
+
+type FireEffect struct {
+	Id       uint32
+	Type     sword.StartFireEffect_EnumFireEffectType
+	Location Location
+}
+
 type ModelData struct {
 	Parties              map[uint32]*Party
 	Formations           map[uint32]*Formation
@@ -476,6 +487,7 @@ type ModelData struct {
 	MedicalHandlings     map[uint32]*MedicalHandling
 	FuneralHandlings     map[uint32]*FuneralHandling
 	SupplyHandlings      map[uint32]*SupplyHandling
+	FireEffects          map[uint32]*FireEffect
 	LocalWeathers        map[uint32]*LocalWeather
 	GlobalWeather        Weather
 	// Available scores definitions
@@ -510,6 +522,7 @@ func NewModelData() *ModelData {
 		MedicalHandlings:     map[uint32]*MedicalHandling{},
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
 		SupplyHandlings:      map[uint32]*SupplyHandling{},
+		FireEffects:          map[uint32]*FireEffect{},
 		KnownScores:          map[string]struct{}{},
 		Scores:               map[string]float32{},
 	}
@@ -852,6 +865,18 @@ func (model *ModelData) removeObject(objectId uint32) bool {
 	return size != len(model.Objects)
 }
 
+func (model *ModelData) addFireEffect(effect *FireEffect) bool {
+	size := len(model.FireEffects)
+	model.FireEffects[effect.Id] = effect
+	return size != len(model.FireEffects)
+}
+
+func (model *ModelData) removeFireEffect(effectId uint32) bool {
+	size := len(model.FireEffects)
+	delete(model.FireEffects, effectId)
+	return size != len(model.FireEffects)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleAutomatAttributes,
@@ -881,6 +906,8 @@ var (
 		(*ModelData).handleCrowdKnowledgeDestruction,
 		(*ModelData).handleCrowdOrder,
 		(*ModelData).handleCrowdUpdate,
+		(*ModelData).handleFireEffectCreation,
+		(*ModelData).handleFireEffectDestruction,
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
