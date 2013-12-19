@@ -6,7 +6,7 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package main
+package server
 
 import (
 	"bytes"
@@ -34,22 +34,20 @@ type TcpProxy struct {
 	tcp     int
 	scheme  string
 	verbose int
+	sword   *int
 }
 
-func NewTcpProxy(options *Options) *TcpProxy {
+func NewTcpProxy(http, tcp, verbose int, ssl bool, sword *int) *TcpProxy {
 	scheme := "http"
-	if options.ssl {
+	if ssl {
 		scheme = "https"
-	}
-	http := options.http
-	if options.override != 0 {
-		http = options.override
 	}
 	return &TcpProxy{
 		http:    http,
-		tcp:     options.tcp,
+		tcp:     tcp,
 		scheme:  scheme,
-		verbose: options.verbose,
+		verbose: verbose,
+		sword:   sword,
 	}
 }
 
@@ -114,8 +112,17 @@ func (t *TcpProxy) handleClient(link net.Conn, id int32) {
 	defer log.Println("- client", link.RemoteAddr())
 	defer link.Close()
 	ctx := NewTcpContext()
+	if t.sword != nil {
+		err := t.openServer(ctx, *t.sword)
+		if err != nil {
+			log.Printf("Unable to open server %d: %s\n", *t.sword, err)
+			return
+		}
+	}
 	go t.readClient(ctx, link)
-	go t.publishAuthService(ctx)
+	if t.sword == nil {
+		go t.publishAuthService(ctx)
+	}
 	t.writePackets(ctx, link, ctx.client)
 }
 
