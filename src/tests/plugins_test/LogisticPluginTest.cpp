@@ -11,6 +11,7 @@
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
 #include "logistic_plugin/ConsignArchive.h"
+#include "logistic_plugin/ConsignCsvLogger.h"
 #include "logistic_plugin/ConsignRecorder.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
@@ -96,15 +97,20 @@ public:
     }
 };
 
-boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const tools::Path& tempDir )
+boost::shared_ptr< ConsignCsvLogger > CreateCsvLogger( const tools::Path& tempDir )
 {
     boost::shared_ptr< SimpleNameResolver > nameResolver( new SimpleNameResolver() );
-    return boost::shared_ptr< LogisticPlugin >( new LogisticPlugin( nameResolver,
-        tempDir / "archive",
+    return boost::make_shared< ConsignCsvLogger >( nameResolver,
         tempDir / "maintenance",
         tempDir / "supply",
         tempDir / "funeral",
-        tempDir / "medical" ) );
+        tempDir / "medical" );
+}
+
+boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
+    const boost::shared_ptr< ConsignCsvLogger >& logger, const tools::Path& tempDir )
+{
+    return boost::make_shared< LogisticPlugin >( logger, tempDir / "archive" );
 }
 
 typedef std::vector< std::string > T_Lines;
@@ -148,7 +154,8 @@ void CheckRegexps( const std::vector< LogFile >& logFiles, tools::Path::T_Paths 
 BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.Path() );
+    auto logger = CreateCsvLogger( tempDir.Path() );
+    auto plugin = CreateLogisticPlugin( logger, tempDir.Path() );
 
     {
         bg::date day1( bg::from_string( "2001/05/17" ) );
@@ -171,7 +178,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_breakdown()->set_id( 11 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
 
         {
             sword::SimToClient m;
@@ -191,7 +198,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_breakdown()->set_id( 21 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
 
         {
             sword::SimToClient m;
@@ -203,7 +210,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->set_current_state_end_tick( 400 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 2 );
 
         {
             sword::SimToClient m;
@@ -212,7 +219,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 1 );
 
         {
             sword::SimToClient m;
@@ -221,7 +228,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             maint->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Maintenance ), 0 );
     }
 
     {
@@ -241,7 +248,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_mental_wound( false );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -253,7 +260,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 30 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -263,7 +270,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 400 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -273,7 +280,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->set_current_state_end_tick( 500 );
             plugin->Receive( m, day3 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 1 );
 
         {
             sword::SimToClient m;
@@ -282,12 +289,12 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             medic->mutable_unit()->set_id( 8 );
             plugin->Receive( m, day3 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Medical ), 0 );
     }
 
     {
         bg::date day1( bg::from_string( "2005/02/20" ) );
-        plugin->SetMaxLinesInFile( 3 );
+        logger->SetMaxLinesInFile( 3 );
 
         {
             sword::SimToClient m;
@@ -298,7 +305,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
 
         for( int i = 0; i < 5; ++i )
         {
@@ -312,7 +319,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->set_current_state_end_tick( 300 + i * 100 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 1 );
 
         {
             sword::SimToClient m;
@@ -320,13 +327,13 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             funeral->mutable_request()->set_id( 7 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 0 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Funeral ), 0 );
     }
 
     {
         bg::date day1( bg::from_string( "2008/09/21" ) );
         bg::date day2( bg::from_string( "2008/09/22" ) );
-        plugin->SetMaxLinesInFile( 3 );
+        logger->SetMaxLinesInFile( 3 );
 
         {
             sword::SimToClient m;
@@ -337,7 +344,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_transporters_provider()->mutable_automat()->set_id( 9 );
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -377,7 +384,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -399,7 +406,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day1 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -421,7 +428,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -454,7 +461,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             }
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 2 );
 
         {
             sword::SimToClient m;
@@ -462,7 +469,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_request()->set_id( 7 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 1 );
 
         {
             sword::SimToClient m;
@@ -470,9 +477,9 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
             supply->mutable_request()->set_id( 8 );
             plugin->Receive( m, day2 );
         }
-        BOOST_CHECK_EQUAL( plugin->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
+        BOOST_CHECK_EQUAL( logger->DebugGetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
-    plugin.reset(); // flush
+    logger->Flush();
 
     auto files = tempDir.Path().ListFiles( true, false, true );
     std::vector< LogFile > expecteds;
@@ -574,16 +581,18 @@ void PushFuneralMessage( LogisticPlugin* plugin )
 BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.Path() );
+    auto logger = CreateCsvLogger( tempDir.Path() );
+    logger->SetMaxLinesInFile( 1 );
+    auto plugin = CreateLogisticPlugin( logger, tempDir.Path() );
 
-    plugin->SetMaxLinesInFile( 1 );
     for( int i = 0; i < 2; ++i )
         PushFuneralMessage( plugin.get() );
 
     // Recreate it on multiple files
-    plugin = CreateLogisticPlugin( tempDir.Path() );
+    logger = CreateCsvLogger( tempDir.Path() );
+    plugin = CreateLogisticPlugin( logger, tempDir.Path() );
     PushFuneralMessage( plugin.get() );
-    plugin.reset();
+    logger->Flush();
 
     tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expected;

@@ -14,6 +14,7 @@
 #define __SupplyResolver_h_
 
 #include "ConsignData_ABC.h"
+#include <map>
 
 namespace sword
 {
