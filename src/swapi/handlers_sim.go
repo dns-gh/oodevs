@@ -86,6 +86,24 @@ func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error 
 	return nil
 }
 
+func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyState()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	unit := model.Units[*mm.Unit.Id]
+	//mm.Stocks.
+	if stocks := mm.GetStocks(); stocks != nil {
+		for _, stock := range stocks.GetElem() {
+			unit.Stocks = append(unit.Stocks, &Stock{
+				Type:     stock.GetResource().GetId(),
+				Quantity: stock.GetQuantity(),
+			})
+		}
+	}
+	return nil
+}
+
 func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitCreation()
 	if mm == nil {
