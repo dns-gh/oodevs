@@ -1899,7 +1899,9 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
 
     const uint32_t resourceType = protocol::GetResourceType( params, 1 );
     const auto* pDotationCategory = PHY_DotationType::FindDotationCategory( resourceType );
-    protocol::Check( pDotationCategory && pDotationCategory->CanBeUsedForIndirectFire(),
+    protocol::Check( pDotationCategory,
+        "must be a valid dotation category identifier", 1 );
+    protocol::Check( pDotationCategory->CanBeUsedForIndirectFire(),
         "must be a dotation category identifier that can be used for indirect fire", 1 );
 
     const float iterations = protocol::GetReal( params, 2 );

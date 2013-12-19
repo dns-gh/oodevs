@@ -326,7 +326,7 @@ void ADN_Resources_GUI::BuildAmmunition()
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, "neutralization-ratio", tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
         builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
-        builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, "dispersion-factor", tr( "Dispersion factor per iteration" ), vConnectors[ eDispersionFactor ], 0, eZeroOne );
+        builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, "dispersion-factor", tr( "Dispersion factor per iteration" ), vConnectors[ eExplosiveDispersion ], 0, eZeroOne );
         builder.PopSubName();
 
         // Smoke parameters
@@ -334,6 +334,7 @@ void ADN_Resources_GUI::BuildAmmunition()
         builder.PushSubName( "param-smoke" );
         builder.AddField< ADN_TimeField >( pSmokeParametersGroup_, "activation-duration", tr( "Activation duration" ), vConnectors[ eSmokeDeployTime ] );
         builder.AddField< ADN_TimeField >( pSmokeParametersGroup_, "span", tr( "Span" ), vConnectors[ eSmokeLifetime ] );
+        builder.AddField< ADN_EditLine_Double >( pSmokeParametersGroup_, "dispersion-factor", tr( "Dispersion factor per iteration" ), vConnectors[ eSmokeDispersion ], 0, eZeroOne );
         builder.PopSubName();
 
         // Flare parameters
@@ -341,6 +342,7 @@ void ADN_Resources_GUI::BuildAmmunition()
         builder.PushSubName( "param-flare" );
         builder.AddField< ADN_TimeField >( pFlareParametersGroup_, "activation-duration", tr( "Activation duration" ), vConnectors[ eFlareDeployTime ] );
         builder.AddField< ADN_TimeField >( pFlareParametersGroup_, "span", tr( "Span" ), vConnectors[ eFlareLifetime ] );
+        builder.AddField< ADN_EditLine_Double >( pFlareParametersGroup_, "dispersion-factor", tr( "Dispersion factor per iteration" ), vConnectors[ eFlareDispersion ], 0, eZeroOne );
         builder.PopSubName();
 
         // Effect (object) parameters

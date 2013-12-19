@@ -228,8 +228,9 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , rDispersionY_        ( 1.0 )
     , rDetectionRange_     ( 5000 )
     , rNeutralizationRatio_( 1 )
-    , rDispersionFactor_   ( 0 )
-    , vModifStance_        ()
+    , rExplosiveDispersion_( 0 )
+    , rFlareDispersion_    ( 0 )
+    , rSmokeDispersion_    ( 0 )
     , flareDeployTime_     ( "0s" )
     , flareLifeTime_       ( "0s" )
     , smokeDeployTime_     ( "0s" )
@@ -271,7 +272,9 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
     rDetectionRange_ = ammoInfos.rDetectionRange_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
-    rDispersionFactor_ = ammoInfos.rDispersionFactor_.GetData();
+    rExplosiveDispersion_ = ammoInfos.rExplosiveDispersion_.GetData();
+    rFlareDispersion_ = ammoInfos.rFlareDispersion_.GetData();
+    rSmokeDispersion_ = ammoInfos.rSmokeDispersion_.GetData();
 
     for( uint i=0 ; i< eNbrUnitPosture ; ++i)
         vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
@@ -332,17 +335,19 @@ void ADN_Resources_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& inp
         case eTypeMunitionTirIndirect_Explosif:
             bExplosive_ = true;
             input >> xml::attribute( "neutralization-ratio", rNeutralizationRatio_ )
-                  >> xml::attribute( "dispersion-factor", rDispersionFactor_ )
+                  >> xml::optional >> xml::attribute( "dispersion-factor", rExplosiveDispersion_ )
                   >> xml::list( "ph", *this, &ADN_Resources_Data::IndirectAmmoInfos::ReadPh );
             break;
         case eTypeMunitionTirIndirect_Fumigene:
             bSmoke_ = true;
             input >> xml::attribute( "setup-time", smokeDeployTime_ )
+                  >> xml::optional >> xml::attribute( "dispersion-factor", rSmokeDispersion_ )
                   >> xml::attribute( "life-time", smokeLifeTime_ );
             break;
         case eTypeMunitionTirIndirect_Eclairant:
             bFlare_ = true;
             input >> xml::attribute( "setup-time", flareDeployTime_ )
+                  >> xml::optional >> xml::attribute( "dispersion-factor", rFlareDispersion_ )
                   >> xml::attribute( "life-time", flareLifeTime_ );
             break;
         case eTypeMunitionTirIndirect_Effect:
@@ -370,7 +375,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output 
         output << xml::start( "indirect-fire" )
                     << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Explosif ) )
                     << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ )
-                    << xml::attribute( "dispersion-factor", rDispersionFactor_ );
+                    << xml::attribute( "dispersion-factor", rExplosiveDispersion_ );
         for( auto it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
             ( *it )->WriteArchive( output );
         output << xml::end;
@@ -380,16 +385,20 @@ void ADN_Resources_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output 
         output << xml::start( "indirect-fire" )
                     << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Fumigene ) )
                     << xml::attribute( "setup-time", smokeDeployTime_ )
-                    << xml::attribute( "life-time", smokeLifeTime_ )
-                << xml::end;
+                    << xml::attribute( "life-time", smokeLifeTime_ );
+        if( rSmokeDispersion_ != 0 )
+            output << xml::attribute( "dispersion-factor", rSmokeDispersion_ );
+        output << xml::end;
     }
     if( bFlare_.GetData() )
     {
         output << xml::start( "indirect-fire" )
                     << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Eclairant ) )
                     << xml::attribute( "setup-time", flareDeployTime_ )
-                    << xml::attribute( "life-time", flareLifeTime_ )
-                << xml::end;
+                    << xml::attribute( "life-time", flareLifeTime_ );
+        if( rFlareDispersion_ != 0 )
+            output << xml::attribute( "dispersion-factor", rFlareDispersion_ );
+        output << xml::end;
     }
     if( bEffect_.GetData() )
     {

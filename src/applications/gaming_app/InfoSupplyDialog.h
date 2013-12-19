@@ -11,6 +11,7 @@
 #define __InfoSupplyDialog_h_
 
 #include "InfoDialog.h"
+#include "LogisticDialog_ABC.h"
 #include "gaming/SupplyStates.h"
 
 namespace kernel
@@ -29,6 +30,8 @@ class SupplyStocksListView;
 class SupplyQuotasWidget;
 class SupplyStatusWidget;
 class Publisher_ABC;
+class LogisticsRequestsSupplyWidget;
+class Model;
 
 // =============================================================================
 /** @class  InfoSupplyDialog
@@ -38,13 +41,22 @@ class Publisher_ABC;
 // =============================================================================
 class InfoSupplyDialog : public InfoDialog< SupplyStates >
                        , public tools::ElementObserver_ABC< SupplyStates >
+                       , public LogisticDialog_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-                             , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+                               gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                               Publisher_ABC& publisher, Model& model );
     virtual ~InfoSupplyDialog();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    virtual void Fill( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -60,6 +72,7 @@ private:
     //@{
     QTabWidget* tabs_;
     SupplyQuotasWidget* supplyQuotasWidget_;
+    LogisticsRequestsSupplyWidget* widget_;
     //@}
 };
 

@@ -31,17 +31,20 @@ using namespace kernel;
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
+                                              const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver,
+                                              const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation,
+                                              kernel::Agent_ABC& consumer )
     : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , resolver_           ( resolver )
-    , consumer_           ( resolver_.Get( message.unit().id() ) )
+    , consumer_           ( consumer )
     , pPionLogHandling_   ( 0 )
     , equipmentType_      ( & componentResolver.Get( message.equipement().id() ) )
     , breakdownType_      ( & breakdownResolver.Get( message.breakdown().id() ) )
     , diagnosed_          ( false )
     , nState_             ( eLogMaintenanceHandlingStatus_Termine )
 {
-    consumer_.Get< LogMaintenanceConsigns >().AddConsign( *this );
+   // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,17 +53,14 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const swor
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::~LogMaintenanceConsign()
 {
-    consumer_.Get< LogMaintenanceConsigns >().RemoveConsign( *this );
-    if( pPionLogHandling_ )
-        if( LogMaintenanceConsigns* consign = pPionLogHandling_->Retrieve< LogMaintenanceConsigns >() )
-            consign->TerminateConsign( *this );
+   // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message )
+void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler )
 {
     if( message.has_state()  )
         nState_ = E_LogMaintenanceHandlingStatus( message.state() );
@@ -70,15 +70,7 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
-    if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
-    {
-        if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );
-        pPionLogHandling_ = resolver_.Find( message.provider().id() );
-        if( pPionLogHandling_ )
-            pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
-    }
-    controller_.Update( *this );
+    pPionLogHandling_ = handler;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +115,7 @@ bool LogMaintenanceConsign::RefersToAgent( unsigned int id ) const
 // Name: LogMaintenanceConsign::GetConsumer
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
+kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
 {
     return &consumer_;
 }
@@ -132,7 +124,7 @@ const kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
 // Name: LogMaintenanceConsign::GetHandler
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
+kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
 {
     return pPionLogHandling_;
 }

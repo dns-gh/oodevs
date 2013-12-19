@@ -85,11 +85,13 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Resources_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eNeutralizationRatio]->Connect( &pInfos->indirectAmmoInfos_.rNeutralizationRatio_, bConnect );
-    vItemConnectors_[ADN_Resources_GUI::eDispersionFactor]->Connect( &pInfos->indirectAmmoInfos_.rDispersionFactor_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eExplosiveDispersion]->Connect( &pInfos->indirectAmmoInfos_.rExplosiveDispersion_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eFlareDeployTime]->Connect( &pInfos->indirectAmmoInfos_.flareDeployTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eFlareLifetime]->Connect( &pInfos->indirectAmmoInfos_.flareLifeTime_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eFlareDispersion]->Connect( &pInfos->indirectAmmoInfos_.rFlareDispersion_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eSmokeDeployTime]->Connect( &pInfos->indirectAmmoInfos_.smokeDeployTime_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eSmokeLifetime]->Connect( &pInfos->indirectAmmoInfos_.smokeLifeTime_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eSmokeDispersion]->Connect( &pInfos->indirectAmmoInfos_.rSmokeDispersion_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eEffectType]->Connect( &pInfos->indirectAmmoInfos_.objectType_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eEffectLifetime]->Connect( &pInfos->indirectAmmoInfos_.effectLifeTime_, bConnect );

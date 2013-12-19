@@ -52,13 +52,13 @@ public:
                                   const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
                                   const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
                                   const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                                  const Simulation& simulation_ );
+                                  const Simulation& simulation_, kernel::Agent_ABC& consumer );
     virtual ~LogFuneralConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::LogFuneralHandlingUpdate& message );
+    void Update( const sword::LogFuneralHandlingUpdate& message, kernel::Entity_ABC* handler, kernel::Agent_ABC* convoy );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned int id ) const;
     //@}
@@ -66,9 +66,9 @@ public:
     //! @name Accessors
     //@{
     E_HumanRank GetRank() const;
-    virtual const kernel::Agent_ABC* GetConsumer() const;
-    virtual const kernel::Entity_ABC* GetHandler() const;
-    const kernel::Agent_ABC* GetConvoy() const;
+    virtual kernel::Agent_ABC* GetConsumer() const;
+    virtual kernel::Entity_ABC* GetHandler() const;
+    kernel::Agent_ABC* GetConvoy() const;
     const kernel::DotationType* GetPackagingResource() const;
     E_LogFuneralHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
@@ -86,7 +86,6 @@ private:
 
     //! @name Tools
     //@{
-    kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg);
     //@}
 
 private:

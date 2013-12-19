@@ -25,8 +25,8 @@
 // -----------------------------------------------------------------------------
 LogisticsRequestsMedicalWidget::LogisticsRequestsMedicalWidget( QWidget* parent, kernel::Controllers& controllers,
                                                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                                                Publisher_ABC& publisher )
-    : LogisticConsignsWidget( parent, controllers, extractor, tools::ToString( eLogMedicalHandlingStatus_Termine ), profile, publisher )
+                                                                Publisher_ABC& publisher, Model& model )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, publisher, model )
 {
     // NOTHING
 }

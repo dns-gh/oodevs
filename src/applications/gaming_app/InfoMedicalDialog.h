@@ -11,6 +11,7 @@
 #define __InfoMedicalDialog_h_
 
 #include "InfoDialog.h"
+#include "LogisticDialog_ABC.h"
 #include "gaming/MedicalStates.h"
 #include "gaming/Troops.h"
 
@@ -28,6 +29,8 @@ namespace gui
 
 class Publisher_ABC;
 class MedicalStatusWidget;
+class LogisticsRequestsMedicalWidget;
+class Model;
 
 // =============================================================================
 /** @class  InfoMedicalDialog
@@ -37,13 +40,22 @@ class MedicalStatusWidget;
 // =============================================================================
 class InfoMedicalDialog : public InfoDialog< MedicalStates >
                         , public tools::ElementObserver_ABC< Troops >
+                        , public LogisticDialog_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
-                                gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                                gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                Publisher_ABC& publisher, Model& model );
     virtual ~InfoMedicalDialog();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    virtual void Fill( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -52,6 +64,12 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Troops& troops );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    LogisticsRequestsMedicalWidget* widget_;
     //@}
 };
 

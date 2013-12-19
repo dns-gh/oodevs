@@ -14,7 +14,6 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "gaming/Simulation.h"
 #include "gaming/LogisticsConsign_ABC.h"
 #include "LogisticsRequestsHistoryTable.h"
 
@@ -33,6 +32,8 @@ namespace gui
 class LogisticsRequestsTable;
 class LogisticsRequestsDetailsTable;
 class Publisher_ABC;
+class Model;
+class LogisticsModel;
 
 // =============================================================================
 /** @class  LogisticConsignsWidget_ABC
@@ -43,17 +44,23 @@ class Publisher_ABC;
 class LogisticConsignsWidget_ABC : public QWidget
                                  , public tools::Observer_ABC
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
-                                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor
-                                       , const QString& filter, const kernel::Profile_ABC& profile, Publisher_ABC& publisher
-                                       , const QStringList& requestsHeader = QStringList() );
+             LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                                         const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
+                                         Model& model, const QStringList& requestsHeader = QStringList() );
     virtual ~LogisticConsignsWidget_ABC();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    virtual void Fill( const kernel::Entity_ABC& entity ) = 0;
     //@}
 
 public slots:
@@ -67,17 +74,15 @@ public slots:
 protected:
     //! @name Operations
     //@{
-    virtual void Purge();
     virtual void PurgeDetail();
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign ) = 0;
-    virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void NotifyUpdated( const Simulation::sEndTick& consigns );
-    virtual void DisplayRequests() = 0;
     virtual void DisplayRequest( const LogisticsConsign_ABC& consign, const QString& requester, const QString& handler, const QString& state );
-    virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
     virtual void DisplayHistory( const LogisticsConsign_ABC::History& history );
+    virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
+    virtual bool IsHistoryChecked() const;
     virtual void DisplayCurrentHistory();
+    virtual void SelectRequest();
     //@}
 
 protected:
@@ -95,6 +100,7 @@ protected:
     //@{
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
+    const LogisticsModel& historyModel_;
     const kernel::Profile_ABC& profile_;
     Publisher_ABC& publisher_;
     QVBoxLayout* pDetailLayout_;

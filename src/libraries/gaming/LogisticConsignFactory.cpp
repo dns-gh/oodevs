@@ -47,9 +47,9 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // Name: LogisticConsignFactory::CreateMaintenanceConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message )
+LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message, kernel::Agent_ABC& consumer )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_, simulation_ );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_, simulation_, consumer );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,23 +58,23 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const s
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, simulation_, message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory::CreateMedicalConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message )
+LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message, kernel::Agent_ABC& consumer )
 {
-    return new LogMedicalConsign( controllers_.controller_, model_.agents_, simulation_, message );
+    return new LogMedicalConsign( controllers_.controller_, model_.agents_, simulation_, message, consumer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignFactory::CreateFuneralConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogFuneralConsign* LogisticConsignFactory::CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message )
+LogFuneralConsign* LogisticConsignFactory::CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message, kernel::Agent_ABC& consumer )
 {
-    return new LogFuneralConsign( controllers_.controller_, message, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_);
+    return new LogFuneralConsign( controllers_.controller_, message, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_, consumer );
 }
