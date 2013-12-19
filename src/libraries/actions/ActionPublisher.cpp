@@ -84,7 +84,7 @@ void ActionPublisher::Send( const sword::ClientToSim& msg )
 {
     if( !design_ )
         publisher_.Send( msg );
-    if( handler_ )
+    if( !handler_ )
         return;
     const std::string currentTime = simulation_.GetDateTime().toString( EVENT_DATE_FORMAT ).toStdString();
     if( msg.message().has_magic_action() )
