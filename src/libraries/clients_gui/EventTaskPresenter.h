@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void FillFromEvent( timeline::Event& event );
+    virtual void FillFrom( const Event& event );
     void OnDescriptionChanged( const QString& label );
     void OnPayloadChanged( const QString& label );
     //@}

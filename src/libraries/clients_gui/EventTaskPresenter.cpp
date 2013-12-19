@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "EventTaskPresenter.h"
 #include "moc_EventTaskPresenter.cpp"
+#include "Event.h"
 #include "EventTaskView_ABC.h"
 #include "EventTaskViewState.h"
 #include <timeline/api.h>
@@ -109,13 +110,14 @@ void EventTaskPresenter::Clear()
 // Name: EventTaskPresenter::FillFromEvent
 // Created: ABR 2013-12-10
 // -----------------------------------------------------------------------------
-void EventTaskPresenter::FillFromEvent( timeline::Event& event )
+void EventTaskPresenter::FillFrom( const Event& event )
 {
+    const timeline::Event& timelineEvent = event.GetEvent();
     state_->Purge();
-    state_->label_ = event.name;
-    state_->description_ = event.info;
-    state_->url_ = event.action.target;
-    const QString data = QByteArray::fromBase64( event.action.payload.c_str() );
+    state_->label_ = timelineEvent.name;
+    state_->description_ = timelineEvent.info;
+    state_->url_ = timelineEvent.action.target;
+    const QString data = QByteArray::fromBase64( timelineEvent.action.payload.c_str() );
     state_->bytes_ = data.size();
     state_->payload_ = data.toStdString();
     state_->isUrlValid_ = !state_->url_.empty();

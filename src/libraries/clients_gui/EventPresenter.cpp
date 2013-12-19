@@ -411,6 +411,8 @@ void EventPresenter::BuildView( E_EventDockModes mode,
                                 const std::string& warning /* = "" */ )
 {
     ChangeMode( mode, raise, false, warningColor, warning );
+    if( state_->event_ )
+        GetCurrentPresenter().FillFrom( *state_->event_ );
     view_.Build( *state_ );
     UpdateView();
 }

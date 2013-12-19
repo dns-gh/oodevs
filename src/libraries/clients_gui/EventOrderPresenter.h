@@ -78,10 +78,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void FillFrom( const Event& event );
     int GetLastContext() const;
-    void FillFromAction( const actions::Action_ABC& action,
-                         E_MissionType type,
-                         const kernel::Entity_ABC* entity );
     void OnTargetChanged( const kernel::Entity_ABC* entity );
     void OnMissionTypeChanged( E_MissionType missionType );
     //@}

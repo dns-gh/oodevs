@@ -157,16 +157,6 @@ void EventTaskWidget::BlockSignals( bool blocked )
 // Name: EventTaskWidget::Build
 // Created: ABR 2013-12-10
 // -----------------------------------------------------------------------------
-void EventTaskWidget::Build( const gui::EventViewState& state )
-{
-    if( state.event_ )
-        taskPresenter_->FillFromEvent( state.event_->GetEvent() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::Build
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
 void EventTaskWidget::Build( const gui::EventTaskViewState& state )
 {
     label_->setText( QString::fromStdString( state.label_ ) );

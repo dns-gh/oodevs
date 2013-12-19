@@ -13,8 +13,8 @@
 #include "icons.h"
 #include "TaskerWidget.h"
 
+#include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
-#include "actions/ActionWithTarget_ABC.h"
 
 #include "actions_gui/MissionInterface.h"
 
@@ -169,23 +169,6 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
         glColor4f( COLOR_PARAM );
         missionInterface_->Draw( tools_, viewport );
         glPopAttrib();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::Build
-// Created: ABR 2013-11-21
-// -----------------------------------------------------------------------------
-void EventOrderWidget::Build( const gui::EventViewState& state )
-{
-    if( !state.event_ || !state.event_->GetType() == eEventTypes_Order )
-        return;
-    const gui::EventAction& eventAction = static_cast< const gui::EventAction& >( *state.event_ );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
-    {
-        const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
-        kernel::Entity_ABC* tasker = model_.agents_.FindAllAgent( mission->GetEntityId() );
-        orderPresenter_->FillFromAction( *action, eventAction.GetMissionType(), tasker );
     }
 }
 

@@ -97,7 +97,6 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Purge();
-    virtual void Build( const gui::EventViewState& state );
     virtual void Draw( gui::Viewport_ABC& viewport );
     virtual void BlockSignals( bool blocked );
     //@}

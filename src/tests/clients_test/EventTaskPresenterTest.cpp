@@ -75,7 +75,7 @@ namespace
         void InitializePresenter()
         {
             CheckBuild();
-            taskPresenter.FillFromEvent( taskEvent->GetEvent() );
+            taskPresenter.FillFrom( *taskEvent );
         }
         void CheckBuild()
         {

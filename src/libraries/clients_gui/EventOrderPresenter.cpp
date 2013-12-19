@@ -11,6 +11,7 @@
 #include "EventOrderPresenter.h"
 #include "moc_EventOrderPresenter.cpp"
 #include "Event.h"
+#include "EventAction.h"
 #include "EventOrderView_ABC.h"
 #include "EventOrderViewState.h"
 #include "EventPresenter.h"
@@ -18,6 +19,7 @@
 
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
+#include "actions/ActionWithTarget_ABC.h"
 
 #include "actions_gui/MissionInterface_ABC.h"
 
@@ -85,12 +87,15 @@ EventOrderPresenter::~EventOrderPresenter()
 // Name: EventOrderPresenter::FillFromAction
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::FillFromAction( const actions::Action_ABC& action,
-                                          E_MissionType type,
-                                          const kernel::Entity_ABC* entity )
+void EventOrderPresenter::FillFrom( const Event& event )
 {
-    entity_ = entity;
-    Select( type, action.GetType().GetName(), &action );
+    const EventAction& eventAction = static_cast< const EventAction& >( event );
+    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    {
+        const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
+        entity_ = mission->GetTarget();
+        Select( eventAction.GetMissionType(), action->GetType().GetName(), action );
+    }
 }
 
 // -----------------------------------------------------------------------------

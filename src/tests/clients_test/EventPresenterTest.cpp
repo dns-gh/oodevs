@@ -119,6 +119,7 @@ namespace
         MOCK_METHOD( ShouldEnableTrigger, 0 );
         MOCK_METHOD( ShouldEnableClear, 0 );
         MOCK_METHOD( Trigger, 0 );
+        MOCK_METHOD( FillFrom, 1 );
         MOCK_METHOD( CommitTo, 1 );
         MOCK_METHOD( Purge, 0 );
         MOCK_METHOD( Clear, 0 );
@@ -182,6 +183,7 @@ namespace
         }
         void CheckBuild( const boost::shared_ptr< MockSubPresenter >& subPresenter )
         {
+            MOCK_EXPECT( subPresenter->FillFrom ).once();
             MOCK_EXPECT( view.Build ).once().with( state );
             CheckUpdate( subPresenter );
         }
@@ -526,6 +528,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_save_clicked_on_new_event, Presenter
     // can't know the generated uuid here, so can't expect with( state )
     MOCK_EXPECT( timelineHandler->CreateEvent ).once();
     MOCK_EXPECT( view.Build ).once();
+    MOCK_EXPECT( taskPresenter->FillFrom ).once();
     MOCK_EXPECT( taskPresenter->ShouldEnableTrigger ).once().returns( false );
     MOCK_EXPECT( taskPresenter->ShouldEnableClear ).once().returns( false );
     MOCK_EXPECT( view.Update ).once();
@@ -541,6 +544,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_save_as_clicked, PresenterFixture )
     // can't know the generated uuid here, so can't expect with( state )
     MOCK_EXPECT( timelineHandler->CreateEvent ).once();
     MOCK_EXPECT( view.Build ).once();
+    MOCK_EXPECT( taskPresenter->FillFrom ).once();
     MOCK_EXPECT( taskPresenter->ShouldEnableTrigger ).once().returns( false );
     MOCK_EXPECT( taskPresenter->ShouldEnableClear ).once().returns( false );
     MOCK_EXPECT( view.Update ).once();

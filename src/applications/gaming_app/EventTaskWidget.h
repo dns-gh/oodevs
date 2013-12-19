@@ -40,7 +40,6 @@ private:
     //! @name EventWidget_ABC implementation
     //@{
     virtual void Purge();
-    virtual void Build( const gui::EventViewState& state );
     virtual void BlockSignals( bool blocked );
     //@}
 

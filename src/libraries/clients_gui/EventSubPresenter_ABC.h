@@ -20,6 +20,7 @@ namespace timeline
 
 namespace gui
 {
+    class Event;
 
 // =============================================================================
 /** @class  EventSubPresenter_ABC
@@ -51,6 +52,7 @@ public:
     //! @name Abstract operations
     //@{
     virtual void Trigger() = 0;
+    virtual void FillFrom( const gui::Event& event ) = 0;
     virtual void CommitTo( timeline::Event& event ) const = 0;
     virtual void Purge() = 0; // reset all
     virtual void Clear() = 0; // reset content
