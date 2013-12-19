@@ -47,6 +47,8 @@ namespace
 int localAppliArgc( 1 );
 char* localAppliArgv[] = { " " };
 const size_t maxReturnedEntries = 500;
+const size_t maxConsigns = 100000;
+const size_t averageHistoryPerConsign = 15;
 
 std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type, int id )
 {
@@ -79,7 +81,8 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC 
     // chains, over 55h of simulated time. This more than an order of magnitude
     // larger, being the number of requests instead of updates.
     : index_( new ConsignIndex() )
-    , recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, 100000 ) )
+    , recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
+               averageHistoryPerConsign*maxConsigns ) )
     , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
@@ -126,7 +129,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         recorder_->Flush();
 
         const int tick = message.message().control_begin_tick().current_tick();
-        if( tick >= 0 )
+        if( tick >= 0 && tick > currentTick_ )
             currentTick_ = tick;
         const std::string time = message.message().control_begin_tick().date_time().data();
         if( !time.empty() )

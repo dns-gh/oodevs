@@ -16,10 +16,17 @@
 #include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/numeric/conversion/cast.hpp>
-#include <algorithm>
+#include <unordered_set>
 
 namespace bg = boost::gregorian;
 using namespace plugins::logistic;
+
+namespace
+{
+
+const uint32_t averageHistoryPerConsign = 15;
+
+}  // namespace
 
 class ConsignRecorder::ConsignHistory
 {
@@ -39,9 +46,10 @@ public:
 };
 
 ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
-        uint32_t maxSize, uint32_t maxConsigns )
+        uint32_t maxSize, uint32_t maxConsigns, uint32_t maxHistory )
     : archive_( new ConsignArchive( archivePath, maxSize ))
     , maxConsigns_( maxConsigns )
+    , maxHistory_( maxHistory )
 {
 }
 
@@ -91,6 +99,13 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
         throw MASA_EXCEPTION( "could not serialize input message: " + entry.ShortDebugString() );
     const auto offset = archive_->Write( &buffer[0], static_cast< uint32_t >( buffer.size() ));
 
+    UpdateRequestIndex( requestId, offset, destroyed, entities );
+    UpdateHistoryIndex( requestId, entry.tick(), offset );
+}
+
+void ConsignRecorder::UpdateRequestIndex( uint32_t requestId, const ConsignOffset& offset,
+       bool destroyed, const std::vector< uint32_t >& entities )
+{
     // Now, get the record file/offset/length and add it to the history,
     // possibly evicting entries, from oldest deleted to newest alive. 
 
@@ -147,6 +162,23 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
     }
 }
 
+void ConsignRecorder::UpdateHistoryIndex( uint32_t requestId, int32_t tick,
+        const ConsignOffset& offset )
+{
+    if( !history_.empty() && history_.front().tick > tick )
+        throw MASA_EXCEPTION( "consign history is moving backward in time" );
+
+    ConsignRecord rec;
+    rec.tick = tick;
+    rec.requestId = requestId;
+    rec.file = offset.file;
+    rec.offset = offset.offset;
+
+    history_.push_front( rec );
+    while( history_.size() > maxHistory_ )
+        history_.pop_back();
+}
+
 void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& entities,
         std::set< uint32_t >& requests ) const
 {
@@ -158,48 +190,31 @@ void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& ent
     }
 }
 
-namespace
-{
-
-bool Compare( ConsignOffset o1, ConsignOffset o2 )
-{
-    return o1.file < o2.file || ( o1.file == o2.file ) && o1.offset < o2.offset;
-}
-
-
-bool ReverseCompare( ConsignOffset o1, ConsignOffset o2 )
-{
-    return Compare( o2, o1 );
-}
-
-}  // namespace
-
 void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
     entries.clear();
-   
-    // Resolve offsets, keeping the top maxCount ones with a heap
+    std::unordered_set< uint32_t > seen;
     std::vector< ConsignOffset > offsets;
-    offsets.reserve( maxCount + 1 );  // +1 for the heap manipulation
-    for( auto ir = requestIds.cbegin(); ir != requestIds.cend(); ++ir )
+    offsets.reserve( maxCount );
+
+    for( auto ih = history_.cbegin(); ih != history_.end(); ++ih )
     {
-        auto ic = consigns_.find( *ir );
-        if( ic == consigns_.end() )
+        // Keep only the latest state of a given request
+        if( !seen.insert( ih->requestId ).second )
             continue;
-        offsets.push_back( ic->second->records_.back() );
-        // The comparison is reversed to pop the smallest element
-        std::push_heap( offsets.begin(), offsets.end(), ReverseCompare );
-        if( offsets.size() > maxCount )
-        {
-            std::pop_heap( offsets.begin(), offsets.end(), ReverseCompare );
-            offsets.pop_back();
-        }
+        if( requestIds.find( ih->requestId ) == requestIds.end() )
+            continue;
+        ConsignOffset offset;
+        offset.file = ih->file;
+        offset.offset = ih->offset;
+        offsets.push_back( offset );
+        if( offsets.size() >= maxCount )
+            break;
     }
 
-    // Make sure to seek in increasing offset order. A quick test shows that
-    // std::sort is faster than std::sort_heap.
-    std::sort( offsets.begin(), offsets.end(), Compare );
+    // Make sure to seek in increasing offset order.
+    std::reverse( offsets.begin(), offsets.end() );
     AppendEntries( offsets, entries );
     std::reverse( entries.base().begin(), entries.base().end() );
 }

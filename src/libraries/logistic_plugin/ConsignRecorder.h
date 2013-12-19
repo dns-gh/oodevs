@@ -14,6 +14,7 @@
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #pragma warning( pop )
+#include <boost/container/deque.hpp>
 #include <boost/noncopyable.hpp>
 #include <cstdint>
 #include <list>
@@ -50,12 +51,21 @@ class ConsignArchive;
 struct ConsignOffset;
 class ConsignResolver_ABC;
 
+struct ConsignRecord
+{
+    int32_t tick;
+    uint32_t requestId;
+    uint32_t file;
+    uint32_t offset;
+};
+
 // Indexes and persists the modification history of logistic requests. History
 // entries can be retrieved from requests or referenced entities identifiers.
 class ConsignRecorder: private boost::noncopyable
 {
 public:
-    ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize, uint32_t maxConsigns );
+    ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize, uint32_t maxConsigns,
+           uint32_t maxHistory );
     virtual ~ConsignRecorder();
 
     void AddLogger( int kind, const tools::Path& path, const std::string header );
@@ -64,8 +74,8 @@ public:
     void Flush();
     void SetMaxLinesInFile( int maxLines );
 
-    void WriteEntry( uint32_t requestId, bool destroyed, const sword::LogHistoryEntry& entry,
-           std::vector< uint32_t >& entities );
+    void WriteEntry( uint32_t requestId, bool destroyed,
+            const sword::LogHistoryEntry& entry, std::vector< uint32_t >& entities );
     // Returns the list of requests referencing supplied entities.
     void GetRequestIdsFromEntities( const std::set< uint32_t >& entities,
             std::set< uint32_t >& requests ) const;
@@ -81,6 +91,10 @@ private:
     // order.
     void AppendEntries( const std::vector< ConsignOffset >& offsets, 
         boost::ptr_vector< sword::LogHistoryEntry >& entries ) const;
+
+    void UpdateRequestIndex( uint32_t requestId, const ConsignOffset& offset,
+           bool destroyed, const std::vector< uint32_t >& entities );
+    void UpdateHistoryIndex( uint32_t requestId, int32_t tick, const ConsignOffset& offset );
 
 private:
     boost::ptr_map< int, ConsignResolver_ABC > loggers_;
@@ -99,6 +113,11 @@ private:
 
     // Map entity (unit, formation, whatever) identifiers to requests
     std::multimap< uint32_t, uint32_t > entityConsigns_;
+
+    // A bounded FIFO queue of request states sorted by descending ticks. Note
+    // that history_ and consign_ referenced states are overlapping but not equal.
+    boost::container::deque< ConsignRecord > history_;
+    size_t maxHistory_;
 };
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,

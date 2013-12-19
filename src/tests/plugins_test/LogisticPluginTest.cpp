@@ -685,7 +685,7 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
     const tools::Path path = tempDir.Path() / "consigns";
     boost::ptr_vector< sword::LogHistoryEntry > entries;
 
-    ConsignRecorder rec( path, 1024*1024, 2 );
+    ConsignRecorder rec( path, 1024*1024, 2, 1000 );
     BOOST_CHECK_EQUAL( 0u, rec.GetHistorySize() );
 
     // Same consign
@@ -697,38 +697,38 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
     BOOST_CHECK_EQUAL( "1.1, 1.2", GetHistoryTrace( entries ) );
 
     // One destroyed
-    AddAndFlush( rec, 2, 1, true );
+    AddAndFlush( rec, 2, 3, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 2, entries ); 
-    BOOST_CHECK_EQUAL( "2.1", GetHistoryTrace( entries ) );
+    BOOST_CHECK_EQUAL( "2.3", GetHistoryTrace( entries ) );
 
     // Another valid -> evict the destroyed [2]
-    AddAndFlush( rec, 3, 1, false );
+    AddAndFlush( rec, 3, 4, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 3, entries ); 
-    BOOST_CHECK_EQUAL( "3.1", GetHistoryTrace( entries ) );
+    BOOST_CHECK_EQUAL( "3.4", GetHistoryTrace( entries ) );
     rec.GetHistory( 2, entries ); 
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Another destroyed -> removed immediately
-    AddAndFlush( rec, 4, 1, true );
+    AddAndFlush( rec, 4, 5, true );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 4, entries ); 
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
 
     // Update [1]
-    AddAndFlush( rec, 1, 3, false );
+    AddAndFlush( rec, 1, 6, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
 
     // A new valid one -> evict [3]
-    AddAndFlush( rec, 5, 1, false );
+    AddAndFlush( rec, 5, 6, false );
     BOOST_CHECK_EQUAL( 2u, rec.GetHistorySize() );
     rec.GetHistory( 1, entries ); 
-    BOOST_CHECK_EQUAL( "1.1, 1.2, 1.3", GetHistoryTrace( entries ) );
+    BOOST_CHECK_EQUAL( "1.1, 1.2, 1.6", GetHistoryTrace( entries ) );
     rec.GetHistory( 3, entries ); 
     BOOST_CHECK_EQUAL( "", GetHistoryTrace( entries ) );
     rec.GetHistory( 5, entries ); 
-    BOOST_CHECK_EQUAL( "5.1", GetHistoryTrace( entries ) );
+    BOOST_CHECK_EQUAL( "5.6", GetHistoryTrace( entries ) );
 }
 
 namespace
@@ -750,10 +750,10 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
     const tools::Path path = tempDir.Path() / "consigns";
 
     // request [2] should be discarded
-    ConsignRecorder rec( path, 1024*1024, 2 );
-    AddAndFlush( rec, 1, 1, false, MakeSet( 30 ));
+    ConsignRecorder rec( path, 1024*1024, 1000, 3 );
     AddAndFlush( rec, 2, 1, false, MakeSet( 10 ));
     AddAndFlush( rec, 2, 1, true, MakeSet( 30 ));
+    AddAndFlush( rec, 1, 1, false, MakeSet( 30 ));
     AddAndFlush( rec, 3, 2, false, MakeSet( 10, 20 ));
     AddAndFlush( rec, 1, 3, true, MakeSet( 20 ));
 
