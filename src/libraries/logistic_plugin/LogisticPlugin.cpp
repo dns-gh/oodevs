@@ -232,12 +232,15 @@ void LogisticPlugin::HandleListLogisticRequests( const sword::ListLogisticReques
     size_t maxCount = maxReturnedEntries;
     if( rq.has_max_count() )
         maxCount = rq.max_count();
+    int32_t startTick = -1;
+    if( rq.has_start_tick() )
+        startTick = rq.start_tick();
     std::set< uint32_t > entities;
     for( int i = 0; i != rq.entities().size(); ++i )
         entities.insert( rq.entities( i ).id() );
 
     boost::ptr_vector< sword::LogHistoryEntry > entries;
-    GetRequestsFromEntities( *recorder_, entities, maxCount, entries );
+    GetRequestsFromEntities( *recorder_, entities, startTick, maxCount, entries );
     for( auto ie = entries.begin(); ie != entries.end(); ie++ )
         *ack.add_entries() = *ie;
 }

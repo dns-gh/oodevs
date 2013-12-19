@@ -16,6 +16,7 @@
 #include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <algorithm>
 #include <unordered_set>
 
 namespace bg = boost::gregorian;
@@ -190,7 +191,17 @@ void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& ent
     }
 }
 
-void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
+namespace
+{
+
+bool CompareTick( const ConsignRecord& rec, int32_t tick )
+{
+    return rec.tick > tick;
+}
+
+}  // namespace
+
+void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds, int32_t startTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
     entries.clear();
@@ -198,7 +209,10 @@ void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
     std::vector< ConsignOffset > offsets;
     offsets.reserve( maxCount );
 
-    for( auto ih = history_.cbegin(); ih != history_.end(); ++ih )
+    auto ih = history_.cbegin();
+    if( startTick >= 0 )
+        ih = std::lower_bound( history_.cbegin(), history_.cend(), startTick, CompareTick );
+    for( ; ih != history_.end(); ++ih )
     {
         // Keep only the latest state of a given request
         if( !seen.insert( ih->requestId ).second )
@@ -247,12 +261,12 @@ size_t ConsignRecorder::GetHistorySize() const
 }
 
 void plugins::logistic::GetRequestsFromEntities( const ConsignRecorder& rec,
-        const std::set< uint32_t >& entities,
+        const std::set< uint32_t >& entities, int32_t startTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries )
 {
     // Resolve request identifiers
     std::set< uint32_t > requestIds;
     rec.GetRequestIdsFromEntities( entities, requestIds );
     // Fetch most recent state of each request
-    rec.GetRequests( requestIds, maxCount, entries );
+    rec.GetRequests( requestIds, startTick, maxCount, entries );
 }

@@ -734,11 +734,11 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
 namespace
 {
 
-std::string TraceEntitiesRequests( const ConsignRecorder& rec,
-    const std::set< uint32_t >& entities )
+std::string TraceEntitiesRequests( const ConsignRecorder& rec, int32_t startTick,
+        const std::set< uint32_t >& entities )
 {
     boost::ptr_vector< sword::LogHistoryEntry > entries;
-    GetRequestsFromEntities( rec, entities, 100, entries );
+    GetRequestsFromEntities( rec, entities, startTick, 100, entries );
     return GetHistoryTrace( entries );
 }
 
@@ -750,19 +750,27 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
     const tools::Path path = tempDir.Path() / "consigns";
 
     // request [2] should be discarded
-    ConsignRecorder rec( path, 1024*1024, 1000, 3 );
+    ConsignRecorder rec( path, 1024*1024, 1000, 4 );
     AddAndFlush( rec, 2, 1, false, MakeSet( 10 ));
     AddAndFlush( rec, 2, 1, true, MakeSet( 30 ));
     AddAndFlush( rec, 1, 1, false, MakeSet( 30 ));
     AddAndFlush( rec, 3, 2, false, MakeSet( 10, 20 ));
     AddAndFlush( rec, 1, 3, true, MakeSet( 20 ));
+    AddAndFlush( rec, 4, 3, false, MakeSet( 40 ));
 
     // Check history for single unit
-    BOOST_CHECK_EQUAL( "3.2", TraceEntitiesRequests( rec, MakeSet( 10 )));
-    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, MakeSet( 20 )));
-    BOOST_CHECK_EQUAL( "1.3", TraceEntitiesRequests( rec,  MakeSet( 30 )));
+    BOOST_CHECK_EQUAL( "3.2", TraceEntitiesRequests( rec, -1, MakeSet( 10 )));
+    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20 )));
+    BOOST_CHECK_EQUAL( "1.3", TraceEntitiesRequests( rec, -1, MakeSet( 30 )));
     // Missing unit
-    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec,  MakeSet( 1000 )));
+    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, -1, MakeSet( 1000 )));
     // Multiple units with one missing
-    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec,  MakeSet( 20, 30, 1000 )));
+    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20, 30, 1000 )));
+
+    // Check history from ticks
+    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, 0, MakeSet( 20, 30, 40 )));
+    BOOST_CHECK_EQUAL( "1.1", TraceEntitiesRequests( rec, 1, MakeSet( 20, 30, 40 )));
+    BOOST_CHECK_EQUAL( "3.2, 1.1", TraceEntitiesRequests( rec, 2, MakeSet( 20, 30, 40 )));
+    BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 3, MakeSet( 20, 30, 40 )));
+    BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 4, MakeSet( 20, 30, 40 )));
 }
