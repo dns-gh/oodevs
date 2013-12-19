@@ -39,8 +39,7 @@ public:
     //@}
 
 private:
-    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver,
-           std::vector< uint32_t >& entities );
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& resolver );
     virtual void WriteConsign( ConsignWriter& output ) const;
     bool ManageMessage( const ::sword::LogFuneralHandlingCreation& msg,
             const NameResolver_ABC& resolver );

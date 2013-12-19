@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "LogisticPlugin.h"
+#include "ConsignIndex.h"
 #include "ConsignRecorder.h"
 #include "FuneralResolver.h"
 #include "MaintenanceResolver.h"
@@ -47,58 +48,6 @@ int localAppliArgc( 1 );
 char* localAppliArgv[] = { " " };
 const size_t maxReturnedEntries = 500;
 
-enum E_ConsignEvent
-{
-    eConsignUnknown,
-    eConsignCreation,
-    eConsignUpdate,
-    eConsignDestruction,
-};
-
-struct ConsignEvent
-{
-    ConsignEvent( LogisticPlugin::E_LogisticType t, E_ConsignEvent a, int i )
-        : type( t ), action( a ), id( i )
-    {
-    }
-
-    LogisticPlugin::E_LogisticType type;
-    E_ConsignEvent action;
-    int id;
-};
-
-template< typename T >
-ConsignEvent MakeEvent( const T& msg, LogisticPlugin::E_LogisticType type, E_ConsignEvent action )
-{
-    return ConsignEvent( type, action,  msg.has_request() ? msg.request().id() : -1 );
-}
-
-#define MAKE_EVENT( M, T, E ) \
-    if( msg.has_##M() ) return MakeEvent( msg.M(), LogisticPlugin::T, E )
-
-ConsignEvent GetEventType( const sword::SimToClient& message )
-{
-    const auto& msg = message.message();
-    MAKE_EVENT( log_funeral_handling_creation,    eLogisticType_Funeral, eConsignCreation );
-    MAKE_EVENT( log_funeral_handling_update,      eLogisticType_Funeral, eConsignUpdate );
-    MAKE_EVENT( log_funeral_handling_destruction, eLogisticType_Funeral, eConsignDestruction );
-
-    MAKE_EVENT( log_maintenance_handling_creation,    eLogisticType_Maintenance, eConsignCreation );
-    MAKE_EVENT( log_maintenance_handling_update,      eLogisticType_Maintenance, eConsignUpdate );
-    MAKE_EVENT( log_maintenance_handling_destruction, eLogisticType_Maintenance, eConsignDestruction );
-
-    MAKE_EVENT( log_medical_handling_creation,    eLogisticType_Medical, eConsignCreation );
-    MAKE_EVENT( log_medical_handling_update,      eLogisticType_Medical, eConsignUpdate );
-    MAKE_EVENT( log_medical_handling_destruction, eLogisticType_Medical, eConsignDestruction );
-
-    MAKE_EVENT( log_supply_handling_creation,    eLogisticType_Supply, eConsignCreation );
-    MAKE_EVENT( log_supply_handling_update,      eLogisticType_Supply, eConsignUpdate );
-    MAKE_EVENT( log_supply_handling_destruction, eLogisticType_Supply, eConsignDestruction );
-
-    return ConsignEvent( LogisticPlugin::eNbrLogisticType, eConsignUnknown, -1 );
-}
-#undef MAKE_EVENT
-
 std::auto_ptr< ConsignData_ABC > NewConsign( LogisticPlugin::E_LogisticType type, int id )
 {
     const auto idString = boost::lexical_cast< std::string >( id );
@@ -129,7 +78,8 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC 
     // QA brigade benchmark reported around 17000 log lines, for all logistic
     // chains, over 55h of simulated time. This more than an order of magnitude
     // larger, being the number of requests instead of updates.
-    : recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, 100000 ) )
+    : index_( new ConsignIndex() )
+    , recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, 100000 ) )
     , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
@@ -184,10 +134,15 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         return;
     }
 
-    const auto ev = GetEventType( message );
-    if( !recorder_->HasLogger( ev.type ) || ev.id <= 0 )
+    std::vector< uint32_t > entities;
+    const auto ev = index_->Update( message, entities, currentTick_ );
+    if( ev.id <= 0 )
         return;
+    recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction, *ev.entry, entities );
 
+    // Push to the legacy logger
+    if( !recorder_->HasLogger( ev.type ) )
+        return;
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
     {
@@ -197,11 +152,8 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         else
             consigns_.replace( it, consign );
     }
-    std::vector< uint32_t > entities;
-    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_, entities ) )
+    if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
         recorder_->Write( ev.type, it->second->ToString(), today );
-    recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction,
-            it->second->GetHistoryEntry(), entities );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }

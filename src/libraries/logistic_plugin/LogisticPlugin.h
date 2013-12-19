@@ -65,6 +65,7 @@ namespace logistic
 {
 
 class ConsignData_ABC;
+class ConsignIndex;
 class ConsignRecorder;
 class NameResolver_ABC;
 
@@ -117,8 +118,9 @@ private:
 private:
     //! @name Member data
     //@{
+    std::unique_ptr< ConsignIndex >             index_;
     std::unique_ptr< ConsignRecorder >          recorder_;
-    std::unique_ptr< QApplication >           localAppli_;
+    std::unique_ptr< QApplication >             localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     boost::ptr_map< int, ConsignData_ABC >      consigns_;
     int currentTick_;
