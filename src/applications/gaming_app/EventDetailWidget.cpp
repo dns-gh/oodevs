@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "EventDetailWidget.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "protocol/Protocol.h"
 #include <timeline/api.h>
 #include <tools/Base64Converters.h>

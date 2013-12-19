@@ -18,6 +18,7 @@
 #include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "tools/GeneralConfig.h"
 #include "ENT/ENT_Tr.h"
 #include <timeline/api.h>

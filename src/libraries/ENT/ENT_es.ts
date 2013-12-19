@@ -979,7 +979,6 @@
         <source>All Gaming</source>
         <translation type="unfinished"></translation>
     </message>
-
     <message>
         <source>Display triggered</source>
         <translation type="unfinished"></translation>

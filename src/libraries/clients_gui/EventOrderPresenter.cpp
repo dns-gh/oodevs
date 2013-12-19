@@ -10,9 +10,11 @@
 #include "clients_gui_pch.h"
 #include "EventOrderPresenter.h"
 #include "moc_EventOrderPresenter.cpp"
+#include "Event.h"
 #include "EventOrderView_ABC.h"
 #include "EventOrderViewState.h"
 #include "EventPresenter.h"
+#include "TimelinePublisher.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
@@ -21,7 +23,6 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Event.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Mission.h"
@@ -29,7 +30,7 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/TimelinePublisher.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Decisions_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
@@ -48,7 +49,7 @@ EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& view,
                                           actions::gui::MissionInterface_ABC& missionInterface,
                                           actions::ActionsModel& actionsModel,
                                           actions::ActionFactory_ABC& actionFactory,
-                                          kernel::TimelinePublisher& timelinePublisher,
+                                          TimelinePublisher& timelinePublisher,
                                           kernel::Controllers& controllers )
     : view_( view )
     , agentTypes_( agentTypes )

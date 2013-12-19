@@ -17,7 +17,7 @@
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/VersionHelper.h"
-#include "tools/Zip.h"
+#include <tools/Zip.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace fc = frontend::commands;

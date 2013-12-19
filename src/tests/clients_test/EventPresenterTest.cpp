@@ -13,7 +13,8 @@
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventView_ABC.h"
 #include "clients_gui/EventViewState.h"
-#include "clients_gui/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 
 #include <boost/lexical_cast.hpp>
 #pragma warning( push )
@@ -24,7 +25,7 @@
 
 namespace gui
 {
-    std::ostream& operator<<( std::ostream& os, const kernel::Event& event )
+    std::ostream& operator<<( std::ostream& os, const gui::Event& event )
     {
         os << "Event " << "{ "
            << ENT_Tr::ConvertFromEventType( event.GetType() ) << ", "
@@ -74,7 +75,7 @@ namespace
                lhs.action.apply  == rhs.action.apply  &&
                lhs.action.payload == rhs.action.payload;
     }
-    bool operator==( const kernel::Event& lhs, const kernel::Event& rhs )
+    bool operator==( const gui::Event& lhs, const gui::Event& rhs )
     {
         return lhs.GetType() == rhs.GetType() &&
                lhs.GetEvent() == rhs.GetEvent();
@@ -106,7 +107,7 @@ namespace
         MOCK_METHOD( BlockSignals, 1 );
         MOCK_METHOD( Draw, 1 );
     };
-    MOCK_BASE_CLASS( MockTimelineHandler, gui::TimelineHandler_ABC )
+    MOCK_BASE_CLASS( MockTimelineHandler, kernel::TimelineHandler_ABC )
     {
         MOCK_METHOD( CreateEvent, 1 );
         MOCK_METHOD( SelectEvent, 1 );
@@ -157,8 +158,8 @@ namespace
         boost::shared_ptr< MockTimelineHandler > timelineHandler;
         boost::shared_ptr< MockSubPresenter > orderPresenter;
         boost::shared_ptr< MockSubPresenter > taskPresenter;
-        boost::shared_ptr< kernel::Event > orderEvent;
-        boost::shared_ptr< kernel::Event > taskEvent;
+        boost::shared_ptr< gui::Event > orderEvent;
+        boost::shared_ptr< gui::Event > taskEvent;
 
         void CheckPurge()
         {

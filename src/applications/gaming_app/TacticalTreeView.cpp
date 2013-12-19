@@ -74,6 +74,16 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
             menu.InsertItem( "Formation", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 
+namespace
+{
+    void CreateSubMenu( TacticalTreeView* view, kernel::ContextMenu& menu, const QString& text, const char* slot )
+    {
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", text );
+        for( int levelIt = static_cast< int >( eNatureLevel_xxxxx ); levelIt > 0; --levelIt )
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), view, slot, 0, levelIt );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalTreeView::NotifyContextMenu
 // Created: SLI 2013-07-16
@@ -87,9 +97,8 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Team_ABC& entity, kernel
     if( profile_.CanDoMagic( entity ) )
     {
         currentEntity_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
-        for( int levelIt = static_cast< int >( eNatureLevel_xxxxx ); levelIt > 0; --levelIt )
-            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
+        CreateSubMenu( this, menu, tr( "Create formation" ), SLOT( OnCreateFormation( int ) ) );
+        CreateSubMenu( this, menu, tr( "Create logistic base" ), SLOT( OnCreateLogisticBase( int ) ) );
     }
     NotifyContextMenu( static_cast< const kernel::Entity_ABC& >( entity ), menu );
 }
@@ -382,7 +391,25 @@ void TacticalTreeView::OnActivate( const QModelIndex& index )
 // -----------------------------------------------------------------------------
 void TacticalTreeView::OnCreateFormation( int level )
 {
-    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_ );
+    CreateFormation( level, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnCreateLogisticBase
+// Created: JSR 2013-12-17
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnCreateLogisticBase( int level )
+{
+    CreateFormation( level, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::CreateFormation
+// Created: JSR 2013-12-17
+// -----------------------------------------------------------------------------
+void TacticalTreeView::CreateFormation( int level, bool isLogisticBase )
+{
+    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_, isLogisticBase );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
     actionsModel_.Publish( *action, 0 );

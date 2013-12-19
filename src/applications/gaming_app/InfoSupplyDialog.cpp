@@ -49,7 +49,6 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
     tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );
     tabs_->addTab( statusWidget, tools::translate( "InfoSupplyDialog", "Chain status" ) );
-    setMinimumWidth( 520 );
 }
 
 // -----------------------------------------------------------------------------

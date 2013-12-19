@@ -99,9 +99,9 @@ Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& ty
 // Name: ActionsModel::CreateFormationCreationAction
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected )
+Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase )
 {
-    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected );
+    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected, isLogisticBase );
     Register( action->GetId(), *action );
     return action;
 }

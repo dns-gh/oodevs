@@ -967,7 +967,9 @@ message EquipmentDotations {
         //! "repairable" element, matching a breakdown identifier
         //! defined in the physical database.
         repeated int32         breakdowns      = 8;
-        //! The number of away equipments
+        //! The number of equipments away. Equipments are away when
+        //! their owner is being transported by another unit but the
+        //! equipment is not transportable.
         optional int32         away            = 9;
     }
     repeated EquipmentDotation elem = 1;
@@ -1139,7 +1141,8 @@ message UnitAttributes {
     optional HumanDotations              human_dotations            = 2;
     //! Unit equipments, mostly vehicles or human surrogates.
     optional EquipmentDotations          equipment_dotations        = 3;
-    //! The resource dotations @see ResourceDotations
+    //! Resource dotations are unique by type and only new or updated
+    //! entries are sent.
     optional ResourceDotations           resource_dotations         = 4;
     //! Unit equipments lent to another unit.
     optional LentEquipments              lent_equipments            = 5;

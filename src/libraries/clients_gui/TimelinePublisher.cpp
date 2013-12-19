@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "TimelinePublisher.h"
 #include "protocol/Protocol.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePublisher constructor

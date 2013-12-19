@@ -26,7 +26,6 @@ namespace kernel
     class Decisions_ABC;
     class Entity_ABC;
     class OrderType;
-    class TimelinePublisher;
 }
 
 namespace actions
@@ -50,6 +49,7 @@ namespace gui
 {
     class EventOrderView_ABC;
     struct EventOrderViewState;
+    class TimelinePublisher;
 
 // =============================================================================
 /** @class  EventOrderPresenter
@@ -71,7 +71,7 @@ public:
                                   actions::gui::MissionInterface_ABC& missionInterface,
                                   actions::ActionsModel& actionsModel,
                                   actions::ActionFactory_ABC& actionFactory,
-                                  kernel::TimelinePublisher& timelinePublisher,
+                                  TimelinePublisher& timelinePublisher,
                                   kernel::Controllers& controllers );
     virtual ~EventOrderPresenter();
     //@}
@@ -132,7 +132,7 @@ private:
     actions::gui::MissionInterface_ABC& missionInterface_;
     actions::ActionsModel& actionsModel_;
     actions::ActionFactory_ABC& actionFactory_;
-    kernel::TimelinePublisher& timelinePublisher_;
+    TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::Decisions_ABC* decisions_;
     const kernel::OrderType* order_;

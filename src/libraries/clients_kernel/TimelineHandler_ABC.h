@@ -7,15 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __EventFactory_h_
-#define __EventFactory_h_
+#ifndef __TimelineHandler_ABC_h_
+#define __TimelineHandler_ABC_h_
 
 #include <boost/noncopyable.hpp>
-
-namespace actions
-{
-    class ActionsModel;
-}
 
 namespace timeline
 {
@@ -24,40 +19,32 @@ namespace timeline
 
 namespace kernel
 {
-    class Controller;
-    class Controllers;
-    class Event;
 
 // =============================================================================
-/** @class  EventFactory
-    @brief  EventFactory
+/** @class  TimelineHandler_ABC
+    @brief  TimelineHandler_ABC
 */
-// Created: ABR 2013-05-28
+// Created: ABR 2013-12-06
 // =============================================================================
-class EventFactory : private boost::noncopyable
+class TimelineHandler_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventFactory( actions::ActionsModel& actionsModel, Controllers& controllers );
-    virtual ~EventFactory();
+             TimelineHandler_ABC() {}
+    virtual ~TimelineHandler_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    Event* Create( const timeline::Event& event ) const;
-    Event* Create( E_EventTypes type, const timeline::Event* event = 0 ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    actions::ActionsModel& actionsModel_;
-    Controllers& controllers_;
+    virtual void CreateEvent( const timeline::Event& event ) = 0;
+    virtual void SelectEvent( const std::string& uuid ) = 0;
+    virtual void EditEvent( const timeline::Event& event ) = 0;
+    virtual void DeleteEvent( const std::string& uuid ) = 0;
     //@}
 };
 
 } //! namespace kernel
 
-#endif // __EventFactory_h_
+#endif // __TimelineHandler_ABC_h_

@@ -32,6 +32,9 @@ namespace actions
 namespace gui
 {
     class EntitySymbols;
+    class Event;
+    class EventAction;
+    class EventFactory;
     class EventPresenter;
     struct EventViewState;
     class GlTools_ABC;
@@ -41,9 +44,6 @@ namespace gui
 namespace kernel
 {
     class Controllers;
-    class Event;
-    class EventAction;
-    class EventFactory;
     class Profile_ABC;
     class Time_ABC;
 }
@@ -58,8 +58,6 @@ namespace tools
     class ExerciseConfig;
 }
 
-class EventBottomWidget;
-class EventTopWidget;
 template< typename T > class EventWidget_ABC;
 class Model;
 
@@ -71,10 +69,10 @@ class Model;
 // =============================================================================
 class EventDockWidget : public gui::RichDockWidget
                       , public gui::EventView_ABC
-                      , public kernel::ContextMenuObserver_ABC< kernel::Event >
-                      , public tools::ElementObserver_ABC< kernel::Event >
-                      , public tools::SelectionObserver< kernel::Event >
-                      , public kernel::ActivationObserver_ABC< kernel::Event >
+                      , public kernel::ContextMenuObserver_ABC< gui::Event >
+                      , public tools::ElementObserver_ABC< gui::Event >
+                      , public tools::SelectionObserver< gui::Event >
+                      , public kernel::ActivationObserver_ABC< gui::Event >
 {
     Q_OBJECT
 
@@ -109,11 +107,11 @@ private:
 
     //! @name Observers implementation
     //@{
-    virtual void NotifyActivated( const kernel::Event& event );
-    virtual void NotifySelected( const kernel::Event* event );
-    virtual void NotifyContextMenu( const kernel::Event& event, kernel::ContextMenu& menu );
-    virtual void NotifyDeleted( const kernel::Event& event );
-    virtual void NotifyUpdated( const kernel::Event& event );
+    virtual void NotifyActivated( const gui::Event& event );
+    virtual void NotifySelected( const gui::Event* event );
+    virtual void NotifyContextMenu( const gui::Event& event, kernel::ContextMenu& menu );
+    virtual void NotifyDeleted( const gui::Event& event );
+    virtual void NotifyUpdated( const gui::Event& event );
     //@}
 
     //! @name RichDockWidget implementation
@@ -142,7 +140,7 @@ private:
     //! @name Member data
     //@{
     boost::scoped_ptr< gui::EventPresenter > presenter_;
-    kernel::SafePointer< kernel::Event > selected_;
+    kernel::SafePointer< gui::Event > selected_;
     QStackedWidget* stack_;
     std::vector< gui::EventView_ABC* > views_;
     //@}

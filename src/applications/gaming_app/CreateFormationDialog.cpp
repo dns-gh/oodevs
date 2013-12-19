@@ -45,6 +45,16 @@ CreateFormationDialog::~CreateFormationDialog()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    void CreateSubMenu( CreateFormationDialog* dialog, kernel::ContextMenu& menu, int level, const QString& text, const char* slot )
+    {
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", text );
+        for( int levelIt = static_cast< int >( level ); levelIt > 0; --levelIt )
+            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), dialog, slot, 0, levelIt );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog::NotifyContextMenu
 // Created: LDC 2010-10-12
@@ -57,9 +67,8 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
     if( profile_.CanDoMagic( entity ) && level > eNatureLevel_c )
     {
         currentEntity_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Formation", tr( "Create formation" ) );
-        for( int levelIt = static_cast< int >( level ); levelIt > 0; --levelIt )
-            subMenu->insertItem( ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( levelIt ), ENT_Tr::eToTr ).c_str(), this, SLOT( OnCreateFormation( int ) ), 0, levelIt );
+        CreateSubMenu( this, menu, level, tr( "Create formation" ), SLOT( OnCreateFormation( int ) ) );
+        CreateSubMenu( this, menu, level, tr( "Create logistic base" ), SLOT( OnCreateLogisticBase( int ) ) );
     }
 }
 
@@ -69,7 +78,25 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::OnCreateFormation( int level )
 {
-    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_ );
+    CreateFormation( level, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateFormationDialog::OnCreateLogisticBase
+// Created: JSR 2013-12-17
+// -----------------------------------------------------------------------------
+void CreateFormationDialog::OnCreateLogisticBase( int level )
+{
+    CreateFormation( level, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateFormationDialog::CreateFormation
+// Created: JSR 2013-12-17
+// -----------------------------------------------------------------------------
+void CreateFormationDialog::CreateFormation( int level, bool isLogisticBase )
+{
+    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_, isLogisticBase );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, time_ ) );
     action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
     actionsModel_.Publish( *action, 0 );

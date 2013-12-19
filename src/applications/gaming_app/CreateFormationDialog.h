@@ -57,6 +57,13 @@ private slots:
     //! @name Slots
     //@{
     void OnCreateFormation( int level );
+    void OnCreateLogisticBase( int level );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CreateFormation( int level, bool isLogisticBase );
     //@}
 
 private:
