@@ -1061,11 +1061,9 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 // -----------------------------------------------------------------------------
 double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
-    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
-    if( pClosestElement )
+    if( MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target ) )
         return pClosestElement->GetDangerosity( target );
-    else
-        return 0.;
+    return 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -1283,10 +1281,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters&
     const auto value = GET_ENUMERATION( sword::EnumCrowdAttitude, msg, 0 );
     const MIL_PopulationAttitude* attitude = MIL_PopulationAttitude::Find( value );
     protocol::Check( attitude, "must be a valid attitude enumeration", 0 );
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SetAttitude( *attitude );
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SetAttitude( *attitude );
+    SetAttitude( *attitude );
 }
 
 namespace
@@ -1309,10 +1304,6 @@ namespace
         const unsigned int newHealthy = Update( healthy, newNumber );
         element.PushHumans( MIL_PopulationHumans( newHealthy, newContaminated, newWounded, newDead ) );
     }
-}
-
-namespace
-{
     unsigned int GetParameter( const sword::MissionParameters& params, int idx )
     {
         const int quantity = protocol::GetQuantity( params, idx );
