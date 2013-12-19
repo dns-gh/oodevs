@@ -252,8 +252,6 @@ void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& s
 {
     frontend::CreateSession action( config_, exercise, session );
     action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
-    action.SetOption( "session/config/timeline/@url", "localhost:" +
-        boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_PORT ) ) );
     action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
     if( decCallsBox_->isChecked() )
         action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
