@@ -141,3 +141,16 @@ integration.inverseTable = function ( tableFrom )
     end
     return tableTo
 end
+
+--- Shuffles the provided list using a Fisher-Yates shuffle
+-- @param list: An integer-indexed table
+-- @return Returns a random permutation of the list
+integration.shuffleList = function( list )
+    for i = #list, 2, -1 do
+        local j = getRandomNumber( 1, i )
+        local tmp = list[i]
+        list[i] = list[j]
+        list[j] = tmp
+    end
+    return list
+end
