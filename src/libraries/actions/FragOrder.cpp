@@ -99,12 +99,16 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::FragOrder message;
-    if( entityTypeName_ == kernel::Automat_ABC::typeName_ )
-        message().mutable_tasker()->mutable_automat()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Population_ABC::typeName_ )
-        message().mutable_tasker()->mutable_crowd()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Agent_ABC::typeName_ )
-        message().mutable_tasker()->mutable_unit()->set_id( entityId_ );
+    const std::string typeName = target_ ? target_->GetTypeName() : "";
+    const unsigned int id = GetEntityId();
+    if( typeName == kernel::Agent_ABC::typeName_ )
+        message().mutable_tasker()->mutable_unit()->set_id( id );
+    else if( typeName == kernel::Automat_ABC::typeName_ )
+        message().mutable_tasker()->mutable_automat()->set_id( id );
+    else if( typeName == kernel::Population_ABC::typeName_ )
+        message().mutable_tasker()->mutable_crowd()->set_id( id );
+    else
+        throw MASA_EXCEPTION( "Unknown tasker" );
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

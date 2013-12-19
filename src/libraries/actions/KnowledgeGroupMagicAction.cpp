@@ -80,7 +80,7 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     sword::KnowledgeMagicAction_Type type =
         ( sword::KnowledgeMagicAction_Type ) GetType().GetId();
     simulation::KnowledgeMagicAction message;
-    message().mutable_knowledge_group()->set_id( entityId_ );
+    message().mutable_knowledge_group()->set_id( GetEntityId() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

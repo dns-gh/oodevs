@@ -18,8 +18,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ActionWithTarget_ABC::ActionWithTarget_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC* target )
     : Action_ABC( controller, type )
-    , entityId_( ( target ) ? target->GetId() : 0 )
-    , entityTypeName_( ( target ) ? target->GetTypeName() : "" )
+    , target_( controller, target )
 {
     // NOTHING
 }
@@ -30,8 +29,7 @@ ActionWithTarget_ABC::ActionWithTarget_ABC( kernel::Controller& controller, cons
 // -----------------------------------------------------------------------------
 ActionWithTarget_ABC::ActionWithTarget_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
     : Action_ABC( xis, controller, type )
-    , entityId_( target.GetId() )
-    , entityTypeName_( target.GetTypeName() )
+    , target_( controller, &target )
 {
     // NOTHING
 }
@@ -43,4 +41,22 @@ ActionWithTarget_ABC::ActionWithTarget_ABC( xml::xistream& xis, kernel::Controll
 ActionWithTarget_ABC::~ActionWithTarget_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionWithTarget_ABC::GetTarget
+// Created: ABR 2013-12-19
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ActionWithTarget_ABC::GetTarget() const
+{
+    return target_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionWithTarget_ABC::GetEntityId
+// Created: ABR 2013-12-19
+// -----------------------------------------------------------------------------
+unsigned int ActionWithTarget_ABC::GetEntityId() const
+{
+    return target_ ? target_->GetId() : 0;
 }

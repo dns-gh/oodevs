@@ -11,6 +11,7 @@
 #define __ActionWithTarget_ABC_h_
 
 #include "Action_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace actions {
 
@@ -32,14 +33,14 @@ public:
 
     //! @name Member
     //@{
-    unsigned int GetEntityId() const { return entityId_; }
+    const kernel::Entity_ABC* GetTarget() const;
+    unsigned int GetEntityId() const;
     //@}
 
 protected:
     //! @name Member data
     //@{
-    const unsigned int entityId_;
-    const std::string entityTypeName_;
+    kernel::SafePointer< kernel::Entity_ABC > target_;
     //@}
 };
 
