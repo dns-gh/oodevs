@@ -82,29 +82,14 @@ EventOrderPresenter::~EventOrderPresenter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderPresenter::SetTarget
-// Created: ABR 2013-11-22
-// -----------------------------------------------------------------------------
-void EventOrderPresenter::SetTarget( const kernel::Entity_ABC* entity,
-                                     const gui::Decisions_ABC* decisions )
-{
-    // $$$$ ABR 2013-11-22: Since we can't retrieve entity's decisions in clients_gui, we need to give it with the target
-    if( !entity && decisions || entity && !decisions )
-        throw MASA_EXCEPTION( "Missing entity or decisions" );
-    entity_ = entity;
-    decisions_ = decisions;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventOrderPresenter::FillFromAction
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::FillFromAction( const actions::Action_ABC& action,
                                           E_MissionType type,
-                                          const kernel::Entity_ABC* entity,
-                                          const gui::Decisions_ABC* decisions )
+                                          const kernel::Entity_ABC* entity )
 {
-    SetTarget( entity, decisions );
+    entity_ = entity;
     Select( type, action.GetType().GetName(), &action );
 }
 
@@ -112,9 +97,9 @@ void EventOrderPresenter::FillFromAction( const actions::Action_ABC& action,
 // Name: EventOrderPresenter::OnTargetChanged
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity, const gui::Decisions_ABC* decisions )
+void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity )
 {
-    SetTarget( entity, decisions );
+    entity_ = entity;
     Select( state_->currentType_, state_->currentMission_ );
 }
 
@@ -243,7 +228,6 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
 void EventOrderPresenter::Purge()
 {
     entity_ = 0;
-    decisions_ = 0;
     order_ = 0;
     state_->Purge();
     view_.BlockSignals( true );
@@ -381,15 +365,7 @@ void EventOrderPresenter::Select( E_MissionType type /*= eMissionType_Pawn*/,
                                   const actions::Action_ABC* action /*= 0*/ )
 {
     if( entity_ )
-    {
-        if( !decisions_ )
-            throw MASA_EXCEPTION( "Missing decisions" );
-        auto entityType = GetEntityType( *entity_ );
-        // if type doesn't match with entity type
-        if( type != eMissionType_FragOrder && type != entityType )
-            type = entityType;
-        SelectWithTarget( *decisions_, type, entityType, mission, action );
-    }
+        SelectWithTarget( *entity_, type, mission, action );
     else
         SelectWithoutTarget( type, mission, action );
 }
@@ -403,7 +379,6 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
                                                const actions::Action_ABC* action )
 {
     const std::string lastMission = state_->currentMission_;
-    entity_ = 0;
     state_->Purge();
     state_->target_ = 0;
     state_->currentMission_ = mission;
@@ -457,18 +432,25 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
 // Name: EventOrderPresenter::SelectWithTarget
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::SelectWithTarget( const gui::Decisions_ABC& decisions,
+void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
                                             E_MissionType type,
-                                            E_MissionType entityType,
                                             const std::string& mission,
                                             const actions::Action_ABC* action )
 {
-    if( !entity_ )
-        throw MASA_EXCEPTION( "Missing target" );
+    const gui::Decisions_ABC* decisions = entity.Retrieve< gui::Decisions_ABC >();
+    if( !decisions )
+        throw MASA_EXCEPTION( "Can't find Decisions_ABC for entity: " + entity.GetId() );
+
+    E_MissionType entityType = GetEntityType( entity );
+    // if type doesn't match with entity type
+    if( type != eMissionType_FragOrder && type != entityType )
+        type = entityType;
+
+
     const std::string lastMission = state_->currentMission_;
     E_MissionType lastMissionType = state_->currentType_;
     state_->Purge();
-    state_->target_ = entity_->GetId();
+    state_->target_ = entity.GetId();
     state_->currentType_ = type;
     state_->currentMission_ = mission;
 
@@ -476,12 +458,12 @@ void EventOrderPresenter::SelectWithTarget( const gui::Decisions_ABC& decisions,
     if( state_->currentType_ == eMissionType_FragOrder )
     {
         // General frag order
-        FillCompatibleOrders< kernel::FragOrder >( state_->missions_, decisions.GetFragOrders() );
+        FillCompatibleOrders< kernel::FragOrder >( state_->missions_, decisions->GetFragOrders() );
         // frag order relating to a mission
-        FillCompatibleFragOrders( state_->missions_, state_->disabledMissions_, decisions.GetMissions(), decisions.GetCurrentMission() );
+        FillCompatibleFragOrders( state_->missions_, state_->disabledMissions_, decisions->GetMissions(), decisions->GetCurrentMission() );
     }
     else
-        FillCompatibleOrders( state_->missions_, decisions.GetMissions() );
+        FillCompatibleOrders( state_->missions_, decisions->GetMissions() );
 
     std::string selectorText = GetSelector( state_->currentType_ );
     // Entity type unchanged && current mission set && unknown mission => invalid mission
@@ -514,13 +496,13 @@ void EventOrderPresenter::SelectWithTarget( const gui::Decisions_ABC& decisions,
     if( state_->currentType_ == eMissionType_FragOrder )
     {
         // General frag order
-        order_ = GetCurrentOrder< kernel::FragOrder >( decisions.GetFragOrders(), state_->currentMission_ );
+        order_ = GetCurrentOrder< kernel::FragOrder >( decisions->GetFragOrders(), state_->currentMission_ );
         // Frag order with mission
         if( !order_ )
-            order_ = GetCurrentFragOrder( decisions.GetMissions(), state_->currentMission_ );
+            order_ = GetCurrentFragOrder( decisions->GetMissions(), state_->currentMission_ );
     }
     else
-        order_ = GetCurrentOrder< kernel::Mission >( decisions.GetMissions(), state_->currentMission_ );
+        order_ = GetCurrentOrder< kernel::Mission >( decisions->GetMissions(), state_->currentMission_ );
 
     // no last mission || entity type changed || last mission != current mission => need to refresh parameters interface
     if( ( lastMission.empty() ||
@@ -535,7 +517,7 @@ void EventOrderPresenter::SelectWithTarget( const gui::Decisions_ABC& decisions,
             missionInterface_.Build( interfaceBuilder_, *order_, state_->currentType_ );
     }
 
-    missionInterface_.SetEntity( entity_ );
+    missionInterface_.SetEntity( &entity );
     // Fill parameters
     if( action )
         missionInterface_.FillFrom( *action );

@@ -172,16 +172,6 @@ void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
     }
 }
 
-namespace
-{
-    const gui::Decisions_ABC* GetDecisions( const kernel::Entity_ABC* entity )
-    {
-        if( entity )
-            return entity->Retrieve< gui::Decisions_ABC >();
-        return 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::Build
 // Created: ABR 2013-11-21
@@ -195,7 +185,7 @@ void EventOrderWidget::Build( const gui::EventViewState& state )
     {
         const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
         kernel::Entity_ABC* tasker = model_.agents_.FindAllAgent( mission->GetEntityId() );
-        orderPresenter_->FillFromAction( *action, eventAction.GetMissionType(), tasker, GetDecisions( tasker ) );
+        orderPresenter_->FillFromAction( *action, eventAction.GetMissionType(), tasker );
     }
 }
 
@@ -397,7 +387,7 @@ void EventOrderWidget::NotifyUpdated( const MissionParameters& extension )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::OnTargetChanged( const kernel::Entity_ABC* entity )
 {
-    orderPresenter_->OnTargetChanged( entity, GetDecisions( entity ) );
+    orderPresenter_->OnTargetChanged( entity );
     presenter_.OnEventContentChanged();
 }
 

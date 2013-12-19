@@ -81,9 +81,8 @@ public:
     int GetLastContext() const;
     void FillFromAction( const actions::Action_ABC& action,
                          E_MissionType type,
-                         const kernel::Entity_ABC* entity,
-                         const gui::Decisions_ABC* decisions );
-    void OnTargetChanged( const kernel::Entity_ABC* entity, const gui::Decisions_ABC* decisions );
+                         const kernel::Entity_ABC* entity );
+    void OnTargetChanged( const kernel::Entity_ABC* entity );
     void OnMissionTypeChanged( E_MissionType missionType );
     //@}
 
@@ -108,17 +107,14 @@ private:
 private:
     //! @name Operations helpers
     //@{
-    void SetTarget( const kernel::Entity_ABC* entity,
-                    const gui::Decisions_ABC* decisions );
     void Select( E_MissionType type = eMissionType_Pawn,
                  std::string mission = "",
                  const actions::Action_ABC* action = 0 );
     void SelectWithoutTarget( E_MissionType type,
                               const std::string& mission,
                               const actions::Action_ABC* action );
-    void SelectWithTarget( const gui::Decisions_ABC& decisions,
+    void SelectWithTarget( const kernel::Entity_ABC& entity,
                            E_MissionType type,
-                           E_MissionType entityType,
                            const std::string& mission,
                            const actions::Action_ABC* action );
     //@}
@@ -134,7 +130,6 @@ private:
     actions::ActionFactory_ABC& actionFactory_;
     TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    const gui::Decisions_ABC* decisions_;
     const kernel::OrderType* order_;
 
     boost::scoped_ptr< EventOrderViewState > state_;
