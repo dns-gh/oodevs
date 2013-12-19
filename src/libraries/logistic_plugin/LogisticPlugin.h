@@ -64,6 +64,7 @@ namespace plugins
 namespace logistic
 {
 
+class ConsignCsvLogger;
 class ConsignData_ABC;
 class ConsignIndex;
 class ConsignRecorder;
@@ -120,6 +121,7 @@ private:
     //@{
     std::unique_ptr< ConsignIndex >             index_;
     std::unique_ptr< ConsignRecorder >          recorder_;
+    std::unique_ptr< ConsignCsvLogger >         logger_;
     std::unique_ptr< QApplication >             localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     boost::ptr_map< int, ConsignData_ABC >      consigns_;

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "LogisticPlugin.h"
+#include "ConsignCsvLogger.h"
 #include "ConsignIndex.h"
 #include "ConsignRecorder.h"
 #include "FuneralResolver.h"
@@ -83,6 +84,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC 
     : index_( new ConsignIndex() )
     , recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
                averageHistoryPerConsign*maxConsigns ) )
+    , logger_( new ConsignCsvLogger() )
     , nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
     , currentTick_( 0 )
@@ -94,10 +96,10 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< const NameResolver_ABC 
     }
     ENT_Tr::InitTranslations();
 
-    recorder_->AddLogger( eLogisticType_Maintenance, maintenanceFile, GetMaintenanceHeader() );
-    recorder_->AddLogger( eLogisticType_Supply, supplyFile, GetSupplyHeader() );
-    recorder_->AddLogger( eLogisticType_Funeral, funeralFile, GetFuneralHeader() );
-    recorder_->AddLogger( eLogisticType_Medical, medicalFile, GetMedicalHeader() );
+    logger_->AddLogger( eLogisticType_Maintenance, maintenanceFile, GetMaintenanceHeader() );
+    logger_->AddLogger( eLogisticType_Supply, supplyFile, GetSupplyHeader() );
+    logger_->AddLogger( eLogisticType_Funeral, funeralFile, GetFuneralHeader() );
+    logger_->AddLogger( eLogisticType_Medical, medicalFile, GetMedicalHeader() );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +129,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     if( message.message().has_control_begin_tick() )
     {
         recorder_->Flush();
+        logger_->Flush();
 
         const int tick = message.message().control_begin_tick().current_tick();
         if( tick >= 0 && tick > currentTick_ )
@@ -144,7 +147,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
     recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction, *ev.entry, entities );
 
     // Push to the legacy logger
-    if( !recorder_->HasLogger( ev.type ) )
+    if( !logger_->HasLogger( ev.type ) )
         return;
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
@@ -156,7 +159,7 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
             consigns_.replace( it, consign );
     }
     if( it->second->UpdateConsign( message, *nameResolver_, currentTick_, simTime_ ) )
-        recorder_->Write( ev.type, it->second->ToString(), today );
+        logger_->Write( ev.type, it->second->ToString(), today );
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
 }
@@ -180,7 +183,7 @@ int LogisticPlugin::DebugGetConsignCount( E_LogisticType eLogisticType ) const
 // -----------------------------------------------------------------------------
 void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 {
-    recorder_->SetMaxLinesInFile( maxLines );
+    logger_->SetMaxLinesInFile( maxLines );
 }
 
 bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,

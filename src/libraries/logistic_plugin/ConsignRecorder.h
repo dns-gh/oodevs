@@ -11,7 +11,6 @@
 #define LOGISTICPLUGIN_CONSIGNRECORDER_H
 
 #pragma warning( push, 0 )
-#include <boost/ptr_container/ptr_map.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #pragma warning( pop )
 #include <boost/container/deque.hpp>
@@ -68,12 +67,7 @@ public:
            uint32_t maxHistory );
     virtual ~ConsignRecorder();
 
-    void AddLogger( int kind, const tools::Path& path, const std::string header );
-    bool HasLogger( int kind ) const;
-    void Write( int kind, const std::string& data, const boost::gregorian::date& today );
     void Flush();
-    void SetMaxLinesInFile( int maxLines );
-
     void WriteEntry( uint32_t requestId, bool destroyed,
             const sword::LogHistoryEntry& entry, std::vector< uint32_t >& entities );
     // Returns the list of requests referencing supplied entities.
@@ -97,7 +91,6 @@ private:
     void UpdateHistoryIndex( uint32_t requestId, int32_t tick, const ConsignOffset& offset );
 
 private:
-    boost::ptr_map< int, ConsignResolver_ABC > loggers_;
     std::unique_ptr< ConsignArchive > archive_;
 
     // Maintain a list of most recently update consigns history. "destroyed_",

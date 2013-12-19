@@ -9,17 +9,13 @@
 
 #include "ConsignRecorder.h"
 #include "ConsignArchive.h"
-#include "ConsignResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <tools/Exception.h>
 #include <tools/Helpers.h>
 #include <tools/Path.h>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/numeric/conversion/cast.hpp>
 #include <algorithm>
 #include <unordered_set>
 
-namespace bg = boost::gregorian;
 using namespace plugins::logistic;
 
 namespace
@@ -58,36 +54,9 @@ ConsignRecorder::~ConsignRecorder()
 {
 }
 
-void ConsignRecorder::AddLogger( int kind, const tools::Path& path, const std::string header )
-{
-    loggers_.insert( kind, std::auto_ptr< ConsignResolver_ABC >(
-        new ConsignResolver_ABC( path, header )));
-}
-
-bool ConsignRecorder::HasLogger( int kind ) const
-{
-    return loggers_.find( kind ) != loggers_.end();
-}
-
-void ConsignRecorder::Write( int kind, const std::string& data, const bg::date& today )
-{
-    auto it = loggers_.find( kind );
-    if( it == loggers_.end() )
-        return;
-    it->second->Write( data, today );
-}
-
 void ConsignRecorder::Flush()
 {
     archive_->Flush();
-    for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
-        it->second->Flush();
-}
-
-void ConsignRecorder::SetMaxLinesInFile( int maxLines )
-{
-    for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
-        it->second->SetMaxLinesInFile( maxLines );
 }
 
 void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
