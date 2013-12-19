@@ -36,9 +36,9 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
 
     dataModel_.setColumnCount( horizontalHeaders.size() );
     proxyModel_->setSourceModel( &dataModel_ );
-    proxyModel_->setSortRole( Qt::DisplayRole );
-    proxyModel_->setFilterKeyColumn( 3 );
+    proxyModel_->setDynamicSortFilter( true );
     setModel( proxyModel_ );
+    sortByColumn( 0, Qt::DescendingOrder );
     setItemDelegate( &delegate_ );
 
     linkItemDelegate_ = new gui::LinkItemDelegate( this );
@@ -96,7 +96,7 @@ void LogisticsRequestsTable::SelectRequest( const LogisticsConsign_ABC* consign 
 {
     if( dataModel_.rowCount() == 0 || !model() )
         return;
-    int rowToSelect = ( consign ? GetRequestRow( *consign ) : ( dataModel_.rowCount() - 1 ) );
+    int rowToSelect = ( consign ? GetRequestRow( *consign ) : 0 );
     selectionModel()->setCurrentIndex( QModelIndex(), QItemSelectionModel::SelectCurrent| QItemSelectionModel::Rows );
     selectionModel()->setCurrentIndex( model()->index( rowToSelect, 0 ), QItemSelectionModel::SelectCurrent| QItemSelectionModel::Rows );
     setFocus();
