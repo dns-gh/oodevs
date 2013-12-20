@@ -9,6 +9,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"flag"
 	"fmt"
 	"log"
@@ -16,6 +17,18 @@ import (
 	"swapi"
 	"time"
 )
+
+func UintToString(d uint32) string {
+	return fmt.Sprintf("%d", d)
+}
+
+func IntToString(d int32) string {
+	return fmt.Sprintf("%d", d)
+}
+
+func FloatToString(f float64) string {
+	return fmt.Sprintf("%f", f)
+}
 
 func main() {
 	flag.Usage = func() {
@@ -27,7 +40,7 @@ func main() {
 	host := flag.String("host", "localhost", "simulation server host name")
 	port := flag.Uint("port", 10001, "simulation server port")
 	user := flag.String("user", "Superviseur", "user name")
-	physical := flag.String("physical", "C:/ldc/models-algeria/data/data/models/algerie/physical", "physical model directory")
+	physical := flag.String("physical", "C:/ldc/models-algeria/data/data/models/algerie/physical/defense-v1/Dotations.xml", "resources file directory")
 	outfile := flag.String("out", "Output.csv", "Output file")
 	flag.Parse()
 
@@ -49,20 +62,21 @@ func main() {
 	client.Model.WaitReady(2 * time.Second)
 	data := client.Model.GetData()
 	log.Printf("--Data read")
-	resources, err := ReadResources(*physical + "/defense-v1/Dotations.xml")
+	resources, err := ReadResources(*physical)
 	if err != nil {
 		log.Fatalf("Error reading resources: %s", err)
 	}
-	output, err := os.OpenFile(*outfile, os.O_RDWR|os.O_APPEND, 0660)
+	output, err := os.Create(*outfile)
 	if err != nil {
-		log.Fatalf("Error opening Output.csv %s", err)
+		log.Fatalf("Error creating %s %s", *outfile, err)
 	}
 	defer output.Close()
+	writer := csv.NewWriter(output)
 	//idealement quantite en UF
-	fmt.Fprintf(output, "Id Unite;Nom Unite;Dotation;Quantite;Masse unitaire;Volume unitaire;Consommation journalière;Quantité en UF;\n")
+	record := []string{"Id Unité", "Nom Unité", "Dotation", "Quantité", "Masse unitaire", "Volume unitaire", "Consommation journalière", "Quantité en UF"}
+	writer.Write(record)
 	for id, unit := range data.Units {
 		for _, stock := range unit.Stocks {
-			log.Printf("Stock found")
 			amount := stock.Quantity
 			resource, err := resources.GetResource(stock.Type)
 			packageSize := float64(resource.PackageSize)
@@ -71,7 +85,9 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error %s getting resource %d\n", err, stock.Type)
 			}
-			fmt.Fprintf(output, "%d;%s;%s;%d;%f;%f\n", id, unit.Name, resource.Name, amount, float64(amount)*mass, float64(amount)*volume)
+			record = []string{UintToString(id), unit.Name, resource.Name, IntToString(amount), FloatToString(mass), FloatToString(volume)}
+			writer.Write(record)
 		}
 	}
+	writer.Flush()
 }
