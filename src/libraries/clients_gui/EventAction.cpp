@@ -97,7 +97,7 @@ namespace
             msg.message().has_unit_magic_action() ||
             msg.message().has_knowledge_magic_action() ||
             msg.message().has_object_magic_action() )
-            return eEventTypes_SupervisorAction;
+            return eEventTypes_Magic;
         return eNbrEventTypes;
     }
 }

@@ -95,14 +95,14 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     stackAreaLayout->addWidget( stack_ );
 
     // Content
-    stack_->insertWidget( eEventTypes_Order           , new EventOrderWidget( *presenter_, controllers, model,
-                                                                              config, interfaceBuilder, profile,
-                                                                              tools, simulation, entitySymbols ) );
-    stack_->insertWidget( eEventTypes_Task            , new EventTaskWidget( *presenter_ ) );
-    AddDefaultView( views_, *stack_, eEventTypes_SupervisorAction, new EventMagicWidget( *presenter_ ) );
-    AddDefaultView( views_, *stack_, eEventTypes_Report          , new EventReportWidget( *presenter_ ) );
-    AddDefaultView( views_, *stack_, eEventTypes_Multimedia      , new EventMultimediaWidget( *presenter_ ) );
-    AddDefaultView( views_, *stack_, eNbrEventTypes              , new EventDetailWidget( *presenter_ ) );
+    stack_->insertWidget( eEventTypes_Order, new EventOrderWidget( *presenter_, controllers, model,
+                                                                   config, interfaceBuilder, profile,
+                                                                   tools, simulation, entitySymbols ) );
+    stack_->insertWidget( eEventTypes_Task , new EventTaskWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_Magic      , new EventMagicWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_Report     , new EventReportWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eNbrEventTypes         , new EventDetailWidget( *presenter_ ) );
 
     // Layout
     QWidget* mainWidget = new QWidget();
