@@ -362,7 +362,8 @@ void EventPresenter::UpdateRemote()
 void EventPresenter::UpdateCurrent()
 {
     CheckEvent();
-    GetCurrentPresenter().CommitTo( event_->GetEvent() );
+    if( HasCurrentPresenter() )
+        GetCurrentPresenter().CommitTo( event_->GetEvent() );
     event_->Update();
 }
 
