@@ -43,15 +43,19 @@ const size_t averageHistoryPerConsign = 15;
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-        const tools::Path& archiveFile )
+        const tools::Path& archiveFile, bool load )
     // QA brigade benchmark reported around 17000 log lines, for all logistic
     // chains, over 55h of simulated time. This more than an order of magnitude
     // larger, being the number of requests instead of updates.
-    : index_( new ConsignIndex() )
-    , recorder_( new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
+    : index_( load ? nullptr : new ConsignIndex() )
+    , recorder_( load
+        ? new ConsignRecorder( archiveFile, maxConsigns,
+               averageHistoryPerConsign*maxConsigns )
+        : new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
                averageHistoryPerConsign*maxConsigns ) )
     , logger_( logger )
     , currentTick_( 0 )
+    , readOnly_( load )
 {
 }
 
@@ -79,6 +83,9 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date& today )
 {
+    if( readOnly_ )
+        return;
+
     if( message.message().has_control_begin_tick() )
     {
         recorder_->Flush();
@@ -173,7 +180,16 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
 {
     auto logger = CreateCsvLogger( model, staticModel, config );
     return boost::make_shared< LogisticPlugin >( logger,
-        config.BuildSessionChildFile( "LogisticArchive" ));
+        config.BuildSessionChildFile( "LogisticArchive" ), false );
+}
+
+boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
+    const tools::SessionConfig& config )
+{
+    return boost::make_shared< LogisticPlugin >(
+        boost::shared_ptr< ConsignCsvLogger >(),
+        config.BuildSessionChildFile( "LogisticArchive" ), true );
+
 }
 
 }  // namespace logistic

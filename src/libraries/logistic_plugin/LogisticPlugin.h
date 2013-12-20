@@ -73,7 +73,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-                 const tools::Path& archiveFile );
+                 const tools::Path& archiveFile, bool load );
     virtual ~LogisticPlugin();
     //@}
 
@@ -111,6 +111,7 @@ private:
     boost::shared_ptr< ConsignCsvLogger >       logger_;
     int currentTick_;
     std::string simTime_;
+    bool readOnly_;
     //@}
 };
 
@@ -119,7 +120,10 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
     const kernel::StaticModel& staticModel,
     const tools::SessionConfig& config );
 
-}
-}
+boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
+    const tools::SessionConfig& config );
+
+}  // namespace logistic
+}  // namespace plugins
 
 #endif // __LogisticPlugin_h_

@@ -12,6 +12,7 @@
 
 #include "MessageHandler_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <cstdint>
 #include <string>
 
 namespace sword
@@ -34,6 +35,21 @@ public:
     virtual ~RewritingPublisher_ABC() {}
 
     virtual void Send( sword::SimToClient& message ) = 0;
+};
+
+// A RewritingPublisher_ABC rewriting output messages client identifier and
+// context number.
+class UnicastPublisher : public RewritingPublisher_ABC
+{
+public:
+    UnicastPublisher( ClientPublisher_ABC& publisher, int32_t clientId, int32_t context );
+
+    void Send( sword::SimToClient& message );
+
+private:
+    ClientPublisher_ABC& publisher_;
+    int32_t clientId_;
+    int32_t context_;
 };
 
 // =============================================================================

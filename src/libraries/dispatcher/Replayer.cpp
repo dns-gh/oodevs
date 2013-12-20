@@ -22,9 +22,11 @@
 #include "replay_plugin/ReplayPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
+#include "logistic_plugin/LogisticPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "web_control_plugin/WebPlugin.h"
 #include "tools/FileWrapper.h"
+#include "protocol/Simulation.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
 
@@ -71,20 +73,22 @@ Replayer::Replayer( const Config& config )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
     , publisher_       ( new NullPublisher() )
     , started_         ( false )
+    , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
+        *model_, *clientsNetworker_, config, *clientsNetworker_,
+        handler_, *clientsNetworker_, registrables_, 0 ))
 {
+    clientsNetworker_->RegisterMessage( *this, &Replayer::Receive );
+
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
-    // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    auto rights = boost::make_shared< plugins::rights::RightsPlugin >(
-            *model_, *clientsNetworker_, config, *clientsNetworker_,
-            handler_, *clientsNetworker_, registrables_, 0 );
-    handler_.Add( rights );
+    handler_.Add( rights_ );
     handler_.Add( plugin_ );
-    handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights, config ) );
+    handler_.Add( boost::make_shared< plugins::aar::AarPlugin >( *clientsNetworker_, *rights_, config ) );
     handler_.Add( boost::make_shared< plugins::score::ScorePlugin >(
                 *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( boost::make_shared< plugins::messenger::MessengerPlugin >(
                 *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
+    handler_.Add( plugins::logistic::ReloadLogisticPlugin( config ) );
     tools::Xifstream xis( config.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -123,4 +127,11 @@ void Replayer::Update()
 void Replayer::OnWebControl( xml::xistream& xis )
 {
     handler_.Add( boost::make_shared< plugins::web_control::WebPlugin >( *publisher_, xis ) );
+}
+
+void Replayer::Receive( const std::string& link, const sword::ClientToSim& msg )
+{
+    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ),
+            rights_->GetClientID( link ), msg.context() );
+    handler_.HandleClientToSim( msg, unicaster, *clientsNetworker_ );
 }

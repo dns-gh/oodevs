@@ -111,7 +111,7 @@ boost::shared_ptr< ConsignCsvLogger > CreateCsvLogger( const tools::Path& tempDi
 boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
     const boost::shared_ptr< ConsignCsvLogger >& logger, const tools::Path& tempDir )
 {
-    return boost::make_shared< LogisticPlugin >( logger, tempDir / "archive" );
+    return boost::make_shared< LogisticPlugin >( logger, tempDir / "archive", false );
 }
 
 typedef std::vector< std::string > T_Lines;

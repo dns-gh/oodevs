@@ -27,6 +27,15 @@ namespace replay
 {
     class ReplayPlugin;
 }
+namespace rights
+{
+    class RightsPlugin;
+}
+}
+
+namespace sword
+{
+    class ClientToSim;
 }
 
 namespace xml
@@ -67,6 +76,9 @@ public:
     //@}
 
 private:
+    void Receive( const std::string& link, const sword::ClientToSim& msg );
+
+private:
     //! @name Member data
     //@{
     std::auto_ptr< Services >                          services_;
@@ -81,6 +93,7 @@ private:
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
     std::auto_ptr< SimulationPublisher_ABC >           publisher_;
     bool                                               started_;
+    boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     //@}
 };
 }
