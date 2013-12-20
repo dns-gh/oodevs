@@ -32,7 +32,6 @@
 #include "frontend/StartReplay.h"
 #include "frontend/StartTimeline.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -103,12 +102,13 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
+                                            kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader,
+                                            frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
-    , interpreter_      ( interpreter )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )

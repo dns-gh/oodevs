@@ -2033,6 +2033,10 @@ Do you want to remove it?</translation>
         <source>Breakdown</source>
         <translation>Breakdown</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unit</translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableResource</name>

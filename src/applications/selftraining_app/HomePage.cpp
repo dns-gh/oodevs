@@ -26,8 +26,7 @@
 HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     Config& config, const tools::Loader_ABC& fileLoader,
                     kernel::Controllers& controllers,
-                    frontend::LauncherClient& launcher,
-                    gui::LinkInterpreter_ABC& interpreter )
+                    frontend::LauncherClient& launcher )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
@@ -41,7 +40,7 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
 
-    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher, interpreter );
+    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher );
     play_ =    AddLink( *playPage_ );
 
     replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher );

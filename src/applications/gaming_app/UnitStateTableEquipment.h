@@ -28,6 +28,11 @@ namespace kernel
     class Time_ABC;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 class Equipments;
 class StaticModel;
 
@@ -46,7 +51,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                      const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile );
+                                      const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
+                                      gui::DisplayExtractor& extractor );
     virtual ~UnitStateTableEquipment();
     //@}
 

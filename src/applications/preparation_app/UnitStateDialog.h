@@ -22,6 +22,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -41,7 +46,8 @@ class UnitStateDialog : public gui::UnitStateDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel );
+             UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                              gui::DisplayExtractor& extractor );
     virtual ~UnitStateDialog();
     //@}
 

@@ -7,19 +7,18 @@
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
+#include "clients_gui_pch.h"
 #include "LinkInterpreter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers )
+LinkInterpreter::LinkInterpreter( QObject* parent, kernel::Controllers& controllers )
      : LinkInterpreter_ABC( parent, controllers.actions_ )
      , controllers_       ( controllers )
 {

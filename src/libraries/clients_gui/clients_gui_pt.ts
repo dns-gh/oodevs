@@ -2024,6 +2024,10 @@ Do you want to remove it?</source>
         <source>Breakdown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableResource</name>

@@ -71,7 +71,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
 
     connect( timer_, SIGNAL( timeout() ), SLOT( OnUpdate() ) );
 
-    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, model.static_, model.actions_, simulation, profile );
+    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, model.static_, model.actions_, simulation, profile, extractor );
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
     AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
 

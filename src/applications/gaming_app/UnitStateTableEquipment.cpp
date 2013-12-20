@@ -35,8 +35,9 @@
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                  const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile )
-    : gui::UnitStateTableEquipment( parent )
+                                                  const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile,
+                                                  gui::DisplayExtractor& extractor )
+    : gui::UnitStateTableEquipment( parent, extractor )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
@@ -186,12 +187,14 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
             }
         }
         // States
-        AddLines( name, equipment.available_,     eEquipmentState_Available,                breakdowns );
-        AddLines( name, equipment.unavailable_,   eEquipmentState_Destroyed,                breakdowns );
-        AddLines( name, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns( hideBreakdown ) ) );
-        AddLines( name, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable,            breakdowns );
-        AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) );
-        AddLines( name, equipment.prisonners_,    eEquipmentState_Prisonner,                breakdowns );
+        AddLines( name, selected, equipment.available_,     eEquipmentState_Available,                breakdowns );
+        AddLines( name, selected, equipment.unavailable_,   eEquipmentState_Destroyed,                breakdowns );
+        AddLines( name, selected, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns,
+            BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns( hideBreakdown ) ) );
+        AddLines( name, selected, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable,            breakdowns );
+        AddLines( name, selected, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns,
+            BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) );
+        AddLines( name, selected, equipment.prisonners_,    eEquipmentState_Prisonner,                breakdowns );
     }
 }
 
