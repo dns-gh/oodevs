@@ -59,7 +59,7 @@ func main() {
 	}
 	defer output.Close()
 	//idealement quantite en UF
-	fmt.Fprintf(output, "Id Unite;Nom Unite;Dotation;Quantite;Masse unitaire;Volume unitaire;Consommation journali�re;Quantite en UF;\n")
+	fmt.Fprintf(output, "Id Unite;Nom Unite;Dotation;Quantite;Masse unitaire;Volume unitaire;Consommation journalière;Quantité en UF;\n")
 	for id, unit := range data.Units {
 		for _, stock := range unit.Stocks {
 			log.Printf("Stock found")
