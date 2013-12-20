@@ -7,23 +7,22 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "LinkInterpreter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "gaming/ProfileFilter.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, ProfileFilter& filter )
-     : gui::LinkInterpreter( parent, controllers )
-     , filter_( filter )
+LinkInterpreter::LinkInterpreter( QObject* parent, kernel::Controllers& controllers )
+     : LinkInterpreter_ABC( parent, controllers.actions_ )
+     , controllers_       ( controllers )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,19 +31,23 @@ LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, Pro
 // -----------------------------------------------------------------------------
 LinkInterpreter::~LinkInterpreter()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LinkInterpreter::InterpreteEntity
-// Created: SBO 2009-03-04
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-bool LinkInterpreter::InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action )
+void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
 {
-    if( action == "filter" )
-    {
-        filter_.SetFilter( entity );
-        return true;
-    }
-    return LinkInterpreter_ABC::InterpreteEntity( entity, action );
+    AddEntity( entity.GetTypeName(), entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    RemoveEntity( entity.GetTypeName(), entity );
 }

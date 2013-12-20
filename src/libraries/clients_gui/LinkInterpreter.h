@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __LinkInterpreter_h_
-#define __LinkInterpreter_h_
+#ifndef gui_LinkInterpreter_h_
+#define gui_LinkInterpreter_h_
 
-#include "clients_gui/LinkInterpreter.h"
+#include "LinkInterpreter_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -19,20 +19,22 @@ namespace kernel
     class Entity_ABC;
 }
 
-class ProfileFilter;
-
+namespace gui
+{
 // =============================================================================
 /** @class  LinkInterpreter
     @brief  LinkInterpreter
 */
 // Created: AGE 2006-08-11
 // =============================================================================
-class LinkInterpreter : public gui::LinkInterpreter
+class LinkInterpreter : public LinkInterpreter_ABC
+                      , public tools::Observer_ABC
+                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LinkInterpreter( QObject* parent, kernel::Controllers& controllers, ProfileFilter& filter );
+             LinkInterpreter( QObject* parent, kernel::Controllers& controllers );
     virtual ~LinkInterpreter();
     //@}
 
@@ -45,14 +47,16 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action );
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ProfileFilter& filter_;
+    kernel::Controllers& controllers_;
     //@}
 };
+}
 
-#endif // __LinkInterpreter_h_
+#endif // gui_LinkInterpreter_h_

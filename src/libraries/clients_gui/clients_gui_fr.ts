@@ -2026,6 +2026,10 @@ Voulez-vous le supprimer?</translation>
         <source>Breakdown</source>
         <translation>Panne</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitStateTableResource</name>

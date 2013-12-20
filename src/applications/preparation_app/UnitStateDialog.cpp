@@ -26,14 +26,15 @@
 // Name: UnitStateDialog constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
+UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                                  gui::DisplayExtractor& extractor )
     : gui::UnitStateDialog( parent, controllers )
 {
     gui::SubObjectName subObject( "UnitStateDialog" );
     setCaption( tools::translate( "UnitStateDialog", "Initial state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( tabWidget_ ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( tabWidget_, extractor ) );
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( tabWidget_, staticModel ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );

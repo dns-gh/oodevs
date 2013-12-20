@@ -20,8 +20,8 @@
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
-    : gui::UnitStateTableEquipment( parent )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, gui::DisplayExtractor& extractor )
+    : gui::UnitStateTableEquipment( parent, extractor )
 {
     // NOTHING
 }
@@ -64,11 +64,11 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     InitialState& extension = selected.Get< InitialState >();
-    for( InitialState::CIT_Equipments it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it )
+    for( auto it = extension.equipments_.begin(); it != extension.equipments_.end(); ++it )
         if( it->state_ == eEquipmentState_RepairableWithEvacuation )
-            AddLines( it->name_, 1, it->state_, it->breakdowns_, std::vector< unsigned int >( 1, it->currentBreakdown_ ) );
+            AddLines( it->name_, selected, 1, it->state_, it->breakdowns_, std::vector< unsigned int >( 1, it->currentBreakdown_ ) );
         else
-            AddLines( it->name_, 1, it->state_, it->breakdowns_ );
+            AddLines( it->name_, selected, 1, it->state_, it->breakdowns_ );
 }
 
 // -----------------------------------------------------------------------------

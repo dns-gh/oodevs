@@ -17,6 +17,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 // =============================================================================
 /** @class  UnitStateTableEquipment
     @brief  UnitStateTableEquipment
@@ -28,7 +33,7 @@ class UnitStateTableEquipment : public gui::UnitStateTableEquipment
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableEquipment( QWidget* parent );
+             UnitStateTableEquipment( QWidget* parent, gui::DisplayExtractor& extractor  );
     virtual ~UnitStateTableEquipment();
     //@}
 
