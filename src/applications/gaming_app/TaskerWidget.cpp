@@ -37,9 +37,9 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
-    nameLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
-    groupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
+    nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
+    symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
+    groupBox_ = new gui::RichGroupBox( "event-target-groupbox", tr( "Recipient" ) );
 
     QWidget* symbolWidget = new QWidget();
     QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
