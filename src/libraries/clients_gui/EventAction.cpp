@@ -108,10 +108,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EventAction::Update( const timeline::Event& event )
 {
-    const std::string oldPayload = GetEvent().action.payload;
     Event::Update( event );
-    if( action_ && oldPayload == event.action.payload )
-        return;
     bool wasSelected_ = action_ && controllers_.actions_.IsSelected( action_ );
     Purge();
     sword::ClientToSim msg;
@@ -134,6 +131,15 @@ void EventAction::Update( const timeline::Event& event )
 const actions::Action_ABC* EventAction::GetAction() const
 {
     return action_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventAction::SetAction
+// Created: ABR 2014-01-10
+// -----------------------------------------------------------------------------
+void EventAction::SetAction( const actions::Action_ABC* action )
+{
+    action_ = action;
 }
 
 // -----------------------------------------------------------------------------

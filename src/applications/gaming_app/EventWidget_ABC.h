@@ -60,6 +60,7 @@ protected:
 };
 
 typedef EventWidget_ABC< gui::EventViewState >                 EventDefaultWidget_ABC;
+typedef EventWidget_ABC< gui::EventMagicViewState >            EventMagicWidget_ABC;
 typedef EventWidget_ABC< gui::EventOrderViewState >            EventOrderWidget_ABC;
 typedef EventWidget_ABC< gui::EventTaskViewState >             EventTaskWidget_ABC;
 

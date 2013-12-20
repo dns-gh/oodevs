@@ -116,7 +116,7 @@ namespace
         }
         MOCK_METHOD( ShouldEnableTrigger, 0 );
         MOCK_METHOD( ShouldEnableClear, 0 );
-        MOCK_METHOD( Trigger, 0 );
+        MOCK_METHOD( Trigger, 1 );
         MOCK_METHOD( FillFrom, 1 );
         MOCK_METHOD( CommitTo, 1 );
         MOCK_METHOD( BuildView, 0 );
