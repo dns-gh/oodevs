@@ -143,8 +143,10 @@ namespace
         if( !entity )
             return false;
         if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
             if( const kernel::Entity_ABC* superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
                 return !tools::IsEngaged( *superior );
+        }
         else if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
             return tools::IsEngaged( *entity );
         return true;
