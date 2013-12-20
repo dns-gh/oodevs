@@ -22,11 +22,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace tools
 {
     class Loader_ABC;
@@ -52,8 +47,7 @@ public:
                                Page_ABC& previous, const Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,
-                               frontend::LauncherClient& launcher,
-                               gui::LinkInterpreter_ABC& interpreter );
+                               frontend::LauncherClient& launcher );
     virtual ~SelfTrainingPage();
     //@}
 

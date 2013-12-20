@@ -22,11 +22,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace tools
 {
     class Loader_ABC;
@@ -57,8 +52,7 @@ public:
              HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                        Config& config, const tools::Loader_ABC& fileLoader,
                        kernel::Controllers& controllers,
-                       frontend::LauncherClient& launcher,
-                       gui::LinkInterpreter_ABC& interpreter );
+                       frontend::LauncherClient& launcher );
     virtual ~HomePage();
     //@}
 

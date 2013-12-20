@@ -20,11 +20,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace frontend
 {
     class LauncherClient;
@@ -86,7 +81,6 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< SessionTray > sessionTray_;
-    std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_;
     QStackedWidget* pages_;
     //@}
 };
