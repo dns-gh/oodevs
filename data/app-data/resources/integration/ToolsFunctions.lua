@@ -89,7 +89,7 @@ getSimulationTime = function()
     return DEC_TempsSim()
 end
 
---- Return a random number between minValue and maxValue
+--- Return a random integer between minValue and maxValue
 -- @param minValue : the minimum value of the range (included in the range)
 -- @param maxValue : the maximum value of the range (included in the range)
 getRandomNumber = function( minValue, maxValue )
