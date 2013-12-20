@@ -1,3 +1,5 @@
+
+
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -10,13 +12,22 @@
 #ifndef CLIENTS_GUI_TOOLS_H
 #define CLIENTS_GUI_TOOLS_H
 
-#include "clients_kernel/Tools.h"
-
-namespace gui
+namespace kernel
 {
+    class Entity_ABC;
+}
 
-bool IsPropagationDir( const tools::Path& dir );
+namespace tools
+{
+    class Path;
 
-}  // namespace gui
+    bool IsPropagationDir( const tools::Path& dir );
+    bool IsCommandPost( const kernel::Entity_ABC& entity );
+    bool IsEngaged( const kernel::Entity_ABC& entity );
+    bool IsSuperiorEngaged( const kernel::Entity_ABC& entity );
+    bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
+    bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
+
+}  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H

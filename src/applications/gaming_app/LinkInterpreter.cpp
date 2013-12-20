@@ -14,18 +14,16 @@
 #include "gaming/ProfileFilter.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter constructor
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
 LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, ProfileFilter& filter )
-     : LinkInterpreter_ABC( parent, controllers.actions_ )
-     , controllers_( controllers )
-     , filter_     ( filter )
+     : gui::LinkInterpreter( parent, controllers )
+     , filter_( filter )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,25 +32,7 @@ LinkInterpreter::LinkInterpreter( QObject* parent, Controllers& controllers, Pro
 // -----------------------------------------------------------------------------
 LinkInterpreter::~LinkInterpreter()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::NotifyCreated
-// Created: SBO 2006-10-13
-// -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
-{
-    AddEntity( entity.GetTypeName().c_str(), entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LinkInterpreter::NotifyDeleted
-// Created: SBO 2006-10-13
-// -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyDeleted( const kernel::Entity_ABC& entity )
-{
-    RemoveEntity( entity.GetTypeName().c_str(), entity );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

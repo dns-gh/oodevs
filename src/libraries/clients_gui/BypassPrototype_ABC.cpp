@@ -10,8 +10,9 @@
 #include "clients_gui_pch.h"
 #include "BypassPrototype_ABC.h"
 #include "LoadableSpinBox.h"
-#include "Tools.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 
 using namespace gui;

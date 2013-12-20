@@ -596,12 +596,16 @@ Do you want to replace it?</source>
         <translation>Conectar al host</translation>
     </message>
     <message>
-        <source>Host:</source>
-        <translation>Host:</translation>
+        <source>Host</source>
+        <translation>Host</translation>
     </message>
     <message>
-        <source>Port:</source>
-        <translation>Puerto:</translation>
+        <source>Port</source>
+        <translation>Puerto</translation>
+    </message>
+    <message>
+        <source>Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

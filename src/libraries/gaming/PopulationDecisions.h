@@ -10,8 +10,8 @@
 #ifndef __PopulationDecisions_h_
 #define __PopulationDecisions_h_
 
-#include "clients_kernel/Decisions_ABC.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_gui/Decisions.h"
+
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
@@ -34,15 +34,15 @@ namespace sword
 */
 // Created: AGE 2006-04-10
 // =============================================================================
-class PopulationDecisions : public kernel::Extension_ABC
+class PopulationDecisions : public gui::Decisions
                           , public kernel::Updatable_ABC< sword::CrowdOrder >
                           , public kernel::Updatable_ABC< sword::CrowdUpdate >
-                          , public kernel::Decisions_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDecisions( kernel::Controller& controller, const kernel::Population_ABC& population,
+             PopulationDecisions( kernel::Controller& controller,
+                                  const kernel::Population_ABC& population,
                                   const kernel::PopulationType& type );
     virtual ~PopulationDecisions();
     //@}
@@ -50,36 +50,13 @@ public:
     //! @name Operations
     //@{
     virtual bool CanBeOrdered() const;
-    virtual tools::Iterator< const kernel::Mission& > GetMissions() const;
-    virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
-    virtual const kernel::Mission* GetCurrentMission() const;
-    virtual const kernel::Entity_ABC& GetAgent() const;
-    std::string ModelName() const;
-    bool IsDebugActivated() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationDecisions( const PopulationDecisions& );            //!< Copy constructor
-    PopulationDecisions& operator=( const PopulationDecisions& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::CrowdOrder& message );
     virtual void DoUpdate( const sword::CrowdUpdate& message );
-    const kernel::DecisionalModel& GetDecisionalModel() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controller& controller_;
-    const kernel::Population_ABC& popu_;
-    const kernel::Mission* current_;
-    const kernel::DecisionalModel* decisionalModel_;
-    bool brainDebug_;
     //@}
 };
 

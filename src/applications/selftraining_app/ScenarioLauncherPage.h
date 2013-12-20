@@ -27,11 +27,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace tools
 {
     class Loader_ABC;
@@ -58,8 +53,7 @@ public:
                                    Page_ABC& previous, kernel::Controllers& controllers,
                                    const Config& config,
                                    const tools::Loader_ABC& fileLoader,
-                                   frontend::LauncherClient& launcher,
-                                   gui::LinkInterpreter_ABC& interpreter );
+                                   frontend::LauncherClient& launcher );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -73,7 +67,6 @@ private slots:
     void OnClientEnabled( bool enabled );
     void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
-    void OnExerciseNumberChanged( int value );
     //@}
 
 private:
@@ -100,7 +93,6 @@ private:
     const Config&                 config_;
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
-    gui::LinkInterpreter_ABC&     interpreter_;
     ProgressPage*                 progressPage_;
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;
@@ -114,7 +106,6 @@ private:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
-    int                           exerciseNumber_;
     //@}
 };
 

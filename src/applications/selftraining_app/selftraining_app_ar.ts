@@ -594,12 +594,16 @@ Do you want to replace it?</source>
         <translation type="unfinished">الانضمام إلى مضيف</translation>
     </message>
     <message>
-        <source>Host:</source>
-        <translation type="unfinished">المضيف:</translation>
+        <source>Host</source>
+        <translation type="unfinished">المضيف</translation>
     </message>
     <message>
-        <source>Port:</source>
-        <translation type="unfinished">المنفذ:</translation>
+        <source>Port</source>
+        <translation type="unfinished">المنف</translation>
+    </message>
+    <message>
+        <source>Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

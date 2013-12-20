@@ -75,6 +75,13 @@
     </message>
 </context>
 <context>
+    <name>AutomatDecisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Block</name>
     <message>
         <source>PhysicalFeatures/Architecture/trafficability</source>
@@ -2015,6 +2022,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

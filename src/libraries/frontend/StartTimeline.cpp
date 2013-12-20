@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "frontend_pch.h"
-#include "CommandLineTools.h"
 #include "ConfigurationManipulator.h"
 #include "StartTimeline.h"
 
@@ -16,6 +15,7 @@
 #pragma warning( disable: 4503 )
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/regex.hpp>
 
 using namespace frontend;
 namespace bpt = boost::property_tree;
@@ -76,6 +76,12 @@ namespace
         WriteTo( output, start, true );
         output << "]";
     }
+
+    std::string GetPort( const std::string& host )
+    {
+        static const auto re = boost::regex( "^.+:" );
+        return boost::regex_replace( host, re, "" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -84,17 +90,19 @@ namespace
 // -----------------------------------------------------------------------------
 StartTimeline::StartTimeline( const tools::GeneralConfig& config,
                               const tools::Path& exercise,
-                              const tools::Path& session,
-                              int index )
+                              const tools::Path& session )
     : SpawnCommand( config, "timeline_server.exe", "timeline_server" )
 {
-    AddArgument( "port", boost::lexical_cast< std::string >( GetPort( index, TIMELINE_PORT ) ) );
+    ConfigurationManipulator xpath( config, exercise, session );
+    const auto dispatcher = GetPort( xpath.GetValue< std::string >( "session/config/dispatcher/network/@server" ) );
+    const auto timeline = GetPort( xpath.GetValue< std::string >( "session/config/timeline/@url" ) );
+    AddArgument( "port", timeline );
     const tools::Path root = ConfigurationManipulator::GetSessionXml( config, exercise, session ).Parent();
     const tools::Path log = root / "timeline.log";
     AddArgument( "log", log.ToUTF8() );
     const tools::Path run = root / "timeline.run";
     AddArgument( "run", run.ToUTF8() );
-    WriteRunScript( run, GetPort( index, DISPATCHER_PORT ) );
+    WriteRunScript( run, boost::lexical_cast< int >( dispatcher ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,10 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "FirePrototype_ABC.h"
-#include "clients_kernel/FireClass.h"
-#include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/FireClass.h"
+#include "clients_kernel/Tools.h"
+
 #include <tools/Iterator.h>
 
 using namespace gui;

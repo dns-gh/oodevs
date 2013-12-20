@@ -9,10 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "TrafficabilityPrototype_ABC.h"
-#include "Tools.h"
 #include "clients_kernel/Units.h"
 #include "LoadableLineEdit.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

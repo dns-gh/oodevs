@@ -8,10 +8,13 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "Decisions.h"
 #include "MagicOrders.h"
+
+#include "clients_gui/Decisions_ABC.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
+
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -61,5 +64,5 @@ bool MagicOrders::CanRetrieveTransporters() const
 // -----------------------------------------------------------------------------
 bool MagicOrders::CanMagicMove() const
 {
-    return agent_.Get< Decisions >().CanBeOrdered();
+    return agent_.Get< gui::Decisions_ABC >().CanBeOrdered();
 }

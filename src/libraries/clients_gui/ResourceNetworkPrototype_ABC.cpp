@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "ResourceNetworkPrototype_ABC.h"
 #include "Tools.h"
+
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 
 using namespace gui;

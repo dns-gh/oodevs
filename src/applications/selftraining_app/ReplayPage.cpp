@@ -10,18 +10,23 @@
 #include "selftraining_app_pch.h"
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
+
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "SessionList.h"
+
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
+#include "frontend/StartTimeline.h"
 #include "frontend/JoinAnalysis.h"
 #include "frontend/ProcessWrapper.h"
+
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -99,6 +104,7 @@ void ReplayPage::StartExercise()
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, "" ) );
+    process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
     process->Add( boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin() ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );

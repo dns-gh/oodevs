@@ -26,7 +26,8 @@
 // Name: UnitStateDialog constructor
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
-UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
+                                  const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, gui::DisplayExtractor& extractor )
     : gui::UnitStateDialog( parent, controllers )
     , profile_         ( profile )
     , disconnected_    ( false )
@@ -36,7 +37,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     setCaption( tr( "Unit state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_, profile ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_, profile, extractor ) );
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );

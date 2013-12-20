@@ -10,9 +10,10 @@
 #include "clients_gui_pch.h"
 #include "NatureEditionCategory.h"
 #include "moc_NatureEditionCategory.cpp"
-#include "Tools.h"
-#include "clients_kernel/SymbolRule.h"
 #include "RichWidget.h"
+
+#include "clients_kernel/SymbolRule.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 using namespace kernel;

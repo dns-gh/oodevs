@@ -10,16 +10,17 @@
 #include "clients_gui_pch.h"
 #include "DiplomacyDialog_ABC.h"
 #include "moc_DiplomacyDialog_ABC.cpp"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Karma.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Diplomacies_ABC.h"
 #include "RichWidget.h"
 #include "RichPushButton.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"
-#include "Tools.h"
+
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

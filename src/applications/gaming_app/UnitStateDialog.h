@@ -23,6 +23,11 @@ namespace kernel
     class Time_ABC;
 }
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -39,7 +44,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                              actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+                              actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile,
+                              gui::DisplayExtractor& extractor );
     virtual ~UnitStateDialog();
     //@}
 

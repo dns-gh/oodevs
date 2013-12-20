@@ -32,8 +32,10 @@
 #include "SymbolEditor.h"
 #include "TerrainExportDialog.h"
 #include "UnitStateDialog.h"
+#include "clients_gui/LinkInterpreter.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/PreferencesDialog.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/SoundPanel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/Model.h"
@@ -54,9 +56,12 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
                                   gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer, gui::GraphicPreferences& preferences )
     : QObject( parent )
 {
+    displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
+    linkInterpreter_.reset( new gui::LinkInterpreter( parent, controllers ) );
+    connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), linkInterpreter_.get(), SLOT( Interprete( const QString& ) ) );
     gui::SubObjectName subObject( "DialogContainer" );
     new ChangeDiplomacyDialog( parent, controllers, profile );
-    new UnitStateDialog( parent, controllers, staticModel );
+    new UnitStateDialog( parent, controllers, staticModel, *displayExtractor_ );
     new AgentAffinitiesDialog( parent, controllers );
     new PeopleAffinitiesDialog( parent, controllers );
     new ColorEditor( parent, controllers, colorStrategy, colorEditor );

@@ -61,6 +61,8 @@ ignoredleaves = set([
     "gui::SymbolIcons",
     "gui::TerrainPicker",
     "gui::UnitPreviewIcon",
+    "gui::DisplayExtractor",
+    "gui::LinkInterpreter_ABC",
     'Q3HBox',
     'Q3VBox',
     'QBoxLayout',

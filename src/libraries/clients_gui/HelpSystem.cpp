@@ -10,9 +10,12 @@
 #include "clients_gui_pch.h"
 #include "HelpSystem.h"
 #include "moc_HelpSystem.cpp"
-#include "Tools.h"
+
+#include "clients_kernel/Tools.h"
+
 #include "tools/GeneralConfig.h"
 #include "tools/Language.h"
+
 #include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
 

@@ -15,13 +15,19 @@
 #include "EventOrderViewState.h"
 #include "EventPresenter.h"
 #include "TimelinePublisher.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
+
 #include "actions_gui/MissionInterface_ABC.h"
+
+#include "clients_gui/AutomatDecisions.h"
+#include "clients_gui/Decisions_ABC.h"
+#include "clients_gui/Tools.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
@@ -32,9 +38,9 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Decisions_ABC.h"
-#include "actions_gui/MissionInterface_ABC.h"
+
 #include <timeline/api.h>
+
 #include <boost/assign.hpp>
 
 using namespace gui;
@@ -80,7 +86,7 @@ EventOrderPresenter::~EventOrderPresenter()
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::SetTarget( const kernel::Entity_ABC* entity,
-                                     const kernel::Decisions_ABC* decisions )
+                                     const gui::Decisions_ABC* decisions )
 {
     // $$$$ ABR 2013-11-22: Since we can't retrieve entity's decisions in clients_gui, we need to give it with the target
     if( !entity && decisions || entity && !decisions )
@@ -96,7 +102,7 @@ void EventOrderPresenter::SetTarget( const kernel::Entity_ABC* entity,
 void EventOrderPresenter::FillFromAction( const actions::Action_ABC& action,
                                           E_MissionType type,
                                           const kernel::Entity_ABC* entity,
-                                          const kernel::Decisions_ABC* decisions )
+                                          const gui::Decisions_ABC* decisions )
 {
     SetTarget( entity, decisions );
     Select( type, action.GetType().GetName(), &action );
@@ -106,7 +112,7 @@ void EventOrderPresenter::FillFromAction( const actions::Action_ABC& action,
 // Name: EventOrderPresenter::OnTargetChanged
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity, const kernel::Decisions_ABC* decisions )
+void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity, const gui::Decisions_ABC* decisions )
 {
     SetTarget( entity, decisions );
     Select( state_->currentType_, state_->currentMission_ );
@@ -138,16 +144,11 @@ namespace
             return false;
         if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
         {
-            if( auto automat = static_cast< const kernel::Automat_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-                if( auto decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
-                    if( decisions->IsEmbraye() )
-                        return false;
+            if( const kernel::Entity_ABC* superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
+                return !tools::IsEngaged( *superior );
         }
-        else
-            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-                if( auto decisions = entity->Retrieve< kernel::AutomatDecisions_ABC >() )
-                    if( !decisions->IsEmbraye() )
-                        return false;
+        else if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+            return tools::IsEngaged( *entity );
         return true;
     }
 }
@@ -456,7 +457,7 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
 // Name: EventOrderPresenter::SelectWithTarget
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::SelectWithTarget( const kernel::Decisions_ABC& decisions,
+void EventOrderPresenter::SelectWithTarget( const gui::Decisions_ABC& decisions,
                                             E_MissionType type,
                                             E_MissionType entityType,
                                             const std::string& mission,

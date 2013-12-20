@@ -33,6 +33,8 @@ namespace gui
     class SymbolIcons;
     class Elevation2dLayer;
     class GraphicPreferences;
+    class DisplayExtractor;
+    class LinkInterpreter;
 }
 
 namespace tools
@@ -107,6 +109,8 @@ private:
     gui::AddRasterDialog*       addRasterDialog_;
     RemoveBlocksDialog*         removeBlocksDialog_;
     TerrainExportDialog*        terrainExportDialog_;
+    std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
+    std::unique_ptr< gui::LinkInterpreter > linkInterpreter_;
     //@}
 };
 

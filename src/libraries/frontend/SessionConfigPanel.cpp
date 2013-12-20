@@ -9,16 +9,19 @@
 
 #include "frontend_pch.h"
 #include "SessionConfigPanel.h"
-#include "clients_gui/tools.h"
+#include "moc_SessionConfigPanel.cpp"
+
+#include "clients_kernel/Tools.h"
+
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+
 #pragma warning( push, 0 )
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qspinbox.h>
 #pragma warning( pop )
 
-#include "moc_SessionConfigPanel.cpp"
 
 using namespace frontend;
 
@@ -26,7 +29,7 @@ using namespace frontend;
 // Name: SessionConfigPanel constructor
 // Created: JSR 2010-11-05
 // -----------------------------------------------------------------------------
-SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config, int exerciseNumber )
+SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
     , config_( config )
 {
@@ -58,7 +61,7 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     exerciseNumber_ = new QSpinBox();
     exerciseNumber_->setRange( 1, 10 );
     exerciseNumber_->setSingleStep( 1 );
-    exerciseNumber_->setValue( exerciseNumber );
+    exerciseNumber_->setValue( 1 );
     connect( exerciseNumber_, SIGNAL( valueChanged( int ) ), SIGNAL( exerciseNumberChanged( int ) ) );
 
     //Exercise box
@@ -129,6 +132,10 @@ void SessionConfigPanel::Commit( const tools::Path& exercise, const tools::Path&
     {
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), DISPATCHER_PORT ) ) );
+    }
+    {
+        action.SetOption( "session/config/timeline/@url", "localhost:" +
+                                    boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), frontend::TIMELINE_PORT ) ) );
     }
     action.Commit();
 }

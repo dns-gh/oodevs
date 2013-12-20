@@ -29,10 +29,8 @@
 #include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
-#include "frontend/StartReplay.h"
 #include "frontend/StartTimeline.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -103,17 +101,17 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
+                                            kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader,
+                                            frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
-    , interpreter_      ( interpreter )
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
     , integrationDir_   ( "" )
-    , exerciseNumber_   ( 1 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -139,8 +137,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
 
     //session config config panel
-    auto* panel = AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_, exerciseNumber_ ) );
-    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), SLOT( OnExerciseNumberChanged( int ) ) );
+    auto* panel = AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
 
     //random config panel
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
@@ -255,7 +252,7 @@ void ScenarioLauncherPage::OnStart()
     process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session.first, arguments, true, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >(
-        config_, exerciseName, session.first, exerciseNumber_ ) );
+        config_, exerciseName, session.first ) );
     if( hasClient_ )
         process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session.first, profile_.GetLogin() ) );
@@ -369,13 +366,4 @@ void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, 
 {
     pathfindFilter_ = filter;
     dumpPathfindDirectory_ = directory;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnExerciseNumberChanged
-// Created: BAX 2013-04-17
-// -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnExerciseNumberChanged( int value )
-{
-    exerciseNumber_ = value;
 }

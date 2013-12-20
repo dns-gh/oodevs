@@ -10,10 +10,11 @@
 #ifndef __AutomatDecisions_h_
 #define __AutomatDecisions_h_
 
-#include "clients_kernel/Decisions_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
+#include "Decisions.h"
+
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +31,20 @@ namespace sword
     class AutomatOrder;
 }
 
+namespace tools
+{
+    template< typename T, typename U > class Resolver_ABC;
+}
+
+namespace xml
+{
+    class xistream;
+}
+
 class Publisher_ABC;
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  AutomatDecisions
@@ -38,61 +52,61 @@ class Publisher_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class AutomatDecisions : public kernel::AutomatDecisions_ABC
+class AutomatDecisions : public Decisions
+                       , public kernel::Displayable_ABC
+                       , public kernel::Serializable_ABC
                        , public kernel::Updatable_ABC< sword::AutomatAttributes >
                        , public kernel::Updatable_ABC< sword::AutomatOrder >
-                       , public kernel::Displayable_ABC
-                       , public kernel::Decisions_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Automat_ABC& agent,
-                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver,
-                               const kernel::AutomatType& type );
+             AutomatDecisions( kernel::Controller& controller,
+                               const kernel::Automat_ABC& agent,
+                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver );
+             AutomatDecisions( xml::xistream& xis,
+                               kernel::Controller& controller,
+                               const kernel::Automat_ABC& agent,
+                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver );
     virtual ~AutomatDecisions();
+    //@}
+
+    //! @name Decisions_ABC implementation
+    //@{
+    virtual bool CanBeOrdered() const;
     //@}
 
     //! @name Operations
     //@{
-    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-
-    virtual bool CanBeOrdered() const;
-    virtual tools::Iterator< const kernel::Mission& > GetMissions() const;
-    virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
-    virtual const kernel::Mission* GetCurrentMission() const;
-    virtual const kernel::Entity_ABC& GetAgent() const;
-
-    bool IsEmbraye() const; // $$$$ AGE 2006-03-14:
-    bool IsDebugActivated() const;
-
-    std::string ModelName() const;
-
-    void Engage();
-    void Disengage();
+    bool IsEngaged() const;
+    void SetEngaged( bool engaged );
     //@}
 
 private:
-    //! @name Helpers
+    //! @name kernel::Displayable_ABC implementation
+    //@{
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    //@}
+
+    //! @name kernel::Serializable_ABC implementation
+    //@{
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    //@}
+
+    //! @name kernel::UpdateTable_ABC implementation
     //@{
     virtual void DoUpdate( const sword::AutomatAttributes& message );
     virtual void DoUpdate( const sword::AutomatOrder& message );
-    bool HasEngagedSuperior() const;
-    const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    Publisher_ABC& publisher_;
-    const kernel::Automat_ABC& agent_;
     const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver_;
-    const kernel::DecisionalModel* model_;
-    bool brainDebug_;
-    bool bEmbraye_;
-    const kernel::Mission* current_;
+    bool engaged_;
     //@}
 };
+
+} //! namespace gui
 
 #endif // __AutomatDecisions_h_

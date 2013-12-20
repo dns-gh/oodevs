@@ -120,7 +120,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     else
         AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
     AddReloadBrainMenu( magicMenu, static_.types_.populationModels_,
-                        entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
+                        entity.Retrieve< gui::Decisions_ABC >() ? entity.Retrieve< gui::Decisions_ABC >()->GetModelName() : "unknown",
                         entity.Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDecisionalModel().GetName() );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );

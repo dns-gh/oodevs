@@ -24,6 +24,13 @@
     </message>
 </context>
 <context>
+    <name>AgentDecisions</name>
+    <message>
+        <source>Mission:</source>
+        <translation type="unfinished">Mission:</translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledge</name>
     <message>
         <source>Unknown unit</source>
@@ -427,17 +434,6 @@
     <message>
         <source>State/Mood</source>
         <translation>State/Mood</translation>
-    </message>
-</context>
-<context>
-    <name>Decisions</name>
-    <message>
-        <source>Automat mission:</source>
-        <translation>Automat mission:</translation>
-    </message>
-    <message>
-        <source>Mission:</source>
-        <translation>Mission:</translation>
     </message>
 </context>
 <context>

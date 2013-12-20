@@ -9,11 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "SupplyRoutePrototype_ABC.h"
-#include "clients_kernel/Units.h"
-#include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "LoadableCheckBox.h"
 #include "SubObjectName.h"
+
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 

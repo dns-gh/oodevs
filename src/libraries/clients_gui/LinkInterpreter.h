@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __LinkInterpreter_h_
-#define __LinkInterpreter_h_
+#ifndef gui_LinkInterpreter_h_
+#define gui_LinkInterpreter_h_
 
-#include "clients_gui/LinkInterpreter_ABC.h"
+#include "LinkInterpreter_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -19,13 +19,15 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace gui
+{
 // =============================================================================
 /** @class  LinkInterpreter
     @brief  LinkInterpreter
 */
 // Created: AGE 2006-08-11
 // =============================================================================
-class LinkInterpreter : public gui::LinkInterpreter_ABC
+class LinkInterpreter : public LinkInterpreter_ABC
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
@@ -55,5 +57,6 @@ private:
     kernel::Controllers& controllers_;
     //@}
 };
+}
 
-#endif // __LinkInterpreter_h_
+#endif // gui_LinkInterpreter_h_

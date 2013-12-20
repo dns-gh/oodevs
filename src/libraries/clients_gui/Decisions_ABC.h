@@ -10,9 +10,23 @@
 #ifndef __Decisions_ABC_h_
 #define __Decisions_ABC_h_
 
-#include <tools/Resolver.h>
+#include "clients_kernel/Extension_ABC.h"
+
+#include <boost/noncopyable.hpp>
 
 namespace kernel
+{
+    class Mission;
+    class FragOrder;
+    class Entity_ABC;
+}
+
+namespace tools
+{
+    template< typename T > class Iterator;
+}
+
+namespace gui
 {
     class Mission;
     class FragOrder;
@@ -24,7 +38,8 @@ namespace kernel
 */
 // Created: AGE 2007-04-04
 // =============================================================================
-class Decisions_ABC
+class Decisions_ABC : public kernel::Extension_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -33,14 +48,15 @@ public:
     virtual ~Decisions_ABC() {};
     //@}
 
-    //! @name Operations
+    //! @name Abstract operations
     //@{
     virtual bool CanBeOrdered() const = 0;
-
+    virtual bool IsDebugActivated() const = 0;
     virtual tools::Iterator< const kernel::Mission& > GetMissions() const = 0;
     virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const = 0;
     virtual const kernel::Mission* GetCurrentMission() const = 0;
     virtual const kernel::Entity_ABC& GetAgent() const = 0;
+    virtual const std::string& GetModelName() const = 0;
     //@}
 };
 

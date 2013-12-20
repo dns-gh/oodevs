@@ -10,11 +10,12 @@
 #include "clients_gui_pch.h"
 #include "TacticalLinesLayer.h"
 #include "moc_TacticalLinesLayer.cpp"
-#include "clients_kernel/Positions.h"
+#include "ParametersLayer.h"
+
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "tools.h"
-#include "ParametersLayer.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 using namespace kernel;

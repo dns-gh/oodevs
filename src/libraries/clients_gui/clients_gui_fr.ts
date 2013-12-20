@@ -76,6 +76,13 @@
     </message>
 </context>
 <context>
+    <name>AutomatDecisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation>Mission de l&apos;automate:</translation>
+    </message>
+</context>
+<context>
     <name>Block</name>
     <message>
         <source>Density:</source>
@@ -2025,6 +2032,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Breakdown</source>
         <translation>Panne</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unité</translation>
     </message>
 </context>
 <context>

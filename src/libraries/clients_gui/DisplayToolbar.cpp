@@ -12,9 +12,11 @@
 #include "BooleanOptionButton.h"
 #include "ImageWrapper.h"
 #include "resources.h"
-#include "Tools.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Tools.h"
+
 #include "tools/GeneralConfig.h"
 
 using namespace gui;

@@ -12,6 +12,7 @@
 #include "Affinities.h"
 #include "Agent.h"
 #include "AgentConvexHulls.h"
+#include "AgentDecisions.h"
 #include "AgentDetections.h"
 #include "AgentHierarchiesCommunication.h"
 #include "AgentPositions.h"
@@ -19,7 +20,6 @@
 #include "AggregatedPositions.h"
 #include "Attributes.h"
 #include "Automat.h"
-#include "AutomatDecisions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatLives.h"
 #include "AutomatTacticalHierarchies.h"
@@ -28,7 +28,6 @@
 #include "ConvexHulls.h"
 #include "DebugPoints.h"
 #include "DecisionalStates.h"
-#include "Decisions.h"
 #include "DictionaryExtensions.h"
 #include "Dotations.h"
 #include "Equipments.h"
@@ -72,6 +71,7 @@
 #include "Weapons.h"
 #include "Color.h"
 #include "CommandPostAttributes.h"
+
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -82,6 +82,8 @@
 #include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+
+#include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
 
@@ -135,7 +137,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dictionary, *result ) );
-    result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, publisher_, *result, static_.types_.automatModels_, *type ) );
+    result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
@@ -172,7 +174,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.detection_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
-    result->Attach( *new Decisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
+    result->Attach< gui::Decisions_ABC >( *new AgentDecisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_, controllers_.controller_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
@@ -229,7 +231,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, team ) );
-    result->Attach( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
+    result->Attach< gui::Decisions_ABC >( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );

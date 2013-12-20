@@ -12,7 +12,6 @@
 #include "moc_MainWindow.cpp"
 #include "Config.h"
 #include "HomePage.h"
-#include "LinkInterpreter.h"
 #include "MessageDialog.h"
 #include "SessionTray.h"
 #include "clients_gui/HelpSystem.h"
@@ -28,7 +27,6 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
     : gui::WidgetLanguageObserver_ABC< QMainWindow >()
-    , interpreter_( new LinkInterpreter( this, controllers ) )
     , sessionTray_( 0 )
 {
     setAttribute( Qt::WA_DeleteOnClose );
@@ -37,7 +35,7 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     setFixedHeight( 600 );
     SetStyle();
     pages_ = new QStackedWidget( this );
-    HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
+    HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, launcherClient );
     pages_->setCurrentWidget( home );
     setCentralWidget( pages_ );
     CenterWindow();

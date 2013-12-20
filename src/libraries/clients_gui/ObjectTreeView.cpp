@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectTreeView.h"
+#include "Tools.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"

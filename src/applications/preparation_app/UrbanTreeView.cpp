@@ -19,6 +19,7 @@
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/SymbolIcon.h"
 #include "clients_gui/SymbolIcons.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"

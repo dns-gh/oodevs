@@ -13,6 +13,7 @@
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ModelObserver_ABC.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
