@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainProfile.h"
-#include "Tools.h"
 #include "VisionLine.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

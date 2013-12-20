@@ -367,7 +367,7 @@ namespace
                 DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )
             : gui::ValuedComboBox< std::string >( "DisasterEditor", parent )
         {
-            const tools::Path::T_Paths result = ( config.GetRootDir() / "data/propagations" ).ListElements( &gui::IsPropagationDir );
+            const tools::Path::T_Paths result = ( config.GetRootDir() / "data/propagations" ).ListElements( &tools::IsPropagationDir );
             for( auto it = result.begin(); it != result.end(); ++it )
                 AddItem( it->ToUTF8(), it->ToUTF8() );
         }

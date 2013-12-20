@@ -9,9 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "TacticalTreeView.h"
-#include "resources.h"
 #include "ItemPixmapDelegate.h"
-#include "clients_kernel/Tools.h"
+#include "resources.h"
+#include "Tools.h"
+
 #include <boost/bind.hpp>
 
 using namespace gui;

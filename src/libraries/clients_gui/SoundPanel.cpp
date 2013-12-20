@@ -10,18 +10,19 @@
 #include "clients_gui_pch.h"
 #include "SoundPanel.h"
 #include "moc_SoundPanel.cpp"
+#include "CheckBox.h"
 #include "FileDialog.h"
 #include "RichGroupBox.h"
 #include "RichLineEdit.h"
 #include "RichPushButton.h"
 #include "RichSlider.h"
 #include "SoundManager.h"
-#include "Tools.h"
-#include "CheckBox.h"
-#include "tools/GeneralConfig.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Tools.h"
+
+#include "tools/GeneralConfig.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/operations.hpp>

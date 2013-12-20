@@ -10,14 +10,19 @@
 #include "preparation_pch.h"
 #include "AgentTemplateElement.h"
 #include "AgentsModel.h"
+
+#include "clients_gui/Tools.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_kernel/Tools.h"
+
 #include "preparation/ColorController.h"
+
 #include <xeumeuleu/xml.hpp>
+
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )

@@ -12,7 +12,8 @@
 #include "SearchButton.h"
 #include "SubObjectName.h"
 #include "ClearButton.h"
-#include "Tools.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

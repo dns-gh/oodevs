@@ -14,11 +14,12 @@
 #include "SubObjectName.h"
 #include "TerrainProfile.h"
 #include "TerrainProfilerLayer.h"
-#include "Tools.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 
 using namespace gui;

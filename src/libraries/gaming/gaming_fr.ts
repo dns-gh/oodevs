@@ -24,6 +24,13 @@
     </message>
 </context>
 <context>
+    <name>AgentDecisions</name>
+    <message>
+        <source>Mission:</source>
+        <translation>Mission:</translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledge</name>
     <message>
         <source>Nature:</source>
@@ -427,17 +434,6 @@
     <message>
         <source>State/Mood</source>
         <translation>Etat/Attitude</translation>
-    </message>
-</context>
-<context>
-    <name>Decisions</name>
-    <message>
-        <source>Mission:</source>
-        <translation>Mission:</translation>
-    </message>
-    <message>
-        <source>Automat mission:</source>
-        <translation>Mission de l&apos;automate:</translation>
     </message>
 </context>
 <context>

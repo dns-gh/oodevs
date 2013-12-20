@@ -21,7 +21,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

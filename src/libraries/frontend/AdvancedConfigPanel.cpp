@@ -10,8 +10,11 @@
 #include "frontend_pch.h"
 #include "AdvancedConfigPanel.h"
 #include "moc_AdvancedConfigPanel.cpp"
-#include "clients_gui/tools.h"
+
+#include "clients_kernel/Tools.h"
+
 #include "frontend/CreateSession.h"
+
 #include <QtGui/qcheckbox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>

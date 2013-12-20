@@ -11,7 +11,8 @@
 #include "LodgingPrototype_ABC.h"
 #include "RichSpinBox.h"
 #include "SubObjectName.h"
-#include "Tools.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

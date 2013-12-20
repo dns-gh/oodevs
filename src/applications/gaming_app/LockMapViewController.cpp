@@ -18,7 +18,7 @@
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Positions.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/View_ABC.h"
 
 using namespace kernel;

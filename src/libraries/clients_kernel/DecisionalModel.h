@@ -27,8 +27,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class DecisionalModel : public  tools::Resolver< Mission >
-                      , public  tools::Resolver< FragOrder >
+class DecisionalModel : public tools::Resolver< Mission >
+                      , public tools::Resolver< FragOrder >
 {
 public:
     //! @name Types

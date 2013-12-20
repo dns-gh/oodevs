@@ -9,13 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationPanel.h"
+#include "DisplayBuilder.h"
+#include "LabelDisplayer.h"
+
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "DisplayBuilder.h"
-#include "LabelDisplayer.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

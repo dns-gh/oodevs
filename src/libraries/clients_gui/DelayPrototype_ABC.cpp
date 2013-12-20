@@ -10,8 +10,9 @@
 #include "clients_gui_pch.h"
 #include "DelayPrototype_ABC.h"
 #include "SubObjectName.h"
-#include "Tools.h"
 #include "LoadableTimeEdit.h"
+
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

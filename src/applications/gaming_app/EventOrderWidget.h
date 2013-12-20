@@ -30,6 +30,7 @@ namespace actions
 
 namespace gui
 {
+    class Decisions_ABC;
     class EntitySymbols;
     class EventOrderPresenter;
     struct EventOrderViewState;
@@ -44,7 +45,6 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Controllers;
-    class Decisions_ABC;
     class Entity_ABC;
     class Population_ABC;
     class Profile_ABC;
@@ -71,7 +71,7 @@ class EventOrderWidget : public EventWidget_ABC< gui::EventOrderView_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                       , public tools::ElementObserver_ABC< kernel::Decisions_ABC >
+                       , public tools::ElementObserver_ABC< gui::Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
                        , public tools::ElementObserver_ABC< MissionParameters >
 {
@@ -112,7 +112,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    virtual void NotifyUpdated( const kernel::Decisions_ABC& decisions );
+    virtual void NotifyUpdated( const gui::Decisions_ABC& decisions );
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
     virtual void NotifyUpdated( const MissionParameters& extension );
     //@}

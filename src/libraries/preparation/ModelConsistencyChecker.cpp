@@ -30,8 +30,12 @@
 #include "TeamsModel.h"
 #include "UrbanModel.h"
 #include "UserProfile.h"
+
+#include "clients_gui/EntityType.h"
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_gui/Tools.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
@@ -63,10 +67,13 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_gui/EntityType.h"
+
+#include "ENT/ENT_Tr.h"
+
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"
+
 #include <boost/foreach.hpp>
 #include <xeuseuleu/xsl.hpp>
 

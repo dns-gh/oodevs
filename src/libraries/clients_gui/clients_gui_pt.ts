@@ -75,6 +75,13 @@
     </message>
 </context>
 <context>
+    <name>AutomatDecisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Block</name>
     <message>
         <source>PhysicalFeatures/Architecture/trafficability</source>

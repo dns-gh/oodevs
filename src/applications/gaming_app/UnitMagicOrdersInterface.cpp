@@ -10,40 +10,47 @@
 #include "gaming_app_pch.h"
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
+
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
+#include "actions/Bool.h"
 #include "actions/EngageMagicAction.h"
 #include "actions/Point.h"
 #include "actions/String.h"
-#include "actions/Bool.h"
+
 #include "actions/UnitMagicAction.h"
+
+#include "clients_gui/Decisions_ABC.h"
+#include "clients_gui/EntityType.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
-#include "clients_kernel/Controllers.h"
+#include "clients_gui/Tools.h"
+
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/DecisionalModel.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_gui/EntityType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/DecisionalModel.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
-#include "gaming/AutomatDecisions.h"
-#include "gaming/StaticModel.h"
-#include "gaming/MagicOrders.h"
-#include "gaming/Decisions.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
+
 #include "gaming/Attributes.h"
 #include "gaming/LogisticConsigns.h"
+#include "gaming/MagicOrders.h"
+#include "gaming/StaticModel.h"
+
 #include "protocol/SimulationSenders.h"
+
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -100,13 +107,13 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
-        const Decisions* decisions = agent.Retrieve< Decisions >();
+        const gui::Decisions_ABC* decisions = agent.Retrieve< gui::Decisions_ABC >();
         if( decisions->IsDebugActivated() )
             AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
         else
             AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
         AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
-            agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
+            agent.Retrieve< gui::Decisions_ABC >() ? agent.Retrieve< gui::Decisions_ABC >()->GetModelName() : "unknown",
             agent.GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
@@ -135,13 +142,10 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     selectedEntity_ = &agent;
     // Display if the profile controls the automat
     if( profile_.CanBeOrdered( agent ) )
-        if( const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() ) )
-        {
-            if( !decisions->IsEmbraye() )
-                menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
-            else if( decisions->CanBeOrdered() )
-                menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
-        }
+        if( tools::IsEngaged( agent ) )
+            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
+        else
+            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
 
     // Display if the profile is supervisor
     if( !profile_.CanDoMagic( agent ) )
@@ -150,7 +154,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
-    const AutomatDecisions* decisions = static_cast< const AutomatDecisions* >( agent.Retrieve< kernel::AutomatDecisions_ABC >() );
+    const gui::Decisions_ABC* decisions = agent.Retrieve< gui::Decisions_ABC >();
     if( decisions )
     {
         bMoveAllowed = decisions->CanBeOrdered();
@@ -160,7 +164,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
             AddMagic( tr( "Activate brain debug" ), SLOT( ActivateBrainDebug() ), magicMenu );
     }
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
-    AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->ModelName() : "unknown",
+    AddReloadBrainMenu( magicMenu, static_.types_.automatModels_, decisions ? decisions->GetModelName() : "unknown",
         agent.Get< gui::EntityType< kernel::AutomatType > >().GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
 
@@ -315,16 +319,16 @@ namespace
         RecursiveMagicFunctor( const ::StaticModel& staticModel, Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, int id )
             : MagicFunctor( staticModel, controllers, actionsModel, simulation, id )
         {}
-        void operator()( const Entity_ABC& entity ) const
+        void operator()( const kernel::Entity_ABC& entity ) const
         {
             if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
                 MagicFunctor::operator()( *agent );
             if( const Hierarchies* h = entity.Retrieve< TacticalHierarchies >() )
             {
-                tools::Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
+                tools::Iterator< const kernel::Entity_ABC& > it = h->CreateSubordinateIterator();
                 while( it.HasMoreElements() )
                 {
-                    const Entity_ABC& entity = it.NextElement();
+                    const kernel::Entity_ABC& entity = it.NextElement();
                     operator()( entity );
                 }
             }
@@ -662,10 +666,6 @@ void UnitMagicOrdersInterface::Engage()
 {
     if( !selectedEntity_ )
         return;
-    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
-    if( !decisions )
-        return;
-
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Engage" ), true, true );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -681,10 +681,6 @@ void UnitMagicOrdersInterface::Disengage()
 {
     if( !selectedEntity_ )
         return;
-    kernel::AutomatDecisions_ABC* decisions = selectedEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >();
-    if( !decisions )
-        return;
-
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Disengage" ), false, true );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );

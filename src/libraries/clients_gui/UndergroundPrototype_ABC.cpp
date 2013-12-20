@@ -14,10 +14,10 @@
 #include "RichWidget.h"
 #include "RichLabel.h"
 #include "SubObjectName.h"
-#include "Tools.h"
 
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 

@@ -23,7 +23,6 @@ namespace kernel
 {
     class AgentTypes;
     class Controllers;
-    class Decisions_ABC;
     class Entity_ABC;
     class OrderType;
 }
@@ -47,6 +46,7 @@ namespace timeline
 
 namespace gui
 {
+    class Decisions_ABC;
     class EventOrderView_ABC;
     struct EventOrderViewState;
     class TimelinePublisher;
@@ -82,8 +82,8 @@ public:
     void FillFromAction( const actions::Action_ABC& action,
                          E_MissionType type,
                          const kernel::Entity_ABC* entity,
-                         const kernel::Decisions_ABC* decisions );
-    void OnTargetChanged( const kernel::Entity_ABC* entity, const kernel::Decisions_ABC* decisions );
+                         const gui::Decisions_ABC* decisions );
+    void OnTargetChanged( const kernel::Entity_ABC* entity, const gui::Decisions_ABC* decisions );
     void OnMissionTypeChanged( E_MissionType missionType );
     //@}
 
@@ -109,14 +109,14 @@ private:
     //! @name Operations helpers
     //@{
     void SetTarget( const kernel::Entity_ABC* entity,
-                    const kernel::Decisions_ABC* decisions );
+                    const gui::Decisions_ABC* decisions );
     void Select( E_MissionType type = eMissionType_Pawn,
                  std::string mission = "",
                  const actions::Action_ABC* action = 0 );
     void SelectWithoutTarget( E_MissionType type,
                               const std::string& mission,
                               const actions::Action_ABC* action );
-    void SelectWithTarget( const kernel::Decisions_ABC& decisions,
+    void SelectWithTarget( const gui::Decisions_ABC& decisions,
                            E_MissionType type,
                            E_MissionType entityType,
                            const std::string& mission,
@@ -134,7 +134,7 @@ private:
     actions::ActionFactory_ABC& actionFactory_;
     TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    const kernel::Decisions_ABC* decisions_;
+    const gui::Decisions_ABC* decisions_;
     const kernel::OrderType* order_;
 
     boost::scoped_ptr< EventOrderViewState > state_;

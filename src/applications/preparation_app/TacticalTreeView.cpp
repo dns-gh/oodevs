@@ -11,12 +11,15 @@
 #include "TacticalTreeView.h"
 #include "moc_TacticalTreeView.cpp"
 #include "ChangeAutomatTypeDialog.h"
+
+#include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_gui/Tools.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_gui/EntityType.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -25,6 +28,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Positions.h"
+
 #include "preparation/AgentsModel.h"
 #include "preparation/EntityCommunications.h"
 #include "preparation/Formation.h"
@@ -293,13 +297,10 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
     contextMenuEntity_ = &automat;
     if( !isVisible() || !IsActivated() )
         return;
-    if( const kernel::AutomatDecisions_ABC* decisions = automat.Retrieve< kernel::AutomatDecisions_ABC >() )
-    {
-        if( ! decisions->IsEmbraye() )
-            menu.InsertItem( "Helpers", tr( "Engage" ), this, SLOT( Engage() ), false, 0 );
-        else if( decisions->CanBeOrdered() )
-            menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
-    }
+    if( tools::IsEngaged( automat ) )
+        menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
+    else
+        menu.InsertItem( "Helpers", tr( "Engage" ), this, SLOT( Engage() ), false, 0 );
     menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ), false, 0 );
 }
 
@@ -428,8 +429,9 @@ void TacticalTreeView::OnChangeSuperior()
 void TacticalTreeView::Engage()
 {
     if( contextMenuEntity_ )
-        if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
-            decisions->Engage();
+        if( gui::AutomatDecisions* decisions =
+            static_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
+            decisions->SetEngaged( true );
     doItemsLayout();
 }
 
@@ -440,8 +442,9 @@ void TacticalTreeView::Engage()
 void TacticalTreeView::Disengage()
 {
     if( contextMenuEntity_ )
-        if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
-            decisions->Disengage();
+        if( gui::AutomatDecisions* decisions =
+            static_cast< gui::AutomatDecisions* >( contextMenuEntity_.ConstCast()->Retrieve< gui::Decisions_ABC >() ) )
+            decisions->SetEngaged( false );
     doItemsLayout();
 }
 
