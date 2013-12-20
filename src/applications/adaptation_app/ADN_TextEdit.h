@@ -28,6 +28,7 @@ public:
         std::string* pTxt= static_cast< std::string* >( data );
         if( pGfx_->toPlainText() != pTxt->c_str() )
             pGfx_->setPlainText( pTxt->c_str() );
+        pGfx_->setEnabled( ShouldEnableGfx() );
     }
 };
 
@@ -46,6 +47,7 @@ public:
         std::string* pTxt= static_cast< std::string* >( data );
         if( pGfx_->toPlainText() != pTxt->c_str() )
             pGfx_->setPlainText( pTxt->c_str() );
+        pGfx_->setEnabled( ShouldEnableGfx() );
     }
 };
 

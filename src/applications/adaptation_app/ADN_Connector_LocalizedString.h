@@ -31,7 +31,7 @@ public:
     virtual ~ADN_Connector_LocalizedString();
     //@}
 
-private:
+protected:
     //! @name Helpers
     //@{
     virtual void SetDataPrivate(void *data);
