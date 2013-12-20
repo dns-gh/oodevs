@@ -13,6 +13,8 @@
 #include "resources.h"
 #include "Tools.h"
 
+#include "clients_kernel/Automat_ABC.h"
+
 #include <boost/bind.hpp>
 
 using namespace gui;
@@ -48,7 +50,7 @@ std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::E
     std::vector< const QPixmap* > ret;
     if( tools::IsCommandPost( entity ) )
         ret.push_back( &commandPost_ );
-    if( tools::IsEngaged( entity ) )
+    if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ && tools::IsEngaged( entity ) )
         ret.push_back( &lock_ );
     return ret;
 }
