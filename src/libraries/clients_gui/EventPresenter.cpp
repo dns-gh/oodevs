@@ -338,7 +338,7 @@ void EventPresenter::Plan()
     event_->GetEvent().done = false;
     if( !timelineHandler_ )
         throw MASA_EXCEPTION( "Can't plan an event without a timeline handler" );
-    timelineHandler_->CreateEvent( event_->GetEvent() );
+    timelineHandler_->CreateEvent( event_->GetEvent(), true );
 }
 
 // -----------------------------------------------------------------------------
