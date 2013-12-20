@@ -43,6 +43,10 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     port_ = new QSpinBox();
     port_->setMaximum( 65535 );
     port_->setValue( 10001 );
+    timelineLabel_ = new QLabel();
+    timeline_ = new QSpinBox();
+    timeline_->setMaximum( 65535 );
+    timeline_->setValue( 10002 );
 
     //sub layout
     QGroupBox* hbox = new QGroupBox();
@@ -52,6 +56,8 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     hboxLayout->addWidget( host_ );
     hboxLayout->addWidget( portLabel_ );
     hboxLayout->addWidget( port_ );
+    hboxLayout->addWidget( timelineLabel_ );
+    hboxLayout->addWidget( timeline_ );
 
     QWidget* box = new QWidget( this );
     QVBoxLayout* boxLayout = new QVBoxLayout( box );
@@ -85,8 +91,10 @@ void ScenarioJoinPage::OnLanguageChanged()
 {
     SetTitle( tools::translate( "ScenarioJoinPage", "Join" ) );
     progressPage_->SetTitle( tools::translate( "ScenarioJoinPage", "Joining host" ) );
-    hostLabel_->setText(     tools::translate( "ScenarioJoinPage", "Host:" ) );
-    portLabel_->setText(     tools::translate( "ScenarioJoinPage", "Port:" ) );
+    hostLabel_->setText(     tools::translate( "ScenarioJoinPage", "Host" ) );
+    portLabel_->setText(     tools::translate( "ScenarioJoinPage", "Port" ) );
+    timelineLabel_->setText( tools::translate( "ScenarioJoinPage", "Timeline" ) );
+
     LauncherClientPage::OnLanguageChanged();
 }
 
@@ -132,6 +140,7 @@ void ScenarioJoinPage::OnJoin()
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
+        action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
         action.Commit();
     }
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );

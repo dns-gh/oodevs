@@ -109,6 +109,10 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( GetPort( 1, DISPATCHER_PORT ) ) );
     }
+    {
+        setter_->SetValue( "session/config/timeline/@url", "localhost:" +
+                                    boost::lexical_cast< std::string >( GetPort( 1, frontend::TIMELINE_PORT ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

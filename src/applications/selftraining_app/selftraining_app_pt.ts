@@ -594,11 +594,15 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Host:</source>
+        <source>Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Port:</source>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

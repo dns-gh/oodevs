@@ -67,7 +67,6 @@ private slots:
     void OnClientEnabled( bool enabled );
     void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
-    void OnExerciseNumberChanged( int value );
     //@}
 
 private:
@@ -107,7 +106,6 @@ private:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
-    int                           exerciseNumber_;
     //@}
 };
 

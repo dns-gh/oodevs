@@ -36,7 +36,7 @@ class SessionConfigPanel : public PluginConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config, int exerciseNumber );
+             SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~SessionConfigPanel();
     //@}
 

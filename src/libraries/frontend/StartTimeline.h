@@ -32,8 +32,7 @@ public:
     //@{
     StartTimeline( const tools::GeneralConfig& config,
                    const tools::Path& exercise,
-                   const tools::Path& session,
-                   int index );
+                   const tools::Path& session );
     virtual ~StartTimeline();
     //@}
 };
