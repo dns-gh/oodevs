@@ -16,7 +16,7 @@
 #include "EventMultimediaWidget.h"
 #include "EventOrderWidget.h"
 #include "EventReportWidget.h"
-#include "EventSupervisorActionWidget.h"
+#include "EventMagicWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 
@@ -99,7 +99,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
                                                                               config, interfaceBuilder, profile,
                                                                               tools, simulation, entitySymbols ) );
     stack_->insertWidget( eEventTypes_Task            , new EventTaskWidget( *presenter_ ) );
-    AddDefaultView( views_, *stack_, eEventTypes_SupervisorAction, new EventSupervisorActionWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_SupervisorAction, new EventMagicWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Report          , new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia      , new EventMultimediaWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eNbrEventTypes              , new EventDetailWidget( *presenter_ ) );

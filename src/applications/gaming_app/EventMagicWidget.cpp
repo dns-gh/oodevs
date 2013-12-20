@@ -8,24 +8,24 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "EventSupervisorActionWidget.h"
-#include "moc_EventSupervisorActionWidget.cpp"
+#include "EventMagicWidget.h"
+#include "moc_EventMagicWidget.cpp"
 
 // -----------------------------------------------------------------------------
-// Name: EventSupervisorActionWidget constructor
+// Name: EventMagicWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventSupervisorActionWidget::EventSupervisorActionWidget( gui::EventPresenter& presenter )
+EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter )
     : EventDefaultWidget_ABC( presenter )
 {
     mainLayout_->addWidget( new QLabel( "Supervisor Widget" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventSupervisorActionWidget destructor
+// Name: EventMagicWidget destructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventSupervisorActionWidget::~EventSupervisorActionWidget()
+EventMagicWidget::~EventMagicWidget()
 {
     // NOTHING
 }

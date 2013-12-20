@@ -7,27 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __EventSupervisorActionWidget_h_
-#define __EventSupervisorActionWidget_h_
+#ifndef __EventMagicWidget_h_
+#define __EventMagicWidget_h_
 
 #include "EventWidget_ABC.h"
 
 // =============================================================================
-/** @class  EventSupervisorActionWidget
-    @brief  EventSupervisorActionWidget
+/** @class  EventMagicWidget
+    @brief  EventMagicWidget
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventSupervisorActionWidget : public EventDefaultWidget_ABC
+class EventMagicWidget : public EventDefaultWidget_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventSupervisorActionWidget( gui::EventPresenter& presenter );
-    virtual ~EventSupervisorActionWidget();
+             EventMagicWidget( gui::EventPresenter& presenter );
+    virtual ~EventMagicWidget();
     //@}
 };
 
-#endif // __EventSupervisorActionWidget_h_
+#endif // __EventMagicWidget_h_
