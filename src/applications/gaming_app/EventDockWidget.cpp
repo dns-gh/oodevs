@@ -21,7 +21,6 @@
 #include "EventTaskWidget.h"
 #include "clients_gui/Event.h"
 #include "clients_gui/EventFactory.h"
-#include "clients_gui/EventOrderPresenter.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
 #include "clients_kernel/ActionController.h"
@@ -41,6 +40,18 @@
 #include <boost/uuid/random_generator.hpp>
 #pragma warning( pop )
 #include <boost/uuid/uuid_io.hpp>
+
+namespace
+{
+    void AddDefaultView( std::vector< gui::EventDefaultView_ABC* >& views,
+                         QStackedWidget& stack,
+                         int index,
+                         EventDefaultWidget_ABC* widget )
+    {
+        views.push_back( widget );
+        stack.insertWidget( index, widget );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget constructor
@@ -79,14 +90,14 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     stackAreaLayout->addWidget( stack_ );
 
     // Content
-    AddSubView( eEventTypes_Order           , new EventOrderWidget( *presenter_, controllers, model,
-                                                                    config, interfaceBuilder, profile,
-                                                                    tools, simulation, entitySymbols ) );
-    AddSubView( eEventTypes_SupervisorAction, new EventSupervisorActionWidget( *presenter_ ) );
-    AddSubView( eEventTypes_Report          , new EventReportWidget( *presenter_ ) );
-    AddSubView( eEventTypes_Task            , new EventTaskWidget( *presenter_ ) );
-    AddSubView( eEventTypes_Multimedia      , new EventMultimediaWidget( *presenter_ ) );
-    AddSubView( eNbrEventTypes              , new EventDetailWidget( *presenter_ ) );
+    stack_->insertWidget( eEventTypes_Order           , new EventOrderWidget( *presenter_, controllers, model,
+                                                                              config, interfaceBuilder, profile,
+                                                                              tools, simulation, entitySymbols ) );
+    stack_->insertWidget( eEventTypes_Task            , new EventTaskWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_SupervisorAction, new EventSupervisorActionWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_Report          , new EventReportWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eEventTypes_Multimedia      , new EventMultimediaWidget( *presenter_ ) );
+    AddDefaultView( views_, *stack_, eNbrEventTypes              , new EventDetailWidget( *presenter_ ) );
 
     // Layout
     QWidget* mainWidget = new QWidget();
@@ -115,17 +126,6 @@ EventDockWidget::~EventDockWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::AddSubView
-// Created: ABR 2013-12-05
-// -----------------------------------------------------------------------------
-template< typename T >
-void EventDockWidget::AddSubView( E_EventTypes type, T* view )
-{
-    views_.push_back( view );
-    stack_->insertWidget( type, view );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventDockWidget::GetPresenter
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
@@ -138,20 +138,9 @@ gui::EventPresenter& EventDockWidget::GetPresenter() const
 // Name: EventDockWidget::ApplyToViews
 // Created: ABR 2013-12-04
 // -----------------------------------------------------------------------------
-void EventDockWidget::ApplyToViews( const boost::function< void( gui::EventView_ABC* ) >& functor )
+void EventDockWidget::ApplyToViews( const EventDockWidget::T_ViewFunctor& functor )
 {
     std::for_each( views_.begin(), views_.end(), functor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventDockWidget::ApplyToViewsNoEmit
-// Created: ABR 2013-12-04
-// -----------------------------------------------------------------------------
-void EventDockWidget::ApplyToViewsNoEmit( const boost::function< void( gui::EventView_ABC* ) >& functor )
-{
-    BlockSignals( true );
-    ApplyToViews( functor );
-    BlockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +149,7 @@ void EventDockWidget::ApplyToViewsNoEmit( const boost::function< void( gui::Even
 // -----------------------------------------------------------------------------
 void EventDockWidget::Purge()
 {
-    ApplyToViewsNoEmit( boost::bind( &gui::EventView_ABC::Purge, _1 ) );
+    ApplyToViews( boost::bind( &gui::EventBaseView_ABC::Purge, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,8 +164,8 @@ void EventDockWidget::Build( const gui::EventViewState& state )
         return;
     }
     SetContentVisible( true );
-    stack_->setCurrentIndex( state.event_->GetType() );
-    ApplyToViewsNoEmit( boost::bind( &gui::EventView_ABC::Build, _1, boost::cref( state ) ) );
+    stack_->setCurrentIndex( state.event_ && !state.detail_ ? state.event_->GetType() : eNbrEventTypes );
+    ApplyToViews( boost::bind( &gui::EventDefaultView_ABC::Build, _1, boost::cref( state ) ) );
     if( state.raise_ )
     {
         setVisible( true );
@@ -185,22 +174,12 @@ void EventDockWidget::Build( const gui::EventViewState& state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventDockWidget::Update
-// Created: ABR 2013-12-04
-// -----------------------------------------------------------------------------
-void EventDockWidget::Update( const gui::EventViewState& state )
-{
-    stack_->setCurrentIndex( state.event_ && !state.detail_ ? state.event_->GetType() : eNbrEventTypes );
-    ApplyToViewsNoEmit( boost::bind( &gui::EventView_ABC::Update, _1, boost::cref( state ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventDockWidget::BlockSignals
 // Created: ABR 2013-11-22
 // -----------------------------------------------------------------------------
 void EventDockWidget::BlockSignals( bool blocked )
 {
-    ApplyToViews( boost::bind( &gui::EventView_ABC::BlockSignals, _1, blocked ) );
+    ApplyToViews( boost::bind( &gui::EventDefaultView_ABC::BlockSignals, _1, blocked ) );
     stack_->blockSignals( blocked );
     blockSignals( blocked );
 }
@@ -220,7 +199,7 @@ void EventDockWidget::SetContentVisible( bool visible )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 {
-    ApplyToViews( boost::bind( &gui::EventView_ABC::Draw, _1, boost::ref( viewport ) ) );
+    ApplyToViews( boost::bind( &gui::EventDefaultView_ABC::Draw, _1, boost::ref( viewport ) ) );
 }
 
 // -----------------------------------------------------------------------------

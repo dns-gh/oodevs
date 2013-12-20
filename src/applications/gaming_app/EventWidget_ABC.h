@@ -10,10 +10,11 @@
 #ifndef __EventWidget_ABC_h_
 #define __EventWidget_ABC_h_
 
+#include "clients_gui/EventView_ABC.h"
+
 namespace gui
 {
     class EventPresenter;
-    struct EventViewState;
     class Viewport_ABC;
 }
 
@@ -23,9 +24,9 @@ namespace gui
 */
 // Created: ABR 2013-05-30
 // =============================================================================
-template< typename T > // T must inherit EventView_ABC
+template< typename ViewState >
 class EventWidget_ABC : public QWidget
-                      , public T
+                      , public gui::EventView_ABC< ViewState >
 {
 
 public:
@@ -42,12 +43,10 @@ public:
     }
     //@}
 
-    //! @name Operations
+    //! @name EventView_ABC empty implementation
     //@{
     virtual void Purge() {}
-    virtual void Build( const gui::EventViewState& /*state*/ ) {}
-    virtual void Update( const gui::EventViewState& /*state*/ ) {}
-
+    virtual void Build( const ViewState& /*state*/ ) {}
     virtual void BlockSignals( bool /*blocked*/ ) {}
     virtual void Draw( gui::Viewport_ABC& /*viewport*/ ) {}
     //@}
@@ -59,5 +58,9 @@ protected:
     gui::EventPresenter& presenter_;
     //@}
 };
+
+typedef EventWidget_ABC< gui::EventViewState >                 EventDefaultWidget_ABC;
+typedef EventWidget_ABC< gui::EventOrderViewState >            EventOrderWidget_ABC;
+typedef EventWidget_ABC< gui::EventTaskViewState >             EventTaskWidget_ABC;
 
 #endif // __EventWidget_ABC_h_

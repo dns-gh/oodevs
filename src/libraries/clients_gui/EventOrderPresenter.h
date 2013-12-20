@@ -46,9 +46,8 @@ namespace timeline
 
 namespace gui
 {
-    class Decisions_ABC;
-    class EventOrderView_ABC;
     struct EventOrderViewState;
+    template< typename T > class EventView_ABC;
     class TimelinePublisher;
 
 // =============================================================================
@@ -58,14 +57,14 @@ namespace gui
 // Created: LGY 2013-10-03
 // =============================================================================
 class EventOrderPresenter : public QObject
-                          , public EventSubPresenter_ABC
+                          , public EventSubPresenter_ABC< EventOrderViewState >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderPresenter( EventOrderView_ABC& view,
+             EventOrderPresenter( EventView_ABC< EventOrderViewState >& view,
                                   const kernel::AgentTypes& agentTypes,
                                   actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                   actions::gui::MissionInterface_ABC& missionInterface,
@@ -103,7 +102,7 @@ private:
     //@}
 
 private:
-    //! @name Operations helpers
+    //! @name Helpers
     //@{
     void Select( E_MissionType type = eMissionType_Pawn,
                  std::string mission = "",
@@ -120,7 +119,6 @@ private:
 private:
     //! @name Member data
     //@{
-    EventOrderView_ABC& view_;
     const kernel::AgentTypes& agentTypes_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     actions::gui::MissionInterface_ABC& missionInterface_;
@@ -130,7 +128,6 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::OrderType* order_;
 
-    boost::scoped_ptr< EventOrderViewState > state_;
     int context_;
     //@}
 };

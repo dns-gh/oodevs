@@ -12,7 +12,6 @@
 
 #include "EventWidget_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
@@ -66,7 +65,7 @@ class TaskerWidget;
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventOrderWidget : public EventWidget_ABC< gui::EventOrderView_ABC >
+class EventOrderWidget : public EventOrderWidget_ABC
                        , public tools::Observer_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -94,14 +93,14 @@ public:
     //@}
 
 private:
-    //! @name EventWidget_ABC implementation
+    //! @name gui::EventBaseView_ABC implementation
     //@{
     virtual void Purge();
     virtual void Draw( gui::Viewport_ABC& viewport );
     virtual void BlockSignals( bool blocked );
     //@}
 
-    //! @name gui::EventOrderView_ABC implementation
+    //! @name gui::EventView_ABC< gui::EventOrderViewState > implementation
     //@{
     virtual void Build( const gui::EventOrderViewState& state );
     //@}

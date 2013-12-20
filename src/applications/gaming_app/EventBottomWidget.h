@@ -11,7 +11,6 @@
 #define __EventBottomWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 
 namespace gui
 {
@@ -27,7 +26,7 @@ namespace gui
 */
 // Created: ABR 2013-05-30
 // =============================================================================
-class EventBottomWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventBottomWidget : public EventDefaultWidget_ABC
 {
     Q_OBJECT
 
@@ -38,16 +37,11 @@ public:
     virtual ~EventBottomWidget();
     //@}
 
-public:
-    //! @name EventWidget_ABC implementation
-    //@{
-    virtual void Purge();
-    //@}
-
 private:
     //! @name EventWidget_ABC implementation
     //@{
-    virtual void Update( const gui::EventViewState& state );
+    virtual void Purge();
+    virtual void Build( const gui::EventViewState& state );
     virtual void BlockSignals( bool blocked );
     //@}
 

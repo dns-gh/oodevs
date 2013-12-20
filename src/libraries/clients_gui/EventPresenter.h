@@ -42,9 +42,7 @@ namespace gui
 {
     class Event;
     class EventFactory;
-    class EventOrderPresenter;
-    class EventOrderView_ABC;
-    class EventView_ABC;
+    template< typename T > class EventView_ABC;
     struct EventViewState;
 
 // =============================================================================
@@ -59,23 +57,22 @@ class EventPresenter : public QObject
 
     //! @name Types
     //@{
-    typedef std::map< E_EventTypes, EventSubPresenter_ABC::T_SharedPtr > T_Presenters;
+    typedef std::map< E_EventTypes, EventPresenter_ABC::T_SharedPtr > T_Presenters;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventPresenter( EventView_ABC& view,
+             EventPresenter( EventView_ABC< EventViewState >& view,
                              const EventFactory& factory );
     virtual ~EventPresenter();
     //@}
 
     //! @name Specialized presenters
     //@{
-    void AddSubPresenter( E_EventTypes type,
-                          const EventSubPresenter_ABC::T_SharedPtr& presenter );
-    EventSubPresenter_ABC& GetCurrentPresenter() const;
-    EventSubPresenter_ABC& GetPresenter( E_EventTypes type ) const;
+    void AddSubPresenter( const EventPresenter_ABC::T_SharedPtr& presenter );
+    EventPresenter_ABC& GetCurrentPresenter() const;
+    EventPresenter_ABC& GetPresenter( E_EventTypes type ) const;
     bool HasCurrentPresenter() const;
     //@}
 
@@ -117,12 +114,12 @@ private:
     bool IsCurrentEvent( const gui::Event& event );
     void InternalPurge();
 
-    void BuildView( E_EventDockModes mode,
+    void ResetView( E_EventDockModes mode,
                     bool raise = false,
                     const QColor& warningColor = Qt::transparent,
                     const std::string& warning = "" );
-    void UpdateView();
-    void UpdateViewAfterEdition();
+    void BuildView();
+    void BuildViewAfterEdition();
     void ChangeMode( E_EventDockModes mode,
                      bool raise,
                      bool detail,
@@ -140,7 +137,7 @@ private:
 private:
     //! @name Member data
     //@{
-    EventView_ABC& view_;
+    EventView_ABC< EventViewState >& view_;
     const EventFactory& factory_;
     boost::scoped_ptr< EventViewState > state_;
     boost::shared_ptr< Event > event_;

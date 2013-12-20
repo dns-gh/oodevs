@@ -11,7 +11,6 @@
 #define __EventDetailWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventDetailWidget
@@ -19,7 +18,7 @@
 */
 // Created: ABR 2013-05-31
 // =============================================================================
-class EventDetailWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventDetailWidget : public EventDefaultWidget_ABC
 {
 
 public:
@@ -30,7 +29,7 @@ public:
     //@}
 
 private:
-    //! @name EventWidget_ABC implementation
+    //! @name EventDefaultWidget_ABC implementation
     //@{
     virtual void Purge();
     virtual void Build( const gui::EventViewState& state );

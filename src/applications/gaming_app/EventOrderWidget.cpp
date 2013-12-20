@@ -68,7 +68,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
                                     gui::GlTools_ABC& tools,
                                     const kernel::Time_ABC& simulation,
                                     const gui::EntitySymbols& entitySymbols )
-    : EventWidget_ABC< gui::EventOrderView_ABC >( presenter )
+    : EventOrderWidget_ABC( presenter )
     , controllers_( controllers )
     , model_( model )
     , interfaceBuilder_( interfaceBuilder )
@@ -90,7 +90,7 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
                                                                       model.actionFactory_,
                                                                       model.timelinePublisher_,
                                                                       controllers );
-    presenter_.AddSubPresenter( eEventTypes_Order, orderPresenter_ );
+    presenter_.AddSubPresenter( orderPresenter_ );
 
     // Tasker
     taskerWidget_ = new TaskerWidget( controllers, entitySymbols );

@@ -11,8 +11,9 @@
 #include "EventTaskPresenter.h"
 #include "moc_EventTaskPresenter.cpp"
 #include "Event.h"
-#include "EventTaskView_ABC.h"
 #include "EventTaskViewState.h"
+#include "EventView_ABC.h"
+
 #include <timeline/api.h>
 
 using namespace gui;
@@ -21,9 +22,8 @@ using namespace gui;
 // Name: EventTaskPresenter constructor
 // Created: ABR 2013-12-09
 // -----------------------------------------------------------------------------
-EventTaskPresenter::EventTaskPresenter( EventTaskView_ABC& view )
-    : view_( view )
-    , state_( new EventTaskViewState() )
+EventTaskPresenter::EventTaskPresenter( EventView_ABC< EventTaskViewState >& view )
+    : EventSubPresenter_ABC< EventTaskViewState >( eEventTypes_Task, view )
 {
     // NOTHING
 }
@@ -44,7 +44,7 @@ EventTaskPresenter::~EventTaskPresenter()
 void EventTaskPresenter::OnLabelChanged( const QString& label )
 {
     state_->label_ = label.toStdString();
-    Build();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void EventTaskPresenter::OnLabelChanged( const QString& label )
 void EventTaskPresenter::OnDescriptionChanged( const QString& description )
 {
     state_->description_ = description.toStdString();
-    Build();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void EventTaskPresenter::OnUrlChanged( const QString& url )
 {
     state_->url_ = url.toStdString();
     state_->isUrlValid_ = !state_->url_.empty();
-    Build();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void EventTaskPresenter::OnUrlChanged( const QString& url )
 void EventTaskPresenter::OnPayloadChanged( const QString& payload )
 {
     state_->payload_ = payload.toStdString();
-    Build();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void EventTaskPresenter::OnPayloadChanged( const QString& payload )
 void EventTaskPresenter::OnShowClicked()
 {
     state_->isPayloadVisible_ = !state_->isPayloadVisible_;
-    Build();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,10 +107,10 @@ void EventTaskPresenter::Clear()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventTaskPresenter::FillFromEvent
-// Created: ABR 2013-12-10
+// Name: EventTaskPresenter::FillFrom
+// Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
-void EventTaskPresenter::FillFrom( const Event& event )
+void EventTaskPresenter::FillFrom( const gui::Event& event )
 {
     const timeline::Event& timelineEvent = event.GetEvent();
     state_->Purge();
@@ -122,7 +122,6 @@ void EventTaskPresenter::FillFrom( const Event& event )
     state_->payload_ = data.toStdString();
     state_->isUrlValid_ = !state_->url_.empty();
     state_->isPayloadVisible_ = false;
-    Build();
 }
 
 // -----------------------------------------------------------------------------
@@ -140,28 +139,4 @@ void EventTaskPresenter::CommitTo( timeline::Event& event ) const
         QByteArray data( state_->payload_.c_str() );
         event.action.payload = data.toBase64().data();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskPresenter::Purge
-// Created: ABR 2013-12-09
-// -----------------------------------------------------------------------------
-void EventTaskPresenter::Purge()
-{
-    state_->Purge();
-    view_.BlockSignals( true );
-    view_.Purge();
-    view_.BlockSignals( false );
-    Build();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskPresenter::Build
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskPresenter::Build()
-{
-    view_.BlockSignals( true );
-    view_.Build( *state_ );
-    view_.BlockSignals( false );
 }

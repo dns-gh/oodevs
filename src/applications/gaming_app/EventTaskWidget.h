@@ -11,7 +11,6 @@
 #define __EventTaskWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventTaskView_ABC.h"
 
 namespace gui
 {
@@ -25,7 +24,7 @@ namespace gui
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventTaskWidget : public EventWidget_ABC< gui::EventTaskView_ABC >
+class EventTaskWidget : public EventTaskWidget_ABC
 {
     Q_OBJECT
 
@@ -37,14 +36,9 @@ public:
     //@}
 
 private:
-    //! @name EventWidget_ABC implementation
+    //! @name gui::EventTaskWidget_ABC implementation
     //@{
-    virtual void Purge();
     virtual void BlockSignals( bool blocked );
-    //@}
-
-    //! @name gui::EventTaskView_ABC implementation
-    //@{
     virtual void Build( const gui::EventTaskViewState& state );
     //@}
 

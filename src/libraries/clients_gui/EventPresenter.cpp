@@ -12,7 +12,6 @@
 #include "moc_EventPresenter.cpp"
 #include "Event.h"
 #include "EventViewState.h"
-#include "EventOrderPresenter.h"
 #include "EventView_ABC.h"
 #include "EventFactory.h"
 #include "clients_kernel/TimelineHandler_ABC.h"
@@ -35,7 +34,7 @@ using namespace gui;
 // Name: EventPresenter constructor
 // Created: ABR 2013-11-19
 // -----------------------------------------------------------------------------
-EventPresenter::EventPresenter( EventView_ABC& view,
+EventPresenter::EventPresenter( EventView_ABC< EventViewState >& view,
                                 const EventFactory& factory )
     : view_( view )
     , factory_( factory )
@@ -57,19 +56,18 @@ EventPresenter::~EventPresenter()
 // Name: EventPresenter::AddSubPresenter
 // Created: ABR 2013-11-20
 // -----------------------------------------------------------------------------
-void EventPresenter::AddSubPresenter( E_EventTypes type,
-                                      const EventSubPresenter_ABC::T_SharedPtr& presenter )
+void EventPresenter::AddSubPresenter( const EventPresenter_ABC::T_SharedPtr& presenter )
 {
-    if( presenters_.find( type ) != presenters_.end() )
-        throw MASA_EXCEPTION( "EventPresent already have a sub presenter for type " + ENT_Tr::ConvertFromEventType( type, ENT_Tr::eToSim ) );
-    presenters_[ type ] = presenter;
+    if( presenters_.find( presenter->GetType() ) != presenters_.end() )
+        throw MASA_EXCEPTION( "EventPresent already have a sub presenter for type " + ENT_Tr::ConvertFromEventType( presenter->GetType(), ENT_Tr::eToSim ) );
+    presenters_[ presenter->GetType() ] = presenter;
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventPresenter::GetPresenter
 // Created: ABR 2013-11-20
 // -----------------------------------------------------------------------------
-EventSubPresenter_ABC& EventPresenter::GetCurrentPresenter() const
+EventPresenter_ABC& EventPresenter::GetCurrentPresenter() const
 {
     return GetPresenter( event_ ? event_->GetType() : eNbrEventTypes );
 }
@@ -78,7 +76,7 @@ EventSubPresenter_ABC& EventPresenter::GetCurrentPresenter() const
 // Name: EventPresenter::GetPresenter
 // Created: ABR 2013-11-20
 // -----------------------------------------------------------------------------
-EventSubPresenter_ABC& EventPresenter::GetPresenter( E_EventTypes type ) const
+EventPresenter_ABC& EventPresenter::GetPresenter( E_EventTypes type ) const
 {
     auto presenter = presenters_.find( type );
     if( presenter == presenters_.end() || !presenter->second )
@@ -125,7 +123,7 @@ void EventPresenter::Purge()
     event_.reset();
     state_->Purge();
     InternalPurge();
-    BuildView( eEventDockModes_None );
+    ResetView( eEventDockModes_None );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +132,9 @@ void EventPresenter::Purge()
 // -----------------------------------------------------------------------------
 void EventPresenter::InternalPurge()
 {
+    view_.BlockSignals( true );
     view_.Purge();
+    view_.BlockSignals( false );
     for( auto it = presenters_.begin(); it != presenters_.end(); ++it )
         if( it->second.get() )
             it->second->Purge();
@@ -150,7 +150,7 @@ void EventPresenter::StartCreation( E_EventTypes type, const QDateTime& beginDat
     event_->GetEvent().begin = beginDate.toString( EVENT_DATE_FORMAT ).toStdString();
     state_->Purge();
     InternalPurge();
-    BuildView( eEventDockModes_Create, true );
+    ResetView( eEventDockModes_Create, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ void EventPresenter::StartEdition( const gui::Event& event,
     event_.reset( event.Clone() );
     if( purge )
         InternalPurge();
-    BuildView( event.GetEvent().done
+    ResetView( event.GetEvent().done
                ? eEventDockModes_DisplayTriggered
                : eEventDockModes_EditPlanned,
                raise );
@@ -179,7 +179,7 @@ void EventPresenter::OnEventContentChanged()
     if( state_->mode_ == eEventDockModes_None )
         return;
     UpdateCurrent();
-    UpdateViewAfterEdition();
+    BuildViewAfterEdition();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void EventPresenter::OnEventUpdated( const gui::Event& event )
 void EventPresenter::OnEventDeleted( const gui::Event& event )
 {
     if( IsCurrentEvent( event ) )
-        BuildView( eEventDockModes_EditTriggered, false, state_->warningColor_, state_->warning_ );
+        ResetView( eEventDockModes_EditTriggered, false, state_->warningColor_, state_->warning_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ void EventPresenter::OnWarningChanged( const std::string& warning, const QColor&
 {
     state_->warningColor_ = warningColor;
     state_->warning_ = warning;
-    UpdateView();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void EventPresenter::OnBeginDateChanged( const QDateTime& begin )
 {
     CheckEvent();
     event_->GetEvent().begin = begin.toString( EVENT_DATE_FORMAT ).toStdString();
-    UpdateViewAfterEdition();
+    BuildViewAfterEdition();
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +234,7 @@ void EventPresenter::OnEndDateActivated( bool activated )
     event_->GetEvent().end = activated
         ? event_->GetEvent().begin
         : "";
-    UpdateViewAfterEdition();
+    BuildViewAfterEdition();
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +245,7 @@ void EventPresenter::OnEndDateChanged( const QDateTime& end )
 {
     CheckEvent();
     event_->GetEvent().end = end.toString( EVENT_DATE_FORMAT ).toStdString();
-    UpdateViewAfterEdition();
+    BuildViewAfterEdition();
 }
 
 // -----------------------------------------------------------------------------
@@ -283,7 +283,7 @@ void EventPresenter::OnDetailClicked()
                 !state_->detail_,
                 state_->warningColor_,
                 state_->warning_ );
-    UpdateView();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +303,7 @@ void EventPresenter::OnSaveClicked()
     }
     else if( state_->mode_ == eEventDockModes_Create )
         Plan();
-    BuildView( eEventDockModes_EditPlanned );
+    ResetView( eEventDockModes_EditPlanned );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void EventPresenter::OnSaveAsClicked()
         state_->mode_ == eEventDockModes_Create )
         throw MASA_EXCEPTION( "Save as button should be disabled" );
     Plan();
-    BuildView( eEventDockModes_EditPlanned );
+    ResetView( eEventDockModes_EditPlanned );
 }
 
 // -----------------------------------------------------------------------------
@@ -402,37 +402,51 @@ bool EventPresenter::HasCurrentPresenter() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventPresenter::BuildView
+// Name: EventPresenter::ResetView
 // Created: ABR 2013-12-04
 // -----------------------------------------------------------------------------
-void EventPresenter::BuildView( E_EventDockModes mode,
+void EventPresenter::ResetView( E_EventDockModes mode,
                                 bool raise /* = false */,
                                 const QColor& warningColor /* = Qt::transparent */,
                                 const std::string& warning /* = "" */ )
 {
     ChangeMode( mode, raise, false, warningColor, warning );
-    if( state_->event_ )
-        GetCurrentPresenter().FillFrom( *state_->event_ );
-    view_.Build( *state_ );
-    UpdateView();
+    if( state_->event_ && HasCurrentPresenter() )
+    {
+        EventPresenter_ABC& current = GetCurrentPresenter();
+        if( state_->event_->GetType() != current.GetType() )
+            throw MASA_EXCEPTION( "Trying to fill a presenter of type "
+                                  + ENT_Tr::ConvertFromEventType( current.GetType() )
+                                  + " with an event of type "
+                                  + ENT_Tr::ConvertFromEventType( state_->event_->GetType() ) );
+        current.FillFrom( *state_->event_ );
+    }
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventPresenter::UpdateView
 // Created: ABR 2013-12-04
 // -----------------------------------------------------------------------------
-void EventPresenter::UpdateView()
+void EventPresenter::BuildView()
 {
-    state_->trigger_ = HasCurrentPresenter() ? GetCurrentPresenter().ShouldEnableTrigger() : false;
-    state_->clear_ = HasCurrentPresenter() ? GetCurrentPresenter().ShouldEnableClear() : false;
-    view_.Update( *state_ );
+    if( HasCurrentPresenter() )
+    {
+        EventPresenter_ABC& current = GetCurrentPresenter();
+        current.BuildView();
+        state_->trigger_ = current.ShouldEnableTrigger();
+        state_->clear_ = current.ShouldEnableClear();
+    }
+    view_.BlockSignals( true );
+    view_.Build( *state_ );
+    view_.BlockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventPresenter::UpdateViewAfterEdition
 // Created: ABR 2013-12-04
 // -----------------------------------------------------------------------------
-void EventPresenter::UpdateViewAfterEdition()
+void EventPresenter::BuildViewAfterEdition()
 {
     ChangeMode( state_->mode_ == eEventDockModes_DisplayTriggered
                     ? eEventDockModes_EditTriggered
@@ -441,7 +455,7 @@ void EventPresenter::UpdateViewAfterEdition()
                 false,
                 Qt::transparent,
                 "" );
-    UpdateView();
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------

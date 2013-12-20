@@ -12,7 +12,6 @@
 #include "MockEventTools.h"
 #include "clients_gui/Event.h"
 #include "clients_gui/EventTaskPresenter.h"
-#include "clients_gui/EventTaskView_ABC.h"
 #include "clients_gui/EventTaskViewState.h"
 
 namespace gui
@@ -44,16 +43,6 @@ namespace
                lhs.bytes_ == rhs.bytes_;
     }
 
-    MOCK_BASE_CLASS( MockEventTaskView, gui::EventTaskView_ABC )
-    {
-        MOCK_METHOD( Purge, 0 );
-        MOCK_METHOD( Build, 1, void( const gui::EventViewState& ), BuildEvent );
-        MOCK_METHOD( Build, 1, void( const gui::EventTaskViewState& ), BuildEventTask );
-        MOCK_METHOD( Update, 1 );
-        MOCK_METHOD( BlockSignals, 1 );
-        MOCK_METHOD( Draw, 1 );
-    };
-
     struct TaskPresenterFixture : public PresenterBaseFixture
     {
         TaskPresenterFixture()
@@ -67,30 +56,24 @@ namespace
             taskEvent->GetEvent().action.payload = "cGF5bG9hZA==";
         }
 
-        MockEventTaskView taskView;
+        MockEventView< gui::EventTaskViewState > taskView;
         gui::EventTaskPresenter taskPresenter;
         gui::EventTaskViewState state;
         boost::shared_ptr< gui::Event > taskEvent;
 
         void InitializePresenter()
         {
-            CheckBuild();
             taskPresenter.FillFrom( *taskEvent );
         }
         void CheckBuild()
         {
             MOCK_EXPECT( taskView.BlockSignals ).once().with( true );
-            MOCK_EXPECT( taskView.BuildEventTask ).once().with( state );
+            MOCK_EXPECT( taskView.Build ).once().with( state );
             MOCK_EXPECT( taskView.BlockSignals ).once().with( false );
         }
     };
 
 } //! anonymous namespace
-
-BOOST_FIXTURE_TEST_CASE( task_presenter_fill_from_event, TaskPresenterFixture )
-{
-    InitializePresenter();
-}
 
 BOOST_FIXTURE_TEST_CASE( task_presenter_on_change_label, TaskPresenterFixture )
 {

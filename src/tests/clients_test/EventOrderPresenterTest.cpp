@@ -21,8 +21,8 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_gui/Event.h"
 #include "clients_gui/EventOrderPresenter.h"
-#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_gui/EventOrderViewState.h"
+#include "clients_gui/EventView_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_gui/TimelinePublisher.h"
@@ -98,15 +98,6 @@ namespace
         MOCK_METHOD( GetStaticModel, 0 );
         MOCK_METHOD( SetParentObject, 1 );
         MOCK_METHOD( SetParamInterface, 1 );
-    };
-    MOCK_BASE_CLASS( MockEventOrderView, gui::EventOrderView_ABC )
-    {
-        MOCK_METHOD( Purge, 0 );
-        MOCK_METHOD( Build, 1, void( const gui::EventViewState& ), BuildEvent );
-        MOCK_METHOD( Build, 1, void( const gui::EventOrderViewState& ), BuildEventOrder );
-        MOCK_METHOD( Update, 1 );
-        MOCK_METHOD( BlockSignals, 1 );
-        MOCK_METHOD( Draw, 1 );
     };
     MOCK_BASE_CLASS( MockEntity, kernel::Entity_ABC )
     {
@@ -206,7 +197,7 @@ namespace
         MockInterfaceBuilder interfaceBuilder;
         MockMissionInterface missionInterface;
 
-        MockEventOrderView orderView;
+        MockEventView< gui::EventOrderViewState > orderView;
         gui::EventOrderPresenter orderPresenter;
         gui::EventOrderViewState state;
         boost::shared_ptr< gui::Event > orderEvent;
@@ -263,7 +254,7 @@ namespace
         void CheckBuild()
         {
             MOCK_EXPECT( orderView.BlockSignals ).once().with( true );
-            MOCK_EXPECT( orderView.BuildEventOrder ).once().with( state );
+            MOCK_EXPECT( orderView.Build ).once().with( state );
             MOCK_EXPECT( orderView.BlockSignals ).once().with( false );
         }
         void CheckUnitBuild( const std::string& mission, bool invalid = false )

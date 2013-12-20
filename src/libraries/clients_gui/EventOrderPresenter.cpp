@@ -12,9 +12,9 @@
 #include "moc_EventOrderPresenter.cpp"
 #include "Event.h"
 #include "EventAction.h"
-#include "EventOrderView_ABC.h"
 #include "EventOrderViewState.h"
 #include "EventPresenter.h"
+#include "EventView_ABC.h"
 #include "TimelinePublisher.h"
 
 #include "actions/ActionsModel.h"
@@ -51,7 +51,7 @@ using namespace gui;
 // Name: EventOrderPresenter constructor
 // Created: LGY 2013-10-03
 // -----------------------------------------------------------------------------
-EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& view,
+EventOrderPresenter::EventOrderPresenter( EventView_ABC< EventOrderViewState >& view,
                                           const kernel::AgentTypes& agentTypes,
                                           actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                           actions::gui::MissionInterface_ABC& missionInterface,
@@ -59,7 +59,7 @@ EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& view,
                                           actions::ActionFactory_ABC& actionFactory,
                                           TimelinePublisher& timelinePublisher,
                                           kernel::Controllers& controllers )
-    : view_( view )
+    : EventSubPresenter_ABC< EventOrderViewState >( eEventTypes_Order, view )
     , agentTypes_( agentTypes )
     , interfaceBuilder_( interfaceBuilder )
     , missionInterface_( missionInterface )
@@ -68,7 +68,6 @@ EventOrderPresenter::EventOrderPresenter( EventOrderView_ABC& view,
     , timelinePublisher_( timelinePublisher )
     , entity_( controllers )
     , order_( 0 )
-    , state_( new EventOrderViewState() )
     , context_( 0 )
 {
     // NOTHING
@@ -106,6 +105,7 @@ void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity )
 {
     entity_ = entity;
     Select( state_->currentType_, state_->currentMission_ );
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +115,7 @@ void EventOrderPresenter::OnTargetChanged( const kernel::Entity_ABC* entity )
 void EventOrderPresenter::OnMissionTypeChanged( E_MissionType missionType )
 {
     Select( missionType );
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,6 +125,7 @@ void EventOrderPresenter::OnMissionTypeChanged( E_MissionType missionType )
 void EventOrderPresenter::OnMissionChanged( const QString& mission )
 {
     Select( state_->currentType_, mission.toStdString() );
+    BuildView();
 }
 
 namespace
@@ -232,12 +234,9 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::Purge()
 {
+    EventSubPresenter_ABC< EventOrderViewState >::Purge();
     entity_ = 0;
     order_ = 0;
-    state_->Purge();
-    view_.BlockSignals( true );
-    view_.Purge();
-    view_.BlockSignals( false );
     Select();
 }
 
@@ -426,11 +425,6 @@ void EventOrderPresenter::SelectWithoutTarget( E_MissionType type,
             missionInterface_.FillFrom( *action );
     }
     missionInterface_.SetEntity( 0 );
-
-    // Update the view
-    view_.BlockSignals( true );
-    view_.Build( *state_ );
-    view_.BlockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -526,9 +520,4 @@ void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
     // Fill parameters
     if( action )
         missionInterface_.FillFrom( *action );
-
-    // Update the view
-    view_.BlockSignals( true );
-    view_.Build( *state_ );
-    view_.BlockSignals( false );
 }

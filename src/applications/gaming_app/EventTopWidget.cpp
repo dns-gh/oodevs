@@ -40,7 +40,7 @@ namespace
 EventTopWidget::EventTopWidget( gui::EventPresenter& presenter,
                                 const kernel::Time_ABC& simulation,
                                 kernel::ActionController& actionController )
-    : EventWidget_ABC< gui::EventView_ABC >( presenter )
+    : EventDefaultWidget_ABC( presenter )
     , simulation_( simulation )
     , actionController_( actionController )
     , saveAction_( 0 )
@@ -127,7 +127,7 @@ void EventTopWidget::Purge()
 // Name: EventTopWidget::Update
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventTopWidget::Update( const gui::EventViewState& state )
+void EventTopWidget::Build( const gui::EventViewState& state )
 {
     E_EventTypes type = ( state.event_ ) ? state.event_->GetType() : eNbrEventTypes;
     const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";

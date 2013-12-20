@@ -11,7 +11,6 @@
 #define __EventSupervisorActionWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventSupervisorActionWidget
@@ -19,7 +18,7 @@
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventSupervisorActionWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventSupervisorActionWidget : public EventDefaultWidget_ABC
 {
     Q_OBJECT
 
