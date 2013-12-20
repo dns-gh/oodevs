@@ -15,6 +15,7 @@
 #pragma warning( pop )
 #include <boost/container/deque.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <cstdint>
 #include <list>
 #include <map>
@@ -65,6 +66,9 @@ class ConsignRecorder: private boost::noncopyable
 public:
     ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize, uint32_t maxConsigns,
            uint32_t maxHistory );
+    // Create recorder in indexer mode only, inputs will not be recorded to disk,
+    // and WriteEntry will throw an exception.
+    ConsignRecorder( const tools::Path& archivePath, uint32_t maxConsigns, uint32_t maxHistory );
     virtual ~ConsignRecorder();
 
     void Flush();
@@ -86,6 +90,8 @@ private:
     void AppendEntries( const std::vector< ConsignOffset >& offsets, 
         boost::ptr_vector< sword::LogHistoryEntry >& entries ) const;
 
+    void IndexEntry( uint32_t requestId, bool destroyed, const ConsignOffset& offset,
+            const sword::LogHistoryEntry& entry, std::vector< uint32_t >& entities );
     void UpdateRequestIndex( uint32_t requestId, const ConsignOffset& offset,
            bool destroyed, const std::vector< uint32_t >& entities );
     void UpdateHistoryIndex( uint32_t requestId, int32_t tick, const ConsignOffset& offset );
@@ -115,6 +121,11 @@ private:
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,
         int32_t startTick, size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries );
+
+uint32_t GetConsignId( const sword::LogHistoryEntry& entry );
+bool IsConsignDestroyed( const sword::LogHistoryEntry& entry );
+void AppendConsignEntities( const sword::LogHistoryEntry& entry,
+        std::vector< uint32_t >& entities );
 
 }  // namespace logistic
 }  // namespace plugins

@@ -15,6 +15,7 @@
 #include "logistic_plugin/ConsignRecorder.h"
 #include "logistic_plugin/ConsignResolver_ABC.h"
 #include "protocol/Protocol.h"
+#include <tools/Helpers.h>
 #include <tools/TemporaryDirectory.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -616,17 +617,34 @@ BOOST_AUTO_TEST_CASE( TestEscapeRegex )
 
 BOOST_AUTO_TEST_CASE( TestConsignArchive )
 {
+    const std::string strings[] =
+    {
+        "abcd",
+        "efgh",
+        "ijkl",
+    };
+
     tools::TemporaryDirectory tempDir( "testlogistic-plugin-", testOptions.GetTempDir() );
     const auto basePath = tempDir.Path() / "consign";
     ConsignArchive ar( basePath, 10 );
-    ar.Write( "abcd", 4 );
-    ar.Write( "efgh", 4 );
-    ar.Write( "ijkl", 4 );
+    for( size_t i = 0; i != COUNT_OF( strings ); ++i )
+        ar.Write( &strings[i][0], static_cast< uint32_t >( strings[i].size() ));
     ar.Flush();
 
     auto paths = tempDir.Path().ListFiles( false, true, true );
     BOOST_REQUIRE_EQUAL( 2u, paths.size() );
     BOOST_CHECK_EQUAL( "consign.2", paths[1].ToUTF8() );
+
+    int seen = 0;
+    ar.ReadAll( [&]( ConsignOffset, std::vector< uint8_t >& output )
+    {
+        BOOST_REQUIRE_EQUAL( 4u, output.size() );
+        std::string s( reinterpret_cast< const char* >( &output[0] ), output.size() );
+        BOOST_REQUIRE( seen < COUNT_OF( strings ));
+        BOOST_CHECK_EQUAL( s, strings[ seen ] );
+        ++seen;
+    });
+    BOOST_CHECK_EQUAL( seen, COUNT_OF( strings ));
 }
 
 namespace
@@ -647,15 +665,39 @@ std::set< uint32_t > MakeSet( uint32_t u1 = 0, uint32_t u2 = 0, uint32_t u3 = 0 
 void AddAndFlush( ConsignRecorder& rec, uint32_t requestId, uint32_t tick,
         bool destroyed, const std::set< uint32_t >& entitiesSet )
 {
-    // ConsignRecord does not understand creation/update/destruction protocol,
-    // it can be fed with any structure.
     sword::LogHistoryEntry entry;
     entry.set_tick( tick );
-    auto funeral = entry.mutable_funeral()->mutable_creation();
-    funeral->mutable_request()->set_id( requestId );
-    funeral->mutable_unit()->set_id( 8 );
-    funeral->set_tick( tick );
-    funeral->set_rank( static_cast< sword::EnumHumanRank >( 0 ) );
+
+    // For the WriteEntry test we could generate any kind of message, the
+    // metadata can be passed to WriteEntry directly. But for a loading test
+    // we have to craft a structure from which the entities and tick can
+    // be retrieved.
+    auto creation = entry.mutable_supply()->mutable_creation();
+    creation->mutable_request()->set_id( requestId );
+    creation->set_tick( tick );
+    creation->mutable_supplier()->mutable_automat()->set_id( 12345 );
+    creation->mutable_transporters_provider()->mutable_automat()->set_id( 12345 );
+
+    auto update = entry.mutable_supply()->mutable_update();
+    update->mutable_request()->set_id( requestId );
+    update->mutable_convoyer()->set_id( 12345 );
+    update->set_state(
+            static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( 0 ) );
+    update->set_current_state_end_tick( 1000 );
+    {
+        for( auto it = entitiesSet.cbegin(); it != entitiesSet.cend(); ++it )
+        {
+            auto* req = update->mutable_requests()->add_requests();
+            req->mutable_recipient()->set_id( *it );
+        }
+    }
+
+    if( destroyed )
+    {
+        auto destruction = entry.mutable_supply()->mutable_destruction();
+        destruction->mutable_request()->set_id( requestId );
+    }
+
     std::vector< uint32_t > entities( entitiesSet.begin(), entitiesSet.end() );
     rec.WriteEntry( requestId, destroyed, entry, entities );
     rec.Flush();
@@ -674,13 +716,13 @@ std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& 
     bool first = true;
     for( auto it = entries.cbegin(); it != entries.end(); ++it )
     {
-        if( !it->has_funeral() || !it->funeral().has_creation() )
+        if( !it->has_supply() || !it->supply().has_creation() )
             continue;
         if( first )
             first = false;
         else
             ss << ", ";
-        auto& creation = it->funeral().creation();
+        auto& creation = it->supply().creation();
         ss << creation.request().id() << "." << creation.tick();
     }
     return ss.str();
@@ -767,19 +809,32 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
     AddAndFlush( rec, 1, 3, true, MakeSet( 20 ));
     AddAndFlush( rec, 4, 3, false, MakeSet( 40 ));
 
-    // Check history for single unit
-    BOOST_CHECK_EQUAL( "3.2", TraceEntitiesRequests( rec, -1, MakeSet( 10 )));
-    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20 )));
-    BOOST_CHECK_EQUAL( "1.3", TraceEntitiesRequests( rec, -1, MakeSet( 30 )));
-    // Missing unit
-    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, -1, MakeSet( 1000 )));
-    // Multiple units with one missing
-    BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20, 30, 1000 )));
+    auto check = []( const ConsignRecorder& rec )
+    {
+        // Check history for single unit
+        BOOST_CHECK_EQUAL( "3.2", TraceEntitiesRequests( rec, -1, MakeSet( 10 )));
+        BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20 )));
+        BOOST_CHECK_EQUAL( "1.3", TraceEntitiesRequests( rec, -1, MakeSet( 30 )));
+        // Missing unit
+        BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, -1, MakeSet( 1000 )));
+        // Multiple units with one missing
+        BOOST_CHECK_EQUAL( "1.3, 3.2", TraceEntitiesRequests( rec, -1, MakeSet( 20, 30, 1000 )));
 
-    // Check history from ticks
-    BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, 0, MakeSet( 20, 30, 40 )));
-    BOOST_CHECK_EQUAL( "1.1", TraceEntitiesRequests( rec, 1, MakeSet( 20, 30, 40 )));
-    BOOST_CHECK_EQUAL( "3.2, 1.1", TraceEntitiesRequests( rec, 2, MakeSet( 20, 30, 40 )));
-    BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 3, MakeSet( 20, 30, 40 )));
-    BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 4, MakeSet( 20, 30, 40 )));
+        // Check history from ticks
+        BOOST_CHECK_EQUAL( "", TraceEntitiesRequests( rec, 0, MakeSet( 20, 30, 40 )));
+        BOOST_CHECK_EQUAL( "1.1", TraceEntitiesRequests( rec, 1, MakeSet( 20, 30, 40 )));
+        BOOST_CHECK_EQUAL( "3.2, 1.1", TraceEntitiesRequests( rec, 2, MakeSet( 20, 30, 40 )));
+        BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 3, MakeSet( 20, 30, 40 )));
+        BOOST_CHECK_EQUAL( "4.3, 1.3, 3.2", TraceEntitiesRequests( rec, 4, MakeSet( 20, 30, 40 )));
+    };
+
+    // Check from initial recorder
+    check( rec ); 
+
+    // Reload and check again
+    ConsignRecorder reloaded( path, 1000, 4 );
+    check( reloaded );
+
+    // Cannot write to a read-only recorder (sic)
+    BOOST_CHECK_THROW( AddAndFlush( reloaded, 4, 3, false, MakeSet( 40 )), tools::Exception );
 }

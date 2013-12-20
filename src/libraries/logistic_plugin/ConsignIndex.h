@@ -56,8 +56,7 @@ public:
     ConsignIndex();
     virtual ~ConsignIndex();
 
-    ConsignEvent Update( const sword::SimToClient& message,
-            std::vector< uint32_t >& entities, int tick );
+    ConsignEvent Update( const sword::SimToClient& message, int tick );
 
 private:
     boost::ptr_map< int, LiveConsign > consigns_;

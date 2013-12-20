@@ -94,10 +94,11 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         return;
     }
 
-    std::vector< uint32_t > entities;
-    const auto ev = index_->Update( message, entities, currentTick_ );
+    const auto ev = index_->Update( message, currentTick_ );
     if( ev.id <= 0 )
         return;
+    std::vector< uint32_t > entities;
+    AppendConsignEntities( *ev.entry, entities );
     recorder_->WriteEntry( ev.id, ev.action == eConsignDestruction, *ev.entry, entities );
     if( logger_ )
         logger_->Log( ev, message, today, currentTick_, simTime_ );

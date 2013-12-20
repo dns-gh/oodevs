@@ -63,29 +63,23 @@ struct plugins::logistic::LiveConsign
     {
     }
 
-    void Update( const sword::SimToClient& message, std::vector< uint32_t >& entities );
+    void Update( const sword::SimToClient& message );
 
     boost::shared_ptr< sword::LogHistoryEntry > entry_;
 };
 
-void LiveConsign::Update( const sword::SimToClient& message,
-        std::vector< uint32_t >& entities )
+void LiveConsign::Update( const sword::SimToClient& message )
 {
     const auto& msg = message.message();
     if( msg.has_log_funeral_handling_creation() )
     {
-        const auto& sub = msg.log_funeral_handling_creation();
-        *entry_->mutable_funeral()->mutable_creation() = sub;
-        entities.push_back( sub.unit().id() );
+        *entry_->mutable_funeral()->mutable_creation() =
+            msg.log_funeral_handling_creation();
     }
     else if( msg.has_log_funeral_handling_update() )
     {
-        const auto& sub = msg.log_funeral_handling_update();
-        entry_->mutable_funeral()->mutable_update()->MergeFrom( sub );
-        if( sub.has_handling_unit() )
-            entities.push_back( protocol::GetParentEntityId( sub.handling_unit() ));
-        if( sub.has_convoying_unit() )
-            entities.push_back( sub.convoying_unit().id() );
+        entry_->mutable_funeral()->mutable_update()->MergeFrom(
+            msg.log_funeral_handling_update() );
     }
     else if( msg.has_log_funeral_handling_destruction() )
     {
@@ -94,16 +88,13 @@ void LiveConsign::Update( const sword::SimToClient& message,
     }
     else if( msg.has_log_maintenance_handling_creation() )
     {
-        const auto& sub = msg.log_maintenance_handling_creation();
-        *entry_->mutable_maintenance()->mutable_creation() = sub;
-        entities.push_back( sub.unit().id() );
+        *entry_->mutable_maintenance()->mutable_creation() =
+            msg.log_maintenance_handling_creation();
     }
     else if( msg.has_log_maintenance_handling_update() )
     {
-        const auto& sub = msg.log_maintenance_handling_update();
-        entry_->mutable_maintenance()->mutable_update()->MergeFrom( sub );
-        entities.push_back( sub.unit().id() );
-        entities.push_back( sub.provider().id() );
+        entry_->mutable_maintenance()->mutable_update()->MergeFrom(
+            msg.log_maintenance_handling_update() );
     }
     else if( msg.has_log_maintenance_handling_destruction() )
     {
@@ -112,17 +103,13 @@ void LiveConsign::Update( const sword::SimToClient& message,
     }
     else if( msg.has_log_medical_handling_creation() )
     {
-        const auto& sub = msg.log_medical_handling_creation();
-        *entry_->mutable_medical()->mutable_creation() = sub;
-        entities.push_back( sub.unit().id() );
+        *entry_->mutable_medical()->mutable_creation() =
+            msg.log_medical_handling_creation();
     }
     else if( msg.has_log_medical_handling_update() )
     {
-        const auto& sub = msg.log_medical_handling_update();
-        entry_->mutable_medical()->mutable_update() ->MergeFrom( sub );
-        entities.push_back( sub.unit().id() );
-        if( sub.has_provider() )
-            entities.push_back( sub.provider().id() );
+        entry_->mutable_medical()->mutable_update() ->MergeFrom(
+            msg.log_medical_handling_update() );
     }
     else if( msg.has_log_medical_handling_destruction() )
     {
@@ -131,10 +118,8 @@ void LiveConsign::Update( const sword::SimToClient& message,
     }
     else if( msg.has_log_supply_handling_creation() )
     {
-        const auto& sub = msg.log_supply_handling_creation();
-        *entry_->mutable_supply()->mutable_creation()  = sub;
-        entities.push_back( protocol::GetParentEntityId( sub.supplier() ));
-        entities.push_back( protocol::GetParentEntityId( sub.transporters_provider() ));
+        *entry_->mutable_supply()->mutable_creation() =
+            msg.log_supply_handling_creation();
     }
     else if( msg.has_log_supply_handling_update() )
     {
@@ -142,16 +127,9 @@ void LiveConsign::Update( const sword::SimToClient& message,
         // Clear them before merging. This is fragile but saves tons of code
         // right now.
         const auto& sub = msg.log_supply_handling_update();
-        entry_->mutable_supply()->mutable_update()->mutable_requests()->Clear();
-        entry_->mutable_supply()->mutable_update()->MergeFrom( sub );
-        if( sub.has_convoyer() )
-            entities.push_back( sub.convoyer().id() );
         if( sub.has_requests() )
-        {
-            const int count = sub.requests().requests().size();
-            for( int i = 0; i != count; ++i )
-                entities.push_back( sub.requests().requests( i ).recipient().id() );
-        }
+            entry_->mutable_supply()->mutable_update()->mutable_requests()->Clear();
+        entry_->mutable_supply()->mutable_update()->MergeFrom( sub );
     }
     else if( msg.has_log_supply_handling_destruction() )
     {
@@ -168,8 +146,7 @@ ConsignIndex::~ConsignIndex()
 {
 }
 
-ConsignEvent ConsignIndex::Update( const sword::SimToClient& message,
-        std::vector< uint32_t >& entities, int tick )
+ConsignEvent ConsignIndex::Update( const sword::SimToClient& message, int tick )
 {
     auto ev = GetEventType( message );
     if( ev.id <= 0 )
@@ -183,11 +160,10 @@ ConsignEvent ConsignIndex::Update( const sword::SimToClient& message,
         else
             consigns_.replace( it, consign );
     }
-    it->second->Update( message, entities );
+    it->second->Update( message );
     it->second->entry_->set_tick( tick );
     ev.entry = it->second->entry_;
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
     return ev;
 }
-
