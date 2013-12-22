@@ -99,9 +99,10 @@ message ClientToReplay {
         allowing to track response message matching a specific request
         emitted by the client.
     */
-    optional int32   context = 1;
+    optional int32   context   = 1;
     //! A field containing one of the messages to be sent
-    required Content message = 2;
+    required Content message   = 2;
+    optional int32   client_id = 3;
 }
 
 /** @}*/

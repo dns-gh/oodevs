@@ -152,6 +152,14 @@ message ReplayToClient {
     optional int32   context = 1;
     //! A field containing one of the messages to be sent
     required Content message = 2;
+    //! Acknowledgent messages will use this field to identify client
+    //! recipient.
+    optional int32   client_id = 3;
+    //! This fields will eventually supersede message specific error
+    //! handling. For now, ignore it unless a client message explicitely
+    //! states it is using it, in which case a non-empty message signals
+    //! an error.
+    optional string  error_msg = 4;
 }
 
 /** @}*/
