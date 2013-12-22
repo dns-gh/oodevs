@@ -35,23 +35,25 @@ message ControlSkipToDate {
     required DateTime date_time = 1;
 }
 
-/** @struct TimeTableRequest
-    @brief Requests datetime information in a specified tick range
-
-    @see TimeTableRequestAck
-*/
+//! Requests a mapping from ticks to simulated and real times.
+//!
+//! The mapping is sent in TimeTableRequestAck, and optionally broadcast
+//! in a standalone TimeTable message.
+//!
+//! Errors are return both in the TimeTableRequestAck and in its parent
+//! ReplayToClient message.
 message TimeTableRequest {
-    /** @struct TimeRange
-        @brief A time range
-    */
     message TimeRange {
-        //! The range first tick
+        //! Range first tick
         required int32 begin_tick = 1;
-        //! The range last tick
+        //! Range last tick
         required int32 end_tick   = 2;
     }
-    //! The time range
     required TimeRange tick_range = 1;
+    //! If broadcast is true, a TimeTable response will be sent to all
+    //! connected clients. TimeTable data is always sent as part of the
+    //! TimeTableRequestAck response.
+    optional bool      broadcast  = 2 [ default = true ];
 }
 
 /** @struct ForceRefreshDataRequest

@@ -162,7 +162,7 @@ bool ReplayPlugin::HandleClientToReplay( const sword::ClientToReplay& message,
     else if( msg.has_control_skip_to_date() )
         skipToFrame_ = loader_.FindTickForDate( msg.control_skip_to_date().date_time().data() );
     else if( msg.has_time_table_request() )
-        RequestTimeTable( msg.time_table_request().tick_range(), unicaster, broadcaster );
+        RequestTimeTable( msg.time_table_request(), unicaster, broadcaster );
     else if( msg.has_force_refresh_data_request() )
         ReloadAll();
     else
@@ -262,7 +262,7 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
 // Name: ReplayPlugin::RequestTimeTable
 // Created: JSR 2011-07-22
 // -----------------------------------------------------------------------------
-void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg,
+void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest& msg,
             dispatcher::RewritingPublisher_ABC& unicaster,
             dispatcher::ClientPublisher_ABC& broadcaster )
 {
@@ -271,18 +271,22 @@ void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest_TimeRange& ms
     ack->set_error_code( sword::TimeTableRequestAck::no_error );
     try
     {
-        int beginTick = msg.begin_tick();
-        int endTick = msg.end_tick();
+        const auto& range = msg.tick_range();
+        const int beginTick = range.begin_tick();
+        const int endTick = range.end_tick();
         protocol::Check( beginTick > 0, "begin_tick must be greater than zero" );
         protocol::Check( beginTick <= endTick,
-                "begin_tick must be less or equal than end_tick" );
+                "begin_tick must be equal or less than end_tick" );
         protocol::Check( endTick <= static_cast< int >( loader_.GetTickNumber() ),
-                "end_tick must be less or equal than replay tick count" );
+                "end_tick must be equal or less than replay tick count" );
 
-        sword::ReplayToClient table;
-        loader_.FillTimeTable( *table.mutable_message()->mutable_time_table(),
-                beginTick, endTick );
-        broadcaster.Send( table );
+        loader_.FillTimeTable( *ack->mutable_time_table(), beginTick, endTick );
+        if( msg.broadcast() )
+        {
+            sword::ReplayToClient table;
+            *table.mutable_message()->mutable_time_table() = ack->time_table();
+            broadcaster.Send( table );
+        }
     }
     catch( const protocol::Exception& e )
     {
