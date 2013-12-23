@@ -702,6 +702,14 @@ Parked engine running</source>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

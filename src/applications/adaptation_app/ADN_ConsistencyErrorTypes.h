@@ -39,6 +39,8 @@ enum E_ConsistencyCheck
     eInvalidIdInVector,
     eDuplicateTranslation,
     eInvalidProbe,
+    eNonLogUnitInLogAutomat,
+    eLogUnitInNonLogAutomat,
     eOthersMask
 };
 

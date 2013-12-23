@@ -184,6 +184,32 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output ) co
     output << xml::end;
 }
 
+namespace
+{
+    bool IsLogisticAutomat( E_AgentTypeAutomate type )
+    {
+        return type == eAgentTypeAutomateLOGTC2
+            || type == eAgentTypeAutomateLOGBLDSante
+            || type == eAgentTypeAutomateLOGBLDMaintenance
+            || type == eAgentTypeAutomateLOGBLDRavitaillement
+            || type == eAgentTypeAutomateLOGBLTSante
+            || type == eAgentTypeAutomateLOGBLTMaintenance
+            || type == eAgentTypeAutomateLOGBLTRavitaillement;
+    }
+
+    bool IsLogisticUnit( E_AgentTypePion type )
+    {
+        return type == eAgentTypePionLOGTC2
+            || type == eAgentTypePionLOGBLDSante
+            || type == eAgentTypePionLOGBLDMaintenance
+            || type == eAgentTypePionLOGBLDRavitaillement
+            || type == eAgentTypePionLOGBLTSante
+            || type == eAgentTypePionLOGBLTMaintenance
+            || type == eAgentTypePionLOGBLTRavitaillement
+            || type == eAgentTypePionLOGConvoi;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AutomatonInfos::CheckDatabaseValidity
 // Created: ABR 2012-07-04
@@ -211,6 +237,21 @@ void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyCh
         }
     if( error )
         checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
+
+    const bool logistic = IsLogisticAutomat( nAgentType_.GetData() );
+    for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+    {
+        const ADN_Automata_Data::UnitInfos& unit = **it;
+        assert( unit.GetCrossedElement() != 0 );
+        if( !unit.GetCrossedElement() )
+            continue;
+        const ADN_Units_Data::UnitInfos& agent = *unit.GetCrossedElement();
+        if( logistic != IsLogisticUnit( agent.eTypeId_.GetData() ) )
+        {
+            checker.AddError( logistic? eNonLogUnitInLogAutomat : eLogUnitInNonLogAutomat, strName_.GetData(), eAutomata );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
