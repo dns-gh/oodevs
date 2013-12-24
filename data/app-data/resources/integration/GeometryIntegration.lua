@@ -1,101 +1,198 @@
 --Default Geometry Implementation
 
+--- Returns a position translated from a direction at a given distance
+-- @param position Simulation source of the starting position
+-- @param direction Simulation source of a direction (vector)
+-- @param dist Float, the distance of the translation
+-- @return Simulation source of the translated position
 integration.positionTranslateDir = function ( position, direction, dist )
     return DEC_Geometrie_PositionTranslateDir( position, direction, dist )
 end
 
+--- Returns a list of points at the border of the area
+-- @param location Simulation source of an area
+-- @return List of simulation sources of positions
 integration.locationInPoints = function( location )
     return DEC_Geometrie_ListePointsLocalisation( location )
 end
 
-integration.isPointInAOR_WithParam = function( fuseau, position )
-    return DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau, position )
+--- Returns true if the provided position is in the area of responsibility,
+--- returns false otherwise
+-- @param areaOfResponsibility Simulation source of an area of responsibility
+-- @param position Simulation source of a position
+-- @return Boolean, whether or not the position is in the AOR
+integration.isPointInAOR_WithParam = function( areaOfResponsibility, position )
+    return DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( areaOfResponsibility, position )
 end
 
-integration.computeArrivedPointForAOR = function( fuseau )
-    return DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau )
+--- Returns a position at the end of the provided area of responsibility
+-- @param areaOfResponsibility Simulation source of an area of responsibility
+-- @return Simulation source of a position at the end of the AOR
+integration.computeArrivedPointForAOR = function( areaOfResponsibility )
+    return DEC_Geometrie_CalculerPointArriveePourFuseau( areaOfResponsibility )
 end
 
+--- Returns the barycenter of the provided area
+-- Note that the barycenter may be outside of the area
+-- @param location Simulation source of an area
+-- @return Simulation source of a position
 integration.computeLocationBarycenter = function( location )
     return DEC_Geometrie_CalculerBarycentreLocalisation( location )
 end
 
-integration.positionAdvanceAlongAORAutomat = function( position )
-    return DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( position )
+--- Returns a position on the middle limit at the provided advance
+--- along the area of responsibility.
+-- @param areaOfResponsibility Simulation source of an area of responsibility
+-- @param advance Float, the advance along the AOR
+-- @return Simulation source of a position
+integration.computePointOnAOR = function( areaOfResponsibility, advance )
+    return DEC_Geometrie_CalculerPointSurFuseau( areaOfResponsibility, advance )
 end
 
-integration.computePointOnAOR = function( fuseau, distance )
-    return DEC_Geometrie_CalculerPointSurFuseau( fuseau, distance )
-end
-
+--- Returns a list of all road intersections with the border of the given area
+-- Returns an empty list if there are none
+-- @param area Simulation source of an area
+-- @return List of simulation sources of positions
 integration.findRoadIntersectionWithZone = function( area )
     return DEC_Geometrie_FindRoadIntersectionWithZone( area )
 end
 
+--- Returns true if the given position is inside the area, false otherwise
+-- @param position Simulation source of a position
+-- @param location Simulation source of an area
+-- @return Boolean, whether or not the position is in the location
 integration.isPointInsideLocation = function( position, location )
     return DEC_Geometrie_EstPointDansLocalisation( position, location )
 end
 
+--- Returns a circle with the given position as its center and 
+--- the given radius as its radius
+-- @param point Simulation source of a position, the center of the circle
+-- @param radius Float, the radius of the circle
+-- @return Simulation source of a circle
 integration.createLocationCircle = function( point, radius )
     return DEC_Geometrie_CreerLocalisationCercle( point, radius )
 end
 
+--- Returns the advance of the provided agent 
+--- along the current area of responsibility.
+-- @param agent Simulation source of an agent
+-- @return Float standing for the advance of the agent along the AOR
 integration.advanceAlongAOR = function( agent )
     return DEC_Geometrie_AdvanceAlongFuseau( agent )
 end
 
+--- Returns the distance between two positions,
+--- taking into account their respective heights
+-- @param firstPosition Simulation source of first position
+-- @param firstHeight Float, the height of the first position
+-- @param secondPosition Simulation source of the second position
+-- @param secondHeight Float, the height of the second position
+-- @return Float, the distance between the positions
 integration.compute3DDistance = function( firstPosition, firstHeight, secondPosition, secondHeight )
     return DEC_Geometrie_Distance3D( firstPosition, firstHeight, secondPosition, secondHeight )
 end
 
+--- Returns the distance between two positions
+-- @param firstPosition Simulation source of first position
+-- @param secondPosition Simulation source of the second position
+-- @return Float, the distance between the positions
 integration.computeDistance = function( firstPosition, secondPosition )
     return DEC_Geometrie_Distance( firstPosition, secondPosition )
 end
 
-integration.postionAdvanceAlongAOR = function( position )
+--- Returns the advance of the provided position
+--- along the current area of responsibility.
+-- @param position Simulation source of a position
+-- @return Float, the advance of the position along the AOR
+integration.positionAdvanceAlongAOR = function( position )
     return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
 
+--- Returns an homothetic transformation of the location so that the border
+--- of the new area will be at the provided distance of the former border.
+-- @param location Simulation source of an area
+-- @param distance Float, the distance used in the homothety
+-- @return Simulation source of an enlarged area
 integration.enlargeLocation = function( location, distance )
     return DEC_Geometrie_AgrandirLocalisation( location, distance )
 end
 
+--- Returns the nearest point to the provided position on the border of the object
+-- @param position Simulation source of a position
+-- @param object Simulation source of an object
+-- @return Simulation source of a position on the border of the object
 integration.computeNearestBorder = function( position, scaledObject )
     return DEC_Geometrie_ComputeNearestBorder( position, scaledObject )
 end
 
+--- Returns true if the positions are the same, false otherwise
+-- @param firstPosition Simulation source of the first position
+-- @param secondPosition Simulation source of the second position
+-- @return Boolean, whether or not the two positions are equal
 integration.positionsEqual = function( firstPosition, secondPosition )
     return DEC_Geometrie_PositionsEgales( firstPosition, secondPosition )
 end
 
+--- Returns positions inside and at the border of the provided urban block
+-- @param urbanBlock Simulation source of an urban block
+-- @return List of simulation sources of positions
 integration.computeUrbanBlockLocations = function( urbanBlock )
     return DEC_Geometrie_CalculerLocalisationsBU( urbanBlock )
 end
 
-integration.computePointNearLocationsInsideAOR = function( position )
-    return DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( position )
+--- Returns the closest point to the caller's position on the border of
+--- the provided area and inside the current area of responsibility.
+--- Returns nil if there is no such position.
+-- @param area Simulation source of an area
+-- @return Simulation source of a position 
+integration.computePointNearLocationsInsideAOR = function( area )
+    return DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( area )
 end
 
+--- Returns an area with the provided list of positions as vertices
+-- @param positionList List of simulations sources of vertices
+-- @return Simulation source of an area
 integration.createLocationPolyline = function( positionsList )
     return DEC_Geometrie_CreerLocalisationPolyligne( positionsList )
 end
 
+--- Returns a vector with the two provided positions as extremities
+-- @param firstPosition Simulation source of the first position
+-- @param secondPosition Simulation source of the second position
+-- @return Simulation source of a direction (vector)
 integration.createDirection = function( firstPosition, secondPosition )
     return DEC_Geometrie_CreerDirection( firstPosition, secondPosition )
 end
 
+--- Returns the X coordinate of the provided position
+-- @param position Simulation source of a position
+-- @return Float, the X coordinate of the position
 integration.geometryX = function( position )
     return position:DEC_Geometrie_X()
 end
 
+--- Returns the Y coordinate of the provided position
+-- @param position Simulation source of a position
+-- @return Float, the Y coordinate of the position
 integration.geometryY = function( position )
-    return position:DEC_Geometrie_Y( )
+    return position:DEC_Geometrie_Y()
 end
 
-integration.computeSafetyPosition = function( agent, safetyDistance )
-    return DEC_Geometrie_CalculerPositionSurete( agent, safetyDistance )
+--- Returns a position at the provided safety distance from the enemy agent.
+--- This method uses the current danger direction to find a safe position.
+-- Note that this method can only be called from a unit brain.
+-- @param enemyAgent Simulation source of an agent
+-- @param safetyDistance Float, the safety distance
+-- @return Simulation source of a position
+integration.computeSafetyPosition = function( enemyAgent, safetyDistance )
+    return DEC_Geometrie_CalculerPositionSurete( enemyAgent, safetyDistance )
 end
 
+--- Splits the current area of responsibility along its global direction
+--- with the provided length. Returns a list of these sections.
+-- @param length Float, the length of each section
+-- @return List of simulation sources of areas of responsibility
 integration.splitAORInSections = function( length )
     return DEC_Geometrie_DecoupeFuseauEnTroncons( length )
 end
@@ -108,34 +205,58 @@ integration.computeMiddlePointsInAOR = function( AOR )
     return DEC_Fuseau_ComputeMiddlePointsInAOR( AOR.source )
 end
 
-integration.clipperLocalisation = function( area, fuseau )
-    return DEC_Geometrie_ClipperLocalisation( area.source, fuseau.source )
+--- Clips the provided area to the area of responsibility, and returns the result
+-- @param area Masalife knowledge of an area
+-- @param areaOfResponsibility Masalife knowledge of an area of responsibility
+-- @return Simulation source of the clipped area
+integration.clipperLocalisation = function( area, areaOfResponsibility )
+    return DEC_Geometrie_ClipperLocalisation( area.source, areaOfResponsibility.source )
 end
 
-integration.convertAORtoLocalisation = function ( fuseau ) 
-    return DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau.source )
+--- Converts an area of responsibility into an area, and returns the result
+-- @param areaOfResponsibility Masalife knowledge of an area of responsibility
+-- @return Simulation source of an area
+integration.convertAORtoLocalisation = function ( areaOfResponsibility ) 
+    return DEC_Geometrie_ConvertirFuseauEnLocalisation( areaOfResponsibility.source )
 end
 
--- returns the convex hull of a list of locations. Both the list and return values are simulation locations.
+--- Returns the convex hull of a list of locations.
+-- @param locationList List of simulation sources of locations
+-- @return Simulation source of the convex hull of the provided locations.
 integration.getConvexHull = function( locationList )
     return DEC_Geometrie_ConvexHull( locationList )
 end
 
+--- Settles the forward line to start the computation of the distance between
+--- the subordinates of the company and the forward line
+-- @return The forward line
 startSettleCalcul = function()
     local listePions = integration.getAgentsWithHQ()
     return DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion( DEC_GetAutomate( meKnowledge.source ), listePions )
 end
 
+--- Computes the distance between the caller and the provided line
+-- @param line The previously settled forward line
+-- @return Float, the distance between the caller and the line
 settleDistance = function( line )
     return DEC_Geometrie_CalculerDistanceLigneAvant( line, meKnowledge.source )
 end
 
+--- Erases the provided line and cleans the previous computations
+-- @param line The previously settled forward line
 stopSettleCalcul = function( line )
     DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
 end
 
--- Overriding DEC_Geometrie_PositionAdvanceAlongFuseau and DEC_Geometrie_PositionAdvanceAlongFuseauAutomat
--- to ensure backwards compatibility
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+-- Deprecated, use integration.postionAdvanceAlongAOR instead
+integration.positionAdvanceAlongAORAutomat = function( position )
+    return DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( position )
+end
+
 DEC_Geometrie_PositionAdvanceAlongFuseau = function( position )
     return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
@@ -143,3 +264,5 @@ end
 DEC_Geometrie_PositionAdvanceAlongFuseauAutomat = function( position )
     return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
 end
+
+integration.postionAdvanceAlongAOR = integration.positionAdvanceAlongAOR
