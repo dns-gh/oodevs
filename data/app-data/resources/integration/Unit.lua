@@ -211,14 +211,14 @@ integration.getWoundedOrDeadUnitsInCircle = function( position, radius )
 end
 
 --- Returns all the known civilians in the provided area
--- @param area Directia area
+-- @param area Area knowledge
 -- @return List of all known civilian simulation units in the area
 integration.getCiviliansInArea = function( area )
     return DEC_Connaissances_UnitesCivilesDansZone( area.source )
 end
 
 --- Returns all the known wounded units in the provided area
--- @param area Directia area
+-- @param area Area knowledge
 -- @return List of all the known wounded simulation units in the area
 integration.getWoundedInArea = function( area )
     return DEC_Connaissances_UnitesBlesseesDansZone( area.source )
@@ -248,7 +248,7 @@ integration.agentCanFly = function( teammate )
 end
 
 --- Returns all the crowds knowledges colliding with this entity
--- @return List of Directia crowds
+-- @return List of crowd knowledges
 integration.getCollidingCrowds = function()
     local simCrowds = DEC_Connaissances_CollisionsPopulations()
     local crowds = {}
