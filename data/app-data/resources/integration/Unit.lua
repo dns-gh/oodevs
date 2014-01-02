@@ -30,19 +30,19 @@ end
 
 --- Sets the force ratio state to the provided value
 -- @param value Integer, the force ratio state. The possible values are :
--- <li> eForceRatioStateNone </li>
+-- <ul> <li> eForceRatioStateNone </li>
 -- <li> eForceRatioStateNeutral </li>
 -- <li> eForceRatioStateFavorable </li>
--- <li> eForceRatioStateUnfavorable </li>
+-- <li> eForceRatioStateUnfavorable </li> </ul>
 integration.setForceRatioState = function( value )
     DEC_Agent_ChangeEtatRapportDeForce( value )
 end
 
 --- Sets the operational state to the provided value
 -- @param value Integer, the operational state. The possible values are :
--- <li> eEtatDestruction_None </li>
+-- <ul> <li> eEtatDestruction_None </li>
 -- <li> eEtatDestruction_Tactique </li>
--- <li> eEtatDestruction_Total </li>
+-- <li> eEtatDestruction_Total </li> </ul>
 integration.setOperationalState = function( value )
     DEC_Agent_ChangeEtatOperationnel( value )
 end
