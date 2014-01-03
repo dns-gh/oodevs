@@ -1943,10 +1943,6 @@ Do you want to remove it?</source>
 <context>
     <name>gui::UnitStateDialog</name>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished">وحدة الدولة</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation type="unfinished">إعادة تعيين</translation>
     </message>
@@ -1969,6 +1965,10 @@ Do you want to remove it?</source>
     <message>
         <source>---</source>
         <translation type="unfinished">---</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished">الدولة</translation>
     </message>
 </context>
 <context>

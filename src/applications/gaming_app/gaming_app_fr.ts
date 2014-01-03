@@ -3509,10 +3509,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Equipments</source>
         <translation>Equipements</translation>
     </message>
-    <message>
-        <source>Unit state</source>
-        <translation>Etat du pion</translation>
-    </message>
 </context>
 <context>
     <name>UnitStateTableCrew</name>

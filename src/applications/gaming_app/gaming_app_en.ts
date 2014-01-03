@@ -3488,10 +3488,6 @@ This data can&apos;t be projected.</source>
         <translation>Composition</translation>
     </message>
     <message>
-        <source>Unit state</source>
-        <translation>Unit state</translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation>Crew</translation>
     </message>

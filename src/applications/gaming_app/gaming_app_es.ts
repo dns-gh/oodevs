@@ -3501,10 +3501,6 @@ This data can&apos;t be projected.</source>
         <source>Equipments</source>
         <translation type="unfinished">Equipos</translation>
     </message>
-    <message>
-        <source>Unit state</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UnitStateTableCrew</name>

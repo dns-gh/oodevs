@@ -1948,10 +1948,6 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UnitStateDialog</name>
     <message>
-        <source>Unit state</source>
-        <translation>Etat du pion</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Réinitialiser</translation>
     </message>
@@ -1974,6 +1970,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?</source>
         <translation>Vous avez des modifications non sauvegardées pour l&apos;unité %1 sur l&apos;onglet %2, voulez vous valider ?</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>État</translation>
     </message>
 </context>
 <context>

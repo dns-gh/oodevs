@@ -33,7 +33,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     // Init dialog
     SubObjectName subObject( "UnitStateDialog" );
-    setCaption( tr( "Unit state" ) );
+    setCaption( tr( "State" ) );
     resize( 900, 600 );
     // Main layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "UnitStateDialog_VBoxLayout_MainLayout" );
