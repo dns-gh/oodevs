@@ -3488,10 +3488,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">تكوين</translation>
     </message>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished">وحدة الدولة</translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation type="unfinished">الطاقم</translation>
     </message>

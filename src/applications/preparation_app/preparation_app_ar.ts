@@ -2628,10 +2628,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Initial state</source>
-        <translation type="unfinished">الدولة الأولى</translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation type="unfinished">الطاقم</translation>
     </message>

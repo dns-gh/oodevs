@@ -1939,10 +1939,6 @@ Do you want to remove it?</source>
 <context>
     <name>gui::UnitStateDialog</name>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1964,6 +1960,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>---</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

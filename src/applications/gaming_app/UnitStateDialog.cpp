@@ -34,7 +34,6 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     , resourceToolTip_ ( tr( "Resources" ) )
     , equipmentToolTip_( tr( "Composition" ) )
 {
-    setCaption( tr( "Unit state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_, profile, extractor ) );
