@@ -88,7 +88,11 @@ PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity,
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::~PHY_RolePion_Communications()
 {
-    // NOTHING
+    if( pJammingKnowledgeGroup_ )
+    {
+        pJammingKnowledgeGroup_->Destroy();
+        pJammingKnowledgeGroup_.reset();
+    }
 }
 
 // -----------------------------------------------------------------------------
