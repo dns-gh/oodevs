@@ -3487,10 +3487,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation type="unfinished"></translation>
     </message>

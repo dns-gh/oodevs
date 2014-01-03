@@ -70,6 +70,11 @@ QWidget* ParamPath::BuildInterface( const QString& objectName, QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
 {
+    if( !entity )
+    {
+        location_.reset();
+        layer_.Reset();
+    }
     entity_ = entity;
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );

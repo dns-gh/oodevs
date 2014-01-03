@@ -2631,10 +2631,6 @@ This data can&apos;t be projected.</translation>
 <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Initial state</source>
-        <translation>Initial state</translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation>Crew</translation>
     </message>

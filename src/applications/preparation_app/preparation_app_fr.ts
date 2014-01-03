@@ -2628,10 +2628,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Initial state</source>
-        <translation>Etat initial</translation>
-    </message>
-    <message>
         <source>Crew</source>
         <translation>Personnel</translation>
     </message>
