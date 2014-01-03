@@ -160,9 +160,9 @@ private:
     QStandardItemModel missionModel_;
     boost::scoped_ptr< actions::gui::MissionInterface_ABC > missionInterface_;
 
-    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedAutomat_;
-    kernel::SafePointer< kernel::Entity_ABC > target_;
+    const kernel::Entity_ABC* selectedEntity_;
+    const kernel::Entity_ABC* selectedEngagedAutomat_;
+    const kernel::Entity_ABC* target_;
 
     bool isBuilding_;
     bool isUpdatingParent_;
