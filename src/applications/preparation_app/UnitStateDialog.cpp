@@ -31,7 +31,6 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     : gui::UnitStateDialog( parent, controllers )
 {
     gui::SubObjectName subObject( "UnitStateDialog" );
-    setCaption( tools::translate( "UnitStateDialog", "Initial state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( tabWidget_ ) );
     tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( tabWidget_, extractor ) );

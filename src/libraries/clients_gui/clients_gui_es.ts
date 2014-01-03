@@ -1948,10 +1948,6 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::UnitStateDialog</name>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1973,6 +1969,10 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>You have unsaved modifications on unit %1 on the %2 tab, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
