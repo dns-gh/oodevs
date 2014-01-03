@@ -478,6 +478,7 @@ void RegisterObjectsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ObjectKnowledge_BuildInstantaneously", &DEC_KnowledgeObjectFunctions::BuildInstantaneously );
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsFullMined", &DEC_KnowledgeObjectFunctions::IsFullMined );
     brain.RegisterFunction( "DEC_ObjectKnowledge_MustBeMined", &DEC_KnowledgeObjectFunctions::MustBeMined );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsTrafficable", &DEC_KnowledgeObjectFunctions::IsObjectTrafficable );
 }
 
 // -----------------------------------------------------------------------------

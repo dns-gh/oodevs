@@ -31,6 +31,7 @@
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
+#include "Entities/Objects/TrafficabilityAttribute.h"
 #include "Entities/Objects/UndergroundAttribute.h"
 #include "Entities/Objects/UndergroundCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -657,4 +658,15 @@ bool DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork( boost::
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsObjectTrafficable
+// Created: NMI 2014-01-03
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsObjectTrafficable( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge, double weight )
+{
+    if( const TrafficabilityAttribute* pAttribute = IsValidObjectAttribute< TrafficabilityAttribute >( objectKnowledge ) )
+        return pAttribute->GetMaxValue() >= weight;
+    return true;
 }
