@@ -47,7 +47,7 @@ end
 -- This method returns roads intersections around the object, or the object border's closest position
 -- to this entity's position if there aren't any.
 -- @param object Object knowledge
--- @param distance Float, the minimum distance between each returned position and the border of the object (in meters)
+-- @param distance Float, the minimum distance between each returned position and the border of the object (in meters, 20 by default).
 -- @return List of simulation positions around the given object
 integration.getObjectPositionsForWork = function( object, distance ) -- object is a buildable element (object or plannedWork)
     distance = distance or 20 -- meters
@@ -74,15 +74,14 @@ integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
 
---- Builds the given engineer object instantaneously and returns it
--- @param genObject Engineer object knowledge to build instantaneously
--- @param withoutReport Boolean if set to true don't display a report to indicate the beginning of the work
--- @return Object knowledge, the instantaneously built object
-integration.buildObjectInstantaneously = function( engineerObject, withoutReport )
+--- Instantaneously finishes the construction of the object
+-- @param object Object knowledge to build instantaneously
+-- @param withoutReport Boolean if set to true don't display a report to indicate the end of the work
+integration.buildObjectInstantaneously = function( object, withoutReport )
     if not withoutReport then
-        integration.pionRC( eRC_FinTravauxObjet, engineerObject.source )
+        integration.pionRC( eRC_FinTravauxObjet, object.source )
     end
-    return DEC_ObjectKnowledge_BuildInstantaneously( myself, engineerObject.source )
+    DEC_ObjectKnowledge_BuildInstantaneously( myself, object.source )
 end
 
 --- Returns true if the given object can be used to filter crowds, false otherwise
@@ -106,17 +105,23 @@ integration.isCamp = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "logistic" )
 end
 
---- Returns true if the given object is trafficable, false otherwise
+--- Returns true if the given object is trafficable for the provided weight, false otherwise
+-- Returns true if no weight is given
 -- @param object Object knowledge
+-- @param weight Float
 -- @return Boolean
-integration.isTrafficable = function( object )
-    return DEC_ObjectKnowledge_HasCapacity( object.source, "trafficability" )
+integration.isObjectTrafficable = function( object, weight )
+    return DEC_ObjectKnowledge_IsTrafficable( object.source, weight or 0 )
 end
 
 --- Returns positions around the provided object
+--- The returned positions are guaranteed to be at at least the provided distance (20 meters by default) from the border of the object.
 -- @param object Object knowledge
+-- @param distance Float, the minimum distance between each returned position and the border of the object (in meters, 20 by default).
 -- @return List of simulation positions
-integration.getPositionsAroundObject = function( object )
+integration.getPositionsAroundObject = function( object, distance )
+    distance = distance or 20
+
     local CreateKnowledge = CreateKnowledge
     local typePoint = integration.ontology.types.point
     
@@ -125,13 +130,13 @@ integration.getPositionsAroundObject = function( object )
     for _, simPoint in pairs( simPoints ) do
         result[ #result + 1 ] = CreateKnowledge( typePoint, simPoint )
     end
-    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
+    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , distance )
     result[ #result + 1 ] = CreateKnowledge( typePoint, DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation ) )
     return result
 end
 
 --- Returns all the object knowledges inside the circle defined by
---- the provided center and radius with at least one type from the given list
+--- the provided center and radius which type belongs to the list
 -- @param position Simulation position, center of the circle
 -- @param distance Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
@@ -142,23 +147,23 @@ end
 
 --- Returns the given object's localisation
 -- @param Simulation object
--- @return Simulation area
+-- @return Simulation location
 integration.getKnowledgeObjectLocation = function( object )
     return DEC_ConnaissanceObjet_Localisation( object )
 end
 
---- Returns the given engineer object's localisation
--- @param Simulation engineer object
--- @return Simulation area
-integration.getGenObjectLocation = function( genObject )
-    return DEC_GenObject_Localisation( genObject )
+--- Returns the given planned work's localisation
+-- @param Simulation planned work
+-- @return Simulation location
+integration.getGenObjectLocation = function( plannedWork )
+    return DEC_GenObject_Localisation( plannedWork )
 end
 
---- Returns the given engineer object's type
--- @param Simulation engineer object
+--- Returns the given planned work's type
+-- @param Simulation planned work
 -- @return String
-integration.getGenObjectType = function( genObject )
-    return DEC_GenObject_Type( genObject )
+integration.getGenObjectType = function( plannedWork )
+    return DEC_GenObject_Type( plannedWork )
 end
 
 --- Returns true if the provided object has the given capacity, false otherwise
@@ -177,8 +182,8 @@ integration.getKnowledgeObjectType = function( object )
 end
 
 --- Returns the next non-bypassed object on this entity's path.
--- The returned object is guaranteed to have at least one of the types from
--- the list parameter (if the provided list is non-empty).
+-- If the list parameter is not empty, the function will return the first
+-- non-bypassed object on this entity's path whose type belongs to the list.
 -- @params model Deprecated, unused
 -- @params distance Deprecated, unused
 -- @params paramsList List of strings
@@ -188,8 +193,8 @@ integration.getNextObjectOnPath = function( model, distance, paramsList )
 end
 
 --- Returns the next object on this entity's path.
--- The returned object is guaranteed to have at least one of the types from
--- the list parameter (if the provided list is non-empty).
+-- If the list parameter is not empty, the function will return the
+-- first object on this entity's path whose type belongs to the list.
 -- @params model Deprecated
 -- @params distance Deprecated
 -- @params paramsList List of strings
@@ -198,24 +203,24 @@ integration.getNextObjectOnPathWithBypassed = function( model, distance, paramsL
     return DEC_GetNextObjectOnPathWithBypassed( model, distance, paramsList )
 end
 
---- Returns true if the given engineer object is not activated, false otherwise
+--- Returns true if the given planned work is not activated, false otherwise
 -- @see integration.isManeuverObstacle
 -- @see integration.isActifManeuverObstacle
--- @params genObject Engineer object knowledge
+-- @params plannedWork Planned work knowledge
 -- @return Boolean
-integration.isManeuverGenObject = function( genObject )
-    return DEC_GenObject_TypeObstacleManoeuvre( genObject )
+integration.isManeuverGenObject = function( plannedWork )
+    return DEC_GenObject_TypeObstacleManoeuvre( plannedWork )
 end
 
---- Returns true if the given object is valid, false otherwise
--- @params object Object knowledge
+--- Returns true if the given object knowledge is valid, false otherwise
+-- @params object Simulation object
 -- @return Boolean, whether or not the object is valid
 integration.isValidKnowledgeObject = function( object )
     return DEC_IsValidKnowledgeObject( object )
 end
 
 --- Queues the given agent knowledge for decontamination in the given decontamination plot
--- @param unit Directia agent
+-- @param unit Directia agent knowledge
 -- @param object Object knowledge
 -- @param decontaminationPlot Object knowledge with a decontamination capacity
 integration.addKnowledgeToDecontaminationList = function( unit, object )
@@ -229,18 +234,18 @@ integration.requestForDecontamination = function( decontaminationPlot )
 end
 
 --- Queues the given agent knowledge for decontamination in the given decontamination plot
--- @param unit Directia agent knowledge
+-- @param unit Directia agent
 -- @param object Object knowledge
 -- @param decontaminationPlot Object knowledge with a decontamination capacity
 integration.addToDecontaminationList = function( unit, object )
     DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion(unit.source, object.source)
 end
 
--- Returns true if the given engineer object needs improvement, false otherwise
--- @param genObject Engineer object knowledge
--- @return Boolean, whether or not the engineer object needs improvement
-integration.genObjectNeedsImprovement = function( genObject )
-    return DEC_GenObject_Mining( genObject.source )
+-- Returns true if the given planned work needs improvement, false otherwise
+-- @param plannedWork Planned work knowledge
+-- @return Boolean, whether or not the planned work needs improvement
+integration.genObjectNeedsImprovement = function( plannedWork )
+    return DEC_GenObject_Mining( plannedWork.source )
 end
 
 -- Returns true if the given object needs improvement, false otherwise
@@ -250,7 +255,7 @@ integration.objectNeedsImprovement = function( object )
     return DEC_ObjectKnowledge_MustBeMined( object.source )
 end
 
---- Returns a position outside the convex hull of the provided set of objects, at a specified distance.
+--- Returns a position outside the convex hull of the provided list of objects, at a specified distance.
 -- Returns nil if the list of objects is empty
 -- @param objects List of object knowledges
 -- @param distanceFromBorder Optional, the minimal distance in meters between 
@@ -275,7 +280,9 @@ end
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
 
--- Deprecated, use integration.getGenObjectLocation instead
-integration.getKnowledgeGenObjectLocation = function( genObject )
-    return DEC_GenObjectKnowledge_Localisation( genObject )
+--- Deprecated, use integration.getGenObjectLocation instead
+integration.getKnowledgeGenObjectLocation = function( plannedWork )
+    return DEC_GenObjectKnowledge_Localisation( plannedWork )
 end
+
+integration.isTrafficable = integration.isObjectTrafficable
