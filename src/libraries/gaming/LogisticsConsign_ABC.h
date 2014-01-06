@@ -61,6 +61,7 @@ public:
     virtual QString GetStatusDisplay() const = 0;
     virtual kernel::Agent_ABC* GetConsumer() const = 0;
     virtual kernel::Entity_ABC* GetHandler() const = 0;
+    virtual kernel::Agent_ABC* GetConvoy() const = 0;
     //@}
 
     //! @name Operations

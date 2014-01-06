@@ -159,10 +159,10 @@ kernel::Entity_ABC* LogSupplyConsign::GetHandler() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::GetConvoying
+// Name: LogSupplyConsign::GetConvoy
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* LogSupplyConsign::GetConvoying() const
+kernel::Agent_ABC* LogSupplyConsign::GetConvoy() const
 {
     return pPionLogConvoying_.ConstCast();
 }

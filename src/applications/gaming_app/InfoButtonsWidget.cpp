@@ -268,9 +268,13 @@ void InfoButtonsWidget::UpdateConsign( const LogisticsConsign_ABC& consign )
 {
     if( element_ )
     {
-        if(  kernel::Agent_ABC* entity = consign.GetConsumer() )
+        // Note it amounts to calling RefersToAgent of any of the entities_ except it forces a lot of getters.
+        // A next commit should refactor that into something like consign.RefersToAgent( entities_ );
+        if( kernel::Agent_ABC* entity = consign.GetConsumer() )
             hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
-        if(  kernel::Entity_ABC* entity = consign.GetHandler() )
+        if( kernel::Entity_ABC* entity = consign.GetHandler() )
+            hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
+        if( kernel::Agent_ABC* entity = consign.GetConvoy() )
             hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
     }
 }

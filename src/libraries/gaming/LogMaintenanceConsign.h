@@ -61,6 +61,7 @@ public:
     //@{
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
+    virtual kernel::Agent_ABC* GetConvoy() const;
     const kernel::ComponentType* GetEquipment() const;
     const kernel::BreakdownType* GetBreakdown() const;
     bool IsDiagnosed() const;

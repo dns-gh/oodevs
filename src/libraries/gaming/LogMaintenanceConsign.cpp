@@ -130,6 +130,15 @@ kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetConvoy
+// Created: LDC 2014-01-03
+// -----------------------------------------------------------------------------
+kernel::Agent_ABC* LogMaintenanceConsign::GetConvoy() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign::GetEquipment
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------

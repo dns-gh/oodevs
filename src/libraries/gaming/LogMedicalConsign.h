@@ -59,6 +59,7 @@ public:
     E_HumanRank GetRank() const;
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
+    virtual kernel::Agent_ABC* GetConvoy() const;
     bool IsMental() const;
     bool IsContamined() const;
     bool IsDiagnosed() const;

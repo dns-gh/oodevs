@@ -118,7 +118,7 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
     detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),        GetRecipientsLinks( c ) );
     detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"),   GetDisplayName( c.GetProviding() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),            GetDisplayName( c.GetConvoying() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),            GetDisplayName( c.GetConvoy() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),        c.GetCreationTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ),            GetDisplayName( c.GetHandler() ) );
     detailsTable_->Add( tools::translate( "Logistic", "State:"),                c.GetStatusDisplay() );

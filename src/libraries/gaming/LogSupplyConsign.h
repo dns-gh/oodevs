@@ -67,7 +67,7 @@ public:
     //@{
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
-    kernel::Agent_ABC* GetConvoying() const;
+    virtual kernel::Agent_ABC* GetConvoy() const;
     const kernel::Entity_ABC* GetProviding() const;
     E_LogSupplyHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;

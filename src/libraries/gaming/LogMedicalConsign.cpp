@@ -143,6 +143,15 @@ kernel::Entity_ABC* LogMedicalConsign::GetHandler() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::GetConvoy
+// Created: LDC 2014-01-03
+// -----------------------------------------------------------------------------
+kernel::Agent_ABC* LogMedicalConsign::GetConvoy() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogMedicalConsign::IsMental
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
