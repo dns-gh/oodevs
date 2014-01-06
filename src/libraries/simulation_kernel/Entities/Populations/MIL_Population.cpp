@@ -522,12 +522,12 @@ void MIL_Population::UpdateState()
 {
     try
     {
-        trashedConcentrations_.clear();
-        trashedFlows_.clear();
         Update( flows_, trashedFlows_ );
         Update( concentrations_, trashedConcentrations_ );
         if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
             UpdateBarycenter();
+        trashedConcentrations_.clear();
+        trashedFlows_.clear();
     }
     catch( const std::exception& e )
     {
@@ -1189,16 +1189,10 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
 {
     protocol::CheckCount( msg, 1 );
     const auto& point = protocol::GetPoint( msg, 0 );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( point, vPosTmp );
-    DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
-    if( roleDec )
-        roleDec->Reset();
-    APPLY_ON_ELEMENTS( element.MagicMove( vPosTmp ); )
+    MT_Vector2D destination;
+    MIL_Tools::ConvertCoordMosToSim( point, destination );
+    APPLY_ON_ELEMENTS( element.MagicMove( destination ); )
     UpdateState();
-    UpdateBarycenter();
-    orderManager_->CancelMission();
-    SetAttitude( GetDefaultAttitude() );
     bHasDoneMagicMove_ = true;
 }
 

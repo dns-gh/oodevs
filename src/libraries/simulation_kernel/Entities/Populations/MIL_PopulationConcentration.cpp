@@ -189,6 +189,7 @@ void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
     {
         MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
         newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
+        newConcentration.SetAttitude( GetAttitude() );
     }
     if( pPullingFlow_ )
     {
