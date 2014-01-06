@@ -50,8 +50,7 @@ integration.isManeuverObstacle = function ( object )
     return DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( object.source )
 end
 
---- Returns true if object knowledge is an active maneuver obstacle, false otherwise
--- An activated maneuver obstacle has the ability to activate and it is active 
+--- Returns true if object knowledge is a maneuver obstacle and is active, false otherwise
 -- @param object an object knowledge
 -- @return Boolean, whether or not this knowledge object is activated
 integration.isActifManeuverObstacle = function ( object )
