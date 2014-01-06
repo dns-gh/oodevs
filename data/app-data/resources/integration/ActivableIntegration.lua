@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
----- ACTIVALE INTERFACE IMPLEMENTATION
+---- ACTIVABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
 --- Returns true if unit has the capacity to activate the provided object, false otherwise
