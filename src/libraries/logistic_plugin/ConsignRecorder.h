@@ -108,7 +108,7 @@ private:
     T_LRU alive_;
     T_LRU destroyed_;
     std::unordered_map< uint32_t, T_LRU::iterator > consigns_;
-    size_t maxConsigns_;
+    const size_t maxConsigns_;
 
     // Map entity (unit, formation, whatever) identifiers to requests
     std::multimap< uint32_t, uint32_t > entityConsigns_;
@@ -116,7 +116,7 @@ private:
     // A bounded FIFO queue of request states sorted by descending ticks. Note
     // that history_ and consign_ referenced states are overlapping but not equal.
     boost::container::deque< ConsignRecord > history_;
-    size_t maxHistory_;
+    const size_t maxHistory_;
 };
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,

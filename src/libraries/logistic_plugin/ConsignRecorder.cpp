@@ -20,13 +20,6 @@
 
 using namespace plugins::logistic;
 
-namespace
-{
-
-const uint32_t averageHistoryPerConsign = 15;
-
-}  // namespace
-
 class ConsignRecorder::ConsignHistory
 {
 public:

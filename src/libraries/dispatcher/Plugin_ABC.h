@@ -48,8 +48,8 @@ public:
 
 private:
     ClientPublisher_ABC& publisher_;
-    int32_t clientId_;
-    int32_t context_;
+    const int32_t clientId_;
+    const int32_t context_;
 };
 
 // =============================================================================

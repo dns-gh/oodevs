@@ -111,7 +111,7 @@ private:
     boost::shared_ptr< ConsignCsvLogger >       logger_;
     int currentTick_;
     std::string simTime_;
-    bool readOnly_;
+    const bool readOnly_;
     //@}
 };
 
