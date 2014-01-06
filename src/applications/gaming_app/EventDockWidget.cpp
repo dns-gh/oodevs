@@ -73,7 +73,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
 {
     setWindowTitle( tr( "Event edition" ) );
     setFloating( true );
-    setMinimumSize( 400, 600 );
+    setMinimumSize( 350, 350 );
     setVisible( false );
 
     // Header / footer
