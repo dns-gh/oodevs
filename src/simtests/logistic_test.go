@@ -282,7 +282,7 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	// Test start tick, this is less reliable because we have no garantee there
 	// are logistic events on other ticks than latestTick, so we can mistook
 	// a "returns nothing" error for a success.
-	entries, err = client.ListLogisticRequests(int(latestTick)-1, 1, unitIds...)
+	entries, err = client.ListLogisticRequests(int(latestTick)-1, -1, unitIds...)
 	c.Assert(err, IsNil)
 	for _, e := range entries {
 		c.Assert(*e.Tick, Lesser, latestTick)
