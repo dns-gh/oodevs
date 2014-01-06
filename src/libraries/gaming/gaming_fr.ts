@@ -437,6 +437,17 @@
     </message>
 </context>
 <context>
+    <name>Decisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission:</source>
+        <translation type="unfinished">Mission:</translation>
+    </message>
+</context>
+<context>
     <name>Dotations</name>
     <message>
         <source>Resources</source>
@@ -732,6 +743,14 @@
         <source>Maintenance system</source>
         <translation>Chaîne maintenance</translation>
     </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Désactivé</translation>
+    </message>
 </context>
 <context>
     <name>MedicalStates</name>
@@ -762,6 +781,14 @@
     <message>
         <source>Medical system</source>
         <translation>Chaîne médicale</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Désactivé</translation>
     </message>
 </context>
 <context>
@@ -1208,6 +1235,14 @@
     <message>
         <source>System status</source>
         <translation>Etat du système</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Désactivé</translation>
     </message>
 </context>
 <context>
