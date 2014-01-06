@@ -15,19 +15,6 @@ import (
 	"sword"
 )
 
-var (
-	ErrContinue = errors.New("continue")
-	ErrNotFound = errors.New("not found")
-)
-
-func mismatch(name string, a, b interface{}) error {
-	return fmt.Errorf("%v mismatch %v != %v", name, a, b)
-}
-
-func invalid(name string, value interface{}) error {
-	return fmt.Errorf("invalid %v: %v", name, value)
-}
-
 func getUnitMagicActionAck(msg *sword.SimToClient_Content) (*sword.UnitMagicActionAck,
 	uint32, error) {
 	ack := msg.GetUnitMagicActionAck()
@@ -1480,13 +1467,10 @@ func (c *Client) LogFinishHandlings(unitId uint32) error {
 }
 
 func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEntry, error) {
-	ids := MakeIdList(requestId...).Elem
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
-				LogisticHistoryRequest: &sword.LogisticHistoryRequest{
-					Requests: ids,
-				},
+				LogisticHistoryRequest: makeLogisticHistoryRequest(requestId...),
 			},
 		},
 	}
@@ -1496,7 +1480,7 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEnt
 		if reply == nil {
 			return ErrContinue
 		}
-		DeepCopy(&entries, reply.GetEntries())
+		entries = handleLogisticHistoryAck(reply)
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
@@ -1506,19 +1490,11 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEnt
 func (c *Client) ListLogisticRequests(currentTick, maxCount int, entityId ...uint32) (
 	[]*sword.LogHistoryEntry, error) {
 
-	ids := MakeIdList(entityId...).Elem
-	var count *uint32
-	if maxCount >= 0 {
-		count = proto.Uint32(uint32(maxCount))
-	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
-				ListLogisticRequests: &sword.ListLogisticRequests{
-					Entities:    ids,
-					MaxCount:    count,
-					CurrentTick: proto.Int32(int32(currentTick)),
-				},
+				ListLogisticRequests: makeListLogisticRequests(currentTick, maxCount,
+					entityId...),
 			},
 		},
 	}
@@ -1528,7 +1504,7 @@ func (c *Client) ListLogisticRequests(currentTick, maxCount int, entityId ...uin
 		if reply == nil {
 			return ErrContinue
 		}
-		DeepCopy(&entries, reply.GetEntries())
+		entries = handleListLogisticRequestsAck(reply)
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)

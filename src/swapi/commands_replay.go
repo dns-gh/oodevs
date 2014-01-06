@@ -112,3 +112,48 @@ func (c *Client) GetTimetable(beginTick, endTick int32, broadcast bool) (
 	})
 	return table, err
 }
+
+func (c *Client) ReplayGetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEntry, error) {
+	msg := SwordMessage{
+		ClientToReplay: &sword.ClientToReplay{
+			Message: &sword.ClientToReplay_Content{
+				LogisticHistoryRequest: makeLogisticHistoryRequest(requestId...),
+			},
+		},
+	}
+	var entries []*sword.LogHistoryEntry
+	handler := func(msg *sword.ReplayToClient_Content) error {
+		reply := msg.GetLogisticHistoryAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		entries = handleLogisticHistoryAck(reply)
+		return nil
+	}
+	err := <-c.postReplay(msg, handler)
+	return entries, err
+}
+
+func (c *Client) ReplayListLogisticRequests(currentTick, maxCount int, entityId ...uint32) (
+	[]*sword.LogHistoryEntry, error) {
+
+	msg := SwordMessage{
+		ClientToReplay: &sword.ClientToReplay{
+			Message: &sword.ClientToReplay_Content{
+				ListLogisticRequests: makeListLogisticRequests(currentTick, maxCount,
+					entityId...),
+			},
+		},
+	}
+	var entries []*sword.LogHistoryEntry
+	handler := func(msg *sword.ReplayToClient_Content) error {
+		reply := msg.GetListLogisticRequestsAck()
+		if reply == nil {
+			return ErrContinue
+		}
+		entries = handleListLogisticRequestsAck(reply)
+		return nil
+	}
+	err := <-c.postReplay(msg, handler)
+	return entries, err
+}

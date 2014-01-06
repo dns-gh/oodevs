@@ -293,16 +293,16 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	client.Close()
 	replay := startReplay(c, sim.Opts)
 	defer replay.Kill()
-	client = loginAndWaitModel(c, replay, AddLogger(NewAdminOpts("")))
+	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
 	defer client.Close()
 
 	// Check we can some request history
-	entries, err = client.GetLogisticHistory(handlingId)
+	entries, err = client.ReplayGetLogisticHistory(handlingId)
 	c.Assert(err, IsNil)
 	c.Assert(len(entries), Greater, 0)
 
 	// Check we can list requests
-	entries, err = client.ListLogisticRequests(-1, -1, unitIds...)
+	entries, err = client.ReplayListLogisticRequests(-1, -1, unitIds...)
 	c.Assert(err, IsNil)
 	c.Assert(len(entries), Greater, 0)
 }
