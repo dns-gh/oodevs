@@ -60,14 +60,15 @@ public:
     //@{
     void Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual bool RefersToAgent( unsigned int id ) const;
+    virtual bool RefersToAgent( unsigned long id ) const;
+    virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
     //@}
 
     //! @name Accessors
     //@{
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
-    kernel::Agent_ABC* GetConvoying() const;
+    virtual kernel::Agent_ABC* GetConvoy() const;
     const kernel::Entity_ABC* GetProviding() const;
     E_LogSupplyHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;

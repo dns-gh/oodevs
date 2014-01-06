@@ -1012,7 +1012,7 @@ Parked engine running</source>
     <name>ADN_Equipments_Data</name>
     <message>
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -1530,11 +1530,10 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_Resources_ListView</name>
+    <name>ADN_Equipments_Resources_Table</name>
     <message>
         <source>Resources</source>
-        <oldsource>Categories</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
         <source>Add resource</source>

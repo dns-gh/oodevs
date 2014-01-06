@@ -12,7 +12,7 @@
 #include "ADN_Table.h"
 #include "ADN_Equipments_ConsumptionsTable.h"
 #include "ADN_Equipments_Dotations_GUI.h"
-#include "ADN_Equipments_Resources_ListView.h"
+#include "ADN_Equipments_Resources_Table.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Resources_Tables constructor
@@ -23,7 +23,7 @@ ADN_Equipments_Resources_Tables::ADN_Equipments_Resources_Tables( const QString&
 {
     setObjectName( objectName );
 
-    categoryList_ = new ADN_Equipments_Resources_ListView( objectName + "_CategoriesListView", dotationConnector );
+    categoryList_ = new ADN_Equipments_Resources_Table( objectName + "_CategoriesListView", dotationConnector );
     categoryList_->setFixedWidth( 150 );
     categoryList_->setFixedHeight( 200 );
 
@@ -78,4 +78,15 @@ const ADN_Table& ADN_Equipments_Resources_Tables::GetConsumptionTable() const
 {
     assert( consumptionTable_ );
     return *consumptionTable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Resources_Tables::ResetScrollBars
+// Created: ABR 2012-12-04
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Resources_Tables::ResetScrollBars()
+{
+    categoryList_->verticalScrollBar()->setValue( 0 );
+    allocationTable_->verticalScrollBar()->setValue( 0 );
+    consumptionTable_->verticalScrollBar()->setValue( 0 );
 }

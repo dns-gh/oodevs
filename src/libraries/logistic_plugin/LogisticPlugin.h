@@ -12,20 +12,11 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include <boost/shared_ptr.hpp>
-#pragma warning( push, 0 )
-#include <boost/ptr_container/ptr_map.hpp>
-#pragma warning( pop )
 #include <vector>
 
-class QApplication;
 namespace tools
 {
     class SessionConfig;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 namespace boost
@@ -64,7 +55,9 @@ namespace plugins
 namespace logistic
 {
 
+class ConsignCsvLogger;
 class ConsignData_ABC;
+class ConsignIndex;
 class ConsignRecorder;
 class NameResolver_ABC;
 
@@ -79,10 +72,8 @@ class LogisticPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const tools::Path& archiveFile, const tools::Path& maintenanceFile,
-                 const tools::Path& supplyFile, const tools::Path& funeralFile,
-                 const tools::Path& medicalFile );
+             LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
+                 const tools::Path& archiveFile, bool load );
     virtual ~LogisticPlugin();
     //@}
 
@@ -104,8 +95,6 @@ public:
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
     virtual bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
-    int DebugGetConsignCount( E_LogisticType eLogisticType ) const;
-    void SetMaxLinesInFile( int maxLines );
     //@}
 
 private:
@@ -117,12 +106,12 @@ private:
 private:
     //! @name Member data
     //@{
+    std::unique_ptr< ConsignIndex >             index_;
     std::unique_ptr< ConsignRecorder >          recorder_;
-    std::unique_ptr< QApplication >           localAppli_;
-    boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
-    boost::ptr_map< int, ConsignData_ABC >      consigns_;
+    boost::shared_ptr< ConsignCsvLogger >       logger_;
     int currentTick_;
     std::string simTime_;
+    const bool readOnly_;
     //@}
 };
 
@@ -131,7 +120,10 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
     const kernel::StaticModel& staticModel,
     const tools::SessionConfig& config );
 
-}
-}
+boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
+    const tools::SessionConfig& config );
+
+}  // namespace logistic
+}  // namespace plugins
 
 #endif // __LogisticPlugin_h_

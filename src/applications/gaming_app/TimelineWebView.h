@@ -97,7 +97,7 @@ private:
 
     //! @name TimelineHandler_ABC implementation
     //@{
-    virtual void CreateEvent( const timeline::Event& event );
+    virtual void CreateEvent( const timeline::Event& event, bool select = false );
     virtual void SelectEvent( const std::string& uuid );
     virtual void EditEvent( const timeline::Event& event );
     virtual void DeleteEvent( const std::string& uuid );

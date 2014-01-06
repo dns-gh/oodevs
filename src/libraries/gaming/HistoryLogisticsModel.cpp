@@ -142,7 +142,7 @@ void HistoryLogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingU
 {
     if( LogSupplyConsign* consign = tools::Resolver< LogSupplyConsign >::Find( message.request().id() ) )
     {
-        kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoying();
+        kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoy();
         if( message.has_convoyer() && ( !pPionLogConvoying || message.convoyer().id() != pPionLogConvoying->GetId() ) )
             pPionLogConvoying = resolver_.Find( message.convoyer().id() );
 

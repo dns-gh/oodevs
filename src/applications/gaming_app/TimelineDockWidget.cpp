@@ -74,7 +74,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
 // -----------------------------------------------------------------------------
 TimelineDockWidget::~TimelineDockWidget()
 {
-    // NOTHING
+    webView_->reparent( 0, QPoint( 0, 0 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,6 +40,8 @@ class ConsignArchive : private boost::noncopyable
 {
 public:
     ConsignArchive( const tools::Path& basePath, uint32_t maxSize );
+    // Read-only mode.
+    ConsignArchive( const tools::Path& basePath );
     virtual ~ConsignArchive();
 
     ConsignOffset Write( const void* data, uint32_t length );
@@ -47,7 +49,9 @@ public:
     // Sequence order is preserved but the caller should try to have offsets
     // grouped by files by ascending offsets to avoid seeking back and forth.
     void ReadMany( const std::vector< ConsignOffset >& offsets,
-            const std::function< void( std::vector< uint8_t >& )>& callback ) const;
+        const std::function< void( const std::vector< uint8_t >& )>& callback ) const;
+    void ReadAll( const std::function<
+        void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const;
     void Flush();
 
 private:
@@ -60,6 +64,7 @@ private:
     uint32_t size_;
     uint32_t index_;
     boost::shared_ptr< tools::Fstream > output_;
+    bool readOnly_;
 };
 
 } // namespace logistic
