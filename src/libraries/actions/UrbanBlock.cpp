@@ -152,5 +152,5 @@ void UrbanBlock::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 std::string UrbanBlock::SerializeType() const
 {
-    return "urbanblock";
+    return "urbanknowledge";
 }

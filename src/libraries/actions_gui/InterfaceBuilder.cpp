@@ -95,7 +95,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     AddFunctor< actions::gui::ParamAutomat >            ( "automat" );
     AddFunctor< actions::gui::ParamCrowd >              ( "crowd" );            // Not used yet, but ready to be !
     AddFunctor< actions::gui::ParamInhabitant >         ( "inhabitant" );       // Same as previous
-    AddFunctor< actions::gui::ParamUrbanBlock >         ( "urbanknowledge" );   // Misnamed, should be "urbanblock" instead of "urbanknowledge"
+    AddFunctor< actions::gui::ParamUrbanBlock >         ( "urbanknowledge" );
     AddFunctor< actions::gui::LimitParameter >          ( "limit" );
     AddFunctor< actions::gui::LimaParameter >           ( "phaseline" );
     // Knowledges
