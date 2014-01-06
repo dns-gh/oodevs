@@ -170,39 +170,18 @@ bool SupplyConsignData::ManageMessage( const ::sword::LogSupplyHandlingUpdate& m
 }
 
 bool SupplyConsignData::DoUpdateConsign( const sword::SimToClient& message,
-        const NameResolver_ABC& resolver, std::vector< uint32_t >& entities )
+        const NameResolver_ABC& resolver )
 {
     const auto& msg = message.message();
     if( msg.has_log_supply_handling_creation() )
     {
         const auto& sub = msg.log_supply_handling_creation();
-        *entry_.mutable_supply()->mutable_creation()  = sub;
-        entities.push_back( protocol::GetParentEntityId( sub.supplier() ));
-        entities.push_back( protocol::GetParentEntityId( sub.transporters_provider() ));
         return ManageMessage( sub, resolver );
     }
     if( msg.has_log_supply_handling_update() )
     {
-        // Sub-messages are merged recursively and repeated fields are *appended*.
-        // Clear them before merging. This is fragile but saves tons of code
-        // right now.
         const auto& sub = msg.log_supply_handling_update();
-        if( sub.has_requests() )
-            entry_.mutable_supply()->mutable_update()->mutable_requests()->Clear();
-        entry_.mutable_supply()->mutable_update()->MergeFrom( sub );
-        if( sub.has_convoyer() )
-            entities.push_back( sub.convoyer().id() );
-        if( sub.has_requests() )
-        {
-            const int count = sub.requests().requests().size();
-            for( int i = 0; i != count; ++i )
-                entities.push_back( sub.requests().requests( i ).recipient().id() );
-        }
         return ManageMessage( sub, resolver );
-    }
-    if( msg.has_log_supply_handling_destruction() )
-    {
-        *entry_.mutable_supply()->mutable_destruction() = msg.log_supply_handling_destruction();
     }
     return false;
 }

@@ -242,39 +242,9 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
     }
 }
 
-namespace
-{
-
-// A RewritingPublisher_ABC rewriting output messages client identifier and
-// context number.
-class UnicastPublisher : public RewritingPublisher_ABC
-{
-public:
-    UnicastPublisher( ClientPublisher_ABC& publisher, int32_t clientId, int32_t context )
-        : publisher_( publisher )
-        , clientId_( clientId )
-        , context_( context )
-    {
-    }
-
-    void Send( sword::SimToClient& message )
-    {
-        message.set_client_id( clientId_ );
-        message.set_context( context_ );
-        publisher_.Send( message );
-    }
-
-private:
-    ClientPublisher_ABC& publisher_;
-    int32_t clientId_;
-    int32_t context_;
-};
-
-}  // namespace
-
 void PluginFactory::Receive( const std::string& link, const sword::ClientToSim& msg )
 {
-    UnicastPublisher unicaster( rights_->GetPublisher( link ),
+    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ),
             rights_->GetClientID( link ), msg.context() );
     rootHandler_.HandleClientToSim( msg, unicaster, *clients_ );
 }

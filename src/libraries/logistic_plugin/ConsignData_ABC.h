@@ -11,10 +11,14 @@
 #define __ConsignData_ABC_h_
 
 #include "LogisticPlugin.h"
-#include "protocol/Simulation.h"
 #include <boost/noncopyable.hpp>
 #include <cstdint>
 #include <vector>
+
+namespace sword
+{
+    class SimToClient;
+}
 
 namespace plugins
 {
@@ -39,22 +43,18 @@ public:
     //@}
 
     // Returns true if the consign was updated and a log entry should be added.
-    // "entities" is filled with the identifiers of entities referenced by
-    // the request message.
     bool UpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
-           int tick, const std::string& time, std::vector< uint32_t >& entities );
+           int tick, const std::string& time );
 
     //! @name Operations
     //@{
     LogisticPlugin::E_LogisticType GetType() const;
     int GetTick() const;
     std::string ToString() const;
-    const sword::LogHistoryEntry& GetHistoryEntry() const;
     //@}
 
 private:
-    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names,
-           std::vector< uint32_t >& entities ) = 0;
+    virtual bool DoUpdateConsign( const sword::SimToClient& msg, const NameResolver_ABC& names ) = 0;
     virtual void WriteConsign( ConsignWriter& w ) const = 0;
 
 public:
@@ -69,7 +69,6 @@ protected:
     //@{
     const LogisticPlugin::E_LogisticType type_;
     std::string requestId_;
-    sword::LogHistoryEntry entry_;
     //@}
 };
 

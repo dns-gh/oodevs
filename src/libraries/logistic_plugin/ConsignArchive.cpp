@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ConsignArchive.h"
+#include <tools/Exception.h>
 #include <tools/StdFileWrapper.h>
 #include <boost/make_shared.hpp>
 #include <winsock2.h>
@@ -20,6 +21,16 @@ ConsignArchive::ConsignArchive( const tools::Path& basePath, uint32_t maxSize )
     , maxSize_( maxSize )
     , size_( 0 )
     , index_( 0 )
+    , readOnly_( false )
+{
+}
+
+ConsignArchive::ConsignArchive( const tools::Path& basePath )
+    : basePath_( basePath )
+    , maxSize_( 0 )
+    , size_( 0 )
+    , index_( 0 )
+    , readOnly_( true )
 {
 }
 
@@ -36,6 +47,9 @@ tools::Path ConsignArchive::GetFilename( uint32_t index ) const
 
 ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
 {
+    if( readOnly_ )
+        throw MASA_EXCEPTION( "cannot write to read-only logistic archive" );
+
     if( !output_ )
     {
         output_.reset( new tools::Fstream( GetFilename( ++index_ ),
@@ -81,9 +95,25 @@ boost::shared_ptr< tools::Fstream > ConsignArchive::GetFile( uint32_t index ) co
     }
 }
 
+namespace
+{
+
+bool ReadOne( tools::Fstream& fp, std::vector< uint8_t >& output )
+{
+    uint32_t length = 0;
+    fp.read( reinterpret_cast< char* >( &length ), sizeof( length ) );
+    if( fp.gcount() != sizeof( length ) || !fp || !length )
+        return false;
+    length = ntohl( length );
+    output.resize( length );
+    fp.read( reinterpret_cast< char* >( &output[0] ), length );
+    return fp.gcount() == length && fp;
+}
+
+}  // namespace
 
 void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
-        const std::function< void( std::vector< uint8_t >& )>& callback ) const
+        const std::function< void( const std::vector< uint8_t >& )>& callback ) const
 {
     std::vector< uint8_t > output;
 
@@ -100,16 +130,41 @@ void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
             continue;
         fp->clear();
         fp->seekg( it->offset, std::ios::beg );
-        uint32_t length = 0;
-        fp->read( reinterpret_cast< char* >( &length ), sizeof( length ) );
-        if( fp->gcount() != sizeof( length ) || !fp || !length )
-            continue;
-        length = ntohl( length );
-        output.resize( length );
-        fp->read( reinterpret_cast< char* >( &output[0] ), length );
-        if( fp->gcount() != length || !fp )
+        if( !ReadOne( *fp, output ) )
             continue;
         callback( output );
+    }
+}
+
+void ConsignArchive::ReadAll( const std::function<
+        void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const
+{
+    std::vector< uint8_t > output;
+
+    ConsignOffset offset;
+    for( uint32_t file = 1; ; ++file )
+    {
+        auto fp = GetFile( file );
+        if( !fp->is_open() )
+            return;
+        fp->seekg( 1, std::ios::beg ); // 1 for the version number
+        for( ;; )
+        {
+            const auto pos = fp->tellg();
+            if( pos < 0 )
+                throw MASA_EXCEPTION( "could not get logistic offset in archive "
+                    + GetFilename( file ).ToUTF8() );
+            if( !ReadOne( *fp, output ) )
+            {
+                if( fp->eof() )
+                    break;
+                throw MASA_EXCEPTION( "could not decode logistic message in"
+                    " archive " + GetFilename( file ).ToUTF8() );
+            }
+            offset.file = file;
+            offset.offset = static_cast< uint32_t >( pos );
+            callback( offset, output );
+        }
     }
 }
 

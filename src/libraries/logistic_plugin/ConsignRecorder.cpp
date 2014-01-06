@@ -9,16 +9,15 @@
 
 #include "ConsignRecorder.h"
 #include "ConsignArchive.h"
-#include "ConsignResolver_ABC.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/Simulation.h"
 #include <tools/Exception.h>
 #include <tools/Helpers.h>
 #include <tools/Path.h>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/numeric/conversion/cast.hpp>
+#include <boost/make_shared.hpp>
 #include <algorithm>
+#include <unordered_set>
 
-namespace bg = boost::gregorian;
 using namespace plugins::logistic;
 
 class ConsignRecorder::ConsignHistory
@@ -39,46 +38,39 @@ public:
 };
 
 ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
-        uint32_t maxSize, uint32_t maxConsigns )
+        uint32_t maxSize, uint32_t maxConsigns, uint32_t maxHistory )
     : archive_( new ConsignArchive( archivePath, maxSize ))
     , maxConsigns_( maxConsigns )
+    , maxHistory_( maxHistory )
 {
+}
+
+ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+        uint32_t maxConsigns, uint32_t maxHistory )
+    : archive_( new ConsignArchive( archivePath ))
+    , maxConsigns_( maxConsigns )
+    , maxHistory_( maxHistory )
+{
+    std::vector< uint32_t > entities;
+    archive_->ReadAll( [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
+    {
+        sword::LogHistoryEntry entry;
+        if( !entry.ParseFromArray( &output[0], static_cast< int >( output.size() )))
+            return;
+        const auto id = GetConsignId( entry );
+        entities.clear();
+        AppendConsignEntities( entry, entities );
+        IndexEntry( id, IsConsignDestroyed( entry ), offset, entry, entities );
+    });
 }
 
 ConsignRecorder::~ConsignRecorder()
 {
 }
 
-void ConsignRecorder::AddLogger( int kind, const tools::Path& path, const std::string header )
-{
-    loggers_.insert( kind, std::auto_ptr< ConsignResolver_ABC >(
-        new ConsignResolver_ABC( path, header )));
-}
-
-bool ConsignRecorder::HasLogger( int kind ) const
-{
-    return loggers_.find( kind ) != loggers_.end();
-}
-
-void ConsignRecorder::Write( int kind, const std::string& data, const bg::date& today )
-{
-    auto it = loggers_.find( kind );
-    if( it == loggers_.end() )
-        return;
-    it->second->Write( data, today );
-}
-
 void ConsignRecorder::Flush()
 {
     archive_->Flush();
-    for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
-        it->second->Flush();
-}
-
-void ConsignRecorder::SetMaxLinesInFile( int maxLines )
-{
-    for( auto it = loggers_.begin(); it != loggers_.end(); ++it )
-        it->second->SetMaxLinesInFile( maxLines );
 }
 
 void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
@@ -91,6 +83,22 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
         throw MASA_EXCEPTION( "could not serialize input message: " + entry.ShortDebugString() );
     const auto offset = archive_->Write( &buffer[0], static_cast< uint32_t >( buffer.size() ));
 
+    IndexEntry( requestId, destroyed, offset, entry, entities );
+}
+
+void ConsignRecorder::IndexEntry( uint32_t requestId, bool destroyed,
+        const ConsignOffset& offset, const sword::LogHistoryEntry& entry,
+        std::vector< uint32_t >& entities )
+{
+    if( !entry.IsInitialized() )
+        throw MASA_EXCEPTION( "input entry is not initialized: " + entry.ShortDebugString() );
+    UpdateRequestIndex( requestId, offset, destroyed, entities );
+    UpdateHistoryIndex( requestId, entry.tick(), offset );
+}
+
+void ConsignRecorder::UpdateRequestIndex( uint32_t requestId, const ConsignOffset& offset,
+       bool destroyed, const std::vector< uint32_t >& entities )
+{
     // Now, get the record file/offset/length and add it to the history,
     // possibly evicting entries, from oldest deleted to newest alive. 
 
@@ -147,6 +155,23 @@ void ConsignRecorder::WriteEntry( uint32_t requestId, bool destroyed,
     }
 }
 
+void ConsignRecorder::UpdateHistoryIndex( uint32_t requestId, int32_t tick,
+        const ConsignOffset& offset )
+{
+    if( !history_.empty() && history_.front().tick > tick )
+        throw MASA_EXCEPTION( "consign history is moving backward in time" );
+
+    ConsignRecord rec;
+    rec.tick = tick;
+    rec.requestId = requestId;
+    rec.file = offset.file;
+    rec.offset = offset.offset;
+
+    history_.push_front( rec );
+    while( history_.size() > maxHistory_ )
+        history_.pop_back();
+}
+
 void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& entities,
         std::set< uint32_t >& requests ) const
 {
@@ -161,45 +186,41 @@ void ConsignRecorder::GetRequestIdsFromEntities( const std::set< uint32_t >& ent
 namespace
 {
 
-bool Compare( ConsignOffset o1, ConsignOffset o2 )
+bool CompareTick( const ConsignRecord& rec, int32_t tick )
 {
-    return o1.file < o2.file || ( o1.file == o2.file ) && o1.offset < o2.offset;
-}
-
-
-bool ReverseCompare( ConsignOffset o1, ConsignOffset o2 )
-{
-    return Compare( o2, o1 );
+    return rec.tick > tick;
 }
 
 }  // namespace
 
-void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds,
+void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds, int32_t startTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
     entries.clear();
-   
-    // Resolve offsets, keeping the top maxCount ones with a heap
+    std::unordered_set< uint32_t > seen;
     std::vector< ConsignOffset > offsets;
-    offsets.reserve( maxCount + 1 );  // +1 for the heap manipulation
-    for( auto ir = requestIds.cbegin(); ir != requestIds.cend(); ++ir )
+    offsets.reserve( maxCount );
+
+    auto ih = history_.cbegin();
+    if( startTick >= 0 )
+        ih = std::lower_bound( history_.cbegin(), history_.cend(), startTick, CompareTick );
+    for( ; ih != history_.end(); ++ih )
     {
-        auto ic = consigns_.find( *ir );
-        if( ic == consigns_.end() )
+        // Keep only the latest state of a given request
+        if( !seen.insert( ih->requestId ).second )
             continue;
-        offsets.push_back( ic->second->records_.back() );
-        // The comparison is reversed to pop the smallest element
-        std::push_heap( offsets.begin(), offsets.end(), ReverseCompare );
-        if( offsets.size() > maxCount )
-        {
-            std::pop_heap( offsets.begin(), offsets.end(), ReverseCompare );
-            offsets.pop_back();
-        }
+        if( requestIds.find( ih->requestId ) == requestIds.end() )
+            continue;
+        ConsignOffset offset;
+        offset.file = ih->file;
+        offset.offset = ih->offset;
+        offsets.push_back( offset );
+        if( offsets.size() >= maxCount )
+            break;
     }
 
-    // Make sure to seek in increasing offset order. A quick test shows that
-    // std::sort is faster than std::sort_heap.
-    std::sort( offsets.begin(), offsets.end(), Compare );
+    // Make sure to seek in increasing offset order.
+    std::reverse( offsets.begin(), offsets.end() );
     AppendEntries( offsets, entries );
     std::reverse( entries.base().begin(), entries.base().end() );
 }
@@ -218,7 +239,7 @@ void ConsignRecorder::GetHistory( uint32_t requestId,
 void ConsignRecorder::AppendEntries( const std::vector< ConsignOffset >& offsets, 
     boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
-    archive_->ReadMany( offsets, [&]( std::vector< uint8_t >& buffer )
+    archive_->ReadMany( offsets, [&]( const std::vector< uint8_t >& buffer )
     {
         std::auto_ptr< sword::LogHistoryEntry > entry( new sword::LogHistoryEntry() );
         if( entry->ParseFromArray( &buffer[0], static_cast< int >( buffer.size() )))
@@ -232,12 +253,95 @@ size_t ConsignRecorder::GetHistorySize() const
 }
 
 void plugins::logistic::GetRequestsFromEntities( const ConsignRecorder& rec,
-        const std::set< uint32_t >& entities,
+        const std::set< uint32_t >& entities, int32_t startTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries )
 {
     // Resolve request identifiers
     std::set< uint32_t > requestIds;
     rec.GetRequestIdsFromEntities( entities, requestIds );
     // Fetch most recent state of each request
-    rec.GetRequests( requestIds, maxCount, entries );
+    rec.GetRequests( requestIds, startTick, maxCount, entries );
+}
+
+uint32_t plugins::logistic::GetConsignId( const sword::LogHistoryEntry& entry )
+{
+    if( entry.has_funeral() && entry.funeral().has_creation() )
+        return entry.funeral().creation().request().id();
+    if( entry.has_maintenance() && entry.maintenance().has_creation() )
+        return entry.maintenance().creation().request().id();
+    if( entry.has_medical() && entry.medical().has_creation() )
+        return entry.medical().creation().request().id();
+    if( entry.has_supply() && entry.supply().has_creation() )
+        return entry.supply().creation().request().id();
+    return 0;
+}
+
+bool plugins::logistic::IsConsignDestroyed( const sword::LogHistoryEntry& entry )
+{
+    return ( entry.has_funeral() && entry.funeral().has_destruction() ) ||
+           ( entry.has_maintenance() && entry.maintenance().has_destruction() ) ||
+           ( entry.has_medical() && entry.medical().has_destruction() ) ||
+           ( entry.has_supply() && entry.supply().has_destruction() );
+}
+
+void plugins::logistic::AppendConsignEntities( const sword::LogHistoryEntry& msg,
+        std::vector< uint32_t >& entities )
+{
+    if( msg.has_funeral() )
+    {
+        if( msg.funeral().has_creation() )
+            entities.push_back( msg.funeral().creation().unit().id() );
+        if( msg.funeral().has_update() )
+        {
+            const auto& sub = msg.funeral().update();
+            if( sub.has_handling_unit() )
+                entities.push_back( protocol::GetParentEntityId( sub.handling_unit() ));
+            if( sub.has_convoying_unit() )
+                entities.push_back( sub.convoying_unit().id() );
+        }
+    }
+    else if( msg.has_maintenance() )
+    {
+        if( msg.maintenance().has_creation() )
+            entities.push_back( msg.maintenance().creation().unit().id() );
+        if( msg.maintenance().has_update() )
+        {
+            const auto& sub = msg.maintenance().update();
+            entities.push_back( sub.unit().id() );
+            entities.push_back( sub.provider().id() );
+        }
+    }
+    else if( msg.has_medical() )
+    {
+        if( msg.medical().has_creation() )
+            entities.push_back( msg.medical().creation().unit().id() );
+        if( msg.medical().has_update() )
+        {
+            const auto& sub = msg.medical().update();
+            entities.push_back( sub.unit().id() );
+            if( sub.has_provider() )
+                entities.push_back( sub.provider().id() );
+        }
+    }
+    else if( msg.has_supply() )
+    {
+        if( msg.supply().has_creation() )
+        {
+            const auto& sub = msg.supply().creation();
+            entities.push_back( protocol::GetParentEntityId( sub.supplier() ));
+            entities.push_back( protocol::GetParentEntityId( sub.transporters_provider() ));
+        }
+        if( msg.supply().has_update() )
+        {
+            const auto& sub = msg.supply().update();
+            if( sub.has_convoyer() )
+                entities.push_back( sub.convoyer().id() );
+            if( sub.has_requests() )
+            {
+                const int count = sub.requests().requests().size();
+                for( int i = 0; i != count; ++i )
+                    entities.push_back( sub.requests().requests( i ).recipient().id() );
+            }
+        }
+    }
 }
