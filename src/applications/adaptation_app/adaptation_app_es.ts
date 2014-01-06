@@ -1538,7 +1538,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_Resources_ListView</name>
+    <name>ADN_Equipments_Resources_Table</name>
     <message>
         <source>Resources</source>
         <translation type="unfinished">Recursos</translation>

@@ -1534,18 +1534,18 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_Resources_ListView</name>
+    <name>ADN_Equipments_Resources_Table</name>
     <message>
         <source>Resources</source>
-        <translation>Environments</translation>
+        <translation type="unfinished">Resources</translation>
     </message>
     <message>
         <source>Add resource</source>
-        <translation>Add resource</translation>
+        <translation type="unfinished">Add resource</translation>
     </message>
     <message>
         <source>Remove resource</source>
-        <translation>Remove resource</translation>
+        <translation type="unfinished">Remove resource</translation>
     </message>
 </context>
 <context>

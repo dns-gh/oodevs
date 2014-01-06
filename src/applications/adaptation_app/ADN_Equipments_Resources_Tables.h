@@ -34,14 +34,15 @@ public:
     //@{
     const ADN_Table& GetAllocationTable() const;
     const ADN_Table& GetConsumptionTable() const;
+    void ResetScrollBars();
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_ListView* categoryList_;
-    ADN_Table*    allocationTable_;
-    ADN_Table*    consumptionTable_;
+    ADN_Table* categoryList_;
+    ADN_Table* allocationTable_;
+    ADN_Table* consumptionTable_;
     //@}
 };
 

@@ -657,4 +657,5 @@ void ADN_Equipments_GUI::OnProtectionTypeChanged()
         else
             pBreakdownsGroup_->hide();
     }
+    pResources_->ResetScrollBars();
 }
