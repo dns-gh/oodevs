@@ -93,11 +93,16 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& message );
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
-    virtual bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
+    virtual bool HandleClientToSim( const sword::ClientToSim& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
+    virtual bool HandleClientToReplay( const sword::ClientToReplay& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
     //@}
 
 private:
+    template< typename M, typename R >
+    bool HandleClientToSomething( const M& msg, dispatcher::RewritingPublisher_ABC& unicaster,
+            dispatcher::ClientPublisher_ABC& );
     void HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
             sword::LogisticHistoryAck& ack ) const;
     void HandleListLogisticRequests( const sword::ListLogisticRequests& rq,

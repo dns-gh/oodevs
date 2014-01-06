@@ -91,6 +91,8 @@ message ClientToReplay {
         optional ForceRefreshDataRequest force_refresh_data_request = 7;
         //! A message to skip to a given date
         optional ControlSkipToDate       control_skip_to_date       = 8;
+        optional LogisticHistoryRequest   logistic_history_request  = 9;
+        optional ListLogisticRequests     list_logistic_requests    = 10;
     }
     /** @property context
         @brief Identifies the request matching the response.
