@@ -78,7 +78,7 @@ public:
     void GetRequestIdsFromEntities( const std::set< uint32_t >& entities,
             std::set< uint32_t >& requests ) const;
     // Returns top maxCount entries of recently updated requests.
-    void GetRequests( const std::set< uint32_t >& requestIds, int32_t startTick,
+    void GetRequests( const std::set< uint32_t >& requestIds, int32_t currentTick,
             size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry>& entries ) const;
     // Returns all entries of a given request.
     void GetHistory( uint32_t requestId, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const;
@@ -120,7 +120,7 @@ private:
 };
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,
-        int32_t startTick, size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries );
+    int32_t currentTick, size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries );
 
 uint32_t GetConsignId( const sword::LogHistoryEntry& entry );
 bool IsConsignDestroyed( const sword::LogHistoryEntry& entry );

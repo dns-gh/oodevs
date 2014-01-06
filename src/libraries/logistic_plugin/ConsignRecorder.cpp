@@ -193,7 +193,7 @@ bool CompareTick( const ConsignRecord& rec, int32_t tick )
 
 }  // namespace
 
-void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds, int32_t startTick,
+void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds, int32_t currentTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries ) const
 {
     entries.clear();
@@ -202,8 +202,8 @@ void ConsignRecorder::GetRequests( const std::set< uint32_t >& requestIds, int32
     offsets.reserve( maxCount );
 
     auto ih = history_.cbegin();
-    if( startTick >= 0 )
-        ih = std::lower_bound( history_.cbegin(), history_.cend(), startTick, CompareTick );
+    if( currentTick >= 0 )
+        ih = std::lower_bound( history_.cbegin(), history_.cend(), currentTick, CompareTick );
     for( ; ih != history_.end(); ++ih )
     {
         // Keep only the latest state of a given request
@@ -253,14 +253,14 @@ size_t ConsignRecorder::GetHistorySize() const
 }
 
 void plugins::logistic::GetRequestsFromEntities( const ConsignRecorder& rec,
-        const std::set< uint32_t >& entities, int32_t startTick,
+        const std::set< uint32_t >& entities, int32_t currentTick,
         size_t maxCount, boost::ptr_vector< sword::LogHistoryEntry >& entries )
 {
     // Resolve request identifiers
     std::set< uint32_t > requestIds;
     rec.GetRequestIdsFromEntities( entities, requestIds );
     // Fetch most recent state of each request
-    rec.GetRequests( requestIds, startTick, maxCount, entries );
+    rec.GetRequests( requestIds, currentTick, maxCount, entries );
 }
 
 uint32_t plugins::logistic::GetConsignId( const sword::LogHistoryEntry& entry )
