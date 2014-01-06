@@ -9,8 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "Synchroniser.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "EntityPublisher_ABC.h"
+#include "ReplaySynchronisations.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
 
@@ -103,8 +104,9 @@ void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 //        (*it)->Apply( &EntityPublisher_ABC::SendDestruction, p );
         // $$$$ AGE 2008-06-20: causes reentrances in the destructor...
         // $$$$ AGE 2008-06-20: Change the whole thing (see SimulationDispatcher::EndSynchronisation)
-
-        const EntityPublisher_ABC* publisher = (toDestroy_[i - 1])->Retrieve< EntityPublisher_ABC >();
+        auto entity = toDestroy_[i - 1];
+        entity->Get< ReplaySynchronisations >().MarkForDestructionNow();
+        const EntityPublisher_ABC* publisher = entity->Retrieve< EntityPublisher_ABC >();
         if( publisher )
             publisher->SendDestruction( p );
     }

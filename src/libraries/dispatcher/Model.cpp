@@ -32,6 +32,7 @@
 #include "PopulationConcentration.h"
 #include "PopulationFire.h"
 #include "PopulationKnowledge.h"
+#include "ReplaySynchronisations.h"
 #include "Report.h"
 #include "Side.h"
 #include "SimulationModel.h"
@@ -573,6 +574,11 @@ void Model::Destroy( tools::Resolver< T >& resolver, unsigned id, const M& messa
     if( T* entity = resolver.Find( id ) )
     {
         entity->Update( message );
+        if( auto sync = entity->Retrieve< ReplaySynchronisations >() )
+        {
+            if( sync->MustBeDestroyedLater() )
+                return;
+        }
         resolver.Remove( id );
         delete entity;
     }
