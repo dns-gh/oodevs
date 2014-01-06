@@ -876,7 +876,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
     runtime::Scoper killSword( [&] {
         sword->Kill();
     } );
-    if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT ) )
+    if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT, [&]() { return sword->IsAlive(); } ) )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to connect to simulation " << id_;
         return false;
