@@ -635,7 +635,7 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
     BOOST_REQUIRE_EQUAL( 2u, paths.size() );
     BOOST_CHECK_EQUAL( "consign.2", paths[1].ToUTF8() );
 
-    int seen = 0;
+    size_t seen = 0;
     ar.ReadAll( [&]( ConsignOffset, std::vector< uint8_t >& output )
     {
         BOOST_REQUIRE_EQUAL( 4u, output.size() );
