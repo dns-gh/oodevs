@@ -222,6 +222,11 @@ type HumanFactors struct {
 	Stress     sword.UnitAttributes_EnumUnitStress
 }
 
+type Stock struct {
+	Type     uint32
+	Quantity int32
+}
+
 type Unit struct {
 	Id                  uint32
 	AutomatId           uint32
@@ -245,6 +250,7 @@ type Unit struct {
 	HumanFactors        HumanFactors
 	RawOperationalState int32
 	Neutralized         bool
+	Stocks              []*Stock
 }
 
 type Automat struct {
@@ -928,6 +934,7 @@ var (
 		(*ModelData).handleLogSupplyHandlingDestruction,
 		(*ModelData).handleLogSupplyHandlingUpdate,
 		(*ModelData).handleLogSupplyQuotas,
+		(*ModelData).handleLogSupplyState,
 		(*ModelData).handleObjectCreation,
 		(*ModelData).handleObjectDestruction,
 		(*ModelData).handleObjectKnowledgeCreation,

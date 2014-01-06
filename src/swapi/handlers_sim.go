@@ -86,6 +86,27 @@ func (model *ModelData) handlePartyCreation(m *sword.SimToClient_Content) error 
 	return nil
 }
 
+func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error {
+	mm := m.GetLogSupplyState()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	unitId := mm.GetUnit().GetId()
+	unit, ok := model.Units[unitId]
+	if !ok {
+		return fmt.Errorf("cannot apply handle log supply state for unit %d", unitId)
+	}
+	if stocks := mm.GetStocks(); stocks != nil {
+		for _, stock := range stocks.GetElem() {
+			unit.Stocks = append(unit.Stocks, &Stock{
+				Type:     stock.GetResource().GetId(),
+				Quantity: stock.GetQuantity(),
+			})
+		}
+	}
+	return nil
+}
+
 func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitCreation()
 	if mm == nil {
