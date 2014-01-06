@@ -372,15 +372,15 @@ message LogisticHistoryRequest {
 //! of supplied entities (unit, automat, formation...) at some point
 //! in its history.
 //!
-//! If start_tick is supplied, returns them as if it were the current
-//! tick. start_tick must be between 1 and the current simulated tick
+//! If current_tick is supplied, returns them as if it were the current
+//! tick. current_tick must be between 1 and the current simulated tick
 //! for usual runs, or in the session tick range for replay runs.
 //! 
 //! Errors are reported in SimToClient.error_msg fields.
 message ListLogisticRequests {
-    repeated Id entities      = 1;
-    optional uint32 max_count = 2;
-    optional int32 start_tick = 3;
+    repeated Id     entities     = 1;
+    optional uint32 max_count    = 2;
+    optional int32  current_tick = 3;
 }
 
 /** @struct ClientToSim
