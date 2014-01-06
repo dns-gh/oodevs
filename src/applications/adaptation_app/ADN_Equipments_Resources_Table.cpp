@@ -8,49 +8,29 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipments_Resources_ListView.h"
+#include "ADN_Equipments_Resources_Table.h"
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_StandardItem.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Equipments_GUI.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_WorkspaceElement.h"
 #include "ENT/ENT_Tr.h"
 
-namespace
-{
-    class ADN_Connector_ListView_Equipment_Resource : public ADN_Connector_ListView_ABC
-        , private boost::noncopyable
-    {
-    public:
-        explicit ADN_Connector_ListView_Equipment_Resource( ADN_ListView& list ) : ADN_Connector_ListView_ABC( list ) {}
-        virtual ~ADN_Connector_ListView_Equipment_Resource() {}
-
-        ADN_StandardItem* CreateItem( void* pObj )
-        {
-            // Create the new list item.
-            ADN_StandardItem* pItem = new ADN_StandardItem( pObj );
-
-            // Connect list item with object's name
-            ADN_Equipments_Data::CategoryInfos* infos = static_cast< ADN_Equipments_Data::CategoryInfos* >( pObj );
-            if( infos && infos->GetCrossedElement() )
-                pItem->Connect( &infos->GetCrossedElement()->strName_ );
-            return pItem;
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView constructor
+// Name: ADN_Equipments_Resources_Table constructor
 // Created: ABR 2012-11-30
 // -----------------------------------------------------------------------------
-ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent /* = 0 */ )
-    : ADN_ListView( parent, objectName , tools::translate( "ADN_Equipments_Resources_ListView", "Resources" ) )
+ADN_Equipments_Resources_Table::ADN_Equipments_Resources_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent /* = 0 */ )
+    : ADN_Table( objectName, connector, parent )
 {
-    pConnector_.reset( new ADN_Connector_ListView_Equipment_Resource( *this ) );
-    connector = pConnector_.get();
+    dataModel_.setColumnCount( 1 );
 
-    setAlternatingRowColors( true );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tools::translate( "ADN_Equipments_Resources_Table", "Resources" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    setMaximumHeight( 270 );
 
     proxyModel_->setDynamicSortFilter( true );
     Sort();
@@ -58,28 +38,31 @@ ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QStr
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView destructor
+// Name: ADN_Equipments_Resources_Table destructor
 // Created: ABR 2012-11-30
 // -----------------------------------------------------------------------------
-ADN_Equipments_Resources_ListView::~ADN_Equipments_Resources_ListView()
+ADN_Equipments_Resources_Table::~ADN_Equipments_Resources_Table()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView::ConnectItem
-// Created: ABR 2012-11-30
+// Name: ADN_Equipments_Resources_Table::AddRow
+// Created: LGY 2014-01-06
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Resources_ListView::ConnectItem( bool /*bConnect*/ )
+void ADN_Equipments_Resources_Table::AddRow( int row, void* data )
 {
-    // NOTHING
+    ADN_Equipments_Data::CategoryInfos* infos = static_cast< ADN_Equipments_Data::CategoryInfos* >( data );
+    if( !infos )
+        return;
+    AddItem( row, 0, data, &infos->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView::OnContextMenu
+// Name: ADN_Equipments_Resources_Table::OnContextMenu
 // Created: ABR 2012-11-30
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_Resources_Table::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -109,18 +92,20 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
         targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr::eToTr ).c_str(), pSubMenu );
     }
 
-    menu.insertItem( tools::translate( "ADN_Equipments_Resources_ListView", "Add resource"), &targetMenu ,0 );
+    menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Add resource"), &targetMenu ,0 );
 
-    if( pCurData_ != 0 )
-        menu.insertItem( tools::translate( "ADN_Equipments_Resources_ListView", "Remove resource" ), 1 );
+    void* data = GetSelectedData();
+
+    if( data != 0 )
+        menu.insertItem( tools::translate( "ADN_Equipments_Resources_Table", "Remove resource" ), 1 );
 
     int nMenuResult = menu.exec(pt);
 
     ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
     if( nMenuResult == 1 )
     {
-        assert( pCurData_ != 0 );
-        pCTable.RemItem( pCurData_ );
+        assert( data != 0 );
+        pCTable.RemItem( data );
     }
     else if( nMenuResult > 1 )
     {
@@ -140,10 +125,10 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView::Contains
+// Name: ADN_Equipments_Resources_Table::Contains
 // Created: ABR 2012-12-03
 // -----------------------------------------------------------------------------
-bool ADN_Equipments_Resources_ListView::Contains( void* category )
+bool ADN_Equipments_Resources_Table::Contains( void* category )
 {
     for( int n = 0; dataModel_.item( n, 0 ) != 0; ++n )
     {
@@ -153,21 +138,4 @@ bool ADN_Equipments_Resources_ListView::Contains( void* category )
             return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipments_Resources_ListView::GetToolTipFor
-// Created: ABR 2012-12-03
-// -----------------------------------------------------------------------------
-std::string ADN_Equipments_Resources_ListView::GetToolTipFor( const QModelIndex& index )
-{
-    if( index.isValid() )
-    {
-        void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-        ADN_Equipments_Data::CategoryInfos* pCastData = static_cast< ADN_Equipments_Data::CategoryInfos* >( pData );
-        assert( pCastData != 0 );
-        if( pCastData->GetCrossedElement() )
-            return pCastData->GetCrossedElement()->strName_.GetData();
-    }
-    return "";
 }

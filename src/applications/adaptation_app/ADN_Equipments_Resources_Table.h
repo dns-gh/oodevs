@@ -7,35 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipments_Resources_ListView_h_
-#define __ADN_Equipments_Resources_ListView_h_
+#ifndef __ADN_Equipments_Resources_Table_h_
+#define __ADN_Equipments_Resources_Table_h_
 
-#include "ADN_ListView.h"
+#include "ADN_Table.h"
 
 // =============================================================================
-/** @class  ADN_Equipments_Resources_ListView
-    @brief  ADN_Equipments_Resources_ListView
+/** @class  ADN_Equipments_Resources_Table
+    @brief  ADN_Equipments_Resources_Table
 */
 // Created: ABR 2012-12-03
 // =============================================================================
-class ADN_Equipments_Resources_ListView : public ADN_ListView
+class ADN_Equipments_Resources_Table : public ADN_Table
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipments_Resources_ListView( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent = 0 );
-    virtual ~ADN_Equipments_Resources_ListView();
+             ADN_Equipments_Resources_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent = 0 );
+    virtual ~ADN_Equipments_Resources_Table();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ConnectItem( bool bConnect );
-    void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
     bool Contains( void* category );
-    std::string GetToolTipFor( const QModelIndex& index );
-    //@}
+    virtual void OnContextMenu( const QPoint& pt );
 };
 
-#endif // __ADN_Equipments_Resources_ListView_h_
+#endif // __ADN_Equipments_Resources_Table_h_
