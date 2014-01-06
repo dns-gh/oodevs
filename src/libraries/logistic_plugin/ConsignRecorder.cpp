@@ -59,7 +59,7 @@ ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
     , maxHistory_( maxHistory )
 {
     std::vector< uint32_t > entities;
-    archive_->ReadAll( [&,this]( ConsignOffset offset, const std::vector< uint8_t >& output )
+    archive_->ReadAll( [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
     {
         sword::LogHistoryEntry entry;
         if( !entry.ParseFromArray( &output[0], static_cast< int >( output.size() )))
@@ -67,7 +67,7 @@ ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
         const auto id = GetConsignId( entry );
         entities.clear();
         AppendConsignEntities( entry, entities );
-        this->IndexEntry( id, IsConsignDestroyed( entry ), offset, entry, entities );
+        IndexEntry( id, IsConsignDestroyed( entry ), offset, entry, entities );
     });
 }
 
