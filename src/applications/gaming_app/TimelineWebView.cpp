@@ -207,11 +207,14 @@ void TimelineWebView::OnCenterView()
 // Name: TimelineWebView::CreateEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineWebView::CreateEvent( const timeline::Event& event )
+void TimelineWebView::CreateEvent( const timeline::Event& event, bool select /* = false */ )
 {
-    eventCreated_ = event.uuid;
     if( server_ )
+    {
+        if( select )
+            eventCreated_ = event.uuid;
         server_->CreateEvent( event );
+    }
 }
 
 // -----------------------------------------------------------------------------

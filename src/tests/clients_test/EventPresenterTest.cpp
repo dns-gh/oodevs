@@ -109,7 +109,7 @@ namespace
     };
     MOCK_BASE_CLASS( MockTimelineHandler, kernel::TimelineHandler_ABC )
     {
-        MOCK_METHOD( CreateEvent, 1 );
+        MOCK_METHOD( CreateEvent, 2 );
         MOCK_METHOD( SelectEvent, 1 );
         MOCK_METHOD( EditEvent, 1 );
         MOCK_METHOD( DeleteEvent, 1 );

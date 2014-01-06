@@ -112,8 +112,8 @@ public:
     PresenterBaseFixture()
         : parameterFactory( coordinateConverter, entityResolver, staticModel, agentKnowledgeConverter, objectKnowledgeConverter, controllers.controller_ )
         , actionFactory( controllers.controller_, parameterFactory, entityResolver, staticModel, time )
-        , actionPublisher( publisher, controllers )
-        , actionsModel( actionFactory, actionPublisher, publisher, controllers.controller_ )
+        , actionPublisher( publisher, controllers, time )
+        , actionsModel( actionFactory, publisher, controllers, time )
         , eventFactory( actionsModel, controllers )
     {}
 

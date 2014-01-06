@@ -13,10 +13,14 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/Observer_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
     class Controllers;
+    class Time_ABC;
+    class TimelineHandler_ABC;
 }
 
 namespace actions
@@ -31,15 +35,23 @@ namespace actions
 class ActionPublisher : public Publisher_ABC
                       , public tools::Observer_ABC
                       , public kernel::ModesObserver_ABC
+                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionPublisher( Publisher_ABC& publisher, kernel::Controllers& controllers );
+             ActionPublisher( Publisher_ABC& publisher,
+                              kernel::Controllers& controllers,
+                              const kernel::Time_ABC& time );
     virtual ~ActionPublisher();
     //@}
 
-    //! @name Proxy methods
+    //! @name Operations
+    //@{
+    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler );
+    //@}
+
+    //! @name Publisher_ABC implementation
     //@{
     virtual void Send( const sword::ClientToSim& message );
     virtual void Send( const sword::ClientToAuthentication& message );
@@ -50,13 +62,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionPublisher( const ActionPublisher& );            //!< Copy constructor
-    ActionPublisher& operator=( const ActionPublisher& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
+    //! @name ModesObserver_ABC implementation
     //@{
     virtual void NotifyModeChanged( E_Modes newMode );
     //@}
@@ -67,6 +73,8 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     bool design_;
+    const kernel::Time_ABC& simulation_;
+    boost::shared_ptr< kernel::TimelineHandler_ABC > handler_;
     //@}
 };
 

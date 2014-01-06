@@ -10,7 +10,9 @@
 #include "actions_pch.h"
 #include "ActionsModel.h"
 #include "ActionsFilter_ABC.h"
+#include "ActionPublisher.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -30,11 +32,14 @@ using namespace actions;
 // Name: ActionsModel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher, kernel::Controller& controller )
+ActionsModel::ActionsModel( ActionFactory_ABC& factory,
+                            Publisher_ABC& defaultPublisher,
+                            Controllers& controllers,
+                            const Time_ABC& simulation )
     : factory_( factory )
-    , publisher_( publisher )
     , defaultPublisher_( defaultPublisher )
-    , controller_( controller )
+    , controller_( controllers.controller_ )
+    , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
 {
     // NOTHING
 }
@@ -283,7 +288,7 @@ void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* f
 // -----------------------------------------------------------------------------
 void ActionsModel::Publish( const Action_ABC& action, int context )
 {
-    action.Publish( publisher_, context );
+    action.Publish( *publisher_, context );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,4 +298,13 @@ void ActionsModel::Publish( const Action_ABC& action, int context )
 void ActionsModel::PublishForce( const Action_ABC& action )
 {
     action.Publish( defaultPublisher_, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::SetTimelineHandler
+// Created: ABR 2013-12-13
+// -----------------------------------------------------------------------------
+void ActionsModel::SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& handler )
+{
+    publisher_->SetTimelineHandler( handler );
 }
