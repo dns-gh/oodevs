@@ -91,10 +91,10 @@ func (model *ModelData) handleLogSupplyState(m *sword.SimToClient_Content) error
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	unit, ok := model.Units[*mm.Unit.Id]
+	unitId := mm.GetUnit().GetId()
+	unit, ok := model.Units[unitId]
 	if !ok {
-		return fmt.Errorf("cannot apply handle log supply state for unit %d",
-			*mm.Unit.Id)
+		return fmt.Errorf("cannot apply handle log supply state for unit %d", unitId)
 	}
 	if stocks := mm.GetStocks(); stocks != nil {
 		for _, stock := range stocks.GetElem() {
