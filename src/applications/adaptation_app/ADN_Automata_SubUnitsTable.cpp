@@ -34,6 +34,8 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectNam
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
     delegate_.AddSpinBoxOnColumn( 2, -1, std::numeric_limits< int >::max() );
+    proxyModel_->setDynamicSortFilter( true );
+    Sort();
 }
 
 // -----------------------------------------------------------------------------
