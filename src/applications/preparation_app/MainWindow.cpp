@@ -813,7 +813,8 @@ void MainWindow::ToggleDocks()
             if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
                 if( GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
-            (*it)->hide();
+            if( ( *it )->parent() == this )
+                ( *it )->hide();
         }
         QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
@@ -821,7 +822,7 @@ void MainWindow::ToggleDocks()
             if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
                 if( GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
-            (*it)->hide();
+            ( *it )->hide();
         }
     }
     else if( restoreState( states_ ) )
