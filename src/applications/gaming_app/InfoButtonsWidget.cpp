@@ -266,13 +266,8 @@ void InfoButtonsWidget::NotifyUpdated( const LogMaintenanceConsigns& consigns )
 // -----------------------------------------------------------------------------
 void InfoButtonsWidget::UpdateConsign( const LogisticsConsign_ABC& consign )
 {
-    if( element_ )
-    {
-        if(  kernel::Agent_ABC* entity = consign.GetConsumer() )
-            hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
-        if(  kernel::Entity_ABC* entity = consign.GetHandler() )
-            hasChanged_ = hasChanged_ || entities_.find( entity->GetId() ) != entities_.end();
-    }
+    if( !hasChanged_ && element_ && consign.RefersToAgent( entities_ ) )
+        hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

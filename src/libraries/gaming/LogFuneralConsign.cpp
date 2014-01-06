@@ -107,11 +107,22 @@ void LogFuneralConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
 // Name: LogFuneralConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-bool LogFuneralConsign::RefersToAgent( unsigned int id ) const
+bool LogFuneralConsign::RefersToAgent( unsigned long id ) const
 {
     return consumer_.GetId() == id
         || ( handler_ && handler_->GetId() == id )
         || ( convoy_ && convoy_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogFuneralConsign::RefersToAgent
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+bool LogFuneralConsign::RefersToAgent( const std::set< unsigned long >& id ) const
+{
+    return( id.find( consumer_.GetId() ) != id.end() )
+       || ( handler_ && id.find( handler_->GetId() ) != id.end() )
+       || ( convoy_ && id.find( convoy_->GetId() ) != id.end() );
 }
 
 // -----------------------------------------------------------------------------

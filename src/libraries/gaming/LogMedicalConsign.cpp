@@ -110,9 +110,19 @@ void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
 // Name: LogMedicalConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-bool LogMedicalConsign::RefersToAgent( unsigned int id ) const
+bool LogMedicalConsign::RefersToAgent( unsigned long id ) const
 {
     return consumer_.GetId() == id || ( pPionLogHandling_ && pPionLogHandling_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMedicalConsign::RefersToAgent
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+bool LogMedicalConsign::RefersToAgent( const std::set< unsigned long >& id ) const
+{
+    return( id.find( consumer_.GetId() ) != id.end() )
+       || ( pPionLogHandling_ && id.find( pPionLogHandling_->GetId() ) != id.end() );
 }
 
 // -----------------------------------------------------------------------------

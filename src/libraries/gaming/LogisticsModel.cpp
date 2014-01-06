@@ -223,7 +223,7 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
 {
     if( LogSupplyConsign* consign = tools::Resolver< LogSupplyConsign >::Find( message.request().id() ) )
     {
-        kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoying();
+        kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoy();
         if( message.has_convoyer() && ( !pPionLogConvoying || message.convoyer().id() != pPionLogConvoying->GetId() ) )
         {
             kernel::Agent_ABC* entity = resolver_.Find( message.convoyer().id() );
@@ -262,7 +262,7 @@ void LogisticsModel::DeleteSupplyConsign( unsigned long id )
 
         if( kernel::Entity_ABC* pLogHandlingEntity = consign->GetHandler() )
             pLogHandlingEntity->Get< LogSupplyConsigns >().TerminateConsign( *consign );
-        if(  kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoying() )
+        if(  kernel::Agent_ABC* pPionLogConvoying = consign->GetConvoy() )
             pPionLogConvoying->Get< LogSupplyConsigns >().TerminateConsign( *consign );
         consign->DeleteAll();
         Delete< LogSupplyConsign >( id );
