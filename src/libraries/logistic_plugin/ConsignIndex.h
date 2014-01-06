@@ -12,11 +12,9 @@
 
 #include "LogisticPlugin.h"
 #include <boost/noncopyable.hpp>
-#pragma warning( push, 0 )
-#include <boost/ptr_container/ptr_map.hpp>
-#pragma warning( pop )
 #include <boost/shared_ptr.hpp>
 #include <cstdint>
+#include <map>
 #include <vector>
 
 namespace sword
@@ -48,8 +46,6 @@ struct ConsignEvent
     boost::shared_ptr< const sword::LogHistoryEntry > entry;
 };
 
-struct LiveConsign;
-
 class ConsignIndex: private boost::noncopyable
 {
 public:
@@ -59,7 +55,7 @@ public:
     ConsignEvent Update( const sword::SimToClient& message, int tick );
 
 private:
-    boost::ptr_map< int, LiveConsign > consigns_;
+    std::map< int, boost::shared_ptr< sword::LogHistoryEntry > > consigns_;
 };
 
 }  // namespace logistic

@@ -54,71 +54,57 @@ ConsignEvent GetEventType( const sword::SimToClient& message )
 }
 #undef MAKE_EVENT
 
-} // namespace
-
-struct plugins::logistic::LiveConsign
-{
-    LiveConsign()
-        : entry_( boost::make_shared< sword::LogHistoryEntry >() )
-    {
-    }
-
-    void Update( const sword::SimToClient& message );
-
-    boost::shared_ptr< sword::LogHistoryEntry > entry_;
-};
-
-void LiveConsign::Update( const sword::SimToClient& message )
+void UpdateEntry( const sword::SimToClient& message, sword::LogHistoryEntry& entry )
 {
     const auto& msg = message.message();
     if( msg.has_log_funeral_handling_creation() )
     {
-        *entry_->mutable_funeral()->mutable_creation() =
+        *entry.mutable_funeral()->mutable_creation() =
             msg.log_funeral_handling_creation();
     }
     else if( msg.has_log_funeral_handling_update() )
     {
-        entry_->mutable_funeral()->mutable_update()->MergeFrom(
+        entry.mutable_funeral()->mutable_update()->MergeFrom(
             msg.log_funeral_handling_update() );
     }
     else if( msg.has_log_funeral_handling_destruction() )
     {
-        *entry_->mutable_funeral()->mutable_destruction() =
+        *entry.mutable_funeral()->mutable_destruction() =
             msg.log_funeral_handling_destruction();
     }
     else if( msg.has_log_maintenance_handling_creation() )
     {
-        *entry_->mutable_maintenance()->mutable_creation() =
+        *entry.mutable_maintenance()->mutable_creation() =
             msg.log_maintenance_handling_creation();
     }
     else if( msg.has_log_maintenance_handling_update() )
     {
-        entry_->mutable_maintenance()->mutable_update()->MergeFrom(
+        entry.mutable_maintenance()->mutable_update()->MergeFrom(
             msg.log_maintenance_handling_update() );
     }
     else if( msg.has_log_maintenance_handling_destruction() )
     {
-        *entry_->mutable_maintenance()->mutable_destruction() =
+        *entry.mutable_maintenance()->mutable_destruction() =
             msg.log_maintenance_handling_destruction();
     }
     else if( msg.has_log_medical_handling_creation() )
     {
-        *entry_->mutable_medical()->mutable_creation() =
+        *entry.mutable_medical()->mutable_creation() =
             msg.log_medical_handling_creation();
     }
     else if( msg.has_log_medical_handling_update() )
     {
-        entry_->mutable_medical()->mutable_update() ->MergeFrom(
+        entry.mutable_medical()->mutable_update() ->MergeFrom(
             msg.log_medical_handling_update() );
     }
     else if( msg.has_log_medical_handling_destruction() )
     {
-        *entry_->mutable_medical()->mutable_destruction() =
+        *entry.mutable_medical()->mutable_destruction() =
             msg.log_medical_handling_destruction();
     }
     else if( msg.has_log_supply_handling_creation() )
     {
-        *entry_->mutable_supply()->mutable_creation() =
+        *entry.mutable_supply()->mutable_creation() =
             msg.log_supply_handling_creation();
     }
     else if( msg.has_log_supply_handling_update() )
@@ -128,15 +114,17 @@ void LiveConsign::Update( const sword::SimToClient& message )
         // right now.
         const auto& sub = msg.log_supply_handling_update();
         if( sub.has_requests() )
-            entry_->mutable_supply()->mutable_update()->mutable_requests()->Clear();
-        entry_->mutable_supply()->mutable_update()->MergeFrom( sub );
+            entry.mutable_supply()->mutable_update()->mutable_requests()->Clear();
+        entry.mutable_supply()->mutable_update()->MergeFrom( sub );
     }
     else if( msg.has_log_supply_handling_destruction() )
     {
-        *entry_->mutable_supply()->mutable_destruction() =
+        *entry.mutable_supply()->mutable_destruction() =
             msg.log_supply_handling_destruction();
     }
 }
+
+} // namespace
 
 ConsignIndex::ConsignIndex()
 {
@@ -154,15 +142,15 @@ ConsignEvent ConsignIndex::Update( const sword::SimToClient& message, int tick )
     auto it = consigns_.find( ev.id );
     if( ev.action == eConsignCreation || it == consigns_.end() )
     {
-        auto consign = std::auto_ptr< LiveConsign >( new LiveConsign() );
+        auto e = boost::make_shared< sword::LogHistoryEntry >();
         if( it == consigns_.end() )
-            it = consigns_.insert( ev.id, consign ).first;
+            it = consigns_.insert( std::make_pair( ev.id, e ) ).first;
         else
-            consigns_.replace( it, consign );
+            it->second.swap( e );
     }
-    it->second->Update( message );
-    it->second->entry_->set_tick( tick );
-    ev.entry = it->second->entry_;
+    UpdateEntry( message, *it->second );
+    it->second->set_tick( tick );
+    ev.entry = it->second;
     if( ev.action == eConsignDestruction )
         consigns_.erase( it );
     return ev;
