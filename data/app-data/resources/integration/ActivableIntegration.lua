@@ -22,8 +22,8 @@ integration.activationLevel = function( object )
     return DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( object.source ) and 100 or 0
 end
 
---- Allows the unit to activate the provided object knowledge (e.g. mines are operationnals)
--- if object is activated, a report is displayed
+--- Allows the unit to activate the provided object knowledge (e.g. mines are operational)
+-- if object is activated, a report is sent
 -- @param object an object knowledge
 -- @return Boolean, whether or not object knowledge is activated
 integration.activateIt = function( object )
@@ -34,7 +34,7 @@ integration.activateIt = function( object )
     return false
 end
 
---- Allows the unit to activate the provided object knowledge (e.g. mines are operationnals) for safety unit
+--- Allows the unit to activate the provided object knowledge (e.g. mines are operational) without sending a report
 -- @param object an object knowledge
 -- @return Boolean, always true even if object knowledge is not activated
 integration.activateItSecu = function( object )
@@ -43,15 +43,15 @@ integration.activateItSecu = function( object )
 end
 
 --- Returns true if object knowledge is a maneuver obstacle, false otherwise
--- A maneuver obstacle is a mined object which could be activated (e.g. mines are operationnals) 
+-- A maneuver obstacle is an object that has the ability to activate 
 -- @param object an object knowledge
 -- @return Boolean, whether or not this knowledge object is a maneuver obstacle
 integration.isManeuverObstacle = function ( object )
     return DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( object.source )
 end
 
---- Returns true if object knowledge is an activated maneuver obstacle, false otherwise
--- An activating maneuver obstacle is an activated mined object (e.g. mines are operationnals) 
+--- Returns true if object knowledge is an active maneuver obstacle, false otherwise
+-- An activated maneuver obstacle has the ability to activate and it is active 
 -- @param object an object knowledge
 -- @return Boolean, whether or not this knowledge object is activated
 integration.isActifManeuverObstacle = function ( object )
