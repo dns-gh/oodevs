@@ -54,6 +54,7 @@ public:
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
     void FindRequestsIds( std::set< unsigned int >& requests );
+    void ResizeColumns();
     //@}
 
     //! @name Accessors

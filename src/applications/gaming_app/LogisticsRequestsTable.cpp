@@ -83,9 +83,7 @@ void LogisticsRequestsTable::Purge()
 {
     dataModel_.clear();
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( dataModel_.columnCount() - 1, QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +181,13 @@ void LogisticsRequestsTable::FindRequestsIds( std::set< unsigned int >& requests
         if( pRequest )
             requests.insert( pRequest->GetId() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::ResizeColumns
+// Created: LGY 2014-01-06
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::ResizeColumns()
+{
+    resizeColumnsToContents();
 }
