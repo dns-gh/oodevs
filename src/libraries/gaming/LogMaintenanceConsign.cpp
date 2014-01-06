@@ -106,9 +106,18 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
 // Name: LogMaintenanceConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-bool LogMaintenanceConsign::RefersToAgent( unsigned int id ) const
+bool LogMaintenanceConsign::RefersToAgent( unsigned long id ) const
 {
     return consumer_.GetId() == id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::RefersToAgent
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+bool LogMaintenanceConsign::RefersToAgent( const std::set< unsigned long >& id ) const
+{
+    return id.find( consumer_.GetId() ) != id.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -127,15 +136,6 @@ kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
 kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
 {
     return pPionLogHandling_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogMaintenanceConsign::GetConvoy
-// Created: LDC 2014-01-03
-// -----------------------------------------------------------------------------
-kernel::Agent_ABC* LogMaintenanceConsign::GetConvoy() const
-{
-    return 0;
 }
 
 // -----------------------------------------------------------------------------

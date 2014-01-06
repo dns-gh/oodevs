@@ -51,7 +51,8 @@ public:
     //@{
     void Update( const sword::LogMedicalHandlingUpdate& message, kernel::Entity_ABC* handler );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    virtual bool RefersToAgent( unsigned int id ) const;
+    virtual bool RefersToAgent( unsigned long id ) const;
+    virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
     //@}
 
     //! @name Accessors
@@ -59,7 +60,6 @@ public:
     E_HumanRank GetRank() const;
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
-    virtual kernel::Agent_ABC* GetConvoy() const;
     bool IsMental() const;
     bool IsContamined() const;
     bool IsDiagnosed() const;

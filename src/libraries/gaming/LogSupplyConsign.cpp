@@ -133,11 +133,22 @@ kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const sword::ParentEntity& m
 // Name: LogSupplyConsign::RefersToAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-bool LogSupplyConsign::RefersToAgent( unsigned int id ) const
+bool LogSupplyConsign::RefersToAgent( unsigned long id ) const
 {
     return ( pLogHandlingEntity_ && pLogHandlingEntity_->GetId() == id )
         || ( pPionLogConvoying_ && pPionLogConvoying_->GetId() == id )
         || ( pLogProvidingConvoyResourcesEntity_ && pLogProvidingConvoyResourcesEntity_->GetId() == id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::RefersToAgent
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+bool LogSupplyConsign::RefersToAgent( const std::set< unsigned long >& id ) const
+{
+    return ( pLogHandlingEntity_ && id.find( pLogHandlingEntity_->GetId() ) != id.end() )
+        || ( pPionLogConvoying_ && id.find( pPionLogConvoying_->GetId() ) != id.end() )
+        || ( pLogProvidingConvoyResourcesEntity_ && id.find( pLogProvidingConvoyResourcesEntity_->GetId() ) != id.end() );
 }
 
 // -----------------------------------------------------------------------------

@@ -56,12 +56,12 @@ public:
     unsigned int GetId() const;
     QString GetCreationTime() const;
     QString GetCurrentEndTime() const;
-    virtual bool RefersToAgent( unsigned int id ) const = 0;
+    virtual bool RefersToAgent( unsigned long id ) const = 0;
+    virtual bool RefersToAgent( const std::set< unsigned long >& id ) const = 0;
     virtual QString GetCurrentStartedTime() const = 0;
     virtual QString GetStatusDisplay() const = 0;
     virtual kernel::Agent_ABC* GetConsumer() const = 0;
     virtual kernel::Entity_ABC* GetHandler() const = 0;
-    virtual kernel::Agent_ABC* GetConvoy() const = 0;
     //@}
 
     //! @name Operations
