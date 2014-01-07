@@ -295,4 +295,5 @@ void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool 
     if( newMode == eModes_Default )
         presenter_->Purge();
     gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    setVisible( false );
 }
