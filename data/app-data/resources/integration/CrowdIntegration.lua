@@ -631,3 +631,9 @@ end
 integration.getKnowledgeBrain = function( unit, crowd )
     return DEC_GetKnowledgeBrain( unit, crowd )
 end
+
+--- Allows the unit to channel crowd in an area
+-- @param area Area knowledge
+integration.channelIt = function ( area )
+    DEC_Agent_CanaliserPopulation( area.source )
+end
