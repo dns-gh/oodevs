@@ -208,7 +208,7 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    bool StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse );
+    bool StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse, bool error );
     void ClearOutput( const Path& path );
     void ParseCheckpoints();
     void ParseExerciseProperties();

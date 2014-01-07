@@ -578,7 +578,7 @@ std::string GetConfiguration( const Config& cfg, int base )
 // Name: Session::StopWith
 // Created: BAX 2013-12-03
 // -----------------------------------------------------------------------------
-bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse )
+bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse, bool error )
 {
     const bool replay = IsReplay();
     Status next = STATUS_STOPPED;
@@ -622,7 +622,7 @@ bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool p
             sword->Kill();
         sword->Join( 5 * 1000 );
     }
-    const auto last_error = GetLastError( deps_.fs, GetOutput() );
+    const auto last_error = error ? GetLastError( deps_.fs, GetOutput() ) : "";
 
     mutex.lock();
     last_error_ = last_error;
@@ -642,7 +642,7 @@ bool Session::StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool p
 bool Session::Stop()
 {
     boost::unique_lock< boost::shared_mutex > mutex( access_ );
-    return StopWith( mutex, true );
+    return StopWith( mutex, true, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -876,9 +876,12 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
     runtime::Scoper killSword( [&] {
         sword->Kill();
     } );
-    if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT ) )
+    if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT, [&]() { return sword->IsAlive(); } ) )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to connect to simulation " << id_;
+        const auto last_error = GetLastError( deps_.fs, GetOutput() );
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        last_error_ = last_error;
         return false;
     }
 
@@ -937,7 +940,8 @@ bool Session::Refresh()
         if( !stop )
             return false;
     }
-    return Stop();
+    boost::unique_lock< boost::shared_mutex > mutex( access_ );
+    return StopWith( mutex, true, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1060,7 +1064,7 @@ void Session::Remove()
                 // nobreak
             case STATUS_PLAYING:
             case STATUS_PAUSED:
-                StopWith( mutex, false );
+                StopWith( mutex, false, false );
                 break;
         }
         busy_ = true;
