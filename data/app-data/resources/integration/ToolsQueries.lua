@@ -98,6 +98,7 @@ local isApplyFireOrder = function( order )
 end
 
 --- Returns the parameters of the first received fire fragmentary order
+-- Removes the fragmentary order from the list of received fragmentary orders.
 -- The fragmentary orders with the following DIA types are considered fire orders :
 -- <ul> <li> "platoon.combat.support.art.tasks.AppliquerFeux" </li>
 -- <li> "Rep_OrderConduite_Pion_AppliquerFeux" </li>
@@ -131,6 +132,7 @@ integration.query.getFirstFireOrder = function( )
 end
 
 --- Returns the knowledge of the first fragmentary order with the given type
+-- Removes the fragmentary order from the list of received fragmentary orders.
 -- Returns nil if no fragmentary order with the given type can be retrieved
 -- @param fragOrderType String, the DIA type of the fragmentary order
 -- @return Fragmentary order knowledge, or nil if no fragmentary order with the given type was retrieved
@@ -155,6 +157,8 @@ integration.query.getFirstFragOrderFromType = function( fragOrderType )
 end
 
 --- Returns a list of nearby enemy knowledges
+-- An agent knowledge is deemed nearby if its "isNearby" method (that it must
+-- define) returns the boolean value True.
 -- @return List of agent knowledges
 integration.query.getNearbyPlatoons = function( )
     local nearbyPlatoons = {}
@@ -269,14 +273,14 @@ integration.GetSuperiorKnowledge = function( unit )
     return nil
 end
 
---- Returns a list of all the knowledges of the subordinates from the provided company.
+--- Returns a list of all the knowledges of the subordinates of the provided company.
 -- The returned subordinates may be filtered by their role, according to the role parameter.
 -- The HQ unit may or may not be among the returned subordinates, according to the withHQ parameter.
 -- All the knowledges of subordinates that define a "isDestroyed" method will not be in the resulting
 -- list if this "isDestroyed" method returns true when called upon the knowledge.
 -- @param company Company knowledge
 -- @param role String, the name of the role to filter the subordinates with.
--- If this parameter equals "none", no filtering takes place.
+-- If this parameter equals "none", nil or NIL, then no filtering takes place.
 -- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
 -- @return List of directia agent knowledges
 integration.getEntitiesFromAutomat = function ( company, role, withHQ )
@@ -303,14 +307,14 @@ integration.getEntitiesFromAutomat = function ( company, role, withHQ )
         end
     end
 
-    if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
+    if role ~= "none" and role ~= NIL and role ~= nil then
         return integration.filterPionWithRole( knowledges, role )
     else
         return knowledges
     end
  end
 
---- Returns a list of all the knowledges of the subordinates from the provided company, so long
+--- Returns a list of all the knowledges of the subordinates of the provided company, so long
 -- as communication between those subordinates and the HQ unit is possible (i.e. a subordinate in 
 -- a jamming area will not be returned by this method, a destroyed HQ unit will result in an empty list, etc.)
 -- The returned subordinates may be filtered by their role, according to the role parameter.
@@ -319,7 +323,7 @@ integration.getEntitiesFromAutomat = function ( company, role, withHQ )
 -- list if this "isDestroyed" method returns true when called upon the knowledge.
 -- @param company Company knowledge
 -- @param role String, the name of the role to filter the subordinates with.
--- If this parameter equals "none", no filtering takes place.
+-- If this parameter equals "none", nil or NIL, then no filtering takes place.
 -- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
 -- @return List of directia agent knowledges
 integration.getEntitiesFromAutomatCommunication = function ( company, role, withHQ )
@@ -346,7 +350,7 @@ integration.getEntitiesFromAutomatCommunication = function ( company, role, with
         end
     end
 
-    if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
+    if role ~= "none" and role ~= NIL and role ~= nil then
         return integration.filterPionWithRole( knowledges, role )
     else
         return knowledges
@@ -367,7 +371,7 @@ integration.getEntitiesFromBatallion = function ()
     return knowledges
 end
  
---- Returns a list of all the knowledges of operational subordinates from the provided company.
+--- Returns a list of all the knowledges of operational subordinates of the provided company.
 -- Communication constraints may apply, according to the noCommunication parameter.
 -- The returned subordinates may be filtered by their role, according to the role parameter.
 -- The HQ unit may or may not be among the returned subordinates, according to the withHQ parameter.
@@ -377,7 +381,7 @@ end
 -- @see integration.getEntitiesFromAutomatCommunication
 -- @param company Company knowledge
 -- @param role String, the name of the role to filter the subordinates with.
--- If this parameter equals "none", no filtering takes place.
+-- If this parameter equals "none", nil or NIL, then no filtering takes place.
 -- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
 -- @param noCommunication Boolean, communication between every returned subordinates and the HQ unit must be
 -- guaranteed if and only if this parameter is set to false
@@ -475,7 +479,7 @@ integration.query.getSiteFranchissementDansZone = function( area )
     return allRes
 end
 
---- Returns an engagement point for air defense artillery (ADA) against a given enemy
+--- Returns an engagement point for air defense artillery against a given enemy
 -- This entity must define a "getPosition" method
 -- @param eni Directia agent knowledge
 -- @param projectileSpeed Float, projectile speed (in m/s)
@@ -484,14 +488,14 @@ integration.positionInterception = function( eni, projectileSpeed )
     return DEC_Geometrie_PositionInterception( eni.source, meKnowledge:getPosition(), projectileSpeed )
 end
 
---- Returns a list of fire positions in a given area for air defense artillery (ADA) 
+--- Returns a list of fire positions in a given area for air defense artillery
 -- @param deploymentMethod Integer, the deployment method. The possible values are :
--- <ul> <li> eDeploiementEn_carre </li>
--- <li> eDeploiementEn_triangle </li>
--- <li> eDeploiementNasse_trois_sections </li>
--- <li> eDeploiementNasse_quatre_sections </li>
--- <li> eDeploiementDouble_rideau </li>
--- <li> eDeploiementSimple_rideau </li> </ul>
+-- <ul> <li> eDeploiementEn_carre (square formation) </li>
+-- <li> eDeploiementEn_triangle (vee formation) </li>
+-- <li> eDeploiementNasse_trois_sections (wedge formation (3 platoons)) </li>
+-- <li> eDeploiementNasse_quatre_sections (wedge formation (4 platoons)) </li>
+-- <li> eDeploiementDouble_rideau (double screen formation) </li>
+-- <li> eDeploiementSimple_rideau (simple screen formation) </li> </ul>
 -- @param area Area knowledge
 -- @param angle Float, the firing angle (degrees, between 0 and 180)
 integration.getFirePositions = function( deploymentMethod, area, angle )
@@ -541,7 +545,7 @@ integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     return enemies
 end
 
---- Returns the objective barycenter's nearest position in this entity's current area of responsibility
+--- Returns the position of this entity's current area of responsibility nearest to the objective.
 -- Returns the objective barycenter if it is inside the area of responsibility
 -- @param objective Knowledge (e.g. area, point...) defining a "getPosition" method returning its barycenter
 -- @return Point knowledge
