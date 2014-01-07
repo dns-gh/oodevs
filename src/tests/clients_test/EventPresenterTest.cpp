@@ -128,7 +128,7 @@ namespace
     const QDateTime second_date = QDateTime::fromString( "2013-13-07T20:30:40", Qt::ISODate );
     const QDateTime third_date = QDateTime::fromString( "2013-14-08T21:40:50", Qt::ISODate );
     const std::string warningErrorText = "warning text";
-    const std::string warningInfoText = "Read only";
+    const std::string warningInfoText = "Order acknowledged";
     const QColor warningErrorColor = Qt::red;
     const QColor warningInfoColor = Qt::darkGreen;
 

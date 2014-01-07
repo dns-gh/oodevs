@@ -490,7 +490,7 @@ void EventPresenter::ChangeMode( E_EventDockModes mode,
         state_->save_ = false;
         state_->saveAs_ = true;
         state_->warningColor_ = Qt::darkGreen;
-        state_->warning_ = tools::translate( "EventPresenter", "Read only" ).toStdString();
+        state_->warning_ = tools::translate( "EventPresenter", "Order acknowledged" ).toStdString();
         break;
     case eEventDockModes_EditTriggered:
         state_->save_ = false;
