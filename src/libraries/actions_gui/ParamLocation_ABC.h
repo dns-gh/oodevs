@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& extent, ::gui::GlTools_ABC& tools ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
@@ -86,11 +86,11 @@ private:
 protected:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
-    ::gui::ParametersLayer&                layer_;
-    QLabel*                                pPosLabel_;
-    std::auto_ptr< kernel::Location_ABC >  location_;
-    std::auto_ptr< geometry::Point2f >     popupPosition_;
+    const kernel::CoordinateConverter_ABC&  converter_;
+    ::gui::ParametersLayer&                 layer_;
+    QLabel*                                 pPosLabel_;
+    std::unique_ptr< kernel::Location_ABC > location_;
+    std::unique_ptr< geometry::Point2f >    popupPosition_;
     //@}
 };
 
