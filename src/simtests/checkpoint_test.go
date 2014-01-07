@@ -150,6 +150,7 @@ func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
 	// Orders are not restored upon checkpoint (bug?)
 	n.Orders = nil
 	n.Profiles = nil
+	n.Replay = nil
 	for _, u := range n.Units {
 		// Pathfinds are not restored?
 		u.PathPoints = 0
