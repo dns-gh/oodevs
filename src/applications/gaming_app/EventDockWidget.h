@@ -20,6 +20,7 @@
 #include <tools/ElementObserver_ABC.h>
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace actions
 {
@@ -47,6 +48,7 @@ namespace kernel
     class Controllers;
     class Profile_ABC;
     class Time_ABC;
+    class TimelineHandler_ABC;
 }
 
 namespace timeline
@@ -95,6 +97,7 @@ public:
     //@{
     virtual void Draw( gui::Viewport_ABC& viewport );
     gui::EventPresenter& GetPresenter() const;
+    void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler );
     //@}
 
 private:
@@ -146,6 +149,7 @@ private:
     kernel::SafePointer< gui::Event > selected_;
     QStackedWidget* stack_;
     std::vector< gui::EventDefaultView_ABC* > views_;
+    boost::shared_ptr< kernel::TimelineHandler_ABC > timelineHandler_;
     //@}
 };
 
