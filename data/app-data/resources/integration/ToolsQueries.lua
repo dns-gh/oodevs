@@ -1,20 +1,14 @@
--------------------------------------------------------------------------------
--- Queries Predicate Tools Implementation :
--- @author DDA
--- @created 2010-04-08
--- @modified MGD 2010-04-29
---
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
--------------------------------------------------------------------------------
-integration.tableIsReachingFor = function( knowledges, objectives)
+--- Filters the given knowledges by keeping only those reaching for at least one of
+--- the given objectives, and returns the resulting list
+-- @param knowledges Table of knowledges, each defining an "isReachingFor" method
+-- @param objectives Table of objectives
+-- @return List of filtered knowledges
+integration.tableIsReachingFor = function( knowledges, objectives )
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
-            if knowledge:isReachingFor(objective) then
-                res [ #res  + 1 ] = knowledge
+            if knowledge:isReachingFor( objective ) then
+                res [ #res + 1 ] = knowledge
                 break
             end
         end
@@ -22,12 +16,18 @@ integration.tableIsReachingFor = function( knowledges, objectives)
     return res
 end
 
+--- Filters the given knowledges by keeping only those destroying for at least one of
+--- the given objectives, and returns the resulting list
+-- @see integration.tableIsNeutralizingFor
+-- @param knowledges Table of knowledges, each defining an "isDestroyingFor" method
+-- @param objectives Table of objectives
+-- @return List of filtered knowledges
 integration.tableIsDestroyingFor = function( knowledges, objectives )
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
-            if knowledge:isDestroyingFor(objective) then
-                res [ #res  + 1 ] = knowledge
+            if knowledge:isDestroyingFor( objective ) then
+                res [ #res + 1 ] = knowledge
                 break
             end
         end
@@ -35,12 +35,18 @@ integration.tableIsDestroyingFor = function( knowledges, objectives )
     return res
 end
 
+--- Filters the given knowledges by keeping only those neutralizing for at least one of
+--- the given objectives, and returns the resulting list
+-- @see integration.tableIsDestroyingFor
+-- @param knowledges Table of knowledges, each defining an "isNeutralizingFor" method
+-- @param objectives Table of objectives
+-- @return List of filtered knowledges
 integration.tableIsNeutralizingFor = function( knowledges, objectives )
     local res = {}
     for _, knowledge in pairs( knowledges ) do
         for _, objective in pairs( objectives ) do
             if knowledge:isNeutralizingFor(objective) then
-                res [ #res  + 1 ] = knowledge
+                res [ #res + 1 ] = knowledge
                 break
             end
         end
@@ -91,6 +97,14 @@ local isApplyFireOrder = function( order )
     return false
 end
 
+--- Returns the parameters of the first received fire fragmentary order
+-- The fragmentary orders with the following DIA types are considered fire orders :
+-- <ul> <li> "platoon.combat.support.art.tasks.AppliquerFeux" </li>
+-- <li> "Rep_OrderConduite_Pion_AppliquerFeux" </li>
+-- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeux" </li> </ul>
+-- Returns nil if no fire fragmentary order was retrieved
+-- @return Table with "entities", "munition" and "interventionType" as keys,
+-- or nil if no fire fragmentary order was retrieved
 integration.query.getFirstFireOrder = function( )
     local ordres_recus = DEC_GetOrdersCategory()
     local integration = integration
@@ -116,28 +130,10 @@ integration.query.getFirstFireOrder = function( )
     return nil
 end
 
-integration.query.getDestroyable = function( )
-    local res = {}
-    DEC_Connaissances_Destroyable( res )
-    return res    
-end
-
-integration.query.getNearbyPlatoons = function( )
-    local nearbyPlatoons = {}
-    local destroyable = {}
-    DEC_Connaissances_Destroyable( destroyable )
-    local nDestroyable = #destroyable
-    for i = 1, nDestroyable do
-        local platoon = destroyable[i]
-        if platoon:isNearby() then
-            nearbyPlatoons[ #nearbyPlatoons + 1 ] = platoon
-        end
-    end
-    return nearbyPlatoons
-end
-
-
--- TODO MGD clean all fragOrder queries
+--- Returns the knowledge of the first fragmentary order with the given type
+-- Returns nil if no fragmentary order with the given type can be retrieved
+-- @param fragOrderType String, the DIA type of the fragmentary order
+-- @return Fragmentary order knowledge, or nil if no fragmentary order with the given type was retrieved
 integration.query.getFirstFragOrderFromType = function( fragOrderType )
     local ordres_recus = DEC_GetOrdersCategory()
     local integration = integration
@@ -158,22 +154,36 @@ integration.query.getFirstFragOrderFromType = function( fragOrderType )
     return nil
 end
 
--- -------------------------------------------------------------------------------- 
--- Return a list of n fuseau
--- @author LMT
--- @release 2010-09-23
--- --------------------------------------------------------------------------------
-integration.query.getFuseaux = function( nombre )
-    local fuseaux = {}
-    fuseaux = DEC_DecouperFuseau( nombre )
-    return fuseaux
+--- Returns a list of nearby enemy knowledges
+-- @return List of agent knowledges
+integration.query.getNearbyPlatoons = function( )
+    local nearbyPlatoons = {}
+    local destroyable = {}
+    DEC_Connaissances_Destroyable( destroyable )
+    for i = 1, #destroyable do
+        local platoon = destroyable[i]
+        if platoon:isNearby() then
+            nearbyPlatoons[ #nearbyPlatoons + 1 ] = platoon
+        end
+    end
+    return nearbyPlatoons
 end
 
--- -------------------------------------------------------------------------------- 
--- Return the number of units in PE
--- @author LMT
--- @release 2010-10-01
--- --------------------------------------------------------------------------------
+--- Splits the current area of responsibility into the given number of sub-areas,
+--- and returns a list of those sub-areas of responsibility
+-- @param nbSubAORs Integer, the number of sub-areas of responsibility
+-- @return List of simulation areas of responsibility
+integration.query.getFuseaux = function( nbSubAORs )
+    return DEC_DecouperFuseau( nbSubAORs )
+end
+
+--- Returns the appropriate number of units to put in the first
+--- echelon of a company with the given number of echelons.
+-- Note that this method can only be called by a company.
+-- If the provided number of echelon is equal to zero, then this method will return
+-- the number of platoons in the company.
+-- @param nbrEchelon Integer, the number of echelons of the company
+-- @return Integer, the number of units to put in the first echelon
 integration.query.getNbrFront = function( nbrEchelon )
     if nbrEchelon == 0 then
         return #( DEC_Automate_PionsAvecPC() ) -- all
@@ -182,36 +192,31 @@ integration.query.getNbrFront = function( nbrEchelon )
     return  math.max(1, ( #pions )/ nbrEchelon )
 end
 
--- -------------------------------------------------------------------------------- 
--- Return the number of GEN units
--- @author LMT
--- @release 2012-01-18
--- --------------------------------------------------------------------------------
+--- Returns the total number of engineer units in this company.
+-- Note that this method can only be called by a company.
+-- @return Integer, the number of engineer units in this company.
 integration.query.getNbrGEN = function()
     return #( DEC_Automate_PionsGenie() ) -- all
 end
 
--- -------------------------------------------------------------------------------- 
--- Return units without mission
--- @author LMT
--- @release 2010-11-25
--- --------------------------------------------------------------------------------
+--- Filters the given entities by keeping only those without a mission,
+--- and returns the resulting list
+-- @param Table of directia agent knowledges, all of them defining a "hasMission" method
+-- @return List of directia agent knowledges
 integration.query.getUnitWithoutMission = function( entities )
     local result = {}
-    for _,unit in pairs( entities ) do
+    for _, unit in pairs( entities ) do
         if not unit:hasMission() then
-            result[#result + 1] = unit
+            result[ #result + 1 ] = unit
         end
     end
     return result
 end
 
-
--- -------------------------------------------------------------------------------- 
--- Return trafficable positions for elements
--- @author LMT
--- @release 2010-11-05
--- --------------------------------------------------------------------------------
+--- Returns a list of reaching positions for the given table of reachable elements.
+-- The returned positions are guaranteed to be trafficable.
+-- @param reachableElements Table of reachable knowledges, all of them defining a "getMyPosition" and a "getPositions" method
+-- @return List of point knowledges
 integration.query.getPositionsToReach = function( reachableElements )
     local currentPositions = {}
     local CreateKnowledge = CreateKnowledge
@@ -232,19 +237,16 @@ integration.query.getPositionsToReach = function( reachableElements )
     return currentPositions
 end
 
--- -------------------------------------------------------------------------------- 
--- Return nearest trafficable position for an element
--- @author MIA
--- @release 2010-11-08
--- --------------------------------------------------------------------------------
+--- Returns the knowledge of the nearest position around the given reachable element.
+-- @param element Knowledge of a reachable element (e.g. area), defining a "getPositions" method
+-- @return Point knowledge
 integration.query.getNearestPointFor = function( element ) -- reachable
     local positions = element:getPositions()
     local nearest = positions[ 1 ]
     local DEC_Geometrie_DistanceBetweenPoints = DEC_Geometrie_DistanceBetweenPoints
-    local nPositions = #positions
     local myPosition = meKnowledge:getPosition()
     local nearestDistance = DEC_Geometrie_DistanceBetweenPoints( myPosition, nearest )
-    for i = 2, nPositions do
+    for i = 2, #positions do
         local position = positions[i]
         local currentDistance = DEC_Geometrie_DistanceBetweenPoints( myPosition, position )
         if currentDistance < nearestDistance then
@@ -254,42 +256,40 @@ integration.query.getNearestPointFor = function( element ) -- reachable
     end
     return CreateKnowledge( integration.ontology.types.point, nearest )
 end
- 
-  -- -------------------------------------------------------------------------------- 
--- Return PC
--- @author LMT
--- @release 2010-11-26
--- --------------------------------------------------------------------------------
-integration.query.getPCUnit = function()
-    return CreateKnowledge( integration.ontology.types.agent, integration.commanderGetHQUnit() )
-end
 
+--- Returns the knowledge of given unit's company
+-- Returns nil if an error occurs in this method
+-- @param unit Directia agent
+-- @return Company knowledge, or nil if an error occurs in this method
 integration.GetSuperiorKnowledge = function( unit ) 
-    local result, automat = pcall( DEC_GetAutomate, unit.source )
+    local result, company = pcall( DEC_GetAutomate, unit.source )
     if result then
-        return CreateKnowledge( integration.ontology.types.automat, automat )
+        return CreateKnowledge( integration.ontology.types.automat, company )
     end
     return nil
 end
 
--- -------------------------------------------------------------------------------- 
--- Param a automat
--- Return a list of platoon
--- @author LMT
--- @release 2011-01-28
--- --------------------------------------------------------------------------------
-integration.getEntitiesFromAutomat = function ( automat, role, withPC)
+--- Returns a list of all the knowledges of the subordinates from the provided company.
+-- The returned subordinates may be filtered by their role, according to the role parameter.
+-- The HQ unit may or may not be among the returned subordinates, according to the withHQ parameter.
+-- All the knowledges of subordinates that define a "isDestroyed" method will not be in the resulting
+-- list if this "isDestroyed" method returns true when called upon the knowledge.
+-- @param company Company knowledge
+-- @param role String, the name of the role to filter the subordinates with.
+-- If this parameter equals "none", no filtering takes place.
+-- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
+-- @return List of directia agent knowledges
+integration.getEntitiesFromAutomat = function ( company, role, withHQ )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
-    local temp = {}
-    if withPC then
-        temp = integration.getSubordinateAgentsFromCommander( automat )
+    local temp
+    if withHQ then
+        temp = integration.getSubordinateAgentsFromCommander( company )
     else
-        temp = DEC_Automate_PionsDeAutomateSansPC(automat.source)
+        temp = DEC_Automate_PionsDeAutomateSansPC( company.source )
     end
     local knowledges = {}
-    local nTemp = #temp
-    for i = 1, nTemp do
+    for i = 1, #temp do
         local pion = temp[i]
         local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
         local fun = function() return knowledge:isDestroyed() end
@@ -310,24 +310,29 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     end
  end
 
--- -------------------------------------------------------------------------------- 
--- Param a automat
--- Return a list of platoon with a good communication
--- @author LMT
--- @release 2012-07-17
--- --------------------------------------------------------------------------------
-integration.getEntitiesFromAutomatCommunication = function ( automat, role, withPC )
+--- Returns a list of all the knowledges of the subordinates from the provided company, so long
+-- as communication between those subordinates and the HQ unit is possible (i.e. a subordinate in 
+-- a jamming area will not be returned by this method, a destroyed HQ unit will result in an empty list, etc.)
+-- The returned subordinates may be filtered by their role, according to the role parameter.
+-- The HQ unit may or may not be among the returned subordinates, according to the withHQ parameter.
+-- All the knowledges of subordinates that define a "isDestroyed" method will not be in the resulting
+-- list if this "isDestroyed" method returns true when called upon the knowledge.
+-- @param company Company knowledge
+-- @param role String, the name of the role to filter the subordinates with.
+-- If this parameter equals "none", no filtering takes place.
+-- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
+-- @return List of directia agent knowledges
+integration.getEntitiesFromAutomatCommunication = function ( company, role, withHQ )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
-    local temp = {}
-    if withPC then
-        temp = DEC_Automate_PionsDeAutomateAvecPCCommunication(automat.source)
+    local temp
+    if withHQ then
+        temp = DEC_Automate_PionsDeAutomateAvecPCCommunication( company.source )
     else
-        temp = DEC_Automate_PionsDeAutomateSansPCCommunication(automat.source)
+        temp = DEC_Automate_PionsDeAutomateSansPCCommunication( company.source )
     end
     local knowledges = {}
-    local nTemp = #temp
-    for i = 1, nTemp do
+    for i = 1, #temp do
         local pion = temp[i]
         local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
         local fun = function() return knowledge:isDestroyed() end
@@ -348,82 +353,83 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     end
  end
  
- -- -------------------------------------------------------------------------------- 
--- Param a batallion
--- Return a list of automat
--- @author LMT
--- @release 2011-12-15
--- --------------------------------------------------------------------------------
+--- Deprecated
 integration.getEntitiesFromBatallion = function ()
-    local temp = {}
-    temp = DEC_Automate_AutomatesSubordonnes()
+    local temp = DEC_Automate_AutomatesSubordonnes()
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     
     local knowledges = {}
-    local nTemp = #temp
-    for i = 1, nTemp do
-        local automat = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.automat, automat )
+    for i = 1, #temp do
+        local company = temp[i]
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.automat, company )
     end
     return knowledges
- end
+end
  
- -- -------------------------------------------------------------------------------- 
--- Param a automat
--- Return a list of operationnal platoon
--- @author LMT
--- @release 2011-10-12
--- --------------------------------------------------------------------------------
-integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withPC, noCommunication )
+--- Returns a list of all the knowledges of operational subordinates from the provided company.
+-- Communication constraints may apply, according to the noCommunication parameter.
+-- The returned subordinates may be filtered by their role, according to the role parameter.
+-- The HQ unit may or may not be among the returned subordinates, according to the withHQ parameter.
+-- All the knowledges of subordinates that define a "isDestroyed" method will not be in the resulting
+-- list if this "isDestroyed" method returns true when called upon the knowledge.
+-- @see integration.getEntitiesFromAutomat
+-- @see integration.getEntitiesFromAutomatCommunication
+-- @param company Company knowledge
+-- @param role String, the name of the role to filter the subordinates with.
+-- If this parameter equals "none", no filtering takes place.
+-- @param withHQ Boolean, whether or not the HQ unit will be included in the list of subordinates.
+-- @param noCommunication Boolean, communication between every returned subordinates and the HQ unit must be
+-- guaranteed if and only if this parameter is set to false
+-- @return List of directia agent knowledges
+integration.getOperationnalEntitiesFromAutomat = function ( company, role, withHQ, noCommunication )
     local entities
     if not noCommunication then -- default case
-        entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC )
+        entities = integration.getEntitiesFromAutomatCommunication( company, role, withHQ )
     else
-        entities = integration.getEntitiesFromAutomat( automat, role, withPC )
+        entities = integration.getEntitiesFromAutomat( company, role, withHQ )
     end
-    local operationnalEntities = {}
+    local operationalEntities = {}
     for i = 1, #entities do
-        if entities[i]:isOperational() then
-            operationnalEntities[#operationnalEntities + 1] = entities[i]
+        if entities[i].isOperational and entities[i]:isOperational() then
+            operationalEntities[ #operationalEntities + 1 ] = entities[i]
         end
     end
-    return operationnalEntities
+    return operationalEntities
  end
 
--- -------------------------------------------------------------------------------- 
--- Param an objective
--- Return a list of platoon in the objective
--- @author LMT
--- @release 2011-03-08
--- --------------------------------------------------------------------------------
-integration.getDestroyableInObjective = function( objective )
+--- Returns a list of all the agent knowledges inside the given objective (if the objective is an area
+--- or an urban block), or inside a circle with its center as the center of the given objective, and its
+--- radius as the provided radius (or 600 meters by default).
+-- @param objective Knowledge, either an area or an urban block or a knowledge defining a "getPosition" method
+-- @param radius Float, the radius (in meters, 600 by default) of the circle (in case the objective parameter is neither an area nor an urban block)
+-- @return List of directia agent knowledges
+integration.getDestroyableInObjective = function( objective, radius )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     local res = {}
     local enemies = {}
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
-        enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
+        enemies = integration.getAgentKnowledgesInArea( objective.source ) 
     elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
-        enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
+        enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), radius or 600 )
     end
     
-    local nEnemies = #enemies
-    for i = 1,nEnemies do
-        local enemy = enemies[i]
-        res[#res + 1] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
+    for i = 1, #enemies do
+        res[ #res + 1 ] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemies[i] )
     end
     return res
 end
 
--- -------------------------------------------------------------------------------- 
--- Param an objective
--- Return a list of terrorist knowledge
--- @author DDA
--- @release 2012-03-12
--- --------------------------------------------------------------------------------
+--- Returns a list of all the terrorist agent knowledges inside the given objective (if the objective is 
+--- an area or an urban block), or inside a circle with its center as the center of the given objective,
+--- and its radius as the provided radius (or 600 meters by default).
+-- @see integration.getDestroyableInObjective
+-- @param objective Knowledge, either an area or an urban block or a knowledge defining a "getPosition" method
+-- @param radius Float, the radius (in meters, 600 by default) of the circle (in case the objective parameter is neither an area nor an urban block)
+-- @return List of directia agent knowledges
 integration.getTerroristsInObjective = function( objective )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
@@ -438,96 +444,87 @@ integration.getTerroristsInObjective = function( objective )
     end
     
     local DEC_ConnaissanceAgent_EstTerroriste = DEC_ConnaissanceAgent_EstTerroriste
-    local nEnemies = #enemies
-    for i = 1,nEnemies do
+    for i = 1, #enemies do
         local enemy = enemies[i]
         if DEC_ConnaissanceAgent_EstTerroriste( enemy ) then
-            res[#res + 1] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
+            res[ #res + 1 ] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
         end
     end
     return res
 end
--- -------------------------------------------------------------------------------- 
--- Param an automate
--- Return PC from Automate
--- @author EVH
--- @release 2011-06-08
--- --------------------------------------------------------------------------------
-integration.getPCOfAutomate = function( automate )
-    return CreateKnowledge( integration.ontology.types.agent, DEC_Automate_PionPCDeAutomate( automate.source ) )
+
+--- Returns the HQ unit of the given company
+-- @param company Company knowledge
+-- @return Directia agent
+integration.getPCOfAutomate = function( company )
+    return CreateKnowledge( integration.ontology.types.agent, DEC_Automate_PionPCDeAutomate( company.source ) )
 end
 
--- -------------------------------------------------------------------------------- 
--- Param element to follow, distancemin and distancemax
--- Return list of postions
--- @author GGE
--- @release 2011-08-29
--- --------------------------------------------------------------------------------
-integration.query.getPositionsToFollow = function( elementToFollow, distanceMin, distanceMax )
-    return { CreateProxyKnowledge( military.world.ReachingArea, elementToFollow, 
-                              { distanceMin = distanceMin, distanceMax = distanceMax } ) }
-end
-
-integration.query.getSiteFranchissementDansZone = function ( zone )
+--- Returns a list of all crossing sites in the given area
+-- @param area Area knowledge
+-- @return List of object knowledges (crossing sites)
+integration.query.getSiteFranchissementDansZone = function( area )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
-    local allRes={}
+    local allRes = {}
     local obstacles = {}
-    obstacles = DEC_ObjectKnowledgesInZone( zone.source, { eTypeObjectCrossingSite } )
-    for _, objective in pairs( obstacles ) do
-        allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, objective )
+    obstacles = DEC_ObjectKnowledgesInZone( area.source, { eTypeObjectCrossingSite } )
+    for i = 1, #obstacles do
+        allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, obstacles[i] )
     end
     return allRes
 end
 
--- -------------------------------------------------------------------------------- 
--- Return a postion for ASA fire
--- @author LMT
--- @release 2011-11-23
--- --------------------------------------------------------------------------------
-integration.positionInterception = function( eni, vitesseProjectile )
-    return DEC_Geometrie_PositionInterception( eni.source, meKnowledge:getPosition(), vitesseProjectile )
+--- Returns an engagement point for air defense artillery (ADA) against a given enemy
+-- This entity must define a "getPosition" method
+-- @param eni Directia agent knowledge
+-- @param projectileSpeed Float, projectile speed (in m/s)
+-- @return Simulation point
+integration.positionInterception = function( eni, projectileSpeed )
+    return DEC_Geometrie_PositionInterception( eni.source, meKnowledge:getPosition(), projectileSpeed )
 end
 
--- -------------------------------------------------------------------------------- 
--- Return a postion for ASA fire depends of the mode
--- @author LMT
--- @release 2011-12-05
--- --------------------------------------------------------------------------------
-integration.getFirePositions = function( modeDeploiement, zone, angle )
+--- Returns a list of fire positions in a given area for air defense artillery (ADA) 
+-- @param deploymentMethod Integer, the deployment method. The possible values are :
+-- <ul> <li> eDeploiementEn_carre </li>
+-- <li> eDeploiementEn_triangle </li>
+-- <li> eDeploiementNasse_trois_sections </li>
+-- <li> eDeploiementNasse_quatre_sections </li>
+-- <li> eDeploiementDouble_rideau </li>
+-- <li> eDeploiementSimple_rideau </li> </ul>
+-- @param area Area knowledge
+-- @param angle Float, the firing angle (degrees, between 0 and 180)
+integration.getFirePositions = function( deploymentMethod, area, angle )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     local nombrePositions = #( integration.getUnitsWithoutHQCommunication() )
     local directionEnnemi = DEC_GetDirectionEnnemi( DEC_GetRawMission( meKnowledge.source ) )
     local firePositions = {}
-    if modeDeploiement == eDeploiementEn_carre then
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, zone:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
-    elseif modeDeploiement == eDeploiementEn_triangle then
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, zone:getPosition(), ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS / 2 ) * 1.155 )
-    elseif modeDeploiement == eDeploiementNasse_trois_sections then
-        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, zone:getPosition(), angle, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
-    elseif modeDeploiement == eDeploiementNasse_quatre_sections then
-        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, zone:getPosition(), angle, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
-    elseif modeDeploiement == eDeploiementDouble_rideau then
-        firePositions = DEC_Geometrie_PosDeploiementDoubleRideau( nombrePositions, zone:getPosition(), M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
-    elseif modeDeploiement == eDeploiementSimple_rideau then
-        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, zone:getPosition(), 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
+    if deploymentMethod == eDeploiementEn_carre then
+        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
+    elseif deploymentMethod == eDeploiementEn_triangle then
+        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS / 2 ) * 1.155 )
+    elseif deploymentMethod == eDeploiementNasse_trois_sections then
+        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, area:getPosition(), angle, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
+    elseif deploymentMethod == eDeploiementNasse_quatre_sections then
+        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, area:getPosition(), angle, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
+    elseif deploymentMethod == eDeploiementDouble_rideau then
+        firePositions = DEC_Geometrie_PosDeploiementDoubleRideau( nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
+    elseif deploymentMethod == eDeploiementSimple_rideau then
+        firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, area:getPosition(), 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
     else
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, zone:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
+        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
     end
     local returnPositions = {}
     for i = 1, #firePositions do
-        returnPositions[i] = CreateKnowledge(integration.ontology.types.point, firePositions[i])
+        returnPositions[i] = CreateKnowledge( integration.ontology.types.point, firePositions[i] )
     end
     return returnPositions
 end
 
--- -------------------------------------------------------------------------------- 
--- Param allied units to support
--- Return list of dangerous units for fiends
--- @author GGE
--- @release 2011-08-29
--- --------------------------------------------------------------------------------
+--- Returns a list of dangerous enemies to neutralize when supporting the given allied units
+-- @param friends List of directia agents, friendly units to support
+-- @return List of directia agent knowledges
 integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
@@ -536,56 +533,75 @@ integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
         local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
         for j = 1, #simEnemies do
             local eny = CreateKnowledge( integration.ontology.types.agentKnowledge, simEnemies[j] )
-            if not eny:isTransported() then
-                if not exists( enemies, eny ) then
-                    enemies[ #enemies + 1 ] = eny
-                end
+            if not eny:isTransported() and not exists( enemies, eny ) then
+                enemies[ #enemies + 1 ] = eny
             end
         end
     end
     return enemies
 end
 
+--- Returns the objective barycenter's nearest position in this entity's current area of responsibility
+-- Returns the objective barycenter if it is inside the area of responsibility
+-- @param objective Knowledge (e.g. area, point...) defining a "getPosition" method returning its barycenter
+-- @return Point knowledge
 integration.query.getNearestPositionInAOR = function( objective )
     local target = objective:getPosition()
     local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
     return CreateKnowledge( integration.ontology.types.point, simPos )
 end
 
--- -------------------------------------------------------------------------------- 
--- Param ally commander
--- Param old supported platoons ally list
--- Return platoons to support
--- @author GGE
--- @release 2012-10-30
--- --------------------------------------------------------------------------------
-integration.query.getEntitiesToCombatSupportTask = function( commander, oldSupportedPlatoonList )
+--- Returns a list of agent knowledges to support, from the given company
+-- This method returns all the subordinates from the first echelon. If there are none,
+-- this method returns all the subordinates instead.
+-- @param company Company knowledge
+-- @return List of agent knowledges
+integration.query.getEntitiesToCombatSupportTask = function( company )
     local integration = integration
-    local platoonsToSupport = {}
-    -- Platoon ally in first echelon
-    local entitiesInFirstEchelon = integration.filterPionWithEchelon( 
-          integration.getEntitiesFromAutomatCommunication( commander, "none", true), eEtatEchelon_First )
-    if next(entitiesInFirstEchelon) then
-        platoonsToSupport = entitiesInFirstEchelon
-    else -- no platoon in first echelon, return all unit from commander
-        platoonsToSupport = integration.getEntitiesFromAutomatCommunication( commander, "none", true)
+    local subordinates = integration.getEntitiesFromAutomatCommunication( company, "none", true )
+    
+    local entitiesInFirstEchelon = integration.filterPionWithEchelon( subordinates, eEtatEchelon_First )
+    if #entitiesInFirstEchelon > 0 then
+        return entitiesInFirstEchelon
     end
-    --Return new elements
-    return platoonsToSupport
+    
+    -- If there are no units in the first echelon, return all the subordinates
+    return subordinates
 end
 
--- -------------------------------------------------------------------------------- 
--- Param ally platoons
--- Param old supported platoons ally list
--- Return platoons to support
--- --------------------------------------------------------------------------------
-integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons, oldSupportedPlatoonList )
+--- Filters the given entities by keeping only the valid and operational ones,
+--- and returns the resulting list
+-- @param List of directia agent knowledges, all of them defining "isValid" and "isOperational" methods
+-- @return List of directia agent knowledges
+integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons )
     local platoonsToSupport = {}
     for i = 1, #platoons do
         if platoons[i]:isValid() and platoons[i]:isOperational() then -- operational and valid platoons only
             platoonsToSupport[ #platoonsToSupport + 1 ] = platoons[i]
         end
     end
-    --Return new elements
+
     return platoonsToSupport
+end
+
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+--- Deprecated
+integration.query.getDestroyable = function( )
+    local res = {}
+    DEC_Connaissances_Destroyable( res )
+    return res    
+end
+
+--- Deprecated, use integration.getKnowledgeHQ instead
+integration.query.getPCUnit = function()
+    return CreateKnowledge( integration.ontology.types.agent, integration.commanderGetHQUnit() )
+end
+
+--- Deprecated
+integration.query.getPositionsToFollow = function( elementToFollow, distanceMin, distanceMax )
+    return { CreateProxyKnowledge( military.world.ReachingArea, elementToFollow, 
+                              { distanceMin = distanceMin, distanceMax = distanceMax } ) }
 end
