@@ -88,7 +88,8 @@ void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMe
     case eNoError:
         {
             setToolTip( originalToolTip_ );
-            ChangeBackgroundColor( Qt::white );
+            ChangeBackgroundColor(
+                isEnabled() ? Qt::white : originalPalette_.color( QPalette::Background ) );
             setPalette( originalPalette_ );
         }
         break;

@@ -286,8 +286,8 @@ void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos ) const
     xos << xml::start( "attachments" );
     for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
         xos << xml::start( "attachment" )
-        << xml::attribute( "name", **it )
-        << xml::end;
+                << xml::attribute( "name", **it )
+            << xml::end;
     xos << xml::end;
 }
 
