@@ -101,9 +101,11 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
 // -----------------------------------------------------------------------------
 void MedicalStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "" )
-        .Display( tools::translate( "MedicalStates", "System status" ),
-            tools::translate( "MedicalStates", bChainEnabled_ ? "Enabled" : "Disabled" ) )
-        .Display( tools::translate( "MedicalStates", "Priorities" ), priorities_ )
+    auto& group = displayer.Group( "" );
+    if( bChainEnabled_ )
+        group.Display( tools::translate( "MedicalStates", "System status" ), tools::translate( "MedicalStates", "Enabled" ) );
+    else
+        group.Display( tools::translate( "MedicalStates", "System status" ), tools::translate( "MedicalStates", "Disabled" ) );
+    group.Display( tools::translate( "MedicalStates", "Priorities" ), priorities_ )
         .Display( tools::translate( "MedicalStates", "Tactical priorities" ), tacticalPriorities_ );
 }
