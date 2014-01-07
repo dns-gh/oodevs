@@ -17,7 +17,7 @@ import (
 
 type replayHandler func(msg *sword.ReplayToClient_Content) error
 
-func (c *Client) postReplayWithClientId(msg SwordMessage,
+func (c *Client) postReplayWithClientId(msg *sword.ClientToReplay_Content,
 	checkClientId bool, handler replayHandler) <-chan error {
 
 	quit := make(chan error, 1)
@@ -44,22 +44,23 @@ func (c *Client) postReplayWithClientId(msg SwordMessage,
 		quit <- err
 		return true
 	}
-	c.Post(msg, wrapper)
+	m := SwordMessage{
+		ClientToReplay: &sword.ClientToReplay{
+			Message: msg,
+		},
+	}
+	c.Post(m, wrapper)
 	return quit
 }
 
-func (c *Client) postReplay(msg SwordMessage, handler replayHandler) <-chan error {
+func (c *Client) postReplay(msg *sword.ClientToReplay_Content, handler replayHandler) <-chan error {
 	return c.postReplayWithClientId(msg, true, handler)
 }
 
 func (c *Client) SkipToTick(tick int32) error {
-	msg := SwordMessage{
-		ClientToReplay: &sword.ClientToReplay{
-			Message: &sword.ClientToReplay_Content{
-				ControlSkipToTick: &sword.ControlSkipToTick{
-					Tick: proto.Int32(tick),
-				},
-			},
+	msg := &sword.ClientToReplay_Content{
+		ControlSkipToTick: &sword.ControlSkipToTick{
+			Tick: proto.Int32(tick),
 		},
 	}
 	return <-c.postReplayWithClientId(msg, false,
@@ -81,17 +82,13 @@ func (c *Client) SkipToTick(tick int32) error {
 func (c *Client) GetTimetable(beginTick, endTick int32, broadcast bool) (
 	[]sword.TimeTable_TimeMapping, error) {
 
-	msg := SwordMessage{
-		ClientToReplay: &sword.ClientToReplay{
-			Message: &sword.ClientToReplay_Content{
-				TimeTableRequest: &sword.TimeTableRequest{
-					TickRange: &sword.TimeTableRequest_TimeRange{
-						BeginTick: proto.Int32(beginTick),
-						EndTick:   proto.Int32(endTick),
-					},
-					Broadcast: proto.Bool(broadcast),
-				},
+	msg := &sword.ClientToReplay_Content{
+		TimeTableRequest: &sword.TimeTableRequest{
+			TickRange: &sword.TimeTableRequest_TimeRange{
+				BeginTick: proto.Int32(beginTick),
+				EndTick:   proto.Int32(endTick),
 			},
+			Broadcast: proto.Bool(broadcast),
 		},
 	}
 	table := []sword.TimeTable_TimeMapping{}
@@ -114,12 +111,8 @@ func (c *Client) GetTimetable(beginTick, endTick int32, broadcast bool) (
 }
 
 func (c *Client) ReplayGetLogisticHistory(requestIds ...uint32) ([]*sword.LogHistoryEntry, error) {
-	msg := SwordMessage{
-		ClientToReplay: &sword.ClientToReplay{
-			Message: &sword.ClientToReplay_Content{
-				LogisticHistoryRequest: makeLogisticHistoryRequest(requestIds...),
-			},
-		},
+	msg := &sword.ClientToReplay_Content{
+		LogisticHistoryRequest: makeLogisticHistoryRequest(requestIds...),
 	}
 	var entries []*sword.LogHistoryEntry
 	handler := func(msg *sword.ReplayToClient_Content) error {
@@ -137,13 +130,9 @@ func (c *Client) ReplayGetLogisticHistory(requestIds ...uint32) ([]*sword.LogHis
 func (c *Client) ReplayListLogisticRequests(currentTick, maxCount int, entities ...uint32) (
 	[]*sword.LogHistoryEntry, error) {
 
-	msg := SwordMessage{
-		ClientToReplay: &sword.ClientToReplay{
-			Message: &sword.ClientToReplay_Content{
-				ListLogisticRequests: makeListLogisticRequests(currentTick, maxCount,
-					entities...),
-			},
-		},
+	msg := &sword.ClientToReplay_Content{
+		ListLogisticRequests: makeListLogisticRequests(currentTick, maxCount,
+			entities...),
 	}
 	var entries []*sword.LogHistoryEntry
 	handler := func(msg *sword.ReplayToClient_Content) error {
