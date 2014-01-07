@@ -114,7 +114,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
-    const PopulationDecisions* decisions = static_cast< const PopulationDecisions* >( entity.Retrieve< PopulationDecisions >() );
+    const PopulationDecisions* decisions = static_cast< const PopulationDecisions* >( entity.Retrieve< gui::Decisions_ABC >() );
     if( decisions->IsDebugActivated() )
         AddMagic( tr( "Deactivate brain debug" ), SLOT( DeactivateBrainDebug() ), magicMenu );
     else
