@@ -26,7 +26,7 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eBadLogisticSubordinate || type == eBadQuotas
+            || type == eBadLogisticSubordinate 
             || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
             || type == eUnknownMaterial || type == eUnknownRoofShape
             || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature
