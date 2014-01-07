@@ -125,7 +125,7 @@ void PortFactory::Release( int port )
     ports_.erase( port );
 }
 
-bool PortFactory::WaitConnected( int port )
+bool PortFactory::WaitConnected( int port, const std::function< bool() >& alive )
 {
     aio::io_service service;
     const tcp::endpoint endpoint( aio::ip::address::from_string( "127.0.0.1" ), static_cast< uint16_t >( port ) );
@@ -138,6 +138,8 @@ bool PortFactory::WaitConnected( int port )
         socket.connect( endpoint, ec );
         if( !ec )
             return true;
+        if( !alive() )
+            return false;
         boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
     }
     return false;

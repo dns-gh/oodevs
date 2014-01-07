@@ -41,7 +41,7 @@ public:
     //@{
     virtual Port Create();
     virtual Port Create( int port );
-    virtual bool WaitConnected( int port );
+    virtual bool WaitConnected( int port, const std::function< bool() >& alive );
     //@}
 
 private:

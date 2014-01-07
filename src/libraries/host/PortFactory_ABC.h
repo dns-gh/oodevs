@@ -11,6 +11,7 @@
 #define PORT_FACTORY_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <functional>
 
 namespace boost
 {
@@ -59,7 +60,7 @@ struct PortFactory_ABC : public boost::noncopyable
     //@{
     virtual Port Create() = 0;
     virtual Port Create( int port ) = 0;
-    virtual bool WaitConnected( int port ) = 0;
+    virtual bool WaitConnected( int port, const std::function< bool() >& alive ) = 0;
     //@}
 };
 }

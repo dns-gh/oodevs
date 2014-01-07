@@ -482,7 +482,7 @@ BOOST_FIXTURE_TEST_CASE( session_removal_eventually_succeeds, Fixture )
     MOCK_EXPECT( runtime.Start ).once().returns( timeline );
 
     Event waiting, connected, started, removed;
-    MOCK_EXPECT( ports.WaitConnected ).once().calls( [&] (int) -> bool {
+    MOCK_EXPECT( ports.WaitConnected ).once().calls( [&] (int, std::function< bool() >) -> bool {
         waiting.Signal();
         connected.Wait();
         return true;
