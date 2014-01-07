@@ -28,13 +28,14 @@ public:
         std::string* pTxt= static_cast< std::string* >( data );
         if( pGfx_->toPlainText() != pTxt->c_str() )
             pGfx_->setPlainText( pTxt->c_str() );
+        pGfx_->setEnabled( ShouldEnableGfx() );
     }
 };
 
-class ADN_Connector_TextEdit_LocalizedSring : public ADN_Connector_LocalizedString< ADN_TextEdit_ABC >
+class ADN_Connector_TextEdit_LocalizedString : public ADN_Connector_LocalizedString< ADN_TextEdit_ABC >
 {
 public:
-    ADN_Connector_TextEdit_LocalizedSring( ADN_TextEdit_ABC* gfx )
+    ADN_Connector_TextEdit_LocalizedString( ADN_TextEdit_ABC* gfx )
         : ADN_Connector_LocalizedString< ADN_TextEdit_ABC >( gfx )
     {
         // NOTHING
@@ -46,6 +47,7 @@ public:
         std::string* pTxt= static_cast< std::string* >( data );
         if( pGfx_->toPlainText() != pTxt->c_str() )
             pGfx_->setPlainText( pTxt->c_str() );
+        pGfx_->setEnabled( ShouldEnableGfx() );
     }
 };
 
@@ -68,6 +70,6 @@ public:
 };
 
 typedef ADN_TextEdit< ADN_Connector_TextEdit_String >           ADN_TextEdit_String;
-typedef ADN_TextEdit< ADN_Connector_TextEdit_LocalizedSring >   ADN_TextEdit_LocalizedString;
+typedef ADN_TextEdit< ADN_Connector_TextEdit_LocalizedString >   ADN_TextEdit_LocalizedString;
 
 #endif // __ADN_TextEdit_h_

@@ -437,6 +437,17 @@
     </message>
 </context>
 <context>
+    <name>Decisions</name>
+    <message>
+        <source>Automat mission:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission:</source>
+        <translation type="unfinished">البعثة:</translation>
+    </message>
+</context>
+<context>
     <name>Dotations</name>
     <message>
         <source>Resources/Out of gas</source>
@@ -732,6 +743,14 @@
         <source>Tactical priorities</source>
         <translation type="unfinished">أولويات التكتيكية</translation>
     </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished">تمكين</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalStates</name>
@@ -762,6 +781,14 @@
     <message>
         <source>Medical system</source>
         <translation type="unfinished">النظام الطبي</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished">تمكين</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1208,6 +1235,14 @@
     <message>
         <source>System status</source>
         <translation type="unfinished">حالة النظام</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished">تمكين</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
