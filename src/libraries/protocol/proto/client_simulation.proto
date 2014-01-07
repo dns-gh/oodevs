@@ -361,28 +361,6 @@ message ListEnabledVisionCones {
     optional uint32 count = 2;
 }
 
-//! Asks the history of selected logistic requests.
-//!
-//! Errors are reported in SimToClient.error_msg fields.
-message LogisticHistoryRequest {
-    repeated Id requests = 1;
-}
-
-//! Returns the most recent state of any logistic request referencing
-//! of supplied entities (unit, automat, formation...) at some point
-//! in its history.
-//!
-//! If current_tick is supplied, returns them as if it were the current
-//! tick. current_tick must be between 1 and the current simulated tick
-//! for usual runs, or in the session tick range for replay runs.
-//! 
-//! Errors are reported in SimToClient.error_msg fields.
-message ListLogisticRequests {
-    repeated Id     entities     = 1;
-    optional uint32 max_count    = 2;
-    optional int32  current_tick = 3;
-}
-
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */

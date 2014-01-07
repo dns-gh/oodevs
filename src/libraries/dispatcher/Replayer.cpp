@@ -26,6 +26,7 @@
 #include "messenger_plugin/MessengerPlugin.h"
 #include "web_control_plugin/WebPlugin.h"
 #include "tools/FileWrapper.h"
+#include "protocol/Replay.h"
 #include "protocol/Simulation.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/make_shared.hpp>
@@ -70,14 +71,15 @@ Replayer::Replayer( const Config& config )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_, *model_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config, clientsNetworker_.get() ) )
-    , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
+    , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
     , publisher_       ( new NullPublisher() )
     , started_         ( false )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
         *model_, *clientsNetworker_, config, *clientsNetworker_,
         handler_, *clientsNetworker_, registrables_, 0 ))
 {
-    clientsNetworker_->RegisterMessage( *this, &Replayer::Receive );
+    clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToSim );
+    clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
 
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
@@ -129,9 +131,18 @@ void Replayer::OnWebControl( xml::xistream& xis )
     handler_.Add( boost::make_shared< plugins::web_control::WebPlugin >( *publisher_, xis ) );
 }
 
-void Replayer::Receive( const std::string& link, const sword::ClientToSim& msg )
+void Replayer::ReceiveClientToSim( const std::string& link,
+        const sword::ClientToSim& msg )
 {
-    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ),
+    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
             rights_->GetClientID( link ), msg.context() );
     handler_.HandleClientToSim( msg, unicaster, *clientsNetworker_ );
+}
+
+void Replayer::ReceiveClientToReplay( const std::string& link,
+        const sword::ClientToReplay& msg )
+{
+    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
+            rights_->GetClientID( link ), msg.context() );
+    handler_.HandleClientToReplay( msg, unicaster, *clientsNetworker_ );
 }

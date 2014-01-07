@@ -35,23 +35,25 @@ message ControlSkipToDate {
     required DateTime date_time = 1;
 }
 
-/** @struct TimeTableRequest
-    @brief Requests datetime information in a specified tick range
-
-    @see TimeTableRequestAck
-*/
+//! Requests a mapping from ticks to simulated and real times.
+//!
+//! The mapping is sent in TimeTableRequestAck, and optionally broadcast
+//! in a standalone TimeTable message.
+//!
+//! Errors are return both in the TimeTableRequestAck and in its parent
+//! ReplayToClient message.
 message TimeTableRequest {
-    /** @struct TimeRange
-        @brief A time range
-    */
     message TimeRange {
-        //! The range first tick
+        //! Range first tick
         required int32 begin_tick = 1;
-        //! The range last tick
+        //! Range last tick
         required int32 end_tick   = 2;
     }
-    //! The time range
     required TimeRange tick_range = 1;
+    //! If broadcast is true, a TimeTable response will be sent to all
+    //! connected clients. TimeTable data is always sent as part of the
+    //! TimeTableRequestAck response.
+    optional bool      broadcast  = 2 [ default = true ];
 }
 
 /** @struct ForceRefreshDataRequest
@@ -89,6 +91,8 @@ message ClientToReplay {
         optional ForceRefreshDataRequest force_refresh_data_request = 7;
         //! A message to skip to a given date
         optional ControlSkipToDate       control_skip_to_date       = 8;
+        optional LogisticHistoryRequest   logistic_history_request  = 9;
+        optional ListLogisticRequests     list_logistic_requests    = 10;
     }
     /** @property context
         @brief Identifies the request matching the response.
@@ -99,9 +103,10 @@ message ClientToReplay {
         allowing to track response message matching a specific request
         emitted by the client.
     */
-    optional int32   context = 1;
+    optional int32   context   = 1;
     //! A field containing one of the messages to be sent
-    required Content message = 2;
+    required Content message   = 2;
+    optional int32   client_id = 3;
 }
 
 /** @}*/

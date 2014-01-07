@@ -93,3 +93,12 @@ bool PluginContainer::HandleClientToSim( const sword::ClientToSim& msg,
             return true;
     return false;
 }
+
+bool PluginContainer::HandleClientToReplay( const sword::ClientToReplay& msg,
+        RewritingPublisher_ABC& unicaster, ClientPublisher_ABC& broadcaster )
+{
+    for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
+        if( (*it)->HandleClientToReplay( msg, unicaster, broadcaster ))
+            return true;
+    return false;
+}
