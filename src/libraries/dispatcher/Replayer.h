@@ -76,7 +76,8 @@ public:
     //@}
 
 private:
-    void Receive( const std::string& link, const sword::ClientToSim& msg );
+    void ReceiveClientToSim( const std::string& link, const sword::ClientToSim& );
+    void ReceiveClientToReplay( const std::string& link, const sword::ClientToReplay& );
 
 private:
     //! @name Member data

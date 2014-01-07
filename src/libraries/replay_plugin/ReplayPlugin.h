@@ -18,12 +18,7 @@ namespace sword
 {
     class ClientToReplay;
     class ControlResume;
-    class TimeTableRequest_TimeRange;
-}
-
-namespace tools
-{
-    class MessageDispatcher_ABC;
+    class TimeTableRequest;
 }
 
 namespace dispatcher
@@ -51,14 +46,16 @@ class ReplayPlugin : public dispatcher::Plugin_ABC, private MT_Timer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPlugin( dispatcher::Model_ABC& model, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
-                           dispatcher::LinkResolver_ABC& linkResolver, dispatcher::Loader& loader, const dispatcher::ReplayModel_ABC& replayModel );
+             ReplayPlugin( dispatcher::Model_ABC& model, dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& linkResolver, dispatcher::Loader& loader, const dispatcher::ReplayModel_ABC& replayModel );
     virtual ~ReplayPlugin();
     //@}
 
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual bool HandleClientToReplay( const sword::ClientToReplay& message,
+        dispatcher::RewritingPublisher_ABC& unicaster,
+        dispatcher::ClientPublisher_ABC& broadcaster );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
                                             dispatcher::Profile_ABC& profile, bool uncounted );
@@ -75,12 +72,13 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned int factor );
     void Pause( bool fromClient );
     void Resume( const std::string& endpoint, const sword::ControlResume& msg );
     void SkipToFrame( unsigned int frame );
-    void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
+    void RequestTimeTable( const sword::TimeTableRequest& msg,
+            dispatcher::RewritingPublisher_ABC& unicaster,
+            dispatcher::ClientPublisher_ABC& broadcaster );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
     void ReloadAll();
     //@}

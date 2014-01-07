@@ -36,7 +36,7 @@ message ControlReplayInformation {
     required EnumSimulationState status            = 6;
     //! The total number of ticks in the replay
     required int32               tick_count        = 7;
-    //! The first tick recorded
+    //! The first tick recorded, unset if equal to 1.
     optional int32               first_tick        = 8;
     //! The real current date and time
     optional DateTime            real_date_time    = 9;
@@ -54,25 +54,6 @@ message ControlSkipToTickAck {
     required int32                tick       = 1;
     //! The error code
     required ControlAck.ErrorCode error_code = 2;
-}
-
-/** @struct TimeTableRequestAck
-    @brief Acknowledges a time table request message
-
-    @see TimeTableRequest
-*/
-message TimeTableRequestAck {
-    /** @enum ErrorCode
-        @brief The error code
-    */
-    enum ErrorCode {
-        //! No error
-        no_error           = 0;
-        //! Invalid tick range
-        invalid_tick_range = 1;
-    }
-    //! The error code
-    required ErrorCode        error_code = 1;
 }
 
 /** @struct TimeTable
@@ -96,6 +77,26 @@ message TimeTable {
     repeated TimeMapping time_table_item = 1;
     //! The completion status
     optional bool        partial         = 2 [ default = false ];
+}
+
+/** @struct TimeTableRequestAck
+    @brief Acknowledges a time table request message
+
+    @see TimeTableRequest
+*/
+message TimeTableRequestAck {
+    /** @enum ErrorCode
+        @brief The error code
+    */
+    enum ErrorCode {
+        //! No error
+        no_error           = 0;
+        //! Invalid tick range
+        invalid_tick_range = 1;
+    }
+    //! The error code
+    required ErrorCode        error_code = 1;
+    optional TimeTable        time_table = 2;
 }
 
 /** @struct NewDataChunkNotification
@@ -139,6 +140,8 @@ message ReplayToClient {
         optional TimeTable                  time_table                     = 8;
         //! @copybrief NewDataChunkNotification
         optional NewDataChunkNotification   new_data_chunk_notification    = 9;
+        optional LogisticHistoryAck         logistic_history_ack           = 10;
+        optional ListLogisticRequestsAck    list_logistic_requests_ack     = 11;
     }
     /** @property context
         @brief Identifies the request matching the response.
@@ -152,6 +155,14 @@ message ReplayToClient {
     optional int32   context = 1;
     //! A field containing one of the messages to be sent
     required Content message = 2;
+    //! Acknowledgent messages will use this field to identify client
+    //! recipient.
+    optional int32   client_id = 3;
+    //! This fields will eventually supersede message specific error
+    //! handling. For now, ignore it unless a client message explicitely
+    //! states it is using it, in which case a non-empty message signals
+    //! an error.
+    optional string  error_msg = 4;
 }
 
 /** @}*/

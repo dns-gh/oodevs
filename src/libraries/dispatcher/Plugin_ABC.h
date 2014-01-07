@@ -17,7 +17,10 @@
 
 namespace sword
 {
+    class ClientToReplay;
     class ClientToSim;
+    class ReplayToClient;
+    class SimToClient;
 }
 
 namespace dispatcher
@@ -34,6 +37,8 @@ public:
              RewritingPublisher_ABC() {}
     virtual ~RewritingPublisher_ABC() {}
 
+    virtual const std::string& GetLink() const = 0;
+    virtual void Send( sword::ReplayToClient& message ) = 0;
     virtual void Send( sword::SimToClient& message ) = 0;
 };
 
@@ -42,12 +47,16 @@ public:
 class UnicastPublisher : public RewritingPublisher_ABC
 {
 public:
-    UnicastPublisher( ClientPublisher_ABC& publisher, int32_t clientId, int32_t context );
+    UnicastPublisher( ClientPublisher_ABC& publisher, const std::string& link,
+            int32_t clientId, int32_t context );
 
-    void Send( sword::SimToClient& message );
+    virtual const std::string& GetLink() const;
+    virtual void Send( sword::ReplayToClient& message );
+    virtual void Send( sword::SimToClient& message );
 
 private:
     ClientPublisher_ABC& publisher_;
+    const std::string link_;
     const int32_t clientId_;
     const int32_t context_;
 };
@@ -86,6 +95,11 @@ public:
     // processing error. Handled messages are not forwarded to other plugins.
     virtual bool HandleClientToSim( const sword::ClientToSim&, RewritingPublisher_ABC&,
             ClientPublisher_ABC& )
+    {
+        return false;
+    }
+    virtual bool HandleClientToReplay( const sword::ClientToReplay&,
+            RewritingPublisher_ABC&, ClientPublisher_ABC& )
     {
         return false;
     }

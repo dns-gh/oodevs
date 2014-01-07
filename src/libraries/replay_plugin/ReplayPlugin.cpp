@@ -14,9 +14,9 @@
 #include "dispatcher/Loader.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Services.h"
-#include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Dispatcher.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/ReplaySenders.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -27,8 +27,9 @@ using namespace dispatcher;
 // Name: ReplayPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
-                            dispatcher::LinkResolver_ABC& linkResolver, Loader& loader, const ReplayModel_ABC& replayModel )
+ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients,
+        dispatcher::LinkResolver_ABC& linkResolver, Loader& loader,
+        const ReplayModel_ABC& replayModel )
     : model_( model )
     , clients_( clients )
     , linkResolver_( linkResolver )
@@ -42,7 +43,6 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     , factory_( new ReplayExtensionFactory( replayModel ) )
 {
     model.RegisterFactory( *factory_ );
-    clientCommands.RegisterMessage( *this, &ReplayPlugin::OnReceive );
     ChangeTimeFactor( factor_ );
     manager_.Register( *this );
 }
@@ -146,26 +146,28 @@ void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
     model_.SendReplayInfo( client, tickNumber_, loader_.GetEndDateTime(), running_ ? sword::running : sword::paused, factor_, loader_.GetFirstTick() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReplayPlugin::OnReceive
-// Created: AGE 2007-08-24
-// -----------------------------------------------------------------------------
-void ReplayPlugin::OnReceive( const std::string& endpoint, const sword::ClientToReplay& wrapper )
+bool ReplayPlugin::HandleClientToReplay( const sword::ClientToReplay& message,
+        dispatcher::RewritingPublisher_ABC& unicaster,
+        dispatcher::ClientPublisher_ABC& broadcaster )
 {
-    if( wrapper.message().has_control_pause() )
+    const auto& msg = message.message();
+    if( msg.has_control_pause() )
         Pause( true );
-    else if( wrapper.message().has_control_resume() )
-        Resume( endpoint, wrapper.message().control_resume() );
-    else if( wrapper.message().has_control_change_time_factor() )
-        ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
-    else if( wrapper.message().has_control_skip_to_tick() )
-        skipToFrame_ = wrapper.message().control_skip_to_tick().tick();
-    else if( wrapper.message().has_control_skip_to_date() )
-        skipToFrame_ = loader_.FindTickForDate( wrapper.message().control_skip_to_date().date_time().data() );
-    else if( wrapper.message().has_time_table_request() )
-        RequestTimeTable( wrapper.message().time_table_request().tick_range() );
-    else if( wrapper.message().has_force_refresh_data_request() )
+    else if( msg.has_control_resume() )
+        Resume( unicaster.GetLink(), msg.control_resume() );
+    else if( msg.has_control_change_time_factor() )
+        ChangeTimeFactor( msg.control_change_time_factor().time_factor() );
+    else if( msg.has_control_skip_to_tick() )
+        skipToFrame_ = msg.control_skip_to_tick().tick();
+    else if( msg.has_control_skip_to_date() )
+        skipToFrame_ = loader_.FindTickForDate( msg.control_skip_to_date().date_time().data() );
+    else if( msg.has_time_table_request() )
+        RequestTimeTable( msg.time_table_request(), unicaster, broadcaster );
+    else if( msg.has_force_refresh_data_request() )
         ReloadAll();
+    else
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -260,23 +262,38 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
 // Name: ReplayPlugin::RequestTimeTable
 // Created: JSR 2011-07-22
 // -----------------------------------------------------------------------------
-void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg )
+void ReplayPlugin::RequestTimeTable( const sword::TimeTableRequest& msg,
+            dispatcher::RewritingPublisher_ABC& unicaster,
+            dispatcher::ClientPublisher_ABC& broadcaster )
 {
-    ::replay::TimeTableRequestAck ack;
-    int beginTick = msg.begin_tick();
-    int endTick = msg.end_tick();
-    bool valid = beginTick > 0 && beginTick <= endTick && endTick <= static_cast< int >( loader_.GetTickNumber() );
-    if( valid )
-        ack().set_error_code( sword::TimeTableRequestAck::no_error );
-    else
-        ack().set_error_code( sword::TimeTableRequestAck::invalid_tick_range );
-    ack.Send( clients_ );
-    if( valid )
+    sword::ReplayToClient reply;
+    auto ack = reply.mutable_message()->mutable_time_table_request_ack();
+    ack->set_error_code( sword::TimeTableRequestAck::no_error );
+    try
     {
-        ::replay::TimeTable asn;
-        loader_.FillTimeTable( asn(), beginTick, endTick );
-        asn.Send( clients_ );
+        const auto& range = msg.tick_range();
+        const int beginTick = range.begin_tick();
+        const int endTick = range.end_tick();
+        protocol::Check( beginTick > 0, "begin_tick must be greater than zero" );
+        protocol::Check( beginTick <= endTick,
+                "begin_tick must be equal or less than end_tick" );
+        protocol::Check( endTick <= static_cast< int >( loader_.GetTickNumber() ),
+                "end_tick must be equal or less than replay tick count" );
+
+        loader_.FillTimeTable( *ack->mutable_time_table(), beginTick, endTick );
+        if( msg.broadcast() )
+        {
+            sword::ReplayToClient table;
+            *table.mutable_message()->mutable_time_table() = ack->time_table();
+            broadcaster.Send( table );
+        }
     }
+    catch( const protocol::Exception& e )
+    {
+        ack->set_error_code( sword::TimeTableRequestAck::invalid_tick_range );
+        reply.set_error_msg( tools::GetExceptionMsg( e ));
+    }
+    unicaster.Send( reply );
 }
 
 // -----------------------------------------------------------------------------

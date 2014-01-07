@@ -44,6 +44,8 @@ public:
     virtual void Close();
     virtual bool HandleClientToSim( const sword::ClientToSim&, RewritingPublisher_ABC&,
             ClientPublisher_ABC& );
+    virtual bool HandleClientToReplay( const sword::ClientToReplay&,
+            RewritingPublisher_ABC&, ClientPublisher_ABC& );
     //@}
 
 private:

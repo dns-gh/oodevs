@@ -1879,3 +1879,414 @@ message UnitMagicAction {
     //! optional name
     optional string            name       = 4;
 }
+
+enum EnumHumanRank {
+    //! Commissioned Officer
+    officer     = 0;
+    //! Non-commissioned Officer
+    sub_officer = 1;
+    //! Other Enlisted Rank
+    trooper     = 2;
+}
+
+/** @struct LogFuneralHandlingCreation
+    @brief Notifies of the creation of a funeral handling
+*/
+message LogFuneralHandlingCreation {
+    //! The funeral request identifier
+    required Id               request          = 1;
+    //! The requesting unit identifier
+    required Id               unit             = 2;
+    //! The creation tick number
+    required int32            tick             = 3;
+    //! The rank of the human associated to the request
+    required EnumHumanRank    rank             = 4;
+}
+
+/** @struct LogFuneralHandlingUpdate
+    @brief Notifies of the update of a funeral handling
+*/
+message LogFuneralHandlingUpdate {
+    /** @enum EnumLogFuneralHandlingStatus
+        @brief Defines the funeral handling states
+    */
+    enum EnumLogFuneralHandlingStatus {
+        //! Waiting to be handled by logistic superior
+        waiting_for_handling     = 0;
+        //! Transporting the unpackaged body from the requesting unit
+        //! to the first logistic base
+        transporting_unpackaged  = 1;
+        //! Waiting for packaging resource to be available
+        waiting_for_packaging    = 2;
+        //! Packaging the body
+        packaging                = 3;
+        //! Waiting for a transporter (supply logistic) to arrive to
+        //! the current logistic base
+        waiting_for_transporter  = 4;
+        //! Transporting the packaged body between logistic bases
+        transporting_packaged    = 5;
+        //! Finished
+        finished                 = 6;
+    }
+    //! The request identifier
+    required Id                            request                = 1;
+    //! The current logistic base handling the request
+    optional ParentEntity                  handling_unit          = 2;
+    //! The current unit transporting the body
+    optional Id                            convoying_unit         = 3;
+    //! The current status
+    optional EnumLogFuneralHandlingStatus  state                  = 4;
+    //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
+    optional int32                         current_state_end_tick = 5;
+    //! The packaging type
+    optional Id                            packaging_resource     = 6;
+}
+
+/** @struct LogFuneralHandlingDestruction
+    @brief Notifies of the destruction of a funeral handling
+*/
+message LogFuneralHandlingDestruction {
+    //! The request identifier
+    required Id               request = 1;
+}
+
+/** @struct LogMaintenanceHandlingCreation
+    @brief Notifies of the creation of a maintenance handling
+*/
+message LogMaintenanceHandlingCreation {
+    //! The request identifier
+    required Id                   request    = 1;
+    //! The unit identifier
+    required Id                   unit       = 2;
+    //! The creation tick number
+    required int32                tick       = 3;
+    //! The equipment type under maintenance
+    required Id                   equipement = 4;
+    //! The breakdown type
+    required Id                   breakdown  = 5;
+}
+
+/** @struct LogMaintenanceHandlingUpdate
+    @brief Notifies of the update of a maintenance handling
+*/
+message LogMaintenanceHandlingUpdate {
+    /** @enum EnumLogMaintenanceHandlingStatus
+        @brief Defines the maintenance handling states
+    */
+    enum EnumLogMaintenanceHandlingStatus {
+        //! Moving to supply
+        moving_to_supply             = 0;
+        //! Waiting for transporter
+        waiting_for_transporter      = 1;
+        //! Transporter moving to supply
+        transporter_moving_to_supply = 2;
+        //! Transporter loading
+        transporter_loading          = 3;
+        //! Transporter moving back
+        transporter_moving_back      = 4;
+        //! Transporter unloading
+        transporter_unloading        = 5;
+        //! Being diagnosed
+        diagnosing                   = 6;
+        //! Searching maintenance upper levels
+        searching_upper_levels       = 7;
+        //! Waiting for parts
+        waiting_for_parts            = 8;
+        //! Waiting for a repairer
+        waiting_for_repairer         = 9;
+        //! Being repaired
+        repairing                    = 10;
+        //! Moving back
+        moving_back                  = 11;
+        //! Finished
+        finished                     = 12;
+    }
+    //! The request identifier
+    required Id                               request                = 1;
+    //! The unit identifier
+    required Id                               unit                   = 2;
+    //! The maintenance provider identifier
+    required Id                               provider               = 3;
+    //! The maintenance state
+    optional EnumLogMaintenanceHandlingStatus state                  = 4;
+    //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
+    optional int32                            current_state_end_tick = 5;
+    //! Whether a diagnostic has been established or not
+    optional bool                             diagnosed              = 6;
+}
+
+/** @struct LogMaintenanceHandlingDestruction
+    @brief Notifies of the destruction of a maintenance handling
+*/
+message LogMaintenanceHandlingDestruction {
+    //! The request identifier
+    required Id                   request = 1;
+    //! The unit identifier
+    required Id                   unit    = 2;
+}
+
+/** @struct LogMedicalHandlingCreation
+    @brief Notifies of the creation of a medical handling
+*/
+message LogMedicalHandlingCreation {
+    //! The medical request identifier
+    required Id               request          = 1;
+    //! The unit identifier
+    required Id               unit             = 2;
+    //! The creation tick number
+    required int32            tick             = 3;
+    //! The rank
+    required EnumHumanRank    rank             = 4;
+    //! The type wound
+    required EnumHumanWound   wound            = 5;
+    //! Whether the unit is mentally wounded or not
+    optional bool             mental_wound     = 6;
+    //! Whether the unit is NBC contaminated or not
+    optional bool             nbc_contaminated = 7;
+}
+
+/** @struct LogMedicalHandlingUpdate
+    @brief Notifies of the update of a medical handling
+*/
+message LogMedicalHandlingUpdate {
+    /** @enum EnumLogMedicalHandlingStatus
+        @brief Defines the medical handling states
+    */
+    enum EnumLogMedicalHandlingStatus {
+        //! Waiting for evacuation
+        waiting_for_evacuation                    = 0;
+        //! Evacuation ambulance moving in
+        evacuation_ambulance_moving_in            = 1;
+        //! Evacuation ambulance loading
+        evacuation_ambulance_loading              = 2;
+        //! Waiting for evacuation loading completion
+        waiting_for_evacuation_loading_completion = 3;
+        //! Evacuation ambulance moving out
+        evacuation_ambulance_moving_out           = 4;
+        //! Evacuation ambulance unloading
+        evacuation_ambulance_unloading            = 5;
+        //! Waiting for diagnostic
+        waiting_for_diagnostic                    = 6;
+        //! Being diagnosed
+        diagnosing                                = 7;
+        //! Looking for triage
+        looking_for_triage                        = 8;
+        //! Waiting for triage
+        waiting_for_triage                        = 9;
+        //! Being triaged
+        triaging                                  = 10;
+        //! Looking for medical attention
+        looking_for_medical_attention             = 11;
+        //! Waiting for medical attention
+        waiting_for_medical_attention             = 12;
+        //! Receiving medical attention
+        receiving_medical_attention               = 13;
+        //! Resting
+        resting                                   = 14;
+        //! Waiting for collection
+        waiting_for_collection                    = 15;
+        //! Collection ambulance loading
+        collection_ambulance_loading              = 16;
+        //! Waiting for collection loading completion
+        waiting_for_collection_loading_completion = 17;
+        //! Collection ambulance moving in
+        collection_ambulance_moving_in            = 18;
+        //! Collection ambulance unloading
+        collection_ambulance_unloading            = 19;
+        //! Finished
+        finished                                  = 20;
+    }
+    //! The request identifier
+    required Id                           request          = 1;
+    //! The unit identifier
+    required Id                           unit             = 2;
+    //! The provider identifier
+    optional Id                           provider         = 3;
+    //! The type of wound
+    optional EnumHumanWound               wound            = 4;
+    //! Whether the unit is mentally wounded or not
+    optional bool                         mental_wound     = 5;
+    //! Whether the unit is NBC contaminated or not
+    optional bool                         nbc_contaminated = 6;
+    //! The current state
+    optional EnumLogMedicalHandlingStatus state            = 7;
+    //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
+    optional int32                        current_state_end_tick = 8;
+    //! Whether a diagnostic has been established or not
+    optional bool                         diagnosed        = 9;
+}
+
+/** @struct LogMedicalHandlingDestruction
+    @brief Notifies of the destruction of a medical handling
+*/
+message LogMedicalHandlingDestruction {
+    //! The request identifier
+    required Id               request = 1;
+    //! The unit identifier
+    required Id               unit    = 2;
+}
+
+/** @struct SupplyResourceRequest
+    @brief Queries a dotation
+*/
+message SupplyResourceRequest {
+    //! The type of the resource
+    required Id           resource  = 1;
+    //! The amount requested
+    required int32        requested = 2;
+    //! The amount granted
+    required int32        granted   = 3;
+    //! The amount being convoyed
+    required int32        convoyed  = 4;
+}
+
+/** @struct SupplyFlowRecipient
+    @brief The recipient(receiver) of a supply flow
+    @todo What's this ?
+*/
+message SupplyRecipientResourcesRequest {
+    //! The recipient of the supply flow
+    required Id                    recipient = 1;
+    //! The resources requested/granted/convoyed
+    repeated SupplyResourceRequest resources = 2;
+}
+message SupplyRecipientResourceRequests {
+    repeated SupplyRecipientResourcesRequest requests = 1;
+}
+
+/** @struct LogSupplyHandlingCreation
+    @brief Notifies of the creation of a supply handling
+*/
+message LogSupplyHandlingCreation {
+    //! The request identifier
+    required Id              request               = 1;
+    //! The creation tick number
+    required int32           tick                  = 2;
+    //! The supplier
+    required ParentEntity    supplier              = 3;
+    //! The logistic base which provides the transporters for the convoy
+    required ParentEntity    transporters_provider = 4;
+}
+
+/** @struct LogSupplyHandlingUpdate
+    @brief Notifies of the update of a log supply handling
+*/
+message LogSupplyHandlingUpdate {
+    /** @enum EnumLogSupplyHandlingStatus
+        @brief List of states a supply request can go through
+    */
+    enum EnumLogSupplyHandlingStatus {
+        //! Convoy is waiting for transporters
+        convoy_waiting_for_transporters     = 0;
+        //! Convoy setup
+        convoy_setup                        = 1;
+        //! Convoy is moving to loading point
+        convoy_moving_to_loading_point      = 2;
+        //! Convoy is loading
+        convoy_loading                      = 3;
+        //! Convoy is moving to unloading point
+        convoy_moving_to_unloading_point    = 4;
+        //! Convoy is unloading
+        convoy_unloading                    = 5;
+        //! Convoy is returning to forming point
+        convoy_moving_back_to_loading_point = 6;
+        //! Convoying operation is finished
+        convoy_finished                     = 7;
+    }
+    //! The request identifier
+    optional Id                              request                = 1;
+    //! The convoyer
+    optional Id                              convoyer               = 2;
+    //! The current state of the handling
+    optional EnumLogSupplyHandlingStatus     state                  = 3;
+    //! When set, the tick when the current state will be finished
+    //! If unset, the end state time is unknown
+    optional int32                           current_state_end_tick = 4;
+    //! The resources requested
+    optional SupplyRecipientResourceRequests requests               = 5;
+}
+
+/** @struct LogSupplyHandlingDestruction
+    @brief Notifies of the destruction of a log supply handling
+*/
+message LogSupplyHandlingDestruction {
+    //! The request identifier
+    required Id              request  = 1;
+}
+
+//! LogHistoryEntry is a snapshot of a logistic request.
+//!
+//! Exactly one of its funeral/maintenance/medical/supply field is set
+//! with one of the possible combination of messages:
+//! - creation: for just created requests
+//! - creation + update: an ongoing request
+//! - creation + update + destruction: request before destruction
+message LogHistoryEntry {
+    message Funeral {
+        optional LogFuneralHandlingCreation        creation = 1;
+        optional LogFuneralHandlingUpdate          update = 2;
+        optional LogFuneralHandlingDestruction     destruction = 3;
+    }
+
+    message Maintenance {
+        optional LogMaintenanceHandlingCreation    creation = 1;
+        optional LogMaintenanceHandlingUpdate      update = 2;
+        optional LogMaintenanceHandlingDestruction destruction = 3;
+    }
+
+    message Medical {
+        optional LogMedicalHandlingCreation        creation = 1;
+        optional LogMedicalHandlingUpdate          update = 2;
+        optional LogMedicalHandlingDestruction     destruction = 3;
+    }
+
+    message Supply {
+        optional LogSupplyHandlingCreation         creation = 1;
+        optional LogSupplyHandlingUpdate           update = 2;
+        optional LogSupplyHandlingDestruction      destruction = 3;
+    }
+
+    required int32       tick        = 1;
+    optional Funeral     funeral     = 2;
+    optional Maintenance maintenance = 3;
+    optional Medical     medical     = 4;
+    optional Supply      supply      = 5;
+}
+
+//! Asks the history of selected logistic requests.
+//!
+//! Errors are reported in SimToClient.error_msg fields.
+message LogisticHistoryRequest {
+    repeated Id requests = 1;
+}
+
+//! Returns a list of logistic requests entries matching those specified
+//! in the LogisticHistoryRequest. Entries are sorted per request, from
+//! oldest to newest.
+message LogisticHistoryAck {
+    repeated LogHistoryEntry entries = 1;
+}
+
+//! Returns the most recent state of any logistic request referencing
+//! of supplied entities (unit, automat, formation...) at some point
+//! in its history.
+//!
+//! If current_tick is supplied, returns them as if it were the current
+//! tick. current_tick must be between 1 and the current simulated tick
+//! for usual runs, or in the session tick range for replay runs.
+//! 
+//! Errors are reported in SimToClient.error_msg fields.
+message ListLogisticRequests {
+    repeated Id     entities     = 1;
+    optional uint32 max_count    = 2;
+    optional int32  current_tick = 3;
+}
+
+//! Returns the most recent LogHistoryEntry of each request touching the
+//! entities listed in ListLogisticRequests, from newest to oldest.
+message ListLogisticRequestsAck {
+    repeated LogHistoryEntry entries = 1;
+}

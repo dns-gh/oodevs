@@ -306,6 +306,8 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return type;
     if( type == "quantity" && type_ == "enumeration" )
         return "quantity";
+    if( type == "urbanblock" )
+        return "urbanknowledge";
     return "";
 }
 

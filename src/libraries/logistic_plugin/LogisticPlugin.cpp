@@ -111,10 +111,11 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         logger_->Log( ev, message, today, currentTick_, simTime_ );
 }
 
-bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
-        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
+template< typename R, typename M >
+bool LogisticPlugin::HandleClientToSomething( const M& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster )
 {
-    sword::SimToClient reply;
+    R reply;
     try
     {
         if( msg.message().has_logistic_history_request() )
@@ -136,6 +137,18 @@ bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
     }
     unicaster.Send( reply );
     return true;
+}
+
+bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
+{
+    return HandleClientToSomething< sword::SimToClient >( msg, unicaster );
+}
+
+bool LogisticPlugin::HandleClientToReplay( const sword::ClientToReplay& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
+{
+    return HandleClientToSomething< sword::ReplayToClient >( msg, unicaster );
 }
 
 void LogisticPlugin::HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
