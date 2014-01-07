@@ -1503,7 +1503,7 @@ func (c *Client) GetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEnt
 	return entries, err
 }
 
-func (c *Client) ListLogisticRequests(maxCount int, entityId ...uint32) (
+func (c *Client) ListLogisticRequests(currentTick, maxCount int, entityId ...uint32) (
 	[]*sword.LogHistoryEntry, error) {
 
 	ids := MakeIdList(entityId...).Elem
@@ -1515,8 +1515,9 @@ func (c *Client) ListLogisticRequests(maxCount int, entityId ...uint32) (
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				ListLogisticRequests: &sword.ListLogisticRequests{
-					Entities: ids,
-					MaxCount: count,
+					Entities:    ids,
+					MaxCount:    count,
+					CurrentTick: proto.Int32(int32(currentTick)),
 				},
 			},
 		},
