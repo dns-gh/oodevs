@@ -103,9 +103,9 @@ void ActionPublisher::Send( const sword::ClientToSim& msg )
 // Name: ActionPublisher::Register
 // Created: LGY 2013-12-10
 // -----------------------------------------------------------------------------
-void ActionPublisher::Register( T_Handler /*handler*/ )
+void ActionPublisher::Register( T_Handler handler )
 {
-    throw MASA_EXCEPTION( "not to be called." );;
+    publisher_.Register( handler );
 }
 
 // -----------------------------------------------------------------------------

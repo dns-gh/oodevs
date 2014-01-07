@@ -31,8 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const T& /*updateMessage*/ ) {};
-    virtual void DoUpdateContext( const T& /*updateMessage*/, int /*context*/ ) {};
+    virtual void DoUpdate( const T& updateMessage ) = 0;
     //@}
 };
 

@@ -308,3 +308,12 @@ void ActionsModel::SetTimelineHandler( const boost::shared_ptr< kernel::Timeline
 {
     publisher_->SetTimelineHandler( handler );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::RegisterHandler
+// Created: LGY 2014-01-06
+// -----------------------------------------------------------------------------
+void ActionsModel::RegisterHandler( Publisher_ABC::T_Handler handler )
+{
+    publisher_->Register( handler );
+}

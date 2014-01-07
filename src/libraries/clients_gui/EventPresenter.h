@@ -93,7 +93,7 @@ public slots:
                        bool raise,
                        bool purge = true );
 
-    void OnEventContentChanged();
+    void OnEventContentChanged( bool cleanWarning = true );
     void OnEventUpdated( const gui::Event& event );
     void OnEventDeleted( const gui::Event& event );
 

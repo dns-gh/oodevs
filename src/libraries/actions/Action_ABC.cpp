@@ -298,12 +298,3 @@ bool Action_ABC::IsValid() const
 {
     return valid_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC::GetContext
-// Created: LGY 2013-11-15
-// -----------------------------------------------------------------------------
-int Action_ABC::GetContext() const
-{
-    return 0;
-}

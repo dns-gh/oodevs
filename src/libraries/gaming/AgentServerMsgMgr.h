@@ -410,9 +410,9 @@ private:
     // Orders
     void OnReceiveAutomatOrder          ( const sword::AutomatOrder&    message );
     void OnReceiveUnitOrder             ( const sword::UnitOrder&       message );
-    void OnReceiveOrderAck              ( const sword::TaskCreationRequestAck& message, unsigned int clientId, unsigned long nCtx );
+    void OnReceiveOrderAck              ( const sword::TaskCreationRequestAck& message, unsigned int clientId );
     void OnReceiveFragOrder             ( const sword::FragOrder&       message );
-    void OnReceiveFragOrderAck          ( const sword::FragOrderAck&    message, unsigned int clientId, unsigned long nCtx );
+    void OnReceiveFragOrderAck          ( const sword::FragOrderAck&    message, unsigned int clientId );
     void OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message );
     void OnReceiveCrowdOrder            ( const sword::CrowdOrder&             message );
 
