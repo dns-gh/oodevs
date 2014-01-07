@@ -40,9 +40,9 @@ integration.startAnimateIt = function( object )
     return true
 end
 
---- Stop animating an object. A report is sent
+--- Stop animating an object. A report is sent if the object is not animated
 -- @param object Object knowledge
--- @return true
+-- @return false
 integration.stopAnimateIt = function( object )
     object.actionAnimation = DEC__StopAction( object.actionAnimation )
     if integration.animationLevel( object ) == 0 then
@@ -56,7 +56,6 @@ end
 -- ----------------------------------------------------------------
 --- Allows the unit to channel crowd in an area
 -- @param area Area knowledge
--- @return true
 integration.channelIt = function ( area )
     DEC_Agent_CanaliserPopulation( area.source )
 end
