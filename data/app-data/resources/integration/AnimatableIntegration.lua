@@ -12,7 +12,7 @@ integration.canAnimateIt = function( object )
   return DEC_ConnaissanceObjet_PeutEtreAnime( object.source )
 end
 
--- Returns the current percentage of object animation.
+--- Returns the current percentage of object animation.
 -- Regarding the simulation, a 'animated object' is an object that is fully active.
 -- This happens when objects are not 'workable' (see capacity definition in authoring tool)
 -- or when 'workable' objects are fully animated  (number of current animators is equal 
