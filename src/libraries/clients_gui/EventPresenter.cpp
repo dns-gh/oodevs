@@ -268,6 +268,7 @@ void EventPresenter::OnTriggerClicked()
 void EventPresenter::OnClearClicked()
 {
     GetCurrentPresenter().Clear();
+    OnWarningChanged( "", Qt::transparent );
 }
 
 // -----------------------------------------------------------------------------
