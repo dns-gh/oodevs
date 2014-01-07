@@ -1,5 +1,12 @@
---Default Askable Implementation
+-------------------------------------------------------------------
+---- ASKABLE INTERFACE IMPLEMENTATION
+-------------------------------------------------------------------
 
+--- Start interrogating the provided knowledge agent
+-- After a delay (depending of the affinity between the agent and the target), reveals critical information
+-- Critical information are filled during the preparation phase 
+-- @param pion Directia agent knowledge
+-- @return false
 integration.startInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     pion[myself].actionInterrogate = DEC_StartInterrogateUnit( pion.source )
@@ -7,6 +14,10 @@ integration.startInterrogatePion = function( pion )
     return false
 end
 
+--- Update interrogating the provided knowledge agent
+-- Returns true when interrogating action is finished or impossible, false otherwise
+-- @param pion Directia agent knowledge
+-- @return Boolean, whether or not action is over
 integration.updateInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     if pion[myself].actionInterrogateState == eActionObjetTerminee or pion[myself].actionInterrogateState == eActionObjetImpossible then
@@ -15,6 +26,10 @@ integration.updateInterrogatePion = function( pion )
     return false
 end
 
+--- Stop interrogating the provided knowledge agent
+-- If exists and action is correctly finished the critical information is revealed.
+-- @param pion Directia agent knowledge
+-- @return true
 integration.stopInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     if pion[myself].actionInterrogateState == eActionObjetTerminee then
@@ -35,6 +50,11 @@ integration.stopInterrogatePion = function( pion )
     return true
 end
 
+--- Start interrogating the provided knowledge crowd
+-- After a delay (depending of the affinity between the agent and the crowd), reveals critical information
+-- Critical information are filled during the preparation phase 
+-- @param crowd Directia crowd knowledge
+-- @return false
 integration.startInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     crowd[myself].actionInterrogate = DEC_StartInterrogateCrowd( crowd.source )
@@ -42,6 +62,10 @@ integration.startInterrogateCrowd = function( crowd )
     return false
 end
 
+--- Update interrogating the provided knowledge crowd
+-- Returns true when interrogating action is finished, false otherwise
+-- @param crowd Directia crowd knowledge
+-- @return Boolean, whether or not action is over
 integration.updateInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
@@ -50,6 +74,10 @@ integration.updateInterrogateCrowd = function( crowd )
     return false
 end
 
+--- Stop interrogating the provided knowledge crowd
+-- If exists and action is correctly finished the critical information is revealed.
+-- @param crowd Directia crowd knowledge
+-- @return true
 integration.stopInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
