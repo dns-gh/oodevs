@@ -100,9 +100,8 @@ public:
     //@}
 
 private:
-    template< typename M, typename R >
-    bool HandleClientToSomething( const M& msg, dispatcher::RewritingPublisher_ABC& unicaster,
-            dispatcher::ClientPublisher_ABC& );
+    template< typename R, typename M >
+    bool HandleClientToSomething( const M& msg, dispatcher::RewritingPublisher_ABC& unicaster );
     void HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
             sword::LogisticHistoryAck& ack ) const;
     void HandleListLogisticRequests( const sword::ListLogisticRequests& rq,

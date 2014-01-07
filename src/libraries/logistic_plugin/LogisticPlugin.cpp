@@ -111,10 +111,9 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         logger_->Log( ev, message, today, currentTick_, simTime_ );
 }
 
-template< typename M, typename R >
+template< typename R, typename M >
 bool LogisticPlugin::HandleClientToSomething( const M& msg,
-        dispatcher::RewritingPublisher_ABC& unicaster,
-        dispatcher::ClientPublisher_ABC& )
+        dispatcher::RewritingPublisher_ABC& unicaster )
 {
     R reply;
     try
@@ -141,17 +140,15 @@ bool LogisticPlugin::HandleClientToSomething( const M& msg,
 }
 
 bool LogisticPlugin::HandleClientToSim( const sword::ClientToSim& msg,
-        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& broadcaster )
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
 {
-    return HandleClientToSomething< sword::ClientToSim, sword::SimToClient >(
-            msg, unicaster, broadcaster );
+    return HandleClientToSomething< sword::SimToClient >( msg, unicaster );
 }
 
 bool LogisticPlugin::HandleClientToReplay( const sword::ClientToReplay& msg,
-        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& broadcaster )
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& )
 {
-    return HandleClientToSomething< sword::ClientToReplay, sword::ReplayToClient >(
-            msg, unicaster, broadcaster );
+    return HandleClientToSomething< sword::ReplayToClient >( msg, unicaster );
 }
 
 void LogisticPlugin::HandleLogisticHistoryRequest( const sword::LogisticHistoryRequest& rq,
