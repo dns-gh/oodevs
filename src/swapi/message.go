@@ -192,6 +192,7 @@ func DecodeMessage(msg *SwordMessage, tag uint32, data []byte) error {
 	case ClientToReplayTag:
 		msg.ClientToReplay = &sword.ClientToReplay{}
 		err = proto.Unmarshal(data, msg.ClientToReplay)
+		msg.ClientId = msg.ClientToReplay.GetClientId()
 		msg.Context = msg.ClientToReplay.GetContext()
 	case ClientToSimulationTag:
 		msg.ClientToSimulation = &sword.ClientToSim{}
@@ -220,6 +221,7 @@ func DecodeMessage(msg *SwordMessage, tag uint32, data []byte) error {
 	case ReplayToClientTag:
 		msg.ReplayToClient = &sword.ReplayToClient{}
 		err = proto.Unmarshal(data, msg.ReplayToClient)
+		msg.ClientId = msg.ReplayToClient.GetClientId()
 		msg.Context = msg.ReplayToClient.GetContext()
 	case SimulationToClientTag:
 		msg.SimulationToClient = &sword.SimToClient{}

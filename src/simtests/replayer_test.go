@@ -17,15 +17,29 @@ import (
 	"sword"
 )
 
-func (s *TestSuite) TestReplayerData(c *C) {
+func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
+	*simu.ReplayProcess, *swapi.Client) {
+
+	replay := startReplay(c, simOpts)
+	client := loginAndWaitModel(c, replay, clientOpts)
+	return replay, client
+}
+
+// Make a short replay session and return simulation options.
+func makeSimpleReplay(c *C) (*simu.SimOpts, *swapi.Formation) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer sim.Stop()
+	defer client.Close()
 
 	// Create new formation and wait a bit
 	party := getSomeParty(c, client.Model.GetData())
 	formation := CreateFormation(c, client, party.Id)
 	client.Model.WaitTicks(1)
-	sim.Stop()
+	return sim.Opts, formation
+}
+
+func (s *TestSuite) TestReplayerData(c *C) {
+	opts, formation := makeSimpleReplay(c)
 
 	// Replay messages and find the tick the formation was created.
 	creationTick := int32(0)
@@ -41,7 +55,7 @@ func (s *TestSuite) TestReplayerData(c *C) {
 		}
 		return nil
 	}
-	err := replay.EnumerateReplayUpdates(sim.Opts.GetReplayDir(), handler)
+	err := replay.EnumerateReplayUpdates(opts.GetReplayDir(), handler)
 	c.Assert(err, IsNil)
 	c.Assert(found, Equals, true)
 	c.Assert(creationTick, Greater, int32(0))
@@ -62,15 +76,14 @@ func (s *TestSuite) TestReplayerData(c *C) {
 		}
 		return nil
 	}
-	err = replay.EnumerateReplayKeyFrames(sim.Opts.GetReplayDir(), keyHandler)
+	err = replay.EnumerateReplayKeyFrames(opts.GetReplayDir(), keyHandler)
 	c.Assert(err, IsNil)
 	c.Assert(firstFrame, Greater, int32(0))
 	c.Assert(found, Equals, false)
 
 	// Start a replay, login a client, the formation is not there
-	replay := startReplay(c, sim.Opts)
+	replay, client := replayAndWaitModel(c, opts, NewAdminOpts(""))
 	defer replay.Kill()
-	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
 	defer client.Close()
 	c.Assert(client.Model.GetFormation(formation.Id), IsNil)
 
@@ -184,4 +197,61 @@ func (s *TestSuite) TestReplayerModels(c *C) {
 		dumps[i], dumps[j] = dumps[j], dumps[i]
 	}
 	replayDumps(c, step, cfg, dumps)
+}
+
+func checkTimetable(c *C, client *swapi.Client, first, last int32, broadcast bool) {
+	table, err := client.GetTimetable(first, last, broadcast)
+	c.Assert(err, IsNil)
+	c.Assert(len(table), Equals, int(last-first+1))
+	for i, t := range table {
+		// TODO: why the +1?
+		c.Assert(*t.Tick, Equals, first+int32(i)+1)
+	}
+}
+
+func (s *TestSuite) TestReplayerTimetable(c *C) {
+	opts, _ := makeSimpleReplay(c)
+	replay, client := replayAndWaitModel(c, opts, NewAdminOpts(""))
+	defer replay.Kill()
+	defer client.Close()
+	// ControlReplayInformation is apparently only returned after a skip
+	err := client.SkipToTick(1)
+	c.Assert(err, IsNil)
+
+	broadcasts := 0
+	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+		if err != nil {
+			return true
+		}
+		if msg != nil &&
+			msg.ReplayToClient != nil &&
+			msg.ReplayToClient.Message != nil &&
+			msg.ReplayToClient.Message.TimeTable != nil {
+			broadcasts++
+		}
+		return false
+	})
+
+	info := client.Model.GetData().Replay
+	c.Assert(info, NotNil)
+	c.Assert(info.FirstTick, Greater, int32(0))
+	c.Assert(info.TickCount, Greater, int32(2))
+
+	// Request all ticks
+	checkTimetable(c, client, info.FirstTick, info.FirstTick+info.TickCount-1, false)
+	c.Assert(broadcasts, Equals, 0)
+
+	// Slice and ask for broadcast
+	checkTimetable(c, client, info.FirstTick, info.FirstTick+1, true)
+	c.Assert(broadcasts, Equals, 1)
+
+	// Invalid values
+	_, err = client.GetTimetable(0, 1, false)
+	c.Assert(err, ErrorMatches, ".*greater than zero.*")
+
+	_, err = client.GetTimetable(2, 1, false)
+	c.Assert(err, ErrorMatches, ".*equal or less.*")
+
+	_, err = client.GetTimetable(2, 100000, false)
+	c.Assert(err, ErrorMatches, ".*equal or less.*")
 }

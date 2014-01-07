@@ -474,6 +474,11 @@ type FireEffect struct {
 	Location Location
 }
 
+type ReplayInfo struct {
+	FirstTick int32
+	TickCount int32
+}
+
 type ModelData struct {
 	Parties              map[uint32]*Party
 	Formations           map[uint32]*Formation
@@ -503,6 +508,7 @@ type ModelData struct {
 	Tick         int32
 	Time         time.Time
 	TickDuration int32
+	Replay       *ReplayInfo
 	// True once the initial state has been received
 	Ready bool
 }
@@ -964,6 +970,9 @@ var (
 		(*ModelData).handleAarInformation,
 		(*ModelData).handleIndicator,
 	}
+	replayToClientHandlers = []func(model *ModelData, m *sword.ReplayToClient_Content) error{
+		(*ModelData).handleControlReplayInformation,
+	}
 )
 
 func (model *ModelData) update(msg *SwordMessage) error {
@@ -986,6 +995,14 @@ func (model *ModelData) update(msg *SwordMessage) error {
 	} else if msg.AarToClient != nil {
 		m := msg.AarToClient.GetMessage()
 		for _, handler := range aarToClientHandlers {
+			err := handler(model, m)
+			if err != ErrSkipHandler {
+				return err
+			}
+		}
+	} else if msg.ReplayToClient != nil {
+		m := msg.ReplayToClient.GetMessage()
+		for _, handler := range replayToClientHandlers {
 			err := handler(model, m)
 			if err != ErrSkipHandler {
 				return err
