@@ -879,6 +879,9 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
     if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT, [&]() { return sword->IsAlive(); } ) )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to connect to simulation " << id_;
+        const auto last_error = GetLastError( deps_.fs, GetOutput() );
+        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        last_error_ = last_error;
         return false;
     }
 
