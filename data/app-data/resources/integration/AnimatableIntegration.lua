@@ -31,7 +31,7 @@ integration.animationLevel = function( object )
     end
 end
 
---- Start animating an object. A report is sent.
+--- Start animating an object. A report is sent
 -- @param object Object knowledge
 -- @return true
 integration.startAnimateIt = function( object )
