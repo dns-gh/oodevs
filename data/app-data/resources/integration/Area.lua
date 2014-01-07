@@ -22,7 +22,7 @@ integration.getAreaPositionSecu = function( area )
 end
 
 -- $$$ MIA To merge with military
---- Returns a list of positions that the agent can reach in the provided knowledge area
+--- Returns a list of positions that the agent can reach in the provided area knowledge
 -- The returned positions are guaranteed to be trafficable.
 -- @param area an Area knowledge
 -- @return list of simulation positions

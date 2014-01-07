@@ -2,7 +2,7 @@
 ---- ASKABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
---- Start interrogating the provided knowledge agent
+--- Start interrogating the provided agent knowledge
 -- After a delay (depending of the affinity between the agent and the target), reveals critical information
 -- Critical information are filled during the preparation phase 
 -- @param pion Directia agent knowledge
@@ -14,7 +14,7 @@ integration.startInterrogatePion = function( pion )
     return false
 end
 
---- Continue interrogating the provided knowledge agent
+--- Continue interrogating the provided agent knowledge
 -- Returns true when interrogating action is finished or impossible, false otherwise
 -- @param pion Directia agent knowledge
 -- @return Boolean, whether or not action is over
@@ -26,7 +26,7 @@ integration.updateInterrogatePion = function( pion )
     return false
 end
 
---- Stop interrogating the provided knowledge agent
+--- Stop interrogating the provided agent knowledge
 -- If exists and action is correctly finished the critical information is revealed.
 -- @param pion Directia agent knowledge
 -- @return true
@@ -50,7 +50,7 @@ integration.stopInterrogatePion = function( pion )
     return true
 end
 
---- Start interrogating the provided knowledge crowd
+--- Start interrogating the provided crowd knowledge
 -- After a delay (depending of the affinity between the agent and the crowd), reveals critical information
 -- Critical information are filled during the preparation phase 
 -- @param crowd Crowd knowledge
@@ -62,7 +62,7 @@ integration.startInterrogateCrowd = function( crowd )
     return false
 end
 
---- Continue interrogating the provided knowledge crowd
+--- Continue interrogating the provided crowd knowledge
 -- Returns true when interrogating action is finished, false otherwise
 -- @param crowd Crowd knowledge
 -- @return Boolean, whether or not action is over
@@ -74,7 +74,7 @@ integration.updateInterrogateCrowd = function( crowd )
     return false
 end
 
---- Stop interrogating the provided knowledge crowd
+--- Stop interrogating the provided crowd knowledge
 -- If exists and action is correctly finished the critical information is revealed.
 -- @param crowd Crowd knowledge
 -- @return true
