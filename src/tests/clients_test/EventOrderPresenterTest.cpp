@@ -82,6 +82,7 @@ namespace
         MOCK_METHOD( SetEntity, 1 );
         MOCK_METHOD( FillFrom, 1 );
         MOCK_METHOD( CommitTo, 1 );
+        MOCK_METHOD( FixOrigin, 1 );
     };
     MOCK_BASE_CLASS( MockInterfaceBuilder, actions::gui::InterfaceBuilder_ABC )
     {

@@ -303,3 +303,13 @@ bool MissionInterface::IsFilling() const
 {
     return filling_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void MissionInterface::FixOrigin( bool fix ) const
+{
+    for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
+        ( *it )->FixOrigin( fix );
+}

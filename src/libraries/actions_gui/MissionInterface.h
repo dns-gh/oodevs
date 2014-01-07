@@ -68,6 +68,7 @@ public:
     virtual void SetEntity( const kernel::Entity_ABC* entity );
     virtual void CommitTo( actions::Action_ABC& action ) const;
     virtual void FillFrom( const actions::Action_ABC& action );
+    virtual void FixOrigin( bool fix ) const;
     //@}
 
     //! @name ParamInterface_ABC implementation
