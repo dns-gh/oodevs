@@ -113,11 +113,11 @@ func (c *Client) GetTimetable(beginTick, endTick int32, broadcast bool) (
 	return table, err
 }
 
-func (c *Client) ReplayGetLogisticHistory(requestId ...uint32) ([]*sword.LogHistoryEntry, error) {
+func (c *Client) ReplayGetLogisticHistory(requestIds ...uint32) ([]*sword.LogHistoryEntry, error) {
 	msg := SwordMessage{
 		ClientToReplay: &sword.ClientToReplay{
 			Message: &sword.ClientToReplay_Content{
-				LogisticHistoryRequest: makeLogisticHistoryRequest(requestId...),
+				LogisticHistoryRequest: makeLogisticHistoryRequest(requestIds...),
 			},
 		},
 	}
@@ -134,14 +134,14 @@ func (c *Client) ReplayGetLogisticHistory(requestId ...uint32) ([]*sword.LogHist
 	return entries, err
 }
 
-func (c *Client) ReplayListLogisticRequests(currentTick, maxCount int, entityId ...uint32) (
+func (c *Client) ReplayListLogisticRequests(currentTick, maxCount int, entities ...uint32) (
 	[]*sword.LogHistoryEntry, error) {
 
 	msg := SwordMessage{
 		ClientToReplay: &sword.ClientToReplay{
 			Message: &sword.ClientToReplay_Content{
 				ListLogisticRequests: makeListLogisticRequests(currentTick, maxCount,
-					entityId...),
+					entities...),
 			},
 		},
 	}

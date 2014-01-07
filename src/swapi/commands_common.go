@@ -28,8 +28,8 @@ func invalid(name string, value interface{}) error {
 	return fmt.Errorf("invalid %v: %v", name, value)
 }
 
-func makeLogisticHistoryRequest(requestId ...uint32) *sword.LogisticHistoryRequest {
-	ids := MakeIdList(requestId...).Elem
+func makeLogisticHistoryRequest(requestIds ...uint32) *sword.LogisticHistoryRequest {
+	ids := MakeIdList(requestIds...).Elem
 	return &sword.LogisticHistoryRequest{
 		Requests: ids,
 	}
@@ -42,9 +42,9 @@ func handleLogisticHistoryAck(ack *sword.LogisticHistoryAck) []*sword.LogHistory
 }
 
 func makeListLogisticRequests(currentTick, maxCount int,
-	entityId ...uint32) *sword.ListLogisticRequests {
+	entities ...uint32) *sword.ListLogisticRequests {
 
-	ids := MakeIdList(entityId...).Elem
+	ids := MakeIdList(entities...).Elem
 	var count *uint32
 	if maxCount >= 0 {
 		count = proto.Uint32(uint32(maxCount))
