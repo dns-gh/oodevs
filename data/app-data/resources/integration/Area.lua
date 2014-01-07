@@ -12,7 +12,7 @@ integration.decontaminateArea = function( area )
 end
 
 -- $$$ MIA To merge with military
---- Returns the barycenter of the provided knowledge area
+--- Returns the barycenter of the provided area knowledge
 -- Note that the barycenter may be outside of the area
 -- @param area an Area knowledge
 -- @return simulation position
