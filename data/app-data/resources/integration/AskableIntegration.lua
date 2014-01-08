@@ -3,8 +3,11 @@
 -------------------------------------------------------------------
 
 --- Start interrogating the provided agent knowledge
--- After a delay (depending of the affinity between the agent and the target), reveals critical information
--- Critical information are filled during the preparation phase 
+-- After a delay (depending on the affinity between the agent and the target), reveals critical information
+-- Critical information are filled during the preparation phase
+-- The critical information will be retrieved after a call to stopInterrogatePion:
+-- @see updateInterrogatePion
+-- @see stropInterrogatePion 
 -- @param pion Directia agent knowledge
 -- @return false
 integration.startInterrogatePion = function( pion )
@@ -51,8 +54,11 @@ integration.stopInterrogatePion = function( pion )
 end
 
 --- Start interrogating the provided crowd knowledge
--- After a delay (depending of the affinity between the agent and the crowd), reveals critical information
--- Critical information are filled during the preparation phase 
+-- After a delay (depending on the affinity between the agent and the crowd), reveals critical information
+-- Critical information are filled during the preparation phase
+-- The critical information will be retrieved after a call to stopInterrogateCrowd:
+-- @see updateInterrogateCrowd
+-- @see stropInterrogateCrowd  
 -- @param crowd Crowd knowledge
 -- @return false
 integration.startInterrogateCrowd = function( crowd )
