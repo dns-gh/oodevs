@@ -16,6 +16,7 @@
 #include "actions/ActionPublisher.h"
 
 #include "clients_gui/EventFactory.h"
+#include "clients_gui/EventView_ABC.h"
 
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -91,6 +92,16 @@ MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_
     MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::KnowledgeGroup_ABC& ), FindObjectKnowledgeFromKnowledge );
     MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::KnowledgeGroup_ABC& ), FindObjectKnowledgeFromObject );
     MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
+};
+
+template< typename ViewState >
+MOCK_BASE_CLASS( MockEventView, gui::EventView_ABC< ViewState > )
+{
+    MOCK_METHOD( Purge, 0, void() );
+    MOCK_METHOD( BlockSignals, 1, void( bool ) );
+    MOCK_METHOD( Draw, 1, void( gui::Viewport_ABC& ) );
+
+    MOCK_METHOD_TPL( Build, 1, void( const ViewState& ) );
 };
 
 struct ApplicationFixture

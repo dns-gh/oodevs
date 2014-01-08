@@ -14,8 +14,28 @@
 
 namespace gui
 {
+    struct EventOrderViewState;
+    struct EventTaskViewState;
     struct EventViewState;
+
     class Viewport_ABC;
+
+class EventBaseView_ABC : private boost::noncopyable
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             EventBaseView_ABC() {}
+    virtual ~EventBaseView_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Purge() = 0;
+    virtual void BlockSignals( bool blocked ) = 0;
+    virtual void Draw( gui::Viewport_ABC& viewport ) = 0;
+    //@}
+};
 
 // =============================================================================
 /** @class  EventView_ABC
@@ -23,7 +43,8 @@ namespace gui
 */
 // Created: ABR 2013-11-19
 // =============================================================================
-class EventView_ABC : private boost::noncopyable
+template< typename ViewState >
+class EventView_ABC : public EventBaseView_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -34,14 +55,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Purge() = 0;
-    virtual void Build( const gui::EventViewState& state ) = 0;
-    virtual void Update( const gui::EventViewState& state ) = 0;
-
-    virtual void BlockSignals( bool blocked ) = 0;
-    virtual void Draw( gui::Viewport_ABC& viewport ) = 0;
+    virtual void Build( const ViewState& state ) = 0;
     //@}
 };
+
+typedef EventView_ABC< gui::EventViewState >                 EventDefaultView_ABC;
+typedef EventView_ABC< gui::EventOrderViewState >            EventOrderView_ABC;
+typedef EventView_ABC< gui::EventTaskViewState >             EventTaskView_ABC;
 
 } //! namespace gui
 

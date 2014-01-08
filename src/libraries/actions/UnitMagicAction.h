@@ -11,7 +11,6 @@
 #define __UnitMagicAction_h_
 
 #include "ActionWithTarget_ABC.h"
-#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -50,7 +49,6 @@ protected:
     //@{
     kernel::Controller& controller_;
     bool registered_;
-    kernel::SafePointer< kernel::Entity_ABC > entity_;
     //@}
 };
 

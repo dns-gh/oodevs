@@ -718,18 +718,6 @@ Raison: %3
 <context>
     <name>EventOrderWidget</name>
     <message>
-        <source>Recipient</source>
-        <translation>Destinataire</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>Selectionner</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
         <source>Order acknowledged</source>
         <translation>Ordre executé</translation>
     </message>
@@ -3143,6 +3131,21 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Create logistic base</source>
         <translation>Créer une base logistique</translation>
+    </message>
+</context>
+<context>
+    <name>TaskerWidget</name>
+    <message>
+        <source>Recipient</source>
+        <translation type="unfinished">Destinataire</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Selectionner</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Supprimer</translation>
     </message>
 </context>
 <context>

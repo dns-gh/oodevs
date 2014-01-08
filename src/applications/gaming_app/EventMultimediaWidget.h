@@ -11,7 +11,6 @@
 #define __EventMultimediaWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventMultimediaWidget
@@ -19,7 +18,7 @@
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventMultimediaWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventMultimediaWidget : public EventDefaultWidget_ABC
 {
     Q_OBJECT
 

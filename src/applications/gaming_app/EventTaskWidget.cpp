@@ -22,11 +22,11 @@
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
 EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
-    : EventWidget_ABC< gui::EventTaskView_ABC >( presenter )
+    : EventTaskWidget_ABC( presenter )
 {
     // Presenter
     taskPresenter_ = boost::make_shared< gui::EventTaskPresenter >( *this );
-    presenter_.AddSubPresenter( eEventTypes_Task, taskPresenter_ );
+    presenter_.AddSubPresenter( taskPresenter_ );
 
     // Editors
     label_ = new QLineEdit();
@@ -87,15 +87,6 @@ EventTaskWidget::~EventTaskWidget()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventTaskWidget::Purge
-// Created: ABR 2013-11-21
-// -----------------------------------------------------------------------------
-void EventTaskWidget::Purge()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventTaskWidget::SaveCursor
 // Created: ABR 2013-12-10
 // -----------------------------------------------------------------------------
@@ -151,16 +142,6 @@ void EventTaskWidget::BlockSignals( bool blocked )
     url_->blockSignals( blocked );
     payload_->blockSignals( blocked );
     bytes_->blockSignals( blocked );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::Build
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskWidget::Build( const gui::EventViewState& state )
-{
-    if( state.event_ )
-        taskPresenter_->FillFromEvent( state.event_->GetEvent() );
 }
 
 // -----------------------------------------------------------------------------

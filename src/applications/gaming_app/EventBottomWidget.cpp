@@ -33,7 +33,7 @@ namespace
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
 EventBottomWidget::EventBottomWidget( gui::EventPresenter& presenter )
-    : EventWidget_ABC< gui::EventView_ABC >( presenter )
+    : EventDefaultWidget_ABC( presenter )
     , detailAction_( 0 )
 {
     // Warning
@@ -96,10 +96,10 @@ void EventBottomWidget::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventBottomWidget::Update
+// Name: EventBottomWidget::Build
 // Created: ABR 2013-12-04
 // -----------------------------------------------------------------------------
-void EventBottomWidget::Update( const gui::EventViewState& state )
+void EventBottomWidget::Build( const gui::EventViewState& state )
 {
     warningBox_->setVisible( !state.warning_.empty() );
     warningBox_->EnableStaticWarning( true, state.warningColor_ );

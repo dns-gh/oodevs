@@ -12,7 +12,6 @@
 
 #include "EventWidget_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
@@ -58,6 +57,7 @@ namespace tools
 
 class Model;
 class MissionParameters;
+class TaskerWidget;
 
 // =============================================================================
 /** @class  EventOrderWidget
@@ -65,7 +65,7 @@ class MissionParameters;
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventOrderWidget : public EventWidget_ABC< gui::EventOrderView_ABC >
+class EventOrderWidget : public EventOrderWidget_ABC
                        , public tools::Observer_ABC
                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
@@ -93,15 +93,14 @@ public:
     //@}
 
 private:
-    //! @name EventWidget_ABC implementation
+    //! @name gui::EventBaseView_ABC implementation
     //@{
     virtual void Purge();
-    virtual void Build( const gui::EventViewState& state );
     virtual void Draw( gui::Viewport_ABC& viewport );
     virtual void BlockSignals( bool blocked );
     //@}
 
-    //! @name gui::EventOrderView_ABC implementation
+    //! @name gui::EventView_ABC< gui::EventOrderViewState > implementation
     //@{
     virtual void Build( const gui::EventOrderViewState& state );
     //@}
@@ -120,7 +119,6 @@ private:
     //! @name Helpers
     //@{
     void OnOrderClicked( const kernel::Entity_ABC* entity );
-    void SetTarget( unsigned long id );
     void OnTargetChanged( const kernel::Entity_ABC* entity );
     void AddReplaceTargetToMenu( kernel::ContextMenu& menu );
     //@}
@@ -132,8 +130,7 @@ private slots:
     void OnOrderClicked();
     void OnOrderAutomatClicked();
     void OnReplaceTargetClicked();
-    void OnTargetActivated() const;
-    void OnTargetRemoved();
+    void OnClearTaskerClicked();
     //@}
 
 private:
@@ -145,27 +142,17 @@ private:
     const kernel::Profile_ABC& profile_;
     gui::GlTools_ABC& tools_;
     const kernel::Time_ABC& simulation_;
-    const gui::EntitySymbols& entitySymbols_;
     boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 
-    gui::RichGroupBox* targetGroupBox_;
-    gui::RichLabel* targetLabel_;
-    gui::RichLabel* symbolLabel_;
-    QPushButton* activateTargetButton_;
-    QPushButton* removeTargetButton_;
-
+    TaskerWidget* taskerWidget_;
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
     gui::RichWarnWidget< QComboBox >* missionCombo_;
     QStandardItemModel missionModel_;
     boost::scoped_ptr< actions::gui::MissionInterface_ABC > missionInterface_;
 
-    const kernel::Entity_ABC* selectedEntity_;
-    const kernel::Entity_ABC* selectedEngagedAutomat_;
-    const kernel::Entity_ABC* target_;
-
-    bool isBuilding_;
-    bool isUpdatingParent_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEngagedAutomat_;
     //@}
 };
 

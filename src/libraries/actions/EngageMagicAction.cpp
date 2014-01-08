@@ -70,7 +70,7 @@ void EngageMagicAction::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "type", "change_mode" );
     xos << xml::attribute( "engaged", engaged_ );
-    xos << xml::attribute( "entity", entityId_ );
+    xos << xml::attribute( "entity", GetEntityId() );
     ActionWithTarget_ABC::Serialize( xos );
 }
 
@@ -81,7 +81,7 @@ void EngageMagicAction::Serialize( xml::xostream& xos ) const
 void EngageMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::SetAutomatMode message;
-    message().mutable_automate()->set_id( entityId_ );
+    message().mutable_automate()->set_id( GetEntityId() );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
     message().set_name( GetName().toStdString() );
     message.Send( publisher );

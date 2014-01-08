@@ -19,6 +19,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
 #include <tools/Iterator.h>
 
 using namespace actions;
@@ -31,7 +32,6 @@ UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel
     : ActionWithTarget_ABC ( controller, magic, &entity )
     , controller_( controller )
     , registered_( registered )
-    , entity_( controller_, &entity )
 {
     Rename( name );
 }
@@ -44,7 +44,6 @@ UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& contro
     : ActionWithTarget_ABC( xis, controller, magic, entity )
     , controller_( controller )
     , registered_( true )
-    , entity_( controller_, &entity )
 {
     Rename( name );
 }
@@ -86,26 +85,28 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
+    const std::string typeName = target_ ? target_->GetTypeName() : "";
+    const unsigned int id = GetEntityId();
     sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
-    if( entityTypeName_ == kernel::Agent_ABC::typeName_ )
-        message().mutable_tasker()->mutable_unit()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Automat_ABC::typeName_ )
-        message().mutable_tasker()->mutable_automat()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Formation_ABC::typeName_ )
-        message().mutable_tasker()->mutable_formation()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Population_ABC::typeName_ )
-        message().mutable_tasker()->mutable_crowd()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Team_ABC::typeName_ )
-        message().mutable_tasker()->mutable_party()->set_id( entityId_ );
-    else if( entityTypeName_ == kernel::Inhabitant_ABC::typeName_ )
-        message().mutable_tasker()->mutable_population()->set_id( entityId_ );
+    if( typeName == kernel::Agent_ABC::typeName_ )
+        message().mutable_tasker()->mutable_unit()->set_id( id );
+    else if( typeName == kernel::Automat_ABC::typeName_ )
+        message().mutable_tasker()->mutable_automat()->set_id( id );
+    else if( typeName == kernel::Formation_ABC::typeName_ )
+        message().mutable_tasker()->mutable_formation()->set_id( id );
+    else if( typeName == kernel::Population_ABC::typeName_ )
+        message().mutable_tasker()->mutable_crowd()->set_id( id );
+    else if( typeName == kernel::Team_ABC::typeName_ )
+        message().mutable_tasker()->mutable_party()->set_id( id );
+    else if( typeName == kernel::Inhabitant_ABC::typeName_ )
+        message().mutable_tasker()->mutable_population()->set_id( id );
     else
         throw MASA_EXCEPTION( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );
-    if( type == sword::UnitMagicAction_Type_move_to && entity_ )
-        entity_.ConstCast()->Update( message() );
+    if( type == sword::UnitMagicAction_Type_move_to && target_ )
+        target_.ConstCast()->Update( message() );
 }

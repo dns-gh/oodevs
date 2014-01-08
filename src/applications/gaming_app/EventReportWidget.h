@@ -11,7 +11,6 @@
 #define __EventReportWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 
 // =============================================================================
 /** @class  EventReportWidget
@@ -19,7 +18,7 @@
 */
 // Created: ABR 2013-05-29
 // =============================================================================
-class EventReportWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventReportWidget : public EventDefaultWidget_ABC
 {
     Q_OBJECT
 

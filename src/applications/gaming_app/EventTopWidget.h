@@ -11,7 +11,6 @@
 #define __EventTopWidget_h_
 
 #include "EventWidget_ABC.h"
-#include "clients_gui/EventView_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace gui
@@ -32,7 +31,7 @@ namespace kernel
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventTopWidget : public EventWidget_ABC< gui::EventView_ABC >
+class EventTopWidget : public EventDefaultWidget_ABC
                      , public tools::Observer_ABC
                      , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
@@ -47,16 +46,11 @@ public:
     virtual ~EventTopWidget();
     //@}
 
-public:
-    //! @name EventWidget_ABC implementation
+private:
+    //! @name EventDefaultWidget_ABC implementation
     //@{
     virtual void Purge();
-    //@}
-
-private:
-    //! @name EventWidget_ABC implementation
-    //@{
-    virtual void Update( const gui::EventViewState& state );
+    virtual void Build( const gui::EventViewState& state );
     virtual void BlockSignals( bool blocked );
     //@}
 

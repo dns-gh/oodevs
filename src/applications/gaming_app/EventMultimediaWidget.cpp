@@ -16,7 +16,7 @@
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
 EventMultimediaWidget::EventMultimediaWidget( gui::EventPresenter& presenter )
-    : EventWidget_ABC< gui::EventView_ABC >( presenter )
+    : EventDefaultWidget_ABC( presenter )
 {
     mainLayout_->addWidget( new QLabel( "Multimedia Widget" ) );
 }

@@ -21,8 +21,8 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_gui/Event.h"
 #include "clients_gui/EventOrderPresenter.h"
-#include "clients_gui/EventOrderView_ABC.h"
 #include "clients_gui/EventOrderViewState.h"
+#include "clients_gui/EventView_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_gui/TimelinePublisher.h"
@@ -99,15 +99,6 @@ namespace
         MOCK_METHOD( SetParentObject, 1 );
         MOCK_METHOD( SetParamInterface, 1 );
     };
-    MOCK_BASE_CLASS( MockEventOrderView, gui::EventOrderView_ABC )
-    {
-        MOCK_METHOD( Purge, 0 );
-        MOCK_METHOD( Build, 1, void( const gui::EventViewState& ), BuildEvent );
-        MOCK_METHOD( Build, 1, void( const gui::EventOrderViewState& ), BuildEventOrder );
-        MOCK_METHOD( Update, 1 );
-        MOCK_METHOD( BlockSignals, 1 );
-        MOCK_METHOD( Draw, 1 );
-    };
     MOCK_BASE_CLASS( MockEntity, kernel::Entity_ABC )
     {
         MOCK_METHOD( GetId, 0 );
@@ -176,6 +167,7 @@ namespace
     {
         OrderPresenterFixture()
             : orderPresenter( orderView, agentTypes, interfaceBuilder, missionInterface, actionsModel, actionFactory, timelinePublisher, controllers )
+            , decisions( new MockDecisions() )
         {
             orderEvent.reset( eventFactory.Create( eEventTypes_Order ) ) ;
             agentTypes.ReadOrderTypes( xml::xisubstream( xis ) );
@@ -188,6 +180,7 @@ namespace
             unitFragOrderDecisionalModel.Register( 1u, allFragOrderResolver.Get( 7 ) );
             automatMissionDecisionalModel.Register( 1u, allMissionResolver.Get( 5 ) );
             crowdMissionDecisionalModel.Register( 1u, allMissionResolver.Get( 6 ) );
+            entity.Attach< gui::Decisions_ABC >( *decisions );
         }
         ~OrderPresenterFixture()
         {
@@ -204,13 +197,13 @@ namespace
         MockInterfaceBuilder interfaceBuilder;
         MockMissionInterface missionInterface;
 
-        MockEventOrderView orderView;
+        MockEventView< gui::EventOrderViewState > orderView;
         gui::EventOrderPresenter orderPresenter;
         gui::EventOrderViewState state;
         boost::shared_ptr< gui::Event > orderEvent;
 
         MockEntity entity;
-        MockDecisions decisions;
+        MockDecisions* decisions;
 
         tools::Resolver< kernel::Mission >   allMissionResolver;
         tools::Resolver< kernel::FragOrder > allFragOrderResolver;
@@ -261,7 +254,7 @@ namespace
         void CheckBuild()
         {
             MOCK_EXPECT( orderView.BlockSignals ).once().with( true );
-            MOCK_EXPECT( orderView.BuildEventOrder ).once().with( state );
+            MOCK_EXPECT( orderView.Build ).once().with( state );
             MOCK_EXPECT( orderView.BlockSignals ).once().with( false );
         }
         void CheckUnitBuild( const std::string& mission, bool invalid = false )
@@ -280,11 +273,11 @@ namespace
         {
             MOCK_EXPECT( entity.GetId ).once().returns( 42 );
             MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( kernel::Agent_ABC::typeName_ ) );
-            MOCK_EXPECT( decisions.GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
-            MOCK_EXPECT( decisions.GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
-            MOCK_EXPECT( decisions.GetFragOrders ).once().returns( unitFragOrderDecisionalModel.CreateIterator() );
-            MOCK_EXPECT( decisions.GetFragOrders ).once().returns( unitFragOrderDecisionalModel.CreateIterator() );
-            MOCK_EXPECT( decisions.GetCurrentMission ).once().returns( currentMission );
+            MOCK_EXPECT( decisions->GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetFragOrders ).once().returns( unitFragOrderDecisionalModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetFragOrders ).once().returns( unitFragOrderDecisionalModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetCurrentMission ).once().returns( currentMission );
             state = gui::EventOrderViewState( 42, unitTypes, eMissionType_FragOrder,
                 boost::assign::list_of( fragOrderSelector )( "fragorder1" )( "fragorder2" )( "fragorder3" ),
                 fragOrderSelector, disabledMissions, false, true );
@@ -308,8 +301,8 @@ namespace
                 missions.insert( missions.begin(), missionSelector );
             MOCK_EXPECT( entity.GetId ).once().returns( 42 );
             MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( typeName ) );
-            MOCK_EXPECT( decisions.GetMissions ).once().returns( missionModel.CreateIterator() );
-            MOCK_EXPECT( decisions.GetMissions ).once().returns( missionModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetMissions ).once().returns( missionModel.CreateIterator() );
+            MOCK_EXPECT( decisions->GetMissions ).once().returns( missionModel.CreateIterator() );
             state = gui::EventOrderViewState( 42, types, type, missions, mission,
                 std::vector< std::string>(), invalid, selector );
             CheckBuild();
@@ -323,17 +316,17 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_change_target, OrderPresenterFixture )
     // set agent as target
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set automat as target
     CheckMissionInterfacePurge( &entity );
     CheckAutomatBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set crowd as target
     CheckMissionInterfacePurge( &entity );
     CheckCrowdBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 }
 
 BOOST_FIXTURE_TEST_CASE( order_presenter_set_target_then_clear_it, OrderPresenterFixture )
@@ -341,13 +334,13 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_target_then_clear_it, OrderPresente
     // set agent as target
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set nothing as target
     CheckMissionInterfacePurge();
     ResetState();
     CheckBuild();
-    orderPresenter.OnTargetChanged( 0, 0 );
+    orderPresenter.OnTargetChanged( 0 );
 }
 
 BOOST_FIXTURE_TEST_CASE( order_presenter_change_type_without_target, OrderPresenterFixture )
@@ -382,7 +375,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_change_type_with_target, OrderPresenter
     // set agent as target
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set frag order as mission type
     CheckMissionInterfacePurge( &entity );
@@ -400,7 +393,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_target_and_mission_then_clear_targe
     // set entity
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set "missionUnit1" mission
     CheckMissionInterfacePurgeAndBuild( &entity );
@@ -413,7 +406,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_target_and_mission_then_clear_targe
     state.missions_ = boost::assign::list_of( "missionUnit1" )( "missionUnit2" )( "missionUnitA" )("missionUnitZ" );
     MOCK_EXPECT( missionInterface.SetEntity ).once();
     CheckBuild();
-    orderPresenter.OnTargetChanged( 0, 0 );
+    orderPresenter.OnTargetChanged( 0 );
 }
 
 BOOST_FIXTURE_TEST_CASE( order_presenter_set_mission_then_set_agent_with_and_without_this_mission, OrderPresenterFixture )
@@ -435,7 +428,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_mission_then_set_agent_with_and_wit
     // set entity
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
     CheckUnitBuild( "missionUnit1" );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // Remove target and keeps the current mission and its parameters
     state.target_ = 0;
@@ -443,7 +436,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_mission_then_set_agent_with_and_wit
     state.missions_ = boost::assign::list_of( "missionUnit1" )( "missionUnit2" )( "missionUnitA" )("missionUnitZ" );
     MOCK_EXPECT( missionInterface.SetEntity ).once();
     CheckBuild();
-    orderPresenter.OnTargetChanged( 0, 0 );
+    orderPresenter.OnTargetChanged( 0 );
 
     // set another mission that our entity doesn't have
     CheckMissionInterfacePurgeAndBuild();
@@ -456,13 +449,13 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_set_mission_then_set_agent_with_and_wit
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
     MOCK_EXPECT( entity.GetId ).once().returns( 42 );
     MOCK_EXPECT( entity.GetTypeName ).once().returns( boost::cref( kernel::Agent_ABC::typeName_ ) );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
-    MOCK_EXPECT( decisions.GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
+    MOCK_EXPECT( decisions->GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
+    MOCK_EXPECT( decisions->GetMissions ).once().returns( unitMissionDecisionalModel.CreateIterator() );
     state = gui::EventOrderViewState( 42, unitTypes, eMissionType_Pawn,
         boost::assign::list_of( "missionUnitA" )( "missionUnit1" )( "missionUnit2" ),
         "missionUnitA", std::vector< std::string>(), true, false );
     CheckBuild();
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 }
 
 BOOST_FIXTURE_TEST_CASE( order_presenter_switching_to_the_same_entity_type_keeps_the_parameters, OrderPresenterFixture )
@@ -470,7 +463,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_switching_to_the_same_entity_type_keeps
     // set agent as target, purge but don't build
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set "missionUnit1" mission, purge and build
     CheckMissionInterfacePurgeAndBuild( &entity );
@@ -480,7 +473,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_switching_to_the_same_entity_type_keeps
     // set another agent with the same mission, keep parameters
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
     CheckUnitBuild( "missionUnit1" );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set another mission, purge and build
     CheckMissionInterfacePurgeAndBuild( &entity );
@@ -490,7 +483,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_switching_to_the_same_entity_type_keeps
     // set another agent with the same mission, keep parameters
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
     CheckUnitBuild( "missionUnit2" );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set frag order mission type, purge
     CheckMissionInterfacePurge( &entity );
@@ -503,7 +496,7 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_display_frag_order_when_a_mission_start
     // set an agent
     CheckMissionInterfacePurge( &entity );
     CheckUnitBuild( missionSelector );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 
     // set frag order mission type, display all fragorders with fragorder2 and fragorder3 unavailable
     CheckMissionInterfacePurge( &entity );
@@ -514,5 +507,5 @@ BOOST_FIXTURE_TEST_CASE( order_presenter_display_frag_order_when_a_mission_start
     // is unavailable because fragorder2 is available in the current active mission missionUnit1
     MOCK_EXPECT( missionInterface.SetEntity ).once().with( &entity );
     CheckFragOrderBuild( &allMissionResolver.Get( 3 ), boost::assign::list_of( "fragorder3" ) );
-    orderPresenter.OnTargetChanged( &entity, &decisions );
+    orderPresenter.OnTargetChanged( &entity );
 }

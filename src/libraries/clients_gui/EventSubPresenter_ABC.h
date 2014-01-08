@@ -10,8 +10,10 @@
 #ifndef __EventSubPresenter_ABC_h_
 #define __EventSubPresenter_ABC_h_
 
+//#include "EventView_ABC.h"
+#include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 
 namespace timeline
 {
@@ -20,20 +22,26 @@ namespace timeline
 
 namespace gui
 {
+    template< typename T > class EventView_ABC;
+    class Event;
 
 // =============================================================================
-/** @class  EventSubPresenter_ABC
-    @brief  EventSubPresenter_ABC
+/** @class  EventPresenter_ABC
+    @brief  EventPresenter_ABC
 */
 // Created: ABR 2013-11-20
 // =============================================================================
-class EventSubPresenter_ABC : private boost::noncopyable
+class EventPresenter_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EventSubPresenter_ABC() {}
-    virtual ~EventSubPresenter_ABC() {}
+    explicit EventPresenter_ABC( E_EventTypes type )
+        : type_( type )
+    {
+        // NOTHING
+    }
+    virtual ~EventPresenter_ABC() {}
     //@}
 
     //! @name Operations
@@ -46,19 +54,81 @@ public:
     {
         return false;
     }
+    E_EventTypes GetType() const
+    {
+        return type_;
+    }
     //@}
 
     //! @name Abstract operations
     //@{
     virtual void Trigger() = 0;
+    virtual void FillFrom( const gui::Event& event ) = 0;
     virtual void CommitTo( timeline::Event& event ) const = 0;
+    virtual void BuildView() = 0;
     virtual void Purge() = 0; // reset all
     virtual void Clear() = 0; // reset content
     //@}
 
     //! @name Types
     //@{
-    typedef boost::shared_ptr< EventSubPresenter_ABC > T_SharedPtr;
+    typedef boost::shared_ptr< EventPresenter_ABC > T_SharedPtr;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    E_EventTypes type_;
+    //@}
+};
+
+
+// =============================================================================
+/** @class  EventSubPresenter_ABC
+    @brief  EventSubPresenter_ABC
+*/
+// Created: ABR 2013-11-20
+// =============================================================================
+template< typename ViewState >
+class EventSubPresenter_ABC : public EventPresenter_ABC
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit EventSubPresenter_ABC( E_EventTypes type, EventView_ABC< ViewState >& view )
+        : EventPresenter_ABC( type )
+        , view_( view )
+        , state_( new ViewState() )
+
+    {
+        // NOTHING
+    }
+    virtual ~EventSubPresenter_ABC() {}
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void BuildView()
+    {
+        view_.BlockSignals( true );
+        view_.Build( *state_ );
+        view_.BlockSignals( false );
+    }
+    virtual void Purge()
+    {
+        state_->Purge();
+        view_.BlockSignals( true );
+        view_.Purge();
+        view_.BlockSignals( false );
+    }
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    EventView_ABC< ViewState >& view_;
+    boost::scoped_ptr< ViewState > state_;
     //@}
 };
 

@@ -12,6 +12,7 @@
 
 #include "ENT/ENT_Enums.h"
 #include "clients_gui/EventView_ABC.h"
+#include "clients_gui/EventViewState.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -68,7 +69,7 @@ class Model;
 // Created: ABR 2013-07-02
 // =============================================================================
 class EventDockWidget : public gui::RichDockWidget
-                      , public gui::EventView_ABC
+                      , public gui::EventDefaultView_ABC
                       , public kernel::ContextMenuObserver_ABC< gui::Event >
                       , public tools::ElementObserver_ABC< gui::Event >
                       , public tools::SelectionObserver< gui::Event >
@@ -97,11 +98,16 @@ public:
     //@}
 
 private:
-    //! @name EventView_ABC implementation
+    //! @name types
+    //@{
+    typedef boost::function< void( gui::EventDefaultView_ABC* ) > T_ViewFunctor;
+    //@}
+
+private:
+    //! @name gui::EventDefaultView_ABC implementation
     //@{
     virtual void Purge();
     virtual void Build( const gui::EventViewState& state );
-    virtual void Update( const gui::EventViewState& state );
     virtual void BlockSignals( bool blocked );
     //@}
 
@@ -121,12 +127,9 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T >
-    void AddSubView( E_EventTypes type, T* view );
     virtual void closeEvent( QCloseEvent * event );
     void SetContentVisible( bool visible );
-    void ApplyToViews( const boost::function< void( gui::EventView_ABC* ) >& functor );
-    void ApplyToViewsNoEmit( const boost::function< void( gui::EventView_ABC* ) >& functor );
+    void ApplyToViews( const T_ViewFunctor& functor );
     //@}
 
 private slots:
@@ -142,7 +145,7 @@ private:
     boost::scoped_ptr< gui::EventPresenter > presenter_;
     kernel::SafePointer< gui::Event > selected_;
     QStackedWidget* stack_;
-    std::vector< gui::EventView_ABC* > views_;
+    std::vector< gui::EventDefaultView_ABC* > views_;
     //@}
 };
 

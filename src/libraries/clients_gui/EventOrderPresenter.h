@@ -46,9 +46,8 @@ namespace timeline
 
 namespace gui
 {
-    class Decisions_ABC;
-    class EventOrderView_ABC;
     struct EventOrderViewState;
+    template< typename T > class EventView_ABC;
     class TimelinePublisher;
 
 // =============================================================================
@@ -58,14 +57,14 @@ namespace gui
 // Created: LGY 2013-10-03
 // =============================================================================
 class EventOrderPresenter : public QObject
-                          , public EventSubPresenter_ABC
+                          , public EventSubPresenter_ABC< EventOrderViewState >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderPresenter( EventOrderView_ABC& view,
+             EventOrderPresenter( EventView_ABC< EventOrderViewState >& view,
                                   const kernel::AgentTypes& agentTypes,
                                   actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                                   actions::gui::MissionInterface_ABC& missionInterface,
@@ -78,12 +77,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void FillFrom( const Event& event );
     int GetLastContext() const;
-    void FillFromAction( const actions::Action_ABC& action,
-                         E_MissionType type,
-                         const kernel::Entity_ABC* entity,
-                         const gui::Decisions_ABC* decisions );
-    void OnTargetChanged( const kernel::Entity_ABC* entity, const gui::Decisions_ABC* decisions );
+    void OnTargetChanged( const kernel::Entity_ABC* entity );
     void OnMissionTypeChanged( E_MissionType missionType );
     //@}
 
@@ -106,19 +102,16 @@ private:
     //@}
 
 private:
-    //! @name Operations helpers
+    //! @name Helpers
     //@{
-    void SetTarget( const kernel::Entity_ABC* entity,
-                    const gui::Decisions_ABC* decisions );
     void Select( E_MissionType type = eMissionType_Pawn,
                  std::string mission = "",
                  const actions::Action_ABC* action = 0 );
     void SelectWithoutTarget( E_MissionType type,
                               const std::string& mission,
                               const actions::Action_ABC* action );
-    void SelectWithTarget( const gui::Decisions_ABC& decisions,
+    void SelectWithTarget( const kernel::Entity_ABC& entity,
                            E_MissionType type,
-                           E_MissionType entityType,
                            const std::string& mission,
                            const actions::Action_ABC* action );
     //@}
@@ -126,7 +119,6 @@ private:
 private:
     //! @name Member data
     //@{
-    EventOrderView_ABC& view_;
     const kernel::AgentTypes& agentTypes_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     actions::gui::MissionInterface_ABC& missionInterface_;
@@ -134,10 +126,8 @@ private:
     actions::ActionFactory_ABC& actionFactory_;
     TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    const gui::Decisions_ABC* decisions_;
     const kernel::OrderType* order_;
 
-    boost::scoped_ptr< EventOrderViewState > state_;
     int context_;
     //@}
 };

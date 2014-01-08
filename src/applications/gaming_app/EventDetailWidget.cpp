@@ -20,7 +20,7 @@
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
 EventDetailWidget::EventDetailWidget( gui::EventPresenter& presenter )
-    : EventWidget_ABC< gui::EventView_ABC >( presenter )
+    : EventDefaultWidget_ABC( presenter )
 {
     uuid_ = new QLineEdit();
     uuid_->setReadOnly( true );
