@@ -18,6 +18,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace actions
+{
+    class Action_ABC;
+}
+
 class Publisher_ABC;
 class Services;
 
@@ -55,6 +60,7 @@ public:
     void RequestCheckpoint( const std::string& name );
     void ForceReplayDataRequest();
     void SendEnableVisionCones( bool value ) const;
+    void PublishAction( const actions::Action_ABC& action ) const;
     //@}
 
 private:

@@ -16,6 +16,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
+#include "actions/Action_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: SimulationController constructor
@@ -249,4 +250,14 @@ void SimulationController::SendEnableVisionCones( bool value ) const
         msg().set_vision_cones( value );
         msg.Send( publisher_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::PublishAction
+// Created: LGY 2014-01-08
+// -----------------------------------------------------------------------------
+void SimulationController::PublishAction( const actions::Action_ABC& action ) const
+{
+    if( hasSimulation_ )
+        action.Publish( publisher_, 0 );
 }
