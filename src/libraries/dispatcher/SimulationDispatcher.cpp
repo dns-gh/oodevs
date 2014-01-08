@@ -94,7 +94,7 @@ namespace
             : model_( &model ) {}
         virtual void Visit( const kernel::EntityBase_ABC& entity )
         {
-            entity.Get< ReplaySynchronisations >().EndSynchronisation( *model_ );
+            const_cast< kernel::EntityBase_ABC& >( entity ).Get< ReplaySynchronisations >().EndSynchronisation( *model_ );
         }
     private:
         Synchroniser* model_;

@@ -49,6 +49,19 @@ namespace sword
     class UnitKnowledgeCreation;
     class UrbanCreation;
     class UrbanKnowledgeCreation;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowDestruction;
+    class CrowdFlowKnowledgeDestruction;
+    class CrowdKnowledgeDestruction;
+    class KnowledgeGroupDestruction;
+    class LogMaintenanceHandlingDestruction;
+    class LogMedicalHandlingDestruction;
+    class LogSupplyHandlingDestruction;
+    class ObjectDestruction;
+    class ObjectKnowledgeDestruction;
+    class UnitDestruction;
+    class UnitKnowledgeDestruction;
+    class UrbanKnowledgeDestruction;
 }
 
 namespace kernel
@@ -97,6 +110,19 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::UrbanCreation >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::KnowledgeGroupDestruction >
+                             , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::LogMedicalHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::LogSupplyHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::ObjectDestruction >
+                             , public kernel::Updatable_ABC< sword::ObjectKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
                              , private boost::noncopyable
 {
 public:
@@ -108,6 +134,8 @@ public:
 
     //! @name Operations
     //@{
+    bool MustBeDestroyedLater() const;
+    void MarkForDestructionNow();
     void StartSynchronisation( bool create );
     void EndSynchronisation  ( Synchroniser& synch ) const;
 
@@ -141,12 +169,27 @@ public:
     virtual void DoUpdate( const sword::UnitKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::UrbanCreation& msg );
     virtual void DoUpdate( const sword::UrbanKnowledgeCreation& msg );
+    
+    virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::CrowdFlowDestruction& msg );
+    virtual void DoUpdate( const sword::CrowdFlowKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::CrowdKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::KnowledgeGroupDestruction& msg );
+    virtual void DoUpdate( const sword::LogMaintenanceHandlingDestruction& msg );
+    virtual void DoUpdate( const sword::LogMedicalHandlingDestruction& msg );
+    virtual void DoUpdate( const sword::LogSupplyHandlingDestruction& msg );
+    virtual void DoUpdate( const sword::ObjectDestruction& msg );
+    virtual void DoUpdate( const sword::ObjectKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::UnitDestruction& msg );
+    virtual void DoUpdate( const sword::UnitKnowledgeDestruction& msg );
+    virtual void DoUpdate( const sword::UrbanKnowledgeDestruction& msg );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void DoUpdate();
+    void DoDestroy();
     void FlagUpdate();
     //@}
 
@@ -158,6 +201,8 @@ private:
     bool created_  : 1;
     bool updated_  : 1;
     bool synching_ : 1;
+    bool destroyLater_: 1;
+    bool destroyNow_: 1;
     //@}
 };
 
