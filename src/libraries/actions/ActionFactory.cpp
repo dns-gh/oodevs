@@ -205,6 +205,37 @@ void ActionFactory::AddTiming( actions::Action_ABC& action, const Message& messa
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::ClientToSim& message, bool needRegistration ) const
+{
+    if( message.has_message() )
+    {
+        const sword::ClientToSim_Content& content = message.message();
+        if( content.has_unit_order() )
+            return CreateAction( content.unit_order(), needRegistration );
+        else if( content.has_automat_order() )
+            return CreateAction( content.automat_order(), needRegistration );
+        else if( content.has_crowd_order() )
+            return CreateAction( content.crowd_order(), needRegistration );
+        else if( content.has_frag_order() )
+            return CreateAction( content.frag_order(), needRegistration );
+        else if( content.has_set_automat_mode() )
+            return CreateAction( content.set_automat_mode(), needRegistration );
+        else if( content.has_magic_action() )
+            return CreateAction( content.magic_action(), needRegistration );
+        else if( content.has_unit_magic_action() )
+            return CreateAction( content.unit_magic_action(), needRegistration );
+        else if( content.has_knowledge_magic_action() )
+            return CreateAction( content.knowledge_magic_action(), needRegistration );
+        else if( content.has_object_magic_action() )
+            return CreateAction( content.object_magic_action(), needRegistration );
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message, bool needRegistration ) const
@@ -278,6 +309,129 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& messag
     action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, order, message.parameters() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::SetAutomatMode& message, bool needRegistration ) const
+{
+    int targetid = message.automate().id();
+    const kernel::Entity_ABC* target = entities_.FindAutomat( targetid );
+    if( !target )
+        return 0;
+    bool engaged = message.mode() == sword::engaged;
+    std::unique_ptr< actions::EngageMagicAction > action( new actions::EngageMagicAction( *target,
+                                                                                          magicActions_.Get( "change_mode" ),
+                                                                                          controller_,
+                                                                                          engaged,
+                                                                                          needRegistration ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( target ) );
+    action->Polish();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::MagicAction& message, bool needRegistration ) const
+{
+    auto type = message.type();
+    auto& orderType = magicActions_.Get( ENT_Tr::ConvertFromMagicActionType( type, ENT_Tr::eToSim ) );
+    std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( orderType,
+                                                                            controller_,
+                                                                            needRegistration ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( 0 ) );
+    action->Polish();
+    AddParameters( *action, orderType, message.parameters() );
+    return action.release();
+}
+
+namespace
+{
+    unsigned long GetTaskerId( const sword::Tasker& tasker )
+    {
+        if( tasker.has_automat() )
+            return tasker.automat().id();
+        else if( tasker.has_unit() )
+            return tasker.unit().id();
+        else if( tasker.has_crowd() )
+            return tasker.crowd().id();
+        else if( tasker.has_formation() )
+            return tasker.formation().id();
+        else if( tasker.has_party() )
+            return tasker.party().id();
+        else if( tasker.has_population() )
+            return tasker.population().id();
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::UnitMagicAction& message, bool needRegistration ) const
+{
+    unsigned long taskerId = GetTaskerId( message.tasker() );
+    const kernel::Entity_ABC* target = entities_.FindEntity( taskerId );
+    if( !target )
+        return 0;
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromUnitMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    std::unique_ptr< actions::UnitMagicAction > action( new actions::UnitMagicAction( *target,
+                                                                                    type,
+                                                                                    controller_,
+                                                                                    needRegistration ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( target ) );
+    action->Polish();
+    AddParameters( *action, type, message.parameters() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::KnowledgeMagicAction& message, bool needRegistration ) const
+{
+    const kernel::Entity_ABC* target = entities_.FindKnowledgeGroup( message.knowledge_group().id() );
+    if( !target )
+        return 0;
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromKnowledgeMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    std::unique_ptr< actions::KnowledgeGroupMagicAction > action( new actions::KnowledgeGroupMagicAction( *target,
+                                                                                                        type,
+                                                                                                        controller_,
+                                                                                                        needRegistration ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( target ) );
+    action->Polish();
+    AddParameters( *action, type, message.parameters() );
+    return action.release();
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: ABR 2014-01-08
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateAction( const sword::ObjectMagicAction& message, bool needRegistration ) const
+{
+    const kernel::Entity_ABC* target = entities_.FindObject( message.object().id() );
+    auto& type = magicActions_.Get( ENT_Tr::ConvertFromObjectMagicActionType( message.type(), ENT_Tr::eToSim ) );
+    std::unique_ptr< actions::ObjectMagicAction > action( new actions::ObjectMagicAction( target,
+                                                                                        type,
+                                                                                        controller_,
+                                                                                        needRegistration ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( target ) );
+    action->Polish();
+    AddParameters( *action, type, message.parameters() );
     return action.release();
 }
 

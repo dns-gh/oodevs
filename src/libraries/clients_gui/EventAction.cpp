@@ -69,6 +69,37 @@ void EventAction::Purge()
     }
 }
 
+namespace
+{
+    E_MissionType GetMissionType( const sword::ClientToSim& msg )
+    {
+        if( msg.message().has_unit_order() )
+            return eMissionType_Pawn;
+        else if( msg.message().has_automat_order() )
+            return eMissionType_Automat;
+        else if( msg.message().has_crowd_order() )
+            return eMissionType_Population;
+        else if( msg.message().has_frag_order() )
+            return eMissionType_FragOrder;
+        return eNbrMissionType;
+    }
+    E_EventTypes GetEventType( const sword::ClientToSim& msg )
+    {
+        if( msg.message().has_unit_order() ||
+            msg.message().has_automat_order() ||
+            msg.message().has_crowd_order() ||
+            msg.message().has_frag_order() )
+            return eEventTypes_Order;
+        if( msg.message().has_set_automat_mode() ||
+            msg.message().has_magic_action() ||
+            msg.message().has_unit_magic_action() ||
+            msg.message().has_knowledge_magic_action() ||
+            msg.message().has_object_magic_action() )
+            return eEventTypes_SupervisorAction;
+        return eNbrEventTypes;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventAction::Update
 // Created: ABR 2013-06-06
@@ -85,28 +116,9 @@ void EventAction::Update( const timeline::Event& event )
     msg.ParsePartialFromString( event.action.payload );
     if( msg.has_message() )
     {
-        if( msg.message().has_unit_order() )
-        {
-            action_ = model_.CreateAction( msg.message().unit_order(), false );
-            missionType_ = eMissionType_Pawn;
-        }
-        else if( msg.message().has_automat_order() )
-        {
-            action_ = model_.CreateAction( msg.message().automat_order(), false );
-            missionType_ = eMissionType_Automat;
-        }
-        else if( msg.message().has_crowd_order() )
-        {
-            action_ = model_.CreateAction( msg.message().crowd_order(), false );
-            missionType_ = eMissionType_Population;
-        }
-        else if( msg.message().has_frag_order() )
-        {
-            action_ = model_.CreateAction( msg.message().frag_order(), false );
-            missionType_ = eMissionType_FragOrder;
-        }
-        else
-            type_ = eEventTypes_SupervisorAction; // $$$$ ABR 2013-06-06: TODO
+        action_ = model_.CreateAction( msg, false );
+        missionType_ = ::GetMissionType( msg );
+        type_ = ::GetEventType( msg );
     }
     if( action_ && wasSelected_ )
         action_->Select( controllers_.actions_ );

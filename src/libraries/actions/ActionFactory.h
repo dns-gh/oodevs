@@ -51,16 +51,26 @@ public:
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder, const QString& name ) const;
+    // From xml
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
     virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const;
 
+    // From proto
+    virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::UnitOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::AutomatOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::CrowdOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::FragOrder& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::SetAutomatMode& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::MagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::UnitMagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::KnowledgeMagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::ObjectMagicAction& message, bool needRegistration ) const;
+
+    // From scratch
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder ) const;
 
     virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const;
