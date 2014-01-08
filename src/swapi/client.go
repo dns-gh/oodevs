@@ -33,7 +33,7 @@ type MessageLogger func(in bool, size int, msg *SwordMessage)
 type MessagePost struct {
 	message SwordMessage
 	handler MessageHandler
-	context int32
+	Context int32
 }
 
 type HandlerRegister struct {
@@ -319,7 +319,7 @@ func (c *Client) write() {
 	for post := range c.posts {
 		written, err := writer.Encode(post.message.tag, post.message.GetMessage())
 		if err != nil {
-			c.errors <- HandlerError{post.context, err}
+			c.errors <- HandlerError{post.Context, err}
 		} else {
 			if c.Logger != nil {
 				c.Logger(false, written, &post.message)
@@ -344,13 +344,22 @@ func (c *Client) Unregister(context int32) {
 	c.unregisters <- context
 }
 
-func (c *Client) PostWithTimeout(msg SwordMessage, handler MessageHandler, timeout time.Duration) int32 {
+func (c *Client) MakeMessage(msg SwordMessage, handler MessageHandler, timeout time.Duration) MessagePost {
 	next := MakeHandlerRegister(handler, timeout)
 	c.registers <- next
 	context := <-next.context
 	msg.SetContext(context)
-	c.posts <- MessagePost{msg, handler, context}
-	return context
+	return MessagePost{msg, handler, context}
+}
+
+func (c *Client) PostMessage(msg MessagePost) {
+	c.posts <- msg
+}
+
+func (c *Client) PostWithTimeout(msg SwordMessage, handler MessageHandler, timeout time.Duration) int32 {
+	m := c.MakeMessage(msg, handler, timeout)
+	c.PostMessage(m)
+	return m.Context
 }
 
 func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
