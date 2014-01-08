@@ -842,6 +842,18 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
 
     // Cannot write to a read-only recorder (sic)
     BOOST_CHECK_THROW( AddAndFlush( reloaded, 4, 3, false, MakeSet( 40 )), tools::Exception );
+
+    // Add new records, refresh the read-only store and check again
+    AddAndFlush( rec, 5, 4, false, MakeSet( 20 ));
+    AddAndFlush( rec, 4, 4, true, MakeSet( 20 ));
+    reloaded.ReadNewEntries();
+    BOOST_CHECK_EQUAL( "4.3, 1.3", TraceEntitiesRequests( reloaded, 3, MakeSet( 20 )));
+    BOOST_CHECK_EQUAL( "4.4, 5.4, 1.3", TraceEntitiesRequests( reloaded, -1, MakeSet( 20 )));
+
+    // Reload with nothing new
+    reloaded.ReadNewEntries();
+    BOOST_CHECK_EQUAL( "4.3, 1.3", TraceEntitiesRequests( reloaded, 3, MakeSet( 20 )));
+    BOOST_CHECK_EQUAL( "4.4, 5.4, 1.3", TraceEntitiesRequests( reloaded, -1, MakeSet( 20 )));
 }
 
 BOOST_AUTO_TEST_CASE( TestConsignOffsetFile )

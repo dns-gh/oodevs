@@ -72,6 +72,11 @@ public:
     virtual ~ConsignRecorder();
 
     void Flush();
+    // In read-only mode, checks the underlying archive for new entries and loads
+    // them. The last loaded entry offset is remembered as a starting point for
+    // the next call. Do nothing in write mode.
+    void ReadNewEntries();
+
     void WriteEntry( uint32_t requestId, bool destroyed,
             const sword::LogHistoryEntry& entry, std::vector< uint32_t >& entities );
     // Returns the list of requests referencing supplied entities.
@@ -117,6 +122,10 @@ private:
     // that history_ and consign_ referenced states are overlapping but not equal.
     boost::container::deque< ConsignRecord > history_;
     const size_t maxHistory_;
+
+    // In read-only mode, the offset of the most recently loaded entry. NULL
+    // in write mode.
+    std::unique_ptr< ConsignOffset > reloadedEnd_;
 };
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,

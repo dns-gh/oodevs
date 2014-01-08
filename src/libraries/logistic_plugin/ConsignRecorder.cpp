@@ -50,9 +50,29 @@ ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
     : archive_( new ConsignArchive( archiveDir ))
     , maxConsigns_( maxConsigns )
     , maxHistory_( maxHistory )
+    , reloadedEnd_( new ConsignOffset )
 {
+    reloadedEnd_->file = 0;
+    reloadedEnd_->offset = 0;
+    ReadNewEntries();
+}
+
+ConsignRecorder::~ConsignRecorder()
+{
+}
+
+void ConsignRecorder::ReadNewEntries()
+{
+    if( !reloadedEnd_ )
+        return;
+    const auto end = archive_->ReadOffsetFile();
+    if( end.file == 0 ||
+        ( reloadedEnd_->file == end.file && reloadedEnd_->offset == end.offset ) )
+        return;
+
     std::vector< uint32_t > entities;
-    archive_->ReadAll( [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
+    archive_->ReadRange( *reloadedEnd_, end,
+        [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
     {
         sword::LogHistoryEntry entry;
         if( !entry.ParseFromArray( &output[0], static_cast< int >( output.size() )))
@@ -62,10 +82,7 @@ ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
         AppendConsignEntities( entry, entities );
         IndexEntry( id, IsConsignDestroyed( entry ), offset, entry, entities );
     });
-}
-
-ConsignRecorder::~ConsignRecorder()
-{
+    *reloadedEnd_ = end;
 }
 
 void ConsignRecorder::Flush()

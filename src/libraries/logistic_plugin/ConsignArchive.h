@@ -52,7 +52,12 @@ public:
         const std::function< void( const std::vector< uint8_t >& )>& callback ) const;
     void ReadAll( const std::function<
         void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const;
+    void ReadRange( ConsignOffset start, ConsignOffset end,
+        const std::function< void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const;
     void Flush();
+    // Reads the offset file and returns its content. Returned file index is not
+    // zero on success.
+    ConsignOffset ReadOffsetFile() const;
 
 private:
     tools::Path GetFilename( uint32_t index ) const;

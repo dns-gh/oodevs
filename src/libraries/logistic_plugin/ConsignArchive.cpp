@@ -12,6 +12,7 @@
 #include <tools/StdFileWrapper.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#define NOMINMAX
 #include <winsock2.h>
 #include <sstream>
 
@@ -193,21 +194,40 @@ void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
 void ConsignArchive::ReadAll( const std::function<
         void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const
 {
+    ConsignOffset offset;
+    offset.file = 0;
+    offset.offset = 0;
+    ReadRange( offset, offset, callback );
+}
+
+void ConsignArchive::ReadRange( ConsignOffset start, ConsignOffset end,
+    const std::function< void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const
+{
     std::vector< uint8_t > output;
+    if( start.file == 0 )
+        start.file = 1;
+    if( start.offset == 0 )
+        start.offset = 1; // 1 byte for version number
+    if( end.file == 0 )
+        end.file = std::numeric_limits< uint32_t >::max() - 1;
 
     ConsignOffset offset;
-    for( uint32_t file = 1; ; ++file )
+    for( uint32_t file = start.file; file <= end.file ; ++file )
     {
         auto fp = GetFile( file );
         if( !fp->is_open() )
             return;
-        fp->seekg( 1, std::ios::beg ); // 1 for the version number
+        fp->seekg( start.offset, std::ios::beg );
+        start.offset = 1;
         for( ;; )
         {
             const auto pos = fp->tellg();
             if( pos < 0 )
                 throw MASA_EXCEPTION( "could not get logistic offset in archive "
                     + GetFilename( file ).ToUTF8() );
+            const auto off = static_cast< uint32_t >( pos );
+            if( file == end.file && off >= end.offset )
+                break;
             if( !ReadOne( *fp, output ) )
             {
                 if( fp->eof() )
@@ -216,7 +236,7 @@ void ConsignArchive::ReadAll( const std::function<
                     " archive " + GetFilename( file ).ToUTF8() );
             }
             offset.file = file;
-            offset.offset = static_cast< uint32_t >( pos );
+            offset.offset = off;
             callback( offset, output );
         }
     }
@@ -229,4 +249,11 @@ void ConsignArchive::Flush()
         output_->flush();
         WriteOffsetFile( baseDir_ / "available", index_, size_ );
     }
+}
+
+ConsignOffset ConsignArchive::ReadOffsetFile() const
+{
+    ConsignOffset offset;
+    ::ReadOffsetFile( baseDir_ / "available", offset.file, offset.offset ); 
+    return offset;
 }

@@ -56,6 +56,7 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& log
     , logger_( logger )
     , currentTick_( 0 )
     , readOnly_( load )
+    , lastRefresh_( 0 )
 {
 }
 
@@ -111,6 +112,21 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         logger_->Log( ev, message, today, currentTick_, simTime_ );
 }
 
+// In read-only mode, possibly check for new logistic data and load it.
+void LogisticPlugin::Refresh()
+{
+    if( !readOnly_ )
+        return;
+    const time_t now = std::time( 0 );
+    if( now == static_cast< time_t >( -1 ) )
+        return;
+    // Refresh at most every 5 seconds
+    if( now < lastRefresh_ + 5 )
+        return;
+    lastRefresh_ = now;
+    recorder_->ReadNewEntries();
+}
+
 template< typename R, typename M >
 bool LogisticPlugin::HandleClientToSomething( const M& msg,
         dispatcher::RewritingPublisher_ABC& unicaster )
@@ -120,11 +136,13 @@ bool LogisticPlugin::HandleClientToSomething( const M& msg,
     {
         if( msg.message().has_logistic_history_request() )
         {
+            Refresh();
             HandleLogisticHistoryRequest( msg.message().logistic_history_request(),
                 *reply.mutable_message()->mutable_logistic_history_ack() );
         }
         else if( msg.message().has_list_logistic_requests() )
         {
+            Refresh();
             HandleListLogisticRequests( msg.message().list_logistic_requests(),
                 *reply.mutable_message()->mutable_list_logistic_requests_ack() );
         }
