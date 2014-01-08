@@ -31,7 +31,7 @@ namespace gui
 
 class LogisticsRequestsTable;
 class LogisticsRequestsDetailsTable;
-class Publisher_ABC;
+class SimulationController;
 class Model;
 class LogisticsModel;
 
@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                                         const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
+                                         const kernel::Profile_ABC& profile, const SimulationController& simulationController,
                                          Model& model, const QStringList& requestsHeader = QStringList() );
     virtual ~LogisticConsignsWidget_ABC();
     //@}
@@ -102,7 +102,7 @@ protected:
     gui::DisplayExtractor& extractor_;
     const LogisticsModel& historyModel_;
     const kernel::Profile_ABC& profile_;
-    Publisher_ABC& publisher_;
+    const SimulationController& simulationController_;
     QVBoxLayout* pDetailLayout_;
     LogisticsRequestsTable* requestsTable_;
     LogisticsRequestsDetailsTable* detailsTable_;

@@ -26,7 +26,7 @@
 // -----------------------------------------------------------------------------
 InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
                                       gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                      Publisher_ABC& publisher, Model& model )
+                                      const SimulationController& simulationController, Model& model )
     : InfoDialog< MedicalStates >( parent, controllers, tools::translate( "InfoMedicalDialog", "Medical system" ) )
     , widget_( 0 )
 {
@@ -42,7 +42,7 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MedicalStatusWidget( tabs, controllers ) );
 
-    widget_= new LogisticsRequestsMedicalWidget( tabs, controllers, extractor, profile, publisher, model );
+    widget_= new LogisticsRequestsMedicalWidget( tabs, controllers, extractor, profile, simulationController, model );
     tabs->addTab( widget_, tools::translate( "InfoMedicalDialog", "Instructions" ) );
     tabs->addTab( ambulancesDoctorsWidget, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMedicalDialog", "Chain status" ) );

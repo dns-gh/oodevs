@@ -27,7 +27,7 @@ namespace gui
     class DisplayExtractor;
 }
 
-class Publisher_ABC;
+class SimulationController;
 class MedicalStatusWidget;
 class LogisticsRequestsMedicalWidget;
 class Model;
@@ -47,7 +47,7 @@ public:
     //@{
              InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers,
                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                Publisher_ABC& publisher, Model& model );
+                                const SimulationController& simulationController, Model& model );
     virtual ~InfoMedicalDialog();
     //@}
 

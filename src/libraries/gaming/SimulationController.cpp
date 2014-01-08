@@ -236,3 +236,72 @@ void SimulationController::NotifyUpdated( const Simulation& simulation )
     if( simulation.IsPaused() )
         replayRequested_ = false;
 }
+
+namespace
+{
+    template< typename T >
+    void SendLogisticRequests( const std::set< unsigned long >& entities, Publisher_ABC& publisher,
+                               unsigned int currentTick )
+    {
+        T msg;
+        auto request = msg.mutable_message()->mutable_list_logistic_requests();
+        request->set_current_tick( currentTick );
+        for( auto it = entities.begin(); it != entities.end(); ++it )
+            request->add_entities()->set_id( *it );
+        publisher.Send( msg );
+    }
+    template< typename T >
+    void SendHistoryRequests( const std::set< unsigned int >& requests, Publisher_ABC& publisher )
+    {
+        T msg;
+        auto request = msg.mutable_message()->mutable_logistic_history_request();
+        for( auto it = requests.begin(); it != requests.end(); ++it )
+            request->add_requests()->set_id( *it );
+        publisher.Send( msg );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendLogisticRequests
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::SendLogisticRequests( const std::set< unsigned long >& entities ) const
+{
+    unsigned int currentTick = simulation_.GetCurrentTick();
+    if( hasReplay_ )
+        ::SendLogisticRequests< sword::ClientToReplay >( entities, publisher_, currentTick );
+
+    if( hasSimulation_ )
+        ::SendLogisticRequests< sword::ClientToSim >( entities, publisher_, currentTick );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendHistoryRequests
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::SendHistoryRequests( const std::set< unsigned int >& requests ) const
+{
+    if( hasReplay_ )
+        ::SendHistoryRequests< sword::ClientToReplay >( requests, publisher_ );
+
+    if( hasSimulation_ )
+        ::SendHistoryRequests< sword::ClientToSim >( requests, publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::RegisterSimHandler
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::RegisterSimHandler( Publisher_ABC::T_SimHandler handler )
+{
+    publisher_.Register( handler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::RegisterReplayHandler
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::RegisterReplayHandler( Publisher_ABC::T_ReplayHandler handler )
+{
+    publisher_.Register( handler );
+}

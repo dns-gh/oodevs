@@ -24,7 +24,7 @@
 // -----------------------------------------------------------------------------
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
                                               gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                              Publisher_ABC& publisher, Model& model )
+                                              const SimulationController& simulationController, Model& model )
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
     , widget_( 0 )
 {
@@ -39,7 +39,7 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers ) );
 
-    widget_ = new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, publisher, model );
+    widget_ = new LogisticsRequestsMaintenanceWidget( tabs, controllers, extractor, profile, simulationController, model );
     tabs->addTab( widget_, tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "InfoMaintenanceDialog", "Chain status" ) );

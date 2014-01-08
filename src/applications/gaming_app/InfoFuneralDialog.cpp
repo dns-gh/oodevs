@@ -20,7 +20,7 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers
-    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
+    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
     : InfoDialog_Base( parent, tools::translate( "InfoFuneralDialog", "Funeral system" ) )
     , controllers_( controllers )
     , selected_( controllers )
@@ -28,7 +28,7 @@ InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& cont
 {
     controllers_.Register( *this );
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    widget_ =  new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, publisher, model );
+    widget_ =  new LogisticsRequestsFuneralWidget( tabs, controllers, extractor, profile, simulationController, model );
     tabs->addTab( widget_, tools::translate( "InfoFuneralDialog", "Instructions" ) );
 }
 

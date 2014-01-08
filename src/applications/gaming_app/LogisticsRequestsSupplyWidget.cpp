@@ -43,8 +43,8 @@ namespace
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
 LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                                                              const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, publisher, model, GetRequestsHeader() )
+                                                              const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, GetRequestsHeader() )
 {
     supplyTable_ = new LogisticsRequestsSupplyTable( "Logistics requests supply details", this );
     connect( supplyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )

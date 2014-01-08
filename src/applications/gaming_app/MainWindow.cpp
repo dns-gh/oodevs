@@ -226,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
-                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog ) );
+                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog, simulationController ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 

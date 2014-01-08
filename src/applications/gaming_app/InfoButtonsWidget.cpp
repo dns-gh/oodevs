@@ -25,6 +25,7 @@
 #include "gaming/LogisticHelpers.h"
 #include "gaming/Model.h"
 #include "gaming/Simulation.h"
+#include "gaming/SimulationController.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/HistoryLogisticsModel.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -48,16 +49,17 @@ namespace
 // -----------------------------------------------------------------------------
 InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                       gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
-                                      const kernel::Profile_ABC& profile, Publisher_ABC& publisher )
+                                      const kernel::Profile_ABC& profile,
+                                      SimulationController& simulationController )
     : Q3GroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
-    , controllers_ ( controllers )
-    , publisher_   ( publisher )
-    , simulation_  ( simulation )
-    , element_     ( 0 )
-    , hasChanged_  ( false )
-    , timer_       ( 0 )
-    , lastTick_    ( 0 )
-    , historyModel_( model.historyLogistics_ )
+    , controllers_         ( controllers )
+    , simulation_          ( simulation )
+    , element_             ( 0 )
+    , hasChanged_          ( false )
+    , timer_               ( 0 )
+    , lastTick_            ( 0 )
+    , historyModel_        ( model.historyLogistics_ )
+    , simulationController_( simulationController )
 {
     setFlat( true );
     setFixedWidth( 100 );
@@ -75,16 +77,21 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
     AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
 
-    AddLogisticButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, extractor, profile, publisher, model );
-    AddLogisticButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, extractor, profile, publisher, model );
-    AddLogisticButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, publisher, model );
-    AddLogisticButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, publisher, model );
+    AddLogisticButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, extractor, profile, model );
+    AddLogisticButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, extractor, profile, model );
+    AddLogisticButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, model );
+    AddLogisticButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, model );
 
-    publisher_.Register( [&]( const sword::SimToClient& message ) {
+    simulationController_.RegisterSimHandler( [&]( const sword::SimToClient& message ) {
         if( message.message().has_list_logistic_requests_ack() )
             FillRequests( message.message().list_logistic_requests_ack() ); }
     );
-
+    simulationController_.RegisterReplayHandler( [&]( const sword::ReplayToClient& message ) {
+        if( message.message().has_list_logistic_requests_ack() )
+            FillRequests( message.message().list_logistic_requests_ack() );
+        hasChanged_ = hasChanged_ || message.message().has_control_resume_ack() ||
+            message.message().has_control_skip_to_tick_ack(); }
+    );
     controllers_.Register( *this );
 }
 
@@ -131,10 +138,10 @@ void InfoButtonsWidget::AddButton( const QPixmap& pixmap, kernel::Controllers& c
 // -----------------------------------------------------------------------------
 template< typename Dialog >
 void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
-    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
+    , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model )
 {
     QPushButton* btn = CreateButton( this, pixmap );
-    Dialog* dialog = new Dialog( topLevelWidget(), controllers, factory, extractor, profile, publisher, model );
+    Dialog* dialog = new Dialog( topLevelWidget(), controllers, factory, extractor, profile, simulationController_, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
@@ -148,10 +155,10 @@ void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Contro
 // -----------------------------------------------------------------------------
 template< typename Dialog >
 void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers
-                                 , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model )
+                                 , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model )
 {
     QPushButton* btn = CreateButton( this, pixmap );
-    Dialog* dialog = new Dialog( topLevelWidget(), controllers, extractor, profile, publisher, model );
+    Dialog* dialog = new Dialog( topLevelWidget(), controllers, extractor, profile, simulationController_, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
@@ -192,13 +199,7 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
             entities_.insert( entity.GetId() );
         } );
         if( !entities_.empty() )
-        {
-            sword::ClientToSim msg;
-            auto request = msg.mutable_message()->mutable_list_logistic_requests();
-            for( auto it = entities_.begin(); it != entities_.end(); ++it )
-                request->add_entities()->set_id( *it );
-            publisher_.Send( msg );
-        }
+            simulationController_.SendLogisticRequests( entities_ );
     }
 }
 
@@ -315,7 +316,7 @@ void InfoButtonsWidget::OnUpdate()
     if( element_ && hasChanged_ )
     {
         unsigned int tick = simulation_.GetCurrentTick();
-        if( lastTick_ < tick )
+        if( lastTick_ != tick )
         {
             NotifySelected( element_ );
             hasChanged_ = false;

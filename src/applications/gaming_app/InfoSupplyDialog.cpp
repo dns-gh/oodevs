@@ -30,7 +30,7 @@ using namespace EntityHelpers;
 // -----------------------------------------------------------------------------
 InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                     gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                    Publisher_ABC& publisher, Model& model )
+                                    const SimulationController& simulationController, Model& model )
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
     , widget_( 0 )
 {
@@ -45,7 +45,7 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     statusLayout->addWidget( new SupplyStatusWidget( this, controllers ) );
 
     supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
-    widget_ = new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, publisher, model );
+    widget_ = new LogisticsRequestsSupplyWidget( this, controllers, extractor, profile, simulationController, model );
     tabs_->addTab( widget_, tools::translate( "InfoSupplyDialog", "Instructions" ) );
     tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
     tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );

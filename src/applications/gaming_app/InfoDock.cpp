@@ -19,11 +19,11 @@
 // -----------------------------------------------------------------------------
 InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
                     gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
-                    Publisher_ABC& publisher )
+                    SimulationController& simulationController )
     : gui::RichDockWidget( controllers, parent, "info" )
 {
     setObjectName( "info" );
-    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, model, simulation, publisher ) );
+    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, model, simulation, simulationController ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     hide();
 }
