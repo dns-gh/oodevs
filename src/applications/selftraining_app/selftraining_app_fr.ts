@@ -609,6 +609,22 @@ Do you want to replace it?</source>
         <source>Timeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
+    </message>
+    <message>
+        <source>Enable Mapnik</source>
+        <translation>Activer Mapnik</translation>
+    </message>
+    <message>
+        <source>Enable Legacy Timeline</source>
+        <translation>Activer l&apos;ancienne timeline</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioLauncherPage</name>
