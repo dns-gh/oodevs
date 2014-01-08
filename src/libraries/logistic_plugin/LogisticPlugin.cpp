@@ -43,15 +43,15 @@ const size_t averageHistoryPerConsign = 15;
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-        const tools::Path& archiveFile, bool load )
+        const tools::Path& archiveDir, bool load )
     // QA brigade benchmark reported around 17000 log lines, for all logistic
     // chains, over 55h of simulated time. This more than an order of magnitude
     // larger, being the number of requests instead of updates.
     : index_( load ? nullptr : new ConsignIndex() )
     , recorder_( load
-        ? new ConsignRecorder( archiveFile, maxConsigns,
+        ? new ConsignRecorder( archiveDir, maxConsigns,
                averageHistoryPerConsign*maxConsigns )
-        : new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
+        : new ConsignRecorder( archiveDir, 20*1024*1024, maxConsigns,
                averageHistoryPerConsign*maxConsigns ) )
     , logger_( logger )
     , currentTick_( 0 )
@@ -193,7 +193,7 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
 {
     auto logger = CreateCsvLogger( model, staticModel, config );
     return boost::make_shared< LogisticPlugin >( logger,
-        config.BuildSessionChildFile( "LogisticArchive" ), false );
+        config.BuildSessionChildFile( "logistics" ), false );
 }
 
 boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
@@ -201,7 +201,7 @@ boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
 {
     return boost::make_shared< LogisticPlugin >(
         boost::shared_ptr< ConsignCsvLogger >(),
-        config.BuildSessionChildFile( "LogisticArchive" ), true );
+        config.BuildSessionChildFile( "logistics" ), true );
 
 }
 

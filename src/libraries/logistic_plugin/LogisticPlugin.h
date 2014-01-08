@@ -73,7 +73,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-                 const tools::Path& archiveFile, bool load );
+                 const tools::Path& archiveDir, bool load );
     virtual ~LogisticPlugin();
     //@}
 

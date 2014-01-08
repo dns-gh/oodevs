@@ -16,17 +16,20 @@
 
 using namespace plugins::logistic;
 
-ConsignArchive::ConsignArchive( const tools::Path& basePath, uint32_t maxSize )
-    : basePath_( basePath )
+ConsignArchive::ConsignArchive( const tools::Path& baseDir, uint32_t maxSize )
+    : baseDir_( baseDir )
+    , basePath_( baseDir / "data" )
     , maxSize_( maxSize )
     , size_( 0 )
     , index_( 0 )
     , readOnly_( false )
 {
+    baseDir_.CreateDirectories();
 }
 
-ConsignArchive::ConsignArchive( const tools::Path& basePath )
-    : basePath_( basePath )
+ConsignArchive::ConsignArchive( const tools::Path& baseDir )
+    : baseDir_( baseDir )
+    , basePath_( baseDir / "data" )
     , maxSize_( 0 )
     , size_( 0 )
     , index_( 0 )

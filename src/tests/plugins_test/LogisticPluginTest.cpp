@@ -111,7 +111,7 @@ boost::shared_ptr< ConsignCsvLogger > CreateCsvLogger( const tools::Path& tempDi
 boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
     const boost::shared_ptr< ConsignCsvLogger >& logger, const tools::Path& tempDir )
 {
-    return boost::make_shared< LogisticPlugin >( logger, tempDir / "archive", false );
+    return boost::make_shared< LogisticPlugin >( logger, tempDir / "logistics", false );
 }
 
 typedef std::vector< std::string > T_Lines;
@@ -138,7 +138,7 @@ void CheckRegexps( const std::vector< LogFile >& logFiles, tools::Path::T_Paths 
 {
     boost::remove_erase_if( files, []( const tools::Path& path ) -> bool
         {
-            return path.BaseName().ToUTF8().find( "archive" ) != std::string::npos;
+            return path.ToUTF8().find( "logistics" ) != std::string::npos;
         });
     BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
     for( size_t i = 0; i != files.size(); ++i )
@@ -625,15 +625,15 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
     };
 
     tools::TemporaryDirectory tempDir( "testlogistic-plugin-", testOptions.GetTempDir() );
-    const auto basePath = tempDir.Path() / "consign";
-    ConsignArchive ar( basePath, 10 );
+    const auto baseDir = tempDir.Path() / "logistics";
+    ConsignArchive ar( baseDir, 10 );
     for( size_t i = 0; i != COUNT_OF( strings ); ++i )
         ar.Write( &strings[i][0], static_cast< uint32_t >( strings[i].size() ));
     ar.Flush();
 
-    auto paths = tempDir.Path().ListFiles( false, true, true );
+    auto paths = baseDir.ListFiles( false, true, true );
     BOOST_REQUIRE_EQUAL( 2u, paths.size() );
-    BOOST_CHECK_EQUAL( "consign.2", paths[1].ToUTF8() );
+    BOOST_CHECK_EQUAL( "data.2", paths[1].ToUTF8() );
 
     size_t seen = 0;
     ar.ReadAll( [&]( ConsignOffset, std::vector< uint8_t >& output )
@@ -733,7 +733,7 @@ std::string GetHistoryTrace( const boost::ptr_vector< sword::LogHistoryEntry >& 
 BOOST_AUTO_TEST_CASE( TestConsignRecorderLRU )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
-    const tools::Path path = tempDir.Path() / "consigns";
+    const tools::Path path = tempDir.Path() / "logistics";
     boost::ptr_vector< sword::LogHistoryEntry > entries;
 
     ConsignRecorder rec( path, 1024*1024, 2, 1000 );
@@ -798,7 +798,7 @@ std::string TraceEntitiesRequests( const ConsignRecorder& rec, int32_t startTick
 BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
-    const tools::Path path = tempDir.Path() / "consigns";
+    const tools::Path path = tempDir.Path() / "logistics";
 
     // request [2] should be discarded
     ConsignRecorder rec( path, 1024*1024, 1000, 4 );

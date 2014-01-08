@@ -37,17 +37,17 @@ public:
     bool destroyed_;
 };
 
-ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
         uint32_t maxSize, uint32_t maxConsigns, uint32_t maxHistory )
-    : archive_( new ConsignArchive( archivePath, maxSize ))
+    : archive_( new ConsignArchive( archiveDir, maxSize ))
     , maxConsigns_( maxConsigns )
     , maxHistory_( maxHistory )
 {
 }
 
-ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
         uint32_t maxConsigns, uint32_t maxHistory )
-    : archive_( new ConsignArchive( archivePath ))
+    : archive_( new ConsignArchive( archiveDir ))
     , maxConsigns_( maxConsigns )
     , maxHistory_( maxHistory )
 {

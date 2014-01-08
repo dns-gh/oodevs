@@ -39,9 +39,9 @@ struct ConsignOffset
 class ConsignArchive : private boost::noncopyable
 {
 public:
-    ConsignArchive( const tools::Path& basePath, uint32_t maxSize );
+    ConsignArchive( const tools::Path& baseDir, uint32_t maxSize );
     // Read-only mode.
-    ConsignArchive( const tools::Path& basePath );
+    ConsignArchive( const tools::Path& baseDir );
     virtual ~ConsignArchive();
 
     ConsignOffset Write( const void* data, uint32_t length );
@@ -59,6 +59,7 @@ private:
     boost::shared_ptr< tools::Fstream > GetFile( uint32_t index ) const;
 
 private:
+    tools::Path baseDir_;
     tools::Path basePath_;
     uint32_t maxSize_;
     uint32_t size_;

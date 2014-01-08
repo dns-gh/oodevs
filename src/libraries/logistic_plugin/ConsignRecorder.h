@@ -64,11 +64,11 @@ struct ConsignRecord
 class ConsignRecorder: private boost::noncopyable
 {
 public:
-    ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize, uint32_t maxConsigns,
+    ConsignRecorder( const tools::Path& archiveDir, uint32_t maxSize, uint32_t maxConsigns,
            uint32_t maxHistory );
     // Create recorder in indexer mode only, inputs will not be recorded to disk,
     // and WriteEntry will throw an exception.
-    ConsignRecorder( const tools::Path& archivePath, uint32_t maxConsigns, uint32_t maxHistory );
+    ConsignRecorder( const tools::Path& archiveDir, uint32_t maxConsigns, uint32_t maxHistory );
     virtual ~ConsignRecorder();
 
     void Flush();
