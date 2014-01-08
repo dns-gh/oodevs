@@ -45,6 +45,8 @@ class EntityBase_ABC : public tools::Extendable< Extension_ABC >
 public:
              EntityBase_ABC() {}
     virtual ~EntityBase_ABC() {}
+    
+    virtual unsigned long GetId() const = 0;
 
     typedef tools::SortedInterfaceContainer< Extension_ABC > T_Interfaces;
 
@@ -89,7 +91,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId() const = 0;
     virtual const std::string& GetTypeName() const;
     //@}
 

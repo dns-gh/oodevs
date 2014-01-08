@@ -9,8 +9,10 @@
 
 #include "dispatcher_pch.h"
 #include "ReplaySynchronisations.h"
-#include "Synchroniser.h"
 #include "ReplayModel_ABC.h"
+#include "Synchroniser.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -24,6 +26,8 @@ ReplaySynchronisations::ReplaySynchronisations( const ReplayModel_ABC& model, ke
     , created_ ( false )
     , updated_ ( false )
     , synching_( false )
+    , destroyLater_( false )
+    , destroyNow_( false )
 {
     if( model_.IsSynching() )
         StartSynchronisation( true );
@@ -134,4 +138,166 @@ void ReplaySynchronisations::DoUpdate( const sword::ChangeDiplomacy& )
 void ReplaySynchronisations::DoUpdate( const sword::ChangeDiplomacyAck& )
 {
     FlagUpdate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::MustBeDestroyedLater
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+bool ReplaySynchronisations::MustBeDestroyedLater() const
+{
+    return destroyLater_ && !destroyNow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::MarkForDestructionNow
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::MarkForDestructionNow()
+{
+    destroyNow_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoDestroy
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoDestroy()
+{
+    if( model_.IsSynching() )
+    {
+        StartSynchronisation( false );
+        updated_ = false;
+        destroyLater_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::CrowdConcentrationKnowledgeDestruction& msg )
+{
+    if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::CrowdFlowDestruction& msg )
+{
+    if( msg.flow().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::CrowdFlowKnowledgeDestruction& msg )
+{
+    if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::CrowdKnowledgeDestruction& msg )
+{
+   if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::KnowledgeGroupDestruction& msg )
+{
+    if( msg.knowledge_group().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::LogMaintenanceHandlingDestruction& msg )
+{
+    if( msg.request().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::LogMedicalHandlingDestruction& msg )
+{
+    if( msg.request().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::LogSupplyHandlingDestruction& msg )
+{
+    if( msg.request().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::ObjectDestruction& msg )
+{
+    if( msg.object().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::ObjectKnowledgeDestruction& msg )
+{
+   if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::UnitDestruction& msg )
+{
+    if( msg.unit().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::UnitKnowledgeDestruction& msg )
+{
+   if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplaySynchronisations::DoUpdate
+// Created: LDC 2014-01-06
+// -----------------------------------------------------------------------------
+void ReplaySynchronisations::DoUpdate( const sword::UrbanKnowledgeDestruction& msg )
+{
+   if( msg.knowledge().id() == holder_.GetId() )
+        DoDestroy();
 }
