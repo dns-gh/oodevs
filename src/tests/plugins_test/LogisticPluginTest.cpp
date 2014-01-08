@@ -632,8 +632,8 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
     ar.Flush();
 
     auto paths = baseDir.ListFiles( false, true, true );
-    BOOST_REQUIRE_EQUAL( 2u, paths.size() );
-    BOOST_CHECK_EQUAL( "data.2", paths[1].ToUTF8() );
+    BOOST_REQUIRE_EQUAL( 3u, paths.size() );
+    BOOST_CHECK_EQUAL( "data.2", paths[2].ToUTF8() );
 
     size_t seen = 0;
     ar.ReadAll( [&]( ConsignOffset, std::vector< uint8_t >& output )
@@ -645,6 +645,11 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
         ++seen;
     });
     BOOST_CHECK_EQUAL( seen, COUNT_OF( strings ));
+
+    uint32_t file, index;
+    BOOST_REQUIRE( ReadOffsetFile( baseDir / "available", file, index ) );
+    BOOST_CHECK_EQUAL( 2u, file );
+    BOOST_CHECK_EQUAL( 9u, index );
 }
 
 namespace
@@ -837,4 +842,33 @@ BOOST_AUTO_TEST_CASE( TestConsignRecorderEntitiesIndex )
 
     // Cannot write to a read-only recorder (sic)
     BOOST_CHECK_THROW( AddAndFlush( reloaded, 4, 3, false, MakeSet( 40 )), tools::Exception );
+}
+
+BOOST_AUTO_TEST_CASE( TestConsignOffsetFile )
+{
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", testOptions.GetTempDir() );
+    const tools::Path path = tempDir.Path() / "offsets";
+
+    uint32_t file = 0;
+    uint32_t index = 0;
+
+    // File does not exist
+    BOOST_CHECK( WriteOffsetFile( path, 10, 42 ) );
+    BOOST_CHECK( ReadOffsetFile( path, file, index ) );
+    BOOST_CHECK_EQUAL( 10u, file );
+    BOOST_CHECK_EQUAL( 42u, index );
+
+    // File already exists
+    BOOST_CHECK( WriteOffsetFile( path, 11, 43 ) );
+    BOOST_CHECK( ReadOffsetFile( path, file, index ) );
+    BOOST_CHECK_EQUAL( 11u, file );
+    BOOST_CHECK_EQUAL( 43u, index );
+
+    // Failure, target file is a directory
+    path.Remove();
+    path.CreateDirectories();
+    BOOST_CHECK( !WriteOffsetFile( path, 12, 44 ) );
+    BOOST_CHECK( !ReadOffsetFile( path, file, index ) );
+    BOOST_CHECK_EQUAL( 0u, file );
+    BOOST_CHECK_EQUAL( 0u, index );
 }

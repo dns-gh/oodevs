@@ -68,6 +68,16 @@ private:
     bool readOnly_;
 };
 
+// Writes a file containing the file index and last valid byte offset within
+// this file as atomically as possible. Since rename() has no atomicity
+// guarantee under windows, we unlink the target and move a temporary file at
+// its place instead. This leaves a window where no offset file exists but this
+// is better than writing an invalid one.
+bool WriteOffsetFile( const tools::Path& path, uint32_t file, uint32_t offset );
+
+// Reads an offset file and return the file and data offset on success.
+bool ReadOffsetFile( const tools::Path& path, uint32_t& file, uint32_t& offset );
+
 } // namespace logistic
 } // namespace plugins
 

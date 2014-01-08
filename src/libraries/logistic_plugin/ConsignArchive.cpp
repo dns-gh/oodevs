@@ -10,11 +10,61 @@
 #include "ConsignArchive.h"
 #include <tools/Exception.h>
 #include <tools/StdFileWrapper.h>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <winsock2.h>
 #include <sstream>
 
 using namespace plugins::logistic;
+
+bool plugins::logistic::WriteOffsetFile( const tools::Path& path, uint32_t file, uint32_t offset )
+{
+    std::stringstream output;
+    output << "file=" << file << std::endl;
+    output << "offset=" << offset << std::endl;
+    const auto temp = path + ".temp";
+    if( !tools::WriteFile( temp, output.str() ) )
+        return false;
+    try
+    {
+        temp.Rename( path );
+    }
+    catch( const std::exception& )
+    {
+        return false;
+    }
+    return true;
+}
+
+bool plugins::logistic::ReadOffsetFile( const tools::Path& path, uint32_t& file, uint32_t& offset )
+{
+    file = offset = 0;
+    std::string data;
+    if( !tools::ReadFile( path, data ) )
+        return false;
+    std::stringstream input( data );
+    std::string line;
+    while( std::getline( input, line ) )
+    {
+        const auto pos = line.find( "=" );
+        if( pos == std::string::npos )
+            continue;
+        const auto key = line.substr( 0, pos );
+        const auto value = line.substr( pos + 1 );
+        try
+        {
+            if( key == "file" )
+                file = boost::lexical_cast< uint32_t >( value );
+            else if( key == "offset" )
+                offset = boost::lexical_cast< uint32_t >( value );
+        }
+        catch( const std::exception& )
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 ConsignArchive::ConsignArchive( const tools::Path& baseDir, uint32_t maxSize )
     : baseDir_( baseDir )
@@ -76,8 +126,9 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
     size_ = size_ + length + sizeof( len );
     if( size_ >= maxSize_ || size_ < oldSize )
     {
+        // Flush() writes the offset file
+        Flush();
         output_.reset();
-        size_ = 0;
     }
 
     return offset;
@@ -174,5 +225,8 @@ void ConsignArchive::ReadAll( const std::function<
 void ConsignArchive::Flush()
 {
     if( output_ )
+    {
         output_->flush();
+        WriteOffsetFile( baseDir_ / "available", index_, size_ );
+    }
 }
