@@ -13,7 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
+	"path/filepath"
 )
 
 type FileHolder struct {
@@ -28,20 +28,25 @@ type PhysicalFile struct {
 	BaseDir    string
 }
 
-func ReadPhysical(xmlDir string) (*PhysicalFile, error) {
-	xmlFile := xmlDir + "/physical.xml"
+func readXml(dir string, file string, result interface{}) error {
+	xmlFile := filepath.Join(dir, file)
 	data, err := ioutil.ReadFile(xmlFile)
 	if err != nil {
-		return nil, fmt.Errorf(
-			"failed to read file: %s", xmlFile)
+		return fmt.Errorf(
+			"failed to read file: %s %s", xmlFile, err)
 	}
+	err = xml.Unmarshal(data, result)
+	return err
+}
+
+func ReadPhysical(xmlDir string) (*PhysicalFile, error) {
 	result := PhysicalFile{}
-	err = xml.Unmarshal(data, &result)
+	err := readXml(xmlDir, "physical.xml", &result)
 	if err != nil {
-		return nil, fmt.Errorf("Error unmarshalling xml")
+		return nil, err
 	}
 	result.BaseDir = xmlDir
-	return &result, err
+	return &result, nil
 }
 
 type Resource struct {
@@ -59,27 +64,18 @@ type Resources struct {
 }
 
 func ReadResources(physical PhysicalFile) (*Resources, error) {
-	xmlFile := physical.BaseDir + "/" + physical.Resources.File
-	data, err := ioutil.ReadFile(xmlFile)
-	if err != nil {
-		return nil, fmt.Errorf(
-			"failed to read file: %s", xmlFile)
-	}
 	resources := Resources{}
-	err = xml.Unmarshal(data, &resources)
-	if err != nil {
-		return nil, fmt.Errorf("Error unmarshalling xml")
-	}
+	err := readXml(physical.BaseDir, physical.Resources.File, &resources)
 	return &resources, err
 }
 
-func (r *Resources) GetResource(id uint32) (*Resource, error) {
+func (r *Resources) GetResource(id uint32) *Resource {
 	for _, resource := range r.Content {
 		if resource.Id == id {
-			return &resource, nil
+			return &resource
 		}
 	}
-	return nil, nil
+	return nil
 }
 
 func (r *Resources) GetIdFromName(name string) (uint32, error) {
@@ -107,11 +103,8 @@ type Unit struct {
 	Name       string      `xml:"name,attr"`
 }
 
-func (this *Units) GetName(id uint32) (string, error) {
-	if this == nil {
-		return "", errors.New("Nil Units")
-	}
-	for _, unit := range this.Units {
+func (units *Units) GetName(id uint32) (string, error) {
+	for _, unit := range units.Units {
 		if unit.Id == id {
 			return unit.Name, nil
 		}
@@ -125,14 +118,8 @@ type Units struct {
 }
 
 func ReadUnits(physical PhysicalFile) (*Units, error) {
-	xmlFile := physical.BaseDir + "/" + physical.Units.File
-	data, err := ioutil.ReadFile(xmlFile)
-	if err != nil {
-		return nil, fmt.Errorf(
-			"failed to read file: %s", xmlFile)
-	}
 	units := Units{}
-	err = xml.Unmarshal(data, &units)
+	err := readXml(physical.BaseDir, physical.Units.File, &units)
 	return &units, err
 }
 
@@ -147,12 +134,9 @@ type Components struct {
 	Components []Component `xml:"equipment"`
 }
 
-func (this *Components) Find(id string) (Component, error) {
+func (components *Components) Find(id string) (Component, error) {
 	var result Component
-	if this == nil {
-		return result, errors.New("Nil swadn.Components")
-	}
-	for _, component := range this.Components {
+	for _, component := range components.Components {
 		if component.Name == id {
 			return component, nil
 		}
@@ -161,14 +145,8 @@ func (this *Components) Find(id string) (Component, error) {
 }
 
 func ReadEquipments(physical PhysicalFile) (*Components, error) {
-	xmlFile := physical.BaseDir + "/" + physical.Components.File
-	data, err := ioutil.ReadFile(xmlFile)
-	if err != nil {
-		return nil, fmt.Errorf(
-			"failed to read file: %s", xmlFile)
-	}
 	components := Components{}
-	err = xml.Unmarshal(data, &components)
+	err := readXml(physical.BaseDir, physical.Components.File, &components)
 	return &components, err
 }
 
@@ -180,9 +158,9 @@ type UnitConsumptions struct {
 	Consumptions map[uint32]*ResourceConsumption
 }
 
-func (this *Resources) ReadNormalisedConsumptions(physical PhysicalFile) (*UnitConsumptions, *Units, error) {
+func (resources *Resources) ReadNormalizedConsumptions(physical PhysicalFile) (*UnitConsumptions, *Units, error) {
 	result := UnitConsumptions{}
-	result.Consumptions = make(map[uint32]*ResourceConsumption)
+	result.Consumptions = map[uint32]*ResourceConsumption{}
 	units, err := ReadUnits(physical)
 	if err != nil {
 		return nil, nil, err
@@ -199,7 +177,7 @@ func (this *Resources) ReadNormalisedConsumptions(physical PhysicalFile) (*UnitC
 				return nil, nil, err
 			}
 			for _, consumption := range equipment.Consumptions {
-				id, err := this.GetIdFromName(consumption.Name)
+				id, err := resources.GetIdFromName(consumption.Name)
 				if err != nil {
 					return nil, nil, err
 				}
@@ -214,19 +192,4 @@ func (this *Resources) ReadNormalisedConsumptions(physical PhysicalFile) (*UnitC
 		}
 	}
 	return &result, units, nil
-}
-
-func (this *UnitConsumptions) NormalisedConsumption(unitType uint32, resourceType uint32) (uint32, error) {
-	if this == nil {
-		return 0, errors.New("Nil UnitConsumption")
-	}
-	if this.Consumptions[unitType] == nil {
-		log.Printf("Unknown unit " + fmt.Sprintf("%d", unitType))
-		return 0, nil
-	}
-	if this.Consumptions[unitType].Consumption == nil {
-		log.Printf("No consumptions at all for given unit")
-		return 0, nil
-	}
-	return this.Consumptions[unitType].Consumption[resourceType], nil
 }

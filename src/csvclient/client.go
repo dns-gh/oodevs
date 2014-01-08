@@ -53,7 +53,7 @@ func OutputResources(resources swadn.Resources, out string) {
 }
 
 func OutputConsumptions(resources swadn.Resources, physical swadn.PhysicalFile, out string) {
-	consumptions, units, err := resources.ReadNormalisedConsumptions(physical)
+	consumptions, units, err := resources.ReadNormalizedConsumptions(physical)
 	if err != nil {
 		log.Fatalf("Error reading consumptions %s", err)
 	}
@@ -69,8 +69,8 @@ func OutputConsumptions(resources swadn.Resources, physical swadn.PhysicalFile, 
 	writer.Write(record)
 	for unit, consumption := range consumptions.Consumptions {
 		for resourceId, amount := range consumption.Consumption {
-			resource, err := resources.GetResource(resourceId)
-			if err != nil || resource == nil {
+			resource := resources.GetResource(resourceId)
+			if resource == nil {
 				log.Fatalf("Error getting resource %d", resourceId)
 			}
 			name, err := units.GetName(unit)
@@ -109,7 +109,7 @@ func main() {
 	host := flag.String("host", "localhost", "simulation server host name")
 	port := flag.Uint("port", 10001, "simulation server port")
 	user := flag.String("user", "Superviseur", "user name")
-	physical := flag.String("physical", "C:/ldc/models-algeria/data/data/models/algerie/physical/defense-v1", "resources file directory")
+	physical := flag.String("physical", "../data/data/models/ada/physical/worldwide", "resources file directory")
 	out := flag.String("out", "Output", "Output prefix")
 	//root := flag.Uint("root", 0, "root logistic unit id")
 	flag.Parse()
@@ -147,8 +147,8 @@ func main() {
 	for id, unit := range data.Units {
 		for _, stock := range unit.Stocks {
 			amount := stock.Quantity
-			resource, err := resources.GetResource(stock.Type)
-			if err != nil || resource == nil {
+			resource := resources.GetResource(stock.Type)
+			if resource == nil {
 				log.Fatalf("Error getting resource: %d", stock.Type)
 			}
 			record = []string{UintToString(id), unit.Name, UintToString(unit.Type), resource.Name, IntToString(amount)}
@@ -156,5 +156,5 @@ func main() {
 		}
 	}
 	writer.Flush()
-	//Ajouter une sortie nombre de subordonnes log de root: table id unite/nombre
+	//TODO: output a list of logistic subordinates of 'root' parameter (id unit type/number)
 }
