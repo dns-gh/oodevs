@@ -54,6 +54,7 @@ public:
     void SkipToTick( unsigned int tick );
     void RequestCheckpoint( const std::string& name );
     void ForceReplayDataRequest();
+    void SendEnableVisionCones( bool value ) const;
     //@}
 
 private:

@@ -20,7 +20,7 @@ namespace kernel
     class OptionVariant;
 }
 
-class Publisher_ABC;
+class SimulationController;
 class Profile;
 class Simulation;
 
@@ -39,7 +39,7 @@ class VisionConesToggler : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionConesToggler( kernel::Controllers& controllers, Publisher_ABC& publisher, QObject* parent );
+             VisionConesToggler( kernel::Controllers& controllers, const SimulationController& simulationController, QObject* parent );
     virtual ~VisionConesToggler();
     //@}
 
@@ -61,11 +61,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     bool displayCones_;
     bool displaySurfaces_;
     bool displayFog_;
     bool connected_;
+    const SimulationController& simulationController_;
     //@}
 };
 

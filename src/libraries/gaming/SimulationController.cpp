@@ -236,3 +236,17 @@ void SimulationController::NotifyUpdated( const Simulation& simulation )
     if( simulation.IsPaused() )
         replayRequested_ = false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendEnableVisionCones
+// Created: LGY 2014-01-08
+// -----------------------------------------------------------------------------
+void SimulationController::SendEnableVisionCones( bool value ) const
+{
+    if( hasSimulation_ )
+    {
+        simulation::ControlEnableVisionCones msg;
+        msg().set_vision_cones( value );
+        msg.Send( publisher_ );
+    }
+}
