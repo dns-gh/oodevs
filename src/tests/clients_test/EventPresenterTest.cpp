@@ -271,18 +271,18 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_warning_changed_on_planned_event, Prese
 BOOST_FIXTURE_TEST_CASE( clean_parameters_hide_warning, PresenterFixture )
 {
     state = gui::EventViewState( orderEvent, eEventDockModes_Create, false, true, false, false, true, false, true );
-    CheckPurgeAndBuild( orderPresenter );
+    CheckPurgeFillAndBuild( orderPresenter );
     presenter.StartCreation( eEventTypes_Order, first_date );
 
     state.warning_ = warningErrorText;
     state.warningColor_ = warningErrorColor;
-    CheckUpdate( orderPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnWarningChanged( warningErrorText, warningErrorColor );
 
     state.warning_ = "";
     state.warningColor_ = Qt::transparent;
     MOCK_EXPECT( orderPresenter->Clear ).once();
-    CheckUpdate( orderPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnClearClicked();
 }
 
@@ -473,7 +473,7 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_clear_clicked, PresenterFixture )
     presenter.StartEdition( *taskEvent, false );
 
     MOCK_EXPECT( taskPresenter->Clear ).once();
-    CheckUpdate( taskPresenter );
+    CheckBuild( taskPresenter );
     presenter.OnClearClicked();
 }
 
