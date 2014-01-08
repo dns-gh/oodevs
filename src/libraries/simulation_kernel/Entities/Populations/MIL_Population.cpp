@@ -1021,7 +1021,7 @@ double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
     if( MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target ) )
         return pClosestElement->GetDangerosity( target );
-    return 0.;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
