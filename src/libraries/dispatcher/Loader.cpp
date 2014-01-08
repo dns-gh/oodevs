@@ -46,13 +46,16 @@ Loader::~Loader()
 // -----------------------------------------------------------------------------
 bool Loader::Start()
 {
-    const bool done = SkipToFrame( 0 );
-    if( !done )
+    unsigned int keyFrame = loader_->FindKeyFrame( 0 );
+    if( keyFrame == UINT_MAX )
         return false;
-    // simulates the end of the initialization
-    sword::SimToClient wrapper;
-    wrapper.mutable_message()->mutable_control_send_current_state_end();
-    handler_.Receive( wrapper );
+    sword::SimToClient begin;
+    begin.mutable_message()->mutable_control_send_current_state_begin();
+    handler_.Receive( begin );
+    SkipToFrame( keyFrame, 0 );
+    sword::SimToClient end;
+    end.mutable_message()->mutable_control_send_current_state_end();
+    handler_.Receive( end );
     return true;
 }
 
@@ -60,11 +63,15 @@ bool Loader::Start()
 // Name: Loader::SkipToFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-bool Loader::SkipToFrame( unsigned int frame )
+void Loader::SkipToFrame( unsigned int frame )
 {
     unsigned int keyFrame = loader_->FindKeyFrame( frame );
-    if( keyFrame == UINT_MAX )
-        return false;
+    if( keyFrame != UINT_MAX )
+        SkipToFrame( keyFrame, frame );
+}
+
+void Loader::SkipToFrame( unsigned int keyFrame, unsigned int frame )
+{
     const bool resync = keyFrame_ != keyFrame || frame < frame_;
     if( resync )
     {
@@ -77,7 +84,6 @@ bool Loader::SkipToFrame( unsigned int frame )
         continue;
     if( resync )
         model_.EndSynchronisation();
-    return true;
 }
 
 // -----------------------------------------------------------------------------
