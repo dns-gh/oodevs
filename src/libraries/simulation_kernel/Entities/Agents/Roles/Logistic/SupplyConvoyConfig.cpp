@@ -144,8 +144,8 @@ void SupplyConvoyConfig::ReadInterpolatedTime( xml::xistream& xis, MT_Interpolat
         throw MASA_EXCEPTION( xis.context() + "time: truck-count <= 0" );
 
     tools::ReadTimeAttribute( xis, "time", rTime );
-    if( rTime <= 0 )
-        throw MASA_EXCEPTION( xis.context() + "time: time <= 0" );
+    if( rTime < 0 )
+        throw MASA_EXCEPTION( xis.context() + "time: time < 0" );
     rTime = MIL_Tools::ConvertSecondsToSim( rTime );
 
     data.AddNewPoint( nNbrCamions, rTime );
