@@ -1,5 +1,15 @@
---Default Askable Implementation
+-------------------------------------------------------------------
+---- ASKABLE INTERFACE IMPLEMENTATION
+-------------------------------------------------------------------
 
+--- Start interrogating the provided agent knowledge
+-- After a delay (depending on the affinity between the agent and the target), reveals critical information
+-- Critical information are filled during the preparation phase
+-- The critical information will be retrieved after a call to stopInterrogatePion:
+-- @see updateInterrogatePion
+-- @see stropInterrogatePion 
+-- @param pion Directia agent knowledge
+-- @return false
 integration.startInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     pion[myself].actionInterrogate = DEC_StartInterrogateUnit( pion.source )
@@ -7,6 +17,10 @@ integration.startInterrogatePion = function( pion )
     return false
 end
 
+--- Continue interrogating the provided agent knowledge
+-- Returns true when interrogating action is finished or impossible, false otherwise
+-- @param pion Directia agent knowledge
+-- @return Boolean, whether or not action is over
 integration.updateInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     if pion[myself].actionInterrogateState == eActionObjetTerminee or pion[myself].actionInterrogateState == eActionObjetImpossible then
@@ -15,6 +29,10 @@ integration.updateInterrogatePion = function( pion )
     return false
 end
 
+--- Stop interrogating the provided agent knowledge
+-- If exists and action is correctly finished the critical information is revealed.
+-- @param pion Directia agent knowledge
+-- @return true
 integration.stopInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
     if pion[myself].actionInterrogateState == eActionObjetTerminee then
@@ -35,6 +53,14 @@ integration.stopInterrogatePion = function( pion )
     return true
 end
 
+--- Start interrogating the provided crowd knowledge
+-- After a delay (depending on the affinity between the agent and the crowd), reveals critical information
+-- Critical information are filled during the preparation phase
+-- The critical information will be retrieved after a call to stopInterrogateCrowd:
+-- @see updateInterrogateCrowd
+-- @see stropInterrogateCrowd  
+-- @param crowd Crowd knowledge
+-- @return false
 integration.startInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     crowd[myself].actionInterrogate = DEC_StartInterrogateCrowd( crowd.source )
@@ -42,6 +68,10 @@ integration.startInterrogateCrowd = function( crowd )
     return false
 end
 
+--- Continue interrogating the provided crowd knowledge
+-- Returns true when interrogating action is finished, false otherwise
+-- @param crowd Crowd knowledge
+-- @return Boolean, whether or not action is over
 integration.updateInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
@@ -50,6 +80,10 @@ integration.updateInterrogateCrowd = function( crowd )
     return false
 end
 
+--- Stop interrogating the provided crowd knowledge
+-- If exists and action is correctly finished the critical information is revealed.
+-- @param crowd Crowd knowledge
+-- @return true
 integration.stopInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
