@@ -114,6 +114,7 @@ func (model *ModelData) handleUnitCreation(m *sword.SimToClient_Content) error {
 	}
 	unit := &Unit{
 		Id:                  mm.GetUnit().GetId(),
+		Type:                mm.GetType().GetId(),
 		AutomatId:           mm.GetAutomat().GetId(),
 		Name:                mm.GetName(),
 		Pc:                  mm.GetPc(),

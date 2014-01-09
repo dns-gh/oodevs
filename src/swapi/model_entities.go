@@ -229,6 +229,7 @@ type Stock struct {
 
 type Unit struct {
 	Id                  uint32
+	Type                uint32
 	AutomatId           uint32
 	Name                string
 	Pc                  bool
