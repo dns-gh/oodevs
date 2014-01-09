@@ -1,11 +1,11 @@
---- Returns a list of three elements :
---- <ul> <li> The minimum firing range for this entity to support an agent </li>
---- <li> The maximum firing range for this entity to support an agent </li>
---- <li> Whether or not the ranges in this table pertain to indirect fire </li> </ul>
+--- Returns firing ranges for this entity to support an agent.
 --- This method returns a table with indirect fire or direct fire ranges, whichever has
 --- the greatest maximal firing range.
 -- Note that this method can only be called by an agent.
--- @return List of two floats and one boolean
+-- @return List of three elements :
+-- <ul> <li> The minimum firing range for this entity to support an agent </li>
+-- <li> The maximum firing range for this entity to support an agent </li>
+-- <li> Whether or not the ranges in this table pertain to indirect fire </li> </ul>
 integration.firingRangeToSupport = function()
     local tirIndirect = { DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3, DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2, true }
     local tirDirect = { DEC_Tir_PorteeMaxPourTirer( 0.9 ) / 2, DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2, false }
@@ -19,14 +19,14 @@ end
 --- Returns the greatest direct fire range with the given probability to hit
 -- Note that this method can only be called by an agent.
 -- @param ph Float (between 0 and 1), the desired probability to hit
--- @return Float
+-- @return Float, distance in meters
 integration.firingRangeWithDirectFires = function( ph )
     return DEC_Tir_PorteeMaxPourTirer( ph )
 end
 
 --- Returns the indirect fire range
 -- Note that this method can only be called by an agent.
--- @return Float
+-- @return Float, distance in meters
 integration.firingRangeWithIndirectFires = function()
     return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition()
 end
@@ -38,7 +38,7 @@ end
 -- Note that this method can only be called by a company.
 -- @param agent Simulation agent
 -- @param pH Float (between 0 and 1), the desired probability to hit (for direct fire)
--- @return Float
+-- @return Float, distance in meters
 integration.getSupportDistanceToCoordination = function( agent, pH )
     local rangeDistance = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( agent )  -- indirect fire case
     if rangeDistance <= 0 then -- direct fire case
@@ -64,10 +64,10 @@ local getPositionTranslatedDirFromFriend = function( friendToSupport, firingType
     return nil
 end
 
---- Returns position to support friend (opposite position from a friend over the danger direction).
+--- Returns position to support friend (a position behind the unit to support along the danger direction).
 -- Returns nil if this entity has no mission.
 -- @see integration.getPositionInAORToSupportFriend
--- @param friendToSupport Directia agent (works also for Directia agent knowledges), the allied unit to support
+-- @param friendToSupport Directia agent or Directia agent knowledge, the unit to support
 -- @param firingTypeEnumeration Integer, whether the position should be computed for indirect or direct fire. 
 -- The possible values are :
 -- <ul> <li> eDirectFires </li>
@@ -93,7 +93,7 @@ integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEn
     end
 end
 
---- Returns the simulation source of a position to support friend, guaranteed to be inside the AOR
+--- Returns the simulation source of a position to support friend, guaranteed to be inside the area of responsibility
 -- (as opposed to the position returned by integration.getPositionToSupportFriend)
 -- @see integration.getPositionToSupportFriend
 -- @param friendToSupport Directia agent (works also for Directia agent knowledges), the allied unit to support
@@ -153,4 +153,5 @@ integration.computeSupportFriendEfficiency = function( friendToSupport )
     end
 end
 
+--- Deprecated
 integration.getPositionAlongDangerDirection = integration.advanceAlongDangerDirection
