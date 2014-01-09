@@ -98,6 +98,8 @@ LogisticConsignsWidget_ABC::~LogisticConsignsWidget_ABC()
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::Purge()
 {
+    if( requestSelected_ )
+        lastRequestId_ = requestSelected_->GetId();
     requestSelected_ = 0;
     requestsTable_->Purge();
     PurgeDetail();
@@ -128,7 +130,7 @@ void LogisticConsignsWidget_ABC::NotifySelected( const kernel::Entity_ABC* entit
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::SelectRequest()
 {
-    requestsTable_->SelectRequest();
+    requestsTable_->SelectRequest( lastRequestId_ );
     requestSelected_ = requestsTable_->GetCurrentRequest();
 }
 
@@ -151,8 +153,8 @@ void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& con
                                                , const QString& requester, const QString& handler, const QString& state )
 {
     requestsTable_->AddRequest( consign, QString::number( consign.GetId() ), requester, handler, state );
-    if( requestSelected_ && requestSelected_->GetId() ==  consign.GetId() )
-        requestsTable_->SelectRequest( requestSelected_ );
+    if( requestSelected_ && requestSelected_->GetId() == consign.GetId() )
+        requestsTable_->SelectRequest( consign.GetId() );
 }
 
 // -----------------------------------------------------------------------------

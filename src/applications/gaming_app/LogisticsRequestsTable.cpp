@@ -87,16 +87,26 @@ void LogisticsRequestsTable::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::Purge
-// Created: MMC 2013-09-11
+// Name: LogisticsRequestsTable::SelectRequest
+// Created: LGY 2014-01-08
 // -----------------------------------------------------------------------------
-void LogisticsRequestsTable::SelectRequest( const LogisticsConsign_ABC* consign /*= 0*/ )
+void LogisticsRequestsTable::SelectRequest( unsigned int id )
 {
     if( dataModel_.rowCount() == 0 || !model() )
         return;
-    int rowToSelect = ( consign ? GetRequestRow( *consign ) : 0 );
-    selectionModel()->setCurrentIndex( QModelIndex(), QItemSelectionModel::SelectCurrent| QItemSelectionModel::Rows );
-    selectionModel()->setCurrentIndex( model()->index( rowToSelect, 0 ), QItemSelectionModel::SelectCurrent| QItemSelectionModel::Rows );
+
+    QModelIndex selected;
+    for( int i = 0; i < model()->rowCount(); ++i )
+    {
+        QModelIndex index = model()->index( i, 0 );
+        const LogisticsConsign_ABC* pRequest = GetRequest( index );
+        if( pRequest && pRequest->GetId() == id )
+        {
+            selected = index;
+            break;
+        }
+    }
+    selectionModel()->setCurrentIndex( selected, QItemSelectionModel::SelectCurrent| QItemSelectionModel::Rows );
     setFocus();
 }
 
