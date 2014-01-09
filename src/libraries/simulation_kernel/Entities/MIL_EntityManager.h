@@ -80,6 +80,7 @@ class MIL_AutomateLOG;
 class MIL_Config;
 class MIL_Entity_ABC;
 class MIL_DictionaryExtensions;
+class MIL_FlowCollisionManager;
 class MIL_Formation;
 class MIL_IDManager;
 class MIL_KnowledgeGroup;
@@ -152,6 +153,8 @@ public:
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
+
+    MIL_FlowCollisionManager& GetFlowCollisionManager() const;
     //@}
 
     //! @name Stats
@@ -287,6 +290,7 @@ private:
     void UpdateEffects();
     void UpdateStates();
     void UpdateKnowledgeGroups();
+    void UpdateFlowCollisionManager();
 
     void PreprocessRandomBreakdowns();
     //@}
@@ -326,6 +330,7 @@ private:
     std::auto_ptr< FormationFactory_ABC >        formationFactory_;       // has to be declared before armyFactory
     std::auto_ptr< KnowledgeGroupFactory >       knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::auto_ptr< ArmyFactory_ABC >             armyFactory_;
+    std::auto_ptr< MIL_FlowCollisionManager >    flowCollisionManager_;
     //@}
 };
 

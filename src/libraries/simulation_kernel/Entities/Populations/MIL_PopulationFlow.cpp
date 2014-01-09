@@ -19,6 +19,7 @@
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathWalker.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
@@ -59,6 +60,14 @@ void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsi
     unsigned int nID;
     archive >> pPopulation >> nID;
     ::new( flow )MIL_PopulationFlow( *pPopulation, nID);
+}
+
+namespace
+{
+    MIL_FlowCollisionManager& GetFlowCollisionManager()
+    {
+        return MIL_AgentServer::GetWorkspace().GetEntityManager().GetFlowCollisionManager();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -519,11 +528,8 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
-    if( canCollideWithFlow_ && !MIL_FlowCollisionManager::GetInstance().CanMove( this ) )
-    {
-        MIL_FlowCollisionManager::GetInstance().Execute();
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
         return; 
-    }
     if( ! CanMove() )
         return;
     if( ManageSplit() )
@@ -609,7 +615,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
                         MT_Vector2D intersection;
                         if( MT_Line( *itPointStart, *itPointEnd ).Intersect2D( line, intersection ) == eDoIntersect )
                         {
-                            MIL_FlowCollisionManager::GetInstance().AddCollision( this, static_cast< MIL_PopulationFlow* >( *it ), itPointEnd, intersection );
+                            GetFlowCollisionManager().AddCollision( this, static_cast< MIL_PopulationFlow* >( *it ), itPointEnd, intersection );
                             done = true;
                             break;
                         }
@@ -667,7 +673,7 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetMaxSpeed() const
 {
-    if( canCollideWithFlow_ && !MIL_FlowCollisionManager::GetInstance().CanMove( this ) )
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
         return 0;
     return GetPopulation().GetMaxSpeed();
 }

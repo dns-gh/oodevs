@@ -12,19 +12,6 @@
 #include "MIL_Time_ABC.h"
 #include "MIL_PopulationFlow.h"
 
-MIL_FlowCollisionManager* MIL_FlowCollisionManager::pInstance_ = 0;
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FlowCollisionManager::GetInstance
-// Created: JSR 2014-01-09
-// -----------------------------------------------------------------------------
-MIL_FlowCollisionManager& MIL_FlowCollisionManager::GetInstance()
-{
-    if( !pInstance_ )
-        pInstance_ = new MIL_FlowCollisionManager;
-    return *pInstance_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollisionManager constructor
 // Created: JSR 2014-01-09
@@ -95,10 +82,10 @@ bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FlowCollisionManager::Execute
+// Name: MIL_FlowCollisionManager::Update
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-void MIL_FlowCollisionManager::Execute()
+void MIL_FlowCollisionManager::Update()
 {
     const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( timeStep - start_ >= 5 )

@@ -29,7 +29,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    static MIL_FlowCollisionManager& GetInstance();
+    MIL_FlowCollisionManager();
     virtual ~MIL_FlowCollisionManager();
     //@}
 
@@ -37,7 +37,7 @@ public:
     //@{
     void AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, T_PointList::const_iterator it, MT_Vector2D& point );
     bool CanMove( const MIL_PopulationFlow* flow );
-    void Execute();
+    void Update();
     //@}
 
 
@@ -48,11 +48,6 @@ public:
 //     void load( MIL_CheckPointInArchive&, const unsigned int );
 //     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-
-private:
-    //! @name Constructor
-    //@{
-    MIL_FlowCollisionManager();
 
 private:
     //! @name Helpers
@@ -67,10 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    static MIL_FlowCollisionManager* pInstance_;
     std::map< MT_Vector2D, std::vector< MIL_PopulationFlow* > > collidingFlows_;
-//     MIL_PopulationFlow* flow1_;
-//     MIL_PopulationFlow* flow2_;
     MIL_PopulationFlow* going_;
     bool isFlowing_;
     MT_Vector2D point_;
