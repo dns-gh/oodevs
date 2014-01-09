@@ -40,13 +40,13 @@ func OutputResources(resources swadn.Resources, out string) {
 	defer outResources.Close()
 	writer := csv.NewWriter(outResources)
 	writer.Comma = ';'
-	record := []string{"Ressource", "Masse", "Volume"} //, "Quantité dans une UF"
+	record := []string{"Ressource", "Masse", "Volume", "Categorie"} //, "Quantité dans une UF"
 	writer.Write(record)
 	for _, resource := range resources.Content {
 		packageSize := float64(resource.PackageSize)
 		mass := resource.Mass / packageSize
 		volume := resource.Volume / packageSize
-		record = []string{resource.Name, FloatToString(mass), FloatToString(volume)}
+		record = []string{resource.Name, FloatToString(mass), FloatToString(volume), resource.Category}
 		writer.Write(record)
 	}
 	writer.Flush()
