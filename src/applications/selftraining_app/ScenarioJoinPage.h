@@ -74,6 +74,7 @@ private:
     kernel::Controllers& controllers_;
     const Config& config_;
     const tools::Loader_ABC& fileLoader_;
+    QTabWidget* tabs_;
     ProgressPage* progressPage_;
     QLineEdit* host_;
     QSpinBox* port_;
@@ -84,6 +85,9 @@ private:
     QLabel* hostLabel_;
     QLabel* portLabel_;
     QLabel* timelineLabel_;
+
+    QCheckBox* mapnik_;
+    QCheckBox* oldTimeline_;
     //@}
 };
 

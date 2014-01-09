@@ -14,6 +14,7 @@
 #include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "ProcessDialogs.h"
+#include "Registry.h"
 #include "frontend/CreateSession.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"
@@ -36,7 +37,7 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
 {
     setWindowTitle( "ScenarioJoinPage" );
 
-    //group box
+    tabs_ = new QTabWidget();
     hostLabel_ = new QLabel();
     host_ = new QLineEdit( "127.0.0.1");
     portLabel_ = new QLabel();
@@ -48,30 +49,54 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     timeline_->setMaximum( 65535 );
     timeline_->setValue( 10002 );
 
-    //sub layout
-    QGroupBox* hbox = new QGroupBox();
-    QHBoxLayout* hboxLayout = new QHBoxLayout( hbox );
-    hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
-    hboxLayout->addWidget( hostLabel_ );
-    hboxLayout->addWidget( host_ );
-    hboxLayout->addWidget( portLabel_ );
-    hboxLayout->addWidget( port_ );
-    hboxLayout->addWidget( timelineLabel_ );
-    hboxLayout->addWidget( timeline_ );
+    mapnik_ = new QCheckBox();
+    mapnik_->setChecked( registry::ReadBool( "HasMapnikLayer" ) );
+    oldTimeline_ = new QCheckBox();
+    oldTimeline_->setChecked( registry::ReadBool( "HasLegacyTimeline" ) );
 
-    QWidget* box = new QWidget( this );
-    QVBoxLayout* boxLayout = new QVBoxLayout( box );
-    boxLayout->setMargin( 10 );
-    boxLayout->setSpacing( 10 );
-    boxLayout->addWidget( hbox );
+    auto gen = new QWidget( this );
+    auto genlayout = new QVBoxLayout( gen );
+    genlayout->setMargin( 10 );
+    genlayout->setSpacing( 10 );
     {
-        exercises_ = new ExerciseList( box, config_, fileLoader_, controllers, true, false, true, false );
+        auto w = new QGroupBox( this );
+        auto layout = new QHBoxLayout( w );
+        layout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+        layout->addWidget( hostLabel_ );
+        layout->addWidget( host_ );
+        layout->addWidget( portLabel_ );
+        layout->addWidget( port_ );
+        layout->addWidget( timelineLabel_ );
+        layout->addWidget( timeline_ );
+        genlayout->addWidget( w );
+    }
+    {
+        exercises_ = new ExerciseList( gen, config_, fileLoader_, controllers, true, false, true, false );
         connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-        boxLayout->addWidget( exercises_ );
+        genlayout->addWidget( exercises_ );
     }
+    tabs_->addTab( gen, "" );
+
+    {
+        auto w = new QWidget( this );
+        auto layout = new QVBoxLayout( w );
+        layout->setMargin( 10 );
+        layout->setSpacing( 10 );
+        layout->addWidget( mapnik_ );
+        layout->addWidget( oldTimeline_ );
+        layout->addStretch();
+        if( config.IsOnDebugMode() )
+            tabs_->addTab( w, "" );
+        else
+            w->setVisible( false );
+    }
+
     EnableButton( eButtonJoin, false );
-    AddContent( box );
+    auto w = new QWidget( this );
+    auto layout = new QHBoxLayout( w );
+    layout->addWidget( tabs_ );
+    AddContent( w );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,10 +115,14 @@ ScenarioJoinPage::~ScenarioJoinPage()
 void ScenarioJoinPage::OnLanguageChanged()
 {
     SetTitle( tools::translate( "ScenarioJoinPage", "Join" ) );
+    tabs_->setTabText( 0, tools::translate( "ScenarioJoinPage", "General" ) );
+    tabs_->setTabText( 1, tools::translate( "ScenarioJoinPage", "Debug" ) );
     progressPage_->SetTitle( tools::translate( "ScenarioJoinPage", "Joining host" ) );
     hostLabel_->setText(     tools::translate( "ScenarioJoinPage", "Host" ) );
     portLabel_->setText(     tools::translate( "ScenarioJoinPage", "Port" ) );
     timelineLabel_->setText( tools::translate( "ScenarioJoinPage", "Timeline" ) );
+    mapnik_->setText(        tools::translate( "ScenarioJoinPage", "Enable Mapnik" ) );
+    oldTimeline_->setText(   tools::translate( "ScenarioJoinPage", "Enable Legacy Timeline" ) );
 
     LauncherClientPage::OnLanguageChanged();
 }
@@ -141,6 +170,8 @@ void ScenarioJoinPage::OnJoin()
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( port_->text() ) );
         action.SetOption( "session/config/timeline/@url", QString( "%1:%2" ).arg( host_->text() ).arg( timeline_->text() ) );
+        action.SetOption( "session/config/timeline/@enabled", oldTimeline_->isChecked() );
+        action.SetOption( "session/config/gaming/mapnik/@activate", mapnik_->isChecked() );
         action.Commit();
     }
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
