@@ -341,3 +341,8 @@ eAviationRange_ShortRange = 0
 eAviationRange_MediumRange = 1
 eAviationRange_LongRange = 2
 eAviationRange_NoAmmunition = 3
+
+-- body types
+eBodyAgent = 0
+eBodyCommander = 1
+eBodyCrowd = 2

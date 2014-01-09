@@ -92,7 +92,7 @@ function RegisterTaskListener()
         TaskStarted = function( self, taskName )
             if myself.currentMission == taskName then
                 self.main = taskName
-                meKnowledge:RC( eRC_DebutMission )
+                reportFunction( eRC_DebutMission )
                 myself.newMission = true
             end
             local fun = function( task )
@@ -105,10 +105,10 @@ function RegisterTaskListener()
         StageChanged = function( self, taskName, id, label)
             if myself.currentMission == taskName then
                 if self.stage[ taskName ] then
-                    meKnowledge:RC( eRC_BM_FinPhase, self.stage[ taskName ] )
+                    reportFunction( eRC_BM_FinPhase, self.stage[ taskName ] )
                 end
                 self.stage[ taskName ] = label
-                meKnowledge:RC( eRC_BM_DebutPhase, label )
+                reportFunction( eRC_BM_DebutPhase, label )
             end
         end,
         Cleanup = function( self )
@@ -118,11 +118,12 @@ function RegisterTaskListener()
             myself.safetyAttitude = eAmbianceMission_None
         end,
         TaskFinished = function( self, taskName )
-            meKnowledge:RC( eRC_BM_FinPhase, self.stage[ taskName ] )
+            reportFunction( eRC_BM_FinPhase, self.stage[ taskName ] )
+
             meKnowledge.currentTask = nil
             if self.main == taskName then
                 self.main = nil
-                meKnowledge:RC( eRC_FinMission )
+                reportFunction( eRC_FinMission )
                 DEC_FinMission()
             end
             self.stage[ taskName ] = nil

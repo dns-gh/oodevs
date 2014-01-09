@@ -109,7 +109,7 @@ integration.getImplantationObjects = function( area, nbAreas )
             elseif next(positionInLocalisation) then
                 localisation = DEC_Geometrie_ConvertirPointEnLocalisation( next(positionInLocalisation) )
             else
-                meKnowledge:RC( eRC_TrafficablePositionFindingInZone )
+                reportFunction(eRC_TrafficablePositionFindingInZone )
                 localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
             end
         else 

@@ -530,7 +530,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints )
         DEC_PauseAction( objective[myself].moveAction )
     elseif etat == eEtatActionDeplacement_NonAutorise then
         if objective[myself].rcDone ~= etat then
-            meKnowledge:RC( eRC_TerrainDifficile )
+            reportFunction(eRC_TerrainDifficile )
             objective[ myself ].rcDone = etat
             myself.canBeBlocked = true
             DEC_Trace( " ** IMPOSSIBLE TO COMPUTE A PATH TO DESTINATION ** " )

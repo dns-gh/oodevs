@@ -74,7 +74,7 @@ end
 integration.updateApplyFireOnPoint = function( point )
     if point[myself].eIndirectFireState == eIndirectFireState_Running then
         if point[myself].firstTime then
-            meKnowledge:RC( eRC_PremierCoupParti )
+            reportFunction(eRC_PremierCoupParti )
             point[myself].firstTime = false
         end
         return false
@@ -98,7 +98,7 @@ end
 integration.updateApplyFireOnPlatoon = function( target )
     if target[myself].eIndirectFireState == eIndirectFireState_Running then
         if target[myself].firstTime then
-            meKnowledge:RC( eRC_TirIndirectSurCible, target.source )
+            reportFunction(eRC_TirIndirectSurCible, target.source )
             target[myself].firstTime = false
         end
         return false
@@ -117,13 +117,13 @@ end
 -- @created LMT 2011-05-20
 integration.updateApplyFireImpossible = function( target )
     if target[myself].eIndirectFireState == eIndirectFireState_Impossible then
-        meKnowledge:RC( eRC_TirIndirectTargetNotIlluminated )
+        reportFunction(eRC_TirIndirectTargetNotIlluminated )
     end
     if target[myself].eIndirectFireState == eIndirectFireState_NoCapacity then
-        meKnowledge:RC( eRC_TirIndirectNoCapacity )
+        reportFunction(eRC_TirIndirectNoCapacity )
     end
     if target[myself].eIndirectFireState == eIndirectFireState_NoAmmo then
-        meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
+        reportFunction(eRC_TirImpossiblePlusDeMunitions )
     end
 end
 
@@ -134,7 +134,7 @@ end
 -- @modified MGD 2010-01-27
 integration.stopApplyFireOnPlatoon = function( target )
   if target[myself].eIndirectFireState == eIndirectFireState_Finished then
-        meKnowledge:RC( eRC_FinTirIndirectSurCible, target.source )
+        reportFunction(eRC_FinTirIndirectSurCible, target.source )
   end
   target[myself].actionIndirectFire = DEC__StopAction( target[myself].actionIndirectFire )
   target[myself].eIndirectFireState = nil
@@ -147,7 +147,7 @@ end
 -- @modified MGD 2010-01-27
 integration.stopApplyFireOnPoint = function( point )
   if point[myself].eIndirectFireState == eIndirectFireState_Finished then
-        meKnowledge:RC( eRC_TirExecute )
+        reportFunction(eRC_TirExecute )
   end
   point[myself].actionIndirectFire = DEC__StopAction( point[myself].actionIndirectFire )
   point[myself].eIndirectFireState = nil

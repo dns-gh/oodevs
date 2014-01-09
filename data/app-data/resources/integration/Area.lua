@@ -7,7 +7,7 @@
 -- @return Boolean, always return true
 integration.decontaminateArea = function( area )            
     DEC_DecontaminerZone( area.source )
-    integration.pionRC( eRC_DecontaminationDone )        
+    reportFunction(eRC_DecontaminationDone )        
     return true
 end
 

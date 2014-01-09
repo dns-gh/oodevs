@@ -2,7 +2,7 @@ integration.EnterInUndergroundNetwork = function( network )
     local returnError = DEC_Agent_SeDissimulerDansReseauSouterrain( myself, network.source)
     if returnError == eUndergroundNetworkInvalid then
         if not myself.alreadySend then
-            meKnowledge:RC( eRC_NotActivatedUndergroundNetwork )
+            reportFunction(eRC_NotActivatedUndergroundNetwork )
             myself.alreadySend = true
         end
         return false
@@ -13,7 +13,7 @@ integration.ExitFromUndergroundNetwork = function()
     local returnError = DEC_Agent_SortirDuReseauSouterrain( myself ) -- /!\ after first tick, if agent has exit, it returns "eUndergroundNetworkInvalid" 
     if returnError == eUndergroundNetworkInvalid then
         if not myself.alreadySend then
-            meKnowledge:RC( eRC_NotActivatedUndergroundNetwork )
+            reportFunction(eRC_NotActivatedUndergroundNetwork )
             myself.alreadySend = true
         end
         return false
@@ -41,7 +41,7 @@ end
 integration.UpdatePassThroughUndergroundNetwork = function( exitIssue )
     if exitIssue[myself].actionPassThroughState == eActionNotAllowed then
         if exitIssue[myself].firstTime then
-            meKnowledge:RC( eRC_BadUndergroundNetwork )
+            reportFunction(eRC_BadUndergroundNetwork )
             exitIssue[myself].firstTime = false
         end
         return false
@@ -49,7 +49,7 @@ integration.UpdatePassThroughUndergroundNetwork = function( exitIssue )
         return true
     elseif exitIssue[myself].firstTime and exitIssue[myself].actionPassThroughState ~= nil then
         local timeMoving = DEC_Agent_TempsPourTraverserReseauSouterrain( myself, exitIssue.source )
-        meKnowledge:RC( eRC_TimeInUndergroundNetwork, tostring(math.ceil(timeMoving/60)) )
+        reportFunction(eRC_TimeInUndergroundNetwork, tostring(math.ceil(timeMoving/60)) )
         exitIssue[myself].firstTime = false
     end
 end

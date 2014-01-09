@@ -20,18 +20,18 @@ end
 integration.updateExtinguish = function( fire )
     if fire.actionExtinguishState == eActionObjetImpossible then
         DEC_Trace( "Fire is already extinguished" )
-        meKnowledge:RC( eRC_ImpossibleToExtinguishFire )
+        reportFunction(eRC_ImpossibleToExtinguishFire )
         return true -- $$$ MIA: TEMP should return false
     elseif fire.actionExtinguishState == eActionObjetManqueDotation then
         DEC_Trace( "not enough dotation" )
-        meKnowledge:RC( eRC_ImpossibleToExtinguishFire )
+        reportFunction(eRC_ImpossibleToExtinguishFire )
         return true  -- $$$ MIA: TEMP should return false
     elseif fire.actionExtinguishState == eActionObjetPasDeCapacite then
         DEC_Trace( "no capacity" ) 
-        meKnowledge:RC( eRC_ImpossibleToExtinguishFire )
+        reportFunction(eRC_ImpossibleToExtinguishFire )
         return true  -- $$$ MIA: TEMP should return false
     elseif( fire.actionExtinguishState == eActionObjetTerminee ) then
-        meKnowledge:RC( eRC_ObjectExtinguished )
+        reportFunction(eRC_ObjectExtinguished )
         return true
     end
     meKnowledge:sendReport( eRC_FireIsBeingExtinguished )

@@ -38,15 +38,15 @@ integration.stopInterrogatePion = function( pion )
     if pion[myself].actionInterrogateState == eActionObjetTerminee then
         local criticalIntelligence = DEC_ObtenirRenseignementCritiqueSurPion( pion.source )
         if string.len( criticalIntelligence ) ~= 0 then
-            meKnowledge:RC( eRC_criticalIntelligence, criticalIntelligence )
+            reportFunction(eRC_criticalIntelligence, criticalIntelligence )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {criticalIntelligence = criticalIntelligence, RC = eRC_criticalIntelligence} )
         else
-            meKnowledge:RC( eRC_criticalIntelligenceNone )
+            reportFunction(eRC_criticalIntelligenceNone )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone} )
         end
     end
     if pion[myself].actionInterrogateState == eActionObjetImpossible then
-        meKnowledge:RC( eRC_criticalIntelligenceImpossible )
+        reportFunction(eRC_criticalIntelligenceImpossible )
     end
     pion[myself].actionInterrogate = DEC__StopAction( pion[myself].actionInterrogate )
     pion[myself].actionInterrogateState = nil
@@ -89,10 +89,10 @@ integration.stopInterrogateCrowd = function( crowd )
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
         local criticalIntelligence = DEC_ObtenirRenseignementCritiqueSurFoule( crowd.source )
         if string.len( criticalIntelligence ) ~= 0 then
-            meKnowledge:RC( eRC_criticalIntelligence, criticalIntelligence )
+            reportFunction(eRC_criticalIntelligence, criticalIntelligence )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {criticalIntelligence = criticalIntelligence, RC =eRC_criticalIntelligence} )
         else
-            meKnowledge:RC( eRC_criticalIntelligenceNone )
+            reportFunction(eRC_criticalIntelligenceNone )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone } )
         end
     end
