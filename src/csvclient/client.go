@@ -166,9 +166,9 @@ func WriteOrbat(out string, data *swapi.ModelData, resources swadn.Resources, ro
 }
 
 func isLogisticSubordinate(data *swapi.ModelData, unit *swapi.Unit, root uint32) bool {
-        if root == 0 {
-                return true
-        }
+	if root == 0 {
+		return true
+	}
 	if unit.AutomatId == root {
 		return true
 	}
