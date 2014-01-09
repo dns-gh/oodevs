@@ -81,7 +81,7 @@ public:
             while( it.HasMoreElements() )
                 DisplayRequest( it.NextElement() );
         }
-        requestsTable_->ResizeColumns();
+        requestsTable_->ResizeColumnsToContents();
         SendHistoryRequests();
         SelectRequest();
     }

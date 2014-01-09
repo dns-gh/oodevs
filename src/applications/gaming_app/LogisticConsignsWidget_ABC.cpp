@@ -257,6 +257,7 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
                 requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
                 requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
                 GetDisplayName( it->handler_ ) );
+    historyTable_->ResizeColumnsToContents();
 }
 
 // -----------------------------------------------------------------------------
