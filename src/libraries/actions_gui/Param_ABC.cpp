@@ -461,3 +461,12 @@ bool Param_ABC::HasParameter( const Param_ABC& param ) const
 {
     return this == &param;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void Param_ABC::FixOrigin( bool /* fix */ ) const
+{
+    // NOTHING
+}

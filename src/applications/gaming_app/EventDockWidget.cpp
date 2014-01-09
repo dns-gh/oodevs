@@ -19,15 +19,20 @@
 #include "EventSupervisorActionWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
+
 #include "clients_gui/Event.h"
 #include "clients_gui/EventFactory.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/TimelineHandler_ABC.h"
 #include "clients_kernel/Tools.h"
+
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
+
 #include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
 
@@ -73,7 +78,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
 {
     setWindowTitle( tr( "Event edition" ) );
     setFloating( true );
-    setMinimumSize( 400, 600 );
+    setMinimumSize( 350, 350 );
     setVisible( false );
 
     // Header / footer
@@ -132,6 +137,16 @@ EventDockWidget::~EventDockWidget()
 gui::EventPresenter& EventDockWidget::GetPresenter() const
 {
     return *presenter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::SetTimelineHandler
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void EventDockWidget::SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler )
+{
+    timelineHandler_ = timelineHandler;
+    presenter_->SetTimelineHandler( timelineHandler );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,6 +214,7 @@ void EventDockWidget::SetContentVisible( bool visible )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 {
+    presenter_->Draw( viewport );
     ApplyToViews( boost::bind( &gui::EventDefaultView_ABC::Draw, _1, boost::ref( viewport ) ) );
 }
 
@@ -230,9 +246,7 @@ void EventDockWidget::OnEditClicked()
 void EventDockWidget::OnDeleteClicked()
 {
     if( selected_ )
-        QMetaObject::invokeMethod( presenter_.get(),
-                                   "DeleteEvent",
-                                   Q_ARG( const std::string&, selected_->GetEvent().uuid ) );
+        timelineHandler_->DeleteEvent( selected_->GetEvent().uuid );
     selected_ = 0;
 }
 
@@ -295,4 +309,5 @@ void EventDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool 
     if( newMode == eModes_Default )
         presenter_->Purge();
     gui::RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    setVisible( false );
 }

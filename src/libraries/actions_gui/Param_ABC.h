@@ -101,6 +101,7 @@ public:
     virtual bool IsVisible() const { return ( group_ ) ? group_->isVisible() : false; }
 
     virtual bool HasParameter( const Param_ABC& param ) const;
+    virtual void FixOrigin( bool fix ) const;
     //@}
 
     //! @name Accessors

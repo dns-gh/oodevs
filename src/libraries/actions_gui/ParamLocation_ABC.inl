@@ -30,7 +30,7 @@ ParamLocation_ABC< BaseParameter >::ParamLocation_ABC( const InterfaceBuilder_AB
 template< typename BaseParameter >
 ParamLocation_ABC< BaseParameter >::~ParamLocation_ABC()
 {
-    if( location_.get() )
+    if( location_ )
         location_.reset();
     layer_.Reset();
 }
@@ -66,7 +66,7 @@ void ParamLocation_ABC< BaseParameter >::Draw( const geometry::Point2f& , const 
 template< typename BaseParameter >
 bool ParamLocation_ABC< BaseParameter >::InternalCheckValidity() const
 {
-    return location_.get() && location_->IsValid();
+    return location_ && location_->IsValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
         layer_.StartCircle( *this );
     else if( parameter_.GetType() == "line" )
         layer_.StartLine( *this );
-    else if( parameter_.GetType() == "point" && popupPosition_.get() )
+    else if( parameter_.GetType() == "point" && popupPosition_ )
     {
         kernel::Point locPoint;
         locPoint.AddPoint( *popupPosition_ );
@@ -156,7 +156,7 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
 template< typename BaseParameter >
 void ParamLocation_ABC< BaseParameter >::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    if( IsChecked() && location_.get() && location_->IsValid() )
+    if( IsChecked() && location_ && location_->IsValid() )
         action.AddParameter( *new BaseParameter( parameter_, converter_, *location_ ) );
     else
         action.AddParameter( *new BaseParameter( parameter_, converter_ ) );

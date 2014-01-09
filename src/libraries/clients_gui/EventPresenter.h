@@ -78,6 +78,7 @@ public:
 
     //! @name Operations
     //@{
+    void Draw( gui::Viewport_ABC& viewport ) const;
     void Purge();
     void SetTimelineHandler( const boost::shared_ptr< kernel::TimelineHandler_ABC >& timelineHandler );
     void OnWarningChanged( const std::string& warning, const QColor& warningColor );

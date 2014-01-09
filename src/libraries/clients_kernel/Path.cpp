@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 Path::Path( const Positions& position )
-    : position_( position )
+    : position_( &position )
 {
     // NOTHING
 }
@@ -32,6 +32,27 @@ Path::Path( const Positions& position )
 Path::~Path()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::SetPosition
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void Path::SetPosition( const Positions& position )
+{
+    position_ = &position;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void Path::FixOrigin( bool fixOrigin )
+{
+    if( fixOrigin && position_ )
+        origin_ = geometry::Point2f( position_->GetPosition().X(), position_->GetPosition().Y() );
+    else
+        origin_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +115,8 @@ bool Path::IsDone() const
 // -----------------------------------------------------------------------------
 void Path::Accept( LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPath( position_.GetPosition(), points_ );
+    assert( position_ );
+    visitor.VisitPath( origin_ ? *origin_ : position_->GetPosition(), points_ );
 }
 
 // -----------------------------------------------------------------------------

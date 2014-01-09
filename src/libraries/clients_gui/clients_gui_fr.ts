@@ -242,8 +242,8 @@
 <context>
     <name>EventPresenter</name>
     <message>
-        <source>Read only</source>
-        <translation>Lecture seule</translation>
+        <source>Order acknowledged</source>
+        <translation>Ordre executé</translation>
     </message>
 </context>
 <context>

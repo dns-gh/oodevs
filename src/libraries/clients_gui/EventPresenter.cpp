@@ -115,6 +115,16 @@ bool EventPresenter::IsCurrentEvent( const gui::Event& event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventPresenter::Draw
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+void EventPresenter::Draw( gui::Viewport_ABC& viewport ) const
+{
+    if( HasCurrentPresenter() )
+        GetCurrentPresenter().Draw( viewport );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventPresenter::Purge
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
@@ -490,7 +500,7 @@ void EventPresenter::ChangeMode( E_EventDockModes mode,
         state_->save_ = false;
         state_->saveAs_ = true;
         state_->warningColor_ = Qt::darkGreen;
-        state_->warning_ = tools::translate( "EventPresenter", "Read only" ).toStdString();
+        state_->warning_ = tools::translate( "EventPresenter", "Order acknowledged" ).toStdString();
         break;
     case eEventDockModes_EditTriggered:
         state_->save_ = false;

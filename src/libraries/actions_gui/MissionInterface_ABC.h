@@ -68,6 +68,7 @@ public:
     virtual void SetEntity( const kernel::Entity_ABC* entity ) = 0;
     virtual void FillFrom( const actions::Action_ABC& action ) = 0;
     virtual void CommitTo( actions::Action_ABC& action ) const = 0;
+    virtual void FixOrigin( bool fix ) const = 0;
     //@}
 };
 

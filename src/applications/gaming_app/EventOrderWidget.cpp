@@ -97,21 +97,16 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
 
     // Top
     missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
-    missionComboLayout_ = new QVBoxLayout();
-    missionComboLayout_->setMargin( 0 );
-    missionComboLayout_->setSpacing( 0 );
-
     missionCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-combobox" );
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel( missionCombo_ );
     proxy->setSourceModel( missionCombo_->model() );
     missionCombo_->model()->setParent( proxy );
     missionCombo_->setModel( proxy );
-    missionComboLayout_->addWidget( missionCombo_ );
 
     QHBoxLayout* topLayout = new QHBoxLayout();
     topLayout->setSpacing( 5 );
     topLayout->addWidget( missionTypeCombo_ );
-    topLayout->addLayout( missionComboLayout_ );
+    topLayout->addWidget( missionCombo_ );
 
     // Layout
     mainLayout_->setSpacing( 5 );
