@@ -246,6 +246,13 @@ func MakeRectangleLocation(from, to Point) *sword.Location {
 	}
 }
 
+func MakePolygonLocation(points ...Point) *sword.Location {
+	return &sword.Location{
+		Type:        sword.Location_polygon.Enum(),
+		Coordinates: MakeCoords(points...),
+	}
+}
+
 func MakeRectangleParam(from, to Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
@@ -273,6 +280,24 @@ func MakeLocationParam(point Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Location: MakePointLocation(point),
+		})
+}
+
+func MakeLinePathParam(points ...Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Path: &sword.Path{
+				Location: MakeLineLocation(points...),
+			},
+		})
+}
+
+func MakePolygonParam(points ...Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Area: &sword.Polygon{
+				Location: MakePolygonLocation(points...),
+			},
 		})
 }
 
