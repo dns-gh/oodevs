@@ -1,4 +1,4 @@
-local maxConfinementDelay = 10 -- ticks
+local maxConfinementDelay = 10 -- in ticks
 local maxEvacuationDelay  = 10
 
 --- Alerts the given urban block, and displays appropriate reports.
@@ -195,8 +195,8 @@ integration.isAgentInsideTown = function( )
     return DEC_Agent_EnVille()
 end
 
---- Returns a list of all urban blocks inside the circle defined by
---- the provided center and radius
+--- Returns a list of all urban blocks which are totally or partly 
+--- inside the circle defined by the provided center and radius
 -- @param center Simulation position, the center of the circle
 -- @param radius Float, the radius of the circle
 -- @return List of urban block knowledges
@@ -204,7 +204,7 @@ integration.getUrbanBlockInsideCircle = function( center, radius )
     return DEC_Connaissances_BlocUrbainDansCercle( center, radius )
 end
 
---- Returns a list of all urban blocks in the provided area
+--- Returns a list of all urban blocks which are totally inside the provided area
 -- @param area Simulation area
 -- @return List of urban block knowledges
 integration.getUrbanBlockInArea = function( area )
