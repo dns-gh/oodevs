@@ -8,7 +8,7 @@ local startSealOffLocation = function( location, knowledge )
         local sealoffarea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
         if sealoffarea == nil then -- need to create seal off area
             DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
-            integration.pionRC( eRC_DebutBouclageZone )			
+            reportFunction(eRC_DebutBouclageZone )			
         end
     end
     return true
@@ -20,7 +20,7 @@ local startedSealOffLocation = function( location, knowledge )
         if not knowledge.constructedObject then
             knowledge.constructedObject = SealOffArea
             knowledge.constructedObject.actionAnimation = DEC__StartAnimerObjet( knowledge.constructedObject )
-            integration.pionRC( eRC_DebutAnimationObjet, knowledge.constructedObject )
+            reportFunction(eRC_DebutAnimationObjet, knowledge.constructedObject )
         end
     end
     return true
@@ -33,12 +33,12 @@ local stopSealOffLocation = function( location, knowledge )
     if knowledge.constructedObject  then 
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) > 0 then
             DEC__StopAction( knowledge.constructedObject.actionAnimation )
-            integration.pionRC( eRC_FinAnimationObjet, knowledge.constructedObject )
+            reportFunction(eRC_FinAnimationObjet, knowledge.constructedObject )
         end
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) == 0 then
             DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
             DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
-            integration.pionRC( eRC_FinBouclageZone )
+            reportFunction(eRC_FinBouclageZone )
             knowledge.constructedObject = nil
         end
     end

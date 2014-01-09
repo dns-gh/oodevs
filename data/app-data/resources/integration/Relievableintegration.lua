@@ -25,7 +25,7 @@ end
 -- @release 2010-09-07
 integration.relieveIt = function( object )
     if DEC_ReleverPion( object.source ) then
-        integration.pionRC( eRC_Releve, object.source )
+        reportFunction(eRC_Releve, object.source )
         return true
     end
     return false

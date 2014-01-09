@@ -7,7 +7,7 @@
 integration.setAttitude = function( eNewAttitude )
     if DEC_Population_Attitude() ~= eNewAttitude then
         integration.changeAttitude( eNewAttitude )
-        integration.crowdRC( eRC_AttitudePopulation, eNewAttitude )
+        reportFunction(eRC_AttitudePopulation, eNewAttitude )
     end
 end
 
@@ -212,7 +212,7 @@ integration.manageInteractionsWithUnits = function( nonLethalWeaponsAuthorizedFa
     -- report
     if finalDomination == 0 then
         if not myself.reportUnderControl then
-            integration.crowdRC( eRC_PopulationTemporairementControlee )
+            reportFunction(eRC_PopulationTemporairementControlee )
             myself.reportUnderControl = true
         end
     else
@@ -259,7 +259,7 @@ integration.FouleEstSecurisee = function( nonLethalWeaponsAuthorizedFactor, leth
     -- Reports
     if next( pions ) then
         if not myself.reportControllingUnits then
-            integration.crowdRC( eRC_UnitsTryingToControl )
+            reportFunction(eRC_UnitsTryingToControl )
             myself.reportControllingUnits = true
         end
     else 
@@ -296,7 +296,7 @@ integration.startControlCrowd = function( crowd, periodicity, decreaseRate )
     myself.rTempsDebut      = getSimulationTime()
     myself.delayExceeded    = false
     myself.bDerniereChance  = false
-    integration.crowdRC( eRC_MiseEnPlaceControleDeFoule )
+    reportFunction(eRC_MiseEnPlaceControleDeFoule )
 end
 integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
     -- periodicity in SECONDE
@@ -313,9 +313,9 @@ integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
             myself.prevDomination = domination
             myself.delayExceeded = false
             myself.rTempsDebut = getSimulationTime()
-            integration.crowdRC( eRC_SituationDifficilementTenableFaceAPopulation )
+            reportFunction(eRC_SituationDifficilementTenableFaceAPopulation )
         else
-            integration.crowdRC( eRC_CannotControlTheCrowd )
+            reportFunction(eRC_CannotControlTheCrowd )
             return false -- FAILED
         end
     end
@@ -329,7 +329,7 @@ integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
     if integration.getDomination( crowd ) == 0 then -- crowd is under control
         if not myself.hasReport then
             myself.hasReport = true
-            integration.crowdRC( eRC_CrowdIsUnderControl )
+            reportFunction(eRC_CrowdIsUnderControl )
         end
         integration.getCrowdInformations( crowd )
         return true -- returns "true" meaning the action is running.
@@ -349,7 +349,7 @@ end
 integration.updateInterveneOnCrowd = function( crowd, periodicity )
     if crowd.respond then
         
-        integration.crowdRC( eRC_RiposteContrePopulation, crowd.source )
+        reportFunction(eRC_RiposteContrePopulation, crowd.source )
         integration.startShootingOnCrowd( crowd )
         crowd.rTempsDebut = getSimulationTime()
         crowd.respond = false

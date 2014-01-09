@@ -79,7 +79,7 @@ end
 -- @param withoutReport Boolean if set to true don't display a report to indicate the end of the work
 integration.buildObjectInstantaneously = function( object, withoutReport )
     if not withoutReport then
-        integration.pionRC( eRC_FinTravauxObjet, object.source )
+        reportFunction(eRC_FinTravauxObjet, object.source )
     end
     DEC_ObjectKnowledge_BuildInstantaneously( myself, object.source )
 end

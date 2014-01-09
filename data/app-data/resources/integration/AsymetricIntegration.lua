@@ -43,7 +43,7 @@ integration.startAttackIt = function( target, suicide, dotation )
     if suicide then
         nbIntervention = DEC_Agent_GetAgentDotation( myself, dotation ) 
     end 
-    integration.pionRC( eRC_ExecutionAttentat )
+    reportFunction(eRC_ExecutionAttentat )
     target[myself].attackAction = DEC_StartTirIndirectSurPosition( dotation, nbIntervention, target:getPosition() )
     actionCallbacks[ target[myself].attackAction ] = function( arg ) target[myself].attackState = arg end
     return true
@@ -58,7 +58,7 @@ integration.updateAttackIt = function( target, suicide, dotation )
             if suicide then DEC_Suicide() end
             return true
         else
-            integration.pionRC( eRC_MissionImpossibleReason, "Attentat impossible" )
+            reportFunction(eRC_MissionImpossibleReason, "Attentat impossible" )
             return true
         end
     end
@@ -79,7 +79,7 @@ end
 
 --Terrorist attack on object integration
 integration.attackObject = function( target, suicide, dotation )
-    integration.pionRC( eRC_ExecutionAttentat )
+    reportFunction(eRC_ExecutionAttentat )
     DEC_ConnaissanceObjet_Degrader( target.source, 0.5, dotation )
     if suicide then DEC_Suicide() end
     return true
@@ -89,7 +89,7 @@ end
 integration.killOfficers = function( unit )
     DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
     integration.SendMessage( "killOfficers", integration.getAgentFromKnowledge( unit ), emptyTable, { type = "dynamic" } )
-    integration.pionRC( eRC_ExecutionAttentat )
+    reportFunction(eRC_ExecutionAttentat )
     return true
 end
 
@@ -106,19 +106,19 @@ end
 --refugee
 integration.takeAsRefugee = function( unit )
     -- $$$ MIA TODO
-    integration.report( eRC_OrientationPopulationVersCampRefugies )
+    reportFunction(eRC_OrientationPopulationVersCampRefugies )
     return true
 end
 
 --prisoner
 integration.takeAsPrisoner = function( unit )
     -- $$$ MIA TODO
-    integration.report( eRC_OrientationEnnemiRenduVersCampPrisonniers )
+    reportFunction(eRC_OrientationEnnemiRenduVersCampPrisonniers )
     return true
 end
 
 integration.attackReport = function( self )
-    integration.pionRC( eRC_ExecutionAttentat )
+    reportFunction(eRC_ExecutionAttentat )
 end
 
 -- capture de terroristes détectés
@@ -133,7 +133,7 @@ integration.capture = function( units, message )
             DEC_Agent_ForcerSilenceRadio( unit.source, true )
             DEC_UnitDecisionalState( unit.source, "hostage", "true" )
             DEC_Connaissance_Transporter( myself, unit.source )
-            integration.pionRC( message, unit.source )
+            reportFunction(message, unit.source )
             myself.CRCaptureSomeone[ unit ] = true
             unit.capture = true
             integration.SendMessage( "capture", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
@@ -165,7 +165,7 @@ end
 
 integration.dropUnit = function( unit )
     DEC_Prisonniers_Debarquer(unit.source)
-    integration.pionRC( eRC_TerroristDropped, unit.source )
+    reportFunction(eRC_TerroristDropped, unit.source )
     if myself.capturedUnits and #myself.capturedUnits > 0 then
         myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from capured list
     end

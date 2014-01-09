@@ -47,35 +47,35 @@ end
 -- CR ROE 
 integration.CR_ROE  = function( typeROE )
     if typeROE == eRoeStateRestrictedFire then
-        integration.report( eRC_TirRestreint )
+        reportFunction(eRC_TirRestreint )
     elseif typeROE ==  eRoeStateFireByOrder then
-        integration.report( eRC_TirInterdit )
+        reportFunction(eRC_TirInterdit )
     elseif typeROE == eRoeStateFreeFire then
-        integration.report( eRC_TirLibre )
+        reportFunction(eRC_TirLibre )
     end
 end
 
 -- CR ROE Foule
 integration.CR_ROE_Foules  = function( typeROE )
     if typeROE == eEtatROEPopulation_EmploiForceInterdit then
-        integration.report( eRC_EmploiForceInterdit )
+        reportFunction(eRC_EmploiForceInterdit )
     elseif typeROE ==  eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-        integration.report( eRC_MaintienADistanceParMoyensNonLetaux )
+        reportFunction(eRC_MaintienADistanceParMoyensNonLetaux )
     elseif typeROE == eEtatROEPopulation_ArmesLetalesAutorisees then
-        integration.report( eRC_ArmesLetalesAutorisees )
+        reportFunction(eRC_ArmesLetalesAutorisees )
     end
 end
 
 -- CR Attitude Foule
 integration.CR_Attitude_Foules  = function ( attitude )
     if attitude == eAttitudeCalme then
-        integration.report( eRC_EmploiForceInterdit )
+        reportFunction(eRC_EmploiForceInterdit )
     elseif attitude ==  eAttitudeAgitee then
-        integration.report( eRC_MaintienADistanceParMoyensNonLetaux )
+        reportFunction(eRC_MaintienADistanceParMoyensNonLetaux )
     elseif attitude == eAttitudeExcitee then
-        integration.report( eRC_ArmesLetalesAutorisees )
+        reportFunction(eRC_ArmesLetalesAutorisees )
     elseif attitude == eAttitudeAgressive then
-        integration.report( eRC_ArmesLetalesAutorisees )
+        reportFunction(eRC_ArmesLetalesAutorisees )
     end
 end
 

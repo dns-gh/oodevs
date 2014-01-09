@@ -7,7 +7,7 @@
 -- @return Boolean, whether or not this entity can activate the object knowledge
 integration.canActivateIt = function( object )
     if DEC_Agent_PeutActiverObjet( object.source ) then
-        integration.pionRC( eRC_ActivationObstacleDeManoeuvre )
+        reportFunction(eRC_ActivationObstacleDeManoeuvre )
         return true
     else
         DEC_Trace( "object cannot be activated" )
@@ -28,7 +28,7 @@ end
 -- @return Boolean, whether or not object knowledge is activated
 integration.activateIt = function( object )
     if DEC_ActiverObjet( object.source ) then
-        integration.pionRC( eRC_ActivationObstacleDeManoeuvre, object.source )
+        reportFunction(eRC_ActivationObstacleDeManoeuvre, object.source )
         return true
     end
     return false

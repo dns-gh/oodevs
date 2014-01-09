@@ -73,15 +73,7 @@ integration.pionRC = function ( ... )
     end
 end
 
-function RegisterTaskListener( bodyType )
-    local reportFunction
-    if bodyType == eBodyAgent then 
-        reportFunction = integration.pionRC
-    elseif bodyType == eBodyCommander then
-         reportFunction = integration.genericRC
-    else -- eBodyCrowd
-        reportFunction = integration.crowdRC
-    end
+function RegisterTaskListener()
     local taskListener = {
         stage = {},
         OnNewTick = function( self )

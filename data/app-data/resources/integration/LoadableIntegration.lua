@@ -138,7 +138,7 @@ integration.updateLoadQueue = function()
     if myself.eEtatTransport == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransport == eActionTransport_Impossible then
-        integration.pionRC( eRC_TransportImpossiblePasDeMoyens )
+        reportFunction(eRC_TransportImpossiblePasDeMoyens )
     end
     return false
 end
@@ -158,7 +158,7 @@ integration.updateUnloadQueue = function()
     if myself.eEtatTransport == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransport == eActionTransport_Impossible then
-        integration.pionRC( eRC_TransportImpossiblePasDeMoyens )
+        reportFunction(eRC_TransportImpossiblePasDeMoyens )
     end
     return false
 end
@@ -283,7 +283,7 @@ end
 
 -- Load crowd
 integration.startLoadCrowd = function( crowd, concentration )
-    integration.pionRC( eRC_TransportEmbarquement )
+    reportFunction(eRC_TransportEmbarquement )
     myself.actionLoadCrowd = DEC_StartEmbarquerFouleDUneConcentration( crowd.source, concentration )
     actionCallbacks[ myself.actionLoadCrowd ] = function( arg ) myself.eEtatTransportCrowd = arg end
     return false
@@ -294,7 +294,7 @@ integration.startedLoadCrowd = function()
         return true
     elseif myself.eEtatTransportCrowd == eActionTransport_Impossible then
         DEC_Trace( "transportation impossible" )
-        integration.pionRC( eRC_TransportImpossiblePasDeMoyens )
+        reportFunction(eRC_TransportImpossiblePasDeMoyens )
         return true  -- loading is impossible, so let us stop here
     end
     return false
@@ -313,7 +313,7 @@ integration.startUnloadCrowd = function( crowd )
     else
         crowdId = crowd.source
     end
-    integration.pionRC( eRC_TransportDebarquement )
+    reportFunction(eRC_TransportDebarquement )
     myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, meKnowledge:getPosition() )
     actionCallbacks[ myself.actionUnloadCrowd ] = function( arg ) myself.eEtatTransportUnloadCrowd = arg end
     return false
@@ -323,7 +323,7 @@ integration.startedUnloadCrowd = function()
     if myself.eEtatTransportUnloadCrowd == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransportUnloadCrowd == eActionTransport_Impossible then
-        integration.pionRC( eRC_TransportImpossiblePasDeMoyens )
+        reportFunction(eRC_TransportImpossiblePasDeMoyens )
         return true  -- unloading is impossible, so let us stop here
     end
     return false

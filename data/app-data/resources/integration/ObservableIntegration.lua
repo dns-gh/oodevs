@@ -99,7 +99,7 @@ integration.observeIt = function( objective )
     else
         DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
     end
-  -- integration.pionRC( eRC_VisionVerrouilleeSur ) @TODO GGE à déplacer pour être gérer sans boucler
+  -- reportFunction(eRC_VisionVerrouilleeSur ) @TODO GGE à déplacer pour être gérer sans boucler
 end
 
 --- Find the perception level from position to objective for static objects

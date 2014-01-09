@@ -200,7 +200,8 @@ function InitMePlatoon( strKnowledgeType, knowledgeSource, groupName )
     meKnowledge = masalife.brain.knowledge.me.body
     myself.engineerObjectsOnPath = {}
     myself.enemyToEngage = {{}, {}}
-    RegisterTaskListener( eBodyAgent )
+    reportFunction = integration.pionRC
+    RegisterTaskListener()
     RegisterDoneTaskListener()
     InitKnowledgeManager()
 end
@@ -209,7 +210,8 @@ function InitMeCrowd( strKnowledgeType, knowledgeSource, groupName )
     masalife.brain.knowledge.me.body = CreateKnowledge( strKnowledgeType, knowledgeSource )
     meKnowledge = masalife.brain.knowledge.me.body
     myself.engineerObjectsOnPath = {}
-    RegisterTaskListener( eBodyCrowd )
+    reportFunction = integration.crowdRC
+    RegisterTaskListener()
     InitKnowledgeManager()
 end
 
@@ -217,7 +219,8 @@ function InitMeAutomat( strKnowledgeType, knowledgeSource, groupName )
     masalife.brain.knowledge.me.body = CreateKnowledge( strKnowledgeType, knowledgeSource )
     meKnowledge = masalife.brain.knowledge.me.body
     myself.reportMessages = {}
-    RegisterTaskListener( eBodyCommander )
+    reportFunction = integration.genericRC
+    RegisterTaskListener()
     InitKnowledgeManager()
 end
 
