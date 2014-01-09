@@ -11,6 +11,7 @@
 #define __Path_h_
 
 #include "Location_ABC.h"
+#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -48,6 +49,8 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
+    void SetPosition( const Positions& position );
+    void FixOrigin( bool dynamicVisitor );
     //@}
 
 private:
@@ -59,7 +62,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const Positions& position_;
+    const Positions* position_;
+    boost::optional< geometry::Point2f > origin_;
     T_PointVector points_;
     //@}
 };

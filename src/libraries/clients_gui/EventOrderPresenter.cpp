@@ -201,6 +201,7 @@ void EventOrderPresenter::Trigger()
         throw MASA_EXCEPTION( "Can't trigger and order without an entity and an order" );
     if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, *entity_ ) )
     {
+        missionInterface_.FixOrigin( true );
         missionInterface_.CommitTo( *action );
         actionsModel_.Publish( *action, ++context_ );
         actionsModel_.Register( action->GetId(), *action );

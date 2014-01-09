@@ -582,6 +582,249 @@
           <xsl:if test="./@type ='General obstacle zone'">
                   <xsl:attribute name="type">movement forbidden area</xsl:attribute>
           </xsl:if>
+            <xsl:if test="./@type ='Grupo de minas'">
+                <xsl:attribute name="type">mines</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de segurança'">
+                <xsl:attribute name="type">safe zone</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de interferência'">
+                <xsl:attribute name="type">jamming area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de completa interferência'">
+                <xsl:attribute name="type">full jamming area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='QBRN Área contaminada  - Externa'">
+                <xsl:attribute name="type">nbc zone (external model)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Nuvem - Externa QBRN'">
+                <xsl:attribute name="type">nbc cloud (external model)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área contaminada QBRN'">
+                <xsl:attribute name="type">nbc zone</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Nuvem QBRN '">
+                <xsl:attribute name="type">nbc cloud</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Fogo'">
+                <xsl:attribute name="type">fire</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Fogo em superfície vegetal'">
+                <xsl:attribute name="type">surface fire</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Local de descontaminação'">
+                <xsl:attribute name="type">decontamination site</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Eixo de suprimento'">
+                <xsl:attribute name="type">logistic route</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Local de construção de ponte'">
+                <xsl:attribute name="type">crossing site</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Local de ROTA'">
+                <xsl:attribute name="type">rota area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Abatis'">
+                <xsl:attribute name="type">abattis</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Fosso anticarro'">
+                <xsl:attribute name="type">anti tank obstacle</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Barricada'">
+                <xsl:attribute name="type">barricade</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Campo Minado (linear)'">
+                <xsl:attribute name="type">mined area (linear)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Campo  minado (disperso)'">
+                <xsl:attribute name="type">mined area (scattered)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Desmoronamento'">
+                <xsl:attribute name="type">landslide</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Bloqueio de estrada'">
+                <xsl:attribute name="type">road destruction</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Destruição de ponte'">
+                <xsl:attribute name="type">bridge destruction</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Meio de travessia contínua'">
+                <xsl:attribute name="type">continuous pontoon bridge</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Meio de travessia descontínua'">
+                <xsl:attribute name="type">discontinuous pontoon bridge</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Posição de tiro'">
+                <xsl:attribute name="type">firing post</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de desdobramento de Artilharia'">
+                <xsl:attribute name="type">gun artillery deployment area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de desdobramento de HLCP ATQ'">
+                <xsl:attribute name="type">cobra deployment area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de desdobramento de astros'">
+                <xsl:attribute name="type">mrls deployment area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de desdobramento de morteiro'">
+                <xsl:attribute name="type">mortar deployment area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto para remuniciamento, reabastecer e ressuprir (R3P)'">
+                <xsl:attribute name="type">logistic support area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Zona de aterrissagem'">
+                <xsl:attribute name="type">landing area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Aeródromo'">
+                <xsl:attribute name="type">trail</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Plataforma'">
+                <xsl:attribute name="type">platform</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de maior mobilidade'">
+                <xsl:attribute name="type">mobility enhanced area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Zona de pouso de helicóptero'">
+                <xsl:attribute name="type">landing area (helicopter)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de reabastecimento e remuniciamento avançado'">
+                <xsl:attribute name="type">logistic area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de retenção de detidos'">
+                <xsl:attribute name="type">prisoners camp</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de retenção de refugiados'">
+                <xsl:attribute name="type">refugees camp</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de controle'">
+                <xsl:attribute name="type">checkpoint</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Zona de liberação'">
+                <xsl:attribute name="type">dropping area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área fogo proibido'">
+                <xsl:attribute name="type">fire forbidden area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Obstáculo de Arame Farpado'">
+                <xsl:attribute name="type">Obstáculo de Arame Farpado</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Instalação'">
+                <xsl:attribute name="type">installation</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de distribuição'">
+                <xsl:attribute name="type">distribution point</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Zona de detecção de sensores'">
+                <xsl:attribute name="type">sensorsDetectionZone</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Zona de sensores'">
+                <xsl:attribute name="type">sensors</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de suprimento'">
+                <xsl:attribute name="type">supply point</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Quadra'">
+                <xsl:attribute name="type">urban block</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Bomba IED'">
+                <xsl:attribute name="type">dirty bomb</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Hospital'">
+                <xsl:attribute name="type">hospital</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Esconderijo de arma'">
+                <xsl:attribute name="type">weapon cache</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Abrigo de emergência'">
+                <xsl:attribute name="type">emergency shelter</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Ponto de encontro para vítimas (PRV)'">
+                <xsl:attribute name="type">emergency meeting place</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Descoberta de vítimas'">
+                <xsl:attribute name="type">victim discovery zone</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Estoque'">
+                <xsl:attribute name="type">stock</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Origem da inundação'">
+                <xsl:attribute name="type">flood</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='População em movimento'">
+                <xsl:attribute name="type">population moving</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área segura'">
+                <xsl:attribute name="type">secured area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Bloqueio de fogo'">
+                <xsl:attribute name="type">firebreak area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Campo Minado (linear e destrutível)'">
+                <xsl:attribute name="type">mined area (linear and destructible)</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Dique'">
+                <xsl:attribute name="type">dyke</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Acesso Subterrâneo'">
+                <xsl:attribute name="type">underground exit</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Estrada não pavimentada'">
+                <xsl:attribute name="type">Country road</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Rodovia'">
+                <xsl:attribute name="type">Highway</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Estrada principal'">
+                <xsl:attribute name="type">Main road</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Estrada secundária'">
+                <xsl:attribute name="type">Secondary road</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Terreno molhado'">
+                <xsl:attribute name="type">Wet terrain</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Terreno com neve'">
+                <xsl:attribute name="type">Snowed terrain</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Terreno congelado'">
+                <xsl:attribute name="type">Iced terrain</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Limite (orla)'">
+                <xsl:attribute name="type">Border</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Elo logístico'">
+                <xsl:attribute name="type">ressource node</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Incêndio criminoso'">
+                <xsl:attribute name="type">Arson</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Bomba de destruição'">
+                <xsl:attribute name="type">Destruction Bomb</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Hospital de campanha'">
+                <xsl:attribute name="type">Medical camp</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Serviços de emergência HQ'">
+                <xsl:attribute name="type">Emergency services HQ</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Fumaça para dispersão de multidão'">
+                <xsl:attribute name="type">Scaterring grenade</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Área de movimento proibido'">
+                <xsl:attribute name="type">movement forbidden area</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Núcleo de Proteção'">
+                <xsl:attribute name="type">Núcleo de Proteção</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Agravamento de margem'">
+                <xsl:attribute name="type">Agravamento de margem</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Cratera em Estrada'">
+                <xsl:attribute name="type">Cratera em Estrada</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="./@type ='Marcador'">
+                <xsl:attribute name="type">Marcador</xsl:attribute>
+            </xsl:if>
       </xsl:copy>
   </xsl:template>
 

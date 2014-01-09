@@ -75,6 +75,12 @@ void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
         location_.reset();
         layer_.Reset();
     }
+    else if( location_ && entity != entity_ )
+    {
+        kernel::Path& path = static_cast< kernel::Path& >( *location_ );
+        path.SetPosition( entity->Get< kernel::Positions >() );
+        path.FixOrigin( false );
+    }
     entity_ = entity;
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );
@@ -100,4 +106,14 @@ void ParamPath::Visit( const actions::parameters::Path& param )
         assert( param.GetPoints().size() == 1 );
         location_->AddPoint( param.GetPoints().front() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void ParamPath::FixOrigin( bool fix ) const
+{
+    if( location_ )
+        static_cast< kernel::Path& >( *location_ ).FixOrigin( fix );
 }

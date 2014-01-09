@@ -122,13 +122,14 @@ namespace
         MOCK_METHOD( BuildView, 0 );
         MOCK_METHOD( Purge, 0 );
         MOCK_METHOD( Clear, 0 );
+        MOCK_METHOD( Draw, 1 );
     };
 
     const QDateTime first_date = QDateTime::fromString( "2013-12-06T19:20:30", Qt::ISODate );
     const QDateTime second_date = QDateTime::fromString( "2013-13-07T20:30:40", Qt::ISODate );
     const QDateTime third_date = QDateTime::fromString( "2013-14-08T21:40:50", Qt::ISODate );
     const std::string warningErrorText = "warning text";
-    const std::string warningInfoText = "Read only";
+    const std::string warningInfoText = "Order acknowledged";
     const QColor warningErrorColor = Qt::red;
     const QColor warningInfoColor = Qt::darkGreen;
 

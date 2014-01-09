@@ -79,7 +79,6 @@ MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel
     , filling_( false )
 {
     setObjectName( name );
-    setMinimumSize( 280, 50 );
     mainTab_ = CreateTab( this, tr( "Mandatory" ) );
     optionalTab_ = CreateTab( this, tr( "Optional" ) );
     helpTab_ = CreateTab( this, tr( "Help" ) );
@@ -303,4 +302,14 @@ bool MissionInterface::HasParameter( const Param_ABC& parameter ) const
 bool MissionInterface::IsFilling() const
 {
     return filling_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void MissionInterface::FixOrigin( bool fix ) const
+{
+    for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
+        ( *it )->FixOrigin( fix );
 }

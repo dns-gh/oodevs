@@ -246,7 +246,7 @@
 <context>
     <name>EventPresenter</name>
     <message>
-        <source>Read only</source>
+        <source>Order acknowledged</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
