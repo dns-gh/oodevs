@@ -64,13 +64,13 @@ private:
     boost::shared_ptr< tools::Fstream > GetFile( uint32_t index ) const;
 
 private:
-    tools::Path baseDir_;
-    tools::Path basePath_;
-    uint32_t maxSize_;
+    const tools::Path baseDir_;
+    const tools::Path basePath_;
+    const uint32_t maxSize_;
     uint32_t size_;
     uint32_t index_;
     boost::shared_ptr< tools::Fstream > output_;
-    bool readOnly_;
+    const bool readOnly_;
 };
 
 // Writes a file containing the file index and last valid byte offset within
