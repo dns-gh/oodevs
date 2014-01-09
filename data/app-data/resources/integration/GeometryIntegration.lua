@@ -82,6 +82,14 @@ integration.advanceAlongAOR = function( agent )
     return DEC_Geometrie_AdvanceAlongFuseau( agent )
 end
 
+--- Returns the advance of the given point along the danger direction of the provided agent
+-- @param agent Directia agent
+-- @param point Simulation position to be translated
+-- @return Float
+integration.advanceAlongDangerDirection = function( agent, point )
+    return DEC_Geometrie_PositionAdvanceAlongDangerDirection( agent.source, point )
+end
+
 --- Returns the distance between two positions,
 --- taking into account their respective heights
 -- @param firstPosition First simulation position
