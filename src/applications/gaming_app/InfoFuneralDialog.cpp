@@ -14,6 +14,7 @@
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/LogFuneralConsign.h"
+#include "gaming/SupplyStates.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog constructor
@@ -49,7 +50,7 @@ namespace
         bool operator()( const kernel::Entity_ABC& element )
         {
             const LogFuneralConsigns* consigns = element.Retrieve< LogFuneralConsigns >();
-            return ( consigns && consigns->IsRelevant() );
+            return ( consigns && consigns->IsRelevant() || element.Retrieve< SupplyStates >() );
         }
     };
 }
