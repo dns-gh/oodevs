@@ -17,12 +17,12 @@ integration.bypassLevel = function( object )
 end
 
 integration.startBypassIt = function( object )
-    meKnowledge:RC( eRC_EnContournementObstacle )
+    integration.pionRC( eRC_EnContournementObstacle )
     object[myself] = object[myself] or {}
     object[myself].actionBypass = DEC_StartCreerContournementObjet( object.source )
     actionCallbacks[ object[myself].actionBypass ] = function( arg ) object[myself].actionBypassState = arg end
     
-    meKnowledge:RC( eRC_DebutTravaux )
+    integration.pionRC( eRC_DebutTravaux )
 end
 
 integration.updateBypassIt = function( object )
@@ -39,7 +39,7 @@ end
 integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
     if object[myself].actionBypassState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinTravaux )
+        integration.pionRC( eRC_FinTravaux )
         object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
         object[myself].actionBypassState = nil
         return true

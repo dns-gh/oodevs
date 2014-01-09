@@ -14,7 +14,7 @@
 integration.takeUpPosition = function( reachable )
     myself.location = reachable
     if DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste then -- corresponding to E_PostureType::ePosturePoste
-        -- meKnowledge:RC( eRC_EnPosteFaceADirectionDangereuse )
+        -- integration.pionRC( eRC_EnPosteFaceADirectionDangereuse )
         return true
     end
     return false
@@ -25,7 +25,7 @@ integration.takeUpPositionObject = function( object )
         myself.actionOccupy = DEC__StartOccuperObjet( object.source )
         return true
     else
-        -- meKnowledge:RC( eRC_ObjetDejaOccupe, object.source ) @TODO MGD : Use takeUpPosition feedback failed after refactor of MoveAndTakePosition with MIA
+        -- integration.pionRC( eRC_ObjetDejaOccupe, object.source ) @TODO MGD : Use takeUpPosition feedback failed after refactor of MoveAndTakePosition with MIA
         DEC_Trace( "eRC_ObjetDejaOccupe" )
         return false
     end

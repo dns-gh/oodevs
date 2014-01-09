@@ -30,14 +30,14 @@ end
 -- @created 2010-08-27
 integration.beginReinforcementPlatoon = function( platoonAlly )
     DEC_Renforce( platoonAlly.source )
-    meKnowledge:RC( eRC_ReussiteRenforcementPion, meKnowledge.source, platoonAlly.source )
+    integration.pionRC( eRC_ReussiteRenforcementPion, meKnowledge.source, platoonAlly.source )
     return true
 end
 
 integration.beginReinforcementAgentKnowledge = function( agentKnowledge )
     local agent = DEC_ConnaissanceAgent_EnAgent( agentKnowledge.source )
     DEC_Renforce( agent )
-    meKnowledge:RC( eRC_ReussiteRenforcementPion, meKnowledge.source, agent )
+    integration.pionRC( eRC_ReussiteRenforcementPion, meKnowledge.source, agent )
     return true
 end
 
@@ -57,10 +57,10 @@ end
 -- @created 2010-08-27
 integration.beginReinforcementCompany = function( companyAlly ) 
     if DEC_Pion_ChangeAutomate( companyAlly.source ) then
-        meKnowledge:RC( eRC_ReussiteRenforcement, meKnowledge.source, companyAlly.source )
+        integration.pionRC( eRC_ReussiteRenforcement, meKnowledge.source, companyAlly.source )
         return true
     else
-        meKnowledge:RC( eRC_EchecRenforcement, meKnowledge.source, companyAlly.source )
+        integration.pionRC( eRC_EchecRenforcement, meKnowledge.source, companyAlly.source )
         return false
     end
 end

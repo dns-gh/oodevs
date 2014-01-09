@@ -35,7 +35,7 @@ end
 integration.startIlluminateIt = function( target, allies )
     target[myself] = target[myself] or {}
     target[myself].actionIlluminate = DEC_StartIlluminer( target.source, allies[1].source  )
-    meKnowledge:RC( eRC_IllumineCible )
+    integration.pionRC( eRC_IllumineCible )
     actionCallbacks[ target[myself].actionIlluminate ] = function( arg ) target[myself].actionState = arg end
     return false
 end

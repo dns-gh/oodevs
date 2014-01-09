@@ -21,7 +21,7 @@ end
 -- @release 2010-02-04
 integration.identifyIt = function( objective )
     if not DEC_ConnaissanceAgent_EstDetruitTactique(objective.source) then
-    -- meKnowledge:RC( eRC_VisionRadarVerrouilleeSur ) @TODO GGE a deplacer pour le gerer sans boucler
+    -- integration.pionRC( eRC_VisionRadarVerrouilleeSur ) @TODO GGE a deplacer pour le gerer sans boucler
         if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
             DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
         else

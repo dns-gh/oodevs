@@ -29,7 +29,7 @@ integration.startDemineIt = function( object )
     object[myself].actionDemine = DEC_StartDevaloriserObjet( object.source )
     actionCallbacks[ object[myself].actionDemine ] = function( arg ) object[myself].actionDemineState = arg end
     
-    meKnowledge:RC( eRC_DebutDevalorisation, object.source )
+    integration.pionRC( eRC_DebutDevalorisation, object.source )
 end
 
 integration.updateDemineIt = function( object )
@@ -50,7 +50,7 @@ integration.stopDemineIt = function( object )
     object[myself] = object[myself] or {} 
     object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
     if object[myself].actionDemineState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinDevalorisation, object.source )
+        integration.pionRC( eRC_FinDevalorisation, object.source )
         object[myself].actionDemineState = nil
         return true
     else
@@ -86,7 +86,7 @@ integration.startRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     object[myself].actionRemove = DEC_StartDetruireObjet( object.source )
     actionCallbacks[ object[myself].actionRemove ] = function( arg ) object[myself].actionRemoveState = arg end
-    meKnowledge:RC( eRC_DebutTravauxObjet, object.source )
+    integration.pionRC( eRC_DebutTravauxObjet, object.source )
 end
 
 integration.updateRemoveIt = function( object )
@@ -107,7 +107,7 @@ integration.stopRemoveIt = function( object )
     object[myself] = object[myself] or {}
     object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
     if object[myself].actionRemoveState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinDegagement )
+        integration.pionRC( eRC_FinDegagement )
         object[myself].actionRemoveState = nil
         return true
     else
@@ -152,7 +152,7 @@ integration.updateRemoveItSecu = function( object )
         meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinDegagement )
+        integration.pionRC( eRC_FinDegagement )
         return true
     end
     return false
@@ -160,7 +160,7 @@ end
 
 integration.stopRemoveItSecu = function( object )
     if not object[ myself ].actionRemoveState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinDegagement )
+        integration.pionRC( eRC_FinDegagement )
     end
     object[ myself ] = object[ myself ] or {} 
     object[ myself ].actionRemove = DEC__StopAction( object[myself].actionRemove )
@@ -173,5 +173,5 @@ integration.startDecontructItUrbanBlock = function( urbanBlock )
     actionCallbacks[ urbanBlock[ myself ].actionRemove ] = function( arg ) 
         urbanBlock[ myself ].actionRemoveState = arg 
     end
-    meKnowledge:RC( eRC_DebutTravaux )
+    integration.pionRC( eRC_DebutTravaux )
 end

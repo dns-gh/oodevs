@@ -10,12 +10,12 @@ integration.startControlArea = function( area )
     perceptionReconnaissanceCallbacks[ area.perceptionID ] = function( arg )
         area.bActionFinished = true
     end
-    meKnowledge:RC( eRC_DebutControleZone )
+    integration.pionRC( eRC_DebutControleZone )
     return true
 end
 integration.stopControlArea  = function( area )
     DEC_Perception_DesactiverReconnaissanceLocalisation( area.perceptionID )
-    meKnowledge:RC( eRC_FinControleZone )
+    integration.pionRC( eRC_FinControleZone )
     perceptionReconnaissanceCallbacks[ area.perceptionID ] = nil
     return true
 end
@@ -26,12 +26,12 @@ end
 -- --------------------------------------------------------------------------------
 integration.startControlUrbanBlock = function( urbanBlock )
     urbanBlock.recceAction = DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock.source )
-    meKnowledge:RC( eRC_DebutControleBlocUrbain )
+    integration.pionRC( eRC_DebutControleBlocUrbain )
     return true
 end
 integration.stopControlUrbanBlock  = function( urbanBlock )
     DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( urbanBlock.recceAction )
-    meKnowledge:RC( eRC_FinControleBlocUrbain )
+    integration.pionRC( eRC_FinControleBlocUrbain )
     return true
 end
 
@@ -46,12 +46,12 @@ integration.startControlPoint = function( point )
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = function( arg )
         point.bActionFinished = true
     end
-    meKnowledge:RC( eRC_DebutControlPoint )
+    integration.pionRC( eRC_DebutControlPoint )
     return true
 end
 integration.stopControlPoint = function( point )
     DEC_Perception_DesactiverReconnaissancePoint( point.perceptionID )
-    meKnowledge:RC( eRC_FinControlPoint )
+    integration.pionRC( eRC_FinControlPoint )
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = nil
     return true
 end

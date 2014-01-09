@@ -36,7 +36,7 @@ integration.startImproveIt = function( object )
     actionCallbacks[ object[myself].actionImprovement ] = function( arg ) 
         object[myself].actionImprovementState = arg
     end
-    meKnowledge:RC( eRC_DebutValorisation, object.source )
+    integration.pionRC( eRC_DebutValorisation, object.source )
 end
 
 integration.updateImproveIt = function( object ) -- used by scipio
@@ -69,7 +69,7 @@ end
 integration.stopImproveIt = function( object )
     object[myself] = object[myself] or {} 
     if object[myself].actionImprovementState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinValorisation, object.source )
+        integration.pionRC( eRC_FinValorisation, object.source )
     else
         DEC_Trace( "pause work improve" )
     end

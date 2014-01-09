@@ -97,7 +97,7 @@ eEtatNbc_Niv4 = 1
 -- @author MGD
 -- @release 2010-04-27
 integration.goOnNBCAlert = function( self )
-    meKnowledge:RC( eRC_AlerteNBCNiveau4 )
+    integration.pionRC( eRC_AlerteNBCNiveau4 )
     F_Pion_SeteEtatNbc( self.source, eEtatNbc_Niv4 )
     myself.NBCAlert = true
 end
@@ -106,7 +106,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.equipNBCOutfit = function()
-    meKnowledge:RC( eRC_TenueProtectionNBCMise )
+    integration.pionRC( eRC_TenueProtectionNBCMise )
     DEC_Agent_MettreTenueProtectionNBC()
 end
 
@@ -114,9 +114,9 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.unequipNBCOutfit = function( self )
-    meKnowledge:RC( eRC_TenueProtectionNBCEnlevee )
+    integration.pionRC( eRC_TenueProtectionNBCEnlevee )
     if myself.NBCAlert == true then
-        meKnowledge:RC( eRC_FinAlerteNBCNiveau4 )
+        integration.pionRC( eRC_FinAlerteNBCNiveau4 )
         F_Pion_SeteEtatNbc( self.source, eEtatNbc_Niv0 )
         myself.NBCAlert = false
     end
@@ -134,7 +134,7 @@ eEtatRadio_Silence_Partiel = 2
 -- @author MGD
 -- @release 2010-04-27
 integration.switchOffRadio = function( self )
-    meKnowledge:RC( eRC_DebutSilenceRadio )
+    integration.pionRC( eRC_DebutSilenceRadio )
     F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence )
     DEC_Agent_PasserEnSilenceRadio()
 end
@@ -143,7 +143,7 @@ end
 -- @author HBD
 -- @release 2010-06-25
 integration.switchEmitOnlyOffRadio = function( self )
-    meKnowledge:RC( eRC_DebutSilencePartielRadio )
+    integration.pionRC( eRC_DebutSilencePartielRadio )
     F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence_Partiel )
     DEC_Agent_PasserEnSilenceRadioPartiel()
 end
@@ -152,7 +152,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.switchOnRadio = function( self )
-    meKnowledge:RC( eRC_FinSilenceRadio )
+    integration.pionRC( eRC_FinSilenceRadio )
     F_Pion_SeteEtatRadio( self.source, eEtatRadio_Ouverte )
     DEC_Agent_ArreterSilenceRadio()
 end
@@ -162,7 +162,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.switchOffRadar = function( self )
-    meKnowledge:RC( eRC_DebutSilenceRadar )
+    integration.pionRC( eRC_DebutSilenceRadar )
     F_Pion_SeteEtatRadar( self.source, eEtatRadar_Silence )
     DEC_Perception_DesactiverRadar( eRadarType_Radar )
     DEC_Perception_DesactiverRadar( eRadarType_Ecoute )
@@ -173,7 +173,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.switchOnRadar = function( self )
-    meKnowledge:RC( eRC_FinSilenceRadar )
+    integration.pionRC( eRC_FinSilenceRadar )
     F_Pion_SeteEtatRadar( self.source, eEtatRadar_Ouvert )
     DEC_Perception_ActiverRadar( eRadarType_Radar )
     DEC_Perception_ActiverRadar( eRadarType_Ecoute )
@@ -426,7 +426,7 @@ integration.startActivateDrone = function ( self, alreadyDeployed )
     integration.setAvailableDrones()
 	myself.Deployed = false
     if myself.droneAvailable == nil then
-        meKnowledge:RC( eRC_PasDeDroneDisponible )
+        integration.pionRC( eRC_PasDeDroneDisponible )
         if not integration.isCommanderEngaged() then
             meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
         end
@@ -434,7 +434,7 @@ integration.startActivateDrone = function ( self, alreadyDeployed )
 	    if alreadyDeployed == nil or alreadyDeployed == false then
 		    DEC_Agent_Deploy()
 		end
-		meKnowledge:RC( eRC_DebutMiseEnOeuvreDrone )
+		integration.pionRC( eRC_DebutMiseEnOeuvreDrone )
 	end
 end
 
@@ -443,7 +443,7 @@ integration.startedActivateDrone = function ( self )
         myself.Deployed = true
         integration.setUAVDeployed( myself.droneAvailable, true ) -- mandatory to permit the flight
         local droneKn = CreateKnowledge( integration.ontology.types.agent, myself.droneAvailable )
-        meKnowledge:RC( eRC_FinMiseEnOeuvreDrone )
+        integration.pionRC( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
         meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
         return true
@@ -659,7 +659,7 @@ integration.activateRadar = function ( area )
         myself.zoneAEcouter = area.source
         myself.radarActivated = true
 
-        meKnowledge:RC( eRC_DebutSurveillance )
+        integration.pionRC( eRC_DebutSurveillance )
         return true
     else
         return false
@@ -679,7 +679,7 @@ integration.deactivateRadar = function ( area )
         integration.disableRadarOnLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
         myself.radarActivated = false
 
-        meKnowledge:RC( eRC_FinSurveillance )	
+        integration.pionRC( eRC_FinSurveillance )	
         return true
     else
         return false
@@ -697,7 +697,7 @@ integration.startActivateRadarTirIndirect = function ( area )
     area[myself].actionRadar = DEC_Perception_ActiverPerceptionTirsIndirect( area.source )
     actionCallbacks[ area[myself].actionRadar ] = function( arg ) area[myself].actionRadar = arg end
 
-    meKnowledge:RC( eRC_DebutSurveillance )
+    integration.pionRC( eRC_DebutSurveillance )
 end
 -- -------------------------------------------------------------------------------- 
 -- Desactivate radar for indirect fire on area
@@ -708,7 +708,7 @@ end
 integration.stopActivateRadarTirIndirect = function ( area )
     area[myself] = area[myself] or {} 
     if area[myself].actionRadar == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinSurveillance )
+        integration.pionRC( eRC_FinSurveillance )
     end  
     if area[myself].actionRadar then
         area[myself].actionRadar = DEC_Perception_DesactiverPerceptionTirsIndirect( area[myself].actionRadar )
@@ -755,12 +755,12 @@ integration.decreaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceBaisseProduction( resourceNode.source, quantity )
 end
 integration.enable = function( resourceNode )
-    meKnowledge:RC( eRC_ResourceNodeEnabled )
+    integration.pionRC( eRC_ResourceNodeEnabled )
     integration.enableResourceNode( resourceNode.source ) 
     return true
 end
 integration.disable = function( resourceNode )
-    meKnowledge:RC( eRC_ResourceNodeDisabled )
+    integration.pionRC( eRC_ResourceNodeDisabled )
     integration.disableResourceNode( resourceNode.source ) 
     return true
 end
@@ -908,7 +908,7 @@ end
 integration.activateSpecialSensors = function( area, eType )
     area[ myself ] = area[ myself ] or {}
     area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
-    meKnowledge:RC( eRC_DebutSurveillance )
+    integration.pionRC( eRC_DebutSurveillance )
     return true
 end
 
@@ -918,7 +918,7 @@ end
 integration.deactivateSpecialSensors = function( area, eType )
     if area[ myself ].actionRadar then
         area[ myself ].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eType, area[ myself ].actionRadar )
-        meKnowledge:RC( eRC_FinSurveillance )
+        integration.pionRC( eRC_FinSurveillance )
     end
 end
 

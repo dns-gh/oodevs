@@ -129,7 +129,7 @@ integration.updateBuildIt = function( object, returnActionDone )
             if returnActionDone then
                 return eRC_FinTravauxObjet
             end
-            meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
+            integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
         end
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
         object[myself].actionBuildState = nil
@@ -152,7 +152,7 @@ integration.stopBuildIt = function( object )
 
     if object[ myself ].actionBuildState == eActionObjetTerminee then
     if( object.knowledge ~= nil ) then
-            meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
+            integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
         end
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
         object[myself].actionBuildState = nil
@@ -170,7 +170,7 @@ end
 integration.stopBuildItUrbanBlock = function( urbanBlock )
     urbanBlock[myself] = urbanBlock[myself] or {}
     if urbanBlock[myself].actionBuildState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinTravauxBlocUrbain )
+        integration.pionRC( eRC_FinTravauxBlocUrbain )
     else
         DEC_Trace( "pause work build" )
     end
@@ -319,7 +319,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
     if checkpoint == nil then -- need to create a checkpoint object
         DEC_MagicGetOrCreateObject( eTypeObjectCheckpoint, localisation )
         end
-        meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
+        integration.pionRC( eRC_MiseEnPlaceFiltrage )
     end
     meKnowledge.checkPointForFilterCrowd = nil
     meKnowledge.localisationForFilterCrowd = nil
@@ -367,7 +367,7 @@ integration.destroyInstantlyCheckpointOn = function( position )
     if position.constructedObject  then 
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) > 0 then
             DEC__StopAction( position.constructedObject.actionAnimation )
-            meKnowledge:RC( eRC_FinAnimationObjet, position.constructedObject )
+            integration.pionRC( eRC_FinAnimationObjet, position.constructedObject )
     end
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) == 0 then
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
@@ -454,7 +454,7 @@ integration.animateDecontaminatePlot = function( position ) -- Appeler à chaque 
         if not position.constructedObject then
             position.constructedObject = DecontaminatePlot
             position.constructedObject.actionAnimation = DEC__StartAnimerObjet( position.constructedObject )
-            meKnowledge:RC( eRC_SiteDecontaminationAnime )
+            integration.pionRC( eRC_SiteDecontaminationAnime )
         end
     end
 end
@@ -463,12 +463,12 @@ integration.destroyInstantlyDecontaminatePlotOn = function( position )
     if position.constructedObject  then 
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) > 0 then
             DEC__StopAction( position.constructedObject.actionAnimation )
-            meKnowledge:RC( eRC_FinAnimationObjet, position.constructedObject )
+            integration.pionRC( eRC_FinAnimationObjet, position.constructedObject )
     end
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) == 0 then
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
             DEC_DetruireObjetSansDelais( position.constructedObject ) -- destroy it
-            meKnowledge:RC( eRC_SiteDecontaminationDesactive )
+            integration.pionRC( eRC_SiteDecontaminationDesactive )
             position.constructedObject = nil
         end
     end
@@ -478,7 +478,7 @@ end
 -- Mobility affect
 -- --------------------------------------------------------------------------------
 integration.startAffectMobility = function( target, affectionType )
-    meKnowledge:RC( eRC_DebutTravaux )
+    integration.pionRC( eRC_DebutTravaux )
     target[myself] = target[myself] or {}
     local genObject = DEC_CreateDynamicGenObject( affectionType, target:getLocalisation(), true )
     target[myself].actionBuild = DEC_StartCreateObject( genObject )
@@ -497,7 +497,7 @@ integration.stopAffectMobility = function( target )
     target[myself] = target[myself] or {}
     target[myself].actionBuild = DEC__StopAction( target[myself].actionBuild )
     target[myself].actionBuildState = nil
-    meKnowledge:RC( eRC_FinTravaux )
+    integration.pionRC( eRC_FinTravaux )
     return true
 end
 
@@ -513,7 +513,7 @@ end
 -- Equip a crossing site with a bridge
 -- --------------------------------------------------------------------------------
 integration.startEquipBridge = function( site, typePont )
-    meKnowledge:RC( eRC_DebutTravaux )
+    integration.pionRC( eRC_DebutTravaux )
     site[myself] = site[myself] or {}
     local genObject = DEC_CreateDynamicGenObject( typePont, site:getLocalisation(), true )
     site[myself].actionBuild = DEC_StartCreateObject( genObject )
@@ -531,8 +531,8 @@ integration.stopEquipBridge = function( site, typePont )
     site[myself] = site[myself] or {}
     site[myself].actionBuild = DEC__StopAction( site[myself].actionBuild )
     site[myself].actionBuildState = nil
-    meKnowledge:RC( eRC_FinTravaux )
-    meKnowledge:RC( eRC_DebutExploitationSiteFranchissement )
+    integration.pionRC( eRC_FinTravaux )
+    integration.pionRC( eRC_DebutExploitationSiteFranchissement )
     return true
 end
 
@@ -541,7 +541,7 @@ integration.unEquipSite = function( site )
     if( DEC_IsValidKnowledgeObject( site[myself].bridge ) ) then
         DEC_DetruireObjetSansDelais( site[myself].bridge )
         site[myself].bridge = nil
-        meKnowledge:RC( eRC_FinExploitationSiteFranchissement )
+        integration.pionRC( eRC_FinExploitationSiteFranchissement )
     end
 end
 
@@ -551,7 +551,7 @@ end
 
 -- $$$ MIA temp for Secu, à merger avec military
 integration.startFilterCrowds = function( intensity, checkpoint )
-    meKnowledge:RC( eRC_ControlPointEstablished )
+    integration.pionRC( eRC_ControlPointEstablished )
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
 integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule fois.

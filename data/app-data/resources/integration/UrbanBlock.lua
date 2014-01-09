@@ -7,9 +7,9 @@ local maxEvacuationDelay  = 10
 integration.alertUrbanBlock = function( urbanBlock )
     if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
         DEC_Agent_Alert( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-        meKnowledge:RC( eRC_ObjectiveAlerted )
+        integration.pionRC( eRC_ObjectiveAlerted )
     else
-        meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+        integration.pionRC( eRC_NoPopulationInUrbanBlock )
         meKnowledge:sendMessage( "the urban block is not inhabited, population cannot be alerted" )
     end
     return true
@@ -18,9 +18,9 @@ end
 integration.undoAlertUrbanBlock = function( urbanBlock )
     if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
         DEC_Agent_UndoAlert( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-        meKnowledge:RC( eRC_ObjectiveIsNoLongerAlerted )
+        integration.pionRC( eRC_ObjectiveIsNoLongerAlerted )
     else
-        meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+        integration.pionRC( eRC_NoPopulationInUrbanBlock )
         meKnowledge:sendMessage( "the urban block is not inhabited" )
     end
     return true
@@ -36,10 +36,10 @@ integration.confineUrbanBlock = masalife.brain.integration.startStopAction(
     start   = function( urbanBlock )
                 if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
                     urbanBlock.confinementDelay_ = 1
-                    meKnowledge:RC( eRC_ZoneConfinementInProgress )
+                    integration.pionRC( eRC_ZoneConfinementInProgress )
                 else
                     meKnowledge:sendMessage( "the urban block is not inhabited, population cannot be confined" )
-                    meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+                    integration.pionRC( eRC_NoPopulationInUrbanBlock )
                 end
               end,
     started = function( urbanBlock )
@@ -47,7 +47,7 @@ integration.confineUrbanBlock = masalife.brain.integration.startStopAction(
                     if urbanBlock.confinementDelay_ == maxConfinementDelay 
                         or DEC_Agent_IsAlerted( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) then
                         DEC_Agent_Confine( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) 
-                        meKnowledge:RC( eRC_ObjectiveConfined )
+                        integration.pionRC( eRC_ObjectiveConfined )
                         return true
                     else
                         urbanBlock.confinementDelay_ = urbanBlock.confinementDelay_ + 1
@@ -63,10 +63,10 @@ integration.confineUrbanBlock = masalife.brain.integration.startStopAction(
 integration.undoConfineUrbanBlock = function( urbanBlock ) 
     if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
         DEC_Agent_UndoConfine( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-        meKnowledge:RC( eRC_ObjectiveIsNoLongerConfined )
+        integration.pionRC( eRC_ObjectiveIsNoLongerConfined )
     else
         meKnowledge:sendMessage( "the urban block is not inhabited" )
-        meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+        integration.pionRC( eRC_NoPopulationInUrbanBlock )
     end
     return true
 end
@@ -80,10 +80,10 @@ integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction(
     start   = function( urbanBlock )
                 if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
                     urbanBlock.evacuationDelay_ = 1
-                    meKnowledge:RC( eRC_ZoneEvacuationInProgress )
+                    integration.pionRC( eRC_ZoneEvacuationInProgress )
                 else
                     meKnowledge:sendMessage( "the urban block is not inhabited" )
-                    meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+                    integration.pionRC( eRC_NoPopulationInUrbanBlock )
                 end
               end,
     started = function( urbanBlock )
@@ -91,7 +91,7 @@ integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction(
                     if urbanBlock.evacuationDelay_ == maxEvacuationDelay 
                     or DEC_Agent_IsAlerted( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) then
                         DEC_Agent_Evacuate( DEC_PolygoneBlocUrbain( urbanBlock.source ) ) 
-                        meKnowledge:RC( eRC_ObjectiveEvacuated )
+                        integration.pionRC( eRC_ObjectiveEvacuated )
                         return true
                     else
                         urbanBlock.evacuationDelay_ = urbanBlock.evacuationDelay_ + 1
@@ -107,10 +107,10 @@ integration.evacuateUrbanBlock = masalife.brain.integration.startStopAction(
 integration.undoEvacuateUrbanBlock = function( urbanBlock )
     if DEC_Agent_UrbanBlockIsPopulated( urbanBlock.source ) then
         DEC_Agent_UndoEvacuate( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-        meKnowledge:RC( eRC_ObjectiveIsNoLongerEvacuated )
+        integration.pionRC( eRC_ObjectiveIsNoLongerEvacuated )
     else
         meKnowledge:sendMessage( "the urban block is not inhabited" )
-        meKnowledge:RC( eRC_NoPopulationInUrbanBlock )
+        integration.pionRC( eRC_NoPopulationInUrbanBlock )
     end
     return true 
 end

@@ -25,7 +25,7 @@ end
 -- @release 2010-09-07
 integration.relieveIt = function( object )
     if DEC_ReleverPion( object.source ) then
-        meKnowledge:RC( eRC_Releve, object.source )
+        integration.pionRC( eRC_Releve, object.source )
         return true
     end
     return false
