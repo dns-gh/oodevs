@@ -522,12 +522,12 @@ void MIL_Population::UpdateState()
 {
     try
     {
+        trashedConcentrations_.clear();
+        trashedFlows_.clear();
         Update( flows_, trashedFlows_ );
         Update( concentrations_, trashedConcentrations_ );
         if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
             UpdateBarycenter();
-        trashedConcentrations_.clear();
-        trashedFlows_.clear();
     }
     catch( const std::exception& e )
     {
