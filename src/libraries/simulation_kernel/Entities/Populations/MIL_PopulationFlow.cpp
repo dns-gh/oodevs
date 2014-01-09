@@ -12,6 +12,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationType.h"
+#include "MIL_FlowCollisionManager.h"
 #include "Decision/DEC_Population_Path.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathPoint.h"
@@ -34,6 +35,8 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_PopulationManager.h"
+#include "simulation_terrain/TER_PopulationFlowManager.h"
 #include "Tools/MIL_Tools.h"
 #include <boost/make_shared.hpp>
 
@@ -81,6 +84,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
+    , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -113,6 +117,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
+    , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
 {
     IT_PointList itSplit = std::find( flowShape_.begin(), flowShape_.end(), splitPoint );
     if( itSplit != flowShape_.end() )
@@ -145,6 +150,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
+    , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
 {
     // NOTHING
 }
@@ -415,6 +421,30 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::Split
+// Created: JSR 2014-01-08
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow* MIL_PopulationFlow::Split( T_PointList ::const_iterator it, const MT_Vector2D& point )
+{
+    assert( canCollideWithFlow_ );
+    const double rDensityBeforeSplit = GetDensity();
+    auto insertIt = std::find( flowShape_.begin(), flowShape_.end(), point );
+    if( insertIt == flowShape_.end() )
+        insertIt = flowShape_.insert( it, point );
+    MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, point );
+    newFlow.pHeadPath_.reset();
+    flowShape_.erase( ++insertIt, flowShape_.end() );
+
+    assert( flowShape_.size() >= 2 );
+    bFlowShapeUpdated_ = true;
+    UpdateLocation();
+    const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
+    newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
+    UpdateDensity();
+    return &newFlow;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ManageSplit
 // Created: NLD 2007-03-02
 // -----------------------------------------------------------------------------
@@ -489,6 +519,11 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
+    if( canCollideWithFlow_ && !MIL_FlowCollisionManager::GetInstance().CanMove( this ) )
+    {
+        MIL_FlowCollisionManager::GetInstance().Execute();
+        return; 
+    }
     if( ! CanMove() )
         return;
     if( ManageSplit() )
@@ -516,7 +551,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
     SetHeadPosition( position );
-    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ &&
+    if( ( bHeadMoveFinished_ || ( !canCollideWithFlow_ && rSpeed == 0 ) ) && !pDestConcentration_ &&
         ( !pSourceConcentration_ || !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) ) )
     {
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
@@ -547,6 +582,46 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
+
+    if( canCollideWithFlow_ )
+    {
+        // todo : extract in method, refactor, simplify
+        CIT_PointList itStart = flowShape_.begin();
+        CIT_PointList itEnd   = itStart;
+        ++itEnd;
+        bool done = false;
+        for( ; itEnd != flowShape_.end(); ++itStart, ++itEnd )
+        {
+            TER_PopulationFlowManager::T_PopulationFlowVector flows;
+            TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListIntersectingLine( *itStart, *itEnd, flows );
+            for( auto it = flows.begin(); it != flows.end(); ++it )
+            {
+                if( *it != this )
+                {
+                    MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
+                    const T_PointList& points = flow->GetFlowShape();
+                    CIT_PointList itPointStart = points.begin();
+                    CIT_PointList itPointEnd   = itPointStart;
+                    ++itPointEnd;
+                    MT_Line line( *itStart, *itEnd );
+                    for( ; itPointEnd != points.end(); ++itPointStart, ++itPointEnd )
+                    {
+                        MT_Vector2D intersection;
+                        if( MT_Line( *itPointStart, *itPointEnd ).Intersect2D( line, intersection ) == eDoIntersect )
+                        {
+                            MIL_FlowCollisionManager::GetInstance().AddCollision( this, static_cast< MIL_PopulationFlow* >( *it ), itPointEnd, intersection );
+                            done = true;
+                            break;
+                        }
+                    }
+                    if( done )
+                        break;
+                }
+            }
+            if( done )
+                break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -592,6 +667,8 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetMaxSpeed() const
 {
+    if( canCollideWithFlow_ && !MIL_FlowCollisionManager::GetInstance().CanMove( this ) )
+        return 0;
     return GetPopulation().GetMaxSpeed();
 }
 

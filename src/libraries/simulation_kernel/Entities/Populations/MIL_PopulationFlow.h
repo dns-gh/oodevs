@@ -50,6 +50,7 @@ public:
     void MoveAlong( const MT_Vector2D& destination );
     void CancelMove();
     virtual bool IsReady() const;
+    MIL_PopulationFlow* Split( T_PointList ::const_iterator it, const MT_Vector2D& point );
     //@}
 
     //! @name Accessors
@@ -170,6 +171,7 @@ private:
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
     bool bBlocked_;
+    bool canCollideWithFlow_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
     const MIL_Object_ABC* pBlockingObject_;

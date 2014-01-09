@@ -98,6 +98,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , attritionData_        ()
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
     , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
+    , canCollideWithFlow_( false )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
@@ -150,6 +151,7 @@ MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model, double rConc
     , rChildren_( 0. )
     , pModel_( &model )
     , decontaminationDelay_( 0. )
+    , canCollideWithFlow_( false )
 {
     // NOTHING
 }
@@ -499,4 +501,13 @@ double MIL_PopulationType::GetDelay() const
 double MIL_PopulationType::GetDecontaminationDelay() const
 {
     return decontaminationDelay_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::CanCollideWithFlow
+// Created: JSR 2014-01-09
+// -----------------------------------------------------------------------------
+bool MIL_PopulationType::CanCollideWithFlow() const
+{
+    return canCollideWithFlow_;
 }
