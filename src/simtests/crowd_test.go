@@ -268,11 +268,14 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 		return len(data.Crowds[crowd.Id].CrowdElements) == 2
 	})
 
-	// Teleport the crowd, the flow is destroyed
+	// Teleport the crowd, the flow and concentrations are destroyed
+	// A new concentration is created, a new flow too when the crowd
+	// restarts its movement.
 	teleport := swapi.Point{X: -15.8193, Y: 128.3456}
 	knownElements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
 	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), teleport)
 	c.Assert(err, IsNil)
+	step(1)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		elements := data.Crowds[crowd.Id].CrowdElements
 		for id, _ := range elements {
@@ -280,13 +283,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 				return false
 			}
 		}
-		return len(elements) == 1
-	})
-
-	// Check crowd restarts its movement, a flow is recreated
-	step(1)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return len(data.Crowds[crowd.Id].CrowdElements) == 2
+		return len(elements) > 1
 	})
 }
 
