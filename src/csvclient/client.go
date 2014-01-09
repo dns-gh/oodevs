@@ -133,7 +133,12 @@ func main() {
 	client.Model.WaitReady(2 * time.Second)
 	data := client.Model.GetData()
 
-	outName := *out + "-orbat.csv"
+	WriteOrbat(*out, *data, *resources)
+	//TODO: output a list of logistic subordinates of 'root' parameter (id unit type/number)
+}
+
+func WriteOrbat(out string, data swapi.ModelData, resources swadn.Resources) {
+	outName := out + "-orbat.csv"
 	outFile, err := os.Create(outName)
 	if err != nil {
 		log.Fatalf("Error creating %s %s", outName, err)
@@ -156,5 +161,4 @@ func main() {
 		}
 	}
 	writer.Flush()
-	//TODO: output a list of logistic subordinates of 'root' parameter (id unit type/number)
 }
