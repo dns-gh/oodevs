@@ -1824,14 +1824,28 @@ func CreateTransportedAndCarrier(c *C, client *swapi.Client) (*swapi.Unit, *swap
 	transported, err := client.CreateUnit(automat.Id, 8, pos)
 	c.Assert(err, IsNil)
 
-	// AIR.Transport Helicopter Patrol
-	carrier, err := client.CreateUnit(automat.Id, 7, pos)
+	// AAVN.Cargo helicopters patrol
+	carrier, err := client.CreateUnit(automat.Id, 115, pos)
 	c.Assert(err, IsNil)
 
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
 
 	return transported, carrier
+}
+
+func makeRectPoints(center swapi.Point, width, height float64) []swapi.Point {
+	x := center.X
+	y := center.Y
+	hw := 0.5 * width
+	hh := 0.5 * height
+	return []swapi.Point{
+		{x - hw, y - hh},
+		{x - hw, y + hh},
+		{x + hw, y + hh},
+		{x + hw, y - hh},
+		{x - hw, y - hh},
+	}
 }
 
 func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit) {
@@ -1850,11 +1864,15 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 	_, err := client.SendUnitOrder(transported.Id, 44528, params)
 	c.Assert(err, IsNil)
 
-	// Mission 'LEG_AIR - helitransport' on the carrier
-	params = swapi.MakeParameters(heading, nil, nil, nil, swapi.MakeAgent(transported.Id),
-		swapi.MakePointParam(to), dest, dest,
-		nil, swapi.MakeBoolean(false), swapi.MakeEnumeration(0))
-	_, err = client.SendUnitOrder(carrier.Id, 13, params)
+	// Mission 'AAVN - Air lift'
+	params = swapi.MakeParameters(heading, nil, nil, nil,
+		swapi.MakeAgent(transported.Id),
+		swapi.MakePolygonParam(makeRectPoints(pos, 0.0001, 0.0001)...),
+		swapi.MakeLinePathParam(pos, to),
+		dest,
+		swapi.MakeBoolean(false),
+	)
+	_, err = client.SendUnitOrder(carrier.Id, 445949276, params)
 	c.Assert(err, IsNil)
 }
 
