@@ -115,6 +115,16 @@ bool EventPresenter::IsCurrentEvent( const gui::Event& event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventPresenter::Draw
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+void EventPresenter::Draw( gui::Viewport_ABC& viewport ) const
+{
+    if( HasCurrentPresenter() )
+        GetCurrentPresenter().Draw( viewport );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventPresenter::Purge
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------

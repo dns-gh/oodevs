@@ -122,6 +122,7 @@ namespace
         MOCK_METHOD( BuildView, 0 );
         MOCK_METHOD( Purge, 0 );
         MOCK_METHOD( Clear, 0 );
+        MOCK_METHOD( Draw, 1 );
     };
 
     const QDateTime first_date = QDateTime::fromString( "2013-12-06T19:20:30", Qt::ISODate );

@@ -24,6 +24,7 @@ namespace gui
 {
     template< typename T > class EventView_ABC;
     class Event;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  EventPresenter_ABC
@@ -68,6 +69,7 @@ public:
     virtual void BuildView() = 0;
     virtual void Purge() = 0; // reset all
     virtual void Clear() = 0; // reset content
+    virtual void Draw( gui::Viewport_ABC& viewPort ) const = 0;
     //@}
 
     //! @name Types
@@ -121,6 +123,10 @@ protected:
         view_.BlockSignals( true );
         view_.Purge();
         view_.BlockSignals( false );
+    }
+    virtual void Draw( gui::Viewport_ABC& viewPort ) const
+    {
+        view_.Draw( viewPort );
     }
     //@}
 

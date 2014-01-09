@@ -214,6 +214,7 @@ void EventDockWidget::SetContentVisible( bool visible )
 // -----------------------------------------------------------------------------
 void EventDockWidget::Draw( gui::Viewport_ABC& viewport )
 {
+    presenter_->Draw( viewport );
     ApplyToViews( boost::bind( &gui::EventDefaultView_ABC::Draw, _1, boost::ref( viewport ) ) );
 }
 
