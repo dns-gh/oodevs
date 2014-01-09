@@ -184,10 +184,11 @@ func (resources *Resources) ReadNormalizedConsumptions(physical PhysicalFile) (*
 				if result.Consumptions[unit.Id] == nil {
 					result.Consumptions[unit.Id] = &ResourceConsumption{}
 				}
-				if result.Consumptions[unit.Id].Consumption == nil {
-					result.Consumptions[unit.Id].Consumption = make(map[uint32]uint32)
+				currentConsumptions := result.Consumptions[unit.Id]
+				if currentConsumptions.Consumption == nil {
+					currentConsumptions.Consumption = make(map[uint32]uint32)
 				}
-				result.Consumptions[unit.Id].Consumption[id] += count * consumption.Consumption
+				currentConsumptions.Consumption[id] += count * consumption.Consumption
 			}
 		}
 	}
