@@ -134,6 +134,7 @@ func main() {
 	data := client.Model.GetData()
 
 	WriteOrbat(*out, data, *resources, uint32(*root))
+	WriteNumberOfUnits(*out, data, uint32(*root))
 }
 
 func WriteOrbat(out string, data *swapi.ModelData, resources swadn.Resources, root uint32) {
@@ -194,4 +195,28 @@ func isFormationLogisticSubordinate(data *swapi.ModelData, id uint32, root uint3
 		}
 	}
 	return isFormationLogisticSubordinate(data, formation.ParentId, root)
+}
+
+func WriteNumberOfUnits(out string, data *swapi.ModelData, root uint32) {
+	amounts := map[uint32]uint32{}
+	for _, unit := range data.Units {
+		if isLogisticSubordinate(data, unit, root) {
+			amounts[unit.Type] = amounts[unit.Type] + 1
+		}
+	}
+	outName := out + "-numbers.csv"
+	outFile, err := os.Create(outName)
+	if err != nil {
+		log.Fatalf("Error creating %s %s", outName, err)
+	}
+	defer outFile.Close()
+	writer := csv.NewWriter(outFile)
+	writer.Comma = ';'
+	record := []string{"Id Type Unité", "Nombre"}
+	writer.Write(record)
+	for id, amount := range amounts {
+		record = []string{UintToString(id), UintToString(amount)}
+		writer.Write(record)
+	}
+	writer.Flush()
 }
