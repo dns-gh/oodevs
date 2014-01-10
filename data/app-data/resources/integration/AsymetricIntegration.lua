@@ -2,9 +2,9 @@
 ---- ASYMETRIC INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
---- Allows the agent to become stealthy or not
+--- Allows the agent to become stealthy or visible
 -- When unit is stealthy, other agents cannot perceive it.
--- Become visible is effective 2 ticks later if no order to stay stealthy is given during this delay
+-- Becoming visible is effective 2 ticks later if no order to stay stealthy is given during this delay
 -- @see OnNewTick in CRTaskListener.lua
 -- @param beStealth Boolean, whether or not the unit will be stealthy
 -- @return nothing
@@ -21,15 +21,14 @@ integration.setStealth = function( beStealth )
             myself.lastStealth = stealthFactor
         end
         myself.wantedVisible = false
-        myself.stealthTick = 0 -- reinit number of ticks
+        myself.stealthTick = 0 -- reinit number of ticks for OnNewTick method in CRTaskListener.
         return
     end
 end
 
 --- Returns true if agent is stealthy, false otherwise
--- @param self the agent knowledge
--- @return Boolean, whether or not the knowlegde is stealthy
-integration.isStealth = function( self )
+-- @return Boolean, whether or not this entity is stealthy
+integration.isStealth = function( )
     return DEC_Perception_EstFurtif()
 end
 
@@ -97,9 +96,9 @@ integration.stopAttackIt = function( target, suicide, dotation )
     return true
 end
 
---- Allows the agent to commit suicide
--- @param self the knowledge
-integration.commitSuicide = function( self )
+--- Allows the entity to commit suicide
+-- Note that this method can only be called by an agent
+integration.commitSuicide = function( )
     DEC_Suicide()
 end
 
@@ -137,17 +136,13 @@ integration.isInFiringRangeForDotation = function( target, dotation )
     return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source, 0.9, dotation )
 end
 
---- Allows the agent to commit suicide
--- @param agent Directia agent knowledge
-integration.selfDestruct = function( agent )
-    DEC_Suicide()
-end
+--- Deprecated
+integration.selfDestruct = integration.commitSuicide
 
 --- Informs that the agent knowledge take into account refugees
 -- A report is sent
--- @param unit Directia agent knowledge
 -- @return true
-integration.takeAsRefugee = function( unit )
+integration.takeAsRefugee = function( )
     -- $$$ MIA TODO
     reportFunction(eRC_OrientationPopulationVersCampRefugies )
     return true
@@ -155,9 +150,8 @@ end
 
 --- Informs that the agent knowledge takes into account prisoners
 -- A report is sent
--- @param unit Directia agent knowledge
 -- @return true
-integration.takeAsPrisoner = function( unit )
+integration.takeAsPrisoner = function( )
     -- $$$ MIA TODO
     reportFunction(eRC_OrientationEnnemiRenduVersCampPrisonniers )
     return true
@@ -165,12 +159,11 @@ end
 
 --- Informs that the agent knowledge has executed a terrorist attempt
 -- A report is sent
--- @param self the knowledge
-integration.attackReport = function( self )
+integration.attackReport = function( )
     reportFunction(eRC_ExecutionAttentat )
 end
 
---- Allows the agent to capture the provide agent knowledges
+--- Allows the agent to capture the provided agent knowledges
 -- The goal is to capture terrorists. They become 'hostage'
 -- The hostages lose their freedom of action. They don't share their knowledges information with their knowledge group
 -- The hostages are transported by the agent
@@ -198,7 +191,7 @@ integration.capture = function( units, message )
 end
 
 --- Hostages are released
--- The provided agent knowledges 'hostages' are free and can sharing their knowledges with their knowledge group
+-- The provided agent knowledges 'hostages' are free and can share their knowledges with their knowledge group
 -- A report is sent by the hostages
 -- @param units, list of DirectIA agent knowledges
 -- @param message, report enum
@@ -222,7 +215,7 @@ end
 
 --- Allows the unit to drop off the provided agent knowledge
 -- The agent knowledge is instantaneously dropped off at the location of the unit
--- The agent knowledge is always an 'hostage" without any freedom of action
+-- The agent knowledge is always an 'hostage' without any freedom of action
 -- A report is sent by the unit 
 -- @param unit Directia agent knowledge
 -- @return true
