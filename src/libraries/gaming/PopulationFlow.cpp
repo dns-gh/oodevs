@@ -34,6 +34,7 @@ PopulationFlow::PopulationFlow( const sword::CrowdFlowCreation& message, const C
     , nContaminatedHumans_( 0 )
     , nDeadHumans_        ( 0 )
     , rDensity_           ( 0 )
+    , attitude_           ( static_cast< E_PopulationAttitude > ( 0 ) )
 {
     AddExtension( *this );
 }
