@@ -40,33 +40,34 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include <boost/make_shared.hpp>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/scoped_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
-#define APPLY_ON_CONCENTRATIONS_NAME( functor, name ) \
+#define APPLY_ON_CONCENTRATIONS_NAME( expression, name ) \
     for( std::size_t i = 0; i < concentrations_.size(); ++i ) \
     { \
         MIL_PopulationConcentration& name = *concentrations_[ i ]; \
-        functor \
+        expression \
     }
 
-#define APPLY_ON_FLOWS_NAME( functor, name ) \
+#define APPLY_ON_FLOWS_NAME( expression, name ) \
     for( std::size_t i = 0; i < flows_.size(); ++i ) \
     { \
         MIL_PopulationFlow& name = *flows_[ i ]; \
-        functor \
+        expression \
     }
 
-#define APPLY_ON_CONCENTRATIONS( functor ) \
-    APPLY_ON_CONCENTRATIONS_NAME( functor, concentration )
+#define APPLY_ON_CONCENTRATIONS( expression ) \
+    APPLY_ON_CONCENTRATIONS_NAME( expression, concentration )
 
-#define APPLY_ON_FLOWS( functor ) \
-    APPLY_ON_FLOWS_NAME( functor, flow )
+#define APPLY_ON_FLOWS( expression ) \
+    APPLY_ON_FLOWS_NAME( expression, flow )
 
-#define APPLY_ON_ELEMENTS( functor ) \
+#define APPLY_ON_ELEMENTS( expression ) \
     { \
-        APPLY_ON_CONCENTRATIONS_NAME( functor, element ) \
-        APPLY_ON_FLOWS_NAME( functor, element ) \
+        APPLY_ON_CONCENTRATIONS_NAME( expression, element ) \
+        APPLY_ON_FLOWS_NAME( expression, element ) \
     }
 
 namespace
@@ -277,9 +278,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.GetId( GetID(), true );
-    MIL_AffinitiesMap* pAffinities;
-    MIL_DictionaryExtensions* pExtensions;
-    DEC_PopulationKnowledge* pKnowledge;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -296,14 +294,11 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> trashedFlows_
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
-         >> pKnowledge
+         >> pKnowledge_
          >> pKnowledgeGroup_
          >> bHasDoneMagicMove_
-         >> pAffinities
-         >> pExtensions;
-    pKnowledge_.reset( pKnowledge );
-    pAffinities_.reset( pAffinities );
-    pExtensions_.reset( pExtensions );
+         >> pAffinities_
+         >> pExtensions_;
     MT_Vector2D tmp;
     file >> tmp;
     vBarycenter_.reset( new MT_Vector2D( tmp ) );
@@ -321,9 +316,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const DEC_PopulationKnowledge* const pKnowledge = pKnowledge_.get();
-    const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
-    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
     file << pArmy_
@@ -340,11 +332,11 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << trashedFlows_
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
-         << pKnowledge
+         << pKnowledge_
          << pKnowledgeGroup_
          << bHasDoneMagicMove_
-         << pAffinities
-         << pExtensions
+         << pAffinities_
+         << pExtensions_
          << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }

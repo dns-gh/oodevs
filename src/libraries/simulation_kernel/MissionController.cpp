@@ -68,7 +68,7 @@ void MissionController::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MissionController::Start( const boost::shared_ptr< MIL_Mission_ABC >& mission )
 {
-    if( !mission )
+    if( !mission || mission->GetOwnerId() == 0 )
         return;
     Stop( mission );
     missions_[ mission->GetOwnerId() ] = mission;
