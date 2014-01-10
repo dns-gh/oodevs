@@ -56,7 +56,6 @@ namespace tools
 }
 
 class Model;
-class MissionParameters;
 class TaskerWidget;
 
 // =============================================================================
@@ -73,7 +72,6 @@ class EventOrderWidget : public EventOrderWidget_ABC
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< gui::Decisions_ABC >
                        , public tools::ElementObserver_ABC< actions::gui::Param_ABC >
-                       , public tools::ElementObserver_ABC< MissionParameters >
 {
     Q_OBJECT
 
@@ -113,7 +111,6 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const gui::Decisions_ABC& decisions );
     virtual void NotifyUpdated( const actions::gui::Param_ABC& param );
-    virtual void NotifyUpdated( const MissionParameters& extension );
     //@}
 
     //! @name Helpers
@@ -121,6 +118,9 @@ private:
     void OnOrderClicked( const kernel::Entity_ABC* entity );
     void OnTargetChanged( const kernel::Entity_ABC* entity );
     void AddReplaceTargetToMenu( kernel::ContextMenu& menu );
+
+    template< typename T >
+    void NotifyOrderReceived( const T& message, int context );
     //@}
 
 private slots:

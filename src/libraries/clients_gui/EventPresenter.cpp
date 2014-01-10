@@ -184,12 +184,19 @@ void EventPresenter::StartEdition( const gui::Event& event,
 // Name: EventPresenter::OnEventContentChanged
 // Created: ABR 2013-11-19
 // -----------------------------------------------------------------------------
-void EventPresenter::OnEventContentChanged()
+void EventPresenter::OnEventContentChanged( bool cleanWarning )
 {
     if( state_->mode_ == eEventDockModes_None )
         return;
     UpdateCurrent();
-    BuildViewAfterEdition();
+    ChangeMode( state_->mode_ == eEventDockModes_DisplayTriggered
+                    ? eEventDockModes_EditTriggered
+                    : state_->mode_,
+                false,
+                false,
+                cleanWarning ? Qt::transparent : state_->warningColor_,
+                cleanWarning ? "" : state_->warning_ );
+    BuildView();
 }
 
 // -----------------------------------------------------------------------------

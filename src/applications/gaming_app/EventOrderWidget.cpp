@@ -15,6 +15,7 @@
 
 #include "actions/Action_ABC.h"
 #include "actions/ActionError.h"
+#include "actions/ActionsModel.h"
 
 #include "actions_gui/MissionInterface.h"
 
@@ -43,7 +44,7 @@
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
-#include "gaming/MissionParameters.h"
+#include "gaming/LogTools.h"
 
 #include <timeline/api.h>
 #include <boost/make_shared.hpp>
@@ -125,6 +126,13 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
              &presenter_, SLOT( OnEventContentChanged() ) );
     connect( missionCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
              &presenter_, SLOT( OnEventContentChanged() ) );
+
+    model.actions_.RegisterHandler( [&]( const sword::SimToClient& message ) {
+        if( message.message().has_order_ack() )
+            NotifyOrderReceived( message.message().order_ack(), message.context() );
+        if( message.message().has_frag_order_ack() )
+            NotifyOrderReceived( message.message().frag_order_ack(), message.context() ); }
+    );
 
     controllers_.Register( *this );
 }
@@ -321,7 +329,10 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 void EventOrderWidget::NotifyUpdated( const gui::Decisions_ABC& decisions )
 {
     if( taskerWidget_->GetTasker() == &decisions.GetAgent() )
-        OnTargetChanged( taskerWidget_->GetTasker() );
+    {
+        orderPresenter_->OnTargetChanged( taskerWidget_->GetTasker() );
+        presenter_.OnEventContentChanged( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -334,28 +345,45 @@ void EventOrderWidget::NotifyUpdated( const actions::gui::Param_ABC& param )
         presenter_.OnEventContentChanged();
 }
 
-// -----------------------------------------------------------------------------
-// Name: EventOrderWidget::NotifyUpdated
-// Created: LGY 2013-08-29
-// -----------------------------------------------------------------------------
-void EventOrderWidget::NotifyUpdated( const MissionParameters& extension )
+namespace
 {
-    if( taskerWidget_->GetTasker() && taskerWidget_->GetTasker()->GetId() == extension.GetEntityId() )
+    unsigned long GetTaskerId( const sword::Tasker& tasker )
     {
-        const actions::Action_ABC* action = extension.GetLastMission();
-        if( action && action->GetContext() == orderPresenter_->GetLastContext() )
-        {
-            bool valid = action->IsValid();
-            std::string warningMsg = valid
+        if( tasker.has_automat() )
+            return tasker.automat().id();
+        else if( tasker.has_unit() )
+            return tasker.unit().id();
+        else if( tasker.has_crowd() )
+            return tasker.crowd().id();
+        else if( tasker.has_formation() )
+            return tasker.formation().id();
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::NotifyOrderReceived
+// Created: LGY 2014-01-06
+// -----------------------------------------------------------------------------
+template< typename T >
+void EventOrderWidget::NotifyOrderReceived( const T& message, int context )
+{
+    unsigned long id = GetTaskerId( message.tasker() );
+    if( taskerWidget_->GetTasker() && taskerWidget_->GetTasker()->GetId() == id &&
+        context == orderPresenter_->GetLastContext() )
+    {
+        bool valid = message.error_code() == sword::OrderAck_ErrorCode_no_error;
+        std::string warningMsg = valid
                 ? tr( "Order acknowledged" ).toStdString()
                 : tr( "Error" ).toStdString();
-            const QColor warningColor = valid ? Qt::darkGreen : Qt::red;
-            if( !valid )
-                if( const actions::ActionError* error = action->Retrieve< actions::ActionError >() )
-                    if( !error->GetError().empty() )
-                        warningMsg = error->GetError();
-            presenter_.OnWarningChanged( warningMsg, warningColor );
+        const QColor warningColor = valid ? Qt::darkGreen : Qt::red;
+        if( !valid )
+        {
+            std::string log = log_tools::Convert( message.error_code() );
+            if( !log.empty() )
+                warningMsg = log;
         }
+        presenter_.OnWarningChanged( warningMsg, warningColor );
     }
 }
 
