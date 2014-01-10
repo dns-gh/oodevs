@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ActionsScheduler.h"
 #include "Simulation.h"
+#include "SimulationController.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
@@ -24,10 +25,13 @@ using namespace kernel;
 // Name: ActionsScheduler constructor
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
-ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation, const actions::ActionsModel& actions, Publisher_ABC& publisher )
+ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation,
+                                    const actions::ActionsModel& actions, Publisher_ABC& publisher,
+                                    const SimulationController& simulationController )
     : QObject( parent )
     , controllers_( controllers )
     , simulation_( simulation )
+    , simulationController_( simulationController )
     , actions_( actions )
     , publisher_( publisher )
     , currentTime_()
@@ -69,7 +73,7 @@ void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
         {
             const QDateTime dateTime = timing->GetTime();
             if( timing->IsEnabled() && dateTime <= currentTime_ && dateTime.secsTo( currentTime_ ) < int( simulation_.GetTickDuration() ) )
-                action.Publish( publisher_, 0 );
+                simulationController_.PublishAction( action );
         }
     }
 }

@@ -201,7 +201,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d, *graphicPreferences_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
-    new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
+    new VisionConesToggler( controllers, simulationController, this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
@@ -226,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
-                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog ) );
+                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog, simulationController ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 

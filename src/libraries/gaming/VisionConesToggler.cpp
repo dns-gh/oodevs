@@ -11,6 +11,7 @@
 #include "VisionConesToggler.h"
 #include "Profile.h"
 #include "Simulation.h"
+#include "SimulationController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
@@ -22,14 +23,14 @@ using namespace kernel;
 // Name: VisionConesToggler constructor
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-VisionConesToggler::VisionConesToggler( Controllers& controllers, Publisher_ABC& publisher, QObject* parent )
+VisionConesToggler::VisionConesToggler( Controllers& controllers, const SimulationController& simulationController, QObject* parent )
     : QObject( parent )
-    , controllers_    ( controllers )
-    , publisher_      ( publisher )
-    , displayCones_   ( false )
-    , displaySurfaces_( false )
-    , displayFog_     ( false )
-    , connected_      ( false )
+    , controllers_         ( controllers )
+    , displayCones_        ( false )
+    , displaySurfaces_     ( false )
+    , displayFog_          ( false )
+    , connected_           ( false )
+    , simulationController_( simulationController )
 {
     controllers_.Register( *this );
 }
@@ -93,9 +94,5 @@ void VisionConesToggler::NotifyUpdated( const Simulation& simulation )
 void VisionConesToggler::SendControlEnableVisionCones()
 {
     if( connected_ )
-    {
-        simulation::ControlEnableVisionCones msg;
-        msg().set_vision_cones( displayCones_ || displaySurfaces_ || displayFog_ );
-        msg.Send( publisher_ );
-    }
+        simulationController_.SendEnableVisionCones( displayCones_ || displaySurfaces_ || displayFog_ );
 }
