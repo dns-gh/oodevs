@@ -382,7 +382,7 @@ QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& v
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "supply" );
 
-    ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tr( "Supply system" ), vInfosConnectors[ eIsLogSupply ], 1 );
+    ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tr( "Supply system" ), vInfosConnectors[ eIsLogSupply ], 3 );
 
     builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
