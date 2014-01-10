@@ -42,7 +42,7 @@ integration.porteePourAttentat = function( dotation )
 end
 
 --- Start an attack on target knowledge with given ammunition
--- The entity can commit a suicide attempt. In this case, he will die during the attack
+-- The entity can commit a suicide attack. In this case, he will die during the attack
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param suicide Boolean
 -- @param dotation simulation resource
@@ -83,7 +83,7 @@ integration.updateAttackIt = function( target, suicide, dotation )
 end
 
 --- Stop attack on the target knowledge
--- The simulation action of terrorist attempt is stopped
+-- The simulation action of terrorist attack is stopped
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param suicide Boolean
 -- @param dotation simulation resource
@@ -104,7 +104,7 @@ end
 --- Allows terrorist to attack the provided object knowledge
 -- The object will be degraded following the dotation used
 -- A report is sent 
--- The terrorist can commit a suicide attempt. In this case, he will die during the attack
+-- The terrorist can commit a suicide attack. In this case, he will die during the attack
 -- @param target object knowledge
 -- @param suicide Boolean
 -- @param dotation simulation dotation category
@@ -156,19 +156,20 @@ integration.takeAsPrisoner = function( )
     return true
 end
 
---- Informs that the agent knowledge has executed a terrorist attempt
+--- Informs that the agent knowledge has executed a terrorist attack
 -- A report is sent
 integration.attackReport = function( )
     reportFunction(eRC_ExecutionAttentat )
 end
 
 --- Allows the agent to capture the provided agent knowledges
--- The goal is to capture terrorists. They become 'hostage'
+-- The goal is to capture forcibly terrorists or units. They become 'hostage'
 -- The hostages lose their freedom of action. They don't share their knowledges information with their knowledge group
 -- The hostages are transported by the agent
 -- A report is sent by the hostages and by the agent
 -- @param units, list of DirectIA agent knowledges
 -- @param message, report enum
+-- @see Reports.xml in physical database
 -- @return true
 integration.capture = function( units, message )
     if not myself.CRCaptureSomeone then return true end
