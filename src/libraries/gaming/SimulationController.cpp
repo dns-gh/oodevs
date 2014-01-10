@@ -295,8 +295,7 @@ void SimulationController::SendLogisticRequests( const std::set< unsigned long >
     unsigned int currentTick = simulation_.GetCurrentTick();
     if( hasReplay_ )
         ::SendLogisticRequests< sword::ClientToReplay >( entities, publisher_, currentTick );
-
-    if( hasSimulation_ )
+    else if( hasSimulation_ )
         ::SendLogisticRequests< sword::ClientToSim >( entities, publisher_, currentTick );
 }
 
@@ -308,8 +307,7 @@ void SimulationController::SendHistoryRequests( const std::set< unsigned int >& 
 {
     if( hasReplay_ )
         ::SendHistoryRequests< sword::ClientToReplay >( requests, publisher_ );
-
-    if( hasSimulation_ )
+    else if( hasSimulation_ )
         ::SendHistoryRequests< sword::ClientToSim >( requests, publisher_ );
 }
 
