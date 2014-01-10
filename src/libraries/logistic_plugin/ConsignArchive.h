@@ -39,9 +39,9 @@ struct ConsignOffset
 class ConsignArchive : private boost::noncopyable
 {
 public:
-    ConsignArchive( const tools::Path& basePath, uint32_t maxSize );
+    ConsignArchive( const tools::Path& baseDir, uint32_t maxSize );
     // Read-only mode.
-    ConsignArchive( const tools::Path& basePath );
+    ConsignArchive( const tools::Path& baseDir );
     virtual ~ConsignArchive();
 
     ConsignOffset Write( const void* data, uint32_t length );
@@ -52,20 +52,38 @@ public:
         const std::function< void( const std::vector< uint8_t >& )>& callback ) const;
     void ReadAll( const std::function<
         void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const;
+    void ReadRange( ConsignOffset start, ConsignOffset end,
+        const std::function< void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const;
     void Flush();
+    // Reads the offset file and returns its content. Returned file index is not
+    // zero on success.
+    ConsignOffset ReadOffsetFile() const;
+    // Exposed for tests
+    tools::Path GetOffsetFilePath() const;
 
 private:
     tools::Path GetFilename( uint32_t index ) const;
     boost::shared_ptr< tools::Fstream > GetFile( uint32_t index ) const;
 
 private:
-    tools::Path basePath_;
-    uint32_t maxSize_;
+    const tools::Path baseDir_;
+    const tools::Path basePath_;
+    const uint32_t maxSize_;
     uint32_t size_;
     uint32_t index_;
     boost::shared_ptr< tools::Fstream > output_;
-    bool readOnly_;
+    const bool readOnly_;
 };
+
+// Writes a file containing the file index and last valid byte offset within
+// this file as atomically as possible. Since rename() has no atomicity
+// guarantee under windows, we unlink the target and move a temporary file at
+// its place instead. This leaves a window where no offset file exists but this
+// is better than writing an invalid one.
+bool WriteOffsetFile( const tools::Path& path, uint32_t file, uint32_t offset );
+
+// Reads an offset file and return the file and data offset on success.
+bool ReadOffsetFile( const tools::Path& path, uint32_t& file, uint32_t& offset );
 
 } // namespace logistic
 } // namespace plugins

@@ -93,7 +93,7 @@ public:
     void DeleteFuneralConsign( unsigned long id );
 
     virtual kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
-    virtual void UdpateLogisticHistory( const sword::LogisticHistoryAck& message );
+    virtual void UpdateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick );
     void DestroyAgent( unsigned long id );
     //@}
 
@@ -116,9 +116,11 @@ private:
     void UpdateConsign( const M& message );
     template< typename Type >
     void UpdateConsign( unsigned long id, int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states  );
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states,
+        unsigned int currentTick );
     void UpdateLogisticHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states );
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states,
+        unsigned int currentTick );
     //@}
 
 protected:

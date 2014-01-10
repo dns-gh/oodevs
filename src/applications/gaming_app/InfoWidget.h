@@ -24,8 +24,8 @@ namespace gui
 }
 
 class Model;
-class Publisher_ABC;
 class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  InfoWidget
@@ -42,7 +42,7 @@ public:
     //@{
              InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
                          gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model,
-                         const Simulation& simulation, Publisher_ABC& publisher );
+                         const Simulation& simulation, SimulationController& simulationController );
     virtual ~InfoWidget();
     //@}
 };

@@ -11,11 +11,17 @@
 #define __SimulationController_h_
 
 #include "Simulation.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
+}
+
+namespace actions
+{
+    class Action_ABC;
 }
 
 class Publisher_ABC;
@@ -52,8 +58,14 @@ public:
     void ChangeTimeFactor( int factor );
     void SkipToDate( const QDateTime& dateTime );
     void SkipToTick( unsigned int tick );
+    void SendLogisticRequests( const std::set< unsigned long >& entities ) const;
+    void SendHistoryRequests( const std::set< unsigned int >& requests ) const;
     void RequestCheckpoint( const std::string& name );
     void ForceReplayDataRequest();
+    void SendEnableVisionCones( bool value ) const;
+    void PublishAction( const actions::Action_ABC& action ) const;
+    void RegisterSimHandler( Publisher_ABC::T_SimHandler handler );
+    void RegisterReplayHandler( Publisher_ABC::T_ReplayHandler handler );
     //@}
 
 private:

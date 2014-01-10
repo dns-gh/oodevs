@@ -57,12 +57,6 @@ public:
     }
 
     template< typename T >
-    void Update( const T& updateMessage, int context )
-    {
-        GetInterfaces().Apply( & Updatable_ABC< T >::DoUpdateContext, updateMessage, context );
-    }
-
-    template< typename T >
     void Attach( T& extension )
     {
         tools::Extendable< Extension_ABC >::Attach( extension );

@@ -44,7 +44,16 @@ void TimelinePublisher::Send( const sword::ClientToSim& message )
 // Name: TimelinePublisher::Register
 // Created: LGY 2013-12-12
 // -----------------------------------------------------------------------------
-void TimelinePublisher::Register( T_Handler /*handler*/ )
+void TimelinePublisher::Register( T_SimHandler /*handler*/ )
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelinePublisher::Register
+// Created: LGY 2013-12-12
+// -----------------------------------------------------------------------------
+void TimelinePublisher::Register( T_ReplayHandler /*handler*/ )
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

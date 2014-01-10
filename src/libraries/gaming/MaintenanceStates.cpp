@@ -109,9 +109,9 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
         group.Display( tools::translate( "MaintenanceStates", "System status" ), tools::translate( "MaintenanceStates", "Enabled" ) );
     else
         group.Display( tools::translate( "MaintenanceStates", "System status" ), tools::translate( "MaintenanceStates", "Disabled" ) );
-    group.Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) )
-        .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
-        .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
+    group.Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) );
+    group.Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ );
+    group.Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------

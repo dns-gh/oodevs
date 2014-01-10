@@ -69,7 +69,6 @@ public:
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     void Display( kernel::Displayer_ABC& displayer ) const;
     unsigned long GetEntityId() const;
-    const actions::Action_ABC* GetLastMission() const;
     //@}
 
 private:
@@ -85,12 +84,12 @@ private:
     virtual void DoUpdate( const sword::AutomatOrder& message );
     virtual void DoUpdate( const sword::CrowdOrder& message );
     virtual void DoUpdate( const sword::FragOrder& message );
-    virtual void DoUpdateContext( const sword::TaskCreationRequestAck& message, int context );
-    virtual void DoUpdateContext( const sword::FragOrderAck& message, int context );
+    virtual void DoUpdate( const sword::TaskCreationRequestAck& message );
+    virtual void DoUpdate( const sword::FragOrderAck& message );
     template< typename T >
     void UpdateMessage( const T& message );
     template< typename T >
-    void UpdateMessage( const T& message, int context );
+    void UpdateMessageAck( const T& message );
     //@}
 
 private:
@@ -100,7 +99,6 @@ private:
     const actions::ActionFactory_ABC& factory_;
     unsigned long entityId_;
     const kernel::OrderType* currentMission_;
-    std::auto_ptr< actions::Action_ABC > pLastAck_;
     //@}
 };
 

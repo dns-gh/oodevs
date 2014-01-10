@@ -25,8 +25,8 @@
 // -----------------------------------------------------------------------------
 LogisticsRequestsMedicalWidget::LogisticsRequestsMedicalWidget( QWidget* parent, kernel::Controllers& controllers,
                                                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                                                                Publisher_ABC& publisher, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, publisher, model )
+                                                                const SimulationController& simulationController, Model& model )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model )
 {
     // NOTHING
 }

@@ -43,19 +43,20 @@ const size_t averageHistoryPerConsign = 15;
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-        const tools::Path& archiveFile, bool load )
+        const tools::Path& archiveDir, bool load )
     // QA brigade benchmark reported around 17000 log lines, for all logistic
     // chains, over 55h of simulated time. This more than an order of magnitude
     // larger, being the number of requests instead of updates.
     : index_( load ? nullptr : new ConsignIndex() )
     , recorder_( load
-        ? new ConsignRecorder( archiveFile, maxConsigns,
+        ? new ConsignRecorder( archiveDir, maxConsigns,
                averageHistoryPerConsign*maxConsigns )
-        : new ConsignRecorder( archiveFile, 20*1024*1024, maxConsigns,
+        : new ConsignRecorder( archiveDir, 20*1024*1024, maxConsigns,
                averageHistoryPerConsign*maxConsigns ) )
     , logger_( logger )
     , currentTick_( 0 )
     , readOnly_( load )
+    , lastRefresh_( 0 )
 {
 }
 
@@ -111,6 +112,21 @@ void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date&
         logger_->Log( ev, message, today, currentTick_, simTime_ );
 }
 
+// In read-only mode, possibly check for new logistic data and load it.
+void LogisticPlugin::Refresh()
+{
+    if( !readOnly_ )
+        return;
+    const time_t now = std::time( 0 );
+    if( now == static_cast< time_t >( -1 ) )
+        return;
+    // Refresh at most every 5 seconds
+    if( now < lastRefresh_ + 5 )
+        return;
+    lastRefresh_ = now;
+    recorder_->ReadNewEntries();
+}
+
 template< typename R, typename M >
 bool LogisticPlugin::HandleClientToSomething( const M& msg,
         dispatcher::RewritingPublisher_ABC& unicaster )
@@ -120,11 +136,13 @@ bool LogisticPlugin::HandleClientToSomething( const M& msg,
     {
         if( msg.message().has_logistic_history_request() )
         {
+            Refresh();
             HandleLogisticHistoryRequest( msg.message().logistic_history_request(),
                 *reply.mutable_message()->mutable_logistic_history_ack() );
         }
         else if( msg.message().has_list_logistic_requests() )
         {
+            Refresh();
             HandleListLogisticRequests( msg.message().list_logistic_requests(),
                 *reply.mutable_message()->mutable_list_logistic_requests_ack() );
         }
@@ -193,7 +211,7 @@ boost::shared_ptr< LogisticPlugin > CreateLogisticPlugin(
 {
     auto logger = CreateCsvLogger( model, staticModel, config );
     return boost::make_shared< LogisticPlugin >( logger,
-        config.BuildSessionChildFile( "LogisticArchive" ), false );
+        config.BuildSessionChildFile( "logistics" ), false );
 }
 
 boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
@@ -201,7 +219,7 @@ boost::shared_ptr< LogisticPlugin > ReloadLogisticPlugin(
 {
     return boost::make_shared< LogisticPlugin >(
         boost::shared_ptr< ConsignCsvLogger >(),
-        config.BuildSessionChildFile( "LogisticArchive" ), true );
+        config.BuildSessionChildFile( "logistics" ), true );
 
 }
 

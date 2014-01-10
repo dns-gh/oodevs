@@ -64,14 +64,19 @@ struct ConsignRecord
 class ConsignRecorder: private boost::noncopyable
 {
 public:
-    ConsignRecorder( const tools::Path& archivePath, uint32_t maxSize, uint32_t maxConsigns,
+    ConsignRecorder( const tools::Path& archiveDir, uint32_t maxSize, uint32_t maxConsigns,
            uint32_t maxHistory );
     // Create recorder in indexer mode only, inputs will not be recorded to disk,
     // and WriteEntry will throw an exception.
-    ConsignRecorder( const tools::Path& archivePath, uint32_t maxConsigns, uint32_t maxHistory );
+    ConsignRecorder( const tools::Path& archiveDir, uint32_t maxConsigns, uint32_t maxHistory );
     virtual ~ConsignRecorder();
 
     void Flush();
+    // In read-only mode, checks the underlying archive for new entries and loads
+    // them. The last loaded entry offset is remembered as a starting point for
+    // the next call. Do nothing in write mode.
+    void ReadNewEntries();
+
     void WriteEntry( uint32_t requestId, bool destroyed,
             const sword::LogHistoryEntry& entry, std::vector< uint32_t >& entities );
     // Returns the list of requests referencing supplied entities.
@@ -117,6 +122,10 @@ private:
     // that history_ and consign_ referenced states are overlapping but not equal.
     boost::container::deque< ConsignRecord > history_;
     const size_t maxHistory_;
+
+    // In read-only mode, the offset of the most recently loaded entry. NULL
+    // in write mode.
+    std::unique_ptr< ConsignOffset > reloadedEnd_;
 };
 
 void GetRequestsFromEntities( const ConsignRecorder& rec, const std::set< uint32_t >& entities,

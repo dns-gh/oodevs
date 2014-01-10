@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticStatusWidgets.h"
-#include "clients_kernel/Displayer_ABC.h"
+#include "clients_gui/BaseDisplayer.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ MaintenanceStatusWidget::~MaintenanceStatusWidget()
 namespace
 {
     template< typename T >
-    struct DisplayerAdapter : kernel::Displayer_ABC
+    struct DisplayerAdapter : gui::BaseDisplayer
     {
         DisplayerAdapter( T& table )
             : table_( table )

@@ -12,6 +12,7 @@
 
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
@@ -93,6 +94,7 @@ public:
     void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context );
     void PublishForce( const Action_ABC& action );
+    void RegisterHandler( Publisher_ABC::T_SimHandler handler );
     //@}
 
     //! @name Creation operations

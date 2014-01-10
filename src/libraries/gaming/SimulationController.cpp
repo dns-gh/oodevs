@@ -16,6 +16,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
+#include "actions/Action_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: SimulationController constructor
@@ -235,4 +236,95 @@ void SimulationController::NotifyUpdated( const Simulation& simulation )
 {
     if( simulation.IsPaused() )
         replayRequested_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendEnableVisionCones
+// Created: LGY 2014-01-08
+// -----------------------------------------------------------------------------
+void SimulationController::SendEnableVisionCones( bool value ) const
+{
+    if( hasSimulation_ )
+    {
+        simulation::ControlEnableVisionCones msg;
+        msg().set_vision_cones( value );
+        msg.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::PublishAction
+// Created: LGY 2014-01-08
+// -----------------------------------------------------------------------------
+void SimulationController::PublishAction( const actions::Action_ABC& action ) const
+{
+    if( hasSimulation_ )
+        action.Publish( publisher_, 0 );
+}
+
+namespace
+{
+    template< typename T >
+    void SendLogisticRequests( const std::set< unsigned long >& entities, Publisher_ABC& publisher,
+                               unsigned int currentTick )
+    {
+        T msg;
+        auto request = msg.mutable_message()->mutable_list_logistic_requests();
+        request->set_current_tick( currentTick );
+        for( auto it = entities.begin(); it != entities.end(); ++it )
+            request->add_entities()->set_id( *it );
+        publisher.Send( msg );
+    }
+    template< typename T >
+    void SendHistoryRequests( const std::set< unsigned int >& requests, Publisher_ABC& publisher )
+    {
+        T msg;
+        auto request = msg.mutable_message()->mutable_logistic_history_request();
+        for( auto it = requests.begin(); it != requests.end(); ++it )
+            request->add_requests()->set_id( *it );
+        publisher.Send( msg );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendLogisticRequests
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::SendLogisticRequests( const std::set< unsigned long >& entities ) const
+{
+    unsigned int currentTick = simulation_.GetCurrentTick();
+    if( hasReplay_ )
+        ::SendLogisticRequests< sword::ClientToReplay >( entities, publisher_, currentTick );
+    else if( hasSimulation_ )
+        ::SendLogisticRequests< sword::ClientToSim >( entities, publisher_, currentTick );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::SendHistoryRequests
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::SendHistoryRequests( const std::set< unsigned int >& requests ) const
+{
+    if( hasReplay_ )
+        ::SendHistoryRequests< sword::ClientToReplay >( requests, publisher_ );
+    else if( hasSimulation_ )
+        ::SendHistoryRequests< sword::ClientToSim >( requests, publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::RegisterSimHandler
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::RegisterSimHandler( Publisher_ABC::T_SimHandler handler )
+{
+    publisher_.Register( handler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::RegisterReplayHandler
+// Created: LGY 2014-01-07
+// -----------------------------------------------------------------------------
+void SimulationController::RegisterReplayHandler( Publisher_ABC::T_ReplayHandler handler )
+{
+    publisher_.Register( handler );
 }

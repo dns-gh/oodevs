@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     bool Start();
-    bool SkipToFrame( unsigned int count );
+    void SkipToFrame( unsigned int count );
     bool Tick();
 
     unsigned int GetCurrentTick() const;
@@ -56,6 +56,9 @@ public:
 
     void ReloadAll();
     //@}
+
+private:
+    void SkipToFrame( unsigned int keyFrame, unsigned int frame );
 
 private:
     //! @name Member data

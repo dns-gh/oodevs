@@ -78,7 +78,6 @@ Replayer::Replayer( const Config& config )
         *model_, *clientsNetworker_, config, *clientsNetworker_,
         handler_, *clientsNetworker_, registrables_, 0 ))
 {
-    clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToSim );
     clientsNetworker_->RegisterMessage( *this, &Replayer::ReceiveClientToReplay );
 
     handler_.AddHandler( model_ );
@@ -129,14 +128,6 @@ void Replayer::Update()
 void Replayer::OnWebControl( xml::xistream& xis )
 {
     handler_.Add( boost::make_shared< plugins::web_control::WebPlugin >( *publisher_, xis ) );
-}
-
-void Replayer::ReceiveClientToSim( const std::string& link,
-        const sword::ClientToSim& msg )
-{
-    dispatcher::UnicastPublisher unicaster( rights_->GetPublisher( link ), link,
-            rights_->GetClientID( link ), msg.context() );
-    handler_.HandleClientToSim( msg, unicaster, *clientsNetworker_ );
 }
 
 void Replayer::ReceiveClientToReplay( const std::string& link,

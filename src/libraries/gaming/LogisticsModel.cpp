@@ -403,11 +403,12 @@ namespace
 // -----------------------------------------------------------------------------
 template< typename Type >
 void LogisticsModel::UpdateConsign( unsigned long id, int start, int end,
-    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
+    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states,
+    unsigned int currentTick )
 {
     Type* consign = tools::Resolver< Type >::Find( id );
     if( consign )
-        consign->UpdateHistory( start, end, states );
+        consign->UpdateHistory( start, end, states, currentTick );
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +416,7 @@ void LogisticsModel::UpdateConsign( unsigned long id, int start, int end,
 // Created: LGY 2013-12-12
 // -----------------------------------------------------------------------------
 void LogisticsModel::UpdateLogisticHistory( int start, int end,
-    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states )
+    const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& states, unsigned int currentTick )
 {
     if( start >= end )
         return;
@@ -423,29 +424,29 @@ void LogisticsModel::UpdateLogisticHistory( int start, int end,
     const auto id = GetLogisticId( s );
 
     if( s.has_funeral() )
-        UpdateConsign< LogFuneralConsign >( id, start, end, states );
+        UpdateConsign< LogFuneralConsign >( id, start, end, states, currentTick );
     else if( s.has_maintenance() )
-        UpdateConsign< LogMaintenanceConsign >( id, start, end, states );
+        UpdateConsign< LogMaintenanceConsign >( id, start, end, states, currentTick );
     else if( s.has_medical() )
-        UpdateConsign< LogMedicalConsign >( id, start, end, states );
+        UpdateConsign< LogMedicalConsign >( id, start, end, states, currentTick );
     else if( s.has_supply() )
-        UpdateConsign< LogSupplyConsign >( id, start, end, states );
+        UpdateConsign< LogSupplyConsign >( id, start, end, states, currentTick );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsModel::DestroyAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-void LogisticsModel::UdpateLogisticHistory( const sword::LogisticHistoryAck& message )
+void LogisticsModel::UpdateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick )
 {
     int i = 0, j;
     for( j = 0; j < message.entries().size(); ++j )
     {
         if( GetLogisticId( message.entries( i ) ) == GetLogisticId( message.entries( j ) ) )
             continue;
-        UpdateLogisticHistory(  i, j, message.entries() );
+        UpdateLogisticHistory( i, j, message.entries(), currentTick );
         i = j;
     }
     if( i != j )
-        UpdateLogisticHistory( i, j, message.entries() );
+        UpdateLogisticHistory( i, j, message.entries(), currentTick );
 }

@@ -35,7 +35,7 @@ namespace rights
 
 namespace sword
 {
-    class ClientToSim;
+    class ClientToReplay;
 }
 
 namespace xml
@@ -76,7 +76,6 @@ public:
     //@}
 
 private:
-    void ReceiveClientToSim( const std::string& link, const sword::ClientToSim& );
     void ReceiveClientToReplay( const std::string& link, const sword::ClientToReplay& );
 
 private:

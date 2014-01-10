@@ -15,7 +15,7 @@
 #include <boost/noncopyable.hpp>
 
 class LogMedicalConsigns;
-class Publisher_ABC;
+class SimulationController;
 
 // =============================================================================
 /** @class  LogisticsRequestsMedicalWidget
@@ -29,8 +29,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsMedicalWidget( QWidget* parent, kernel::Controllers& controllers,
-                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
-                                             Model& model );
+                                             gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                             const SimulationController& simulationController, Model& model );
     virtual ~LogisticsRequestsMedicalWidget();
     //@}
 

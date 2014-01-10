@@ -27,7 +27,7 @@ namespace gui
     class DisplayExtractor;
 }
 
-class Publisher_ABC;
+class SimulationController;
 class LogisticsRequestsMaintenanceWidget;
 class Model;
 
@@ -45,8 +45,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers,
-                                    gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC& publisher,
-                                    Model& model );
+                                    gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
+                                    const SimulationController& simulationController, Model& model );
     virtual ~InfoMaintenanceDialog();
     //@}
 

@@ -10,7 +10,6 @@
 #ifndef __MIL_Population_h_
 #define __MIL_Population_h_
 
-#include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include <tools/Set.h>
@@ -32,7 +31,6 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_DictionaryExtensions;
-class MIL_Formation;
 class MIL_KnowledgeGroup;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
@@ -226,49 +224,44 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
-    typedef T_ConcentrationVector::iterator            IT_ConcentrationVector;
-    typedef T_ConcentrationVector::const_iterator     CIT_ConcentrationVector;
-
-    typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
-    typedef T_FlowVector::iterator            IT_FlowVector;
-    typedef T_FlowVector::const_iterator     CIT_FlowVector;
+    typedef std::vector< boost::shared_ptr< MIL_PopulationConcentration > > T_ConcentrationVector;
+    typedef std::vector< boost::shared_ptr< MIL_PopulationFlow > > T_FlowVector;
     //@}
 
 private:
     //! @name Member Data
     //@{
-    const MIL_PopulationType*                   pType_;
-    MIL_Army_ABC*                               pArmy_;
-    boost::shared_ptr< MIL_KnowledgeGroup >     pKnowledgeGroup_;
-    const MIL_PopulationAttitude*               pDefaultAttitude_;
-    double                                      rArmedIndividuals_;
-    double                                      rNewArmedIndividuals_;
-    double                                      rMale_;
-    double                                      rFemale_;
-    double                                      rChildren_;
-    std::string                                 criticalIntelligence_;
-    T_ConcentrationVector                       concentrations_;
-    T_FlowVector                                flows_;
-    T_ConcentrationVector                       trashedConcentrations_;
-    T_FlowVector                                trashedFlows_;
-    DEC_PopulationKnowledge*                    pKnowledge_;
+    const MIL_PopulationType*                       pType_;
+    MIL_Army_ABC*                                   pArmy_;
+    boost::shared_ptr< MIL_KnowledgeGroup >         pKnowledgeGroup_;
+    const MIL_PopulationAttitude*                   pDefaultAttitude_;
+    double                                          rArmedIndividuals_;
+    double                                          rNewArmedIndividuals_;
+    double                                          rMale_;
+    double                                          rFemale_;
+    double                                          rChildren_;
+    std::string                                     criticalIntelligence_;
+    T_ConcentrationVector                           concentrations_;
+    T_FlowVector                                    flows_;
+    T_ConcentrationVector                           trashedConcentrations_;
+    T_FlowVector                                    trashedFlows_;
+    boost::scoped_ptr< DEC_PopulationKnowledge >    pKnowledge_;
     boost::scoped_ptr< MIL_PopulationOrderManager > orderManager_;
-    boost::shared_ptr< MT_Vector2D >            vBarycenter_;
+    boost::shared_ptr< MT_Vector2D >                vBarycenter_;
     // Pion effects
-    double                                      rOverloadedPionMaxSpeed_;
-    bool                                        bPionMaxSpeedOverloaded_;
-    bool                                        bBlinded_;
+    double                                          rOverloadedPionMaxSpeed_;
+    bool                                            bPionMaxSpeedOverloaded_;
+    bool                                            bBlinded_;
     // Misc
-    bool                                        bHasDoneMagicMove_;
-    bool                                        criticalIntelligenceChanged_;
-    bool                                        armedIndividualsChanged_;
-    bool                                        isDamagingUrbanBlock_;
-    bool                                        isDemonstrating_;
-    boost::scoped_ptr< MIL_AffinitiesMap >      pAffinities_;
-    boost::scoped_ptr< MIL_DictionaryExtensions > pExtensions_;
-    double                                      urbanBlockAngriness_;
-    tools::Set< MIL_Agent_ABC* >                hidden_;
+    bool                                            bHasDoneMagicMove_;
+    bool                                            criticalIntelligenceChanged_;
+    bool                                            armedIndividualsChanged_;
+    bool                                            isDamagingUrbanBlock_;
+    bool                                            isDemonstrating_;
+    boost::scoped_ptr< MIL_AffinitiesMap >          pAffinities_;
+    boost::scoped_ptr< MIL_DictionaryExtensions >   pExtensions_;
+    double                                          urbanBlockAngriness_;
+    tools::Set< MIL_Agent_ABC* >                    hidden_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
