@@ -37,22 +37,42 @@ public:
     bool destroyed_;
 };
 
-ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
         uint32_t maxSize, uint32_t maxConsigns, uint32_t maxHistory )
-    : archive_( new ConsignArchive( archivePath, maxSize ))
+    : archive_( new ConsignArchive( archiveDir, maxSize ))
     , maxConsigns_( maxConsigns )
     , maxHistory_( maxHistory )
 {
 }
 
-ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
+ConsignRecorder::ConsignRecorder( const tools::Path& archiveDir,
         uint32_t maxConsigns, uint32_t maxHistory )
-    : archive_( new ConsignArchive( archivePath ))
+    : archive_( new ConsignArchive( archiveDir ))
     , maxConsigns_( maxConsigns )
     , maxHistory_( maxHistory )
+    , reloadedEnd_( new ConsignOffset )
 {
+    reloadedEnd_->file = 0;
+    reloadedEnd_->offset = 0;
+    ReadNewEntries();
+}
+
+ConsignRecorder::~ConsignRecorder()
+{
+}
+
+void ConsignRecorder::ReadNewEntries()
+{
+    if( !reloadedEnd_ )
+        return;
+    const auto end = archive_->ReadOffsetFile();
+    if( end.file == 0 ||
+        ( reloadedEnd_->file == end.file && reloadedEnd_->offset == end.offset ) )
+        return;
+
     std::vector< uint32_t > entities;
-    archive_->ReadAll( [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
+    archive_->ReadRange( *reloadedEnd_, end,
+        [&]( ConsignOffset offset, const std::vector< uint8_t >& output )
     {
         sword::LogHistoryEntry entry;
         if( !entry.ParseFromArray( &output[0], static_cast< int >( output.size() )))
@@ -62,10 +82,7 @@ ConsignRecorder::ConsignRecorder( const tools::Path& archivePath,
         AppendConsignEntities( entry, entities );
         IndexEntry( id, IsConsignDestroyed( entry ), offset, entry, entities );
     });
-}
-
-ConsignRecorder::~ConsignRecorder()
-{
+    *reloadedEnd_ = end;
 }
 
 void ConsignRecorder::Flush()

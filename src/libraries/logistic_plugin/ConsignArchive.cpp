@@ -8,25 +8,70 @@
 // *****************************************************************************
 
 #include "ConsignArchive.h"
+#include "tools/FileWrapper.h"
 #include <tools/Exception.h>
-#include <tools/StdFileWrapper.h>
+#include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#define NOMINMAX
 #include <winsock2.h>
 #include <sstream>
 
 using namespace plugins::logistic;
 
-ConsignArchive::ConsignArchive( const tools::Path& basePath, uint32_t maxSize )
-    : basePath_( basePath )
+bool plugins::logistic::WriteOffsetFile( const tools::Path& path, uint32_t file, uint32_t offset )
+{
+    const auto temp = path + ".temp";
+    try
+    {
+        {
+            tools::Xofstream xos( temp );
+            xos << xml::start( "data" )
+                    << xml::start( "available" )
+                        << xml::attribute( "file", file )
+                        << xml::attribute( "offset", offset );
+        }
+        temp.Rename( path );
+    }
+    catch( const std::exception& )
+    {
+        return false;
+    }
+    return true;
+}
+
+bool plugins::logistic::ReadOffsetFile( const tools::Path& path, uint32_t& file, uint32_t& offset )
+{
+    file = offset = 0;
+    try
+    {
+        tools::Xifstream xis( path );
+        xis >> xml::start( "data" )
+                >> xml::start( "available" )
+                    >> xml::attribute( "file", file )
+                    >> xml::attribute( "offset", offset );
+    }
+    catch( const std::exception& )
+    {
+        return false;
+    }
+    return true;
+}
+
+ConsignArchive::ConsignArchive( const tools::Path& baseDir, uint32_t maxSize )
+    : baseDir_( baseDir )
+    , basePath_( baseDir / "data" )
     , maxSize_( maxSize )
     , size_( 0 )
     , index_( 0 )
     , readOnly_( false )
 {
+    baseDir_.CreateDirectories();
 }
 
-ConsignArchive::ConsignArchive( const tools::Path& basePath )
-    : basePath_( basePath )
+ConsignArchive::ConsignArchive( const tools::Path& baseDir )
+    : baseDir_( baseDir )
+    , basePath_( baseDir / "data" )
     , maxSize_( 0 )
     , size_( 0 )
     , index_( 0 )
@@ -73,8 +118,9 @@ ConsignOffset ConsignArchive::Write( const void* data, uint32_t length )
     size_ = size_ + length + sizeof( len );
     if( size_ >= maxSize_ || size_ < oldSize )
     {
+        // Flush() writes the offset file
+        Flush();
         output_.reset();
-        size_ = 0;
     }
 
     return offset;
@@ -139,21 +185,40 @@ void ConsignArchive::ReadMany( const std::vector< ConsignOffset >& offsets,
 void ConsignArchive::ReadAll( const std::function<
         void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const
 {
+    ConsignOffset offset;
+    offset.file = 0;
+    offset.offset = 0;
+    ReadRange( offset, offset, callback );
+}
+
+void ConsignArchive::ReadRange( ConsignOffset start, ConsignOffset end,
+    const std::function< void( ConsignOffset, const std::vector< uint8_t > )>& callback ) const
+{
     std::vector< uint8_t > output;
+    if( start.file == 0 )
+        start.file = 1;
+    if( start.offset == 0 )
+        start.offset = 1; // 1 byte for version number
+    if( end.file == 0 )
+        end.file = std::numeric_limits< uint32_t >::max() - 1;
 
     ConsignOffset offset;
-    for( uint32_t file = 1; ; ++file )
+    for( uint32_t file = start.file; file <= end.file ; ++file )
     {
         auto fp = GetFile( file );
         if( !fp->is_open() )
             return;
-        fp->seekg( 1, std::ios::beg ); // 1 for the version number
+        fp->seekg( start.offset, std::ios::beg );
+        start.offset = 1;
         for( ;; )
         {
             const auto pos = fp->tellg();
             if( pos < 0 )
                 throw MASA_EXCEPTION( "could not get logistic offset in archive "
                     + GetFilename( file ).ToUTF8() );
+            const auto off = static_cast< uint32_t >( pos );
+            if( file == end.file && off >= end.offset )
+                break;
             if( !ReadOne( *fp, output ) )
             {
                 if( fp->eof() )
@@ -162,7 +227,7 @@ void ConsignArchive::ReadAll( const std::function<
                     " archive " + GetFilename( file ).ToUTF8() );
             }
             offset.file = file;
-            offset.offset = static_cast< uint32_t >( pos );
+            offset.offset = off;
             callback( offset, output );
         }
     }
@@ -171,5 +236,20 @@ void ConsignArchive::ReadAll( const std::function<
 void ConsignArchive::Flush()
 {
     if( output_ )
+    {
         output_->flush();
+        WriteOffsetFile( GetOffsetFilePath(), index_, size_ );
+    }
+}
+
+ConsignOffset ConsignArchive::ReadOffsetFile() const
+{
+    ConsignOffset offset;
+    ::ReadOffsetFile( GetOffsetFilePath(), offset.file, offset.offset ); 
+    return offset;
+}
+
+tools::Path ConsignArchive::GetOffsetFilePath() const
+{
+    return baseDir_ / "available";
 }

@@ -12,6 +12,7 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <ctime>
 #include <vector>
 
 namespace tools
@@ -73,7 +74,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin( const boost::shared_ptr< ConsignCsvLogger >& logger,
-                 const tools::Path& archiveFile, bool load );
+                 const tools::Path& archiveDir, bool load );
     virtual ~LogisticPlugin();
     //@}
 
@@ -106,6 +107,7 @@ private:
             sword::LogisticHistoryAck& ack ) const;
     void HandleListLogisticRequests( const sword::ListLogisticRequests& rq,
             sword::ListLogisticRequestsAck& ack ) const;
+    void Refresh();
 
 private:
     //! @name Member data
@@ -116,6 +118,7 @@ private:
     int currentTick_;
     std::string simTime_;
     const bool readOnly_;
+    time_t lastRefresh_;
     //@}
 };
 
