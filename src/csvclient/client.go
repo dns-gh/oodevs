@@ -40,13 +40,13 @@ func OutputResources(resources swadn.Resources, out string) {
 	defer outResources.Close()
 	writer := csv.NewWriter(outResources)
 	writer.Comma = ';'
-	record := []string{"Ressource", "Masse", "Volume"} //, "Quantité dans une UF"
+	record := []string{"Ressource", "Masse", "Volume", "Categorie"} //, "Quantité dans une UF"
 	writer.Write(record)
 	for _, resource := range resources.Content {
 		packageSize := float64(resource.PackageSize)
 		mass := resource.Mass / packageSize
 		volume := resource.Volume / packageSize
-		record = []string{resource.Name, FloatToString(mass), FloatToString(volume)}
+		record = []string{resource.Name, FloatToString(mass), FloatToString(volume), resource.Category}
 		writer.Write(record)
 	}
 	writer.Flush()
@@ -111,7 +111,7 @@ func main() {
 	user := flag.String("user", "Superviseur", "user name")
 	physical := flag.String("physical", "../data/data/models/ada/physical/worldwide", "resources file directory")
 	out := flag.String("out", "Output", "Output prefix")
-	//root := flag.Uint("root", 0, "root logistic unit id")
+	root := flag.Uint("root", 0, "root logistic unit id - if 0 or unset, all units are dumped")
 	flag.Parse()
 
 	resources, err := ComputePhysicalData(*physical, *out)
@@ -133,7 +133,12 @@ func main() {
 	client.Model.WaitReady(2 * time.Second)
 	data := client.Model.GetData()
 
-	outName := *out + "-orbat.csv"
+	WriteOrbat(*out, data, *resources, uint32(*root))
+	WriteNumberOfUnits(*out, data, uint32(*root))
+}
+
+func WriteOrbat(out string, data *swapi.ModelData, resources swadn.Resources, root uint32) {
+	outName := out + "-orbat.csv"
 	outFile, err := os.Create(outName)
 	if err != nil {
 		log.Fatalf("Error creating %s %s", outName, err)
@@ -145,16 +150,76 @@ func main() {
 	record := []string{"Id Unité", "Nom Unité", "Id Type Unité", "Ressource", "Quantité"}
 	writer.Write(record)
 	for id, unit := range data.Units {
-		for _, stock := range unit.Stocks {
-			amount := stock.Quantity
-			resource := resources.GetResource(stock.Type)
-			if resource == nil {
-				log.Fatalf("Error getting resource: %d", stock.Type)
+		if isLogisticSubordinate(data, unit, root) {
+			for _, stock := range unit.Stocks {
+				amount := stock.Quantity
+				resource := resources.GetResource(stock.Type)
+				if resource == nil {
+					log.Fatalf("Error getting resource: %d", stock.Type)
+				}
+				record = []string{UintToString(id), unit.Name, UintToString(unit.Type), resource.Name, IntToString(amount)}
+				writer.Write(record)
 			}
-			record = []string{UintToString(id), unit.Name, UintToString(unit.Type), resource.Name, IntToString(amount)}
-			writer.Write(record)
 		}
 	}
 	writer.Flush()
-	//TODO: output a list of logistic subordinates of 'root' parameter (id unit type/number)
+}
+
+func isLogisticSubordinate(data *swapi.ModelData, unit *swapi.Unit, root uint32) bool {
+	if root == 0 {
+		return true
+	}
+	if unit.AutomatId == root {
+		return true
+	}
+	automat := data.Automats[unit.AutomatId]
+	if automat == nil {
+		log.Fatalf("Error No automat %d superior of unit %d", unit.AutomatId, unit.Id)
+	}
+	for _, superior := range automat.LogSuperiors {
+		if superior == root {
+			return true
+		}
+	}
+	return isFormationLogisticSubordinate(data, automat.FormationId, root)
+}
+
+func isFormationLogisticSubordinate(data *swapi.ModelData, id uint32, root uint32) bool {
+	if id == root {
+		return true
+	}
+	formation := data.Formations[id]
+	if formation == nil {
+		return false // we reached the party (or the formation does not exist but this should not happen)
+	}
+	for _, superior := range formation.LogSuperiors {
+		if superior == root {
+			return true
+		}
+	}
+	return isFormationLogisticSubordinate(data, formation.ParentId, root)
+}
+
+func WriteNumberOfUnits(out string, data *swapi.ModelData, root uint32) {
+	amounts := map[uint32]uint32{}
+	for _, unit := range data.Units {
+		if isLogisticSubordinate(data, unit, root) {
+			amounts[unit.Type] = amounts[unit.Type] + 1
+		}
+	}
+	outName := out + "-numbers.csv"
+	outFile, err := os.Create(outName)
+	if err != nil {
+		log.Fatalf("Error creating %s %s", outName, err)
+	}
+	defer outFile.Close()
+	writer := csv.NewWriter(outFile)
+	writer.Comma = ';'
+	record := []string{"Id Type Unité", "Nombre"}
+	writer.Write(record)
+	for id, amount := range amounts {
+		record = []string{UintToString(id), UintToString(amount)}
+		writer.Write(record)
+	}
+	writer.Flush()
 }
