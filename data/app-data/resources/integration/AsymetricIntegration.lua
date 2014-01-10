@@ -2,7 +2,7 @@
 ---- ASYMETRIC INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
---- Allows the agent to become stealthy or visible
+--- Allows the agent to become stealthy or not
 -- When unit is stealthy, other agents cannot perceive it.
 -- Becoming visible is effective 2 ticks later if no order to stay stealthy is given during this delay
 -- @see OnNewTick in CRTaskListener.lua
@@ -41,12 +41,11 @@ integration.porteePourAttentat = function( dotation )
     return myself[dotation].portee
 end
 
---- Start terrorist attempt on the target knowledge
--- Allows terrorist to fire on target location, a report is sent
--- The terrorist can commit a suicide attempt. In this case, he will die during the attack
+--- Start an attack on target knowledge with given ammunition
+-- The entity can commit a suicide attempt. In this case, he will die during the attack
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param suicide Boolean
--- @param dotation simulation dotation category
+-- @param dotation simulation resource
 -- @return true
 integration.startAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
@@ -60,12 +59,12 @@ integration.startAttackIt = function( target, suicide, dotation )
     return true
 end
 
---- Continue terrorist attempt on the provided target knowledge
+--- Continue attack on the provided target knowledge
 -- If action is a suicide one and is finished, the agent commits suicide
 -- If action is impossible (e.g. no ammunition), a report is sent    
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param suicide Boolean
--- @param dotation simulation dotation category
+-- @param dotation simulation resource
 -- @return Boolean, whether or not firing is over
 integration.updateAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
@@ -83,11 +82,11 @@ integration.updateAttackIt = function( target, suicide, dotation )
     return false
 end
 
---- Stop terrorist attempt on the target knowledge
+--- Stop attack on the target knowledge
 -- The simulation action of terrorist attempt is stopped
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param suicide Boolean
--- @param dotation simulation dotation category
+-- @param dotation simulation resource
 -- @return true
 integration.stopAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
