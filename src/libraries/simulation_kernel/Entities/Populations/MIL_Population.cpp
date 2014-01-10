@@ -281,6 +281,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
+    DEC_PopulationDecision* pRole;
     assert( pDefaultAttitude_ );
     file >> rArmedIndividuals_
          >> rNewArmedIndividuals_
@@ -298,16 +299,11 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pKnowledgeGroup_
          >> bHasDoneMagicMove_
          >> pAffinities_
-         >> pExtensions_;
-    MT_Vector2D tmp;
-    file >> tmp;
-    vBarycenter_.reset( new MT_Vector2D( tmp ) );
-    {
-        DEC_PopulationDecision* pRole;
-        file >> pRole;
-        RegisterRole( *pRole );
-        RegisterRole( *new DEC_Representations() );
-    }
+         >> pExtensions_
+         >> vBarycenter_
+         >> pRole;
+    RegisterRole( *pRole );
+    RegisterRole( *new DEC_Representations() );
 }
 
 // -----------------------------------------------------------------------------

@@ -21,17 +21,17 @@
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( kernel::Options& options, const sword::CrowdConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density )
-    : options_( options )
-    , position_( converter.ConvertToXY( message.position() ) )
-    , nID_( message.concentration().id() )
-    , density_( density )
-    , nHealthyHumans_( 0 )
-    , nWoundedHumans_( 0 )
+    : options_            ( options )
+    , position_           ( converter.ConvertToXY( message.position() ) )
+    , nID_                ( message.concentration().id() )
+    , density_            ( density )
+    , nHealthyHumans_     ( 0 )
+    , nWoundedHumans_     ( 0 )
     , nContaminatedHumans_( 0 )
-    , nDeadHumans_( 0 )
-    , radius_( 0 )
-    , deadRadius_( 0 )
-    , attitude_( static_cast< E_PopulationAttitude > ( 0 ) )
+    , nDeadHumans_        ( 0 )
+    , radius_             ( 0 )
+    , deadRadius_         ( 0 )
+    , attitude_           ( ePopulationAttitude_Calme )
 {
     AddExtension( *this );
 }
