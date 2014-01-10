@@ -111,6 +111,7 @@ protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     bool needUpdating_;
     const LogisticsConsign_ABC* requestSelected_;
+    unsigned int lastRequestId_;
     //@}
 };
 

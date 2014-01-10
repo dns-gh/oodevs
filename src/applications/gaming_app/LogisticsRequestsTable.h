@@ -50,7 +50,7 @@ public:
     virtual void Purge();
     virtual void AddRequest( const LogisticsConsign_ABC& consign, const QString& id, 
                              const QString& requester, const QString& handler, const QString& state );
-    virtual void SelectRequest( const LogisticsConsign_ABC* consign = 0 );
+    virtual void SelectRequest( unsigned int id );
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
     void FindRequestsIds( std::set< unsigned int >& requests );
