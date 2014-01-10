@@ -783,7 +783,11 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     end
     -- Init
     local Activate = Activate
-    myself.leadData = {}
+    if self.params.additionalStage then
+        myself.leadData = myself.leadData or {} 
+    else
+        myself.leadData = {}
+    end
     myself.leadData.paramsGiven = {}
     myself.leadData.workMap = {}
     myself.leadData.tasksGiven = {}
