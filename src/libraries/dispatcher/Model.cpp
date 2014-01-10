@@ -96,7 +96,6 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Reset()
 {
-    simulation_->Reset();
     urbanKnowledges_       .DeleteAll();
     detectionRangeEffects_. DeleteAll();
     fireEffects_           .DeleteAll();
@@ -171,7 +170,7 @@ void Model::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_send_current_state_begin() )
     {
         Reset();
-        sides_.Register( 0, *( new NoSide() ) );
+        sides_.Register( 0, *new NoSide() );
         MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
     }
     else if( wrapper.message().has_control_send_current_state_end() )
