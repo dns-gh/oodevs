@@ -143,6 +143,11 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	c.Assert(err, IsNil)
 	skip(step)
 
+	object2, err := client.CreateObject("dyke", 0,
+		swapi.MakeRectangleLocation(swapi.Point{X: -15.8193, Y: 28.3456}, swapi.Point{X: -15.8183, Y: 28.3466}))
+	c.Assert(err, IsNil)
+	skip(step)
+
 	kg, err := client.CreateKnowledgeGroup(party.Id, "Standard")
 	_ = kg
 	c.Assert(err, IsNil)
@@ -153,6 +158,10 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	_, err = client.CreateObjectKnowledge(kg.Id, object.Id, 2)
+	c.Assert(err, IsNil)
+	skip(step)
+
+	_, err = client.CreateObjectKnowledge(kg.Id, object2.Id, 2)
 	c.Assert(err, IsNil)
 	skip(step)
 
