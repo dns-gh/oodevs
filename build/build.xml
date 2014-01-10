@@ -8,6 +8,7 @@
     <property name="sword_branch" value="trunk"/>
     <property name="test.port" value="35000"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
+    <property name="version.version" value="1.0.0.0.${git.revision}.${git.hash}"/>
 
     <target name="clean">
         <delete dir="${out.dir}"/>
@@ -16,11 +17,13 @@
     </target>
 
     <target name="update">
+        <update name="buildtools" version="5.3"/>
         <update name="golang" version="1.1.1"/>
         <update name="golibs" version="5.3"/>
         <update name="models" version="5.3" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" version="5.3" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="protobuf" version="2.3.0"/>
+        <update name="python" version="2.7.3-3"/>
         <update name="sword" version="5.3" package="protobuf" todir="${src.dir}/sword"/>
         <update name="sword" version="5.3" package="binaries_${platform}" todir="${run.dir}"/>
     </target>
@@ -83,8 +86,36 @@
         <runtests/>
     </target>
 
+    <macrodef name="setversion">
+        <attribute name="version" default="${version.version}"/>
+        <attribute name="product" default="Sword"/>
+        <attribute name="file"/>
+        <sequential>
+            <echo message="Updating version info of @{file}"/>
+            <python>
+                <arg value="${bin.dir}/buildtools/editres.py"/>
+                <arg value="copy"/>
+                <arg value="${root.dir}/build/template.res"/>
+                <arg value="--types=RT_VERSION"/>
+                <arg value="@{file}"/>
+            </python>
+            <python>
+                <arg value="${bin.dir}/buildtools/editres.py"/>
+                <arg value="editversion"/>
+                <arg value="--original-filename=@{file}"/>
+                <arg value="--product-name=@{product}"/>
+                <arg value="--version=@{version}"/>
+                <arg value="@{file}"/>
+            </python>
+        </sequential>
+    </macrodef>
+
     <target name="package">
         <go_package/>
+        <setversion file="${bin.dir}/csvclient.exe"/>
+        <go_zip subdir="dll" output="${platform}">
+            <fileset dir="${bin.dir}" includes="csvclient.exe"/>
+        </go_zip>
     </target>
 
     <target name="all" depends="update,proto,build,test,package"/>
