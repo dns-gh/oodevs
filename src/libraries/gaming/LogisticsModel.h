@@ -93,7 +93,7 @@ public:
     void DeleteFuneralConsign( unsigned long id );
 
     virtual kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
-    virtual void UdpateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick );
+    virtual void UpdateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick );
     void DestroyAgent( unsigned long id );
     //@}
 

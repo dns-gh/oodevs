@@ -592,8 +592,8 @@ void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistor
     if( profile_ && profile_->DisplayMessage( messageClientId ) )
     {
         unsigned int currentTick = simulation_.GetCurrentTick();
-        GetModel().logistics_.UdpateLogisticHistory( message, currentTick );
-        GetModel().historyLogistics_.UdpateLogisticHistory( message, currentTick );
+        GetModel().logistics_.UpdateLogisticHistory( message, currentTick );
+        GetModel().historyLogistics_.UpdateLogisticHistory( message, currentTick );
     }
 }
 
@@ -1993,7 +1993,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         CheckAcknowledge( logger_, wrapper.message().control_enable_vision_cones_ack() );
     else
         OnReceiveSimToClient2( from, wrapper, clientId );
-    UpdateHanders( wrapper );
+    UpdateHandlers( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -2130,7 +2130,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
         OnReceiveListLogisticRequestsAck( wrapper.message().list_logistic_requests_ack(), clientId );
     else
         UnhandledMessage( &wrapper.message() );
-    UpdateHanders( wrapper );
+    UpdateHandlers( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -2412,10 +2412,10 @@ void AgentServerMsgMgr::OnReceiveFormationChangeSuperior ( const sword::Formatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::UpdateHanders
+// Name: AgentServerMsgMgr::UpdateHandlers
 // Created: LGY 2013-01-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::UpdateHanders( const sword::SimToClient& message )
+void AgentServerMsgMgr::UpdateHandlers( const sword::SimToClient& message )
 {
     unsigned int clientId = message.has_client_id() ? message.client_id() : 0u;
     if( profile_ && profile_->DisplayMessage( clientId ) )
@@ -2424,10 +2424,10 @@ void AgentServerMsgMgr::UpdateHanders( const sword::SimToClient& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::UpdateHanders
+// Name: AgentServerMsgMgr::UpdateHandlers
 // Created: LGY 2013-01-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::UpdateHanders( const sword::ReplayToClient& message )
+void AgentServerMsgMgr::UpdateHandlers( const sword::ReplayToClient& message )
 {
     for( auto it = replayHandlers_.begin(); it != replayHandlers_.end(); ++it )
         (*it)( message );

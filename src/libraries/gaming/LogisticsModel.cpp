@@ -437,7 +437,7 @@ void LogisticsModel::UpdateLogisticHistory( int start, int end,
 // Name: LogisticsModel::DestroyAgent
 // Created: LDC 2013-09-16
 // -----------------------------------------------------------------------------
-void LogisticsModel::UdpateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick )
+void LogisticsModel::UpdateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick )
 {
     int i = 0, j;
     for( j = 0; j < message.entries().size(); ++j )

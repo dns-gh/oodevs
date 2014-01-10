@@ -498,8 +498,8 @@ private:
     void OnReceiveUrbanKnowledgeDestruction( const sword::UrbanKnowledgeDestruction&        message );
 
     // Handlers
-    void UpdateHanders( const sword::SimToClient& message );
-    void UpdateHanders( const sword::ReplayToClient& message );
+    void UpdateHandlers( const sword::SimToClient& message );
+    void UpdateHandlers( const sword::ReplayToClient& message );
 
     // Burn surface
     void OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx );
