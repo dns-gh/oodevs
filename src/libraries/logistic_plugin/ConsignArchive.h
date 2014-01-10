@@ -58,6 +58,8 @@ public:
     // Reads the offset file and returns its content. Returned file index is not
     // zero on success.
     ConsignOffset ReadOffsetFile() const;
+    // Exposed for tests
+    tools::Path GetOffsetFilePath() const;
 
 private:
     tools::Path GetFilename( uint32_t index ) const;

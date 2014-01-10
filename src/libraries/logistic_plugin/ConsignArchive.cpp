@@ -247,13 +247,18 @@ void ConsignArchive::Flush()
     if( output_ )
     {
         output_->flush();
-        WriteOffsetFile( baseDir_ / "available", index_, size_ );
+        WriteOffsetFile( GetOffsetFilePath(), index_, size_ );
     }
 }
 
 ConsignOffset ConsignArchive::ReadOffsetFile() const
 {
     ConsignOffset offset;
-    ::ReadOffsetFile( baseDir_ / "available", offset.file, offset.offset ); 
+    ::ReadOffsetFile( GetOffsetFilePath(), offset.file, offset.offset ); 
     return offset;
+}
+
+tools::Path ConsignArchive::GetOffsetFilePath() const
+{
+    return baseDir_ / "available";
 }

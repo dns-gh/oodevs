@@ -647,7 +647,7 @@ BOOST_AUTO_TEST_CASE( TestConsignArchive )
     BOOST_CHECK_EQUAL( seen, COUNT_OF( strings ));
 
     uint32_t file, index;
-    BOOST_REQUIRE( ReadOffsetFile( baseDir / "available", file, index ) );
+    BOOST_REQUIRE( ReadOffsetFile( ar.GetOffsetFilePath(), file, index ) );
     BOOST_CHECK_EQUAL( 2u, file );
     BOOST_CHECK_EQUAL( 9u, index );
 }
