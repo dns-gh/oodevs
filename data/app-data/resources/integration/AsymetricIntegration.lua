@@ -1,18 +1,18 @@
--------------------------------------------------------------------------------
--- Queries Predicate Tools Implementation :
--- @author DDA
--- @created 2010-06-16
---
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
--------------------------------------------------------------------------------
+-------------------------------------------------------------------
+---- ASYMETRIC INTERFACE IMPLEMENTATION
+-------------------------------------------------------------------
+
+--- Allows the agent to become stealthy or not
+-- When unit is stealthy, other agents cannot perceive it.
+-- Become visible is effective 2 ticks later if no order to stay stealthy is given during this delay
+-- @see OnNewTick in CRTaskListener.lua
+-- @param beStealth Boolean, whether or not the unit will be stealthy
+-- @return nothing
 integration.setStealth = function( beStealth )
     local stealthFactor = beStealth and 0 or 1
     myself.lastStealth = myself.lastStealth or 1
     if stealthFactor == 1 and myself.lastStealth == 0 then 
-        myself.wantedVisible = true -- Ask to become visible. It will be effective 2 ticks later if no order to stay invisible is given (see OnNewTick method in CRTaskListener).
+        myself.wantedVisible = true -- Ask to become visible (see OnNewTick method in CRTaskListener).
         return
     end
     if stealthFactor == 0 then -- Become invisible
@@ -21,22 +21,34 @@ integration.setStealth = function( beStealth )
             myself.lastStealth = stealthFactor
         end
         myself.wantedVisible = false
-        myself.stealthTick = 0 -- reinit number of ticks for OnNewTick method in CRTaskListener.
+        myself.stealthTick = 0 -- reinit number of ticks
         return
     end
 end
 
+--- Returns true if agent is stealthy, false otherwise
+-- @param self the agent knowledge
+-- @return Boolean, whether or not the knowlegde is stealthy
 integration.isStealth = function( self )
     return DEC_Perception_EstFurtif()
 end
 
+--- Returns the maximum indirect firing range for a particular ammunition
+-- @param dotation simulation dotation category
+-- @return Float, value is the indirect firing range in meters
 integration.porteePourAttentat = function( dotation )
     myself[dotation] = myself[dotation] or {}
     myself[dotation].portee = myself[dotation].portee or DEC_Tir_PorteeMaxTirIndirect( dotation )
     return myself[dotation].portee
 end
 
---Terrorist attack integration
+--- Start terrorist attempt on the target knowledge
+-- Allows terrorist to fire on target location, a report is sent
+-- The terrorist can commit a suicide attempt. In this case, he will die during the attack
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param suicide Boolean
+-- @param dotation simulation dotation category
+-- @return true
 integration.startAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
     local nbIntervention = 1
@@ -49,6 +61,13 @@ integration.startAttackIt = function( target, suicide, dotation )
     return true
 end
 
+--- Continue terrorist attempt on the provided target knowledge
+-- If action is a suicide one and is finished, the agent commits suicide
+-- If action is impossible (e.g. no ammunition), a report is sent    
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param suicide Boolean
+-- @param dotation simulation dotation category
+-- @return Boolean, whether or not firing is over
 integration.updateAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
     if target[myself].attackState then
@@ -65,10 +84,12 @@ integration.updateAttackIt = function( target, suicide, dotation )
     return false
 end
 
-integration.commitSuicide = function( self )
-    DEC_Suicide()
-end
-
+--- Stop terrorist attempt on the target knowledge
+-- The simulation action of terrorist attempt is stopped
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param suicide Boolean
+-- @param dotation simulation dotation category
+-- @return true
 integration.stopAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
     target[myself].attackAction = DEC__StopAction( target[myself].attackAction )
@@ -76,8 +97,20 @@ integration.stopAttackIt = function( target, suicide, dotation )
     return true
 end
 
+--- Allows the agent to commit suicide
+-- @param self the knowledge
+integration.commitSuicide = function( self )
+    DEC_Suicide()
+end
 
---Terrorist attack on object integration
+--- Allows terrorist to attack the provided object knowledge
+-- The object will be degraded following the dotation used
+-- A report is sent 
+-- The terrorist can commit a suicide attempt. In this case, he will die during the attack
+-- @param target object knowledge
+-- @param suicide Boolean
+-- @param dotation simulation dotation category
+-- @return true
 integration.attackObject = function( target, suicide, dotation )
     reportFunction(eRC_ExecutionAttentat )
     DEC_ConnaissanceObjet_Degrader( target.source, 0.5, dotation )
@@ -85,7 +118,10 @@ integration.attackObject = function( target, suicide, dotation )
     return true
 end
 
---Terrorist Officer assassination integration
+--- Allows terrorist to assassinate officers of the provided agent knowledge 
+-- A report is sent by the provided unit knowledge and by the terrorist 
+-- @param unit Directia agent knowledge
+-- @return true
 integration.killOfficers = function( unit )
     DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
     integration.SendMessage( "killOfficers", integration.getAgentFromKnowledge( unit ), emptyTable, { type = "dynamic" } )
@@ -93,41 +129,57 @@ integration.killOfficers = function( unit )
     return true
 end
 
---Firing Range for specific dotation
+--- Returns true if target is in range for firing with the provided dotation, false otherwise
+-- @param target Directia agent knowledge
+-- @param dotation simulation dotation category
+-- @return Boolean, whether or not the target is in firing range
 integration.isInFiringRangeForDotation = function( target, dotation )
     return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source, 0.9, dotation )
 end
 
---Suicide
+--- Allows the agent to commit suicide
+-- @param agent Directia agent knowledge
 integration.selfDestruct = function( agent )
     DEC_Suicide()
 end
 
---refugee
+--- Informs that the agent knowledge take into account refugees
+-- A report is sent
+-- @param unit Directia agent knowledge
+-- @return true
 integration.takeAsRefugee = function( unit )
     -- $$$ MIA TODO
     reportFunction(eRC_OrientationPopulationVersCampRefugies )
     return true
 end
 
---prisoner
+--- Informs that the agent knowledge takes into account prisoners
+-- A report is sent
+-- @param unit Directia agent knowledge
+-- @return true
 integration.takeAsPrisoner = function( unit )
     -- $$$ MIA TODO
     reportFunction(eRC_OrientationEnnemiRenduVersCampPrisonniers )
     return true
 end
 
+--- Informs that the agent knowledge has executed a terrorist attempt
+-- A report is sent
+-- @param self the knowledge
 integration.attackReport = function( self )
     reportFunction(eRC_ExecutionAttentat )
 end
 
--- capture de terroristes détectés
--- changemement de leur état en "otage"
-
+--- Allows the agent to capture the provide agent knowledges
+-- The goal is to capture terrorists. They become 'hostage'
+-- The hostages lose their freedom of action. They don't share their knowledges information with their knowledge group
+-- The hostages are transported by the agent
+-- A report is sent by the hostages and by the agent
+-- @param units, list of DirectIA agent knowledges
+-- @param message, report enum
+-- @return true
 integration.capture = function( units, message )
-
     if not myself.CRCaptureSomeone then return true end
-
     for _, unit in pairs( units ) do
         if not myself.CRCaptureSomeone[unit] and not DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) then
             DEC_Agent_ForcerSilenceRadio( unit.source, true )
@@ -142,12 +194,16 @@ integration.capture = function( units, message )
             myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit -- Add to captured list
         end
     end
-
     return true
 end
 
+--- Hostages are released
+-- The provided agent knowledges 'hostages' are free and can sharing their knowledges with their knowledge group
+-- A report is sent by the hostages
+-- @param units, list of DirectIA agent knowledges
+-- @param message, report enum
+-- @return true
 integration.captureEnd = function( units, message )
-
     for _, unit in pairs( units ) do
             DEC_Agent_ForcerSilenceRadio( unit.source, false )
             DEC_UnitDecisionalState( unit.source, "hostage", "false" )
@@ -155,14 +211,21 @@ integration.captureEnd = function( units, message )
             unit.capture = false
             integration.SendMessage( "captureEnd", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
     end
-
     return true
 end
 
+--- Returns a list of captured units ('hostages') by the agent
+-- @return list of DirectIA agent knowledges
 integration.getCapturedUnits = function()
-    return myself.capturedUnits -- return a list of captured units
+    return myself.capturedUnits 
 end
 
+--- Allows the unit to drop off the provided agent knowledge
+-- The agent knowledge is instantaneously dropped off at the location of the unit
+-- The agent knowledge is always an 'hostage" without any freedom of action
+-- A report is sent by the unit 
+-- @param unit Directia agent knowledge
+-- @return true
 integration.dropUnit = function( unit )
     DEC_Prisonniers_Debarquer(unit.source)
     reportFunction(eRC_TerroristDropped, unit.source )
@@ -172,26 +235,38 @@ integration.dropUnit = function( unit )
     return true
 end
 
+--- Allows the unit to share knowledges information (e.g. objects, units...) with the provided agent knowledge
+-- Knowledges sharing starts after a delay. If the delay is 0, the sharing is instantaneous 
+-- @param dest Directia agent knowledge
+-- @param delay Float delay in minutes
 integration.shareKnowledge = function( dest, delay )
     DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent( myself, dest.source, delay )
 end
 
+--- Allows the unit to share knowledges information (e.g. objects knowledges, units knowledges) with the automat of the provided agent knowledge
+-- Knowledges sharing starts after a delay. If the delay is 0, the sharing is instantaneous 
+-- @param dest Directia agent knowledge
+-- @param delay Float delay in minutes
 integration.shareKnowledgeAgent = function( dest, delay )
     DEC_Connaissances_PartageConnaissancesAvec(DEC_GetAutomate( dest.source ), delay )
 end
 
+--- Allows the automat to share knowledges information (e.g. objects knowledges, units knowledges) with the provided agent knowledge
+-- Knowledges sharing starts after a delay. If the delay is 0, the sharing is instantaneous 
+-- @param dest Directia agent knowledge
+-- @param delay Float delay in minutes
 integration.shareKnowledgeAgentFromAutomat = function( dest, delay )
     DEC_Connaissances_PartageConnaissancesAvec(dest.source, delay )
 end
 
-
--- --------------------------------------------------------------------------------
---  Launch projectile on a target 
--- $$$ MIA: same thing than the "integration.startAttackIt" for terrorist but without 
--- the terrorist attack conotation.
--- $$$ MIA : to merge with militaty
--- --------------------------------------------------------------------------------
+--- Allows the unit to Launch projectile on the provided localized element knowledge
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param dotation simulation dotation category
+-- @param quantity Float number of iterations for a shoot
+-- @return false 
 integration.startLaunchProjectile = function( target, dotation, quantity )
+-- $$$ MIA: same thing than the "integration.startAttackIt" for terrorist but without the terrorist attack conotation.
+-- $$$ MIA : to merge with militaty
     target[ myself ] = target[ myself ] or {}
     local nbIntervention = quantity
     target[ myself ].attackAction = DEC_StartTirIndirectSurPosition( dotation, quantity, target:getPosition() )
@@ -201,6 +276,11 @@ integration.startLaunchProjectile = function( target, dotation, quantity )
     return false
 end
 
+--- Continue launching projectile on the provided target knowledge
+-- A report is sent following the firing    
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param dotation simulation dotation category
+-- @return Boolean, following the state of the firing action
 integration.updateLaunchProjectile = function( target, dotation )
     target[ myself ] = target[ myself ] or {}
     if target[ myself ].attackState then
@@ -223,6 +303,10 @@ integration.updateLaunchProjectile = function( target, dotation )
     return false
 end
 
+--- Stop launching projectile on the provided target knowledge
+-- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
+-- @param dotation simulation dotation category
+-- @return true
 integration.stopLaunchProjectile = function( target, dotation )
     target[ myself ] = target[ myself ] or {}
     target[ myself ].attackAction = DEC__StopAction( target[ myself ].attackAction )
