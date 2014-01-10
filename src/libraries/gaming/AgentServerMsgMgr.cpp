@@ -122,9 +122,18 @@ void AgentServerMsgMgr::Send( const sword::ClientToSim& wrapper )
 // Name: AgentServerMsgMgr::Register
 // Created: LGY 2013-12-10
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::Register( T_Handler handler )
+void AgentServerMsgMgr::Register( T_SimHandler handler )
 {
-    handlers_.push_back( handler );
+    simHandlers_.push_back( handler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Register
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Register( T_ReplayHandler handler )
+{
+    replayHandlers_.push_back( handler );
 }
 
 // -----------------------------------------------------------------------------
@@ -582,8 +591,9 @@ void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistor
 {
     if( profile_ && profile_->DisplayMessage( messageClientId ) )
     {
-        GetModel().logistics_.UdpateLogisticHistory( message );
-        GetModel().historyLogistics_.UdpateLogisticHistory( message );
+        unsigned int currentTick = simulation_.GetCurrentTick();
+        GetModel().logistics_.UpdateLogisticHistory( message, currentTick );
+        GetModel().historyLogistics_.UpdateLogisticHistory( message, currentTick );
     }
 }
 
@@ -1983,7 +1993,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         CheckAcknowledge( logger_, wrapper.message().control_enable_vision_cones_ack() );
     else
         OnReceiveSimToClient2( from, wrapper, clientId );
-    UpdateHanders( wrapper );
+    UpdateHandlers( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -2095,6 +2105,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
 {
     if( host_.empty() )
         return;
+    unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
     if( wrapper.message().has_control_replay_information() )
         OnReceiveMsgCtrReplayInfo( wrapper.message().control_replay_information() );
     else if( wrapper.message().has_control_stop_ack() )
@@ -2113,8 +2124,13 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
         OnReceiveTimeTableRequestAck( wrapper.message().time_table_request_ack() );
     else if( wrapper.message().has_time_table() )
         OnReceiveTimeTable( wrapper.message().time_table() );
+    else if( wrapper.message().has_logistic_history_ack() )
+        OnReceiveLogisticHistoryAck( wrapper.message().logistic_history_ack(), clientId );
+    else if( wrapper.message().has_list_logistic_requests_ack() )
+        OnReceiveListLogisticRequestsAck( wrapper.message().list_logistic_requests_ack(), clientId );
     else
         UnhandledMessage( &wrapper.message() );
+    UpdateHandlers( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -2396,13 +2412,23 @@ void AgentServerMsgMgr::OnReceiveFormationChangeSuperior ( const sword::Formatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::UpdateHanders
+// Name: AgentServerMsgMgr::UpdateHandlers
 // Created: LGY 2013-01-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::UpdateHanders( const sword::SimToClient& message )
+void AgentServerMsgMgr::UpdateHandlers( const sword::SimToClient& message )
 {
-     unsigned int clientId = message.has_client_id() ? message.client_id() : 0u;
-     if( profile_ && profile_->DisplayMessage( clientId ) )
-        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
+    unsigned int clientId = message.has_client_id() ? message.client_id() : 0u;
+    if( profile_ && profile_->DisplayMessage( clientId ) )
+        for( auto it = simHandlers_.begin(); it != simHandlers_.end(); ++it )
             (*it)( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::UpdateHandlers
+// Created: LGY 2013-01-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::UpdateHandlers( const sword::ReplayToClient& message )
+{
+    for( auto it = replayHandlers_.begin(); it != replayHandlers_.end(); ++it )
+        (*it)( message );
 }

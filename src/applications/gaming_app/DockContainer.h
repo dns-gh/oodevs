@@ -78,7 +78,7 @@ public:
                    gui::ParametersLayer& paramLayer, gui::TerrainProfilerLayer& profilerLayer, AutomatsLayer& automatsLayer, FormationLayer& formationLayer, ::WeatherLayer& weatherLayer,
                    gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
                    gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, const gui::EntitySymbols& entitySymbols,
-                   IndicatorExportDialog& indicatorExportDialog, const SimulationController& simulationController );
+                   IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController );
     virtual ~DockContainer();
     //@}
 

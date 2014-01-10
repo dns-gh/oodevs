@@ -32,7 +32,6 @@ namespace gui
 }
 
 class Model;
-class Publisher_ABC;
 class LogisticDialog_ABC;
 class Simulation;
 class LogMedicalConsigns;
@@ -45,6 +44,7 @@ class LogMaintenanceConsign;
 class LogSupplyConsign;
 class LogisticsConsign_ABC;
 class LogisticsModel;
+class SimulationController;
 
 // =============================================================================
 /** @class  InfoButtonsWidget
@@ -71,7 +71,7 @@ public:
     //@{
              InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                 gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
-                                const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                                const kernel::Profile_ABC& profile, SimulationController& simulationController );
     virtual ~InfoButtonsWidget();
     //@}
 
@@ -97,10 +97,10 @@ private:
     void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     template< typename Dialog >
     void AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                    gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC &publisher, Model& model );
+                    gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model );
     template< typename Dialog >
     void AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers
-                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Publisher_ABC &publisher, Model& model );
+                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model );
     void AddButton( QDialog* dialog, const QPixmap& pixmap, const QString& tooltips, const char* toggleSlot, const char* toggleSignal );
     void FillRequests( const sword::ListLogisticRequestsAck& message );
     template< typename Extension >
@@ -118,8 +118,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     const Simulation& simulation_;
+    SimulationController& simulationController_;
     LogisticsModel& historyModel_;
     std::vector< LogisticDialog_ABC* > logisticDialogs_;
     const kernel::Entity_ABC* element_;

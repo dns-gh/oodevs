@@ -18,6 +18,7 @@ namespace sword
     class ClientToReplay;
     class ClientToSim;
     class SimToClient;
+    class ReplayToClient;
 }
 
 // =============================================================================
@@ -31,7 +32,8 @@ class Publisher_ABC
 public:
     //! @name Types
     //@{
-    typedef std::function< void( const sword::SimToClient& ) > T_Handler;
+    typedef std::function< void( const sword::SimToClient& ) >    T_SimHandler;
+    typedef std::function< void( const sword::ReplayToClient& ) > T_ReplayHandler;
     //@}
 
 public:
@@ -49,7 +51,8 @@ public:
     virtual void Send( const sword::ClientToAar& message ) = 0;
     virtual void Send( const sword::ClientToMessenger& message ) = 0;
 
-    virtual void Register( T_Handler handler ) = 0;
+    virtual void Register( T_SimHandler handler ) = 0;
+    virtual void Register( T_ReplayHandler handler ) = 0;
     //@}
 };
 

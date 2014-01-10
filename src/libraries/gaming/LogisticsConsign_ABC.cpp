@@ -99,12 +99,16 @@ const LogisticsConsign_ABC::History& LogisticsConsign_ABC::GetHistory() const
 // Created: MMC 2013-09-26
 // -----------------------------------------------------------------------------
 void LogisticsConsign_ABC::UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history )
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
+        unsigned int currentTick )
 {
     history_->Clear();
     for( int i = start; i != end; ++i )
     {
         const auto& msg = history.Get( i );
+        if( static_cast< unsigned int >( msg.tick() ) > currentTick )
+            continue;
+
         HistoryState state;
         if( msg.has_funeral() )
         {

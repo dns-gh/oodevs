@@ -21,9 +21,9 @@
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/RichCheckBox.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "gaming/Model.h"
 #include "gaming/HistoryLogisticsModel.h"
+#include "gaming/SimulationController.h"
 #include "protocol/Protocol.h"
 
 #include "ENT/ENT_Enums.h"
@@ -35,17 +35,17 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2012-10-29
 // -----------------------------------------------------------------------------
 LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                                                        const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model,
+                                                        const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
                                                         const QStringList& requestsHeader /*= QStringList()*/ )
     : QWidget( parent )
     , controllers_( controllers )
     , extractor_( extractor )
     , historyModel_( model.historyLogistics_ )
     , profile_( profile )
-    , publisher_( publisher )
     , selected_( controllers )
     , needUpdating_( true )
     , requestSelected_( 0 )
+    , simulationController_( simulationController )
 {
     QVBoxLayout* pLayout = new QVBoxLayout( this );
     pLayout->setSizeConstraint( QLayout::SetMaximumSize );
@@ -278,9 +278,5 @@ void LogisticConsignsWidget_ABC::SendHistoryRequests()
     requestsTable_->FindRequestsIds( requestsIds );
     if( requestsIds.empty() )
         return;
-    sword::ClientToSim msg;
-    auto logRequest = msg.mutable_message()->mutable_logistic_history_request();
-    for( auto it = requestsIds.begin(); it != requestsIds.end(); ++it )
-        logRequest->add_requests()->set_id( *it );
-    publisher_.Send( msg );
+    simulationController_.SendHistoryRequests( requestsIds );
 }

@@ -58,7 +58,8 @@ public:
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message );
-    virtual void Register( T_Handler handler );
+    virtual void Register( T_SimHandler handler );
+    virtual void Register( T_ReplayHandler handler );
     //@}
 
 private:

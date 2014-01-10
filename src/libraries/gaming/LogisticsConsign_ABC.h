@@ -67,8 +67,9 @@ public:
     //! @name Operations
     //@{
     void UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history );
-    //@}   
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
+        unsigned int currentTick );
+    //@}
 
     //! @name Types
     //@{
