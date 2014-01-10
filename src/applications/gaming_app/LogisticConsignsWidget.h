@@ -30,7 +30,7 @@ namespace gui
 
 class LogisticsRequestsTable;
 class LogisticsRequestsDetailsTable;
-class Publisher_ABC;
+class SimulationController;
 class LogisticsModel;
 
 // =============================================================================
@@ -47,9 +47,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                            const kernel::Profile_ABC& profile, Publisher_ABC& publisher, Model& model,
+                            const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
                             const QStringList& requestsHeader = QStringList() )
-        : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, publisher, model, requestsHeader ) {}
+        : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader ) {}
 
     ~LogisticConsignsWidget() {}
     //@}

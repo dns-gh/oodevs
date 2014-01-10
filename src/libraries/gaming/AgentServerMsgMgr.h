@@ -232,7 +232,8 @@ public:
     void Disconnect();
 
     virtual void Send( const sword::ClientToSim& message );
-    virtual void Register( T_Handler handler );
+    virtual void Register( T_SimHandler handler );
+    virtual void Register( T_ReplayHandler handler );
     virtual void Send( const sword::ClientToAuthentication& message );
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
@@ -498,6 +499,7 @@ private:
 
     // Handlers
     void UpdateHanders( const sword::SimToClient& message );
+    void UpdateHanders( const sword::ReplayToClient& message );
 
     // Burn surface
     void OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx );
@@ -520,7 +522,8 @@ private:
     //! @name Types
     //@{
     typedef std::set< boost::shared_ptr< sword::Listener > > T_Listeners;
-    typedef std::vector< T_Handler > T_Handlers;
+    typedef std::vector< T_SimHandler >    T_SimHandlers;
+    typedef std::vector< T_ReplayHandler > T_ReplayHandlers;
     //@}
 
     //! @name Member data
@@ -535,7 +538,8 @@ private:
     kernel::Logger_ABC&       logger_;
     CommandHandler&           commands_;
     T_Listeners               listeners_;
-    T_Handlers                handlers_;
+    T_SimHandlers             simHandlers_;
+    T_ReplayHandlers          replayHandlers_;
     //@}
 };
 

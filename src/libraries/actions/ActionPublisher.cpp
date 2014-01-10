@@ -103,7 +103,16 @@ void ActionPublisher::Send( const sword::ClientToSim& msg )
 // Name: ActionPublisher::Register
 // Created: LGY 2013-12-10
 // -----------------------------------------------------------------------------
-void ActionPublisher::Register( T_Handler /*handler*/ )
+void ActionPublisher::Register( T_SimHandler /*handler*/ )
+{
+    throw MASA_EXCEPTION( "not to be called." );;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Register
+// Created: LGY 2013-12-10
+// -----------------------------------------------------------------------------
+void ActionPublisher::Register( T_ReplayHandler /*handler*/ )
 {
     throw MASA_EXCEPTION( "not to be called." );;
 }

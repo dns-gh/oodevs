@@ -29,7 +29,7 @@ namespace gui
 class SupplyStocksListView;
 class SupplyQuotasWidget;
 class SupplyStatusWidget;
-class Publisher_ABC;
+class SimulationController;
 class LogisticsRequestsSupplyWidget;
 class Model;
 
@@ -48,7 +48,7 @@ public:
     //@{
              InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
-                               Publisher_ABC& publisher, Model& model );
+                               const SimulationController& simulationController, Model& model );
     virtual ~InfoSupplyDialog();
     //@}
 
