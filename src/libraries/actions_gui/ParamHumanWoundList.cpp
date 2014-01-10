@@ -130,6 +130,7 @@ void ParamHumanWoundList::OnDown()
 void ParamHumanWoundList::OnAdd( int value )
 {
     model_.appendRow( new QStandardItem( tools::ToString( E_HumanWound( value ) ) ) );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

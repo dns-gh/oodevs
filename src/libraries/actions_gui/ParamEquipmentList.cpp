@@ -232,7 +232,11 @@ void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
     {
         std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
         for( auto it = priorities.rbegin(); it != priorities.rend(); ++it )
-            list_->addItem( QString( ( **it ).GetName().c_str() ) );
+        {
+            QListWidgetItem* item = new QListWidgetItem( (*it)->GetName().c_str() );
+            item->setData( EquipmentRole, QVariant::fromValue( *it ) );
+            list_->addItem( item );
+        }
     }
 }
 
@@ -263,6 +267,10 @@ void ParamEquipmentList::Visit( const actions::parameters::MaintenancePriorities
     }
 
     for( auto it = priorities.begin(); it != priorities.end(); ++it )
-        if( kernel::EquipmentType* type = resolver_.Find( boost::lexical_cast< unsigned long >( *it ) ) )
-            list_->addItem( QString::fromStdString( type->GetName() ) );
+        if( const kernel::EquipmentType* type = resolver_.Find( boost::lexical_cast< unsigned long >( *it ) ) )
+        {
+            QListWidgetItem* item = new QListWidgetItem( type->GetName().c_str() );
+            item->setData( EquipmentRole, QVariant::fromValue( type ) );
+            list_->addItem( item );
+        }
 }
