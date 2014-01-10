@@ -437,17 +437,6 @@
     </message>
 </context>
 <context>
-    <name>Decisions</name>
-    <message>
-        <source>Automat mission:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mission:</source>
-        <translation type="unfinished">Mission:</translation>
-    </message>
-</context>
-<context>
     <name>Dotations</name>
     <message>
         <source>Resources</source>
