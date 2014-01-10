@@ -8,8 +8,9 @@
 // *****************************************************************************
 
 #include "ConsignArchive.h"
+#include "tools/FileWrapper.h"
 #include <tools/Exception.h>
-#include <tools/StdFileWrapper.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #define NOMINMAX
@@ -20,14 +21,16 @@ using namespace plugins::logistic;
 
 bool plugins::logistic::WriteOffsetFile( const tools::Path& path, uint32_t file, uint32_t offset )
 {
-    std::stringstream output;
-    output << "file=" << file << std::endl;
-    output << "offset=" << offset << std::endl;
     const auto temp = path + ".temp";
-    if( !tools::WriteFile( temp, output.str() ) )
-        return false;
     try
     {
+        {
+            tools::Xofstream xos( temp );
+            xos << xml::start( "data" )
+                    << xml::start( "available" )
+                        << xml::attribute( "file", file )
+                        << xml::attribute( "offset", offset );
+        }
         temp.Rename( path );
     }
     catch( const std::exception& )
@@ -40,29 +43,17 @@ bool plugins::logistic::WriteOffsetFile( const tools::Path& path, uint32_t file,
 bool plugins::logistic::ReadOffsetFile( const tools::Path& path, uint32_t& file, uint32_t& offset )
 {
     file = offset = 0;
-    std::string data;
-    if( !tools::ReadFile( path, data ) )
-        return false;
-    std::stringstream input( data );
-    std::string line;
-    while( std::getline( input, line ) )
+    try
     {
-        const auto pos = line.find( "=" );
-        if( pos == std::string::npos )
-            continue;
-        const auto key = line.substr( 0, pos );
-        const auto value = line.substr( pos + 1 );
-        try
-        {
-            if( key == "file" )
-                file = boost::lexical_cast< uint32_t >( value );
-            else if( key == "offset" )
-                offset = boost::lexical_cast< uint32_t >( value );
-        }
-        catch( const std::exception& )
-        {
-            return false;
-        }
+        tools::Xifstream xis( path );
+        xis >> xml::start( "data" )
+                >> xml::start( "available" )
+                    >> xml::attribute( "file", file )
+                    >> xml::attribute( "offset", offset );
+    }
+    catch( const std::exception& )
+    {
+        return false;
     }
     return true;
 }
