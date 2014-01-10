@@ -175,7 +175,7 @@ target_link_libraries( sword_tools
 )
 
 # ent
-add_target( ent common "libraries/ent" OPTIONS qt )
+add_target( ent common "libraries/ent" OPTIONS qt protocol )
 target_link_libraries( ent ${QT_QTCORE_LIBRARY} )
 
 # meteo
