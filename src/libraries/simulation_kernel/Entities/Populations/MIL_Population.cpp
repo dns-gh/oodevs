@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
-
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Decision/DEC_Representations.h"
@@ -39,12 +38,37 @@
 #include "Tools/MIL_MessageParameters.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
-
-#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/scoped_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
+
+#define APPLY_ON_CONCENTRATIONS_NAME( expression, name ) \
+    for( std::size_t i = 0; i < concentrations_.size(); ++i ) \
+    { \
+        MIL_PopulationConcentration& name = *concentrations_[ i ]; \
+        expression \
+    }
+
+#define APPLY_ON_FLOWS_NAME( expression, name ) \
+    for( std::size_t i = 0; i < flows_.size(); ++i ) \
+    { \
+        MIL_PopulationFlow& name = *flows_[ i ]; \
+        expression \
+    }
+
+#define APPLY_ON_CONCENTRATIONS( expression ) \
+    APPLY_ON_CONCENTRATIONS_NAME( expression, concentration )
+
+#define APPLY_ON_FLOWS( expression ) \
+    APPLY_ON_FLOWS_NAME( expression, flow )
+
+#define APPLY_ON_ELEMENTS( expression ) \
+    { \
+        APPLY_ON_CONCENTRATIONS_NAME( expression, element ) \
+        APPLY_ON_FLOWS_NAME( expression, element ) \
+    }
 
 namespace
 {
@@ -98,8 +122,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rMale_                      ( type.GetMale() )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
-    , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , pKnowledge_                 ( new DEC_PopulationKnowledge( *this ) )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
+    , vBarycenter_                ( new MT_Vector2D() )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -128,13 +153,10 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
             >> xml::attribute( "content", criticalIntelligence_ )
         >> xml::end;
     rNewArmedIndividuals_ = rArmedIndividuals_;
-    pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult, logger ) );
     RegisterRole( *new DEC_Representations() );
-    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
-    concentrations_.push_back( pConcentration );
+    concentrations_.push_back( boost::make_shared< MIL_PopulationConcentration >( *this, xis ) );
     pArmy_->RegisterPopulation( *this );
-    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
 
@@ -142,8 +164,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
 // Name: MIL_Population constructor
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type,
-                                MissionController_ABC& controller )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, MissionController_ABC& controller )
     : MIL_Entity_ABC( type.GetName(), 0 )
     , pType_                      ( &type )
     , pArmy_                      ( 0 )
@@ -152,8 +173,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rMale_                      ( type.GetMale() )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
-    , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , pKnowledge_                 ( new DEC_PopulationKnowledge( *this ) )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
+    , vBarycenter_                ( new MT_Vector2D() )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -165,8 +187,6 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , pAffinities_                ( 0 )
     , pExtensions_                ( 0 )
 {
-    pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
 
@@ -193,8 +213,9 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , rMale_                      ( type.GetMale() )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
-    , pKnowledge_                 ( 0 )
-    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ))
+    , pKnowledge_                 ( new DEC_PopulationKnowledge( *this ) )
+    , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
+    , vBarycenter_                ( new MT_Vector2D() )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -207,17 +228,14 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , pExtensions_                ( new MIL_DictionaryExtensions() )
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
-    pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult, logger ) );
     RegisterRole( *new DEC_Representations() );
     pKnowledgeGroup_ = army.FindCrowdKnowledgeGroup();
     if( pKnowledgeGroup_ )
         pKnowledgeGroup_->RegisterPopulation( *this );
     SendCreation( context );
-    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
-    concentrations_.push_back( pConcentration );
+    concentrations_.push_back( boost::make_shared< MIL_PopulationConcentration >( *this, point, number ) );
     pArmy_->RegisterPopulation( *this );
-    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
 
@@ -231,7 +249,6 @@ MIL_Population::~MIL_Population()
         pArmy_->UnregisterPopulation( *this );
     if( pKnowledgeGroup_ )
         pKnowledgeGroup_->UnregisterPopulation( *this );
-    delete pKnowledge_;
 }
 
 // -----------------------------------------------------------------------------
@@ -261,11 +278,10 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.GetId( GetID(), true );
-    MIL_AffinitiesMap* pAffinities;
-    MIL_DictionaryExtensions* pExtensions;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
+    DEC_PopulationDecision* pRole;
     assert( pDefaultAttitude_ );
     file >> rArmedIndividuals_
          >> rNewArmedIndividuals_
@@ -282,19 +298,12 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pKnowledge_
          >> pKnowledgeGroup_
          >> bHasDoneMagicMove_
-         >> pAffinities
-         >> pExtensions;
-    pAffinities_.reset( pAffinities );
-    pExtensions_.reset( pExtensions );
-    MT_Vector2D tmp;
-    file >> tmp;
-    vBarycenter_.reset( new MT_Vector2D( tmp ) );
-    {
-        DEC_PopulationDecision* pRole;
-        file >> pRole;
-        RegisterRole( *pRole );
-        RegisterRole( *new DEC_Representations() );
-    }
+         >> pAffinities_
+         >> pExtensions_
+         >> vBarycenter_
+         >> pRole;
+    RegisterRole( *pRole );
+    RegisterRole( *new DEC_Representations() );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,8 +312,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
-    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
     file << pArmy_
@@ -324,8 +331,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << pKnowledge_
          << pKnowledgeGroup_
          << bHasDoneMagicMove_
-         << pAffinities
-         << pExtensions
+         << pAffinities_
+         << pExtensions_
          << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
@@ -408,7 +415,7 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, double rSur
         pElement = GetClosestAliveElement( exterminator );
         if( !pElement )
             break;
-        double damage = pElement->Exterminate( rSurface );
+        const double damage = pElement->Exterminate( rSurface );
         if( !damage )
             break;
         rSurface -= damage;
@@ -433,10 +440,7 @@ void MIL_Population::NotifyChanneled( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 void MIL_Population::NotifyUrbanDestructionStart()
 {
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (*it )->NotifyUrbanDestructionStart();
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( *it )->NotifyUrbanDestructionStart();
+    APPLY_ON_ELEMENTS( element.NotifyUrbanDestructionStart(); )
 }
 
 // -----------------------------------------------------------------------------
@@ -479,6 +483,25 @@ void MIL_Population::UpdateDecision( float duration )
     }
 }
 
+namespace
+{
+    template< typename T >
+    void Update( T& elements, T& trashed )
+    {
+        for( auto it = elements.begin(); it != elements.end(); )
+        {
+            auto element = *it;
+            if( !element->Update() )
+            {
+                it = elements.erase( it );
+                trashed.push_back( element );
+            }
+            else
+                ++it;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::UpdateState
 // Created: NLD 2005-10-04
@@ -487,36 +510,12 @@ void MIL_Population::UpdateState()
 {
     try
     {
-        for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-            delete *it;
         trashedConcentrations_.clear();
-        for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-            delete *it;
         trashedFlows_.clear();
-        // Flows
-        for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
-        {
-            MIL_PopulationFlow* pFlow = *itFlow;
-            if( !pFlow->Update() )
-            {
-                itFlow = flows_.erase( itFlow );
-                trashedFlows_.push_back( pFlow );
-            }
-            else
-                ++itFlow;
-        }
-        // Concentrations
-        for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
-        {
-            MIL_PopulationConcentration* pConcentration = *itConcentration;
-            if( !pConcentration->Update() )
-            {
-                itConcentration = concentrations_.erase( itConcentration );
-                trashedConcentrations_.push_back( pConcentration );
-            }
-            else
-                ++itConcentration;
-        }
+        Update( flows_, trashedFlows_ );
+        Update( concentrations_, trashedConcentrations_ );
+        if( !trashedFlows_.empty() || !trashedConcentrations_.empty() )
+            UpdateBarycenter();
     }
     catch( const std::exception& e )
     {
@@ -533,10 +532,7 @@ void MIL_Population::Clean()
     DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->Clean();
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).Clean();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        ( **itFlow ).Clean();
+    APPLY_ON_ELEMENTS( element.Clean(); )
     bHasDoneMagicMove_ = false;
 }
 
@@ -546,12 +542,10 @@ void MIL_Population::Clean()
 // -----------------------------------------------------------------------------
 bool MIL_Population::IsDead() const
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( !( **itConcentration ).IsDead() )
+    APPLY_ON_ELEMENTS(
+        if( !element.IsDead() )
             return false;
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        if( !( **itFlow ).IsDead() )
-            return false;
+    )
     return true;
 }
 
@@ -559,14 +553,12 @@ bool MIL_Population::IsDead() const
 // Name: MIL_Population::IsInZone
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
-bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
+bool MIL_Population::IsInZone( const TER_Localisation& localization ) const
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( ( **itConcentration ).IsInZone( loc ) )
+    APPLY_ON_ELEMENTS(
+        if( element.IsInZone( localization ) )
             return true;
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        if( ( **itFlow ).IsInZone( loc ) )
-            return true;
+    )
     return false;
 }
 
@@ -578,20 +570,20 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 {
     MT_Vector2D closestPoint;
     double rMinDistance = std::numeric_limits< double >::max();
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    APPLY_ON_CONCENTRATIONS(
     {
-        MT_Vector2D nearestPointTmp = ( **itConcentration ).GetLocation().ComputeBarycenter();
+        MT_Vector2D nearestPointTmp = concentration.GetLocation().ComputeBarycenter();
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
             closestPoint = nearestPointTmp;
         }
-    }
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    } )
+    APPLY_ON_FLOWS(
     {
         MT_Vector2D nearestPointTmp;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
+        if( !flow.GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
@@ -599,7 +591,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
             rMinDistance = rDistance;
             closestPoint = nearestPointTmp;
         }
-    }
+    } )
     return closestPoint;
 }
 
@@ -624,18 +616,18 @@ MIL_PopulationConcentration* MIL_Population::GetClosestConcentration( const MT_V
 {
     MIL_PopulationConcentration* ret = 0;
     double minDistance = std::numeric_limits< double >::max();
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    APPLY_ON_CONCENTRATIONS(
     {
-        if( ( *itConcentration)->IsValid() )
+        if( concentration.IsValid() )
         {
-            double d = ( *itConcentration )->GetLocation().ComputeBarycenter().Distance( position );
+            const double d = concentration.GetLocation().ComputeBarycenter().Distance( position );
             if( d <= maxDistance && d < minDistance )
             {
-                ret = *itConcentration;
+                ret = &concentration;
                 minDistance = d;
             }
         }
-    }
+    } )
     return ret;
 }
 
@@ -647,34 +639,20 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 {
     pClosestElement = 0;
     rMinDistance = std::numeric_limits< double >::max();
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    APPLY_ON_ELEMENTS(
     {
-        if( ( **itConcentration ).IsDead() )
-            continue;
+        if( element.IsDead() )
+            return;
         MT_Vector2D nearestPoint;
-        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
-            continue;
-        double rDistance = position.Distance( nearestPoint );
+        if( !element.GetLocation().ComputeNearestPoint( position, nearestPoint ) )
+            return;
+        const double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
-            pClosestElement = *itConcentration;
+            pClosestElement = &element;
         }
-    }
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-    {
-        if( ( **itFlow ).IsDead() )
-            continue;
-        MT_Vector2D nearestPoint;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
-            continue;
-        double rDistance = position.Distance( nearestPoint );
-        if( rDistance < rMinDistance )
-        {
-            rMinDistance = rDistance;
-            pClosestElement = *itFlow;
-        }
-    }
+    } )
 }
 
 // -----------------------------------------------------------------------------
@@ -684,35 +662,20 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const
 {
     rMinDistance = std::numeric_limits< double >::max();
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    APPLY_ON_ELEMENTS(
     {
-        if( ( **itConcentration ).IsDead() )
-            continue;
+        if( element.IsDead() )
+            return;
         MT_Vector2D nearestPointTmp;
         double rDistance;
-        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
-            continue;
+        if( !element.GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
+            return;
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
             closestPoint = nearestPointTmp;
         }
-    }
-
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-    {
-        if( ( **itFlow ).IsDead() )
-            continue;
-        MT_Vector2D nearestPointTmp;
-        double rDistance;
-        if( !( **itFlow ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
-            continue;
-        if( rDistance < rMinDistance )
-        {
-            rMinDistance = rDistance;
-            closestPoint = nearestPointTmp;
-        }
-    }
+    } )
 }
 
 // -----------------------------------------------------------------------------
@@ -839,10 +802,11 @@ boost::shared_ptr< MT_Vector2D > MIL_Population::GetBarycenter() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_Population::GetConcentrationPosition( unsigned int concentrationId ) const
 {
-    for( CIT_ConcentrationVector itC = concentrations_.begin(); itC != concentrations_.end(); ++itC )
-        if( ( *itC )->GetID() == concentrationId )
-            return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ( *itC )->GetPosition() ) );
-     return boost::shared_ptr< MT_Vector2D >();
+    APPLY_ON_CONCENTRATIONS(
+        if( concentration.GetID() == concentrationId )
+            return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( concentration.GetPosition() ) );
+    )
+    return boost::shared_ptr< MT_Vector2D >();
 }
 
 // -----------------------------------------------------------------------------
@@ -861,12 +825,10 @@ bool MIL_Population::HasFlow() const
 const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 {
     const MIL_PopulationAttitude* attitude = &GetDefaultAttitude();
-    for( CIT_ConcentrationVector itC = concentrations_.begin(); itC != concentrations_.end(); ++itC )
-        if( (*itC)->GetAttitude() > *attitude )
-            attitude = &(*itC)->GetAttitude();
-    for( CIT_FlowVector itF = flows_.begin(); itF != flows_.end(); ++itF )
-        if( (*itF)->GetAttitude() > *attitude )
-            attitude = &(*itF)->GetAttitude();
+    APPLY_ON_ELEMENTS(
+        if( element.GetAttitude() > *attitude )
+            attitude = &element.GetAttitude();
+    )
     return *attitude;
 }
 
@@ -877,10 +839,7 @@ const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 unsigned int MIL_Population::GetAllHumans() const
 {
     unsigned int nResult = 0;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetAllHumans();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetAllHumans();
+    APPLY_ON_ELEMENTS( nResult += element.GetAllHumans(); )
     return nResult;
 }
 
@@ -891,10 +850,7 @@ unsigned int MIL_Population::GetAllHumans() const
 unsigned int MIL_Population::GetHealthyHumans() const
 {
     unsigned int nResult = 0;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetHealthyHumans();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetHealthyHumans();
+    APPLY_ON_ELEMENTS( nResult += element.GetHealthyHumans(); )
     return nResult;
 }
 
@@ -905,10 +861,7 @@ unsigned int MIL_Population::GetHealthyHumans() const
 unsigned int MIL_Population::GetWoundedHumans() const
 {
     unsigned int nResult = 0;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetWoundedHumans();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetWoundedHumans();
+    APPLY_ON_ELEMENTS( nResult += element.GetWoundedHumans(); )
     return nResult;
 }
 
@@ -919,10 +872,7 @@ unsigned int MIL_Population::GetWoundedHumans() const
 unsigned int MIL_Population::GetContaminatedHumans() const
 {
     unsigned int nResult = 0;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetContaminatedHumans();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetContaminatedHumans();
+    APPLY_ON_ELEMENTS( nResult += element.GetContaminatedHumans(); )
     return nResult;
 }
 
@@ -933,10 +883,7 @@ unsigned int MIL_Population::GetContaminatedHumans() const
 unsigned int MIL_Population::GetDeadHumans() const
 {
     unsigned int nResult = 0;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetDeadHumans();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetDeadHumans();
+    APPLY_ON_ELEMENTS( nResult += element.GetDeadHumans(); );
     return nResult;
 }
 
@@ -946,9 +893,10 @@ unsigned int MIL_Population::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 unsigned int MIL_Population::GetAllHumansInConcentration( unsigned int concentrationId )
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( ( *itConcentration )->GetID() == concentrationId )
-            return ( *itConcentration )->GetAllHumans();
+    APPLY_ON_CONCENTRATIONS(
+        if( concentration.GetID() == concentrationId )
+            return concentration.GetAllHumans();
+    )
     return 0;
 }
 
@@ -1007,11 +955,7 @@ void MIL_Population::SetNewArmedIndividuals( double newArmedIndividuals )
 // -----------------------------------------------------------------------------
 void MIL_Population::Move( const MT_Vector2D& destination )
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).Move( destination );
-    for( size_t i = 0; i < flows_.size(); ++i ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
-    // for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow ) $$$$ LDC NO!!! flows_ can be lengthened during computation.
-        flows_[i]->Move( destination );
+    APPLY_ON_ELEMENTS( element.Move( destination ); ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
     UpdateBarycenter();
 }
 
@@ -1023,10 +967,7 @@ void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2
 {
     if( destination.empty() )
         return;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).Move( *destination[0] );
-    for( size_t i = 0; i < flows_.size(); ++i ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
-        flows_[i]->MoveAlong( *destination[0] );
+    APPLY_ON_ELEMENTS( element.Move( *destination[0] ); ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
     UpdateBarycenter();
 }
 
@@ -1036,8 +977,7 @@ void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2
 // -----------------------------------------------------------------------------
 void MIL_Population::CancelMove()
 {
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( *it )->CancelMove();
+    APPLY_ON_FLOWS( flow.CancelMove(); )
 }
 
 // -----------------------------------------------------------------------------
@@ -1046,13 +986,9 @@ void MIL_Population::CancelMove()
 // -----------------------------------------------------------------------------
 void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
-    if( !IsBlinded() )
-    {
-        for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-            ( **itConcentration ).FireOnPions( rIntensity, fireResult );
-        for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-            ( **itFlow ).FireOnPions( rIntensity, fireResult );
-    }
+    if( IsBlinded() )
+        return;
+    APPLY_ON_ELEMENTS( element.FireOnPions( rIntensity, fireResult ); )
 }
 
 // -----------------------------------------------------------------------------
@@ -1061,8 +997,7 @@ void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population&
 // -----------------------------------------------------------------------------
 void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
-    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
-    if( pClosestElement )
+    if( MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target ) )
         pClosestElement->FireOnPion( rIntensity, target, fireResult );
 }
 
@@ -1072,11 +1007,9 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 // -----------------------------------------------------------------------------
 double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
-    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
-    if( pClosestElement )
+    if( MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target ) )
         return pClosestElement->GetDangerosity( target );
-    else
-        return 0.;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -1085,15 +1018,8 @@ double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 // -----------------------------------------------------------------------------
 void MIL_Population::SetAttitude( const MIL_PopulationAttitude& attitude )
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).SetAttitude( attitude );
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        ( **itFlow ).SetAttitude( attitude );
+    APPLY_ON_ELEMENTS( element.SetAttitude( attitude ); )
 }
-
-// =============================================================================
-// FLOWS / CONCENTRATION MANAGEMENT
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::CreateFlow
@@ -1101,9 +1027,8 @@ void MIL_Population::SetAttitude( const MIL_PopulationAttitude& attitude )
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& concentration )
 {
-    MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, concentration );
-    flows_.push_back( pFlow );
-    return *pFlow;
+    flows_.push_back( boost::make_shared< MIL_PopulationFlow >( *this, concentration ) );
+    return *flows_.back();
 }
 
 // -----------------------------------------------------------------------------
@@ -1112,9 +1037,8 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& con
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow& MIL_Population::CreateFlow( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint )
 {
-    MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, source, splitPoint );
-    flows_.push_back( pFlow );
-    return *pFlow;
+    flows_.push_back( boost::make_shared< MIL_PopulationFlow >( *this, source, splitPoint ) );
+    return *flows_.back();
 }
 
 // -----------------------------------------------------------------------------
@@ -1123,12 +1047,12 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( const MIL_PopulationFlow& source
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D& position )
 {
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        if( ( **it ).IsNearPosition( position ) )
-            return **it;
-    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
-    concentrations_.push_back( pConcentration );
-    return *pConcentration;
+    APPLY_ON_CONCENTRATIONS(
+        if( concentration.IsNearPosition( position ) )
+            return concentration;
+    )
+    concentrations_.push_back( boost::make_shared< MIL_PopulationConcentration >( *this, position ) );
+    return *concentrations_.back();
 }
 
 // -----------------------------------------------------------------------------
@@ -1137,9 +1061,10 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration* MIL_Population::RetrieveConcentration( unsigned int concentrationId ) const
 {
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        if( ( *it )->GetID() == concentrationId )
-            return *it;
+    APPLY_ON_CONCENTRATIONS(
+        if( concentration.GetID() == concentrationId )
+            return &concentration;
+    )
     return 0;
 }
 
@@ -1252,22 +1177,10 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
 {
     protocol::CheckCount( msg, 1 );
     const auto& point = protocol::GetPoint( msg, 0 );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( point, vPosTmp );
-   // merge all concentrations into new
-    T_ConcentrationVector concentrations = concentrations_;
-    for( IT_ConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
-        ( **it ).MagicMove( vPosTmp );
-    // merge all flows into new concentration
-    for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).MagicMove( vPosTmp );
-    DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
-    if( roleDec )
-        roleDec->Reset();
+    MT_Vector2D destination;
+    MIL_Tools::ConvertCoordMosToSim( point, destination );
+    APPLY_ON_ELEMENTS( element.MagicMove( destination ); )
     UpdateState();
-    UpdateBarycenter();
-    orderManager_->CancelMission();
-    SetAttitude( GetDefaultAttitude() );
     bHasDoneMagicMove_ = true;
 }
 
@@ -1277,10 +1190,7 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::MissionParame
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgDestroyAll()
 {
-    for( IT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).KillAllHumans();
-    for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).KillAllHumans();
+    APPLY_ON_ELEMENTS( element.KillAllHumans(); )
     DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
     if( roleDec )
         roleDec->Reset();
@@ -1297,10 +1207,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::MissionParameters&
     const auto value = GET_ENUMERATION( sword::EnumCrowdAttitude, msg, 0 );
     const MIL_PopulationAttitude* attitude = MIL_PopulationAttitude::Find( value );
     protocol::Check( attitude, "must be a valid attitude enumeration", 0 );
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SetAttitude( *attitude );
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SetAttitude( *attitude );
+    SetAttitude( *attitude );
 }
 
 namespace
@@ -1323,10 +1230,6 @@ namespace
         const unsigned int newHealthy = Update( healthy, newNumber );
         element.PushHumans( MIL_PopulationHumans( newHealthy, newContaminated, newWounded, newDead ) );
     }
-}
-
-namespace
-{
     unsigned int GetParameter( const sword::MissionParameters& params, int idx )
     {
         const int quantity = protocol::GetQuantity( params, idx );
@@ -1356,26 +1259,21 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::MissionParamete
 // -----------------------------------------------------------------------------
 void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead )
 {
-    unsigned int currentAllHumans = GetAllHumans();
+    const unsigned int currentAllHumans = GetAllHumans();
     if( currentAllHumans == 0 )
     {
-        MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, *vBarycenter_, MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
-        concentrations_.push_back( pConcentration );
+        concentrations_.push_back( boost::make_shared< MIL_PopulationConcentration >( *this, *vBarycenter_, MIL_PopulationHumans( healthy, contaminated, wounded, dead ) ) );
+        UpdateBarycenter();
     }
     else
     {
-        float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / currentAllHumans;
+        const float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / currentAllHumans;
         MIL_PopulationElement_ABC* last = 0;
-        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        APPLY_ON_ELEMENTS(
         {
-            last = *it;
-            ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
-        }
-        for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        {
-            last = *it;
-            ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
-        }
+            last = &element;
+            ChangeHealthState( element, healthy, contaminated, wounded, dead, ratio );
+        } )
         if( last )
             last->PushHumans( MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
     }
@@ -1387,18 +1285,18 @@ void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wound
 // -----------------------------------------------------------------------------
 double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanObjet )
 {
-    double densityRef = pType_->GetUrbanDestructionDensity( GetAttitude() );
-    double timeRef = pType_->GetUrbanDestructionTime( GetAttitude() ) ;
+    const double densityRef = pType_->GetUrbanDestructionDensity( GetAttitude() );
+    const double timeRef = pType_->GetUrbanDestructionTime( GetAttitude() ) ;
     if( densityRef <= 0.0 && timeRef <= 0.0 )
         return 0.0;
 
     double coveredArea = 0.0, currentArea = 0.0, areaDensitySum = 0.0;
-    for( auto it = concentrations_.begin(); it != concentrations_.end();  ++it )
+    APPLY_ON_CONCENTRATIONS(
     {
-        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
+        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), concentration.GetLocation() );
         coveredArea += currentArea;
-        areaDensitySum += currentArea * (*it)->GetDensity();
-    }
+        areaDensitySum += currentArea * concentration.GetDensity();
+    } )
     /* FIXME : Either remove completely flows or replace IntersectionArea with proper computation
      * The geometry is a line: a polygon should be constructed out of it if we want to intersect
      * or just counting the number of people inside the block (but most often that will be 0).
@@ -1412,13 +1310,13 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
     if( coveredArea < 0.00001 /*epsilon*/ )
         return 0.0;
 
-    double urbanArea = pUrbanObjet->GetLocalisation().GetArea();
-    double areaFactor = std::min< double >( 1.0, coveredArea / urbanArea );
+    const double urbanArea = pUrbanObjet->GetLocalisation().GetArea();
+    const double areaFactor = std::min< double >( 1.0, coveredArea / urbanArea );
     if( densityRef <= 0.0 || timeRef <= 0.0 )
         return areaFactor;
 
-    double averageDensity = areaDensitySum / coveredArea;
-    double densityTimeFactor = std::min< double >( 1.0, averageDensity / ( densityRef * timeRef ) );
+    const double averageDensity = areaDensitySum / coveredArea;
+    const double densityTimeFactor = std::min< double >( 1.0, averageDensity / ( densityRef * timeRef ) );
     return  areaFactor * densityTimeFactor;
 }
 
@@ -1436,6 +1334,18 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::MissionPar
     armedIndividualsChanged_ = true;
 }
 
+namespace
+{
+    template< typename F, typename Concentrations, typename Flows >
+    void Send( F functor, const Concentrations& concentrations, const Concentrations& trashedConcentrations, const Flows& flows, const Flows& trashedFlows )
+    {
+        std::for_each( concentrations.begin(), concentrations.end(), functor );
+        std::for_each( trashedConcentrations.begin(), trashedConcentrations.end(), functor );
+        std::for_each( flows.begin(), flows.end(), functor );
+        std::for_each( trashedFlows.begin(), trashedFlows.end(), functor );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::SendCreation
 // Created: NLD 2005-09-28
@@ -1451,14 +1361,7 @@ void MIL_Population::SendCreation( unsigned int context ) const
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
     asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendCreation( context );
-    for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendCreation( context );
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendCreation( context );
-    for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendCreation( context );
+    Send( boost::bind( &MIL_PopulationElement_ABC::SendCreation, _1, context ), concentrations_, trashedConcentrations_, flows_, trashedFlows_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1482,14 +1385,7 @@ void MIL_Population::SendFullState() const
     asnMsg().set_contaminated( GetContaminatedHumans() );
     asnMsg().set_dead( GetDeadHumans() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendFullState();
-    for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendFullState();
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendFullState();
-    for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendFullState();
+    Send( boost::bind( &MIL_PopulationElement_ABC::SendFullState, _1 ), concentrations_, trashedConcentrations_, flows_, trashedFlows_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1522,14 +1418,7 @@ void MIL_Population::UpdateNetwork()
             }
             asnMsg.Send( NET_Publisher_ABC::Publisher() );
         }
-        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            ( **it ).SendChangedState();
-        for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-            ( **it ).SendChangedState();
-        for( auto it = flows_.begin(); it != flows_.end(); ++it )
-            ( **it ).SendChangedState();
-        for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-            ( **it ).SendChangedState();
+        Send( boost::bind( &MIL_PopulationElement_ABC::SendChangedState, _1 ), concentrations_, trashedConcentrations_, flows_, trashedFlows_ );
     }
     catch( const std::exception& e )
     {
@@ -1543,10 +1432,7 @@ void MIL_Population::UpdateNetwork()
 // -----------------------------------------------------------------------------
 void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const
 {
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        visitor.Visit( **it );
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        visitor.Visit( **it );
+    APPLY_ON_ELEMENTS( visitor.Visit( element ); )
 }
 
 // -----------------------------------------------------------------------------
@@ -1555,7 +1441,7 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
 // -----------------------------------------------------------------------------
 void MIL_Population::Apply( MIL_EntitiesVisitor_ABC& ) const
 {
-    // Nothing
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1691,18 +1577,13 @@ bool MIL_Population::IsBlinded() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateBarycenter()
 {
-    MT_Vector2D currentBarycenter;
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        currentBarycenter += (*it)->GetPosition();
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        currentBarycenter += (*it)->GetPosition();
-    double elements = static_cast< double >( concentrations_.size() + flows_.size() );
-    if( elements > 0 )
-    {
-        currentBarycenter = currentBarycenter / elements;
-        vBarycenter_->rX_ = currentBarycenter.rX_;
-        vBarycenter_->rY_ = currentBarycenter.rY_;
-    }
+    if( concentrations_.empty() && flows_.empty() )
+        return;
+    MT_Vector2D barycenter;
+    APPLY_ON_ELEMENTS( barycenter += element.GetPosition(); )
+    barycenter = barycenter / static_cast< double >( concentrations_.size() + flows_.size() );
+    vBarycenter_->rX_ = barycenter.rX_;
+    vBarycenter_->rY_ = barycenter.rY_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1711,12 +1592,10 @@ void MIL_Population::UpdateBarycenter()
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasHumansChanged() const
 {
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( ( **itConcentration ).HasHumansChanged() )
+    APPLY_ON_ELEMENTS(
+        if( element.HasHumansChanged() )
             return true;
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        if( ( **itFlow ).HasHumansChanged() )
-            return true;
+    )
     return false;
 }
 
@@ -1778,9 +1657,9 @@ double MIL_Population::GetUrbanBlockAngriness() const
 // Name: MIL_Population::SetUrbanBlockAngriness
 // Created: BCI 2011-03-18
 // -----------------------------------------------------------------------------
-void MIL_Population::SetUrbanBlockAngriness( double u )
+void MIL_Population::SetUrbanBlockAngriness( double angriness )
 {
-    urbanBlockAngriness_ = u;
+    urbanBlockAngriness_ = angriness;
 }
 
 // -----------------------------------------------------------------------------
@@ -1807,14 +1686,11 @@ bool MIL_Population::CanEmitReports() const
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) const
 {
-    double weldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
-
-    BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
-        if( destination.SquareDistance( concentration->GetPosition() ) <= weldValue )
+    const double weldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue() / 10;
+    APPLY_ON_ELEMENTS(
+        if( destination.SquareDistance( element.GetPosition() ) <= weldValue )
             return true;
-    BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
-        if( destination.SquareDistance( flow->GetPosition() ) <= weldValue )
-            return true;
+    )
     return false;
 }
 
@@ -1825,12 +1701,10 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 bool MIL_Population::HasReachedBlockBorder( const MIL_UrbanObject_ABC* pUrbanKnowledge ) const
 {
     const TER_Localisation& localisation = pUrbanKnowledge->GetLocalisation();
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        if( localisation.IsInside( (*it)->GetPosition() ) )
+    APPLY_ON_ELEMENTS(
+        if( localisation.IsInside( element.GetPosition() ) )
             return true;
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        if( localisation.IsInside( (*it)->GetPosition() ) )
-            return true;
+    )
     return false;
 }
 
@@ -1844,7 +1718,7 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
         return false;
     if( concentrations_.size() != 1 )
         return false;
-    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
+    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue() / 10;
 }
 
 // -----------------------------------------------------------------------------
@@ -1855,8 +1729,7 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 {
     if( !HasFlow() )
         throw MASA_EXCEPTION( "Asking head position of a crowd without flow." );
-    MIL_PopulationFlow* firstFlow = *flows_.begin();
-    return firstFlow->GetPosition();
+    return flows_.front()->GetPosition();
 }
 
 // -----------------------------------------------------------------------------

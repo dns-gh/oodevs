@@ -37,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PopulationKnowledge( const MIL_Population& population );
+    explicit DEC_PopulationKnowledge( const MIL_Population& population );
     virtual ~DEC_PopulationKnowledge();
     //@}
 

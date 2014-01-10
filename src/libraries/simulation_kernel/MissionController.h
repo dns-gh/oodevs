@@ -34,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory );
+    virtual void Initialize( const tools::Resolver< MIL_AgentPion >& resolver, const PopulationFactory_ABC& populationFactory );
     virtual void SendFullState();
-    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission );
-    virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual void Start( const boost::shared_ptr< MIL_Mission_ABC >& mission );
+    virtual void Stop( const boost::shared_ptr< MIL_Mission_ABC >& mission );
     virtual uint32_t AcquireId();
     //@}
 
@@ -51,8 +51,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< MIL_Mission_ABC >   T_Mission;
-    typedef std::map< unsigned int, T_Mission >    T_Missions;
+    typedef boost::shared_ptr< MIL_Mission_ABC > T_Mission;
+    typedef std::map< unsigned int, T_Mission >  T_Missions;
     //@}
 
 private:

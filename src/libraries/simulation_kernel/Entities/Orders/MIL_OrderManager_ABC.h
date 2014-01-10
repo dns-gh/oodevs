@@ -12,14 +12,14 @@
 #ifndef __MIL_OrderManager_ABC_h_
 #define __MIL_OrderManager_ABC_h_
 
-#include "MIL.h"
 #include "MIL_LimaOrder.h"
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
 class MIL_Fuseau;
 class MIL_LimaFunction;
+class MIL_LimaOrder;
 class MIL_MissionType_ABC;
 class MissionController_ABC;
 
@@ -42,7 +42,7 @@ public:
 
     // @name Events
     //@{
-    void ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pMission ); // asynchronous
+    void ReplaceMission( const boost::shared_ptr< MIL_Mission_ABC >& pMission ); // asynchronous
     void CancelMission(); // asynchronous
     virtual void StopAllMissions(); // synchronous
     //@}
