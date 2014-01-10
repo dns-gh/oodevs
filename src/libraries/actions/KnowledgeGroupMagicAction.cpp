@@ -9,10 +9,14 @@
 
 #include "actions_pch.h"
 #include "KnowledgeGroupMagicAction.h"
-#include "protocol/SimulationSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
+
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+
+#include "ENT/ENT_Tr.h"
+
+#include "protocol/SimulationSenders.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace actions;
 
@@ -25,7 +29,7 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::Entity_ABC& 
     , controller_( controller )
     , registered_( registered )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +41,7 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel
     , controller_         ( controller )
     , registered_         ( true )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

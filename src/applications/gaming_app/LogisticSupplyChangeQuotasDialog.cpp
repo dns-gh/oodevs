@@ -280,7 +280,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
-    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ), true );
+    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), (*selected_).GetId() ) );
 

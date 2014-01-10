@@ -266,7 +266,7 @@ void EquipmentTransferDialog::Validate()
     }
     accept();
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "transfer_equipment" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selectedFrom_, actionType, controllers_.controller_, tr( "Equipment transfer"), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selectedFrom_, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), selectedTo_->GetId() ) );
     actions::parameters::ParameterList* equipments = new actions::parameters::ParameterList( it.NextElement() );

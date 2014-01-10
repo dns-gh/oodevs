@@ -33,8 +33,8 @@ public:
 
 //! @name Constructors/Destructor
     //@{
-             EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered = true );
-             EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name, const bool engaged);
+             EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered = true );
+             EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const bool engaged);
     virtual ~EngageMagicAction();
     //@}
 

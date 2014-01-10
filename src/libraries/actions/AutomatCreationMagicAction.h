@@ -43,7 +43,7 @@ class AutomatCreationMagicAction : public UnitMagicAction
 public:
     //! @name Constructors/Destructor
     //@{
-                AutomatCreationMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const kernel::StaticModel& staticModel, const kernel::AutomatType& type, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel,  const kernel::Time_ABC& simulation, bool registered = true );
+                AutomatCreationMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const kernel::StaticModel& staticModel, const kernel::AutomatType& type, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel,  const kernel::Time_ABC& simulation, bool registered = true );
        virtual ~AutomatCreationMagicAction();
     //@}
 

@@ -178,7 +178,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( ( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, isPushFlow_ ? tr( "Log Supply Push Flow" ) : tr( "Log Resupply" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     actions::parameters::PushFlowParameters* pushFlowParameters = new actions::parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_, !isPushFlow_ );

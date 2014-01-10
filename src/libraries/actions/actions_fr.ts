@@ -38,34 +38,6 @@
         <source>Executing target not set</source>
         <translation>Unité exécutante non trouvée</translation>
     </message>
-    <message>
-        <source>Crowd Creation</source>
-        <translation>Création de foule</translation>
-    </message>
-    <message>
-        <source>Formation Creation</source>
-        <translation>Création de formation</translation>
-    </message>
-    <message>
-        <source>Unit Creation</source>
-        <translation>Création d&apos;unité</translation>
-    </message>
-    <message>
-        <source>Automat Creation</source>
-        <translation>Création d&apos;automate</translation>
-    </message>
-    <message>
-        <source>Population Change Health State</source>
-        <translation>Changer l&apos;état de santé de la population</translation>
-    </message>
-    <message>
-        <source>Population Change Alerted State</source>
-        <translation>Changer l&apos;état d&apos;alerte de la population</translation>
-    </message>
-    <message>
-        <source>Population Change Confined State</source>
-        <translation>Changer l&apos;état de confinement de la population</translation>
-    </message>
 </context>
 <context>
     <name>ActionParameter</name>
@@ -148,6 +120,17 @@
     </message>
 </context>
 <context>
+    <name>EngageMagicAction</name>
+    <message>
+        <source>Engage</source>
+        <translation>Embrayer</translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation>Débrayer</translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
@@ -209,17 +192,6 @@
     <message>
         <source>Not set</source>
         <translation>Non défini</translation>
-    </message>
-</context>
-<context>
-    <name>gaming_app::Action</name>
-    <message>
-        <source>Object Update</source>
-        <translation>Mise à jour d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Destruction d&apos;objet</translation>
     </message>
 </context>
 </TS>

@@ -38,34 +38,6 @@
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
         <translation>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</translation>
     </message>
-    <message>
-        <source>Automat Creation</source>
-        <translation>Automat Creation</translation>
-    </message>
-    <message>
-        <source>Unit Creation</source>
-        <translation>Unit Creation</translation>
-    </message>
-    <message>
-        <source>Formation Creation</source>
-        <translation>Formation Creation</translation>
-    </message>
-    <message>
-        <source>Crowd Creation</source>
-        <translation>Crowd Creation</translation>
-    </message>
-    <message>
-        <source>Population Change Health State</source>
-        <translation>Population Change Health State</translation>
-    </message>
-    <message>
-        <source>Population Change Alerted State</source>
-        <translation>Population Change Alerted State</translation>
-    </message>
-    <message>
-        <source>Population Change Confined State</source>
-        <translation>Population Change Confined State</translation>
-    </message>
 </context>
 <context>
     <name>ActionParameter</name>
@@ -148,6 +120,17 @@
     </message>
 </context>
 <context>
+    <name>EngageMagicAction</name>
+    <message>
+        <source>Engage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
@@ -209,17 +192,6 @@
     <message>
         <source>Not set</source>
         <translation>Not set</translation>
-    </message>
-</context>
-<context>
-    <name>gaming_app::Action</name>
-    <message>
-        <source>Object Update</source>
-        <translation>Object Update</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Object Destruction</translation>
     </message>
 </context>
 </TS>

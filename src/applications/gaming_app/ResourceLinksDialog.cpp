@@ -65,7 +65,7 @@ void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
     }
     // $$$$ _RC_ JSR 2011-02-24: TODO passer dans la factory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_resource_links" );
-    MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Change resource links"), true );
+    MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new Identifier( it.NextElement(), id ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );

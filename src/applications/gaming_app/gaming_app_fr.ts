@@ -285,13 +285,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Change Diplomacy</source>
-        <translation>Changer la diplomatie</translation>
-    </message>
-</context>
-<context>
     <name>ChangeHealthStateDialog_ABC</name>
     <message>
         <source>Change health state</source>
@@ -333,10 +326,6 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Change Human Factors</source>
-        <translation>Changer les facteurs humains</translation>
-    </message>
-    <message>
         <source>Stress:</source>
         <translation>Stress:</translation>
     </message>
@@ -362,10 +351,6 @@
     <message>
         <source>Change logistic links</source>
         <translation>Changer les liens logistiques</translation>
-    </message>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Changer les Liens Logistiques</translation>
     </message>
     <message>
         <source>Nominal superior</source>
@@ -451,10 +436,6 @@
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
-    </message>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation></translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>
@@ -822,10 +803,6 @@ Raison: %3
 <context>
     <name>ExtensionsPanel</name>
     <message>
-        <source>Change extension</source>
-        <translation>Changer l&apos;extension</translation>
-    </message>
-    <message>
         <source>Validate</source>
         <translation>Valider</translation>
     </message>
@@ -859,14 +836,6 @@ Raison: %3
     <message>
         <source>Launch strike</source>
         <translation>Déclencher le tir</translation>
-    </message>
-    <message>
-        <source>Strike order</source>
-        <translation>Ordre de feu</translation>
-    </message>
-    <message>
-        <source>Strike order on location</source>
-        <translation>Ordre de feu sur position</translation>
     </message>
     <message>
         <source>Strike order: reporter</source>
@@ -1666,10 +1635,6 @@ Voulez-vous le remplacer ?</translation>
         <source>Allocate supply quotas</source>
         <translation>Allouer les quotas de ravitaillement</translation>
     </message>
-    <message>
-        <source>Log Supply Change Quotas</source>
-        <translation>Changer les quotas de ravitaillement</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
@@ -1692,20 +1657,12 @@ Voulez-vous le remplacer ?</translation>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
     </message>
-    <message>
-        <source>Log Supply Pull Flow</source>
-        <translation>Ravitaillement Tirer Flux</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
         <source>Push supply flow</source>
         <translation>Pousser un flux de ravitaillement</translation>
-    </message>
-    <message>
-        <source>Log Supply Push Flow</source>
-        <translation>Ravitaillement Pousser Flux</translation>
     </message>
     <message>
         <source>Add recipient</source>
@@ -1718,10 +1675,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Resupply</source>
         <translation>Ravitailler</translation>
-    </message>
-    <message>
-        <source>Log Resupply</source>
-        <translation>Ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1793,17 +1746,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Quantity %</source>
         <translation>Quantité %</translation>
-    </message>
-    <message>
-        <source>Partial Recovery</source>
-        <translation>Recomplétion partielle</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticTreeView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Changer les Liens Logistiques</translation>
     </message>
 </context>
 <context>
@@ -1891,33 +1833,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Magic orders</source>
         <translation>Actions magiques</translation>
-    </message>
-</context>
-<context>
-    <name>MagicAction</name>
-    <message>
-        <source>Recover - All</source>
-        <translation>Recompléter - Tout</translation>
-    </message>
-    <message>
-        <source>Recover - Troops</source>
-        <translation>Recompléter - Troupes</translation>
-    </message>
-    <message>
-        <source>Recover - Equipments</source>
-        <translation>Recompléter - Composantes</translation>
-    </message>
-    <message>
-        <source>Recover - Resources</source>
-        <translation>Recompléter - Ressources</translation>
-    </message>
-    <message>
-        <source>Destroy - All</source>
-        <translation>Détruire - Entièrement</translation>
-    </message>
-    <message>
-        <source>Cancel - Surrender</source>
-        <translation>Annuler la rédition</translation>
     </message>
 </context>
 <context>
@@ -2735,20 +2650,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Changer l&apos;attitude</translation>
     </message>
     <message>
-        <source>Crowd Total Destruction</source>
-        <translation>Destruction totale de la foule</translation>
-    </message>
-    <message>
-        <source>Crowd Change Attitude</source>
-        <translation>Changer l&apos;attitude de la foule</translation>
-    </message>
-    <message>
         <source>Change armed individuals:</source>
         <translation>Changer les individus armés:</translation>
-    </message>
-    <message>
-        <source>Crowd Change Armed Individuals</source>
-        <translation>Changer les individus armés d&apos;une foule</translation>
     </message>
     <message>
         <source>Enter value</source>
@@ -2918,13 +2821,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Show warnings</source>
         <translation>Montrer les avertissements</translation>
-    </message>
-</context>
-<context>
-    <name>ResourceLinksDialog</name>
-    <message>
-        <source>Change resource links</source>
-        <translation>Changer les liens de ressources</translation>
     </message>
 </context>
 <context>
@@ -3112,14 +3008,6 @@ Ces données ne peuvent pas être projetées.</translation>
 </context>
 <context>
     <name>TacticalTreeView</name>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation>Changer le supérieur de l&apos;unité</translation>
-    </message>
-    <message>
-        <source>Change Formation Superior</source>
-        <translation>Changer le supérieur de la formation</translation>
-    </message>
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
@@ -3438,18 +3326,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Rédition</translation>
     </message>
     <message>
-        <source>Surrender</source>
-        <translation>Capituler</translation>
-    </message>
-    <message>
-        <source>Destroy Component</source>
-        <translation>Détruite Composante</translation>
-    </message>
-    <message>
-        <source>Recover Transporters</source>
-        <translation>Recompléter Transporteurs</translation>
-    </message>
-    <message>
         <source>Reload brain</source>
         <translation>Recharger le decisionnel</translation>
     </message>
@@ -3514,21 +3390,10 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>UnitStateTableCrew</name>
-    <message>
-        <source>Change human state</source>
-        <translation>Modifier l&apos;état des humains</translation>
-    </message>
-</context>
-<context>
     <name>UnitStateTableEquipment</name>
     <message>
         <source>Random</source>
         <translation>Aléatoire</translation>
-    </message>
-    <message>
-        <source>Change equipment state</source>
-        <translation>Modifier l&apos;état de l&apos;équipement</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -3540,10 +3405,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Maximal capacity</source>
         <translation>Capacité maximale</translation>
-    </message>
-    <message>
-        <source>Change dotations</source>
-        <translation>Modifier les dotations</translation>
     </message>
 </context>
 <context>
@@ -3684,14 +3545,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>WeatherPanel</name>
     <message>
-        <source>Change Global Weather</source>
-        <translation>Changement de météo globale</translation>
-    </message>
-    <message>
-        <source>Change Local Weather</source>
-        <translation>Changement de météo locale</translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
     </message>
@@ -3702,10 +3555,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Weather parameters</source>
         <translation>Paramètres de météo</translation>
-    </message>
-    <message>
-        <source>Local Weather Destruction</source>
-        <translation>Destruction de météo locale</translation>
     </message>
 </context>
 <context>

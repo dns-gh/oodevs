@@ -142,7 +142,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Teleport" ), true );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -177,7 +177,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_total_destruction" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Total Destruction" ), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
@@ -194,7 +194,7 @@ void PopulationMagicOrdersInterface::ReloadBrain(QAction* action)
     {
         std::string modelName = action->text();
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -214,7 +214,7 @@ void PopulationMagicOrdersInterface::ChangeArmedIndividuals()
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_armed_individuals" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Change Armed Individuals" ), true );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -233,7 +233,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_attitude" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Change Attitude" ), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Enumeration( it.NextElement(), index ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -315,7 +315,7 @@ void PopulationMagicOrdersInterface::ActivateBrainDebug()
         if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Activate brain debug" ), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -333,7 +333,7 @@ void PopulationMagicOrdersInterface::DeactivateBrainDebug()
     if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Deactivate brain debug" ), true );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );

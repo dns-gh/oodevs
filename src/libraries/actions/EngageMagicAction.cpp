@@ -13,33 +13,42 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Tools.h"
 
 using namespace actions;
 
-// -----------------------------------------------------------------------------
-// Name: EngageMagicAction::EngageMagicAction
-// Created: FDS 2010-11-22
-// -----------------------------------------------------------------------------
-EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered /* = true*/ )
-    : ActionWithTarget_ABC ( controller, magic, &entity )
-    , controller_( controller )
-    , registered_( registered )
-    , engaged_( engaged )
+namespace
 {
-    Rename( name );
+    QString GetName( bool engage )
+    {
+        return engage ? tools::translate( "EngageMagicAction", "Engage" ) : tools::translate( "EngageMagicAction", "Disengage" );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: EngageMagicAction::EngageMagicAction
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------
-EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name, const bool engaged )
+EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered /* = true*/ )
+    : ActionWithTarget_ABC ( controller, magic, &entity )
+    , controller_( controller )
+    , registered_( registered )
+    , engaged_( engaged )
+{
+    Rename( ::GetName( engaged ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EngageMagicAction::EngageMagicAction
+// Created: FDS 2010-11-22
+// -----------------------------------------------------------------------------
+EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const bool engaged )
     : ActionWithTarget_ABC( xis, controller, magic, entity )
     , controller_( controller )
     , registered_( true )
     , engaged_( engaged )
 {
-    Rename( name );
+    Rename( ::GetName( engaged ) );
 }
 
 // -----------------------------------------------------------------------------

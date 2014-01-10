@@ -99,7 +99,7 @@ void WeatherPanel::Commit()
     {
         assert( currentModel_->GetGlobalMeteo() );
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "global_weather" );
-        actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Global Weather" ), true );
+        actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         static_cast< WeatherWidget* >( globalWeatherWidget_ )->CreateParameters( *action, it );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -122,7 +122,7 @@ void WeatherPanel::Commit()
                 if( local->IsValid() )
                 {
                     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather" );
-                    actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Local Weather" ), true );
+                    actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, true );
                     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
                     localWeatherWidget_->Update( *local );
@@ -151,7 +151,7 @@ void WeatherPanel::Commit()
         while( unsigned long trashedWeather = static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather_destruction" );
-            actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Local Weather Destruction" ), true );
+            actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, true );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), trashedWeather ) );

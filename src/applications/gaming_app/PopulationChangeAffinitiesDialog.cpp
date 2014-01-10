@@ -55,7 +55,7 @@ PopulationChangeAffinitiesDialog::~PopulationChangeAffinitiesDialog()
 void PopulationChangeAffinitiesDialog::DoValidate()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_affinities" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* affinitiesList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *affinitiesList );

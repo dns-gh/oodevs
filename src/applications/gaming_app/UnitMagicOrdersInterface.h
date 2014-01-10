@@ -42,6 +42,11 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace sword
+{
+    enum UnitMagicAction_Type;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -64,7 +69,14 @@ class UnitMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
+             UnitMagicOrdersInterface( QWidget* parent,
+                                       kernel::Controllers& controllers,
+                                       actions::ActionsModel& actionsModel,
+                                       const StaticModel& staticModel,
+                                       const kernel::Time_ABC& simulation,
+                                       gui::ParametersLayer& layer,
+                                       const kernel::Profile_ABC& profile,
+                                       gui::GlSelector& selector );
     virtual ~UnitMagicOrdersInterface();
     //@}
 
@@ -97,11 +109,11 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void AddMagic( const QString& label, int id,           kernel::ContextMenu* menu );
+    void AddMagic( const QString& label, sword::UnitMagicAction_Type id, kernel::ContextMenu* menu );
     int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
-    void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
+    void ApplyOnHierarchy( const kernel::Entity_ABC& entity, sword::UnitMagicAction_Type id );
     void FillCommonOrders( kernel::ContextMenu* magicMenu );
-    void CreateAndPublish( const std::string& actionType, const QString& name, bool attachEntitytoTasker = true );
+    void CreateAndPublish( const std::string& actionType );
 
     void AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity );
     void AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< kernel::DecisionalModel >& models,

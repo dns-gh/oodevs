@@ -105,7 +105,7 @@ void ExtensionsPanel::OnActivationChanged( bool state )
 void ExtensionsPanel::OnValidate()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( types_ ).Get( "change_extension" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change extension" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* extensions = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *extensions );

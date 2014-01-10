@@ -9,10 +9,14 @@
 
 #include "actions_pch.h"
 #include "ObjectMagicAction.h"
-#include "protocol/SimulationSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
+
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+
+#include "ENT/ENT_Tr.h"
+
+#include "protocol/SimulationSenders.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace actions;
 
@@ -26,7 +30,7 @@ ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const ke
     , controller_( controller )
     , registered_( registered )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromObjectMagicActionType( ENT_Tr::ConvertToObjectMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +43,7 @@ ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& co
     , controller_( controller )
     , registered_( true )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromObjectMagicActionType( ENT_Tr::ConvertToObjectMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

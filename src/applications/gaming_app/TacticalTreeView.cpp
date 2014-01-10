@@ -319,7 +319,7 @@ void TacticalTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity
         if( &item.Get< kernel::TacticalHierarchies >().GetUp() == automat )
             return;
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "unit_change_superior" );
-        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Unit Change Superior" ), true );
+        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -339,7 +339,7 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
         if( & item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
             return;
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
+        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -355,7 +355,7 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
 void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target)
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )

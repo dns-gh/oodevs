@@ -204,7 +204,7 @@ void FireCreationPanel::Commit()
         if( IsStrikeOnLocation() )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order_on_location" );
-            MagicAction* action = new MagicAction( actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order on location" ), true );
+            MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, *location_ ) );
@@ -216,7 +216,7 @@ void FireCreationPanel::Commit()
         else
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order" ), true );
+            UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, true );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_ ) );

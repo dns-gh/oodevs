@@ -32,8 +32,8 @@ class UnitMagicAction : public ActionWithTarget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered = true);
-             UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name );
+             UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true);
+             UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
     virtual ~UnitMagicAction();
     //@}
 

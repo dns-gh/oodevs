@@ -190,7 +190,7 @@ void ChangeLogisticLinksDialog::Validate()
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
-        UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
+        UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
         action->AddParameter( Serialize( *nominalSuperiorCombo_, it.NextElement() ) );

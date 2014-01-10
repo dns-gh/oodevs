@@ -32,8 +32,8 @@ class MagicAction : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered = true );
-             MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const QString& name );
+             MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+             MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
     virtual ~MagicAction();
     //@}
 

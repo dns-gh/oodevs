@@ -70,7 +70,7 @@ const kernel::Entity_ABC* LogisticTreeView::RetrieveSuperior( const kernel::Enti
 void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( entity, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( entity, actionType, controllers_.controller_, true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     const LogisticLinks* links = entity.Retrieve< LogisticLinks >();
 

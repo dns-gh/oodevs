@@ -71,7 +71,7 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
         return;
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_diplomacy" );
-    MagicAction* action = new MagicAction( actionType, controllers_.controller_, tools::translate( "ChangeDiplomacyDialog", "Change Diplomacy" ), true );
+    MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team1.GetId() ) );
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team2.GetId() ) );

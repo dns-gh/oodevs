@@ -490,7 +490,7 @@ void LogisticSupplyRecompletionDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Partial Recovery"), true );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
