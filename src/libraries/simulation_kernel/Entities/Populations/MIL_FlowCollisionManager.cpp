@@ -9,17 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FlowCollisionManager.h"
-#include "MIL_Time_ABC.h"
-#include "MIL_PopulationFlow.h"
+#include "MIL_FlowCollision.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollisionManager constructor
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
 MIL_FlowCollisionManager::MIL_FlowCollisionManager()
-    : going_( 0 )
-    , isFlowing_( false )
-    , movingIndex_( 0 )
 {
     // NOTHING
 }
@@ -37,22 +33,16 @@ MIL_FlowCollisionManager::~MIL_FlowCollisionManager()
 // Name: MIL_FlowCollisionManager::AddCollision
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-void MIL_FlowCollisionManager::AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, T_PointList::const_iterator it, MT_Vector2D& point )
+void MIL_FlowCollisionManager::AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, MT_Vector2D& point )
 {
-    // todo (gérer plusieurs conflits)
-    if( !collidingFlows_.empty() )
-        return;
+    // todo gérer plus de deux collisions en un point
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+        if( it->first.SquareDistance( point ) < 100 ) // 10 metres ?
+            return;
 
-    auto& container = collidingFlows_[ point ];
-    if( std::find( container.begin(), container.end(), flow1 ) == container.end() )
-        container.insert( container.begin(), flow1 );
-    if( std::find( container.begin(), container.end(), flow2 ) == container.end() )
-        container.insert( container.begin(), flow2 );
-    point_ = point;
-    isFlowing_ = false;
-    movingIndex_ = 0;
-    start_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    going_ = container[ 0 ]->Split( it, point );
+    std::shared_ptr< MIL_FlowCollision > collision = std::make_shared< MIL_FlowCollision >( point );
+    collision->AddCollision( flow1, flow2 );
+    flowCollisions_[ point ] = collision;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,24 +51,10 @@ void MIL_FlowCollisionManager::AddCollision( MIL_PopulationFlow* flow1, MIL_Popu
 // -----------------------------------------------------------------------------
 bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow )
 {
-    for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); ++it )
-    {
-        auto& container = it->second;
-        auto flowIt = std::find( container.begin(), container.end(), flow );
-        if( flowIt != container.end() )
-        {
-            // todo going != 0 utile???
-            if( !isFlowing_ || going_ != 0 || container[ movingIndex_ ] != flow || MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ >= 5 )
-                return false;
-        }
-    }
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+        if( !it->second->CanMove( flow ) )
+            return false;
     return true;
-
-/*    if( isFlowing_ && going_ == 0 && flow == flowing_ && MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ < 5 )
-        return true;
-    if( flow == flow1_ || flow == flow2_ )
-        return false;
-    return true;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -87,42 +63,6 @@ bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow )
 // -----------------------------------------------------------------------------
 void MIL_FlowCollisionManager::Update()
 {
-    const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    if( timeStep - start_ >= 5 )
-    {
-        for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); ++it )
-        {
-            auto& container = it->second;
-            if( going_ == 0 && isFlowing_ )
-            {
-                MIL_PopulationFlow* flow = container[ movingIndex_ ];
-                const T_PointList& shape = flow->GetFlowShape();
-                CIT_PointList itStart = shape.begin();
-                CIT_PointList itEnd = itStart;
-                ++itEnd;
-                for( ; itEnd != shape.end(); ++itStart, ++itEnd )
-                {
-                    MT_Line line( *itStart, *itEnd );
-                    MT_Vector2D result;
-                    double r = line.ProjectPointOnLine( point_, result );
-                    if( r >= 0 && r <= 1 /* && result == point_*/ )
-                    {
-                        going_ = flow->Split( itEnd, point_ );
-                        isFlowing_ = false;
-                        break;
-                    }
-                }
-
-            }
-            else
-            {
-                isFlowing_ = true;
-                going_ = 0;
-                ++movingIndex_;
-                if( movingIndex_ >= container.size() )
-                    movingIndex_ = 0;
-            }
-            start_ = timeStep;
-        }
-    }
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+        it->second->Update();
 }

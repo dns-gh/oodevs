@@ -7,35 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_FlowCollisionManager_h_
-#define __MIL_FlowCollisionManager_h_
+#ifndef __MIL_FlowCollision_h_
+#define __MIL_FlowCollision_h_
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
-
 class MIL_PopulationFlow;
-class MIL_FlowCollision;
 
 // =============================================================================
-/** @class  MIL_FlowCollisionManager
-    @brief  MIL_FlowCollisionManager
+/** @class  MIL_FlowCollision
+    @brief  MIL_FlowCollision
 */
-// Created: JSR 2014-01-09
+// Created: JSR 2014-01-10
 // =============================================================================
-class MIL_FlowCollisionManager : private boost::noncopyable
+class MIL_FlowCollision : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_FlowCollisionManager();
-    virtual ~MIL_FlowCollisionManager();
+    explicit MIL_FlowCollision( const MT_Vector2D& point );
+    virtual ~MIL_FlowCollision();
     //@}
 
     //! @name Operations
     //@{
-    void AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, MT_Vector2D& point );
+    void AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 );
     bool CanMove( const MIL_PopulationFlow* flow );
     void Update();
     //@}
+
 
     //! @name CheckPoints
     //@{
@@ -48,13 +47,19 @@ public:
 private:
     //! @name Helpers
     //@{
+    void DoSplit();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::map< MT_Vector2D, std::shared_ptr< MIL_FlowCollision > > flowCollisions_;
+    MT_Vector2D point_;
+    std::vector< MIL_PopulationFlow* > collidingFlows_;
+    MIL_PopulationFlow* going_; // remplacer par index ?
+    bool isFlowing_;
+    int movingIndex_;
+    int start_;
     //@}
 };
 
-#endif // __MIL_FlowCollisionManager_h_
+#endif // __MIL_FlowCollision_h_

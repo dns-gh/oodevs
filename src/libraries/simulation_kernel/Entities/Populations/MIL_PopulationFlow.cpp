@@ -615,7 +615,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
                         MT_Vector2D intersection;
                         if( MT_Line( *itPointStart, *itPointEnd ).Intersect2D( line, intersection ) == eDoIntersect )
                         {
-                            GetFlowCollisionManager().AddCollision( this, static_cast< MIL_PopulationFlow* >( *it ), itPointEnd, intersection );
+                            GetFlowCollisionManager().AddCollision( this, static_cast< MIL_PopulationFlow* >( *it ), intersection );
                             done = true;
                             break;
                         }
