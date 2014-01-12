@@ -12,6 +12,7 @@
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/PushFlowParameters.h"
@@ -178,7 +179,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( ( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     actions::parameters::PushFlowParameters* pushFlowParameters = new actions::parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_, !isPushFlow_ );
@@ -220,7 +221,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 
     Clear();
     selected_ = 0;

@@ -13,6 +13,7 @@
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
 #include "KnowledgeAddInGroupDialog.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Bool.h"
@@ -106,13 +107,13 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_enable" );
-        KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true ) );
         action->Rename( tools::translate( "gamig_app::Action", "Knowledge Group Activation Change" ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -141,12 +142,12 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
         auto& type = types_.Get( s.text().toStdString() );
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_type" );
-        KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true ) );
         tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
         action->AddParameter( *new parameters::String( paramIt.NextElement(), type.GetName() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -159,12 +160,12 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup( const kernel::S
     if( entity )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-        MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
+        std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
         action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
         action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( entity, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }

@@ -11,6 +11,7 @@
 #include "EquipmentTransferDialog.h"
 #include "moc_EquipmentTransferDialog.cpp"
 
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
@@ -266,7 +267,7 @@ void EquipmentTransferDialog::Validate()
     }
     accept();
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "transfer_equipment" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selectedFrom_, actionType, controllers_.controller_, true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selectedFrom_, actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), selectedTo_->GetId() ) );
     actions::parameters::ParameterList* equipments = new actions::parameters::ParameterList( it.NextElement() );
@@ -274,7 +275,7 @@ void EquipmentTransferDialog::Validate()
     FillEquipments( *equipments );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selectedFrom_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
     selectedFrom_ = 0;
     selectedTo_ = 0;
 }

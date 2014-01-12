@@ -135,22 +135,13 @@ void InhabitantExtractCrowdDialog::Validate()
         return;
     accept();
     // Throw Inhabitant_Change_Health_State Magic Action
-    {
-        actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead() - deadSpinBox_->value(), *selected_ );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( selected_, false ) );
-        action->Polish();
-        actionsModel_.Publish( *action, 0 );
-    }
+    actionsModel_.PublishInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead() - deadSpinBox_->value(), *selected_ );
+
     // Throw Crowd_Creation Magic Action
     {
         const Inhabitant& entity = static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) );
         const kernel::Entity_ABC& top = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.Get< gui::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), entity.GetPosition(), top );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( &top, false ) );
-        action->Polish();
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.PublishCrowdCreationAction( entity.Get< gui::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), entity.GetPosition(), top );
     }
     selected_ = 0;
 }

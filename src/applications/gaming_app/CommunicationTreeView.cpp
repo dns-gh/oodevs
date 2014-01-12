@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "CommunicationTreeView.h"
 #include "moc_CommunicationTreeView.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
@@ -293,13 +294,13 @@ void CommunicationTreeView::OnCreateKnowledgeGroup( const kernel::SafePointer< k
     if( entity )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-        actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, true );
+        std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > paramIt = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
         action->AddParameter( *new actions::parameters::String( paramIt.NextElement(), type ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( entity, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -316,12 +317,12 @@ void CommunicationTreeView::Drop( const kernel::Agent_ABC& item, const kernel::E
         if( &item.Get< kernel::CommunicationHierarchies >().GetUp() != automat )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
-            actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, true );
+            std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( item, actionType, controllers_.controller_, false ) );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new actions::ActionTasker( &item, false ) );
-            action->RegisterAndPublish( actionsModel_ );
+            actionsModel_.Publish( *action, 0 );
         }
     }
 }
@@ -335,14 +336,14 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
     if( const kernel::KnowledgeGroup_ABC* group = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
-        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, true );
+        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( item, actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::KnowledgeGroup( it.NextElement(), *group, controllers_.controller_ ) );
         if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &group->Get< kernel::CommunicationHierarchies >().GetTop() ) )
             action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &item, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -352,11 +353,11 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target )
 {
-    actions::KnowledgeGroupMagicAction* action = 0;
+    std::unique_ptr< actions::Action_ABC > action;
     if( const kernel::KnowledgeGroup_ABC* groupParent = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &target ) )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side_parent" );
-        action = new actions::KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
+        action.reset( new actions::KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &groupParent->Get< kernel::CommunicationHierarchies >().GetTop() ) )
             action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
@@ -365,7 +366,7 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
     else if( const kernel::Team_ABC* teamParent = dynamic_cast< const kernel::Team_ABC* >( &target ) )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side" );
-        action = new actions::KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
+        action.reset( new actions::KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         if( const kernel::Team_ABC *team = dynamic_cast< const kernel::Team_ABC* >( &teamParent->Get< kernel::CommunicationHierarchies >().GetTop() ) )
             action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
@@ -374,6 +375,6 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
     {
         action->Attach( *new actions::ActionTasker( &item, false ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }

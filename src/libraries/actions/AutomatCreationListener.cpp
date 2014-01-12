@@ -74,10 +74,7 @@ bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& messa
         {
             if( pcSet || &composition->GetType() != automat->Get< ::gui::EntityType< kernel::AutomatType > >().GetType().GetTypePC() )
                 point = geometry::Point2f( 100.f * std::sin( current++ * angle ), 100.f * std::cos( current * angle ) ) + point_.ToVector();
-            actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point, *automat );
-            action->Attach( *new actions::ActionTiming( controller_, time_ ) );
-            action->Attach( *new actions::ActionTasker( automat, false ) );
-            actionsModel_.PublishForce( *action );
+            actionsModel_.PublishAgentCreationAction( agentType, point, *automat, true );
         }
     }
     return true;

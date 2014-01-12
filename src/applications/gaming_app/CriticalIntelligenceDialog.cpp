@@ -61,12 +61,12 @@ CriticalIntelligenceDialog::~CriticalIntelligenceDialog()
 void CriticalIntelligenceDialog::OnAccept()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_critical_intelligence" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new actions::parameters::String( it.NextElement(), textEdit_->text().toStdString() ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
     accept();
     textEdit_->setText( "" );
     gui::CriticalIntelligenceDialog::OnAccept();

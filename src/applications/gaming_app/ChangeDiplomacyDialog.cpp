@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/Enumeration.h"
 #include "actions/Identifier.h"
@@ -71,11 +72,11 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
         return;
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_diplomacy" );
-    MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team1.GetId() ) );
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team2.GetId() ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ResolveDiplomacy( diplomacy ) ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }

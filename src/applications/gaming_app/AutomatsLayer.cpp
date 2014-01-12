@@ -122,11 +122,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *selected_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.PublishAgentCreationAction( type, point, *selected_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,9 +131,5 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, clock() );
+    actionsModel_.PublishAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
 }

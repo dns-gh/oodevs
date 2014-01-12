@@ -78,125 +78,117 @@ void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateAutomatCreationAction
+// Name: ActionsModel::PublishAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
+void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
                                                       tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation  )
 {
-   Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, point, agentsModel, agentMessenger, *this, simulation );
-   Register( action->GetId(), *action );
-   return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateAutomatCreationAction( type, selected, point, agentsModel, agentMessenger, *this, simulation ) );
+    Publish( *action, clock() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateAgentCreationAction
+// Name: ActionsModel::PublishAgentCreationAction
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
+void ActionsModel::PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, bool force )
 {
-    Action_ABC* action = factory_.CreateAgentCreationAction( type, point, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateAgentCreationAction( type, point, selected ) );
+    if( force )
+        PublishForce( *action );
+    else
+        Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateFormationCreationAction
+// Name: ActionsModel::PublishFormationCreationAction
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase )
+void ActionsModel::PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase )
 {
-    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected, isLogisticBase );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateFormationCreationAction( level, selected, isLogisticBase ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateCrowdCreationAction
+// Name: ActionsModel::PublishCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
+void ActionsModel::PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateCrowdCreationAction( type, numberHealthy, numberWounded, numberDead, point, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateCrowdCreationAction( type, numberHealthy, numberWounded, numberDead, point, selected ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateCrowdChangeHealthStateAction
+// Name: ActionsModel::PublishCrowdChangeHealthStateAction
 // Created: JSR 2011-03-15
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected )
+void ActionsModel::PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateCrowdChangeHealthStateAction( healthy, wounded, contaminated, dead, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateCrowdChangeHealthStateAction( healthy, wounded, contaminated, dead, selected ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateInhabitantChangeHealthStateAction
+// Name: ActionsModel::PublishInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected )
+void  ActionsModel::PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateInhabitantChangeAlertedStateAction
+// Name: ActionsModel::PublishInhabitantChangeAlertedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected )
+void ActionsModel::PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateInhabitantChangeConfinedStateAction
+// Name: ActionsModel::PublishInhabitantChangeConfinedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected )
+void ActionsModel::PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateInhabitantChangeConfinedStateAction( confined, selected );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeConfinedStateAction( confined, selected ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateObjectMagicAction
+// Name: ActionsModel::PublishObjectMagicAction
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId )
+void ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsigned long targetId )
 {
-    Action_ABC* action = factory_.CreateObjectMagicAction( magicAction, targetId );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateObjectMagicAction( magicAction, targetId ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateObjectUpdateMagicAction
+// Name: ActionsModel::PublishObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
+void ActionsModel::PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
 {
-    Action_ABC* action = factory_.CreateObjectUpdateMagicAction( object, attribute );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateObjectUpdateMagicAction( object, attribute ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateObjectDestroyMagicAction
+// Name: ActionsModel::PublishObjectDestroyMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object )
+void ActionsModel::PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object )
 {
-    Action_ABC* action = factory_.CreateObjectDestroyMagicAction( object );
-    Register( action->GetId(), *action );
-    return action;
+    std::unique_ptr< Action_ABC > action( factory_.CreateObjectDestroyMagicAction( object ) );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------

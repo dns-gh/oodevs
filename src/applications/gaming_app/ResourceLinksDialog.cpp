@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ResourceLinksDialog.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/Bool.h"
 #include "actions/Identifier.h"
@@ -65,7 +66,7 @@ void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
     }
     // $$$$ _RC_ JSR 2011-02-24: TODO passer dans la factory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_resource_links" );
-    MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new Identifier( it.NextElement(), id ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
@@ -89,5 +90,5 @@ void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
         }
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }

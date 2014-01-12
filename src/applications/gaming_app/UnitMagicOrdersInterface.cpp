@@ -11,6 +11,7 @@
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
 
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
@@ -227,12 +228,12 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
             {
                 // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
                 MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-                UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+                std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
                 tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
                 action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
                 action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
                 action->Attach( *new ActionTasker( selectedEntity_, false ) );
-                action->RegisterAndPublish( actionsModel_ );
+                actionsModel_.Publish( *action, 0 );
             }
             catch( ... )
             {
@@ -263,10 +264,10 @@ namespace
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( type_ );
-            UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
+            std::unique_ptr< Action_ABC > action( new UnitMagicAction( agent, actionType, controllers_.controller_, false ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( &agent, false ) );
-            action->RegisterAndPublish( actionsModel_ );
+            actionsModel_.Publish( *action, 0 );
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
@@ -389,12 +390,12 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "surrender" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -408,12 +409,12 @@ void UnitMagicOrdersInterface::ReloadBrain( QAction* action )
     {
         std::string modelName = action->text();
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -426,12 +427,12 @@ void UnitMagicOrdersInterface::ActivateBrainDebug()
     if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -444,12 +445,12 @@ void UnitMagicOrdersInterface::DeactivateBrainDebug()
     if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -462,10 +463,10 @@ void UnitMagicOrdersInterface::FinishLogisticHandlings()
     if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_finish_handlings" );
-        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
 }
 
@@ -519,10 +520,10 @@ void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
 {
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
-    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selectedEntity_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }
 
 namespace
@@ -635,7 +636,7 @@ void UnitMagicOrdersInterface::Engage()
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -650,5 +651,5 @@ void UnitMagicOrdersInterface::Disengage()
     actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, false );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }

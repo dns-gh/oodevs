@@ -42,7 +42,7 @@ EventAction::EventAction( E_EventTypes type,
 // -----------------------------------------------------------------------------
 EventAction::~EventAction()
 {
-    // NOTHING
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void EventAction::Update( const timeline::Event& event )
     msg.ParsePartialFromString( event.action.payload );
     if( msg.has_message() )
     {
-        action_ = model_.CreateAction( msg, false );
+        action_ = model_.CreateAction( msg, true );
         missionType_ = ::GetMissionType( msg );
         type_ = ::GetEventType( msg );
     }

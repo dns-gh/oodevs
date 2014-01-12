@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticTreeView.h"
+#include "actions/ActionsModel.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/Identifier.h"
 #include "actions/ActionTiming.h"
@@ -70,7 +71,7 @@ const kernel::Entity_ABC* LogisticTreeView::RetrieveSuperior( const kernel::Enti
 void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( entity, actionType, controllers_.controller_, true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( entity, actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     const LogisticLinks* links = entity.Retrieve< LogisticLinks >();
 
@@ -83,5 +84,5 @@ void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kern
 
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( &entity, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }

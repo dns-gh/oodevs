@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "KnowledgeAddInGroupDialog.h"
 #include "moc_KnowledgeAddInGroupDialog.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
@@ -118,7 +119,7 @@ void KnowledgeAddInGroupDialog::OnAccept()
     action->Attach( *new actions::ActionTasker( selectedKnowledgeGroup_, false ) );
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
     action->AddParameter( *new actions::parameters::Enumeration( it.NextElement(), selectedPerception ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 
     Close();
 }

@@ -153,11 +153,7 @@ void ChangeHealthStateDialog_ABC::Validate()
     if( ! selected_ )
         return;
     accept();
-    actions::Action_ABC* action = CreateMagicAction( actionsModel_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, 0 );
+    CreateMagicAction( actionsModel_ );
     selected_ = 0;
 }
 

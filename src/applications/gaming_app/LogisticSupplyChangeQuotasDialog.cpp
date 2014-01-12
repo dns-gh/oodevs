@@ -11,6 +11,7 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
 #include "LogisticSupplyValuesTableWidget.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
@@ -280,7 +281,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
-    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( *target, actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), (*selected_).GetId() ) );
 
@@ -298,7 +299,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    actionsModel_.Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------

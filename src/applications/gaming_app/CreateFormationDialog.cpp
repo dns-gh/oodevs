@@ -96,8 +96,5 @@ void CreateFormationDialog::OnCreateLogisticBase( int level )
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::CreateFormation( int level, bool isLogisticBase )
 {
-    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_, isLogisticBase );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, time_ ) );
-    action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.PublishFormationCreationAction( level, *currentEntity_, isLogisticBase );
 }
