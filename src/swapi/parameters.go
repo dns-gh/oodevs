@@ -241,9 +241,15 @@ func MakeLineLocation(points ...Point) *sword.Location {
 
 func MakeRectangleLocation(from, to Point) *sword.Location {
 	return &sword.Location{
-		Type: sword.Location_polygon.Enum(),
-		Coordinates: MakeCoords(from, Point{X: from.X, Y: to.Y},
-			to, Point{X: to.X, Y: from.Y}),
+		Type:        sword.Location_rectangle.Enum(),
+		Coordinates: MakeCoords(from, to),
+	}
+}
+
+func MakePolygonLocation(points ...Point) *sword.Location {
+	return &sword.Location{
+		Type:        sword.Location_polygon.Enum(),
+		Coordinates: MakeCoords(points...),
 	}
 }
 
