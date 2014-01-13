@@ -331,7 +331,9 @@ void UnitMagicOrdersInterface::Magic( int type )
                 type = sword::UnitMagicAction_Type_recover_troops_except_log;
         }
     }
-    if( selectedEntity_ && sword::UnitMagicAction::Type_IsValid( type ) )
+    if( !sword::UnitMagicAction::Type_IsValid( type ) )
+        throw MASA_EXCEPTION( "Invalid sword::UnitMagicActionType " + type );
+    if( selectedEntity_ )
         ApplyOnHierarchy( *selectedEntity_, static_cast< sword::UnitMagicAction::Type >( type ) );
     selectedEntity_ = 0;
 }
