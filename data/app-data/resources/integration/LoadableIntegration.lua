@@ -1,11 +1,13 @@
--- -------------------------------------------------------------------------------- 
--- Discharge agent
--- --------------------------------------------------------------------------------
-
+--- Instantaneously unloads the given agent into the provided camp.
+-- If the given unit is a refugee, then it will be taken into account by
+-- the logistic units in the camp upon unloading.
+-- @param unit Directia agent
+-- @param camp Object knowledge (camp)
+-- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgent = function( unit, camp )
     if DEC_Agent_EstRefugie( unit.source ) then
-        if DEC_Agent_RefugieEstEmbarque( meKnowledge.source, unit.source ) then
-            DEC_Agent_DebarquerRefugiesDansCamp( meKnowledge.source, unit.source, camp.source )
+        if DEC_Agent_RefugieEstEmbarque( myself, unit.source ) then
+            DEC_Agent_DebarquerRefugiesDansCamp( myself, unit.source, camp.source )
             return true
         end
     else
@@ -15,28 +17,31 @@ integration.dischargeAgent = function( unit, camp )
     return false
 end
 
--- -------------------------------------------------------------------------------- 
--- Discharge agent knowledge
--- --------------------------------------------------------------------------------
-
-integration.dischargeAgentKnowledge = function( ennemy, camp )
-     if DEC_ConnaissanceAgent_EstRefugie( ennemy.source ) then
-        if DEC_Refugies_EstEmbarque( ennemy.source ) then
-            DEC_Refugies_DebarquerDansCamp( ennemy.source, camp.source )
+--- Instantaneously unloads the given agent knowledge into the provided camp.
+-- The given unit must be a refugee or a prisoner for the unloading to take place.
+-- The given unit will be taken into account by the logistic units in the camp upon unloading.
+-- @param enemy Directia agent knowledge
+-- @param camp Object knowledge (camp)
+-- @return Boolean, whether or not the unloading succeeded
+integration.dischargeAgentKnowledge = function( enemy, camp )
+     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
+        if DEC_Refugies_EstEmbarque( enemy.source ) then
+            DEC_Refugies_DebarquerDansCamp( enemy.source, camp.source )
             return true
         end
-    elseif DEC_ConnaissanceAgent_EstPrisonnier( ennemy.source ) then
-        if DEC_Prisonniers_EstEmbarque( ennemy.source ) then
-            DEC_Prisonniers_DebarquerDansCamp( ennemy.source, camp.source )
+    elseif DEC_ConnaissanceAgent_EstPrisonnier( enemy.source ) then
+        if DEC_Prisonniers_EstEmbarque( enemy.source ) then
+            DEC_Prisonniers_DebarquerDansCamp( enemy.source, camp.source )
             return true
         end
     end
     return false
 end
 
--- -------------------------------------------------------------------------------- 
--- Default loadable/unloadable integration for friends or foe (agent knowledge)
--- --------------------------------------------------------------------------------
+--- Instantaneously loads the given agent knowledge
+-- @see integration.unloadFriendOrFoe
+-- @param unit Directia agent knowledge
+-- @return Boolean, whether or not the loading succeeded
 integration.loadFriendOrFoe = function( unit )
     myself.loadedUnits = myself.loadedUnits or {}
     myself.loadedUnits[ unit ] = true
@@ -51,12 +56,16 @@ integration.loadFriendOrFoe = function( unit )
             return true
         end
     else
-        DEC_Connaissance_Transporter( myself, unit.source ) -- transpoter un otage
+        DEC_Connaissance_Transporter( myself, unit.source )
         return true
     end
     return false
 end
 
+--- Instantaneously unloads the given agent knowledge
+-- @see integration.loadFriendOrFoe
+-- @param unit Directia agent knowledge
+-- @return Boolean, whether or not the unloading succeeded
 integration.unloadFriendOrFoe = function( unit )
     if myself.loadedUnits then
         myself.loadedUnits[ unit ] = nil
@@ -75,6 +84,9 @@ integration.unloadFriendOrFoe = function( unit )
     return false
 end
 
+--- Returns true if the given agent knowledge is currently transported, false otherwise.
+-- @param unit Directia agent knowledge
+-- @return Boolean, whether or not the agent knowledge is transported
 integration.isFriendOrFoeTransported = function( unit )
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         return true
@@ -85,12 +97,20 @@ integration.isFriendOrFoeTransported = function( unit )
     return false
 end
 
--- -------------------------------------------------------------------------------- 
--- Default loadable/unloadable integration for friends
--- --------------------------------------------------------------------------------
+--- Returns true if the given friendly unit can be loaded, false otherwise.
+--- Friendly units can always be transported, therefore this method always returns true,
+--- regardless of the given unit.
+-- @param unit Deprecated, unused
+-- @param onlyLoadable Deprecated, unused
+-- @return Boolean, true
 integration.canLoadFriend = function( unit, onlyLoadable )
     return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
 end
+
+--- Instantaneously loads the given agent
+-- @see integration.unloadFriend
+-- @param unit Directia agent
+-- @return Boolean, whether or not the loading succeeded
 integration.loadFriend = function( unit )
     myself.loadedUnits = myself.loadedUnits or {}
     myself.loadedUnits[ unit ] = true
@@ -101,6 +121,11 @@ integration.loadFriend = function( unit )
     end
     return true
 end
+
+--- Instantaneously unloads the given agent
+-- @see integration.loadFriend
+-- @param unit Directia agent
+-- @return Boolean, whether or not the unloading succeeded
 integration.unloadFriend = function( unit )
     if myself.loadedUnits then
         myself.loadedUnits[ unit ] = nil
@@ -112,28 +137,34 @@ integration.unloadFriend = function( unit )
     return true
 end
 
--- Returns true if the agent body is transported, false otherwise
+--- Returns true if this entity is transported, false otherwise.
+-- @return Boolean, vwhether or not this entity is transported
 integration.isBodyTransported = function()
     return DEC_Agent_EstTransporte()
 end
 
--- Returns true if the provided friendly unit is transported, false otherwise
--- @param unit : knowledge of a friendly agent
+--- Returns true if the given agent is currently transported, false otherwise.
+-- @param unit Directia agent
+-- @return Boolean, whether or not the agent is transported
 integration.isFriendTransported = function( unit )
     return unit.source:DEC_Agent_EstTransporte()
 end
 
-integration.isFriendTranported = integration.isFriendTransported -- To ensure backward compatibility
-
--- -----------------------------------------------------------------------------------
--- Non magic Load Integration
--- -----------------------------------------------------------------------------------
+--- Starts loading the units in its current loading queue.
+-- @see integration.updateLoadQueue
+-- @see integration.stopLoadQueue
+-- @return Boolean, false
 integration.startLoadQueue = function()
     myself.actionEmbarquer = DEC_Start_TransportEmbarquer(  )
     actionCallbacks[ myself.actionEmbarquer ] = function( arg ) myself.eEtatTransport = arg end
     return false
 end
 
+--- Continues loading the units in its current loading queue.
+-- @see integration.startLoadQueue
+-- @see integration.stopLoadQueue
+-- Displays a report if the loading is impossible.
+-- @return Boolean, whether or not the loading is finished
 integration.updateLoadQueue = function()
     if myself.eEtatTransport == eActionTransport_Finished then
         return true
@@ -143,17 +174,30 @@ integration.updateLoadQueue = function()
     return false
 end
 
+--- Stops loading the units in its current loading queue.
+-- The simulation action of loading is stopped. 
+-- @see integration.startLoadQueue
+-- @see integration.updateLoadQueue
 integration.stopLoadQueue = function()
     myself.actionEmbarquer = DEC__StopAction( myself.actionEmbarquer )
     myself.eEtatTransport = nil
 end
 
+--- Starts unloading the units in its current unloading queue.
+-- @see integration.updateUnloadQueue
+-- @see integration.stopUnloadQueue
+-- @return Boolean, false
 integration.startUnloadQueue = function()
     myself.actionDebarquer = DEC_Start_TransportDebarquer( nil )
     actionCallbacks[ myself.actionDebarquer ] = function( arg ) myself.eEtatTransport = arg end
     return false
 end
 
+--- Continues unloading the units in its current unloading queue.
+-- Displays a report if the unloading is impossible.
+-- @see integration.startUnloadQueue
+-- @see integration.stopUnloadQueue
+-- @return Boolean, whether or not the unloading is finished
 integration.updateUnloadQueue = function()
     if myself.eEtatTransport == eActionTransport_Finished then
         return true
@@ -163,27 +207,51 @@ integration.updateUnloadQueue = function()
     return false
 end
 
+--- Stops unloading the units in its current unloading queue.
+-- The simulation action of unloading is stopped. 
+-- @see integration.startUnloadQueue
+-- @see integration.updateUnloadQueue
 integration.stopUnloadQueue = function()
     myself.actionDebarquer = DEC__StopAction( myself.actionDebarquer )
     myself.eEtatTransport = nil
 end
 
+--- Adds the given agent to the current loading queue.
+-- @param unit Directia agent
+-- @param onlyLoadable Boolean, whether or not the transport of this unit will only
+-- take into account components that are defined as 'loadable' in the physical database.
 integration.addPlatoonInQueue = function( unit, onlyLoadable )
     DEC_Transport_AjouterPion( unit.source, onlyLoadable )
 end
 
+--- Adds the given agent knowledge to the current loading queue.
+-- @param unit Directia agent knowledge
+-- @param onlyLoadable Boolean, whether or not the transport of this unit will only
+-- take into account components that are defined as 'loadable' in the physical database.
 integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
     DEC_TransportConnaissance_AjouterPion( myself, knowledge.source, onlyLoadable )
 end
 
-integration.friendHasTransportationMission = function( unit, missionName )
+--- Returns true if the given agent has currently the mission matching the provided task name, false otherwise
+-- This method can be used to determine whether or not an agent is ready to be transported
+-- (e.g. if it has a 'Get Transported' mission).
+-- @param unit Directia agent
+-- @param taskName String
+-- @return Boolean
+integration.friendHasTransportationMission = function( unit, taskName )
     local mission = DEC_GetRawMission( unit.source )
-    if mission ~= nil and ( integration.getAnyType( mission ) == missionName ) then
+    if mission ~= nil and ( integration.getAnyType( mission ) == taskName ) then
        return true 
     end
     return false
 end
 
+--- Returns true if the given agent has currently the mission matching the provided task name, false otherwise
+-- This method can be used to determine whether or not an agent is ready to be transported
+-- (e.g. if it has a 'Get Transported' mission).
+-- @param unit Directia agent
+-- @param taskName String
+-- @return Boolean
 integration.unitHasTransportationMission = function( unit, missionName )
     local mission = DEC_Connaissance_GetRawMission( unit.source )
     if mission ~= nil and ( integration.getAnyType( mission ) == missionName ) then
@@ -207,70 +275,128 @@ local isAMissionForTransport = function( mission )
         or missionType == "france.military.platoon.tasks.SeFaireTransporter" )
 end
 
--- distanceMin is equal to -1 if the unit is ready to load when it is into an area.
-local readyForLoad = function( knowledge, distanceMin, area, mission )
-    if not distanceMin then
-        distanceMin = 100
-    end
+-- distanceMax is equal to -1 if the unit is ready to load when it is into an area.
+local readyForLoad = function( knowledge, distanceMax, area, mission )
+    distanceMax = distanceMax or 100
     if isAMissionForTransport( mission ) then
-        if ( distanceMin == -1 and integration.isPointInLocalisation( unit, area ) ) or 
-           ( DEC_Geometrie_Distance( meKnowledge:getPosition(), knowledge:getPosition() ) < distanceMin ) then
+        if ( distanceMax == -1 and DEC_Geometrie_EstPointDansLocalisation( knowledge:getPosition(), area ) ) or 
+           ( DEC_Geometrie_Distance( meKnowledge:getPosition(), knowledge:getPosition() ) < distanceMax ) then
             return true 
         end
     end
     return false
 end
 
-integration.readyForLoad = function( unit, distanceMin, area )
+--- Returns true if the given agent is ready to be loaded, false otherwise.
+-- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types : 
+-- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
+-- <li> T_Mission_Pion_SeFaireTransporter </li>
+-- <li> platoon.tasks.SeFaireTransporter </li>
+-- <li> worldwide.agent.tasks.GetTransported </li>
+-- <li> france.military.platoon.tasks.SeFaireTransporter </li> </ul>
+-- The agent must also meet one of the following two conditions :
+-- <ul> <li> The distanceMax parameter is positive, and the distance between this entity and the agent is
+-- lower than distanceMax, or; </li>
+-- <li> The distanceMax parameter is equal to -1, and the agent is inside the given area </li> </ul>
+-- @param unit Directia agent, defining a "getPosition" method returning a simulation point
+-- @param distanceMax Float, the maximal distance between this entity and the given agent for the latter to be
+-- ready to be loaded. If this parameters equals to -1, then the distance is ignored, and the area parameter
+-- is taken into account instead.
+-- @param area Simulation area, taken into account only if the distanceMax parameter is equal to -1.
+-- @return Boolean, whether or not the given agent is ready to be loaded
+integration.readyForLoad = function( unit, distanceMax, area )
     local mission = DEC_GetRawMission( unit.source )
-    return readyForLoad( unit, distanceMin, area, mission )
+    return readyForLoad( unit, distanceMax, area, mission )
 end
 
--- distanceMin is equal to -1 if the knowledge is ready to load when it is into an area.
-integration.knowledgeReadyForLoad = function( knowledge, distanceMin, area )
+--- Returns true if the given agent knowledge is ready to be loaded, false otherwise.
+-- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types : 
+-- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
+-- <li> T_Mission_Pion_SeFaireTransporter </li>
+-- <li> platoon.tasks.SeFaireTransporter </li>
+-- <li> worldwide.agent.tasks.GetTransported </li>
+-- <li> france.military.platoon.tasks.SeFaireTransporter </li> </ul>
+-- The agent must also meet one of the following two conditions :
+-- <ul> <li> The distanceMax parameter is positive, and the distance between this entity and the agent is
+-- lower than distanceMax, or; </li>
+-- <li> The distanceMax parameter is equal to -1, and the agent is inside the given area </li> </ul>
+-- @param unit Directia agent knowledge, defining a "getPosition" method returning a simulation point
+-- @param distanceMax Float, the maximal distance between this entity and the given agent for the latter to be
+-- ready to be loaded. If this parameters equals to -1, then the distance is ignored, and the area parameter
+-- is taken into account instead.
+-- @param area Simulation area, taken into account only if the distanceMax parameter is equal to -1.
+-- @return Boolean, whether or not the given agent is ready to be loaded
+integration.knowledgeReadyForLoad = function( knowledge, distanceMax, area )
     local mission = DEC_Connaissance_GetRawMission( knowledge.source )
-    return readyForLoad( knowledge, distanceMin, area, mission )
+    return readyForLoad( knowledge, distanceMax, area, mission )
 end
 
+--- Returns true if the transport action is finished for this entity, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.isTransportFinished = function()
     return DEC_Transport_EstTermine()
 end
 
+--- Returns true if this entity can transport the given agent, false otherwise.
+-- This method can only be called by an agent.
+-- @param unit Directia agent
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean
 integration.canTransportUnit = function( unit, onlyLoadable )
     return DEC_Agent_PeutTransporterPion( unit.source, onlyLoadable )
 end
 
-integration.canTransportKnowledge = function( knowledge, onlyLoadable )
-    return DEC_Connaissance_PeutTransporterPion( myself, knowledge.source, onlyLoadable )
+--- Returns true if this entity can transport the given agent knowledge, false otherwise.
+-- This method can only be called by an agent.
+-- @param unit Directia agent knowledge
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean
+integration.canTransportKnowledge = function( unit, onlyLoadable )
+    return DEC_Connaissance_PeutTransporterPion( myself, unit.source, onlyLoadable )
 end
 
--- Returns true if the transporting agent can transport the knowledge to transport, false otherwise
--- @param transportingAgent : the transporting agent
--- @param knowledgeToTransport : knowledge of the agent to transport
--- @param onlyLoadable : whether or not the non-loadable equipments should be ignored
+--- Returns true if the transporting agent can transport the knowledge to transport, false otherwise.
+-- @param transportingAgent Directia agent, the transporting agent
+-- @param knowledgeToTransport Directia agent knowledge, the agent knowledge to transport
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean
 integration.canAgentTransportKnowledge = function( transportingAgent, knowledgeToTransport, onlyLoadable )
     return DEC_Connaissance_PeutTransporterPion( transportingAgent.source, knowledgeToTransport.source, onlyLoadable )
 end
 
+--- Returns the necessary number of round trips for this entity to transport the given agent.
+-- This method can only be called by an agent.
+-- @param unit Directia agent knowledge
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Integer
 integration.transportUnitRoundTrip = function( unit, onlyLoadable )
     return DEC_Agent_TransportNombreAllerRetour( unit.source, onlyLoadable )
 end
 
+--- Returns the necessary number of round trips for this entity to transport the given agent.
+-- This method can only be called by an agent.
+-- @param unit Directia agent
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Integer
 integration.transportKnowledgeRoundTrip = function( knowledge, onlyLoadable )
     return DEC_Connaissance_TransportNombreAllerRetour( myself, knowledge.source, onlyLoadable )
 end
 
--- -----------------------------------------------------------------------------------
--- Transport of crowd
--- -----------------------------------------------------------------------------------
+--- Returns true if this entity can transport crowds, false otherwise.
+-- @return Boolean
 integration.canTransportCrowd = function()
     return DEC_Agent_PeutTransporterFoule( myself )
 end
 
-integration.canTransportCrowdConcentration = function( crowd, concentration )
-    return DEC_CrowdKnowledge_CanLoadCrowdConcentration( myself, crowd.source, concentration )
-end
-
+--- Returns the necessary number of round trips for this entity to transport the given crowd.
+-- @param crowd Crowd knowledge, the crowd to transport
+-- @return Integer, the necessary number of round trips. 0 if this entity has no capacity to transport crowds.
 integration.transportCrowdRoundTrip = function( crowd )
     local capacityTransport = DEC_Agent_GetCapacityToTransportCrowd( myself )
     local crowdsNumber = DEC_GetNombrePersonnesDansFoule( myself, crowd.source )  
@@ -281,7 +407,12 @@ integration.transportCrowdRoundTrip = function( crowd )
     end
 end
 
--- Load crowd
+--- Starts loading the given concentration of the provided crowd.
+-- @see integration.startedLoadCrowd
+-- @see integration.stopLoadCrowd
+-- @param crowd Crowd knowledge
+-- @param concentration Simulation concentration
+-- @return Boolean, false
 integration.startLoadCrowd = function( crowd, concentration )
     reportFunction(eRC_TransportEmbarquement )
     myself.actionLoadCrowd = DEC_StartEmbarquerFouleDUneConcentration( crowd.source, concentration )
@@ -289,6 +420,11 @@ integration.startLoadCrowd = function( crowd, concentration )
     return false
 end
 
+--- Continues the previously started crowd loading action.
+-- Displays a report if the loading is impossible.
+-- @see integration.startLoadCrowd
+-- @see integration.stopLoadCrowd
+-- @return Boolean, true if the loading is finished or impossible, false otherwise.
 integration.startedLoadCrowd = function()
     if myself.eEtatTransportCrowd == eActionTransport_Finished then
         return true
@@ -300,25 +436,39 @@ integration.startedLoadCrowd = function()
     return false
 end
 
+--- Stops the previously started crowd loading action.
+-- The simulation action of loading is stopped.
+-- @see integration.startLoadCrowd
+-- @see integration.startedLoadCrowd
 integration.stopLoadCrowd = function()
     myself.actionLoadCrowd = DEC__StopAction( myself.actionLoadCrowd )
     myself.eEtatTransportCrowd = nil
 end
 
--- Unload crowd
+--- Starts unloading the given crowd. If no crowd is provided, this method
+--- will start the unloading of the currently transported crowd instead.
+-- @see integration.startedUnloadCrowd
+-- @see integration.stopUnloadCrowd
+-- @param crowd Crowd knowledge (optional)
+-- @return Boolean, false
 integration.startUnloadCrowd = function( crowd )
     local crowdId
     if crowd == nil or crowd == NIL then
-         crowdId = 0 -- if the crowd is not issued, unload current transported crowd concentration.
+        crowdId = 0 -- if the crowd is not issued, unload current transported crowd concentration.
     else
         crowdId = crowd.source
     end
-    reportFunction(eRC_TransportDebarquement )
+    reportFunction( eRC_TransportDebarquement )
     myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, meKnowledge:getPosition() )
     actionCallbacks[ myself.actionUnloadCrowd ] = function( arg ) myself.eEtatTransportUnloadCrowd = arg end
     return false
 end
 
+--- Continues the previously started crowd unloading action.
+-- Displays a report if the unloading is impossible.
+-- @see integration.startUnloadCrowd
+-- @see integration.stopUnloadCrowd
+-- @return Boolean, true if the unloading is finished or impossible, false otherwise.
 integration.startedUnloadCrowd = function()
     if myself.eEtatTransportUnloadCrowd == eActionTransport_Finished then
         return true
@@ -329,6 +479,10 @@ integration.startedUnloadCrowd = function()
     return false
 end
 
+--- Stops the previously started crowd unloading action.
+-- The simulation action of unloading is stopped.
+-- @see integration.startUnloadCrowd
+-- @see integration.startedUnloadCrowd
 integration.stopUnloadCrowd = function()
     if myself.actionUnloadCrowd ~= nil then
         myself.actionUnloadCrowd = DEC__StopAction( myself.actionUnloadCrowd )
@@ -336,38 +490,82 @@ integration.stopUnloadCrowd = function()
     myself.eEtatTransportUnloadCrowd = nil
 end
 
+--- Returns true if this entity is transporting a crowd, false otherwise.
+-- @return Boolean
 integration.isTransportingCrowd = function()
     return DEC_Agent_TransporteFoule( myself )
 end
 
+--- Returns true if the given agent knowledge is transported, false otherwise.
+-- This method can only be called by an agent.
+-- @param enemy Directia agent knowledge
+-- @return Boolean
 integration.isTransported = function( enemy )
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
+--- Instantaneously leaves this entity's carriers on its current location.
+-- This can be used to make this entity move inside an underground network, for instance.
+-- This method can only be called by an agent.
+-- @see integration.retrieveCarriers
 integration.allowCarriers = function()
     DEC_LaisserTransporteursSansDelai()
 end
 
+--- Instantaneously retrieves this entity's carriers (if they have previously been left behind).
+-- This method can only be called by an agent.
+-- @see integration.allowCarriers
 integration.retrieveCarriers = function()
     DEC_RecupererTransporteursSansDelai()
 end
 
+--- Returns true if the given agent is surrendered, false otherwise.
+-- @param friend Directia agent
+-- @return Boolean
 integration.isAgentSurrendered = function( friend )
     return DEC_Agent_EstRendu( friend.source )
 end
 
+--- Returns true if the given agent knowledge is surrendered, false otherwise.
+-- @param platoon Directia agent knowledge
+-- @return Boolean
 integration.isKnowledgeAgentSurrendered = function( platoon )
-    return DEC_ConnaissanceAgent_EstRenduAMonCamp( meKnowledge.source, platoon.source )
+    return DEC_ConnaissanceAgent_EstRenduAMonCamp( myself, platoon.source )
 end
 
+--- Returns true if this entity is currently in the middle of transporting troops or crowds, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.isDuringTransport = function( )
     return DEC_Transport_EnCoursDeTransport()
 end
 
+--- Returns true if the given agent has loaded its supplies, false otherwise
+-- This method is used in logistic convoy supplying missions.
+-- @see integration.setSuppliesLoaded
+-- @param unit Directia agent
+-- @return Boolean
 integration.areSuppliesLoaded = function( unit )
     return unit.source:GetsuppliesLoaded_()
 end
 
+--- Sets the current supplies loading state for the given agent to the
+--- provided boolean state.
+-- @see integration.areSuppliesLoaded
+-- @param unit Directia agent
+-- @param bool Boolean, new supplies loading state
 integration.setSuppliesLoaded = function( unit, bool )
-    return unit.source:SetsuppliesLoaded_( bool )
+    unit.source:SetsuppliesLoaded_( bool )
+end
+
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+--- Deprecated
+integration.isFriendTranported = integration.isFriendTransported
+
+--- Deprecated
+integration.canTransportCrowdConcentration = function( crowd, concentration )
+    return DEC_CrowdKnowledge_CanLoadCrowdConcentration( myself, crowd.source, concentration )
 end
