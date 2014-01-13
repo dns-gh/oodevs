@@ -41,7 +41,7 @@ LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& obj
     setItemDelegate( delegate_ );
     setItemDelegateForColumn( 3, linkItemDelegate_ );
 
-    setSortingEnabled( true );
+    setSortingEnabled( false );
     setShowGrid( true );
     setEnabled( true );
     setAlternatingRowColors( true );
