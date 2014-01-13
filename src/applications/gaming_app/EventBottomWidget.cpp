@@ -101,19 +101,19 @@ void EventBottomWidget::Purge()
 // -----------------------------------------------------------------------------
 void EventBottomWidget::Build( const gui::EventViewState& state )
 {
+    toolBar_->setVisible( state.bottomToolBar_ || detailAction_->isVisible() );
     warningBox_->setVisible( !state.warning_.empty() );
     warningBox_->EnableStaticWarning( true, state.warningColor_ );
     warningLabel_->setText( QString::fromStdString( state.warning_ ) );
     warningLabel_->EnableStaticWarning( true, state.warningColor_ );
+    clearAction_->setVisible( state.bottomToolBar_ );
     clearAction_->setEnabled( state.clear_ );
+    triggerAction_->setVisible( state.bottomToolBar_ );
     triggerButton_->setEnabled( state.trigger_ );
     triggerButton_->setToolTip( state.mode_ == eEventDockModes_DisplayTriggered
                                 ? tr( "Copy and trigger" )
                                 : tr( "Trigger" ) );
     detailAction_->setChecked( state.detail_ );
-    toolBar_->setVisible( state.bottomToolBar_ || detailAction_->isVisible() );
-    clearAction_->setVisible( state.bottomToolBar_ );
-    triggerAction_->setVisible( state.bottomToolBar_ );
 }
 
 // -----------------------------------------------------------------------------

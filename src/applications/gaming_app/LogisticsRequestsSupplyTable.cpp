@@ -21,7 +21,7 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objectName, QWidget* parent )
-    : gui::RichWidget< QTableView >( objectName, parent )
+    : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )
@@ -35,6 +35,10 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
     dataModel_.setColumnCount( horizontalHeaders_.size() );
     proxyModel_.setSourceModel( &dataModel_ );
     proxyModel_.setSortRole( Qt::UserRole );
+
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
+
     setModel( &proxyModel_ );
     setItemDelegate( &delegate_ );
 
@@ -50,8 +54,6 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
     verticalHeader()->setDefaultSectionSize( 22 );
-
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,11 +80,7 @@ const gui::LinkItemDelegate* LogisticsRequestsSupplyTable::GetLinkItemDelegate()
 // -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyTable::Purge()
 {
-    dataModel_.clear();
-    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( dataModel_.columnCount() - 1, QHeaderView::Stretch );    
+    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------

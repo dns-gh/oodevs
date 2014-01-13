@@ -49,7 +49,7 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
-    void SetPosition( const Positions& position );
+    void SetEntityPosition( const Positions* position );
     void FixOrigin( bool dynamicVisitor );
     //@}
 

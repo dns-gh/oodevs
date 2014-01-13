@@ -20,7 +20,7 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders )
-    : gui::RichWidget< QTableView >( objectName, parent )
+    : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( new QSortFilterProxyModel( parent ) )
     , delegate_  ( parent )
@@ -35,6 +35,8 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
     }
 
     dataModel_.setColumnCount( horizontalHeaders.size() );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
     proxyModel_->setSourceModel( &dataModel_ );
     proxyModel_->setDynamicSortFilter( true );
     setModel( proxyModel_ );
@@ -53,8 +55,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
     verticalHeader()->setDefaultSectionSize( 22 );
-
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +81,7 @@ const gui::LinkItemDelegate* LogisticsRequestsTable::GetLinkItemDelegate() const
 // -----------------------------------------------------------------------------
 void LogisticsRequestsTable::Purge()
 {
-    dataModel_.clear();
-    dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
-    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
+    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,13 +189,4 @@ void LogisticsRequestsTable::FindRequestsIds( std::set< unsigned int >& requests
         if( pRequest )
             requests.insert( pRequest->GetId() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::ResizeColumns
-// Created: LGY 2014-01-06
-// -----------------------------------------------------------------------------
-void LogisticsRequestsTable::ResizeColumns()
-{
-    resizeColumnsToContents();
 }

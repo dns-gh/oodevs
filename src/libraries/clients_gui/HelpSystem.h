@@ -10,6 +10,12 @@
 #ifndef __HelpSystem_h_
 #define __HelpSystem_h_
 
+namespace kernel
+{
+    class ModeController;
+    class Profile_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -30,7 +36,10 @@ class HelpSystem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             HelpSystem( QWidget* root, const tools::Path& config );
+             HelpSystem( QWidget* root,
+                         const tools::Path& config,
+                         const kernel::ModeController* modeController = 0,
+                         const kernel::Profile_ABC* profile = 0 );
     virtual ~HelpSystem();
     //@}
 
@@ -41,8 +50,9 @@ public slots:
     //@}
 
 private:
-        //! @name Helpers
+    //! @name Helpers
     //@{
+    void RetrieveHelpFile();
     void ReadWidget( xml::xistream& xis );
     std::string FindWidget( const QObject* root );
     //@}
@@ -56,6 +66,8 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::ModeController* modeController_;
+    const kernel::Profile_ABC* profile_;
     tools::Path helpFile_;
     QWidget* root_; // à virer
     T_Anchors anchors_;

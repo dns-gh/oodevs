@@ -143,4 +143,5 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
                                                 , QString::number( curRequest.GetConvoyed() ) );
         }
     }
+    supplyTable_->ResizeColumnsToContents();
 }
