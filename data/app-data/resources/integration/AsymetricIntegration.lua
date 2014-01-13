@@ -168,7 +168,7 @@ end
 -- The hostages are transported by the agent
 -- A report is sent by the hostages and by the agent
 -- @param units, list of DirectIA agent knowledges
--- @param message, report enum
+-- @param message, string defined in Reports.xml
 -- @see Reports.xml in physical database
 -- @return true
 integration.capture = function( units, message )
