@@ -70,15 +70,10 @@ QWidget* ParamPath::BuildInterface( const QString& objectName, QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
 {
-    if( !entity )
-    {
-        location_.reset();
-        layer_.Reset();
-    }
-    else if( location_ && entity != entity_ )
+    if( location_ && entity != entity_ )
     {
         kernel::Path& path = static_cast< kernel::Path& >( *location_ );
-        path.SetPosition( entity->Get< kernel::Positions >() );
+        path.SetEntityPosition( entity ? entity->Retrieve< kernel::Positions >() : 0 );
         path.FixOrigin( false );
     }
     entity_ = entity;

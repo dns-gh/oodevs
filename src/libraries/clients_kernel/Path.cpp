@@ -35,12 +35,12 @@ Path::~Path()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Path::SetPosition
+// Name: Path::SetEntityPosition
 // Created: ABR 2014-01-07
 // -----------------------------------------------------------------------------
-void Path::SetPosition( const Positions& position )
+void Path::SetEntityPosition( const Positions* position )
 {
-    position_ = &position;
+    position_ = position;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,8 +115,14 @@ bool Path::IsDone() const
 // -----------------------------------------------------------------------------
 void Path::Accept( LocationVisitor_ABC& visitor ) const
 {
-    assert( position_ );
-    visitor.VisitPath( origin_ ? *origin_ : position_->GetPosition(), points_ );
+    if( points_.size() == 0 )
+        return;
+    const geometry::Point2f start = origin_
+                                    ? *origin_
+                                    : position_
+                                      ? position_->GetPosition()
+                                      : points_[ 0 ];
+    visitor.VisitPath( start, points_ );
 }
 
 // -----------------------------------------------------------------------------
