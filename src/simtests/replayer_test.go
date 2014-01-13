@@ -143,8 +143,12 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	c.Assert(err, IsNil)
 	skip(step)
 
+	from := swapi.Point{X: -15.8193, Y: 28.3456}
+	to := swapi.Point{X: -15.8183, Y: 28.3466}
 	object2, err := client.CreateObject("dyke", 0,
-		swapi.MakeRectangleLocation(swapi.Point{X: -15.8193, Y: 28.3456}, swapi.Point{X: -15.8183, Y: 28.3466}))
+		swapi.MakePolygonLocation(
+			from, swapi.Point{X: from.X, Y: to.Y},
+			to, swapi.Point{X: to.X, Y: from.Y}))
 	c.Assert(err, IsNil)
 	skip(step)
 
