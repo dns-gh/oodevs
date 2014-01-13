@@ -8,6 +8,7 @@
     <property name="sword_branch" value="trunk"/>
     <property name="test.port" value="35000"/>
     <property name="licensepath" value="${run.dir}/license.dat"/>
+    <property name="version.version" value="1.0.0.0.${git.revision}.${git.hash}"/>
 
     <target name="clean">
         <delete dir="${out.dir}"/>
@@ -16,11 +17,13 @@
     </target>
 
     <target name="update">
+        <update name="buildtools" version="5.3"/>
         <update name="golang" version="1.1.1"/>
         <update name="golibs"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="protobuf" version="2.3.0"/>
+        <update name="python" version="2.7.3-3"/>
         <update name="sword" package="protobuf" todir="${src.dir}/sword"/>
         <update name="sword" package="binaries_${platform}" todir="${run.dir}"/>
     </target>
@@ -85,6 +88,10 @@
 
     <target name="package">
         <go_package/>
+        <setversion version="${version.version}" product="Sword" file="${bin.dir}/csvclient.exe"/>
+        <go_zip subdir="dll" output="${platform}">
+            <fileset dir="${bin.dir}" includes="csvclient.exe"/>
+        </go_zip>
     </target>
 
     <target name="all" depends="update,proto,build,test,package"/>
