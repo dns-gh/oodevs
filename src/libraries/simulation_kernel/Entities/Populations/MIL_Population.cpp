@@ -276,7 +276,7 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-    file >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    file >> pArmy_;
     idManager_.GetId( GetID(), true );
     unsigned int nAttitudeID;
     file >> nAttitudeID;
@@ -333,7 +333,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << bHasDoneMagicMove_
          << pAffinities_
          << pExtensions_
-         << (*vBarycenter_);
+         << vBarycenter_;
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
 
