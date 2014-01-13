@@ -604,10 +604,7 @@ void AgentServerMsgMgr::OnReceiveLogisticHistoryAck( const sword::LogisticHistor
 void AgentServerMsgMgr::OnReceiveListLogisticRequestsAck( const sword::ListLogisticRequestsAck& message, unsigned int messageClientId )
 {
     if( profile_ && profile_->DisplayMessage( messageClientId ) )
-    {
-        GetModel().historyLogistics_.Purge();
         GetModel().historyLogistics_.Fill( message );
-    }
 }
 
 // -----------------------------------------------------------------------------

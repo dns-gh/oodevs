@@ -49,6 +49,13 @@ public:
     virtual void CreateFuneralConsign( const sword::LogFuneralHandlingCreation& message );
     virtual void UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate& message );
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename Type >
+    void DeleteConsigns( const std::set< unsigned int >& newRequests );
+    //@}
 };
 
 #endif // __HistoryLogisticsModel_h_
