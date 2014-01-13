@@ -233,31 +233,49 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 	c.Assert(err, IsNil)
 }
 
-func (s *TestSuite) TestCrowdElements(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+func (s *TestSuite) TestCrowdTeleportation(c *C) {
+	opts := NewAdminOpts(ExCrossroadSmallOrbat)
+	opts.Paused = true
+	sim, client := connectAndWaitModel(c, opts)
+	step := func(n int32) {
+		tick := client.Model.GetTick()
+		if tick == 0 {
+			tick++ // looks like a bug
+		}
+		err := client.Resume(uint32(n))
+		c.Assert(err, IsNil)
+		client.Model.WaitUntilTick(tick + n)
+	}
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
-
+	step(1)
 	// Initial crowd has a concentration
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.Crowds[crowd.Id].CrowdElements) == 1
 	})
+	step(1)
 
 	// Send moveTo mission on the crowd
-	to := swapi.Point{X: -15.8193, Y: 28.3456}
-	params := swapi.MakeParameters(swapi.MakePointParam(to))
+	client.Resume(0)
+	destination := swapi.Point{X: -15.8193, Y: 28.3456}
+	params := swapi.MakeParameters(swapi.MakePointParam(destination))
 	_, err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
+	client.Pause()
 
-	// Check crowd begin its movement, a flow is created
+	// Check crowd begins its movement, a flow is created
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.Crowds[crowd.Id].CrowdElements) == 2
 	})
 
-	// Reset movement, the flow is destroyed
+	// Teleport the crowd, the flow and concentrations are destroyed
+	// A new concentration is created, a new flow too when the crowd
+	// restarts its movement.
+	teleport := swapi.Point{X: -15.8193, Y: 128.3456}
 	knownElements := client.Model.GetData().Crowds[crowd.Id].CrowdElements
-	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), to)
+	err = client.Teleport(swapi.MakeCrowdTasker(crowd.Id), teleport)
 	c.Assert(err, IsNil)
+	step(1)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		elements := data.Crowds[crowd.Id].CrowdElements
 		for id, _ := range elements {
@@ -265,7 +283,7 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 				return false
 			}
 		}
-		return len(elements) == 1
+		return len(elements) > 1
 	})
 }
 
