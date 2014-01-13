@@ -186,14 +186,11 @@ void InfoButtonsWidget::AddButton( QDialog* dialog, const QPixmap& pixmap, const
 void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
 {
     element_ = element;
-    for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-        (*it)->Purge();
-    historyModel_.Purge();
     entities_.clear();
     if( element_ )
     {
         for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            (*it)->Fill( *element_ );
+            (*it)->FillCurrentModel( *element_ );
 
         logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element, [&]( const kernel::Entity_ABC& entity ) {
             entities_.insert( entity.GetId() );
@@ -201,6 +198,9 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
         if( !entities_.empty() )
             simulationController_.SendLogisticRequests( entities_ );
     }
+    else
+        for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
+            (*it)->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -210,8 +210,10 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
 void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*message*/ )
 {
     if( element_ )
+    {
         for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            (*it)->Fill( *element_ );
+            (*it)->FillHistoryModel();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -57,11 +57,11 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Fill( const kernel::Entity_ABC& entity )
+    virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
     {
-        Purge();
         if( !IsHistoryChecked() )
         {
+            Purge();
             std::set< const Request* > consigns;
             logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity, [ &consigns ]( const kernel::Entity_ABC& entity ) {
                 const Extension* pConsigns = entity.Retrieve< Extension >();
@@ -74,16 +74,24 @@ public:
 
             for( auto it = consigns.begin(); it != consigns.end(); ++it )
                 DisplayRequest( **it );
+            requestsTable_->ResizeColumnsToContents();
+            SendHistoryRequests();
+            SelectRequest();
         }
-        else
+    }
+
+    virtual void FillHistoryModel()
+    {
+        if( IsHistoryChecked() )
         {
+            Purge();
             auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
             while( it.HasMoreElements() )
                 DisplayRequest( it.NextElement() );
+            requestsTable_->ResizeColumnsToContents();
+            SendHistoryRequests();
+            SelectRequest();
         }
-        requestsTable_->ResizeColumnsToContents();
-        SendHistoryRequests();
-        SelectRequest();
     }
     //@}
 
