@@ -11,6 +11,8 @@
 #include "HelpSystem.h"
 #include "moc_HelpSystem.cpp"
 
+#include "clients_kernel/ModeController.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 
 #include "tools/GeneralConfig.h"
@@ -25,19 +27,17 @@ using namespace gui;
 // Name: HelpSystem constructor
 // Created: AGE 2008-08-18
 // -----------------------------------------------------------------------------
-HelpSystem::HelpSystem( QWidget* root, const tools::Path& config )
+HelpSystem::HelpSystem( QWidget* root,
+                        const tools::Path& config,
+                        const kernel::ModeController* modeController /* = 0 */,
+                        const kernel::Profile_ABC* profile /* = 0 */ )
     : QObject( root )
     , root_  ( root )
-    , helpFile_( "" )
+    , modeController_( modeController )
+    , profile_( profile )
 {
     try
     {
-        const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
-        const tools::Path locale = tools::Path( tools::Language::Current().c_str() );
-        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( tools::Path( "help" ) / locale / tools::Path::FromUTF8( strGuide ) + ".pdf" );
-        if( !helpFile_.Exists() )
-            helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/en/Sword_General_User_Guide.pdf" );
-
         tools::Xifstream xis( config );
         xis >> xml::start( "widgets" )
                 >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
@@ -93,12 +93,46 @@ std::string HelpSystem::FindWidget( const QObject* root )
     return std::string();
 }
 
+namespace
+{
+    struct HelpFile
+    {
+        tools::Path name_;
+        tools::Path default_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: HelpSystem::RetrieveHelpFile
+// Created: ABR 2014-01-13
+// -----------------------------------------------------------------------------
+void HelpSystem::RetrieveHelpFile()
+{
+    const tools::Path locale = tools::Path( tools::Language::Current().c_str() );
+    const HelpFile user = { tools::Path::FromUTF8( tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString() ),
+                            "help/en/Sword_General_User_Guide.pdf" };
+    const HelpFile player = { tools::Path::FromUTF8( tools::translate( "gui::HelpSystem", "Sword_Gaming_Player_Guide" ).toStdString() ),
+                              "help/en/Sword_Gaming_Player_Guide.pdf" };
+    const HelpFile supervisor = { tools::Path::FromUTF8( tools::translate( "gui::HelpSystem", "Sword_Gaming_Supervisor_Guide" ).toStdString() ),
+                                  "help/en/Sword_Gaming_Supervisor_Guide.pdf" };
+    HelpFile current = user;
+    if( modeController_ && ( modeController_->GetCurrentMode() & eModes_Gaming ) != 0 )
+        current = profile_ && profile_->IsSupervision() ? supervisor : player;
+
+    helpFile_ = tools::GeneralConfig::BuildResourceChildFile( tools::Path( "help" ) / locale / current.name_ + ".pdf" );
+    if( !helpFile_.Exists() )
+        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( current.default_ );
+    if( !helpFile_.Exists() )
+        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( user.default_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: HelpSystem::ShowHelp
 // Created: AGE 2008-08-18
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
+    RetrieveHelpFile();
     if( !helpFile_.Exists() )
         return;
 

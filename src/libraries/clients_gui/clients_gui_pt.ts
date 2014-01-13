@@ -1009,6 +1009,14 @@ Please check access permissions or write protection.</source>
         <source>Error opening help file &apos;%1&apos;. Make sure you have a PDF viewer installed on your computer.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sword_Gaming_Player_Guide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword_Gaming_Supervisor_Guide</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::HighlightColorModifier</name>
