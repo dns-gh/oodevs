@@ -49,6 +49,10 @@ LogisticsRequestsDetailsTable::LogisticsRequestsDetailsTable( const QString& obj
     setFocusPolicy( Qt::NoFocus );
     verticalHeader()->setDefaultSectionSize( 22 );
     setFixedHeight( dataModel_->rowCount() * rowHeight( 0 ) + frameWidth() * 2 );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 2, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 3, QHeaderView::Stretch );
 
     Purge();
 }
@@ -80,7 +84,7 @@ void LogisticsRequestsDetailsTable::Purge()
     detailIndex_ = 0;
     int columnCount = dataModel_->columnCount();
     int rowCount = dataModel_->rowCount();
-    dataModel_->clear();
+    dataModel_->removeRows( 0, dataModel_->rowCount() );
     dataModel_->setColumnCount( columnCount );
     dataModel_->setRowCount( rowCount );
     for( int i = 0; i < rowCount; ++i )
@@ -98,8 +102,6 @@ void LogisticsRequestsDetailsTable::Purge()
             }
             dataModel_->setItem( i, j, pItem );
         }
-    for( int i = 0; i < columnCount; ++i )
-        horizontalHeader()->setResizeMode( i, ( i < (columnCount - 1 ) )? QHeaderView::ResizeToContents : QHeaderView::Stretch );
 }
 
 // -----------------------------------------------------------------------------

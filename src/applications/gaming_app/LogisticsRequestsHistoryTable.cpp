@@ -20,7 +20,7 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& objectName, QWidget* parent )
-    : gui::RichWidget< QTableView >( objectName, parent )
+    : gui::RichTableView( objectName, parent )
 {
     horizontalHeaders_ << tools::translate( "LogisticsRequestsHistoryTable", "Previous state" )
         << tools::translate( "LogisticsRequestsHistoryTable", "Started" )
@@ -28,6 +28,8 @@ LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& obj
         << tools::translate( "LogisticsRequestsHistoryTable", "Handler" );
 
     dataModel_          = new QStandardItemModel( parent );
+    dataModel_->setHorizontalHeaderLabels( horizontalHeaders_ );
+    horizontalHeader()->setResizeMode( QHeaderView::Interactive );
     proxyModel_         = new QSortFilterProxyModel( parent );
     delegate_           = new gui::CommonDelegate( parent );
     linkItemDelegate_   = new gui::LinkItemDelegate( this );
@@ -39,7 +41,7 @@ LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& obj
     setItemDelegate( delegate_ );
     setItemDelegateForColumn( 3, linkItemDelegate_ );
 
-    setSortingEnabled( true );
+    setSortingEnabled( false );
     setShowGrid( true );
     setEnabled( true );
     setAlternatingRowColors( true );
@@ -48,8 +50,6 @@ LogisticsRequestsHistoryTable::LogisticsRequestsHistoryTable( const QString& obj
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
     setFocusPolicy( Qt::NoFocus );
-
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,11 +76,7 @@ const gui::LinkItemDelegate* LogisticsRequestsHistoryTable::GetLinkItemDelegate(
 // -----------------------------------------------------------------------------
 void LogisticsRequestsHistoryTable::Purge()
 {
-    dataModel_->clear();
-    dataModel_->setHorizontalHeaderLabels( horizontalHeaders_ );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    horizontalHeader()->setResizeMode( dataModel_->columnCount() - 1, QHeaderView::Stretch );
+    dataModel_->removeRows( 0, dataModel_->rowCount() );
 }
 
 // -----------------------------------------------------------------------------

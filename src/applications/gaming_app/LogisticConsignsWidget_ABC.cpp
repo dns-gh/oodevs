@@ -141,7 +141,6 @@ void LogisticConsignsWidget_ABC::SelectRequest()
 void LogisticConsignsWidget_ABC::OnLinkClicked( const QString& url, const QModelIndex& /*index*/ )
 {
     const QString safeUrl( url );
-    Purge();
     extractor_.NotifyLinkClicked( safeUrl + "#select" );
 }
 
@@ -191,8 +190,11 @@ void LogisticConsignsWidget_ABC::OnRequestsTableSelected( const QModelIndex& cur
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::OnCompletedFilter()
 {
-    Purge();
-    Fill( *selected_ );
+    if( selected_ )
+    {
+        FillHistoryModel();
+        FillCurrentModel( *selected_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -251,12 +253,18 @@ void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_A
 {
     historyTable_->Purge();
     const auto& states = consign.GetHistory().GetStates();
+    bool empty = true;
     for( auto it = states.rbegin(); it != states.rend(); ++it )
         if( it->endedTick_ )
+        {
+            empty = false;
             historyTable_->AddRequest( consign.GetStatusDisplay( it->nStatus_ ),
                 requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
                 requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
                 GetDisplayName( it->handler_ ) );
+        }
+    if( !empty )
+        historyTable_->ResizeColumnsToContents();
 }
 
 // -----------------------------------------------------------------------------

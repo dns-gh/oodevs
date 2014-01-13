@@ -55,7 +55,8 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual void Fill( const kernel::Entity_ABC& entity );
+    virtual void FillCurrentModel( const kernel::Entity_ABC& entity );
+    virtual void FillHistoryModel();
     //@}
 
 private:

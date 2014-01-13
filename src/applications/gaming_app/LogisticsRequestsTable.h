@@ -12,8 +12,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "clients_gui/CommonDelegate.h"
-#include "clients_gui/RichWidget.h"
-#include "QTableView.h"
+#include "clients_gui/RichTableView.h"
 
 namespace kernel
 {
@@ -33,7 +32,7 @@ class LogisticsConsign_ABC;
 */
 // Created: MMC 2013-09-11
 // =============================================================================
-class LogisticsRequestsTable : public gui::RichWidget< QTableView >
+class LogisticsRequestsTable : public gui::RichTableView
 {
     Q_OBJECT;
 
@@ -54,7 +53,6 @@ public:
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
     void FindRequestsIds( std::set< unsigned int >& requests );
-    void ResizeColumns();
     //@}
 
     //! @name Accessors

@@ -12,8 +12,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "clients_gui/CommonDelegate.h"
-#include "clients_gui/RichWidget.h"
-#include "QTableView.h"
+#include "clients_gui/RichTableView.h"
 
 namespace kernel
 {
@@ -33,7 +32,7 @@ class LogisticsConsign_ABC;
 */
 // Created: MMC 2013-09-11
 // =============================================================================
-class LogisticsRequestsSupplyTable : public gui::RichWidget< QTableView >
+class LogisticsRequestsSupplyTable : public gui::RichTableView
 {
     Q_OBJECT;
 
