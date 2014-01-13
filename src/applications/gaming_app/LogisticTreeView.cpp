@@ -71,7 +71,7 @@ const kernel::Entity_ABC* LogisticTreeView::RetrieveSuperior( const kernel::Enti
 void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( entity, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     const LogisticLinks* links = entity.Retrieve< LogisticLinks >();
 
@@ -83,6 +83,6 @@ void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kern
     action->AddParameter( *currentParam );
 
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( &entity, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, &entity, false ) );
     actionsModel_.Publish( *action, 0 );
 }

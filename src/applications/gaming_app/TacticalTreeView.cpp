@@ -319,11 +319,11 @@ void TacticalTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity
         if( &item.Get< kernel::TacticalHierarchies >().GetUp() == automat )
             return;
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "unit_change_superior" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( item, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( &item, false ) );
+        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -339,11 +339,11 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
         if( & item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
             return;
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( item, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( &item, false ) );
+        action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -355,7 +355,7 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
 void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target)
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( item, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
@@ -370,7 +370,7 @@ void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::En
         action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( &item, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
     actionsModel_.Publish( *action, 0 );
 }
 

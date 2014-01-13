@@ -14,8 +14,8 @@
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
 template< typename T >
-EntityMission< T >::EntityMission( const kernel::Entity_ABC* entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /*= true*/ )
-    : Mission( entity, mission, controller, registered )
+EntityMission< T >::EntityMission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered /*= true*/ )
+    : Mission( mission, controller, registered )
 {
     // NOTHING
 }
@@ -25,8 +25,8 @@ EntityMission< T >::EntityMission( const kernel::Entity_ABC* entity, const kerne
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
 template< typename T >
-EntityMission< T >::EntityMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
-    : Mission( xis, controller, missions, entity, stub )
+EntityMission< T >::EntityMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub )
+    : Mission( xis, controller, missions, stub )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ template< typename T >
 void EntityMission< T >::Publish( Publisher_ABC& publisher, int context ) const
 {
     T message;
-    message().mutable_tasker()->set_id( GetEntityId() );
+    message().mutable_tasker()->set_id( Get< ActionTasker >().GetId() );
     message().mutable_type()->set_id( GetType().GetId());
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

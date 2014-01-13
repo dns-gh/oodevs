@@ -133,8 +133,8 @@
 <context>
     <name>FragOrder</name>
     <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation>L&apos;entité &apos;%1&apos; (id: %2) ne peut pas exécuter l&apos;ordre de conduite &apos;%3&apos; (id: %4)</translation>
+        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
+        <translation>Impossible d&apos;exécuter l&apos;ordre de conduite &apos;%3&apos; (id: %4)</translation>
     </message>
 </context>
 <context>

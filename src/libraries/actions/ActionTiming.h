@@ -66,6 +66,7 @@ public:
     //@{
     bool IsEnabled() const;
     QDateTime GetTime() const;
+    void SetTime( const QDateTime& time );
     //@}
 
 private:

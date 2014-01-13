@@ -112,11 +112,11 @@ void KnowledgeAddInGroupDialog::OnAccept()
     int selectedPerception = pPerceptionCombo_->itemData( pPerceptionCombo_->currentItem() ).toInt();
 
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
-    actions::KnowledgeGroupMagicAction* action = new actions::KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
+    actions::KnowledgeGroupMagicAction* action = new actions::KnowledgeGroupMagicAction( actionType, controllers_.controller_, true );
     action->Rename( tools::translate( "gaming_app::Action", "Knowledge Group Add knowledge" ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selectedKnowledgeGroup_, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selectedKnowledgeGroup_, false ) );
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
     action->AddParameter( *new actions::parameters::Enumeration( it.NextElement(), selectedPerception ) );
     actionsModel_.Publish( *action, 0 );

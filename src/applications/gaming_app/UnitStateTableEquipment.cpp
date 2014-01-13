@@ -207,7 +207,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
     if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_equipment_state" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
 
     auto it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
@@ -237,6 +237,6 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
             }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
     actionsModel_.Publish( *action, 0 );
 }

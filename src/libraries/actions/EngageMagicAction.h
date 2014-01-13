@@ -10,7 +10,7 @@
 #ifndef __EngageMagicAction_h_
 #define __EngageMagicAction_h_
 
-#include "ActionWithTarget_ABC.h"
+#include "Action_ABC.h"
 
 namespace kernel
 {
@@ -27,14 +27,14 @@ namespace actions
 */
     // Created: FDS 2010-11-22
 // =============================================================================
-class EngageMagicAction : public ActionWithTarget_ABC
+class EngageMagicAction : public Action_ABC
 {
 public:
 
 //! @name Constructors/Destructor
     //@{
-             EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered = true );
-             EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const bool engaged);
+             EngageMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered = true );
+             EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const bool engaged);
     virtual ~EngageMagicAction();
     //@}
 

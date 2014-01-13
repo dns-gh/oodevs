@@ -267,14 +267,14 @@ void EquipmentTransferDialog::Validate()
     }
     accept();
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "transfer_equipment" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selectedFrom_, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), selectedTo_->GetId() ) );
     actions::parameters::ParameterList* equipments = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *equipments );
     FillEquipments( *equipments );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selectedFrom_, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selectedFrom_, false ) );
     actionsModel_.Publish( *action, 0 );
     selectedFrom_ = 0;
     selectedTo_ = 0;

@@ -139,7 +139,7 @@ QTreeWidgetItem* TimelineListView::FindListItem( const actions::Action_ABC& acti
     const actions::ActionTasker* tasker = action.Retrieve< actions::ActionTasker >();
     if( tasker )
     {
-        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
+        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetId() ) )
         {
             actionType = actions::eTypeEntity;
             return FindItem( entity );
@@ -173,17 +173,19 @@ void TimelineListView::NotifyCreated( const actions::Action_ABC& action )
     {
     case actions::eTypeEntity :
         {
-            const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< actions::ActionTasker >()->GetTaskerId() ); // cannot be null
-            if( !item )
+            if( const kernel::Entity_ABC* entity = model_.FindEntity( action.Get< actions::ActionTasker >().GetId() ) ) // cannot be null
             {
-                item = new QTreeWidgetItem();
-                item->setText( 0, entity->GetName() );
-                item->setData( 0, Qt::UserRole, QVariant::fromValue( entity ) );
-                addTopLevelItem( item );
+                if( !item )
+                {
+                    item = new QTreeWidgetItem();
+                    item->setText( 0, entity->GetName() );
+                    item->setData( 0, Qt::UserRole, QVariant::fromValue( entity ) );
+                    addTopLevelItem( item );
+                }
+                // $$$$ _RC_ JSR 2011-03-03: on cache toute la ligne si une action n'est pas autorisée?? a vérifier
+                item->setHidden( filter_ && !filter_->Allows( action ) );
+                entityActions_[ entity ].push_back( &action );
             }
-            // $$$$ _RC_ JSR 2011-03-03: on cache toute la ligne si une action n'est pas autorisée?? a vérifier
-            item->setHidden( filter_ && !filter_->Allows( action ) );
-            entityActions_[ entity ].push_back( &action );
         }
         break;
     case actions::eTypeWeather :
@@ -222,7 +224,7 @@ void TimelineListView::NotifyDeleted( const actions::Action_ABC& action )
     {
     case actions::eTypeEntity :
     {
-        const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< actions::ActionTasker >()->GetTaskerId() ); // cannot be null;
+        const kernel::Entity_ABC* entity = model_.FindEntity( action.Get< actions::ActionTasker >().GetId() ); // cannot be null;
         actions = &entityActions_[ entity ];
         break;
     }

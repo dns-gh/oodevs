@@ -217,14 +217,14 @@ void FireCreationPanel::Commit()
         else
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
-            std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, false ) );
+            std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_ ) );
             action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
             action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedReporter_, false ) );
+            action->Attach( *new ActionTasker( controllers_.controller_, selectedReporter_, false ) );
             actionsModel_.Publish( *action, 0 );
         }
     }

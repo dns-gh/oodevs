@@ -105,13 +105,13 @@ void ExtensionsPanel::OnActivationChanged( bool state )
 void ExtensionsPanel::OnValidate()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( types_ ).Get( "change_extension" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* extensions = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *extensions );
     static_cast< const DictionaryExtensions& >( selected_->Get< kernel::DictionaryExtensions >() ).FillParameterList( extensions );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
     actions_.Publish( *action, 0 );
     ChangeButtonsState( false );
 }

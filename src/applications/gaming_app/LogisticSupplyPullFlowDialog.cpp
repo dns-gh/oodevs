@@ -182,7 +182,7 @@ void LogisticSupplyPullFlowDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( dynamic_cast< const Automat_ABC* >( static_cast< const Entity_ABC* >( selected_ ) ) ) ? "automat_log_supply_pull_flow" : "formation_log_supply_pull_flow" );
-    std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
     PullFlowParameters* pullFlowParameters = new PullFlowParameters( it.NextElement(), static_.coordinateConverter_ );
@@ -229,7 +229,7 @@ void LogisticSupplyPullFlowDialog::Validate()
 
     action->AddParameter( *pullFlowParameters );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selected_, false ) );
+    action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
     actionsModel_.Publish( *action, 0 );
 
     ClearSuppliersTable();

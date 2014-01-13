@@ -82,7 +82,7 @@ void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
 void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
-                                                      tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation  )
+                                                 tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateAutomatCreationAction( type, selected, point, agentsModel, agentMessenger, *this, simulation ) );
     Publish( *action, clock() );

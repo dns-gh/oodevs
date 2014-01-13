@@ -281,7 +281,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
-    std::unique_ptr< Action_ABC > action( new UnitMagicAction( *target, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), (*selected_).GetId() ) );
 
@@ -298,7 +298,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
         dotationList.AddQuantity( "Number", it.value() );
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( target, false ) );
+    action->Attach( *new ActionTasker( controllers_.controller_, target, false ) );
     actionsModel_.Publish( *action, 0 );
 }
 

@@ -179,7 +179,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( ( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
-    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     actions::parameters::PushFlowParameters* pushFlowParameters = new actions::parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_, !isPushFlow_ );
@@ -220,7 +220,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     action->AddParameter( *pushFlowParameters );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
     actionsModel_.Publish( *action, 0 );
 
     Clear();

@@ -143,11 +143,11 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-            std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+            std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedEntity_, false ) );
+            action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
             actionsModel_.Publish( *action, 0 );
         }
     }
@@ -178,9 +178,9 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_total_destruction" );
-        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -195,11 +195,11 @@ void PopulationMagicOrdersInterface::ReloadBrain(QAction* action)
     {
         std::string modelName = action->text();
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
-        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -215,11 +215,11 @@ void PopulationMagicOrdersInterface::ChangeArmedIndividuals()
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_armed_individuals" );
-            std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+            std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedEntity_, false ) );
+            action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
             actionsModel_.Publish( *action, 0 );
         }
 }
@@ -234,11 +234,11 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_attitude" );
-        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Enumeration( it.NextElement(), index ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -316,11 +316,11 @@ void PopulationMagicOrdersInterface::ActivateBrainDebug()
         if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }
@@ -334,11 +334,11 @@ void PopulationMagicOrdersInterface::DeactivateBrainDebug()
     if( selectedEntity_ )
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_brain_debug" );
-        std::unique_ptr< Action_ABC > action( new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
         actionsModel_.Publish( *action, 0 );
     }
 }

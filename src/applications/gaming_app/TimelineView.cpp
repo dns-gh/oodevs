@@ -69,7 +69,7 @@ TimelineView::T_Actions* TimelineView::FindActions( const actions::Action_ABC& a
     const ActionTasker* tasker = action.Retrieve< ActionTasker >();
     if( tasker )
     {
-        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
+        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetId() ) )
         {
             actionType = eTypeEntity;
             std::map< const kernel::Entity_ABC*, T_Actions >::iterator it = entityActions_.find( entity );
@@ -107,7 +107,7 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     case eTypeEntity :
         if( actions == 0 )
         {
-            const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< ActionTasker >()->GetTaskerId() );
+            const kernel::Entity_ABC* entity = model_.FindEntity( action.Get< ActionTasker >().GetId() );
             actions = &entityActions_[ entity ];
             orderedActions_.push_back( entity );
         }
@@ -147,7 +147,7 @@ void TimelineView::NotifyDeleted( const Action_ABC& action )
             if( actions->empty() )
             {
                 if( actionType == eTypeEntity )
-                    NotifyDeleted( *model_.FindEntity( action.Retrieve< ActionTasker >()->GetTaskerId() ) );
+                    NotifyDeleted( *model_.FindEntity( action.Get< ActionTasker >().GetId() ) );
                 else if( actionType == eTypeWeather )
                     weatherVisible_ = false;
                 else if( actionType == eTypeObjects )

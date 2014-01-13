@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "ObjectMagicAction.h"
+#include "ActionTasker.h"
 
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
@@ -24,9 +25,8 @@ using namespace actions;
 // Name: ObjectMagicAction::ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
+ObjectMagicAction::ObjectMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
     : Action_ABC ( controller, magic )
-    , objectId_  ( object ? object->GetId() : 0 )
     , controller_( controller )
     , registered_( registered )
 {
@@ -37,9 +37,8 @@ ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const ke
 // Name: ObjectMagicAction::ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC* object )
+ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
     : Action_ABC ( xis, controller, magic )
-    , objectId_  ( object ? object->GetId() : 0 )
     , controller_( controller )
     , registered_( true )
 {
@@ -73,9 +72,8 @@ void ObjectMagicAction::Polish()
 void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", GetType().GetName() )
-        << xml::attribute( "type", "magicobject" );
-    if( objectId_ != 0 )
-        xos << xml::attribute( "target", objectId_ );
+        << xml::attribute( "type", "magicobject" )
+        << xml::attribute( "target", Get< ActionTasker >().GetId() );
     Action_ABC::Serialize( xos );
 }
 
@@ -87,7 +85,7 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType().GetId();
     simulation::ObjectMagicAction message;
-    message().mutable_object()->set_id( objectId_ );
+    message().mutable_object()->set_id( Get< ActionTasker >().GetId() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

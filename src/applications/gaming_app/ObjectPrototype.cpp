@@ -260,7 +260,7 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
     if( currentActionsModel_ && currentSimulationTime_ )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
-        std::unique_ptr< Action_ABC > action( new ObjectMagicAction( 0, actionType, controllers_.controller_, false ) );
+        std::unique_ptr< Action_ABC > action( new ObjectMagicAction( actionType, controllers_.controller_, false ) );
         action->Rename( tools::translate( "gaming_app::Action", "Object Creation" ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 

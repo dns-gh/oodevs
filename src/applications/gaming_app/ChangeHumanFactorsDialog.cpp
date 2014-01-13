@@ -188,14 +188,14 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_U
 {
     // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
-    std::unique_ptr< Action_ABC > action( new UnitMagicAction( entity, actionType, controllers_.controller_, false ) );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), tiredness ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), experience ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), stress ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( &entity, false ) );
+    action->Attach( *new ActionTasker( controllers_.controller_, &entity, false ) );
     actionsModel_.Publish( *action, 0 );
 }
 

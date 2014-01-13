@@ -19,7 +19,7 @@
 
 #include "actions/ActionsModel.h"
 #include "actions/ActionFactory_ABC.h"
-#include "actions/ActionWithTarget_ABC.h"
+#include "actions/ActionTasker.h"
 
 #include "actions_gui/MissionInterface_ABC.h"
 
@@ -91,8 +91,8 @@ void EventOrderPresenter::FillFrom( const Event& event )
     const EventAction& eventAction = static_cast< const EventAction& >( event );
     if( const actions::Action_ABC* action = eventAction.GetAction() )
     {
-        const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
-        entity_ = mission->GetTarget();
+        if( const actions::ActionTasker* tasker = action->Retrieve< actions::ActionTasker >() )
+            entity_ = tasker->GetTasker();
         Select( eventAction.GetMissionType(), action->GetType().GetName(), action );
     }
 }
@@ -181,13 +181,13 @@ namespace
     actions::Action_ABC* CreateAction( E_MissionType type,
                                        actions::ActionFactory_ABC& actionsFactory,
                                        const kernel::OrderType& orderType,
-                                       const kernel::Entity_ABC& entity )
+                                       const kernel::Entity_ABC* entity )
     {
         if( type == eNbrMissionType )
             throw MASA_EXCEPTION( "Can't create action with an invalid type" );
         if( type == eMissionType_FragOrder )
-            return actionsFactory.CreateAction( &entity, static_cast< const kernel::FragOrderType& >( orderType ) );
-        return actionsFactory.CreateAction( &entity, static_cast< const kernel::MissionType& >( orderType ) );
+            return actionsFactory.CreateAction( entity, static_cast< const kernel::FragOrderType& >( orderType ) );
+        return actionsFactory.CreateAction( entity, static_cast< const kernel::MissionType& >( orderType ) );
     }
 }
 
@@ -199,7 +199,7 @@ void EventOrderPresenter::Trigger()
 {
     if( !entity_ || !order_ )
         throw MASA_EXCEPTION( "Can't trigger and order without an entity and an order" );
-    if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, *entity_ ) )
+    if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, entity_ ) )
     {
         missionInterface_.FixOrigin( true );
         missionInterface_.CommitTo( *action );
@@ -217,7 +217,7 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
     event.name.clear();
     event.action.payload.clear();
     if( order_ )
-        if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, *entity_ ) )
+        if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, entity_ ) )
         {
             missionInterface_.CommitTo( *action );
             action->Publish( timelinePublisher_, 0 );
