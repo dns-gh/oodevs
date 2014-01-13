@@ -86,33 +86,9 @@
         <runtests/>
     </target>
 
-    <macrodef name="setversion">
-        <attribute name="version" default="${version.version}"/>
-        <attribute name="product" default="Sword"/>
-        <attribute name="file"/>
-        <sequential>
-            <echo message="Updating version info of @{file}"/>
-            <python>
-                <arg value="${bin.dir}/buildtools/editres.py"/>
-                <arg value="copy"/>
-                <arg value="${root.dir}/build/template.res"/>
-                <arg value="--types=RT_VERSION"/>
-                <arg value="@{file}"/>
-            </python>
-            <python>
-                <arg value="${bin.dir}/buildtools/editres.py"/>
-                <arg value="editversion"/>
-                <arg value="--original-filename=@{file}"/>
-                <arg value="--product-name=@{product}"/>
-                <arg value="--version=@{version}"/>
-                <arg value="@{file}"/>
-            </python>
-        </sequential>
-    </macrodef>
-
     <target name="package">
         <go_package/>
-        <setversion file="${bin.dir}/csvclient.exe"/>
+        <setversion version="${version.version}" product="Sword" file="${bin.dir}/csvclient.exe"/>
         <go_zip subdir="dll" output="${platform}">
             <fileset dir="${bin.dir}" includes="csvclient.exe"/>
         </go_zip>
