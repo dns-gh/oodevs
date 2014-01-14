@@ -33,7 +33,6 @@ EventAction::EventAction( E_EventTypes type,
     , model_( model )
     , controllers_( controllers )
     , action_( controllers )
-    , missionType_( eNbrMissionType )
 {
     Event::Update();
 }
@@ -73,18 +72,6 @@ void EventAction::Purge()
 
 namespace
 {
-    E_MissionType GetMissionType( const sword::ClientToSim& msg )
-    {
-        if( msg.message().has_unit_order() )
-            return eMissionType_Pawn;
-        else if( msg.message().has_automat_order() )
-            return eMissionType_Automat;
-        else if( msg.message().has_crowd_order() )
-            return eMissionType_Population;
-        else if( msg.message().has_frag_order() )
-            return eMissionType_FragOrder;
-        return eNbrMissionType;
-    }
     E_EventTypes GetEventType( const sword::ClientToSim& msg )
     {
         if( msg.message().has_unit_order() ||
@@ -117,7 +104,6 @@ void EventAction::Update( const timeline::Event& event )
     {
         action_ = model_.CreateAction( msg, true );
         UpdateTiming();
-        missionType_ = ::GetMissionType( msg );
         type_ = ::GetEventType( msg );
     }
     if( action_ && wasSelected_ )
@@ -140,15 +126,6 @@ const actions::Action_ABC* EventAction::GetAction() const
 void EventAction::SetAction( const actions::Action_ABC* action )
 {
     action_ = action;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventAction::GetMissionType
-// Created: ABR 2013-06-06
-// -----------------------------------------------------------------------------
-E_MissionType EventAction::GetMissionType() const
-{
-    return missionType_;
 }
 
 // -----------------------------------------------------------------------------

@@ -50,9 +50,8 @@ public:
     //@{
     virtual Event* Clone() const;
     virtual void Update( const timeline::Event& event );
-    const actions::Action_ABC* GetAction() const;
+    virtual const actions::Action_ABC* GetAction() const;
     void SetAction( const actions::Action_ABC* action );
-    E_MissionType GetMissionType() const;
     virtual void Select( kernel::ActionController& eventController,
                          kernel::ActionController& actionController ) const;
     //@}
@@ -76,7 +75,6 @@ private:
     actions::ActionsModel& model_;
     kernel::Controllers& controllers_;
     kernel::SafePointer< actions::Action_ABC > action_;
-    E_MissionType missionType_;
     //@}
 };
 

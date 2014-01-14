@@ -80,8 +80,7 @@ bool EventMagicPresenter::ShouldEnableTrigger() const
 // -----------------------------------------------------------------------------
 void EventMagicPresenter::Trigger( const gui::Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    if( const actions::Action_ABC* action = event.GetAction() )
         actionsModel_.Publish( *action, ++context_ );
     else
         throw MASA_EXCEPTION( "Can't trigger and order without an action" );}
@@ -111,8 +110,7 @@ void EventMagicPresenter::Purge()
 // -----------------------------------------------------------------------------
 void EventMagicPresenter::FillFrom( const Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    if( const actions::Action_ABC* action = event.GetAction() )
     {
         if( const actions::ActionTasker* tasker = action->Retrieve< actions::ActionTasker >() )
         {

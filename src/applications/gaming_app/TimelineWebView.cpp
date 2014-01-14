@@ -561,7 +561,7 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
     {
         gui::Event& event = GetOrCreateEvent( *it );
         if( event.GetType() == eEventTypes_Order || event.GetType() == eEventTypes_Magic )
-            if( const actions::Action_ABC* action = static_cast< gui::EventAction& >( event ).GetAction() )
+            if( const actions::Action_ABC* action = event.GetAction() )
             {
                 xos << xml::start( "action" );
                 action->Serialize( xos );

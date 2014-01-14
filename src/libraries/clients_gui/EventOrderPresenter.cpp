@@ -88,12 +88,11 @@ EventOrderPresenter::~EventOrderPresenter()
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::FillFrom( const Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    if( const actions::Action_ABC* action = event.GetAction() )
     {
         if( const actions::ActionTasker* tasker = action->Retrieve< actions::ActionTasker >() )
             entity_ = tasker->GetTasker();
-        Select( eventAction.GetMissionType(), action->GetType().GetName(), action );
+        Select( action->GetType().GetType(), action->GetType().GetName(), action );
     }
 }
 
@@ -197,8 +196,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::Trigger( const gui::Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    if( const actions::Action_ABC* action = event.GetAction() )
     {
         missionInterface_.FixOrigin( true );
         actionsModel_.Publish( *action, ++context_ );
