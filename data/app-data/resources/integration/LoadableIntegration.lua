@@ -22,7 +22,7 @@ integration.removeFromLoadedUnits = function( unit )
     end
 end
 
---- Removes the given unit to the table of units currently loaded by this entity.
+--- Removes the given unit to the table of units currently captured by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromCapturedUnits = function( unit )
     if myself.capturedUnits then
@@ -37,15 +37,17 @@ end
 -- @param camp Object knowledge (camp)
 -- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgent = function( unit, camp )
-    integration.removeFromLoadedUnits( unit )
-    integration.removeFromCapturedUnits( unit )
     if DEC_Agent_EstRefugie( unit.source ) then
         if DEC_Agent_RefugieEstEmbarque( myself, unit.source ) then
             DEC_Agent_DebarquerRefugiesDansCamp( myself, unit.source, camp.source )
+            integration.removeFromLoadedUnits( unit )
+            integration.removeFromCapturedUnits( unit )
             return true
         end
     else
         DEC_Transport_DebarquerPionSansDelais( unit.source )
+        integration.removeFromLoadedUnits( unit )
+        integration.removeFromCapturedUnits( unit )
         return true
     end
     return false
@@ -58,16 +60,18 @@ end
 -- @param camp Object knowledge (camp)
 -- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgentKnowledge = function( enemy, camp )
-    integration.removeFromLoadedUnits( enemy )
-    integration.removeFromCapturedUnits( enemy )
     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
         if DEC_Refugies_EstEmbarque( enemy.source ) then
             DEC_Refugies_DebarquerDansCamp( enemy.source, camp.source )
+            integration.removeFromLoadedUnits( unit )
+            integration.removeFromCapturedUnits( unit )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstPrisonnier( enemy.source ) then
         if DEC_Prisonniers_EstEmbarque( enemy.source ) then
             DEC_Prisonniers_DebarquerDansCamp( enemy.source, camp.source )
+            integration.removeFromLoadedUnits( unit )
+            integration.removeFromCapturedUnits( unit )
             return true
         end
     end
