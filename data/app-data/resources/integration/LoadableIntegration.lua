@@ -1,3 +1,35 @@
+--- Adds the given unit to the table of units currently loaded by this entity.
+-- Creates the table if it does not already exist
+-- @param unit Directia agent or agent knowledge
+integration.addToLoadedUnits = function( unit )
+    myself.loadedUnits = myself.loadedUnits or {}
+    myself.loadedUnits[ unit ] = true
+end
+
+--- Adds the given unit to the table of units currently captured by this entity.
+-- Creates the table if it does not already exist
+-- @param unit Directia agent or agent knowledge
+integration.addToCapturedUnits = function( unit )
+    myself.capturedUnits = myself.capturedUnits or {}
+    myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit
+end
+
+--- Removes the given unit to the table of units currently loaded by this entity.
+-- @param unit Directia agent or agent knowledge
+integration.removeFromLoadedUnits = function( unit )
+    if myself.loadedUnits then
+        myself.loadedUnits[ unit ] = nil
+    end
+end
+
+--- Removes the given unit to the table of units currently loaded by this entity.
+-- @param unit Directia agent or agent knowledge
+integration.removeFromCapturedUnits = function( unit )
+    if myself.capturedUnits then
+        myself.capturedUnits = removeFromList( unit, myself.capturedUnits )
+    end
+end
+
 --- Instantaneously unloads the given agent into the provided camp.
 -- If the given unit is a refugee, then it will be taken into account by
 -- the logistic units in the camp upon unloading.
@@ -5,6 +37,8 @@
 -- @param camp Object knowledge (camp)
 -- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgent = function( unit, camp )
+    integration.removeFromLoadedUnits( unit )
+    integration.removeFromCapturedUnits( unit )
     if DEC_Agent_EstRefugie( unit.source ) then
         if DEC_Agent_RefugieEstEmbarque( myself, unit.source ) then
             DEC_Agent_DebarquerRefugiesDansCamp( myself, unit.source, camp.source )
@@ -24,7 +58,9 @@ end
 -- @param camp Object knowledge (camp)
 -- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgentKnowledge = function( enemy, camp )
-     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
+    integration.removeFromLoadedUnits( enemy )
+    integration.removeFromCapturedUnits( enemy )
+    if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
         if DEC_Refugies_EstEmbarque( enemy.source ) then
             DEC_Refugies_DebarquerDansCamp( enemy.source, camp.source )
             return true
@@ -47,11 +83,11 @@ end
 -- @param unit Directia agent knowledge
 -- @return Boolean, whether or not the loading succeeded
 integration.loadFriendOrFoe = function( unit )
-    myself.loadedUnits = myself.loadedUnits or {}
-    myself.loadedUnits[ unit ] = true
+    integration.addToLoadedUnits( unit )
     if DEC_ConnaissanceAgent_EstRenduAMonCamp( myself, unit.source ) then
         if not DEC_Prisonniers_EstEmbarque( unit.source ) then
             DEC_Prisonniers_CapturerEtEmbarquer( unit.source )
+            integration.addToCapturedUnits( unit )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstRefugie( unit.source ) then
@@ -72,12 +108,9 @@ end
 -- @param unit Directia agent knowledge
 -- @return Boolean, whether or not the unloading succeeded
 integration.unloadFriendOrFoe = function( unit )
-    if myself.loadedUnits then
-        myself.loadedUnits[ unit ] = nil
-    end
-    if myself.capturedUnits and #myself.capturedUnits > 0 then
-        myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from captured list
-    end
+    integration.removeFromLoadedUnits( unit )
+    integration.removeFromCapturedUnits( unit )
+    
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         DEC_Prisonniers_Debarquer( unit.source )
         return true
@@ -108,8 +141,7 @@ end
 -- @param unit Directia agent
 -- @return Boolean, whether or not the loading succeeded
 integration.loadFriend = function( unit )
-    myself.loadedUnits = myself.loadedUnits or {}
-    myself.loadedUnits[ unit ] = true
+    integration.addToLoadedUnits( unit )
     if DEC_Agent_EstRefugie( unit.source ) then
         DEC_Agent_OrienterEtEmbarquer( meKnowledge.source, unit.source )
     else
@@ -123,12 +155,8 @@ end
 -- @param unit Directia agent
 -- @return Boolean, whether or not the unloading succeeded
 integration.unloadFriend = function( unit )
-    if myself.loadedUnits then
-        myself.loadedUnits[ unit ] = nil
-    end
-    if myself.capturedUnits and #myself.capturedUnits > 0 then
-        myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from captured list
-    end
+    integration.removeFromLoadedUnits( unit )
+    integration.removeFromCapturedUnits( unit )
     DEC_Transport_DebarquerPionSansDelais( unit.source )
     return true
 end

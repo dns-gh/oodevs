@@ -183,8 +183,8 @@ integration.capture = function( units, message )
             unit.capture = true
             integration.SendMessage( "capture", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
             DEC_ChangerSuperieurLogistiqueConnaissance( myself, unit.source )
-            myself.capturedUnits = myself.capturedUnits or {}
-            myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit -- Add to captured list
+            integration.addToLoadedUnits( unit )
+            integration.addToCapturedUnits( unit )
         end
     end
     return true
@@ -222,9 +222,8 @@ end
 integration.dropUnit = function( unit )
     DEC_Prisonniers_Debarquer(unit.source)
     reportFunction(eRC_TerroristDropped, unit.source )
-    if myself.capturedUnits and #myself.capturedUnits > 0 then
-        myself.capturedUnits = removeFromList( unit, myself.capturedUnits ) -- remove from capured list
-    end
+    integration.removeFromLoadedUnits( unit )
+    integration.removeFromCapturedUnits( unit )
     return true
 end
 
