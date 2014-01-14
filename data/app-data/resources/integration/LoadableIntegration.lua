@@ -38,7 +38,11 @@ integration.dischargeAgentKnowledge = function( enemy, camp )
     return false
 end
 
---- Instantaneously loads the given agent knowledge
+--- Instantaneously loads the given agent knowledge.
+-- If the agent knowledge is surrendered to this entity's side,
+-- then it is loaded and captured.
+-- If the agent knowledge is a refugee, then it is loaded and
+-- orientated.
 -- @see integration.unloadFriendOrFoe
 -- @param unit Directia agent knowledge
 -- @return Boolean, whether or not the loading succeeded
@@ -64,6 +68,7 @@ end
 
 --- Instantaneously unloads the given agent knowledge
 -- @see integration.loadFriendOrFoe
+-- @see integration.capture
 -- @param unit Directia agent knowledge
 -- @return Boolean, whether or not the unloading succeeded
 integration.unloadFriendOrFoe = function( unit )
@@ -97,17 +102,8 @@ integration.isFriendOrFoeTransported = function( unit )
     return false
 end
 
---- Returns true if the given friendly unit can be loaded, false otherwise.
---- Friendly units can always be transported, therefore this method always returns true,
---- regardless of the given unit.
--- @param unit Deprecated, unused
--- @param onlyLoadable Deprecated, unused
--- @return Boolean, true
-integration.canLoadFriend = function( unit, onlyLoadable )
-    return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
-end
-
 --- Instantaneously loads the given agent
+-- The agent will also be properly orientated if it is a refugee.
 -- @see integration.unloadFriend
 -- @param unit Directia agent
 -- @return Boolean, whether or not the loading succeeded
@@ -151,6 +147,7 @@ integration.isFriendTransported = function( unit )
 end
 
 --- Starts loading the units in its current loading queue.
+-- @see integration.addPlatoonInQueue
 -- @see integration.updateLoadQueue
 -- @see integration.stopLoadQueue
 -- @return Boolean, false
@@ -183,7 +180,7 @@ integration.stopLoadQueue = function()
     myself.eEtatTransport = nil
 end
 
---- Starts unloading the units in its current unloading queue.
+--- Starts unloading all the previously loaded units.
 -- @see integration.updateUnloadQueue
 -- @see integration.stopUnloadQueue
 -- @return Boolean, false
@@ -232,7 +229,7 @@ integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
     DEC_TransportConnaissance_AjouterPion( myself, knowledge.source, onlyLoadable )
 end
 
---- Returns true if the given agent has currently the mission matching the provided task name, false otherwise
+--- Returns true if the given agent currently has the mission matching the provided task name, false otherwise
 -- This method can be used to determine whether or not an agent is ready to be transported
 -- (e.g. if it has a 'Get Transported' mission).
 -- @param unit Directia agent
@@ -246,7 +243,7 @@ integration.friendHasTransportationMission = function( unit, taskName )
     return false
 end
 
---- Returns true if the given agent has currently the mission matching the provided task name, false otherwise
+--- Returns true if the given agent currently has the mission matching the provided task name, false otherwise
 -- This method can be used to determine whether or not an agent is ready to be transported
 -- (e.g. if it has a 'Get Transported' mission).
 -- @param unit Directia agent
@@ -384,8 +381,8 @@ end
 -- @param onlyLoadable Boolean, whether or not this method will only take into
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Integer
-integration.transportKnowledgeRoundTrip = function( knowledge, onlyLoadable )
-    return DEC_Connaissance_TransportNombreAllerRetour( myself, knowledge.source, onlyLoadable )
+integration.transportKnowledgeRoundTrip = function( unit, onlyLoadable )
+    return DEC_Connaissance_TransportNombreAllerRetour( myself, unit.source, onlyLoadable )
 end
 
 --- Returns true if this entity can transport crowds, false otherwise.
@@ -445,11 +442,10 @@ integration.stopLoadCrowd = function()
     myself.eEtatTransportCrowd = nil
 end
 
---- Starts unloading the given crowd. If no crowd is provided, this method
---- will start the unloading of the currently transported crowd instead.
+--- Starts unloading the last loaded crowd.
 -- @see integration.startedUnloadCrowd
 -- @see integration.stopUnloadCrowd
--- @param crowd Crowd knowledge (optional)
+-- @param crowd Deprecated, unused
 -- @return Boolean, false
 integration.startUnloadCrowd = function( crowd )
     local crowdId
@@ -526,7 +522,7 @@ integration.isAgentSurrendered = function( friend )
     return DEC_Agent_EstRendu( friend.source )
 end
 
---- Returns true if the given agent knowledge is surrendered, false otherwise.
+--- Returns true if the given agent knowledge is surrendered to this entity's side, false otherwise.
 -- @param platoon Directia agent knowledge
 -- @return Boolean
 integration.isKnowledgeAgentSurrendered = function( platoon )
@@ -568,4 +564,9 @@ integration.isFriendTranported = integration.isFriendTransported
 --- Deprecated
 integration.canTransportCrowdConcentration = function( crowd, concentration )
     return DEC_CrowdKnowledge_CanLoadCrowdConcentration( myself, crowd.source, concentration )
+end
+
+--- Deprecated
+integration.canLoadFriend = function( unit, onlyLoadable )
+    return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
 end
