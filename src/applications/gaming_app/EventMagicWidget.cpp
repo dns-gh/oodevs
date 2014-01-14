@@ -50,8 +50,8 @@ EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter,
     layout->addWidget( name_, 0, 1, Qt::AlignLeft );
 
     mainLayout_->addWidget( taskerWidget_ );
-    mainLayout_->addLayout( layout, 1 );
-    mainLayout_->addStretch( 2 );
+    mainLayout_->addLayout( layout );
+    mainLayout_->addStretch( 1 );
 
     // Connections
     connect( taskerWidget_, SIGNAL( ClearClicked() ), this, SLOT( OnClearTaskerClicked() ) );
