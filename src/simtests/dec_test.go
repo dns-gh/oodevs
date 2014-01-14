@@ -9,8 +9,14 @@
 package simtests
 
 import (
+	"bufio"
 	"bytes"
+	"fmt"
+	"io"
 	. "launchpad.net/gocheck"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"swapi"
 	"swtest"
@@ -132,136 +138,96 @@ end
 		`19\.4\d*`, "")
 }
 
-const genericHelpers = `
-function MakeCombinedResult(result, expected)
-    return result .. "-- EXPECTED --\n" .. expected
-end
-`
+func loadLuaScriptAndIncludes(rootDir, name string, included map[string]bool,
+	loading []string, w io.Writer) error {
 
-const geometryHelpers = `
-function CreatePolygonFromXY(coords)
-    if not coords then
-        return nil
-    end
-    local points = {}
-    for i = 1, #coords/2 do
-        points[i] = DEC_Geometrie_CreerPointXY(coords[2*i-1], coords[2*i])
-    end
-    return DEC_Geometrie_CreerLocalisationPolygone(points)
-end
+	// Check for cycles
+	for _, n := range loading {
+		if n == name {
+			loading = append(loading, name)
+			return fmt.Errorf("cyclic dependency: %s", strings.Join(loading, " -> "))
+		}
+	}
+	loading = append(loading, name)
 
-function CreatePolygonFromLatLong(coords)
-    if not coords then
-        return nil
-    end
-    local points = {}
-    for i = 1, #coords/2 do
-        points[i] = DEC_Geometrie_CreerPointLatLong(coords[2*i-1], coords[2*i])
-    end
-    return DEC_Geometrie_CreerLocalisationPolygone(points)
-end
+	// Resolve and open the script
+	path := filepath.Join(rootDir, name+".lua")
+	fp, err := os.Open(path)
+	if err != nil {
+		return fmt.Errorf("cannot find module %s: %s", name, err)
+	}
+	defer fp.Close()
 
-function PointToString(point)
-    return string.format("(%.2f, %.2f)", point:DEC_Geometrie_X(), point:DEC_Geometrie_Y())
-end
-
-function PolygonToString(poly)
-    if not poly then
-        return "nil"
-    end
-    output = "["
-    if poly then
-        local points = DEC_Geometrie_ListePointsLocalisation(poly)
-        for i = 1, #points do
-        output = output .. PointToString(points[i]) .. ", "
-        end
-    end
-    output = output .. "]"
-    return output
-end
-`
-
-func testDecGeometryPoints(c *C, client *swapi.Client) {
-	script := genericHelpers + geometryHelpers + `
-function TestFunction()
-    points = {
-        DEC_Geometrie_CreerPoint(),
-        DEC_Geometrie_CreerPointLatLong(-28.3456, -15.8193),
-        DEC_Geometrie_CreerPointLatLong(0, 0),
-        DEC_Geometrie_CreerPointXY(10000, 20000),
-    }
-    result = ""
-    for i = 1, #points do
-        p = points[i]
-        result = result .. PointToString(p) .. "\n"
-    end
-    expected = [[(0.00, 0.00)
-(11829.77, -5316878.77)
-(1750510.29, -2899797.56)
-(10000.00, 20000.00)
-]]
-    return MakeCombinedResult(result, expected)
-end
-`
-	diffScript(c, client, script, nil)
+	// Append it to the global script while resolving includes
+	reCmt := regexp.MustCompile(`^\s*--`)
+	reRequire := regexp.MustCompile(`^\s*require\s+"([^"]+)"\s*$`)
+	scanner := bufio.NewScanner(fp)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if reCmt.MatchString(line) {
+			line = ""
+		}
+		m := reRequire.FindStringSubmatch(line)
+		if m != nil {
+			if included[m[0]] {
+				// We have it already
+				continue
+			}
+			err = loadLuaScriptAndIncludes(rootDir, m[1], included, loading, w)
+			if err != nil {
+				return err
+			}
+			continue
+		}
+		_, err := io.WriteString(w, line+"\n")
+		if err != nil {
+			return err
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	included[name] = true
+	return nil
 }
 
-func testDecGeometryPolygon(c *C, client *swapi.Client) {
-	script := geometryHelpers + `
-function TestFunction()
-    local tests = {
-        { nil, {
-            {1, 2},
-        }},
-        { {}, {
-            {1, 2},
-        }},
-        { { 5, 5 }, {
-            {1, 2},
-        }},
-        { { 5, 5, 6, 6 }, {
-            {1, 2},
-        }},
-        { { 0, 0, 5, 0, 5, 5, 0, 0 }, {
-            {2, 1},
-            -- Stupid precision
-            {6, 6},
-            -- This one is really outside
-            {10, 10},
-        }},
-    }
-    local output = ""
-    for i = 1, #tests do
-        local poly = CreatePolygonFromXY(tests[i][1])
-        local points = tests[i][2]
-        for j = 1, #points do
-            local p = DEC_Geometrie_CreerPointXY(points[j][1], points[j][2])
-            local result = DEC_Geometrie_EstPointDansLocalisation(p, poly)
-            local relation = "is in"
-            if not result then
-                relation = "is not in"
-            end
-            output = output .. string.format("%s %s %s\n", PointToString(p),
-                relation, PolygonToString(poly))
-        end
-    end
-    expected = [[(1.00, 2.00) is not in nil
-(1.00, 2.00) is in []
-(1.00, 2.00) is in [(5.00, 5.00), ]
-(1.00, 2.00) is in [(5.00, 5.00), (6.00, 6.00), ]
-(2.00, 1.00) is in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
-(6.00, 6.00) is in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
-(10.00, 10.00) is not in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
-]]
-    return MakeCombinedResult(output, expected)
-end
-`
-	diffScript(c, client, script, nil)
+// Loads lua script "name".
+//
+// Scripts are resolved relatively to "${TESTDIR}/testdata/dec" and a ".lua"
+// extension is appended. "require" statements are expanded inlined, only once
+// and cycles are detected.
+func loadLuaScript(name string) (string, error) {
+	rootDir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	rootDir = filepath.Join(rootDir, "testdata/dec")
+	included := map[string]bool{}
+	loading := []string{}
+	w := bytes.Buffer{}
+	err = loadLuaScriptAndIncludes(rootDir, name, included, loading, &w)
+	return w.String(), err
+}
+
+func (s *TestSuite) TestLoadLuaScripts(c *C) {
+	// cyclic includes
+	_, err := loadLuaScript("recurse_test")
+	c.Assert(err, ErrorMatches, ".*cyclic.*")
+
+	// missing includes
+	_, err = loadLuaScript("missing_test")
+	c.Assert(err, ErrorMatches, ".*cannot find module.*")
 }
 
 func (s *TestSuite) TestDecGeometry(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer sim.Stop()
-	testDecGeometryPoints(c, client)
-	testDecGeometryPolygon(c, client)
+	runScript := func(name string) {
+		script, err := loadLuaScript(name)
+		c.Assert(err, IsNil)
+		diffScript(c, client, script, nil)
+	}
+
+	runScript("point_test")
+	runScript("polygon_test")
 }
