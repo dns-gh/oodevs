@@ -52,7 +52,6 @@ const weather::WindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
 //-----------------------------------------------------------------------------
 void MIL_Tools::ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D& vSimPos )
 {
-    assert( strMosPos.size() == 15 );
     TER_World::GetWorld().MosToSimMgrsCoord( strMosPos, vSimPos );
 }
 
