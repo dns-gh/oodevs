@@ -26,6 +26,7 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Availability.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/DotationType.h"
@@ -279,6 +280,25 @@ void LogisticSupplyPullFlowDialog::ClearSuppliersData()
     supplierSupplies_.clear();
 }
 
+namespace
+{
+    typedef std::map< std::size_t, std::size_t > T_Carriers;
+    void AddAvailability( const kernel::Entity_ABC& entity, T_Carriers& carriers )
+    {
+        if( const SupplyStates* pState = entity.Retrieve< SupplyStates >() )
+        {
+            for( auto it = pState->dispoTransporters_.begin(); it != pState->dispoTransporters_.end(); ++it )
+                carriers[ it->type_->GetId() ] += it->available_;
+        }
+    }
+    T_Carriers GetAvailableCarriers( const kernel::Entity_ABC& supplier )
+    {
+        T_Carriers result;
+        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( supplier, boost::bind( &AddAvailability, _1, boost::ref( result ) ) );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::computeAvailableCarriers
 // Created: MMC 2011-09-21
@@ -289,16 +309,14 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableCarriers( QMap< QString, int 
         return;
     carriersTypes_.clear();
     carriersTypeNames_.clear();
-    const TacticalHierarchies* pTacticalHierarchies = supplier_->Retrieve< TacticalHierarchies >();
-    if( !pTacticalHierarchies )
-        return;
     AddCarryingEquipment( *supplier_ );
-    tools::Iterator< const Entity_ABC& > itEnt = pTacticalHierarchies->CreateSubordinateIterator();
-    while( itEnt.HasMoreElements() )
-        AddCarryingEquipment( itEnt.NextElement() );
-    for( T_QuantitiesMap::const_iterator it = carriersTypes_.begin(); it != carriersTypes_.end(); ++it )
-        if( !it.key().isEmpty() && it.value() > 0 )
-            availableCarriers[ it.key() ] = static_cast< int >( it.value() );
+    const T_Carriers carriers = GetAvailableCarriers( *supplier_ );
+    for( auto it = carriersTypes_.begin(); it != carriersTypes_.end(); ++it )
+    {
+        auto carrier = carriers.find( carriersTypeNames_[ it.key() ]->GetId() );
+        if( !it.key().isEmpty() && it.value() > 0 && carrier != carriers.end() )
+            availableCarriers[ it.key() ] = static_cast< int >( carrier->second );
+    }
 }
 
 // -----------------------------------------------------------------------------
