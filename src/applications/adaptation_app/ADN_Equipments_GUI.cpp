@@ -384,8 +384,10 @@ QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& v
 
     ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tr( "Supply system" ), vInfosConnectors[ eIsLogSupply ], 3 );
 
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-weight-carried", tr( "Min weight carried"  ), vInfosConnectors[ eLogCarryMinWeightCapacity ], tr( "T" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryMaxWeightCapacity ], tr( "T" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-volume-carried", tr( "Min volume carried"  ), vInfosConnectors[ eLogCarryMinVolumeCapacity ], tr( "m3" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryMaxVolumeCapacity ], tr( "m3" ), eGreaterZero );
     builder.AddField< ADN_ComboBox_Vector >( pSupplyGroup, "resource-nature-carried", tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
 
     builder.PopSubName(); //! supply

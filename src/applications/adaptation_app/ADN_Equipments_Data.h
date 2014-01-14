@@ -145,8 +145,10 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Natures_Data::NatureInfos > ptr_;
-        ADN_Type_Double rWeight_;
-        ADN_Type_Double rVolume_;
+        ADN_Type_Double rMinWeight_;
+        ADN_Type_Double rMaxWeight_;
+        ADN_Type_Double rMinVolume_;
+        ADN_Type_Double rMaxVolume_;
     };
 
     //*****************************************************************************
