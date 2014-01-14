@@ -11,8 +11,9 @@ package simtests
 import (
 	"bytes"
 	. "launchpad.net/gocheck"
-	"regexp"
+	"strings"
 	"swapi"
+	"swtest"
 	"text/template"
 )
 
@@ -56,8 +57,8 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
-	expectedPattern, errorPattern string) {
+func execScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) (
+	string, error) {
 
 	w := &bytes.Buffer{}
 	t, err := template.New("test").Parse(script)
@@ -68,12 +69,35 @@ func checkScript(c *C, client *swapi.Client, script string, keys map[string]inte
 
 	unit := getRandomUnit(c, client)
 	output, err := client.ExecScript(unit.Id, "TestFunction", text)
+	return output, err
+}
+
+func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
+	expectedPattern, errorPattern string) {
+
+	output, err := execScript(c, client, script, keys)
 	if len(errorPattern) == 0 {
 		c.Assert(err, IsNil)
 		c.Assert(output, Matches, expectedPattern)
 	} else {
 		c.Assert(err, ErrorMatches, errorPattern)
 	}
+}
+
+// Evaluate supplied script as a Go template with supplied values, execute it.
+// Returned string is expected to be like:
+//
+//   RESULT
+//   "-- EXPECTED --"
+//   EXPECTED
+//
+// Parts are split and diffed.
+func diffScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) {
+	output, err := execScript(c, client, script, keys)
+	c.Assert(err, IsNil)
+	parts := strings.Split(output, "-- EXPECTED --\n")
+	c.Assert(parts, HasLen, 2)
+	swtest.AssertEqualOrDiff(c, parts[0], parts[1])
 }
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
@@ -107,6 +131,12 @@ end
 	checkScript(c, client, script, map[string]interface{}{"unitid": unit.Id},
 		`19\.4\d*`, "")
 }
+
+const genericHelpers = `
+function MakeCombinedResult(result, expected)
+    return result .. "-- EXPECTED --\n" .. expected
+end
+`
 
 const geometryHelpers = `
 function CreatePolygonFromXY(coords)
@@ -152,7 +182,7 @@ end
 `
 
 func testDecGeometryPoints(c *C, client *swapi.Client) {
-	script := geometryHelpers + `
+	script := genericHelpers + geometryHelpers + `
 function TestFunction()
     points = {
         DEC_Geometrie_CreerPoint(),
@@ -165,15 +195,15 @@ function TestFunction()
         p = points[i]
         result = result .. PointToString(p) .. "\n"
     end
-    return result
-end
-`
-	expected := regexp.QuoteMeta(`(0.00, 0.00)
+    expected = [[(0.00, 0.00)
 (11829.77, -5316878.77)
 (1750510.29, -2899797.56)
 (10000.00, 20000.00)
-`)
-	checkScript(c, client, script, nil, expected, "")
+]]
+    return MakeCombinedResult(result, expected)
+end
+`
+	diffScript(c, client, script, nil)
 }
 
 func testDecGeometryPolygon(c *C, client *swapi.Client) {
@@ -215,19 +245,18 @@ function TestFunction()
                 relation, PolygonToString(poly))
         end
     end
-    return output
-end
-`
-	expected := regexp.QuoteMeta("" +
-		`(1.00, 2.00) is not in nil
+    expected = [[(1.00, 2.00) is not in nil
 (1.00, 2.00) is in []
 (1.00, 2.00) is in [(5.00, 5.00), ]
 (1.00, 2.00) is in [(5.00, 5.00), (6.00, 6.00), ]
 (2.00, 1.00) is in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
 (6.00, 6.00) is in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
 (10.00, 10.00) is not in [(0.00, 0.00), (5.00, 0.00), (5.00, 5.00), (0.00, 0.00), ]
-`)
-	checkScript(c, client, script, nil, expected, "")
+]]
+    return MakeCombinedResult(output, expected)
+end
+`
+	diffScript(c, client, script, nil)
 }
 
 func (s *TestSuite) TestDecGeometry(c *C) {
