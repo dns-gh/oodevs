@@ -337,5 +337,5 @@ bool GhostsLayer::IsEligibleForDrag()
 // -----------------------------------------------------------------------------
 void GhostsLayer::SetAlpha( float alpha )
 {
-    Layer::SetAlpha( alpha / 3.f );
+    Layer::SetAlpha( alpha );
 }
