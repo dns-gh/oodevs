@@ -186,8 +186,8 @@ void DotationsEditor::UpdateInfos()
             if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
             {
                 double nEquipments = static_cast< double >( agentComposition.GetCount() );
-                maxCapacities[ carrying->stockNature_ ].first += nEquipments * carrying->stockWeightCapacity_;
-                maxCapacities[ carrying->stockNature_ ].second += nEquipments * carrying->stockVolumeCapacity_;
+                maxCapacities[ carrying->stockNature_ ].first += nEquipments * carrying->stockMaxWeightCapacity_;
+                maxCapacities[ carrying->stockNature_ ].second += nEquipments * carrying->stockMaxVolumeCapacity_;
             }
         }
         // Compute current

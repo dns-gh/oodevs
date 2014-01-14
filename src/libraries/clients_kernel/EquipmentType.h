@@ -35,16 +35,16 @@ public :
     //@{
     struct CarryingSupplyFunction
     {
-        CarryingSupplyFunction( const std::string& stockNature, double stockWeightCapacity, double stockVolumeCapacity )
+        CarryingSupplyFunction( const std::string& stockNature, double stockMaxWeightCapacity, double stockMaxVolumeCapacity )
             : stockNature_        ( stockNature )
-            , stockWeightCapacity_( stockWeightCapacity )
-            , stockVolumeCapacity_( stockVolumeCapacity )
+            , stockMaxWeightCapacity_( stockMaxWeightCapacity )
+            , stockMaxVolumeCapacity_( stockMaxVolumeCapacity )
         {
             // NOTHING
         }
         std::string stockNature_;
-        double stockWeightCapacity_;
-        double stockVolumeCapacity_;
+        double stockMaxWeightCapacity_;
+        double stockMaxVolumeCapacity_;
     };
     //@}
 

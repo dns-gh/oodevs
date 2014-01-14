@@ -419,8 +419,8 @@ void LogisticStockEditor::ComputeAvailableCapacity( const Agent_ABC& entStock, c
             if( carrying->stockNature_ == dotationType.GetNature() )
             {
                 unsigned int nEquipments = agentComposition. GetCount();
-                weightCapacity += nEquipments * carrying->stockWeightCapacity_;
-                volumeCapacity += nEquipments * carrying->stockVolumeCapacity_;
+                weightCapacity += nEquipments * carrying->stockMaxWeightCapacity_;
+                volumeCapacity += nEquipments * carrying->stockMaxVolumeCapacity_;
             }
     }
     Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
