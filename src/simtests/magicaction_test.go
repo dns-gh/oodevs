@@ -273,6 +273,9 @@ func (s *TestSuite) TestTriggerError(c *C) {
 		reStack := regexp.MustCompile(
 			`(?s)Crash - stack trace.*(filename not available|\\simulation_kernel\\)`)
 		c.Assert(reStack.FindSubmatch(log), NotNil)
+
+		err = simu.CheckSessionErrors(opts.GetSessionDir())
+		c.Assert(err, NotNil)
 	}
 
 	kinds := []string{"null_pointer", "stack_overflow"}

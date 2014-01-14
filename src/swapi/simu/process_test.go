@@ -105,6 +105,9 @@ func (s *TestSuite) TestSuccess(c *C) {
 
 	sim.Wait(60 * time.Second)
 	c.Assert(sim.Success(), Equals, true)
+
+	err = CheckSessionErrors(opts.GetSessionDir())
+	c.Assert(err, IsNil)
 }
 
 // Test SimProcess fails fast when started with an invalid configuration and
