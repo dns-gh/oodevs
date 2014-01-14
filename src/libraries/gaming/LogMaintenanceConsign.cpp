@@ -108,7 +108,7 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
 // -----------------------------------------------------------------------------
 bool LogMaintenanceConsign::RefersToAgent( unsigned long id ) const
 {
-    return consumer_.GetId() == id;
+    return consumer_.GetId() == id || ( pPionLogHandling_ && pPionLogHandling_->GetId() == id );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,9 @@ bool LogMaintenanceConsign::RefersToAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 bool LogMaintenanceConsign::RefersToAgent( const std::set< unsigned long >& id ) const
 {
-    return id.find( consumer_.GetId() ) != id.end();
+    if( id.find( consumer_.GetId() ) != id.end() )
+        return true;
+    return pPionLogHandling_ && ( id.find( pPionLogHandling_->GetId() ) != id.end() );
 }
 
 // -----------------------------------------------------------------------------
