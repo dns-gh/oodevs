@@ -20,6 +20,7 @@ MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     : point_( point )
     , going_( 0 )
     , isFlowing_( false )
+    , markedForDestruction_( false )
     , movingIndex_( 0 )
     , start_( 0 )
 {
@@ -36,17 +37,22 @@ MIL_FlowCollision::~MIL_FlowCollision()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FlowCollision::AddCollision
+// Name: MIL_FlowCollision::SetCollision
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-void MIL_FlowCollision::AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 )
+void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 )
 {
-    collidingFlows_.push_back( flow2 );
-    collidingFlows_.push_back( flow1 );
-    //isFlowing_ = false;
-    //movingIndex_ = 0;
-    DoSplit();
-    start_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+    bool firstSplit = collidingFlows_.empty();
+    if( std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) == collidingFlows_.end() )
+        collidingFlows_.push_back( flow2 );
+    if( std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) == collidingFlows_.end() )
+        collidingFlows_.push_back( flow1 );
+
+    if( firstSplit )
+    {
+        DoSplit();
+        start_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -66,11 +72,22 @@ bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::MarkedForDestruction
+// Created: JSR 2014-01-13
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::MarkedForDestruction() const
+{
+    return markedForDestruction_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision::Update
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::Update()
 {
+    if( markedForDestruction_ )
+        return;
     const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( timeStep - start_ >= 5 )
     {
@@ -86,6 +103,64 @@ void MIL_FlowCollision::Update()
                 movingIndex_ = 0;
         }
     }
+    if( isFlowing_ )
+    {
+        bool hasGone = true;
+        int nIndex = 0;
+        for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
+        {
+            MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
+            const T_PointList& shape = flow->GetFlowShape();
+            CIT_PointList itStart = shape.begin();
+            CIT_PointList itEnd = itStart;
+            ++itEnd;
+            for( ; itEnd != shape.end(); ++itStart, ++itEnd )
+            {
+                MT_Line line( *itStart, *itEnd );
+                MT_Vector2D result;
+                double r = line.ProjectPointOnLine( point_, result );
+                if( r >= -0.1 && r <= 1.1 /* && result == point_*/ ) // todo : epsilon
+                {
+                    hasGone = false;
+                    break;
+                }
+            }
+            if( hasGone )
+            {
+                it = collidingFlows_.erase( it );
+                if( movingIndex_ > nIndex )
+                    --movingIndex_;
+            }
+            else
+            {
+                ++it;
+                ++nIndex;
+            }
+        }
+        if( collidingFlows_.size() < 2 )
+            markedForDestruction_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::NotifyFlowDestruction
+// Created: JSR 2014-01-13
+// -----------------------------------------------------------------------------
+void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
+{
+    int nIndex = 0;
+    for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); ++it, ++nIndex )
+    {
+        if( *it == flow )
+        {
+            collidingFlows_.erase( it );
+            if( movingIndex_ > nIndex )
+                --movingIndex_;
+            break;
+        }
+    }
+    if( collidingFlows_.size() < 2 )
+        markedForDestruction_ = true;
 }
 
 // -----------------------------------------------------------------------------

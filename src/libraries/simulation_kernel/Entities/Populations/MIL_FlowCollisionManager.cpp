@@ -30,19 +30,30 @@ MIL_FlowCollisionManager::~MIL_FlowCollisionManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FlowCollisionManager::AddCollision
-// Created: JSR 2014-01-09
+// Name: MIL_FlowCollisionManager::SetCollisions
+// Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-void MIL_FlowCollisionManager::AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, MT_Vector2D& point )
+void MIL_FlowCollisionManager::SetCollisions( MIL_PopulationFlow* flow, const std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > >& collisions )
 {
-    // todo gérer plus de deux collisions en un point
-    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
-        if( it->first.SquareDistance( point ) < 100 ) // 10 metres ?
-            return;
-
-    std::shared_ptr< MIL_FlowCollision > collision = std::make_shared< MIL_FlowCollision >( point );
-    collision->AddCollision( flow1, flow2 );
-    flowCollisions_[ point ] = collision;
+    for( auto itCollision = collisions.begin(); itCollision != collisions.end(); ++itCollision )
+    {
+        std::shared_ptr< MIL_FlowCollision > collision;
+        const MT_Vector2D& point = itCollision->second;
+        for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+        {
+            if( it->first.SquareDistance( point ) < 100 ) // 10 metres ?
+            {
+                collision = it->second;
+                break;
+            }
+        }
+        if( collision == 0 )
+        {
+            collision = std::make_shared< MIL_FlowCollision >( point );
+            flowCollisions_[ point ] = collision;
+        }
+        collision->SetCollision( flow, itCollision->first );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +74,24 @@ bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow )
 // -----------------------------------------------------------------------------
 void MIL_FlowCollisionManager::Update()
 {
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); )
+    {
+        if( it->second->MarkedForDestruction() )
+            it = flowCollisions_.erase( it );
+        else
+        {
+            it->second->Update();
+            ++it;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollisionManager::NotifyFlowDestruction
+// Created: JSR 2014-01-13
+// -----------------------------------------------------------------------------
+void MIL_FlowCollisionManager::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
+{
     for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
-        it->second->Update();
+        it->second->NotifyFlowDestruction( flow );
 }

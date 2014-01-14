@@ -30,8 +30,10 @@ public:
 
     //! @name Operations
     //@{
-    void AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 );
+    void SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 );
     bool CanMove( const MIL_PopulationFlow* flow );
+    void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
+    bool MarkedForDestruction() const;
     void Update();
     //@}
 
@@ -57,6 +59,7 @@ private:
     std::vector< MIL_PopulationFlow* > collidingFlows_;
     MIL_PopulationFlow* going_; // remplacer par index ?
     bool isFlowing_;
+    bool markedForDestruction_;
     int movingIndex_;
     int start_;
     //@}

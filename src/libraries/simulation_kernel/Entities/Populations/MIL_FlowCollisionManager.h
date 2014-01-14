@@ -32,9 +32,10 @@ public:
 
     //! @name Operations
     //@{
-    void AddCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2, MT_Vector2D& point );
+    void SetCollisions( MIL_PopulationFlow* flow, const std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > >& collisions );
     bool CanMove( const MIL_PopulationFlow* flow );
     void Update();
+    void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
     //@}
 
     //! @name CheckPoints
