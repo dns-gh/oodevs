@@ -277,6 +277,12 @@ func (s *TestSuite) TestTriggerError(c *C) {
 			`(?s)Crash - stack trace.*(filename not available|\\simulation_kernel\\)`)
 		c.Assert(reStack.FindStringSubmatch(trace), NotNil)
 
+		// There is at least one functErr, the crash one
+		fp.Seek(0, 0)
+		errors, err := simu.FindLoggedFatalErrors(fp)
+		c.Assert(err, IsNil)
+		c.Assert(len(errors), Greater, 0)
+
 		err = simu.CheckSessionErrors(opts.GetSessionDir())
 		c.Assert(err, NotNil)
 	}

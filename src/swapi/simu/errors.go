@@ -17,6 +17,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strings"
 )
 
 // Returns a list of dump files found in a dump directory.
@@ -32,6 +33,32 @@ func ListDmpFiles(path string) ([]string, error) {
 		}
 	}
 	return dmps, nil
+}
+
+var reFunctErr *regexp.Regexp = regexp.MustCompile("(" +
+	// Many log files have no schemas. This can be fixed but is certainly not a
+	// fatal error.
+	`doesn't have any schema` +
+	")")
+
+// Reads fp and possibly returns a concatenation of all <functERR> lines, or an
+// empty string.
+func FindLoggedFatalErrors(fp io.Reader) (string, error) {
+	errors := bytes.Buffer{}
+	scanner := bufio.NewScanner(fp)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.Contains(line, "<functERR>") {
+			if reFunctErr.MatchString(line) {
+				continue
+			}
+			errors.WriteString(line + "\n")
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return errors.String(), nil
 }
 
 // Reads fp and possibly returns a stack trace, or an empty string.
@@ -84,6 +111,15 @@ func CheckSessionErrors(sessionPath string) error {
 		}
 		if len(trace) > 0 {
 			return fmt.Errorf("stacktrace found in %s:\n%s\n", path, trace)
+		}
+
+		fp.Seek(0, 0)
+		errors, err := FindLoggedFatalErrors(fp)
+		if err != nil {
+			return err
+		}
+		if len(errors) != 0 {
+			return fmt.Errorf("fatal errors found in %s:\n%s\n", path, errors)
 		}
 	}
 
