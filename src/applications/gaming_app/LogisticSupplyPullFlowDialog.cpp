@@ -47,7 +47,6 @@
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -75,8 +74,8 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
 
     QStringList resourcesHeader;
     resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );
+                    << tools::translate( "Logistic : Push supply flow", "Available" )
+                    << tools::translate( "Logistic : Push supply flow", "Quantity" );
     resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
 
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
@@ -99,14 +98,10 @@ LogisticSupplyPullFlowDialog::~LogisticSupplyPullFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) )
-    {
-        if( agent.GetLogisticLevel() != LogisticLevel::none_ )
-        {
-            selected_ = &agent;
-            menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
-        }
-    }
+    if( !profile_.CanBeOrdered( agent ) || agent.GetLogisticLevel() == LogisticLevel::none_ )
+        return;
+    selected_ = &agent;
+    menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +125,7 @@ void LogisticSupplyPullFlowDialog::Show()
 
     supplierCombo_->clear();
     supplierCombo_->AddItem( QString(), 0 );
-    for( T_SuppliersNames::iterator it = suppliersNames_.begin(); it != suppliersNames_.end(); ++it )
+    for( auto it = suppliersNames_.begin(); it != suppliersNames_.end(); ++it )
         supplierCombo_->AddItem( it.key(), it.value() );
 
     OnSupplierValueChanged();
@@ -153,10 +148,27 @@ void LogisticSupplyPullFlowDialog::GetSuppliesFromTable()
 void LogisticSupplyPullFlowDialog::SetSuppliesToTable()
 {
     QMap< QString, int > maxQuantities, quantities;
-    for( T_AvailableDotations::const_iterator it = availableSupplies_.begin(); it != availableSupplies_.end(); ++it )
+    for( auto it = availableSupplies_.begin(); it != availableSupplies_.end(); ++it )
         if( !it->first.isEmpty() && it->second.type_ && it->second.quantity_ > 0 )
             maxQuantities[ it->first ] = it->second.quantity_;
      resourcesTable_->SetQuantities( quantities, maxQuantities );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPullFlowDialog::Clear
+// Created: SLI 2014-01-10
+// -----------------------------------------------------------------------------
+void LogisticSupplyPullFlowDialog::Clear()
+{
+    ClearSuppliersTable();
+    ClearSuppliersData();
+    resourcesTable_->Clear();
+    availableSupplies_.clear();
+    carriersTable_->Clear();
+    ClearCarriersData();
+    ClearRouteList();
+    ClearRouteData();
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +206,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     else if( pSupplierFormation )
         pullFlowParameters->SetSupplier( *pSupplierFormation );
 
-    for( T_QuantitiesMap::iterator it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
+    for( auto it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
     {
         const DotationType* dotationType = availableSupplies_[ it.key() ].type_;
         assert( dotationType );
@@ -203,7 +215,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     }
 
     if( carriersUseCheck_->isChecked() )
-        for( T_QuantitiesMap::iterator it = carriers_.begin(); it != carriers_.end(); ++it )
+        for( auto it = carriers_.begin(); it != carriers_.end(); ++it )
             pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
     // Route
@@ -211,7 +223,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     QStringList waypoints = pModel->stringList();
     T_PointVector outPath, backPath;
     bool isOutPath = true;
-    for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
+    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         QString str = *it;
         if( points_.find( str ) != points_.end() )
@@ -232,15 +244,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
     actionsModel_.Publish( *action, 0 );
 
-    ClearSuppliersTable();
-    ClearSuppliersData();
-    resourcesTable_->Clear();
-    availableSupplies_.clear();
-    carriersTable_->Clear();
-    ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
-    selected_ = 0;
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -253,16 +257,7 @@ void LogisticSupplyPullFlowDialog::Reject()
     layer_.Reset();
     controllers_.Unregister( *waypointLocationCreator_ );
     controllers_.Unregister( *routeLocationCreator_ );
-
-    ClearSuppliersTable();
-    ClearSuppliersData();
-    resourcesTable_->Clear();
-    availableSupplies_.clear();
-    carriersTable_->Clear();
-    ClearCarriersData();
-    ClearRouteList();
-    ClearRouteData();
-    selected_ = 0;
+    Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,16 +274,6 @@ void LogisticSupplyPullFlowDialog::ClearSuppliersTable()
 // Created: MMC 2011-09-20
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::ClearSuppliersData()
-{
-    supplier_ = 0;
-    supplierSupplies_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::EraseSupplierData
-// Created: MMC 2011-09-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::EraseSupplierData()
 {
     supplier_ = 0;
     supplierSupplies_.clear();
@@ -326,7 +311,7 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
     QStringList waypoints = pModel->stringList();
     if( supplier_ )
         waypoints.removeAll( supplier_->GetName() );
-    EraseSupplierData();
+    ClearSuppliersData();
 
     QString selection = supplierCombo_->text( supplierCombo_->currentIndex() );
     supplier_ = suppliersNames_[ selection ];
@@ -350,22 +335,30 @@ void LogisticSupplyPullFlowDialog::OnSupplierValueChanged()
 void LogisticSupplyPullFlowDialog::OnSupplierSelectionChanged()
 {
     QString selection =  supplierCombo_->text( supplierCombo_->currentIndex() );
-    if( selection.isEmpty() )
-        supplier_ = 0;
-    else
-        supplier_ = suppliersNames_[ selection ];
-
+    supplier_ = selection.isEmpty() ? 0 : suppliersNames_[ selection ];
+    availableSupplies_.clear();
+    resourcesTable_->Clear();
     if( !supplier_ )
+        return;
+    logistic_helpers::VisitBaseStocksDotations( *supplier_, boost::bind( &LogisticSupplyPullFlowDialog::AddAvailable, this, _1 ) );
+    SetSuppliesToTable();
+}
+
+namespace
+{
+    template< typename Elements, typename Suppliers, typename Selected >
+    void FillSuppliers( const Elements& elements, Suppliers& suppliers, const Selected& selected )
     {
-        availableSupplies_.clear();
-        resourcesTable_->Clear();
-    }
-    else
-    {
-        availableSupplies_.clear();
-        resourcesTable_->Clear();
-        logistic_helpers::VisitBaseStocksDotations( *supplier_, boost::bind( &LogisticSupplyPullFlowDialog::AddAvailable, this, _1 ) );
-        SetSuppliesToTable();
+        const Entity_ABC& team = selected->Get< TacticalHierarchies >().GetTop();
+        auto it = elements.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const auto& element = it.NextElement();
+            if( &element != selected && 
+                element.GetLogisticLevel() != LogisticLevel::none_ &&
+                &element.Get< TacticalHierarchies >().GetTop() == &team )
+                    suppliers[ element.GetName() ] = &element;
+        }
     }
 }
 
@@ -376,29 +369,8 @@ void LogisticSupplyPullFlowDialog::OnSupplierSelectionChanged()
 void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
 {
     suppliersNames_.clear();
-
-    const Entity_ABC& team = selected_->Get< TacticalHierarchies >().GetTop();
-    {
-        tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Automat_ABC& automat = it.NextElement();
-            if( &automat != selected_ )
-            {
-                if( automat.GetLogisticLevel() != LogisticLevel::none_ && &automat.Get< TacticalHierarchies >().GetTop() == &team )
-                    suppliersNames_[ automat.GetName() ] = &automat;
-            }
-        }
-    }
-    {
-        tools::Iterator< const Formation_ABC& > it = formations_.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Formation_ABC& formation = it.NextElement();
-            if( formation.GetLogisticLevel() != LogisticLevel::none_ && &formation.Get< TacticalHierarchies >().GetTop() == &team )
-                suppliersNames_[ formation.GetName() ] = &formation;
-        }
-    }
+    FillSuppliers( automats_, suppliersNames_, selected_ );
+    FillSuppliers( formations_, suppliersNames_, selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,7 +383,7 @@ void LogisticSupplyPullFlowDialog::ComputeRoute( T_Route& route )
     CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
 
-    for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
+    for( auto it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         QString str = *it;
         if( points_.find( str ) != points_.end() )
@@ -441,6 +413,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
         routeDrawpoints_.push_back( startPos );
 
     for( std::size_t i=0; i < route.size(); ++i )
+    {
         if( route[i].IsPoint() )
             routeDrawpoints_.push_back( route[i].point_ );
         else
@@ -451,7 +424,6 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
             if( !pos.IsZero() )
                 routeDrawpoints_.push_back( pos );
         }
-
+    }
     routeDrawpoints_.push_back( startPos );
 }
-
