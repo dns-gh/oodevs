@@ -69,12 +69,11 @@ public:
 private:
     //! @name Type
     //@{
-    typedef std::vector< BreakdownOriginType* >   T_Breakdowns;
-    typedef T_Breakdowns::const_iterator        CIT_Breakdowns;
-    typedef std::vector< DotationCapacityType* >  T_Resources;
-    typedef T_Resources::const_iterator         CIT_Resources;
+    typedef std::vector< BreakdownOriginType* >  T_Breakdowns;
+    typedef std::vector< DotationCapacityType* > T_Resources;
     //@}
 
+private:
     //! @name Helpers
     //@{
     void ReadWeaponSystem( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );

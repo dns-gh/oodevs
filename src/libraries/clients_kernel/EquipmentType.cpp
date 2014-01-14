@@ -155,7 +155,11 @@ void EquipmentType::ReadResource( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void EquipmentType::ReadLogSupplyFunction( xml::xistream& xis )
 {
-    carryingSupplyFunction_.reset( new CarryingSupplyFunction( xis.attribute< std::string >( "nature" ), xis.attribute< double >( "max-mass" ), xis.attribute< double >( "max-volume" ) ) );
+    carryingSupplyFunction_.reset(
+        new CarryingSupplyFunction(
+            xis.attribute< std::string >( "nature" ),
+            xis.attribute< double >( "max-mass" ),
+            xis.attribute< double >( "max-volume" ) ) );
 }
 
 // -----------------------------------------------------------------------------
