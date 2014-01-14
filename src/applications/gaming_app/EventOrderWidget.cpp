@@ -328,9 +328,14 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyUpdated( const gui::Decisions_ABC& decisions )
 {
-    if( taskerWidget_->GetTasker() == &decisions.GetAgent() )
+    const kernel::Entity_ABC& entity = decisions.GetAgent();
+    const kernel::Entity_ABC* tasker = taskerWidget_->GetTasker();
+    const kernel::Entity_ABC* superior = tasker && tasker->GetTypeName() == kernel::Agent_ABC::typeName_
+                                         ? tasker->Get< kernel::TacticalHierarchies >().GetSuperior()
+                                         : 0;
+    if( tasker == &entity || superior && superior == &entity )
     {
-        orderPresenter_->OnTargetChanged( taskerWidget_->GetTasker() );
+        orderPresenter_->OnTargetChanged( tasker );
         presenter_.OnEventContentChanged( false );
     }
 }
