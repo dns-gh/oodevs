@@ -106,8 +106,6 @@ void TaskerWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void TaskerWidget::SetTasker( kernel::Entity_ABC* entity )
 {
-    if( tasker_ == entity )
-        return;
     tasker_ = entity;
     bool hasTasker = tasker_ != 0;
     nameLabel_->setText( hasTasker ? tasker_->GetName() : "---" );

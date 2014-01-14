@@ -144,6 +144,7 @@ private:
     const kernel::Time_ABC& simulation_;
     boost::shared_ptr< gui::EventOrderPresenter > orderPresenter_;
 
+    unsigned int lastTaskerId_;
     TaskerWidget* taskerWidget_;
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
