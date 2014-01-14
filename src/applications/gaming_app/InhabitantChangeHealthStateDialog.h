@@ -42,7 +42,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual actions::Action_ABC* CreateMagicAction( actions::ActionsModel& actionsModel ) const;
+    virtual void CreateMagicAction( actions::ActionsModel& actionsModel ) const;
     virtual unsigned int GetValue( unsigned int index ) const;
     //@}
 };

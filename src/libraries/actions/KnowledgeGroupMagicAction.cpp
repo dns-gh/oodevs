@@ -9,10 +9,15 @@
 
 #include "actions_pch.h"
 #include "KnowledgeGroupMagicAction.h"
-#include "protocol/SimulationSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "ActionTasker.h"
+
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+
+#include "ENT/ENT_Tr.h"
+
+#include "protocol/SimulationSenders.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace actions;
 
@@ -20,24 +25,24 @@ using namespace actions;
 // Name: KnowledgeGroupMagicAction constructor
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
-    : ActionWithTarget_ABC ( controller, magic, &entity )
+KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
+    : Action_ABC( controller, magic )
     , controller_( controller )
     , registered_( registered )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicAction constructor
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity )
-    : ActionWithTarget_ABC( xis, controller, magic, entity )
+KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
+    : Action_ABC( xis, controller, magic )
     , controller_         ( controller )
     , registered_         ( true )
 {
-    // NOTHING
+    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +63,7 @@ void KnowledgeGroupMagicAction::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", GetType().GetName() );
     xos << xml::attribute( "type", "magicknowledge" );
-    ActionWithTarget_ABC::Serialize( xos );
+    Action_ABC::Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +85,7 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     sword::KnowledgeMagicAction_Type type =
         ( sword::KnowledgeMagicAction_Type ) GetType().GetId();
     simulation::KnowledgeMagicAction message;
-    message().mutable_knowledge_group()->set_id( GetEntityId() );
+    message().mutable_knowledge_group()->set_id( Get< ActionTasker >().GetId() );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

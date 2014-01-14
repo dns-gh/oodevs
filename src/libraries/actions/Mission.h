@@ -10,7 +10,7 @@
 #ifndef __ActionMission_h_
 #define __ActionMission_h_
 
-#include "ActionWithTarget_ABC.h"
+#include "Action_ABC.h"
 
 namespace kernel
 {
@@ -37,13 +37,13 @@ namespace actions
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class Mission : public ActionWithTarget_ABC
+class Mission : public Action_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( const kernel::Entity_ABC* entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-             Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub );
+             Mission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
+             Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub );
     virtual ~Mission();
     //@}
 

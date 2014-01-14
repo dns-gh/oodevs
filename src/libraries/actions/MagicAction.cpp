@@ -9,10 +9,14 @@
 
 #include "actions_pch.h"
 #include "MagicAction.h"
-#include "protocol/SimulationSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
+
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+
+#include "ENT/ENT_Tr.h"
+
+#include "protocol/SimulationSenders.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace actions;
 
@@ -20,24 +24,24 @@ using namespace actions;
 // Name: MagicAction constructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, bool registered /* = true*/ )
+MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
     : Action_ABC ( controller, magic )
     , controller_( controller )
     , registered_( registered )
 {
-    Rename( name );
+    Rename( ENT_Tr::ConvertFromMagicActionType( ENT_Tr::ConvertToMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MagicAction constructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const QString& name )
+MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
     : Action_ABC( xis, controller, magic )
     , controller_( controller )
     , registered_( true )
 {
-    Rename( name );
+    Rename( ENT_Tr::ConvertFromMagicActionType( ENT_Tr::ConvertToMagicActionType( magic.GetName() ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

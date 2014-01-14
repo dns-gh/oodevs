@@ -10,6 +10,8 @@
 #include "ENT_Tr.h"
 #include "ENT_Private.h"
 
+#include "protocol/Simulation.h"
+
 #include <tools/Helpers.h>
 #include <boost/static_assert.hpp>
 
@@ -58,6 +60,10 @@ typedef ENT_Tr::Converter< E_EventTypes > T_ConverterEventTypes;
 typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_MissionType > T_ConverterMissionType;
 typedef ENT_Tr::Converter< E_EventDockModes > T_ConverterEventDockModes;
+typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType;
+typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
+typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
+typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -532,11 +538,110 @@ T_ConverterEventDockModes EventDockModesConverter_[] =
     T_ConverterEventDockModes( "", "", (E_EventDockModes)-1 )
 };
 
+T_ConverterMagicActionType MagicActionTypeConverter_[] =
+{
+    T_ConverterMagicActionType( "change_diplomacy",          QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change diplomacy" ), sword::MagicAction::change_diplomacy ),
+    T_ConverterMagicActionType( "change_resource_links",     QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change resource links" ), sword::MagicAction::change_resource_network_properties ),
+    T_ConverterMagicActionType( "create_knowledge_group",    QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Create knowledge group" ), sword::MagicAction::create_knowledge_group ),
+    T_ConverterMagicActionType( "fire_order_on_location",    QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Strike order on location" ), sword::MagicAction::create_fire_order_on_location ),
+    T_ConverterMagicActionType( "global_weather",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change global weather" ), sword::MagicAction::global_weather ),
+    T_ConverterMagicActionType( "local_weather",             QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change local weather" ), sword::MagicAction::local_weather ),
+    T_ConverterMagicActionType( "local_weather_destruction", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local weather destruction" ), sword::MagicAction::local_weather_destruction ),
+    T_ConverterMagicActionType( "debug_internal",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Debug internal" ), sword::MagicAction::debug_internal),
+    T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
+};
+
+T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
+{
+    T_ConverterUnitMagicActionType( "automat_creation",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat - Creation" ), sword::UnitMagicAction::automat_creation ),
+    T_ConverterUnitMagicActionType( "cancel_surrender",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Cancel surrender" ), sword::UnitMagicAction::cancel_surrender ),
+    T_ConverterUnitMagicActionType( "change_automat_superior",          "" /* doesn't seems to work, but change_formation_superior does */, sword::UnitMagicAction::change_automat_superior ),
+    T_ConverterUnitMagicActionType( "change_brain_debug",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change brain debug" ), sword::UnitMagicAction::change_brain_debug ),
+    T_ConverterUnitMagicActionType( "change_critical_intelligence",     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change critical intelligence" ), sword::UnitMagicAction::change_critical_intelligence ),
+    T_ConverterUnitMagicActionType( "change_dotation",                  QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change dotations" ), sword::UnitMagicAction::change_dotation ),
+    T_ConverterUnitMagicActionType( "change_equipment_human_size",      "" /* deprecated */, sword::UnitMagicAction::change_equipment_human_size ),
+    T_ConverterUnitMagicActionType( "change_equipment_state",           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change equipment state" ), sword::UnitMagicAction::change_equipment_state ),
+    T_ConverterUnitMagicActionType( "change_extension",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change extension" ), sword::UnitMagicAction::change_extension ),
+    T_ConverterUnitMagicActionType( "change_formation_superior",        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change superior" ), sword::UnitMagicAction::change_formation_superior ),
+    T_ConverterUnitMagicActionType( "change_human_factors",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Change human factors" ), sword::UnitMagicAction::change_human_factors ),
+    T_ConverterUnitMagicActionType( "change_human_state",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change human state" ), sword::UnitMagicAction::change_human_state ),
+    T_ConverterUnitMagicActionType( "change_knowledge_group",           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat - Change knowledge group" ), sword::UnitMagicAction::change_knowledge_group ),
+    T_ConverterUnitMagicActionType( "change_logistic_links",            QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Logistic - Change links" ), sword::UnitMagicAction::change_logistic_links ),
+    T_ConverterUnitMagicActionType( "create_breakdowns",                "" /* deprecated */, sword::UnitMagicAction::create_breakdowns ),
+    T_ConverterUnitMagicActionType( "create_direct_fire_order",         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Direct strike order" ) /* hla */, sword::UnitMagicAction::create_direct_fire_order ),
+    T_ConverterUnitMagicActionType( "create_wound",                     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Create wound" ) /* scripts */, sword::UnitMagicAction::create_wound ),
+    T_ConverterUnitMagicActionType( "create_wounds",                    "" /* deprecated */, sword::UnitMagicAction::create_wounds ),
+    T_ConverterUnitMagicActionType( "crowd_change_affinities",          QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Change affinities" ), sword::UnitMagicAction::crowd_change_affinities ),
+    T_ConverterUnitMagicActionType( "crowd_change_armed_individuals",   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Change armed individuals" ), sword::UnitMagicAction::crowd_change_armed_individuals ),
+    T_ConverterUnitMagicActionType( "crowd_change_attitude",            QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Change attitude" ), sword::UnitMagicAction::crowd_change_attitude ),
+    T_ConverterUnitMagicActionType( "crowd_change_health_state",        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Change health state" ), sword::UnitMagicAction::crowd_change_health_state ),
+    T_ConverterUnitMagicActionType( "crowd_creation",                   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Creation" ), sword::UnitMagicAction::crowd_creation ),
+    T_ConverterUnitMagicActionType( "crowd_total_destruction",          QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Crowd - Total destruction" ), sword::UnitMagicAction::crowd_total_destruction ),
+    T_ConverterUnitMagicActionType( "delete_unit",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Delete" ), sword::UnitMagicAction::delete_unit ),
+    T_ConverterUnitMagicActionType( "destroy_all",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Destroy all" ), sword::UnitMagicAction::destroy_all ),
+    T_ConverterUnitMagicActionType( "destroy_component",                QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Destroy component" ), sword::UnitMagicAction::destroy_component ),
+    T_ConverterUnitMagicActionType( "fire_order",                       QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Strike order" ), sword::UnitMagicAction::create_fire_order ),
+    T_ConverterUnitMagicActionType( "formation_creation",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Formation - Creation" ), sword::UnitMagicAction::formation_creation ),
+    T_ConverterUnitMagicActionType( "inhabitant_change_affinities",     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Population - Change Affinities" ), sword::UnitMagicAction::inhabitant_change_affinities ),
+    T_ConverterUnitMagicActionType( "inhabitant_change_alerted_state",  QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Population - Change Alerted State" ), sword::UnitMagicAction::inhabitant_change_alerted_state ),
+    T_ConverterUnitMagicActionType( "inhabitant_change_confined_state", QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Population - Change Confined State" ), sword::UnitMagicAction::inhabitant_change_confined_state ),
+    T_ConverterUnitMagicActionType( "inhabitant_change_health_state",   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Population - Change Health State" ), sword::UnitMagicAction::inhabitant_change_health_state ),
+    T_ConverterUnitMagicActionType( "knowledge_group_update",           "" /* deprecated */, sword::UnitMagicAction::knowledge_group_update ),
+    T_ConverterUnitMagicActionType( "load_unit",                        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Load" ) /* hla */, sword::UnitMagicAction::load_unit ),
+    T_ConverterUnitMagicActionType( "log_finish_handlings",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Logistic - Finish handlings" ), sword::UnitMagicAction::log_finish_handlings ),
+    T_ConverterUnitMagicActionType( "log_supply_change_quotas",         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Logistic - Supply change quotas" ), sword::UnitMagicAction::log_supply_change_quotas ),
+    T_ConverterUnitMagicActionType( "log_supply_pull_flow",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Logistic - Supply pull flow" ), sword::UnitMagicAction::log_supply_pull_flow ),
+    T_ConverterUnitMagicActionType( "log_supply_push_flow",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Logistic - Supply push flow" ), sword::UnitMagicAction::log_supply_push_flow ),
+    T_ConverterUnitMagicActionType( "partial_recovery",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Partial recovery" ), sword::UnitMagicAction::partial_recovery ),
+    T_ConverterUnitMagicActionType( "recover_all",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover all" ), sword::UnitMagicAction::recover_all ),
+    T_ConverterUnitMagicActionType( "recover_equipments",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover equipments" ), sword::UnitMagicAction::recover_equipments ),
+    T_ConverterUnitMagicActionType( "recover_resources",                QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover resources" ), sword::UnitMagicAction::recover_resources ),
+    T_ConverterUnitMagicActionType( "recover_transporters",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover transporters" ), sword::UnitMagicAction::recover_transporters ),
+    T_ConverterUnitMagicActionType( "recover_troops",                   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover troops" ), sword::UnitMagicAction::recover_troops ),
+    T_ConverterUnitMagicActionType( "recover_all_except_log",           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover all except those in logistic" ), sword::UnitMagicAction::recover_all_except_log ),
+    T_ConverterUnitMagicActionType( "recover_equipments_except_log",    QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover equipments except those in logistic" ), sword::UnitMagicAction::recover_equipments_except_log ),
+    T_ConverterUnitMagicActionType( "recover_resources_except_log",     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover resources except those in logistic" ), sword::UnitMagicAction::recover_resources_except_log ),
+    T_ConverterUnitMagicActionType( "recover_troops_except_log",        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Recover troops except those in logistic" ), sword::UnitMagicAction::recover_troops_except_log ),
+    T_ConverterUnitMagicActionType( "reload_brain",                     QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Reload brain" ), sword::UnitMagicAction::reload_brain ),
+    T_ConverterUnitMagicActionType( "surrender",                        QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Surrender" ), sword::UnitMagicAction::surrender_to ),
+    T_ConverterUnitMagicActionType( "teleport",                         QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Teleport" ), sword::UnitMagicAction::move_to ),
+    T_ConverterUnitMagicActionType( "transfer_equipment",               QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Log - Equipment transfer" ), sword::UnitMagicAction::transfer_equipment ),
+    T_ConverterUnitMagicActionType( "unit_change_affinities",           QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change affinities" ), sword::UnitMagicAction::unit_change_affinities ),
+    T_ConverterUnitMagicActionType( "unit_change_superior",             QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change superior" ), sword::UnitMagicAction::unit_change_superior ),
+    T_ConverterUnitMagicActionType( "unit_creation",                    QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Creation" ), sword::UnitMagicAction::unit_creation ),
+    T_ConverterUnitMagicActionType( "unload_unit",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Unload" ) /* hla */, sword::UnitMagicAction::unload_unit ),
+    T_ConverterUnitMagicActionType( "change_posture",                   QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Unit - Change posture" ), sword::UnitMagicAction::change_posture ),
+    T_ConverterUnitMagicActionType( "exec_script",                      QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Exec script" ) /*  */, sword::UnitMagicAction::exec_script ),
+    T_ConverterUnitMagicActionType( "", "", sword::UnitMagicAction::Type_MAX )
+};
+
+T_ConverterKnowledgeMagicActionType KnowledgeMagicActionTypeConverter_[] =
+{
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_add_knowledge",      QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group - Add knowledge" ), sword::KnowledgeMagicAction::add_knowledge ),
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_enable",             QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group - Activation Change" ), sword::KnowledgeMagicAction::enable ),
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_update_side",        QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group - Change superior" ), sword::KnowledgeMagicAction::update_party ),
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_update_side_parent", QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group - Change superior" ), sword::KnowledgeMagicAction::update_party_parent ),
+    T_ConverterKnowledgeMagicActionType( "knowledge_group_update_type",        QT_TRANSLATE_NOOP( "sword::KnowledgeMagicAction::Type", "Knowledge Group - Change Type" ), sword::KnowledgeMagicAction::update_type ),
+    T_ConverterKnowledgeMagicActionType( "", "", sword::KnowledgeMagicAction::Type_MAX )
+};
+
+T_ConverterObjectMagicActionType ObjectMagicActionTypeConverter_[] =
+{
+    T_ConverterObjectMagicActionType( "create_object",  QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object - Creation" ),    sword::ObjectMagicAction::create ),
+    T_ConverterObjectMagicActionType( "destroy_object", QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object - Destruction" ), sword::ObjectMagicAction::destroy ),
+    T_ConverterObjectMagicActionType( "update_object",  QT_TRANSLATE_NOOP( "sword::ObjectMagicAction::Type", "Object - Update" ),      sword::ObjectMagicAction::update ),
+    T_ConverterObjectMagicActionType( "", "", sword::ObjectMagicAction::Type_MAX )
+};
+
 }  // namespace
 
 #define INIT_TR( NAME )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
     InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
+
+#define INIT_PROTO_TR( NAME )\
+    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## TypeConverter_ ) == ( sword:: ## NAME ## ::Type_ARRAYSIZE ) + 1 );\
+    InitTr( ( NAME ## TypeConverter_ ), "ENT_Tr" );
 
 //-----------------------------------------------------------------------------
 // Name: InitTranslations
@@ -551,6 +656,7 @@ void ENT_Tr::InitTranslations()
     INIT_TR( Diplomacy );
     INIT_TR( DotationFamily );
     INIT_TR( EquipmentState );
+    INIT_TR( EventDockModes );
     INIT_TR( EventTypes );
     INIT_TR( FireAvailability );
     INIT_TR( ForceRatioStatus );
@@ -584,7 +690,10 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitStress );
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
-    INIT_TR( EventDockModes );
+    INIT_PROTO_TR( KnowledgeMagicAction );
+    INIT_PROTO_TR( MagicAction );
+    INIT_PROTO_TR( ObjectMagicAction );
+    INIT_PROTO_TR( UnitMagicAction );
 }
 
 //-----------------------------------------------------------------------------
@@ -956,6 +1065,42 @@ const std::string& ENT_Tr::ConvertFromEventDockModes( E_EventDockModes nValue, E
     return InverseFindInConverter( EventDockModesConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromMagicActionType( sword::MagicAction::Type value, E_Conversion conversion )
+{
+    return InverseFindInConverter( MagicActionTypeConverter_, value, conversion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromUnitMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromUnitMagicActionType( sword::UnitMagicAction::Type value, E_Conversion conversion )
+{
+    return InverseFindInConverter( UnitMagicActionTypeConverter_, value, conversion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromKnowledgeMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction::Type value, E_Conversion conversion )
+{
+    return InverseFindInConverter( KnowledgeMagicActionTypeConverter_, value, conversion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromObjectMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromObjectMagicActionType( sword::ObjectMagicAction::Type value, E_Conversion conversion )
+{
+    return InverseFindInConverter( ObjectMagicActionTypeConverter_, value, conversion );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1323,4 +1468,40 @@ E_MissionType ENT_Tr::ConvertToMissionType( const std::string& strName, E_Conver
 E_EventDockModes ENT_Tr::ConvertToEventDockModes( const std::string& strName, E_Conversion mode )
 {
     return ENT_Tr::FindInConverter( EventDockModesConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+sword::MagicAction::Type ENT_Tr::ConvertToMagicActionType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( MagicActionTypeConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToUnitMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+sword::UnitMagicAction::Type ENT_Tr::ConvertToUnitMagicActionType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( UnitMagicActionTypeConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToKnowledgeMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+sword::KnowledgeMagicAction::Type ENT_Tr::ConvertToKnowledgeMagicActionType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( KnowledgeMagicActionTypeConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToObjectMagicActionType
+// Created: ABR 2014-01-09
+// -----------------------------------------------------------------------------
+sword::ObjectMagicAction::Type ENT_Tr::ConvertToObjectMagicActionType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( ObjectMagicActionTypeConverter_, strName, mode );
 }

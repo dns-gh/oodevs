@@ -32,8 +32,8 @@ class ObjectMagicAction : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicAction( const kernel::Entity_ABC* object, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
-             ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC* object );
+             ObjectMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+             ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
     virtual ~ObjectMagicAction();
     //@}
 
@@ -47,7 +47,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const unsigned long objectId_;
     kernel::Controller& controller_;
     bool registered_;
     //@}

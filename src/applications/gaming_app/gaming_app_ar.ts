@@ -285,13 +285,6 @@
     </message>
 </context>
 <context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Change Diplomacy</source>
-        <translation type="unfinished">تغير الدبلوماسية</translation>
-    </message>
-</context>
-<context>
     <name>ChangeHealthStateDialog_ABC</name>
     <message>
         <source>Change health state</source>
@@ -336,10 +329,6 @@
         <source>Cancel</source>
         <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-    <message>
-        <source>Change Human Factors</source>
-        <translation type="unfinished">تغيير العوامل البشرية</translation>
-    </message>
 </context>
 <context>
     <name>ChangeLogisticLinksDialog</name>
@@ -366,10 +355,6 @@
     <message>
         <source>None</source>
         <translation type="unfinished">لا شيء</translation>
-    </message>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">تغيير الارتباطات السوقية</translation>
     </message>
     <message>
         <source>Change logistic links</source>
@@ -451,10 +436,6 @@
     <message>
         <source>Change superior</source>
         <translation type="unfinished">تغيير مجموعة المعارف</translation>
-    </message>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation type="unfinished">وحدة التغيير متفوقة</translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>
@@ -827,10 +808,6 @@ Reason: %3
         <source>Reset</source>
         <translation type="unfinished">إعادة تعيين</translation>
     </message>
-    <message>
-        <source>Change extension</source>
-        <translation type="unfinished">قم بتغيير ملحق</translation>
-    </message>
 </context>
 <context>
     <name>FireCreationPanel</name>
@@ -885,14 +862,6 @@ Reason: %3
     <message>
         <source>Launch strike</source>
         <translation type="unfinished">الشروع في الإضراب</translation>
-    </message>
-    <message>
-        <source>Strike order on location</source>
-        <translation type="unfinished">أمر الإضراب في الموقع</translation>
-    </message>
-    <message>
-        <source>Strike order</source>
-        <translation type="unfinished">أمر الإضراب</translation>
     </message>
     <message>
         <source>Strike order: reporter</source>
@@ -1663,10 +1632,6 @@ Do you want to replace it?</source>
         <source>Allocate supply quotas</source>
         <translation type="unfinished">تخصيص حصص</translation>
     </message>
-    <message>
-        <source>Log Supply Change Quotas</source>
-        <translation type="unfinished">تسجيل تغيير حصص</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
@@ -1689,20 +1654,12 @@ Do you want to replace it?</source>
         <source>Pull supply flow</source>
         <translation type="unfinished">سحب تدفق الإمدادات</translation>
     </message>
-    <message>
-        <source>Log Supply Pull Flow</source>
-        <translation type="unfinished">سجل تدفق سحب الإمدادات</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
         <source>Push supply flow</source>
         <translation type="unfinished">دفع تدفق الإمدادات</translation>
-    </message>
-    <message>
-        <source>Log Supply Push Flow</source>
-        <translation type="unfinished">سجل العرض دفع تدفق</translation>
     </message>
     <message>
         <source>Add recipient</source>
@@ -1714,10 +1671,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Resupply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log Resupply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1788,19 +1741,8 @@ Do you want to replace it?</source>
         <translation type="unfinished">القطاع الخاص</translation>
     </message>
     <message>
-        <source>Partial Recovery</source>
-        <translation type="unfinished">انتعاش جزئي</translation>
-    </message>
-    <message>
         <source>Partial recompletion</source>
         <translation type="unfinished">ريكومبليشن جزئي</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticTreeView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">تغيير الارتباطات السوقية</translation>
     </message>
 </context>
 <context>
@@ -1888,33 +1830,6 @@ Do you want to replace it?</source>
     <message>
         <source>Magic orders</source>
         <translation type="unfinished">أوامر السحر</translation>
-    </message>
-</context>
-<context>
-    <name>MagicAction</name>
-    <message>
-        <source>Recover - All</source>
-        <translation type="unfinished">استرداد--الجميع</translation>
-    </message>
-    <message>
-        <source>Recover - Troops</source>
-        <translation type="unfinished">استرداد-القوات</translation>
-    </message>
-    <message>
-        <source>Recover - Equipments</source>
-        <translation type="unfinished">استرداد--المعدات</translation>
-    </message>
-    <message>
-        <source>Recover - Resources</source>
-        <translation type="unfinished">استرداد-الموارد</translation>
-    </message>
-    <message>
-        <source>Destroy - All</source>
-        <translation type="unfinished">تدمير-كل</translation>
-    </message>
-    <message>
-        <source>Cancel - Surrender</source>
-        <translation type="unfinished">إلغاء الأمر--استسلام</translation>
     </message>
 </context>
 <context>
@@ -2725,20 +2640,8 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">تغير موقف الحشد</translation>
     </message>
     <message>
-        <source>Crowd Total Destruction</source>
-        <translation type="unfinished">التدمير التام الحشد</translation>
-    </message>
-    <message>
         <source>Reload brain</source>
         <translation type="unfinished">إعادة تحميل الدماغ</translation>
-    </message>
-    <message>
-        <source>Crowd Change Armed Individuals</source>
-        <translation type="unfinished">التغيير حشد أفراد مسلحون</translation>
-    </message>
-    <message>
-        <source>Crowd Change Attitude</source>
-        <translation type="unfinished">الحشد تغير الموقف</translation>
     </message>
     <message>
         <source>Enter value</source>
@@ -2904,13 +2807,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Show warnings</source>
         <translation type="unfinished">إظهار تحذيرات</translation>
-    </message>
-</context>
-<context>
-    <name>ResourceLinksDialog</name>
-    <message>
-        <source>Change resource links</source>
-        <translation type="unfinished">تغيير وصلات الموارد</translation>
     </message>
 </context>
 <context>
@@ -3098,14 +2994,6 @@ This data can&apos;t be projected.</source>
 </context>
 <context>
     <name>TacticalTreeView</name>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation type="unfinished">وحدة التغيير متفوقة</translation>
-    </message>
-    <message>
-        <source>Change Formation Superior</source>
-        <translation type="unfinished">تغيير تشكيل متفوقة</translation>
-    </message>
     <message>
         <source>Change superior</source>
         <translation type="unfinished">تغير عليا</translation>
@@ -3400,18 +3288,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">إنهاء هاندلينجس السوقي</translation>
     </message>
     <message>
-        <source>Destroy Component</source>
-        <translation type="unfinished">تدمير المكون</translation>
-    </message>
-    <message>
-        <source>Recover Transporters</source>
-        <translation type="unfinished">استرداد الناقلين</translation>
-    </message>
-    <message>
-        <source>Surrender</source>
-        <translation type="unfinished">استسلام</translation>
-    </message>
-    <message>
         <source>Reload brain</source>
         <translation type="unfinished">إعادة تحميل الدماغ</translation>
     </message>
@@ -3500,21 +3376,10 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>UnitStateTableCrew</name>
-    <message>
-        <source>Change human state</source>
-        <translation type="unfinished">تغيير حالة الإنسان</translation>
-    </message>
-</context>
-<context>
     <name>UnitStateTableEquipment</name>
     <message>
         <source>Random</source>
         <translation type="unfinished">عشوائية</translation>
-    </message>
-    <message>
-        <source>Change equipment state</source>
-        <translation type="unfinished">تغيير حالة المعدات</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -3526,10 +3391,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Maximal capacity</source>
         <translation type="unfinished">القدرة القصوى</translation>
-    </message>
-    <message>
-        <source>Change dotations</source>
-        <translation type="unfinished">تبادل المقتنيات</translation>
     </message>
 </context>
 <context>
@@ -3674,24 +3535,12 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">معلمات الطقس</translation>
     </message>
     <message>
-        <source>Change Global Weather</source>
-        <translation type="unfinished">تغير الطقس العالمي</translation>
-    </message>
-    <message>
-        <source>Change Local Weather</source>
-        <translation type="unfinished">تغير الطقس المحلي</translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
         <source>Invalid local weather %1, please correct time or position settings</source>
         <translation type="unfinished">الطقس %1 المحلي غير صالح، الرجاء إعدادات الوقت أو الموقف الصحيح</translation>
-    </message>
-    <message>
-        <source>Local Weather Destruction</source>
-        <translation type="unfinished">تدمير الطقس المحلي</translation>
     </message>
 </context>
 <context>

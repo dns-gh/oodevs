@@ -38,34 +38,6 @@
         <source>Executing target not set</source>
         <translation>Blanco de ejecución no definido</translation>
     </message>
-    <message>
-        <source>Automat Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Formation Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Change Health State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Change Alerted State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Change Confined State</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ActionParameter</name>
@@ -148,10 +120,21 @@
     </message>
 </context>
 <context>
+    <name>EngageMagicAction</name>
+    <message>
+        <source>Engage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation>La entidad &apos;%1&apos; (id: %2) no puede ejecutar la orden fragmentaria &apos;%3&apos; (id: %4)</translation>
+        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -208,17 +191,6 @@
     </message>
     <message>
         <source>List</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gaming_app::Action</name>
-    <message>
-        <source>Object Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

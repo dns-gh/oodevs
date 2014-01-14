@@ -73,7 +73,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual actions::Action_ABC* CreateMagicAction( actions::ActionsModel& actionsModel ) const = 0;
+    virtual void CreateMagicAction( actions::ActionsModel& actionsModel ) const = 0;
     virtual unsigned int GetValue( unsigned int index ) const = 0;
     //@}
 

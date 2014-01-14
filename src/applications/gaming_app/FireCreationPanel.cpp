@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "FireCreationPanel.h"
 #include "moc_FireCreationPanel.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/DotationType.h"
@@ -204,27 +205,27 @@ void FireCreationPanel::Commit()
         if( IsStrikeOnLocation() )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order_on_location" );
-            MagicAction* action = new MagicAction( actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order on location" ), true );
+            std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, *location_ ) );
             action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
             action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->RegisterAndPublish( actionsModel_ );
+            actionsModel_.Publish( *action, 0 );
         }
         else
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order" ), true );
+            std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_ ) );
             action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
             action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedReporter_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
+            action->Attach( *new ActionTasker( controllers_.controller_, selectedReporter_, false ) );
+            actionsModel_.Publish( *action, 0 );
         }
     }
 }

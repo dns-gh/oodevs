@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroupMagicAction_h_
 #define __KnowledgeGroupMagicAction_h_
 
-#include "ActionWithTarget_ABC.h"
+#include "Action_ABC.h"
 
 namespace kernel
 {
@@ -27,13 +27,13 @@ namespace actions
 */
 // Created: JSR 2010-04-20
 // =============================================================================
-class KnowledgeGroupMagicAction : public ActionWithTarget_ABC
+class KnowledgeGroupMagicAction : public Action_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
-             KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
+             KnowledgeGroupMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+             KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
     virtual ~KnowledgeGroupMagicAction();
     //@}
 

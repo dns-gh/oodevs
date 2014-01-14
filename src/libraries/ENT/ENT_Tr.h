@@ -22,6 +22,14 @@
 #include "ENT_Enums.h"
 #include <string>
 
+namespace sword
+{
+    enum MagicAction_Type;
+    enum UnitMagicAction_Type;
+    enum KnowledgeMagicAction_Type;
+    enum ObjectMagicAction_Type;
+}
+
 namespace ENT_Tr
 {
     enum E_Conversion
@@ -75,6 +83,10 @@ namespace ENT_Tr
     const std::string& ConvertFromEventType( E_EventTypes, E_Conversion = eToTr );
     const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
     const std::string& ConvertFromEventDockModes( E_EventDockModes, E_Conversion = eToTr );
+    const std::string& ConvertFromMagicActionType( sword::MagicAction_Type, E_Conversion = eToTr );
+    const std::string& ConvertFromUnitMagicActionType( sword::UnitMagicAction_Type, E_Conversion = eToTr );
+    const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
+    const std::string& ConvertFromObjectMagicActionType( sword::ObjectMagicAction_Type, E_Conversion = eToTr );
 
     // ConvertTo functions
     E_LocationType ConvertToLocationType( const std::string& );
@@ -118,6 +130,10 @@ namespace ENT_Tr
     E_EventTypes ConvertToEventType( const std::string&, E_Conversion = eToTr );
     E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );
     E_EventDockModes ConvertToEventDockModes( const std::string&, E_Conversion = eToTr );
+    sword::MagicAction_Type ConvertToMagicActionType( const std::string&, E_Conversion = eToSim );
+    sword::UnitMagicAction_Type ConvertToUnitMagicActionType( const std::string&, E_Conversion = eToSim );
+    sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );
+    sword::ObjectMagicAction_Type ConvertToObjectMagicActionType( const std::string&, E_Conversion = eToSim );
 }
 
 #endif // __ENT_Tr_h_

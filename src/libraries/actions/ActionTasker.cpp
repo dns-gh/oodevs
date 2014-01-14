@@ -18,8 +18,23 @@ using namespace actions;
 // Name: ActionTasker constructor
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
-ActionTasker::ActionTasker( const kernel::Entity_ABC* tasker, bool simulation )
-    : taskerId_  ( tasker ? tasker->GetId() : 0 )
+ActionTasker::ActionTasker( kernel::Controller& controller, const kernel::Entity_ABC* tasker, bool simulation )
+    : tasker_( controller, tasker )
+    , taskerId_( tasker ? tasker->GetId() : 0 )
+    , taskerTypename_( tasker ? tasker->GetTypeName() : std::string() )
+    , simulation_( simulation )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTasker constructor
+// Created: ABR 2014-01-14
+// -----------------------------------------------------------------------------
+ActionTasker::ActionTasker( kernel::Controller& controller, unsigned int id, const std::string& type, bool simulation /*= true*/ )
+    : tasker_( controller, 0 )
+    , taskerId_( id )
+    , taskerTypename_( type )
     , simulation_( simulation )
 {
     // NOTHING
@@ -44,12 +59,12 @@ bool ActionTasker::IsSimulation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionTasker::GetTaskerId
+// Name: ActionTasker::GetId
 // Created: JSR 2013-01-31
 // -----------------------------------------------------------------------------
-unsigned int ActionTasker::GetTaskerId() const
+unsigned int ActionTasker::GetId() const
 {
-    return taskerId_;
+    return tasker_ ? tasker_->GetId() : taskerId_;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +73,24 @@ unsigned int ActionTasker::GetTaskerId() const
 // -----------------------------------------------------------------------------
 void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( taskerId_ )
+    if( tasker_ || taskerId_ )
         xos << xml::attribute( "target", taskerId_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTasker::GetTasker
+// Created: ABR 2014-01-13
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ActionTasker::GetTasker() const
+{
+    return tasker_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTasker::GetTypename
+// Created: ABR 2014-01-13
+// -----------------------------------------------------------------------------
+const std::string& ActionTasker::GetTypename() const
+{
+    return tasker_ ? tasker_->GetTypeName() : taskerTypename_;
 }

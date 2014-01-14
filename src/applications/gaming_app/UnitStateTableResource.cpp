@@ -205,7 +205,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
     if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ || rowsChanged_.empty() )
         return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableResource", "Change dotations" ), true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
 
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
@@ -221,6 +221,6 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
     }
     rowsChanged_.clear();
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
+    actionsModel_.Publish( *action, 0 );
 }

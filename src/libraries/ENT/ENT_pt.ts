@@ -996,4 +996,292 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>sword::KnowledgeMagicAction::Type</name>
+    <message>
+        <source>Knowledge Group - Add knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge Group - Activation Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge Group - Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge Group - Change Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::MagicAction::Type</name>
+    <message>
+        <source>Change diplomacy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change resource links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order on location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change global weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change local weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local weather destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug internal</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::ObjectMagicAction::Type</name>
+    <message>
+        <source>Object - Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object - Destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object - Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::UnitMagicAction::Type</name>
+    <message>
+        <source>Automat - Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel surrender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change brain debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change dotations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change equipment state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change human factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change human state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat - Change knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Change links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Direct strike order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Create wound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Change affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Change armed individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Change attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Change health state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd - Total destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Destroy all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Destroy component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Strike order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formation - Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Change Affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Change Alerted State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Change Confined State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Change Health State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Finish handlings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Supply change quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Supply pull flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic - Supply push flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Partial recovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover troops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover all except those in logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover equipments except those in logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover resources except those in logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Recover troops except those in logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload brain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Teleport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log - Equipment transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Unload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit - Change posture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exec script</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

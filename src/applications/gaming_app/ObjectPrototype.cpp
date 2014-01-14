@@ -28,6 +28,7 @@
 #include "UndergroundPrototype.h"
 #include "TrafficabilityPrototype.h"
 #include "DisasterPrototype.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -259,7 +260,7 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
     if( currentActionsModel_ && currentSimulationTime_ )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
-        ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
+        std::unique_ptr< Action_ABC > action( new ObjectMagicAction( actionType, controllers_.controller_, false ) );
         action->Rename( tools::translate( "gaming_app::Action", "Object Creation" ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
@@ -274,6 +275,6 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
         ObjectPrototype_ABC::DoCommit( team );
 
         action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
-        action->RegisterAndPublish( *currentActionsModel_ );
+        currentActionsModel_->Publish( *action, 0 );
     }
 }

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include <boost/noncopyable.hpp>
 
 namespace xml
@@ -40,20 +41,25 @@ class ActionTasker : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionTasker( const kernel::Entity_ABC* tasker, bool simulation = true );
+            ActionTasker( kernel::Controller& controller, const kernel::Entity_ABC* tasker, bool simulation = true );
+            ActionTasker( kernel::Controller& controller, unsigned int id, const std::string& type, bool simulation = true );
     virtual ~ActionTasker();
     //@}
 
     //! @name Operations
     //@{
     bool IsSimulation() const;
-    unsigned int GetTaskerId() const;
+    const kernel::Entity_ABC* GetTasker() const;
+    unsigned int GetId() const;
+    const std::string& GetTypename() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::SafePointer< kernel::Entity_ABC > tasker_;
+    const std::string taskerTypename_;
     unsigned int taskerId_;
     const bool simulation_;
     //@}

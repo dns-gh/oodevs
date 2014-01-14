@@ -55,14 +55,14 @@ PopulationChangeAffinitiesDialog::~PopulationChangeAffinitiesDialog()
 void PopulationChangeAffinitiesDialog::DoValidate()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_affinities" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), true );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* affinitiesList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *affinitiesList );
     selected_->Get< Affinities >().FillParameterList( affinitiesList );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
+    actionsModel_.Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------

@@ -95,7 +95,6 @@ public:
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    void RegisterAndPublish( ActionsModel& actionsModel );
     virtual void Invalidate();
     //@}
 
