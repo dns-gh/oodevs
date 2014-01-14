@@ -64,7 +64,7 @@ protected:
     void DisplayModelWithAvailabilities();
     void DisplaySelectionAvailabilities();
     void AddAvailability( const kernel::Entity_ABC& entity );
-    virtual const std::vector< kernel::Availability >* GetAvailities( const Extension& ) const { return nullptr; }
+    virtual const std::vector< kernel::Availability >* GetAvailabilities( const Extension& ) const { return nullptr; }
     //@}
 
     //! @name Member data
@@ -239,7 +239,7 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
 {
     if( const Extension* pState = entity.Retrieve< Extension >() )
     {
-        const std::vector< kernel::Availability >* curAvailabilies = GetAvailities( *pState );
+        const std::vector< kernel::Availability >* curAvailabilies = GetAvailabilities( *pState );
         if( curAvailabilies )
             for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
                 availabilities_[ it->type_->GetName() ] += *it;

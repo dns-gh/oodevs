@@ -40,10 +40,10 @@ MedicalDoctorsListView::~MedicalDoctorsListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalDoctorsListView::GetAvailities
+// Name: MedicalDoctorsListView::GetAvailabilities
 // Created: MMC 2013-01-28
 // -----------------------------------------------------------------------------
-const std::vector< kernel::Availability >* MedicalDoctorsListView::GetAvailities( const MedicalStates& states ) const
+const std::vector< kernel::Availability >* MedicalDoctorsListView::GetAvailabilities( const MedicalStates& states ) const
 {
     return &states.dispoDoctors_;
 }

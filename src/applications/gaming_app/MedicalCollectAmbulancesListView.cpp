@@ -40,10 +40,10 @@ MedicalCollectAmbulancesListView::~MedicalCollectAmbulancesListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalCollectAmbulancesListView::GetAvailities
+// Name: MedicalCollectAmbulancesListView::GetAvailabilities
 // Created: MMC 2013-01-28
 // -----------------------------------------------------------------------------
-const std::vector< kernel::Availability >* MedicalCollectAmbulancesListView::GetAvailities( const MedicalStates& states ) const
+const std::vector< kernel::Availability >* MedicalCollectAmbulancesListView::GetAvailabilities( const MedicalStates& states ) const
 {
     return &states.dispoRamassageAmbulances_;
 }
