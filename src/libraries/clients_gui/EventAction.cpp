@@ -11,9 +11,11 @@
 #include "EventAction.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "protocol/Protocol.h"
 #include <timeline/api.h>
 
@@ -117,6 +119,7 @@ void EventAction::Update( const timeline::Event& event )
     if( msg.has_message() )
     {
         action_ = model_.CreateAction( msg, true );
+        UpdateTiming();
         missionType_ = ::GetMissionType( msg );
         type_ = ::GetEventType( msg );
     }
@@ -169,4 +172,15 @@ void EventAction::Select( kernel::ActionController& eventController, kernel::Act
     eventController.Select( static_cast< const Event& >( *this ) );
     if( action_ && event_ && event_->done )
         actionController.Select( *action_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventAction::UpdateTiming
+// Created: ABR 2014-01-14
+// -----------------------------------------------------------------------------
+void EventAction::UpdateTiming()
+{
+    if( action_ && event_ )
+        if( actions::ActionTiming* timing = action_.ConstCast()->Retrieve< actions::ActionTiming >() )
+            timing->SetTime( QDateTime::fromString( QString::fromStdString( event_->begin ), EVENT_DATE_FORMAT ) );
 }
