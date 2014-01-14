@@ -335,6 +335,18 @@ func readFileAsString(c *C, path string) string {
 	return string(data)
 }
 
+func stopSim(c *C, sim *simu.SimProcess) {
+	sim.Stop()
+	if c.Failed() {
+		return
+	}
+	session := sim.Opts.GetSessionDir()
+	err := simu.CheckSessionErrors(session)
+	if err != nil {
+		c.Fatalf("errors found in session %s:\n%s", session, err)
+	}
+}
+
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct{}
