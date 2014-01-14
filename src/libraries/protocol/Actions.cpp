@@ -102,22 +102,6 @@ const ActionParam automat_creation_params[] =
     { "KnowledgeGroup", "identifier", 0 },
 };
 
-const ActionParam automat_log_supply_change_quotas_params[] =
-{
-    { "Receiver", "identifier", 0 },
-    { "Dotations", "list", 0 },
-};
-
-const ActionParam automat_log_supply_pull_flow_params[] =
-{
-    { "Parameters", "pullflowparameters", 0 },
-};
-
-const ActionParam automat_log_supply_push_flow_params[] =
-{
-    { "Parameters", "pushflowparameters", 0 },
-};
-
 const ActionParam change_automat_superior_params[] =
 {
     { "Automat", "automat", 0 },
@@ -277,22 +261,6 @@ const ActionParam formation_creation_params[] =
     { "LogLevel", "string", 0 },
 };
 
-const ActionParam formation_log_supply_change_quotas_params[] =
-{
-    { "Receiver", "identifier", 0 },
-    { "Dotations", "list", 0 },
-};
-
-const ActionParam formation_log_supply_pull_flow_params[] =
-{
-    { "Parameters", "pullflowparameters", 0 },
-};
-
-const ActionParam formation_log_supply_push_flow_params[] =
-{
-    { "Parameters", "pushflowparameters", 0 },
-};
-
 const ActionParam global_weather_params[] =
 {
     { "Temperature", "numeric", 0 },
@@ -373,6 +341,22 @@ const ActionParam local_weather_destruction_params[] =
     { "WeatherID", "identifier", 0 },
 };
 
+const ActionParam log_supply_change_quotas_params[] =
+{
+    { "Receiver", "identifier", 0 },
+    { "Dotations", "list", 0 },
+};
+
+const ActionParam log_supply_pull_flow_params[] =
+{
+    { "Parameters", "pullflowparameters", 0 },
+};
+
+const ActionParam log_supply_push_flow_params[] =
+{
+    { "Parameters", "pushflowparameters", 0 },
+};
+
 const ActionParam partial_recovery_params[] =
 {
     { "Equipments", "list", 0 },
@@ -436,9 +420,6 @@ const ActionParam update_urban_params[] =
 const Action actions[] =
 {
     ACTION( automat_creation ),
-    ACTION( automat_log_supply_change_quotas ),
-    ACTION( automat_log_supply_pull_flow ),
-    ACTION( automat_log_supply_push_flow ),
     ACTION( change_automat_superior ),
     ACTION( change_brain_debug ),
     ACTION( change_critical_intelligence ),
@@ -465,9 +446,6 @@ const Action actions[] =
     ACTION( fire_order ),
     ACTION( fire_order_on_location ),
     ACTION( formation_creation ),
-    ACTION( formation_log_supply_change_quotas ),
-    ACTION( formation_log_supply_pull_flow ),
-    ACTION( formation_log_supply_push_flow ),
     ACTION( global_weather ),
     ACTION( inhabitant_change_affinities ),
     ACTION( inhabitant_change_alerted_state ),
@@ -480,6 +458,9 @@ const Action actions[] =
     ACTION( knowledge_group_update_type ),
     ACTION( local_weather ),
     ACTION( local_weather_destruction ),
+    ACTION( log_supply_change_quotas ),
+    ACTION( log_supply_pull_flow ),
+    ACTION( log_supply_push_flow ),
     ACTION( partial_recovery ),
     ACTION( reload_brain ),
     ACTION( surrender ),

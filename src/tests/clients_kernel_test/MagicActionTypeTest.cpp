@@ -45,23 +45,13 @@ namespace
 
     const std::vector< TypeConstraints > constraints = boost::assign::list_of< TypeConstraints >
         (
-            "automat_log_supply_push_flow",
+            "log_supply_push_flow",
             boost::assign::list_of< Parameter >( "Parameters", "pushflowparameters" )
         )(
-            "formation_log_supply_push_flow",
-            boost::assign::list_of< Parameter >( "Parameters", "pushflowparameters" )
-        )(
-            "automat_log_supply_pull_flow",
+            "log_supply_pull_flow",
             boost::assign::list_of< Parameter >( "Parameters", "pullflowparameters" )
         )(
-            "formation_log_supply_pull_flow",
-            boost::assign::list_of< Parameter >( "Parameters", "pullflowparameters" )
-        )(
-            "automat_log_supply_change_quotas",
-            boost::assign::list_of< Parameter >( "Receiver",  "identifier" )
-                                               ( "Dotations", "list" )
-        )(
-            "formation_log_supply_change_quotas",
+            "log_supply_change_quotas",
             boost::assign::list_of< Parameter >( "Receiver",  "identifier" )
                                                ( "Dotations", "list" )
         )(
