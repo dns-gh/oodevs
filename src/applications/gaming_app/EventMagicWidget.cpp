@@ -36,6 +36,7 @@ EventMagicWidget::EventMagicWidget( gui::EventPresenter& presenter,
     : EventMagicWidget_ABC( presenter )
     , model_( model )
     , selectedEntity_( controllers )
+    , lastTaskerId_( 0 )
 {
     // Presenter
     magicPresenter_ = boost::make_shared< gui::EventMagicPresenter >( *this, controllers, model.actions_ );
@@ -95,6 +96,7 @@ void EventMagicWidget::Build( const gui::EventMagicViewState& state )
     // Target
     taskerWidget_->SetTasker( model_.agents_.FindAllAgent( state.target_ ) );
     taskerWidget_->setVisible( state.hasTarget_ );
+    lastTaskerId_ = state.target_;
 
     // Name
     name_->setText( QString::fromStdString( state.name_ ) );
@@ -115,12 +117,8 @@ void EventMagicWidget::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
 // -----------------------------------------------------------------------------
 void EventMagicWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( taskerWidget_->GetTasker() == &entity ||
-        selectedEntity_ == &entity )
-    {
+    if( lastTaskerId_ == entity.GetId() )
         OnTargetChanged( 0 );
-        selectedEntity_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
