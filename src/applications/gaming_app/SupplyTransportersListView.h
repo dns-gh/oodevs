@@ -34,7 +34,7 @@ private:
     virtual void NotifyUpdated( const SupplyStates& a );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void UpdateSelected( const kernel::Entity_ABC* entity );
-    virtual const std::vector< kernel::Availability >* GetAvailities( const SupplyStates& states ) const;
+    virtual const std::vector< kernel::Availability >* GetAvailabilities( const SupplyStates& states ) const;
     //@}
 };
 

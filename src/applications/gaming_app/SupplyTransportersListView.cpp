@@ -40,10 +40,10 @@ SupplyTransportersListView::~SupplyTransportersListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyTransportersListView::GetAvailities
+// Name: SupplyTransportersListView::GetAvailabilities
 // Created: MMC 2013-01-28
 // -----------------------------------------------------------------------------
-const std::vector< kernel::Availability >* SupplyTransportersListView::GetAvailities( const SupplyStates& states ) const
+const std::vector< kernel::Availability >* SupplyTransportersListView::GetAvailabilities( const SupplyStates& states ) const
 {
     return &states.dispoTransporters_;
 }

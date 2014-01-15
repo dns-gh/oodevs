@@ -40,10 +40,10 @@ MaintenanceHaulersListView::~MaintenanceHaulersListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceHaulersListView::GetAvailities
+// Name: MaintenanceHaulersListView::GetAvailabilities
 // Created: MMC 2013-01-28
 // -----------------------------------------------------------------------------
-const std::vector< kernel::Availability >* MaintenanceHaulersListView::GetAvailities( const kernel::MaintenanceStates_ABC& states ) const
+const std::vector< kernel::Availability >* MaintenanceHaulersListView::GetAvailabilities( const kernel::MaintenanceStates_ABC& states ) const
 {
     return &states.GetDispoHaulers();
 }
