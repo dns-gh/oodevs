@@ -912,7 +912,6 @@ namespace
                 result.push_back( GetMidPoint( pointVector[i], pointVector[i+1] ) );
             }
             result.push_back( pointVector.back() );
-            result.push_back( GetMidPoint( pointVector.back(), pointVector.front() ) );
         }
         return result;
     }
@@ -930,8 +929,22 @@ void TER_Localisation::Scale( double rDist )
     {
         MT_Vector2D vBarycenter = ComputeBarycenter();
         // Scale (homothety from the barycenter)
-        T_PointVector newPointVector;
-        if( pointVector_.size() == 3 )
+        T_PointVector newPointVector;        
+        if( pointVector_.size() == 3 ) // Flat polygon with only 2 points...
+        {
+            MT_Vector2D direction = pointVector_[1] - pointVector_[0];
+            direction.Rotate90();
+            direction.Normalize();
+            T_PointVector newVector;
+            newVector.push_back( pointVector_[0] );
+            newVector.push_back( vBarycenter + direction );
+            newVector.push_back( pointVector_[1] );
+            newVector.push_back( vBarycenter - direction );
+            newVector.push_back( pointVector_[2] );
+            polygon_.Reset( newVector, false );
+            pointVector_ = newVector;
+        }
+        else if( pointVector_.size() == 4 ) // Triangles
         {
             T_PointVector polygonWithAtLeastFourSides = GetVectorWithAdditionalPoint( pointVector_ );
             polygon_.Reset( polygonWithAtLeastFourSides, false );
