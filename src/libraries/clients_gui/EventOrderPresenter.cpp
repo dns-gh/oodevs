@@ -222,7 +222,7 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
             event.action.payload = timelinePublisher_.GetPayload();
             delete action;
         }
-    event.action.apply = ShouldEnableTrigger();
+    event.action.apply = true;
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }
 
@@ -443,7 +443,6 @@ void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
     if( type != eMissionType_FragOrder && type != entityType )
         type = entityType;
 
-
     const std::string lastMission = state_->currentMission_;
     E_MissionType lastMissionType = state_->currentType_;
     state_->Purge();
@@ -504,7 +503,7 @@ void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
     // no last mission || entity type changed || last mission != current mission => need to refresh parameters interface
     if( ( lastMission.empty() ||
         lastMissionType != state_->currentType_ ||
-        lastMission != state_->currentMission_ || 
+        lastMission != state_->currentMission_ ||
         action ) && !state_->invalid_ )
     {
         // Purge parameters interface

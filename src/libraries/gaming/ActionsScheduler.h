@@ -18,10 +18,12 @@ namespace kernel
 {
     class Controllers;
 }
+
 namespace actions
 {
     class ActionsModel;
 }
+
 class Publisher_ABC;
 class Simulation;
 class SimulationController;
@@ -42,7 +44,8 @@ public:
     //@{
              ActionsScheduler( QObject* parent, kernel::Controllers& controllers, const Simulation& simulation,
                                const actions::ActionsModel& actions, Publisher_ABC& publisher,
-                               const SimulationController& simulationController );
+                               const SimulationController& simulationController,
+                               bool publish );
     virtual ~ActionsScheduler();
     //@}
 
@@ -64,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const bool publish_;
     kernel::Controllers& controllers_;
     const Simulation& simulation_;
     const SimulationController& simulationController_;
