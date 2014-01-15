@@ -27,9 +27,9 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamPath::ParamPath( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ParamLocation_ABC< actions::parameters::Path >( builder, parameter )
-    , entity_( builder.GetControllers() )
+    , entity_( 0 )
 {
-    // NOTHING
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ParamPath::ParamPath( const InterfaceBuilder_ABC& builder, const kernel::OrderPa
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,4 +111,14 @@ void ParamPath::FixOrigin( bool fix ) const
 {
     if( location_ )
         static_cast< kernel::Path& >( *location_ ).FixOrigin( fix );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::FixOrigin
+// Created: ABR 2014-01-07
+// -----------------------------------------------------------------------------
+void ParamPath::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    if( entity_ && entity_ == &entity )
+        SetEntity( 0 );
 }
