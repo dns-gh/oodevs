@@ -168,5 +168,5 @@ void Event::OverFly( kernel::ActionController& controller ) const
 // -----------------------------------------------------------------------------
 const actions::Action_ABC* Event::GetAction() const
 {
-    throw MASA_EXCEPTION( "Invalid call to GetAction in an event of type " + ENT_Tr::ConvertFromEventType( GetType() ) );
+    return 0;
 }
