@@ -12,8 +12,7 @@
 
     <target name="clean">
         <delete dir="${out.dir}"/>
-        <delete dir="${lib.dir}/pkg"/>
-        <delete dir="${lib.dir}/src"/>
+        <go_clean/>
     </target>
 
     <target name="update">
