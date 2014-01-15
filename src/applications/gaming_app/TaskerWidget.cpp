@@ -31,9 +31,9 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
                             bool showClear /* = true */,
                             QWidget* parent /* = 0 */ )
     : QWidget( parent )
-    , actionController_( controllers.actions_ )
+    , controllers_( controllers )
     , symbols_( symbols )
-    , tasker_( controllers )
+    , tasker_( 0 )
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
@@ -69,6 +69,8 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
 
     QHBoxLayout* mainLayout = new QHBoxLayout( this );
     mainLayout->addWidget( groupBox_ );
+
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +79,7 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 TaskerWidget::~TaskerWidget()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +108,8 @@ void TaskerWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void TaskerWidget::SetTasker( kernel::Entity_ABC* entity )
 {
+    if( tasker_ == entity )
+        return;
     tasker_ = entity;
     bool hasTasker = tasker_ != 0;
     nameLabel_->setText( hasTasker ? tasker_->GetName() : "---" );
@@ -139,9 +143,9 @@ void TaskerWidget::OnActivateClicked()
 {
     if( !tasker_ )
         throw MASA_EXCEPTION( "Can't activate an unset target" );
-    tasker_->Select( actionController_ );
-    tasker_->MultipleSelect( actionController_, boost::assign::list_of( tasker_ ) );
-    tasker_->Activate( actionController_ );
+    tasker_->Select( controllers_.actions_ );
+    tasker_->MultipleSelect( controllers_.actions_, boost::assign::list_of( tasker_ ) );
+    tasker_->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,4 +155,14 @@ void TaskerWidget::OnActivateClicked()
 void TaskerWidget::OnClearClicked()
 {
     SetTasker( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::OnClearClicked
+// Created: ABR 2013-12-17
+// -----------------------------------------------------------------------------
+void TaskerWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    if( tasker_ && tasker_ == &entity )
+        SetTasker( 0 );
 }
