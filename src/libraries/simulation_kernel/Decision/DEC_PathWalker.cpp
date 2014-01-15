@@ -359,7 +359,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_
             movingEntity_.NotifyMovingInsideObject( object );
             if( rSpeedWithinObject == 0. )
             {
-                if( itNextMoveStep->objectsToNextPointSet_.end() != itNextMoveStep->objectsToNextPointSet_.find( &object ) )
+                if( object.IsOnBorder( vNewPos_ ) || !object.IsInside( vNewPos_ ) )
                 {
                     SetBlockedByObject( startPosition, object, itCurMoveStep );
                     return false;
