@@ -18,10 +18,10 @@
 // -----------------------------------------------------------------------------
 MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     : point_( point )
-    , going_( 0 )
     , isFlowing_( false )
     , markedForDestruction_( false )
     , movingIndex_( 0 )
+    , going_( 0 )
     , start_( 0 )
 {
     // NOTHING
@@ -42,16 +42,34 @@ MIL_FlowCollision::~MIL_FlowCollision()
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 )
 {
-    bool firstSplit = collidingFlows_.empty();
-    if( std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) == collidingFlows_.end() )
+    if( flow1 == going_ || flow2 == going_ )
+        return;
+    bool flow1Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end();
+    bool flow2Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
+    if( flow1Found && flow2Found )
+        return;
+    if( flow1Found )
         collidingFlows_.push_back( flow2 );
-    if( std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) == collidingFlows_.end() )
+    else if( flow2Found )
         collidingFlows_.push_back( flow1 );
-
-    if( firstSplit )
+    else
     {
-        DoSplit();
-        start_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+        const MT_Vector2D& p1 = flow1->GetFlowShape().back();
+        const MT_Vector2D& p2 = flow2->GetFlowShape().back();
+        MIL_PopulationFlow* orderedFlow1 = 0;
+        MIL_PopulationFlow* orderedFlow2 = 0;
+        if( p1.SquareDistance( point_ ) > p2.SquareDistance( point_ ) )
+        {
+            orderedFlow1 = flow1;
+            orderedFlow2 = flow2;
+        }
+        else
+        {
+            orderedFlow1 = flow2;
+            orderedFlow2 = flow1;
+        }
+        collidingFlows_.push_back( orderedFlow1 );
+        collidingFlows_.push_back( orderedFlow2 );
     }
 }
 
@@ -61,14 +79,23 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
 // -----------------------------------------------------------------------------
 bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
 {
+    if( markedForDestruction_ )
+        return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
     if( flowIt != collidingFlows_.end() )
-    {
-        // todo going != 0 utile???
-        if( !isFlowing_ || going_ != 0 || collidingFlows_[ movingIndex_ ] != flow || MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ >= 5 )
+        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ >= 5 )
             return false;
-    }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::HasCollision
+// Created: JSR 2014-01-14
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 )
+{
+    return std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end()
+        && std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,15 +116,20 @@ void MIL_FlowCollision::Update()
     if( markedForDestruction_ )
         return;
     const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    if( timeStep - start_ >= 5 )
+    if( start_ == 0 ) // first update
+    {
+        DoSplit();
+        start_ = timeStep;
+        return;
+    }
+    if( timeStep - start_ >= 5 && isFlowing_ || ( timeStep - start_ >= 5 && !isFlowing_ ) )
     {
         start_ = timeStep;
-        if( going_ == 0 && isFlowing_ )
+        if( isFlowing_ )
             DoSplit();
         else
         {
             isFlowing_ = true;
-            going_ = 0;
             ++movingIndex_;
             if( movingIndex_ >= collidingFlows_.size() )
                 movingIndex_ = 0;
@@ -105,10 +137,10 @@ void MIL_FlowCollision::Update()
     }
     if( isFlowing_ )
     {
-        bool hasGone = true;
         int nIndex = 0;
         for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
         {
+            bool hasGone = true;
             MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
             const T_PointList& shape = flow->GetFlowShape();
             CIT_PointList itStart = shape.begin();
@@ -130,6 +162,8 @@ void MIL_FlowCollision::Update()
                 it = collidingFlows_.erase( it );
                 if( movingIndex_ > nIndex )
                     --movingIndex_;
+                if( movingIndex_ >= collidingFlows_.size() )
+                    movingIndex_ = 0;
             }
             else
             {
@@ -156,6 +190,8 @@ void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
             collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
                 --movingIndex_;
+            if( movingIndex_ >= collidingFlows_.size() )
+                movingIndex_ = 0;
             break;
         }
     }
@@ -179,7 +215,7 @@ void MIL_FlowCollision::DoSplit()
         MT_Line line( *itStart, *itEnd );
         MT_Vector2D result;
         double r = line.ProjectPointOnLine( point_, result );
-        if( r >= 0 && r <= 1 /* && result == point_*/ )
+        if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
         {
             going_ = flow->Split( itEnd, point_ );
             isFlowing_ = false;

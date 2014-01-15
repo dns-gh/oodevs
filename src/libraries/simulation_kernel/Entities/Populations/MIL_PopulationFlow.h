@@ -109,6 +109,7 @@ private:
     void SetDirection( const MT_Vector2D& direction );
     void SetSpeed( const double rSpeed );
     void UpdateLocation();
+    void UpdateCrowdCollisions();
     //@}
 
     //! @name Notifications

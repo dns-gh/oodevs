@@ -196,12 +196,7 @@ void MIL_PopulationFlow::DetachFromDestConcentration()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 {
-    if( pHeadPath_ )
-    {
-        pHeadPath_->Cancel();
-        pHeadPath_->DecRef();
-        pHeadPath_.reset();
-    }
+    CancelMove();
     if( pTailPath_ )
     {
         pTailPath_->Cancel();
@@ -442,9 +437,9 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( T_PointList ::const_iterator it, 
     if( insertIt == flowShape_.end() )
         insertIt = flowShape_.insert( it, point );
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, point );
-    newFlow.pHeadPath_.reset();
+    newFlow.CancelMove();
     flowShape_.erase( ++insertIt, flowShape_.end() );
-
+    CancelMove();
     assert( flowShape_.size() >= 2 );
     bFlowShapeUpdated_ = true;
     UpdateLocation();
@@ -589,7 +584,14 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UpdateCrowdCollisions
+// Created: JSR 2014-01-14
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::UpdateCrowdCollisions()
+{
     if( canCollideWithFlow_ )
     {
         // todo : extract in method, refactor, simplify
@@ -642,6 +644,7 @@ bool MIL_PopulationFlow::Update()
     }
     // Collisions
     UpdateCollisions();
+    UpdateCrowdCollisions();
     return true;
 }
 
@@ -1013,12 +1016,27 @@ void MIL_PopulationFlow::SetSpeed( const double rSpeed )
 void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
 {
     assert( flowShape_.size() >= 2 );
-    if( flowShape_.back() == position )
+    const MT_Vector2D& headPoint = flowShape_.back();
+    if( headPoint == position )
         return;
+
+    if( pHeadPath_ && std::find( pointsToInsert_.begin(), pointsToInsert_.end(), headPoint ) == pointsToInsert_.end() )
+    {
+        const DEC_PathResult::T_PathPointList& list = pHeadPath_->GetResult();
+        for( auto it = list.begin(); it != list.end(); ++it )
+        {
+            if( ( *it )->GetPos().SquareDistance( headPoint ) < 1 )
+            {
+                pointsToInsert_.push_back( headPoint );
+                break;
+            }
+        }
+    }
+
     bFlowShapeUpdated_ = true;
     flowShape_.back() = position;
     
-    for( std::vector< MT_Vector2D >::const_iterator it = pointsToInsert_.begin(); it != pointsToInsert_.end(); ++it )
+    for( auto it = pointsToInsert_.begin(); it != pointsToInsert_.end(); ++it )
     {
         IT_PointList itTmp = flowShape_.end();
         --itTmp;

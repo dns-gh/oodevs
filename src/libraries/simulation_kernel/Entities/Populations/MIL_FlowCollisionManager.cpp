@@ -41,7 +41,8 @@ void MIL_FlowCollisionManager::SetCollisions( MIL_PopulationFlow* flow, const st
         const MT_Vector2D& point = itCollision->second;
         for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
         {
-            if( it->first.SquareDistance( point ) < 100 ) // 10 metres ?
+            // todo optimiser
+            if( it->second->HasCollision( flow, itCollision->first ) || it->first.SquareDistance( point ) < 100 ) // 10 metres ?
             {
                 collision = it->second;
                 break;
