@@ -27,8 +27,10 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ActionsScheduler::ActionsScheduler( QObject* parent, Controllers& controllers, const Simulation& simulation,
                                     const actions::ActionsModel& actions, Publisher_ABC& publisher,
-                                    const SimulationController& simulationController )
+                                    const SimulationController& simulationController,
+                                    bool publish )
     : QObject( parent )
+    , publish_( publish )
     , controllers_( controllers )
     , simulation_( simulation )
     , simulationController_( simulationController )
@@ -65,6 +67,8 @@ void ActionsScheduler::NotifyUpdated( const Simulation& )
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )
 {
     currentTime_ = simulation_.GetDateTime();
+    if( !publish_ )
+        return;
     tools::Iterator< const actions::Action_ABC& > it( actions_.CreateIterator() );
     while( it.HasMoreElements() )
     {
