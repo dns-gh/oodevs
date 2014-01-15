@@ -481,12 +481,26 @@ void DEC_Knowledge_Object::UpdateFromCrowdPerception()
 // Name: DEC_Knowledge_Object::UpdateLocalisationPartially
 // Created: JCR 2009-12-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision )
+void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision, const TER_Localisation& realLocation )
 {
     if( std::find( localisation_.GetPoints().begin(), localisation_.GetPoints().end(), collision.GetPosition() ) == localisation_.GetPoints().end() )
     {
         T_PointVector points = localisation_.GetPoints();
-        points.push_back( collision.GetPosition() );
+        MT_Vector2D collisionPoint = collision.GetPosition();
+        T_PointVector scaledVector;
+        MT_Vector2D deltaX( 10, 0 );
+        MT_Vector2D deltaY( 0, 10 );
+        scaledVector.push_back( collisionPoint + deltaX + deltaY );
+        scaledVector.push_back( collisionPoint + deltaX - deltaY );
+        scaledVector.push_back( collisionPoint - deltaX - deltaY );
+        scaledVector.push_back( collisionPoint - deltaX + deltaY );
+        scaledVector.push_back( collisionPoint + deltaX + deltaY );
+        TER_Polygon polygon;
+        polygon.Reset( scaledVector );
+        TER_Localisation location( polygon );
+        location.GetPointsClippedByLocalisation( realLocation, scaledVector );
+        for( auto it = scaledVector.begin(); it != scaledVector.end(); ++it )
+            points.push_back( *it );
         if( points.size() >= 2 )
             points.push_back( points.front() );
         localisation_.Reset( points );
@@ -513,7 +527,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
         if( type == TER_Localisation::ePoint || type == TER_Localisation::eLine )
             UpdateLocalisations();
         else
-            UpdateLocalisationPartially( collision );
+            UpdateLocalisationPartially( collision, pObjectKnown_->GetLocalisation() );
     }
     UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnCollision, _1, boost::ref( *this ), boost::ref( collision ) ) );
 }
@@ -1036,6 +1050,8 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC* agent ) const
 {
     static const double epsilon = 1e-8;
+    if( IsOnBorder( pathPoints, epsilon ) )
+        return false;
     if( agent && pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
         {
@@ -1061,6 +1077,18 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
         }
     for( auto it = pathPoints.begin(); it != pathPoints.end(); ++it )
         if( localisation_.IsInside( *it, epsilon ) && ( !pObjectKnown_ || pObjectKnown_->GetLocalisation().IsInside( *it, epsilon ) ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsOnBorder
+// Created: LDC 2014-01-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsOnBorder( const T_PointVector& pathPoints, double precision ) const
+{
+    for( auto it = pathPoints.begin(); it != pathPoints.end(); ++it )
+        if( pObjectKnown_ && pObjectKnown_->GetLocalisation().IsOnBorder( *it, precision ) )
             return true;
     return false;
 }
