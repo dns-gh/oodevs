@@ -16,7 +16,7 @@
     </target>
 
     <target name="update">
-        <update name="buildtools" version="5.3"/>
+        <update name="buildtools"/>
         <update name="golang" version="1.1.1"/>
         <update name="golibs"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
