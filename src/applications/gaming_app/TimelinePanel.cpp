@@ -37,7 +37,7 @@ namespace
         {
             if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
             {
-                if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
+                if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetId() ) )
                     return profile_.IsVisible( *entity );
             }
             return true;

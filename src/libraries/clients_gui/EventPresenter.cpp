@@ -174,7 +174,7 @@ void EventPresenter::StartEdition( const gui::Event& event,
     event_.reset( event.Clone() );
     if( purge )
         InternalPurge();
-    ResetView( event.GetEvent().done
+    ResetView( event.GetType() == eEventTypes_Order && event.GetEvent().done
                ? eEventDockModes_DisplayTriggered
                : eEventDockModes_EditPlanned,
                raise );
@@ -366,7 +366,7 @@ void EventPresenter::Plan()
 void EventPresenter::UpdateRemote()
 {
     CheckEvent();
-    if( event_->GetEvent().done )
+    if( event_->GetType() == eEventTypes_Order && event_->GetEvent().done )
         throw MASA_EXCEPTION( "Can't edit an already triggered event" );
     if( !timelineHandler_ )
         throw MASA_EXCEPTION( "Can't edit an event without a timeline handler" );

@@ -85,11 +85,7 @@ void InhabitantChangeAlertedStateDialog::Validate()
         return;
     accept();
 
-    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeAlertedStateAction( pAlertedCheckBox_->isChecked(), *selected_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.PublishInhabitantChangeAlertedStateAction( pAlertedCheckBox_->isChecked(), *selected_ );
     selected_ = 0;
 }
 

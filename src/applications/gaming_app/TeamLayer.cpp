@@ -63,11 +63,7 @@ bool TeamLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& poi
     {
         if( const kernel::PopulationPrototype* type = dnd::FindData< kernel::PopulationPrototype >( event ) )
         {
-            actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *type->type_, type->number_, 0, 0, point, *selected_ );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new actions::ActionTasker( selected_, false ) );
-            action->Polish();
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.PublishCrowdCreationAction( *type->type_, type->number_, 0, 0, point, *selected_ );
             return true;
         }
     }

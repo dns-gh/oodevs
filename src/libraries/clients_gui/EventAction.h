@@ -66,6 +66,7 @@ private:
     //! @name Helpers
     //@{
     void Purge();
+    void UpdateTiming();
     //@}
 
 private:

@@ -14,6 +14,7 @@
 #include "WeatherLayer.h"
 #include "WeatherListView.h"
 #include "WeatherWidget.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/DateTime.h"
 #include "actions/Location.h"
@@ -99,11 +100,11 @@ void WeatherPanel::Commit()
     {
         assert( currentModel_->GetGlobalMeteo() );
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "global_weather" );
-        actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Global Weather" ), true );
+        std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         static_cast< WeatherWidget* >( globalWeatherWidget_ )->CreateParameters( *action, it );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
         const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );
         Reset();
     }
@@ -122,7 +123,7 @@ void WeatherPanel::Commit()
                 if( local->IsValid() )
                 {
                     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather" );
-                    actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Local Weather" ), true );
+                    std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
                     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
                     localWeatherWidget_->Update( *local );
@@ -136,7 +137,7 @@ void WeatherPanel::Commit()
                     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), ( local->IsCreated() ) ? 0 : local->GetId() ) );
 
                     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-                    action->RegisterAndPublish( actionsModel_ );
+                    actionsModel_.Publish( *action, 0 );
                     hasCommited = true;
                     local->SetModified( false );
                 }
@@ -151,12 +152,12 @@ void WeatherPanel::Commit()
         while( unsigned long trashedWeather = static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() )
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather_destruction" );
-            actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Local Weather Destruction" ), true );
+            std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
             tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
             action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), trashedWeather ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->RegisterAndPublish( actionsModel_ );
+            actionsModel_.Publish( *action, 0 );
             hasCommited = true;
         }
         if( hasCommited )

@@ -176,8 +176,8 @@ void MissionParameters::UpdateMessageAck( const T& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::NotifyCreated( const actions::Action_ABC& action )
 {
-    const ActionTasker* tacker = action.Retrieve< ActionTasker >();
-    if( tacker && tacker->GetTaskerId() == entityId_ )
+    const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+    if( tasker && tasker->GetId() == entityId_ )
         currentMission_ = &action.GetType();
 }
 
@@ -187,8 +187,8 @@ void MissionParameters::NotifyCreated( const actions::Action_ABC& action )
 // -----------------------------------------------------------------------------
 void MissionParameters::NotifyDeleted( const actions::Action_ABC& action )
 {
-    const ActionTasker* tacker = action.Retrieve< ActionTasker >();
-    if( tacker && tacker->GetTaskerId() == entityId_ )
+    const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+    if( tasker && tasker->GetId() == entityId_ )
         currentMission_ = 0;
 }
 

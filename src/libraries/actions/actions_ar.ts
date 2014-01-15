@@ -38,34 +38,6 @@
         <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
         <translation type="unfinished">عدم تطابق المعلمة في العمل &apos;%1&apos; (المعرف: %2): %3.</translation>
     </message>
-    <message>
-        <source>Automat Creation</source>
-        <translation type="unfinished">خلق [اوتومت]</translation>
-    </message>
-    <message>
-        <source>Unit Creation</source>
-        <translation type="unfinished">إنشاء وحدة</translation>
-    </message>
-    <message>
-        <source>Formation Creation</source>
-        <translation type="unfinished">إنشاء تكوين</translation>
-    </message>
-    <message>
-        <source>Crowd Creation</source>
-        <translation type="unfinished">خلق الحشد</translation>
-    </message>
-    <message>
-        <source>Population Change Health State</source>
-        <translation type="unfinished">السكان تغير الحالة الصحية</translation>
-    </message>
-    <message>
-        <source>Population Change Alerted State</source>
-        <translation type="unfinished">التغير السكاني نبهت الدولة</translation>
-    </message>
-    <message>
-        <source>Population Change Confined State</source>
-        <translation type="unfinished">التغير السكاني تقتصر الدولة</translation>
-    </message>
 </context>
 <context>
     <name>ActionParameter</name>
@@ -148,10 +120,21 @@
     </message>
 </context>
 <context>
+    <name>EngageMagicAction</name>
+    <message>
+        <source>Engage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disengage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FragOrder</name>
     <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished">الكيان &apos;%1&apos; (معرف: 2 ٪) لا يمكن تنفيذ أمر مجزأة &apos;%3&apos; (المعرف: %4)</translation>
+        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -209,17 +192,6 @@
     <message>
         <source>Not set</source>
         <translation type="unfinished">لم يتم تعيين</translation>
-    </message>
-</context>
-<context>
-    <name>gaming_app::Action</name>
-    <message>
-        <source>Object Update</source>
-        <translation type="unfinished">تحديث الكائن</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation type="unfinished">تدمير الكائن</translation>
     </message>
 </context>
 </TS>

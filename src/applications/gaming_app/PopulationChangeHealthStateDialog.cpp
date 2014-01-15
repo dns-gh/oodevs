@@ -49,9 +49,9 @@ void PopulationChangeHealthStateDialog::NotifyContextMenu( const kernel::Populat
 // Name: PopulationChangeHealthStateDialog::CreateMagicAction
 // Created: JSR 2011-03-15
 // -----------------------------------------------------------------------------
-actions::Action_ABC* PopulationChangeHealthStateDialog::CreateMagicAction( actions::ActionsModel& actionsModel ) const
+void PopulationChangeHealthStateDialog::CreateMagicAction( actions::ActionsModel& actionsModel ) const
 {
-    return actionsModel.CreateCrowdChangeHealthStateAction( GetSpinboxValue( 0 ), GetSpinboxValue( 1 ), GetSpinboxValue( 2 ), GetSpinboxValue( 3 ), GetSelected() );
+    actionsModel.PublishCrowdChangeHealthStateAction( GetSpinboxValue( 0 ), GetSpinboxValue( 1 ), GetSpinboxValue( 2 ), GetSpinboxValue( 3 ), GetSelected() );
 }
 
 // -----------------------------------------------------------------------------

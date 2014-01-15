@@ -16,6 +16,7 @@
 namespace sword
 {
     class MissionParameters;
+    class Tasker;
 }
 
 namespace kernel
@@ -31,7 +32,7 @@ namespace kernel
 
 namespace actions
 {
-class ParameterFactory_ABC;
+    class ParameterFactory_ABC;
 
 // =============================================================================
 /** @class  ActionFactory
@@ -44,23 +45,36 @@ class ActionFactory : public ActionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory( kernel::Controller& controller, const ParameterFactory_ABC& factory, const kernel::EntityResolver_ABC& entities
-                          , const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation );
+             ActionFactory( kernel::Controller& controller,
+                            const ParameterFactory_ABC& factory,
+                            const kernel::EntityResolver_ABC& entities,
+                            const kernel::StaticModel& staticModel,
+                            const kernel::Time_ABC& simulation );
     virtual ~ActionFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder, const QString& name ) const;
+    // From xml
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
     virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const;
 
+    // From proto
+    virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::UnitOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::AutomatOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::CrowdOrder& message, bool needRegistration ) const;
     virtual Action_ABC* CreateAction( const sword::FragOrder& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::SetAutomatMode& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::MagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::UnitMagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::KnowledgeMagicAction& message, bool needRegistration ) const;
+    virtual Action_ABC* CreateAction( const sword::ObjectMagicAction& message, bool needRegistration ) const;
+
+    // From scratch
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder ) const;
 
     virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const;
@@ -103,6 +117,9 @@ private:
     void ReadStubParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     template< typename Message >
     void AddTiming( Action_ABC& action, const Message& message ) const;
+    void AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;
+    void AddTasker( Action_ABC& action, unsigned int id, const std::string& type, bool isSimulation = true ) const;
+    void AddTasker( Action_ABC& action, const kernel::Entity_ABC* entity, bool isSimulation = true ) const;
     //@}
 
 private:

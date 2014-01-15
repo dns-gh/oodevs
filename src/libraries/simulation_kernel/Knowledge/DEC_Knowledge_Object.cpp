@@ -511,9 +511,8 @@ void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_Obje
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collision )
 {
-    if( !collision.IsValid() )
+    if( !collision.IsValid() || !pObjectKnown_ )
         return;
-    assert( pObjectKnown_ );
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
     UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );

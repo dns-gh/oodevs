@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/ParameterList.h"
@@ -490,7 +491,7 @@ void LogisticSupplyRecompletionDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Partial Recovery"), true );
+    std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
@@ -512,8 +513,8 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillSupplies( *stocks );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
+    actionsModel_.Publish( *action, 0 );
 
     selected_ = 0;
 }

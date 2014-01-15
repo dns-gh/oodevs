@@ -93,11 +93,7 @@ void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Fo
 // -----------------------------------------------------------------------------
 void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, clock() );
+    actionsModel_.PublishAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,9 +102,5 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
 // -----------------------------------------------------------------------------
 void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::PopulationPrototype& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *(type.type_), type.number_, 0, 0, point, *selected_ );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->Polish();
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.PublishCrowdCreationAction( *(type.type_), type.number_, 0, 0, point, *selected_ );
 }

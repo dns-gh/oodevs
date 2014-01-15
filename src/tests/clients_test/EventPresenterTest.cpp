@@ -234,25 +234,29 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_start_creation, PresenterFixture )
 
 BOOST_FIXTURE_TEST_CASE( event_presenter_start_edition, PresenterFixture )
 {
-    // Edit 1 event
+    // Edit an order
     state = gui::EventViewState( orderEvent, eEventDockModes_EditPlanned, false, true, true, false, false, false, true );
     CheckPurgeFillAndBuild( orderPresenter );
     presenter.StartEdition( *orderEvent, false );
+
+    // Edit a triggered order
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
     // Edit with a raise request
     state.raise_ = true;
     CheckPurgeFillAndBuild( orderPresenter );
     presenter.StartEdition( *orderEvent, true );
 
-    // Edit another type
-    state.event_ = taskEvent;
-    state.bottomToolBar_ = false;
+    // Edit another type: a task
+    state = gui::EventViewState( taskEvent, eEventDockModes_EditPlanned, false, true, true, false, true, false, false );
     CheckPurgeFillAndBuild( taskPresenter );
     presenter.StartEdition( *taskEvent, true );
 
-    // Edit a triggered event
+    // Edit a triggered task
     taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
     CheckPurgeFillAndBuild( taskPresenter );
     presenter.StartEdition( *taskEvent, true );
 }
@@ -314,14 +318,14 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_event_content_changed_on_planned_eve
 
 BOOST_FIXTURE_TEST_CASE( event_presenter_on_event_content_changed_on_triggered_event, PresenterFixture )
 {
-    taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartEdition( *taskEvent, true );
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
-    state = gui::EventViewState( taskEvent, eEventDockModes_EditTriggered, false, false, true );
-    MOCK_EXPECT( taskPresenter->CommitTo ).once().with( taskEvent->GetEvent() );
-    CheckBuild( taskPresenter );
+    state = gui::EventViewState( orderEvent, eEventDockModes_EditTriggered, false, false, true, false, false, false, true );
+    MOCK_EXPECT( orderPresenter->CommitTo ).once().with( orderEvent->GetEvent() );
+    CheckBuild( orderPresenter );
     presenter.OnEventContentChanged();
 }
 
@@ -375,14 +379,14 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_begin_date_changed_on_planned_event,
 
 BOOST_FIXTURE_TEST_CASE( event_presenter_on_begin_date_changed_on_triggered_event, PresenterFixture )
 {
-    taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartEdition( *taskEvent, true );
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
-    state = gui::EventViewState( taskEvent, eEventDockModes_EditTriggered, false, false, true );
+    state = gui::EventViewState( orderEvent, eEventDockModes_EditTriggered, false, false, true, false, false, false, true );
     state.event_->GetEvent().begin = second_date.toString( EVENT_DATE_FORMAT );
-    CheckBuild( taskPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnBeginDateChanged( second_date );
 }
 
@@ -403,18 +407,18 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_end_date_activated_on_planned_event,
 
 BOOST_FIXTURE_TEST_CASE( event_presenter_on_end_date_activated_on_triggered_event, PresenterFixture )
 {
-    taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartEdition( *taskEvent, true );
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
-    state = gui::EventViewState( taskEvent, eEventDockModes_EditTriggered, false, false, true );
+    state = gui::EventViewState( orderEvent, eEventDockModes_EditTriggered, false, false, true, false, false, false, true );
     state.event_->GetEvent().end = state.event_->GetEvent().begin;
-    CheckBuild( taskPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnEndDateActivated( true );
 
     state.event_->GetEvent().end.clear();
-    CheckBuild( taskPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnEndDateActivated( false );
 }
 
@@ -433,14 +437,14 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_on_end_date_changed_on_planned_event, P
 
 BOOST_FIXTURE_TEST_CASE( event_presenter_on_end_date_changed_on_triggered_event, PresenterFixture )
 {
-    taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartEdition( *taskEvent, true );
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
-    state = gui::EventViewState( taskEvent, eEventDockModes_EditTriggered, false, false, true );
+    state = gui::EventViewState( orderEvent, eEventDockModes_EditTriggered, false, false, true, false, false, false, true );
     state.event_->GetEvent().end = third_date.toString( EVENT_DATE_FORMAT );
-    CheckBuild( taskPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnEndDateChanged( third_date );
 }
 
@@ -567,27 +571,27 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_throw_if_a_forbidden_action_is_triggere
     BOOST_CHECK_THROW( presenter.OnSaveAsClicked(), tools::Exception );
 
     // eEventDockModes_DisplayTriggered
-    taskEvent->GetEvent().done = true;
-    state = gui::EventViewState( taskEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, false, warningInfoColor, warningInfoText );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartEdition( *taskEvent, true );
+    orderEvent->GetEvent().done = true;
+    state = gui::EventViewState( orderEvent, eEventDockModes_DisplayTriggered, false, false, true, false, true, false, true, warningInfoColor, warningInfoText );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartEdition( *orderEvent, true );
 
     BOOST_CHECK_THROW( presenter.OnSaveClicked(), tools::Exception );
 
     // eEventDockModes_EditTriggered
-    state = gui::EventViewState( taskEvent, eEventDockModes_EditTriggered, false, false, true );
+    state = gui::EventViewState( orderEvent, eEventDockModes_EditTriggered, false, false, true, false, false, false, true );
     state.event_->GetEvent().begin = second_date.toString( EVENT_DATE_FORMAT );
-    CheckBuild( taskPresenter );
+    CheckBuild( orderPresenter );
     presenter.OnBeginDateChanged( second_date );
 
     BOOST_CHECK_THROW( presenter.OnSaveClicked(), tools::Exception );
 
     // eEventDockModes_Create
-    taskEvent->GetEvent().done = false;
-    taskEvent->GetEvent().begin = first_date.toString( EVENT_DATE_FORMAT );
-    state = gui::EventViewState( taskEvent, eEventDockModes_Create, false, true, false, false, true );
-    CheckPurgeFillAndBuild( taskPresenter );
-    presenter.StartCreation( eEventTypes_Task, first_date );
+    orderEvent->GetEvent().done = false;
+    orderEvent->GetEvent().begin = first_date.toString( EVENT_DATE_FORMAT );
+    state = gui::EventViewState( orderEvent, eEventDockModes_Create, false, true, false, false, true, false, true );
+    CheckPurgeFillAndBuild( orderPresenter );
+    presenter.StartCreation( eEventTypes_Order, first_date );
 
     BOOST_CHECK_THROW( presenter.OnSaveAsClicked(), tools::Exception );
 }

@@ -48,9 +48,9 @@ void InhabitantChangeHealthStateDialog::NotifyContextMenu( const kernel::Inhabit
 // Name: InhabitantChangeHealthStateDialog::CreateMagicAction
 // Created: JSR 2011-03-15
 // -----------------------------------------------------------------------------
-actions::Action_ABC* InhabitantChangeHealthStateDialog::CreateMagicAction( actions::ActionsModel& actionsModel ) const
+void InhabitantChangeHealthStateDialog::CreateMagicAction( actions::ActionsModel& actionsModel ) const
 {
-    return actionsModel.CreateInhabitantChangeHealthStateAction( GetSpinboxValue( 0 ), GetSpinboxValue( 1 ), GetSpinboxValue( 2 ), GetSelected() );
+    actionsModel.PublishInhabitantChangeHealthStateAction( GetSpinboxValue( 0 ), GetSpinboxValue( 1 ), GetSpinboxValue( 2 ), GetSelected() );
 }
 
 // -----------------------------------------------------------------------------

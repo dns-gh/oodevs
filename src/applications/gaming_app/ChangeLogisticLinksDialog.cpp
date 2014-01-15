@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
@@ -190,15 +191,15 @@ void ChangeLogisticLinksDialog::Validate()
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
-        UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
+        std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
         action->AddParameter( Serialize( *nominalSuperiorCombo_, it.NextElement() ) );
         action->AddParameter( Serialize( *currentSuperiorCombo_, it.NextElement() ) );
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( selected_, false ) );
-        action->RegisterAndPublish( actionsModel_ );
+        action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
+        actionsModel_.Publish( *action, 0 );
     }
     Reject();
 }

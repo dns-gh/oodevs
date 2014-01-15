@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ObjectStateDialog.h"
 #include "moc_ObjectStateDialog.cpp"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/ObjectMagicAction.h"
 #include "actions/ParameterList.h"
@@ -107,7 +108,7 @@ void ObjectStateDialog::OnOk()
     if( selected_ )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
-        actions::ObjectMagicAction* action = new actions::ObjectMagicAction( selected_, actionType, controllers_.controller_, true );
+        std::unique_ptr< actions::Action_ABC > action( new actions::ObjectMagicAction( actionType, controllers_.controller_, false ) );
         action->Rename( tools::translate( "gaming_app::Action", "Object Update" ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
@@ -140,7 +141,7 @@ void ObjectStateDialog::OnOk()
             bypassList.AddQuantity( "Percentage", bypassSpinBox_->value() );
         }
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->RegisterAndPublish( actionsModel_ );
+        actionsModel_.Publish( *action, 0 );
     }
     selected_ = 0;
     accept();
