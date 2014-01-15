@@ -63,15 +63,15 @@ integration.dischargeAgentKnowledge = function( enemy, camp )
     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
         if DEC_Refugies_EstEmbarque( enemy.source ) then
             DEC_Refugies_DebarquerDansCamp( enemy.source, camp.source )
-            integration.removeFromLoadedUnits( unit )
-            integration.removeFromCapturedUnits( unit )
+            integration.removeFromLoadedUnits( enemy )
+            integration.removeFromCapturedUnits( enemy )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstPrisonnier( enemy.source ) then
         if DEC_Prisonniers_EstEmbarque( enemy.source ) then
             DEC_Prisonniers_DebarquerDansCamp( enemy.source, camp.source )
-            integration.removeFromLoadedUnits( unit )
-            integration.removeFromCapturedUnits( unit )
+            integration.removeFromLoadedUnits( enemy )
+            integration.removeFromCapturedUnits( enemy )
             return true
         end
     end
