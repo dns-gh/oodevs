@@ -778,8 +778,12 @@ integration.isDead = function( self )
 end
 
 integration.selfDecontaminate = function( self )
-    DEC_Agent_SeDecontaminer()
-    return true
+    if DEC_Agent_EstAgentNBC() then
+        DEC_Agent_SeDecontaminer()
+        return true
+    else
+        return false
+    end
 end
 
 integration.changeHeight = function( height )
