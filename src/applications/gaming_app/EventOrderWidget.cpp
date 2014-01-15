@@ -46,8 +46,10 @@
 #include "gaming/StaticModel.h"
 #include "gaming/LogTools.h"
 
+#include "protocol/MessageParameters.h"
 #include <timeline/api.h>
 #include <boost/make_shared.hpp>
+#include <boost/optional.hpp>
 
 namespace
 {
@@ -345,22 +347,6 @@ void EventOrderWidget::NotifyUpdated( const actions::gui::Param_ABC& param )
         presenter_.OnEventContentChanged();
 }
 
-namespace
-{
-    unsigned long GetTaskerId( const sword::Tasker& tasker )
-    {
-        if( tasker.has_automat() )
-            return tasker.automat().id();
-        else if( tasker.has_unit() )
-            return tasker.unit().id();
-        else if( tasker.has_crowd() )
-            return tasker.crowd().id();
-        else if( tasker.has_formation() )
-            return tasker.formation().id();
-        return 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: EventOrderWidget::NotifyOrderReceived
 // Created: LGY 2014-01-06
@@ -368,8 +354,8 @@ namespace
 template< typename T >
 void EventOrderWidget::NotifyOrderReceived( const T& message, int context )
 {
-    unsigned long id = GetTaskerId( message.tasker() );
-    if( taskerWidget_->GetTasker() && taskerWidget_->GetTasker()->GetId() == id &&
+    const auto id = protocol::TryGetTasker( message.tasker() );
+    if( id && taskerWidget_->GetTasker() && taskerWidget_->GetTasker()->GetId() == *id &&
         context == orderPresenter_->GetLastContext() )
     {
         bool valid = message.error_code() == sword::OrderAck_ErrorCode_no_error;
