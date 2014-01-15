@@ -40,8 +40,20 @@ class PullFlowParameters : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
-             PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
+             PullFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter );
+             PullFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter,
+                                 const kernel::EntityResolver_ABC& entityResolver,
+                                 const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                 const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                 const sword::PullFlowParameters& parameters );
+             PullFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter,
+                                 const kernel::EntityResolver_ABC& entityResolver,
+                                 const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                 const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                 xml::xistream& xis );
     virtual ~PullFlowParameters();
     //@}
 
