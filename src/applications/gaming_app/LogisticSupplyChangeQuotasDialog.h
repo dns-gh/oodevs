@@ -104,7 +104,6 @@ private:
         void Set( const kernel::Formation_ABC& agent );
         actions::Parameter_ABC* GetParameter(const kernel::OrderParameter& parameter, kernel::Controller& controller);
         void Reset();
-        const std::string GetMagicActionType() const;
 
     private:
         kernel::SafePointer< kernel::Automat_ABC > selectedAutomat_;

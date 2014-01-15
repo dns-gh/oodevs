@@ -32,19 +32,71 @@ using namespace parameters;
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
+PullFlowParameters::PullFlowParameters( const OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter )
     : Parameter< QString >( parameter )
+    , converter_          ( converter )
     , supplierFormation_  ( 0 )
     , supplierAutomat_    ( 0 )
-    , converter_          ( converter )
 {
     // NOTHING
 }
 
 namespace
 {
+    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
+    void FillFromPointList( T_PointVector& vector, const sword::PointList& list, const kernel::CoordinateConverter_ABC& converter )
+    {
+        for( int i = 0; i < list.elem_size(); ++i )
+        {
+            const sword::Location& location = list.elem( i ).location();
+            if( location.type() != sword::Location_Geometry_point ||
+                !location.has_coordinates() ||
+                location.coordinates().elem_size() != 1 )
+                throw MASA_EXCEPTION( "Invalid location type" );
+            vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PullFlowParameters constructor
+// Created: ABR 2014-01-15
+// -----------------------------------------------------------------------------
+PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::EntityResolver_ABC& entityResolver,
+                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                        const sword::PullFlowParameters& parameters )
+    : Parameter< QString >( parameter )
+    , converter_          ( converter )
+    , supplierFormation_  ( parameters.supplier().has_formation() ? entityResolver.FindFormation( parameters.supplier().formation().id() ) : 0 )
+    , supplierAutomat_    ( parameters.supplier().has_automat() ? entityResolver.FindAutomat( parameters.supplier().automat().id() ) : 0 )
+{
+    for( int i = 0; i < parameters.resources_size(); ++i )
+    {
+        const sword::SupplyFlowResource& resource = parameters.resources( i );
+        const DotationType& dotationType = dotationTypeResolver.Get( resource.resourcetype().id() );
+        resources_[ &dotationType ] += resource.quantity();
+    }
+    for( int i = 0; i < parameters.transporters_size(); ++i )
+    {
+        const sword::SupplyFlowTransporter& transporter = parameters.transporters( i );
+        const EquipmentType& type = equipmentTypeResolver.Get( transporter.equipmenttype().id() );
+        transporters_[ &type ] += transporter.quantity();
+    }
+    if( parameters.has_waybackpath() )
+        FillFromPointList( wayBackPath_, parameters.waybackpath(), converter );
+    if( parameters.has_wayoutpath() )
+        FillFromPointList( wayOutPath_, parameters.wayoutpath(), converter );
+}
+
+namespace
+{
     typedef boost::function< void( xml::xistream& ) > T_Operand;
 
+    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
     void WalkList( const std::string& key, const std::string& sub, const T_Operand& operand,
                    const std::string&, std::string name, xml::xistream& xis )
     {
@@ -58,7 +110,12 @@ namespace
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
+PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::EntityResolver_ABC& entityResolver,
+                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                        xml::xistream& xis )
     : Parameter< QString >( parameter )
     , supplierFormation_  ( 0 )
     , supplierAutomat_    ( 0 )

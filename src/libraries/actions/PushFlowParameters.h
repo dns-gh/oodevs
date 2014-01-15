@@ -15,6 +15,7 @@
 namespace sword
 {
     class PointList;
+    class PushFlowParameters;
 }
 
 namespace kernel
@@ -42,8 +43,21 @@ class PushFlowParameters : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, bool isSupply );
-             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
+             PushFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter,
+                                 bool isSupply );
+             PushFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter,
+                                 const kernel::EntityResolver_ABC& entityResolver,
+                                 const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                 const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                 const sword::PushFlowParameters& parameters );
+             PushFlowParameters( const kernel::OrderParameter& parameter,
+                                 const kernel::CoordinateConverter_ABC& converter,
+                                 const kernel::EntityResolver_ABC& entityResolver,
+                                 const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                 const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                 xml::xistream& xis );
     virtual ~PushFlowParameters();
     //@}
 

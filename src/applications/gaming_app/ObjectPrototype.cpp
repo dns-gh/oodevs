@@ -29,6 +29,7 @@
 #include "TrafficabilityPrototype.h"
 #include "DisasterPrototype.h"
 #include "actions/ActionsModel.h"
+#include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -275,6 +276,7 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
         ObjectPrototype_ABC::DoCommit( team );
 
         action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
+        action->Attach( *new actions::ActionTasker( controllers_.controller_, 0, false ) );
         currentActionsModel_->Publish( *action, 0 );
     }
 }
