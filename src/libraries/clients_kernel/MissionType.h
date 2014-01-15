@@ -33,7 +33,7 @@ public:
 
     //! @name Accessors
     //@{
-    E_MissionType GetType() const;
+    virtual E_MissionType GetType() const;
     //@}
 
 private:

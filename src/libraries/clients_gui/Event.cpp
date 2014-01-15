@@ -9,8 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "Event.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/TimelineHelpers.h"
+
+#include "ENT/ENT_Tr.h"
+
 #include <timeline/api.h>
 
 using namespace gui;
@@ -156,4 +160,13 @@ void Event::Activate( kernel::ActionController& controller ) const
 void Event::OverFly( kernel::ActionController& controller ) const
 {
     controller.OverFly( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Event::GetAction
+// Created: ABR 2014-01-14
+// -----------------------------------------------------------------------------
+const actions::Action_ABC* Event::GetAction() const
+{
+    throw MASA_EXCEPTION( "Invalid call to GetAction in an event of type " + ENT_Tr::ConvertFromEventType( GetType() ) );
 }

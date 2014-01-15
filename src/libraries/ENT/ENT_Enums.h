@@ -453,7 +453,7 @@ enum E_AgentNbcSuit
 enum E_EventTypes
 {
     eEventTypes_Order,
-    eEventTypes_SupervisorAction,
+    eEventTypes_Magic,
     eEventTypes_Report,
     eEventTypes_Task,
     eEventTypes_Multimedia,

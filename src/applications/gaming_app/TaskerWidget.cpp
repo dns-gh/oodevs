@@ -37,9 +37,9 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
-    nameLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
-    groupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
+    nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
+    symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
+    groupBox_ = new gui::RichGroupBox( "event-target-groupbox", tr( "Recipient" ) );
 
     QWidget* symbolWidget = new QWidget();
     QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
@@ -51,21 +51,17 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     layout->setContentsMargins( 5, 0, 5, 5 );
     layout->addWidget( symbolWidget, 10, Qt::AlignCenter );
 
-    if( showActivate )
-    {
-        activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
-        activateButton_->setToolTip( tr( "Select" ) );
-        connect( activateButton_, SIGNAL( clicked() ), this, SLOT( OnActivateClicked() ) );
-        layout->addWidget( activateButton_, 1, Qt::AlignRight );
-    }
+    activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
+    activateButton_->setToolTip( tr( "Select" ) );
+    connect( activateButton_, SIGNAL( clicked() ), this, SLOT( OnActivateClicked() ) );
+    layout->addWidget( activateButton_, 1, Qt::AlignRight );
+    activateButton_->setVisible( showActivate );
 
-    if( showClear )
-    {
-        clearButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
-        clearButton_->setToolTip( tr( "Remove" ) );
-        connect( clearButton_, SIGNAL( clicked() ), this, SIGNAL( ClearClicked() ) );
-        layout->addWidget( clearButton_, 1, Qt::AlignRight );
-    }
+    clearButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
+    clearButton_->setToolTip( tr( "Remove" ) );
+    connect( clearButton_, SIGNAL( clicked() ), this, SIGNAL( ClearClicked() ) );
+    layout->addWidget( clearButton_, 1, Qt::AlignRight );
+    clearButton_->setVisible( showClear );
 
     QHBoxLayout* mainLayout = new QHBoxLayout( this );
     mainLayout->addWidget( groupBox_ );

@@ -102,3 +102,12 @@ void OrderType::AddParameter( const OrderParameter& parameter )
 {
     Register( Count(), *new OrderParameter( parameter ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::GetType
+// Created: ABR 2014-01-14
+// -----------------------------------------------------------------------------
+E_MissionType OrderType::GetType() const
+{
+    throw MASA_EXCEPTION( "Invalid call to GetType in " + GetName() );
+}

@@ -77,7 +77,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
         if( !event )
             result->GetEvent().name = tools::translate( "EventFactory", "New task" );
         break;
-    case eEventTypes_SupervisorAction:
+    case eEventTypes_Magic:
     case eEventTypes_Report:
     case eEventTypes_Multimedia:
     default:

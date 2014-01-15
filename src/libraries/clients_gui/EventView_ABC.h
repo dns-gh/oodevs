@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    struct EventMagicViewState;
     struct EventOrderViewState;
     struct EventTaskViewState;
     struct EventViewState;
@@ -60,6 +61,7 @@ public:
 };
 
 typedef EventView_ABC< gui::EventViewState >                 EventDefaultView_ABC;
+typedef EventView_ABC< gui::EventMagicViewState >            EventMagicView_ABC;
 typedef EventView_ABC< gui::EventOrderViewState >            EventOrderView_ABC;
 typedef EventView_ABC< gui::EventTaskViewState >             EventTaskView_ABC;
 

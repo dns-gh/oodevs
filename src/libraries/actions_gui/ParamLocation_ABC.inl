@@ -146,7 +146,6 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
     else if( parameter_.GetType() == "rectangle" )
         layer_.StartRectangle( *this );
     InternalOnMenuClick();
-    Update();
 }
 
 // -----------------------------------------------------------------------------

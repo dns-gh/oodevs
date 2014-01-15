@@ -512,7 +512,7 @@ T_ConverterLayerTypes LayerTypesConverter_[] =
 T_ConverterEventTypes EventTypesConverter_[] =
 {
     T_ConverterEventTypes( "order",             QT_TRANSLATE_NOOP( "ENT_Tr", "Order" ),             eEventTypes_Order ),
-    T_ConverterEventTypes( "supervisor_action", QT_TRANSLATE_NOOP( "ENT_Tr", "Supervisor action" ), eEventTypes_SupervisorAction ),
+    T_ConverterEventTypes( "magic",             QT_TRANSLATE_NOOP( "ENT_Tr", "Supervisor action" ), eEventTypes_Magic ),
     T_ConverterEventTypes( "report",            QT_TRANSLATE_NOOP( "ENT_Tr", "Report" ),            eEventTypes_Report ),
     T_ConverterEventTypes( "task",              QT_TRANSLATE_NOOP( "ENT_Tr", "Task" ),              eEventTypes_Task ),
     T_ConverterEventTypes( "multimedia",        QT_TRANSLATE_NOOP( "ENT_Tr", "Multimedia" ),        eEventTypes_Multimedia ),

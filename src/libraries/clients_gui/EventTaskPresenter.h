@@ -54,7 +54,7 @@ public slots:
 private:
     //! @name EventSubPresenter_ABC implementation
     //@{
-    virtual void Trigger();
+    virtual void Trigger( const gui::Event& event );
     virtual void CommitTo( timeline::Event& event ) const;
     virtual void Clear();
     //@}
