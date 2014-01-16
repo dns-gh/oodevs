@@ -138,9 +138,9 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
             curRequest.GetGranted();
             curRequest.GetConvoyed();
             supplyTable_->AddRecipientResource( GetDisplayName( &curRecipient.recipient_ ), curRequest.GetTypeName()
-                                                , QString::number( curRequest.GetRequested() )
-                                                , QString::number( curRequest.GetGranted() )
-                                                , QString::number( curRequest.GetConvoyed() ) );
+                                                , curRequest.GetRequested()
+                                                , curRequest.GetGranted()
+                                                , curRequest.GetConvoyed() );
         }
     }
     supplyTable_->ResizeColumnsToContents();

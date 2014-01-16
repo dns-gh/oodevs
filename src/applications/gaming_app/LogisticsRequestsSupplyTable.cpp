@@ -34,7 +34,7 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
 
     dataModel_.setColumnCount( horizontalHeaders_.size() );
     proxyModel_.setSourceModel( &dataModel_ );
-    proxyModel_.setSortRole( Qt::UserRole );
+    proxyModel_.setDynamicSortFilter( true );
 
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
@@ -88,7 +88,7 @@ void LogisticsRequestsSupplyTable::Purge()
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipient, const QString& resource
-                                                       , const QString& requested, const QString& granted, const QString& conveyed )
+                                                       , unsigned int requested, unsigned int granted, unsigned int conveyed )
 {
     int rowIndex = dataModel_.rowCount();
     SetData( rowIndex, 0, recipient );
@@ -102,13 +102,13 @@ void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipien
 // Name: LogisticsRequestsTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::SetData( int row, int col, QString text )
+void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text )
 {
     QStandardItem* item = dataModel_.item( row, col );
     if( !item )
         item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setData( QVariant( text ), Qt::DisplayRole );
+    item->setData( text, Qt::DisplayRole );
     item->setTextAlignment( Qt::AlignCenter );
     dataModel_.setItem( row, col, item );
 }
