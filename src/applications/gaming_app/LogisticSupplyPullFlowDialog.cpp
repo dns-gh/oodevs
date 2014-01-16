@@ -126,15 +126,6 @@ void LogisticSupplyPullFlowDialog::Show()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::GetSuppliesFromTable
-// Created: MMC 2012-10-16
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::GetSuppliesFromTable()
-{
-    resourcesTable_->GetQuantities( supplierSupplies_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::SetSuppliesToTable
 // Created: MMC 2012-10-16
 // -----------------------------------------------------------------------------
@@ -173,7 +164,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     if( !selected_ || !supplier_ )
         return;
 
-    GetSuppliesFromTable();
+    resourcesTable_->GetQuantities( supplierSupplies_ );
     if( carriersUseCheck_->isChecked() )
         GetCarriersFromTable();
 
