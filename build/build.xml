@@ -71,6 +71,31 @@
             <arg value="--exclude=ClientToSim.Content.UnitMagicAction"/>
         </compare-proto>
         <compare-proto olddir="${data.dir}/proto-5.2.1" newdir="${data.dir}/proto-5.2.2"/>
+        <compare-proto olddir="${data.dir}/proto-5.2.2" newdir="${data.dir}/proto-5.3.1">
+            <!-- New error codes are probably fine, the ack's were not sent most
+                 of the time anyway.
+            -->
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupUpdateAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupCreationAck.KnowledgeGroupAck.ErrorCode"/>
+            <arg value="--exclude=SimToClient.Content.KnowledgeGroupMagicActionAck.KnowledgeGroupAck.ErrorCode"/>
+            <!-- We change uint32 fields of UnitEquipmentFireDamage to int32 because the values sent
+                 are actually signed integers -->
+            <arg value="--exclude=SimToClient.Content.StopUnitFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByUnitFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.Explosion.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.StopCrowdFire.UnitsFireDamages.UnitFireDamages.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <arg value="--exclude=SimToClient.Content.UnitDamagedByCrowdFire.SeqOfUnitEquipmentFireDamage.UnitEquipmentFireDamage"/>
+            <!-- New magic actions are fine -->
+            <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.UnitMagicAction.Type"/>
+            <arg value="--exclude=ClientToSim.Content.MagicAction.Type"/>
+            <!-- We took care to preserve compatibility with human location -->
+            <arg value="--exclude=SimToClient.Content.UnitAttributes.HumanDotations.HumanDotation.EnumHumanLocation"/>
+            <!-- This authentication return code is only sent upon a new message
+                 only available to new clients.
+            -->
+            <arg value="--exclude=AuthenticationToClient.Content.AuthenticationResponse.ErrorCode"/>
+        </compare-proto>
     </target>
 
     <target name="package">
@@ -84,6 +109,8 @@
                     prefix="protolint/proto/proto-5.1.x"/>
                 <zipfileset dir="${data.dir}/proto-5.2.2"
                     prefix="protolint/proto/proto-5.2.x"/>
+                <zipfileset dir="${data.dir}/proto-5.3.1"
+                    prefix="protolint/proto/proto-5.3.x"/>
             </zip>
         </safe-move>
     </target>

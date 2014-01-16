@@ -1,0 +1,85 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the after action review module
+ *  @addtogroup aar After action review
+ *  @{
+ */
+
+/** @struct PlotRequest
+    @brief Defines a plot request
+
+    This message is sent to request a plot.
+
+    @see PlotResult
+*/
+message PlotRequest {
+    /** @struct TimeRange @deprecated
+        @brief Defines the request time range.
+    */
+    message TimeRange {
+        //! The first tick of the time range request
+        required uint32 begin_tick = 1;
+        //! The last tick of the time range request (must be >= begin_tick)
+        required uint32 end_tick   = 2;
+    }
+    /** @struct DateTimeRange
+        @brief Defines the request time range.
+    */
+    message DateTimeRange {
+        //! The first date/time of the time range request
+        required DateTime begin_date = 1;
+        //! The last date/time of the time range request (must be >= begin_date)
+        required DateTime end_date   = 2;
+    }
+    //! An identifier for the request
+    required uint32 identifier             = 1;
+    //! The request
+    required string request                = 2;
+    //! The request time range @deprecated
+    optional TimeRange time_range          = 3;
+    //! The request time range
+    optional DateTimeRange date_time_range = 4;
+}
+
+/** @struct ClientToAar
+    @brief Wraps available messages going from client to AAR
+
+    This is the actual message sent over the network.
+*/
+message ClientToAar {
+    /** @struct Content
+        @brief The possible messages contained in a client to AAR message
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
+    */
+    message Content {
+        //! A plot request message
+        optional PlotRequest plot_request = 1;
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response
+        messages. This context allows the client application to put an
+        unique identifier (based for instance on MAC address), thus
+        allowing to track response message matching a specific request
+        emitted by the client.
+    */
+    optional int32   context = 1;
+    //! A field containing one of the messages to be sent
+    required Content message = 2;
+}
+
+/** @}*/

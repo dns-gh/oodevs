@@ -1,0 +1,348 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+import "version.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from the authentication module to clients
+ *  @addtogroup Authentication
+ *  @{
+ */
+
+message AuthenticationKeyResponse {
+    required string authentication_key = 1;
+}
+
+/** @struct AuthenticationResponse
+    @brief A response message to an authentication request
+
+    @see AuthenticationRequest
+
+    This message is sent in response to an authentication request. It
+    contains an error code indicating the success of the operation or
+    failure with the reason for it. In case of failure, it contains a
+    short description of available profiles so that client applications
+    can prompt the user with a list of profiles.
+*/
+message AuthenticationResponse {
+    /** @enum ErrorCode
+        @brief Reason for the failure of an authentication operation
+    */
+    enum ErrorCode {
+        //! Authentication succeeded
+        success                     = 0;
+        //! Authentication failed because the provided login does not
+        //! exist (in file "exercise/profiles.xml")
+        invalid_login               = 1;
+        //! Authentication failed because there are too many
+        //! connections (depends on licensing)
+        too_many_connections        = 2;
+        //! Authentication failed because of a mismatched protocol
+        //! version between client and server
+        mismatched_protocol_version = 4;
+        //! Authentication failed because an invalid authentication key
+        invalid_authentication_key  = 5;
+    }
+    //! Reason for the failure of an authentication operation
+    required ErrorCode              error_code        = 1;
+    //! Contains authenticated profile information when operation is
+    //! successful
+    optional Profile                profile           = 2;
+    //! Contains list of available profiles when authentication has failed
+    optional ProfileDescriptionList profiles          = 3;
+    //! Server protocol version
+    required ProtocolVersion        server_version    = 4;
+    //! Date and time of the simulation when restarting on a checkpoint
+    //! @todo not implemented
+    optional DateTime               restart_date_time = 5;
+    //! Terrain name used by the simulation (from file
+    //! "exercise/exercise.xml"). @todo not implemented
+    optional string                 terrain_name      = 6;
+}
+
+/** @struct ProfileCreation
+    @brief A profile creation message
+
+    This message is sent when a profile is created :
+    @li When connecting to a running exercise; creation of all available
+        profiles are notified to client
+    @li During the game, upon manual creation of a profile by an
+        authorised user (supervisor)
+*/
+message ProfileCreation {
+    //! Information about the created profile
+    required Profile profile = 1;
+}
+
+/** @struct ProfileCreationRequestAck
+    @brief A profile creation request acknowledgement message
+
+    This message is sent when a profile is created manually by an
+    authorised user (supervisor).
+*/
+message ProfileCreationRequestAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of a profile creation operation
+    */
+    enum ErrorCode {
+        //! Profile creation succeeded.
+        success          = 0;
+        //! Profile creation failed because of an invalid (empty) login.
+        invalid_login    = 1;
+        //! @deprecated Profile creation failed because of an invalid
+        //! password.
+        invalid_password = 2;
+        //! Profile creation failed because provided login already exists.
+        duplicate_login  = 3;
+        //! Caller does not have enough privileges.
+        forbidden        = 4;
+    }
+    //! Login provided on profile creation request
+    required string    login      = 1;
+    //! Reason for the failure of a profile creation operation
+    required ErrorCode error_code = 2;
+}
+
+/** @struct ProfileUpdateRequestAck
+    @brief A profile update request acknowledgement message
+
+    This message is sent when a profile is updated manually by an
+    authorised user (supervisor).
+*/
+message ProfileUpdateRequestAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of a profile update operation
+    */
+    enum ErrorCode {
+        //! Profile update succeeded
+        success          = 0;
+        //! Profile update failed because of an invalid profile (non
+        //! existing)
+        invalid_profile  = 1;
+        //! Profile update failed because of an invalid (empty) login
+        invalid_login    = 2;
+        //! Profile update failed because of an invalid password @deprecated
+        invalid_password = 3;
+        //! Profile update failed because the provided new login
+        //! already exists
+        duplicate_login  = 4;
+        //! Caller does not have enough privileges.
+        forbidden        = 5;
+    }
+    //! Login provided on profile update request
+    required string    login      = 1;
+    //! Reason for the failure of a profile update operation
+    required ErrorCode error_code = 2;
+}
+
+/** @struct ProfileUpdate
+    @brief A profile update message
+
+    This message is sent when a profile is updated during the game by an
+    authorised user (supervisor).
+*/
+message ProfileUpdate {
+    //! Login of the updated profile
+    required string  login   = 1;
+    //! Updated profile information
+    required Profile profile = 2;
+}
+
+/** @struct ProfileDestruction
+    @brief A profile destruction message
+
+    This message is sent :
+    @li When a profile is destroyed during the game by an authorised
+        user (supervisor).
+    @li When the exercise terminates.
+*/
+message ProfileDestruction {
+    //! Login of the destroyed profile
+    optional string login = 1;
+}
+
+/** @struct ProfileDestructionRequestAck
+    @brief A profile destruction request acknowledgement message
+
+    This message is sent when a profile is destroyed manually by an
+    authorised user (supervisor).
+*/
+message ProfileDestructionRequestAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of a profile destruction operation
+    */
+    enum ErrorCode {
+        //! Profile destruction succeeded.
+        success         = 0;
+        //! Profile destruction failed because the specified profile
+        //! does not exist.
+        invalid_profile = 1;
+        //! @deprecated never used
+        failure         = 2;
+        //! Caller does not have enough privileges.
+        forbidden       = 3;
+    }
+    //! Reason for the failure of a profile destruction operation
+    required ErrorCode error_code = 1;
+    //! Login provided on profile destruction request
+    required string    login      = 2;
+}
+
+/** @struct RoleType
+    @brief Defines a role played by a profile during the game
+
+    Profile roles are listed in file "Extensions.xml" (profile-attributes).
+*/
+message RoleType {
+    //! Role type identifier as defined in file "Extensions.xml"
+    required uint32 id = 1;
+}
+
+/** @struct Profile
+    @brief Profile data: login, password, access-rights...
+
+    The profile information can be set :
+    @li During exercise preparation, creating "exercise/profiles.xml"
+        loaded by Dispatcher at runtime.
+    @li During exercise gaming, manually creating or editing profile
+        information.
+*/
+message Profile {
+    //! The profile unique identifier
+    required string login                 = 1;
+    //! The password is optional and allows the protection of a
+    //! profile during the authentication process
+    optional string password              = 2;
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified formations but cannot control them
+    optional IdList read_only_formations  = 3;
+    //! Profiles with read-write permissions can see the situation
+    //! from the specified formations and control them
+    optional IdList read_write_formations = 4;
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified automats but cannot control them
+    optional IdList read_only_automates   = 5;
+    //! Profiles with read-write permissions can see the situation from
+    //! the specified automats and control them
+    optional IdList read_write_automates  = 6;
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified parties but cannot control them
+    optional IdList read_only_parties     = 7;
+    //! Profiles with read-write permissions can see the situation
+    //! from the specified parties and control them
+    optional IdList read_write_parties    = 8;
+    //! Profiles with read-only permissions can only see the situation
+    //! from the specified crowds but cannot control them
+    optional IdList read_only_crowds      = 9;
+    //! Profiles with read-write permissions can see the situation from
+    //! the specified crowds and control them
+    optional IdList read_write_crowds     = 10;
+    //! Supervisor access grants a profile the right to execute "magic
+    //! actions" such as teleporting or recompleting a unit, and also
+    //! edit profiles and control the simulation (pause, resume, changing
+    //! speed factor)
+    required bool   supervisor            = 11;
+}
+
+/** @struct ConnectedProfileList
+    @brief A list of Profile which are connected
+*/
+message ConnectedProfileList {
+    //! The list of profiles
+    repeated Profile elem = 1;
+}
+
+/** @struct ProfileDescriptionList
+    @brief A list of ProfileDescription.
+    @todo should be integrated to AuthenticationResponse fields
+*/
+message ProfileDescriptionList {
+    //! The list of profile descriptions
+    repeated ProfileDescription elem = 1;
+}
+
+/** @struct ProfileDescription
+    @brief A short profile description.
+
+    This description is when authentication fail in order to provide the
+    client with a short list of available profiles without access
+    rights.
+
+    @todo should be nested inside AuthenticationResponse
+*/
+message ProfileDescription {
+    //! The profile login
+    required string   login      = 1;
+    //! The profile password
+    required bool     password   = 2;
+    //! Flag to indicate whether the profile has been granted
+    //! supervisor access
+    required bool     supervisor = 3;
+    //! The profile role in the context of the exercise
+    optional RoleType role       = 4;
+}
+
+/** @struct AuthenticationToClient
+    @brief Wraps available messages going from authentication to client.
+
+    This is the actual message sent over the network.
+*/
+message AuthenticationToClient {
+    /** @struct Content
+        @brief The possible messages contained in an authentication to
+        client message.
+        @warning Each Content message must contain exactly one of the
+        possible messages.
+    */
+    message Content {
+        //! A response message to an authentication request.
+        optional AuthenticationResponse    authentication_response      = 1;
+        //! A profile creation message.
+        optional ProfileCreation           profile_creation             = 2;
+        //! An acknowledge message to profile creation request.
+        optional ProfileCreationRequestAck profile_creation_request_ack = 3;
+        //! A profile update message.
+        optional ProfileUpdate             profile_update               = 4;
+        //! An acknowledge message to profile update request.
+        optional ProfileUpdateRequestAck   profile_update_request_ack   = 5;
+        //! A profile destruction message.
+        optional ProfileDestruction        profile_destruction          = 6;
+        //! An acknowledge message to profile destruction request.
+        optional ProfileDestructionRequestAck
+            profile_destruction_request_ack = 7;
+        //! List of profiles actually connected
+        optional ConnectedProfileList      connected_profile_list       = 8;
+        //! A response message to an authentication key request.
+        optional AuthenticationKeyResponse authentication_key_response  = 9;
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is filled using the "context" fields provided in the
+        request message.
+
+        This context allows the client application to set a unique
+        identifier (based for instance on MAC address), thus allowing to
+        track response message matching a specific request emitted by
+        the client.
+
+        @see ClientToAuthentication
+    */
+    optional int32   context = 1;
+    //! A field containing one of the messages to be sent
+    required Content message = 2;
+    //! client identifier, non-nul after a successful authentication, for
+    //! specific messages, mostly requests acknowledgements.
+    optional int32   client_id = 3;
+}
+
+/** @}*/
