@@ -175,7 +175,7 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         QStringList breakdowns;
         tools::Iterator< const kernel::BreakdownOriginType& > itBreakdown = equipment.type_.CreateBreakdownsIterator();
         if( itBreakdown.HasMoreElements() )
-            breakdowns << ( profile_.CanDoMagic( selected ) ? tools::translate( "UnitStateTableEquipment",  "Random" ) : tools::translate( "UnitStateTableEquipment", "Unknown" ) );
+            breakdowns << ( profile_.CanDoMagic( selected ) ? tools::translate( "UnitStateTableEquipment", "Random" ) : tools::translate( "UnitStateTableEquipment", "Unknown" ) );
         std::set< std::string > alreadyAddedBreakdowns;
         while( itBreakdown.HasMoreElements() )
         {
