@@ -230,4 +230,20 @@ bool DisasterAttribute::Update( const DisasterAttribute& rhs )
 void DisasterAttribute::OnUpdate( const sword::MissionParameter_Value& /*attribute*/ )
 {
     pManager_->Initialize( model_, date_ );
+    NotifyAttributeUpdated( eOnUpdate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::Send
+// Created: AHC 2014-01-16
+// -----------------------------------------------------------------------------
+bool DisasterAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+{
+    if( NeedUpdate( eOnUpdate ) )
+    {
+        SendFullState( asn );
+        Reset( eOnUpdate );
+        return true;
+    }
+    return false;
 }
