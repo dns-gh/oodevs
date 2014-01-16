@@ -40,10 +40,10 @@ MaintenanceRepairersListView::~MaintenanceRepairersListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceRepairersListView::GetAvailities
+// Name: MaintenanceRepairersListView::GetAvailabilities
 // Created: MMC 2013-01-28
 // -----------------------------------------------------------------------------
-const std::vector< kernel::Availability >* MaintenanceRepairersListView::GetAvailities( const kernel::MaintenanceStates_ABC& states ) const
+const std::vector< kernel::Availability >* MaintenanceRepairersListView::GetAvailabilities( const kernel::MaintenanceStates_ABC& states ) const
 {
     return &states.GetDispoRepairers();
 }

@@ -95,7 +95,7 @@ private:
     virtual bool ShouldEnableTrigger() const;
     virtual bool ShouldEnableClear() const;
 
-    virtual void Trigger();
+    virtual void Trigger( const gui::Event& event );
     virtual void CommitTo( timeline::Event& event ) const;
     virtual void Purge();
     virtual void Clear();

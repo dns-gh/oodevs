@@ -33,7 +33,6 @@ EventAction::EventAction( E_EventTypes type,
     , model_( model )
     , controllers_( controllers )
     , action_( controllers )
-    , missionType_( eNbrMissionType )
 {
     Event::Update();
 }
@@ -73,18 +72,6 @@ void EventAction::Purge()
 
 namespace
 {
-    E_MissionType GetMissionType( const sword::ClientToSim& msg )
-    {
-        if( msg.message().has_unit_order() )
-            return eMissionType_Pawn;
-        else if( msg.message().has_automat_order() )
-            return eMissionType_Automat;
-        else if( msg.message().has_crowd_order() )
-            return eMissionType_Population;
-        else if( msg.message().has_frag_order() )
-            return eMissionType_FragOrder;
-        return eNbrMissionType;
-    }
     E_EventTypes GetEventType( const sword::ClientToSim& msg )
     {
         if( msg.message().has_unit_order() ||
@@ -97,7 +84,7 @@ namespace
             msg.message().has_unit_magic_action() ||
             msg.message().has_knowledge_magic_action() ||
             msg.message().has_object_magic_action() )
-            return eEventTypes_SupervisorAction;
+            return eEventTypes_Magic;
         return eNbrEventTypes;
     }
 }
@@ -108,10 +95,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EventAction::Update( const timeline::Event& event )
 {
-    const std::string oldPayload = GetEvent().action.payload;
     Event::Update( event );
-    if( action_ && oldPayload == event.action.payload )
-        return;
     bool wasSelected_ = action_ && controllers_.actions_.IsSelected( action_ );
     Purge();
     sword::ClientToSim msg;
@@ -120,7 +104,6 @@ void EventAction::Update( const timeline::Event& event )
     {
         action_ = model_.CreateAction( msg, true );
         UpdateTiming();
-        missionType_ = ::GetMissionType( msg );
         type_ = ::GetEventType( msg );
     }
     if( action_ && wasSelected_ )
@@ -137,12 +120,12 @@ const actions::Action_ABC* EventAction::GetAction() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventAction::GetMissionType
-// Created: ABR 2013-06-06
+// Name: EventAction::SetAction
+// Created: ABR 2014-01-10
 // -----------------------------------------------------------------------------
-E_MissionType EventAction::GetMissionType() const
+void EventAction::SetAction( const actions::Action_ABC* action )
 {
-    return missionType_;
+    action_ = action;
 }
 
 // -----------------------------------------------------------------------------

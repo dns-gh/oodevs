@@ -26,7 +26,9 @@ using namespace parameters;
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, bool isSupply )
+PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        bool isSupply )
     : Parameter< QString >( parameter )
     , converter_( converter )
     , isSupply_( isSupply )
@@ -36,8 +38,67 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
 
 namespace
 {
+    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
+    void FillFromPointList( T_PointVector& vector, const sword::PointList& list, const kernel::CoordinateConverter_ABC& converter )
+    {
+        for( int i = 0; i < list.elem_size(); ++i )
+        {
+            const sword::Location& location = list.elem( i ).location();
+            if( location.type() != sword::Location_Geometry_point ||
+                !location.has_coordinates() ||
+                location.coordinates().elem_size() != 1 )
+                throw MASA_EXCEPTION( "Invalid location type" );
+            vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PushFlowParameters constructor
+// Created: ABR 2014-01-15
+// -----------------------------------------------------------------------------
+PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::EntityResolver_ABC& entityResolver,
+                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                        const sword::PushFlowParameters& parameters )
+    : Parameter< QString >( parameter )
+    , converter_( converter )
+    , isSupply_( parameters.has_supply() ? parameters.supply() : false )
+{
+    for( int i = 0; i < parameters.recipients_size(); ++i )
+    {
+        const sword::SupplyFlowRecipient& protoRecipient = parameters.recipients( i );
+        const kernel::Automat_ABC* automat = entityResolver.FindAutomat( protoRecipient.receiver().id() );
+        if( !automat )
+            continue; // if somehow the automat has been deleted or not created yet
+        Recipient& recipient = recipients_[ automat ];
+        recipientsSequence_.push_back( automat );
+        for( int j = 0; j < protoRecipient.resources_size(); ++j )
+        {
+            const sword::SupplyFlowResource& resource = protoRecipient.resources( j );
+            const kernel::DotationType& dotationType = dotationTypeResolver.Get( resource.resourcetype().id() );
+            recipient.resources_[ &dotationType ] += resource.quantity();
+        }
+        if( protoRecipient.has_path() )
+            FillFromPointList( recipient.path_, protoRecipient.path(), converter );
+    }
+    for( int i = 0; i < parameters.transporters_size(); ++i )
+    {
+        const sword::SupplyFlowTransporter& transporter = parameters.transporters( i );
+        const kernel::EquipmentType& type = equipmentTypeResolver.Get( transporter.equipmenttype().id() );
+        transporters_[ &type ] += transporter.quantity();
+    }
+    if( parameters.has_waybackpath() )
+        FillFromPointList( wayBackPath_, parameters.waybackpath(), converter );
+}
+
+namespace
+{
     typedef void ( PushFlowParameters::*T_ReadPoint )( xml::xistream& xis, T_PointVector& points );
 
+    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
     void WalkPath( PushFlowParameters* it, T_PointVector& path, T_ReadPoint reader,
                    const std::string&, std::string name, xml::xistream& xis )
     {
@@ -51,7 +112,12 @@ namespace
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
+PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::EntityResolver_ABC& entityResolver,
+                                        const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver,
+                                        const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver,
+                                        xml::xistream& xis )
     : Parameter< QString >( parameter )
     , converter_( converter )
     , isSupply_( false )

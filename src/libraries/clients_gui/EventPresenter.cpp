@@ -342,7 +342,7 @@ void EventPresenter::OnSaveAsClicked()
 // -----------------------------------------------------------------------------
 void EventPresenter::Trigger()
 {
-    GetCurrentPresenter().Trigger();
+    GetCurrentPresenter().Trigger( *event_ );
 }
 
 // -----------------------------------------------------------------------------

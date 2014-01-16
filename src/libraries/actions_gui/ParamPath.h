@@ -36,6 +36,7 @@ namespace actions
 // Created: APE 2004-03-25
 // =============================================================================
 class ParamPath : public ParamLocation_ABC< actions::parameters::Path >
+                , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,9 +60,15 @@ protected:
     //@}
 
 private:
+    //! @name tools::ElementObserver_ABC< kernel::Entity_ABC > implementation
+    //@{
+    virtual void NotifyDeleted( const kernel::Entity_ABC& );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Entity_ABC > entity_;
+    const kernel::Entity_ABC* entity_;
     //@}
 };
 

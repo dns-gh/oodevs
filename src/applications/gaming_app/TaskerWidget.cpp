@@ -31,15 +31,15 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
                             bool showClear /* = true */,
                             QWidget* parent /* = 0 */ )
     : QWidget( parent )
-    , actionController_( controllers.actions_ )
+    , controllers_( controllers )
     , symbols_( symbols )
-    , tasker_( controllers )
+    , tasker_( 0 )
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
-    nameLabel_ = new gui::RichLabel( "event-order-target-label", "---" );
-    symbolLabel_ = new gui::RichLabel( "event-order-target-symbol-label" );
-    groupBox_ = new gui::RichGroupBox( "event-order-target-groupbox", tr( "Recipient" ) );
+    nameLabel_ = new gui::RichLabel( "event-target-label", "---" );
+    symbolLabel_ = new gui::RichLabel( "event-target-symbol-label" );
+    groupBox_ = new gui::RichGroupBox( "event-target-groupbox", tr( "Recipient" ) );
 
     QWidget* symbolWidget = new QWidget();
     QHBoxLayout* symbolLayout = new QHBoxLayout( symbolWidget );
@@ -51,24 +51,22 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
     layout->setContentsMargins( 5, 0, 5, 5 );
     layout->addWidget( symbolWidget, 10, Qt::AlignCenter );
 
-    if( showActivate )
-    {
-        activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
-        activateButton_->setToolTip( tr( "Select" ) );
-        connect( activateButton_, SIGNAL( clicked() ), this, SLOT( OnActivateClicked() ) );
-        layout->addWidget( activateButton_, 1, Qt::AlignRight );
-    }
+    activateButton_ = new gui::RichPushButton( "activateTargetButton", gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/center_time.png" ) ), "" );
+    activateButton_->setToolTip( tr( "Select" ) );
+    connect( activateButton_, SIGNAL( clicked() ), this, SLOT( OnActivateClicked() ) );
+    layout->addWidget( activateButton_, 1, Qt::AlignRight );
+    activateButton_->setVisible( showActivate );
 
-    if( showClear )
-    {
-        clearButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
-        clearButton_->setToolTip( tr( "Remove" ) );
-        connect( clearButton_, SIGNAL( clicked() ), this, SIGNAL( ClearClicked() ) );
-        layout->addWidget( clearButton_, 1, Qt::AlignRight );
-    }
+    clearButton_ = new gui::RichPushButton( "removeTargetButton", qApp->style()->standardIcon( QStyle::SP_DialogCloseButton ), "" );
+    clearButton_->setToolTip( tr( "Remove" ) );
+    connect( clearButton_, SIGNAL( clicked() ), this, SIGNAL( ClearClicked() ) );
+    layout->addWidget( clearButton_, 1, Qt::AlignRight );
+    clearButton_->setVisible( showClear );
 
     QHBoxLayout* mainLayout = new QHBoxLayout( this );
     mainLayout->addWidget( groupBox_ );
+
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +75,7 @@ TaskerWidget::TaskerWidget( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 TaskerWidget::~TaskerWidget()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,9 +139,9 @@ void TaskerWidget::OnActivateClicked()
 {
     if( !tasker_ )
         throw MASA_EXCEPTION( "Can't activate an unset target" );
-    tasker_->Select( actionController_ );
-    tasker_->MultipleSelect( actionController_, boost::assign::list_of( tasker_ ) );
-    tasker_->Activate( actionController_ );
+    tasker_->Select( controllers_.actions_ );
+    tasker_->MultipleSelect( controllers_.actions_, boost::assign::list_of( tasker_ ) );
+    tasker_->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,4 +151,14 @@ void TaskerWidget::OnActivateClicked()
 void TaskerWidget::OnClearClicked()
 {
     SetTasker( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::OnClearClicked
+// Created: ABR 2013-12-17
+// -----------------------------------------------------------------------------
+void TaskerWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    if( tasker_ && tasker_ == &entity )
+        SetTasker( 0 );
 }

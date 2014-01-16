@@ -34,7 +34,7 @@ private:
     virtual void NotifyUpdated( const MedicalStates& a );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void UpdateSelected( const kernel::Entity_ABC* entity );
-    virtual const std::vector< kernel::Availability >* GetAvailities( const MedicalStates& states ) const;
+    virtual const std::vector< kernel::Availability >* GetAvailabilities( const MedicalStates& states ) const;
     //@}
 };
 

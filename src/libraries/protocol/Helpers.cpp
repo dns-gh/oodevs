@@ -18,9 +18,6 @@ using namespace protocol;
 
 const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "automat_creation",                   sword::UnitMagicAction::automat_creation },
-    { "automat_log_supply_change_quotas",   sword::UnitMagicAction::log_supply_change_quotas },
-    { "automat_log_supply_pull_flow",       sword::UnitMagicAction::log_supply_pull_flow },
-    { "automat_log_supply_push_flow",       sword::UnitMagicAction::log_supply_push_flow },
     { "cancel_surrender",                   sword::UnitMagicAction::cancel_surrender },
     { "change_automat_superior",            sword::UnitMagicAction::change_automat_superior },
     { "change_brain_debug",                 sword::UnitMagicAction::change_brain_debug },
@@ -49,9 +46,6 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "destroy_component",                  sword::UnitMagicAction::destroy_component },
     { "fire_order",                         sword::UnitMagicAction::create_fire_order },
     { "formation_creation",                 sword::UnitMagicAction::formation_creation },
-    { "formation_log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas },
-    { "formation_log_supply_pull_flow",     sword::UnitMagicAction::log_supply_pull_flow },
-    { "formation_log_supply_push_flow",     sword::UnitMagicAction::log_supply_push_flow },
     { "inhabitant_change_affinities",       sword::UnitMagicAction::inhabitant_change_affinities },
     { "inhabitant_change_alerted_state",    sword::UnitMagicAction::inhabitant_change_alerted_state },
     { "inhabitant_change_confined_state",   sword::UnitMagicAction::inhabitant_change_confined_state },
@@ -59,6 +53,9 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "knowledge_group_update",             sword::UnitMagicAction::knowledge_group_update },
     { "load_unit",                          sword::UnitMagicAction::load_unit },
     { "log_finish_handlings",               sword::UnitMagicAction::log_finish_handlings },
+    { "log_supply_change_quotas",           sword::UnitMagicAction::log_supply_change_quotas },
+    { "log_supply_pull_flow",               sword::UnitMagicAction::log_supply_pull_flow },
+    { "log_supply_push_flow",               sword::UnitMagicAction::log_supply_push_flow },
     { "partial_recovery",                   sword::UnitMagicAction::partial_recovery },
     { "recover_all",                        sword::UnitMagicAction::recover_all },
     { "recover_equipments",                 sword::UnitMagicAction::recover_equipments },
@@ -81,6 +78,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "exec_script",                        sword::UnitMagicAction::exec_script },
 };
 const size_t mapping::MagicUnitAction::size_ = COUNT_OF( mapping::MagicUnitAction::data_ );
+BOOST_STATIC_ASSERT( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitAction::size_ );
 
 const mapping::MagicKnowledgeAction mapping::MagicKnowledgeAction::data_[] = {
     { "knowledge_group_add_knowledge",      sword::KnowledgeMagicAction::add_knowledge },

@@ -88,12 +88,11 @@ EventOrderPresenter::~EventOrderPresenter()
 // -----------------------------------------------------------------------------
 void EventOrderPresenter::FillFrom( const Event& event )
 {
-    const EventAction& eventAction = static_cast< const EventAction& >( event );
-    if( const actions::Action_ABC* action = eventAction.GetAction() )
+    if( const actions::Action_ABC* action = event.GetAction() )
     {
         if( const actions::ActionTasker* tasker = action->Retrieve< actions::ActionTasker >() )
             entity_ = tasker->GetTasker();
-        Select( eventAction.GetMissionType(), action->GetType().GetName(), action );
+        Select( action->GetType().GetType(), action->GetType().GetName(), action );
     }
 }
 
@@ -195,17 +194,15 @@ namespace
 // Name: EventOrderPresenter::Trigger
 // Created: ABR 2013-11-21
 // -----------------------------------------------------------------------------
-void EventOrderPresenter::Trigger()
+void EventOrderPresenter::Trigger( const gui::Event& event )
 {
-    if( !entity_ || !order_ )
-        throw MASA_EXCEPTION( "Can't trigger and order without an entity and an order" );
-    if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, entity_ ) )
+    if( const actions::Action_ABC* action = event.GetAction() )
     {
         missionInterface_.FixOrigin( true );
-        missionInterface_.CommitTo( *action );
         actionsModel_.Publish( *action, ++context_ );
-        actionsModel_.Register( action->GetId(), *action );
     }
+    else
+        throw MASA_EXCEPTION( "Can't trigger and order without an action" );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +222,7 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
             event.action.payload = timelinePublisher_.GetPayload();
             delete action;
         }
-    event.action.apply = ShouldEnableTrigger();
+    event.action.apply = true;
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }
 
@@ -446,7 +443,6 @@ void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
     if( type != eMissionType_FragOrder && type != entityType )
         type = entityType;
 
-
     const std::string lastMission = state_->currentMission_;
     E_MissionType lastMissionType = state_->currentType_;
     state_->Purge();
@@ -507,7 +503,7 @@ void EventOrderPresenter::SelectWithTarget( const kernel::Entity_ABC& entity,
     // no last mission || entity type changed || last mission != current mission => need to refresh parameters interface
     if( ( lastMission.empty() ||
         lastMissionType != state_->currentType_ ||
-        lastMission != state_->currentMission_ || 
+        lastMission != state_->currentMission_ ||
         action ) && !state_->invalid_ )
     {
         // Purge parameters interface

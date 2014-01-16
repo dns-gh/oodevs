@@ -33,7 +33,6 @@ namespace sword
 
 class Model;
 class StaticModel;
-class SupplyStates;
 
 // =============================================================================
 /** @class  Logistics

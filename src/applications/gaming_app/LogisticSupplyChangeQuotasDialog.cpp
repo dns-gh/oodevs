@@ -127,20 +127,6 @@ actions::Parameter_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::GetPar
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::GetMagicActionType
-// Created: ABR 2011-04-11
-// -----------------------------------------------------------------------------
-const std::string LogisticSupplyChangeQuotasDialog::SelectedHolder::GetMagicActionType() const
-{
-    if( selectedAutomat_ != 0)
-        return "automat_log_supply_change_quotas";
-    else if( selectedFormation_ )
-        return "formation_log_supply_change_quotas";
-    else
-        throw MASA_EXCEPTION( "SelectedHolder: nor automat nor formation set." );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
@@ -280,7 +266,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
     std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), (*selected_).GetId() ) );

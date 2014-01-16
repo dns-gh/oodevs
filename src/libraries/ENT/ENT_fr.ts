@@ -999,51 +999,51 @@
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
     <message>
-        <source>Knowledge Group - Add knowledge</source>
-        <translation type="unfinished"></translation>
+        <source>Knowledge Group Add knowledge</source>
+        <translation>Groupe de connaissance Ajout de connaissance</translation>
     </message>
     <message>
-        <source>Knowledge Group - Activation Change</source>
-        <translation type="unfinished"></translation>
+        <source>Knowledge Group Activation Change</source>
+        <translation>Changement d&apos;activation de groupe de connaissance</translation>
     </message>
     <message>
-        <source>Knowledge Group - Change superior</source>
-        <translation type="unfinished"></translation>
+        <source>Change superior</source>
+        <translation>Changer de supérieur</translation>
     </message>
     <message>
-        <source>Knowledge Group - Change Type</source>
-        <translation type="unfinished"></translation>
+        <source>Knowledge Group Change Type</source>
+        <translation>Changement de type de groupe de connaissance</translation>
     </message>
 </context>
 <context>
     <name>sword::MagicAction::Type</name>
     <message>
         <source>Change diplomacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer la diplomatie</translation>
     </message>
     <message>
         <source>Change resource links</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer les liens de ressources</translation>
     </message>
     <message>
-        <source>Create knowledge group</source>
-        <translation type="unfinished"></translation>
+        <source>Create Knowledge Group</source>
+        <translation>Créer un groupe de connaissance</translation>
     </message>
     <message>
         <source>Strike order on location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordre de feu sur position</translation>
     </message>
     <message>
-        <source>Change global weather</source>
-        <translation type="unfinished"></translation>
+        <source>Change Global Weather</source>
+        <translation>Changement de météo globale</translation>
     </message>
     <message>
-        <source>Change local weather</source>
-        <translation type="unfinished"></translation>
+        <source>Change Local Weather</source>
+        <translation>Changement de météo locale</translation>
     </message>
     <message>
-        <source>Local weather destruction</source>
-        <translation type="unfinished"></translation>
+        <source>Local Weather Destruction</source>
+        <translation>Destruction de météo locale</translation>
     </message>
     <message>
         <source>Debug internal</source>
@@ -1053,235 +1053,203 @@
 <context>
     <name>sword::ObjectMagicAction::Type</name>
     <message>
-        <source>Object - Creation</source>
-        <translation type="unfinished"></translation>
+        <source>Object Creation</source>
+        <translation>Création d&apos;object</translation>
     </message>
     <message>
-        <source>Object - Destruction</source>
-        <translation type="unfinished"></translation>
+        <source>Object Destruction</source>
+        <translation>Destruction d&apos;objet</translation>
     </message>
     <message>
-        <source>Object - Update</source>
-        <translation type="unfinished"></translation>
+        <source>Object Update</source>
+        <translation>Mise à jour d&apos;objet</translation>
     </message>
 </context>
 <context>
     <name>sword::UnitMagicAction::Type</name>
     <message>
-        <source>Automat - Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel surrender</source>
-        <translation type="unfinished"></translation>
+        <source>Automat Creation</source>
+        <translation>Création d&apos;automate</translation>
     </message>
     <message>
         <source>Change brain debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer le mode debug du décisionnel</translation>
     </message>
     <message>
-        <source>Unit - Change critical intelligence</source>
-        <translation type="unfinished"></translation>
+        <source>Change critical intelligence</source>
+        <translation>Modifier le renseignement critique</translation>
     </message>
     <message>
-        <source>Unit - Change dotations</source>
-        <translation type="unfinished"></translation>
+        <source>Change dotations</source>
+        <translation>Modifier les dotations</translation>
     </message>
     <message>
-        <source>Unit - Change equipment state</source>
-        <translation type="unfinished"></translation>
+        <source>Change equipment state</source>
+        <translation>Modifier l&apos;état de l&apos;équipement</translation>
     </message>
     <message>
         <source>Change extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l&apos;extension</translation>
+    </message>
+    <message>
+        <source>Unit Change Superior</source>
+        <translation>Changer le supérieur de l&apos;unité</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer de supérieur</translation>
     </message>
     <message>
         <source>Change human factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer les facteurs humains</translation>
     </message>
     <message>
-        <source>Unit - Change human state</source>
-        <translation type="unfinished"></translation>
+        <source>Change human state</source>
+        <translation>Modifier l&apos;état des humains</translation>
     </message>
     <message>
-        <source>Automat - Change knowledge group</source>
-        <translation type="unfinished"></translation>
+        <source>Change Logistic Links</source>
+        <translation>Changer les Liens Logistiques</translation>
     </message>
     <message>
-        <source>Logistic - Change links</source>
-        <translation type="unfinished"></translation>
+        <source>Direct strike order</source>
+        <translation>Ordre de tir direct</translation>
     </message>
     <message>
-        <source>Unit - Direct strike order</source>
-        <translation type="unfinished"></translation>
+        <source>Crowd Change Armed Individuals</source>
+        <translation>Changer les individus armés d&apos;une foule</translation>
     </message>
     <message>
-        <source>Unit - Create wound</source>
-        <translation type="unfinished"></translation>
+        <source>Crowd Change Attitude</source>
+        <translation>Changer l&apos;attitude de la foule</translation>
     </message>
     <message>
-        <source>Crowd - Change affinities</source>
-        <translation type="unfinished"></translation>
+        <source>Crowd Change Health State</source>
+        <translation>Changer l&apos;état de santé de la foule</translation>
     </message>
     <message>
-        <source>Crowd - Change armed individuals</source>
-        <translation type="unfinished"></translation>
+        <source>Crowd Creation</source>
+        <translation>Création de foule</translation>
     </message>
     <message>
-        <source>Crowd - Change attitude</source>
-        <translation type="unfinished"></translation>
+        <source>Crowd Total Destruction</source>
+        <translation>Destruction totale de la foule</translation>
     </message>
     <message>
-        <source>Crowd - Change health state</source>
-        <translation type="unfinished"></translation>
+        <source>Delete unit</source>
+        <translation>Supprimer l&apos;unité</translation>
     </message>
     <message>
-        <source>Crowd - Creation</source>
-        <translation type="unfinished"></translation>
+        <source>Destroy Component</source>
+        <translation>Détruite Composante</translation>
     </message>
     <message>
-        <source>Crowd - Total destruction</source>
-        <translation type="unfinished"></translation>
+        <source>Strike order</source>
+        <translation>Ordre de feu</translation>
     </message>
     <message>
-        <source>Unit - Delete</source>
-        <translation type="unfinished"></translation>
+        <source>Formation Creation</source>
+        <translation>Création de formation</translation>
     </message>
     <message>
-        <source>Unit - Destroy all</source>
-        <translation type="unfinished"></translation>
+        <source>Population Change Alerted State</source>
+        <translation>Changer l&apos;état d&apos;alerte de la population</translation>
     </message>
     <message>
-        <source>Unit - Destroy component</source>
-        <translation type="unfinished"></translation>
+        <source>Population Change Confined State</source>
+        <translation>Changer l&apos;état de confinement de la population</translation>
     </message>
     <message>
-        <source>Unit - Strike order</source>
-        <translation type="unfinished"></translation>
+        <source>Population Change Health State</source>
+        <translation>Changer l&apos;état de santé de la population</translation>
     </message>
     <message>
-        <source>Formation - Creation</source>
-        <translation type="unfinished"></translation>
+        <source>Load unit</source>
+        <translation>Charger un pion</translation>
     </message>
     <message>
-        <source>Population - Change Affinities</source>
-        <translation type="unfinished"></translation>
+        <source>Finish logistic handlings</source>
+        <translation>Terminer les requêtes logistiques</translation>
     </message>
     <message>
-        <source>Population - Change Alerted State</source>
-        <translation type="unfinished"></translation>
+        <source>Log Supply Change Quotas</source>
+        <translation>Changer les quotas de ravitaillement</translation>
     </message>
     <message>
-        <source>Population - Change Confined State</source>
-        <translation type="unfinished"></translation>
+        <source>Log Supply Pull Flow</source>
+        <translation>Ravitaillement Tirer Flux</translation>
     </message>
     <message>
-        <source>Population - Change Health State</source>
-        <translation type="unfinished"></translation>
+        <source>Log Supply Push Flow</source>
+        <translation>Ravitaillement Pousser Flux</translation>
     </message>
     <message>
-        <source>Unit - Load</source>
-        <translation type="unfinished"></translation>
+        <source>Partial Recovery</source>
+        <translation>Recomplétion partielle</translation>
     </message>
     <message>
-        <source>Logistic - Finish handlings</source>
-        <translation type="unfinished"></translation>
+        <source>Recover - All</source>
+        <translation>Recompléter - Tout</translation>
     </message>
     <message>
-        <source>Logistic - Supply change quotas</source>
-        <translation type="unfinished"></translation>
+        <source>Recover - Troops</source>
+        <translation>Recompléter - Troupes</translation>
     </message>
     <message>
-        <source>Logistic - Supply pull flow</source>
-        <translation type="unfinished"></translation>
+        <source>Recover - Equipments</source>
+        <translation>Recompléter - Composantes</translation>
     </message>
     <message>
-        <source>Logistic - Supply push flow</source>
-        <translation type="unfinished"></translation>
+        <source>Recover - Resources</source>
+        <translation>Recompléter - Ressources</translation>
     </message>
     <message>
-        <source>Unit - Partial recovery</source>
-        <translation type="unfinished"></translation>
+        <source>Destroy - All</source>
+        <translation>Détruire - Entièrement</translation>
     </message>
     <message>
-        <source>Unit - Recover all</source>
-        <translation type="unfinished"></translation>
+        <source>Cancel - Surrender</source>
+        <translation>Annuler la rédition</translation>
     </message>
     <message>
-        <source>Unit - Recover equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover transporters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover troops</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover all except those in logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover equipments except those in logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover resources except those in logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Recover troops except those in logistic</source>
-        <translation type="unfinished"></translation>
+        <source>Recover Transporters</source>
+        <translation>Recompléter Transporteurs</translation>
     </message>
     <message>
         <source>Reload brain</source>
-        <translation type="unfinished"></translation>
+        <translation>Recharger le décisionnel</translation>
     </message>
     <message>
         <source>Surrender</source>
-        <translation type="unfinished"></translation>
+        <translation>Capituler</translation>
     </message>
     <message>
         <source>Teleport</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléporter</translation>
     </message>
     <message>
-        <source>Log - Equipment transfer</source>
-        <translation type="unfinished"></translation>
+        <source>Equipment transfer</source>
+        <translation>Transfert de composantes</translation>
     </message>
     <message>
-        <source>Unit - Change affinities</source>
-        <translation type="unfinished"></translation>
+        <source>Change affinities</source>
+        <translation>Modifier la liste d&apos;adhésions</translation>
     </message>
     <message>
-        <source>Unit - Change superior</source>
-        <translation type="unfinished"></translation>
+        <source>Unit Creation</source>
+        <translation>Création d&apos;unité</translation>
     </message>
     <message>
-        <source>Unit - Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Unload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit - Change posture</source>
-        <translation type="unfinished"></translation>
+        <source>Change posture</source>
+        <translation>Changement de posture</translation>
     </message>
     <message>
         <source>Exec script</source>
-        <translation type="unfinished"></translation>
+        <translation>Execution de script</translation>
+    </message>
+    <message>
+        <source>Unload unit</source>
+        <translation>Décharger un pion</translation>
     </message>
 </context>
 </TS>

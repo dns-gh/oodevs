@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-    class ActionController;
+    class Controllers;
     class Controllers;
     class Entity_ABC;
 }
@@ -33,6 +33,8 @@ namespace gui
 // Created: ABR 2013-12-17
 // =============================================================================
 class TaskerWidget : public QWidget
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -70,11 +72,17 @@ private slots:
     //@}
 
 private:
+    //! @name tools::ElementObserver_ABC< kernel::Entity_ABC > implementation
+    //@{
+    virtual void NotifyDeleted( const kernel::Entity_ABC& );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    kernel::ActionController& actionController_;
+    kernel::Controllers& controllers_;
     const gui::EntitySymbols& symbols_;
-    kernel::SafePointer< kernel::Entity_ABC > tasker_;
+    kernel::Entity_ABC* tasker_;
 
     gui::RichGroupBox* groupBox_;
     gui::RichLabel* nameLabel_;

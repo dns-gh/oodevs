@@ -68,9 +68,10 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               IndicatorExportDialog& indicatorExportDialog, SimulationController& simulationController )
     : timelineDockWidget_( 0 )
 {
+    const bool hasLegacyTimeline = config.HasTimeline();
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
-    scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController ) );
+    scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr(), simulationController, hasLegacyTimeline ) );
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
     QObject::connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), &interpreter, SLOT( Interprete( const QString& ) ) );
     plotFactory_.reset( new IndicatorPlotFactory( parent, controllers, network.GetMessageMgr(), indicatorExportDialog, simulation ) );
@@ -207,7 +208,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         eventDockWidget_->SetTimelineHandler( timelineDockWidget_->GetWebView() );
         QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
-    if( config.HasTimeline() )
+    if( hasLegacyTimeline )
     {
         // Old Timeline
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );

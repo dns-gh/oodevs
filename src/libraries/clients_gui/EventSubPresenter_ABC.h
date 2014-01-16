@@ -10,7 +10,6 @@
 #ifndef __EventSubPresenter_ABC_h_
 #define __EventSubPresenter_ABC_h_
 
-//#include "EventView_ABC.h"
 #include "ENT/ENT_Enums.h"
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
@@ -63,7 +62,7 @@ public:
 
     //! @name Abstract operations
     //@{
-    virtual void Trigger() = 0;
+    virtual void Trigger( const gui::Event& event ) = 0;
     virtual void FillFrom( const gui::Event& event ) = 0;
     virtual void CommitTo( timeline::Event& event ) const = 0;
     virtual void BuildView() = 0;

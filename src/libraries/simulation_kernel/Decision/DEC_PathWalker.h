@@ -129,7 +129,7 @@ private:
 
     //! @name Tools
     //@{
-    bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining );
+    bool TryToMoveToNextStep( const MT_Vector2D& startPosition, CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining );
     bool TryToMoveTo( const MT_Vector2D& vNewPosTmp, double& rTimeRemaining );
     void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed();
@@ -138,7 +138,7 @@ private:
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
     void SetCurrentPathPoint( DEC_PathResult& path );
     void CheckPathNotification();
-    void SetBlockedByObject( MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep );
+    void SetBlockedByObject( const MT_Vector2D& startPosition, MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep );
      //@}
 
 private:

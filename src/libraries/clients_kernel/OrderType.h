@@ -10,6 +10,7 @@
 #ifndef __OrderType_h_
 #define __OrderType_h_
 
+#include "ENT/ENT_Enums.h"
 #include <tools/Resolver.h>
 
 namespace xml
@@ -45,6 +46,7 @@ public:
     const std::string& GetDoctrineInformation() const;
     const std::string& GetUsageInformation() const;
     void AddParameter( const OrderParameter& parameter );
+    virtual E_MissionType GetType() const;
     //@}
 
 private:

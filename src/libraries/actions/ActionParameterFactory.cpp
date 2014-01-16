@@ -184,9 +184,9 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_extensionlist() )
         return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )
-        return new parameters::PushFlowParameters( parameter, converter_, false );
+        return ( nullValue ) ? new parameters::PushFlowParameters( parameter, converter_, false ) : new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.push_flow_parameters() );
     if( message.has_pull_flow_parameters() )
-        return new parameters::PullFlowParameters( parameter, converter_ );
+        return ( nullValue ) ? new parameters::PullFlowParameters( parameter, converter_ ) : new parameters::PullFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, message.pull_flow_parameters() );
     return 0;
 }
 

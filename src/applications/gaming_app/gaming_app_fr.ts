@@ -697,6 +697,13 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>EventMagicWidget</name>
+    <message>
+        <source>Supervisor action:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EventOrderWidget</name>
     <message>
         <source>Order acknowledged</source>

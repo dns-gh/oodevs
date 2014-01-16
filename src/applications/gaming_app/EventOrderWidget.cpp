@@ -183,6 +183,7 @@ void EventOrderWidget::Build( const gui::EventOrderViewState& state )
 {
     // Target
     taskerWidget_->SetTasker( model_.agents_.FindAllAgent( state.target_ ) );
+    lastTaskerId_ = state.target_;
     // Mission type
     {
         // CLEAR
@@ -312,14 +313,8 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
 // -----------------------------------------------------------------------------
 void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( taskerWidget_->GetTasker() == &entity ||
-        selectedEntity_ == &entity ||
-        selectedEngagedAutomat_ == &entity )
-    {
+    if( lastTaskerId_ == entity.GetId() )
         OnTargetChanged( 0 );
-        selectedEntity_ = 0;
-        selectedEngagedAutomat_ = 0;
-    }
 }
 
 // -----------------------------------------------------------------------------

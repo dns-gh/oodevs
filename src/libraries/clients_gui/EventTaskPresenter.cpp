@@ -92,7 +92,7 @@ void EventTaskPresenter::OnShowClicked()
 // Name: EventTaskPresenter::Trigger
 // Created: ABR 2013-12-09
 // -----------------------------------------------------------------------------
-void EventTaskPresenter::Trigger()
+void EventTaskPresenter::Trigger( const gui::Event& /* event */ )
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

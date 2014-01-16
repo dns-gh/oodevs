@@ -81,7 +81,7 @@ public:
     int                          prisonners_;
 private:
     std::vector< int >           breakdowns_;
-    std::map< int, Breakdown >   consigns_;       
+    std::map< int, Breakdown >   consigns_;
     //@}
 };
 

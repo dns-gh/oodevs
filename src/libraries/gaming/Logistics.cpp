@@ -47,7 +47,7 @@ Logistics::~Logistics()
 // -----------------------------------------------------------------------------
 void Logistics::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( ! holder_.Retrieve< kernel::MaintenanceStates_ABC >() )
+    if( !holder_.Retrieve< kernel::MaintenanceStates_ABC >() )
     {
         MaintenanceStates* ext = new MaintenanceStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_ );
         holder_.Attach< kernel::MaintenanceStates_ABC >( *ext );
@@ -61,9 +61,9 @@ void Logistics::DoUpdate( const sword::LogMaintenanceState& message )
 // -----------------------------------------------------------------------------
 void Logistics::DoUpdate( const sword::LogMedicalState& message )
 {
-    if( ! holder_.Retrieve< MedicalStates >() )
+    if( !holder_.Retrieve< MedicalStates >() )
     {
-        MedicalStates* ext = new MedicalStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_);
+        MedicalStates* ext = new MedicalStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_ );
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }
@@ -75,11 +75,10 @@ void Logistics::DoUpdate( const sword::LogMedicalState& message )
 // -----------------------------------------------------------------------------
 void Logistics::DoUpdate( const sword::LogSupplyState& message )
 {
-    if( ! holder_.Retrieve< SupplyStates >() )
+    if( !holder_.Retrieve< SupplyStates >() )
     {
-        SupplyStates* ext = new SupplyStates( holder_, controller_, static_.objectTypes_, static_.objectTypes_, dico_);
+        SupplyStates* ext = new SupplyStates( holder_, controller_, static_.objectTypes_, static_.objectTypes_, dico_ );
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }
 }
-

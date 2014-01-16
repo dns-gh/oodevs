@@ -95,6 +95,7 @@ public:
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
     bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC* agent ) const;
+    bool IsOnBorder( const T_PointVector& pathPoints, double precision ) const;
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     bool IsPerceptionDistanceHacked() const;
     double GetMaxTrafficability() const;
@@ -176,7 +177,7 @@ private:
     //@{
     void UpdateLocalisations();
     void UpdateLocalisations( const MIL_Object_ABC& pObjectKnown );
-    void UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision );
+    void UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision, const TER_Localisation& realLocation );
     void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
