@@ -309,16 +309,13 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
         if( object.CanInteractWith( **it ) )
             object.ProcessAgentInside( **it );
 
-    for( auto it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
+    if( object.CanInteractWithEntity() )
     {
-        object.PreprocessPopulation( **it );
-        if( object.CanInteractWithEntity() )
+        for( auto it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
             object.ProcessPopulationInside( **it );
-    }
-        
-    for( auto it = populationsMovingInside_.begin(); it != populationsMovingInside_.end(); ++it )
-        if( object.CanInteractWithEntity() )
+        for( auto it = populationsMovingInside_.begin(); it != populationsMovingInside_.end(); ++it )
             (*it)->NotifyObjectCollision( object );
+    }
 
     agentsEntering_.clear();
     agentsExiting_.clear();

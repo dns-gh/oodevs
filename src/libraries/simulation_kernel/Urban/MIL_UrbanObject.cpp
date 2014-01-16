@@ -859,17 +859,6 @@ void MIL_UrbanObject::ProcessAgentInside( MIL_Agent_ABC& agent )
 }
     
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanObject::PreprocessPopulation
-// Created: LDC 2012-11-07
-// -----------------------------------------------------------------------------
-void MIL_UrbanObject::PreprocessPopulation( MIL_PopulationElement_ABC& population )
-{
-    if( !IsBlock() )
-        return;
-    MIL_UrbanObject_ABC::PreprocessPopulation( population );
-}
-    
-// -----------------------------------------------------------------------------
 // Name: MIL_UrbanObject::ProcessPopulationInside
 // Created: LDC 2012-11-07
 // -----------------------------------------------------------------------------

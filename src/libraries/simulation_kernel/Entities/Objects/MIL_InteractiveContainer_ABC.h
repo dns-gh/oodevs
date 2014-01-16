@@ -46,7 +46,6 @@ public:
 
     //! @name Operations on population
     //@{
-    virtual void PreprocessPopulation   ( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
     virtual void ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {}
     //@}
 

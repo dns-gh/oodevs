@@ -45,7 +45,6 @@ public:
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessAgentInside( MIL_Agent_ABC& /*agent*/ ) {}
     virtual void ProcessPopulationInside( MIL_PopulationElement_ABC& /*population*/ ) {}
-    virtual void PreprocessPopulation( MIL_PopulationElement_ABC& /*population*/ ) {};
     virtual void ApplyIndirectFire( const TER_Localisation& /*attritionSurface*/, const PHY_DotationCategory& /*dotation*/, MIL_Army_ABC* /*army*/ ) {};
     virtual void ApplyDirectFire() const {};
     virtual void ApplyDestruction( const TER_Localisation& /*attritionSurface*/, const PHY_UrbanAttritionData& /*attrition*/ ) {};
