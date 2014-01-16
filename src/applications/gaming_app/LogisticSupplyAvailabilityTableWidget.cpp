@@ -13,8 +13,6 @@
 #include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/Tools.h"
 
-using namespace gui;
-
 namespace
 {
     enum eColumnType
@@ -88,10 +86,11 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
             available = model->data( model->index( row, eAvailable ), Qt::UserRole ).value< int >();
             qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
-        RichSpinBox* spinBox = new RichSpinBox( "spinBox", parent );
-        spinBox->setRange( 0, available );
+        gui::RichSpinBox* spinBox = new gui::RichSpinBox( "spinBox", parent );
+        spinBox->setRange( 1, available );
         spinBox->setValue( qty );
         spinBox->setSingleStep( 1 );
+        connect( spinBox, SIGNAL( valueChanged( int ) ), parentTable, SLOT( OnQuantityChanged() ) );
         return spinBox;
     }
     return 0;
@@ -113,7 +112,7 @@ void LogisticSupplyAvailabilityItemDelegate::setEditorData( QWidget* editor, con
     }
     else if( index.column() == eValue )
     {
-        RichSpinBox* spinBox = static_cast< RichSpinBox* >( editor );
+        gui::RichSpinBox* spinBox = static_cast< gui::RichSpinBox* >( editor );
         const QAbstractItemModel* model = index.model();
         if( model )
             spinBox->setValue( model->data( index, Qt::UserRole ).value< int >() );
@@ -130,7 +129,7 @@ void LogisticSupplyAvailabilityItemDelegate::setModelData( QWidget* editor, QAbs
         return;
     if( index.column() == eValue )
     {
-        RichSpinBox* spinBox = static_cast< RichSpinBox* >( editor );
+        gui::RichSpinBox* spinBox = static_cast< gui::RichSpinBox* >( editor );
         int val = spinBox->value();
         model->setData( index, spinBox->text(), Qt::DisplayRole );
         model->setData( index, val, Qt::UserRole );
@@ -158,13 +157,10 @@ LogisticSupplyAvailabilityTableWidget::LogisticSupplyAvailabilityTableWidget( QW
     : QTableWidget( parent )
     , header_( header )
 {
-    setColumnCount( 3 );
+    setColumnCount( header.size() );
     setSelectionMode( QAbstractItemView::NoSelection );
     setItemDelegate( new LogisticSupplyAvailabilityItemDelegate( this ) );
     setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked | QAbstractItemView::CurrentChanged );
-    setColumnWidth( eName, 160 );
-    setColumnWidth( eAvailable, 70 );
-    setColumnWidth( eValue, 70 );
     horizontalHeader()->setResizeMode( QHeaderView::Interactive );
     verticalHeader()->hide();
     verticalHeader()->setDefaultSectionSize( 25 );
@@ -226,7 +222,7 @@ void LogisticSupplyAvailabilityTableWidget::GetQuantities( QMap< QString, int >&
 // Name: LogisticSupplyAvailabilityTableWidget::SetQuantities
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
-void LogisticSupplyAvailabilityTableWidget::SetQuantities( QMap< QString, int >& quantities, const QMap< QString, int >& maxQuantities )
+void LogisticSupplyAvailabilityTableWidget::SetQuantities( const QMap< QString, int >& quantities, const QMap< QString, int >& maxQuantities )
 {
     Clear();
     maxQuantities_ = maxQuantities;
@@ -234,26 +230,14 @@ void LogisticSupplyAvailabilityTableWidget::SetQuantities( QMap< QString, int >&
         return;
     setRowCount( quantities.size() + 1 );
     int i = 0;
-    for( QMap< QString, int >::iterator it = quantities.begin(); it != quantities.end(); ++it )
+    for( auto it = quantities.begin(); it != quantities.end(); ++it )
     {
         const QString& name = it.key();
         int quantity = it.value();
         int available = maxQuantities_[ name ];
         QAbstractItemModel* model = this->model();
         if( model && !name.isEmpty() && available > 0 && quantity > 0 )
-        {
-            QModelIndex nameIndex = model->index( i, eName );
-            QModelIndex availableIndex = model->index( i, eAvailable );
-            QModelIndex qtyIndex = model->index( i, eValue );
-            model->setData( nameIndex, name, Qt::DisplayRole );
-            model->setData( availableIndex, locale().toString( available ), Qt::DisplayRole );
-            model->setData( availableIndex, available, Qt::UserRole );
-            model->setData( qtyIndex, locale().toString( quantity ), Qt::DisplayRole );
-            model->setData( qtyIndex, quantity, Qt::UserRole );
-            item( i, eAvailable )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
-            item( i, eValue )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
-            ++i;
-        }
+            AddRow( i++, name, available );
     }
     setRowCount( i + 1 );
 }
@@ -267,10 +251,10 @@ void LogisticSupplyAvailabilityTableWidget::OnNameChanged( const QString& newNam
     QAbstractItemModel* model = this->model();
     if( !model )
         return;
-    int rowsCount = rowCount();
-    int row = currentIndex().row();
-    QString previousName = model->data( model->index( row, eName ), Qt::DisplayRole ).value< QString >();
-    bool isLastRow = ( row == ( rowsCount - 1 ) );
+    const int rowsCount = rowCount();
+    const int row = currentIndex().row();
+    const QString previousName = model->data( model->index( row, eName ), Qt::DisplayRole ).value< QString >();
+    const bool isLastRow = ( row == ( rowsCount - 1 ) );
     if( newName.isEmpty() )
     {
         if( !isLastRow && !previousName.isEmpty() )
@@ -282,20 +266,38 @@ void LogisticSupplyAvailabilityTableWidget::OnNameChanged( const QString& newNam
     else if( newName != previousName )
     {
         int available = maxQuantities_[ newName ];
-        QModelIndex indexResource = model->index( row, eName );
-        QModelIndex indexAvailable = model->index( row, eAvailable );
-        QModelIndex indexQty = model->index( row, eValue );
-        model->setData( indexResource, newName, Qt::DisplayRole );
-        model->setData( indexAvailable, locale().toString( available ), Qt::DisplayRole );
-        model->setData( indexAvailable, available, Qt::UserRole );
-        model->setData( indexQty, locale().toString( 1 ), Qt::DisplayRole );
-        model->setData( indexQty, 1, Qt::UserRole );
-        item( row, eAvailable )->setText( locale().toString( available ) );
-        item( row, eAvailable )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
-        item( row, eValue )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
+        AddRow( row, newName, available );
         setCurrentCell( row, 2, QItemSelectionModel::Select );
         clearSelection();
         if( isLastRow && previousName.isEmpty() )
             setRowCount( rowsCount + 1 );
     }
+    emit OnChanged( row );
+}
+
+void LogisticSupplyAvailabilityTableWidget::OnQuantityChanged()
+{
+    emit OnChanged( currentIndex().row() );
+}
+
+void LogisticSupplyAvailabilityTableWidget::AddRow( int row, const QString& newName, int available )
+{
+    SetContent( row, eName, newName );
+    SetContent( row, eAvailable, available );
+    SetContent( row, eValue, 1 );
+}
+
+void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, double value )
+{
+    const QModelIndex index = model()->index( row, col );
+    model()->setData( index, locale().toString( value ), Qt::DisplayRole );
+    model()->setData( index, value, Qt::UserRole );
+    item( row, col )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
+}
+
+void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, const QString& value )
+{
+    const QModelIndex index = model()->index( row, col );
+    model()->setData( index, value, Qt::DisplayRole );
+    item( row, col )->setTextAlignment( Qt::AlignVCenter | ( col ? Qt::AlignRight : Qt::AlignLeft ) );
 }

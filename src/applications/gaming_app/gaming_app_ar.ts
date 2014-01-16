@@ -1541,45 +1541,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>Logistic : Push supply flow</name>
-    <message>
-        <source>Move waypoint up</source>
-        <translation type="unfinished">نقل إحداثية أعلى</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation type="unfinished">نقل إحداثية لأسفل</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished">حذف إحداثية</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished">إضافة إحداثية</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished">الموارد</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished">الكمية</translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation type="unfinished">التحديد اليدوي لشركات النقل</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
-    </message>
-</context>
-<context>
     <name>Logistic : supply flow</name>
     <message>
         <source>Resources</source>

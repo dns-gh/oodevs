@@ -68,17 +68,9 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     , supplier_   ( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
-
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
     supplierCombo_->setMinimumWidth( 260 );
     connect( supplierCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSupplierValueChanged() ) );
-
-    QStringList resourcesHeader;
-    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-                    << tools::translate( "Logistic : Push supply flow", "Available" )
-                    << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
-
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( supplierCombo_ );
     resourcesLayout->addWidget( resourcesTable_ );

@@ -10,10 +10,9 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyFlowDialog_ABC.h"
 #include "moc_LogisticSupplyFlowDialog_ABC.cpp"
-
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
-
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
@@ -90,6 +89,13 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     QGridLayout* tabLayout = new QGridLayout( this, 1, 2 );
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
 
+    static const char context[] = "Logistic : Push supply flow";
+    QStringList resourcesHeader;
+    resourcesHeader << tools::translate( context, "Resource" )
+        << tools::translate( context, "Available" )
+        << tools::translate( context, "Quantity" );
+    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
+
     resourcesTab_ = new QWidget( tabs_ );
     QWidget* carriersTab = new QWidget( tabs_ );
     QWidget* routeTab = new QWidget( tabs_ );
@@ -111,10 +117,10 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     delWaypointButton_->setIcon( MAKE_ICON( trash ) );
     addWaypointButton_->setIcon( MAKE_ICON( add_point ) );
-    moveUpButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint up" ) );
-    moveDownButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Move waypoint down" ) );
-    delWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Delete Waypoint") );
-    addWaypointButton_->setToolTip( tools::translate( "Logistic : Push supply flow", "Add Waypoint") );
+    moveUpButton_->setToolTip( tools::translate( context, "Move waypoint up" ) );
+    moveDownButton_->setToolTip( tools::translate( context, "Move waypoint down" ) );
+    delWaypointButton_->setToolTip( tools::translate( context, "Delete Waypoint") );
+    addWaypointButton_->setToolTip( tools::translate( context, "Add Waypoint") );
     connect( moveUpButton_, SIGNAL( clicked() ), SLOT( MoveUpWaypoint() ) );
     connect( moveDownButton_, SIGNAL( clicked() ), SLOT( MoveDownWaypoint() ) );
     connect( delWaypointButton_, SIGNAL( clicked() ), SLOT( DeleteWaypoint() ) );
@@ -123,18 +129,23 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    setFixedSize( 340, 420 );
+    setMinimumSize( 720, 420 );
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
-    carriersUseCheck_ = new QCheckBox( tools::translate( "Logistic : Push supply flow", "Manual selection of transport carriers" ), carriersTab );
+    carriersUseCheck_ = new QCheckBox( tools::translate( context, "Manual selection of transport carriers" ), carriersTab );
     connect( carriersUseCheck_, SIGNAL( stateChanged( int ) ), this, SLOT( OnCarriersUseCheckStateChanged() ) );
     QStringList carriersHeader;
-    carriersHeader << tools::translate( "Logistic : Push supply flow", "Type" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    carriersTable_ = new LogisticSupplyAvailabilityTableWidget( this, carriersHeader );
+    carriersHeader << tools::translate( context, "Type" )
+        << tools::translate( context, "Available" )
+        << tools::translate( context, "Quantity" )
+        << tools::translate( context, "Capacity (T)" )
+        << tools::translate( context, "Capacity (m3)" )
+        << tools::translate( context, "Mass" )
+        << tools::translate( context, "Volume" );
+    carriersTable_ = new LogisticSupplyCarriersTableWidget( this, carriersHeader, carriersTypeNames_, *resourcesTable_, availableSupplies_ );
     carriersTable_->setEnabled( false );
+    connect( resourcesTable_, SIGNAL( OnChanged( int ) ), carriersTable_, SLOT( Update() ) );
 
     QVBoxLayout* carriersLayout = new QVBoxLayout( carriersTab );
     carriersLayout->addWidget( carriersUseCheck_ );
@@ -465,4 +476,3 @@ void LogisticSupplyFlowDialog_ABC::OnTabChanged( int index )
 {
     addWaypointButton_->setVisible( index == 2 );
 }
-

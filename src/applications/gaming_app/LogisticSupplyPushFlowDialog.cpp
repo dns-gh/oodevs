@@ -52,12 +52,6 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, ker
     connect( recipientsList_, SIGNAL( ItemRemoved( const QString& ) ), SLOT( RemoveRecipient( const QString& ) ) );
     connect( recipientsList_, SIGNAL( SelectionChanged( const QString&, const QString& ) ),
                               SLOT( OnRecipientSelectionChanged( const QString&, const QString& ) ) );
-    QStringList resourcesHeader;
-    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
-
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( recipientsList_ );
     resourcesLayout->addWidget( resourcesTable_ );
@@ -350,10 +344,7 @@ void LogisticSupplyPushFlowDialog::GetSuppliesFromTable( const kernel::Automat_A
 {
     auto it = recipientSupplies_.find( &recipient );
     if( it != recipientSupplies_.end() )
-    {
-        T_QuantitiesMap& curSupplies = it->second;
-        resourcesTable_->GetQuantities( curSupplies );
-    }
+        resourcesTable_->GetQuantities( it->second );
 }
 
 namespace

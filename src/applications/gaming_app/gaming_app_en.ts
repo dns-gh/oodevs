@@ -1542,45 +1542,6 @@ Do you want to replace it?</translation>
     </message>
 </context>
 <context>
-    <name>Logistic : Push supply flow</name>
-    <message>
-        <source>Move waypoint up</source>
-        <translation>Move waypoint up</translation>
-    </message>
-    <message>
-        <source>Move waypoint down</source>
-        <translation>Move waypoint down</translation>
-    </message>
-    <message>
-        <source>Delete Waypoint</source>
-        <translation>Delete Waypoint</translation>
-    </message>
-    <message>
-        <source>Add Waypoint</source>
-        <translation>Add Waypoint</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation>Resource</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Available</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantity</translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation>Manual selection of transport carriers</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-</context>
-<context>
     <name>Logistic : supply flow</name>
     <message>
         <source>Resources</source>
