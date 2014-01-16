@@ -1574,6 +1574,17 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>Warning, the convoy is unable to carry that much weight</source>
+        <translation>Attention, le convoi ne peut pas transporter la masse demandée</translation>
+    </message>
+    <message>
+        <source>Warning, the convoy is unable to carry that much volume</source>
+        <translation>Attention, le convoi ne peut pas transporter le volume demandé</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>

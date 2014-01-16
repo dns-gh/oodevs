@@ -59,7 +59,7 @@ protected:
     virtual void AddRow( int row, const QString& newName, int available );
 
     void SetContent( int row, int col, double value );
-    void SetContent( int row, int col, const QString& value );
+    void SetContent( int row, int col, const QString& value, const QString& warning = "" );
 
 private slots:
     //! @name Slots

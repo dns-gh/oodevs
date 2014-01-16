@@ -67,11 +67,23 @@ void LogisticSupplyCarriersTableWidget::Update()
             continue;
         const double total = ComputeMaxMass( function->stockNature_ );
         const double mass = ComputeMass( function->stockNature_ );
-        SetContent( row, eMass, locale().toString( 100 * mass / total, 'g', 3 ) + "%" );
+        const double massPercent = 100 * mass / total;
+        {
+            QString warning;
+            if( massPercent > 100 )
+                warning = tr( "Warning, the convoy is unable to carry that much weight" );
+            SetContent( row, eMass, locale().toString( massPercent, 'g', 3 ) + "%", warning );
+        }
         const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
         const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
         const double volume = ComputeVolume( function->stockNature_ );
-        SetContent( row, eVolume, locale().toString( 100 * volume * maxMass / total / maxVolume, 'g', 3 ) + "%" );
+        const double volumePercent = 100 * volume * maxMass / total / maxVolume;
+        {
+            QString warning;
+            if( volumePercent > 100 )
+                warning = tr( "Warning, the convoy is unable to carry that much volume" );
+            SetContent( row, eVolume, locale().toString( volumePercent, 'g', 3 ) + "%", warning );
+        }
     }
 }
 

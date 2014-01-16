@@ -1572,6 +1572,17 @@ Do you want to replace it?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>Warning, the convoy is unable to carry that much weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning, the convoy is unable to carry that much volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
