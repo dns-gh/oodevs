@@ -52,7 +52,7 @@ private:
     //! @name Helpers
     //@{
     void Split();
-    bool SplitOnSegment( CIT_PointList itStart, CIT_PointList itEnd );
+    bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex );
     void RemovedPassedOverFlows();
     //@}
 

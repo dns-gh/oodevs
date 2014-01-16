@@ -109,9 +109,8 @@ bool MIL_FlowCollision::MarkedForDestruction() const
 
 namespace
 {
-    bool HasFlowPassedOver( const MT_Vector2D& point, bool& hasPassedOver, CIT_PointList itStart, CIT_PointList itEnd )
+    bool HasFlowPassedOver( const MT_Vector2D& point, const MT_Line& line, bool& hasPassedOver )
     {
-        MT_Line line( *itStart, *itEnd );
         MT_Vector2D result;
         double r = line.ProjectPointOnLine( point, result );
         if( r >= -0.1 && r <= 1.1 /* && result == point_*/ ) // todo : epsilon et point
@@ -166,7 +165,7 @@ void MIL_FlowCollision::RemovedPassedOverFlows()
     {
         bool hasPassedOver = true;
         MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
-        flow->ApplyOnShape( boost::bind( &HasFlowPassedOver, boost::cref( point_ ), boost::ref( hasPassedOver ), _1, _2 ) );
+        flow->ApplyOnShape( boost::bind( &HasFlowPassedOver, boost::cref( point_ ), _1, boost::ref( hasPassedOver ) ) );
         if( hasPassedOver )
         {
             it = collidingFlows_.erase( it );
@@ -214,24 +213,25 @@ void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::Split()
 {
+    std::size_t nSegmentIndex = 0;
     MIL_PopulationFlow* flow = collidingFlows_[ movingIndex_ ];
-    flow->ApplyOnShape( boost::bind( &MIL_FlowCollision::SplitOnSegment, this, _1, _2 ) );
+    flow->ApplyOnShape( boost::bind( &MIL_FlowCollision::SplitOnSegment, this, _1, boost::ref( nSegmentIndex ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision::SplitOnSegment
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::SplitOnSegment( CIT_PointList itStart, CIT_PointList itEnd )
+bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex )
 {
     MT_Vector2D result;
-    MT_Line line( *itStart, *itEnd );
     double r = line.ProjectPointOnLine( point_, result );
     if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
     {
-        going_ = collidingFlows_[ movingIndex_ ]->Split( itEnd, point_ );
+        going_ = collidingFlows_[ movingIndex_ ]->Split( point_, segmentIndex );
         isFlowing_ = false;
         return true;
     }
+    ++segmentIndex;
     return false;
 }

@@ -429,14 +429,21 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
 // Name: MIL_PopulationFlow::Split
 // Created: JSR 2014-01-08
 // -----------------------------------------------------------------------------
-MIL_PopulationFlow* MIL_PopulationFlow::Split( CIT_PointList itEnd, const MT_Vector2D& splittingPoint_ )
+MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint, std::size_t segmentIndex )
 {
     assert( canCollideWithFlow_ );
     const double rDensityBeforeSplit = GetDensity();
-    auto insertIt = std::find( flowShape_.begin(), flowShape_.end(), splittingPoint_ );
+    IT_PointList insertIt = std::find( flowShape_.begin(), flowShape_.end(), splittingPoint );
     if( insertIt == flowShape_.end() )
-        insertIt = flowShape_.insert( itEnd, splittingPoint_ );
-    MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, splittingPoint_ );
+    {
+        if( segmentIndex < flowShape_.size() )
+        {
+            insertIt = flowShape_.begin();
+            std::advance( insertIt, segmentIndex + 1 );
+        }
+        insertIt = flowShape_.insert( insertIt, splittingPoint );
+    }
+    MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, splittingPoint );
     newFlow.CancelMove();
     flowShape_.erase( ++insertIt, flowShape_.end() );
     CancelMove();
@@ -590,10 +597,10 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 // Name: MIL_PopulationFlow::AddFlowCollision
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, T_FlowCollisions& collisions, CIT_PointList itStart, CIT_PointList itEnd )
+bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions )
 {
     MT_Vector2D intersection;
-    if( MT_Line( *itStart, *itEnd ).Intersect2D( line, intersection ) == eDoIntersect )
+    if( flowSegment.Intersect2D( line, intersection ) == eDoIntersect )
     {
         collisions.push_back( std::make_pair( this, intersection ) );
         return true;
@@ -602,19 +609,44 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, T_FlowCollisions
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanCollideWithFlow
+// Created: JSR 2014-01-16
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanCollideWithFlow() const
+{
+    return canCollideWithFlow_ && GetDensity() > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanCollideWith
+// Created: JSR 2014-01-16
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanCollideWith( MIL_PopulationFlow* flow ) const
+{
+    if( flow == this )
+        return false;
+    if( !CanCollideWithFlow() || !flow->CanCollideWithFlow() )
+        return false;
+    const MT_Vector2D& head1 = GetHeadPosition();
+    const MT_Vector2D& tail1 = GetTailPosition();
+    const MT_Vector2D& head2 = flow->GetHeadPosition();
+    const MT_Vector2D& tail2 = flow->GetTailPosition();
+    return head1 != head2 && head1 != tail2 && tail1 != head2 && tail1 != tail2;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ComputeFlowCollisions
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-bool MIL_PopulationFlow::ComputeFlowCollisions( T_FlowCollisions& collisions, CIT_PointList itStart, CIT_PointList itEnd )
+bool MIL_PopulationFlow::ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions )
 {
     TER_PopulationFlowManager::T_PopulationFlowVector flows;
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListIntersectingLine( *itStart, *itEnd, flows );
-    MT_Line line( *itStart, *itEnd );
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListIntersectingLine( line.GetPosStart(), line.GetPosEnd(), flows );
     for( auto it = flows.begin(); it != flows.end(); ++it )
     {
         MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
-        if( flow != this && flow->canCollideWithFlow_ && flow->GetDensity() > 0 )
-            flow->ApplyOnShape( boost::bind( &MIL_PopulationFlow::AddFlowCollision, flow, boost::cref( line ), boost::ref( collisions ), _1, _2 ) );
+        if( CanCollideWith( flow ) )
+            flow->ApplyOnShape( boost::bind( &MIL_PopulationFlow::AddFlowCollision, flow, boost::cref( line ), _1, boost::ref( collisions ) ) );
     }
     return false;
 }
@@ -629,7 +661,7 @@ void MIL_PopulationFlow::UpdateCrowdCollisions()
     {
         // todo : extract in method, refactor, simplify
         T_FlowCollisions collisions;
-        ApplyOnShape( boost::bind( &MIL_PopulationFlow::ComputeFlowCollisions, this, boost::ref( collisions ), _1, _2 ) );
+        ApplyOnShape( boost::bind( &MIL_PopulationFlow::ComputeFlowCollisions, this, _1, boost::ref( collisions ) ) );
         GetFlowCollisionManager().SetCollisions( this, collisions );
     }
 }
@@ -1165,12 +1197,15 @@ const T_PointList& MIL_PopulationFlow::GetFlowShape() const
 // Name: MIL_PopulationFlow::ApplyOnShape
 // Created: JSR 2014-01-15
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyOnShape( const boost::function< bool( CIT_PointList itStart, CIT_PointList itEnd ) >& f ) const
+void MIL_PopulationFlow::ApplyOnShape( const boost::function< bool( const MT_Line& ) >& f ) const
 {
     auto itStart = flowShape_.begin();
     auto itEnd   = itStart;
     ++itEnd;
     for( ; itEnd != flowShape_.end(); ++itStart, ++itEnd )
-        if( f( itStart, itEnd ) )
+    {
+        MT_Line line( *itStart, *itEnd );
+        if( f( line ) )
             return;
+    }
 }
