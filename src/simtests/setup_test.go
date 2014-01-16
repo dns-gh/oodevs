@@ -299,7 +299,7 @@ func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
 	return nil
 }
 
-func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
+func createSpecificAutomat(c *C, client *swapi.Client, partyName string, automatType uint32) *swapi.Automat {
 	data := client.Model.GetData()
 
 	party := data.FindPartyByName(partyName)
@@ -319,10 +319,14 @@ func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.
 	}
 	c.Assert(kg, NotNil)
 
-	automat, err := client.CreateAutomat(formation.Id, AutomatType, kg.Id)
+	automat, err := client.CreateAutomat(formation.Id, automatType, kg.Id)
 	c.Assert(err, IsNil)
 	c.Assert(automat, NotNil)
 	return automat
+}
+
+func createAutomatForParty(c *C, client *swapi.Client, partyName string) *swapi.Automat {
+	return createSpecificAutomat(c, client, partyName, AutomatType)
 }
 
 func createAutomat(c *C, client *swapi.Client) *swapi.Automat {

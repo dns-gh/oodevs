@@ -336,9 +336,10 @@ func CheckAttitude(crowd *swapi.Crowd, attitude int32) bool {
 
 const (
 	// Attitude enumeration
-	Peaceful = int32(0)
-	Agitated = int32(1)
-	Excited  = int32(2)
+	Peaceful  = int32(0)
+	Agitated  = int32(1)
+	Excited   = int32(2)
+	Agressive = int32(3)
 )
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
@@ -396,5 +397,83 @@ func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckAttitude(data.Crowds[crowd.Id], Peaceful)
+	})
+}
+
+const (
+	MissionDemonstrateCrowdId = uint32(44574)
+)
+
+func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
+	// This test is to verify that the crowd doesn't stay blocked by a checkpoint.
+	// Description:
+	// Police Automat creates a checkpoint on the road of a crowd.
+	// This crowd is blocked by this checkpoint until the crowd destroy police units.
+	// Then the crowd continue its road until its objective.
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer sim.Stop()
+	// Create agressive crowd
+	party := client.Model.GetData().FindPartyByName("another-party")
+	c.Assert(party, NotNil)
+	// Create crowd in party
+	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd", swapi.Point{X: -15.8005, Y: 28.3451},
+		600, 0, 0, "crowd")
+
+	err = client.ChangeAttitude(crowd.Id, Agressive)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckAttitude(data.Crowds[crowd.Id], Agressive)
+	})
+
+	// Create Safety police patrol
+	safetyPolicePatrolId := uint32(185)
+	safetyPoliceUnit := uint32(105)
+	automat := createSpecificAutomat(c, client, "party", safetyPolicePatrolId)
+	unitPos := swapi.Point{X: -15.7928, Y: 28.3451}
+	client.CreateUnit(automat.Id, safetyPoliceUnit, unitPos)
+
+	limit11 := swapi.Point{X: -15.8241, Y: 28.3241}
+	limit12 := swapi.Point{X: -15.8092, Y: 28.3458}
+
+	// Send SAFETY - Operate a checkpoint (filter crowds)
+	operateCheckpoint := uint32(445949258)
+	params := swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		nil,
+		swapi.MakeLimit(limit11, limit11),
+		swapi.MakeLimit(limit12, limit12),
+		swapi.MakePlannedWork("checkpoint", unitPos),
+		nil,
+		nil,
+	)
+	_, err = client.SendAutomatOrder(automat.Id, operateCheckpoint, params)
+	c.Assert(err, IsNil)
+
+	// Wait Checkpoint
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, object := range data.Objects {
+			if object.ObjectType == "checkpoint" {
+				return true
+			}
+		}
+		return false
+	})
+
+	// Send demonstrate mission on the crowd
+	to := swapi.Point{X: -15.786, Y: 28.3451}
+	params = swapi.MakeParameters(swapi.MakePointParam(to))
+	_, err = client.SendCrowdOrder(crowd.Id, MissionDemonstrateCrowdId, params)
+	c.Assert(err, IsNil)
+
+	// Check crowd position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		unit := data.Crowds[crowd.Id]
+		if len(unit.CrowdElements) != 1 {
+			return false
+		}
+		for _, value := range unit.CrowdElements {
+			return isNearby(value.Position, to)
+		}
+		return false
 	})
 }
