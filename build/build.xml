@@ -16,15 +16,15 @@
     </target>
 
     <target name="update">
-        <update name="buildtools" version="5.3"/>
+        <update name="buildtools" version="qa"/>
         <update name="golang" version="1.1.1"/>
         <update name="golibs" version="5.3"/>
-        <update name="models" version="5.3" package="decisional-dev" todir="${data.dir}/data/models"/>
-        <update name="models" version="5.3" package="terrains-dev" todir="${data.dir}/data/terrains"/>
+        <update name="models" version="qa" package="decisional-dev" todir="${data.dir}/data/models"/>
+        <update name="models" version="qa" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="protobuf" version="2.3.0"/>
         <update name="python" version="2.7.3-3"/>
-        <update name="sword" version="5.3" package="protobuf" todir="${src.dir}/sword"/>
-        <update name="sword" version="5.3" package="binaries_${platform}" todir="${run.dir}"/>
+        <update name="sword" version="qa" package="protobuf" todir="${src.dir}/sword"/>
+        <update name="sword" version="qa" package="binaries_${platform}" todir="${run.dir}"/>
     </target>
 
     <target name="proto">
