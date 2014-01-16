@@ -9,13 +9,18 @@
 
 #include "actions_pch.h"
 #include "PushFlowParameters.h"
+#include "Helpers.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+
 #include "protocol/Protocol.h"
+
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -34,23 +39,6 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     , isSupply_( isSupply )
 {
     // NOTHING
-}
-
-namespace
-{
-    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
-    void FillFromPointList( T_PointVector& vector, const sword::PointList& list, const kernel::CoordinateConverter_ABC& converter )
-    {
-        for( int i = 0; i < list.elem_size(); ++i )
-        {
-            const sword::Location& location = list.elem( i ).location();
-            if( location.type() != sword::Location_Geometry_point ||
-                !location.has_coordinates() ||
-                location.coordinates().elem_size() != 1 )
-                throw MASA_EXCEPTION( "Invalid location type" );
-            vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,20 +82,6 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
         FillFromPointList( wayBackPath_, parameters.waybackpath(), converter );
 }
 
-namespace
-{
-    typedef void ( PushFlowParameters::*T_ReadPoint )( xml::xistream& xis, T_PointVector& points );
-
-    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
-    void WalkPath( PushFlowParameters* it, T_PointVector& path, T_ReadPoint reader,
-                   const std::string&, std::string name, xml::xistream& xis )
-    {
-        boost::algorithm::to_lower( name );
-        if( name == "waybackpath" )
-            xis >> xml::list( "point", *it, reader, path );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
@@ -122,11 +96,11 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     , converter_( converter )
     , isSupply_( false )
 {
-    xis >> xml::list( boost::bind( &WalkPath, this, boost::ref( wayBackPath_ ), &PushFlowParameters::ReadPoint, _1, _2, _3 ) );
-    xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver );
-    xis >> xml::optional >> xml::start( "type" )
-        >> xml::attribute( "supply", isSupply_ );
+    const T_XmlFunctor backpath = boost::bind( &PushFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
+    xis >> xml::optional >> xml::start( "type" ) >> xml::attribute( "supply", isSupply_ ) >> xml::end
+        >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
+        >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver )
+        >> xml::list( boost::bind( &WalkPointList, "waybackpath", backpath, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------

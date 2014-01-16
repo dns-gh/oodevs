@@ -9,19 +9,23 @@
 
 #include "actions_pch.h"
 #include "PullFlowParameters.h"
+#include "Helpers.h"
 #include "LocationBase.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
+
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -40,23 +44,6 @@ PullFlowParameters::PullFlowParameters( const OrderParameter& parameter,
     , supplierAutomat_    ( 0 )
 {
     // NOTHING
-}
-
-namespace
-{
-    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
-    void FillFromPointList( T_PointVector& vector, const sword::PointList& list, const kernel::CoordinateConverter_ABC& converter )
-    {
-        for( int i = 0; i < list.elem_size(); ++i )
-        {
-            const sword::Location& location = list.elem( i ).location();
-            if( location.type() != sword::Location_Geometry_point ||
-                !location.has_coordinates() ||
-                location.coordinates().elem_size() != 1 )
-                throw MASA_EXCEPTION( "Invalid location type" );
-            vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -92,20 +79,6 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
         FillFromPointList( wayOutPath_, parameters.wayoutpath(), converter );
 }
 
-namespace
-{
-    typedef boost::function< void( xml::xistream& ) > T_Operand;
-
-    // $$$$ ABR 2014-01-15: TODO refactor this in a helper file
-    void WalkList( const std::string& key, const std::string& sub, const T_Operand& operand,
-                   const std::string&, std::string name, xml::xistream& xis )
-    {
-        boost::algorithm::to_lower( name );
-        if( name == key )
-            xis >> xml::list( sub, operand );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PullFlowParameters constructor
 // Created: SBO 2007-06-26
@@ -130,12 +103,12 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
     if( !supplierAutomat_ )
         supplierFormation_ = &entityResolver.GetFormation( idTmp) ;
 
+    const T_XmlFunctor outpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayOutPath_ ) );
+    const T_XmlFunctor backpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
     xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver );
-    const T_Operand outpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayOutPath_ ) );
-    xis >> xml::list( boost::bind( &WalkList, "wayoutpath", "point", outpath, _1, _2, _3 ) );
-    const T_Operand backpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
-    xis >> xml::list( boost::bind( &WalkList, "waybackpath", "point", backpath, _1, _2, _3 ) );
+        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver )
+        >> xml::list( boost::bind( &WalkPointList, "wayoutpath", outpath, _1, _2, _3 ) )
+        >> xml::list( boost::bind( &WalkPointList, "waybackpath", backpath, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------
