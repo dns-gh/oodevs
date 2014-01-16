@@ -65,15 +65,17 @@ void LogisticSupplyCarriersTableWidget::Update()
         const auto function = it->second->GetLogSupplyFunctionCarrying();
         if( !function )
             continue;
-        const double total = ComputeTotalMass( function->stockNature_ );
-        const double load = ComputeLoad( function->stockNature_ );
-        const double percent = load * 100 / total;
-        SetContent( row, eMass, locale().toString( percent ) + "%" );
-        SetContent( row, eVolume, "-" ); // $$$$ MCO 2014-01-15: compute volume based on mass
+        const double total = ComputeMaxMass( function->stockNature_ );
+        const double mass = ComputeMass( function->stockNature_ );
+        SetContent( row, eMass, locale().toString( 100 * mass / total, 'g', 3 ) + "%" );
+        const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
+        const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
+        const double volume = ComputeVolume( function->stockNature_ );
+        SetContent( row, eVolume, locale().toString( 100 * volume * maxMass / total / maxVolume, 'g', 3 ) + "%" );
     }
 }
 
-double LogisticSupplyCarriersTableWidget::ComputeTotalMass( const std::string& nature ) const
+double LogisticSupplyCarriersTableWidget::ComputeMaxMass( const std::string& nature ) const
 {
     double result = 0;
     for( int row = 0; row < model()->rowCount(); ++row )
@@ -89,13 +91,13 @@ double LogisticSupplyCarriersTableWidget::ComputeTotalMass( const std::string& n
             if( !function )
                 continue;
             if( function->stockNature_ == nature )
-                result += quantity * function->stockMaxVolumeCapacity_;
+                result += quantity * function->stockMaxWeightCapacity_;
         }
     }
     return result;
 }
 
-double LogisticSupplyCarriersTableWidget::ComputeLoad( const std::string& nature ) const
+double LogisticSupplyCarriersTableWidget::ComputeMass( const std::string& nature ) const
 {
     double result = 0;
     QMap< QString, int > quantities;
@@ -105,6 +107,20 @@ double LogisticSupplyCarriersTableWidget::ComputeLoad( const std::string& nature
         auto it2 = dotations_.find( it.key() );
         if( it2 != dotations_.end() && it2->second.type_->GetNature() == nature )
             result += it.value() * it2->second.type_->GetUnitWeight();
+    }
+    return result;
+}
+
+double LogisticSupplyCarriersTableWidget::ComputeVolume( const std::string& nature ) const
+{
+    double result = 0;
+    QMap< QString, int > quantities;
+    resources_.GetQuantities( quantities );
+    for( auto it = quantities.begin(); it != quantities.end(); ++it )
+    {
+        auto it2 = dotations_.find( it.key() );
+        if( it2 != dotations_.end() && it2->second.type_->GetNature() == nature )
+            result += it.value() * it2->second.type_->GetUnitVolume();
     }
     return result;
 }
