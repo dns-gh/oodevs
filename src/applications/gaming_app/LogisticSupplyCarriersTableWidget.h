@@ -37,8 +37,8 @@ private slots:
     void UpdateRow( int row );
 
 private:
-    double ComputeTotalMass() const;
-    double ComputeLoad() const;
+    double ComputeTotalMass( const std::string& nature ) const;
+    double ComputeLoad( const std::string& nature ) const;
 
 private:
     const T_CarrierTypes& types_;

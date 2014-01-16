@@ -56,21 +56,24 @@ void LogisticSupplyCarriersTableWidget::UpdateRow( int row )
 
 void LogisticSupplyCarriersTableWidget::Update()
 {
-    const double total = ComputeTotalMass();
-    const double load = ComputeLoad();
     for( int row = 0; row < model()->rowCount(); ++row )
     {
         const QString name = model()->data( model()->index( row, eName ), Qt::DisplayRole ).value< QString >();
         const auto it = types_.find( name );
         if( it == types_.end() )
             continue;
+        const auto function = it->second->GetLogSupplyFunctionCarrying();
+        if( !function )
+            continue;
+        const double total = ComputeTotalMass( function->stockNature_ );
+        const double load = ComputeLoad( function->stockNature_ );
         const double percent = load * 100 / total;
         SetContent( row, eMass, locale().toString( percent ) + "%" );
         SetContent( row, eVolume, "-" ); // $$$$ MCO 2014-01-15: compute volume based on mass
     }
 }
 
-double LogisticSupplyCarriersTableWidget::ComputeTotalMass() const
+double LogisticSupplyCarriersTableWidget::ComputeTotalMass( const std::string& nature ) const
 {
     double result = 0;
     for( int row = 0; row < model()->rowCount(); ++row )
@@ -85,14 +88,14 @@ double LogisticSupplyCarriersTableWidget::ComputeTotalMass() const
             const auto function = it->second->GetLogSupplyFunctionCarrying();
             if( !function )
                 continue;
-            //function->stockNature_
-            result += quantity * function->stockMaxVolumeCapacity_; // $$$$ MCO 2014-01-15: filter on nature
+            if( function->stockNature_ == nature )
+                result += quantity * function->stockMaxVolumeCapacity_;
         }
     }
     return result;
 }
 
-double LogisticSupplyCarriersTableWidget::ComputeLoad() const // $$$$ MCO 2014-01-15: filter on nature
+double LogisticSupplyCarriersTableWidget::ComputeLoad( const std::string& nature ) const
 {
     double result = 0;
     QMap< QString, int > quantities;
@@ -100,8 +103,8 @@ double LogisticSupplyCarriersTableWidget::ComputeLoad() const // $$$$ MCO 2014-0
     for( auto it = quantities.begin(); it != quantities.end(); ++it )
     {
         auto it2 = dotations_.find( it.key() );
-        if( it2 != dotations_.end() )
-            result += it.value() * it2->second.type_->GetUnitWeight(); // $$$$ MCO 2014-01-16: GetNature here too
+        if( it2 != dotations_.end() && it2->second.type_->GetNature() == nature )
+            result += it.value() * it2->second.type_->GetUnitWeight();
     }
     return result;
 }
