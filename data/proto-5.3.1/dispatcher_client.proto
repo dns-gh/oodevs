@@ -1,0 +1,74 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+/** @file
+ *  @brief Messages from the dispatcher to clients
+ *  @addtogroup Dispatcher
+ *  @{
+ */
+
+// EnumService is not directly used by the protocol, but client code can
+// use it internally instead of string identifiers.
+enum EnumService {
+    service_aar            = 0;
+    service_authentication = 1;
+    service_messenger      = 2;
+    service_replay         = 3;
+    service_simulation     = 4;
+}
+
+/** @struct ServicesDescription
+    @brief A message sent by the Dispatcher to announce available services.
+    
+    This message is sent just after a client connection request. It
+    provides a list of strings identifying the services available on the
+    Dispatcher. Services are optional modules such as indicator
+    computation for After/During Action Review.
+*/
+message ServicesDescription {
+    /** @property services
+        @brief The list of available services identifiers.
+    */
+    repeated string services = 1;
+}
+
+/** @struct ConnectionToSimLost
+    @brief A message sent by the Dispatcher to announce that the
+           connection with the simulation has been lost.
+*/
+message ConnectionToSimLost {
+}
+
+/** @struct DispatcherToClient
+    @brief Wraps available messages going from Dispatcher to client.
+    
+    This is the actual message sent over the network.
+*/
+message DispatcherToClient {
+    /** @struct Content
+        @brief The possible messages contained in a Dispatcher to client
+               message.
+        @warning Each Content message must contain exactly one of the
+                 possible messages.
+    */
+    message Content {
+        //! A services description message
+        optional ServicesDescription services_description   = 1;
+        //! A connection to sim lost message
+        optional ConnectionToSimLost connection_to_sim_lost = 2;
+    }
+    /** @property message
+        @brief A field containing one of the messages to be sent.
+    */
+    required Content message = 1;
+}
+
+/** @}*/

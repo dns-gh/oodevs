@@ -1,0 +1,191 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+import "client_simulation.proto";
+import "version.proto";
+
+package sword;
+
+/** @internal
+ *  @addtogroup Launcher
+ *  @{
+ */
+
+/** @struct ConnectionRequest
+    @brief Defines a request connection to launcher
+*/
+message ConnectionRequest {
+    //! launcher client version, used to check compatibility
+    required ProtocolVersion client_version = 1;
+}
+
+/** @struct ExerciseListRequest
+    @brief retrieve list of exercises available on launcher
+*/
+message ExerciseListRequest {}
+
+/** @struct SessionListRequest
+    @brief retrieve session list for an exercise
+*/
+message SessionListRequest {
+    //! exercise from which to list sessions
+    required string exercise = 1;
+}
+
+message SessionParameter {
+    required string key   = 1;
+    required string value = 2;
+}
+
+/** @struct SessionStartRequest
+    @brief start a session using the given exercise/session.
+*/
+message SessionStartRequest {
+    enum Type {
+        //! starts a simulation. Starts an embedded dispatcher if
+        //! specified in session.
+        simulation = 0;
+        //! starts a dispatcher.
+        dispatch   = 1;
+        //! starts a replayer.
+        replay     = 2;
+    }
+    //! exercise to be started
+    required string exercise               = 1;
+    //! session name (created with default parameters if it does not exist)
+    required string session                = 2 [ default = "default" ];
+    //! type of exercise session to start
+    required Type   type                   = 3;
+    //! load the specified checkpoint
+    optional string checkpoint             = 4;
+    //! list of overloaded session parameters
+    repeated SessionParameter   parameter  = 5;
+}
+
+/** @struct SessionStopRequest
+    @brief stop a given running session
+*/
+message SessionStopRequest {
+    //! exercise to stop
+    required string exercise = 1;
+    //! session to stop
+    required string session  = 2 [ default = "default" ];
+}
+
+/** @struct ProfileListRequest
+    @brief retrieve list of profiles for a given exercise
+*/
+message ProfileListRequest {
+    //! exercise to list profiles from
+    required string exercise = 1;
+}
+
+/** @struct ConnectedProfileListRequest
+    @brief retrieve list of connected profiles for a given exercise/session
+*/
+message ConnectedProfileListRequest {
+    //! exercise to list connected profiles from
+    required string exercise = 1;
+    //! session to list connected profiles from
+    required string session  = 2 [ default = "default" ];
+}
+
+/** @struct SessionParameterChangeRequest
+    @brief change session parameters
+*/
+message SessionParameterChangeRequest {
+    //! exercise to change parameter from
+    required string exercise             = 1;
+    //! session to change parameter from
+    required string session              = 2 [ default = "default" ];
+    //! if set, change checkpoint frequency
+    optional uint32 checkpoint_frequency = 3;
+    //! if set, change acceleration factor
+    optional uint32 acceleration_factor  = 4;
+}
+
+/** @struct SessionCommandExecutionRequest
+    @brief request command execution to running session
+*/
+message SessionCommandExecutionRequest {
+    //! exercise to send command to
+    required string     exercise        = 1;
+    //! session to send command to
+    required string     session         = 2 [ default = "default" ];
+    //! if set, save a checkpoint with specified name or default (timestamp)
+    optional string     save_checkpoint = 3;
+    //! if set to false, send a pause command; if set to true, set a
+    //! resume command
+    optional bool       set_running     = 4;
+    //! if set, change exercise time
+    optional DateTime   time_change     = 5;
+}
+
+/** @struct CheckpointListRequest
+    @brief retrieve list of checkpoints for a given exercise/session
+*/
+message CheckpointListRequest {
+    //! exercise to list checkpoint from
+    required string exercise = 1;
+    //! session to list checkpoint from
+    required string session  = 2 [ default = "default" ];
+}
+
+/** @struct CheckpointDeleteRequest
+    @brief delete checkpoint for a given exercise/session
+*/
+message CheckpointDeleteRequest {
+    //! exercise to delete checkpoint from
+    required string exercise   = 1;
+    //! session to delete checkpoint from
+    required string session    = 2 [ default = "default" ];
+    //! delete all checkpoints if not specified
+    repeated string checkpoint = 3;
+}
+
+/** @struct SessionNotification
+    @brief notification to specified exercise/session
+*/
+message SessionNotificationRequest {
+    message DirectoryChange {}
+    message Notification {
+        optional DirectoryChange    directory_change = 1;
+    }
+    //! exercise to send notification to
+    required string         exercise      = 1;
+    //! session to send notification to
+    required string         session       = 2;
+    //! notifiaction to send
+    required Notification   notification  = 3;
+}
+
+message AdminToLauncher {
+    message Content {
+        optional ConnectionRequest          connection_request        = 1;
+        optional SessionStartRequest        session_start_request     = 2;
+        optional SessionStopRequest         session_stop_request      = 3;
+        optional ExerciseListRequest        exercise_list_request     = 4;
+        optional SessionListRequest         session_list_request      = 5;
+        optional ProfileListRequest         profile_list_request      = 6;
+        optional ConnectedProfileListRequest
+            connected_profile_list_request    = 7;
+        optional SessionParameterChangeRequest
+            session_parameter_change_request  = 8;
+        optional SessionCommandExecutionRequest
+            session_command_execution_request = 9;
+        optional CheckpointListRequest      checkpoint_list_request   = 10;
+        optional CheckpointDeleteRequest    checkpoint_delete_request = 11;
+        optional SessionNotificationRequest session_notification      = 12;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}
+
+/** @}*/
