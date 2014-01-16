@@ -77,6 +77,9 @@ struct Event
     std::string info;
     std::string begin;
     std::string end;
+    std::string error_text;
+    int         error_code;
+    bool        read_only;
     bool        done;
     Action      action;
 private:

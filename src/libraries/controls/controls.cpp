@@ -116,6 +116,9 @@ namespace
         if( !event.action.target.empty() )
             SetAction( *dst.mutable_action(), event.action );
         dst.set_done( event.done );
+        dst.set_read_only( event.read_only );
+        dst.set_error_code( event.error_code );
+        dst.set_error_text( event.error_text );
     }
 
     Action GetAction( const sdk::Action& src )
@@ -138,6 +141,9 @@ namespace
         if( src.has_action() )
             dst.action = GetAction( src.action() );
         dst.done = src.done();
+        dst.read_only = src.read_only();
+        dst.error_code = src.error_code();
+        dst.error_text = src.error_text();
         return dst;
     }
 

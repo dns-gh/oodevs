@@ -18,7 +18,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+    <item row="0" column="1">
+        <widget class="QLineEdit" name="uuid"/>
+    </item>
+    <item row="1" column="0">
     <widget class="QLabel" name="nameLabel">
      <property name="text">
       <string>Name</string>
@@ -72,14 +75,41 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+    <item row="5" column="0">
+        <widget class="QLabel" name="error_code_label">
+            <property name="text">
+                <string>Error Code</string>
+            </property>
+        </widget>
+    </item>
+    <item row="5" column="1">
+        <widget class="QSpinBox" name="error_code"/>
+    </item>
+    <item row="6" column="0">
+        <widget class="QLabel" name="error_text_label">
+            <property name="text">
+                <string>Error Text</string>
+            </property>
+        </widget>
+    </item>
+    <item row="6" column="1">
+        <widget class="QLineEdit" name="error_text"/>
+    </item>
+    <item row="7" column="0">
+        <widget class="QCheckBox" name="read_only">
+            <property name="text">
+                <string>Read only</string>
+            </property>
+        </widget>
+    </item>
+    <item row="8" column="0">
     <widget class="QCheckBox" name="done">
      <property name="text">
       <string>Done</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="9" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Action</string>
@@ -115,7 +145,7 @@
      </layout>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="10" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -128,16 +158,14 @@
      </property>
     </spacer>
    </item>
-   <item row="8" column="0" colspan="2">
+   <item row="11" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="uuid"/>
-   </item>
+
   </layout>
  </widget>
  <resources/>
