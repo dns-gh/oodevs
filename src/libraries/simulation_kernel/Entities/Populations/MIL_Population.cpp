@@ -642,10 +642,10 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
     APPLY_ON_ELEMENTS(
     {
         if( element.IsDead() )
-            return;
+            continue;
         MT_Vector2D nearestPoint;
         if( !element.GetLocation().ComputeNearestPoint( position, nearestPoint ) )
-            return;
+            continue;
         const double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
@@ -665,11 +665,11 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
     APPLY_ON_ELEMENTS(
     {
         if( element.IsDead() )
-            return;
+            continue;
         MT_Vector2D nearestPointTmp;
         double rDistance;
         if( !element.GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
-            return;
+            continue;
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
@@ -967,7 +967,8 @@ void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2
 {
     if( destination.empty() )
         return;
-    APPLY_ON_ELEMENTS( element.Move( *destination[0] ); ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
+    APPLY_ON_CONCENTRATIONS( concentration.Move( *destination[0] ); )
+    APPLY_ON_FLOWS( flow.MoveAlong( *destination[0] ); ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
     UpdateBarycenter();
 }
 
