@@ -230,12 +230,11 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 
     TER_ObjectManager::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
-    collidingObjects_.clear();
-    collidingObjects_.reserve( objects.size() );
+    collidingObjects_.reserve( collidingObjects_.size() + objects.size() );
     for( auto it = objects.begin(); it != objects.end(); ++it )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-        collidingObjects_.push_back( &object );
+        NotifyObjectCollision( object );
         object.NotifyPopulationMovingInside( *this );
     }
 
@@ -659,6 +658,16 @@ void MIL_PopulationElement_ABC::NotifyUrbanDestructionStart()
             return;
         MIL_Report::PostEvent( **it, report::eRC_CloseCrowdUrbanDestruction, pKnPopulation );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::NotifyObjectCollision
+// Created: LDC 2014-01-16
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::NotifyObjectCollision( MIL_Object_ABC& object )
+{
+    if( std::find( collidingObjects_.begin(), collidingObjects_.end(), &object ) == collidingObjects_.end() )
+        collidingObjects_.push_back( &object );
 }
 
 // -----------------------------------------------------------------------------

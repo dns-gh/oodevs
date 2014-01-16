@@ -555,7 +555,6 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::Update()
 {
-    ClearCollisions();
     if( !IsValid() )
     {
         DetachFromDestConcentration();

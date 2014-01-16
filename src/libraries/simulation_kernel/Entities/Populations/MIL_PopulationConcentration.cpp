@@ -138,7 +138,6 @@ bool MIL_PopulationConcentration::Update()
 {
     if( pSplittingObject_ && pSplittingObject_->IsMarkedForDestruction() )
         pSplittingObject_ = 0;
-    ClearCollisions();
     if( !IsValid() )
     {
         if( pPullingFlow_ )

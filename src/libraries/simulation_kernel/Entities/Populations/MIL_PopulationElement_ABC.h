@@ -88,6 +88,8 @@ public:
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
     void NotifyUrbanDestructionStart();
+    void NotifyObjectCollision( MIL_Object_ABC& object );
+    void ClearCollisions();
     //@}
 
     //! @name Accessors
@@ -144,7 +146,6 @@ protected:
     //@{
     void UpdateDensity();
     void UpdateCollisions();
-    void ClearCollisions();
     //@}
 
     //! @name Network

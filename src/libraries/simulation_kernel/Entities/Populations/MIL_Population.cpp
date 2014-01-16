@@ -537,6 +537,18 @@ void MIL_Population::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::ClearCollisions
+// Created: LDC 2014-01-16
+// -----------------------------------------------------------------------------
+void MIL_Population::ClearCollisions()
+{
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (*it)->ClearCollisions();
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
+        (*it)->ClearCollisions();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::IsDead
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------

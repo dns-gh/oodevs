@@ -86,6 +86,7 @@ private:
     T_Agents agentsMovingInside_;
     T_Agents agentsDelayedEntering_;
     T_Populations populationsInside_;
+    T_Populations populationsMovingInside_;
     double height_;
     //@}
 };

@@ -55,6 +55,7 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
          >> agentsMovingInside_
          >> agentsDelayedEntering_
          >> populationsInside_
+         >> populationsMovingInside_
          >> height_;
 }
 
@@ -70,6 +71,7 @@ void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned
          << agentsMovingInside_
          << agentsDelayedEntering_
          << populationsInside_
+         << populationsMovingInside_
          << height_;
 }
 
@@ -197,6 +199,7 @@ void MIL_ObjectInteraction::UpdatePopulations( const TER_Localisation& location,
 void MIL_ObjectInteraction::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population )
 {
     populationsInside_.insert( &population );
+    populationsMovingInside_.insert( &population );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,6 +267,7 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
     agentsMovingInside_.clear();
     agentsDelayedEntering_.clear();
     populationsInside_.clear();
+    populationsMovingInside_.clear();
     ProcessInteractionEvents( object );
 }
 
@@ -311,9 +315,14 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
         if( object.CanInteractWithEntity() )
             object.ProcessPopulationInside( **it );
     }
+        
+    for( auto it = populationsMovingInside_.begin(); it != populationsMovingInside_.end(); ++it )
+        if( object.CanInteractWithEntity() )
+            (*it)->NotifyObjectCollision( object );
 
     agentsEntering_.clear();
     agentsExiting_.clear();
     agentsMovingInside_.clear();
     populationsInside_.clear();
+    populationsMovingInside_.clear();
 }
