@@ -50,7 +50,7 @@ public:
     void MoveAlong( const MT_Vector2D& destination );
     void CancelMove();
     virtual bool IsReady() const;
-    MIL_PopulationFlow* Split( T_PointList ::const_iterator it, const MT_Vector2D& point );
+    MIL_PopulationFlow* Split( CIT_PointList it, const MT_Vector2D& splittingPoint );
     //@}
 
     //! @name Accessors
@@ -63,6 +63,7 @@ public:
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const;
     const T_PointList& GetFlowShape() const;
+    void ApplyOnShape( const boost::function< bool( CIT_PointList itStart, CIT_PointList itEnd ) >& f ) const;
     //@}
 
     //! @name Concentration management
@@ -89,6 +90,11 @@ protected:
     MIL_PopulationFlow( MIL_Population& population, unsigned int nID );
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > > T_FlowCollisions;
+    //@}
+
     //! @name Helpers
     //@{
     virtual double GetMaxSpeed() const;
@@ -110,6 +116,8 @@ private:
     void SetSpeed( const double rSpeed );
     void UpdateLocation();
     void UpdateCrowdCollisions();
+    bool ComputeFlowCollisions( T_FlowCollisions& collisions, CIT_PointList itStart, CIT_PointList itEnd );
+    bool AddFlowCollision( const MT_Line& line, T_FlowCollisions& collisions, CIT_PointList itStart, CIT_PointList itEnd );
     //@}
 
     //! @name Notifications

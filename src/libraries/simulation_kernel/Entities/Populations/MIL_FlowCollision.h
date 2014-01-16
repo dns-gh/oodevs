@@ -12,6 +12,7 @@
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
 class MIL_PopulationFlow;
+class MT_Line;
 
 // =============================================================================
 /** @class  MIL_FlowCollision
@@ -50,7 +51,9 @@ public:
 private:
     //! @name Helpers
     //@{
-    void DoSplit();
+    void Split();
+    bool SplitOnSegment( CIT_PointList itStart, CIT_PointList itEnd );
+    void RemovedPassedOverFlows();
     //@}
 
 private:

@@ -107,6 +107,22 @@ bool MIL_FlowCollision::MarkedForDestruction() const
     return markedForDestruction_;
 }
 
+namespace
+{
+    bool HasFlowPassedOver( const MT_Vector2D& point, bool& hasPassedOver, CIT_PointList itStart, CIT_PointList itEnd )
+    {
+        MT_Line line( *itStart, *itEnd );
+        MT_Vector2D result;
+        double r = line.ProjectPointOnLine( point, result );
+        if( r >= -0.1 && r <= 1.1 /* && result == point_*/ ) // todo : epsilon et point
+        {
+            hasPassedOver = false;
+            return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision::Update
 // Created: JSR 2014-01-10
@@ -118,7 +134,7 @@ void MIL_FlowCollision::Update()
     const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( start_ == 0 ) // first update
     {
-        DoSplit();
+        Split();
         start_ = timeStep;
         return;
     }
@@ -126,7 +142,7 @@ void MIL_FlowCollision::Update()
     {
         start_ = timeStep;
         if( isFlowing_ )
-            DoSplit();
+            Split();
         else
         {
             isFlowing_ = true;
@@ -136,44 +152,37 @@ void MIL_FlowCollision::Update()
         }
     }
     if( isFlowing_ )
+        RemovedPassedOverFlows();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::RemovedPassedOverFlows
+// Created: JSR 2014-01-15
+// -----------------------------------------------------------------------------
+void MIL_FlowCollision::RemovedPassedOverFlows()
+{
+    int nIndex = 0;
+    for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
     {
-        int nIndex = 0;
-        for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
+        bool hasPassedOver = true;
+        MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
+        flow->ApplyOnShape( boost::bind( &HasFlowPassedOver, boost::cref( point_ ), boost::ref( hasPassedOver ), _1, _2 ) );
+        if( hasPassedOver )
         {
-            bool hasGone = true;
-            MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
-            const T_PointList& shape = flow->GetFlowShape();
-            CIT_PointList itStart = shape.begin();
-            CIT_PointList itEnd = itStart;
-            ++itEnd;
-            for( ; itEnd != shape.end(); ++itStart, ++itEnd )
-            {
-                MT_Line line( *itStart, *itEnd );
-                MT_Vector2D result;
-                double r = line.ProjectPointOnLine( point_, result );
-                if( r >= -0.1 && r <= 1.1 /* && result == point_*/ ) // todo : epsilon
-                {
-                    hasGone = false;
-                    break;
-                }
-            }
-            if( hasGone )
-            {
-                it = collidingFlows_.erase( it );
-                if( movingIndex_ > nIndex )
-                    --movingIndex_;
-                if( movingIndex_ >= collidingFlows_.size() )
-                    movingIndex_ = 0;
-            }
-            else
-            {
-                ++it;
-                ++nIndex;
-            }
+            it = collidingFlows_.erase( it );
+            if( movingIndex_ > nIndex )
+                --movingIndex_;
+            if( movingIndex_ >= collidingFlows_.size() )
+                movingIndex_ = 0;
         }
-        if( collidingFlows_.size() < 2 )
-            markedForDestruction_ = true;
+        else
+        {
+            ++it;
+            ++nIndex;
+        }
     }
+    if( collidingFlows_.size() < 2 )
+        markedForDestruction_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,26 +209,29 @@ void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FlowCollision::DoSplit
+// Name: MIL_FlowCollision::Split
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-void MIL_FlowCollision::DoSplit()
+void MIL_FlowCollision::Split()
 {
     MIL_PopulationFlow* flow = collidingFlows_[ movingIndex_ ];
-    const T_PointList& shape = flow->GetFlowShape();
-    CIT_PointList itStart = shape.begin();
-    CIT_PointList itEnd = itStart;
-    ++itEnd;
-    for( ; itEnd != shape.end(); ++itStart, ++itEnd )
+    flow->ApplyOnShape( boost::bind( &MIL_FlowCollision::SplitOnSegment, this, _1, _2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::SplitOnSegment
+// Created: JSR 2014-01-15
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::SplitOnSegment( CIT_PointList itStart, CIT_PointList itEnd )
+{
+    MT_Vector2D result;
+    MT_Line line( *itStart, *itEnd );
+    double r = line.ProjectPointOnLine( point_, result );
+    if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
     {
-        MT_Line line( *itStart, *itEnd );
-        MT_Vector2D result;
-        double r = line.ProjectPointOnLine( point_, result );
-        if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
-        {
-            going_ = flow->Split( itEnd, point_ );
-            isFlowing_ = false;
-            break;
-        }
+        going_ = collidingFlows_[ movingIndex_ ]->Split( itEnd, point_ );
+        isFlowing_ = false;
+        return true;
     }
+    return false;
 }
