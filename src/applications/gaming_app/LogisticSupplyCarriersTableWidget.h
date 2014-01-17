@@ -42,9 +42,8 @@ private slots:
 
 private:
     double ComputeMaxMass( const std::string& nature ) const;
-    std::pair< double, double > ComputeMassVolume( int row ) const;
-
     const kernel::EquipmentType::CarryingSupplyFunction* GetLogSupplyFunctionCarrying( int row ) const;
+    std::pair< double, double > ComputeMassVolume( const kernel::EquipmentType::CarryingSupplyFunction*, double maxMass, double maxVolume ) const;
 
 private:
     const T_CarrierTypes& types_;

@@ -59,22 +59,20 @@ void LogisticSupplyCarriersTableWidget::UpdateRow( int row )
 void LogisticSupplyCarriersTableWidget::Update()
 {
     for( int row = 0; row < model()->rowCount() - 1; ++row )
-    {
-        const auto function = GetLogSupplyFunctionCarrying( row );
-        if( !function )
-            continue;
-        const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
-        const auto fractions = ComputeMassVolume( row );
-        SetContent( row, eMass, locale().toString( 100 * fractions.first, 'g', 3 ) + "%",
-            fractions.first > 1 ? tr( "The convoy is unable to carry that much weight" ) :
-            fractions.first * maxMass < function->stockMinWeightCapacity_ ? tr( "The convoy is under its minimal mass threshold" ) :
-            "" );
-        const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
-        SetContent( row, eVolume, locale().toString( 100 * fractions.second, 'g', 3 ) + "%", 
-            fractions.second > 1 ? tr( "The convoy is unable to carry that much volume" ) :
-            fractions.second * maxVolume < function->stockMinVolumeCapacity_ ? tr( "The convoy is under its minimal volume threshold" ) :
-            "" );
-    }
+        if( const auto function = GetLogSupplyFunctionCarrying( row ) )
+        {
+            const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
+            const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
+            const auto fractions = ComputeMassVolume( function, maxMass, maxVolume );
+            SetContent( row, eMass, locale().toString( 100 * fractions.first, 'g', 3 ) + "%",
+                fractions.first > 1 ? tr( "The convoy is unable to carry that much weight" ) :
+                fractions.first * maxMass < function->stockMinWeightCapacity_ ? tr( "The convoy is under its minimal mass threshold" ) :
+                "" );
+            SetContent( row, eVolume, locale().toString( 100 * fractions.second, 'g', 3 ) + "%", 
+                fractions.second > 1 ? tr( "The convoy is unable to carry that much volume" ) :
+                fractions.second * maxVolume < function->stockMinVolumeCapacity_ ? tr( "The convoy is under its minimal volume threshold" ) :
+                "" );
+        }
 }
 
 double LogisticSupplyCarriersTableWidget::ComputeMaxMass( const std::string& nature ) const
@@ -85,17 +83,14 @@ double LogisticSupplyCarriersTableWidget::ComputeMaxMass( const std::string& nat
         const QString name = model()->data( model()->index( row, eName ), Qt::DisplayRole ).value< QString >();
         const int quantity = model()->data( model()->index( row, eValue ), Qt::UserRole ).value< int >();
         const auto function = GetLogSupplyFunctionCarrying( row );
-        if( !function )
-            continue;
-        if( function->stockNature_ == nature )
+        if( function && function->stockNature_ == nature )
             result += quantity * function->stockMaxWeightCapacity_;
     }
     return result;
 }
 
-std::pair< double, double > LogisticSupplyCarriersTableWidget::ComputeMassVolume( int row ) const
+std::pair< double, double > LogisticSupplyCarriersTableWidget::ComputeMassVolume( const kernel::EquipmentType::CarryingSupplyFunction* function, double maxMass, double maxVolume ) const
 {
-    const auto function = GetLogSupplyFunctionCarrying( row );
     if( !function )
         return std::make_pair( 0, 0 );
     double mass = 0;
@@ -111,8 +106,6 @@ std::pair< double, double > LogisticSupplyCarriersTableWidget::ComputeMassVolume
             volume += it.value() * it2->second.type_->GetUnitVolume();
         }
     }
-    const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
-    const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
     const double total = ComputeMaxMass( function->stockNature_ );
     return std::make_pair( mass / total, volume * maxMass / total / maxVolume );
 }
@@ -121,7 +114,10 @@ bool LogisticSupplyCarriersTableWidget::IsOverloaded() const
 {
     for( int row = 0; row < model()->rowCount() - 1; ++row )
     {
-        const auto fractions = ComputeMassVolume( row );
+        const auto function = GetLogSupplyFunctionCarrying( row );
+        const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
+        const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
+        const auto fractions = ComputeMassVolume( function, maxMass, maxVolume );
         if( fractions.first > 1 || fractions.second > 1 )
             return true;
     }
@@ -133,14 +129,11 @@ bool LogisticSupplyCarriersTableWidget::IsUnderloaded() const
     for( int row = 0; row < model()->rowCount() - 1; ++row )
     {
         const auto function = GetLogSupplyFunctionCarrying( row );
-        if( !function )
-            continue;
-        const auto fractions = ComputeMassVolume( row );
         const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
-        if( fractions.first * maxMass < function->stockMinWeightCapacity_ )
-            return true;
         const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
-        if( fractions.second * maxVolume < function->stockMinVolumeCapacity_ )
+        const auto fractions = ComputeMassVolume( function, maxMass, maxVolume );
+        if( fractions.first * maxMass < function->stockMinWeightCapacity_ ||
+            fractions.second * maxVolume < function->stockMinVolumeCapacity_ )
             return true;
     }
     return false;
