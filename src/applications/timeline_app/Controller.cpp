@@ -95,6 +95,11 @@ namespace
         return edit.dateTime().toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
     }
 
+    int ToInteger( const QSpinBox& spinBox )
+    {
+        return spinBox.value();
+    }
+
     void WriteDummyEvent( Ui::CreateEvent& ui )
     {
         ui.name->setText( "some name" );
@@ -105,12 +110,15 @@ namespace
 
     void ReadEvent( Event& dst, const Ui::CreateEvent& ui )
     {
-        dst.uuid  = ToString( *ui.uuid );
-        dst.name  = ToString( *ui.name );
-        dst.info  = ToString( *ui.info );
-        dst.begin = ToString( *ui.begin );
-        dst.end   = ToBool( *ui.endLabel ) ? std::max( ToString( *ui.end ), dst.begin ) : std::string();
-        dst.done  = ToBool( *ui.done );
+        dst.uuid       = ToString( *ui.uuid );
+        dst.name       = ToString( *ui.name );
+        dst.info       = ToString( *ui.info );
+        dst.begin      = ToString( *ui.begin );
+        dst.end        = ToBool( *ui.endLabel ) ? std::max( ToString( *ui.end ), dst.begin ) : std::string();
+        dst.error_code = ToInteger( *ui.error_code );
+        dst.error_text = ToString( *ui.error_text );
+        dst.read_only  = ToBool( *ui.read_only );
+        dst.done       = ToBool( *ui.done );
         const std::string target = ToString( *ui.target );
         if( target.empty() )
             return;
@@ -391,14 +399,20 @@ namespace
             ",info:%3"
             ",begin:%4"
             ",end:%5"
-            ",done:%6"
-            ",action:%7"
+            ",error_code:%6"
+            ",error_text:%7"
+            ",read_only:%8"
+            ",done:%9"
+            ",action:%10"
             "}" )
             .arg( QString::fromStdString( event.uuid ) )
             .arg( QString::fromStdString( event.name ) )
             .arg( QString::fromStdString( event.info ) )
             .arg( QString::fromStdString( event.begin ) )
             .arg( QString::fromStdString( event.end ) )
+            .arg( event.error_code )
+            .arg( QString::fromStdString( event.error_text ) )
+            .arg( event.read_only )
             .arg( event.done )
             .arg( Dump( event.action ) );
     }

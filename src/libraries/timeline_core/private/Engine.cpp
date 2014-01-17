@@ -104,6 +104,11 @@ namespace
         return SetValue( dst, key, CefV8Value::CreateBool( value ) );
     }
 
+    CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, int value )
+    {
+        return SetValue( dst, key, CefV8Value::CreateInt( value ) );
+    }
+
     CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, size_t argc, const Adapter::T_Operand& operand )
     {
         CefRefPtr< CefV8Handler > handler( new Adapter( key, argc, operand ) );
@@ -221,6 +226,9 @@ namespace
         SetValue( data, "info", event.info );
         SetValue( data, "begin", event.begin );
         SetValue( data, "end", event.end );
+        SetValue( data, "error_text", event.error_text );
+        SetValue( data, "error_code", event.error_code );
+        SetValue( data, "read_only", event.read_only );
         SetValue( data, "done", event.done );
         if( event.action.target.empty() )
             return;
@@ -238,7 +246,10 @@ namespace
         dst.info  = GetString( src, "info" );
         dst.begin = GetString( src, "begin" );
         dst.end   = GetString( src, "end" );
-        dst.done  = GetBool( src, "done" );
+        dst.error_text = GetString( src, "error_text" );
+        dst.error_code = GetInteger( src, "error_code" );
+        dst.read_only  = GetBool( src, "read_only" );
+        dst.done       = GetBool( src, "done" );
         auto action = src->GetValue( "action" );
         if( !action )
             return dst;
