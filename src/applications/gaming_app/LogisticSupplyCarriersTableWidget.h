@@ -34,6 +34,7 @@ public:
         const T_AvailableDotations& dotations );
 
     bool IsOverloaded() const;
+    bool IsUnderloaded() const;
 
 private slots:
     void Update();

@@ -1577,11 +1577,19 @@ Voulez-vous le remplacer ?</translation>
     <name>LogisticSupplyCarriersTableWidget</name>
     <message>
         <source>The convoy is unable to carry that much weight</source>
-        <translation>Attention, le convoi ne peut pas transporter la masse demandée</translation>
+        <translation>Le convoi ne peut pas transporter la masse demandée</translation>
     </message>
     <message>
         <source>The convoy is unable to carry that much volume</source>
-        <translation>Attention, le convoi ne peut pas transporter le volume demandé</translation>
+        <translation>Le convoi ne peut pas transporter le volume demandé</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass threshold</source>
+        <translation>Le convoi est sous son seuil minimal en masse transportée</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal volume threshold</source>
+        <translation>Le convoi est sous son seuil minimal en volume transporté</translation>
     </message>
 </context>
 <context>
@@ -1644,6 +1652,10 @@ Voulez-vous le remplacer ?</translation>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
     </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1670,6 +1682,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>The convoy is unable to carry that much weight and/or volume</source>
         <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation type="unfinished">Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
     </message>
 </context>
 <context>

@@ -60,11 +60,20 @@ void LogisticSupplyCarriersTableWidget::Update()
 {
     for( int row = 0; row < model()->rowCount() - 1; ++row )
     {
+        const auto function = GetLogSupplyFunctionCarrying( row );
+        if( !function )
+            continue;
+        const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
         const auto fractions = ComputeMassVolume( row );
         SetContent( row, eMass, locale().toString( 100 * fractions.first, 'g', 3 ) + "%",
-            fractions.first > 1 ? tr( "The convoy is unable to carry that much weight" ) : "" );
+            fractions.first > 1 ? tr( "The convoy is unable to carry that much weight" ) :
+            fractions.first * maxMass < function->stockMinWeightCapacity_ ? tr( "The convoy is under its minimal mass threshold" ) :
+            "" );
+        const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
         SetContent( row, eVolume, locale().toString( 100 * fractions.second, 'g', 3 ) + "%", 
-            fractions.second > 1 ? tr( "The convoy is unable to carry that much volume" ) : "" );
+            fractions.second > 1 ? tr( "The convoy is unable to carry that much volume" ) :
+            fractions.second * maxVolume < function->stockMinVolumeCapacity_ ? tr( "The convoy is under its minimal volume threshold" ) :
+            "" );
     }
 }
 
@@ -114,6 +123,24 @@ bool LogisticSupplyCarriersTableWidget::IsOverloaded() const
     {
         const auto fractions = ComputeMassVolume( row );
         if( fractions.first > 1 || fractions.second > 1 )
+            return true;
+    }
+    return false;
+}
+
+bool LogisticSupplyCarriersTableWidget::IsUnderloaded() const
+{
+    for( int row = 0; row < model()->rowCount() - 1; ++row )
+    {
+        const auto function = GetLogSupplyFunctionCarrying( row );
+        if( !function )
+            continue;
+        const auto fractions = ComputeMassVolume( row );
+        const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
+        if( fractions.first * maxMass < function->stockMinWeightCapacity_ )
+            return true;
+        const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
+        if( fractions.second * maxVolume < function->stockMinVolumeCapacity_ )
             return true;
     }
     return false;
