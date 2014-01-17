@@ -36,24 +36,47 @@ FeatureNameParser::~FeatureNameParser()
 // Name: FeatureNameParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool FeatureNameParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
+bool FeatureNameParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
 {
-    QString hintSearch;
-    bool found = false;
-    if( lastRequest_ == content )
-        found =  searcher_->FindNext( result, hintSearch );
-    else
-        found =  searcher_->Search( content, result, hintSearch );
-    hint.append( hintSearch );
-    lastRequest_ = content;
-    return found;
+    try
+    {
+        if( content.size() != 1 )
+                return false;
+        const QString value = content[0];
+        QString hintSearch;
+        bool found = false;
+        if( lastRequest_ == value )
+            found =  searcher_->FindNext( result, hintSearch );
+        else
+            found =  searcher_->Search( value, result, hintSearch );
+        hint.append( hintSearch );
+        lastRequest_ = value;
+        return found;
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: FeatureNameParser::GetNumberOfParameters
-// Created: AME 2010-03-11
+// Name: FeatureNameParser::GetDescriptor
+// Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-int FeatureNameParser::GetNumberOfParameters() const
+const LocationParserDescriptor& FeatureNameParser::GetDescriptor() const
 {
-    return 1;
+    static const LocationParserDescriptor desc = {
+        QStringList() << QString(),
+        QList< int >() << INT_MAX,
+    };
+    return desc;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FeatureNameParser::Split
+// Created: BAX 2014-01-16
+// -----------------------------------------------------------------------------
+QStringList FeatureNameParser::Split( const QString& input ) const
+{
+    return QStringList() << input;
 }

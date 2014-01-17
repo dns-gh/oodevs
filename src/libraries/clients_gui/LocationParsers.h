@@ -40,8 +40,6 @@ public:
     //! @name Operations
     //@{
     LocationParser_ABC& GetParser( int parserId );
-    bool Parse( int parserId, const QString& content, geometry::Point2f& result, QStringList& hint );
-    bool Parse( int parserId, const QString& contentX, const QString& contentY, geometry::Point2f& result, QStringList& hint );
     void AddParser( LocationParser_ABC* parser, int id );
     //@}
 

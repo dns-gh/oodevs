@@ -32,11 +32,16 @@ public:
     virtual ~XyParser();
     //@}
 
+    //! @name LocationParser_ABC methods
+    //@{
+    virtual const LocationParserDescriptor& GetDescriptor() const;
+    virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual QStringList Split( const QString& input ) const;
+    //@}
+
     //! @name Operations
     //@{
     bool Parse( const QString& content, geometry::Point2f& result, QString& hint ) const;
-    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
-    virtual int GetNumberOfParameters() const;
     //@}
 };
 

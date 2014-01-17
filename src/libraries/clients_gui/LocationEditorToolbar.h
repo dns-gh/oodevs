@@ -63,7 +63,6 @@ private:
     //! @name Helpers
     //@{
     bool GetPosition( geometry::Point2f& point );
-    void SetAspect( bool oneValue, bool red );
     //@}
 
     //! @name Types

@@ -43,44 +43,6 @@ LocationParsers::~LocationParsers()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationParsers::Parse
-// Created: AME 2010-03-11
-// -----------------------------------------------------------------------------
-bool LocationParsers::Parse( int parserId, const QString& content, geometry::Point2f& result, QStringList& hint )
-{
-    auto it = parsers_.find( parserId );
-    if( it == parsers_.end() || it->second->GetNumberOfParameters() != 1 )
-         throw MASA_EXCEPTION( "Invalid parser id or wrong number of parser parameter for this id." );
-    try
-    {
-        return it->second->Parse( content, result, hint );
-    }
-    catch( ... )
-    {
-        return false;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationParsers::Parse
-// Created: AME 2010-03-11
-// -----------------------------------------------------------------------------
-bool LocationParsers::Parse( int parserId, const QString& contentX, const QString& contentY, geometry::Point2f& result, QStringList& hint )
-{
-    auto it = parsers_.find( parserId );
-    if( it == parsers_.end() || it->second->GetNumberOfParameters() != 2 )
-        throw MASA_EXCEPTION( "Invalid parser id or wrong number of parser parameter for this id." );
-    try
-    {
-        return it->second->Parse( contentX + ":" + contentY, result, hint );
-    }
-    catch( ... )
-    {
-        return false;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationParsers::GetParser
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------

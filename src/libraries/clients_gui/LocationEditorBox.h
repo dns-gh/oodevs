@@ -10,6 +10,9 @@
 #ifndef __LocationEditorBox_h_
 #define __LocationEditorBox_h_
 
+#include <vector>
+#include <QtGui/QValidator>
+
 namespace kernel
 {
     class CoordinateSystems;
@@ -22,9 +25,17 @@ namespace gui
 {
      class LocationParsers;
      class LocationParser_ABC;
-     class RichPushButton;
-     class RichLineEdit;
-     template< typename T > class RichWidget;
+}
+
+namespace gui
+{
+struct Field
+{
+    QLabel*    label;
+    QLineEdit* edit;
+    QString    last;
+};
+
 // =============================================================================
 /** @class  LocationEditorBox
     @brief  LocationEditorBox
@@ -46,7 +57,6 @@ public:
     void FillDefaultMenu();
     void AddParser( LocationParser_ABC* parser, const QString& name );
     bool GetPosition( geometry::Point2f& result );
-    void SelectDefaultParser( int index );
     void UpdateField( const geometry::Point2f& position );
     //@}
 
@@ -54,32 +64,29 @@ private slots:
     //! @name Slots
     //@{
     void SelectParser( int index );
-    void GetSelectedItemInSubList( int index );
+    void SelectHint( int index );
+    QValidator::State Complete( QString& data, int idx );
+    QValidator::State Complete( QString& data, int idx, Field& field );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void UpdateParamZone( int index );
-    void SetAspect( bool oneValue, bool red );
+    void UpdateParamZone();
+    void SetValid( bool valid );
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< LocationParsers > parsers_;
-    RichLineEdit* latitude_;
-    RichLineEdit* longitude_;
-    QLabel* latitudeLabel_;
-    QLabel* longitudeLabel_;
-    RichPushButton* choiceParserButton_;
-    kernel::ContextMenu* parserMenu_;
-    RichLineEdit* singleField_;
-    QMenu* subMenu_;
-    RichWidget< QListWidget >* list_;
-    QWidget* coordBox_;
-    int parserSelected_;
+    std::auto_ptr< LocationParsers >       parsers_;
+    LocationParser_ABC*                    current_;
+    QPushButton*                           combo_;
+    kernel::ContextMenu*                   menu_;
+    QMenu*                                 subMenu_;
+    QListWidget*                           hints_;
+    std::vector< Field >                   fields_;
     //@}
 };
 }

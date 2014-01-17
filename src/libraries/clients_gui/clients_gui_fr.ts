@@ -1194,24 +1194,24 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location: </source>
-        <translation>Localiser: </translation>
+        <source>Location</source>
+        <translation>Emplacement</translation>
     </message>
     <message>
-        <source>long: </source>
-        <translation>long: </translation>
+        <source>Lat</source>
+        <translation></translation>
     </message>
     <message>
-        <source>lat: </source>
-        <translation>lat: </translation>
+        <source>Long</source>
+        <translation></translation>
     </message>
     <message>
-        <source>y: </source>
-        <translation>y: </translation>
+        <source>Y</source>
+        <translation></translation>
     </message>
     <message>
-        <source>x: </source>
-        <translation>x: </translation>
+        <source>X</source>
+        <translation></translation>
     </message>
 </context>
 <context>

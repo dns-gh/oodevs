@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "XyParser.h"
 
+#include "clients_kernel/Tools.h"
+
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -58,34 +60,57 @@ bool XyParser::Parse( const QString& content, geometry::Point2f& result, QString
 // Name: XyParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool XyParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
+bool XyParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
 {
-    QStringList listValue = QStringList::split( ":", content );
-    QString hintX = listValue[ 0 ].stripWhiteSpace();
-    QString hintY = listValue[ 1 ].stripWhiteSpace();
+    try
+    {
+        if( content.size() != 2 )
+            return false;
+        QString hintX = content[ 0 ].stripWhiteSpace();
+        QString hintY = content[ 1 ].stripWhiteSpace();
 
-    float x, y;
-    std::stringstream strX( hintX.toStdString() );
-    strX >> x ;
-    if( ! strX )
-        return false;
-    std::stringstream strY( hintY.toStdString() );
-    strY >> y ;
-    if( ! strY )
-        return false;
+        float x, y;
+        std::stringstream strX( hintX.toStdString() );
+        strX >> x ;
+        if( ! strX )
+            return false;
+        std::stringstream strY( hintY.toStdString() );
+        strY >> y ;
+        if( ! strY )
+            return false;
 
-    hint.append( hintX );
-    hint.append( hintY );
+        hint.append( hintX );
+        hint.append( hintY );
 
-    result.Set( x, y );
+        result.Set( x, y );
         return true;
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: XyParser::GetNumberOfParameters
-// Created: AME 2010-03-11
+// Name: XyParser::GetDescriptor
+// Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-int XyParser::GetNumberOfParameters() const
+const LocationParserDescriptor& XyParser::GetDescriptor() const
 {
-    return 2;
+    static const LocationParserDescriptor desc = {
+        QStringList()
+            << tools::translate( "gui::LocationEditorBox", "Y" )
+            << tools::translate( "gui::LocationEditorBox", "X" ),
+        QList< int >() << INT_MAX << INT_MAX,
+    };
+    return desc;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XyParser::Split
+// Created: BAX 2014-01-16
+// -----------------------------------------------------------------------------
+QStringList XyParser::Split( const QString& input ) const
+{
+    return input.split( ":" );
 }

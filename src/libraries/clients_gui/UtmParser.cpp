@@ -40,47 +40,31 @@ UtmParser::~UtmParser()
 // Name: UtmParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool UtmParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
+bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
 {
     // "31 NEA 00000 00000"
     try
     {
-        QString strContent = content;
-        strContent.remove( ' ' );
-        bool bOk = false;
-        strContent.left( 2 ).toInt( &bOk );
-        if( !bOk )
-            strContent = zone_.c_str() + strContent;
-        if( strContent.length() < 15 )
-            strContent = Fill( strContent );
-        result = converter_( strContent.toStdString() );
-        hint.append( strContent );
+        if( content.size() > 3 )
+            return false;
+        hint = content;
+        while( hint.size() < 3 )
+            hint << QString();
+        for( auto it = hint.begin(); it != hint.end(); ++it )
+            it->remove( ' ' );
+        bool ok = false;
+        hint[0].left( 2 ).toInt( &ok );
+        if( !ok )
+            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( 5 );
+        for( int i = 1; i < hint.size(); ++i )
+            hint[i] = hint[i].left( 5 );
+        result = converter_( hint.join( "" ).toStdString() );
         return true;
     }
     catch( ... )
     {
         return false;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UtmParser::Fill
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-QString UtmParser::Fill( QString value )
-{
-    int missing = 15 - value.length();
-    if( missing <= 0 || missing > 10 )
-        return value;
-    const int northMissing = missing / 2;
-    QString north;
-    north.fill( '0', northMissing );
-    const int eastMissing  = missing - northMissing;
-    QString east;
-    east.fill( '0', eastMissing );
-    value.insert( 10 - northMissing, north );
-    value.insert( 15 - eastMissing, east );
-    return value;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +79,27 @@ void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UtmParser::GetNumberOfParameters
-// Created: AME 2010-03-11
+// Name: UtmParser::GetDescriptor
+// Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-int UtmParser::GetNumberOfParameters() const
+const LocationParserDescriptor& UtmParser::GetDescriptor() const
 {
-    return 1;
+    static const LocationParserDescriptor desc = {
+        QStringList() << QString() << QString() << QString(),
+        QList< int >() << 5 << 5 << 5,
+    };
+    return desc;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UtmParser::Split
+// Created: BAX 2014-01-16
+// -----------------------------------------------------------------------------
+QStringList UtmParser::Split( const QString& input ) const
+{
+    int left = std::max( 0, input.size() - 5 ) / 2;
+    return QStringList()
+        << input.left( 5 )
+        << input.mid( 5, left )
+        << input.mid( 5 + left );
 }

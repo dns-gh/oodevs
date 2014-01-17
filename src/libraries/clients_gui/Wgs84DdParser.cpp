@@ -9,7 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "Wgs84DdParser.h"
+
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 
@@ -35,34 +37,57 @@ Wgs84DdParser::~Wgs84DdParser()
 // Name: Wgs84DdParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DdParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
 {
-    QStringList listValue = QStringList::split( ":", content );
-    QString hintX = listValue[ 0 ].stripWhiteSpace();
-    QString hintY = listValue[ 1 ].stripWhiteSpace();
+    try
+    {
+        if( content.size() != 2 )
+            return false;
+        QString hintX = content[ 0 ].stripWhiteSpace();
+        QString hintY = content[ 1 ].stripWhiteSpace();
 
-    float x, y;
-    std::stringstream strX( hintX.toStdString() );
-    strX >> x ;
-    if( ! strX )
-        return false;
-    std::stringstream strY( hintY.toStdString() );
-    strY >> y ;
-    if( ! strY )
-        return false;
-    hint.append( hintX );
-    hint.append( hintY );
+        float x, y;
+        std::stringstream strX( hintX.toStdString() );
+        strX >> x ;
+        if( ! strX )
+            return false;
+        std::stringstream strY( hintY.toStdString() );
+        strY >> y ;
+        if( ! strY )
+            return false;
+        hint.append( hintX );
+        hint.append( hintY );
 
-    geometry::Point2d point( x, y );
-    result = converter_.ConvertFromGeo( point );
-    return true;
+        geometry::Point2d point( x, y );
+        result = converter_.ConvertFromGeo( point );
+        return true;
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Wgs84DdParser::GetNumberOfParameters
-// Created: AME 2010-03-11
+// Name: Wgs84DdParser::GetDescriptor
+// Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-int Wgs84DdParser::GetNumberOfParameters() const
+const LocationParserDescriptor& Wgs84DdParser::GetDescriptor() const
 {
-    return 2;
+    static const LocationParserDescriptor desc = {
+        QStringList()
+            << tools::translate( "gui::LocationEditorBox", "Lat" )
+            << tools::translate( "gui::LocationEditorBox", "Long" ),
+        QList< int >() << INT_MAX << INT_MAX,
+    };
+    return desc;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Wgs84DdParser::Split
+// Created: BAX 2014-01-16
+// -----------------------------------------------------------------------------
+QStringList Wgs84DdParser::Split( const QString& input ) const
+{
+    return input.split( ":" );
 }
