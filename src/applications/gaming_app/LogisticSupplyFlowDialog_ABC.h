@@ -44,7 +44,7 @@ class Dotation;
 class StaticModel;
 class SupplyStates;
 class LogisticSupplyAvailabilityTableWidget;
-class LogisticSupplyExclusiveListWidget;
+class LogisticSupplyCarriersTableWidget;
 
 // =============================================================================
 /** @class  LogisticSupplyFlowDialog_ABC
@@ -176,7 +176,7 @@ protected:
 
     QTabWidget* tabs_;
     LogisticSupplyAvailabilityTableWidget* resourcesTable_;
-    LogisticSupplyAvailabilityTableWidget* carriersTable_;
+    LogisticSupplyCarriersTableWidget* carriersTable_;
 
     QListView* waypointList_;
     QCheckBox* carriersUseCheck_;

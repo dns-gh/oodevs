@@ -1574,11 +1574,11 @@ Do you want to replace it?</translation>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
     <message>
-        <source>Warning, the convoy is unable to carry that much weight</source>
+        <source>The convoy is unable to carry that much weight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning, the convoy is unable to carry that much volume</source>
+        <source>The convoy is unable to carry that much volume</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1634,6 +1634,14 @@ Do you want to replace it?</translation>
         <source>Pull supply flow</source>
         <translation>Pull supply flow</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation>The convoy is unable to carry that much weight and/or volume</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1652,6 +1660,14 @@ Do you want to replace it?</translation>
     <message>
         <source>Resupply</source>
         <translation>Resupply</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation>The convoy is unable to carry that much weight and/or volume</translation>
     </message>
 </context>
 <context>

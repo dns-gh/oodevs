@@ -12,6 +12,7 @@
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -26,6 +27,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
@@ -158,6 +160,12 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
+    if( carriersTable_->IsOverloaded() )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+        return;
+    }
+
     if( pRecipientSelected_ )
         GetSuppliesFromTable( *pRecipientSelected_ );
     T_QuantitiesMap carriers;

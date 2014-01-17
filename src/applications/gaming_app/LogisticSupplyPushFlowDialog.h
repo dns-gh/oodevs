@@ -12,6 +12,8 @@
 
 #include "LogisticSupplyFlowDialog_ABC.h"
 
+class LogisticSupplyExclusiveListWidget;
+
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
     @brief  LogisticSupplyPushFlowDialog

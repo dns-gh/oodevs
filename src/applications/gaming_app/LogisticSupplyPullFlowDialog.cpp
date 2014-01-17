@@ -11,6 +11,7 @@
 #include "LogisticSupplyPullFlowDialog.h"
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -163,6 +164,11 @@ void LogisticSupplyPullFlowDialog::Validate()
 {
     if( !selected_ || !supplier_ )
         return;
+    if( carriersTable_->IsOverloaded() )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+        return;
+    }
 
     resourcesTable_->GetQuantities( supplierSupplies_ );
     T_QuantitiesMap carriers;

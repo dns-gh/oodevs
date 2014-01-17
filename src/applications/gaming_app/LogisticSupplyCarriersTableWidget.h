@@ -11,6 +11,7 @@
 #define LogisticSupplyCarriersTableWidget_h
 
 #include "LogisticSupplyAvailabilityTableWidget.h"
+#include "clients_kernel/EquipmentType.h"
 
 class Dotation;
 
@@ -32,14 +33,17 @@ public:
         const T_CarrierTypes& types, const LogisticSupplyAvailabilityTableWidget& resources,
         const T_AvailableDotations& dotations );
 
+    bool IsOverloaded() const;
+
 private slots:
     void Update();
     void UpdateRow( int row );
 
 private:
     double ComputeMaxMass( const std::string& nature ) const;
-    double ComputeMass( const std::string& nature ) const;
-    double ComputeVolume( const std::string& nature ) const;
+    std::pair< double, double > ComputeMassVolume( int row ) const;
+
+    const kernel::EquipmentType::CarryingSupplyFunction* GetLogSupplyFunctionCarrying( int row ) const;
 
 private:
     const T_CarrierTypes& types_;

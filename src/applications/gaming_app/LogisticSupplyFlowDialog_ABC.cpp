@@ -11,7 +11,6 @@
 #include "LogisticSupplyFlowDialog_ABC.h"
 #include "moc_LogisticSupplyFlowDialog_ABC.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
-#include "LogisticSupplyExclusiveListWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
