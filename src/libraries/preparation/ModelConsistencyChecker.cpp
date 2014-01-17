@@ -17,7 +17,6 @@
 #include "LimitsModel.h"
 #include "LogisticAttribute.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttribute.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
@@ -33,9 +32,9 @@
 
 #include "clients_gui/EntityType.h"
 #include "clients_gui/Infrastructure_ABC.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/Tools.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
@@ -49,7 +48,6 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -57,7 +55,6 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Object_ABC.h"
@@ -67,9 +64,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-
 #include "ENT/ENT_Tr.h"
-
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"
@@ -312,7 +307,7 @@ void ModelConsistencyChecker::CheckStockInitialization()
 
 namespace
 {
-    void CompareConsumptionAndStock( const LogisticHierarchiesBase& pLogHierarchy, const TacticalHierarchies& tacticalHierarchy, std::vector< std::string >& missingStocks, const ::StaticModel& staticModel )
+    void CompareConsumptionAndStock( const gui::LogisticHierarchiesBase& pLogHierarchy, const TacticalHierarchies& tacticalHierarchy, std::vector< std::string >& missingStocks, const ::StaticModel& staticModel )
     {
         tools::Iterator< const kernel::Entity_ABC& > logChildIt = pLogHierarchy.CreateSubordinateIterator();
 
@@ -379,11 +374,10 @@ void ModelConsistencyChecker::CheckMissingStock()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const LogisticLevelAttribute* attribute = automat.Retrieve< LogisticLevelAttribute >();
-        if( attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( automat.Get< gui::LogisticBase >().IsBase() )
         {
             std::vector< std::string > missingStocks;
-            CompareConsumptionAndStock( automat.Get< LogisticHierarchiesBase >(), automat.Get< TacticalHierarchies >(), missingStocks, staticModel_ );
+            CompareConsumptionAndStock( automat.Get< gui::LogisticHierarchiesBase >(), automat.Get< TacticalHierarchies >(), missingStocks, staticModel_ );
             if( !missingStocks.empty() )
             {
                 std::string optional;
@@ -455,7 +449,7 @@ void ModelConsistencyChecker::CheckLogisticInitialization()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() );
+        const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( automat.Retrieve< gui::LogisticHierarchiesBase >() );
         const Entity_ABC* superior = hierarchy->GetSuperior();
         if( !superior )
             AddError( eLogisticInitialization, &automat );
@@ -663,7 +657,7 @@ namespace
 {
     bool IsLogisticBaseFormation( const Formation_ABC& formation )
     {
-        if( formation.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( formation.Get< gui::LogisticBase >().IsBase() )
             return true;
         const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( formation.Retrieve< TacticalHierarchies >() );
         if( !hierarchy )
@@ -702,7 +696,7 @@ void ModelConsistencyChecker::CheckLogisticFormation()
         const kernel::AutomatType& type = automat.Get< gui::EntityType< kernel::AutomatType > >().GetType();
         if( !type.HasLogistics() )
             continue;
-        if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( automat.Get< gui::LogisticBase >().IsBase() )
             continue;
         const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( automat.Retrieve< TacticalHierarchies >() );
         if( hierarchy && hierarchy->GetSuperior() )
@@ -728,9 +722,9 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
         const kernel::AutomatType& type = automat.Get< gui::EntityType< kernel::AutomatType > >().GetType();
         if( !type.HasLogistics() )
             continue;
-        if( automat.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+        if( !automat.Get< gui::LogisticBase >().IsBase() )
             continue;
-        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( automat.Retrieve< LogisticHierarchiesBase >() ) );
+        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( automat.Retrieve< gui::LogisticHierarchiesBase >() ) );
         if( hierarchy->CleanBadSubordinates() )
         {
             AddError( eBadLogisticSubordinate, &automat );
@@ -741,9 +735,9 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
     while( itFormations.HasMoreElements() )
     {
         const Formation_ABC& formation = itFormations.NextElement();
-        if( formation.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+        if( !formation.Get< gui::LogisticBase >().IsBase() )
             continue;
-        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( formation.Retrieve< LogisticHierarchiesBase >() ) );
+        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( formation.Retrieve< gui::LogisticHierarchiesBase >() ) );
         if( hierarchy->CleanBadSubordinates() )
         {
             AddError( eBadLogisticSubordinate, &formation );
@@ -753,7 +747,7 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
         while( children.HasMoreElements() )
         {
             const kernel::Entity_ABC& entity = children.NextElement();
-            const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+            const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< gui::LogisticHierarchiesBase >() );
             if( subordinateLogHierarchy && !subordinateLogHierarchy->HasQuotas() )
                 AddError( eBadQuotas, &entity );
         }

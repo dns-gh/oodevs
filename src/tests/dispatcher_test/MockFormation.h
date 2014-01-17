@@ -43,7 +43,6 @@ MOCK_BASE_CLASS( MockFormation, dispatcher::Formation_ABC )
     MOCK_METHOD( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
     MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
     MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Team_ABC& ), SetSuperiorTeam );
-    MOCK_METHOD( GetLogisticLevel, 0 );
     MOCK_METHOD( GetLogisticEntity, 0 );
     MOCK_METHOD( GetApp6Symbol, 0);
 

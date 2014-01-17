@@ -11,6 +11,7 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
 #include "LogisticSupplyValuesTableWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -27,17 +28,18 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/TeamsModel.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/AutomatType.h"
-#include "clients_kernel/DotationType.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/SimulationSenders.h"
+
 #include <tools/Iterator.h>
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
@@ -186,13 +188,10 @@ LogisticSupplyChangeQuotasDialog::~LogisticSupplyChangeQuotasDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) )
+    if( profile_.CanBeOrdered( agent ) && agent.Get< gui::LogisticBase >().IsBase() )
     {
-        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        {
-            selected_.Set( agent );
-            menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
-        }
+        selected_.Set( agent );
+        menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
     }
 }
 
@@ -202,13 +201,10 @@ void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& age
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const kernel::Formation_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) )
+    if( profile_.CanBeOrdered( agent ) && agent.Get< gui::LogisticBase >().IsBase() )
     {
-        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        {
-            selected_.Set( agent );
-            menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
-        }
+        selected_.Set( agent );
+        menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
     }
 }
 
@@ -227,7 +223,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         {
             const Automat_ABC& agent = it.NextElement();
             const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
-            if( log && log->HasSuperior( *selected_ ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
+            if( log && log->HasSuperior( *selected_ ) && agent.Get< gui::LogisticBase >().IsBase() )
                 targetCombo_->AddItem( agent.GetName(), &agent );
         }
     }
@@ -237,7 +233,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         {
             const Formation_ABC& agent = it.NextElement();
             const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
-            if( log && log->HasSuperior( *selected_ ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
+            if( log && log->HasSuperior( *selected_ ) && agent.Get< gui::LogisticBase >().IsBase() )
                 targetCombo_->AddItem( agent.GetName(), &agent );
         }
     }

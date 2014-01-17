@@ -26,7 +26,6 @@ namespace kernel
     class MaterialCompositionType;
     class Moveable_ABC;
     class NBCAgent;
-    class LogisticLevel;
     class RoofShapeType;
     class UrbanTemplateType;
     struct UrbanBlockColor;
@@ -56,8 +55,6 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::TeamKarma* >
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
-                    , public tools::Caller< kernel::LogisticLevel** >
-                    , public tools::Caller< kernel::EntityLogisticLevel* >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_NbcState* >
                     , public tools::Caller< DotationsItem** >
@@ -89,8 +86,6 @@ public:
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_NbcState* const& value );
     virtual void Call( DotationsItem** const& value );
-    virtual void Call( kernel::LogisticLevel** const& value );
-    virtual void Call( kernel::EntityLogisticLevel* const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( PopulationRepartition** const& value );
     virtual void Call( kernel::InfrastructureType** const& value );

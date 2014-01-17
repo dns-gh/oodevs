@@ -12,7 +12,6 @@
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -24,12 +23,10 @@ using namespace kernel;
 Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const kernel::AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), true )
     , type_( type )
-    , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( type.GetName().c_str() );
     AddExtension( *this );
-    CreateDictionary( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,17 +39,6 @@ Automat::~Automat()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::CreateDictionary
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void Automat::CreateDictionary( const kernel::AutomatType& type )
-{
-    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
-    if( type.IsTC2() ) //$$$ NAZE
-        dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), GetLogisticLevel() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat::Draw
 // Created: LDC 2013-04-15
 // -----------------------------------------------------------------------------
@@ -60,7 +46,7 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 {
     drawable_.Draw( *this, where, viewport, tools, -1.5f);
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Automat::Pick
 // Created: LGY 2013-02-20
@@ -68,15 +54,6 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetLogisticLevel
-// Created: AHC 2010-10-08
-// -------------------------------------------------------------------------------
-const kernel::LogisticLevel& Automat::GetLogisticLevel() const
-{
-    return *logisticLevel_;
 }
 
 // -----------------------------------------------------------------------------

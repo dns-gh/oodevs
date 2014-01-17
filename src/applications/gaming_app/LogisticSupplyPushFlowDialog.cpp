@@ -13,6 +13,7 @@
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -21,6 +22,7 @@
 #include "clients_gui/EntityType.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/AgentTypes.h"
@@ -29,13 +31,14 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/Dotations.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
+
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
@@ -74,7 +77,7 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( profile_.CanBeOrdered( agent ) && agent.Get< gui::LogisticBase >().IsBase() )
         InsertMenuEntry( agent, menu );
 }
 
@@ -84,7 +87,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const kernel::Automat_ABC&
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( profile_.CanBeOrdered( agent ) && agent.Get< gui::LogisticBase >().IsBase() )
         InsertMenuEntry( agent, menu );
 }
 

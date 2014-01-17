@@ -9,13 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticHelpers.h"
+#include "LogisticBase.h"
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -93,5 +93,16 @@ namespace logistic_helpers
         if( const kernel::Positions* pPositions = entity.Retrieve< kernel::Positions >() )
             return pPositions->GetPosition();
         return geometry::Point2f();
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: Tools::IsLogisticBase
+    // Created: ABR 2014-01-20
+    // -----------------------------------------------------------------------------
+    bool logistic_helpers::IsLogisticBase( const kernel::Entity_ABC& entity )
+    {
+        if( const gui::LogisticBase* extension = entity.Retrieve< gui::LogisticBase >() )
+            return extension->IsBase();
+        return false;
     }
 }

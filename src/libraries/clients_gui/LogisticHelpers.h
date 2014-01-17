@@ -24,6 +24,7 @@ namespace kernel
 namespace logistic_helpers
 {
     geometry::Point2f GetLogisticPosition( const kernel::Entity_ABC& entity, bool onlySupply = false );
+    bool IsLogisticBase( const kernel::Entity_ABC& entity );
 }
 
 #endif // __gui_LogisticHelpers_h_

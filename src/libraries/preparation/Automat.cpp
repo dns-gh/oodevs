@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "Automat.h"
-#include "LogisticLevelAttribute.h"
 #include "tools/IdManager.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -98,16 +97,7 @@ void Automat::InitializeSymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetLogisticLevel
-// Created: AHC 2010-10-07
-// -----------------------------------------------------------------------------
-const LogisticLevel& Automat::GetLogisticLevel() const
-{
-    return Get< LogisticLevelAttribute >().GetLogisticLevel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetLogisticLevel
+// Name: Automat::GetType
 // Created: AHC 2010-10-07
 // -----------------------------------------------------------------------------
 const AutomatType& Automat::GetType() const

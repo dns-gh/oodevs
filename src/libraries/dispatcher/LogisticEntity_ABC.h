@@ -12,11 +12,6 @@
 
 #include "LogisticHierarchyOwner_ABC.h"
 
-namespace kernel
-{
-    class LogisticLevel;
-}
-
 namespace sword
 {
     class ParentEntity;
@@ -41,11 +36,6 @@ public:
     //@{
              LogisticEntity_ABC() {};
     virtual ~LogisticEntity_ABC() {};
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const = 0;
     //@}
 
     //! @name Network

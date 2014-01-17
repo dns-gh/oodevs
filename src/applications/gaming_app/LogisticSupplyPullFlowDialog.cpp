@@ -12,6 +12,7 @@
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -20,6 +21,7 @@
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/PullFlowParameters.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
@@ -34,7 +36,6 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
@@ -47,6 +48,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "protocol/SimulationSenders.h"
+
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
@@ -92,7 +94,7 @@ LogisticSupplyPullFlowDialog::~LogisticSupplyPullFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( !profile_.CanBeOrdered( agent ) || agent.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !profile_.CanBeOrdered( agent ) || !agent.Get< gui::LogisticBase >().IsBase() )
         return;
     selected_ = &agent;
     menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
@@ -362,8 +364,8 @@ namespace
         while( it.HasMoreElements() )
         {
             const auto& element = it.NextElement();
-            if( &element != selected && 
-                element.GetLogisticLevel() != LogisticLevel::none_ &&
+            if( &element != selected &&
+                element.Get< LogisticBase >().IsBase() &&
                 &element.Get< TacticalHierarchies >().GetTop() == &team )
                     suppliers[ element.GetName() ] = &element;
         }

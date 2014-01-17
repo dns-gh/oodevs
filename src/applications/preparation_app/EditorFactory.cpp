@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "EditorFactory.h"
 #include "DotationsEditor.h"
-#include "LogisticLevelEditor.h"
 #include "LogisticSuperiorEditor.h"
 #include "MultipleResolverEditor.h"
 #include "preparation/Model.h"
@@ -19,7 +18,6 @@
 #include "preparation/GhostModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
-#include "preparation/LogisticLevel.h"
 #include "clients_gui/CriticalIntelligenceDialog.h"
 #include "clients_gui/RichWidget.h"
 #include "clients_gui/ValuedComboBox.h"
@@ -32,7 +30,6 @@
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"
@@ -137,30 +134,6 @@ void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 void EditorFactory::Call( kernel::TeamKarma* const& value )
 {
     SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas, kernel::TeamKarma >( parent_, staticModel_.teamKarmas_ );
-    editor->SetCurrentItem( *value );
-    result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2007-11-02
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::EntityLogisticLevel* const& value )
-{
-    SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, kernel::EntityLogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, kernel::EntityLogisticLevel >( parent_, staticModel_.logisticLevels_ );
-    editor->SetCurrentItem( *value );
-    result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: HBD 2010-11-15
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::LogisticLevel** const& value )
-{
-    if( !selected_ )
-        return;
-    LogisticLevelEditor* editor = new LogisticLevelEditor( parent_, *selected_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

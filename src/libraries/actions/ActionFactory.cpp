@@ -40,7 +40,6 @@
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
@@ -924,7 +923,8 @@ Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kerne
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast<float>( level ) ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
-    action->AddParameter( *new parameters::String( it.NextElement(), isLogisticBase ? kernel::LogisticLevel::logistic_base_.GetName() : std::string() ) );
+    const std::string logisticLevel = isLogisticBase ? ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) : std::string();
+    action->AddParameter( *new parameters::String( it.NextElement(), logisticLevel ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();

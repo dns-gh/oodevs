@@ -256,13 +256,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished">معلومات/لوجيستيكليفيل</translation>
-    </message>
-</context>
-<context>
     <name>Block</name>
     <message>
         <source>Infrastructure/Enable</source>
@@ -476,13 +469,6 @@
     <message>
         <source>Prisoner</source>
         <translation type="unfinished">السجين</translation>
-    </message>
-</context>
-<context>
-    <name>Formation</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished">معلومات/لوجيستيكليفيل</translation>
     </message>
 </context>
 <context>

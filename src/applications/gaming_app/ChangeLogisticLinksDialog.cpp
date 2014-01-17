@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -17,10 +18,10 @@
 #include "actions/UnitMagicAction.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/StaticModel.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
@@ -47,7 +48,6 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , simulation_( simulation)
     , profile_( profile )
     , selected_( controllers )
-    , selectedLevel_( &LogisticLevel::none_ )
 {
     setCaption( tr( "Logistic links edition" ) );
     Q3VBoxLayout* layout = new Q3VBoxLayout( this );
@@ -122,7 +122,7 @@ void ChangeLogisticLinksDialog::Show()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !agent.Get< LogisticBase >().IsBase() )
         return;
     nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
     currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
@@ -134,7 +134,7 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !agent.Get< LogisticBase >().IsBase() )
         return;
     nominalSuperiorCombo_->RemoveItem( &agent );
     currentSuperiorCombo_->RemoveItem( &agent );
@@ -146,7 +146,7 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !agent.Get< LogisticBase >().IsBase() )
         return;
     nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
     currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
@@ -158,7 +158,7 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Formation_ABC& agent )
 {
-    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !agent.Get< LogisticBase >().IsBase() )
         return;
     nominalSuperiorCombo_->RemoveItem( &agent );
     currentSuperiorCombo_->RemoveItem( &agent );
@@ -223,7 +223,6 @@ void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, Con
     if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks >() )
     {
         selected_ = (Entity_ABC*)&agent;
-        selectedLevel_ = &agent.GetLogisticLevel();
         menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
     }
 }
@@ -237,7 +236,6 @@ void ChangeLogisticLinksDialog::NotifyContextMenu( const Formation_ABC& agent, C
     if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks >() )
     {
         selected_ = (Entity_ABC*)&agent;
-        selectedLevel_ = &agent.GetLogisticLevel();
         menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
     }
 }

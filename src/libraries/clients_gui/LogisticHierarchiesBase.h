@@ -13,6 +13,9 @@
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/SubTypes.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  LogisticHierarchiesBase
     @brief  LogisticHierarchiesBase
@@ -35,5 +38,7 @@ public:
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior ) = 0;
     //@}
 };
+
+}; //! namespace kernel
 
 #endif // __LogisticHierarchiesBase_h_

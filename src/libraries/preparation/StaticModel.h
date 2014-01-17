@@ -33,11 +33,6 @@ namespace gui
     class DrawingTypes;
 }
 
-namespace preparation
-{
-    class LogisticLevel;
-}
-
 class SuccessFactorActionTypes;
 class TeamKarmas;
 
@@ -70,7 +65,6 @@ public:
     indicators::GaugeTypes&     gaugeTypes_; // Move to kernel::StaticModel
     gui::DrawingTypes&          drawings_;   // Move to kernel::StaticModel
     SuccessFactorActionTypes&   successFactorActionTypes_;
-    preparation::LogisticLevel& logisticLevels_;
     TeamKarmas&                 teamKarmas_;
     //@}
 };

@@ -285,21 +285,6 @@
     </message>
 </context>
 <context>
-    <name>LogisticLevelAttribute</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished">معلومات/لوجيستيكليفيل</translation>
-    </message>
-    <message>
-        <source>SWORD</source>
-        <translation type="unfinished">السيف</translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation type="unfinished">عن طريق تعطيل الدالة اللوجستية في تشكيل هذا، سيتم إعادة تعيين جميع الرؤساء المرؤوسين السوقي. هل تريد المتابعة؟</translation>
-    </message>
-</context>
-<context>
     <name>MineAttribute</name>
     <message>
         <source>Info/Improvable/Value</source>

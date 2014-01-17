@@ -10,8 +10,6 @@
 #ifndef __LogisticTools_h_
 #define __LogisticTools_h_
 
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/EntityHelpers.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 

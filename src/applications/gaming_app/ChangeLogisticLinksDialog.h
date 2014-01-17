@@ -23,7 +23,6 @@ namespace kernel
     class Formation_ABC;
     class Profile_ABC;
     class Time_ABC;
-    class LogisticLevel;
 }
 
 namespace actions
@@ -76,13 +75,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ChangeLogisticLinksDialog( const ChangeLogisticLinksDialog& );            //!< Copy constructor
-    ChangeLogisticLinksDialog& operator=( const ChangeLogisticLinksDialog& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -94,7 +86,6 @@ private:
     gui::ValuedComboBox< const kernel::Entity_ABC* >* nominalSuperiorCombo_;
     gui::ValuedComboBox< const kernel::Entity_ABC* >* currentSuperiorCombo_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    const kernel::LogisticLevel* selectedLevel_;
     //@}
 };
 

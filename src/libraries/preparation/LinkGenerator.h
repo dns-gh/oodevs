@@ -46,7 +46,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool IsLogisticBase( const kernel::Entity_ABC& entity ) const;
     void AddLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
     void RemoveLogisticSuperior( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior );
     void CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, boost::function< bool( const kernel::Entity_ABC& ) > fun );

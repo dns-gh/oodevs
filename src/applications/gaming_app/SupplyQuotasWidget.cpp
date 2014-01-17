@@ -12,13 +12,12 @@
 #include "moc_SupplyQuotasWidget.cpp"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/tools.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "gaming/LogisticLink.h"
 
 using namespace gui;
 using namespace kernel;
-using namespace EntityHelpers;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyQuotasWidget constructor
@@ -152,7 +151,7 @@ void SupplyQuotasWidget::NotifyUpdated( const LogisticLinks& links )
 void SupplyQuotasWidget::NotifySelected( const Entity_ABC* pEntity )
 {
     pLinks_ = 0;
-    if( pEntity && IsLogisticBase( *pEntity ) )
+    if( pEntity && logistic_helpers::IsLogisticBase( *pEntity ) )
         pLinks_ = pEntity->Retrieve< LogisticLinks >();
     if( pLinks_ )
         NotifyUpdated( *pLinks_ );

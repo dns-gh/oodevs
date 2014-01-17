@@ -20,7 +20,6 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockLogisticEntity, dispatcher::LogisticEntity_ABC )
 {
-    MOCK_METHOD( GetLogisticLevel, 0 );
     MOCK_METHOD( Send, 1 );
 };
 

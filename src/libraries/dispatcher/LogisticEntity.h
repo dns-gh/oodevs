@@ -42,14 +42,16 @@ class LogisticEntity : public LogisticEntity_ABC
 public:
     //! @name Constructor/destructor
     //@{
-             LogisticEntity( const LogisticEntityOwner_ABC& owner, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automates, const kernel::LogisticLevel& logisticLevel );
+             LogisticEntity( const LogisticEntityOwner_ABC& owner,
+                             const tools::Resolver_ABC< Formation_ABC >& formations,
+                             const tools::Resolver_ABC< Automat_ABC >& automates,
+                             bool isBase );
     virtual ~LogisticEntity();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
-                  LogisticHierarchy&     GetLogisticHierarchy();
+    LogisticHierarchy& GetLogisticHierarchy();
     //@}
 
     //! @name Network
@@ -65,8 +67,8 @@ private:
     //! @name Member data
     //@{
     const LogisticEntityOwner_ABC& owner_;
-    const kernel::LogisticLevel& logisticLevel_;
     LogisticHierarchy logisticHierarchy_;
+    bool isBase_;
     //@}
 };
 

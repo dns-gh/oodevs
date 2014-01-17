@@ -9,14 +9,16 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticPrototype_ABC.h"
+#include "moc_LogisticPrototype_ABC.cpp"
+
+#include "LogisticBase.h"
 #include "LongNameHelper.h"
 #include "SubObjectName.h"
-#include "moc_LogisticPrototype_ABC.cpp"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -81,12 +83,9 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
 {
-    if( logSuperiors_->GetItemIndex( &automat ) != -1 )
+    if( logSuperiors_->GetItemIndex( &automat ) != -1 ||
+        !automat.Get< LogisticBase >().IsBase() )
         return;
-
-    if( automat.GetLogisticLevel() == LogisticLevel::none_ )
-        return;
-
     logSuperiors_->AddItem( GetDisplayName( automat ), &automat );
     if( !selected_ )
         selected_ = &automat;
@@ -98,12 +97,9 @@ void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyCreated( const Formation_ABC& formation )
 {
-    if( logSuperiors_->GetItemIndex( &formation ) != -1 )
+    if( logSuperiors_->GetItemIndex( &formation ) != -1 ||
+        !formation.Get< LogisticBase >().IsBase() )
         return;
-
-    if( formation.GetLogisticLevel() == LogisticLevel::none_ )
-        return;
-
     logSuperiors_->AddItem( GetDisplayName( formation ), &formation );
     if( !selected_ )
         selected_ = &formation;
@@ -146,11 +142,11 @@ void LogisticPrototype_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 // Name: LogisticPrototype_ABC::NotifyContextMenu
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
+void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& automat, ContextMenu& menu )
 {
-    if( isVisible() && agent.GetLogisticLevel() != LogisticLevel::none_ )
+    if( isVisible() && automat.Get< LogisticBase >().IsBase() )
     {
-        selected_ = &agent;
+        selected_ = &automat;
         menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
     }
 }
@@ -161,7 +157,7 @@ void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, Context
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
-    if( isVisible() && formation.GetLogisticLevel() != LogisticLevel::none_ )
+    if( isVisible() && formation.Get< LogisticBase >().IsBase() )
     {
         selected_ = &formation;
         menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
