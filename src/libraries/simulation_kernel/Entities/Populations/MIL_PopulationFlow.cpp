@@ -80,6 +80,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , pFirstSplittingObject_      ( sourceConcentration.GetSplittingObject() )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
+    , objectDensity_              ( 1. )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -111,6 +112,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , pFirstSplittingObject_      ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
+    , objectDensity_              ( 1. )
 {
     IT_PointList itSplit = std::find( flowShape_.begin(), flowShape_.end(), splitPoint );
     if( itSplit != flowShape_.end() )
@@ -142,6 +144,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , pFirstSplittingObject_      ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
+    , objectDensity_              ( 1. )
 {
     // NOTHING
 }
@@ -274,9 +277,11 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
         pFirstSplittingObject_ = &object;
     if( pFirstSplittingObject_ )
         return;
+    objectDensity_ = 1.;
     const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
     if( !attr )
         return;
+    objectDensity_ = attr->GetDensity();
     if( !pSplittingObject_ || attr->GetDensity() < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
     {
         personsPassedThroughObject_ = 0;
@@ -293,9 +298,12 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyPopulationMovingOutside( *this );
     pBlockingObject_ = &object;
-    pSplittingObject_ = 0;
-    if( &object == pFirstSplittingObject_ )
-        pFirstSplittingObject_ = 0;
+    if( objectDensity_ != 0 )
+    {
+        pSplittingObject_ = 0;
+        if( &object == pFirstSplittingObject_ )
+            pFirstSplittingObject_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
