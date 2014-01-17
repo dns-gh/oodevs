@@ -356,26 +356,6 @@ Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message, bool 
     return action.release();
 }
 
-namespace
-{
-    unsigned long GetTaskerId( const sword::Tasker& tasker )
-    {
-        if( tasker.has_automat() )
-            return tasker.automat().id();
-        else if( tasker.has_unit() )
-            return tasker.unit().id();
-        else if( tasker.has_crowd() )
-            return tasker.crowd().id();
-        else if( tasker.has_formation() )
-            return tasker.formation().id();
-        else if( tasker.has_party() )
-            return tasker.party().id();
-        else if( tasker.has_population() )
-            return tasker.population().id();
-        return 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
