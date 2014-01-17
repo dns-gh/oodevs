@@ -1,51 +1,64 @@
--------------------------------------------------------------------------------
--- Equipment Implementation : 
--- Regroup function to manage platoon equipement
--- @author MGD
--- @created 2010-04-27
---
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
--------------------------------------------------------------------------------
-
---- Indicate if the unit has the munition 
--- @param munition The id of a munition
--- @return bool
--- @author MGD
--- @created 2010-01-27
-integration.hasDotation = function( munition )
-    return DEC_HasDotation(munition)
+--- Returns true if this entity has the given piece of equipment, false otherwise.
+-- This method can only be called by an agent.
+-- @param resource Resource type
+-- @return Boolean
+integration.hasDotation = function( resource )
+    return DEC_HasDotation( resource )
 end
 
-integration.hasDotationForFiring = function( munition, number)
- return DEC_HasDotationForFiring(meKnowledge.source, munition, number)
+--- Returns true if this entity has at least the given quantity of the provided piece
+-- of equipment, false otherwise.
+-- This method can only be called by an agent.
+-- @param resource Resource type
+-- @param quantity Integer, the quantity of needed resource
+-- @return Boolean
+integration.hasDotationForFiring = function( resource, quantity )
+ return DEC_HasDotationForFiring( myself, resource, quantity )
 end
 
-integration.canUseDotation = function( munition )
-    return DEC_CanUseDotation(munition)
+--- Returns true if this entity can use the given piece of equipment, false otherwise.
+-- This method can only be called by an agent.
+-- @param resource Resource type
+-- @return Boolean
+integration.canUseDotation = function( resource )
+    return DEC_CanUseDotation( resource )
 end
 
-integration.isContaminated = function( self )
-    return self.source:DEC_Agent_EstContamine()
+--- Returns true if the given agent is contaminated, false otherwise.
+-- @param agent Directia agent
+-- @return Boolean
+integration.isContaminated = function( agent )
+    return agent.source:DEC_Agent_EstContamine()
 end
 
-integration.isDecontaminationDone = function( self )
-    return self.source:DEC_Agent_IsDecontaminationFinished()
+--- Returns true if the decontamination of the given agent is finished, false otherwise.
+-- @param agent Directia agent
+-- @return Boolean
+integration.isDecontaminationDone = function( agent )
+    return agent.source:DEC_Agent_IsDecontaminationFinished()
 end
 
+--- Returns true if this entity is poisoned, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.isPoisoned = function()
     return DEC_Agent_EstEmpoisonne()
 end
 
+--- Returns true if this entity is an NBC agent, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.isAgentNBC = function()
     return DEC_Agent_EstAgentNBC()
 end
 
---- EquipNBC outfit
--- @author MGD
--- @release 2010-04-27
+--- Makes this entity equip its NBC outfit.
+-- Displays reports.
+-- Does nothing if this entity is already wearing
+-- its NBC outfit, or if it does not have one.
+-- This method can only be called by an agent.
+-- @return Boolean, true if the outfit has been successfully equipped or if
+-- it was already equipped, false if this entity has no NBC outfit to equip.
 integration.equipNBCOutfitSecu = function()
     if meKnowledge.equipOutfit then
         return true
@@ -62,9 +75,11 @@ integration.equipNBCOutfitSecu = function()
     end
 end
 
---- UnequipNBC outfit
--- @author MGD
--- @release 2010-04-27
+--- Makes this entity unequip its NBC outfit.
+-- Displays reports.
+-- Does nothing if this entity is not wearing
+-- its NBC outfit, or if it does not have one.
+-- This method can only be called by an agent.
 integration.unequipNBCOutfitSecu = function()
     if not meKnowledge.equipOutfit then
         return
@@ -79,115 +94,102 @@ integration.unequipNBCOutfitSecu = function()
     end
 end
 
---- Return the RNBC protection level defined in ADN
--- @author LMT
--- @release 2012-11-27
+--- Returns the RNBC protection level of this entity, as defined in the physical database.
+-- This method can only be called by an agent.
+-- @return Integer, the RNBC protection level from 0 to 5, 0 meaning there is no RNBC
+-- protection available for this entity.
 integration.getRNBCProtectionLevel = function()
     meKnowledge.RNBCProtectionLevel = meKnowledge.RNBCProtectionLevel or DEC_Agent_NiveauProtectionNBC()
     return meKnowledge.RNBCProtectionLevel
 end
 
---- Define nbc alert enumeration
--- @author MGD
--- @release 2010-04-27
-eEtatNbc_Niv0 = 0
-eEtatNbc_Niv4 = 1
-
---- Switch on radar
--- @author MGD
--- @release 2010-04-27
-integration.goOnNBCAlert = function( self )
-    reportFunction(eRC_AlerteNBCNiveau4 )
-    F_Pion_SeteEtatNbc( self.source, eEtatNbc_Niv4 )
+--- Makes the provided agent go on NBC alert level four.
+-- Displays a report.
+-- @param agent Directia agent
+integration.goOnNBCAlert = function( agent )
+    reportFunction( eRC_AlerteNBCNiveau4 )
+    F_Pion_SeteEtatNbc( agent.source, eEtatNbc_Niv4 )
     myself.NBCAlert = true
 end
 
---- EquipNBC outfit
--- @author MGD
--- @release 2010-04-27
+--- Makes this entity equip its NBC outfit.
+-- Displays reports.
+-- This method can only be called by an agent.
 integration.equipNBCOutfit = function()
-    reportFunction(eRC_TenueProtectionNBCMise )
+    reportFunction( eRC_TenueProtectionNBCMise )
     DEC_Agent_MettreTenueProtectionNBC()
 end
 
---- UnequipNBC outfit
--- @author MGD
--- @release 2010-04-27
-integration.unequipNBCOutfit = function( self )
-    reportFunction(eRC_TenueProtectionNBCEnlevee )
+--- Makes this entity unequip its NBC outfit and 
+--- cease its potential NBC alert state.
+-- Displays reports.
+-- This method can only be called by an agent.
+integration.unequipNBCOutfit = function()
+    reportFunction( eRC_TenueProtectionNBCEnlevee )
     if myself.NBCAlert == true then
-        reportFunction(eRC_FinAlerteNBCNiveau4 )
-        F_Pion_SeteEtatNbc( self.source, eEtatNbc_Niv0 )
+        reportFunction( eRC_FinAlerteNBCNiveau4 )
+        F_Pion_SeteEtatNbc( myself, eEtatNbc_Niv0 )
         myself.NBCAlert = false
     end
     DEC_Agent_EnleverTenueProtectionNBC()
 end
 
---- Define etat radio enumeration
--- @author MGD
--- @release 2010-04-27
-eEtatRadio_Ouverte = 0
-eEtatRadio_Silence = 1
-eEtatRadio_Silence_Partiel = 2
-
---- Switch off radio
--- @author MGD
--- @release 2010-04-27
-integration.switchOffRadio = function( self )
-    reportFunction(eRC_DebutSilenceRadio )
-    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence )
+--- Switches off the radio communications of the given agent.
+-- Displays a report.
+-- @param agent Directia agent
+integration.switchOffRadio = function( agent )
+    reportFunction( eRC_DebutSilenceRadio )
+    F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Silence )
     DEC_Agent_PasserEnSilenceRadio()
 end
 
---- Switch off radio
--- @author HBD
--- @release 2010-06-25
-integration.switchEmitOnlyOffRadio = function( self )
-    reportFunction(eRC_DebutSilencePartielRadio )
-    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence_Partiel )
+--- Switches off the outgoing radio emissions of the given agent.
+-- Displays a report.
+-- @param agent Directia agent
+integration.switchEmitOnlyOffRadio = function( agent )
+    reportFunction( eRC_DebutSilencePartielRadio )
+    F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Silence_Partiel )
     DEC_Agent_PasserEnSilenceRadioPartiel()
 end
 
---- Switch on radio
--- @author MGD
--- @release 2010-04-27
-integration.switchOnRadio = function( self )
-    reportFunction(eRC_FinSilenceRadio )
-    F_Pion_SeteEtatRadio( self.source, eEtatRadio_Ouverte )
+--- Switches on the radio communications of the given agent.
+-- Displays a report.
+-- @param agent Directia agent
+integration.switchOnRadio = function( agent )
+    reportFunction( eRC_FinSilenceRadio )
+    F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Ouverte )
     DEC_Agent_ArreterSilenceRadio()
 end
 
-
---- Switch off radar
--- @author MGD
--- @release 2010-04-27
-integration.switchOffRadar = function( self )
-    reportFunction(eRC_DebutSilenceRadar )
-    F_Pion_SeteEtatRadar( self.source, eEtatRadar_Silence )
+--- Enables radar silence for the given agent.
+-- Displays a report.
+-- @param agent Directia agent
+integration.switchOffRadar = function( agent )
+    reportFunction( eRC_DebutSilenceRadar )
+    F_Pion_SeteEtatRadar( agent.source, eEtatRadar_Silence )
     DEC_Perception_DesactiverRadar( eRadarType_Radar )
     DEC_Perception_DesactiverRadar( eRadarType_Ecoute )
     DEC_Perception_DesactiverRadar( eRadarType_EcouteRadar )
 end
 
---- Switch on radar
--- @author MGD
--- @release 2010-04-27
-integration.switchOnRadar = function( self )
-    reportFunction(eRC_FinSilenceRadar )
-    F_Pion_SeteEtatRadar( self.source, eEtatRadar_Ouvert )
+--- Enables radar silence for the given agent.
+-- Displays a report.
+-- @param agent Directia agent
+integration.switchOnRadar = function( agent )
+    reportFunction( eRC_FinSilenceRadar )
+    F_Pion_SeteEtatRadar( agent.source, eEtatRadar_Ouvert )
     DEC_Perception_ActiverRadar( eRadarType_Radar )
     DEC_Perception_ActiverRadar( eRadarType_Ecoute )
     DEC_Perception_ActiverRadar( eRadarType_EcouteRadar )
 end
--- -------------------------------------------------------------------------------- 
--- Switch on safety attitude
--- @author MIA
--- @release 2010-09-09
--- @ On modélise par les effets, le résultat d'une posture de progression tactique
--- de niveau section qui se couvre etc. pour mieux voir, être moins vue, mieux réagir
--- en cas de prise à partie.
--- --------------------------------------------------------------------------------
-integration.switchOnSafetyMode = function( self )
+
+--- Switches on this entity's safety attitude, in order for it to take cover,
+--- move slower, fly lower (if it is a flying agent), activate sensors, etc.
+-- May display reports.
+-- This method can only be called by an agent.
+-- @see integration.switchOffSafetyMode
+-- @see integration.setMovementPace
+integration.switchOnSafetyMode = function()
     DEC_Perception_ActiverCoupsDeSonde()
     DEC_Agent_ChangerAmbianceEnSurete( true )
     if integration.isFlying() then
@@ -195,20 +197,18 @@ integration.switchOnSafetyMode = function( self )
     end
     if not myself.reportSafetyMode or myself.reportSafetyMode == nil then
          myself.reportSafetyMode = true
-         reportFunction(eRC_AmbianceSurete )
+         reportFunction( eRC_AmbianceSurete )
     end
     myself.speedModulation = myself.speedModulation or {}
     myself.speedModulation.switchOnSafetyMode = 0.3 -- modulationMax / 10 Scipio
     myself.safetyMode = true -- WW base
 end
 
--- -------------------------------------------------------------------------------- 
--- Switch on cover attitude
--- @author MIA
--- @release 2010-09-09
--- Modulation de la vitesse max [0;1]. 
--- --------------------------------------------------------------------------------
-integration.switchOnCoverMode = function( self )
+--- Switches on this entity's cover attitude, in order for it to move slower.
+-- This method can only be called by an agent.
+-- @see integration.switchOffCoverMode
+-- @see integration.setMovementPace
+integration.switchOnCoverMode = function()
     --scipio
     myself.speedModulation = myself.speedModulation or {}
 	if meKnowledge:hasBadForceRatio() then
@@ -221,12 +221,12 @@ integration.switchOnCoverMode = function( self )
 	myself.coverMode = true
 end
 
--- -------------------------------------------------------------------------------- 
--- Switch off safety attitude
--- @author MIA
--- @release 2010-09-09
--- --------------------------------------------------------------------------------
-integration.switchOffSafetyMode = function( self )
+--- Switches off this entity's safety attitude.
+-- May display reports.
+-- This method can only be called by an agent.
+-- @see integration.switchOnSafetyMode
+-- @see integration.setMovementPace
+integration.switchOffSafetyMode = function()
     DEC_Perception_DesactiverCoupsDeSonde()
     DEC_Agent_ChangerAmbianceEnSurete( false )
     if integration.isFlying() then
@@ -242,12 +242,11 @@ integration.switchOffSafetyMode = function( self )
     myself.safetyMode = false  -- ww base
 end
 
--- -------------------------------------------------------------------------------- 
--- Switch off cover attitude
--- @author MIA
--- @release 2010-09-09
--- --------------------------------------------------------------------------------
-integration.switchOffCoverMode = function( self )
+--- Switches off this entity's cover attitude.
+-- This method can only be called by an agent.
+-- @see integration.switchOnCoverMode
+-- @see integration.setMovementPace
+integration.switchOffCoverMode = function()
     DEC_Perception_DesactiverCoupsDeSonde()
     DEC_Agent_ChangerAmbianceEnSurete( false )
     reportFunction(eRC_CouvertureDesactive )
@@ -255,35 +254,40 @@ integration.switchOffCoverMode = function( self )
 	myself.speedModulation.switchOnCoverMode = 1 --scipio
     myself.coverMode = false -- ww base
 end
--- -------------------------------------------------------------------------------- 
--- @return The unit can dismount
--- @author LMT
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
+
+--- Returns true if this entity can dismount, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.canDismount = function()
     return DEC_Agent_EstEmbarquable()
 end
 
--- -------------------------------------------------------------------------------- 
--- @return The unit can mount
--- @author LMT
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
+--- Returns true if this entity can mount, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.canMount = function()
     return DEC_Agent_EstEmbarquable() and DEC_CanMount( myself )
 end
 
+--- Returns true if this entity should dismount, i.e. if it can dismount
+--- and if it is located on a non-trafficable urban position, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
 integration.shouldDismount = function()
     return DEC_Agent_EstEmbarquable() and not DEC_Agent_EstDebarque()
            and not DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() )
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit need to mount
--- @author LMT / review MIA 2011-09-20
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.mountStarted = function( self )
+--- Makes this entity start mounting if it can (no other mounting action is taking place
+--- and the entity is dismounted) and if it is supposed to (this entity is located on
+--- a trafficable position).
+--- Otherwise, this method stops the potential current mounting action (started by a
+--- previous call of this method).
+-- This method can only be called by an agent.
+-- @see integration.updateMoveToIt
+-- @see integration.stopMount
+-- @return Boolean, false if the action is ongoing, true otherwise.
+integration.mountStarted = function()
     myself.stayDismounted = false
     if( myself.mount == nil and myself.dismount == nil ) -- means that movement use mount or dismount action
       and not DEC_Agent_EstEmbarque() 
@@ -300,12 +304,15 @@ integration.mountStarted = function( self )
     return true
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit need to dismount
--- @author LMT / review MIA 2011-09-20
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.dismountStarted = function( self )
+--- Makes this entity start dismounting if it can (no other dismounting action is taking place,
+--- and the entity is mounted).
+--- Otherwise, this method stops the potential current dismounting action (started by a
+--- previous call of this method).
+-- This method can only be called by an agent.
+-- @see integration.updateMoveToIt
+-- @see integration.stopDismount
+-- @return Boolean, false if the action is ongoing, true otherwise.
+integration.dismountStarted = function()
     myself.stayDismounted = true
     if( myself.mount == nil and myself.dismount == nil ) -- means that movement use mount or dismount action
         and not DEC_Agent_EstDebarque() then
@@ -320,12 +327,11 @@ integration.dismountStarted = function( self )
     return true
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit stop dismounting
--- @author LMT / review MIA 2011-09-20
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.stopDismount = function( self )  
+--- Makes this entity stop its potential current dismounting action, started by a
+--- call to the integration.dismountStarted method.
+-- This method can only be called by an agent.
+-- @see integration.dismountStarted
+integration.stopDismount = function()  
     myself.stayDismounted = false
     if myself.orderDismount then
         DEC__StopAction( myself.orderDismount )
@@ -333,12 +339,11 @@ integration.stopDismount = function( self )
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit stop mounting
--- @author LMT / review MIA 2011-09-20
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.stopMount = function( self )
+--- Makes this entity stop its potential current mounting action, started by a
+--- call to the integration.mountStarted method.
+-- This method can only be called by an agent.
+-- @see integration.mountStarted
+integration.stopMount = function()
     myself.stayDismounted = false
     if myself.orderMount then
         DEC__StopAction( myself.orderMount )
@@ -346,113 +351,86 @@ integration.stopMount = function( self )
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit is mounted
--- @author LMT
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.isMounted = function( self )
+--- Returns true if this entity is mounted, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.isMounted = function()
     return DEC_Agent_EstEmbarque()
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit is dismounted
--- @author LMT
--- @release 2010-10-20
--- --------------------------------------------------------------------------------
-integration.isDismounted = function( self )
+--- Returns true if this entity is dismounted, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.isDismounted = function()
     return DEC_Agent_EstDebarque()
 end
 
--- -------------------------------------------------------------------------------- 
--- Board list of elements without delay
--- @author GGE
--- @release 2012-10-22
--- --------------------------------------------------------------------------------
-integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
-    DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
-end
-
-integration.unboardElementsWithoutDelay = function( units )
-    DEC_Transport_DebarquerPionsSansDelais( units )
-end
-
--- -------------------------------------------------------------------------------- 
--- Board one element without delay
--- @author GGE
--- @release 2012-10-22
--- --------------------------------------------------------------------------------
-integration.boardElementWithoutDelay = function( unit, transportOnlyLoadable )
-    DEC_Transport_EmbarquerPionSansDelais( unit, transportOnlyLoadable )
-end
-
-integration.unboardElementWithoutDelay = function( unit )
-    DEC_Transport_DebarquerPionSansDelais( unit )
-end
-
--- -------------------------------------------------------------------------------- 
--- Deploy the unit
--- @author PSN
--- @release 2011-12-20
--- --------------------------------------------------------------------------------
-integration.startDeploy = function( self )
+--- Deploys this entity.
+-- This method can only be called by an agent.
+integration.startDeploy = function()
     DEC_Agent_Deploy()
 end
 
--- -------------------------------------------------------------------------------- 
--- Undeploy the unit
--- @author PSN
--- @release 2011-12-20
--- --------------------------------------------------------------------------------
-integration.undeploy = function( self )
+--- Undeploys this entity.
+-- This method can only be called by an agent.
+integration.undeploy = function()
     DEC_Agent_Undeploye()
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit is deployed
--- @author CMA
--- @release 2011-04-12
--- --------------------------------------------------------------------------------
-integration.isDeployed = function( self )
+--- Returns true if this entity is deployed, false otherwise.
+-- This method can only be called by an agent.
+integration.isDeployed = function()
     return DEC_Agent_IsDeployed()
 end
 
--- -------------------------------------------------------------------------------- 
--- The drones are implemented
--- @author GGE
--- @release 2011-12-16
--- --------------------------------------------------------------------------------
+--- Finds an available drone and starts activating it (deploys it).
+-- Display reports.
+-- This method can only be called by an agent.
+-- @see integration.setAvailableDrones
+-- @see integration.startedActivateDrone
+-- @param self Deprecated, unused
+-- @param alreadyDeployed Boolean, this method does not deploy the drone if set to true
 integration.startActivateDrone = function ( self, alreadyDeployed )
     integration.setAvailableDrones()
 	myself.Deployed = false
     if myself.droneAvailable == nil then
-        reportFunction(eRC_PasDeDroneDisponible )
+        reportFunction( eRC_PasDeDroneDisponible )
         if not integration.isCommanderEngaged() then
             meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
         end
 	else
-	    if alreadyDeployed == nil or alreadyDeployed == false then
+	    if not alreadyDeployed then
 		    DEC_Agent_Deploy()
 		end
-		reportFunction(eRC_DebutMiseEnOeuvreDrone )
+		reportFunction( eRC_DebutMiseEnOeuvreDrone )
 	end
 end
 
-integration.startedActivateDrone = function ( self )
+--- Continues the activation of the currently deployed drone (if there is one).
+-- Notifies this entity's company of the deployment's completion.
+-- May display reports.
+-- This method can only be called by an agent.
+-- @return Boolean, whether or not the activation of the drone has been successfully completed.
+integration.startedActivateDrone = function()
     if not myself.Deployed and meKnowledge:isDeployed() and myself.droneAvailable then
         myself.Deployed = true
         integration.setUAVDeployed( myself.droneAvailable, true ) -- mandatory to permit the flight
         local droneKn = CreateKnowledge( integration.ontology.types.agent, myself.droneAvailable )
-        reportFunction(eRC_FinMiseEnOeuvreDrone )
+        reportFunction( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
-        meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
+        meKnowledge:sendDisponibleDrone( meKnowledge:getAutomat(), droneKn )
         return true
     elseif myself.droneAvailable == nil then
         return false
     end
 end
 
-integration.setAvailableDrones = function ( self )
+--- Finds an available drone in the company of this entity, and sets it in the myself.droneAvailable variable.
+-- A drone is deemed available if it is operational, if it has enough fuel,
+-- and if it is at less than 80 meters away from this entity.
+-- This method can only be called by an agent (e.g. a UAV station).
+-- @see integration.startActivateDrone
+integration.setAvailableDrones = function()
     myself.droneAvailable  = nil
     local integration = integration
     local listePions = integration.getAgentsWithoutHQ()
@@ -463,6 +441,8 @@ integration.setAvailableDrones = function ( self )
         if operationalLevel ~= 0 and fuelDotationNumber > 3 then -- Le drone doit être opérationnel et avoir un minimum de carburant
             if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and not pion:GetbMiseEnOeuvre_() then
                 integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
+                integration.removeFromLoadedUnits( pion )
+                integration.removeFromCapturedUnits( pion )
                 DEC_Transport_DebarquerPionSansDelais( pion )
                 myself.droneAvailable = pion
                 break
@@ -471,65 +451,32 @@ integration.setAvailableDrones = function ( self )
     end
 end
 
--- Returns true if there is an available drone into the automat, false otherwise
-integration.companyHasAvailableDrones = function( self )
+--- Returns true if this company has an available drone, false otherwise.
+-- This method can only be called by a company.
+-- A drone is deemed available if it is operational and if it is not already deployed.
+-- @return Boolean
+integration.companyHasAvailableDrones = function()
     local integration = integration
     local listePions = integration.getUnitsWithoutHQCommunication()
-    for _,pion in pairs( listePions or emptyTable ) do
+    for _, pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
-       if operationalLevel ~= 0 and not integration.isUAVDeployed( pion ) then
+        if operationalLevel ~= 0 and not integration.isUAVDeployed( pion ) then
             return true
         end
     end
     return false
 end
 
+--- Undeploys this entity.
+-- This method can only be called by an agent.
+-- @param self Deprecated, unused
+-- @param alreadyUnDeployed Boolean, this method does not undeploy the drone if set to true
 integration.stopActivateDrone = function( self, alreadyUnDeployed )
-    if alreadyUnDeployed == nil or alreadyUnDeployed == false then
+    if not alreadyUnDeployed then
         DEC_Agent_Undeploye()
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- Random position in circle
--- @author CMA
--- @release 2011-05-04
--- --------------------------------------------------------------------------------
-integration.randomPositionInCircle = function( position, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
-end
-
-integration.randomPositionOnCircle = function( position, radius )
-    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( position:getPosition(), radius ) )
-end
-
--- -------------------------------------------------------------------------------- 
--- Split area into subareas
--- @author CMA
--- @release 2011-05-04
--- --------------------------------------------------------------------------------
-integration.splitArea = function( area, numberOfParts )
-    local subAreas = DEC_Geometry_SplitLocalisation( area.source, numberOfParts, nil )
-    subAreas = subAreas.first
-    local integration = integration
-    local myself = myself
-    myself.leadData.subAreas = {}
-    for _, localArea in pairs( subAreas ) do
-        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( integration.ontology.types.area, localArea )
-    end
-    if #subAreas == 0 then
-        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = area -- cas ou la zone est hors limite
-    end
-end
-
--- -------------------------------------------------------------------------------- 
--- Split localisation
--- @author GGE
--- @release 2012-10-22
--- --------------------------------------------------------------------------------
-integration.geometrySplitLocalisation = function( localisation, numberOfParts, direction )
-    return DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
-end
 -- -------------------------------------------------------------------------------- 
 -- The unit is moving
 -- @author MIA
@@ -778,12 +725,8 @@ integration.isDead = function( self )
 end
 
 integration.selfDecontaminate = function( self )
-    if DEC_Agent_EstAgentNBC() then
-        DEC_Agent_SeDecontaminer()
-        return true
-    else
-        return false
-    end
+    DEC_Agent_SeDecontaminer()
+    return true
 end
 
 integration.changeHeight = function( height )
@@ -894,14 +837,23 @@ integration.getAgentsWithHQ = function()
     return DEC_Pion_PionsAvecPC()
 end
 
+--- Returns true if the given drone is exploited, false otherwise.
+-- @param drone Simulation agent
+-- @return Boolean
 integration.isUAVExploited = function( drone )
     return drone:GetbEnExploitation_()
 end
 
+--- Returns true if the given drone is deployed, false otherwise.
+-- @param drone Simulation agent
+-- @return Boolean
 integration.isUAVDeployed = function( drone )
     return drone:GetbMiseEnOeuvre_()
 end
 
+--- Set the given drone's current deployment state to the provided boolean.
+-- @param drone Simulation agent
+-- @param boolean Boolean, the new value
 integration.setUAVDeployed = function( drone, boolean )
     drone:SetbMiseEnOeuvre_( boolean )
 end
@@ -956,3 +908,10 @@ integration.getToxicPlumeDetected = function( agent )
     objects = DEC_Connaissances_CollisionsDesastres()
     return objects
 end
+
+------------------------------------------------------------------
+--- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
+------------------------------------------------------------------
+
+--- Deprecated
+integration.stopActivateDrone

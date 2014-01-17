@@ -237,6 +237,65 @@ integration.getConvexHull = function( locationList )
     return DEC_Geometrie_ConvexHull( locationList )
 end
 
+--- Returns a random position inside the disc defined by the given center and radius.
+-- @param center Point knowledge (center of the disc), defining a "getPosition" method returning a simulation point.
+-- @param radius Float, the radius of the disc
+-- @return Point knowledge
+integration.randomPositionInCircle = function( center, radius )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( center:getPosition(), radius ) )
+end
+
+--- Returns a random position on the circle defined by the given center and radius.
+-- @param center Point knowledge (center of the circle), defining a "getPosition" method returning a simulation point.
+-- @param radius Float, the radius of the circle
+-- @return Point knowledge
+integration.randomPositionOnCircle = function( center, radius )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( center:getPosition(), radius ) )
+end
+
+--- Splits the given area into the provided number of parts,
+--- and sets the list of sub-areas knowledges in the myself.leadData.subAreas list variable.
+-- If the given area is outside of the current area of responsibility, then it will not
+-- be split, and will be the only area set in the myself.leadData.subAreas list variable.
+-- This method can only be called by a company with an ongoing mission.
+-- @see integration.geometrySplitLocalisation
+-- @param area Area knowledge, the area to be split
+-- @param numberOfParts Integer, the number of sub-areas to create
+integration.splitArea = function( area, numberOfParts )
+    local subAreas = integration.geometrySplitLocalisation( area.source, numberOfParts )
+    subAreas = subAreas.first
+    local integration = integration
+    local myself = myself
+    myself.leadData.subAreas = {}
+    for _, localArea in pairs( subAreas ) do
+        myself.leadData.subAreas[ #myself.leadData.subAreas + 1 ] = CreateKnowledge( integration.ontology.types.area, localArea )
+    end
+    if #subAreas == 0 then
+        myself.leadData.subAreas[ #myself.leadData.subAreas + 1 ] = area -- cas ou la zone est hors limite
+    end
+end
+
+--- Splits the given area into the provided number of parts using the given direction,
+--- and returns the resulting list of sub-areas knowledges.
+-- If there is a current area of responsibility, then only the part of the given area
+-- inside the current area of responsibility will be used. If the given area has no 
+-- intersection with the current area of responsibility, then the splitting will not take place,
+-- and the returned list of sub-areas will be empty.
+-- @param localisation Simulation area, the area to be split
+-- @param numberOfParts Integer, the number of sub-areas to create. If negative, the splitting will not take place, 
+-- and the returned list of sub-areas will be empty.
+-- @param direction Simulation direction (vector), the direction with respect to which the splitting will take place
+-- (the vertical direction by default).
+-- @return Table with two keys :
+-- <ul> <li> "first" : List of area knowledges, the created sub-areas  </li>
+-- <li> "second" : Integer, the error code among one of the following : </li>
+-- <ul> <li> 1 : The area has no intersection with the current area of responsibility
+-- <li> 2 : The numberOfParts parameter is negative </li>
+-- <li> 3 : The splitting was successful </li> </ul> </ul>
+integration.geometrySplitLocalisation = function( localisation, numberOfParts, direction )
+    return DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
+end
+
 --- Sets the forward line computer to start the computation of the distance
 --- between the subordinates of the company and the forward line
 -- @see settleDistance
