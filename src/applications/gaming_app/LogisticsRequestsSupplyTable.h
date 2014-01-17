@@ -48,8 +48,8 @@ public:
     //@{
     virtual void Purge();
     virtual void AddRecipientResource( const QString& recipient, const QString& resource
-                                     , const QString& requested, const QString& granted, const QString& conveyed );
-    virtual void SetData( int row, int col, QString text );
+                                     , unsigned int requested, unsigned int granted, unsigned int conveyed );
+    virtual void SetData( int row, int col, QVariant text );
     //@}
 
     //! @name Accessors
