@@ -27,6 +27,7 @@ import (
 const (
 	ConnectTimeout = 40 * time.Second
 	PostTimeout    = 40 * time.Second
+	WaitTimeout    = 60 * time.Second
 )
 
 var (
@@ -200,12 +201,14 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 }
 
 type ClientOpts struct {
-	Exercise string
-	User     string
-	Password string
-	Step     int
-	Paused   bool
-	Logger   swapi.MessageLogger
+	Exercise    string
+	User        string
+	Password    string
+	Step        int
+	Paused      bool
+	Logger      swapi.MessageLogger
+	WaitTimeout time.Duration
+	StartGaming bool
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -236,6 +239,14 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	c.Assert(err, IsNil)
 	client.Logger = opts.Logger
 	client.PostTimeout = PostTimeout
+	client.Model.WaitTimeout = WaitTimeout
+	if opts.WaitTimeout != 0 {
+		timeout := opts.WaitTimeout
+		if timeout < 0 {
+			timeout = 0
+		}
+		client.Model.WaitTimeout = timeout
+	}
 	swapi.ConnectClient(client)
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
@@ -260,6 +271,15 @@ func AddLogger(opts *ClientOpts) *ClientOpts {
 	return opts
 }
 
+// Start a gaming_app after starting the simulation and before connecting the
+// test client. First the simulation will be paused (if not already), then
+// gaming will be started and call will wait for the simulation to be unpaused
+// before moving on.
+func AddGaming(opts *ClientOpts) *ClientOpts {
+	opts.StartGaming = true
+	return opts
+}
+
 func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	client := connectClient(c, sim, opts)
 	err := client.Login(opts.User, opts.Password)
@@ -269,10 +289,34 @@ func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	return client
 }
 
+func startGaming(c *C, sim *simu.SimProcess) {
+	admin := connectClient(c, sim, &ClientOpts{WaitTimeout: -1})
+	defer admin.Close()
+	key, err := admin.GetAuthenticationKey()
+	c.Assert(err, IsNil)
+	err = admin.LoginWithAuthenticationKey("", "", key)
+	c.Assert(err, IsNil)
+	err = admin.Pause()
+	c.Assert(err, IsNil)
+	_, err = simu.StartGamingFromSim(sim.Opts)
+	c.Assert(err, IsNil)
+	admin.Model.WaitTicks(1)
+}
+
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnExercise(c, opts)
+	ok := false
+	defer func() {
+		if !ok {
+			sim.Stop()
+		}
+	}()
+	if opts.StartGaming {
+		startGaming(c, sim)
+	}
 	client := loginAndWaitModel(c, sim, opts)
+	ok = true
 	return sim, client
 }
 
