@@ -9,9 +9,17 @@
 package simtests
 
 import (
+	"bufio"
 	"bytes"
+	"fmt"
+	"io"
 	. "launchpad.net/gocheck"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
 	"swapi"
+	"swtest"
 	"text/template"
 )
 
@@ -55,8 +63,8 @@ func (s *TestSuite) TestExecScript(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter:.*string expected, got nil.*")
 }
 
-func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
-	expectedPattern, errorPattern string) {
+func execScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) (
+	string, error) {
 
 	w := &bytes.Buffer{}
 	t, err := template.New("test").Parse(script)
@@ -67,12 +75,35 @@ func checkScript(c *C, client *swapi.Client, script string, keys map[string]inte
 
 	unit := getRandomUnit(c, client)
 	output, err := client.ExecScript(unit.Id, "TestFunction", text)
+	return output, err
+}
+
+func checkScript(c *C, client *swapi.Client, script string, keys map[string]interface{},
+	expectedPattern, errorPattern string) {
+
+	output, err := execScript(c, client, script, keys)
 	if len(errorPattern) == 0 {
 		c.Assert(err, IsNil)
 		c.Assert(output, Matches, expectedPattern)
 	} else {
 		c.Assert(err, ErrorMatches, errorPattern)
 	}
+}
+
+// Evaluate supplied script as a Go template with supplied values, execute it.
+// Returned string is expected to be like:
+//
+//   RESULT
+//   "-- EXPECTED --"
+//   EXPECTED
+//
+// Parts are split and diffed.
+func diffScript(c *C, client *swapi.Client, script string, keys map[string]interface{}) {
+	output, err := execScript(c, client, script, keys)
+	c.Assert(err, IsNil)
+	parts := strings.Split(output, "-- EXPECTED --\n")
+	c.Assert(parts, HasLen, 2)
+	swtest.AssertEqualOrDiff(c, parts[0], parts[1])
 }
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
@@ -105,4 +136,98 @@ end
 	// Result is in m/s
 	checkScript(c, client, script, map[string]interface{}{"unitid": unit.Id},
 		`19\.4\d*`, "")
+}
+
+func loadLuaScriptAndIncludes(rootDir, name string, included map[string]bool,
+	loading []string, w io.Writer) error {
+
+	// Check for cycles
+	for _, n := range loading {
+		if n == name {
+			loading = append(loading, name)
+			return fmt.Errorf("cyclic dependency: %s", strings.Join(loading, " -> "))
+		}
+	}
+	loading = append(loading, name)
+
+	// Resolve and open the script
+	path := filepath.Join(rootDir, name+".lua")
+	fp, err := os.Open(path)
+	if err != nil {
+		return fmt.Errorf("cannot find module %s: %s", name, err)
+	}
+	defer fp.Close()
+
+	// Append it to the global script while resolving includes
+	reCmt := regexp.MustCompile(`^\s*--`)
+	reRequire := regexp.MustCompile(`^\s*require\s+"([^"]+)"\s*$`)
+	scanner := bufio.NewScanner(fp)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if reCmt.MatchString(line) {
+			line = ""
+		}
+		m := reRequire.FindStringSubmatch(line)
+		if m != nil {
+			if included[m[0]] {
+				// We have it already
+				continue
+			}
+			err = loadLuaScriptAndIncludes(rootDir, m[1], included, loading, w)
+			if err != nil {
+				return err
+			}
+			continue
+		}
+		_, err := io.WriteString(w, line+"\n")
+		if err != nil {
+			return err
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	included[name] = true
+	return nil
+}
+
+// Loads lua script "name".
+//
+// Scripts are resolved relatively to "${TESTDIR}/testdata/dec" and a ".lua"
+// extension is appended. "require" statements are expanded inlined, only once
+// and cycles are detected.
+func loadLuaScript(name string) (string, error) {
+	rootDir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	rootDir = filepath.Join(rootDir, "testdata/dec")
+	included := map[string]bool{}
+	loading := []string{}
+	w := bytes.Buffer{}
+	err = loadLuaScriptAndIncludes(rootDir, name, included, loading, &w)
+	return w.String(), err
+}
+
+func (s *TestSuite) TestLoadLuaScripts(c *C) {
+	// cyclic includes
+	_, err := loadLuaScript("recurse_test")
+	c.Assert(err, ErrorMatches, ".*cyclic.*")
+
+	// missing includes
+	_, err = loadLuaScript("missing_test")
+	c.Assert(err, ErrorMatches, ".*cannot find module.*")
+}
+
+func (s *TestSuite) TestDecGeometry(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer sim.Stop()
+	runScript := func(name string) {
+		script, err := loadLuaScript(name)
+		c.Assert(err, IsNil)
+		diffScript(c, client, script, nil)
+	}
+
+	runScript("point_test")
+	runScript("polygon_test")
 }
