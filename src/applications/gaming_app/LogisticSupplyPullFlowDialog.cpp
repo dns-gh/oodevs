@@ -65,7 +65,7 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
                                                             const Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
     ,  formations_( formations )
-    , supplier_( 0 )
+    , supplier_   ( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
 
@@ -283,18 +283,15 @@ void LogisticSupplyPullFlowDialog::ClearSuppliersData()
 namespace
 {
     typedef std::map< std::size_t, std::size_t > T_Carriers;
-    void AddAvailability( const kernel::Entity_ABC& entity, T_Carriers& carriers )
-    {
-        if( const SupplyStates* pState = entity.Retrieve< SupplyStates >() )
-        {
-            for( auto it = pState->dispoTransporters_.begin(); it != pState->dispoTransporters_.end(); ++it )
-                carriers[ it->type_->GetId() ] += it->available_;
-        }
-    }
     T_Carriers GetAvailableCarriers( const kernel::Entity_ABC& supplier )
     {
         T_Carriers result;
-        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( supplier, boost::bind( &AddAvailability, _1, boost::ref( result ) ) );
+        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( supplier, [&]( const kernel::Entity_ABC& entity )
+        {
+            if( const SupplyStates* pState = entity.Retrieve< SupplyStates >() )
+                for( auto it = pState->dispoTransporters_.begin(); it != pState->dispoTransporters_.end(); ++it )
+                    result[ it->type_->GetId() ] += it->available_;
+        } );
         return result;
     }
 }
@@ -309,8 +306,8 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableCarriers( QMap< QString, int 
         return;
     carriersTypes_.clear();
     carriersTypeNames_.clear();
-    AddCarryingEquipment( *supplier_ );
-    const T_Carriers carriers = GetAvailableCarriers( *supplier_ );
+    AddCarryingEquipment( *selected_ );
+    const T_Carriers carriers = GetAvailableCarriers( *selected_ );
     for( auto it = carriersTypes_.begin(); it != carriersTypes_.end(); ++it )
     {
         auto carrier = carriers.find( carriersTypeNames_[ it.key() ]->GetId() );

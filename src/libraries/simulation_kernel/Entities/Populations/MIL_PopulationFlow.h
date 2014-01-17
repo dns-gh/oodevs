@@ -176,6 +176,7 @@ private:
     double armedIndividualsBeforeSplit_;
     unsigned int personsPassedThroughObject_;
     static MIL_IDManager idManager_;
+    double objectDensity_;
     //@}
 };
 
