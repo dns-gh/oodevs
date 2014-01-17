@@ -296,20 +296,20 @@ void GQ_PlotData::InitPointShape( unsigned int nShapeSize )
           break;
       case eVLine:
           pointShape_.resize( 2 );
-          pointShape_.setPoint( 1,  0, -w );
-          pointShape_.setPoint( 2,  0,  w );
+          pointShape_.setPoint( 0,  0, -w );
+          pointShape_.setPoint( 1,  0,  w );
           bPolylineShape_ = false;
           break;
       case eBDiag:
           pointShape_.resize( 2 );
-          pointShape_.setPoint( 1,  -w, -w );
-          pointShape_.setPoint( 2,   w,  w );
+          pointShape_.setPoint( 0,  -w, -w );
+          pointShape_.setPoint( 1,   w,  w );
           bPolylineShape_ = false;
           break;
       case eFDiag:
           pointShape_.resize( 2 );
-          pointShape_.setPoint( 1,  w, -w );
-          pointShape_.setPoint( 2, -w,  w );
+          pointShape_.setPoint( 0,  w, -w );
+          pointShape_.setPoint( 1, -w,  w );
           bPolylineShape_ = false;
           break;
 
