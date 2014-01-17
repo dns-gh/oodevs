@@ -13,34 +13,19 @@
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
-#include "actions/ActionTasker.h"
-#include "actions/ActionTiming.h"
-#include "actions/Automat.h"
-#include "actions/Formation.h"
-#include "actions/ParameterList.h"
-#include "actions/PushFlowParameters.h"
-#include "actions/UnitMagicAction.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Controllers.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
@@ -56,7 +41,6 @@ using namespace kernel;
 using namespace gui;
 using namespace actions;
 using namespace longname;
-using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyFlowDialog_ABC constructor
