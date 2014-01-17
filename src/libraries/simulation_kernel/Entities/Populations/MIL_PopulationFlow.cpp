@@ -172,7 +172,8 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 {
     assert( !pSourceConcentration_ );
     assert( !pDestConcentration_ );
-    GetFlowCollisionManager().NotifyFlowDestruction( this );
+    if( MIL_AgentServer::IsInitialized() )
+        GetFlowCollisionManager().NotifyFlowDestruction( this );
     SendDestruction();
     RemoveFromPatch();
 }
