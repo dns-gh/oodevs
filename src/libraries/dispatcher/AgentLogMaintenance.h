@@ -63,8 +63,8 @@ private:
     const Model_ABC&                          model_;
     const kernel::Agent_ABC&                  agent_;
     bool                                      bSystemEnabled_;
-    std::vector< sword::Id >                  priorities_;
-    std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
+    std::vector< sword::Id > priorities_;
+    std::vector< sword::Id > tacticalPriorities_;
 
     std::vector< MaintenanceEquipmentAvailability > haulersAvailability_;
     std::vector< MaintenanceEquipmentAvailability > repairersAvailability_;
