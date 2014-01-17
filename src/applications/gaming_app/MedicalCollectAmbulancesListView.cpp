@@ -27,6 +27,7 @@ MedicalCollectAmbulancesListView::MedicalCollectAmbulancesListView( QWidget* par
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Available" ) );
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Working" ) );
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Resting" ) );
+    list.append( tools::translate( "MedicalCollectAmbulancesListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 

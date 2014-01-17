@@ -1981,6 +1981,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Resting</source>
         <translation>En repos</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -2003,6 +2007,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
     </message>
 </context>
 <context>
@@ -2027,6 +2035,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Resting</source>
         <translation>En repos</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2050,6 +2062,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Resting</source>
         <translation>En repos</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2072,6 +2088,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
     </message>
 </context>
 <context>
@@ -3011,6 +3031,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation>prêté</translation>
     </message>
 </context>
 <context>

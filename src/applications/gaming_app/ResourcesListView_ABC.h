@@ -226,6 +226,7 @@ void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities()
         model_.item( index, 2 )->setText( QString::number( it->second.available_ ) );
         model_.item( index, 3 )->setText( QString::number( it->second.atWork_ ) );
         model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
+        model_.item( index, 5 )->setText( QString::number( it->second.lent_ ) );
         ++index;
     }
 }

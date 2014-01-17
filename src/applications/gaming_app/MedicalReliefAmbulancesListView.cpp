@@ -28,6 +28,7 @@ MedicalReliefAmbulancesListView::MedicalReliefAmbulancesListView( QWidget* paren
     list.append( tools::translate( "MedicalReliefAmbulancesListView", "Available" ) );
     list.append( tools::translate( "MedicalReliefAmbulancesListView", "Working" ) );
     list.append( tools::translate( "MedicalReliefAmbulancesListView", "Resting" ) );
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 
