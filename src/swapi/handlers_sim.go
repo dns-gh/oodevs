@@ -428,7 +428,7 @@ func (model *ModelData) handleCrowdFlowCreation(m *sword.SimToClient_Content) er
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId(), Point{}) {
 		return fmt.Errorf("cannot insert crowd flow %d into crowd %d",
 			mm.GetFlow().GetId(), mm.GetCrowd().GetId())
 	}
@@ -471,7 +471,7 @@ func (model *ModelData) handleCrowdConcentrationCreation(m *sword.SimToClient_Co
 	if mm == nil {
 		return ErrSkipHandler
 	}
-	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+	if !model.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId(), ReadPoint(mm.GetPosition())) {
 		return fmt.Errorf("cannot insert crowd concentration %d into crowd %d",
 			mm.GetConcentration().GetId(), mm.GetCrowd().GetId())
 	}

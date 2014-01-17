@@ -111,6 +111,7 @@ func NewPopulation(id, partyId uint32, name string) *Population {
 type CrowdElement struct {
 	Id       uint32
 	Attitude int32
+	Position Point
 }
 
 type Crowd struct {
@@ -609,13 +610,13 @@ func (model *ModelData) removeAutomat(automatId uint32) bool {
 	return size != len(model.Automats)
 }
 
-func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
+func (model *ModelData) addCrowdElement(crowdId, elementId uint32, position Point) bool {
 	crowd, ok := model.Crowds[crowdId]
 	if !ok {
 		return false
 	}
 	size := len(crowd.CrowdElements)
-	crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0}
+	crowd.CrowdElements[elementId] = &CrowdElement{elementId, 0, position}
 	return size != len(crowd.CrowdElements)
 }
 
