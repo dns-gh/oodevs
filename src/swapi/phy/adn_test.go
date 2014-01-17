@@ -12,8 +12,22 @@ import (
 	. "launchpad.net/gocheck"
 	"os"
 	"path/filepath"
+	"swtest"
 	"testing"
 )
+
+var (
+	application string
+	rootdir     string
+	rundir      string
+	testPort    int
+	showLog     bool
+	platform    string
+)
+
+func init() {
+	swtest.InitFlag(&application, &rootdir, &rundir, &platform, &testPort, &showLog)
+}
 
 func Test(t *testing.T) { TestingT(t) }
 

@@ -9,9 +9,29 @@
 package swtest
 
 import (
+	"flag"
 	"github.com/pmezard/go-difflib/difflib"
 	. "launchpad.net/gocheck"
+	"runtime"
 )
+
+func InitFlag(application, rootdir, rundir, platform *string, testPort *int,
+	showLog *bool) {
+	flag.StringVar(application, "application", "",
+		"path to simulation_app executable")
+	flag.StringVar(rootdir, "root-dir", "",
+		"path to simulation root directory")
+	flag.StringVar(rundir, "run-dir", "",
+		"path application run directory, default to application directory")
+	flag.IntVar(testPort, "test-port", 35000,
+		"base port for spawned simulations")
+	flag.BoolVar(showLog, "show-log", false, "print simulation log files")
+
+	*platform = "vc100_x64"
+	if runtime.GOARCH == "386" {
+		*platform = "vc100"
+	}
+}
 
 func makeDiff(before, after string) (string, error) {
 	diff := difflib.UnifiedDiff{
