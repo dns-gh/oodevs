@@ -185,16 +185,6 @@ void LogisticSupplyFlowDialog_ABC::closeEvent( QCloseEvent* /*pEvent*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyFlowDialog_ABC::GetCarriersFromTable
-// Created: MMC 2012-10-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyFlowDialog_ABC::GetCarriersFromTable()
-{
-    carriers_.clear();
-    carriersTable_->GetQuantities( carriers_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticSupplyFlowDialog_ABC::AddAvailable
 // Created : MMC 2012-10-15
 // -----------------------------------------------------------------------------
@@ -364,7 +354,6 @@ void LogisticSupplyFlowDialog_ABC::ClearCarriersData()
 {
     carriersTypes_.clear();
     carriersTypeNames_.clear();
-    carriers_.clear();
 }
 
 // -----------------------------------------------------------------------------

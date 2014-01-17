@@ -165,8 +165,9 @@ void LogisticSupplyPullFlowDialog::Validate()
         return;
 
     resourcesTable_->GetQuantities( supplierSupplies_ );
+    T_QuantitiesMap carriers;
     if( carriersUseCheck_->isChecked() )
-        GetCarriersFromTable();
+        carriersTable_->GetQuantities( carriers );
 
     accept();
     layer_.Reset();
@@ -197,10 +198,8 @@ void LogisticSupplyPullFlowDialog::Validate()
         if( dotationType )
             pullFlowParameters->AddResource( *dotationType, it.value() );
     }
-
-    if( carriersUseCheck_->isChecked() )
-        for( auto it = carriers_.begin(); it != carriers_.end(); ++it )
-            pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
+    for( auto it = carriers.begin(); it != carriers.end(); ++it )
+        pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
     // Route
     CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );

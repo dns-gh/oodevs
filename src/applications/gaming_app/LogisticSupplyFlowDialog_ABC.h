@@ -143,7 +143,6 @@ protected:
     //@{
     virtual void AddAvailable( const Dotation& dotation );
     virtual QString GetSelectedWaypoint();
-    void GetCarriersFromTable();
 
     virtual void ComputeRoute( T_Route& route ) = 0;
     virtual void AddCarryingEquipment( const kernel::Entity_ABC& entity );
@@ -187,8 +186,6 @@ protected:
     QPushButton* moveDownButton_;
     QPushButton* addWaypointButton_;
     QPushButton* delWaypointButton_;
-
-    T_QuantitiesMap carriers_;
 
     bool startWaypointLocation_;
     gui::LocationCreator* waypointLocationCreator_;
