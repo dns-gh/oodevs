@@ -331,3 +331,20 @@ std::vector< protocol::Extension > protocol::GetExtensionList(
     }
     return values;
 }
+
+boost::optional< uint32_t > protocol::TryGetTasker( const sword::Tasker& tasker )
+{
+    if( tasker.has_unit() )
+        return tasker.unit().id();
+    if( tasker.has_automat() )
+        return tasker.automat().id();
+    if( tasker.has_crowd() )
+        return tasker.crowd().id();
+    if( tasker.has_formation() )
+        return tasker.formation().id();
+    if( tasker.has_party() )
+        return tasker.party().id();
+    if( tasker.has_population() )
+        return tasker.population().id();
+    return boost::none;
+}

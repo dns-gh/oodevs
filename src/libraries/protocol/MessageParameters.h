@@ -83,6 +83,8 @@ namespace protocol
     boost::optional< uint32_t >        TryGetPartyId( const sword::MissionParameters& params, int i, int  j = -1, int k = -1 );
     uint32_t                           GetResourceType( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     std::vector< Extension >           GetExtensionList( const sword::MissionParameters& params, int i );
+
+    boost::optional< uint32_t >        TryGetTasker( const sword::Tasker& tasker );
 }
 
 #define GET_ENUMERATION( ENUM, I, ... ) static_cast< ENUM >( protocol::GetEnumeration( ENUM ## _descriptor(), I, __VA_ARGS__ ) )
