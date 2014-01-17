@@ -6,7 +6,7 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package swadn
+package phy
 
 import (
 	"encoding/xml"
