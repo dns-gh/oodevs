@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"math"
 	"swapi"
+	"swapi/phy"
 	"sword"
 )
 
@@ -404,6 +405,17 @@ const (
 	MissionDemonstrateCrowdId = uint32(44574)
 )
 
+// Helper combining reports source and message filters.
+func newReporter(c *C, source uint32, db *phy.PhysicalFile, pattern string) *swapi.Reporter {
+	ids := swapi.ReportSources(source)
+	messages, err := swapi.ReportMessages(db, pattern)
+	c.Assert(err, IsNil)
+	filter := func(r *sword.Report) bool {
+		return ids(r) && messages(r)
+	}
+	return swapi.NewReporter(filter)
+}
+
 func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	// This test is to verify that the crowd doesn't stay blocked by a checkpoint.
 	// Description:
@@ -416,8 +428,8 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	party := client.Model.GetData().FindPartyByName("another-party")
 	c.Assert(party, NotNil)
 	// Create crowd in party
-	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd", swapi.Point{X: -15.8005, Y: 28.3451},
-		600, 0, 0, "crowd")
+	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd",
+		swapi.Point{X: -15.8005, Y: 28.3451}, 600, 0, 0, "crowd")
 
 	err = client.ChangeAttitude(crowd.Id, Agressive)
 	c.Assert(err, IsNil)
@@ -430,7 +442,10 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	safetyPoliceUnit := uint32(105)
 	automat := createSpecificAutomat(c, client, "party", safetyPolicePatrolId)
 	unitPos := swapi.Point{X: -15.7928, Y: 28.3451}
-	client.CreateUnit(automat.Id, safetyPoliceUnit, unitPos)
+	for i := 0; i != 2; i++ {
+		_, err := client.CreateUnit(automat.Id, safetyPoliceUnit, unitPos)
+		c.Assert(err, IsNil)
+	}
 
 	limit11 := swapi.Point{X: -15.8241, Y: 28.3241}
 	limit12 := swapi.Point{X: -15.8092, Y: 28.3458}
@@ -459,6 +474,10 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		return false
 	})
 
+	phydb := loadWWPhysical(c)
+	reporter := newReporter(c, crowd.Id, phydb, "Hard to go through")
+	reporter.Start(client.Model)
+
 	// Send demonstrate mission on the crowd
 	to := swapi.Point{X: -15.786, Y: 28.3451}
 	params = swapi.MakeParameters(swapi.MakePointParam(to))
@@ -476,4 +495,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 		}
 		return false
 	})
+
+	reports := reporter.Stop()
+	c.Assert(len(reports), Equals, 2)
 }

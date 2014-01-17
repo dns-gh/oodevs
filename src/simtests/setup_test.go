@@ -19,6 +19,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"swapi"
+	"swapi/phy"
 	"swapi/simu"
 	"testing"
 	"time"
@@ -393,6 +394,15 @@ func stopSim(c *C, sim *simu.SimProcess) {
 	if err != nil {
 		c.Fatalf("errors found in session %s:\n%s", session, err)
 	}
+}
+
+func loadWWPhysical(c *C) *phy.PhysicalFile {
+	wd, err := os.Getwd()
+	c.Assert(err, IsNil)
+	path := filepath.Join(wd, "../../data/data/models/ada/physical/worldwide")
+	phydb, err := phy.ReadPhysical(path)
+	c.Assert(err, IsNil)
+	return phydb
 }
 
 func Test(t *testing.T) { TestingT(t) }
