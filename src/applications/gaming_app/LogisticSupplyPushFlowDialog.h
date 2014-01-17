@@ -61,7 +61,7 @@ private:
     void ComputeRecipients();
     void ComputeAvailableRecipients( QStringList& displayRecipientsNames );
     void EraseRecipientData( const QString& recipient );
-    virtual void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
+    void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
     //@}
 
     //! @name Types

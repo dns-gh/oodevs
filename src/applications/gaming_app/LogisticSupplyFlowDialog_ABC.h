@@ -143,8 +143,7 @@ protected:
     //@{
     virtual void AddAvailable( const Dotation& dotation );
     virtual QString GetSelectedWaypoint();
-    virtual void GetCarriersFromTable();
-    virtual void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers ) = 0;
+    void GetCarriersFromTable();
 
     virtual void ComputeRoute( T_Route& route ) = 0;
     virtual void AddCarryingEquipment( const kernel::Entity_ABC& entity );
