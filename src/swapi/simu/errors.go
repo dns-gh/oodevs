@@ -64,7 +64,7 @@ func FindLoggedFatalErrors(fp io.Reader) (string, error) {
 	return errors.String(), nil
 }
 
-// Reads fp and possibly returns a stack trace, or an empty string.
+// Reads fp and possibly returns a stack trace, or an error.
 func FindStacktrace(fp io.Reader) (string, error) {
 	// [2014-01-14 11:07:28] <Simulation> <functERR> Crash -
 	reStart := regexp.MustCompile(`<functERR>\s+Crash\s+-`)
@@ -134,10 +134,7 @@ func CheckSessionErrors(sessionPath string) error {
 		return err
 	}
 	if len(dumps) > 0 {
-		s := "dump files found:\n"
-		for _, dump := range dumps {
-			s += "  " + dump + "\n"
-		}
+		s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
 		return fmt.Errorf("%s", s)
 	}
 	return nil
