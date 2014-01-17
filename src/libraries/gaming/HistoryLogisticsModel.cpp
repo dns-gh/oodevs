@@ -49,27 +49,50 @@ HistoryLogisticsModel::~HistoryLogisticsModel()
 // -----------------------------------------------------------------------------
 void HistoryLogisticsModel::Fill( const sword::ListLogisticRequestsAck& message )
 {
+    std::set< unsigned int > newRequests;
+    for( int i = 0; i < message.entries().size(); ++i )
+    {
+        sword::LogHistoryEntry entry = message.entries( i );
+        if( entry.has_funeral() && entry.funeral().has_creation() )
+            newRequests.insert( entry.funeral().creation().request().id() );
+        else if( entry.has_maintenance() && entry.maintenance().has_creation() && entry.maintenance().has_update() )
+            newRequests.insert( entry.maintenance().creation().request().id() );
+        else if( entry.has_medical() && entry.medical().has_creation() && entry.medical().has_update() )
+            newRequests.insert( entry.medical().creation().request().id() );
+        else if( entry.has_supply() && entry.supply().has_creation() && entry.supply().has_update() )
+            newRequests.insert( entry.supply().creation().request().id() );
+    }
+
+    DeleteConsigns< LogFuneralConsign >( newRequests );
+    DeleteConsigns< LogMaintenanceConsign >( newRequests );
+    DeleteConsigns< LogMedicalConsign >( newRequests );
+    DeleteConsigns< LogSupplyConsign >( newRequests );
+
     for( int i = 0; i < message.entries().size(); ++i )
     {
         sword::LogHistoryEntry entry = message.entries( i );
         if( entry.has_funeral() && entry.funeral().has_creation() && entry.funeral().has_update() )
         {
-            CreateFuneralConsign( entry.funeral().creation() );
+            if( !tools::Resolver< LogFuneralConsign >::Find( entry.maintenance().creation().request().id() ) )
+                CreateFuneralConsign( entry.funeral().creation() );
             UpdateFuneralConsign( entry.funeral().update() );
         }
         else if( entry.has_maintenance() && entry.maintenance().has_creation() && entry.maintenance().has_update() )
         {
-            CreateMaintenanceConsign( entry.maintenance().creation() );
+            if( !tools::Resolver< LogMaintenanceConsign >::Find( entry.maintenance().creation().request().id() ) )
+                CreateMaintenanceConsign( entry.maintenance().creation() );
             UpdateMaintenanceConsign( entry.maintenance().update() );
         }
         else if( entry.has_medical() && entry.medical().has_creation() && entry.medical().has_update() )
         {
-            CreateMedicalConsign( entry.medical().creation() );
+            if( !tools::Resolver< LogMedicalConsign >::Find( entry.medical().creation().request().id() ) )
+                CreateMedicalConsign( entry.medical().creation() );
             UpdateMedicalConsign( entry.medical().update() );
         }
         else if( entry.has_supply() && entry.supply().has_creation() && entry.supply().has_update() )
         {
-            CreateSupplyConsign( entry.supply().creation() );
+            if( !tools::Resolver< LogSupplyConsign >::Find( entry.supply().creation().request().id() ) )
+                CreateSupplyConsign( entry.supply().creation() );
             UpdateSupplyConsign( entry.supply().update() );
         }
     }
@@ -187,4 +210,21 @@ void HistoryLogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlin
 
         consign->Update( message, handler, convoy );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HistoryLogisticsModel::DeleteConsigns
+// Created: LGY 2014-01-13
+// -----------------------------------------------------------------------------
+template< typename Type >
+void HistoryLogisticsModel::DeleteConsigns( const std::set< unsigned int >& newRequests )
+{
+    std::set< unsigned int > lastRequests;
+    auto it = tools::Resolver< Type >::CreateIterator();
+    while( it.HasMoreElements() )
+        lastRequests.insert( it.NextElement().GetId() );
+
+    for( auto it = lastRequests.begin(); it != lastRequests.end(); ++it )
+        if( newRequests.find( *it ) == newRequests.end() )
+            tools::Resolver< Type >::Delete( *it );
 }

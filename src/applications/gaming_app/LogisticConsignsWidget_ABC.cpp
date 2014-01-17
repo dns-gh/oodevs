@@ -251,20 +251,23 @@ void LogisticConsignsWidget_ABC::DisplayCurrentHistory()
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::DisplayRequestHistory( const LogisticsConsign_ABC& consign )
 {
-    historyTable_->Purge();
     const auto& states = consign.GetHistory().GetStates();
-    bool empty = true;
-    for( auto it = states.rbegin(); it != states.rend(); ++it )
-        if( it->endedTick_ )
-        {
-            empty = false;
-            historyTable_->AddRequest( consign.GetStatusDisplay( it->nStatus_ ),
-                requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
-                requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
-                GetDisplayName( it->handler_ ) );
-        }
-    if( !empty )
-        historyTable_->ResizeColumnsToContents();
+    if( !states.empty() )
+    {
+        historyTable_->Purge();
+        bool empty = true;
+        for( auto it = states.rbegin(); it != states.rend(); ++it )
+            if( it->endedTick_ )
+            {
+                empty = false;
+                historyTable_->AddRequest( consign.GetStatusDisplay( it->nStatus_ ),
+                    requestSelected_->ConvertTickToTimeString( it->startedTick_ ),
+                    requestSelected_->ConvertTickToTimeString( it->endedTick_ ),
+                    GetDisplayName( it->handler_ ) );
+            }
+        if( !empty )
+            historyTable_->ResizeColumnsToContents();
+    }
 }
 
 // -----------------------------------------------------------------------------
