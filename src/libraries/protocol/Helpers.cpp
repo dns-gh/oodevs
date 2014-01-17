@@ -56,6 +56,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "log_supply_change_quotas",           sword::UnitMagicAction::log_supply_change_quotas },
     { "log_supply_pull_flow",               sword::UnitMagicAction::log_supply_pull_flow },
     { "log_supply_push_flow",               sword::UnitMagicAction::log_supply_push_flow },
+    { "log_maintenance_switch_mode",        sword::UnitMagicAction::log_maintenance_switch_mode },
     { "partial_recovery",                   sword::UnitMagicAction::partial_recovery },
     { "recover_all",                        sword::UnitMagicAction::recover_all },
     { "recover_equipments",                 sword::UnitMagicAction::recover_equipments },

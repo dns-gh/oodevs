@@ -1869,6 +1869,12 @@ message UnitMagicAction {
         //!   function to execute, referenced above.
         //! result[0], ACharStr: function result.
         exec_script                       = 58;
+        //! Switch the manual/automatic mode for maintenance.
+        //! The tasker is set to target logistic base: 
+        //!    an automat or a formation identifier.
+        //! parameters[0], BooleanValue: if true, maintenace is in manual mode,
+        //!   otherwise maintenance is in automatic mode.
+        log_maintenance_switch_mode       = 59;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;
