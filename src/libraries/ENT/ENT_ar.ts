@@ -1017,6 +1017,17 @@
     </message>
 </context>
 <context>
+    <name>sword::EnumLogisticLevel</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">لا شيء</translation>
+    </message>
+    <message>
+        <source>Logistic base</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>sword::KnowledgeMagicAction::Type</name>
     <message>
         <source>Knowledge Group Add knowledge</source>
