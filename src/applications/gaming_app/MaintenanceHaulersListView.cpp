@@ -27,6 +27,7 @@ MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent, kernel:
     list.append( tools::translate( "MaintenanceHaulersListView", "Available" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Working" ) );
     list.append( tools::translate( "MaintenanceHaulersListView", "Resting" ) );
+    list.append( tools::translate( "MaintenanceHaulersListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 

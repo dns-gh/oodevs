@@ -27,6 +27,7 @@ MedicalDoctorsListView::MedicalDoctorsListView( QWidget* parent, kernel::Control
     list.append( tools::translate( "MedicalDoctorsListView", "Available" ) );
     list.append( tools::translate( "MedicalDoctorsListView", "Working" ) );
     list.append( tools::translate( "MedicalDoctorsListView", "Resting" ) );
+    list.append( tools::translate( "MedicalDoctorsListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 

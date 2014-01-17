@@ -23,20 +23,7 @@ Availability::Availability()
     , available_( 0 )
     , atWork_( 0 )
     , atRest_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Availability::Availability
-// Created: MMC 2013-01-23
-// -----------------------------------------------------------------------------
-Availability::Availability( const kernel::EquipmentType* type, unsigned int total, unsigned int available, unsigned int atWork, unsigned int atRest )
-    : type_( type )
-    , total_( total )
-    , available_( available )
-    , atWork_( atWork )
-    , atRest_( atRest )
+    , lent_( 0 )
 {
     // NOTHING
 }
@@ -60,7 +47,8 @@ void Availability::Display( Displayer_ABC& displayer ) const
              .Display( 0, total_)
              .Display( 0, available_ )
              .Display( 0, atWork_ )
-             .Display( 0, atRest_ );
+             .Display( 0, atRest_ )
+             .Display( 0, lent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,4 +61,5 @@ void Availability::operator+=( const Availability& other )
     available_ += other.available_;
     atWork_+= other.atWork_;
     atRest_+= other.atRest_;
+    lent_+= other.lent_;
 }
