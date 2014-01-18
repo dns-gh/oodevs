@@ -1977,6 +1977,10 @@ This data can&apos;t be projected.</source>
         <source>Resting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceRepairersListView</name>
@@ -1998,6 +2002,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2023,6 +2031,10 @@ This data can&apos;t be projected.</source>
         <source>Resting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalDoctorsListView</name>
@@ -2046,6 +2058,10 @@ This data can&apos;t be projected.</source>
         <source>Resting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2067,6 +2083,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2995,6 +3015,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Resting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

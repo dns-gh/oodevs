@@ -100,7 +100,6 @@ public:
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
-    unsigned int TaskerToId( const sword::Tasker& tasker ) const;
     const kernel::ExtensionTypes& GetExtensionTypes() const;
     //@}
 

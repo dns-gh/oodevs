@@ -190,23 +190,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 // =============================================================================
 namespace
 {
-    long TaskerToId( const Tasker& tasker )
-    {
-        if( tasker.has_unit() )
-            return tasker.unit().id();
-        if( tasker.has_automat() )
-            return tasker.automat().id();
-        if( tasker.has_crowd() )
-            return tasker.crowd().id();
-        if( tasker.has_formation() )
-            return tasker.formation().id();
-        if( tasker.has_party() )
-            return tasker.party().id();
-        if( tasker.has_population() )
-            return tasker.population().id();
-        throw MASA_INVALIDTASKER;
-    }
-
     std::string GetStringParam( const sword::MissionParameters& params, int index )
     {
         const auto& elem = params.elem( index );
@@ -1077,19 +1060,16 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
 {
     client::UnitMagicActionAck ack;
-    unsigned int id = 0;
-    try
-    {
-        const Tasker& tasker = message.tasker();
-        id = TaskerToId( tasker );
-    }
-    catch( const std::exception& )
+
+    const auto tasker = protocol::TryGetTasker( message.tasker() );
+    if( !tasker )
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
         ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
         return;
     }
+    const auto id = *tasker;
 
     ack().mutable_unit()->set_id( id );
     ack().set_error_code( UnitActionAck::no_error );
@@ -1422,30 +1402,32 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
     ack().mutable_tasker()->mutable_unit()->set_id( 0 );
     try
     {
-        unsigned int taskerId = TaskerToId( message.tasker() );
+        const auto taskerId = protocol::TryGetTasker( message.tasker() );
+        if( !taskerId )
+            throw MASA_INVALIDTASKER;
         bool sentAck = false;
         auto sendAck = [&]( uint32_t id ) {
             ack().set_id( id );
             ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
             sentAck = true;
         };
-        if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
+        if( MIL_Automate* pAutomate = FindAutomate( *taskerId ) )
         {
-            ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
+            ack().mutable_tasker()->mutable_automat()->set_id( *taskerId );
             pAutomate->OnReceiveFragOrder( message, sendAck );
         }
-        else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ) )
+        else if( MIL_Population* pPopulation = populationFactory_->Find( *taskerId ) )
         {
-            ack().mutable_tasker()->mutable_crowd()->set_id( taskerId );
+            ack().mutable_tasker()->mutable_crowd()->set_id( *taskerId );
             pPopulation->OnReceiveFragOrder( message, sendAck );
         }
-        else if( MIL_AgentPion* pPion = FindAgentPion ( taskerId ) )
+        else if( MIL_AgentPion* pPion = FindAgentPion ( *taskerId ) )
         {
-            ack().mutable_tasker()->mutable_unit()->set_id( taskerId );
+            ack().mutable_tasker()->mutable_unit()->set_id( *taskerId );
             pPion->OnReceiveFragOrder( message, sendAck );
         }
         else
-            throw MASA_BADUNIT_ORDER( "invalid automat, crowd or unit: " << taskerId );
+            throw MASA_BADUNIT_ORDER( "invalid automat, crowd or unit: " << *taskerId );
         if( sentAck )
             return;
     }
@@ -1749,7 +1731,10 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message )
 {
-    MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
+    const auto tasker = protocol::TryGetTasker( message.tasker() );
+    if( !tasker )
+        throw MASA_INVALIDTASKER;
+    MIL_AutomateLOG* pBrainLog = FindBrainLogistic( *tasker );
     if( !pBrainLog )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
     if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )

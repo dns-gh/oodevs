@@ -28,15 +28,15 @@ class Availability
 public:
     //! @name Constructors/Destructor
     //@{
-             Availability();
-             Availability( const kernel::EquipmentType* type_, unsigned int total, unsigned int available, unsigned int atWork, unsigned int atRest );
-             template< typename Message >
-                 Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
+        Availability();
+        template< typename Message >
+        Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
                 : type_     ( & resolver.Get( message.equipment().id() ) )
                 , total_    ( message.total() )
                 , available_( message.available() )
                 , atWork_   ( message.working() )
                 , atRest_   ( message.has_resting() ? message.resting() : 0 )
+                , lent_     ( message.has_lent() ? message.lent() : 0 )
              {};
     virtual ~Availability();
     //@}
@@ -55,6 +55,7 @@ public:
     unsigned int available_;
     unsigned int atWork_;
     unsigned int atRest_;
+    unsigned int lent_;
     //@}
 };
 }

@@ -27,6 +27,7 @@ SupplyTransportersListView::SupplyTransportersListView( QWidget* parent, kernel:
     list.append( tools::translate( "SupplyTransportersListView", "Available" ) );
     list.append( tools::translate( "SupplyTransportersListView", "Working" ) );
     list.append( tools::translate( "SupplyTransportersListView", "Resting" ) );
+    list.append( tools::translate( "SupplyTransportersListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 

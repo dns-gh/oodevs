@@ -43,6 +43,7 @@
 #include "EntityPublisher.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
@@ -50,6 +51,7 @@
 #include "clients_kernel/DecisionalModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4503 4355 )
 
@@ -338,7 +340,12 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_crowd_flow_detection() )
         agents_.Get( message.crowd_flow_detection().observer().id() ).Update( message.crowd_flow_detection() );
     else if( message.has_decisional_state() )
-        UpdateAnyAgent( TaskerToId( message.decisional_state().source() ), message.decisional_state() );
+    {
+        const auto id = protocol::TryGetTasker( message.decisional_state().source() );
+        if( !id )
+            throw MASA_EXCEPTION( "tasker is empty" );
+        UpdateAnyAgent( *id, message.decisional_state() );
+    }
     else if( message.has_start_fire_effect() )
         CreateUpdate< FireEffect >( fireEffects_, message.start_fire_effect().fire_effect().id(), message.start_fire_effect() );
     else if( message.has_stop_fire_effect() )
@@ -560,7 +567,7 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
         popu->Update( message );
     else if( kernel::Inhabitant_ABC* inhab = inhabitants_.Find( id ) )
         inhab->Update( message );
-    else throw MASA_EXCEPTION( "Unknown entity." );
+    else throw MASA_EXCEPTION( "unknown entity: " + boost::lexical_cast< std::string >( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -679,23 +686,6 @@ void Model::SetToTasker( sword::Tasker& tasker, unsigned int id ) const
         tasker.mutable_unit()->set_id( id );
     else
         throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::TaskerToId
-// Created: RPD 2010-07-09
-// -----------------------------------------------------------------------------
-unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
-{
-    if( tasker.has_unit() )
-        return tasker.unit().id();
-    if( tasker.has_automat() )
-        return tasker.automat().id();
-    if( tasker.has_crowd() )
-        return tasker.crowd().id();
-    if( tasker.has_formation() )
-        return tasker.formation().id();
-    throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,6 +27,7 @@ MaintenanceRepairersListView::MaintenanceRepairersListView( QWidget* parent, ker
     list.append( tools::translate( "MaintenanceRepairersListView", "Available" ) );
     list.append( tools::translate( "MaintenanceRepairersListView", "Working" ) );
     list.append( tools::translate( "MaintenanceRepairersListView", "Resting" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Lent" ) );
     model_.setHorizontalHeaderLabels( list );
 }
 
