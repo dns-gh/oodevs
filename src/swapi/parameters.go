@@ -332,6 +332,16 @@ func MakeEnumeration(value int32) *sword.MissionParameter {
 		})
 }
 
+func MakePlannedWork(objectType string, point Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			PlannedWork: &sword.PlannedWork{
+				Type:     proto.String(objectType),
+				Position: MakePointLocation(point),
+			},
+		})
+}
+
 func MakeTime(value time.Time) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
