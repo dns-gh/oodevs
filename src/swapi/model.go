@@ -138,14 +138,10 @@ func (model *Model) run() error {
 				}
 
 				// Execute handlers
-				removed := []int32{}
 				for id, handler := range model.handlers {
 					if handler(model.data, rq.Message, nil) {
-						removed = append(removed, id)
+						model.remove(id)
 					}
-				}
-				for _, id := range removed {
-					model.remove(id)
 				}
 
 				//Execute conditions
