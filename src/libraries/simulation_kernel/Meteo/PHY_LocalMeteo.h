@@ -22,6 +22,8 @@ namespace xml
     class xistream;
 }
 
+class PHY_RawVisionData;
+
 // =============================================================================
 /** @class  PHY_LocalMeteo
     @brief  PHY_LocalMeteo
@@ -41,7 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< weather::Meteo > meteo );
+    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData& dataVision,
+            const boost::shared_ptr< weather::Meteo >& meteo );
     virtual void Update( const sword::MissionParameters& msg );
     using weather::Meteo::Update;
     virtual bool IsPatched() const;

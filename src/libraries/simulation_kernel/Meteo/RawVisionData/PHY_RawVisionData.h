@@ -11,7 +11,6 @@
 #define __PHY_RawVisionData_h_
 
 #include "ElevationGrid.h"
-#include "meteo/PHY_RawVisionData_ABC.h"
 
 class MT_Ellipse;
 class MT_Vector2D;
@@ -35,8 +34,7 @@ namespace weather
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24
 //*****************************************************************************
-class PHY_RawVisionData : public weather::PHY_RawVisionData_ABC
-                        , private boost::noncopyable
+class PHY_RawVisionData : private boost::noncopyable
 {
 public:
     // environnement visuel statique

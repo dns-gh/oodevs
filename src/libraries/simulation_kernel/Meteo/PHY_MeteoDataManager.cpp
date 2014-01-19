@@ -335,7 +335,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             it->second->Update( pEphemeride_->GetLightingBase() );
     }
-    pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
+    pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
         it->second->UpdateMeteoPatch( date, *pRawData_, it->second );
 }
