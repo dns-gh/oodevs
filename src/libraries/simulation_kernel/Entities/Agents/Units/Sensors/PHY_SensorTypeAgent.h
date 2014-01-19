@@ -93,7 +93,7 @@ private:
     unsigned int ConvertEnvironmentToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
 
     const PHY_PerceptionLevel& RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator, bool posted ) const;
-    double ComputeEnvironmentFactor( ElevationGrid::envBits nEnv ) const;
+    double ComputeEnvironmentFactor( envBits nEnv ) const;
     double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
     bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, bool posted ) const;
     const double ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;

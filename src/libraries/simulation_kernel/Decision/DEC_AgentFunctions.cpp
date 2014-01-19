@@ -61,6 +61,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"

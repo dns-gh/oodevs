@@ -36,7 +36,7 @@ public:
 
     bool End() const;
     double Length() const;
-    ElevationGrid::envBits GetCurrentEnv() const;
+    envBits GetCurrentEnv() const;
     const weather::PHY_Lighting& GetLighting() const;
     const weather::PHY_Precipitation& GetPrecipitation() const;
 
@@ -107,7 +107,7 @@ protected:
     double rEnvCoeff_;
 
     // Environnement courrant
-    const ElevationGrid::sCell* pCurrentCell_;
+    const ElevationCell* pCurrentCell_;
     bool bIsInGround_;
     bool bIsInEnv_;
 };
