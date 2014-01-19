@@ -16,6 +16,7 @@
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
+#include "meteo/Meteo.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( CloudPropagationCapacity )
 

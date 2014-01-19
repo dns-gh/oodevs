@@ -11,11 +11,23 @@
 #define __PHY_MeteoDataManager_h_
 
 #include "MIL.h"
-#include "meteo/MeteoManager_ABC.h"
+#include <boost/shared_ptr.hpp>
+#include <map>
+
+namespace geometry
+{
+    template< typename T > class Point2;
+    typedef Point2< float > Point2f;
+}
 
 namespace sword
 {
     class MagicAction;
+}
+
+namespace weather
+{
+    class Meteo;
 }
 
 namespace xml
@@ -27,6 +39,7 @@ class MIL_Config;
 class MT_Ellipse;
 class PHY_Ephemeride;
 class PHY_GlobalMeteo;
+class PHY_LocalMeteo;
 class PHY_RawVisionData;
 class PHY_IndirectFireDotationClass;
 
@@ -35,7 +48,6 @@ class PHY_IndirectFireDotationClass;
 // Last modified: JVT 04-03-25
 //*****************************************************************************
 class PHY_MeteoDataManager : private boost::noncopyable
-                           , public weather::MeteoManager_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -82,7 +94,7 @@ public:
 private:
     //! @name Registration
     //@{
-    virtual void AddMeteo( weather::Meteo& element );
+    virtual void AddMeteo( const boost::shared_ptr< PHY_LocalMeteo >& element );
     //@}
 
     //! @name Helpers
@@ -108,6 +120,7 @@ private:
     PHY_Ephemeride* pEphemeride_;
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
+    std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
     static unsigned int localCounter_;
     //@}
 };
