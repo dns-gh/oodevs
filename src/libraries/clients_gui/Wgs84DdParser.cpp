@@ -43,8 +43,8 @@ bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result
     {
         if( content.size() != 2 )
             return false;
-        QString hintX = content[ 0 ].stripWhiteSpace();
-        QString hintY = content[ 1 ].stripWhiteSpace();
+        const QString hintX = content[ 0 ].stripWhiteSpace();
+        const QString hintY = content[ 1 ].stripWhiteSpace();
 
         float x, y;
         std::stringstream strX( hintX.toStdString() );
@@ -58,7 +58,7 @@ bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result
         hint.append( hintX );
         hint.append( hintY );
 
-        geometry::Point2d point( x, y );
+        const geometry::Point2d point( x, y );
         result = converter_.ConvertFromGeo( point );
         return true;
     }

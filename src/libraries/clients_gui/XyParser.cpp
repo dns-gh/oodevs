@@ -66,8 +66,8 @@ bool XyParser::Parse( const QStringList& content, geometry::Point2f& result, QSt
     {
         if( content.size() != 2 )
             return false;
-        QString hintX = content[ 0 ].stripWhiteSpace();
-        QString hintY = content[ 1 ].stripWhiteSpace();
+        const QString hintX = content[ 0 ].stripWhiteSpace();
+        const QString hintY = content[ 1 ].stripWhiteSpace();
 
         float x, y;
         std::stringstream strX( hintX.toStdString() );
