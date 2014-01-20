@@ -19,8 +19,6 @@
 #ifndef __TER_World_h_
 #define __TER_World_h_
 
-#include "TER_NodeFunctor_ABC.h"
-#include "TER_CoordinateManager.h"
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 
@@ -41,6 +39,7 @@ class TER_PathFindManager;
 class TER_AnalyzerManager;
 class TER_LimitDataManager;
 class MT_Rect;
+class MT_Vector2D;
 
 namespace tools
 {

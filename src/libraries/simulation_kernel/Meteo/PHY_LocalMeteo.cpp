@@ -169,6 +169,22 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
     Meteo::UpdateMeteoPatch( date, dataVision, meteo );
 }
 
+namespace
+{
+
+void SimToWorld( MT_Vector2D sim, sword::CoordLatLong& world )
+{
+    double x, y;
+    TER_World::GetWorld().SimToMosMgrsCoord( sim, x, y );
+    // While sword::CoordLatLong uses double, we convert to float first because
+    // MeteoLocal uses float and using double gives a different model between
+    // a running simulation and the dispatcher, hence different checkpoints.
+    world.set_latitude( static_cast< float >( x ));
+    world.set_longitude( static_cast< float >( y ));
+}
+
+} // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo::SendRegister
 // Created: HBD 2010-03-24
@@ -188,13 +204,8 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
     att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
-    sword::CoordLatLong longlat;
-    MIL_Tools::ConvertCoordSimToMos( downRight_, longlat );
-    msg().mutable_bottom_right()->set_latitude( longlat.latitude()  );
-    msg().mutable_bottom_right()->set_longitude( longlat.longitude()  );
-    MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat );
-    msg().mutable_top_left()->set_latitude( longlat.latitude()  );
-    msg().mutable_top_left()->set_longitude( longlat.longitude()  );
+    SimToWorld( downRight_, *msg().mutable_bottom_right() );
+    SimToWorld( upLeft_, *msg().mutable_top_left() );
     msg().mutable_start_date()->set_data( bpt::to_iso_string( bpt::from_time_t( startTime_ ) ) );
     msg().mutable_end_date()->set_data( bpt::to_iso_string( bpt::from_time_t( endTime_ ) ) );
     msg.Send( NET_Publisher_ABC::Publisher() );

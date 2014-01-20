@@ -261,7 +261,7 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     att->mutable_wind_direction()->set_heading( wind_.eAngle_ );
     att->set_cloud_floor ( cloud_.nFloor_ );
     att->set_cloud_ceiling( cloud_.nCeiling_ );
-    att->set_cloud_density( static_cast< int >( cloud_.rDensity_ ) );
+    att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( protocol::ToProto( pPrecipitation_->GetID() ));
     att->set_temperature( temperature_ );
     att->set_lighting( protocol::ToProto( pLighting_->GetID() ));
