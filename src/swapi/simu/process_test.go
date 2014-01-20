@@ -20,16 +20,11 @@ import (
 )
 
 var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-	showLog     bool
-	platform    string
+	Cfg *swtest.Config
 )
 
 func init() {
-	swtest.InitFlag(&application, &rootdir, &rundir, &platform, &testPort, &showLog)
+	Cfg = swtest.ParseFlags()
 }
 
 func (s *TestSuite) TestSimOpts(c *C) {
@@ -48,25 +43,25 @@ func MakeOpts() *SimOpts {
 		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", "..", ".."))
 	}
 
-	if len(application) > 0 {
-		opts.Executable = application
+	if len(Cfg.Application) > 0 {
+		opts.Executable = Cfg.Application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", platform, "simulation_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "simulation_app.exe")
 	}
-	if len(rootdir) > 0 {
-		opts.RootDir = rootdir
+	if len(Cfg.RootDir) > 0 {
+		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
 	}
 	opts.DataDir = opts.RootDir
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
+	if len(Cfg.RunDir) > 0 {
+		opts.RunDir = &Cfg.RunDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
+	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort)
+	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+1)
 	opts.ConnectTimeout = 600 * time.Second
-	opts.EnableTailing = showLog
+	opts.EnableTailing = Cfg.ShowLog
 	return &opts
 }
 

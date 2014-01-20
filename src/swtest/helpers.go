@@ -15,22 +15,32 @@ import (
 	"runtime"
 )
 
-func InitFlag(application, rootdir, rundir, platform *string, testPort *int,
-	showLog *bool) {
-	flag.StringVar(application, "application", "",
-		"path to simulation_app executable")
-	flag.StringVar(rootdir, "root-dir", "",
-		"path to simulation root directory")
-	flag.StringVar(rundir, "run-dir", "",
-		"path application run directory, default to application directory")
-	flag.IntVar(testPort, "test-port", 35000,
-		"base port for spawned simulations")
-	flag.BoolVar(showLog, "show-log", false, "print simulation log files")
+type Config struct {
+	Application string
+	Platform    string
+	RootDir     string
+	RunDir      string
+	ShowLog     bool
+	TestPort    int
+}
 
-	*platform = "vc100_x64"
+func ParseFlags() *Config {
+	cfg := Config{}
+	flag.StringVar(&cfg.Application, "application", "",
+		"path to simulation_app executable")
+	flag.StringVar(&cfg.RootDir, "root-dir", "",
+		"path to simulation root directory")
+	flag.StringVar(&cfg.RunDir, "run-dir", "",
+		"path application run directory, default to application directory")
+	flag.IntVar(&cfg.TestPort, "test-port", 35000,
+		"base port for spawned simulations")
+	flag.BoolVar(&cfg.ShowLog, "show-log", false, "print simulation log files")
+
+	cfg.Platform = "vc100_x64"
 	if runtime.GOARCH == "386" {
-		*platform = "vc100"
+		cfg.Platform = "vc100"
 	}
+	return &cfg
 }
 
 func makeDiff(before, after string) (string, error) {

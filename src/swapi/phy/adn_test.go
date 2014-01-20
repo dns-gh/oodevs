@@ -17,16 +17,11 @@ import (
 )
 
 var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-	showLog     bool
-	platform    string
+	Cfg *swtest.Config
 )
 
 func init() {
-	swtest.InitFlag(&application, &rootdir, &rundir, &platform, &testPort, &showLog)
+	Cfg = swtest.ParseFlags()
 }
 
 func Test(t *testing.T) { TestingT(t) }

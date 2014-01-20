@@ -31,16 +31,11 @@ const (
 )
 
 var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-	showLog     bool
-	platform    string
+	Cfg *swtest.Config
 )
 
 func init() {
-	swtest.InitFlag(&application, &rootdir, &rundir, &platform, &testPort, &showLog)
+	Cfg = swtest.ParseFlags()
 }
 
 const (
@@ -60,24 +55,24 @@ func MakeOpts() *simu.SimOpts {
 		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
 	}
 
-	if len(application) > 0 {
-		opts.Executable = application
+	if len(Cfg.Application) > 0 {
+		opts.Executable = Cfg.Application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", platform, "simulation_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "simulation_app.exe")
 	}
-	if len(rootdir) > 0 {
-		opts.RootDir = rootdir
+	if len(Cfg.RootDir) > 0 {
+		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
 	}
 	opts.DataDir = opts.RootDir
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
+	if len(Cfg.RunDir) > 0 {
+		opts.RunDir = &Cfg.RunDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
-	opts.EnableTailing = showLog
+	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
+	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+6)
+	opts.EnableTailing = Cfg.ShowLog
 	opts.ConnectTimeout = ConnectTimeout
 	return &opts
 }
@@ -129,22 +124,22 @@ func MakeReplayOpts() *simu.ReplayOpts {
 		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
 	}
 
-	if len(application) > 0 {
+	if len(Cfg.Application) > 0 {
 		// Assume replayer_app lives along with the simulation
-		opts.Executable = filepath.Join(filepath.Dir(application), "replayer_app.exe")
+		opts.Executable = filepath.Join(filepath.Dir(Cfg.Application), "replayer_app.exe")
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", platform, "replayer_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "replayer_app.exe")
 	}
-	if len(rootdir) > 0 {
-		opts.RootDir = rootdir
+	if len(Cfg.RootDir) > 0 {
+		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
 	}
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
+	if len(Cfg.RunDir) > 0 {
+		opts.RunDir = &Cfg.RunDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
-	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", testPort+5)
+	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
 	opts.ConnectTimeout = ConnectTimeout
 	return &opts
 }
@@ -398,9 +393,9 @@ type TestSuite struct{}
 var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
-	log.Println("application", application)
-	log.Println("root-dir", rootdir)
-	log.Println("run-dir", rundir)
-	log.Println("test-port", testPort)
-	log.Println("platform", platform)
+	log.Println("application", Cfg.Application)
+	log.Println("root-dir", Cfg.RootDir)
+	log.Println("run-dir", Cfg.RunDir)
+	log.Println("test-port", Cfg.TestPort)
+	log.Println("platform", Cfg.Platform)
 }
