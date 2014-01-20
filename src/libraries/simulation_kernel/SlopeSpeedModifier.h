@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     bool ComputeLocalSlope( const PHY_RawVisionData& data, const MT_Vector2D& from, const MT_Vector2D& to );
-    void ModifySpeed( double& rSpeed, double rSlopeDeceleration, const MT_Vector2D& to ) const;
+    void ModifySpeed( double& rSpeed, double rSlopeDeceleration, double rMaxSlope, const MT_Vector2D& to ) const;
     const T_Slopes& GetSlopes() const;
     //@}
 

@@ -3111,7 +3111,7 @@ PNG (*.png)
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">°</translation>
     </message>
 </context>
 <context>
@@ -4325,7 +4325,7 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">°</translation>
     </message>
     <message>
         <source>Can perform scanning</source>
