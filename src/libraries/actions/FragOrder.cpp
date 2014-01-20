@@ -104,7 +104,7 @@ void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::FragOrder message;
     const ActionTasker& tasker = Get< ActionTasker >();
-    const std::string typeName = tasker.GetTypename();
+    const std::string typeName = tasker.GetTypeName();
     const unsigned int id = tasker.GetId();
     if( typeName == kernel::Agent_ABC::typeName_ )
         message().mutable_tasker()->mutable_unit()->set_id( id );

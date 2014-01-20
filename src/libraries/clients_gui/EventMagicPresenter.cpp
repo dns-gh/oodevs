@@ -83,7 +83,8 @@ void EventMagicPresenter::Trigger( const gui::Event& event )
     if( const actions::Action_ABC* action = event.GetAction() )
         actionsModel_.Publish( *action, ++context_ );
     else
-        throw MASA_EXCEPTION( "Can't trigger and order without an action" );}
+        throw MASA_EXCEPTION( "Invalid action" );
+}
 
 // -----------------------------------------------------------------------------
 // Name: EventMagicPresenter::Clear
@@ -120,6 +121,8 @@ void EventMagicPresenter::FillFrom( const Event& event )
         }
         state_->name_ = action->GetName();
     }
+    else
+        throw MASA_EXCEPTION( "Invalid action" );
 }
 
 // -----------------------------------------------------------------------------

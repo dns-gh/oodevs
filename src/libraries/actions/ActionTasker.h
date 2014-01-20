@@ -51,7 +51,7 @@ public:
     bool IsSimulation() const;
     const kernel::Entity_ABC* GetTasker() const;
     unsigned int GetId() const;
-    const std::string& GetTypename() const;
+    const std::string& GetTypeName() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
@@ -59,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Entity_ABC > tasker_;
-    const std::string taskerTypename_;
+    const std::string taskerTypeName_;
     unsigned int taskerId_;
     const bool simulation_;
     //@}

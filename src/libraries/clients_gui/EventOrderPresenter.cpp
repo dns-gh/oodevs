@@ -94,6 +94,8 @@ void EventOrderPresenter::FillFrom( const Event& event )
             entity_ = tasker->GetTasker();
         Select( action->GetType().GetType(), action->GetType().GetName(), action );
     }
+    else
+        throw MASA_EXCEPTION( "Invalid action" );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +204,7 @@ void EventOrderPresenter::Trigger( const gui::Event& event )
         actionsModel_.Publish( *action, ++context_ );
     }
     else
-        throw MASA_EXCEPTION( "Can't trigger and order without an action" );
+        throw MASA_EXCEPTION( "Invalid action" );
 }
 
 // -----------------------------------------------------------------------------
@@ -366,6 +368,8 @@ void EventOrderPresenter::Select( E_MissionType type /*= eMissionType_Pawn*/,
                                   std::string mission /*= ""*/,                 // need to copy it here, because of the following state_.Purge()
                                   const actions::Action_ABC* action /*= 0*/ )
 {
+    if( type == eNbrMissionType )
+        throw MASA_EXCEPTION( "Invalid type" );
     if( entity_ )
         SelectWithTarget( *entity_, type, mission, action );
     else

@@ -109,5 +109,5 @@ void OrderType::AddParameter( const OrderParameter& parameter )
 // -----------------------------------------------------------------------------
 E_MissionType OrderType::GetType() const
 {
-    throw MASA_EXCEPTION( "Invalid call to GetType in " + GetName() );
+    return eNbrMissionType;
 }
