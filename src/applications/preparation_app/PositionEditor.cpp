@@ -31,7 +31,7 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
     pMainLayout->setMargin( 10 );
 
     locBox_ = new gui::LocationEditorBox( controllers, converter );
-    locBox_->SelectDefaultParser( converter.GetCoordSystem().GetDefault() );
+    locBox_->SelectParser( converter.GetCoordSystem().GetDefault() );
     pMainLayout->addWidget( locBox_ );
 
     QHBoxLayout* pbuttonBox = new QHBoxLayout();

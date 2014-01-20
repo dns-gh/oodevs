@@ -60,10 +60,15 @@ public:
     void UpdateField( const geometry::Point2f& position );
     //@}
 
-private slots:
+public slots:
     //! @name Slots
     //@{
     void SelectParser( int index );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
     void SelectHint( int index );
     QValidator::State Complete( QString& data, int idx );
     QValidator::State Complete( QString& data, int idx, Field& field );
