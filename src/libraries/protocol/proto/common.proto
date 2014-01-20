@@ -250,12 +250,10 @@ message ControlStop {
 message ControlPause {
 }
 
-/** @struct ControlResume
-    @brief Resumes the simulation
-    @see ControlResumeAck
-*/
+//! Resumes a paused simulation. If tick greater is than zero, the
+//! simulation runs until after the end message of current_tick + tick
+//! before being suspended again.
 message ControlResume {
-    //! Resume for "tick" ticks before to pause again
     optional uint32 tick = 1;
 }
 
