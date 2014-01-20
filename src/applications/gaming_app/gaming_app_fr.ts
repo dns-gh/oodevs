@@ -1544,6 +1544,45 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>Logistic : Push supply flow</name>
+    <message>
+        <source>Resource</source>
+        <translation>Ressource</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Manual selection of transport carriers</source>
+        <translation>Sélection manuelle des vecteurs de transport</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Move waypoint up</source>
+        <translation>Monter le point de passage</translation>
+    </message>
+    <message>
+        <source>Move waypoint down</source>
+        <translation>Descendre le point de passage</translation>
+    </message>
+    <message>
+        <source>Delete Waypoint</source>
+        <translation>Supprimer le point de passage</translation>
+    </message>
+    <message>
+        <source>Add Waypoint</source>
+        <translation>Ajouter le point de passage</translation>
+    </message>
+</context>
+<context>
     <name>Logistic : supply flow</name>
     <message>
         <source>Resources</source>
@@ -1571,25 +1610,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Unknown</source>
         <translation>Inconnu</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticSupplyCarriersTableWidget</name>
-    <message>
-        <source>The convoy is unable to carry that much weight</source>
-        <translation>Le convoi ne peut pas transporter la masse demandée</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry that much volume</source>
-        <translation>Le convoi ne peut pas transporter le volume demandé</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal mass threshold</source>
-        <translation>Le convoi est sous son seuil minimal en masse transportée</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal volume threshold</source>
-        <translation>Le convoi est sous son seuil minimal en volume transporté</translation>
     </message>
 </context>
 <context>
@@ -1644,18 +1664,6 @@ Voulez-vous le remplacer ?</translation>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry that much weight and/or volume</source>
-        <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
-        <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1674,18 +1682,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Resupply</source>
         <translation>Ravitailler</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry that much weight and/or volume</source>
-        <translation>Le convoi ne peut pas transporter la masse et/ou le volume demandé</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
-        <translation type="unfinished">Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
     </message>
 </context>
 <context>
