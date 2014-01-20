@@ -299,10 +299,11 @@ void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, const 
 {
     const QModelIndex index = model()->index( row, col );
     model()->setData( index, value, Qt::DisplayRole );
-    item( row, col )->setTextAlignment( Qt::AlignVCenter | ( col ? Qt::AlignRight : Qt::AlignLeft ) );
+    const auto i = item( row, col );
+    i->setTextAlignment( Qt::AlignVCenter | ( col ? Qt::AlignRight : Qt::AlignLeft ) );
     if( ! warning.isEmpty() )
     {
-        item( row, col )->setTextColor( Qt::red );
-        item( row, col )->setToolTip( warning );
+        i->setTextColor( Qt::red );
+        i->setToolTip( warning );
     }
 }
