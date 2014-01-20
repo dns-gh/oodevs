@@ -37,7 +37,6 @@ void actions::parameters::WalkPointList( const std::string& key,
                                          std::string name,
                                          xml::xistream& xis )
 {
-    boost::algorithm::to_lower( name );
     if( name == key )
         xis >> xml::list( "point", operand );
 }
