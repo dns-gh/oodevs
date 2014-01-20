@@ -13,6 +13,18 @@ import (
 	"testing"
 )
 
+func stopSim(c *C, sim *SimProcess) {
+	sim.Stop()
+	if c.Failed() {
+		return
+	}
+	session := sim.Opts.GetSessionDir()
+	err := CheckSessionErrors(session)
+	if err != nil {
+		c.Fatalf("errors found in session %s:\n%s", session, err)
+	}
+}
+
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct{}

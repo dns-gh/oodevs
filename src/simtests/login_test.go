@@ -17,7 +17,7 @@ import (
 
 func (s *TestSuite) TestLogin(c *C) {
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSim(c, sim)
 
 	// Test invalid login
 	client := connectClient(c, sim, nil)
@@ -76,14 +76,20 @@ func (s *TestSuite) TestLogin(c *C) {
 	c.Assert(err, IsNil)
 	err = client.LoginWithAuthenticationKey("", "", key)
 	c.Assert(err, IsNil)
+	client.Close()
 }
 
 func (s *TestSuite) TestMaxConnections(c *C) {
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSim(c, sim)
 
 	// Authenticate a maximum of clients
 	clients := []*swapi.Client{}
+	defer func() {
+		for _, client := range clients {
+			client.Close()
+		}
+	}()
 	for {
 		client := connectClient(c, sim, nil)
 		if client.Login("admin", "") != nil {
@@ -133,10 +139,11 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	}
 
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSim(c, sim)
 
 	// Connect and watch incoming messages
 	client := connectClient(c, sim, nil)
+	defer client.Close()
 
 	msgch := make(chan *swapi.SwordMessage)
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
@@ -192,7 +199,7 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	}
 
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSim(c, sim)
 
 	// The dispatcher sends connected user lists upon authentication, which
 	// without proper 'context' can confuse the command callback and make it
@@ -220,7 +227,7 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 
 func (s *TestSuite) TestProfileEditing(c *C) {
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSim(c, sim)
 
 	userProfile := &swapi.Profile{
 		Login:      "userprofile",

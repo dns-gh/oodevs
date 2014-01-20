@@ -96,7 +96,7 @@ func (s *TestSuite) TestSuccess(c *C) {
 
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
-	defer sim.Stop()
+	defer stopSim(c, sim)
 	// Since the simulation can run the 3 ticks before the test connection
 	// returns successfully, we cannot check the error returned by StartSim
 	// unless we have a way to start in paused mode and unpause it. Instead,
@@ -105,6 +105,9 @@ func (s *TestSuite) TestSuccess(c *C) {
 
 	sim.Wait(60 * time.Second)
 	c.Assert(sim.Success(), Equals, true)
+
+	err = CheckSessionErrors(opts.GetSessionDir())
+	c.Assert(err, IsNil)
 }
 
 // Test SimProcess fails fast when started with an invalid configuration and
@@ -156,7 +159,7 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 
 	opts.SessionName = filepath.Base(sessionDir)
 	sim, err := StartSim(opts)
-	defer sim.Stop()
+	defer stopSim(c, sim)
 	sim.Wait(60 * time.Second)
 	c.Assert(sim.Success(), Equals, true)
 
