@@ -117,11 +117,11 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // Name: AgentsModel::DestroyAgent
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyAgent( const sword::UnitDestruction& msg )
+void AgentsModel::DestroyAgent( const sword::UnitDestruction& message )
 {
     for( auto it = tools::Resolver< Agent_ABC >::CreateIterator(); it.HasMoreElements(); )
-        const_cast< kernel::Agent_ABC& >( it.NextElement() ).Update( msg );
-    tools::Resolver< Agent_ABC >::Delete( msg.unit().id() );
+        const_cast< kernel::Agent_ABC& >( it.NextElement() ).Update( message );
+    tools::Resolver< Agent_ABC >::Delete( message.unit().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +130,7 @@ void AgentsModel::DestroyAgent( const sword::UnitDestruction& msg )
 // -----------------------------------------------------------------------------
 void AgentsModel::DestroyAutomat( const sword::AutomatDestruction& message )
 {
-    delete tools::Resolver< Automat_ABC >::Find( message.automat().id() );
-    tools::Resolver< Automat_ABC >::Remove( message.automat().id() );
+    tools::Resolver< Automat_ABC >::Delete( message.automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +139,7 @@ void AgentsModel::DestroyAutomat( const sword::AutomatDestruction& message )
 // -----------------------------------------------------------------------------
 void AgentsModel::DestroyCrowd( const sword::CrowdDestruction& message )
 {
-    delete tools::Resolver< Population_ABC >::Find( message.crowd().id() );
-    tools::Resolver< Population_ABC >::Remove( message.crowd().id() );
+    tools::Resolver< Population_ABC >::Delete( message.crowd().id() );
 }
 
 // -----------------------------------------------------------------------------
