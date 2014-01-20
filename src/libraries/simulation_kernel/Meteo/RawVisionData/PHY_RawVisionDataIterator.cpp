@@ -329,7 +329,7 @@ const weather::PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
 //-----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() const
 {
-    return pCurrentCell_->GetPrecipitation();
+    return data_.GetPrecipitation( *pCurrentCell_ );
 }
 
 //-----------------------------------------------------------------------------

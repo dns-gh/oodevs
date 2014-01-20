@@ -66,16 +66,6 @@ ElevationCell& ElevationGrid::GetEmptyCell() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::sCell::GetPrecipitation
-// Created: JVT 04-03-24
-//-----------------------------------------------------------------------------
-const weather::PHY_Precipitation& ElevationCell::GetPrecipitation() const
-{
-    const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
-    return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
-}
-
-//-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetLighting
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------

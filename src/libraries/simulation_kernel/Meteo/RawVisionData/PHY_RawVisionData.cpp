@@ -29,6 +29,7 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::
     , nNbrRow_( 0 )
     , meteoManager_( manager )
     , pElevationGrid_( 0 )
+    , globalMeteo_( globalMeteo )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
@@ -295,7 +296,15 @@ ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 // -----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_Vector2D& vPos ) const
 {
-    return operator() ( vPos ).GetPrecipitation();
+    return GetPrecipitation( operator()( vPos ) );
+}
+
+const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const ElevationCell& cell ) const
+{
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    if( cell.pEffects )
+        return cell.pEffects->GetPrecipitation( meteo.GetPrecipitation() );
+    return meteo.GetPrecipitation();
 }
 
 //-----------------------------------------------------------------------------

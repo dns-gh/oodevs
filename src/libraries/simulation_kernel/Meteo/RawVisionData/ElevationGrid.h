@@ -38,7 +38,6 @@ public:
     short GetAltitude() const          { return h; }
     unsigned char GetEnvHeight() const { return dh; }
     envBits GetEnv() const             { return e; }
-    const weather::PHY_Precipitation&    GetPrecipitation() const;
     const weather::PHY_Lighting&         GetLighting     () const;
     const weather::WindData&             GetWind         () const;
 

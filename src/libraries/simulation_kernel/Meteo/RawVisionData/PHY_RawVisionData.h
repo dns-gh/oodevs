@@ -71,6 +71,7 @@ public:
     double GetCellSize() const;
 
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
+    const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
 
     double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
     double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;
@@ -118,7 +119,7 @@ private:
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
     PHY_MeteoDataManager* meteoManager_;
-
+    weather::Meteo& globalMeteo_;
 };
 
 #endif // __PHY_RawVisionData_h_
