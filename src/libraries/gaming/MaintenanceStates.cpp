@@ -68,33 +68,27 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
     if( message.has_work_rate()  )
         nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
 
+    priorities_.clear();
     if( message.has_priorities() )
-    {
-        priorities_.resize( message.priorities().elem_size() );
         for( int i = 0; i < message.priorities().elem_size(); ++i )
-            priorities_[i] = & resolver_.Get( message.priorities().elem( i ).id() );
-    }
-    if( message.has_tactical_priorities() )
-    {
-        tacticalPriorities_.resize( message.tactical_priorities().elem_size() );
-        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
-    }
-    if( message.has_haulers() )
-    {
-        dispoHaulers_.resize( message.haulers().elem_size() );
-        for( int i = 0; i < message.haulers().elem_size(); ++i )
-            dispoHaulers_[i] = kernel::Availability( resolver_, message.haulers().elem( i ) );
-    }
-    if( message.has_repairers() )
-    {
-        dispoRepairers_.resize( message.repairers().elem_size() );
-        for( int i = 0; i < message.repairers().elem_size(); ++i )
-            dispoRepairers_[i] = kernel::Availability( resolver_, message.repairers().elem( i ) );
-    }
+            priorities_.push_back( &resolver_.Get( message.priorities().elem( i ).id() ) );
 
-    if( message.has_priorities() || message.has_work_rate() || message.has_tactical_priorities() || message.has_chain() )
-        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
+    tacticalPriorities_.clear();
+    if( message.has_tactical_priorities() )
+        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+            tacticalPriorities_.push_back( &automatResolver_.Get( message.tactical_priorities().elem( i ).id() ) );
+
+    dispoHaulers_.clear();
+    if( message.has_haulers() )
+        for( int i = 0; i < message.haulers().elem_size(); ++i )
+            dispoHaulers_.push_back( kernel::Availability( resolver_, message.haulers().elem( i ) ) );
+
+    dispoRepairers_.clear();
+    if( message.has_repairers() )
+        for( int i = 0; i < message.repairers().elem_size(); ++i )
+            dispoRepairers_.push_back( kernel::Availability( resolver_, message.repairers().elem( i ) ) );
+
+    controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( *this );
 }
 
