@@ -16,7 +16,6 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>

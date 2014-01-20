@@ -18,14 +18,12 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-
 #include "protocol/Protocol.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
