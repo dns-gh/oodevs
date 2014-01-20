@@ -159,7 +159,8 @@ bool ProcessWrapper::IsRunning() const
 // -----------------------------------------------------------------------------
 void ProcessWrapper::Join() const
 {
-    thread_->join();
+    if( thread_.get() )
+        thread_->join();
 }
 
 // -----------------------------------------------------------------------------
