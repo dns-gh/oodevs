@@ -90,6 +90,8 @@ func (s *TestSuite) TestControlGlobalWeather(c *C) {
 	client.Model.WaitTicks(2)
 	actual = client.Model.GetData().GlobalWeather
 	c.Assert(expected, Equals, actual)
+
+	checkpointCompareAndStop(c, sim, client)
 }
 
 func CheckWeather(remote, local *swapi.LocalWeather, c *C) {
@@ -164,6 +166,8 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	weather := client.Model.GetData().LocalWeathers[local.Id]
 
 	CheckWeather(weather, &local, c)
+
+	checkpointCompareAndStop(c, sim, client)
 }
 
 func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
