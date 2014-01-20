@@ -34,8 +34,6 @@ namespace ADN_Tr
     const std::string& ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromDoctorSkills( E_DoctorSkills, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromProtectionType( E_ProtectionType, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
-    const std::string& ConvertFromBreakdownType( E_BreakdownType, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
-    const std::string& ConvertFromBreakdownNTI( E_BreakdownNTI, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromRadarType( E_RadarType, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromEquipmentState_ADN( E_EquipmentState_ADN, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
@@ -62,8 +60,6 @@ namespace ADN_Tr
     E_SensorWeatherModifiers  ConvertToSensorWeatherModifiers( const std::string& );
     E_DoctorSkills            ConvertToDoctorSkills     ( const std::string& );
     E_ProtectionType          ConvertToProtectionType   ( const std::string& );
-    E_BreakdownType           ConvertToBreakdownType    ( const std::string& );
-    E_BreakdownNTI            ConvertToBreakdownNTI     ( const std::string& );
     E_RadarType               ConvertToRadarType        ( const std::string& );
     E_EquipmentState_ADN      ConvertToEquipmentState_ADN( const std::string& );
     E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );

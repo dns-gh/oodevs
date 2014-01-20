@@ -5145,26 +5145,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Blessure extrêmement grave</translation>
     </message>
     <message>
-        <source>Eletronic</source>
-        <translation>Electronique</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobilité</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Gravité niveau 3</translation>
-    </message>
-    <message>
         <source>radar</source>
         <translation>radar</translation>
     </message>

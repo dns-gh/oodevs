@@ -5174,26 +5174,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Eletronic</source>
-        <translation>Electronique</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Gravité niveau 3</translation>
-    </message>
-    <message>
         <source>radar</source>
         <translation></translation>
     </message>

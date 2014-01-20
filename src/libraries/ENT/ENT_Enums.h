@@ -403,6 +403,21 @@ enum E_InjuriesSeriousness
     eNbrInjuriesSeriousness
 };
 
+enum E_BreakdownType
+{
+    eBreakdownType_EA,
+    eBreakdownType_M,
+    eNbrBreakdownType
+};
+
+enum E_BreakdownNTI
+{
+    eBreakdownNTI_NTI1,
+    eBreakdownNTI_NTI2,
+    eBreakdownNTI_NTI3,
+    eNbrBreakdownNTI,
+};
+
 enum E_GhostType
 {
     eGhostType_Agent,
