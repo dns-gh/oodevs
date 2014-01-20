@@ -91,8 +91,9 @@ void ADN_Equipments_GUI::Build()
 
     // Slope groupbox
     Q3GroupBox* pSlopeGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Slope" ) );
-    builder.AddField<ADN_EditLine_Double>( pSlopeGroupBox, "max-slope", tr( "Max slope" ), vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pSlopeGroupBox, "slope_deceleration", tr( "Deceleration" ), vInfosConnectors[ eSlopeDeceleration ], "", eGreaterEqualZero );
+    ADN_EditLine_Int* maxSlope = builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "max-slope", tr( "Max slope" ), vInfosConnectors[ eMaxSlope ], tr( "°" ) );
+    maxSlope->GetValidator().setRange( 0, 90 );
+    builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "slope_deceleration", tr( "Deceleration" ), vInfosConnectors[ eSlopeDeceleration ], tr( "%" ), ePercentage );
 
     // Troop/Crew groupbox
     QGroupBox* pTroopGroupBox = new gui::RichGroupBox( "troop-crew", tr( "Troop/Crew" ) );
@@ -560,8 +561,8 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData() ? composante.ptrArmor_.GetData()->strName_.GetData().c_str() : "" );
         builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData() ? composante.ptrSize_.GetData()->strName_.GetData().c_str() : "" );
         builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
-        builder.ListItem( tr( "Max slope" ), composante.rMaxSlope_.GetData() );
-        builder.ListItem( tr( "Slope deceleration" ), composante.rSlopeDeceleration_.GetData() );
+        builder.ListItem( tr( "Max slope" ), composante.nMaxSlope_.GetData() );
+        builder.ListItem( tr( "Slope deceleration" ), composante.nSlopeDeceleration_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )
         {
             builder.ListItem( tr( "Mounting duration per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
