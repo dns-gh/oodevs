@@ -47,37 +47,29 @@ void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
     if( message.has_chain() )
         bSystemEnabled_ = message.chain() != 0;
 
-    if( message.has_haulers()  )
-    {
-        haulersAvailability_.clear();
+    haulersAvailability_.clear();
+    if( message.has_haulers() )
         for( int i = 0; i < message.haulers().elem_size(); ++i )
             haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.haulers().elem( i ) ) );
-    }
 
-    if( message.has_repairers()  )
-    {
-        repairersAvailability_.clear();
+    repairersAvailability_.clear();
+    if( message.has_repairers() )
         for( int i = 0; i < message.repairers().elem_size(); ++i )
             repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.repairers().elem( i ) ) );
-    }
 
-    if( message.has_tactical_priorities()  )
-    {
-        tacticalPriorities_.clear();
+    tacticalPriorities_.clear();
+    if( message.has_tactical_priorities() )
         for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
             tacticalPriorities_.push_back( message.tactical_priorities().elem( i ) );
-    }
 
-    if( message.has_priorities()  )
-    {
-        priorities_.clear();
+    priorities_.clear();
+    if( message.has_priorities() )
         for( int i = 0; i < message.priorities().elem_size(); ++i )
         {
             sword::Id msg;
             msg.set_id( message.priorities().elem( i ).id() );
             priorities_.push_back( msg );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------

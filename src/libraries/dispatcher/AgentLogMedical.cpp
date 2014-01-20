@@ -48,40 +48,30 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
     if( asnMsg.has_chain()  )
         bSystemEnabled_ = asnMsg.chain() != 0;
 
-    if( asnMsg.has_collection_ambulances()  )
-    {
-        collectionAmbulancesAvailability_.clear();
+    collectionAmbulancesAvailability_.clear();
+    if( asnMsg.has_collection_ambulances() )
         for( int i = 0; i < asnMsg.collection_ambulances().elem_size(); ++i )
             collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.collection_ambulances().elem( i ) ) );
-    }
 
-    if( asnMsg.has_evacuation_ambulances()  )
-    {
-        evacuationAmbulancesAvailability_.clear();
+    evacuationAmbulancesAvailability_.clear();
+    if( asnMsg.has_evacuation_ambulances() )
         for( int i = 0; i < asnMsg.evacuation_ambulances().elem_size(); ++i )
             evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.evacuation_ambulances().elem( i ) ) );
-    }
 
+    doctorsAvailability_.clear();
     if( asnMsg.has_doctors()  )
-    {
-        doctorsAvailability_.clear();
         for( int i = 0; i < asnMsg.doctors().elem_size(); ++i )
             doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.doctors().elem( i ) ) );
-    }
 
-    if( asnMsg.has_tactical_priorities()  )
-    {
-        tacticalPriorities_.clear();
+    tacticalPriorities_.clear();
+    if( asnMsg.has_tactical_priorities() )
         for( int i = 0; i < asnMsg.tactical_priorities().elem_size(); ++i )
             tacticalPriorities_.push_back( asnMsg.tactical_priorities().elem( i ) );
-    }
 
-    if( asnMsg.has_priorities()  )
-    {
-        priorities_.clear();
+    priorities_.clear();
+    if( asnMsg.has_priorities() )
         for( int i = 0; i < asnMsg.priorities().elem_size(); ++i )
             priorities_.push_back( asnMsg.priorities().elem( i ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,27 +83,15 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_chain ( bSystemEnabled_ );
-
-    {
-        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
-            it->Send( *asn().mutable_evacuation_ambulances()->add_elem() );
-    }
-    {
-        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
-            it->Send( *asn().mutable_collection_ambulances()->add_elem() );
-    }
-    {
-        for( std::vector< MedicalEquipmentAvailability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
-            it->Send( *asn().mutable_doctors()->add_elem() );
-    }
-    {
-        for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
-            asn().mutable_tactical_priorities()->add_elem()->set_id( it->id() );
-    }
-    {
-        for( std::vector< sword::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorities()->add_elem( *it );
-    }
-
+    for( auto it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
+        it->Send( *asn().mutable_evacuation_ambulances()->add_elem() );
+    for( auto it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
+        it->Send( *asn().mutable_collection_ambulances()->add_elem() );
+    for( auto it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
+        it->Send( *asn().mutable_doctors()->add_elem() );
+    for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
+        asn().mutable_tactical_priorities()->add_elem()->set_id( it->id() );
+    for( auto it = priorities_.begin(); it != priorities_.end(); ++it )
+        asn().mutable_priorities()->add_elem( *it );
     asn.Send( publisher );
 }
