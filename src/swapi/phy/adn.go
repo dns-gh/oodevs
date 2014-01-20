@@ -206,7 +206,7 @@ type Reports []Report
 // Returns all reports which message match supplied regular expression. Returns
 // an empty slice if none is found or the pattern is invalid.
 func (r *Reports) MatchByMessage(pattern string) Reports {
-	reports := []Report{}
+	reports := Reports{}
 	re, err := regexp.Compile(pattern)
 	if err != nil {
 		return Reports(reports)
@@ -216,7 +216,7 @@ func (r *Reports) MatchByMessage(pattern string) Reports {
 			reports = append(reports, report)
 		}
 	}
-	return Reports(reports)
+	return reports
 }
 
 // Returns the only message matching supplied pattern, nil otherwise.
@@ -239,9 +239,5 @@ func ReadReports(physical PhysicalFile) (Reports, error) {
 	if err != nil {
 		return Reports{}, err
 	}
-	reports := make([]Report, len(xml.Reports))
-	for i, r := range xml.Reports {
-		reports[i] = r
-	}
-	return Reports(reports), nil
+	return Reports(xml.Reports), nil
 }
