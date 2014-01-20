@@ -111,7 +111,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    setMinimumSize( 720, 420 );
+    setMinimumSize( 750, 420 );
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
