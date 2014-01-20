@@ -12,6 +12,7 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include "TER_Analyzer.h"
+#include "TER_NodeFunctor_ABC.h"
 
 class TerrainData;
 class TER_StaticData;

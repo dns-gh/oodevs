@@ -404,15 +404,6 @@ void Meteo::SetTemperature( int temperature )
     temperature_ = temperature;
 }
 
-// *****************************************************************************
-//
-// This file is part of a MASA library or program.
-// Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2011 MASA Group
-//
-// *****************************************************************************
-
 // -----------------------------------------------------------------------------
 // Name: Meteo::GetID
 // Created: JSR 2011-11-22
