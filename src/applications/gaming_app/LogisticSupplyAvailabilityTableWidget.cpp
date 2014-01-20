@@ -301,9 +301,6 @@ void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, const 
     model()->setData( index, value, Qt::DisplayRole );
     const auto i = item( row, col );
     i->setTextAlignment( Qt::AlignVCenter | ( col ? Qt::AlignRight : Qt::AlignLeft ) );
-    if( ! warning.isEmpty() )
-    {
-        i->setTextColor( Qt::red );
-        i->setToolTip( warning );
-    }
+    i->setTextColor( warning.isEmpty() ? Qt::black : Qt::red );
+    i->setToolTip( warning );
 }
