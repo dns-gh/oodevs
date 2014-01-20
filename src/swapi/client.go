@@ -202,15 +202,10 @@ func (c *Client) remove(context int32) {
 }
 
 func (c *Client) apply(msg *SwordMessage) {
-	removals := []int32{}
 	for context, handler := range c.handlers {
-		remove := handler(msg, context, nil)
-		if remove {
-			removals = append(removals, context)
+		if handler(msg, context, nil) {
+			c.remove(context)
 		}
-	}
-	for _, context := range removals {
-		c.remove(context)
 	}
 }
 
