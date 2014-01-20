@@ -49,29 +49,24 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
         bSystemEnabled_ = asnMsg.chain() != 0;
 
     collectionAmbulancesAvailability_.clear();
-    if( asnMsg.has_collection_ambulances() )
-        for( int i = 0; i < asnMsg.collection_ambulances().elem_size(); ++i )
-            collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.collection_ambulances().elem( i ) ) );
+    for( int i = 0; i < asnMsg.collection_ambulances().elem_size(); ++i )
+        collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.collection_ambulances().elem( i ) ) );
 
     evacuationAmbulancesAvailability_.clear();
-    if( asnMsg.has_evacuation_ambulances() )
-        for( int i = 0; i < asnMsg.evacuation_ambulances().elem_size(); ++i )
-            evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.evacuation_ambulances().elem( i ) ) );
+    for( int i = 0; i < asnMsg.evacuation_ambulances().elem_size(); ++i )
+        evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.evacuation_ambulances().elem( i ) ) );
 
     doctorsAvailability_.clear();
-    if( asnMsg.has_doctors()  )
-        for( int i = 0; i < asnMsg.doctors().elem_size(); ++i )
-            doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.doctors().elem( i ) ) );
+    for( int i = 0; i < asnMsg.doctors().elem_size(); ++i )
+        doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.doctors().elem( i ) ) );
 
     tacticalPriorities_.clear();
-    if( asnMsg.has_tactical_priorities() )
-        for( int i = 0; i < asnMsg.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( asnMsg.tactical_priorities().elem( i ) );
+    for( int i = 0; i < asnMsg.tactical_priorities().elem_size(); ++i )
+        tacticalPriorities_.push_back( asnMsg.tactical_priorities().elem( i ) );
 
     priorities_.clear();
-    if( asnMsg.has_priorities() )
-        for( int i = 0; i < asnMsg.priorities().elem_size(); ++i )
-            priorities_.push_back( asnMsg.priorities().elem( i ) );
+    for( int i = 0; i < asnMsg.priorities().elem_size(); ++i )
+        priorities_.push_back( asnMsg.priorities().elem( i ) );
 }
 
 // -----------------------------------------------------------------------------

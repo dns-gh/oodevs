@@ -69,24 +69,20 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
         nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
 
     priorities_.clear();
-    if( message.has_priorities() )
-        for( int i = 0; i < message.priorities().elem_size(); ++i )
-            priorities_.push_back( &resolver_.Get( message.priorities().elem( i ).id() ) );
+    for( int i = 0; i < message.priorities().elem_size(); ++i )
+        priorities_.push_back( &resolver_.Get( message.priorities().elem( i ).id() ) );
 
     tacticalPriorities_.clear();
-    if( message.has_tactical_priorities() )
-        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( &automatResolver_.Get( message.tactical_priorities().elem( i ).id() ) );
+    for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+        tacticalPriorities_.push_back( &automatResolver_.Get( message.tactical_priorities().elem( i ).id() ) );
 
     dispoHaulers_.clear();
-    if( message.has_haulers() )
-        for( int i = 0; i < message.haulers().elem_size(); ++i )
-            dispoHaulers_.push_back( kernel::Availability( resolver_, message.haulers().elem( i ) ) );
+    for( int i = 0; i < message.haulers().elem_size(); ++i )
+        dispoHaulers_.push_back( kernel::Availability( resolver_, message.haulers().elem( i ) ) );
 
     dispoRepairers_.clear();
-    if( message.has_repairers() )
-        for( int i = 0; i < message.repairers().elem_size(); ++i )
-            dispoRepairers_.push_back( kernel::Availability( resolver_, message.repairers().elem( i ) ) );
+    for( int i = 0; i < message.repairers().elem_size(); ++i )
+        dispoRepairers_.push_back( kernel::Availability( resolver_, message.repairers().elem( i ) ) );
 
     controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( *this );

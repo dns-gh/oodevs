@@ -61,29 +61,24 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
         bChainEnabled_ = message.chain() != 0;
 
     priorities_.clear();
-    if( message.has_priorities() )
-        for( int i = 0; i < message.priorities().elem_size(); ++i )
-            priorities_.push_back( E_HumanWound( message.priorities().elem( i ) ) );
+    for( int i = 0; i < message.priorities().elem_size(); ++i )
+        priorities_.push_back( E_HumanWound( message.priorities().elem( i ) ) );
 
     tacticalPriorities_.clear();
-    if( message.has_tactical_priorities() )
-        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( &automatResolver_.Get( message.tactical_priorities().elem( i ).id() ) );
+    for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+        tacticalPriorities_.push_back( &automatResolver_.Get( message.tactical_priorities().elem( i ).id() ) );
 
     dispoRamassageAmbulances_.clear();
-    if( message.has_collection_ambulances() )
-        for( int i = 0; i < message.collection_ambulances().elem_size(); ++i )
-            dispoRamassageAmbulances_.push_back( kernel::Availability( resolver_, message.collection_ambulances().elem( i ) ) );
+    for( int i = 0; i < message.collection_ambulances().elem_size(); ++i )
+        dispoRamassageAmbulances_.push_back( kernel::Availability( resolver_, message.collection_ambulances().elem( i ) ) );
 
     dispoReleveAmbulances_.clear();
-    if( message.has_evacuation_ambulances() )
-        for( int i = 0; i < message.evacuation_ambulances().elem_size(); ++i )
-            dispoReleveAmbulances_.push_back( kernel::Availability( resolver_, message.evacuation_ambulances().elem( i ) ) );
+    for( int i = 0; i < message.evacuation_ambulances().elem_size(); ++i )
+        dispoReleveAmbulances_.push_back( kernel::Availability( resolver_, message.evacuation_ambulances().elem( i ) ) );
 
     dispoDoctors_.clear();
-    if( message.has_doctors() )
-        for( int i = 0; i < message.doctors().elem_size(); ++i )
-            dispoDoctors_.push_back( kernel::Availability( resolver_, message.doctors().elem( i ) ) );
+    for( int i = 0; i < message.doctors().elem_size(); ++i )
+        dispoDoctors_.push_back( kernel::Availability( resolver_, message.doctors().elem( i ) ) );
 
     controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MedicalStates", "Medical system" ) ) );
     controller_.Update( *this );
