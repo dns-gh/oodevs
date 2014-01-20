@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../physical/tools.xsd"/>
+	<xs:simpleType name="ParameterType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the list of available action parameters, including magic actions, missions and fragorders</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="agent">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Agent">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit) uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="agentknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit) knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="agentknowledgelist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit) knowledge list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="agentlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit) list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AgentList">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Agent (unit) list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="army">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Party.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="automate">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="automat">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Automate">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="automatelist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AutomateList">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="bool">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Boolean value.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Bool">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Bool uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="boolean">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Bool uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="datetime">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Datetime.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Datetime">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Datetime uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="density">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Used for object attributes (mine fields...).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="direction">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Direction.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Direction">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Direction uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="dotationtype">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource type identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DotationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource type uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resourceType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource type identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="inhabitant">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Inhabitant.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="enumeration">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Enumeration.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Enumeration">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Enumeration uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="formation">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Formation identifier used within intelligence definition.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="genobject">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Engineered object.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GenObject">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Engineered object uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="plannedwork">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Engineered object.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="genobjectlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of engineered objects.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GenObjectList">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Engineered objects list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="heading">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Direction.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="identifier">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Generic identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="karma">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Karma used within intelligence parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="knowledgegroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Knowledge group.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="level">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Hierarchical level used within intelligence parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="lima">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Phase line within a PhaseLineList.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="limit">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Boundary limit.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Limit">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Limit uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="list">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Generic list of parameters, used for nested parameters definition.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="location">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Location. Can be point, line, polygon, circle or ellipse.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="locationlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of locations.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="maintenancepriorities">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines a list of equipment types ordered by treatmenet priority.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="medicalpriorities">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines a list of wound gravities ordered by treatment priority.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="name">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. String value used for intelligence definition.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="nature">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. String value used for intelligence definition.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="natureatlas">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Composition of ATLAS natures.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="numeric">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Real number.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Integer">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Number.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="crowd">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Crowd.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="crowdknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Crowd knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urbanknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Urban knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="objectknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Object knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="objectknowledgelist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Object knowledge list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="objectivelist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of objectives.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="obstacletype">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Obstacle type "preliminary" or "reserved" for use within a genobject.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pullFlowParameters">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Pull flow parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pushflowparameters">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Push flow parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="path">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Path.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Path">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Path uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pathlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Path list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pathpoint">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Path point for use within a path.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="phaseline">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Phase line.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="phaselinelist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Phase line list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PhaseLineList">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Phase line list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resourcenetworktype">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource network type.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resourcenetworknode">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource network node.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="point">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Point.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pointlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Point list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PointList">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Point list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="polygon">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Polygon.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Polygon">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Polygon uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="polygonlist">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Polygon list.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="populationknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Population knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="quantity">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Qualified quantity (as for recompletion magic actions...).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="string">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Plain text.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tc2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Internal. Used for object attributes (refugee camps...).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeometryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="point"/>
+			<xs:enumeration value="line"/>
+			<xs:enumeration value="circle"/>
+			<xs:enumeration value="polygon"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UtmCoordinates">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d{2})?[A-Z]{3}\d{8}(\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MissionIdentifier">
+		<xs:restriction base="xs:positiveInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="MagicActionIdentifier">
+		<xs:restriction base="xs:string">
+            <!-- MagicAction -->
+            <xs:enumeration value="change_diplomacy"/>
+            <xs:enumeration value="change_resource_links"/>
+            <xs:enumeration value="create_knowledge_group"/>
+            <xs:enumeration value="debug_internal"/>
+            <xs:enumeration value="fire_order_on_location"/>
+            <xs:enumeration value="global_weather"/>
+            <xs:enumeration value="local_weather"/>
+            <xs:enumeration value="local_weather_destruction"/>
+            <!-- UnitMagicAction -->
+            <xs:enumeration value="automat_creation"/>
+            <xs:enumeration value="cancel_surrender"/>
+            <xs:enumeration value="change_automat_superior"/>
+            <xs:enumeration value="change_brain_debug"/>
+            <xs:enumeration value="change_critical_intelligence"/>
+            <xs:enumeration value="change_dotation"/>
+            <xs:enumeration value="change_equipment_human_size"/>
+            <xs:enumeration value="change_equipment_state"/>
+            <xs:enumeration value="change_extension"/>
+            <xs:enumeration value="change_formation_superior"/>
+            <xs:enumeration value="change_human_factors"/>
+            <xs:enumeration value="change_human_state"/>
+            <xs:enumeration value="change_knowledge_group"/>
+            <xs:enumeration value="change_logistic_links"/>
+            <xs:enumeration value="change_posture"/>
+            <xs:enumeration value="create_breakdowns"/>
+            <xs:enumeration value="create_direct_fire_order"/>
+            <xs:enumeration value="create_wound"/>
+            <xs:enumeration value="create_wounds"/>
+            <xs:enumeration value="crowd_change_affinities"/>
+            <xs:enumeration value="crowd_change_armed_individuals"/>
+            <xs:enumeration value="crowd_change_attitude"/>
+            <xs:enumeration value="crowd_change_health_state"/>
+            <xs:enumeration value="crowd_creation"/>
+            <xs:enumeration value="crowd_total_destruction"/>
+            <xs:enumeration value="delete_unit"/>
+            <xs:enumeration value="destroy_all"/>
+            <xs:enumeration value="destroy_component"/>
+            <xs:enumeration value="exec_script"/>
+            <xs:enumeration value="fire_order"/>
+            <xs:enumeration value="formation_creation"/>
+            <xs:enumeration value="inhabitant_change_affinities"/>
+            <xs:enumeration value="inhabitant_change_alerted_state"/>
+            <xs:enumeration value="inhabitant_change_confined_state"/>
+            <xs:enumeration value="inhabitant_change_health_state"/>
+            <xs:enumeration value="knowledge_group_update"/>
+            <xs:enumeration value="load_unit"/>
+            <xs:enumeration value="log_finish_handlings"/>
+            <xs:enumeration value="log_supply_change_quotas"/>
+            <xs:enumeration value="log_supply_pull_flow"/>
+            <xs:enumeration value="log_supply_push_flow"/>
+            <xs:enumeration value="partial_recovery"/>
+            <xs:enumeration value="recover_all"/>
+            <xs:enumeration value="recover_all_except_log"/>
+            <xs:enumeration value="recover_equipments"/>
+            <xs:enumeration value="recover_equipments_except_log"/>
+            <xs:enumeration value="recover_resources"/>
+            <xs:enumeration value="recover_resources_except_log"/>
+            <xs:enumeration value="recover_transporters"/>
+            <xs:enumeration value="recover_troops"/>
+            <xs:enumeration value="recover_troops_except_log"/>
+            <xs:enumeration value="reload_brain"/>
+            <xs:enumeration value="surrender"/>
+            <xs:enumeration value="teleport"/>
+            <xs:enumeration value="transfer_equipment"/>
+            <xs:enumeration value="unit_change_affinities"/>
+            <xs:enumeration value="unit_change_superior"/>
+            <xs:enumeration value="unit_creation"/>
+            <xs:enumeration value="unload_unit"/>
+            <!-- KnowledgeMagicAction -->
+            <xs:enumeration value="knowledge_group_add_knowledge"/>
+            <xs:enumeration value="knowledge_group_enable"/>
+            <xs:enumeration value="knowledge_group_update_side"/>
+            <xs:enumeration value="knowledge_group_update_side_parent"/>
+            <xs:enumeration value="knowledge_group_update_type"/>
+            <!-- ObjectMagicAction -->
+            <xs:enumeration value="create_object"/>
+            <xs:enumeration value="destroy_object"/>
+            <xs:enumeration value="update_object"/>
+        </xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActionIdentifier">
+		<xs:union memberTypes="MissionIdentifier MagicActionIdentifier"/>
+	</xs:simpleType>
+	<xs:complexType name="Point">
+		<xs:attribute name="coordinates" type="UtmCoordinates"/>
+	</xs:complexType>
+	<xs:complexType name="Geometry">
+		<xs:sequence>
+			<xs:element name="point" type="Point" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="GeometryType"/>
+	</xs:complexType>
+	<xs:complexType name="ParameterBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Base class for action parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="parameter" type="ParameterBase" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of embedded parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="location" type="Geometry" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="identifier" type="xs:string" use="optional"/>
+		<xs:attribute name="type" type="ParameterType" use="optional"/>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="ActionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the list of available actions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mission"/>
+			<xs:enumeration value="fragorder"/>
+			<xs:enumeration value="magic"/>
+			<xs:enumeration value="magicunit"/>
+			<xs:enumeration value="magicobject"/>
+			<xs:enumeration value="magicknowledge"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ActionBase">
+		<xs:sequence>
+			<xs:element name="parameter" type="ParameterBase" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="ActionIdentifier">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Action identifier, such as mission ID.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Name of the action, used for display and identification purpose.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="target" type="xs:nonNegativeInteger">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifier of target entity executing action.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="time" type="xs:dateTime">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Date and time of action planned execution using exercise time. For backward compatibility, time in "tick" value is also supported but is considered obsolete.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="ActionType"/>
+	</xs:complexType>
+	<xs:element name="actions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="action" type="ActionBase" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ParameterDirection">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Direction parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:attribute name="value">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="\d{1,3}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="type" type="ParameterType" fixed="direction"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ParameterLocationBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Location parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:sequence>
+					<xs:element name="location" type="Geometry"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="ParameterType" fixed="location"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - location -->
+	<xs:complexType name="ParameterLocation">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - line -->
+	<xs:complexType name="ParameterLine">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - point -->
+	<xs:complexType name="ParameterPoint">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PhaseLineFunctionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Phase line function types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LD"/>
+			<xs:enumeration value="LCA"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="LI"/>
+			<xs:enumeration value="LO"/>
+			<xs:enumeration value="LCAR"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="LDM"/>
+			<xs:enumeration value="LFM"/>
+			<xs:enumeration value="LIA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ParameterPhaseLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Phase line parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:sequence>
+					<xs:element name="parameter" type="ParameterLocationBase"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="ParameterType" fixed="lima"/>
+				<xs:attribute name="value" type="PhaseLineFunctionType"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ParameterPhaseLineList">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Phase line list parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:sequence>
+					<xs:element name="parameter" type="ParameterPhaseLine" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="ParameterType" fixed="phaselinelist"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

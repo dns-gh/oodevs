@@ -192,4 +192,5 @@
   <migration from="5.3.0" to="5.3.1">
     <upgrade schema="schemas/5.3.0/exercise/orders.xsd" apply="schemas/5.3.1/xsl/orders_5.3.0-5.3.1.xsl"/>
   </migration>
+  <migration from="5.3.1" to="5.3.2"/>
 </migrations>
