@@ -45,8 +45,10 @@ struct Action
 struct Event
 {
     Event()
-        : sizeof_( sizeof( Event ) )
-        , done   ( false )
+        : sizeof_   ( sizeof( Event ) )
+        , error_code( 0 )
+        , read_only ( false )
+        , done      ( false )
     {
         // NOTHING
     }
@@ -57,14 +59,16 @@ struct Event
            const std::string& end,
            bool done,
            const Action& action )
-        : sizeof_( sizeof( Event ) )
-        , uuid   ( uuid )
-        , name   ( name )
-        , info   ( info )
-        , begin  ( begin )
-        , end    ( end )
-        , done   ( done )
-        , action ( action )
+        : sizeof_   ( sizeof( Event ) )
+        , uuid      ( uuid )
+        , name      ( name )
+        , info      ( info )
+        , begin     ( begin )
+        , end       ( end )
+        , error_code( 0 )
+        , read_only ( false )
+        , done      ( done )
+        , action    ( action )
     {
         // NOTHING
     }
