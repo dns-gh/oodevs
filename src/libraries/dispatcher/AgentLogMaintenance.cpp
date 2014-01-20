@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "AgentLogMaintenance.h"
 #include "Model_ABC.h"
-#include "Automat_ABC.h"
 #include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -66,7 +65,7 @@ void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
     {
         tacticalPriorities_.clear();
         for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( message.tactical_priorities().elem( i ).id() ) );
+            tacticalPriorities_.push_back( message.tactical_priorities().elem( i ) );
     }
 
     if( message.has_priorities()  )
@@ -95,7 +94,7 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
     for( auto it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
         it->Send( *asn().mutable_haulers()->add_elem() );
     for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
-        asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
+        asn().mutable_tactical_priorities()->add_elem()->set_id( it->id() );
     for( auto it = priorities_.begin(); it != priorities_.end(); ++it )
         asn().mutable_priorities()->add_elem()->set_id( it->id() );
     asn.Send( publisher );

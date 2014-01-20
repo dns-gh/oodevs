@@ -73,7 +73,7 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
     {
         tacticalPriorities_.clear();
         for( int i = 0; i < asnMsg.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.tactical_priorities().elem( i ).id() ) );
+            tacticalPriorities_.push_back( asnMsg.tactical_priorities().elem( i ) );
     }
 
     if( asnMsg.has_priorities()  )
@@ -107,8 +107,8 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
             it->Send( *asn().mutable_doctors()->add_elem() );
     }
     {
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
-            asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
+        for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
+            asn().mutable_tactical_priorities()->add_elem()->set_id( it->id() );
     }
     {
         for( std::vector< sword::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
