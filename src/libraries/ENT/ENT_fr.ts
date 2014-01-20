@@ -1252,7 +1252,7 @@
         <translation>Décharger un pion</translation>
     </message>
     <message>
-        <source>Log Switch Maintenance Mode</source>
+        <source>Switch Log Maintenance Mode</source>
         <translation>Changement de mode de maintenance</translation>
     </message>
 </context>
