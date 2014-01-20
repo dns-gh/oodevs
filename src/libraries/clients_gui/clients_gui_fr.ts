@@ -1199,19 +1199,19 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Lat</source>
-        <translation></translation>
+        <translation>Lat</translation>
     </message>
     <message>
         <source>Long</source>
-        <translation></translation>
+        <translation>Long</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <source>X</source>
-        <translation></translation>
+        <translation>X</translation>
     </message>
 </context>
 <context>
