@@ -33,7 +33,7 @@ class EquipmentType : public tools::Resolver< WeaponSystemType, std::string >
 public :
     //! @name Types
     //@{
-    struct CarryingSupplyFunction
+    struct CarryingSupplyFunction : boost::noncopyable
     {
         CarryingSupplyFunction( const std::string& stockNature,
             double stockMaxWeightCapacity, double stockMinWeightCapacity,
@@ -46,11 +46,11 @@ public :
         {
             // NOTHING
         }
-        std::string stockNature_;
-        double stockMaxWeightCapacity_;
-        double stockMinWeightCapacity_;
-        double stockMaxVolumeCapacity_;
-        double stockMinVolumeCapacity_;
+        const std::string stockNature_;
+        const double stockMaxWeightCapacity_;
+        const double stockMinWeightCapacity_;
+        const double stockMaxVolumeCapacity_;
+        const double stockMinVolumeCapacity_;
     };
     //@}
 
