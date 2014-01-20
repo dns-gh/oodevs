@@ -9,8 +9,8 @@
 package simtests
 
 import (
-	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"os"
 	"reflect"
 	"regexp"
 	"swapi"
@@ -268,11 +268,23 @@ func (s *TestSuite) TestTriggerError(c *C) {
 		c.Assert(dmps, HasLen, 1)
 
 		// And the sim.log should contain a stack trace related to the error
-		log, err := ioutil.ReadFile(opts.GetSimLogPath())
+		fp, err := os.Open(opts.GetSimLogPath())
+		c.Assert(err, IsNil)
+		defer fp.Close()
+		trace, err := simu.FindStacktrace(fp)
 		c.Assert(err, IsNil)
 		reStack := regexp.MustCompile(
 			`(?s)Crash - stack trace.*(filename not available|\\simulation_kernel\\)`)
-		c.Assert(reStack.FindSubmatch(log), NotNil)
+		c.Assert(reStack.FindStringSubmatch(trace), NotNil)
+
+		// There is at least one functErr, the crash one
+		fp.Seek(0, 0)
+		errors, err := simu.FindLoggedFatalErrors(fp)
+		c.Assert(err, IsNil)
+		c.Assert(len(errors), Greater, 0)
+
+		err = simu.CheckSessionErrors(opts.GetSessionDir())
+		c.Assert(err, NotNil)
 	}
 
 	kinds := []string{"null_pointer", "stack_overflow"}

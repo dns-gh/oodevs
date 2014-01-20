@@ -10,7 +10,6 @@ package simu
 
 import (
 	"errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"swapi"
@@ -124,20 +123,6 @@ func (o *SimOpts) WriteSession(session *Session) error {
 	o.DebugDir = filepath.Join(sessionDir, "debug")
 	o.SessionName = filepath.Base(sessionDir)
 	return nil
-}
-
-func ListDmpFiles(path string) ([]string, error) {
-	dmps := []string{}
-	entries, err := ioutil.ReadDir(path)
-	if err != nil {
-		return dmps, err
-	}
-	for _, d := range entries {
-		if filepath.Ext(d.Name()) == ".dmp" {
-			dmps = append(dmps, filepath.Join(path, d.Name()))
-		}
-	}
-	return dmps, nil
 }
 
 type SimProcess struct {
