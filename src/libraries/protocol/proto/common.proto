@@ -1873,6 +1873,13 @@ message UnitMagicAction {
         //! parameters[0], BooleanValue: if true, maintenance is in manual mode,
         //!   otherwise maintenance is in automated mode.
         log_maintenance_set_manual        = 59;
+        //! Create an automat and its units(defined in the physical base)
+        //! The tasker must be set to the parent formation or automat.
+        //! parameters[0], Identifier: the automat type.
+        //! parameters[1], Identifier: the automat knowledge group.
+        //! parameters[2], Point: the automat location in WGS84.
+        //! result[0], AutomatId: created automat identifier.
+        automat_and_units_creation        = 60;
     }
     //! The tasker @todo Explain what is a "tasker"
     required Tasker            tasker     = 1;

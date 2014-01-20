@@ -96,6 +96,13 @@ const size_t enumsCount = COUNT_OF( enums );
 namespace
 {
 
+const ActionParam automat_and_units_creation_params[] =
+{
+    { "AutomatType", "identifier", 0 },
+    { "KnowledgeGroup", "identifier", 0 },
+    { "Location", "point", 0 },
+};
+
 const ActionParam automat_creation_params[] =
 {
     { "AutomatType", "identifier", 0 },
@@ -424,6 +431,7 @@ const ActionParam update_urban_params[] =
 
 const Action actions[] =
 {
+    ACTION( automat_and_units_creation ),
     ACTION( automat_creation ),
     ACTION( change_automat_superior ),
     ACTION( change_brain_debug ),

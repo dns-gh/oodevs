@@ -553,6 +553,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
 
 T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
 {
+    T_ConverterUnitMagicActionType( "automat_and_units_creation",       QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat and units creation" ), sword::UnitMagicAction::automat_and_units_creation ),
     T_ConverterUnitMagicActionType( "automat_creation",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat Creation" ), sword::UnitMagicAction::automat_creation ),
     T_ConverterUnitMagicActionType( "cancel_surrender",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Cancel - Surrender" ), sword::UnitMagicAction::cancel_surrender ),
     T_ConverterUnitMagicActionType( "change_automat_superior",          "" /* doesn't seems to work, but change_formation_superior does */, sword::UnitMagicAction::change_automat_superior ),
