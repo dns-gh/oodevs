@@ -36,21 +36,21 @@ public :
     struct CarryingSupplyFunction : boost::noncopyable
     {
         CarryingSupplyFunction( const std::string& stockNature,
-            double stockMaxWeightCapacity, double stockMinWeightCapacity,
-            double stockMaxVolumeCapacity, double stockMinVolumeCapacity )
+            double stockMinWeightCapacity, double stockMaxWeightCapacity,
+            double stockMinVolumeCapacity, double stockMaxVolumeCapacity )
             : stockNature_( stockNature )
-            , stockMaxWeightCapacity_( stockMaxWeightCapacity )
             , stockMinWeightCapacity_( stockMinWeightCapacity )
-            , stockMaxVolumeCapacity_( stockMaxVolumeCapacity )
+            , stockMaxWeightCapacity_( stockMaxWeightCapacity )
             , stockMinVolumeCapacity_( stockMinVolumeCapacity )
+            , stockMaxVolumeCapacity_( stockMaxVolumeCapacity )
         {
             // NOTHING
         }
         const std::string stockNature_;
-        const double stockMaxWeightCapacity_;
         const double stockMinWeightCapacity_;
-        const double stockMaxVolumeCapacity_;
+        const double stockMaxWeightCapacity_;
         const double stockMinVolumeCapacity_;
+        const double stockMaxVolumeCapacity_;
     };
     //@}
 
