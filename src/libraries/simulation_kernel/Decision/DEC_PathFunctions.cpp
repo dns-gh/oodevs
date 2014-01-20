@@ -29,6 +29,7 @@
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointBM
@@ -224,11 +225,11 @@ bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const 
 // Name: DEC_PathFunctions::GetRepPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-MT_Vector2D* DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return (MT_Vector2D*)&pPoint->GetPos();
+    return boost::make_shared< MT_Vector2D >( pPoint->GetPos() );
 }
 
 // -----------------------------------------------------------------------------
