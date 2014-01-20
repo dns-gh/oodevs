@@ -606,81 +606,7 @@
         </python>
     </target>
 
-    <target name="prepare-dec-api-files" description="prepare resources to generate the documentation">
-        <mkdir dir="${reports.dir}"/>
-        <pathconvert targetos="unix" property="src.dir.unix">
-            <path location="${src.dir}"/>
-        </pathconvert>
-        <pathconvert targetos="unix" property="out.dir.unix">
-            <path location="${out.dir}"/>
-        </pathconvert>
-        <delete dir="${out.dir}/dec_api/definition"/>
-        <mkdir dir="${out.dir}/dec_api"/>
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt'/>
-        </exec>
-        <python>
-            <arg value="decfilter.py"/>
-            <arg value="${out.dir}/dec_api/dec_files.txt"/>
-            <arg value="${src.dir}/libraries/simulation_kernel/"/>
-            <arg value="${out.dir}/dec_api/definition"/>
-        </python>
-        <copy file="./dec_api/sdk.dox" toDir="${out.dir}/dec_api/definition"/>
-    </target>
-
-    <target name="dec-api-documentation" description="generate SWORD DEC API documentation">
-        <doxygen-report name="sword" input="${out.dir}/dec_api/definition" outdir="${out.dir}/sdk/dec">
-            <property name="PROJECT_NAME" value="SWORD - DEC API Reference"/>
-            <property name="PROJECT_NUMBER" value="${version.project}"/>
-            <property name="FILE_PATTERNS" value='"*.h *.dox"'/>
-            <property name="EXCLUDE" value='"*.svn*"'/>
-            <property name="EXCLUDE_PATTERNS" value='"*/.svn/*"'/>
-            <!-- <property name="FILTER_PATTERNS" value="*.cpp=decfilter.py"/> -->
-            <!-- <property name="FILTER_PATTERNS" value="*.h=decfilter.py"/>-->
-            <property name="ABBREVIATE_BRIEF" value="YES"/>
-            <property name="JAVADOC_AUTOBRIEF" value="YES"/>
-            <property name="EXTRACT_ALL" value="YES"/>
-            <property name="INLINE_SOURCES" value="YES"/>
-            <property name="SOURCE_BROWSER" value="YES"/>
-            <property name="DISABLE_INDEX" value="NO"/>
-            <property name="GENERATE_TAGFILE" value="${reports.dir}/doxygen_tag.log"/>
-            <property name="COLLABORATION_GRAPH" value="NO"/>
-            <!--
-            <property name="GENERATE_DEPRECATEDLIST" value="NO"/>
-            <property name="GENERATE_TODOLIST" value="NO"/>
-            <property name="GENERATE_BUGLIST" value="NO"/>
-            -->
-            <property name="INTERNAL_DOCS" value="YES"/>
-            <property name="SHOW_USED_FILES" value="YES"/>
-            <property name="HIDE_UNDOC_MEMBERS" value="YES"/>
-            <property name="SHOW_FILES" value="NO"/>
-            <property name="SHOW_NAMESPACES" value="NO"/>
-            <property name="BRIEF_MEMBER_DESC" value="NO"/>
-            <property name="ENUM_VALUES_PER_LINE" value="1"/>
-            <property name="WARNINGS" value="YES"/>
-            <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
-            <property name="WARN_LOGFILE" value="${reports.dir}/doxygen_dec.log"/>
-            <property name="GENERATE_HTMLHELP" value="YES"/>
-            <property name="CHM_FILE" value="${out.dir}/sdk/dec/SWORD_DEC_Reference_${version.project}.chm"/>
-            <!--
-            <property name="EXAMPLE_PATH" value="${data.dir}\app-data\resources\schemas\${version.major}"/>
-            <property name="EXAMPLE_RECURSIVE" value="YES"/>
-            <property name="EXAMPLE_PATTERN" value="*.h *.cpp *.xsd"/>
-            -->
-        </doxygen-report>
-        <fail message="documentation contains errors, see ${reports.dir}/doxygen_dec.log">
-            <condition>
-                <length file="${reports.dir}/doxygen_dec.log" when="greater" length="0"/>
-            </condition>
-        </fail>
-        <python>
-            <arg value="${root.dir}/bin/htmlhelp/hhc.py"/>
-            <arg value="${out.dir}/sdk/dec/html/index.hhp"/>
-        </python>
-    </target>
-
-    <target name="documentation" depends="proto-api-documentation, prepare-dec-api-files, dec-api-documentation"/>
+    <target name="documentation" depends="proto-api-documentation"/>
 
     <!--
     ============================================================================
@@ -808,9 +734,6 @@
                 <zipfileset dir="${out.dir}/sdk/doc"
                     includes="sdk.pdf"
                     fullpath="${sdk.prefix}/SWORD_API_Reference_${version.project}.pdf"/>
-                <zipfileset dir="${out.dir}/sdk/dec"
-                    includes="SWORD_DEC_Reference_${version.project}.chm"
-                    fullpath="${sdk.prefix}/SWORD_DEC_Reference_${version.project}.chm"/>
                 <zipfileset dir="${out.dir}/sdk/doc/html"
                     includes="**"
                     prefix="${sdk.prefix}/SWORD_API_Reference_${version.project}-html"/>
@@ -883,7 +806,6 @@
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
-        <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv" version="1.14.r619"/>
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
