@@ -477,127 +477,79 @@ integration.stopActivateDrone = function( self, alreadyUnDeployed )
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- The unit is moving
--- @author MIA
--- @release 2011-05-13
--- --------------------------------------------------------------------------------
-integration.bodyIsMoving = function( self )
-    return self.source:DEC_Agent_EstEnMouvement()
-end
-integration.activateInjuredSorting = function( self )
-    DEC_Sante_ActiverFonctionTri()
+--- Returns true if this agent is moving, false otherwise.
+-- @param agent Directia agent
+-- @return Boolean
+integration.bodyIsMoving = function( agent )
+    return agent.source:DEC_Agent_EstEnMouvement()
 end
 
-integration.desactivateInjuredSorting = function( self )
-    DEC_Sante_DesactiverFonctionTri()
+--- Makes the given supporting unit lend tugs to the given supported unit.
+-- @see integration.StartGetTugs
+-- @param supportingUnit Directia agent, the agent lending tugs
+-- @param supportedUnit Directia agent, the agent to lend tugs to.
+-- @param nbrTugs Integer, the number of tugs to lend.
+-- This method can only be called by an agent.
+integration.StartLendTugs = function ( supportingUnit, supportedUnit, nbrTugs )
+    DEC_StartPreterRemorqueurs( supportingUnit.source, supportedUnit.source, nbrTugs )
 end
 
-integration.activateLogisticChains = function( self )
-    if integration.isLogisticTypeUnit() then
-        DEC_Sante_ActiverChaine()
-        DEC_Maintenance_ActiverChaine()
-        DEC_Ravitaillement_ActiverChaine()
-        DEC_Sante_ActiverFonctionSoin()
-        return true
-    else
-        return false
-    end
+--- Makes the given supported unit give back the tugs previously lent to it by this entity.
+-- @see integration.StartLendTugs
+-- @param supportedUnit Directia agent, the agent giving back the tugs.
+-- @param nbrTugs Integer, the number of tugs to retrieve.
+-- This method can only be called by an agent.
+integration.StartGetTugs = function ( supportedUnit, nbrTugs )
+    DEC_RecupererRemorqueurs( supportedUnit.source, nbrTugs )
 end
 
-integration.desactivateLogisticChains = function( self )
-    if integration.isLogisticTypeUnit() then
-        DEC_Sante_DesactiverChaine()
-        DEC_Maintenance_DesactiverChaine()
-        DEC_Ravitaillement_DesactiverChaine()
-        DEC_Sante_DesactiverFonctionSoin()
-        return true
-    else
-        return false
-    end
+--- Makes the given supporting unit lend ambulances to the given supported unit.
+-- @see integration.StartGetVSRAM
+-- @param supportingUnit Directia agent, the agent lending ambulances
+-- @param supportedUnit Directia agent, the agent to lend ambulances to.
+-- @param nbrAmbulances Integer, the number of ambulances to lend.
+-- This method can only be called by an agent.
+integration.StartLendVSRAM = function ( supportingUnit, supportedUnit, nbrAmbulances )
+    DEC_StartPreterVSRAM( supportingUnit.source, supportedUnit.source, nbrAmbulances )
 end
 
--- -------------------------------------------------------------------------------- 
--- Activate injured people treatment
--- @author GGE
--- @release 2011-08-03
--- --------------------------------------------------------------------------------
-integration.activateInjuredTreatment = function ( )
-    DEC_Sante_ActiverFonctionSoin()
+--- Makes the given supporting unit lend ambulances to the given supported unit.
+-- @see integration.GetBackAmbulances
+-- @param supportingUnit Simulation agent, the agent lending ambulances
+-- @param supportedUnit Simulation agent, the agent to lend ambulances to.
+-- @param nbrAmbulances Integer, the number of ambulances to lend.
+-- This method can only be called by an agent.
+integration.LendAmbulances = function ( supportingUnit, supportedUnit, nbrAmbulances )
+    DEC_StartPreterVSRAM( supportingUnit, supportedUnit, nbrAmbulances )
 end
 
--- -------------------------------------------------------------------------------- 
--- Desactivate injured people treatment
--- @author GGE
--- @release 2011-08-03
--- --------------------------------------------------------------------------------
-integration.desactivateInjuredTreatment = function ( )
-    DEC_Sante_DesactiverFonctionSoin()
+--- Makes the given supported unit give back the ambulances previously lent to it by this entity.
+-- @see integration.StartLendVSRAM
+-- @param supportedUnit Directia agent, the agent giving back the ambulances.
+-- @param nbrAmbulances Integer, the number of ambulances to retrieve.
+-- This method can only be called by an agent.
+integration.StartGetVSRAM = function ( supportedUnit, nbrAmbulances )
+    DEC_RecupererVSRAM( supportedUnit.source, nbrAmbulances )
 end
 
--- -------------------------------------------------------------------------------- 
--- Modify human wound priority
--- @author GGE
--- @release 2011-08-03
--- --------------------------------------------------------------------------------
-integration.modifyHumanWoundPriority = function ( blessuresTraitees )
-    if ( blessuresTraitees ~= nil ) then
-        local List = {}
-        for parameterName, parameterValue in pairs( blessuresTraitees ) do
-            List[parameterName] = parameterValue.source
-        end
-        integration.changeHealthPriority( List )
-    end
+--- Makes the given supported unit give back the ambulances previously lent to it by this entity.
+-- @see integration.LendAmbulances
+-- @param supportedUnit Simulation agent, the agent giving back the ambulances.
+-- @param nbrAmbulances Integer, the number of ambulances to retrieve.
+-- This method can only be called by an agent.
+integration.GetBackAmbulances = function ( supportedUnit, nbrAmbulances )
+    DEC_RecupererVSRAM( supportedUnit, nbrAmbulances )
 end
 
--- -------------------------------------------------------------------------------- 
--- Start Lend Tugs
--- @author GGE
--- @release 2011-10-05
--- --------------------------------------------------------------------------------
-integration.StartLendTugs = function ( pionRenforce, pionARenforcer, nbrRemorqueurs  )
-    DEC_StartPreterRemorqueurs( pionRenforce.source, pionARenforcer.source, nbrRemorqueurs )
-end
-
--- -------------------------------------------------------------------------------- 
--- Start Get Tugs
--- @author GGE
--- @release 2011-10-05
--- --------------------------------------------------------------------------------
-integration.StartGetTugs = function ( pionRenforce, nbrRemorqueurs )
-    DEC_RecupererRemorqueurs( pionRenforce.source, nbrRemorqueurs )
-end
-
--- -------------------------------------------------------------------------------- 
--- Start Lend VSRAM
--- @author GGE
--- @release 2011-10-05
--- --------------------------------------------------------------------------------
-integration.StartLendVSRAM = function ( pionRenforce, pionARenforcer, nbrAmbulances )
-    DEC_StartPreterVSRAM( pionRenforce.source, pionARenforcer.source, nbrAmbulances )
-end
-integration.LendAmbulances = function ( pionRenforce, pionARenforcer, nbrAmbulances )
-    DEC_StartPreterVSRAM( pionRenforce, pionARenforcer, nbrAmbulances )
-end
-
--- -------------------------------------------------------------------------------- 
--- Start Get VSRAM
--- @author GGE
--- @release 2011-10-05
--- --------------------------------------------------------------------------------
-integration.StartGetVSRAM = function ( pionRenforce, nbrAmbulances )
-    DEC_RecupererVSRAM( pionRenforce.source, nbrAmbulances )
-end
-integration.GetBackAmbulances = function ( pionRenforce, nbrAmbulances )
-    DEC_RecupererVSRAM( pionRenforce, nbrAmbulances )
-end
-
--- -------------------------------------------------------------------------------- 
--- Activate radar on area
--- @param area
--- @author PSN
--- @release 2012-07-12
--- -------------------------------------------------------------------------------- 
+--- Enables all three types of radar detection on the given area.
+-- May display a report.
+-- This method does nothing if radar detection was already enabled by a previous
+-- call to this method without having been disabled with a call to the integration.deactivateRadar method.
+-- This method can only be called by an agent.
+-- @see integration.deactivateRadar
+-- @see integration.activeRadarOnLocalisation
+-- @param area Area knowledge
+-- @return Boolean, whether or not the call to this method has activated radar detection.
 integration.activateRadar = function ( area )
     if not myself.radarActivated then
         myself.ecoute = integration.activeRadarOnLocalisation( eRadarType_Ecoute, area.source )
@@ -606,19 +558,22 @@ integration.activateRadar = function ( area )
         myself.zoneAEcouter = area.source
         myself.radarActivated = true
 
-        reportFunction(eRC_DebutSurveillance )
+        reportFunction( eRC_DebutSurveillance )
         return true
     else
         return false
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- Deactivate radar on area
--- @param area
--- @author PSN
--- @release 2012-07-12
--- -------------------------------------------------------------------------------- 
+--- Disables all three types of radar detection on the given area.
+-- May display a report.
+-- This method does nothing if radar detection was not previously enabled by
+-- a call to the integration.activateRadar method.
+-- This method can only be called by an agent.
+-- @see integration.activateRadar
+-- @see integration.disableRadarOnLocalisation
+-- @param area Area knowledge
+-- @return Boolean, whether or not the call to this method has disabled radar detection.
 integration.deactivateRadar = function ( area )
     if myself.radarActivated then
         integration.disableRadarOnLocalisation( eRadarType_Ecoute, myself.ecoute )
@@ -626,138 +581,205 @@ integration.deactivateRadar = function ( area )
         integration.disableRadarOnLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
         myself.radarActivated = false
 
-        reportFunction(eRC_FinSurveillance )	
+        reportFunction( eRC_FinSurveillance )	
         return true
     else
         return false
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- Activate radar for indirect fire on area
--- @param area
--- @author LMT
--- @release 2012-06-13
--- -------------------------------------------------------------------------------- 
+--- Starts the detection of indirect fire in the given area.
+-- Displays a report.
+-- This method can only be called by an agent.
+-- @see integration.stopActivateRadarTirIndirect
+-- @param area Area knowledge
 integration.startActivateRadarTirIndirect = function ( area )
     area[myself] = area[myself] or {}
     area[myself].actionRadar = DEC_Perception_ActiverPerceptionTirsIndirect( area.source )
     actionCallbacks[ area[myself].actionRadar ] = function( arg ) area[myself].actionRadar = arg end
 
-    reportFunction(eRC_DebutSurveillance )
+    reportFunction( eRC_DebutSurveillance )
 end
--- -------------------------------------------------------------------------------- 
--- Desactivate radar for indirect fire on area
--- @param area
--- @author LMT
--- @release 2012-06-13
--- -------------------------------------------------------------------------------- 
+
+--- Stops the detection of indirect fire in the given area.
+-- May display a report.
+-- This method can only be called by an agent.
+-- @see integration.startActivateRadarTirIndirect
+-- @param area Area knowledge 
 integration.stopActivateRadarTirIndirect = function ( area )
     area[myself] = area[myself] or {} 
     if area[myself].actionRadar == eActionObjetTerminee then
-        reportFunction(eRC_FinSurveillance )
+        reportFunction( eRC_FinSurveillance )
     end  
     if area[myself].actionRadar then
         area[myself].actionRadar = DEC_Perception_DesactiverPerceptionTirsIndirect( area[myself].actionRadar )
     end
 end
--- -------------------------------------------------------------------------------- 
--- Return true if agent has tapping radar
--- @author DDA
--- @release 2011-12-10
--- -------------------------------------------------------------------------------- 
-integration.hasRadar = function ( self, typeRadar )
-    return DEC_Agent_ARadar( self.source, typeRadar )
+
+--- Returns true if the given agent has a radar with the given radar type, false otherwise.
+-- @param agent Directia agent
+-- @param typeRadar Integer, the type of radar among one of the following : 
+-- <ul> <li> eRadarType_Radar (radar) </li>
+-- <li> eRadarType_Ecoute (listening) </li>
+-- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
+-- @return Boolean
+integration.hasRadar = function ( agent, typeRadar )
+    return DEC_Agent_ARadar( agent.source, typeRadar )
 end
 
-
-integration.isNight = function( self )
+--- Returns true if it is night, false otherwise.
+-- @return Boolean
+integration.isNight = function()
     return DEC_Nuit()
 end
 
-integration.activateRecording = function( self )
+--- Activates the recording mode for this entity.
+-- @see integration.deactivateRecording
+-- This method can only be called by an agent.
+integration.activateRecording = function()
     DEC_Perception_ActiverModeEnregistrement()
 end
-integration.deactivateRecording = function( self )
+
+--- Deactivates the recording mode for this entity.
+-- @see integration.activateRecording
+-- This method can only be called by an agent.
+integration.deactivateRecording = function()
     DEC_Perception_DesactiverModeEnregistrement()
 end
-integration.activateSensors= function( self )
+
+--- Activates this entity's sensors.
+-- @see integration.deactivateSensors
+-- This method can only be called by an agent.
+integration.activateSensors = function()
     DEC_Perception_ActiverSenseurs()
 end
-integration.deactivateSensors = function( self )
+
+--- Deactivates this entity's sensors.
+-- @see integration.activateSensors
+-- This method can only be called by an agent.
+integration.deactivateSensors = function()
     DEC_Perception_DesactiverSenseurs()
 end
+
+--- Increases the production of the given resource node with the provided quantity.
+-- @see integration.increaseResourceNodeProduction
+-- @param resourceNode Resource node knowledge
+-- @param quantity Integer, the quantity
+-- @return Boolean, true
 integration.increaseNodeProduction = function( resourceNode, quantity )
     integration.increaseResourceNodeProduction( resourceNode, quantity )
     return true
 end
+
+--- Increases the production of the given resource node with the provided quantity.
+-- @param resourceNode Resource node knowledge
+-- @param quantity Integer, the quantity
 integration.increaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceAugmenteProduction( resourceNode.source, quantity )
 end
+
+--- Decreases the production of the given resource node with the provided quantity.
+-- @see integration.decreaseResourceNodeProduction
+-- @param resourceNode Resource node knowledge
+-- @param quantity Integer, the quantity
+-- @return Boolean, true
 integration.decreaseNodeProduction = function( resourceNode, quantity )
     integration.decreaseResourceNodeProduction( resourceNode, quantity )
     return true
 end
+
+--- Decreases the production of the given resource node with the provided quantity.
+-- @param resourceNode Resource node knowledge
+-- @param quantity Integer, the quantity
 integration.decreaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceBaisseProduction( resourceNode.source, quantity )
 end
+
+--- Enables the given resource node.
+-- Displays a report.
+-- @see integration.enableResourceNode
+-- @param resourceNode Resource node knowledge
+-- @return Boolean, true
 integration.enable = function( resourceNode )
-    reportFunction(eRC_ResourceNodeEnabled )
+    reportFunction( eRC_ResourceNodeEnabled )
     integration.enableResourceNode( resourceNode.source ) 
     return true
 end
+
+--- Disables the given resource node.
+-- Displays a report.
+-- @see integration.disableResourceNode
+-- @param resourceNode Resource node knowledge
+-- @return Boolean, true
 integration.disable = function( resourceNode )
-    reportFunction(eRC_ResourceNodeDisabled )
+    reportFunction( eRC_ResourceNodeDisabled )
     integration.disableResourceNode( resourceNode.source ) 
     return true
 end
 
+--- Enables the given resource node.
+-- @param resourceNode Simulation resource node
 integration.enableResourceNode = function( resourceNode )
     DEC_ReseauRessource_ActiverElement( resourceNode )
 end
 
+--- Disables the given resource node.
+-- @param resourceNode Simulation resource node
 integration.disableResourceNode = function( resourceNode )
     DEC_ReseauRessource_DesactiverElement( resourceNode )
 end
 
-integration.isDead = function( self )
+--- Returns true if the caller of this method is dead, false otherwise.
+-- This method can only be called by an agent or a crowd.
+-- @return Boolean
+integration.isDead = function()
     return DEC_Agent_EstMort()
 end
 
-integration.selfDecontaminate = function( self )
+--- Instantaneously decontaminates this entity.
+-- This method can only be called by an NBC agent.
+-- @return Boolean, true
+integration.selfDecontaminate = function()
     DEC_Agent_SeDecontaminer()
     return true
 end
 
+--- Sets the flying height of this entity at the given height.
+-- This method can only be called by an agent.
+-- @param height Float, the new flying height (in meters)
 integration.changeHeight = function( height )
     myself.altitude = height
     DEC_Agent_HauteurDeVol( height )
 end
 
-integration.isFlying = function( self )
+--- Returns true if this entity is flying, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.isFlying = function()
     return DEC_Agent_EstEnVol()
 end
 
-integration.startImmuniserNbc = function( self )
-    DEC_Agent_ImmuniserNbc( )
+--- Returns true if the given agent knowledge is flying, false otherwise.
+-- @param agent Simulation agent knowledge
+-- @return Boolean
+integration.isAgentFlying = function( agent )
+    return DEC_ConnaissanceAgent_EstEnVol( agent )
 end
 
-integration.stopImmuniserNbc = function( self )
-    DEC_Agent_StopImmuniserNbc( )
+--- Immunizes or stops immunizing the given agent.
+-- @param agent Directia agent
+-- @param immunize Whether the given agent should be immunized or should stop immunizing
+integration.forcerImmunisationNbc = function( agent, immunize )
+    DEC_Agent_ForcerImmunisationNbc( agent.source, immunize )
 end
 
-integration.forcerImmunisationNbc = function( self, immunize )
-    DEC_Agent_ForcerImmunisationNbc( self.source, immunize )
-end
-
-integration.getUnitPC = function( self ) 
-    return CreateKnowledge( integration.ontology.types.agent, DEC_Pion_PionPC() )
-end
-
+--- Returns true if the given agent is of a logistic type, false otherwise.
+-- If no agent is given, this method can only be called by an agent, and
+-- will instead return true if this entity is of a logistic type, false otherwise.
+-- @param platoon Simulation agent (optional)
+-- @return Boolean
 integration.isLogisticTypeUnit = function( platoon )
-    if platoon == nil then
-        platoon = myself
-    end
+    platoon = platoon or myself
     local typePion = DEC_Pion_GetMilPionType( platoon )
     if typePion == "Pion LOG TC2"
       or typePion == "Pion LOG BLD Sante"
@@ -773,6 +795,9 @@ integration.isLogisticTypeUnit = function( platoon )
     end
 end
 
+--- Returns true if the given agent is a logistic convoy, false otherwise.
+-- @param platoon Simulation agent
+-- @return Boolean
 integration.isLogisticConvoy = function( platoon )
     local typePion = DEC_Pion_GetMilPionType( platoon )
     if typePion == "Pion LOG Convoi" then
@@ -782,57 +807,81 @@ integration.isLogisticConvoy = function( platoon )
     end
 end
 
+--- Returns the usual flying height of the given agent, based only on his type.
+-- @param entity Simulation agent
+-- @return Float, the usual flying height (in meters)
 integration.unitAltitude = function( entity )
     local nomPion = DEC_Pion_GetMilPionName( entity )
     local altitude = 1000
-    if string.find (nomPion, "SDTI") then
-        altitude = 1000
-    elseif  string.find (nomPion, "DRAC") then
+    if string.find( nomPion, "DRAC" ) then
         altitude = 200
     end
     return altitude
 end
 
-integration.meKnowledgeIsTranported = function( self )
+--- Returns true if this entity is transported, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.meKnowledgeIsTranported = function()
     return DEC_Agent_EstTransporte()
 end
 
+--- Enables a radar of the given radar type to detect activity in the given area.
+-- This method can only be called by an agent.
+-- @see integration.disableRadarOnLocalisation
+-- @param radarType Integer, the type of radar among one of the following : 
+-- <ul> <li> eRadarType_Radar (radar) </li>
+-- <li> eRadarType_Ecoute (listening) </li>
+-- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
+-- @param area Simulation area
+-- @return Integer, the id of the activated radar
 integration.activeRadarOnLocalisation = function( radarType, area )
     return DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
 end
 
+--- Disables the given radar of the given radar type, previously enabled
+--- to detect activity in an area.
+-- @see integration.activeRadarOnLocalisation
+-- @param radarType Integer, the type of radar among one of the following : 
+-- <ul> <li> eRadarType_Radar (radar) </li>
+-- <li> eRadarType_Ecoute (listening) </li>
+-- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
+-- @param radar Integer, the id of the radar to disable.
 integration.disableRadarOnLocalisation = function( radarType, radar )
-    return DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
+    DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
 end
 
-integration.isAgentFlying = function( agent )
-    return DEC_ConnaissanceAgent_EstEnVol( agent )
-end
-
--- Returns the current speed of the provided agent in m/s
--- @param agent : an agent
+--- Returns the current speed of the provided agent in m/s
+-- @param agent Simulation agent
 integration.getCurrentSpeed = function( agent )
     return DEC_Agent_GetCurrentSpeed( agent )
 end
 
--- Returns the maximal speed of the provided agent in m/s
--- @param agent : an agent knowledge
+--- Returns the maximal speed of the provided agent in m/s
+-- @param agent Directia agent
 integration.getMaxSpeed = function( agent )
     return DEC_Agent_MaxSpeed( agent.source )
 end
 
-integration.getModulationMaxSpeed = function( agent )
-    return DEC_GetModulationVitesseMax( agent )
-end
-
+--- Returns the direction this entity is facing.
+-- @return Simulation direction
 integration.getAgentDirection = function()
     return DEC_Agent_Direction()
 end
 
+--- Returns the list of all agents in the same company
+--- as this entity except the HQ.
+-- This method can be called by an agent.
+-- @return List of simulation agents
 integration.getAgentsWithoutHQ = function()
     return DEC_Pion_PionsSansPC()
 end
 
+--- Returns the list of all agents in this company (if this method
+--- is called by a company), or of all agents in the same company
+--- as this entity (if this method is called by an agent).
+-- This method can be called by an agent or by a company.
+-- @return List of simulation agents
 integration.getAgentsWithHQ = function()
     return DEC_Pion_PionsAvecPC()
 end
@@ -858,60 +907,89 @@ integration.setUAVDeployed = function( drone, boolean )
     drone:SetbMiseEnOeuvre_( boolean )
 end
 
--- -------------------------------------------------------------------------------- 
--- Activate special sensors on area
--- --------------------------------------------------------------------------------  
+--- Enables a radar of the given radar type to detect activity in the given area.
+-- Displays a report.
+-- This method can only be called by an agent.
+-- @see integration.deactivateSpecialSensors
+-- @param radarType Integer, the type of radar among one of the following : 
+-- <ul> <li> eRadarType_Radar (radar) </li>
+-- <li> eRadarType_Ecoute (listening) </li>
+-- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
+-- @param area Area knowledge
+-- @return Boolean, true
 integration.activateSpecialSensors = function( area, eType )
     area[ myself ] = area[ myself ] or {}
     area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
-    reportFunction(eRC_DebutSurveillance )
+    reportFunction( eRC_DebutSurveillance )
     return true
 end
 
--- -------------------------------------------------------------------------------- 
--- deactivate special sensors on area
--- -------------------------------------------------------------------------------- 
+--- Disables a radar of the given radar type to detect activity in the given area.
+-- May display a report.
+-- This method does nothing if radar detection was not previously enabled by
+-- a call to the integration.activateSpecialSensors method.
+-- This method can only be called by an agent.
+-- @see integration.activateSpecialSensors
+-- @param radarType Integer, the type of radar among one of the following : 
+-- <ul> <li> eRadarType_Radar (radar) </li>
+-- <li> eRadarType_Ecoute (listening) </li>
+-- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
+-- @param area Area knowledge
 integration.deactivateSpecialSensors = function( area, eType )
-    if area[ myself ].actionRadar then
+    if area[ myself ] and area[ myself ].actionRadar then
         area[ myself ].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eType, area[ myself ].actionRadar )
-        reportFunction(eRC_FinSurveillance )
+        reportFunction( eRC_FinSurveillance )
     end
 end
 
--- -------------------------------------------------------------------------------- 
--- activate special sensors on toxic CBRN plume
--- --------------------------------------------------------------------------------  
+--- Enables this entity's special sensors to detect CBRN toxic plume.
+-- This method can only be called by an agent.
+-- @see integration.deactivateSpecialSensorForCBRN
 integration.activateSpecialSensorForCBRN = function ()
     DEC_Perception_ActiverSenseursSurDecision()
 end
 
--- -------------------------------------------------------------------------------- 
--- deactivate special sensors on toxic CBRN plume
--- -------------------------------------------------------------------------------- 
+--- Disables this entity's special sensors to detect CBRN toxic plume.
+-- This method can only be called by an agent.
+-- @see integration.activateSpecialSensorForCBRN
 integration.deactivateSpecialSensorForCBRN = function ()
     DEC_Perception_DesactiverSenseursSurDecision()
 end
 
--- -------------------------------------------------------------------------------- 
--- colliding with a toxic plume
--- -------------------------------------------------------------------------------- 
-integration.isToxicPlumeDetected = function( agent )
-    local objects = integration.getToxicPlumeDetected( agent )
-    return #objects > 0
+--- Returns true if a toxic plum is detected by this entity, false otherwise.
+-- This method can only be called by an agent.
+-- @return Boolean
+integration.isToxicPlumeDetected = function()
+    return #DEC_Connaissances_CollisionsDesastres() > 0
 end
 
--- -------------------------------------------------------------------------------- 
--- returning the toxic plume
--- -------------------------------------------------------------------------------- 
-integration.getToxicPlumeDetected = function( agent )
-    local objects = {}
-    objects = DEC_Connaissances_CollisionsDesastres()
-    return objects
+--- Returns a list of all the toxic plumes detected by this entity.
+-- This method can only be called by an agent.
+-- @return List of object knowledges
+integration.getToxicPlumeDetected = function()
+    return DEC_Connaissances_CollisionsDesastres()
 end
 
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
 
+--- Deprecated, use integration.forcerImmunisationNbc instead (with the immunize parameter set to true)
+integration.startImmuniserNbc = function( self )
+    DEC_Agent_ImmuniserNbc( )
+end
+
+--- Deprecated, use integration.forcerImmunisationNbc instead (with the immunize parameter set to false)
+integration.stopImmuniserNbc = function( self )
+    DEC_Agent_StopImmuniserNbc( )
+end
+
+--- Deprecated, use integration.getKnowledgeHQ instead
+integration.getUnitPC = function( self ) 
+    return CreateKnowledge( integration.ontology.types.agent, DEC_Pion_PionPC() )
+end
+
 --- Deprecated
-integration.stopActivateDrone
+integration.getModulationMaxSpeed = function( agent )
+    return DEC_GetModulationVitesseMax( agent )
+end
