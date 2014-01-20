@@ -1542,11 +1542,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Min weight carried</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse min transportable</translation>
     </message>
     <message>
         <source>Min volume carried</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume min transportable</translation>
     </message>
 </context>
 <context>
