@@ -22,7 +22,6 @@ namespace sword
 namespace kernel
 {
     class Agent_ABC;
-    class Automat_ABC;
 }
 
 namespace dispatcher

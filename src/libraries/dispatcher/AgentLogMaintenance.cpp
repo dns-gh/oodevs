@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "AgentLogMaintenance.h"
 #include "Model_ABC.h"
-#include "Automat_ABC.h"
 #include "Agent_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
