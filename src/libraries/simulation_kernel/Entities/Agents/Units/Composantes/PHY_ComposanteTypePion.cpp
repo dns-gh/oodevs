@@ -43,6 +43,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/foreach.hpp>
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 
@@ -846,16 +847,25 @@ double PHY_ComposanteTypePion::GetConstructionSpeed( const TerrainData& data ) c
     return speeds_.GetConstructionSpeed( data );
 }
 
+namespace
+{
+    template< typename Objects >
+    bool CanDoIt( const Objects& objectData, const MIL_ObjectType_ABC& object, boost::function< bool( const PHY_ComposanteTypeObjectData& ) > f )
+    {
+        if( objectData.size() <= object.GetID() )
+            return false;
+        auto pObjectData = objectData[ object.GetID() ];
+        return pObjectData && f( *pObjectData );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanConstruct();
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanConstruct, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -864,10 +874,7 @@ bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) co
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanDestroy();
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanDestroy, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -876,10 +883,7 @@ bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) cons
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanMine();
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanMine, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -888,10 +892,7 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanExtinguish();
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanExtinguish, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -900,10 +901,7 @@ bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) c
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanDemine();
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanDemine, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -912,10 +910,7 @@ bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool bObjectIsMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanBypass( bObjectIsMined );
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanBypass, _1, bObjectIsMined ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -924,10 +919,21 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object, bool isObjectMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanRemoveFromPath( isObjectMined );
+    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanRemoveFromPath, _1, isObjectMined ) );
+}
+
+namespace
+{
+    template< typename Objects >
+    double GetTime( const Objects& objectData, const MIL_ObjectType_ABC& object, boost::function< double( const PHY_ComposanteTypeObjectData& ) > f )
+    {
+        if( objectData.size() <= object.GetID() )
+            return std::numeric_limits< double >::max();
+        const auto pObjectData = objectData[ object.GetID() ];
+        if( pObjectData )
+            return f( *pObjectData );
+        return std::numeric_limits< double >::max();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -936,12 +942,7 @@ bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetConstructionTime( rSizeCoef );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetConstructionTime, _1, rSizeCoef ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -950,12 +951,7 @@ double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& ob
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetDestructionTime( rSizeCoef );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetDestructionTime, _1, rSizeCoef ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -964,12 +960,7 @@ double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& obj
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetMiningTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetMiningTime, _1 ) );
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetDeminingTime
@@ -977,12 +968,7 @@ double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object )
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetDeminingTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetDeminingTime, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -991,12 +977,7 @@ double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetExtinguishingTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetExtinguishingTime, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1005,12 +986,7 @@ double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& o
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, double rSizeCoef, bool bObjectIsMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetBypassTime( rSizeCoef, bObjectIsMined );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetBypassTime, _1, rSizeCoef, bObjectIsMined ) );
 }
 
 // -----------------------------------------------------------------------------
