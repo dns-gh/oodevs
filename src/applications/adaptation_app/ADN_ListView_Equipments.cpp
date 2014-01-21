@@ -119,8 +119,10 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eTreatsNBC]->Connect( &pInfos->logInfos_.healthInfos_.bCuresNBC_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eTreatsShock]->Connect( &pInfos->logInfos_.healthInfos_.bCuresShock_, bConnect );
 
-    vItemConnectors_[ADN_Equipments_GUI::eLogCarryVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rVolume_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eLogCarryMinVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rMinVolume_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eLogCarryMaxVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rMaxVolume_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eLogCarryMinWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rMinWeight_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eLogCarryMaxWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rMaxWeight_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptr_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );

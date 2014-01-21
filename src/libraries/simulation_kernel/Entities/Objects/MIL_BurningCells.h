@@ -63,7 +63,7 @@ public:
     void save( MIL_CheckPointOutArchive& ) const;
     void finalizeLoad( MIL_EntityManager& entityManager );
     void load( MIL_CheckPointInArchive&, unsigned int objectId, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, MIL_Object_ABC&, const unsigned int ) const;
+    void save( MIL_CheckPointOutArchive&, unsigned int objectId, const unsigned int ) const;
     //@}
 
     //! @name Dispatch & save

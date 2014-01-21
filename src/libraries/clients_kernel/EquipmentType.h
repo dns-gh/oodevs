@@ -33,18 +33,24 @@ class EquipmentType : public tools::Resolver< WeaponSystemType, std::string >
 public :
     //! @name Types
     //@{
-    struct CarryingSupplyFunction
+    struct CarryingSupplyFunction : boost::noncopyable
     {
-        CarryingSupplyFunction( const std::string& stockNature, double stockWeightCapacity, double stockVolumeCapacity )
-            : stockNature_        ( stockNature )
-            , stockWeightCapacity_( stockWeightCapacity )
-            , stockVolumeCapacity_( stockVolumeCapacity )
+        CarryingSupplyFunction( const std::string& stockNature,
+            double stockMinWeightCapacity, double stockMaxWeightCapacity,
+            double stockMinVolumeCapacity, double stockMaxVolumeCapacity )
+            : stockNature_( stockNature )
+            , stockMinWeightCapacity_( stockMinWeightCapacity )
+            , stockMaxWeightCapacity_( stockMaxWeightCapacity )
+            , stockMinVolumeCapacity_( stockMinVolumeCapacity )
+            , stockMaxVolumeCapacity_( stockMaxVolumeCapacity )
         {
             // NOTHING
         }
-        std::string stockNature_;
-        double stockWeightCapacity_;
-        double stockVolumeCapacity_;
+        const std::string stockNature_;
+        const double stockMinWeightCapacity_;
+        const double stockMaxWeightCapacity_;
+        const double stockMinVolumeCapacity_;
+        const double stockMaxVolumeCapacity_;
     };
     //@}
 
@@ -69,12 +75,11 @@ public:
 private:
     //! @name Type
     //@{
-    typedef std::vector< BreakdownOriginType* >   T_Breakdowns;
-    typedef T_Breakdowns::const_iterator        CIT_Breakdowns;
-    typedef std::vector< DotationCapacityType* >  T_Resources;
-    typedef T_Resources::const_iterator         CIT_Resources;
+    typedef std::vector< BreakdownOriginType* >  T_Breakdowns;
+    typedef std::vector< DotationCapacityType* > T_Resources;
     //@}
 
+private:
     //! @name Helpers
     //@{
     void ReadWeaponSystem( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );

@@ -31,6 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Bur
 BurnSurfaceAttribute::BurnSurfaceAttribute( MIL_Object_ABC* pObject )
     : burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
     , pObject_( pObject )
+    , objectId_( pObject ? pObject->GetID() : 0 )
 {
     //NOTHING
 }
@@ -42,6 +43,7 @@ BurnSurfaceAttribute::BurnSurfaceAttribute( MIL_Object_ABC* pObject )
 BurnSurfaceAttribute::BurnSurfaceAttribute( const BurnSurfaceAttribute& other )
 : burningCells_( other.burningCells_ )
 , pObject_( other.pObject_ )
+, objectId_( other.objectId_ )
 {
     // NOTHING
 }
@@ -62,6 +64,7 @@ BurnSurfaceAttribute::~BurnSurfaceAttribute()
 BurnSurfaceAttribute& BurnSurfaceAttribute::operator=( const BurnSurfaceAttribute& other )
 {
     pObject_ = other.pObject_;
+    objectId_ = other.objectId_;
     NotifyAttributeUpdated( eOnUpdate);
     return *this;
 }
@@ -73,9 +76,8 @@ BurnSurfaceAttribute& BurnSurfaceAttribute::operator=( const BurnSurfaceAttribut
 void BurnSurfaceAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int version )
 {
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    unsigned int objectId;
-    ar >> objectId;
-    burningCells_.load( ar, objectId, version );
+    ar >> objectId_;
+    burningCells_.load( ar, objectId_, version );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,13 +86,9 @@ void BurnSurfaceAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int version ) const
 {
-    if( !pObject_ )
-        throw MASA_EXCEPTION( "cannot save unitialized attribute" );
-
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    unsigned int objectId = pObject_->GetID();
-    ar << objectId;
-    burningCells_.save( ar, *pObject_, version );
+    ar << objectId_;
+    burningCells_.save( ar, objectId_, version );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +108,7 @@ void BurnSurfaceAttribute::Register( MIL_Object_ABC& object ) const
 {
     BurnSurfaceAttribute attribute( *this );
     attribute.pObject_ = &object;
+    attribute.objectId_ = object.GetID();
     object.SetAttribute< BurnSurfaceAttribute, BurnSurfaceAttribute >( attribute );
 }
 
@@ -173,10 +172,11 @@ double BurnSurfaceAttribute::ComputePathCost( const MT_Vector2D& from, const MT_
 bool BurnSurfaceAttribute::Update( const BurnSurfaceAttribute& rhs )
 {
     // $$$$ BCI 2011-01-06: pas trop compris le but de cette méthode...
-    if( pObject_ != rhs.pObject_ )
+    if( objectId_ != rhs.objectId_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
         pObject_ = rhs.pObject_;
+        objectId_ = rhs.objectId_;
     }
     return NeedUpdate( eOnUpdate );
 }

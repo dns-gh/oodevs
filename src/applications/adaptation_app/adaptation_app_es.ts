@@ -1544,6 +1544,14 @@ estacionado con motor encendido</translation>
         <source>persons</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Min weight carried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min volume carried</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

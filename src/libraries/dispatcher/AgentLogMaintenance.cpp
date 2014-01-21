@@ -47,37 +47,21 @@ void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
     if( message.has_chain() )
         bSystemEnabled_ = message.chain() != 0;
 
-    if( message.has_haulers()  )
-    {
-        haulersAvailability_.clear();
-        for( int i = 0; i < message.haulers().elem_size(); ++i )
-            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.haulers().elem( i ) ) );
-    }
+    haulersAvailability_.clear();
+    for( int i = 0; i < message.haulers().elem_size(); ++i )
+        haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.haulers().elem( i ) ) );
 
-    if( message.has_repairers()  )
-    {
-        repairersAvailability_.clear();
-        for( int i = 0; i < message.repairers().elem_size(); ++i )
-            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.repairers().elem( i ) ) );
-    }
+    repairersAvailability_.clear();
+    for( int i = 0; i < message.repairers().elem_size(); ++i )
+        repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.repairers().elem( i ) ) );
 
-    if( message.has_tactical_priorities()  )
-    {
-        tacticalPriorities_.clear();
-        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_.push_back( message.tactical_priorities().elem( i ) );
-    }
+    tacticalPriorities_.clear();
+    for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+        tacticalPriorities_.push_back( message.tactical_priorities().elem( i ) );
 
-    if( message.has_priorities()  )
-    {
-        priorities_.clear();
-        for( int i = 0; i < message.priorities().elem_size(); ++i )
-        {
-            sword::Id msg;
-            msg.set_id( message.priorities().elem( i ).id() );
-            priorities_.push_back( msg );
-        }
-    }
+    priorities_.clear();
+    for( int i = 0; i < message.priorities().elem_size(); ++i )
+        priorities_.push_back( message.priorities().elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +80,6 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
     for( auto it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
         asn().mutable_tactical_priorities()->add_elem()->set_id( it->id() );
     for( auto it = priorities_.begin(); it != priorities_.end(); ++it )
-        asn().mutable_priorities()->add_elem()->set_id( it->id() );
+        *asn().mutable_priorities()->add_elem() = *it;
     asn.Send( publisher );
 }

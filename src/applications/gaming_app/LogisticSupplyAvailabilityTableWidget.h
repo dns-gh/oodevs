@@ -44,23 +44,31 @@ class LogisticSupplyAvailabilityTableWidget: public QTableWidget
     Q_OBJECT;
 
 public:
-
     LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header );
     ~LogisticSupplyAvailabilityTableWidget();
 
     void Clear();
     const QMap< QString, int >& GetMaxQuantities() const;
     void GetQuantities( QMap< QString, int >& quantities ) const;
-    void SetQuantities( QMap< QString, int >& quantities, const QMap< QString, int >& maxQuantities );
+    void SetQuantities( const QMap< QString, int >& quantities, const QMap< QString, int >& maxQuantities );
+
+signals:
+    void OnChanged( int row );
+
+protected:
+    virtual void AddRow( int row, const QString& newName, int available );
+
+    void SetContent( int row, int col, double value );
+    void SetContent( int row, int col, const QString& value, const QString& warning = "" );
 
 private slots:
     //! @name Slots
     //@{
     void OnNameChanged( const QString& newName );
+    void OnQuantityChanged();
     //@}
 
 private:
-
     //! @name Member data
     //@{
     QMap< QString, int > maxQuantities_;

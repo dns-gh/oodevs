@@ -1579,6 +1579,22 @@ Do you want to replace it?</translation>
         <source>Type</source>
         <translation>Type</translation>
     </message>
+    <message>
+        <source>Capacity (T)</source>
+        <translation>Capacity (T)</translation>
+    </message>
+    <message>
+        <source>Capacity (m3)</source>
+        <translation>Capacity (m3)</translation>
+    </message>
+    <message>
+        <source>Mass</source>
+        <translation>Mass</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
 </context>
 <context>
     <name>Logistic : supply flow</name>
@@ -1608,6 +1624,25 @@ Do you want to replace it?</translation>
     <message>
         <source>Unknown</source>
         <translation type="unfinished">Unknown</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>The convoy is unable to carry that much weight</source>
+        <translation>The convoy is unable to carry that much weight</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass threshold</source>
+        <translation>The convoy is under its minimal mass threshold</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much volume</source>
+        <translation>The convoy is unable to carry that much volume</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal volume threshold</source>
+        <translation>The convoy is under its minimal volume threshold</translation>
     </message>
 </context>
 <context>
@@ -1662,6 +1697,18 @@ Do you want to replace it?</translation>
         <source>Pull supply flow</source>
         <translation>Pull supply flow</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation>The convoy is unable to carry that much weight and/or volume</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1680,6 +1727,18 @@ Do you want to replace it?</translation>
     <message>
         <source>Resupply</source>
         <translation>Resupply</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation>The convoy is unable to carry that much weight and/or volume</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</translation>
     </message>
 </context>
 <context>

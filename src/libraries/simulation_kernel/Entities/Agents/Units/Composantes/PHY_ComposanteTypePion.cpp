@@ -780,8 +780,8 @@ void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
 {
     std::string strNature;
     xis >> xml::attribute( "nature", strNature )
-        >> xml::attribute( "mass", rStockTransporterWeightCapacity_ )
-        >> xml::attribute( "volume", rStockTransporterVolumeCapacity_ );
+        >> xml::attribute( "max-mass", rStockTransporterWeightCapacity_ )
+        >> xml::attribute( "max-volume", rStockTransporterVolumeCapacity_ );
 
     pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
     if( !pStockTransporterNature_ )

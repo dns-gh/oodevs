@@ -1251,5 +1251,9 @@
         <source>Crowd Change Health State</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Switch Log Maintenance To Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -12,6 +12,8 @@
 
 #include "LogisticSupplyFlowDialog_ABC.h"
 
+class LogisticSupplyExclusiveListWidget;
+
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
     @brief  LogisticSupplyPushFlowDialog
@@ -52,8 +54,8 @@ private:
     //! @name Helpers
     //@{
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
-    virtual void GetSuppliesFromTable( const kernel::Automat_ABC& recipient );
-    virtual void SetSuppliesToTable( const kernel::Automat_ABC& recipient );
+    void GetSuppliesFromTable( const kernel::Automat_ABC& recipient );
+    void SetSuppliesToTable( const kernel::Automat_ABC& recipient );
 
     void Clear();
     void Show();
@@ -61,7 +63,7 @@ private:
     void ComputeRecipients();
     void ComputeAvailableRecipients( QStringList& displayRecipientsNames );
     void EraseRecipientData( const QString& recipient );
-    virtual void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
+    void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
     //@}
 
     //! @name Types
