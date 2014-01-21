@@ -687,12 +687,10 @@ void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( owner_->GetID() );
     asn().set_chain( bSystemEnabled_ );
-    if( !priorities_.empty() )
-        for( auto itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            asn().mutable_priorities()->add_elem( (**itPriority).GetAsnID() );
-    if( !tacticalPriorities_.empty() )
-        for( auto itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-            asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
+    for( auto itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
+        asn().mutable_priorities()->add_elem( (**itPriority).GetAsnID() );
+    for( auto itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
+        asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
     ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
