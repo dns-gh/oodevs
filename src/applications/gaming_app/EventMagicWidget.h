@@ -85,6 +85,7 @@ private:
     Model& model_;
     boost::shared_ptr< gui::EventMagicPresenter > magicPresenter_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    unsigned int lastTaskerId_;
     TaskerWidget* taskerWidget_;
     QLabel* name_;
     //@}

@@ -17,13 +17,13 @@ package sword;
  *  @{
  */
 
-/** @struct ControlSkipToTick
-    @brief Skips to a given tick
-
-    @see ControlSkipToTickAck
-*/
+//! Makes the replayer move after the end tick message of tick+1, sending
+//! creation, update and destruction messages to keep connected client
+//! synchronized.
+//!
+//! Note: moving to the end of tick+1 instead of tick happens for
+//! historical reasons and is likely to change in the future.
 message ControlSkipToTick {
-    //! The tick number
     required int32 tick = 1;
 }
 

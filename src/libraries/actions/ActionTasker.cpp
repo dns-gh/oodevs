@@ -21,7 +21,7 @@ using namespace actions;
 ActionTasker::ActionTasker( kernel::Controller& controller, const kernel::Entity_ABC* tasker, bool simulation )
     : tasker_( controller, tasker )
     , taskerId_( tasker ? tasker->GetId() : 0 )
-    , taskerTypename_( tasker ? tasker->GetTypeName() : std::string() )
+    , taskerTypeName_( tasker ? tasker->GetTypeName() : std::string() )
     , simulation_( simulation )
 {
     // NOTHING
@@ -34,7 +34,7 @@ ActionTasker::ActionTasker( kernel::Controller& controller, const kernel::Entity
 ActionTasker::ActionTasker( kernel::Controller& controller, unsigned int id, const std::string& type, bool simulation /*= true*/ )
     : tasker_( controller, 0 )
     , taskerId_( id )
-    , taskerTypename_( type )
+    , taskerTypeName_( type )
     , simulation_( simulation )
 {
     // NOTHING
@@ -64,7 +64,7 @@ bool ActionTasker::IsSimulation() const
 // -----------------------------------------------------------------------------
 unsigned int ActionTasker::GetId() const
 {
-    return tasker_ ? tasker_->GetId() : taskerId_;
+    return taskerId_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ unsigned int ActionTasker::GetId() const
 // -----------------------------------------------------------------------------
 void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( tasker_ || taskerId_ )
+    if( taskerId_ )
         xos << xml::attribute( "target", taskerId_ );
 }
 
@@ -87,10 +87,10 @@ const kernel::Entity_ABC* ActionTasker::GetTasker() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionTasker::GetTypename
+// Name: ActionTasker::GetTypeName
 // Created: ABR 2014-01-13
 // -----------------------------------------------------------------------------
-const std::string& ActionTasker::GetTypename() const
+const std::string& ActionTasker::GetTypeName() const
 {
-    return tasker_ ? tasker_->GetTypeName() : taskerTypename_;
+    return taskerTypeName_;
 }

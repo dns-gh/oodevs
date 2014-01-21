@@ -15,6 +15,7 @@
 namespace sword
 {
     enum EnumHumanWound;
+    class Id;
     class LogMedicalState;
     class LogMedicalEquipmentAvailability;
 }
@@ -67,7 +68,7 @@ private:
     bool                     bSystemEnabled_;
 
     std::vector< sword::EnumHumanWound >       priorities_;
-    std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
+    std::vector< sword::Id > tacticalPriorities_;
 
     std::vector< MedicalEquipmentAvailability > evacuationAmbulancesAvailability_;
     std::vector< MedicalEquipmentAvailability > collectionAmbulancesAvailability_;

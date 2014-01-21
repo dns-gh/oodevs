@@ -560,14 +560,13 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
     for( auto it = events.begin(); it != events.end(); ++it )
     {
         gui::Event& event = GetOrCreateEvent( *it );
-        if( event.GetType() == eEventTypes_Order || event.GetType() == eEventTypes_Magic )
-            if( const actions::Action_ABC* action = event.GetAction() )
-            {
-                xos << xml::start( "action" );
-                action->Serialize( xos );
-                xos << xml::attribute( "time", event.GetEvent().begin );
-                xos << xml::end; //! action
-            }
+        if( const actions::Action_ABC* action = event.GetAction() )
+        {
+            xos << xml::start( "action" );
+            action->Serialize( xos );
+            xos << xml::attribute( "time", event.GetEvent().begin );
+            xos << xml::end; //! action
+        }
     }
     xos << xml::end; //! actions
 

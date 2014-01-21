@@ -92,7 +92,7 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     const ActionTasker& tasker = Get< ActionTasker >();
-    const std::string typeName = tasker.GetTypename();
+    const std::string typeName = tasker.GetTypeName();
     const unsigned int id = tasker.GetId();
     sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
