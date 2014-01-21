@@ -11,7 +11,6 @@
 #include "ActionFactory.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
-#include "AutomatCreationMagicAction.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
 #include "FragOrder.h"
@@ -857,15 +856,12 @@ namespace
 // Name: ActionFactory::CreateAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, const geometry::Point2f& point,
-                                                                tools::Resolver_ABC< Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger,
-                                                                ActionsModel& actionsModel, const Time_ABC& simulation ) const
+Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, const geometry::Point2f& point ) const
 {
-    kernel::MagicActionType& actionType = magicActions_.Get( "automat_creation" );
-
-    std::unique_ptr< AutomatCreationMagicAction > action( new AutomatCreationMagicAction( actionType, controller_,
-          staticModel_, type, point, agentsModel, agentMessenger, actionsModel, simulation, false ) );
-
+    kernel::Point location;
+    location.AddPoint( point );
+    kernel::MagicActionType& actionType = magicActions_.Get( "automat_and_units_creation" );
+    std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     int knowledgeGroup = 0;
@@ -890,6 +886,7 @@ Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type,
         }
     }
     action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();

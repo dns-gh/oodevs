@@ -97,7 +97,7 @@ public:
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const = 0;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder ) const = 0;
 
-    virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const = 0;
+    virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point ) const = 0;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const = 0;
     virtual Action_ABC* CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase ) const = 0;
     virtual Action_ABC* CreateCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected ) const = 0;

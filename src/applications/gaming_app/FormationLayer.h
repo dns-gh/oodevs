@@ -11,7 +11,6 @@
 #define __FormationLayer_h_
 
 #include "clients_gui/FormationLayer.h"
-#include <tools/Resolver_ABC.h>
 
 namespace actions
 {
@@ -23,10 +22,8 @@ namespace kernel
     class Automat_ABC;
     class AutomatType;
     struct PopulationPrototype;
-    class Time_ABC;
 }
 
-class AgentServerMsgMgr;
 class StaticModel;
 
 // =============================================================================
@@ -42,8 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     FormationLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                    gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
-                    const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
+                    gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel );
     virtual ~FormationLayer();
     //@}
 
@@ -67,9 +63,6 @@ private:
     kernel::SafePointer< kernel::Formation_ABC > selected_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
-    const kernel::Time_ABC& simulation_;
-    AgentServerMsgMgr& messageManager_;
-    tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel_;
     //@}
 };
 
