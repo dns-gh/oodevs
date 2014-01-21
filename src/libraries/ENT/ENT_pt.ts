@@ -1252,7 +1252,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Log Maintenance Mode</source>
+        <source>Switch Log Maintenance To Manual</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

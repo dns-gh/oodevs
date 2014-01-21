@@ -357,7 +357,7 @@ const ActionParam log_supply_push_flow_params[] =
     { "Parameters", "pushflowparameters", 0 },
 };
 
-const ActionParam log_maintenance_switch_mode_params[] =
+const ActionParam log_maintenance_set_manual_params[] =
 {
     { "Manual", "bool", 0 },
 };
@@ -466,7 +466,7 @@ const Action actions[] =
     ACTION( log_supply_change_quotas ),
     ACTION( log_supply_pull_flow ),
     ACTION( log_supply_push_flow ),
-    ACTION( log_maintenance_switch_mode ),
+    ACTION( log_maintenance_set_manual ),
     ACTION( partial_recovery ),
     ACTION( reload_brain ),
     ACTION( surrender ),
