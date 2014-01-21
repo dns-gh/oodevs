@@ -6,7 +6,6 @@ require 'debug'
 --- If the given value is not in the [minFrom ; maxFrom] interval, then
 --- this method will return either minTo or maxTo, depending on how the
 --- given value compares to the initial boundaries.
---- The [minTo ; maxTo] interval is reversed.
 -- Examples : LinearInterpolation(0, 10, 0, 100, true, 50) returns 5,
 -- LinearInterpolation(0, 10, 0, 100, false, 60) returns 4.
 -- @param minTo Float, the left bound for the target interval.
