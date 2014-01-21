@@ -601,18 +601,9 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
 
     sNTICapability ntiCapability( maintenanceLevel );
 
-    std::string types;
-    xis >> xml::attribute( "type", types );
-    std::stringstream stream( types );
-    std::string type;
-    while( std::getline( stream, type, ',' ) )
-    {
-        boost::trim( type );
-        if( type == "EA" )
-            ntiCapability.bElectronic_ = true;
-        if( type == "M" )
-            ntiCapability.bMobility_   = true;
-    }
+    const std::string types = xis.attribute< std::string >( "type" );
+    ntiCapability.bElectronic_ = boost::contains( types, "EA" );
+    ntiCapability.bMobility_   = boost::contains( types, "M" );
 
     double rTime = 0;
     if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
@@ -655,14 +646,11 @@ void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
 bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const
 {
     bool bHasCapability = false;
-
-    std::string strWounds;
-    xis >> xml::optional >> xml::attribute( attributeName, strWounds );
-    std::stringstream stream( strWounds );
-    std::string wound;
-    while( std::getline( stream, wound, ',' ) )
+    const std::string strWounds = xis.attribute< std::string >( attributeName, "" );
+    std::vector< std::string > wounds;
+    boost::split( wounds, strWounds, boost::is_any_of( "," ) );
+    BOOST_FOREACH( const std::string& wound, wounds )
     {
-        boost::trim( wound );
         if( const PHY_HumanWound* pWound = PHY_HumanWound::Find( wound ) )
         {
             bHasCapability = true;
