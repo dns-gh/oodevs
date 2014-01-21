@@ -361,6 +361,22 @@ func (model *ModelData) handleFormationDestruction(m *sword.SimToClient_Content)
 	return nil
 }
 
+func (model *ModelData) handleFormationUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetFormationUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	formation, ok := model.Formations[mm.GetFormation().GetId()]
+	if !ok {
+		return fmt.Errorf("cannot update formation %d",
+			mm.GetFormation().GetId())
+	}
+	if mm.LogMaintenanceManual != nil {
+		formation.LogMaintenanceManual = *mm.LogMaintenanceManual
+	}
+	return nil
+}
+
 func (model *ModelData) handleCrowdCreation(m *sword.SimToClient_Content) error {
 	mm := m.GetCrowdCreation()
 	if mm == nil {

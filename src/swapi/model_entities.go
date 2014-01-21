@@ -268,14 +268,15 @@ type Automat struct {
 }
 
 type Formation struct {
-	Id             uint32
-	PartyId        uint32
-	ParentId       uint32
-	Name           string
-	Level          string
-	LogLevel       string
-	LogSuperiors   []uint32
-	SuperiorQuotas map[uint32]int32
+	Id                   uint32
+	PartyId              uint32
+	ParentId             uint32
+	Name                 string
+	Level                string
+	LogLevel             string
+	LogSuperiors         []uint32
+	SuperiorQuotas       map[uint32]int32
+	LogMaintenanceManual bool
 }
 
 func NewFormation(id uint32, name string, parentId uint32,
@@ -928,6 +929,7 @@ var (
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
+		(*ModelData).handleFormationUpdate,
 		(*ModelData).handleFragOrder,
 		(*ModelData).handleKnowledgeGroupCreation,
 		(*ModelData).handleKnowledgeGroupDestruction,

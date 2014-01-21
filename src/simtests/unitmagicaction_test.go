@@ -2359,3 +2359,34 @@ func (s *TestSuite) TestLogFinishHandlings(c *C) {
 	c.Assert(funerals, HasLen, 1)
 	c.Assert(funerals[handlingId].Handler.State, Equals, sword.LogFuneralHandlingUpdate_finished)
 }
+
+func (s *TestSuite) TestLogMaintenanceSetManual(c *C) {
+	// user without supervision rights can send log maintenance magic action
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallLog))
+	defer sim.Stop()
+	const formation = 13
+
+	// invalid unit
+	err := client.LogMaintenanceSetManual(1000, true)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// invalid formation without logistic base
+	err = client.LogMaintenanceSetManual(5, true)
+	c.Assert(err, ErrorMatches, "error_invalid_unit: formation doesn't have a logistic automat")
+
+	// invalid empty parameter
+	err = client.LogMaintenanceSetManualTest(formation, swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// invalid parameter
+	err = client.LogMaintenanceSetManualTest(formation, swapi.MakeParameters(swapi.MakeInt(1337)))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// setting manual mode updates formation model
+	c.Assert(client.Model.GetData().Formations[formation].LogMaintenanceManual, Equals, false)
+	err = client.LogMaintenanceSetManual(formation, true)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Formations[formation].LogMaintenanceManual
+	})
+}
