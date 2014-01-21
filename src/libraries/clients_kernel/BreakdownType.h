@@ -10,42 +10,43 @@
 #ifndef __BreakdownType_h_
 #define __BreakdownType_h_
 
-namespace xml{ class xistream; };
+#include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
-
 // =============================================================================
 /** @class  BreakdownType
     @brief  BreakdownType
 */
 // Created: AGE 2006-04-05
 // =============================================================================
-class BreakdownType
+class BreakdownType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit BreakdownType( xml::xistream& xis );
+             BreakdownType( xml::xistream& xis, const std::string& category );
     virtual ~BreakdownType();
     //@}
 
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string   GetName() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    BreakdownType( const BreakdownType& );            //!< Copy constructor
-    BreakdownType& operator=( const BreakdownType& ); //!< Assignment operator
+    const std::string& GetName() const;
+    std::string GetUnknownName() const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    E_BreakdownNTI category_;
+    E_BreakdownType type_;
     unsigned long id_;
     std::string name_;
     //@}

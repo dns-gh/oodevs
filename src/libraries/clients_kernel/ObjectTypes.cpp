@@ -233,16 +233,17 @@ void ObjectTypes::ReadBreakdowns( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadBreakdownCategory( xml::xistream& xis )
 {
-    xis >> xml::list( "breakdown", *this, &ObjectTypes::ReadBreakdown );
+    const std::string category = xis.attribute< std::string >( "name" );
+    xis >> xml::list( "breakdown", *this, &ObjectTypes::ReadBreakdown, category );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::ReadBreakdown
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadBreakdown( xml::xistream& xis )
+void ObjectTypes::ReadBreakdown( xml::xistream& xis, const std::string& category )
 {
-    BreakdownType* breakdown = new BreakdownType( xis );
+    BreakdownType* breakdown = new BreakdownType( xis, category );
     Resolver2< BreakdownType >::Register( breakdown->GetId(), breakdown->GetName(), *breakdown );
 }
 
