@@ -116,6 +116,7 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
 void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
     knowledge.Invalidate();
+    previousAgentMap_.erase( &knowledge.GetAgentKnown() );
     if( realAgentMap_.erase( &knowledge.GetAgentKnown() ) < 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     if( unitKnowledgeFromIDMap_.erase( knowledge.GetID() ) != 1 )

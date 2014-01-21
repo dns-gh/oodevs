@@ -465,9 +465,9 @@ void MIL_BurningCells::load( MIL_CheckPointInArchive& ar, unsigned int objectId,
 // Name: MIL_BurningCells::save
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::save( MIL_CheckPointOutArchive& ar, MIL_Object_ABC& object, const unsigned int ) const
+void MIL_BurningCells::save( MIL_CheckPointOutArchive& ar, unsigned int objectId, const unsigned int ) const
 {
-    BurningCellsByObjectsMap::const_iterator it = burningCellsByObjects_.find( object.GetID() );
+    BurningCellsByObjectsMap::const_iterator it = burningCellsByObjects_.find( objectId );
     if( it != burningCellsByObjects_.end() )
     {
         const BurningCellsVector& cells = it->second;

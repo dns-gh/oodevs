@@ -80,6 +80,7 @@ private:
     //! @name Member data
     //@{
     MIL_BurningCells& burningCells_;
+    unsigned int objectId_;
     MIL_Object_ABC* pObject_;
     //@}
 };
