@@ -116,7 +116,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , time_                                      ( time )
     , speeds_                                    ( xis )
     , rMaxSlope_                                 ( 1. )
-    , rSlopeDeceleration_                        ( 1. )
+    , rSlopeDeceleration_                        ( 0 )
     , dotationCapacities_                        ( "composition", xis )
     , objectData_                                ( )
     , consumptions_                              ( PHY_ConsumptionType::GetConsumptionTypes().size(), 0 )
@@ -155,16 +155,8 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rStockTransporterWeightCapacity_           ( 0. )
     , rStockTransporterVolumeCapacity_           ( 0. )
 {
-    if( xis.has_attribute( "max-slope" ) )
-        rMaxSlope_ = xis.attribute< double >( "max-slope" );
-    else
-    {
-        if( GetProtection().IsHuman() )
-            rMaxSlope_ = tan( 30 * MT_PI / 180 );
-        else
-            rMaxSlope_ = tan( 75 * MT_PI / 180 );
-    }
-    xis >> xml::optional  >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ )
+    xis >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ )
+        >> xml::optional  >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ )
         >> xml::attribute( "weight", rWeight_ );
     if( rMaxSlope_ < 0 )
         throw MASA_EXCEPTION( xis.context() + "element: max-slope < 0" );
