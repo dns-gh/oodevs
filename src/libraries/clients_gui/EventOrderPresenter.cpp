@@ -94,8 +94,6 @@ void EventOrderPresenter::FillFrom( const Event& event )
             entity_ = tasker->GetTasker();
         Select( action->GetType().GetType(), action->GetType().GetName(), action );
     }
-    else
-        throw MASA_EXCEPTION( "Invalid action" );
 }
 
 // -----------------------------------------------------------------------------
