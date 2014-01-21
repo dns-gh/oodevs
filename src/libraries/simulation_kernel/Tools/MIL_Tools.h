@@ -161,6 +161,4 @@ private:
 
 };
 
-#include "MIL_Tools.inl"
-
 #endif // __MIL_Tools_h_
