@@ -46,19 +46,19 @@ using namespace longname;
 // Name: LogisticSupplyFlowDialog_ABC constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, kernel::Controllers& controllers,
+LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent,
+                                                            kernel::Controllers& controllers,
                                                             actions::ActionsModel& actionsModel,
-                                                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation,
+                                                            const ::StaticModel& staticModel,
+                                                            const kernel::Time_ABC& simulation,
                                                             gui::ParametersLayer& layer,
-                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                                            const kernel::Profile_ABC& profile )
+                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats )
     : QDialog( parent, tr( "Supply flow" ), 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
     , automats_( automats )
-    , profile_( profile )
     , selected_( controllers )
     , startWaypointLocation_( false )
     , layer_( layer )
@@ -161,7 +161,6 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     waypointLayout->setSpacing( 5 );
     waypointLayout->setMargin( 10 );
 
-    controllers_.Register( *this );
     hide();
 }
 

@@ -700,7 +700,7 @@ Raison: %3
     <name>EventMagicWidget</name>
     <message>
         <source>Supervisor action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action superviseur:</translation>
     </message>
 </context>
 <context>
@@ -1657,6 +1657,26 @@ Voulez-vous le remplacer ?</translation>
         <source>Switch to manual maintenance</source>
         <translation>Passer en maintenance manuelle</translation>
     </message>
+    <message>
+        <source>Logistic actions</source>
+        <translation>Actions logistiques</translation>
+    </message>
+    <message>
+        <source>Allocate supply quotas</source>
+        <translation>Allouer les quotas de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Push supply flow</source>
+        <translation>Pousser un flux de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Resupply</source>
+        <translation>Ravitailler</translation>
+    </message>
+    <message>
+        <source>Pull supply flow</source>
+        <translation>Tirer flux</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyChangeQuotasDialog</name>
@@ -1683,10 +1703,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Allocate supply quotas</source>
-        <translation>Allouer les quotas de ravitaillement</translation>
     </message>
 </context>
 <context>

@@ -26,7 +26,20 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
+    class Profile_ABC;
+    class Time_ABC;
 }
+
+namespace gui
+{
+    class ParametersLayer;
+}
+
+class LogisticSupplyChangeQuotasDialog;
+class LogisticSupplyPullFlowDialog;
+class LogisticSupplyPushFlowDialog;
+class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  LogisticMagicInterface
@@ -44,16 +57,24 @@ class LogisticMagicInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    LogisticMagicInterface( QObject* parent,
+    LogisticMagicInterface( QWidget* parent,
                             kernel::Controllers& controllers,
-                            actions::ActionsModel& actionsModel );
+                            Model& model,
+                            const StaticModel& staticModel,
+                            const kernel::Time_ABC& simulation,
+                            const kernel::Profile_ABC& profile,
+                            gui::ParametersLayer& layer );
     virtual ~LogisticMagicInterface();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void SwitchMaintenance();
+    void OnChangeQuotas();
+    void OnPullFlow();
+    void OnPushFlow();
+    void OnResupply();
+    void OnSwitchMaintenanceMode();
     //@}
 
 private:
@@ -65,7 +86,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddSetMaintenanceManual( kernel::ContextMenu& menu );
+    void AddMenuEntries( kernel::ContextMenu& menu );
     //@}
 
 private:
@@ -73,7 +94,11 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
-    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    const kernel::Profile_ABC& profile_;
+    LogisticSupplyChangeQuotasDialog* changeQuotasDialog_;
+    LogisticSupplyPushFlowDialog* pushFlowDialog_;
+    LogisticSupplyPullFlowDialog* pullFlowDialog_;
     //@}
 };
 

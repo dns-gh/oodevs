@@ -11,21 +11,57 @@
 #include "LogisticMagicInterface.h"
 #include "moc_LogisticMagicInterface.cpp"
 
+#include "LogisticSupplyChangeQuotasDialog.h"
+#include "LogisticSupplyPullFlowDialog.h"
+#include "LogisticSupplyPushFlowDialog.h"
+
 #include "actions/ActionsModel.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "gaming/AgentsModel.h"
+#include "gaming/Model.h"
+#include "gaming/TeamsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticMagicInterface constructor
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-LogisticMagicInterface::LogisticMagicInterface( QObject* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel )
+LogisticMagicInterface::LogisticMagicInterface( QWidget* parent,
+                                                kernel::Controllers& controllers,
+                                                Model& model,
+                                                const StaticModel& staticModel,
+                                                const kernel::Time_ABC& simulation,
+                                                const kernel::Profile_ABC& profile,
+                                                gui::ParametersLayer& layer )
     : QObject( parent )
     , controllers_( controllers )
-    , actionsModel_( actionsModel )
-    , selectedEntity_( controllers.controller_ )
+    , actionsModel_( model.actions_ )
+    , selected_( controllers.controller_ )
+    , profile_( profile )
 {
+    changeQuotasDialog_ = new LogisticSupplyChangeQuotasDialog( parent,
+                                                                controllers,
+                                                                model.actions_,
+                                                                staticModel,
+                                                                simulation,
+                                                                model );
+    pushFlowDialog_ = new LogisticSupplyPushFlowDialog( parent,
+                                                        controllers,
+                                                        model.actions_,
+                                                        staticModel,
+                                                        simulation,
+                                                        layer,
+                                                        model.agents_ );
+    pullFlowDialog_ = new LogisticSupplyPullFlowDialog( parent,
+                                                        controllers,
+                                                        model.actions_,
+                                                        staticModel,
+                                                        simulation,
+                                                        layer,
+                                                        model.agents_,
+                                                        model.teams_ );
     controllers_.Register( *this );
 }
 
@@ -44,10 +80,10 @@ LogisticMagicInterface::~LogisticMagicInterface()
 // -----------------------------------------------------------------------------
 void LogisticMagicInterface::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
-    if( !automat.Get< gui::LogisticBase >().IsBase() )
+    if( !profile_.CanBeOrdered( automat ) || !automat.Get< gui::LogisticBase >().IsBase() )
         return;
-    selectedEntity_ = &automat;
-    AddSetMaintenanceManual( menu );
+    selected_ = &automat;
+    AddMenuEntries( menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,34 +92,84 @@ void LogisticMagicInterface::NotifyContextMenu( const kernel::Automat_ABC& autom
 // -----------------------------------------------------------------------------
 void LogisticMagicInterface::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
-    if( !formation.Get< gui::LogisticBase >().IsBase() )
+    if( !profile_.CanBeOrdered( formation ) || !formation.Get< gui::LogisticBase >().IsBase() )
         return;
-    selectedEntity_ = &formation;
-    AddSetMaintenanceManual( menu );
+    selected_ = &formation;
+    AddMenuEntries( menu );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticMagicInterface::AddSetMaintenanceManual
+// Name: LogisticMagicInterface::AddMenuEntries
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void LogisticMagicInterface::AddSetMaintenanceManual( kernel::ContextMenu& menu )
+void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu )
 {
-    if( !selectedEntity_ )
+    if( !selected_ )
         return;
-    if( selectedEntity_->Get< gui::LogisticBase >().IsMaintenanceManual() )
-        menu.InsertItem( "Command", tr( "Switch to automated maintenance" ), this, SLOT( SwitchMaintenance() ) );
-    else
-        menu.InsertItem( "Command", tr( "Switch to manual maintenance" ), this, SLOT( SwitchMaintenance() ) );
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Logistic actions" ), false, 2 );
+    subMenu->InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( OnChangeQuotas() ) );
+    subMenu->InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( OnPushFlow() ) );
+    subMenu->InsertItem( "Command", tr( "Resupply" ), this, SLOT( OnResupply() ) );
+    if( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ )
+        subMenu->InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( OnPullFlow() ) );
+    const QString switchMaintenance = selected_->Get< gui::LogisticBase >().IsMaintenanceManual()
+                                      ? tr( "Switch to automated maintenance" )
+                                      : tr( "Switch to manual maintenance" );
+    subMenu->InsertItem( "Command", switchMaintenance, this, SLOT( OnSwitchMaintenanceMode() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticMagicInterface::SwitchMaintenance
+// Name: LogisticMagicInterface::OnChangeQuotas
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void LogisticMagicInterface::SwitchMaintenance()
+void LogisticMagicInterface::OnChangeQuotas()
 {
-    if( !selectedEntity_ )
+    if( !selected_ )
         return;
-    actionsModel_.PublishLogMaintenanceSetManualAction( *selectedEntity_,
-                                                        !selectedEntity_->Get< gui::LogisticBase >().IsMaintenanceManual() );
+    changeQuotasDialog_->Show( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMagicInterface::OnPullFlow
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticMagicInterface::OnPullFlow()
+{
+    if( !selected_ )
+        return;
+    pullFlowDialog_->Show( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMagicInterface::OnPushFlow
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticMagicInterface::OnPushFlow()
+{
+    if( !selected_ )
+        return;
+    pushFlowDialog_->PushFlow( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMagicInterface::OnResupply
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticMagicInterface::OnResupply()
+{
+    if( !selected_ )
+        return;
+    pushFlowDialog_->Supply( *selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticMagicInterface::OnSwitchMaintenanceMode
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticMagicInterface::OnSwitchMaintenanceMode()
+{
+    if( !selected_ )
+        return;
+    actionsModel_.PublishLogMaintenanceSetManualAction( *selected_,
+                                                        !selected_->Get< gui::LogisticBase >().IsMaintenanceManual() );
 }

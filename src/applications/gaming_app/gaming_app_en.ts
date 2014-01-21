@@ -1655,6 +1655,26 @@ Do you want to replace it?</translation>
         <source>Switch to manual maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allocate supply quotas</source>
+        <translation type="unfinished">Allocate supply quotas</translation>
+    </message>
+    <message>
+        <source>Push supply flow</source>
+        <translation type="unfinished">Push supply flow</translation>
+    </message>
+    <message>
+        <source>Resupply</source>
+        <translation type="unfinished">Resupply</translation>
+    </message>
+    <message>
+        <source>Pull supply flow</source>
+        <translation type="unfinished">Pull supply flow</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyChangeQuotasDialog</name>
@@ -1681,10 +1701,6 @@ Do you want to replace it?</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Allocate supply quotas</source>
-        <translation>Allocate supply quotas</translation>
     </message>
 </context>
 <context>

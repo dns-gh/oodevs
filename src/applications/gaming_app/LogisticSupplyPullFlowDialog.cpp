@@ -61,14 +61,17 @@ using namespace parameters;
 // Name: LogisticSupplyPullFlowDialog constructor
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel,
-                                                            const ::StaticModel& staticModel, const Time_ABC& simulation,
-                                                            ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                            const tools::Resolver_ABC< Formation_ABC >& formations,
-                                                            const Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
-    ,  formations_( formations )
-    , supplier_   ( 0 )
+LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
+                                                            Controllers& controllers,
+                                                            ActionsModel& actionsModel,
+                                                            const ::StaticModel& staticModel,
+                                                            const Time_ABC& simulation,
+                                                            ParametersLayer& layer,
+                                                            const tools::Resolver_ABC< Automat_ABC >& automats,
+                                                            const tools::Resolver_ABC< Formation_ABC >& formations )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
+    , formations_( formations )
+    , supplier_( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
@@ -85,29 +88,16 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
 // -----------------------------------------------------------------------------
 LogisticSupplyPullFlowDialog::~LogisticSupplyPullFlowDialog()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::NotifyContextMenu
-// Created : AHC 2010-10-14
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
-{
-    if( !profile_.CanBeOrdered( agent ) || !agent.Get< gui::LogisticBase >().IsBase() )
-        return;
-    selected_ = &agent;
-    menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::Show
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::Show()
+void LogisticSupplyPullFlowDialog::Show( const kernel::Entity_ABC& entity )
 {
-    if( !selected_ )
-        return;
+    selected_ = &entity;
 
     controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
