@@ -70,7 +70,7 @@
         <translation>Coordonnées locales</translation>
     </message>
     <message>
-        <source>UTM South American 1969, Brazil</source>
+        <source>UTM SAD69 Brazil</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

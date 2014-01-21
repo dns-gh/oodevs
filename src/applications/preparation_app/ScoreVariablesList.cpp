@@ -201,7 +201,7 @@ void ScoreVariablesList::OnItemClick()
                 geometry::Point2f point;
                 for( QStringList::iterator it = tempList.begin(); it != tempList.end(); ++it )
                 {
-                    if( parser_->Parse( *it, point, hint ) )
+                    if( parser_->Parse( QStringList() << *it, point, hint ) )
                         location_->AddPoint( point );
                 }
             }

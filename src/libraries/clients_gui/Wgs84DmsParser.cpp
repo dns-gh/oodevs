@@ -38,15 +38,16 @@ Wgs84DmsParser::~Wgs84DmsParser()
 // Name: Wgs84DmsParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DmsParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const
 {
     try
     {
-        QStringList listValue = QStringList::split( ":", content );
+        if( content.size() != 2 )
+            return false;
         QString hintx;
         QString hinty;
-        bool formatCoordX = FormatDmsCoordinate( listValue[ 0 ].stripWhiteSpace(), true, hintx );
-        bool formatCoordY = FormatDmsCoordinate( listValue[ 1 ].stripWhiteSpace(), false, hinty );
+        bool formatCoordX = FormatDmsCoordinate( content[ 1 ].stripWhiteSpace(), true, hintx );
+        bool formatCoordY = FormatDmsCoordinate( content[ 0 ].stripWhiteSpace(), false, hinty );
 
         if( formatCoordX && formatCoordY )
         {
@@ -112,10 +113,27 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude
 }
 
 // -----------------------------------------------------------------------------
-// Name: Wgs84DmsParser::GetNumberOfParameters
-// Created: AME 2010-03-11
+// Name: Wgs84DmsParser::GetDescriptor
+// Created: BAX 2014-01-16
 // -----------------------------------------------------------------------------
-int Wgs84DmsParser::GetNumberOfParameters() const
+const LocationParserDescriptor& Wgs84DmsParser::GetDescriptor() const
 {
-    return 2;
+    static const LocationParserDescriptor desc = {
+        QStringList()
+            << tools::translate( "gui::LocationEditorBox", "Lat" )
+            << tools::translate( "gui::LocationEditorBox", "Long" ),
+        QList< int >() << INT_MAX << INT_MAX,
+    };
+    return desc;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Wgs84DmsParser::Split
+// Created: BAX 2014-01-16
+// -----------------------------------------------------------------------------
+QStringList Wgs84DmsParser::Split( const QString& input ) const
+{
+    auto list = input.split( ":" );
+    std::swap( list[0], list[1] );
+    return list;
 }

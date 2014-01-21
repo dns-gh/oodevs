@@ -1195,24 +1195,24 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location: </source>
-        <translation>Localiser: </translation>
+        <source>Location</source>
+        <translation>Localiser</translation>
     </message>
     <message>
-        <source>long: </source>
-        <translation>long: </translation>
+        <source>Lat</source>
+        <translation>Lat</translation>
     </message>
     <message>
-        <source>lat: </source>
-        <translation>lat: </translation>
+        <source>Long</source>
+        <translation>Long</translation>
     </message>
     <message>
-        <source>y: </source>
-        <translation>y: </translation>
+        <source>Y</source>
+        <translation>Y</translation>
     </message>
     <message>
-        <source>x: </source>
-        <translation>x: </translation>
+        <source>X</source>
+        <translation>X</translation>
     </message>
 </context>
 <context>
@@ -2000,7 +2000,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Localiser</translation>
     </message>
     <message>
         <source>Mentally injured</source>
