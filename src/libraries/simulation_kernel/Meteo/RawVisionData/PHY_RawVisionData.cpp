@@ -33,7 +33,6 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
-    ElevationCell::pGlobalMeteo_ = &globalMeteo;
 }
 
 //-----------------------------------------------------------------------------
@@ -349,7 +348,9 @@ envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 // -----------------------------------------------------------------------------
 const weather::WindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    return operator()( vPos ).GetWind();
+    const auto& cell = operator()( vPos );
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    return meteo.GetWind();
 }
 
 //-----------------------------------------------------------------------------

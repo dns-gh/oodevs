@@ -17,7 +17,6 @@ class PHY_AmmoEffect;
 namespace weather
 {
     class Meteo;
-    struct WindData;
 }
 
 typedef unsigned char envBits;  // champ de bit
@@ -36,7 +35,6 @@ public:
     short GetAltitude() const          { return h; }
     unsigned char GetEnvHeight() const { return dh; }
     envBits GetEnv() const             { return e; }
-    const weather::WindData&             GetWind         () const;
 
     bool operator == ( const ElevationCell& rhs ) const
     {
@@ -51,7 +49,6 @@ private:
     envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
     boost::shared_ptr< weather::Meteo > pMeteo;     // météo locale
     PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-    static const weather::Meteo* pGlobalMeteo_;
 };
 //@}
 

@@ -9,10 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ElevationGrid.h"
-#include "PHY_AmmoEffect.h"
-#include "meteo/Meteo.h"
 
-const weather::Meteo* ElevationCell::pGlobalMeteo_ = 0;
 ElevationCell ElevationGrid::emptyCell_;
 
 // -----------------------------------------------------------------------------
@@ -64,13 +61,3 @@ ElevationCell& ElevationGrid::GetEmptyCell() const
 {
     return emptyCell_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::GetWind
-// Created: JVT 2004-10-29
-// -----------------------------------------------------------------------------
-const weather::WindData& ElevationCell::GetWind() const
-{
-    return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
-}
-
