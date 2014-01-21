@@ -64,11 +64,11 @@ void LogisticSupplyCarriersTableWidget::Update()
             const double maxMass = model()->data( model()->index( row, eMaxMass ), Qt::UserRole ).value< double >();
             const double maxVolume = model()->data( model()->index( row, eMaxVolume ), Qt::UserRole ).value< double >();
             const auto fractions = ComputeMassVolume( function, maxMass, maxVolume );
-            SetContent( row, eMass, locale().toString( 100 * fractions.first, 'g', 3 ) + "%",
+            SetContent( row, eMass, locale().toString( 100 * fractions.first, 'f', 0 ) + "%",
                 fractions.first > 1 ? tr( "The convoy is unable to carry that much weight" ) :
                 fractions.first * maxMass < function->stockMinWeightCapacity_ ? tr( "The convoy is under its minimal mass threshold" ) :
                 "" );
-            SetContent( row, eVolume, locale().toString( 100 * fractions.second, 'g', 3 ) + "%", 
+            SetContent( row, eVolume, locale().toString( 100 * fractions.second, 'f', 0 ) + "%", 
                 fractions.second > 1 ? tr( "The convoy is unable to carry that much volume" ) :
                 fractions.second * maxVolume < function->stockMinVolumeCapacity_ ? tr( "The convoy is under its minimal volume threshold" ) :
                 "" );

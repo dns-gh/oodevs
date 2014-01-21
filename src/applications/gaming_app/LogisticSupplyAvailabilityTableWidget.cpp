@@ -290,7 +290,7 @@ void LogisticSupplyAvailabilityTableWidget::AddRow( int row, const QString& newN
 void LogisticSupplyAvailabilityTableWidget::SetContent( int row, int col, double value )
 {
     const QModelIndex index = model()->index( row, col );
-    model()->setData( index, locale().toString( value ), Qt::DisplayRole );
+    model()->setData( index, locale().toString( value, 'f', 0 ), Qt::DisplayRole );
     model()->setData( index, value, Qt::UserRole );
     item( row, col )->setTextAlignment( Qt::AlignVCenter | Qt::AlignRight );
 }
