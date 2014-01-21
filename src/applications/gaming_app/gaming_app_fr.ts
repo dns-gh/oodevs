@@ -1648,6 +1648,17 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticMagicInterface</name>
+    <message>
+        <source>Switch to automated maintenance</source>
+        <translation>Passer en maintenance automatique</translation>
+    </message>
+    <message>
+        <source>Switch to manual maintenance</source>
+        <translation>Passer en maintenance manuelle</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>

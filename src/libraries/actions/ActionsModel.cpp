@@ -192,6 +192,16 @@ void ActionsModel::PublishObjectDestroyMagicAction( const kernel::Entity_ABC& ob
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLogMaintenanceSetManualAction
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLogMaintenanceSetManualAction( tasker, manual ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

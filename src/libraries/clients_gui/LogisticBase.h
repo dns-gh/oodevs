@@ -63,6 +63,9 @@ public:
     bool IsBase() const;
     void SetBase( const bool& isBase );
     const kernel::Entity_ABC& GetEntity() const;
+
+    bool IsMaintenanceManual() const;
+    void SetMaintenanceManual( bool manual );
     //@}
 
 private:
@@ -82,8 +85,9 @@ private:
     //! @name Attributes
     //@{
     kernel::Controller& controller_;
-    bool isBase_;
     const kernel::Entity_ABC& entity_;
+    bool isBase_;
+    bool isMaintenanceManual_;
     //@}
 };
 

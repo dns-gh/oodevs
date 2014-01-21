@@ -33,6 +33,7 @@
 #include "LinkInterpreter.h"
 #include "LockMapViewController.h"
 #include "LoggerProxy.h"
+#include "LogisticMagicInterface.h"
 #include "ConnectLoginDialog.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
@@ -216,6 +217,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Misc
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
+    new LogisticMagicInterface( this, controllers_, model_.actions_ );
 
     //Dialogs
     new Dialogs( this, controllers, model_, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config, *parameters_ );

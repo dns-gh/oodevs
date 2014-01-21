@@ -1284,7 +1284,7 @@
     </message>
     <message>
         <source>Switch Log Maintenance To Manual</source>
-        <translation>Passer la maintenance en manuel</translation>
+        <translation>Changement de mode de maintenance</translation>
     </message>
 </context>
 </TS>

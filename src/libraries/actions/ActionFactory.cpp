@@ -1017,6 +1017,21 @@ Action_ABC* ActionFactory::CreateInhabitantChangeConfinedStateAction( bool confi
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLogMaintenanceSetManualAction
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "log_maintenance_set_manual" );
+    std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Bool( it.NextElement(), manual ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    AddTasker( *action, &tasker, false );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

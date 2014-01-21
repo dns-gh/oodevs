@@ -31,6 +31,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     : controller_( controllers.controller_ )
     , isBase_( isBase )
     , entity_( entity )
+    , isMaintenanceManual_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -48,6 +49,7 @@ LogisticBase::LogisticBase( kernel::Controllers& controllers,
     , isBase_( xis.has_attribute( "logistic-level" ) &&
                xis.attribute( "logistic-level", "" ) == ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) )
     , entity_( entity )
+    , isMaintenanceManual_( false )
 {
     CreateDictionary( dictionary, active, ( controllers.GetCurrentMode() & eModes_AllGaming ) != 0 );
 }
@@ -129,4 +131,23 @@ void LogisticBase::SerializeAttributes( xml::xostream& xos ) const
 {
     if( isBase_ )
         xos << xml::attribute( "logistic-level", ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::IsMaintenanceManual
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+bool LogisticBase::IsMaintenanceManual() const
+{
+    return isMaintenanceManual_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::SetMaintenanceManual
+// Created: ABR 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticBase::SetMaintenanceManual( bool manual )
+{
+    isMaintenanceManual_ = manual;
+    controller_.Update( *this );
 }

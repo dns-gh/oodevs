@@ -1645,6 +1645,17 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>LogisticMagicInterface</name>
+    <message>
+        <source>Switch to automated maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>

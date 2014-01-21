@@ -112,6 +112,8 @@ public:
     virtual Action_ABC* CreateObjectUpdateMagicAction( const kernel::Entity_ABC& objet, parameters::ParameterList& attribute ) const = 0;
     virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object ) const = 0;
 
+    virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
+
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}
 };
