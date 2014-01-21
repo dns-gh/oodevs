@@ -477,6 +477,12 @@ func (model *Model) WaitUntilTick(tick int32) bool {
 	})
 }
 
+func (model *Model) WaitUntilTickEnds(tick int32) bool {
+	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
+		return tick <= model.data.LastTick
+	})
+}
+
 func (model *Model) WaitTicks(ticks int32) bool {
 	endTick := model.GetTick() + ticks
 	return model.WaitUntilTick(endTick)
