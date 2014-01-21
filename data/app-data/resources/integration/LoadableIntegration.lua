@@ -34,7 +34,7 @@ integration.addToCapturedUnits = function( units )
     end
 end
 
---- Removes the given unit to the table of units currently loaded by this entity.
+--- Removes the given unit from the table of units currently loaded by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromLoadedUnits = function( unit )
     if myself.loadedUnits then
@@ -52,7 +52,7 @@ integration.removeListFromLoadedUnits = function( units )
     end
 end
 
---- Removes the given unit to the table of units currently captured by this entity.
+--- Removes the given unit from the table of units currently captured by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromCapturedUnits = function( unit )
     if myself.capturedUnits then
@@ -60,7 +60,7 @@ integration.removeFromCapturedUnits = function( unit )
     end
 end
 
---- Removes the given units to the table of units currently captured by this entity.
+--- Removes the given units from the table of units currently captured by this entity.
 -- @param units Table of directia agents or agent knowledges
 integration.removeListFromCapturedUnits = function( units )
     if myself.capturedUnits then
