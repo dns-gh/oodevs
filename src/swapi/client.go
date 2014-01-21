@@ -23,9 +23,18 @@ var (
 	ClientTimeout       = 0 * time.Second
 	TickPeriod          = 1 * time.Second
 	ErrTimeout          = errors.New("handler timeout")
-	ErrConnectionClosed = errors.New("connection closed")
+	ErrConnectionClosed = ConnectionError{errors.New("connection closed")}
 	InvalidContext      = int32(0)
 )
+
+type ConnectionError struct {
+	error
+}
+
+func IsConnectionError(err error) bool {
+	_, ok := err.(ConnectionError)
+	return ok
+}
 
 type MessageHandler func(msg *SwordMessage, context int32, err error) bool
 type MessageLogger func(in bool, size int, msg *SwordMessage)
@@ -294,7 +303,7 @@ func (c *Client) listen(errors chan<- error) {
 			if atomic.LoadInt32(&c.eof) != 0 {
 				err = io.EOF
 			}
-			errors <- err
+			errors <- ConnectionError{err}
 			// Tell serve() to invalidate existing and future handlers, but not
 			// to stop yet as the caller can still interact with the client.
 			c.quit <- false
@@ -314,7 +323,7 @@ func (c *Client) write() {
 	for post := range c.posts {
 		written, err := writer.Encode(post.message.tag, post.message.GetMessage())
 		if err != nil {
-			c.errors <- HandlerError{post.Context, err}
+			c.errors <- HandlerError{post.Context, ConnectionError{err}}
 		} else {
 			if c.Logger != nil {
 				c.Logger(false, written, &post.message)
