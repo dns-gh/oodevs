@@ -220,12 +220,7 @@ void LocationEditorBox::UpdateField( const geometry::Point2f& position )
 {
     const QString coord = QString::fromStdString( converter_.GetStringPosition( position ) );
     const auto& labels = current_->GetDescriptor().labels;
-    if( labels.size() == 1 )
-    {
-        fields_[0].edit->setText( coord );
-        return;
-    }
-    const QStringList parts = coord.split( ":" );
+    const QStringList parts = current_->Split( coord );
     if( parts.size() != labels.size() )
         throw MASA_EXCEPTION( "Invalid coordinate " + coord.toStdString() );
     for( int i = 0; i < parts.size(); ++i )

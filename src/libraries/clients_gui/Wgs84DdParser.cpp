@@ -13,6 +13,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 
+#include <boost/lexical_cast.hpp>
+
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -43,21 +45,11 @@ bool Wgs84DdParser::Parse( const QStringList& content, geometry::Point2f& result
     {
         if( content.size() != 2 )
             return false;
-        const QString hintX = content[ 0 ].stripWhiteSpace();
-        const QString hintY = content[ 1 ].stripWhiteSpace();
-
-        float x, y;
-        std::stringstream strX( hintX.toStdString() );
-        strX >> x ;
-        if( ! strX )
-            return false;
-        std::stringstream strY( hintY.toStdString() );
-        strY >> y ;
-        if( ! strY )
-            return false;
-        hint.append( hintX );
-        hint.append( hintY );
-
+        hint.clear();
+        for( auto it = content.begin(); it != content.end(); ++it )
+            hint << it->stripWhiteSpace();
+        const float y = boost::lexical_cast< float >( hint[0].toStdString() );
+        const float x = boost::lexical_cast< float >( hint[1].toStdString() );
         const geometry::Point2d point( x, y );
         result = converter_.ConvertFromGeo( point );
         return true;
@@ -89,5 +81,7 @@ const LocationParserDescriptor& Wgs84DdParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList Wgs84DdParser::Split( const QString& input ) const
 {
-    return input.split( ":" );
+    auto list = input.split( ":" );
+    std::swap( list[0], list[1] );
+    return list;
 }

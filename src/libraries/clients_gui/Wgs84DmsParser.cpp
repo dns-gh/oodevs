@@ -46,8 +46,8 @@ bool Wgs84DmsParser::Parse( const QStringList& content, geometry::Point2f& resul
             return false;
         QString hintx;
         QString hinty;
-        bool formatCoordX = FormatDmsCoordinate( content[ 0 ].stripWhiteSpace(), true, hintx );
-        bool formatCoordY = FormatDmsCoordinate( content[ 1 ].stripWhiteSpace(), false, hinty );
+        bool formatCoordX = FormatDmsCoordinate( content[ 1 ].stripWhiteSpace(), true, hintx );
+        bool formatCoordY = FormatDmsCoordinate( content[ 0 ].stripWhiteSpace(), false, hinty );
 
         if( formatCoordX && formatCoordY )
         {
@@ -133,5 +133,7 @@ const LocationParserDescriptor& Wgs84DmsParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList Wgs84DmsParser::Split( const QString& input ) const
 {
-    return input.split( ":" );
+    auto list = input.split( ":" );
+    std::swap( list[0], list[1] );
+    return list;
 }
