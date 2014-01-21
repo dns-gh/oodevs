@@ -16,6 +16,11 @@
 
 using namespace gui;
 
+namespace
+{
+    static const int MaxFieldSize = 5;
+}
+
 // -----------------------------------------------------------------------------
 // Name: UtmParser constructor
 // Created: AGE 2008-05-29
@@ -55,9 +60,10 @@ bool UtmParser::Parse( const QStringList& content, geometry::Point2f& result, QS
         bool ok = false;
         hint[0].left( 2 ).toInt( &ok );
         if( !ok )
-            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( 5 );
+            hint[0] = (QString::fromStdString( zone_ ) + hint[0]).left( MaxFieldSize );
+        const int max = std::max( hint[1].size(), hint[2].size() );
         for( int i = 1; i < hint.size(); ++i )
-            hint[i] = hint[i].left( 5 );
+            hint[i] = hint[i].append( QString( "0" ).repeated( max - hint[i].size() ) ).left( MaxFieldSize );
         result = converter_( hint.join( "" ).toStdString() );
         return true;
     }
@@ -86,7 +92,7 @@ const LocationParserDescriptor& UtmParser::GetDescriptor() const
 {
     static const LocationParserDescriptor desc = {
         QStringList() << QString() << QString() << QString(),
-        QList< int >() << 5 << 5 << 5,
+        QList< int >() << MaxFieldSize << MaxFieldSize << MaxFieldSize,
     };
     return desc;
 }
@@ -97,9 +103,9 @@ const LocationParserDescriptor& UtmParser::GetDescriptor() const
 // -----------------------------------------------------------------------------
 QStringList UtmParser::Split( const QString& input ) const
 {
-    int left = std::max( 0, input.size() - 5 ) / 2;
+    int left = std::max( 0, input.size() - MaxFieldSize ) / 2;
     return QStringList()
-        << input.left( 5 )
-        << input.mid( 5, left )
-        << input.mid( 5 + left );
+        << input.left( MaxFieldSize )
+        << input.mid( MaxFieldSize, left )
+        << input.mid( MaxFieldSize + left );
 }
