@@ -35,7 +35,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     , app6symbol_          ( msg.app6symbol() )
     , logisticEntity_      ( 0 )
     , parent_              ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
-    , logMaintenanceManual_( false )
+    , logMaintenanceManual_( msg.log_maintenance_manual() )
 {
     if( parent_ )
         parent_->Register( *this );
@@ -48,7 +48,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
-        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) ) );
         AddExtension( *logisticEntity_ );
         AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }
@@ -146,6 +146,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
+    message().set_log_maintenance_manual( logMaintenanceManual_ );
     message.Send( publisher );
 }
 
@@ -237,6 +238,7 @@ void Formation::Register( dispatcher::Formation_ABC& formation )
 {
     formations_.Register( formation.GetId(), formation );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-18
@@ -245,6 +247,7 @@ void Formation::Remove( dispatcher::Formation_ABC& formation )
 {
     formations_.Remove( formation.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetFormations
 // Created: MGD 2009-12-22
@@ -262,6 +265,7 @@ void Formation::Register( dispatcher::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-21
@@ -270,6 +274,7 @@ void Formation::Remove( dispatcher::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetAutomates
 // Created: MGD 2009-12-22

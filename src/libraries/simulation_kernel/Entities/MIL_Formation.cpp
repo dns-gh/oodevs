@@ -287,6 +287,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
+    message().set_log_maintenance_manual( logMaintenanceManual_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
