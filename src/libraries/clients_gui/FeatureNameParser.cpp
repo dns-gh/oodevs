@@ -41,7 +41,7 @@ bool FeatureNameParser::Parse( const QStringList& content, geometry::Point2f& re
     try
     {
         if( content.size() != 1 )
-                return false;
+            return false;
         const QString value = content[0];
         QString hintSearch;
         bool found = false;
