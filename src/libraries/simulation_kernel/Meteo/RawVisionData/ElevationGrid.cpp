@@ -65,16 +65,6 @@ ElevationCell& ElevationGrid::GetEmptyCell() const
     return emptyCell_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::GetLighting
-// Created: JVT 04-03-24
-//-----------------------------------------------------------------------------
-const weather::PHY_Lighting& ElevationCell::GetLighting() const
-{
-    const weather::PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
-    return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetWind
 // Created: JVT 2004-10-29

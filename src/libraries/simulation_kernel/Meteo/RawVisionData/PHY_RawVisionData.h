@@ -36,6 +36,7 @@ namespace weather
 {
     class Meteo;
     class PHY_Precipitation;
+    class PHY_Lighting;
     struct WindData;
 }
 
@@ -72,6 +73,7 @@ public:
 
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
+    const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
 
     double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
     double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;

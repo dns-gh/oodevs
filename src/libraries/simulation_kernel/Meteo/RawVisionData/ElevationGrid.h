@@ -17,8 +17,6 @@ class PHY_AmmoEffect;
 namespace weather
 {
     class Meteo;
-    class PHY_Lighting;
-    class PHY_Precipitation;
     struct WindData;
 }
 
@@ -38,7 +36,6 @@ public:
     short GetAltitude() const          { return h; }
     unsigned char GetEnvHeight() const { return dh; }
     envBits GetEnv() const             { return e; }
-    const weather::PHY_Lighting&         GetLighting     () const;
     const weather::WindData&             GetWind         () const;
 
     bool operator == ( const ElevationCell& rhs ) const

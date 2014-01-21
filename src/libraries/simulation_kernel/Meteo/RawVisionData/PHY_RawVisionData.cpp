@@ -307,6 +307,14 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const Ele
     return meteo.GetPrecipitation();
 }
 
+const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const ElevationCell& cell ) const
+{
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    if( cell.pEffects )
+        return cell.pEffects->GetLighting( meteo.GetLighting() );
+    return meteo.GetLighting();
+}
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetAltitude
 // Created: JVT 03-02-24

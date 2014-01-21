@@ -320,7 +320,7 @@ envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
 //-----------------------------------------------------------------------------
 const weather::PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
 {
-    return pCurrentCell_->GetLighting();
+    return data_.GetLighting( *pCurrentCell_ );
 }
 
 //-----------------------------------------------------------------------------
