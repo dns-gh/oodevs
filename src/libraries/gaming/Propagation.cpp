@@ -45,11 +45,12 @@ Propagation::Propagation( const tools::Path& file, const PropagationManager& man
         }
     }
 
-    pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], colsCount, extractor.GetPixelSize().X() ) );
-    pTree_.reset( new TextureTree( *pFactory_, colsCount, rowsCount ) );
     const geometry::Rectangle2d& extent = extractor.GetExtent();
     globalExtent_= geometry::Rectangle2f( converter.ConvertFromGeo( extent.BottomLeft() ),
                                           converter.ConvertFromGeo( extent.TopRight() ) );
+    const double pixelSize = ( globalExtent_.Right() - globalExtent_.Left() ) / rowsCount;
+    pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], colsCount, pixelSize ) );
+    pTree_.reset( new TextureTree( *pFactory_, colsCount, rowsCount ) );
 }
 
 // -----------------------------------------------------------------------------
