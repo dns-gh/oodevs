@@ -85,7 +85,7 @@ void LogisticsRequestsSupplyWidget::PurgeDetail()
 // Name: LogisticsRequestsSupplyWidget::GetRecipientsLinks
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsign& consign )
+QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsign& consign, bool link )
 {
     QString recipients;
     tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = consign.CreateIterator();
@@ -94,7 +94,7 @@ QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsig
         const SupplyRecipientResourcesRequest& curRecipient= itRecipient.NextElement();
         if( !recipients.isEmpty() )
             recipients.append( ", ");
-        recipients += GetDisplayName( &curRecipient.recipient_ );
+        recipients += link ? GetDisplayName( &curRecipient.recipient_ ) : curRecipient.recipient_.GetName();
     }
     return recipients;
 }
@@ -106,7 +106,8 @@ QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsig
 void LogisticsRequestsSupplyWidget::DisplayRequest( const LogisticsConsign_ABC& consign )
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
-    LogisticConsignsWidget_ABC::DisplayRequest( c, GetRecipientsLinks( c ), GetDisplayName( c.GetHandler() ), tools::ToString( c.GetStatus() ) );
+    kernel::Entity_ABC* handler = c.GetHandler();
+    LogisticConsignsWidget_ABC::DisplayRequest( c, GetRecipientsLinks( c, false ), handler ? handler->GetName() : "", tools::ToString( c.GetStatus() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +117,7 @@ void LogisticsRequestsSupplyWidget::DisplayRequest( const LogisticsConsign_ABC& 
 void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_ABC& consign )
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
-    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),        GetRecipientsLinks( c ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),        GetRecipientsLinks( c, true ) );
     detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"),   GetDisplayName( c.GetProviding() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),            GetDisplayName( c.GetConvoy() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),        c.GetCreationTime() );

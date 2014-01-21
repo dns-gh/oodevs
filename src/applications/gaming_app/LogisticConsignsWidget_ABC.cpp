@@ -62,8 +62,6 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
     requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader );
-    connect( requestsTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
-                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     connect( requestsTable_->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) )
                                              , SLOT( OnRequestsTableSelected( const QModelIndex&, const QModelIndex& ) ) );
 
@@ -231,8 +229,10 @@ QString LogisticConsignsWidget_ABC::SupervisionFilter( const QString& value ) co
 // -----------------------------------------------------------------------------
 void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& consign )
 {
-    LogisticConsignsWidget_ABC::DisplayRequest( consign, GetDisplayName( consign.GetConsumer() ),
-        GetDisplayName( consign.GetHandler() ), consign.GetStatusDisplay() );
+    kernel::Agent_ABC* consumer = consign.GetConsumer();
+    kernel::Entity_ABC* handler = consign.GetHandler();
+    LogisticConsignsWidget_ABC::DisplayRequest( consign, consumer ? consumer->GetName() : "",
+        handler ? handler->GetName() : "" , consign.GetStatusDisplay() );
 }
 
 // -----------------------------------------------------------------------------

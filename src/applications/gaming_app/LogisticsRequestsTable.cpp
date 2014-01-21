@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "LogisticsRequestsTable.h"
 #include "moc_LogisticsRequestsTable.cpp"
-#include "clients_gui/LinkItemDelegate.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
@@ -43,10 +42,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
     sortByColumn( 0, Qt::DescendingOrder );
     setItemDelegate( &delegate_ );
 
-    linkItemDelegate_ = new gui::LinkItemDelegate( this );
-    setItemDelegateForColumn( 1, linkItemDelegate_ );
-    setItemDelegateForColumn( 2, linkItemDelegate_ );
-
     setSortingEnabled( true );
     setShowGrid( true );
     setAlternatingRowColors( true );
@@ -64,15 +59,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
 LogisticsRequestsTable::~LogisticsRequestsTable()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::GetLinkItemDelegate
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-const gui::LinkItemDelegate* LogisticsRequestsTable::GetLinkItemDelegate() const
-{ 
-    return linkItemDelegate_;
 }
 
 // -----------------------------------------------------------------------------

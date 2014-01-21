@@ -19,11 +19,6 @@ namespace kernel
     class Entity_ABC;
 }
 
-namespace gui
-{
-    class LinkItemDelegate;
-}
-
 class LogisticsConsign_ABC;
 
 // =============================================================================
@@ -55,10 +50,6 @@ public:
     void FindRequestsIds( std::set< unsigned int >& requests );
     //@}
 
-    //! @name Accessors
-    const gui::LinkItemDelegate* GetLinkItemDelegate() const;
-    //@}
-
 protected:
     //! @name Helpers
     //@{
@@ -69,11 +60,10 @@ protected:
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel      dataModel_;
-    QSortFilterProxyModel*  proxyModel_;
-    gui::CommonDelegate     delegate_;
-    gui::LinkItemDelegate*  linkItemDelegate_;
-    QStringList             horizontalHeaders_;
+    QStandardItemModel     dataModel_;
+    QSortFilterProxyModel* proxyModel_;
+    gui::CommonDelegate    delegate_;
+    QStringList            horizontalHeaders_;
     //@}
 };
 
