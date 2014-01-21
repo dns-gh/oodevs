@@ -376,3 +376,12 @@ bool MIL_AutomateType::IsInjuredHuman() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::GetComposition
+// Created: LGY 2014-01-20
+// -----------------------------------------------------------------------------
+const MIL_AutomateType::T_CompositionMap& MIL_AutomateType::GetComposition() const
+{
+    return composition_;
+}
