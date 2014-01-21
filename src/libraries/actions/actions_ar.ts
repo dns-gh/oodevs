@@ -15,28 +15,8 @@
 <context>
     <name>ActionFactory</name>
     <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation type="unfinished">عدم تطابق المعلمة في العمل &apos;%1&apos; (المعرف: %2): مفقود المعلمة &apos;%3&apos;.</translation>
-    </message>
-    <message>
-        <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation type="unfinished">غير قادر على العثور على تنفيذ الكيان &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Executing target not set</source>
-        <translation type="unfinished">لم يتم تنفيذ الهدف تعيين</translation>
-    </message>
-    <message>
-        <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation type="unfinished">نوع عمل السحر &apos;%1&apos; غير معروف.</translation>
-    </message>
-    <message>
-        <source>too many parameters provided</source>
-        <translation type="unfinished">معلمات كثيرة جداً المقدمة</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
-        <translation type="unfinished">عدم تطابق المعلمة في العمل &apos;%1&apos; (المعرف: %2): %3.</translation>
+        <source>Incomplete order</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -95,13 +75,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParameterFactory</name>
-    <message>
-        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation type="unfinished">وتتوقع &apos;%1&apos; العثور على &apos;%2&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
@@ -128,24 +101,6 @@
     <message>
         <source>Disengage</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FragOrder</name>
-    <message>
-        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Mission</name>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished">الكيان &apos;%1&apos; (معرف: 2 ٪) لا يمكن تنفيذ المهمة &apos;%3&apos; (المعرف: %4)</translation>
-    </message>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
-        <translation type="unfinished">كيان &apos;%1&apos; (المعرف: %2) تلقت البعثة غير معروف</translation>
     </message>
 </context>
 <context>

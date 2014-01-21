@@ -145,17 +145,20 @@ QTreeWidgetItem* TimelineListView::FindListItem( const actions::Action_ABC& acti
             return FindItem( entity );
         }
     }
-    const std::string& actionTypeName = action.GetType().GetName();
-    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
+    if( action.GetType() )
     {
-        actionType = actions::eTypeWeather;
-        return weatherItem_;
-    }
-    if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
-        actionTypeName == "destroy_object" || actionTypeName == "request_object" )
-    {
-        actionType = actions::eTypeObjects;
-        return objectItem_;
+        const std::string& actionTypeName = action.GetType()->GetName();
+        if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
+        {
+            actionType = actions::eTypeWeather;
+            return weatherItem_;
+        }
+        if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
+            actionTypeName == "destroy_object" || actionTypeName == "request_object" )
+        {
+            actionType = actions::eTypeObjects;
+            return objectItem_;
+        }
     }
     actionType = actions::eTypeMagic;
     return magicItem_;

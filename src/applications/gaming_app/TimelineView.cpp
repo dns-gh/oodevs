@@ -78,17 +78,20 @@ TimelineView::T_Actions* TimelineView::FindActions( const actions::Action_ABC& a
             return &it->second;
         }
     }
-    const std::string& actionTypeName = action.GetType().GetName();
-    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
+    if( action.GetType() )
     {
-        actionType = eTypeWeather;
-        return &weatherActions_;
-    }
-    if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
-                actionTypeName == "destroy_object" || actionTypeName == "request_object" )
-    {
-        actionType = eTypeObjects;
-        return &objectsActions_;
+        const std::string& actionTypeName = action.GetType()->GetName();
+        if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
+        {
+            actionType = eTypeWeather;
+            return &weatherActions_;
+        }
+        if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
+                    actionTypeName == "destroy_object" || actionTypeName == "request_object" )
+        {
+            actionType = eTypeObjects;
+            return &objectsActions_;
+        }
     }
     actionType = eTypeMagic;
     return &magicActions_;

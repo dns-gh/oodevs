@@ -19,41 +19,11 @@
 
 using namespace actions;
 
-namespace
-{
-    const kernel::OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub )
-    {
-        const kernel::OrderType* type = 0;
-        try
-        {
-            const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
-            type = missions.Find( id );
-            if( !type )
-            {
-                const std::string name = xis.attribute< std::string >( "name", "" );
-                throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
-                                      .arg( name.c_str() ).arg( id ).toStdString() );
-            }
-        }
-        catch( const std::exception& )
-        {
-            if( stub )
-            {
-                static const kernel::OrderType stubType;
-                return stubType;
-            }
-            throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) received unknown mission" )
-                                  .arg( "?" ).arg( "?" ).toStdString() );
-        }
-        return *type;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Mission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Mission::Mission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
+Mission::Mission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered /* = true */ )
     : Action_ABC( controller, mission )
     , controller_( controller )
     , registered_( registered )
@@ -65,8 +35,8 @@ Mission::Mission( const kernel::MissionType& mission, kernel::Controller& contro
 // Name: Mission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub )
-    : Action_ABC( xis, controller, ResolveType( xis, missions, stub ) )
+Mission::Mission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis )
+    : Action_ABC( xis, controller, mission )
     , controller_( controller )
     , registered_( true )
 {
@@ -99,7 +69,7 @@ void Mission::Polish()
 // -----------------------------------------------------------------------------
 void Mission::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetId() )
+    xos << xml::attribute( "id", GetType() ? GetType()->GetId() : 0 )
         << xml::attribute( "type", "mission" );
     Action_ABC::Serialize( xos );
 }

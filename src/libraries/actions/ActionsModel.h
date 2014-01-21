@@ -144,6 +144,8 @@ Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC
 {
     Action_ABC* action = factory_.CreateAction( target, order );
     Register( action->GetId(), *action );
+    if( !action->CheckValidity() )
+        action->Invalidate();
     return action;
 }
 
@@ -156,6 +158,8 @@ Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration 
 {
     Action_ABC* action = factory_.CreateAction( message, needRegistration );
     Register( action->GetId(), *action );
+    if( !action->CheckValidity() )
+        action->Invalidate();
     return action;
 }
 

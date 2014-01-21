@@ -114,8 +114,8 @@ BOOST_FIXTURE_TEST_CASE( serialize_null_parameter_when_type_attribute_missing, F
     MOCK_EXPECT( publicher.ClientToSim ).once().with( mock::retrieve( msg ) );
     action->Publish( publicher, 42 );
 
-    BOOST_CHECK( msg.message().has_unit_order() );
-    const sword::UnitOrder& order = msg.message().unit_order();
+    BOOST_CHECK( msg.message().has_automat_order() );
+    const sword::AutomatOrder& order = msg.message().automat_order();
     BOOST_CHECK( order.has_parameters() );
     // Parameter number is consistent
     const sword::MissionParameters& parameters =order.parameters();

@@ -25,7 +25,7 @@ using namespace actions;
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
-    : Action_ABC ( controller, magic )
+    : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
 {
@@ -37,7 +37,7 @@ MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controll
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, magic )
+    : Action_ABC( xis, controller, &magic )
     , controller_( controller )
     , registered_( true )
 {
@@ -70,7 +70,7 @@ void MagicAction::Polish()
 // -----------------------------------------------------------------------------
 void MagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetName() )
+    xos << xml::attribute( "id", GetType()->GetName() )
         << xml::attribute( "type", "magic" );
     Action_ABC::Serialize( xos );
 }
@@ -81,7 +81,7 @@ void MagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
-    sword::MagicAction_Type type = ( sword::MagicAction_Type ) GetType().GetId();
+    sword::MagicAction_Type type = ( sword::MagicAction_Type ) GetType()->GetId();
     simulation::MagicAction message;
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );

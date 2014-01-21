@@ -41,30 +41,53 @@ class ActionParameterFactory : public actions::ParameterFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
-                                   , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                   , kernel::Controller& controller );
+             ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter,
+                                     const kernel::EntityResolver_ABC& entities,
+                                     const kernel::StaticModel& staticModel,
+                                     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter,
+                                     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
+                                     kernel::Controller& controller );
     virtual ~ActionParameterFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter& message, const kernel::Entity_ABC* entity ) const;
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC* entity, bool nullValue = false ) const;
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
+                                                     const sword::MissionParameter& message,
+                                                     boost::optional< const kernel::Entity_ABC& > entity ) const;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
+                                                     const sword::MissionParameter_Value& message,
+                                                     boost::optional< const kernel::Entity_ABC& > entity,
+                                                     bool nullValue ) const;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
+                                                     xml::xistream& xis,
+                                                     boost::optional< const kernel::Entity_ABC& > entity ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const std::string& parent ) const;
-    void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity, const std::string& parent ) const;
-    bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
-    bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
-    void CreateLocationComposite( const std::string &type, xml::xistream& xis, const kernel::OrderParameter& parameter, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const;
-
-    actions::Parameter_ABC* DoCreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter& message, const kernel::Entity_ABC& entity ) const;
+    void CreateListParameter( xml::xistream& xis,
+                              actions::parameters::ParameterList& list,
+                              const std::string& parent ) const;
+    void CreateListParameter( xml::xistream& xis,
+                              actions::parameters::ParameterList& list,
+                              const kernel::Entity_ABC& entity,
+                              const std::string& parent ) const;
+    bool DoCreateParameter( const kernel::OrderParameter& parameter,
+                            xml::xistream& xis,
+                            const std::string& type,
+                            std::unique_ptr< actions::Parameter_ABC >& param ) const;
+    bool DoCreateParameter( const kernel::OrderParameter& parameter,
+                            xml::xistream& xis,
+                            const kernel::Entity_ABC& entity,
+                            const std::string& type,
+                            std::unique_ptr< actions::Parameter_ABC >& param ) const;
+    void CreateLocationComposite( const std::string &type,
+                                  xml::xistream& xis,
+                                  const kernel::OrderParameter& parameter,
+                                  const kernel::Entity_ABC& entity,
+                                  std::unique_ptr< actions::Parameter_ABC >& param ) const;
     //@}
 
 private:
@@ -79,6 +102,6 @@ private:
     //@}
 };
 
-}
+} //! namespace actions
 
 #endif // __actions_ActionParameterFactory_h_

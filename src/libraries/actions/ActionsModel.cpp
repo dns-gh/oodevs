@@ -246,28 +246,9 @@ void ActionsModel::ReadActions( xml::xistream& xis, bool readonly )
 // -----------------------------------------------------------------------------
 void ActionsModel::ReadAction( xml::xistream& xis, bool readonly )
 {
-    try
-    {
-        std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis, readonly ) );
-        Register( action->GetId(), *action );
-        action.release();
-    }
-    catch( const std::exception& /*e*/ )
-    {
-        try
-        {
-            std::auto_ptr< Action_ABC > action( factory_.CreateStubAction( xis ) );
-            if( action.get() )
-            {
-                Register( action->GetId(), *action );
-                action.release();
-            }
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
-    }
+    std::auto_ptr< Action_ABC > action( factory_.CreateAction( xis, readonly ) );
+    Register( action->GetId(), *action );
+    action.release();
 }
 
 // -----------------------------------------------------------------------------

@@ -30,8 +30,8 @@ class EntityMission : public Mission
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityMission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-             EntityMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub );
+             EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered = true );
+             EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis );
     virtual ~EntityMission();
     //@}
 

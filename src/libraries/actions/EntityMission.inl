@@ -14,7 +14,7 @@
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
 template< typename T >
-EntityMission< T >::EntityMission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered /*= true*/ )
+EntityMission< T >::EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered /*= true*/ )
     : Mission( mission, controller, registered )
 {
     // NOTHING
@@ -25,8 +25,8 @@ EntityMission< T >::EntityMission( const kernel::MissionType& mission, kernel::C
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
 template< typename T >
-EntityMission< T >::EntityMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub )
-    : Mission( xis, controller, missions, stub )
+EntityMission< T >::EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis )
+    : Mission( mission, controller, xis )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ void EntityMission< T >::Publish( Publisher_ABC& publisher, int context ) const
 {
     T message;
     message().mutable_tasker()->set_id( Get< ActionTasker >().GetId() );
-    message().mutable_type()->set_id( GetType().GetId());
+    message().mutable_type()->set_id( GetType() ? GetType()->GetId() : 0 );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

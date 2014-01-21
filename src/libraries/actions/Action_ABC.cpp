@@ -11,6 +11,7 @@
 #include "Action_ABC.h"
 #include "Parameter_ABC.h"
 #include "ActionsModel.h"
+#include "ActionTasker.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -33,28 +34,30 @@ namespace
 // Name: Action_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
+Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType* type )
     : controller_( controller )
-    , type_      ( type )
-    , id_        ( ++ids )
-    , name_      ( type_.GetName().c_str() )
-    , valid_     ( true )
+    , type_( boost::none )
+    , id_( ++ids )
+    , name_( type ? type->GetName().c_str() : "" )
+    , valid_( type != 0 )
 {
-    // NOTHING
+    if( type )
+        type_ = *type;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Action_ABC constructor
 // Created: SBO 2008-05-28
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type )
+Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType* type )
     : controller_( controller )
-    , type_      ( type )
-    , id_        ( ++ids )
-    , name_      ( xis.attribute< std::string >( "name", type_.GetName() ).c_str() )
-    , valid_     ( true )
+    , type_( boost::none )
+    , id_( ++ids )
+    , name_( xis.attribute< std::string >( "name", type ? type->GetName() : "" ).c_str() )
+    , valid_( type != 0 )
 {
-    // NOTHING
+    if( type )
+        type_ = *type;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +110,7 @@ void Action_ABC::Rename( const QString& name )
 // Name: Action_ABC::GetType
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-const kernel::OrderType& Action_ABC::GetType() const
+const boost::optional< const kernel::OrderType& >& Action_ABC::GetType() const
 {
     return type_;
 }
@@ -221,8 +224,6 @@ void Action_ABC::CommitTo( sword::MissionParameters& message ) const
         for( auto it = elements_.begin(); it != elements_.end(); ++it )
             it->second->CommitTo( *message.add_elem() );
     }
-    else
-        valid_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -277,6 +278,7 @@ void Action_ABC::Activate( kernel::ActionController& controller ) const
 void Action_ABC::Invalidate()
 {
     valid_ = false;
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,4 +288,18 @@ void Action_ABC::Invalidate()
 bool Action_ABC::IsValid() const
 {
     return valid_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::CheckValidity
+// Created: ABR 2014-01-22
+// -----------------------------------------------------------------------------
+bool Action_ABC::CheckValidity() const
+{
+    const ActionTasker* tasker = Retrieve< ActionTasker >();
+    bool taskerValidity = tasker ? tasker->GetTasker() != 0 : true;
+    bool paramValidity = true;
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        paramValidity = paramValidity && ( it->second->IsOptional() || it->second->IsSet() );
+    return valid_ && taskerValidity && paramValidity && CheckKnowledgeValidity();
 }

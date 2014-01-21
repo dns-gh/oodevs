@@ -35,7 +35,7 @@ using namespace actions;
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 UnitMagicAction::UnitMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/)
-    : Action_ABC ( controller, magic )
+    : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
 {
@@ -47,7 +47,7 @@ UnitMagicAction::UnitMagicAction( const kernel::MagicActionType& magic, kernel::
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, magic )
+    : Action_ABC( xis, controller, &magic )
     , controller_( controller )
     , registered_( true )
 {
@@ -80,7 +80,7 @@ void UnitMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetName() )
+    xos << xml::attribute( "id", GetType()->GetName() )
         << xml::attribute( "type", "magicunit" );
     Action_ABC::Serialize( xos );
 }
@@ -94,7 +94,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     const ActionTasker& tasker = Get< ActionTasker >();
     const std::string typeName = tasker.GetTypeName();
     const unsigned int id = tasker.GetId();
-    sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType().GetId();
+    sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType()->GetId();
     simulation::UnitMagicAction message;
     if( typeName == kernel::Agent_ABC::typeName_ )
         message().mutable_tasker()->mutable_unit()->set_id( id );

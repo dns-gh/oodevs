@@ -10,6 +10,8 @@
 #ifndef __actions_ActionFactory_ABC_h_
 #define __actions_ActionFactory_ABC_h_
 
+#include "ENT/ENT_Enums.h"
+
 #include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
@@ -78,7 +80,6 @@ public:
     //@{
     // From xml
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
-    virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const = 0;
 
     // From proto
     virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const = 0;
@@ -96,6 +97,7 @@ public:
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const = 0;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const = 0;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, E_MissionType type ) const = 0;
 
     virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point ) const = 0;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const = 0;
@@ -119,6 +121,6 @@ public:
     //@}
 };
 
-}
+} //! namespace actions
 
 #endif // __actions_ActionFactory_ABC_h_

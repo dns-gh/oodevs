@@ -42,8 +42,8 @@ class Mission : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-             Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, bool stub );
+             Mission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered = true );
+             Mission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis );
     virtual ~Mission();
     //@}
 

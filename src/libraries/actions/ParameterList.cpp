@@ -66,22 +66,23 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter )
 // Name: ParameterList constructor
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC* entity )
+ParameterList::ParameterList( const kernel::OrderParameter& parameter,
+                              const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
+                              const actions::ParameterFactory_ABC& factory,
+                              boost::optional< const kernel::Entity_ABC& > entity )
     : Parameter< QString >( parameter )
     , parameter_( parameter )
 {
     int i = 0;
-    for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
+    for( auto it = list.begin(); it != list.end(); ++it, ++i )
     {
         kernel::OrderParameter newParameter = OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), parameter.GetType(), parameter.IsOptional() );
         OrderParameterValueVisitor visitor( newParameter );
         parameter.Accept( visitor );
-
-        Parameter_ABC* param = factory.CreateParameter( newParameter, *it, entity );
+        std::unique_ptr< Parameter_ABC > param( factory.CreateParameter( newParameter, *it, entity ) );
         if( param )
             AddParameter( *param );
-        else
-            throw MASA_EXCEPTION( "Invalid mission parameter" );
+        param.release();
     }
 }
 
