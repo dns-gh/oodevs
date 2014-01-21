@@ -1029,6 +1029,20 @@ Action_ABC* ActionFactory::CreateLogMaintenanceSetManualAction( const kernel::En
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectNewLogisticState
+// Created: LGY 2014-01-24
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectNewLogisticState( unsigned int consignId ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "select_new_logistic_state" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

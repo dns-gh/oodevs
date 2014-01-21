@@ -61,7 +61,7 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     connect( completedCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( OnCompletedFilter() ) );
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
-    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader );
+    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, model.actions_, controllers.GetCurrentMode() );
     connect( requestsTable_->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) )
                                              , SLOT( OnRequestsTableSelected( const QModelIndex&, const QModelIndex& ) ) );
 

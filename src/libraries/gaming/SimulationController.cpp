@@ -312,6 +312,15 @@ void SimulationController::SendHistoryRequests( const std::set< unsigned int >& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationController::ApplyRequestResolution
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+void SimulationController::ApplyRequestResolution() const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationController::RegisterSimHandler
 // Created: LGY 2014-01-07
 // -----------------------------------------------------------------------------

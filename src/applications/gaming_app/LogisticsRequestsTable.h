@@ -14,12 +14,23 @@
 #include "clients_gui/CommonDelegate.h"
 #include "clients_gui/RichTableView.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Entity_ABC;
 }
 
+namespace gui
+{
+    class LinkItemDelegate;
+}
+
 class LogisticsConsign_ABC;
+class ConsignDialog;
 
 // =============================================================================
 /** @class  LogisticsRequestsTable
@@ -34,7 +45,8 @@ class LogisticsRequestsTable : public gui::RichTableView
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders );
+             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
+                                     actions::ActionsModel& actionsModel, E_Modes currentMode );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -57,13 +69,22 @@ protected:
      void SetData( int row, int col, QString text, const LogisticsConsign_ABC& consign );
     //@}
 
+public slots:
+    //! @name Slots
+    //@{
+    void OnLinkClicked( const QString& url, const QModelIndex& index );
+    //@}
+
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel     dataModel_;
-    QSortFilterProxyModel* proxyModel_;
-    gui::CommonDelegate    delegate_;
-    QStringList            horizontalHeaders_;
+    QStandardItemModel      dataModel_;
+    QSortFilterProxyModel*  proxyModel_;
+    gui::CommonDelegate     delegate_;
+    gui::LinkItemDelegate*  linkItemDelegate_;
+    QStringList             horizontalHeaders_;
+    ConsignDialog*          consignDialog_;
+    E_Modes                 currentMode_;
     //@}
 };
 

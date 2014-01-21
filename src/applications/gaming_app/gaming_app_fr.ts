@@ -496,6 +496,17 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>ConsignDialog</name>
+    <message>
+        <source>request</source>
+        <translation>requête</translation>
+    </message>
+    <message>
+        <source>Apply the automated resolution</source>
+        <translation>Appliquer une résolution automatique</translation>
+    </message>
+</context>
+<context>
     <name>CreateFormationDialog</name>
     <message>
         <source>Create formation</source>
