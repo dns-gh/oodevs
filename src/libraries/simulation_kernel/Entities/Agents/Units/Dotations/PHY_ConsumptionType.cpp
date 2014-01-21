@@ -77,7 +77,7 @@ const PHY_ConsumptionType::T_ConsumptionTypeMap& PHY_ConsumptionType::GetConsump
 // -----------------------------------------------------------------------------
 const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( const std::string& strName )
 {
-    CIT_ConsumptionTypeMap it = consumptionTypes_.find( strName );
+    auto it = consumptionTypes_.find( strName );
     return it == consumptionTypes_.end() ? 0 : it->second;
 }
 

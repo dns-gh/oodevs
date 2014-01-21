@@ -365,9 +365,9 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "radars" )
-                >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
-            >> xml::end;
+        >> xml::start( "radars" )
+            >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -480,8 +480,7 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis, const Object
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
-    std::string strType( xml::attribute( xis, "type", std::string() ) );
-
+    const std::string strType = xis.attribute< std::string >( "type", "" );
     try
     {
         const MIL_ObjectType_ABC& objectType = resolver.FindType( strType );
@@ -520,7 +519,7 @@ void PHY_ComposanteTypePion::InitializeAviationQuotas( xml::xistream& xis )
             {
                 E_AviationRange range = ENT_Tr::ConvertToAviationRange( xis.attribute< std::string >( "range" ) );
                 xis >> xml::list( "quota", *this, &PHY_ComposanteTypePion::ReadAviationQuotas, aviationResourceQuotas_[ range ] );
-            })
+            } )
         >> xml::end;
 }
 
@@ -531,7 +530,7 @@ void PHY_ComposanteTypePion::InitializeAviationQuotas( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
-    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( xis.attribute< std::string >( "status" ) );
+    auto it = consumptionTypes.find( xis.attribute< std::string >( "status" ) );
     const PHY_ConsumptionType& consumptionType = *it->second;
     consumptions_[ consumptionType.GetID() ] = new PHY_DotationConsumptions( consumptionType.GetName(), xis );
 }
@@ -597,7 +596,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
 
     xis >> xml::attribute( "category", maintenanceType );
 
-    PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( maintenanceType );
+    auto it = maintenanceLevels.find( maintenanceType );
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
 
     sNTICapability ntiCapability( maintenanceLevel );
@@ -681,11 +680,11 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
 void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "health-functions" )
-                >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
-                >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
-                >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
-            >> xml::end;
+        >> xml::start( "health-functions" )
+            >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
+            >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
+            >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -767,9 +766,9 @@ void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "supply-functions" )
-                >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
-            >> xml::end;
+        >> xml::start( "supply-functions" )
+            >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1151,7 +1150,6 @@ double PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_A
 double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     double rRange = -1.;
-
     for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )

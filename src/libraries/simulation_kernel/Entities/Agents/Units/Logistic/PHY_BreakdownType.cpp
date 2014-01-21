@@ -64,13 +64,9 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
 {
-    const PHY_MaintenanceLevel::T_MaintenanceLevelMap& maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
-    std::string categoryType;
-    xis >> xml::attribute( "name", categoryType );
-
-    PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( categoryType );
-    const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
-
+    const auto maintenanceLevels = PHY_MaintenanceLevel::GetMaintenanceLevels();
+    const std::string categoryType = xis.attribute< std::string >( "name" );
+    const PHY_MaintenanceLevel& maintenanceLevel = *maintenanceLevels.find( categoryType )->second;
     xis >> xml::list( "breakdown", boost::bind( &PHY_BreakdownType::ReadBreakdown, _1, boost::cref( maintenanceLevel ) ) );
 }
 
