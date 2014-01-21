@@ -11,6 +11,7 @@
 #include "LogisticSupplyPullFlowDialog.h"
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -68,17 +69,9 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
     , supplier_   ( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
-
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
     supplierCombo_->setMinimumWidth( 260 );
     connect( supplierCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSupplierValueChanged() ) );
-
-    QStringList resourcesHeader;
-    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-                    << tools::translate( "Logistic : Push supply flow", "Available" )
-                    << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
-
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( supplierCombo_ );
     resourcesLayout->addWidget( resourcesTable_ );
@@ -134,15 +127,6 @@ void LogisticSupplyPullFlowDialog::Show()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::GetSuppliesFromTable
-// Created: MMC 2012-10-16
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::GetSuppliesFromTable()
-{
-    resourcesTable_->GetQuantities( supplierSupplies_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::SetSuppliesToTable
 // Created: MMC 2012-10-16
 // -----------------------------------------------------------------------------
@@ -180,10 +164,21 @@ void LogisticSupplyPullFlowDialog::Validate()
 {
     if( !selected_ || !supplier_ )
         return;
+    if( carriersTable_->IsOverloaded() )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+        return;
+    }
+    if( carriersTable_->IsUnderloaded() &&
+        QMessageBox::warning( this, tr( "Error" ),
+            tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
+            QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
+        return;
 
-    GetSuppliesFromTable();
+    resourcesTable_->GetQuantities( supplierSupplies_ );
+    T_QuantitiesMap carriers;
     if( carriersUseCheck_->isChecked() )
-        GetCarriersFromTable();
+        carriersTable_->GetQuantities( carriers );
 
     accept();
     layer_.Reset();
@@ -214,10 +209,8 @@ void LogisticSupplyPullFlowDialog::Validate()
         if( dotationType )
             pullFlowParameters->AddResource( *dotationType, it.value() );
     }
-
-    if( carriersUseCheck_->isChecked() )
-        for( auto it = carriers_.begin(); it != carriers_.end(); ++it )
-            pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
+    for( auto it = carriers.begin(); it != carriers.end(); ++it )
+        pullFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
     // Route
     CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );

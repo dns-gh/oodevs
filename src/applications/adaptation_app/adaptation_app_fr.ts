@@ -1540,6 +1540,14 @@ Arrêt moteur allumé</translation>
         <source>persons</source>
         <translation>personnes</translation>
     </message>
+    <message>
+        <source>Min weight carried</source>
+        <translation>Masse min transportable</translation>
+    </message>
+    <message>
+        <source>Min volume carried</source>
+        <translation>Volume min transportable</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

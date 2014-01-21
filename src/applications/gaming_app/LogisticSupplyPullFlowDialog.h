@@ -59,9 +59,8 @@ private:
     void ClearSuppliersTable();
     void ClearSuppliersData();
     void ComputeAvailableSuppliers();
-    virtual void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
-    virtual void GetSuppliesFromTable();
-    virtual void SetSuppliesToTable();
+    void SetSuppliesToTable();
+    void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers );
     void Clear();
     //@}
 

@@ -10,38 +10,21 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyFlowDialog_ABC.h"
 #include "moc_LogisticSupplyFlowDialog_ABC.cpp"
-
 #include "LogisticSupplyAvailabilityTableWidget.h"
-#include "LogisticSupplyExclusiveListWidget.h"
-
-#include "actions/ActionTasker.h"
-#include "actions/ActionTiming.h"
-#include "actions/Automat.h"
-#include "actions/Formation.h"
-#include "actions/ParameterList.h"
-#include "actions/PushFlowParameters.h"
-#include "actions/UnitMagicAction.h"
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Controllers.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
@@ -57,7 +40,6 @@ using namespace kernel;
 using namespace gui;
 using namespace actions;
 using namespace longname;
-using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyFlowDialog_ABC constructor
@@ -89,6 +71,12 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     tabs_->setMargin( 5 );
     QGridLayout* tabLayout = new QGridLayout( this, 1, 2 );
     tabLayout->addWidget( tabs_, 0, 0, 1, 3 );
+
+    QStringList resourcesHeader;
+    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
+        << tools::translate( "Logistic : Push supply flow", "Available" )
+        << tools::translate( "Logistic : Push supply flow", "Quantity" );
+    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
 
     resourcesTab_ = new QWidget( tabs_ );
     QWidget* carriersTab = new QWidget( tabs_ );
@@ -123,7 +111,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
 
     tabLayout->addWidget( okButton, 1, 0, 1, 1 );
     tabLayout->addWidget( cancelButton, 1, 2, 1, 1 );
-    setFixedSize( 340, 420 );
+    setMinimumSize( 750, 420 );
     tabLayout->setMargin( 5 );
     tabLayout->setSpacing( 5 );
 
@@ -132,9 +120,14 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     QStringList carriersHeader;
     carriersHeader << tools::translate( "Logistic : Push supply flow", "Type" )
         << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    carriersTable_ = new LogisticSupplyAvailabilityTableWidget( this, carriersHeader );
+        << tools::translate( "Logistic : Push supply flow", "Quantity" )
+        << tools::translate( "Logistic : Push supply flow", "Capacity (T)" )
+        << tools::translate( "Logistic : Push supply flow", "Capacity (m3)" )
+        << tools::translate( "Logistic : Push supply flow", "Mass" )
+        << tools::translate( "Logistic : Push supply flow", "Volume" );
+    carriersTable_ = new LogisticSupplyCarriersTableWidget( this, carriersHeader, carriersTypeNames_, *resourcesTable_, availableSupplies_ );
     carriersTable_->setEnabled( false );
+    connect( resourcesTable_, SIGNAL( OnChanged( int ) ), carriersTable_, SLOT( Update() ) );
 
     QVBoxLayout* carriersLayout = new QVBoxLayout( carriersTab );
     carriersLayout->addWidget( carriersUseCheck_ );
@@ -187,16 +180,6 @@ LogisticSupplyFlowDialog_ABC::~LogisticSupplyFlowDialog_ABC()
 void LogisticSupplyFlowDialog_ABC::closeEvent( QCloseEvent* /*pEvent*/ )
 {
     Reject();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyFlowDialog_ABC::GetCarriersFromTable
-// Created: MMC 2012-10-19
-// -----------------------------------------------------------------------------
-void LogisticSupplyFlowDialog_ABC::GetCarriersFromTable()
-{
-    carriers_.clear();
-    carriersTable_->GetQuantities( carriers_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +352,6 @@ void LogisticSupplyFlowDialog_ABC::ClearCarriersData()
 {
     carriersTypes_.clear();
     carriersTypeNames_.clear();
-    carriers_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -465,4 +447,3 @@ void LogisticSupplyFlowDialog_ABC::OnTabChanged( int index )
 {
     addWaypointButton_->setVisible( index == 2 );
 }
-

@@ -44,7 +44,7 @@ class Dotation;
 class StaticModel;
 class SupplyStates;
 class LogisticSupplyAvailabilityTableWidget;
-class LogisticSupplyExclusiveListWidget;
+class LogisticSupplyCarriersTableWidget;
 
 // =============================================================================
 /** @class  LogisticSupplyFlowDialog_ABC
@@ -143,8 +143,6 @@ protected:
     //@{
     virtual void AddAvailable( const Dotation& dotation );
     virtual QString GetSelectedWaypoint();
-    virtual void GetCarriersFromTable();
-    virtual void ComputeAvailableCarriers( QMap< QString, int >& availableCarriers ) = 0;
 
     virtual void ComputeRoute( T_Route& route ) = 0;
     virtual void AddCarryingEquipment( const kernel::Entity_ABC& entity );
@@ -178,7 +176,7 @@ protected:
 
     QTabWidget* tabs_;
     LogisticSupplyAvailabilityTableWidget* resourcesTable_;
-    LogisticSupplyAvailabilityTableWidget* carriersTable_;
+    LogisticSupplyCarriersTableWidget* carriersTable_;
 
     QListView* waypointList_;
     QCheckBox* carriersUseCheck_;
@@ -188,8 +186,6 @@ protected:
     QPushButton* moveDownButton_;
     QPushButton* addWaypointButton_;
     QPushButton* delWaypointButton_;
-
-    T_QuantitiesMap carriers_;
 
     bool startWaypointLocation_;
     gui::LocationCreator* waypointLocationCreator_;

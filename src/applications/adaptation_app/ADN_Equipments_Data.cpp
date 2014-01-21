@@ -403,8 +403,10 @@ bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::LogSupplyInfos::LogSupplyInfos()
     : ptr_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetElement< ADN_Natures_Data >( eNatures ).GetNaturesInfos(), 0 )
-    , rWeight_( 0 )
-    , rVolume_( 0 )
+    , rMinWeight_( 0 )
+    , rMaxWeight_( 0 )
+    , rMinVolume_( 0 )
+    , rMaxVolume_( 0 )
 {
     // NOTHING
 }
@@ -415,8 +417,10 @@ ADN_Equipments_Data::LogSupplyInfos::LogSupplyInfos()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 {
-    rWeight_ = src.rWeight_.GetData();
-    rVolume_ = src.rVolume_.GetData();
+    rMinWeight_ = src.rMinWeight_.GetData();
+    rMaxWeight_ = src.rMaxWeight_.GetData();
+    rMinVolume_ = src.rMinVolume_.GetData();
+    rMaxVolume_ = src.rMaxVolume_.GetData();
     ptr_ = src.ptr_.GetData();
 }
 
@@ -429,8 +433,10 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional
           >> xml::start( "carrying" )
             >> xml::attribute( "nature", ptr_ )
-            >> xml::attribute( "mass", rWeight_ )
-            >> xml::attribute( "volume", rVolume_ )
+            >> xml::attribute( "min-mass", rMinWeight_ )
+            >> xml::attribute( "max-mass", rMaxWeight_ )
+            >> xml::attribute( "min-volume", rMinVolume_ )
+            >> xml::attribute( "max-volume", rMaxVolume_ )
           >> xml::end;
 }
 
@@ -442,11 +448,13 @@ void ADN_Equipments_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) 
 {
     if( ptr_.GetData() )
     {
-        output << xml::start( "supply-functions" );
-            output << xml::start( "carrying" )
-                   << xml::attribute( "nature", ptr_ )
-                   << xml::attribute( "mass", rWeight_ )
-                   << xml::attribute( "volume", rVolume_ )
+        output << xml::start( "supply-functions" )
+                   << xml::start( "carrying" )
+                       << xml::attribute( "nature", ptr_ )
+                       << xml::attribute( "min-mass", rMinWeight_ )
+                       << xml::attribute( "max-mass", rMaxWeight_ )
+                       << xml::attribute( "min-volume", rMinVolume_ )
+                       << xml::attribute( "max-volume", rMaxVolume_ )
                    << xml::end
                << xml::end;
     }

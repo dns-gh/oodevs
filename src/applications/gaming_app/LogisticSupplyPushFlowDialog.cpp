@@ -12,6 +12,7 @@
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
+#include "LogisticSupplyCarriersTableWidget.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -26,6 +27,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
@@ -52,12 +54,6 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, ker
     connect( recipientsList_, SIGNAL( ItemRemoved( const QString& ) ), SLOT( RemoveRecipient( const QString& ) ) );
     connect( recipientsList_, SIGNAL( SelectionChanged( const QString&, const QString& ) ),
                               SLOT( OnRecipientSelectionChanged( const QString&, const QString& ) ) );
-    QStringList resourcesHeader;
-    resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )
-        << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );
-    resourcesTable_ = new LogisticSupplyAvailabilityTableWidget( this, resourcesHeader );
-
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( recipientsList_ );
     resourcesLayout->addWidget( resourcesTable_ );
@@ -164,10 +160,22 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
+    if( carriersTable_->IsOverloaded() )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+        return;
+    }
+    if( carriersTable_->IsUnderloaded() &&
+        QMessageBox::warning( this, tr( "Error" ),
+            tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
+            QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
+        return;
+
     if( pRecipientSelected_ )
         GetSuppliesFromTable( *pRecipientSelected_ );
+    T_QuantitiesMap carriers;
     if( carriersUseCheck_->isChecked() )
-        GetCarriersFromTable();
+        carriersTable_->GetQuantities( carriers );
 
     accept();
     layer_.Reset();
@@ -194,10 +202,8 @@ void LogisticSupplyPushFlowDialog::Validate()
                 pushFlowParameters->AddResource( *dotationType, itResource.value(), **it );
         }
     }
-
-    if( carriersUseCheck_->isChecked() )
-        for( auto it = carriers_.begin(); it != carriers_.end(); ++it )
-            pushFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
+    for( auto it = carriers.begin(); it != carriers.end(); ++it )
+        pushFlowParameters->AddTransporter( *carriersTypeNames_[ it.key() ], it.value() );
 
     // Route
     CustomStringListModel* pModel = static_cast< CustomStringListModel* >( waypointList_->model() );
@@ -350,10 +356,7 @@ void LogisticSupplyPushFlowDialog::GetSuppliesFromTable( const kernel::Automat_A
 {
     auto it = recipientSupplies_.find( &recipient );
     if( it != recipientSupplies_.end() )
-    {
-        T_QuantitiesMap& curSupplies = it->second;
-        resourcesTable_->GetQuantities( curSupplies );
-    }
+        resourcesTable_->GetQuantities( it->second );
 }
 
 namespace
