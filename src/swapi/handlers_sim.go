@@ -340,6 +340,7 @@ func (model *ModelData) handleFormationCreation(m *sword.SimToClient_Content) er
 		mm.GetParty().GetId(),
 		level,
 		logLevel,
+		mm.GetLogMaintenanceManual(),
 	)
 	if !model.addFormation(formation) {
 		return fmt.Errorf("cannot create formation %v with unknown"+

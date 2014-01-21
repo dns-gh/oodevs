@@ -280,14 +280,15 @@ type Formation struct {
 }
 
 func NewFormation(id uint32, name string, parentId uint32,
-	partyId uint32, level, logLevel string) *Formation {
+	partyId uint32, level, logLevel string, logMaintenanceManual bool) *Formation {
 	return &Formation{
-		Id:       id,
-		PartyId:  partyId,
-		ParentId: parentId,
-		Name:     name,
-		Level:    level,
-		LogLevel: logLevel,
+		Id:                   id,
+		PartyId:              partyId,
+		ParentId:             parentId,
+		Name:                 name,
+		Level:                level,
+		LogLevel:             logLevel,
+		LogMaintenanceManual: logMaintenanceManual,
 	}
 }
 
