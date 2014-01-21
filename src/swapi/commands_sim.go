@@ -320,6 +320,35 @@ func (c *Client) CreateAutomat(formationId, automatType,
 	return created, err
 }
 
+func (c *Client) CreateAutomatAndUnits(formationId, automatType,
+	knowledgeGroupId uint32, location Point) (*Automat, error) {
+	tasker := MakeFormationTasker(formationId)
+	msg := CreateUnitMagicAction(tasker, MakeParameters(
+		MakeIdentifier(automatType),
+		MakeIdentifier(knowledgeGroupId),
+		MakePointParam(location),
+	), sword.UnitMagicAction_automat_and_units_creation)
+	var created *Automat
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetAutomatCreation(); reply != nil {
+			// Ignore this message, its context should not be set anyway
+			return ErrContinue
+		}
+		reply, _, err := getUnitMagicActionAck(msg)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		created = c.Model.GetAutomat(value.GetAutomat().GetId())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
+}
+
 func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	location Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
 
