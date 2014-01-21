@@ -748,9 +748,12 @@ message FormationCreation {
 */
 message FormationUpdate {
     //! The formation identifier @see FormationId
-    required Id        formation             = 1;
+    required Id        formation                = 1;
     //! The extension fields
-    optional Extension extension             = 2;
+    optional Extension extension                = 2;
+    //! The logistic maintenance mode: true for manual,
+    //! false for automatic (by default)
+    optional bool      log_maintenance_manual   = 3;
 }
 
 /** @struct FormationDestruction

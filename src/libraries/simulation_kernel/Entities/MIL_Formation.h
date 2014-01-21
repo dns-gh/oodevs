@@ -119,6 +119,7 @@ private:
     //@{
     void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
+    void OnReceiveLogMaintenanceSetManual( const sword::MissionParameters& parameters );
     //@}
 
     //! @name Serialization
@@ -138,6 +139,8 @@ private:
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color > pColor_;
     std::string symbol_;
+    bool logMaintenanceManual_;
+    bool manualHasChanged_;
     //@}
 };
 

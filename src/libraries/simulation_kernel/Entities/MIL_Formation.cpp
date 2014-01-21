@@ -19,12 +19,12 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
-
 #include "Tools/MIL_IDManager.h"
 #include "CheckPoints/SerializationTools.h"
 #include <boost/serialization/map.hpp>
@@ -41,12 +41,14 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
     : MIL_Entity_ABC( xis, idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
-    , pArmy_      ( &army )
-    , pParent_    ( pParent )
-    , pLevel_     ( 0 )
-    , pExtensions_( new MIL_DictionaryExtensions( xis ) )
-    , pColor_     ( new MIL_Color( xis ) )
-    , symbol_     ( xis.attribute< std::string >( "symbol", "" ) )
+    , pArmy_               ( &army )
+    , pParent_             ( pParent )
+    , pLevel_              ( 0 )
+    , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
+    , pColor_              ( new MIL_Color( xis ) )
+    , symbol_              ( xis.attribute< std::string >( "symbol", "" ) )
+    , logMaintenanceManual_( false )
+    , manualHasChanged_    ( false )
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
@@ -58,8 +60,8 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
         >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
     std::string logLevelStr = PHY_LogisticLevel::none_.GetName();
-    xis >> xml::optional >> xml::attribute("logistic-level", logLevelStr);
-    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
+    xis >> xml::optional >> xml::attribute( "logistic-level", logLevelStr );
+    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !logLevel )
         throw MASA_EXCEPTION( xis.context() + "Invalid logistic level" );
     if( *logLevel != PHY_LogisticLevel::none_ )
@@ -76,10 +78,12 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
     : MIL_Entity_ABC( name, idManager_.GetId() )
-    , pArmy_      ( &army )
-    , pParent_    ( parent )
-    , pLevel_     ( 0 )
-    , pExtensions_( new MIL_DictionaryExtensions() )
+    , pArmy_               ( &army )
+    , pParent_             ( parent )
+    , pLevel_              ( 0 )
+    , pExtensions_         ( new MIL_DictionaryExtensions() )
+    , logMaintenanceManual_( false )
+    , manualHasChanged_    ( false )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -113,11 +117,13 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( const std::string& name )
     : MIL_Entity_ABC( name, 0 )
-    , pArmy_      ( 0 )
-    , pParent_    ( 0 )
-    , pLevel_     ( 0 )
-    , pExtensions_( 0 )
-    , pColor_     ( 0 )
+    , pArmy_               ( 0 )
+    , pParent_             ( 0 )
+    , pLevel_              ( 0 )
+    , pExtensions_         ( 0 )
+    , pColor_              ( 0 )
+    , logMaintenanceManual_( false )
+    , manualHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -196,7 +202,8 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pExtensions
          >> pColor
          >> symbol_
-         >> pBrainLogistic_;
+         >> pBrainLogistic_
+         >> logMaintenanceManual_;
     pExtensions_.reset( pExtensions );
     pColor_.reset( pColor );
     if( pBrainLogistic_.get() )
@@ -225,7 +232,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << pExtensions
          << pColor
          << symbol_
-         << pBrainLogistic_;
+         << pBrainLogistic_
+         << logMaintenanceManual_;
 }
 
 // -----------------------------------------------------------------------------
@@ -294,13 +302,12 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
 // -----------------------------------------------------------------------------
 void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
 {
+    client::FormationUpdate message;
+    message().mutable_formation()->set_id( GetID() );
     if( !pExtensions_->IsEmpty() )
-    {
-        client::FormationUpdate message;
-        message().mutable_formation()->set_id( GetID() );
         pExtensions_->SendFullState( message );
-        message.Send( NET_Publisher_ABC::Publisher() );
-    }
+    message().set_log_maintenance_manual( logMaintenanceManual_ );
+    message.Send( NET_Publisher_ABC::Publisher() );
     if( pBrainLogistic_.get() )
         pBrainLogistic_->SendFullState();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1, context ) );
@@ -317,6 +324,13 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
     {
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
+        break;
+    case sword::UnitMagicAction::log_maintenance_set_manual:
+        if( !pBrainLogistic_.get() )
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode,
+                                     sword::UnitActionAck::error_invalid_unit,
+                                     "formation doesn't have a logistic automat" );
+        OnReceiveLogMaintenanceSetManual( msg.parameters() );
         break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
@@ -349,7 +363,7 @@ const MIL_Color& MIL_Formation::GetColor() const
 // -----------------------------------------------------------------------------
 bool MIL_Formation::CanEmitReports() const
 {
- return true;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -455,10 +469,6 @@ void MIL_Formation::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
     }
 }
 
-// =============================================================================
-// TMP - Renettoyer les boucles d'updates .. Cf. Scipio
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::UpdateNetwork
 // Created: NLD 2011-01-11
@@ -467,13 +477,14 @@ void MIL_Formation::UpdateNetwork()
 {
    if( pBrainLogistic_.get() )
         pBrainLogistic_->SendChangedState();
+    client::FormationUpdate message;
+    message().mutable_formation()->set_id( GetID() );
     if( pExtensions_->HasChanged() )
-    {
-        client::FormationUpdate message;
-        message().mutable_formation()->set_id( GetID() );
         pExtensions_->UpdateNetwork( message );
-        message.Send( NET_Publisher_ABC::Publisher() );
-    }
+    if( manualHasChanged_ )
+        message().set_log_maintenance_manual( logMaintenanceManual_ );
+    if( pExtensions_->HasChanged() || manualHasChanged_ )
+         message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -484,6 +495,7 @@ void MIL_Formation::Clean()
 {
     if( pBrainLogistic_.get() )
         pBrainLogistic_->Clean();
+    manualHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -532,4 +544,15 @@ void MIL_Formation::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, 
         pParent_ = 0;
         pArmy_->RegisterFormation( *this );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::OnReceiveLogMaintenanceSetManual
+// Created: SLI 2014-01-21
+// -----------------------------------------------------------------------------
+void MIL_Formation::OnReceiveLogMaintenanceSetManual( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    logMaintenanceManual_ = protocol::GetBool( parameters, 0 );
+    manualHasChanged_ = true;
 }
