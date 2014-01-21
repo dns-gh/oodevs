@@ -1,71 +1,73 @@
 require 'debug'
 
---- Return a linear interpolation between to point
--- @param min The min value on Y axis
--- @param min The max value on Y axis
--- @param start The value on x where interpolation begin
--- @param stop The value on x where interpolation stop
--- @param upslop Indicate if the function inscrease or decrease
--- @param value The x value where we want f(x)
--- @author MGD
--- @release 2010-01-22
-LinearInterpolation = function( min, max, start, stop, upslope, value )
-    local res = 0;
-    if( start == stop ) then
-        error( "Can't interpolate if start == stop" )
+--- Linearly interpolates the given value from the [minFrom ; maxFrom] interval
+--- to the [minTo ; maxTo] interval, and returns the value.
+--- Throws an error if minFrom is equal to maxFrom.
+--- If the given value is not in the [minFrom ; maxFrom] interval, then
+--- this method will return either minTo or maxTo, depending on how the
+--- given value compares to the initial boundaries.
+-- Examples : LinearInterpolation(0, 10, 0, 100, true, 50) returns 5,
+-- LinearInterpolation(0, 10, 0, 100, false, 60) returns 4.
+-- @param minTo Float, the left bound for the target interval.
+-- @param maxTo Float, the right bound for the target interval.
+-- @param minFrom Float, the left bound for the starting interval.
+-- @param maxFrom Float, the right bound for the starting interval.
+-- @param upslope Boolean. If set to false, the [minTo ; maxTo] interval is reversed
+-- (i.e. the interpolation occurs from [minFrom ; maxFrom] to [maxTo ; minTo]).
+-- @param value Float, the value to interpolate
+-- @return Float, the interpolated value (in [minTo ; maxTo])
+LinearInterpolation = function( minTo, maxTo, minFrom, maxFrom, upslope, value )
+    if( minFrom == maxFrom ) then
+        error( "Can't interpolate if minFrom == maxFrom" )
     end
-    if( upslope ) then
-        if( value < start ) then
-            res = min
-        elseif( value > stop ) then
-            res = max
-        else
-            res = min + ( value - start ) * ( max - min ) / ( stop - start )
-        end
+    
+    if not upslope then
+        local tmp = maxTo
+        maxTo = minTo
+        minTo = tmp
+    end
+    
+    if( value < minFrom ) then
+        return minTo
+    elseif( value > maxFrom ) then
+        return maxTo
     else
-        if( value < start ) then
-            res = max
-        elseif( value > stop ) then
-            res = min
-        else
-            res = max + ( value - start ) * ( min - max ) / ( stop - start )
-        end
+        return minTo + ( value - minFrom ) * ( maxTo - minTo ) / ( maxFrom - minFrom )
     end
-    return res
 end
 
---- Return min value in table
--- @param t: table of numeric values
--- @author DDA
--- @release 2010-11-26
+--- Returns the smallest number in the given table of numeric values.
+-- @param t Table of numeric values
+-- @return Float, the min value
 minValue = function( t )
     local minValue = math.huge
-    for i, _ in pairs( t ) do
-        if t[ i ] < minValue then
-            minValue =  t[ i ]
+    for _, value in pairs( t ) do
+        if value < minValue then
+            minValue = value
         end
     end
     return minValue
 end
 
 --- Splits the string given in parameter with respect to the separator,
---- and returns the result in an array
--- @param separator: the separator
--- @param str: the string to split
--- @author LMT
--- @release 2010-11-18
+--- and returns the result in an array.
+-- If the separator is not found in the given string, the returned
+-- list contains only the given string.
+-- @param separator String, the separator.
+-- @param str String, the string to split.
+-- @return List of strings
 explode =  function ( seperator, str ) 
     local pos, arr = 0, {}
     for st, sp in function() return string.find( str, seperator, pos, true ) end do
-        arr[#arr+1] = string.sub( str, pos, st-1 )
+        arr[ #arr + 1 ] = string.sub( str, pos, st-1 )
         pos = sp + 1
     end
-    arr[#arr+1] = string.sub( str, pos )
+    arr[ #arr + 1 ] = string.sub( str, pos )
     return arr
 end
 
---- Debug function used to display a set of localized elements
--- @param elements : a list of localized elements
+--- Displays a set of localized elements (debug function).
+-- @param elements Table of knowledges defining a "getPosition" method returning a simulation position.
 affichePositions = function( elements )
     local simPoints = {}
     for _, element in pairs( elements ) do
@@ -76,28 +78,32 @@ affichePositions = function( elements )
 end
 
 --- Returns true once the delay given in parameter has passed, false otherwise
--- @param self
--- @param delay : the delay in seconds
-waitInMin = function( self, delay )
-    self[myself] = self[myself] or {}
-    self[myself].tempsDebut = self[myself].tempsDebut or getSimulationTime()
-    return  delay * 60 <= getSimulationTime() - self[myself].tempsDebut
+-- @param knowledge Any knowledge
+-- @param delay Float, the delay in seconds
+-- @return Boolean, whether the given delay has elapsed or not.
+waitInMin = function( knowledge, delay )
+    knowledge[myself] = knowledge[myself] or {}
+    knowledge[myself].tempsDebut = knowledge[myself].tempsDebut or getSimulationTime()
+    return delay * 60 <= getSimulationTime() - knowledge[myself].tempsDebut
 end
 
---- Returns the simulation time
+--- Returns the current simulation time (in seconds).
+-- @return Float
 getSimulationTime = function()
     return DEC_TempsSim()
 end
 
---- Return a random integer between minValue and maxValue
--- @param minValue : the minimum value of the range (included in the range)
--- @param maxValue : the maximum value of the range (included in the range)
+--- Return a random integer between minValue and maxValue.
+-- @param minValue Integer, the minimum value of the range (included in the range)
+-- @param maxValue Integer, the maximum value of the range (included in the range)
+-- @return Integer
 getRandomNumber = function( minValue, maxValue )
     return DEC_RandomValue( minValue, maxValue )
 end
 
---- Returns the action current state
--- @param idAction : the id of the current action
+--- Returns the current state of the given action
+-- @param idAction Integer, the id of the action
+-- @return Integer, the id of the current state of the action
 getEtatAction = function( idAction )
     return DEC_EtatAction( idAction )
 end
