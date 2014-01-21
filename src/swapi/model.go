@@ -165,15 +165,11 @@ func (model *Model) run() error {
 				}
 			}
 		case now := <-ticker.C:
-			removed := []int32{}
 			for id, timeout := range model.timeouts {
 				if now.After(timeout) {
-					removed = append(removed, id)
+					model.handlers[id](model.data, nil, ErrTimeout)
+					model.remove(id)
 				}
-			}
-			for _, id := range removed {
-				model.handlers[id](model.data, nil, ErrTimeout)
-				model.remove(id)
 			}
 		}
 	}
