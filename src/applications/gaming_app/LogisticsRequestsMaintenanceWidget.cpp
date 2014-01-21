@@ -48,10 +48,9 @@ LogisticsRequestsMaintenanceWidget::~LogisticsRequestsMaintenanceWidget()
 // -----------------------------------------------------------------------------
 QString LogisticsRequestsMaintenanceWidget::GetBreakdown( const LogMaintenanceConsign& consign )
 {
-    QString breakdown;
     if( consign.IsDiagnosed() || profile_.IsSupervision() )
-        breakdown = consign.GetBreakdown()->GetName().c_str();
-    return breakdown;
+        return consign.GetBreakdown()->GetName().c_str();
+    return consign.GetBreakdown()->GetUnknownName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,4 +69,3 @@ void LogisticsRequestsMaintenanceWidget::OnRequestSelected( const LogisticsConsi
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ),         c.GetCurrentStartedTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Ending:" ),          SupervisionFilter( c.GetCurrentEndTime() ) );
 }
-

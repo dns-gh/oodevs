@@ -3485,10 +3485,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Random</source>
         <translation>Aléatoire</translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Inconnue</translation>
-    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>

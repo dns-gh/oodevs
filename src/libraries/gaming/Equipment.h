@@ -46,8 +46,8 @@ public:
     void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
     void DeleteMaintenanceConsign( int id );
     void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
-    std::vector< int > GetBreakdowns( bool isReadOnly ) const;
-    std::vector< int > GetBreakdownsInTreatment( bool isReadOnly ) const;
+    const std::vector< int >& GetBreakdowns() const;
+    std::vector< int > GetBreakdownsInTreatment( bool isDiagnosed ) const;
     //@}
 
     //! @name Operators
