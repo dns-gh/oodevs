@@ -94,6 +94,7 @@ type Client struct {
 	running     sync.WaitGroup
 	serving     sync.WaitGroup
 	writing     sync.WaitGroup
+	closed      bool
 }
 
 func NewClient(address string) (*Client, error) {
@@ -153,6 +154,10 @@ func Connect(host string) (*Client, error) {
 }
 
 func (c *Client) Close() {
+	if c.closed {
+		return
+	}
+	c.closed = true
 	// Connection might closed remotely while we set this flag.
 	atomic.StoreInt32(&c.eof, 1)
 	// Terminate the input connection
