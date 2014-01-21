@@ -3,7 +3,7 @@
 -------------------------------------------------------------------
 
 --- Returns true if the unit has the capacity to build the selected object, false otherwise
--- The unit has more capacity when dismount
+-- The unit has more capacity when dismounted
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
@@ -13,7 +13,7 @@ integration.canBuildObjectType = function( objectType, localisationObject )
 end
 
 --- Returns true if the unit has the capacity to build the selected object without reinforcement, false otherwise
--- The unit has more capacity when dismount
+-- The unit has more capacity when dismounted
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
@@ -23,7 +23,7 @@ integration.canBuildObjectTypeWithoutReinforcement = function( objectType, local
 end
 
 --- Returns true if the unit has the capacity to build the selected object now, false otherwise
--- The unit has more capacity when dismount
+-- The unit has more capacity when dismounted
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
@@ -49,7 +49,7 @@ end
 
 --- Returns the percentage of the structural state for an urban block
 -- @param urbanBlock Urban block knowledge
--- @return structural state between 0 and 100 (if value is 100, the urban block is built) 
+-- @return structural state between 0 and 1 (if value is 1, the urban block has no damaged) 
 integration.buildLevelUrbanBlock = function( urbanBlock )
     return DEC_EtatBlocUrbain( urbanBlock.source )
 end
@@ -95,7 +95,6 @@ end
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param withoutReport Boolean if set to true don't send a report to indicate the beginning of the work
--- @return nothing
 integration.startBuildItInstantaneously = function( object, objectType, withoutReport )
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
@@ -134,7 +133,7 @@ integration.startBuildItKnowledge = function( objectKnowledge )
     end
 end
 
---- Begin to resume work to build of pre-existing urban block
+--- Beginning to resume work to build of pre-existing urban block
 -- A report is sent when the work is begining 
 -- @param urbanBlock Urban block knowledge
 integration.startBuildItUrbanBlock = function( urbanBlock )  
@@ -307,7 +306,7 @@ integration.stopBuildItSecu = function( object )
 end
 
 --- Return the closest object knowledge from the reference point in a circle
--- The barycenter of the object is used for it's location 
+-- The barycenter of the object is used for its location 
 -- @param ptRef Simulation point, the center of the circle where finding the object
 -- @param lstObjets, list of object knowledges
 -- @param rDistMax Double, the radius where finding the object
@@ -327,8 +326,8 @@ integration.obtenirObjetProcheDePosition = function( ptRef, lstObjets, rDistMax 
 end
 
 --- Return the closest object knowledge from the reference point
--- The barycenter of the object is used for it's localisation) 
--- @param locRef Point knowledge
+-- The barycenter of the object is used for its localisation 
+-- @param locRef Simulation object knowledge
 -- @param eTypeObject String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param rDistMax Double, the radius where finding the object
@@ -410,7 +409,7 @@ integration.changeCrowdDensity = function( blockingStrength, checkpoint ) -- cal
 end
 
 --- Disarm the crowds
--- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. More the percentage is higher more the time search is long and will slow down the passage of the crowd through the checkpoint.
+-- @param bodySearchStrength, percentage which represents intensity of search. Allows to find weapons and disarms the crowd. More the percentage is higher more the time search is long and will slow down the passage of the crowd through the checkpoint.
 -- @param position Point knowledge
 -- @param checkpoint, Simulation object knowledge
 integration.setBodySearchIntensity = function( bodySearchStrength, position, checkpoint ) -- called at each tick
@@ -428,12 +427,12 @@ end
 
 --- Disarm the crowd
 -- @param crowd Crowd knowledge
--- @param nbrToDisarmPerTick, Double number of people to disarm at each tick
+-- @param nbrToDisarmPerTick, Float number of people to disarm at each tick
 integration.disarmCrowd = function( crowd, nbrToDisarmPerTick ) -- Called at each tick
     DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd.source, nbrToDisarmPerTick )
 end
 
---- Destroy instantanneously a checkpoint
+--- Instantaneously destroy a checkpoint
 -- First the checkpoint operating is stopped. Then the checkpoint is removed 
 -- A report is sent when agent has stopped to operate the checkpoint
 -- @param position Point knowledge
@@ -454,7 +453,7 @@ integration.destroyInstantlyCheckpointOn = function( position )
     end
 end
 
---- Delete object witch have same simulation localisation and return the localisation
+--- Delete object which have same simulation localisation and return the localisation
 -- @param eTypeObject String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
 -- @param area Area or Point knowledge
@@ -668,7 +667,7 @@ integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( obje
   return DEC_Agent_ADotationPourConstruireObjetSansRenforts( objectType )
 end
 
---- Start filetered crowds
+--- Start filetering crowds
 -- @param intensity
 -- @param checkpoint Object knowledge (checkpoint object)
 integration.startFilterCrowds = function( intensity, checkpoint )
@@ -677,7 +676,7 @@ integration.startFilterCrowds = function( intensity, checkpoint )
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
 
---- Stop filtered crowds
+--- Stop filtering crowds
 -- Change the population density at the exit of the object knowledge
 -- @param checkpoint Object knowledge (checkpoint object type)
 integration.stopFilterCrowds = function( checkpoint ) -- Called only once
@@ -697,27 +696,27 @@ end
 --- Returns if the agent can remove object, false otherwise
 -- The result is given when foot soldiers are loaded 
 -- The result depends on the terrain where object should be built 
--- @param entity
+-- @param entity Simulation agent
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
--- @param location
+-- @param location Simulation area
 -- @return Boolean, whether or not unit can build the object
 integration.canBuildObjectWhenLoadedWithLocation = function( entity, objectType, location )
     return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity, objectType, location )
 end
 
 --- Returns if the agent can remove the object when the foot soldiers are loaded, false otherwise
--- @param entity
+-- @param entity Simulation agent
 -- @param objectType String, the type of the object
 -- @see ObjectNames.xml and Objects.xml in physical database for the types
--- @param location
+-- @param location Simulation area
 -- @return Boolean, whether or not unit can remove the object
 integration.canBuildObjectWhenLoaded = function( entity, objectType, location )
     return DEC_Agent_AgentPeutConstruireObjetEmbarque( entity, objectType, location )
 end
 
 --- Returns if the agent can remove an object, false otherwise
--- @param entity the Simulation 
+-- @param entity Simulation agent 
 -- @param obstacle Object knowledge
 -- @return Boolean, whether or not unit can remove the object
 integration.canDestroyObject = function( entity, obstacle )
