@@ -10,16 +10,16 @@ package simtests
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"swapi"
+	"swapi/phy"
 	"swapi/simu"
+	"swtest"
 	"testing"
 	"time"
 )
@@ -27,32 +27,15 @@ import (
 const (
 	ConnectTimeout = 40 * time.Second
 	PostTimeout    = 40 * time.Second
+	WaitTimeout    = 60 * time.Second
 )
 
 var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-	showLog     bool
-	platform    string
+	Cfg *swtest.Config
 )
 
 func init() {
-	flag.StringVar(&application, "application", "",
-		"path to simulation_app executable")
-	flag.StringVar(&rootdir, "root-dir", "",
-		"path to simulation root directory")
-	flag.StringVar(&rundir, "run-dir", "",
-		"path application run directory, default to application directory")
-	flag.IntVar(&testPort, "test-port", 35000,
-		"base port for spawned simulations")
-	flag.BoolVar(&showLog, "show-log", false, "print simulation log files")
-
-	platform = "vc100_x64"
-	if runtime.GOARCH == "386" {
-		platform = "vc100"
-	}
+	Cfg = swtest.ParseFlags()
 }
 
 const (
@@ -72,24 +55,24 @@ func MakeOpts() *simu.SimOpts {
 		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
 	}
 
-	if len(application) > 0 {
-		opts.Executable = application
+	if len(Cfg.Application) > 0 {
+		opts.Executable = Cfg.Application
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", platform, "simulation_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "simulation_app.exe")
 	}
-	if len(rootdir) > 0 {
-		opts.RootDir = rootdir
+	if len(Cfg.RootDir) > 0 {
+		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
 	}
 	opts.DataDir = opts.RootDir
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
+	if len(Cfg.RunDir) > 0 {
+		opts.RunDir = &Cfg.RunDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
-	opts.EnableTailing = showLog
+	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
+	opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+6)
+	opts.EnableTailing = Cfg.ShowLog
 	opts.ConnectTimeout = ConnectTimeout
 	return &opts
 }
@@ -141,22 +124,22 @@ func MakeReplayOpts() *simu.ReplayOpts {
 		projectRoot, _ = filepath.Abs(filepath.Join(cwd, "..", ".."))
 	}
 
-	if len(application) > 0 {
+	if len(Cfg.Application) > 0 {
 		// Assume replayer_app lives along with the simulation
-		opts.Executable = filepath.Join(filepath.Dir(application), "replayer_app.exe")
+		opts.Executable = filepath.Join(filepath.Dir(Cfg.Application), "replayer_app.exe")
 	} else if len(projectRoot) > 0 {
-		opts.Executable = filepath.Join(projectRoot, "run", platform, "replayer_app.exe")
+		opts.Executable = filepath.Join(projectRoot, "run", Cfg.Platform, "replayer_app.exe")
 	}
-	if len(rootdir) > 0 {
-		opts.RootDir = rootdir
+	if len(Cfg.RootDir) > 0 {
+		opts.RootDir = Cfg.RootDir
 	} else if len(projectRoot) > 0 {
 		opts.RootDir = filepath.Join(projectRoot, "data")
 	}
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
+	if len(Cfg.RunDir) > 0 {
+		opts.RunDir = &Cfg.RunDir
 	}
 	opts.ExerciseName = "crossroad-small-empty"
-	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", testPort+5)
+	opts.ReplayerAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+5)
 	opts.ConnectTimeout = ConnectTimeout
 	return &opts
 }
@@ -200,12 +183,14 @@ func checkOrderAckSequences(c *C, client *swapi.Client) {
 }
 
 type ClientOpts struct {
-	Exercise string
-	User     string
-	Password string
-	Step     int
-	Paused   bool
-	Logger   swapi.MessageLogger
+	Exercise    string
+	User        string
+	Password    string
+	Step        int
+	Paused      bool
+	Logger      swapi.MessageLogger
+	WaitTimeout time.Duration
+	StartGaming bool
 }
 
 func NewAllUserOpts(exercise string) *ClientOpts {
@@ -236,6 +221,14 @@ func connectClient(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	c.Assert(err, IsNil)
 	client.Logger = opts.Logger
 	client.PostTimeout = PostTimeout
+	client.Model.WaitTimeout = WaitTimeout
+	if opts.WaitTimeout != 0 {
+		timeout := opts.WaitTimeout
+		if timeout < 0 {
+			timeout = 0
+		}
+		client.Model.WaitTimeout = timeout
+	}
 	swapi.ConnectClient(client)
 	client.Model.SetErrorHandler(func(data *swapi.ModelData, msg *swapi.SwordMessage,
 		err error) error {
@@ -260,6 +253,15 @@ func AddLogger(opts *ClientOpts) *ClientOpts {
 	return opts
 }
 
+// Start a gaming_app after starting the simulation and before connecting the
+// test client. First the simulation will be paused (if not already), then
+// gaming will be started and call will wait for the simulation to be unpaused
+// before moving on.
+func AddGaming(opts *ClientOpts) *ClientOpts {
+	opts.StartGaming = true
+	return opts
+}
+
 func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	client := connectClient(c, sim, opts)
 	err := client.Login(opts.User, opts.Password)
@@ -269,10 +271,34 @@ func loginAndWaitModel(c *C, sim Simulator, opts *ClientOpts) *swapi.Client {
 	return client
 }
 
+func startGaming(c *C, sim *simu.SimProcess) {
+	admin := connectClient(c, sim, &ClientOpts{WaitTimeout: -1})
+	defer admin.Close()
+	key, err := admin.GetAuthenticationKey()
+	c.Assert(err, IsNil)
+	err = admin.LoginWithAuthenticationKey("", "", key)
+	c.Assert(err, IsNil)
+	err = admin.Pause()
+	c.Assert(err, IsNil)
+	_, err = simu.StartGamingFromSim(sim.Opts)
+	c.Assert(err, IsNil)
+	admin.Model.WaitTicks(1)
+}
+
 func connectAndWaitModel(c *C, opts *ClientOpts) (
 	*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnExercise(c, opts)
+	ok := false
+	defer func() {
+		if !ok {
+			sim.Stop()
+		}
+	}()
+	if opts.StartGaming {
+		startGaming(c, sim)
+	}
 	client := loginAndWaitModel(c, sim, opts)
+	ok = true
 	return sim, client
 }
 
@@ -351,6 +377,15 @@ func stopSim(c *C, sim *simu.SimProcess) {
 	}
 }
 
+func loadWWPhysical(c *C) *phy.PhysicalFile {
+	wd, err := os.Getwd()
+	c.Assert(err, IsNil)
+	path := filepath.Join(wd, "../../data/data/models/ada/physical/worldwide")
+	phydb, err := phy.ReadPhysical(path)
+	c.Assert(err, IsNil)
+	return phydb
+}
+
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct{}
@@ -358,9 +393,9 @@ type TestSuite struct{}
 var _ = Suite(&TestSuite{})
 
 func (t *TestSuite) SetUpSuite(c *C) {
-	log.Println("application", application)
-	log.Println("root-dir", rootdir)
-	log.Println("run-dir", rundir)
-	log.Println("test-port", testPort)
-	log.Println("platform", platform)
+	log.Println("application", Cfg.Application)
+	log.Println("root-dir", Cfg.RootDir)
+	log.Println("run-dir", Cfg.RunDir)
+	log.Println("test-port", Cfg.TestPort)
+	log.Println("platform", Cfg.Platform)
 }

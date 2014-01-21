@@ -507,8 +507,10 @@ type ModelData struct {
 	KnownScores map[string]struct{}
 	Scores      map[string]float32
 	// Tick and time of the most recent started tick
-	Tick         int32
-	Time         time.Time
+	Tick int32
+	Time time.Time
+	// Latest ending tick
+	LastTick     int32
 	TickDuration int32
 	Replay       *ReplayInfo
 	// True once the initial state has been received
@@ -902,6 +904,7 @@ var (
 		(*ModelData).handleAutomatOrder,
 		(*ModelData).handleChangeDiplomacy,
 		(*ModelData).handleControlBeginTick,
+		(*ModelData).handleControlEndTick,
 		(*ModelData).handleControlGlobalWeather,
 		(*ModelData).handleControlInformation,
 		(*ModelData).handleControlLocalWeatherCreation,

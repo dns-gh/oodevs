@@ -6,7 +6,7 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package swadn
+package phy
 
 import (
 	"encoding/xml"
@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
+	"regexp"
 )
 
 type FileHolder struct {
@@ -23,6 +24,7 @@ type FileHolder struct {
 type PhysicalFile struct {
 	XMLName    xml.Name   `xml:"physical"`
 	Components FileHolder `xml:"components"`
+	Reports    FileHolder `xml:"reports"`
 	Resources  FileHolder `xml:"resources"`
 	Units      FileHolder `xml:"units"`
 	BaseDir    string
@@ -191,4 +193,51 @@ func (resources *Resources) ReadNormalizedConsumptions(physical PhysicalFile) (*
 		}
 	}
 	return &result, units, nil
+}
+
+type Report struct {
+	Id      uint32 `xml:"id,attr"`
+	Key     string `xml:"key,attr"`
+	Message string `xml:"message,attr"`
+}
+
+type Reports []Report
+
+// Returns all reports which message match supplied regular expression. Returns
+// an empty slice if none is found or the pattern is invalid.
+func (r *Reports) MatchByMessage(pattern string) Reports {
+	reports := Reports{}
+	re, err := regexp.Compile(pattern)
+	if err != nil {
+		return Reports(reports)
+	}
+	for _, report := range *r {
+		if re.MatchString(report.Message) {
+			reports = append(reports, report)
+		}
+	}
+	return reports
+}
+
+// Returns the only message matching supplied pattern, nil otherwise.
+func (r *Reports) MatchUniqueByMessage(regexp string) *Report {
+	matched := r.MatchByMessage(regexp)
+	if len(matched) != 1 {
+		return nil
+	}
+	return &matched[0]
+}
+
+type xmlReports struct {
+	XMLName xml.Name `xml:"reports"`
+	Reports []Report `xml:"report"`
+}
+
+func ReadReports(physical PhysicalFile) (Reports, error) {
+	xml := xmlReports{}
+	err := readXml(physical.BaseDir, physical.Reports.File, &xml)
+	if err != nil {
+		return Reports{}, err
+	}
+	return Reports(xml.Reports), nil
 }

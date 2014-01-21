@@ -79,7 +79,7 @@ func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 
 		opts := MakeOpts()
 		WriteSession(c, opts, session)
-		opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+simOffset+6)
+		opts.SimulationAddr = fmt.Sprintf("localhost:%d", Cfg.TestPort+simOffset+6)
 		opts.TailPrefix = fmt.Sprintf("sim+%v", simOffset)
 		return simu.StartSim(opts)
 	}

@@ -145,6 +145,7 @@ func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
 	// Tick and time are not part of checkpoint data and requires a tick
 	// to be set.
 	n.Tick = 0
+	n.LastTick = 0
 	n.TickDuration = 0
 	n.Time = time.Time{}
 	// Orders are not restored upon checkpoint (bug?)

@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"swadn"
 	"swapi"
+	"swapi/phy"
 	"time"
 )
 
@@ -31,7 +31,7 @@ func FloatToString(f float64) string {
 	return fmt.Sprintf("%f", f)
 }
 
-func OutputResources(resources swadn.Resources, out string) {
+func OutputResources(resources phy.Resources, out string) {
 	outResourcesFile := out + "-resources.csv"
 	outResources, err := os.Create(outResourcesFile)
 	if err != nil {
@@ -52,7 +52,7 @@ func OutputResources(resources swadn.Resources, out string) {
 	writer.Flush()
 }
 
-func OutputConsumptions(resources swadn.Resources, physical swadn.PhysicalFile, out string) {
+func OutputConsumptions(resources phy.Resources, physical phy.PhysicalFile, out string) {
 	consumptions, units, err := resources.ReadNormalizedConsumptions(physical)
 	if err != nil {
 		log.Fatalf("Error reading consumptions %s", err)
@@ -84,13 +84,13 @@ func OutputConsumptions(resources swadn.Resources, physical swadn.PhysicalFile, 
 	writer.Flush()
 }
 
-func ComputePhysicalData(xmlDir string, out string) (*swadn.Resources, error) {
+func ComputePhysicalData(xmlDir string, out string) (*phy.Resources, error) {
 	log.Printf("--Data read")
-	physicalFile, err := swadn.ReadPhysical(xmlDir)
+	physicalFile, err := phy.ReadPhysical(xmlDir)
 	if err != nil {
 		log.Fatalf("Error reading physical file: %s", err)
 	}
-	resources, err := swadn.ReadResources(*physicalFile)
+	resources, err := phy.ReadResources(*physicalFile)
 	if err != nil {
 		log.Fatalf("Error reading resources: %s", err)
 	}
@@ -137,7 +137,7 @@ func main() {
 	WriteNumberOfUnits(*out, data, uint32(*root))
 }
 
-func WriteOrbat(out string, data *swapi.ModelData, resources swadn.Resources, root uint32) {
+func WriteOrbat(out string, data *swapi.ModelData, resources phy.Resources, root uint32) {
 	outName := out + "-orbat.csv"
 	outFile, err := os.Create(outName)
 	if err != nil {
