@@ -21,6 +21,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/SerializationTools.h"
 #include "MT_Tools/MT_FormatString.h"

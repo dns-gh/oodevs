@@ -12,21 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/FileWrapper.h"
 #include "Tools/MIL_Tools.h"
 #include <sys/timeb.h>
-
-MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
-{
-    converter< PHY_RawVisionData::E_VisionObject >( "Vide",   PHY_RawVisionData::eVisionEmpty ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Foret",  PHY_RawVisionData::eVisionForest ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Urbain", PHY_RawVisionData::eVisionUrban ),
-    converter< PHY_RawVisionData::E_VisionObject >( "Sol",    PHY_RawVisionData::eVisionGround ),
-    converter< PHY_RawVisionData::E_VisionObject >( "",      (PHY_RawVisionData::E_VisionObject)-1 )
-};
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::GetAltitude
@@ -201,15 +193,6 @@ double MIL_Tools::ConvertMeterToSim( double rValue )
 float MIL_Tools::ConvertSimToMeter( double rValue )
 {
     return (float)( rValue  );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Tools::GetEnvironnementTypeName
-// Created: JVT 03-08-07
-//-----------------------------------------------------------------------------
-const std::string& MIL_Tools::GetEnvironnementTypeName( PHY_RawVisionData::E_VisionObject val )
-{
-    return InverseFindInConverter( environnementConverter_, val );
 }
 
 //-----------------------------------------------------------------------------

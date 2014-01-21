@@ -30,6 +30,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/ElevationGrid.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include <spatialcontainer/TerrainData.h>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )

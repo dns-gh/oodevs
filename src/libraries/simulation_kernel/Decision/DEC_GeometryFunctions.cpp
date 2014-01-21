@@ -32,6 +32,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "Urban/UrbanPhysicalCapacity.h"

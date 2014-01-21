@@ -12,7 +12,6 @@
 #ifndef __MIL_Tools_h_
 #define __MIL_Tools_h_
 
-#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include <spatialcontainer/TerrainData.h>
 
 namespace tools
@@ -87,78 +86,11 @@ public:
     /** @name id to name converters */
     //-------------------------------------------------------------------------
     //@{
-    static const std::string& GetEnvironnementTypeName( PHY_RawVisionData::E_VisionObject );
     static std::string  GetLandTypeName( const TerrainData& data );
     //@}
 
 private:
     MIL_Tools();
-
-private:
-    //-----------------------------------------------------------------------------
-    // Name: struct converter
-    // Created: JVT 03-01-08
-    //-----------------------------------------------------------------------------
-    template < typename type > struct converter
-    {
-        const std::string name_;
-        const type type_;
-        converter( const char* name, type t ) : name_( name ), type_( t ) {};
-        converter& operator = ( const converter& rhs ) { name_ = rhs.name_; type_ = rhs.type_; return *this;};
-    };
-
-    //-----------------------------------------------------------------------------
-    // Name: struct converter
-    // Created: JVT 03-02-27
-    //-----------------------------------------------------------------------------
-    template< typename type > struct mutableConverter
-    {
-        const std::string name_;
-        type* type_;
-        mutableConverter( const char* name, type& t ) : name_( name ), type_( &t ) {};
-        mutableConverter& operator = ( const mutableConverter& rhs ) { name_ = rhs.name_; type_ = rhs.type_; return *this;};
-    };
-
-    template< typename T > static T BadId() { return T( -1 ); };
-    template<> static std::string BadId< std::string >() { return ""; }
-    template<> static TerrainData BadId< TerrainData >() { return TerrainData(); }
-
-    //-----------------------------------------------------------------------------
-    // Name: FindInConverter
-    // Created: JVT 03-01-08
-    // Last modified: JVT 03-09-29
-    //-----------------------------------------------------------------------------
-    template < typename T > static const T& FindInConverter( const converter<T> conv[], const std::string& str )
-    {
-        static T badId = BadId< T >();
-
-        for( unsigned int i = 0; ; ++i )
-        {
-            const std::string& sCurrentName = conv[i].name_;
-            if( sCurrentName.empty() || sCaseInsensitiveEqual()( sCurrentName, str ) )
-                return conv[i].type_;
-        }
-        /*assert( false ); // On ne doit pas arriver ici !!!
-        return badId;*/
-    }
-
-    //-----------------------------------------------------------------------------
-    // Name: InverseFindInConverter
-    // Created: JVT 03-04-29
-    //-----------------------------------------------------------------------------
-    template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val )
-    {
-        for( unsigned int i = 0; !conv[i].name_.empty(); ++i )
-            if( conv[i].type_ == val )
-                return conv[i].name_;
-
-        static std::string badString( "" );
-        return badString;
-    }
-
-private:
-    static converter< PHY_RawVisionData::E_VisionObject > environnementConverter_[];
-
 };
 
 #endif // __MIL_Tools_h_
