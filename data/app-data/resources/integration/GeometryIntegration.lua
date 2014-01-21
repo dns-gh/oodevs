@@ -285,7 +285,7 @@ end
 -- @param numberOfParts Integer, the number of sub-areas to create. If negative, the splitting will not take place, 
 -- and the returned list of sub-areas will be empty.
 -- @param direction Simulation direction (vector), the direction with respect to which the splitting will take place
--- (the vertical direction by default).
+-- (the north-south direction by default).
 -- @return Table with two keys :
 -- <ul> <li> "first" : List of area knowledges, the created sub-areas  </li>
 -- <li> "second" : Integer, the error code among one of the following : </li>

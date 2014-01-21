@@ -1,4 +1,4 @@
---- Returns true if this entity has the given piece of equipment, false otherwise.
+--- Returns true if this entity has the given resource, false otherwise.
 -- This method can only be called by an agent.
 -- @param resource Resource type
 -- @return Boolean
@@ -6,8 +6,8 @@ integration.hasDotation = function( resource )
     return DEC_HasDotation( resource )
 end
 
---- Returns true if this entity has at least the given quantity of the provided piece
--- of equipment, false otherwise.
+--- Returns true if this entity has at least the given quantity of
+-- the provided resource, false otherwise.
 -- This method can only be called by an agent.
 -- @param resource Resource type
 -- @param quantity Integer, the quantity of needed resource
@@ -16,7 +16,7 @@ integration.hasDotationForFiring = function( resource, quantity )
  return DEC_HasDotationForFiring( myself, resource, quantity )
 end
 
---- Returns true if this entity can use the given piece of equipment, false otherwise.
+--- Returns true if this entity can use the given resource, false otherwise.
 -- This method can only be called by an agent.
 -- @param resource Resource type
 -- @return Boolean
@@ -45,7 +45,7 @@ integration.isPoisoned = function()
     return DEC_Agent_EstEmpoisonne()
 end
 
---- Returns true if this entity is an NBC agent, false otherwise.
+--- Returns true if this entity is an agent of type "NBC troop", false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isAgentNBC = function()
@@ -94,16 +94,16 @@ integration.unequipNBCOutfitSecu = function()
     end
 end
 
---- Returns the RNBC protection level of this entity, as defined in the physical database.
+--- Returns the NBC protection level of this entity, as defined in the physical database.
 -- This method can only be called by an agent.
--- @return Integer, the RNBC protection level from 0 to 5, 0 meaning there is no RNBC
+-- @return Integer, the NBC protection level from 0 to 5, 0 meaning there is no
 -- protection available for this entity.
 integration.getRNBCProtectionLevel = function()
     meKnowledge.RNBCProtectionLevel = meKnowledge.RNBCProtectionLevel or DEC_Agent_NiveauProtectionNBC()
     return meKnowledge.RNBCProtectionLevel
 end
 
---- Makes the provided agent go on NBC alert level four.
+--- Alerts the provided agent to NBC level four.
 -- Displays a report.
 -- @param agent Directia agent
 integration.goOnNBCAlert = function( agent )
@@ -121,9 +121,10 @@ integration.equipNBCOutfit = function()
 end
 
 --- Makes this entity unequip its NBC outfit and 
---- cease its potential NBC alert state.
+--- decreases its potential NBC alert level to 0.
 -- Displays reports.
 -- This method can only be called by an agent.
+-- @see integration.goOnNBCAlert
 integration.unequipNBCOutfit = function()
     reportFunction( eRC_TenueProtectionNBCEnlevee )
     if myself.NBCAlert == true then
@@ -161,7 +162,7 @@ integration.switchOnRadio = function( agent )
     DEC_Agent_ArreterSilenceRadio()
 end
 
---- Enables radar silence for the given agent.
+--- Disables radar silence for the given agent.
 -- Displays a report.
 -- @param agent Directia agent
 integration.switchOffRadar = function( agent )
@@ -183,7 +184,7 @@ integration.switchOnRadar = function( agent )
     DEC_Perception_ActiverRadar( eRadarType_EcouteRadar )
 end
 
---- Switches on this entity's safety attitude, in order for it to take cover,
+--- Switches this entity's safety attitude on, in order for it to take cover,
 --- move slower, fly lower (if it is a flying agent), activate sensors, etc.
 -- May display reports.
 -- This method can only be called by an agent.
@@ -256,14 +257,22 @@ integration.switchOffCoverMode = function()
 end
 
 --- Returns true if this entity can dismount, false otherwise.
+-- For this method to return true, the unit must have equipments that can load
+-- other equipments (typically vehicles carrying infantry).
 -- This method can only be called by an agent.
+-- @see integration.canMount
 -- @return Boolean
 integration.canDismount = function()
     return DEC_Agent_EstEmbarquable()
 end
 
 --- Returns true if this entity can mount, false otherwise.
+-- For this method to return true, the following conditions must be met :
+-- <ul> <li> The unit must have equipments that can load other equipments (typically vehicles carrying infantry) </li>
+-- <li> The unit is not located on a non-trafficable urban position </li>
+-- <li> The unit is not moving underground </li> </ul>
 -- This method can only be called by an agent.
+-- @see integration.canDismount
 -- @return Boolean
 integration.canMount = function()
     return DEC_Agent_EstEmbarquable() and DEC_CanMount( myself )
@@ -278,11 +287,15 @@ integration.shouldDismount = function()
            and not DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() )
 end
 
---- Makes this entity start mounting if it can (no other mounting action is taking place
---- and the entity is dismounted) and if it is supposed to (this entity is located on
---- a trafficable position).
---- Otherwise, this method stops the potential current mounting action (started by a
---- previous call of this method).
+--- Makes this entity start mounting if it is supposed to (this entity is located
+--- on a trafficable position) and if it can (the entity is dismounted and 
+--- no mounting action has been started by the potential movement of this entity
+--- (i.e. by a call to the integration.updateMoveToIt method)).
+--- Otherwise, if this entity cannot or should not mount (or has finished mounting),
+--- this method stops the potential current mounting action (started by a previous
+--- call of this method).
+--- Calling this method prevents any mounting action from being started by
+--- the integration.updateMoveToIt method.
 -- This method can only be called by an agent.
 -- @see integration.updateMoveToIt
 -- @see integration.stopMount
@@ -307,7 +320,19 @@ end
 --- Makes this entity start dismounting if it can (no other dismounting action is taking place,
 --- and the entity is mounted).
 --- Otherwise, this method stops the potential current dismounting action (started by a
---- previous call of this method).
+--- previous call to this method).
+-- This method can only be called by an agent.
+-- @see integration.updateMoveToIt
+-- @see integration.stopDismount
+-- @return Boolean, false if the action is ongoing, true otherwise.
+
+
+--- Makes this entity start dismounting if it can (the entity is mounted and 
+--- no dismounting action has been started by the potential movement of this entity
+--- (i.e. by a call to the integration.updateMoveToIt method)).
+--- Otherwise, if this entity cannot dismount (or has finished dismounting),
+--- this method stops the potential current dismounting action (started by a previous
+--- call to this method).
 -- This method can only be called by an agent.
 -- @see integration.updateMoveToIt
 -- @see integration.stopDismount
@@ -365,13 +390,19 @@ integration.isDismounted = function()
     return DEC_Agent_EstDebarque()
 end
 
---- Deploys this entity.
+--- Deploys this entity for it to complete its positioning.
+-- The deployment duration is defined in the physical database, 
+-- in the "Deployment" section of the "Unit" tab.
+-- @see integration.undeploy
 -- This method can only be called by an agent.
 integration.startDeploy = function()
     DEC_Agent_Deploy()
 end
 
 --- Undeploys this entity.
+-- The un-deployment duration is defined in the physical database, 
+-- in the "Deployment" section of the "Unit" tab.
+-- @see integration.startDeploy
 -- This method can only be called by an agent.
 integration.undeploy = function()
     DEC_Agent_Undeploye()
@@ -427,10 +458,16 @@ end
 
 --- Finds an available drone in the company of this entity, and sets it in the myself.droneAvailable variable.
 -- A drone is deemed available if it is operational, if it has enough fuel,
--- and if it is at less than 80 meters away from this entity.
+-- and if it is close enough to this entity.
 -- This method can only be called by an agent (e.g. a UAV station).
+-- @param minFuelQuantity Integer, the minimum quantity of fuel that the drone
+-- must have in order to be considered available (3 units by default).
+-- @param maxDistance Float, the maximal distance between this entity and the drone for
+-- the latter to be considered available (in meters, 80 by default).
 -- @see integration.startActivateDrone
-integration.setAvailableDrones = function()
+integration.setAvailableDrones = function( minFuelQuantity, maxDistance )
+    minFuelQuantity = minFuelQuantity or 3
+    maxDistance = maxDistance or 80
     myself.droneAvailable  = nil
     local integration = integration
     local listePions = integration.getAgentsWithoutHQ()
@@ -438,8 +475,8 @@ integration.setAvailableDrones = function()
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
         -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 and fuelDotationNumber > 0 then
-        if operationalLevel ~= 0 and fuelDotationNumber > 3 then -- Le drone doit être opérationnel et avoir un minimum de carburant
-            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and not pion:GetbMiseEnOeuvre_() then
+        if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- Le drone doit être opérationnel et avoir un minimum de carburant
+            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < maxDistance and not pion:GetbMiseEnOeuvre_() then
                 integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
                 integration.removeFromLoadedUnits( pion )
                 integration.removeFromCapturedUnits( pion )
@@ -465,16 +502,6 @@ integration.companyHasAvailableDrones = function()
         end
     end
     return false
-end
-
---- Undeploys this entity.
--- This method can only be called by an agent.
--- @param self Deprecated, unused
--- @param alreadyUnDeployed Boolean, this method does not undeploy the drone if set to true
-integration.stopActivateDrone = function( self, alreadyUnDeployed )
-    if not alreadyUnDeployed then
-        DEC_Agent_Undeploye()
-    end
 end
 
 --- Returns true if this agent is moving, false otherwise.
@@ -504,16 +531,6 @@ integration.StartGetTugs = function ( supportedUnit, nbrTugs )
 end
 
 --- Makes the given supporting unit lend ambulances to the given supported unit.
--- @see integration.StartGetVSRAM
--- @param supportingUnit Directia agent, the agent lending ambulances
--- @param supportedUnit Directia agent, the agent to lend ambulances to.
--- @param nbrAmbulances Integer, the number of ambulances to lend.
--- This method can only be called by an agent.
-integration.StartLendVSRAM = function ( supportingUnit, supportedUnit, nbrAmbulances )
-    DEC_StartPreterVSRAM( supportingUnit.source, supportedUnit.source, nbrAmbulances )
-end
-
---- Makes the given supporting unit lend ambulances to the given supported unit.
 -- @see integration.GetBackAmbulances
 -- @param supportingUnit Simulation agent, the agent lending ambulances
 -- @param supportedUnit Simulation agent, the agent to lend ambulances to.
@@ -521,15 +538,6 @@ end
 -- This method can only be called by an agent.
 integration.LendAmbulances = function ( supportingUnit, supportedUnit, nbrAmbulances )
     DEC_StartPreterVSRAM( supportingUnit, supportedUnit, nbrAmbulances )
-end
-
---- Makes the given supported unit give back the ambulances previously lent to it by this entity.
--- @see integration.StartLendVSRAM
--- @param supportedUnit Directia agent, the agent giving back the ambulances.
--- @param nbrAmbulances Integer, the number of ambulances to retrieve.
--- This method can only be called by an agent.
-integration.StartGetVSRAM = function ( supportedUnit, nbrAmbulances )
-    DEC_RecupererVSRAM( supportedUnit.source, nbrAmbulances )
 end
 
 --- Makes the given supported unit give back the ambulances previously lent to it by this entity.
@@ -541,7 +549,7 @@ integration.GetBackAmbulances = function ( supportedUnit, nbrAmbulances )
     DEC_RecupererVSRAM( supportedUnit, nbrAmbulances )
 end
 
---- Enables all three types of radar detection on the given area.
+--- Enables all types of radar detection on the given area.
 -- May display a report.
 -- This method does nothing if radar detection was already enabled by a previous
 -- call to this method without having been disabled with a call to the integration.deactivateRadar method.
@@ -565,7 +573,7 @@ integration.activateRadar = function ( area )
     end
 end
 
---- Disables all three types of radar detection on the given area.
+--- Disables all types of radar detection on the given area.
 -- May display a report.
 -- This method does nothing if radar detection was not previously enabled by
 -- a call to the integration.activateRadar method.
@@ -616,7 +624,7 @@ integration.stopActivateRadarTirIndirect = function ( area )
     end
 end
 
---- Returns true if the given agent has a radar with the given radar type, false otherwise.
+--- Returns true if the given agent has a radar of the given radar type, false otherwise.
 -- @param agent Directia agent
 -- @param typeRadar Integer, the type of radar among one of the following : 
 -- <ul> <li> eRadarType_Radar (radar) </li>
@@ -647,14 +655,14 @@ integration.deactivateRecording = function()
     DEC_Perception_DesactiverModeEnregistrement()
 end
 
---- Activates this entity's sensors.
+--- Activates this entity's sensors (but not its special sensors).
 -- @see integration.deactivateSensors
 -- This method can only be called by an agent.
 integration.activateSensors = function()
     DEC_Perception_ActiverSenseurs()
 end
 
---- Deactivates this entity's sensors.
+--- Deactivates this entity's sensors (but not its special sensors).
 -- @see integration.activateSensors
 -- This method can only be called by an agent.
 integration.deactivateSensors = function()
@@ -662,37 +670,21 @@ integration.deactivateSensors = function()
 end
 
 --- Increases the production of the given resource node with the provided quantity.
--- @see integration.increaseResourceNodeProduction
 -- @param resourceNode Resource node knowledge
 -- @param quantity Integer, the quantity
 -- @return Boolean, true
-integration.increaseNodeProduction = function( resourceNode, quantity )
-    integration.increaseResourceNodeProduction( resourceNode, quantity )
-    return true
-end
-
---- Increases the production of the given resource node with the provided quantity.
--- @param resourceNode Resource node knowledge
--- @param quantity Integer, the quantity
 integration.increaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceAugmenteProduction( resourceNode.source, quantity )
-end
-
---- Decreases the production of the given resource node with the provided quantity.
--- @see integration.decreaseResourceNodeProduction
--- @param resourceNode Resource node knowledge
--- @param quantity Integer, the quantity
--- @return Boolean, true
-integration.decreaseNodeProduction = function( resourceNode, quantity )
-    integration.decreaseResourceNodeProduction( resourceNode, quantity )
     return true
 end
 
 --- Decreases the production of the given resource node with the provided quantity.
 -- @param resourceNode Resource node knowledge
 -- @param quantity Integer, the quantity
+-- @return Boolean, true
 integration.decreaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceBaisseProduction( resourceNode.source, quantity )
+    return true
 end
 
 --- Enables the given resource node.
@@ -744,7 +736,7 @@ integration.selfDecontaminate = function()
     return true
 end
 
---- Sets the flying height of this entity at the given height.
+--- Sets the flying height of this entity to the given height.
 -- This method can only be called by an agent.
 -- @param height Float, the new flying height (in meters)
 integration.changeHeight = function( height )
@@ -864,6 +856,7 @@ integration.getMaxSpeed = function( agent )
 end
 
 --- Returns the direction this entity is facing.
+-- This method can only be called by an agent.
 -- @return Simulation direction
 integration.getAgentDirection = function()
     return DEC_Agent_Direction()
@@ -871,7 +864,7 @@ end
 
 --- Returns the list of all agents in the same company
 --- as this entity except the HQ.
--- This method can be called by an agent.
+-- This method can only be called by an agent.
 -- @return List of simulation agents
 integration.getAgentsWithoutHQ = function()
     return DEC_Pion_PionsSansPC()
@@ -956,7 +949,7 @@ integration.deactivateSpecialSensorForCBRN = function ()
     DEC_Perception_DesactiverSenseursSurDecision()
 end
 
---- Returns true if a toxic plum is detected by this entity, false otherwise.
+--- Returns true if a toxic plume is detected by this entity, false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isToxicPlumeDetected = function()
@@ -993,3 +986,37 @@ end
 integration.getModulationMaxSpeed = function( agent )
     return DEC_GetModulationVitesseMax( agent )
 end
+
+--- Deprecated, use integration.undeploy instead
+integration.stopActivateDrone = function( self, alreadyUnDeployed )
+    if not alreadyUnDeployed then
+        DEC_Agent_Undeploye()
+    end
+end
+
+--- Deprecated, use integration.LendAmbulances instead
+--- Makes the given supporting unit lend ambulances to the given supported unit.
+-- @see integration.StartGetVSRAM
+-- @param supportingUnit Directia agent, the agent lending ambulances
+-- @param supportedUnit Directia agent, the agent to lend ambulances to.
+-- @param nbrAmbulances Integer, the number of ambulances to lend.
+-- This method can only be called by an agent.
+integration.StartLendVSRAM = function ( supportingUnit, supportedUnit, nbrAmbulances )
+    integration.LendAmbulances( supportingUnit.source, supportedUnit.source, nbrAmbulances )
+end
+
+--- Deprecated, use integration.GetBackAmbulances instead
+--- Makes the given supported unit give back the ambulances previously lent to it by this entity.
+-- @see integration.StartLendVSRAM
+-- @param supportedUnit Directia agent, the agent giving back the ambulances.
+-- @param nbrAmbulances Integer, the number of ambulances to retrieve.
+-- This method can only be called by an agent.
+integration.StartGetVSRAM = function ( supportedUnit, nbrAmbulances )
+    integration.LendAmbulances( supportedUnit.source, nbrAmbulances )
+end
+
+--- Deprecated
+integration.increaseNodeProduction = integration.increaseResourceNodeProduction
+
+--- Deprecated
+integration.decreaseNodeProduction = integration.decreaseResourceNodeProduction

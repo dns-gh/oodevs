@@ -42,7 +42,7 @@ integration.removeFromLoadedUnits = function( unit )
     end
 end
 
---- Removes the given units to the table of units currently loaded by this entity.
+--- Removes the given units from the table of units currently loaded by this entity.
 -- @param units Table of directia agents or agent knowledges
 integration.removeListFromLoadedUnits = function( units )
     if myself.loadedUnits then

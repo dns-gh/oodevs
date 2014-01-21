@@ -161,21 +161,21 @@ integration.enforceAviationResourcesFromRange = function( range )
     DEC_EnforceAviationResources( myself, range )
 end
 
---- Starts the sorting of wounded units.
+--- Enables the sorting of wounded units.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.desactivateInjuredSorting
 integration.activateInjuredSorting = function()
     DEC_Sante_ActiverFonctionTri()
 end
 
---- Stops the sorting of wounded units.
+--- Disables the sorting of wounded units.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.activateInjuredSorting
 integration.desactivateInjuredSorting = function()
     DEC_Sante_DesactiverFonctionTri()
 end
 
---- Enables the logistics system (the medical chain and the supply chain).
+--- Enables the logistics system (medical, supply and maintenance chains).
 -- Returns true if the caller of this method is of a logistic type, false otherwise.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.desactivateLogisticChains
@@ -192,7 +192,7 @@ integration.activateLogisticChains = function()
     end
 end
 
---- Disables the logistics system (the medical chain and the supply chain).
+--- Disables the logistics system (medical, supply and maintenance chains).
 -- Returns true if the caller of this method is of a logistic type, false otherwise.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.activateLogisticChains
