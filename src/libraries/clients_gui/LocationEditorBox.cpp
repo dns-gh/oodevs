@@ -66,7 +66,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
     auto box = new QWidget();
     auto coordLayout = new QHBoxLayout( box );
     fields_.resize( 3 );
-    for( int i = 0; i < fields_.size(); ++i )
+    for( int i = 0; i < static_cast< int >( fields_.size() ); ++i )
     {
         auto& it = fields_[i];
         it.label = new QLabel();
@@ -137,9 +137,9 @@ void LocationEditorBox::UpdateParamZone()
     const auto& labels = current_->GetDescriptor().labels;
     for( auto it = fields_.begin(); it < fields_.end(); ++it )
     {
-        const size_t i = std::distance( fields_.begin(), it );
+        const int i = static_cast< int >( std::distance( fields_.begin(), it ) );
         it->edit->clear();
-        const QString label = i < labels.size() ? labels[static_cast< int >( i )] : QString();
+        const QString label = i < labels.size() ? labels[ i ] : QString();
         it->label->setVisible( !label.isEmpty() );
         it->label->setText( label );
         it->edit->setVisible( i < labels.size() );
@@ -189,8 +189,8 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
     subMenu_->hide();
     QStringList content;
     const auto& labels = current_->GetDescriptor().labels;
-    for( size_t i = 0; i < labels.size(); ++i )
-        if( i < fields_.size() )
+    for( int i = 0; i < labels.size(); ++i )
+        if( i < static_cast< int >( fields_.size() ) )
             content << fields_[i].edit->text();
     QStringList hint;
     const bool valid = current_->Parse( content, result, hint );
@@ -262,7 +262,7 @@ QValidator::State LocationEditorBox::Complete( QString& input, int idx, Field& f
         const QString right = input.mid( maxSize );
         const QString prev = input;
         input = input.left( maxSize );
-        if( idx + 1 < fields_.size() )
+        if( idx + 1 < static_cast< int >( fields_.size() ) )
         {
             auto* edit = fields_[ idx+1 ].edit;
             if( !right.isEmpty() )
