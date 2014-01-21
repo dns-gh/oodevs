@@ -28,8 +28,7 @@ func replayAndWaitModel(c *C, simOpts *simu.SimOpts, clientOpts *ClientOpts) (
 // Make a short replay session and return simulation options.
 func makeSimpleReplay(c *C) (*simu.SimOpts, *swapi.Formation) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
-	defer client.Close()
+	defer stopSimAndClient(c, sim, client)
 
 	// Create new formation and wait a bit
 	party := getSomeParty(c, client.Model.GetData())
@@ -107,8 +106,7 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	cfg := NewAdminOpts(ExCrossroadSmallEmpty)
 	cfg.Paused = true
 	sim, client := connectAndWaitModel(c, cfg)
-	defer sim.Stop()
-	defer client.Close()
+	defer stopSimAndClient(c, sim, client)
 	dumps := []ModelDump{}
 	skip := func(n int32) {
 		tick := client.Model.GetTick()

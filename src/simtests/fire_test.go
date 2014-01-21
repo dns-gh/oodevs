@@ -23,7 +23,7 @@ const (
 
 func (s *TestSuite) TestFireOrderOnLocationMakesSmoke(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	point := swapi.Point{X: -15.8241, Y: 28.3241}
 
 	getEffectEllipse := func() (float64, float64) {

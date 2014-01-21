@@ -15,7 +15,7 @@ import (
 
 func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
 	to := swapi.Point{X: -15.8193, Y: 28.3456}

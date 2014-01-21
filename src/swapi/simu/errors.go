@@ -48,6 +48,9 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile("(" +
 	`|<Dispatcher> <functERR> exception caught: Not connected to` +
 	// Schema validation is a joke.
 	`|string_input.*attribute.*is not declared for element` +
+	`|string_input.*missing elements in content model` +
+	// Invalid coordinates may be a problem but not a functERR
+	`|Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range` +
 	")")
 
 // Reads fp and possibly returns a concatenation of all <functERR> lines, or an

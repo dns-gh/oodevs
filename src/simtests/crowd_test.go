@@ -38,7 +38,7 @@ func CreateCrowd(c *C, client *swapi.Client) *swapi.Crowd {
 
 func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	healthy, wounded, dead := int32(10), int32(11), int32(12)
 
 	crowd := CreateCrowd(c, client)
@@ -64,7 +64,7 @@ func (s *TestSuite) TestCrowdTotalDestruction(c *C) {
 
 func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	crowd := CreateCrowd(c, client)
 
@@ -95,7 +95,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	crowd := CreateCrowd(c, client)
 
@@ -118,7 +118,7 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 
 func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	healthy, wounded, contaminated, dead := int32(10), int32(11), int32(0), int32(12)
 
 	crowd := CreateCrowd(c, client)
@@ -149,7 +149,7 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 
 func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 
 	// By default, adhesions are empty
@@ -195,7 +195,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 
 func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 	tasker := swapi.MakeCrowdTasker(crowd.Id)
 
@@ -238,6 +238,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallOrbat)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
 	step := func(n int32) {
 		tick := client.Model.GetTick()
 		if tick == 0 {
@@ -247,7 +248,6 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 		c.Assert(err, IsNil)
 		client.Model.WaitUntilTick(tick + n)
 	}
-	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 	step(1)
 	// Initial crowd has a concentration
@@ -290,7 +290,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 
 func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 
 	// By default, adhesions are empty.
@@ -345,7 +345,7 @@ const (
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	crowd := CreateCrowd(c, client)
 
 	// Wait crowd update
@@ -423,7 +423,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	// This crowd is blocked by this checkpoint until the crowd destroy police units.
 	// Then the crowd continue its road until its objective.
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	// Create agressive crowd
 	party := client.Model.GetData().FindPartyByName("another-party")
 	c.Assert(party, NotNil)

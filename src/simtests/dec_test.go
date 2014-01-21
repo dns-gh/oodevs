@@ -30,7 +30,7 @@ func getRandomUnit(c *C, client *swapi.Client) *swapi.Unit {
 
 func (s *TestSuite) TestExecScript(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	unit := getRandomUnit(c, client)
 
 	function := "TestFunc"
@@ -108,7 +108,7 @@ func diffScript(c *C, client *swapi.Client, script string, keys map[string]inter
 
 func (s *TestSuite) TestGenericLuaErrors(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// Floating point division by zero used to trigger exceptions in the sim
 	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, nil, "(?i).*inf.*", "")
@@ -123,7 +123,7 @@ end
 
 func (s *TestSuite) TestDecUnit(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	unit := CreateUnit(c, client, automat.Id)
 
@@ -221,7 +221,7 @@ func (s *TestSuite) TestLoadLuaScripts(c *C) {
 
 func (s *TestSuite) TestDecGeometry(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	runScript := func(name string) {
 		script, err := loadLuaScript(name)
 		c.Assert(err, IsNil)

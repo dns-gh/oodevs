@@ -55,7 +55,7 @@ func checkSpeed(c *C, client *swapi.Client, from, to swapi.Point, expectedSpeed 
 
 func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExGradXYTestEmpty))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	lngFrom, lngTo := -15.9384, -15.7028
 	checkSlopeSpeed := func(lat float64, expectedSpeed int32, upward bool) {
@@ -87,7 +87,7 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExLandOfStripesEmpty))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// 10km/h forest
 	lngForest, latForest := -15.732, 28.4374
