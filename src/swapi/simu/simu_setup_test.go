@@ -19,7 +19,7 @@ func stopSim(c *C, sim *SimProcess) {
 		return
 	}
 	session := sim.Opts.GetSessionDir()
-	err := CheckSessionErrors(session)
+	err := CheckSessionErrors(session, nil)
 	if err != nil {
 		c.Fatalf("errors found in session %s:\n%s", session, err)
 	}

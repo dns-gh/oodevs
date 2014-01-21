@@ -279,11 +279,11 @@ func (s *TestSuite) TestTriggerError(c *C) {
 
 		// There is at least one functErr, the crash one
 		fp.Seek(0, 0)
-		errors, err := simu.FindLoggedFatalErrors(fp)
+		errors, err := simu.FindLoggedFatalErrors(fp, &simu.SessionErrorsOpts{})
 		c.Assert(err, IsNil)
 		c.Assert(len(errors), Greater, 0)
 
-		err = simu.CheckSessionErrors(opts.GetSessionDir())
+		err = simu.CheckSessionErrors(opts.GetSessionDir(), nil)
 		c.Assert(err, NotNil)
 	}
 

@@ -87,7 +87,7 @@ func (s *TestSuite) TestSuccess(c *C) {
 	sim.Wait(60 * time.Second)
 	c.Assert(sim.Success(), Equals, true)
 
-	err = CheckSessionErrors(opts.GetSessionDir())
+	err = CheckSessionErrors(opts.GetSessionDir(), nil)
 	c.Assert(err, IsNil)
 }
 

@@ -22,8 +22,15 @@ import (
 )
 
 func (s *TestSuite) TestCheckpointMessages(c *C) {
+	errOpts := simu.SessionErrorsOpts{
+		IgnorePatterns: []string{
+			// One test explicitely triggers a checkpoint error
+			"Can't save checkpoint",
+		},
+	}
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSim(c, sim, &errOpts)
+	defer client.Close()
 
 	check := func(input, errmsg string) {
 		boundaries := []string{}
@@ -95,7 +102,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 
 func (s *TestSuite) TestCheckpointSendState(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	check := func(sendState bool) {
 		boundaries := ""
@@ -237,7 +244,7 @@ func checkpointAndCompare(c *C, sim *simu.SimProcess, client *swapi.Client, stop
 	valid := false
 	defer func() {
 		if !valid || stop {
-			sim.Stop()
+			stopSimAndClient(c, sim, client)
 		}
 	}()
 	after := client.Model.GetData()
@@ -259,7 +266,7 @@ func checkpointCompareAndStop(c *C, sim *simu.SimProcess, client *swapi.Client) 
 // There will be other tests to check the checkpoint content.
 func (s *TestSuite) TestCheckpointRestart(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
 	CreateFormation(c, client, party.Id)
@@ -269,14 +276,14 @@ func (s *TestSuite) TestCheckpointRestart(c *C) {
 	c.Assert(err, IsNil)
 
 	sim, client, _ = checkpointAndRestart(c, sim, client)
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	unit2 := client.Model.GetUnit(unit.Id)
 	c.Assert(unit2, NotNil)
 }
 
 func (s *TestSuite) TestCheckpointCrowd(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
 
@@ -294,7 +301,7 @@ func (s *TestSuite) TestCheckpointCrowd(c *C) {
 
 func (s *TestSuite) TestCheckpointUnit(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	party := client.Model.GetData().FindPartyByName("party1")
 	c.Assert(party, NotNil)
 	CreateFormation(c, client, party.Id)
@@ -320,7 +327,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, opts)
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// Find the supply base
 	model := client.Model.GetData()
