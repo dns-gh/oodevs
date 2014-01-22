@@ -56,6 +56,7 @@ BOOST_FIXTURE_TEST_CASE( Formation_CanBeCreated, Fixture )
     message.set_app6symbol( "sfgpu----------" );
     message.set_symbol( "sfgpu----------" );
     message.set_logistic_level( sword::none );
+    message.set_log_maintenance_manual( false );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // creation
@@ -88,6 +89,7 @@ BOOST_FIXTURE_TEST_CASE( Formation_CanBeCreated_WithExtensions, Fixture )
     message.set_app6symbol( "sfgpu----------" );
     message.set_symbol( "sfgpu----------" );
     message.set_logistic_level( sword::none );
+    message.set_log_maintenance_manual( false );
     sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
     entry->set_name( "extension" );
     entry->set_value( "value" );
