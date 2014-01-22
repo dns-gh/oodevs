@@ -62,7 +62,7 @@ integration.getTypeUrbanBlock = function( urbanBlock )
 end
 
 --- Start to build an object knowledge
--- @param object Object knowledge
+-- @param object Planned work knowledge
 -- @param objectType String, the type of the object
 -- See ObjectNames.xml and Objects.xml in physical database
 integration.startBuildIt = function( object, objectType )
@@ -233,7 +233,7 @@ end
 
 --- Start building object
 -- A report is sent when work is beginning
--- @param object Object knowledge to build
+-- @param object Planned work knowledge to build
 -- @param objectType String, the type of the object 
 -- See ObjectNames.xml and Objects.xml in physical database for the types
 integration.startBuildItSecu = function( object, objectType )
@@ -348,8 +348,8 @@ integration.getBarycentreZone = function( localisation )
     return integration.getBarycentreZoneFromLocalisation( localisationObject )
 end
 
---- Return the barycenter of an area
--- @param localisation Simulation area
+--- Return the barycenter of a location
+-- @param localisation Simulation location
 -- @return Simulation point
 integration.getBarycentreZoneFromLocalisation = function( localisation )
     local _returnValue = nil
@@ -434,8 +434,9 @@ integration.disarmCrowd = function( crowd, nbrToDisarmPerTick ) -- Called at eac
 end
 
 --- Instantaneously destroy a checkpoint
--- First the checkpoint operating is stopped. Then the checkpoint is removed 
+-- First the checkpoint operating is stopped
 -- A report is sent when agent has stopped to operate the checkpoint
+-- Then the checkpoint is removed if no unit operates the checkpoint
 -- @param position Point knowledge
 integration.destroyInstantlyCheckpointOn = function( position )
     meKnowledge.checkPointForFilterCrowd = nil
@@ -512,8 +513,11 @@ integration.destroyInstantlyObjectOn = function( typeObject, position )
     end
 end
 
---- Decontaminate plot posture integration
--- Build a decontamination plot if it doesn't exist yet
+--- Allows the agent to decontaminate other agents equipments
+-- Build a decontamination site if it doesn't exist yet
+-- The agents will be decontaminate when they will reach the site if they received...
+-- A decontamination mission (e.g. get decontaminated) with this decontamination site as parameter
+-- The time to decontaminate depends of physical database
 -- @param position Point knowledge
 integration.buildInstantlyDecontaminatePlotOn = function( position )  -- Called only once
     if not position.constructedObject then
@@ -528,7 +532,7 @@ integration.buildInstantlyDecontaminatePlotOn = function( position )  -- Called 
 end
 
 --- Allows the unit to operate a decontamination site
--- A report is sent
+-- A decontamination site must be operated by an agent to be effective. A report is sent when site os operated
 -- @param position Point knowledge
 integration.animateDecontaminatePlot = function( position ) -- Called at each tick
     local DecontaminatePlot = nil
@@ -545,7 +549,9 @@ integration.animateDecontaminatePlot = function( position ) -- Called at each ti
 end
 
 --- Remove instantaneously a decontamination site
--- A report is sent if the decontamination site is operated
+-- First the deconstamination site operating is stopped
+-- A report is sent when agent has stopped to operate the decontamination plot
+-- Then the site is removed if no unit operates it
 -- @param position Point knowledge
 integration.destroyInstantlyDecontaminatePlotOn = function( position )
     if position.constructedObject  then 
@@ -562,9 +568,11 @@ integration.destroyInstantlyDecontaminatePlotOn = function( position )
     end
 end
 
--- Improve mobility area
--- Build an object to improve mobility (e.g. mobility enhanced area)
+--- Build an object which only requires a location in order to be built, such as a mobility enhanced area
 -- A report is sent when the work is beginning
+-- Starts the work
+-- @see integration.updateAffectMobility
+-- @see integration.stopAffectMobility
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @param affectionType, string the type of the object, see Types.lua for the types list
 -- @return false
@@ -578,7 +586,10 @@ integration.startAffectMobility = function( target, affectionType )
     return false
 end
 
---- Continue to improve mobility area
+--- Continue to build an object
+-- Only works for objects constructed with integration.startAffectMobility
+-- @see integration.startAffectMobility
+-- @see integration.stopAffectMobility
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @return Boolean true if the object is built, false otherwise
 integration.updateAffectMobility = function( target )
@@ -586,8 +597,11 @@ integration.updateAffectMobility = function( target )
     return target[myself].actionBuildState == eActionObjetTerminee
 end
 
---- Stop to improve mobility area
--- A report is sent
+--- Stop to build an object
+-- A report is sent when the work is stopped
+-- Only works for objects constructed with integration.startAffectMobility
+-- @see integration.startAffectMobility
+-- @see integration.updateAffectMobility
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 -- @return true 
 integration.stopAffectMobility = function( target )
@@ -598,8 +612,9 @@ integration.stopAffectMobility = function( target )
     return true
 end
 
---- Remove mobility object instantanneously
+--- Remove object instantanneously
 -- Only works for objects constructed with integration.starAffectMobility
+-- @see integration.startAffectMobility
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 integration.unAffectMobility = function( target )
     target[myself] = target[myself] or {}
@@ -632,8 +647,8 @@ integration.updateEquipBridge = function( site, typePont )
     return site[myself].actionBuildState == eActionObjetTerminee
 end
 
---- Stop to equip a crossing site, the construction of the bridge in the crossing site is over 
--- Two reports are sent to inform that the work is finished and the beginning of the operation of the crossing site
+--- Stop equipping a crossing site, the construction of the bridge in the crossing site is stopped 
+-- Two reports are sent to inform that the work is stopped and the beginning of the operation of the crossing site
 -- @param site Object knowledge
 -- @param typePont String, the type of the bridge (e.g. discontinuous or continuous pontoon bridge)
 -- @return true
