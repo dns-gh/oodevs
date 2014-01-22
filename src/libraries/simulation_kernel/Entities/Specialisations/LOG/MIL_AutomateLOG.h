@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Specialisations/Log/MIL_AutomateLOG.h $
-// $Author: Jvt $
-// $Modtime: 14/04/05 11:33 $
-// $Revision: 12 $
-// $Workfile: MIL_AutomateLOG.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -71,8 +69,8 @@ class MIL_AutomateLOG : public PHY_Actor
                       , public logistic::FuneralHandler_ABC
 {
 public:
-             MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level);
-             MIL_AutomateLOG( MIL_Automate&  automat, const PHY_LogisticLevel& level);
+             MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level );
+             MIL_AutomateLOG( MIL_Automate&  automat, const PHY_LogisticLevel& level );
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints
@@ -105,6 +103,8 @@ public:
     PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport   ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     bool                            MaintenanceHandleComposanteForTransport   ( PHY_MaintenanceComposanteState& composanteState );
     bool                            MaintenanceHandleComposanteForRepair      ( PHY_MaintenanceComposanteState& composanteState );
+    bool                            IsMaintenanceManual() const;
+    void                            OnReceiveLogMaintenanceSetManual          ( const sword::MissionParameters& parameters );
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( PHY_MaintenanceComposanteState& composanteState );
@@ -172,9 +172,21 @@ public:
 
     //! @name Network
     //@{
-    void SendFullState   () const;
-    void SendChangedState() const;
-
+    template< typename Message >
+    bool SendChangedState( Message& message ) const
+    {
+        if( !manualHasChanged_ )
+            return false;
+        message().set_log_maintenance_manual( maintenanceManual_ );
+        SendChangedState();
+        return true;
+    }
+    template< typename Message >
+    void SendFullState( Message& message ) const
+    {
+        message().set_log_maintenance_manual( maintenanceManual_ );
+        SendFullState();
+    }
     virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
     virtual void Serialize( sword::ParentEntity& message ) const;
     //@}
@@ -189,9 +201,11 @@ private:
     typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > > T_SupplyRequests;
     //@}
 
-private:
+public:
     //! @name Tools
     //@{
+    void SendFullState   () const;
+    void SendChangedState() const;
     template< typename T > void Visit( T& visitor ) const;
     //@}
 
@@ -206,6 +220,9 @@ private:
     T_SupplyConsigns supplyConsigns_;
     T_SupplyRequests supplyRequests_; // Pushed flows
     std::vector< logistic::SupplyConvoysObserver_ABC* > supplyConvoysObserver_;
+
+    bool maintenanceManual_;
+    bool manualHasChanged_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

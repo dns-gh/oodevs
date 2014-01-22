@@ -19,7 +19,6 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include "protocol/MessageParameters.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
@@ -47,8 +46,6 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
     , pColor_              ( new MIL_Color( xis ) )
     , symbol_              ( xis.attribute< std::string >( "symbol", "" ) )
-    , logMaintenanceManual_( false )
-    , manualHasChanged_    ( false )
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
@@ -82,8 +79,6 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     , pParent_             ( parent )
     , pLevel_              ( 0 )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , logMaintenanceManual_( false )
-    , manualHasChanged_    ( false )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -122,8 +117,6 @@ MIL_Formation::MIL_Formation( const std::string& name )
     , pLevel_              ( 0 )
     , pExtensions_         ( 0 )
     , pColor_              ( 0 )
-    , logMaintenanceManual_( false )
-    , manualHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -202,8 +195,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pExtensions
          >> pColor
          >> symbol_
-         >> pBrainLogistic_
-         >> logMaintenanceManual_;
+         >> pBrainLogistic_;
     pExtensions_.reset( pExtensions );
     pColor_.reset( pColor );
     if( pBrainLogistic_.get() )
@@ -232,8 +224,7 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << pExtensions
          << pColor
          << symbol_
-         << pBrainLogistic_
-         << logMaintenanceManual_;
+         << pBrainLogistic_;
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +278,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
-    message().set_log_maintenance_manual( logMaintenanceManual_ );
+    message().set_log_maintenance_manual( pBrainLogistic_.get() ? pBrainLogistic_->IsMaintenanceManual() : false );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
@@ -307,10 +298,9 @@ void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
     message().mutable_formation()->set_id( GetID() );
     if( !pExtensions_->IsEmpty() )
         pExtensions_->SendFullState( message );
-    message().set_log_maintenance_manual( logMaintenanceManual_ );
-    message.Send( NET_Publisher_ABC::Publisher() );
     if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendFullState();
+        pBrainLogistic_->SendFullState( message );
+    message.Send( NET_Publisher_ABC::Publisher() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1, context ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1, context ) );
 }
@@ -331,7 +321,7 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
             throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode,
                                      sword::UnitActionAck::error_invalid_unit,
                                      "formation doesn't have a logistic automat" );
-        OnReceiveLogMaintenanceSetManual( msg.parameters() );
+        pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
         break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
@@ -430,14 +420,14 @@ namespace
     template< typename T >
     struct VisitorApplyer
     {
-        VisitorApplyer( T& visitor)
+        VisitorApplyer( T& visitor )
             : visitor_( &visitor )
         {}
-        void operator()(const MIL_Formation& f) const
+        void operator()( const MIL_Formation& f ) const
         {
             f.Apply( *visitor_ );
         }
-        void operator()(const MIL_Automate& f) const
+        void operator()( const MIL_Automate& f ) const
         {
             f.Apply( *visitor_ );
         }
@@ -476,15 +466,14 @@ void MIL_Formation::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void MIL_Formation::UpdateNetwork()
 {
-   if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendChangedState();
+    bool mustSend = pExtensions_->HasChanged();
     client::FormationUpdate message;
     message().mutable_formation()->set_id( GetID() );
-    if( pExtensions_->HasChanged() )
+    if( mustSend )
         pExtensions_->UpdateNetwork( message );
-    if( manualHasChanged_ )
-        message().set_log_maintenance_manual( logMaintenanceManual_ );
-    if( pExtensions_->HasChanged() || manualHasChanged_ )
+    if( pBrainLogistic_.get() )
+        mustSend |= pBrainLogistic_->SendChangedState( message );
+    if( mustSend )
          message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -496,7 +485,6 @@ void MIL_Formation::Clean()
 {
     if( pBrainLogistic_.get() )
         pBrainLogistic_->Clean();
-    manualHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -545,15 +533,4 @@ void MIL_Formation::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, 
         pParent_ = 0;
         pArmy_->RegisterFormation( *this );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::OnReceiveLogMaintenanceSetManual
-// Created: SLI 2014-01-21
-// -----------------------------------------------------------------------------
-void MIL_Formation::OnReceiveLogMaintenanceSetManual( const sword::MissionParameters& parameters )
-{
-    protocol::CheckCount( parameters, 1 );
-    logMaintenanceManual_ = protocol::GetBool( parameters, 0 );
-    manualHasChanged_ = true;
 }
