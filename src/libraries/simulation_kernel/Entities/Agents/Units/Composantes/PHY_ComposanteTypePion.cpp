@@ -649,7 +649,7 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
     bool bHasCapability = false;
     const std::string strWounds = xis.attribute< std::string >( attributeName, "" );
     std::vector< std::string > wounds;
-    boost::split( wounds, strWounds, boost::is_any_of( "," ) );
+    boost::split( wounds, strWounds, boost::is_any_of( ", " ) );
     BOOST_FOREACH( const std::string& wound, wounds )
     {
         if( const PHY_HumanWound* pWound = PHY_HumanWound::Find( wound ) )
@@ -850,12 +850,12 @@ double PHY_ComposanteTypePion::GetConstructionSpeed( const TerrainData& data ) c
 namespace
 {
     template< typename Objects >
-    bool CanDoIt( const Objects& objectData, const MIL_ObjectType_ABC& object, boost::function< bool( const PHY_ComposanteTypeObjectData& ) > f )
+    bool CanDoIt( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< bool( const PHY_ComposanteTypeObjectData& ) > f )
     {
-        if( objectData.size() <= object.GetID() )
+        if( objectType.GetID() > objects.size() )
             return false;
-        auto pObjectData = objectData[ object.GetID() ];
-        return pObjectData && f( *pObjectData );
+        auto objectData = objects[ objectType.GetID() ];
+        return objectData && f( *objectData );
     }
 }
 
@@ -865,7 +865,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanConstruct, _1 ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanConstruct(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -874,7 +874,7 @@ bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) co
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanDestroy, _1 ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanDestroy(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -883,7 +883,7 @@ bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) cons
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanMine, _1 ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanMine(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -892,7 +892,7 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanExtinguish, _1 ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanExtinguish(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -901,7 +901,7 @@ bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) c
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanDemine, _1 ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanDemine(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -910,7 +910,7 @@ bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool bObjectIsMined ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanBypass, _1, bObjectIsMined ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanBypass( bObjectIsMined ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -919,19 +919,19 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object, bool isObjectMined ) const
 {
-    return CanDoIt( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::CanRemoveFromPath, _1, isObjectMined ) );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanRemoveFromPath( isObjectMined ); } );
 }
 
 namespace
 {
     template< typename Objects >
-    double GetTime( const Objects& objectData, const MIL_ObjectType_ABC& object, boost::function< double( const PHY_ComposanteTypeObjectData& ) > f )
+    double GetTime( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< double( const PHY_ComposanteTypeObjectData& ) > f )
     {
-        if( objectData.size() <= object.GetID() )
+        if( objectType.GetID() > objects.size() )
             return std::numeric_limits< double >::max();
-        const auto pObjectData = objectData[ object.GetID() ];
-        if( pObjectData )
-            return f( *pObjectData );
+        const auto objectData = objects[ objectType.GetID() ];
+        if( objectData )
+            return f( *objectData );
         return std::numeric_limits< double >::max();
     }
 }
@@ -942,7 +942,7 @@ namespace
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetConstructionTime, _1, rSizeCoef ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetConstructionTime( rSizeCoef ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -951,7 +951,7 @@ double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& ob
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetDestructionTime, _1, rSizeCoef ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetDestructionTime( rSizeCoef ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -960,7 +960,7 @@ double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& obj
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetMiningTime, _1 ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetMiningTime(); } );
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetDeminingTime
@@ -968,7 +968,7 @@ double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object )
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetDeminingTime, _1 ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetDeminingTime(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -977,7 +977,7 @@ double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& object ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetExtinguishingTime, _1 ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetExtinguishingTime(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -986,7 +986,7 @@ double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& o
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, double rSizeCoef, bool bObjectIsMined ) const
 {
-    return GetTime( objectData_, object, boost::bind( &PHY_ComposanteTypeObjectData::GetBypassTime, _1, rSizeCoef, bObjectIsMined ) );
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetBypassTime( rSizeCoef, bObjectIsMined ); } );
 }
 
 // -----------------------------------------------------------------------------

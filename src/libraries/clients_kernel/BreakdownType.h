@@ -45,10 +45,10 @@ public:
 private:
     //! @name Member data
     //@{
-    E_BreakdownNTI category_;
-    E_BreakdownType type_;
-    unsigned long id_;
-    std::string name_;
+    const E_BreakdownNTI category_;
+    const E_BreakdownType type_;
+    const unsigned long id_;
+    const std::string name_;
     //@}
 };
 

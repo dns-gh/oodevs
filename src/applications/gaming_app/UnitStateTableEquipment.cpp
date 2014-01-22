@@ -93,7 +93,7 @@ std::vector< unsigned int > UnitStateTableEquipment::BreakdownIDToComboIndex( co
     for( unsigned int i = 0; i < breakdownIDs.size(); ++i )
     {
         const kernel::BreakdownType& type = staticModel_.objectTypes_.Resolver2< kernel::BreakdownType >::Get( breakdownIDs[ i ] );
-        const int index = breakdowns.findIndex( type.GetName().c_str() );
+        const int index = breakdowns.findIndex( QString::fromStdString( type.GetName() ) );
         assert( index != -1 );
         result.push_back( static_cast< unsigned int >( index ) );
     }
@@ -139,7 +139,7 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const /
     while( itEquip.HasMoreElements() )
     {
         const Equipment& equipment = itEquip.NextElement();
-        const QString name = equipment.type_.GetName().c_str();
+        const QString name = QString::fromStdString( equipment.type_.GetName() );
         int row = 0;
         for( ; row < dataModel_.rowCount(); ++row )
             if( GetDisplayData( row, eName ) == name )
@@ -172,18 +172,19 @@ namespace
             if( alreadyAddedBreakdowns.find( name ) == alreadyAddedBreakdowns.end() )
             {
                 alreadyAddedBreakdowns.insert( name );
-                breakdownTypes << name.c_str();
+                breakdownTypes << QString::fromStdString( name );
             }
         }
         return breakdownTypes;
     }
+
     QStringList GetUnknownBreakdowns( const QStringList& breakdowns, const kernel::Resolver2< kernel::BreakdownType >& types )
     {
         QStringList result;
         for( auto it = breakdowns.begin(); it != breakdowns.end(); ++it )
         {
             const kernel::BreakdownType* type = types.Find( it->toStdString() );
-            result += !type ? *it : type->GetUnknownName().c_str();
+            result += !type ? *it : QString::fromStdString( type->GetUnknownName() );
         }
         return result;
     }

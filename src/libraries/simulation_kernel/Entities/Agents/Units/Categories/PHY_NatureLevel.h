@@ -63,7 +63,6 @@ private:
     };
 
     typedef std::map< std::string, const PHY_NatureLevel* > T_NatureLevelMap;
-    typedef T_NatureLevelMap::const_iterator              CIT_NatureLevelMap;
     //@}
 
 private:

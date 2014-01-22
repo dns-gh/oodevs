@@ -49,8 +49,8 @@ LogisticsRequestsMaintenanceWidget::~LogisticsRequestsMaintenanceWidget()
 QString LogisticsRequestsMaintenanceWidget::GetBreakdown( const LogMaintenanceConsign& consign )
 {
     if( consign.IsDiagnosed() || profile_.IsSupervision() )
-        return consign.GetBreakdown()->GetName().c_str();
-    return consign.GetBreakdown()->GetUnknownName().c_str();
+        return QString::fromStdString( consign.GetBreakdown()->GetName() );
+    return QString::fromStdString( consign.GetBreakdown()->GetUnknownName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void LogisticsRequestsMaintenanceWidget::OnRequestSelected( const LogisticsConsi
 {
     const LogMaintenanceConsign& c = static_cast< const LogMaintenanceConsign& >( consign );
     detailsTable_->Add( tools::translate( "Logistic", "Requester:" ),       GetDisplayName( c.GetConsumer() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Equipment:"),        QString( c.GetEquipment()->GetName().c_str() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Equipment:"),        QString::fromStdString( c.GetEquipment()->GetName() ) );
     detailsTable_->Add( tools::translate( "Logistic", "Breakdown:" ),       GetBreakdown( c ) );
     detailsTable_->Add( tools::translate( "Logistic", "Request date:" ),    c.GetCreationTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Handler:" ),         GetDisplayName( c.GetHandler() ) );

@@ -73,7 +73,7 @@ PHY_NatureLevel::~PHY_NatureLevel()
 // -----------------------------------------------------------------------------
 const PHY_NatureLevel* PHY_NatureLevel::Find( const std::string& strName )
 {
-    CIT_NatureLevelMap it = natureLevels_.find( strName );
+    auto it = natureLevels_.find( strName );
     return it == natureLevels_.end() ? 0 : it->second;
 }
 

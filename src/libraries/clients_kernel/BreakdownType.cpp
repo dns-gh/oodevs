@@ -21,12 +21,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 BreakdownType::BreakdownType( xml::xistream& xis, const std::string& category )
     : category_( ENT_Tr::ConvertToBreakdownNTI( category ) )
+    , type_    ( ENT_Tr::ConvertToBreakdownType( xis.attribute< std::string >( "type" ) ) )
+    , id_      ( xis.attribute< unsigned long >( "id" ) )
+    , name_    ( xis.attribute< std::string >( "name" ) )
 {
-    std::string type;
-    xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "id", id_ )
-        >> xml::attribute( "type", type );
-    type_ = ENT_Tr::ConvertToBreakdownType( type );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
