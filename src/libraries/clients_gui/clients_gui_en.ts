@@ -1199,24 +1199,24 @@ Please check access permissions or write protection.</translation>
 <context>
     <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location: </source>
-        <translation>Location: </translation>
+        <source>Location</source>
+        <translation>Location</translation>
     </message>
     <message>
-        <source>lat: </source>
-        <translation>lat: </translation>
+        <source>Lat</source>
+        <translation>Lat</translation>
     </message>
     <message>
-        <source>long: </source>
-        <translation>long: </translation>
+        <source>Long</source>
+        <translation>Long</translation>
     </message>
     <message>
-        <source>y: </source>
-        <translation>y: </translation>
+        <source>Y</source>
+        <translation>Y</translation>
     </message>
     <message>
-        <source>x: </source>
-        <translation>x: </translation>
+        <source>X</source>
+        <translation>X</translation>
     </message>
 </context>
 <context>

@@ -10,8 +10,16 @@
 #ifndef __LocationParser_ABC_h_
 #define __LocationParser_ABC_h_
 
+#include <QtCore/QList>
+class QStringList;
+
 namespace gui
 {
+    struct LocationParserDescriptor
+    {
+        QStringList  labels;
+        QList< int > sizes;
+    };
 
 // =============================================================================
 /** @class  LocationParser_ABC
@@ -22,7 +30,6 @@ namespace gui
 class LocationParser_ABC
 {
 public:
-
     //! @name Constructors/Destructor
     //@{
              LocationParser_ABC() {}
@@ -31,8 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const = 0;
-    virtual int GetNumberOfParameters() const = 0;
+    virtual const LocationParserDescriptor& GetDescriptor() const = 0;
+    virtual bool  Parse( const QStringList& content, geometry::Point2f& result, QStringList& hints ) const = 0;
+    virtual QStringList Split( const QString& input ) const = 0;
     //@}
 };
 

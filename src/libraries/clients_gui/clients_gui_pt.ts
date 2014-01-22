@@ -1191,23 +1191,23 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location: </source>
+        <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>lat: </source>
+        <source>Lat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>long: </source>
+        <source>Long</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>y: </source>
+        <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>x: </source>
+        <source>X</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

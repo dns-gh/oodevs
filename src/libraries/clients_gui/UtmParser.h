@@ -44,15 +44,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
-    virtual int GetNumberOfParameters() const;
+    virtual const LocationParserDescriptor& GetDescriptor() const;
+    virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual QStringList Split( const QString& input ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    static QString Fill( QString value );
     //@}
 
 private:
