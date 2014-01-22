@@ -256,15 +256,16 @@ type Unit struct {
 }
 
 type Automat struct {
-	Id               uint32
-	PartyId          uint32
-	FormationId      uint32
-	Name             string
-	Engaged          bool
-	DebugBrain       bool
-	KnowledgeGroupId uint32
-	LogSuperiors     []uint32
-	SuperiorQuotas   map[uint32]int32
+	Id                   uint32
+	PartyId              uint32
+	FormationId          uint32
+	Name                 string
+	Engaged              bool
+	DebugBrain           bool
+	KnowledgeGroupId     uint32
+	LogSuperiors         []uint32
+	SuperiorQuotas       map[uint32]int32
+	LogMaintenanceManual bool
 }
 
 type Formation struct {

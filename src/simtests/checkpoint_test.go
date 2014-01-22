@@ -316,12 +316,22 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	checkpointCompareAndStop(c, sim, client)
 }
 
+func (s *TestSuite) TestCheckpointAutomat(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	defer sim.Stop()
+	automat := client.Model.GetData().Automats[14]
+	c.Assert(automat, NotNil)
+	err := client.LogMaintenanceSetManual(automat.Id, true)
+	c.Assert(err, IsNil)
+	checkpointCompareAndStop(c, sim, client)
+}
+
 func (s *TestSuite) TestCheckpointFormation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
 	defer sim.Stop()
 	formation := client.Model.GetData().Formations[13]
 	c.Assert(formation, NotNil)
-	err := client.LogMaintenanceSetManual(13, true)
+	err := client.LogMaintenanceSetManual(formation.Id, true)
 	c.Assert(err, IsNil)
 	checkpointCompareAndStop(c, sim, client)
 }
