@@ -190,7 +190,7 @@ func initLogisticEvents(c *C, client *swapi.Client) {
 
 func (s *TestSuite) TestLogisticPlugin(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
 
 	// Expected log lines below are the minimum subset of events which must have
@@ -225,7 +225,7 @@ func hashLogEntry(c *C, e *sword.LogHistoryEntry) string {
 
 func (s *TestSuite) TestLogisticHistory(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	initLogisticEvents(c, client)
 	// Wait for some basic activity
 	client.Model.WaitTicks(3)

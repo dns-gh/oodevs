@@ -16,7 +16,7 @@ import (
 
 func (s *TestSuite) TestControlGlobalWeather(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	model := client.Model.GetData()
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -109,7 +109,7 @@ func CheckWeather(remote, local *swapi.LocalWeather, c *C) {
 
 func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return !data.Time.IsZero()
@@ -172,7 +172,7 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 
 func (s *TestSuite) TestControlLocalWeatherDestruction(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return !data.Time.IsZero()

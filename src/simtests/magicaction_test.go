@@ -27,7 +27,7 @@ const (
 
 func (s *TestSuite) TestChangeDiplomacy(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	//check with no parameters
 	params := swapi.MakeParameters()
@@ -67,7 +67,7 @@ func (s *TestSuite) TestChangeDiplomacy(c *C) {
 
 func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	point := swapi.Point{X: -15.8241, Y: 28.3241}
 
 	// error: invalid parameters count, 3 parameters expected
@@ -121,7 +121,7 @@ func (s *TestSuite) TestFireOrderOnLocationCreation(c *C) {
 
 func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, 2 parameters expected
 	params := swapi.MakeParameters()
@@ -201,7 +201,7 @@ func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
 
 func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, parameters expected
 	params := swapi.MakeParameters()
@@ -259,6 +259,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 		defer sim.Stop()
 
 		client := connectAndWait(c, sim, "admin", "")
+		defer client.Close()
 		err = client.TriggerError(kind)
 		c.Assert(err, ErrorMatches, "connection closed")
 
@@ -279,11 +280,11 @@ func (s *TestSuite) TestTriggerError(c *C) {
 
 		// There is at least one functErr, the crash one
 		fp.Seek(0, 0)
-		errors, err := simu.FindLoggedFatalErrors(fp)
+		errors, err := simu.FindLoggedFatalErrors(fp, &simu.SessionErrorsOpts{})
 		c.Assert(err, IsNil)
 		c.Assert(len(errors), Greater, 0)
 
-		err = simu.CheckSessionErrors(opts.GetSessionDir())
+		err = simu.CheckSessionErrors(opts.GetSessionDir(), nil)
 		c.Assert(err, NotNil)
 	}
 
@@ -294,7 +295,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 
 	// The command is ignored if the simulation was not started with --test-commands
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	err := client.TriggerError("null_pointer")
 	c.Assert(err, IsNil)
 }

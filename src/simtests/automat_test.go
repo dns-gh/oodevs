@@ -16,7 +16,7 @@ import (
 
 func (s *TestSuite) TestSetAutomatMode(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	c.Assert(automat.Engaged, Equals, true)
 
@@ -38,7 +38,7 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 
 func (s *TestSuite) TestAutomatReloadBrain(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	tasker := swapi.MakeAutomatTasker(automat.Id)
 

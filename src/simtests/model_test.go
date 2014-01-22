@@ -264,7 +264,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 
 func (s *TestSuite) TestModelInitialization(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 
 	dump := printParties(&prettyPrinter{HideUnstable: true},
@@ -296,7 +296,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 
 func (s *TestSuite) TestModelIsolation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 	data := model.GetData()
 	expected := printParties(&prettyPrinter{}, data).GetOutput()

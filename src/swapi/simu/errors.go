@@ -20,6 +20,10 @@ import (
 	"strings"
 )
 
+type SessionErrorsOpts struct {
+	IgnorePatterns []string
+}
+
 // Returns a list of dump files found in a dump directory.
 func ListDmpFiles(path string) ([]string, error) {
 	dmps := []string{}
@@ -42,17 +46,34 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile("(" +
 	// Probably happens when the dispatcher waits for the simulation, attempts
 	// should not be logged as fatal errors, only when the time out is reached.
 	`|<Dispatcher> <functERR> exception caught: Not connected to` +
+	// Schema validation is a joke.
+	`|string_input.*attribute.*is not declared for element` +
+	`|string_input.*missing elements in content model` +
+	// Invalid coordinates may be a problem but not a functERR
+	`|Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range` +
 	")")
 
 // Reads fp and possibly returns a concatenation of all <functERR> lines, or an
 // empty string.
-func FindLoggedFatalErrors(fp io.Reader) (string, error) {
+func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error) {
+	var reIgn *regexp.Regexp
+	var err error
+	if len(opts.IgnorePatterns) > 0 {
+		reIgn, err = regexp.Compile("(" + strings.Join(opts.IgnorePatterns, "|") + ")")
+		if err != nil {
+			return "", err
+		}
+	}
+
 	errors := bytes.Buffer{}
 	scanner := bufio.NewScanner(fp)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.Contains(line, "<functERR>") {
 			if reFunctErr.MatchString(line) {
+				continue
+			}
+			if reIgn != nil && reIgn.MatchString(line) {
 				continue
 			}
 			errors.WriteString(line + "\n")
@@ -89,7 +110,10 @@ func FindStacktrace(fp io.Reader) (string, error) {
 }
 
 // Checks a session directory for all kind of errors.
-func CheckSessionErrors(sessionPath string) error {
+func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
+	if opts == nil {
+		opts = &SessionErrorsOpts{}
+	}
 	logFiles := []string{
 		"debug/sim.log",
 		"debug/replayer.log",
@@ -117,7 +141,7 @@ func CheckSessionErrors(sessionPath string) error {
 		}
 
 		fp.Seek(0, 0)
-		errors, err := FindLoggedFatalErrors(fp)
+		errors, err := FindLoggedFatalErrors(fp, opts)
 		if err != nil {
 			return err
 		}

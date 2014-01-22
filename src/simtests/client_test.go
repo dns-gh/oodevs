@@ -18,8 +18,9 @@ import (
 
 func (s *TestSuite) TestPostTimeout(c *C) {
 	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
-	defer sim.Stop()
+	defer stopSim(c, sim, nil)
 	client := connectClient(c, sim, nil)
+	defer client.Close()
 	err := client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
 	client.PostTimeout = 3 * time.Second
