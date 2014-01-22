@@ -771,27 +771,30 @@ message FormationDestruction {
 */
 message AutomatCreation {
     //! The automat identifier
-    required Id                automat         = 1;
+    required Id                automat                = 1;
     //! The automat type @see AutomatType
-    required Id                type            = 2;
+    required Id                type                   = 2;
     //! The automat name
-    required string            name            = 3;
+    required string            name                   = 3;
     //! The automat parent @see ParentEntity
-    required ParentEntity      parent          = 4;
+    required ParentEntity      parent                 = 4;
     //! The automat party
-    required Id                party           = 5;
+    required Id                party                  = 5;
     //! The automat knowledge group
-    optional Id                knowledge_group = 6;
+    optional Id                knowledge_group        = 6;
     //! The automat APP-6 symbol
-    required string            app6symbol      = 7;
+    required string            app6symbol             = 7;
     //! The automat logistic level @see EnumLogisticLevel
-    required EnumLogisticLevel logistic_level  = 8;
+    required EnumLogisticLevel logistic_level         = 8;
     //! The automat color @see RgbColor
-    optional RgbColor          color           = 9;
+    optional RgbColor          color                  = 9;
     //! The automat APP-6 symbol @deprecated Use app6symbol instead
-    required string            symbol          = 10;
+    required string            symbol                 = 10;
     //! The extension fields
-    optional Extension         extension       = 11;
+    optional Extension         extension              = 11;
+    //! The logistic maintenance mode: true for manual,
+    //! false for automatic (by default)
+    optional bool              log_maintenance_manual = 12;
 }
 
 /** @struct RulesOfEngagement
@@ -865,23 +868,26 @@ enum EnumOperationalStatus {
 */
 message AutomatAttributes {
     //! The automat identifier
-    required Id                          automat               = 1;
+    required Id                          automat                = 1;
     //! The automat mode
-    optional EnumAutomatMode             mode                  = 2;
+    optional EnumAutomatMode             mode                   = 2;
     //! The automat force ratio
-    optional ForceRatio.Value            force_ratio           = 3;
+    optional ForceRatio.Value            force_ratio            = 3;
     //! The meeting engagement status
-    optional EnumMeetingEngagementStatus meeting_engagement    = 4;
+    optional EnumMeetingEngagementStatus meeting_engagement     = 4;
     //! The automat operational state
-    optional EnumOperationalStatus       operational_state     = 5;
+    optional EnumOperationalStatus       operational_state      = 5;
     //! The automat rules of engagement
-    optional RulesOfEngagement.Value     roe                   = 6;
+    optional RulesOfEngagement.Value     roe                    = 6;
     //! The extension fields
-    optional Extension                   extension             = 9;
+    optional Extension                   extension              = 9;
     //! The decisional model
-    optional string                      decisional_model      = 10;
+    optional string                      decisional_model       = 10;
     //! The brain debug activation
-    optional bool                        brain_debug           = 11;
+    optional bool                        brain_debug            = 11;
+    //! The logistic maintenance mode: true for manual,
+    //! false for automatic (by default)
+    optional bool                        log_maintenance_manual = 12;
 }
 
 /** @struct AutomatDestruction

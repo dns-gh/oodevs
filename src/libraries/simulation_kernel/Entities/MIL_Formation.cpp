@@ -25,6 +25,7 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Color.h"
 #include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_MessageParameters.h"
 #include "CheckPoints/SerializationTools.h"
 #include <boost/serialization/map.hpp>
 #include <boost/foreach.hpp>
@@ -318,9 +319,7 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
         break;
     case sword::UnitMagicAction::log_maintenance_set_manual:
         if( !pBrainLogistic_.get() )
-            throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode,
-                                     sword::UnitActionAck::error_invalid_unit,
-                                     "formation doesn't have a logistic automat" );
+            throw MASA_BADUNIT_UNIT( "formation must be a logistic base" );
         pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
         break;
     default:
