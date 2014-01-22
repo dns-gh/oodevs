@@ -20,6 +20,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
+#include "clients_kernel/CoordinateSystems.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/Variable.h"

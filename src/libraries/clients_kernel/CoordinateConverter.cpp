@@ -240,7 +240,7 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
 // Name: CoordinateConverter::GetStringPosition
 // Created: LGY 2014-01-22
 // -----------------------------------------------------------------------------
-std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position, const CoordinateSystems::Projection projection ) const
+std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position, int projection ) const
 {
     std::string positionStr;
     switch( projection )

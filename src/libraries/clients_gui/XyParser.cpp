@@ -21,8 +21,9 @@ using namespace gui;
 // Name: XyParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-XyParser::XyParser( const kernel::CoordinateConverter_ABC& converter )
+XyParser::XyParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystem )
     : converter_( converter )
+    , coordinateSystem_( coordinateSystem )
 {
     // NOTHING
 }
@@ -116,5 +117,5 @@ QStringList XyParser::Split( const QString& input ) const
 // -----------------------------------------------------------------------------
 std::string XyParser::GetStringPosition( const geometry::Point2f& position ) const
 {
-    return converter_.GetStringPosition( position, kernel::CoordinateSystems::E_Local );
+    return converter_.GetStringPosition( position, coordinateSystem_ );
 }

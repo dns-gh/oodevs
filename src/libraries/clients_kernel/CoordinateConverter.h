@@ -48,7 +48,7 @@ public:
 
     virtual const CoordinateSystems& GetCoordSystem() const;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
-    virtual std::string GetStringPosition( const geometry::Point2f& position, const CoordinateSystems::Projection projection ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position, int projection ) const;
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
     virtual const geometry::Rectangle2f& GetExtent() const;
