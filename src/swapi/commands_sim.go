@@ -1510,3 +1510,12 @@ func (c *Client) ListLogisticRequests(currentTick, maxCount int, entityId ...uin
 	err := <-c.postSimRequest(msg, handler)
 	return entries, err
 }
+
+func (c *Client) LogMaintenanceSetManualTest(unitId uint32, parameters *sword.MissionParameters) error {
+	return c.sendUnitMagicAction(MakeUnitTasker(unitId), parameters,
+		sword.UnitMagicAction_log_maintenance_set_manual)
+}
+
+func (c *Client) LogMaintenanceSetManual(unitId uint32, mode bool) error {
+	return c.LogMaintenanceSetManualTest(unitId, MakeParameters(MakeBoolean(mode)))
+}

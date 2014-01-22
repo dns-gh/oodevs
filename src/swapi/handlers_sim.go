@@ -269,11 +269,12 @@ func (model *ModelData) handleAutomatCreation(m *sword.SimToClient_Content) erro
 		return ErrSkipHandler
 	}
 	automat := &Automat{
-		Id:               mm.GetAutomat().GetId(),
-		PartyId:          mm.GetParty().GetId(),
-		Name:             mm.GetName(),
-		Engaged:          true,
-		KnowledgeGroupId: mm.GetKnowledgeGroup().GetId(),
+		Id:                   mm.GetAutomat().GetId(),
+		PartyId:              mm.GetParty().GetId(),
+		Name:                 mm.GetName(),
+		Engaged:              true,
+		KnowledgeGroupId:     mm.GetKnowledgeGroup().GetId(),
+		LogMaintenanceManual: mm.GetLogMaintenanceManual(),
 	}
 	if parent := mm.GetParent().GetFormation(); parent != nil {
 		automat.FormationId = parent.GetId()
@@ -317,6 +318,9 @@ func (model *ModelData) handleAutomatAttributes(m *sword.SimToClient_Content) er
 	if mm.BrainDebug != nil {
 		automat.DebugBrain = mm.GetBrainDebug()
 	}
+	if mm.LogMaintenanceManual != nil {
+		automat.LogMaintenanceManual = mm.GetLogMaintenanceManual()
+	}
 	return nil
 }
 
@@ -340,6 +344,7 @@ func (model *ModelData) handleFormationCreation(m *sword.SimToClient_Content) er
 		mm.GetParty().GetId(),
 		level,
 		logLevel,
+		mm.GetLogMaintenanceManual(),
 	)
 	if !model.addFormation(formation) {
 		return fmt.Errorf("cannot create formation %v with unknown"+
@@ -357,6 +362,22 @@ func (model *ModelData) handleFormationDestruction(m *sword.SimToClient_Content)
 	if !model.removeFormation(mm.GetFormation().GetId()) {
 		return fmt.Errorf("cannot destroy formation %d",
 			mm.GetFormation().GetId())
+	}
+	return nil
+}
+
+func (model *ModelData) handleFormationUpdate(m *sword.SimToClient_Content) error {
+	mm := m.GetFormationUpdate()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	formation, ok := model.Formations[mm.GetFormation().GetId()]
+	if !ok {
+		return fmt.Errorf("cannot update formation %d",
+			mm.GetFormation().GetId())
+	}
+	if mm.LogMaintenanceManual != nil {
+		formation.LogMaintenanceManual = *mm.LogMaintenanceManual
 	}
 	return nil
 }

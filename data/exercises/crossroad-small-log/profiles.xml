@@ -9,4 +9,13 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="alluser" password="alluser" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="1"/>
+        <side id="3"/>
+      </readwrite>
+    </rights>
+  </profile>
 </profiles>

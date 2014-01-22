@@ -323,6 +323,28 @@ func (s *TestSuite) TestCheckpointUnit(c *C) {
 	checkpointCompareAndStop(c, sim, client)
 }
 
+func (s *TestSuite) TestCheckpointAutomat(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	defer stopSimAndClient(c, sim, client)
+	// Need one which is a logistic base
+	automat := client.Model.GetAutomat(14)
+	c.Assert(automat, NotNil)
+	err := client.LogMaintenanceSetManual(automat.Id, true)
+	c.Assert(err, IsNil)
+	checkpointCompareAndStop(c, sim, client)
+}
+
+func (s *TestSuite) TestCheckpointFormation(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	defer stopSimAndClient(c, sim, client)
+	// Need one which is a logistic base
+	formation := client.Model.GetFormation(13)
+	c.Assert(formation, NotNil)
+	err := client.LogMaintenanceSetManual(formation.Id, true)
+	c.Assert(err, IsNil)
+	checkpointCompareAndStop(c, sim, client)
+}
+
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Step = 300
