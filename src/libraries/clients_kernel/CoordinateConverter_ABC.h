@@ -10,6 +10,7 @@
 #ifndef __kernel_CoordinateConverter_ABC_h_
 #define __kernel_CoordinateConverter_ABC_h_
 
+#include "CoordinateSystems.h"
 #include <geometry/Types.h>
 
 namespace tools
@@ -19,7 +20,6 @@ namespace tools
 
 namespace kernel
 {
-    class CoordinateSystems;
 // =============================================================================
 /** @class  CoordinateConverter_ABC
     @brief  CoordinateConverter_ABC
@@ -50,6 +50,7 @@ public:
     virtual geometry::Point2f ConvertFromGeoDms     ( const std::string& longitude, const std::string& latitude ) const = 0;
     virtual const CoordinateSystems& GetCoordSystem() const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
+    virtual std::string GetStringPosition( const geometry::Point2f& position, const CoordinateSystems::Projection projection ) const = 0;
 
     virtual std::string       ConvertTo  ( const geometry::Point2f& p, const std::string& code = "WGE" ) const = 0;
     virtual geometry::Point2f ConvertFrom( const std::string& pos, const std::string& code = "WGE" ) const = 0;

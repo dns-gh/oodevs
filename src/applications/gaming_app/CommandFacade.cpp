@@ -23,11 +23,11 @@
 // -----------------------------------------------------------------------------
 CommandFacade::CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
                               CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
-                              ProfileFilter& profile )
+                              ProfileFilter& profile, const kernel::CoordinateConverter_ABC& converter )
     : QObject( parent )
 {
     Add( new CenterViewCommand  ( handler, interpreter ) );
-    Add( new ZoomViewCommand    ( handler, view ) );
+    Add( new ZoomViewCommand    ( handler, view, converter ) );
     Add( new ChangeOptionCommand( handler, controllers.options_ ) );
     Add( new DockCommand        ( handler, *parent ) );
     Add( new LauncherCommand    ( handler, config, interpreter ) );

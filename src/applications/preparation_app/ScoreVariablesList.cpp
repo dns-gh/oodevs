@@ -37,7 +37,8 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
-    , parser_( new gui::UtmParser( controllers, [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); } ) )
+    , parser_( new gui::UtmParser( controllers, [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); },
+            [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.GetStringPosition( position, kernel::CoordinateSystems::E_Mgrs ); } ) )
 {
     gui::SubObjectName subObject( "ScoreVariablesList" );
     setMargin( 5 );

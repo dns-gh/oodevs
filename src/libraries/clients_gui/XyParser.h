@@ -13,6 +13,11 @@
 #include "LocationParser_ABC.h"
 #include <boost/noncopyable.hpp>
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace gui
 {
 
@@ -28,7 +33,7 @@ class XyParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             XyParser();
+    explicit XyParser( const kernel::CoordinateConverter_ABC& converter );
     virtual ~XyParser();
     //@}
 
@@ -37,11 +42,18 @@ public:
     virtual const LocationParserDescriptor& GetDescriptor() const;
     virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual QStringList Split( const QString& input ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
     //@}
 
     //! @name Operations
     //@{
     bool Parse( const QString& content, geometry::Point2f& result, QString& hint ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

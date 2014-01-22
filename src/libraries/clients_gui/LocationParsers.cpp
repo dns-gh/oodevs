@@ -26,9 +26,11 @@ LocationParsers::LocationParsers( kernel::Controllers& controllers, const kernel
     : controllers_( controllers )
     , converter_( converter )
 {
-    parsers_[ kernel::CoordinateSystems::E_Mgrs ].reset( new UtmParser( controllers_, [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); } ) );
-    parsers_[ kernel::CoordinateSystems::E_SanC ].reset( new UtmParser( controllers_, [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); } ) );
-    parsers_[ kernel::CoordinateSystems::E_Local ].reset( new XyParser() );
+    parsers_[ kernel::CoordinateSystems::E_Mgrs ].reset( new UtmParser( controllers_, [&]( const std::string& mgrs ) { return converter.ConvertToXY( mgrs ); },
+        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, kernel::CoordinateSystems::E_Mgrs ); } ) );
+    parsers_[ kernel::CoordinateSystems::E_SanC ].reset( new UtmParser( controllers_, [&]( const std::string& s ) { return converter.ConvertFrom( s, "SAN-C" ); },
+        [&]( const geometry::Point2f& position ) { return converter.GetStringPosition( position, kernel::CoordinateSystems::E_SanC ); } ) );
+    parsers_[ kernel::CoordinateSystems::E_Local ].reset( new XyParser( converter_ ) );
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dd ].reset( new Wgs84DdParser( converter_ ) );
     parsers_[ kernel::CoordinateSystems::E_Wgs84Dms ].reset( new Wgs84DmsParser( converter_ ) );
 }

@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -46,7 +47,7 @@ public:
     //@{
              CommandFacade( QMainWindow* parent, kernel::Controllers& controllers, tools::ExerciseConfig& config,
                             CommandHandler& handler, gui::LinkInterpreter_ABC& interpreter, gui::View_ABC& view,
-                            ProfileFilter& profile );
+                            ProfileFilter& profile, const kernel::CoordinateConverter_ABC& converter );
     virtual ~CommandFacade();
     //@}
 

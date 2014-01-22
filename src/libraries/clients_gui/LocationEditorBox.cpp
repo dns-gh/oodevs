@@ -275,3 +275,12 @@ QValidator::State LocationEditorBox::Complete( QString& input, int idx, Field& f
         return QValidator::Intermediate;
     return QValidator::Acceptable;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorBox::Complete
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+const LocationParser_ABC* LocationEditorBox::GetCurrentParser() const
+{
+    return current_;
+}

@@ -233,8 +233,17 @@ const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
 // -----------------------------------------------------------------------------
 std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position ) const
 {
+    return GetStringPosition( position, systems_.GetDefault() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::GetStringPosition
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position, const CoordinateSystems::Projection projection ) const
+{
     std::string positionStr;
-    switch( systems_.GetDefault() )
+    switch( projection )
     {
     case CoordinateSystems::E_Mgrs:
         positionStr = ConvertToMgrs( position );

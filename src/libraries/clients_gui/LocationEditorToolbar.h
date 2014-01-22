@@ -63,6 +63,7 @@ private:
     //! @name Helpers
     //@{
     bool GetPosition( geometry::Point2f& point );
+    void CreateBookmark( const std::string& defaultName );
     //@}
 
     //! @name Types

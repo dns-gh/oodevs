@@ -23,9 +23,11 @@
 // Name: ZoomViewCommand constructor
 // Created: SBO 2008-07-07
 // -----------------------------------------------------------------------------
-ZoomViewCommand::ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view )
+ZoomViewCommand::ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view,
+                                  const kernel::CoordinateConverter_ABC& converter )
     : handler_( handler )
     , view_( view )
+    , converter_( converter )
 {
     handler_.Register( "zoom", *this );
     handler_.Register( "center", *this );
@@ -66,7 +68,7 @@ void ZoomViewCommand::Receive( const Command& command )
 // -----------------------------------------------------------------------------
 void ZoomViewCommand::Center( const std::string& arg )
 {
-    gui::XyParser parser;
+    gui::XyParser parser( converter_ );
     QString content = arg.c_str();
     QString hint;
     geometry::Point2f result;

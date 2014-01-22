@@ -11,6 +11,8 @@
 #define __CoordinateSystems_h_
 
 #include <boost/noncopyable.hpp>
+#include <QString>
+#include <map>
 
 namespace kernel
 {

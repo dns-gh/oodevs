@@ -137,3 +137,12 @@ QStringList Wgs84DmsParser::Split( const QString& input ) const
     std::swap( list[0], list[1] );
     return list;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Wgs84DmsParser::GetStringPosition
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+std::string Wgs84DmsParser::GetStringPosition( const geometry::Point2f& position ) const
+{
+    return converter_.GetStringPosition( position, kernel::CoordinateSystems::E_Wgs84Dms );
+}
