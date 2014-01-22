@@ -61,22 +61,32 @@ integration.getTypeUrbanBlock = function( urbanBlock )
     return DEC_BlocUrbain_Type( urbanBlock.source )
 end
 
---- Start to build an object knowledge
--- @param object Planned work knowledge
+--- Start to build a planned work
+-- First the method searches if an object with the same type exists and has the same location
+-- A same location depends of the distance parameter. 10 meters by default, 10 meters is the resolution used by the simulation
+-- If object exists, the agent will resume the construction
+-- If not exists, the agent will build a new one
+-- This process is needed when the simulation is restarted following a recovery backup
+-- In this case, it's possible that the object is already beginning to construct, so resume the construction 
+-- @param object Object knowledge
 -- @param objectType String, the type of the object
+-- @param distance, distance in meter
 -- See ObjectNames.xml and Objects.xml in physical database
-integration.startBuildIt = function( object, objectType )
+integration.startBuildIt = function( object, objectType, distance )
 -- comments: -- $$$ MIA TODO merge with security
     if not objectType then
         objectType = integration.ontology.types.object
     end
+	if not distance then
+	    distance = 10
+	end
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
-                        object:getType(), 10 )
+                        object:getType(), distance )
     object[ myself ] = object[ myself ] or {}
     if existingObject == nil then
         object[myself].actionBuild = DEC_StartCreateObject( object.source )
     else
-        object[myself].actionBuild = DEC_StartCreateObject( existingObject.source ) 
+        object[myself].actionBuild = DEC_StartReprendreTravauxObjet( existingObject.source, false ) 
     end
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
         object[ myself ].actionBuildState = arg
@@ -118,7 +128,7 @@ integration.startBuildItInstantaneously = function( object, objectType, withoutR
     end
 end
 
---- Begin to resume work to build of pre-existing object
+--- Begin to resume work to build a pre-existing object
 -- A report is sent when the work is beginning
 -- @param objectKnowledge Object knowledge
 integration.startBuildItKnowledge = function( objectKnowledge )
@@ -147,7 +157,9 @@ integration.startBuildItUrbanBlock = function( urbanBlock )
     end
 end
 
---- Continue to work construction object (object, urban block) 
+--- Continue the work to build an object (object, urban block)
+-- @See integration.startBuildItKnowledge
+-- @See integration.startBuildIt
 -- @param object Object knowledge
 -- @param returnActionDone Boolean, true if a message should be sent when the work is over  
 -- @return string defined in Reports.xml
@@ -173,7 +185,7 @@ integration.updateBuildIt = function( object, returnActionDone )
     return eRC_RAS
 end
 
---- Stop to work construction object
+--- Allows the unit to stop to build an object
 -- The action in the simulation is stopped
 -- @param object Object knowledge
 integration.stopBuildIt = function( object )
@@ -193,7 +205,7 @@ integration.stopBuildIt = function( object )
     myself.hasStartedBuilding = nil
 end
 
--- Stop to work construction urban block
+-- Allows the unit to stop to build an urban block
 -- The action in the simulation is stopped
 -- A report is sent when the work is done
 -- @param urbanBlock Urban block knowledge
@@ -383,7 +395,7 @@ end
 
 --- Filter the crowd, unit adopts a filtration posture
 -- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. The higher the percentage, the longer search time and will slow down the passage of the crowd through the checkpoint.
--- @param blockingStrength, percentage of the filter efficiency. 100% means crowd is blocked. 0% means the filter has no effect.
+-- @param blockingStrength, percentage of the filter efficiency. A number in-between changes the density of the outgoing crowd in that proportion.
 -- @param position Point knowledge
 integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
     -- Activate filtration capability on retrieved checkpoint 
