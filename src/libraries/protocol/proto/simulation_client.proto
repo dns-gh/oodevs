@@ -755,7 +755,7 @@ message FormationUpdate {
     //! The extension fields
     optional Extension extension                = 2;
     //! The logistic maintenance mode: true for manual,
-    //! false for automatic (by default)
+    //! false for automatic, unchanged if omitted.
     optional bool      log_maintenance_manual   = 3;
 }
 
@@ -886,7 +886,7 @@ message AutomatAttributes {
     //! The brain debug activation
     optional bool                        brain_debug            = 11;
     //! The logistic maintenance mode: true for manual,
-    //! false for automatic (by default)
+    //! false for automatic, unchanged if omitted.
     optional bool                        log_maintenance_manual = 12;
 }
 

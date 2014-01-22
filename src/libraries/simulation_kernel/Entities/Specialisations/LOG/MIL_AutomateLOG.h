@@ -175,11 +175,10 @@ public:
     template< typename Message >
     bool SendChangedState( Message& message ) const
     {
-        if( !manualHasChanged_ )
-            return false;
-        message().set_log_maintenance_manual( maintenanceManual_ );
+        if( manualHasChanged_ )
+            message().set_log_maintenance_manual( maintenanceManual_ );
         SendChangedState();
-        return true;
+        return manualHasChanged_;
     }
     template< typename Message >
     void SendFullState( Message& message ) const
