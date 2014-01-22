@@ -274,8 +274,10 @@
 					<xs:sequence>
 						<xs:element name="carrying">
 							<xs:complexType>
-								<xs:attribute name="mass" type="T_NonNegativeDouble" use="required"/>
-								<xs:attribute name="volume" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="min-mass" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="max-mass" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="min-volume" type="T_NonNegativeDouble" use="required"/>
+								<xs:attribute name="max-volume" type="T_NonNegativeDouble" use="required"/>
 								<xs:attribute name="nature" type="xs:string" use="required"/>
 							</xs:complexType>
 						</xs:element>
