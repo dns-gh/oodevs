@@ -148,8 +148,9 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
 // Name: EquipmentUpdater::RemoteCreated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
+void EquipmentUpdater::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
+    hlaObjects_[ identifier ] = &object;
     object.Register( *this );
 }
 
@@ -157,9 +158,9 @@ void EquipmentUpdater::RemoteCreated( const std::string& /*identifier*/, HlaClas
 // Name: EquipmentUpdater::RemoteDestroyed
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::RemoteDestroyed( const std::string& /*identifier*/ )
+void EquipmentUpdater::RemoteDestroyed( const std::string& identifier )
 {
-    // NOTHING
+    hlaObjects_.erase( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,36 +278,40 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
 // Name: EquipmentUpdater::LocalCreated
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+void EquipmentUpdater::LocalCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    hlaObjects_[ identifier ] = &object;
 }
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentUpdater::LocalDestroyed
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::LocalDestroyed( const std::string& /*identifier*/ )
+void EquipmentUpdater::LocalDestroyed( const std::string& identifier )
 {
-    // NOTHING
+    hlaObjects_.erase( identifier);
 }
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentUpdater::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Divested( const std::string& /*identifier*/ )
+void EquipmentUpdater::Divested( const std::string& identifier )
 {
-    // NOTHING
+    T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
+    if( hlaObjects_.end() != itObj )
+        itObj->second->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentUpdater::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Acquired( const std::string& /*identifier*/ )
+void EquipmentUpdater::Acquired( const std::string& identifier )
 {
-    // NOTHING
+    T_HLAObjects::const_iterator itObj( hlaObjects_.find( identifier ) );
+    if( hlaObjects_.end() != itObj )
+        itObj->second->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

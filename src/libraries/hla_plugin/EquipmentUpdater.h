@@ -124,6 +124,7 @@ private:
     typedef std::map< std::string, T_StaticComponent > T_StaticComponents;
     typedef std::map< std::string, T_StaticComponents > T_AgentsTypes;
     typedef boost::bimap< std::string, unsigned int > T_Identifiers;
+    typedef std::map< std::string, HlaObject_ABC* > T_HLAObjects;
     //@}
 
 private:
@@ -139,6 +140,7 @@ private:
     T_Identifiers identifiers_;
     T_Agents remoteAgents_;
     T_AgentsTypes agentTypes_;
+    T_HLAObjects hlaObjects_;
     //@}
 };
 

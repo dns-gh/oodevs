@@ -43,6 +43,35 @@ namespace
             MOCK_EXPECT( messageController.Register ).once().with( mock::retrieve( unitAttributesHandler ) );
             MOCK_EXPECT( messageController.Unregister );
         }
+
+        sword::UnitCreation MakeMessage( unsigned int agentTypeId, unsigned int unitId )
+        {
+            sword::UnitCreation creationMessage;
+            creationMessage.mutable_type()->set_id( agentTypeId );
+            creationMessage.mutable_unit()->set_id( unitId );
+            return creationMessage;
+        }
+        void CheckMessage( const sword::ClientToSim& message, unsigned int unitId, unsigned int componentTypeId,
+                           int undamaged, int destroyed, int lightDamages, int heavyDamages )
+        {
+            BOOST_CHECK( message.message().has_unit_magic_action() );
+            const sword::UnitMagicAction& action = message.message().unit_magic_action();
+            BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::change_equipment_state );
+            BOOST_CHECK_EQUAL( action.tasker().unit().id(), unitId );
+            BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
+            BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value_size(), 1 );
+            const sword::MissionParameter_Value& componentChanged = action.parameters().elem( 0 ).value( 0 );
+            BOOST_CHECK_EQUAL( componentChanged.list_size(), 8 );
+            BOOST_CHECK_EQUAL( componentChanged.list( 0 ).identifier(), componentTypeId );
+            BOOST_CHECK_EQUAL( componentChanged.list( 1 ).quantity(), undamaged );
+            BOOST_CHECK_EQUAL( componentChanged.list( 2 ).quantity(), destroyed );
+            BOOST_CHECK_EQUAL( componentChanged.list( 3 ).quantity(), heavyDamages );
+            BOOST_CHECK_EQUAL( componentChanged.list( 4 ).quantity(), lightDamages );
+            BOOST_CHECK_EQUAL( componentChanged.list( 5 ).quantity(), 0 );
+            BOOST_CHECK_EQUAL( componentChanged.list( 6 ).quantity(), 0 );
+            BOOST_CHECK_EQUAL( componentChanged.list( 7 ).list_size(), 0 );
+        }
+
         ClassListener_ABC* remoteClassListener;
         ResponseObserver_ABC< sword::UnitCreation >* responseObserver;
         MockRemoteAgentSubject subject;
@@ -74,33 +103,6 @@ namespace
             BOOST_REQUIRE( remoteAgentListener );
             BOOST_REQUIRE( responseObserver );
             BOOST_REQUIRE( unitAttributesHandler );
-        }
-        sword::UnitCreation MakeMessage( unsigned int agentTypeId, unsigned int unitId )
-        {
-            sword::UnitCreation creationMessage;
-            creationMessage.mutable_type()->set_id( agentTypeId );
-            creationMessage.mutable_unit()->set_id( unitId );
-            return creationMessage;
-        }
-        void CheckMessage( const sword::ClientToSim& message, unsigned int unitId, unsigned int componentTypeId,
-                           int undamaged, int destroyed, int lightDamages, int heavyDamages )
-        {
-            BOOST_CHECK( message.message().has_unit_magic_action() );
-            const sword::UnitMagicAction& action = message.message().unit_magic_action();
-            BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::change_equipment_state );
-            BOOST_CHECK_EQUAL( action.tasker().unit().id(), unitId );
-            BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
-            BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value_size(), 1 );
-            const sword::MissionParameter_Value& componentChanged = action.parameters().elem( 0 ).value( 0 );
-            BOOST_CHECK_EQUAL( componentChanged.list_size(), 8 );
-            BOOST_CHECK_EQUAL( componentChanged.list( 0 ).identifier(), componentTypeId );
-            BOOST_CHECK_EQUAL( componentChanged.list( 1 ).quantity(), undamaged );
-            BOOST_CHECK_EQUAL( componentChanged.list( 2 ).quantity(), destroyed );
-            BOOST_CHECK_EQUAL( componentChanged.list( 3 ).quantity(), heavyDamages );
-            BOOST_CHECK_EQUAL( componentChanged.list( 4 ).quantity(), lightDamages );
-            BOOST_CHECK_EQUAL( componentChanged.list( 5 ).quantity(), 0 );
-            BOOST_CHECK_EQUAL( componentChanged.list( 6 ).quantity(), 0 );
-            BOOST_CHECK_EQUAL( componentChanged.list( 7 ).list_size(), 0 );
         }
         EquipmentUpdater updater;
         const std::string componentEntityType;
@@ -269,4 +271,58 @@ BOOST_FIXTURE_TEST_CASE( equipment_updater_resends_nothing_if_component_is_unkno
 {
     const unsigned int unknownComponentTypeId = 888;
     unitAttributesHandler->Notify( MakeUnitAttributesMessage( undamaged + 1, destroyed - 1, unitId, unknownComponentTypeId ), 42 );
+}
+
+namespace
+{
+    class LocalObjectFixture : public Fixture
+    {
+    public:
+        LocalObjectFixture()
+            : updater ( subject, handler, publisher, factory, resolver, componentTypes, messageController, logger )
+            , componentEntityType( "1 1 2 0 0 0 0" )
+            , componentTypeName  ( "component type name" )
+            , agentTypeId        ( 42 )
+            , remoteAgentListener( 0 )
+            , unitId             ( 1337 )
+            , componentTypeId    ( 43 )
+        {
+            BOOST_REQUIRE( remoteClassListener );
+            BOOST_REQUIRE( responseObserver );
+            BOOST_REQUIRE( unitAttributesHandler );
+            remoteClassListener->LocalCreated( "id_local", hlaClass, object );
+        }
+        EquipmentUpdater updater;
+        const std::string componentEntityType;
+        const std::string componentTypeName;
+        const unsigned int agentTypeId;
+        ObjectListener_ABC* remoteAgentListener;
+        const unsigned int unitId;
+        const unsigned int componentTypeId;
+        MockHlaClass hlaClass;
+        MockHlaObject object;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( divested_local_object_update, LocalObjectFixture )
+{
+    const int componentNumber = 10;
+
+    MOCK_EXPECT( componentTypes.Apply ).once().with( agentTypeId, mock::any ).calls( boost::bind( &ComponentTypeVisitor_ABC::NotifyEquipment, _2, componentTypeId, componentTypeName, componentNumber ) );
+    responseObserver->Notify( MakeMessage( agentTypeId, unitId ), "id_local" );
+
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+    remoteClassListener->Divested( "id_local" );
+    BOOST_REQUIRE( remoteAgentListener );
+
+    const int undamaged = 2;
+    const int destroyed = 3;
+    const int lightDamages = 3;
+    const int heavyDamages = 2;
+
+    sword::ClientToSim message;
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( resolver.Resolve ).once().with( rpr::EntityType( componentEntityType ), mock::assign( componentTypeName ) ).returns( true );
+    remoteAgentListener->EquipmentUpdated( "id_local", rpr::EntityType( componentEntityType ), undamaged, destroyed, lightDamages, heavyDamages );
+    CheckMessage( message, unitId, componentTypeId, undamaged, destroyed, lightDamages, heavyDamages );
 }
