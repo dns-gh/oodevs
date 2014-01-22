@@ -179,22 +179,28 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
     if( !pType )
         throw MASA_EXCEPTION( xis.context() + "Unknown pawn type" );
 
-    if( composition_.find( pType ) != composition_.end() )
+    if( FindUnitType( *pType ) )
         throw MASA_EXCEPTION( xis.context() + "Pawn type already defined in composition" );
 
-    composition_[ pType ].nMax_ = std::numeric_limits< unsigned int >::max();
-    composition_[ pType ].nMin_ = 0;
+    sCompositionBounds bounds;
+    bounds.nMax_ = std::numeric_limits< unsigned int >::max();
+    bounds.nMin_ = 0u;
 
-    xis >> xml::optional >> xml::attribute( "min-occurs", composition_[ pType ].nMin_ )
-        >> xml::optional >> xml::attribute( "max-occurs", composition_[ pType ].nMax_ );
+    xis >> xml::optional >> xml::attribute( "min-occurs", bounds.nMin_ )
+        >> xml::optional >> xml::attribute( "max-occurs", bounds.nMax_ );
 
     bool isCommandPost = false;
     xis >> xml::optional >> xml::attribute( "command-post", isCommandPost );
     if( isCommandPost )
+    {
         if( !pTypePC_ )
             pTypePC_ = pType;
         else
             throw MASA_EXCEPTION( xis.context() + "Multiple command-post defined in automat type: " + strName_ );
+        composition_.insert( composition_.begin(), std::make_pair( pType, bounds ) );
+    }
+    else
+        composition_.push_back( std::make_pair( pType, bounds ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,13 +225,12 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 {
     std::map< const MIL_AgentType_ABC*, unsigned int > currentComposition;
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
-
     for( auto it = pions.begin(); it != pions.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
         const MIL_AgentType_ABC& pionType = pion.GetType();
         ++currentComposition[ &pionType ];
-        if( composition_.find( &pionType ) == composition_.end() )
+        if( !FindUnitType( pionType ) )
             return false;
     }
 
@@ -384,4 +389,15 @@ bool MIL_AutomateType::IsInjuredHuman() const
 const MIL_AutomateType::T_CompositionMap& MIL_AutomateType::GetComposition() const
 {
     return composition_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::GetComposition
+// Created: LGY 2014-01-20
+// -----------------------------------------------------------------------------
+bool MIL_AutomateType::FindUnitType( const MIL_AgentType_ABC& type ) const
+{
+    return std::find_if( composition_.begin(), composition_.end(),
+        [&type]( std::pair< const MIL_AgentType_ABC*, sCompositionBounds > value )->bool {
+            return type.GetID() == value.first->GetID(); } ) != composition_.end();
 }

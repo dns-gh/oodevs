@@ -1248,7 +1248,7 @@ namespace
     unsigned int GetSensibleNumber( unsigned int nMin, unsigned int nMax )
     {
         if( nMax == nMin )
-            return nMin;
+            return std::max( nMin, 1u );
         if( nMax != std::numeric_limits< unsigned int >::max() )
             return std::max( ( nMax + nMin ) / 2u, 1u );
         return std::max( nMin, 1u );
@@ -1269,19 +1269,19 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
     if( !pType )
         throw MASA_BADPARAM_UNIT( "invalid automat type: " << automatType );
 
+    const auto& point = protocol::GetPoint( params, 1 );
+    MT_Vector2D position;
+    MIL_Tools::ConvertCoordMosToSim( point, position );
+
     unsigned int groupId = 0;
     if( const auto group = protocol::TryGetKnowledgeGroup( params, 1 ) )
         groupId = *group;
     else
-        groupId = protocol::GetIdentifier( params, 1 );
+        groupId = protocol::GetIdentifier( params, 2 );
 
     auto group = entity.GetArmy().FindKnowledgeGroup( groupId );
     if( !group || group->IsJammed() )
         throw MASA_BADPARAM_UNIT( "knowledge group is invalid or jammed" );
-
-    const auto& point = protocol::GetPoint( params, 2 );
-    MT_Vector2D position;
-    MIL_Tools::ConvertCoordMosToSim( point, position );
 
     MIL_DictionaryExtensions extensions;
     MIL_Automate& automat = CreateAutomat( *pType, groupId, "", entity, nCtx, extensions );
@@ -1293,37 +1293,35 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
         const MIL_AutomateType::sCompositionBounds& bounds = it->second;
         numberOfAgents += GetSensibleNumber( bounds.nMin_, bounds.nMax_ );
     }
-    // Creation pc first
-    for( auto composition = compositions.begin(); composition != compositions.end(); ++composition )
-        if( const MIL_AgentType_ABC* agentType = composition->first )
-            if( agentType->GetID() == pType->GetTypePionPC().GetID() )
-            {
-                const MIL_AutomateType::sCompositionBounds& bounds = composition->second;
-                unsigned int number = GetSensibleNumber( bounds.nMin_, bounds.nMax_ );
-                for( unsigned int i = 0; i < number; ++i )
-                    CreatePion( *static_cast< const MIL_AgentTypePion* >( agentType ), automat, position, nCtx );
-            }
+
+    ack.mutable_result()->add_elem()->add_value()->mutable_automat()
+        ->set_id( automat.GetID() );
 
     static const float pi = std::acos( -1.f );
     float angle = numberOfAgents > 1 ? 2 * pi / ( numberOfAgents - 1 ) : 0;
     unsigned int current = 0;
-    for( auto composition = compositions.begin(); composition != compositions.end(); ++composition )
-        if( const MIL_AgentType_ABC* agentType = composition->first )
-            if( agentType->GetID() != pType->GetTypePionPC().GetID() )
+    std::vector< unsigned int > unitIds;
+    for( int index = 0; index < compositions.size(); ++index )
+    {
+        const auto content = compositions.at( index );
+        if( const MIL_AgentTypePion* agentType = dynamic_cast< const MIL_AgentTypePion* >( content.first ) )
+        {
+            const MIL_AutomateType::sCompositionBounds& bounds = content.second;
+            unsigned int number = GetSensibleNumber( bounds.nMin_, bounds.nMax_ );
+            MT_Vector2D newPosition = position;
+            for( unsigned int i = 0; i < number; ++i )
             {
-                const MIL_AutomateType::sCompositionBounds& bounds = composition->second;
-                unsigned int number = GetSensibleNumber( bounds.nMin_, bounds.nMax_ );
-                MT_Vector2D newPosition = position;
-                for( unsigned int i = 0; i < number; ++i )
+                if( agentType->GetID() != pType->GetTypePionPC().GetID() )
                 {
                     newPosition = MT_Vector2D( 100.f * std::sin( current * angle ), 100.f * std::cos( current * angle ) ) + position;
                     current++;
-                    CreatePion( *static_cast< const MIL_AgentTypePion* >( agentType ), automat, newPosition, nCtx );
                 }
+                MIL_AgentPion& pion = CreatePion( *agentType, automat, newPosition, nCtx );
+                ack.mutable_result()->add_elem()->add_value()->mutable_agent()
+                    ->set_id( pion.GetID() );
             }
-
-    ack.mutable_result()->add_elem()->add_value()->mutable_automat()
-        ->set_id( automat.GetID() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

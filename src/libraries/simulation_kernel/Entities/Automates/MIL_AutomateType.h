@@ -53,7 +53,7 @@ public:
         unsigned int nMin_;
         unsigned int nMax_;
     };
-    typedef std::map< const MIL_AgentType_ABC*, sCompositionBounds > T_CompositionMap;
+    typedef std::vector< std::pair< const MIL_AgentType_ABC*, sCompositionBounds > > T_CompositionMap;
     //@}
 
     //! @name Manager
@@ -78,6 +78,7 @@ public:
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
+    // Pc is the first element
     const T_CompositionMap&                  GetComposition                   () const;
     //@}
 
@@ -121,6 +122,7 @@ private:
     //@{
     static void ReadAutomat( xml::xistream& xis );
     void ReadUnit          ( xml::xistream& xis );
+    bool FindUnitType      ( const MIL_AgentType_ABC& type ) const;
     //@}
 
 private:

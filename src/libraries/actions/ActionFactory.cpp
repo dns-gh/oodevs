@@ -864,6 +864,7 @@ Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type,
     std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
     int knowledgeGroup = 0;
     const kernel::CommunicationHierarchies* hierarchy = selected.Retrieve< kernel::CommunicationHierarchies >();
     if( !hierarchy )
@@ -886,7 +887,6 @@ Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type,
         }
     }
     action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
-    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();
