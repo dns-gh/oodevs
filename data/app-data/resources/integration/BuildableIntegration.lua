@@ -3,9 +3,9 @@
 -------------------------------------------------------------------
 
 --- Returns true if the unit has the capacity to build the selected object, false otherwise
--- The unit has more capacity when dismounted
+-- The unit may have more capacity when dismounted
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildObjectType = function( objectType, localisationObject )
@@ -13,9 +13,9 @@ integration.canBuildObjectType = function( objectType, localisationObject )
 end
 
 --- Returns true if the unit has the capacity to build the selected object without reinforcement, false otherwise
--- The unit has more capacity when dismounted
+-- The unit may have more capacity when dismounted
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildObjectTypeWithoutReinforcement = function( objectType, localisationObject )
@@ -23,18 +23,18 @@ integration.canBuildObjectTypeWithoutReinforcement = function( objectType, local
 end
 
 --- Returns true if the unit has the capacity to build the selected object now, false otherwise
--- The unit has more capacity when dismounted
+-- The unit may have more capacity when dismounted
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildNowObjectType = function( objectType, localisationObject )
     return DEC_Agent_PeutConstruireObjetAvecLocalisation( objectType, localisationObject )
 end
 
---- Returns true if the unit has dotation to build the selected object now, false otherwise
+--- Returns true if the unit has enough resource to build the selected object now, false otherwise
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @return Boolean, whether or not unit has dotation to build
 integration.hasEnoughtDotationForObjectType = function( objectType )
   return DEC_Agent_ADotationPourConstruireObjet( objectType )
@@ -47,7 +47,7 @@ integration.buildLevel = function( objectKnowledge )
     return DEC_ConnaissanceObjet_NiveauConstruction( objectKnowledge.source ) * 100
 end
 
---- Returns the percentage of the structural state for an urban block
+--- Returns the structural state for an urban block
 -- @param urbanBlock Urban block knowledge
 -- @return structural state between 0 and 1 (if value is 1, the urban block has no damaged) 
 integration.buildLevelUrbanBlock = function( urbanBlock )
@@ -64,7 +64,7 @@ end
 --- Start to build an object knowledge
 -- @param object Object knowledge
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database
+-- See ObjectNames.xml and Objects.xml in physical database
 integration.startBuildIt = function( object, objectType )
 -- comments: -- $$$ MIA TODO merge with security
     if not objectType then
@@ -93,7 +93,7 @@ end
 --- Build instantaneously an object
 -- @param object Object knowledge to build instantaneously
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param withoutReport Boolean if set to true don't send a report to indicate the beginning of the work
 integration.startBuildItInstantaneously = function( object, objectType, withoutReport )
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
@@ -133,8 +133,8 @@ integration.startBuildItKnowledge = function( objectKnowledge )
     end
 end
 
---- Beginning to resume work to build of pre-existing urban block
--- A report is sent when the work is begining 
+--- Beginning to resume work to build a pre-existing urban block
+-- A report is sent when the work begins 
 -- @param urbanBlock Urban block knowledge
 integration.startBuildItUrbanBlock = function( urbanBlock )  
     urbanBlock[ myself ] = urbanBlock[ myself ] or {}
@@ -151,7 +151,6 @@ end
 -- @param object Object knowledge
 -- @param returnActionDone Boolean, true if a message should be sent when the work is over  
 -- @return string defined in Reports.xml
--- @see Reports.xml in physical database
 integration.updateBuildIt = function( object, returnActionDone )
     if object[myself].actionBuildState == eActionObjetTerminee then -- maneuver obstacle is finished but does not return feedback done without having activated it
         if( object.knowledge ~= nil ) then
@@ -236,7 +235,7 @@ end
 -- A report is sent when work is beginning
 -- @param object Object knowledge to build
 -- @param objectType String, the type of the object 
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 integration.startBuildItSecu = function( object, objectType )
     object[ myself ] = object[ myself ] or {}
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
@@ -284,7 +283,7 @@ integration.updateBuildItSecu = function( object )
     return false
 end
 
---- Stop to construct an object
+--- Stop constructing an object
 -- The action in the simulation is stopped
 -- A report is sent when object is finished
 -- @param object Object knowledge
@@ -305,8 +304,9 @@ integration.stopBuildItSecu = function( object )
     return result
 end
 
---- Return the closest object knowledge from the reference point in a circle
--- The barycenter of the object is used for its location 
+--- Return the object knowledge among a list of objects closest to a point
+-- If the nearest object is farther than a specified distance, then nil is returned instead
+-- Distance is computed solely based on the objects barycenters 
 -- @param ptRef Simulation point, the center of the circle where finding the object
 -- @param lstObjets, list of object knowledges
 -- @param rDistMax Double, the radius where finding the object
@@ -325,11 +325,12 @@ integration.obtenirObjetProcheDePosition = function( ptRef, lstObjets, rDistMax 
     return _returnValue
 end
 
---- Return the closest object knowledge from the reference point
--- The barycenter of the object is used for its localisation 
+--- Return the object knowledge closest to a point
+-- If the nearest object is farther than a specified distance, then nil is returned instead
+-- Distance is computed solely based on the objects barycenters 
 -- @param locRef Simulation object knowledge
 -- @param eTypeObject String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param rDistMax Double, the radius where finding the object
 -- @return the closest Simulation object knowledge 
 integration.obtenirObjetProcheDe = function( locRef, eTypeObject, rDistMax )
@@ -362,7 +363,7 @@ integration.getBarycentreZoneFromLocalisation = function( localisation )
 end
 
 
---- Start to filter crowd with a checkpoint
+--- Start filtering crowd with a checkpoint
 -- Create a checkpoint at the position
 -- A report is sent
 -- @param position Point knowledge
@@ -381,7 +382,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- called only on
 end
 
 --- Filter the crowd, unit adopts a filtration posture
--- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. More the percentage is higher more the time search is long and will slow down the passage of the crowd through the checkpoint.
+-- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. The higher the percentage, the longer search time and will slow down the passage of the crowd through the checkpoint.
 -- @param blockingStrength, percentage of the filter efficiency. 100% means crowd is blocked. 0% means the filter has no effect.
 -- @param position Point knowledge
 integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
@@ -453,11 +454,11 @@ integration.destroyInstantlyCheckpointOn = function( position )
     end
 end
 
---- Delete object which have same simulation localisation and return the localisation
+--- Delete object which have same simulation location and return the location
 -- @param eTypeObject String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param area Area or Point knowledge
--- @return localisation
+-- @return location
 integration.deleteObjectWithSameLocalisation = function( typeObject, area )  -- Called only once
     local localisation
     if masalife.brain.core.class.isOfType( area, integration.ontology.types.area) then
@@ -474,9 +475,9 @@ integration.deleteObjectWithSameLocalisation = function( typeObject, area )  -- 
 end
 
 --- Create instantaneously object on position
--- If an other object with the same type already exists, it will be removed instantaneously before to create the new one
+-- If an other object with the same type already exists, it will be removed instantaneously before creating the new one
 -- @param eTypeObject String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param position Area knowledge
 integration.buildInstantlyObjectOn = function( typeObject, position )  -- Called only once
     local localisation = integration.deleteObjectWithSameLocalisation( typeObject, position ) 
@@ -486,9 +487,9 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- Called
 end
 
 --- Create a polygonal object on area
--- If an other object with the same type already exists, it will be removed instantaneously before to create the new one
+-- If an other object with the same type already exists, it will be removed instantaneously before creating the new one
 -- @param eTypeObject String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param area Area knowledge
 integration.buildInstantlyPolyligneOnArea = function( typeObject, area )  -- Called only once
     local localisation = integration.deleteObjectWithSameLocalisation( typeObject, area ) 
@@ -501,7 +502,7 @@ end
 
 --- Destroy instantaneously object on position
 -- @param eTypeObject String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param position Point knowledge
 integration.destroyInstantlyObjectOn = function( typeObject, position )
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
@@ -565,8 +566,7 @@ end
 -- Build an object to improve mobility (e.g. mobility enhanced area)
 -- A report is sent when the work is beginning
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
--- @param affectionType, string the type of the object
--- @see Types.lua for the types list
+-- @param affectionType, string the type of the object, see Types.lua for the types list
 -- @return false
 integration.startAffectMobility = function( target, affectionType )
     reportFunction(eRC_DebutTravaux )
@@ -599,6 +599,7 @@ integration.stopAffectMobility = function( target )
 end
 
 --- Remove mobility object instantanneously
+-- Only works for objects constructed with integration.starAffectMobility
 -- @param target Directia target knowledge (target should be a localized element, e.g. area, crowd, agent, point, urban block...)
 integration.unAffectMobility = function( target )
     target[myself] = target[myself] or {}
@@ -608,7 +609,7 @@ integration.unAffectMobility = function( target )
     end
 end
 
---- Start to equip a crossing site with a bridge
+--- Start equipping a crossing site with a bridge
 -- @param site Object knowledge
 -- @param typePont String, the type of the bridge (discontinuous or continuous pontoon bridge)
 -- @return false
@@ -622,7 +623,7 @@ integration.startEquipBridge = function( site, typePont )
     return false
 end
 
---- Continue to equip a crossing site by a bridge
+--- Continue equipping a crossing site by a bridge
 -- @param site Object knowledge
 -- @param typePont String, the type of the bridge (discontinuous or continuous pontoon bridge)
 -- @return Boolean true if the bridge is built, false otherwise
@@ -658,17 +659,17 @@ integration.unEquipSite = function( site )
     end
 end
 
---- Returns if the agent has dotation to build an object type, false otherwise
+--- Returns whether the agent has resource to build an object type, false otherwise
 -- The tests is done for agent without reinforcement 
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @return Boolean
 integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( objectType )
   return DEC_Agent_ADotationPourConstruireObjetSansRenforts( objectType )
 end
 
---- Start filetering crowds
--- @param intensity
+--- Start filtering crowds
+-- @param intensity between 0 and 100
 -- @param checkpoint Object knowledge (checkpoint object)
 integration.startFilterCrowds = function( intensity, checkpoint )
 -- $$$ MIA temp for Secu, à merger avec military
@@ -684,38 +685,38 @@ integration.stopFilterCrowds = function( checkpoint ) -- Called only once
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, 1 )
 end
 
---- Returns if the agent has dotation to build an object knowledge, false otherwise
+--- Returns whether the agent has resource to build an object knowledge, false otherwise
 -- @param entity Simulation agent
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
--- @return Boolean, whether or not unit has dotation to build the object
+-- See ObjectNames.xml and Objects.xml in physical database for the types
+-- @return Boolean, whether or not unit has resource to build the object
 integration.hasDotationToBuildObject = function( entity, objectType )
     return DEC_Agent_AgentADotationPourConstruireObjet( entity, objectType )
 end
 
---- Returns if the agent can remove object, false otherwise
+--- Returns true if the agent can remove object, false otherwise
 -- The result is given when foot soldiers are loaded 
 -- The result depends on the terrain where object should be built 
 -- @param entity Simulation agent
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param location Simulation area
 -- @return Boolean, whether or not unit can build the object
 integration.canBuildObjectWhenLoadedWithLocation = function( entity, objectType, location )
     return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity, objectType, location )
 end
 
---- Returns if the agent can remove the object when the foot soldiers are loaded, false otherwise
+--- Returns true if the agent can remove the object when the foot soldiers are loaded, false otherwise
 -- @param entity Simulation agent
 -- @param objectType String, the type of the object
--- @see ObjectNames.xml and Objects.xml in physical database for the types
+-- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @param location Simulation area
 -- @return Boolean, whether or not unit can remove the object
 integration.canBuildObjectWhenLoaded = function( entity, objectType, location )
     return DEC_Agent_AgentPeutConstruireObjetEmbarque( entity, objectType, location )
 end
 
---- Returns if the agent can remove an object, false otherwise
+--- Returns true if the agent can remove an object, false otherwise
 -- @param entity Simulation agent 
 -- @param obstacle Object knowledge
 -- @return Boolean, whether or not unit can remove the object
