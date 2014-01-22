@@ -317,16 +317,6 @@ integration.mountStarted = function()
     return true
 end
 
---- Makes this entity start dismounting if it can (no other dismounting action is taking place,
---- and the entity is mounted).
---- Otherwise, this method stops the potential current dismounting action (started by a
---- previous call to this method).
--- This method can only be called by an agent.
--- @see integration.updateMoveToIt
--- @see integration.stopDismount
--- @return Boolean, false if the action is ongoing, true otherwise.
-
-
 --- Makes this entity start dismounting if it can (the entity is mounted and 
 --- no dismounting action has been started by the potential movement of this entity
 --- (i.e. by a call to the integration.updateMoveToIt method)).
@@ -641,7 +631,8 @@ integration.isNight = function()
     return DEC_Nuit()
 end
 
---- Activates the recording mode for this entity.
+--- Activates the recording mode for this entity. Entities perceived by this entity will not
+--- be transmitted to its knowledge group until integration.deactivateRecording has been called.
 -- @see integration.deactivateRecording
 -- This method can only be called by an agent.
 integration.activateRecording = function()
@@ -649,6 +640,7 @@ integration.activateRecording = function()
 end
 
 --- Deactivates the recording mode for this entity.
+-- Sends all perceptions acquired during record mode to the entity's knowledge group.
 -- @see integration.activateRecording
 -- This method can only be called by an agent.
 integration.deactivateRecording = function()
@@ -797,18 +789,6 @@ integration.isLogisticConvoy = function( platoon )
     else
         return false
     end
-end
-
---- Returns the usual flying height of the given agent, based only on his type.
--- @param entity Simulation agent
--- @return Float, the usual flying height (in meters)
-integration.unitAltitude = function( entity )
-    local nomPion = DEC_Pion_GetMilPionName( entity )
-    local altitude = 1000
-    if string.find( nomPion, "DRAC" ) then
-        altitude = 200
-    end
-    return altitude
 end
 
 --- Returns true if this entity is transported, false otherwise.
@@ -1020,3 +1000,15 @@ integration.increaseNodeProduction = integration.increaseResourceNodeProduction
 
 --- Deprecated
 integration.decreaseNodeProduction = integration.decreaseResourceNodeProduction
+
+--- Deprecated
+-- @see integration.getStandardFlyingHeight
+-- @see integration.getTacticalFlyingHeight
+integration.unitAltitude = function( entity )
+    local nomPion = DEC_Pion_GetMilPionName( entity )
+    local altitude = 1000
+    if string.find( nomPion, "DRAC" ) then
+        altitude = 200
+    end
+    return altitude
+end
