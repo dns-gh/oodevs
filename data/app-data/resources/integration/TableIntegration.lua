@@ -14,7 +14,7 @@ end
 --- Returns true if the given table of table contains a table with
 -- the provided element as a value.
 -- @param t Table containing only tables as values
--- @param k Any type, the seeked element
+-- @param k Any type, the sought element
 -- @return Boolean
 existsInside = function( t, k )
     for _, content in pairs( t ) do
@@ -29,7 +29,7 @@ end
 
 --- Returns true if the provided index is a key of the given table.
 -- @param t Table
--- @param i Any type, the seeked index
+-- @param i Any type, the sought index
 -- @return Boolean
 existsIndex = function( t, i )
     return t[i] ~= nil
@@ -53,34 +53,36 @@ fusionList = function( table1, table2 )
     return res
 end
 
---- Removes the given value from the provided table, and returns it
+--- Removes the given value from the provided list, and returns it.
+--- Shifts down any remaining integer keys.
 -- @param value Any type, the value to remove
--- @param tableParam Table upon which the removal will take place
--- @return Table, the provided table without the given value
-removeFromList = function( value, tableParam )
-    for i, k in pairs( tableParam ) do
-        if value == k then
-            table.remove( tableParam, i )
+-- @param list List upon which the removal will take place
+-- @return List, the provided list without the given value
+removeFromList = function( value, list )
+    for i = 1, #list do
+        if value == list[i] then
+            table.remove( list, i )
             break
         end
     end
-    return tableParam
+    return list
 end
 
--- Removes all the given values from the provided table, and returns it
+--+ Removes all the given values from the provided list, and returns it.
+--- Shifts down any remaining integer keys.
 -- @param values Table of values to remove
--- @param tableParam Table upon which the removal will take place
--- @return Table, the provided table without the given values
-removeListFromList = function( values, tableParam )
+-- @param list List upon which the removal will take place
+-- @return List, the provided list without the given value
+removeListFromList = function( values, list )
     for _, value in pairs( values ) do
-        for i, k in pairs( tableParam ) do
-            if value == k then
-                table.remove( tableParam, i )
+        for i = 1, #list do
+            if value == list[i] then
+                table.remove( list, i )
                 break
             end
         end
     end
-    return tableParam
+    return list
 end
 
 --- Returns a deep copy of the given table
