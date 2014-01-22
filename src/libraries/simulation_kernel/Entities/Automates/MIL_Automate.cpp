@@ -542,20 +542,22 @@ void MIL_Automate::UpdateNetwork() const
 {
     try
     {
-        if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
+        client::AutomatAttributes msg;
+        msg().mutable_automat()->set_id( GetID() );
+        bool mustSend = bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged();
+        if( mustSend )
         {
-            client::AutomatAttributes msg;
-            msg().mutable_automat()->set_id( GetID() );
             if( bAutomateModeChanged_ )
                 msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
             GetRole< DEC_AutomateDecision >().SendChangedState( msg );
             pExtensions_->UpdateNetwork( msg );
-            msg.Send( NET_Publisher_ABC::Publisher() );
         }
         if( pBrainLogistic_.get() )
-            pBrainLogistic_->SendChangedState();
+            mustSend |= pBrainLogistic_->SendChangedState( msg );
         else
             pLogisticHierarchy_->SendChangedState();
+        if( mustSend )
+            msg.Send( NET_Publisher_ABC::Publisher() );
         pDotationSupplyManager_->SendChangedState();
         pStockSupplyManager_->SendChangedState();
     }
@@ -861,6 +863,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().set_app6symbol( symbol_ );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
+    message().set_log_maintenance_manual( pBrainLogistic_.get() ? pBrainLogistic_->IsMaintenanceManual() : false );
     message().set_name( GetName() );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
@@ -893,7 +896,7 @@ void MIL_Automate::SendFullState( unsigned int contex ) const
 
     pLogisticHierarchy_->SendFullState();
     if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendFullState();
+        pBrainLogistic_->SendFullState( message );
     pDotationSupplyManager_->SendFullState();
     pStockSupplyManager_->SendFullState();
 
@@ -1074,10 +1077,15 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         OnChangeBrainDebug( msg.parameters() );
         break;
     case sword::UnitMagicAction::log_finish_handlings:
-            if( ! pBrainLogistic_.get() )
-                throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
-            if( ! pBrainLogistic_->FinishAllHandlingsSuccessfullyWithoutDelay() )
-                throw MASA_BADUNIT_UNIT( "automat must have logistic handlings pending" );
+        if( ! pBrainLogistic_.get() )
+            throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
+        if( ! pBrainLogistic_->FinishAllHandlingsSuccessfullyWithoutDelay() )
+            throw MASA_BADUNIT_UNIT( "automat must have logistic handlings pending" );
+        break;
+    case sword::UnitMagicAction::log_maintenance_set_manual:
+        if( !pBrainLogistic_.get() )
+            throw MASA_BADUNIT_UNIT( "automat must be a logistic base" );
+        pBrainLogistic_->OnReceiveLogMaintenanceSetManual( msg.parameters() );
         break;
     default:
         {

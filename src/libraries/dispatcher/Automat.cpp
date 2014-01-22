@@ -32,25 +32,26 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const tools::Resolver_ABC< kernel::AutomatType >& types )
-    : Automat_ABC       ( msg.automat().id(), QString( msg.name().c_str() ) )
-    , model_            ( model )
-    , decisionalInfos_  ( model )
-    , type_             ( types.Get( msg.type().id() ) )
-    , team_             ( model.Sides().Get( msg.party().id() ) )
-    , parentFormation_  ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
-    , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
-    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
-    , logisticEntity_   ( 0 )
-    , logisticHierarchy_( *this, model.Formations(), model.Automats() )
-    , nAutomatState_    ( sword::disengaged )
-    , nForceRatioState_ ( sword::ForceRatio::neutral )
-    , nCloseCombatState_( sword::pinned_down )
-    , nOperationalState_( sword::totally_destroyed )
-    , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
-    , order_            ( 0 )
-    , app6symbol_       ( msg.app6symbol() )
-    , decisionalModel_  ( type_.GetDecisionalModel().GetName() )
-    , brainDebug_       ( false )
+    : Automat_ABC( msg.automat().id(), QString( msg.name().c_str() ) )
+    , model_               ( model )
+    , decisionalInfos_     ( model )
+    , type_                ( types.Get( msg.type().id() ) )
+    , team_                ( model.Sides().Get( msg.party().id() ) )
+    , parentFormation_     ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
+    , parentAutomat_       ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
+    , knowledgeGroup_      ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
+    , logisticEntity_      ( 0 )
+    , logisticHierarchy_   ( *this, model.Formations(), model.Automats() )
+    , nAutomatState_       ( sword::disengaged )
+    , nForceRatioState_    ( sword::ForceRatio::neutral )
+    , nCloseCombatState_   ( sword::pinned_down )
+    , nOperationalState_   ( sword::totally_destroyed )
+    , nRoe_                ( sword::RulesOfEngagement::fire_upon_order )
+    , order_               ( 0 )
+    , app6symbol_          ( msg.app6symbol() )
+    , decisionalModel_     ( type_.GetDecisionalModel().GetName() )
+    , brainDebug_          ( false )
+    , logMaintenanceManual_( msg.log_maintenance_manual() )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw MASA_EXCEPTION( "invalid parent for automat " + msg.name() );
@@ -250,6 +251,8 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
         decisionalModel_ = msg.decisional_model();
     if( msg.has_brain_debug() )
         brainDebug_ = msg.brain_debug();
+    if( msg.has_log_maintenance_manual() )
+        logMaintenanceManual_ = msg.log_maintenance_manual();
 }
 
 // -----------------------------------------------------------------------------
@@ -278,31 +281,32 @@ void Automat::DoUpdate( const sword::AutomatOrder& message )
 // -----------------------------------------------------------------------------
 void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::AutomatCreation asn;
-    asn().mutable_automat()->set_id( GetId() );
-    asn().mutable_type()->set_id( type_.GetId() );
-    asn().set_name( GetName().toStdString() );
-    asn().mutable_party()->set_id( team_.GetId() );
-    asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-    asn().set_app6symbol( app6symbol_ );
-    asn().set_symbol( app6symbol_ );
+    client::AutomatCreation msg;
+    msg().mutable_automat()->set_id( GetId() );
+    msg().mutable_type()->set_id( type_.GetId() );
+    msg().set_name( GetName().toStdString() );
+    msg().mutable_party()->set_id( team_.GetId() );
+    msg().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
+    msg().set_app6symbol( app6symbol_ );
+    msg().set_symbol( app6symbol_ );
     if( parentFormation_ )
-        asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
+        msg().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
     if( parentAutomat_ )
-        asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
+        msg().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
     if( logisticEntity_.get() )
-        logisticEntity_->Send( asn() );
+        logisticEntity_->Send( msg() );
     else
-        asn().set_logistic_level( sword::none );
+        msg().set_logistic_level( sword::none );
     if( color_.IsInitialized() )
-        *asn().mutable_color() = color_;
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        *msg().mutable_color() = color_;
+    for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
-        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
-    asn.Send( publisher );
+    msg().set_log_maintenance_manual( logMaintenanceManual_ );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,22 +316,23 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
-        client::AutomatAttributes asn;
-        asn().mutable_automat()->set_id( GetId() );
-        asn().set_mode( nAutomatState_ );
-        asn().set_force_ratio( nForceRatioState_);
-        asn().set_meeting_engagement( nCloseCombatState_);
-        asn().set_operational_state( nOperationalState_ );
-        asn().set_roe( nRoe_ );
+        client::AutomatAttributes msg;
+        msg().mutable_automat()->set_id( GetId() );
+        msg().set_mode( nAutomatState_ );
+        msg().set_force_ratio( nForceRatioState_);
+        msg().set_meeting_engagement( nCloseCombatState_);
+        msg().set_operational_state( nOperationalState_ );
+        msg().set_roe( nRoe_ );
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
-            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
-        asn().set_decisional_model( decisionalModel_ );
-        asn().set_brain_debug( brainDebug_ );
-        asn.Send( publisher );
+        msg().set_decisional_model( decisionalModel_ );
+        msg().set_brain_debug( brainDebug_ );
+        msg().set_log_maintenance_manual( logMaintenanceManual_ );
+        msg.Send( publisher );
     }
     if( order_.get() )
         order_->Send( publisher );
@@ -495,7 +500,7 @@ const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 // -----------------------------------------------------------------------------
 bool Automat::GetExtension( const std::string& key, std::string& result ) const
 {
-    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    auto it = extensions_.find( key );
     if( it == extensions_.end() )
         return false;
     result = it->second;

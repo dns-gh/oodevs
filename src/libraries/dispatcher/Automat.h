@@ -140,6 +140,7 @@ private:
     std::string app6symbol_;
     std::string decisionalModel_;
     bool brainDebug_;
+    bool logMaintenanceManual_;
     //@}
 };
 

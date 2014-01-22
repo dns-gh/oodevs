@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Specialisations/Log/MIL_AutomateLOG.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 14:54 $
-// $Revision: 18 $
-// $Workfile: MIL_AutomateLOG.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -45,6 +43,7 @@
 #include "Tools/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/MessageParameters.h"
 #include <boost/foreach.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
@@ -62,8 +61,8 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 {
     std::string logLevelName;
     archive >> logLevelName;
-    assert(PHY_LogisticLevel::Find(logLevelName));
-    ::new(automat)MIL_AutomateLOG(*PHY_LogisticLevel::Find(logLevelName));
+    assert( PHY_LogisticLevel::Find( logLevelName ) );
+    ::new( automat )MIL_AutomateLOG( *PHY_LogisticLevel::Find( logLevelName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +74,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
     , pAssociatedFormation_( &formation )
     , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , pLogLevel_           ( &logLevel )
+    , maintenanceManual_   ( false )
+    , manualHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -88,6 +89,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
     , pAssociatedFormation_( 0 )
     , pLogLevel_           ( &logLevel )
     , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
+    , maintenanceManual_   ( false )
+    , manualHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -101,6 +104,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
     , pAssociatedFormation_( 0 )
     , pLogLevel_           ( &level )
     , pLogisticHierarchy_  ( 0 )
+    , maintenanceManual_   ( false )
+    , manualHasChanged_    ( false )
 {
     // NOTHING
 }
@@ -141,6 +146,7 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
     file & pLogisticHierarchy_;
     file & supplyRequests_;
     file & supplyConsigns_;
+    file & maintenanceManual_;
 }
 
 // -----------------------------------------------------------------------------
@@ -641,6 +647,7 @@ void MIL_AutomateLOG::Clean()
 {
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
+    manualHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -650,7 +657,7 @@ void MIL_AutomateLOG::Clean()
 void MIL_AutomateLOG::SendFullState() const
 {
     pLogisticHierarchy_->SendFullState();
-    BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
+    BOOST_FOREACH( const auto& data, supplyRequests_ )
         data->SendFullState();
 }
 
@@ -759,4 +766,24 @@ bool MIL_AutomateLOG::FinishAllHandlingsSuccessfullyWithoutDelay()
     boost::for_each( observers,
         boost::mem_fn( &logistic::SupplyConvoysObserver_ABC::FinishSuccessfullyWithoutDelay ) );
     return ! supplyConsigns_.empty() || ! observers.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::IsMaintenanceManual
+// Created: SLI 2014-01-22
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::IsMaintenanceManual() const
+{
+    return maintenanceManual_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::OnReceiveLogMaintenanceSetManual
+// Created: SLI 2014-01-21
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::OnReceiveLogMaintenanceSetManual( const sword::MissionParameters& parameters )
+{
+    protocol::CheckCount( parameters, 1 );
+    maintenanceManual_ = protocol::GetBool( parameters, 0 );
+    manualHasChanged_ = true;
 }
