@@ -74,3 +74,101 @@ func (s *TestSuite) TestAutomatReloadBrain(c *C) {
 	err = client.ReloadBrain(tasker, "Journalists")
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestCreateAutomat(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer sim.Stop()
+	model := client.Model
+
+	formation := getSomeFormation(c, model.GetData())
+
+	// We want two knowledge groups from different parties, one of which
+	// matches selected formation.
+	knowledgeGroups := model.GetData().KnowledgeGroups
+	c.Assert(len(knowledgeGroups), Greater, 1)
+	var kg0 *swapi.KnowledgeGroup
+	var kg1 *swapi.KnowledgeGroup
+	for _, kg := range knowledgeGroups {
+		if kg0 == nil && kg.PartyId == formation.PartyId {
+			kg0 = kg
+		}
+		if kg1 == nil && kg.PartyId != formation.PartyId {
+			kg1 = kg
+		}
+	}
+	c.Assert(kg0, NotNil)
+	c.Assert(kg1, NotNil)
+
+	automatType := AutomatType
+
+	// No parent formation
+	_, err := client.CreateAutomat(0, automatType, kg0.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Invalid formation
+	_, err = client.CreateAutomat(InvalidIdentifier, automatType, kg0.Id)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Invalid automat type
+	_, err = client.CreateAutomat(formation.Id, InvalidIdentifier, kg0.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Invalid knowledge group
+	_, err = client.CreateAutomat(formation.Id, automatType, InvalidIdentifier)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Knowledge group not belonging to formation party
+	_, err = client.CreateAutomat(formation.Id, automatType, kg1.Id)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Create automat in formation
+	a, err := client.CreateAutomat(formation.Id, automatType, kg0.Id)
+	c.Assert(err, IsNil)
+	c.Assert(a, NotNil)
+	c.Assert(a.KnowledgeGroupId, Equals, kg0.Id)
+}
+
+func (s *TestSuite) TestCreateAutomatAndUnits(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	defer sim.Stop()
+	model := client.Model
+
+	formation := getSomeFormation(c, model.GetData())
+	pos := swapi.Point{X: -15.8219, Y: 28.2456}
+
+	// We want two knowledge groups from different parties, one of which
+	// matches selected formation.
+	knowledgeGroups := model.GetData().KnowledgeGroups
+	c.Assert(len(knowledgeGroups), Greater, 1)
+	var kg0 *swapi.KnowledgeGroup
+	var kg1 *swapi.KnowledgeGroup
+	for _, kg := range knowledgeGroups {
+		if kg0 == nil && kg.PartyId == formation.PartyId {
+			kg0 = kg
+		}
+		if kg1 == nil && kg.PartyId != formation.PartyId {
+			kg1 = kg
+		}
+	}
+	c.Assert(kg0, NotNil)
+	c.Assert(kg1, NotNil)
+
+	// No parent formation
+	_, _, err := client.CreateAutomatAndUnits(0, AutomatType, kg0.Id, pos)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Invalid formation
+	_, _, err = client.CreateAutomatAndUnits(InvalidIdentifier, AutomatType, kg0.Id, pos)
+	c.Assert(err, IsSwordError, "error_invalid_unit")
+
+	// Invalid automat type
+	_, _, err = client.CreateAutomatAndUnits(formation.Id, InvalidIdentifier, kg0.Id, pos)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// Create INF.Infantry company(contains 6 units)
+	automat, units, err := client.CreateAutomatAndUnits(formation.Id, AutomatType, kg0.Id, pos)
+	c.Assert(err, IsNil)
+	c.Assert(automat, NotNil)
+	c.Assert(automat.KnowledgeGroupId, Equals, kg0.Id)
+	c.Assert(len(units), Equals, 6)
+}

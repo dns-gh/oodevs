@@ -321,14 +321,14 @@ func (c *Client) CreateAutomat(formationId, automatType,
 }
 
 func (c *Client) CreateAutomatAndUnits(formationId, automatType,
-	knowledgeGroupId uint32, location Point) (*Automat, error) {
+	knowledgeGroupId uint32, location Point) (*Automat, []*Unit, error) {
 	tasker := MakeFormationTasker(formationId)
 	msg := CreateUnitMagicAction(tasker, MakeParameters(
 		MakeIdentifier(automatType),
-		MakeIdentifier(knowledgeGroupId),
 		MakePointParam(location),
+		MakeIdentifier(knowledgeGroupId),
 	), sword.UnitMagicAction_automat_and_units_creation)
-	var created *Automat
+	var result *sword.MissionParameters
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetAutomatCreation(); reply != nil {
 			// Ignore this message, its context should not be set anyway
@@ -338,15 +338,45 @@ func (c *Client) CreateAutomatAndUnits(formationId, automatType,
 		if err != nil {
 			return err
 		}
-		value := GetParameterValue(reply.GetResult(), 0)
-		if value == nil {
-			return invalid("result", reply.GetResult())
-		}
-		created = c.Model.GetAutomat(value.GetAutomat().GetId())
+		result = reply.GetResult()
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
-	return created, err
+	units := []*Unit{}
+	if err != nil {
+		return nil, units, err
+	}
+	size := len(result.GetElem())
+	ids := make([]uint32, size)
+	for i := 0; i < size; i++ {
+		value := GetParameterValue(result, i)
+		if i == 0 {
+			ids[i] = value.GetAutomat().GetId()
+		} else {
+			ids[i] = value.GetAgent().GetId()
+		}
+	}
+	var automat *Automat
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		automat = data.Automats[ids[0]]
+		if automat == nil {
+			return false
+		}
+		for k, v := range ids {
+			if k != 0 {
+				unit := data.Units[v]
+				if unit == nil {
+					return false
+				}
+				units = append(units, unit)
+			}
+		}
+		return true
+	})
+	if !ok {
+		return nil, units, ErrTimeout
+	}
+	return automat, units, nil
 }
 
 func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
