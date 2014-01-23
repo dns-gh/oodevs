@@ -354,6 +354,8 @@ void EventPresenter::Plan()
     CheckEvent();
     event_->GetEvent().uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event_->GetEvent().done = false;
+    event_->GetEvent().error_code = 0;
+    event_->GetEvent().error_text.clear();
     if( !timelineHandler_ )
         throw MASA_EXCEPTION( "Can't plan an event without a timeline handler" );
     timelineHandler_->CreateEvent( event_->GetEvent(), true );
@@ -380,6 +382,8 @@ void EventPresenter::UpdateRemote()
 void EventPresenter::UpdateCurrent()
 {
     CheckEvent();
+    event_->GetEvent().error_code = 0;
+    event_->GetEvent().error_text.clear();
     if( HasCurrentPresenter() )
         GetCurrentPresenter().CommitTo( event_->GetEvent() );
     event_->Update();

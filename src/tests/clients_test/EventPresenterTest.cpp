@@ -37,6 +37,9 @@ namespace gui
            << event.GetEvent().begin << ", "
            << event.GetEvent().end << ", "
            << event.GetEvent().done << ", "
+           << event.GetEvent().read_only << ", "
+           << event.GetEvent().error_code << ", "
+           << event.GetEvent().error_text << ", "
            << event.GetEvent().action.target << ", "
            << event.GetEvent().action.apply << ", "
            << event.GetEvent().action.payload << " }";
@@ -73,6 +76,9 @@ namespace
                lhs.begin == rhs.begin &&
                lhs.end == rhs.end &&
                lhs.done == rhs.done &&
+               lhs.read_only == rhs.read_only &&
+               lhs.error_code == rhs.error_code &&
+               lhs.error_text == rhs.error_text &&
                lhs.action.target == rhs.action.target &&
                lhs.action.apply  == rhs.action.apply  &&
                lhs.action.payload == rhs.action.payload;
@@ -180,7 +186,7 @@ namespace
         }
         void CheckFillAndBuild( const boost::shared_ptr< MockSubPresenter >& subPresenter )
         {
-            MOCK_EXPECT( subPresenter->FillFrom ).once();
+            MOCK_EXPECT( subPresenter->FillFrom ).once().with( boost::cref( *state.event_ ) );
             CheckBuild( subPresenter );
         }
         void CheckBuild( const boost::shared_ptr< MockSubPresenter >& subPresenter )
@@ -594,4 +600,20 @@ BOOST_FIXTURE_TEST_CASE( event_presenter_throw_if_a_forbidden_action_is_triggere
     presenter.StartCreation( eEventTypes_Order, first_date );
 
     BOOST_CHECK_THROW( presenter.OnSaveAsClicked(), tools::Exception );
+}
+
+BOOST_FIXTURE_TEST_CASE( event_presenter_click_on_save_reset_error, PresenterFixture )
+{
+    state = gui::EventViewState( taskEvent, eEventDockModes_EditPlanned, false, true, true );
+    taskEvent->GetEvent().error_code = 2;
+    taskEvent->GetEvent().error_text = "error text";
+    CheckPurgeFillAndBuild( taskPresenter );
+    presenter.StartEdition( *taskEvent, false );
+
+    taskEvent->GetEvent().error_code = 0;
+    taskEvent->GetEvent().error_text.clear();
+    MOCK_EXPECT( taskPresenter->CommitTo ).once().with( taskEvent->GetEvent() );
+    MOCK_EXPECT( timelineHandler->EditEvent ).once().with( taskEvent->GetEvent() );
+    CheckFillAndBuild( taskPresenter );
+    presenter.OnSaveClicked();
 }
