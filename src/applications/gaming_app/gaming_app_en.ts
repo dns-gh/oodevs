@@ -1627,25 +1627,6 @@ Do you want to replace it?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticSupplyCarriersTableWidget</name>
-    <message>
-        <source>The convoy is unable to carry that much weight</source>
-        <translation>The convoy is unable to carry that much weight</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal mass threshold</source>
-        <translation>The convoy is under its minimal mass threshold</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry that much volume</source>
-        <translation>The convoy is unable to carry that much volume</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal volume threshold</source>
-        <translation>The convoy is under its minimal volume threshold</translation>
-    </message>
-</context>
-<context>
     <name>LogisticMagicInterface</name>
     <message>
         <source>Switch to automated maintenance</source>
@@ -1674,6 +1655,25 @@ Do you want to replace it?</translation>
     <message>
         <source>Pull supply flow</source>
         <translation type="unfinished">Pull supply flow</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>The convoy is unable to carry that much weight</source>
+        <translation>The convoy is unable to carry that much weight</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass threshold</source>
+        <translation>The convoy is under its minimal mass threshold</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much volume</source>
+        <translation>The convoy is unable to carry that much volume</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal volume threshold</source>
+        <translation>The convoy is under its minimal volume threshold</translation>
     </message>
 </context>
 <context>

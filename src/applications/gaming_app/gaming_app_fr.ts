@@ -1629,25 +1629,6 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticSupplyCarriersTableWidget</name>
-    <message>
-        <source>The convoy is unable to carry that much weight</source>
-        <translation>Le convoi ne peut pas transporter la masse demandée</translation>
-    </message>
-    <message>
-        <source>The convoy is unable to carry that much volume</source>
-        <translation>Le convoi ne peut pas transporter le volume demandé</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal mass threshold</source>
-        <translation>Le convoi est sous son seuil minimal en masse transportée</translation>
-    </message>
-    <message>
-        <source>The convoy is under its minimal volume threshold</source>
-        <translation>Le convoi est sous son seuil minimal en volume transporté</translation>
-    </message>
-</context>
-<context>
     <name>LogisticMagicInterface</name>
     <message>
         <source>Switch to automated maintenance</source>
@@ -1676,6 +1657,25 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>The convoy is unable to carry that much weight</source>
+        <translation>Le convoi ne peut pas transporter la masse demandée</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much volume</source>
+        <translation>Le convoi ne peut pas transporter le volume demandé</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass threshold</source>
+        <translation>Le convoi est sous son seuil minimal en masse transportée</translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal volume threshold</source>
+        <translation>Le convoi est sous son seuil minimal en volume transporté</translation>
     </message>
 </context>
 <context>
