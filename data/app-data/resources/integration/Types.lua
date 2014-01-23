@@ -355,3 +355,8 @@ eEtatNbc_Niv4 = 1
 eEtatRadio_Ouverte = 0
 eEtatRadio_Silence = 1
 eEtatRadio_Silence_Partiel = 2
+
+-- tri state enumeration
+ eTristate_True = 0
+ eTristate_False = 1
+ eTristate_DontKnow = 2
