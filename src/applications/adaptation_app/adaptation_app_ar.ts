@@ -1528,6 +1528,10 @@ Parked engine running</source>
         <source>Min volume carried</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
