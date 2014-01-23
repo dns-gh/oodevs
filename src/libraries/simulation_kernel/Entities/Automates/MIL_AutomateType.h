@@ -42,6 +42,20 @@ public:
              MIL_AutomateType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateType();
 
+    //! @name Types
+    //@{
+    struct sCompositionBounds
+    {
+        sCompositionBounds()
+            : nMin_( 0 )
+            , nMax_( 0 )
+        {}
+        unsigned int nMin_;
+        unsigned int nMax_;
+    };
+    typedef std::vector< std::pair< const MIL_AgentType_ABC*, sCompositionBounds > > T_CompositionMap;
+    //@}
+
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );
@@ -64,6 +78,8 @@ public:
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
+    // Pc is the first element
+    const T_CompositionMap&                  GetComposition                   () const;
     //@}
 
     //! @name Operations
@@ -94,17 +110,6 @@ private:
 
     typedef const MIL_AutomateType* (*T_AutomateTypeAllocator)( const std::string& strName, xml::xistream& xis );
     typedef std::map< std::string, T_AutomateTypeAllocator > T_AutomateTypeAllocatorMap;
-
-    struct sCompositionBounds
-    {
-        sCompositionBounds()
-            : nMin_( 0 )
-            , nMax_( 0 )
-        {}
-        unsigned int nMin_;
-        unsigned int nMax_;
-    };
-    typedef std::map< const MIL_AgentType_ABC*, sCompositionBounds > T_CompositionMap;
     //@}
 
 private:
@@ -117,6 +122,7 @@ private:
     //@{
     static void ReadAutomat( xml::xistream& xis );
     void ReadUnit          ( xml::xistream& xis );
+    bool FindUnitType      ( const MIL_AgentType_ABC& type ) const;
     //@}
 
 private:

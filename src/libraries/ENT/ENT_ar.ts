@@ -1275,5 +1275,9 @@
         <source>Switch Log Maintenance To Manual</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automat and units creation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

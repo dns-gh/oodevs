@@ -1915,15 +1915,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
     else if( wrapper.message().has_unit_creation() )
         OnReceiveUnitCreation              ( wrapper.message().unit_creation() );
     else if( wrapper.message().has_automat_creation() )
-    {
         OnReceiveAutomatCreation( wrapper.message().automat_creation() );
-        T_Listeners toRemove;
-        for( T_Listeners::iterator it = listeners_.begin(); it != listeners_.end(); ++it )
-            if( (*it)->OnMessageReceived( wrapper ) )
-                toRemove.insert( *it );
-        for( T_Listeners::iterator it = toRemove.begin(); it != toRemove.end(); ++it )
-            listeners_.erase( *it );
-    }
     else if( wrapper.message().has_change_diplomacy() )
         OnReceiveChangeDiplomacy( wrapper.message().change_diplomacy() );
     else if( wrapper.message().has_unit_destruction() )
@@ -2339,15 +2331,6 @@ void AgentServerMsgMgr::OnReceiveTimeTableRequestAck( const sword::TimeTableRequ
 void AgentServerMsgMgr::OnReceiveTimeTable( const sword::TimeTable& message )
 {
     simulation_.Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::RegisterListener
-// Created: LDC 2010-10-11
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::RegisterListener( boost::shared_ptr< sword::Listener >& listener )
-{
-    listeners_.insert( listener );
 }
 
 // -----------------------------------------------------------------------------

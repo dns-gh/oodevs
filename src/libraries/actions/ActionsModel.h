@@ -93,7 +93,6 @@ public:
     void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
     void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context );
-    void PublishForce( const Action_ABC& action );
     void RegisterHandler( Publisher_ABC::T_SimHandler handler );
     //@}
 
@@ -105,8 +104,8 @@ public:
     template< typename T >
     Action_ABC* CreateAction( const T& message, bool needRegistration );
 
-    void PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const kernel::Time_ABC& simulation );
-    void PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, bool force );
+    void PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected );
+    void PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
     void PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase );
     void PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected );
     void PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected );
@@ -130,7 +129,6 @@ private:
     //@{
     kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
-    Publisher_ABC& defaultPublisher_;
     std::unique_ptr< ActionPublisher > publisher_;
     //@}
 };

@@ -11,22 +11,18 @@
 #define __AutomatsLayer_h_
 
 #include "clients_gui/AutomatsLayer.h"
-#include <tools/Resolver_ABC.h>
 
 namespace kernel
 {
     class AgentType;
     class AutomatType;
     class Automat_ABC;
-    class Time_ABC;
 }
 
 namespace actions
 {
     class ActionsModel;
 }
-
-class AgentServerMsgMgr;
 
 // =============================================================================
 /** @class  AutomatsLayer
@@ -40,8 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                            gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                            const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
+                            gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel );
     virtual ~AutomatsLayer();
     //@}
 
@@ -66,10 +61,7 @@ private:
     //@{
     gui::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
-    const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
-    AgentServerMsgMgr& messageManager_;
-    tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel_;
     //@}
 };
 

@@ -10,12 +10,8 @@
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
 #include "actions/ActionsModel.h"
-#include "actions/ActionTasker.h"
-#include "actions/ActionTiming.h"
-#include "actions/UnitMagicAction.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
 #include <ctime>
@@ -25,16 +21,11 @@
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
-                             const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                             const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
-                             tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
+                              const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile )
-    , tools_         ( tools )
-    , actionsModel_  ( actionsModel )
-    , simulation_    ( simulation )
-    , selected_      ( controllers )
-    , messageManager_( messageManager )
-    , agentsModel_   ( agentsModel )
+    , tools_       ( tools )
+    , actionsModel_( actionsModel )
+    , selected_    ( controllers )
 {
     // NOTHING
 }
@@ -122,7 +113,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    actionsModel_.PublishAgentCreationAction( type, point, *selected_, false );
+    actionsModel_.PublishAgentCreationAction( type, point, *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,5 +122,5 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    actionsModel_.PublishAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
+    actionsModel_.PublishAutomatCreationAction( point, type, *selected_ );
 }

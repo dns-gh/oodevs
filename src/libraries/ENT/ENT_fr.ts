@@ -1275,5 +1275,9 @@
         <source>Switch Log Maintenance To Manual</source>
         <translation>Passer la maintenance en manuel</translation>
     </message>
+    <message>
+        <source>Automat and units creation</source>
+        <translation>Création d&apos;automate</translation>
+    </message>
 </context>
 </TS>
