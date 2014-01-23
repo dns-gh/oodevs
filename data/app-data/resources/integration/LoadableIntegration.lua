@@ -24,16 +24,6 @@ integration.addToCapturedUnits = function( unit )
     myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit
 end
 
---- Adds the given units to the table of units currently captured by this entity.
--- Creates the table if it does not already exist
--- @param units Table of directia agents or agent knowledges
-integration.addToCapturedUnits = function( units )
-    myself.capturedUnits = myself.capturedUnits or {}
-    for _, unit in pairs( units ) do
-        myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit
-    end
-end
-
 --- Removes the given unit from the table of units currently loaded by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromLoadedUnits = function( unit )
@@ -207,22 +197,34 @@ end
 
 --- Instantaneously loads the given agents.
 -- @see integration.unboardElementsWithoutDelay
--- @param units List of directia agents
+-- @param units List of simulation agents
 -- @param transportOnlyLoadable Boolean, whether or not the transport of the units will only
 -- take into account components that are defined as 'loadable' in the physical database.
 -- @return Boolean, whether or not the loading succeeded
 integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
-    integration.addListToLoadedUnits( units )
+    local kUnits = {}
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, #units do
+        kUnits[i] = CreateKnowledge( integration.ontology.types.agent, units[i] )
+    end
+    integration.addListToLoadedUnits( kUnits )
     DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
 end
 
 --- Instantaneously unloads the given agents.
 -- @see integration.boardElementsWithoutDelay
--- @param units List of directia agents
+-- @param units List of simulation agents
 -- @return Boolean, whether or not the loading succeeded
 integration.unboardElementsWithoutDelay = function( units )
-    integration.removeListFromLoadedUnits( units )
-    integration.removeListFromCapturedUnits( units )
+    local kUnits = {}
+    local integration = integration
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, #units do
+        kUnits[i] = CreateKnowledge( integration.ontology.types.agent, units[i] )
+    end
+    integration.removeListFromLoadedUnits( kUnits )
+    integration.removeListFromCapturedUnits( kUnits )
     DEC_Transport_DebarquerPionsSansDelais( units )
 end
 
