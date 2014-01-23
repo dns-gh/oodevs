@@ -133,7 +133,7 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";
     const std::string& endDate = ( state.event_ ) ? state.event_->GetEvent().end : "";
 
-    title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventType( type ) ) );
+    title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventTypes( type ) ) );
 
     saveAction_->setEnabled( state.save_ );
     saveAsAction_->setEnabled( state.saveAs_ );

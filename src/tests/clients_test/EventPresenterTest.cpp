@@ -30,7 +30,7 @@ namespace gui
     std::ostream& operator<<( std::ostream& os, const gui::Event& event )
     {
         os << "Event " << "{ "
-           << ENT_Tr::ConvertFromEventType( event.GetType() ) << ", "
+           << ENT_Tr::ConvertFromEventTypes( event.GetType() ) << ", "
            << event.GetEvent().uuid << ", "
            << event.GetEvent().name << ", "
            << event.GetEvent().info << ", "

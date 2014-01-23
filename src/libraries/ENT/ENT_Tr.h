@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-18 $
-// $Archive: /MVW_v10/Build/SDK/ent/src/ENT_Tr.h $
-// $Author: Ape $
-// $Modtime: 18/02/05 17:32 $
-// $Revision: 1 $
-// $Workfile: ENT_Tr.h $
-//
-// *****************************************************************************
 
 #ifndef __ENT_Tr_h_
 #define __ENT_Tr_h_
@@ -32,6 +23,24 @@ namespace sword
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
+#define DECLARE_CONVERT_METHODS( NAME, DEFAULT_FROM, DEFAULT_TO )                       \
+const std::string& ConvertFrom ## NAME ## ( E_ ## NAME value,                           \
+                                            E_Conversion conversion = DEFAULT_FROM );   \
+E_ ## NAME ConvertTo ## NAME ##( const std::string& text,                               \
+                                 E_Conversion conversion = DEFAULT_TO );                \
+
+#define DECLARE_CONVERT_METHODS_PROTO( CLASS, ALIAS, DEFAULT_FROM, DEFAULT_TO )         \
+const std::string& ConvertFrom ## ALIAS ## ( sword:: ## CLASS value,                    \
+                                             E_Conversion conversion = DEFAULT_FROM );  \
+sword:: ## CLASS ConvertTo ## ALIAS ##( const std::string& text,                        \
+                                        E_Conversion conversion = DEFAULT_TO );         \
+
+#define DECLARE_CONVERT_METHODS_SUB_PROTO( CLASS, NAME, ALIAS, DEFAULT_FROM, DEFAULT_TO )       \
+const std::string& ConvertFrom ## ALIAS ## ( sword:: ## CLASS ## _ ## NAME value,               \
+                                             E_Conversion conversion = DEFAULT_FROM );          \
+sword:: ## CLASS ## _ ## NAME ConvertTo ## ALIAS ##( const std::string& text,                   \
+                                                     E_Conversion conversion = DEFAULT_TO );    \
+
 namespace ENT_Tr
 {
     enum E_Conversion
@@ -43,105 +52,55 @@ namespace ENT_Tr
 
     void InitTranslations();
 
-    // ConvertFrom functions
-    const std::string& ConvertFromLocationType( E_LocationType, E_Conversion = eToSim );
-    const std::string& ConvertFromDotationFamily( E_DotationFamily, E_Conversion = eToSim );
-    const std::string& ConvertFromAmmunitionType( E_AmmunitionType, E_Conversion = eToSim );
-    const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
-    const std::string& ConvertFromDiplomacy( E_Diplomacy, E_Conversion = eToSim );
-    const std::string& ConvertFromForceRatioStatus( E_ForceRatioStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromOperationalStatus( E_OperationalStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromRoe( E_Roe, E_Conversion = eToSim );
-    const std::string& ConvertFromUnitPosture( E_UnitPosture, E_Conversion = eToSim );
-    const std::string& ConvertFromFireAvailability( E_FireAvailability, E_Conversion = eToSim );
-    const std::string& ConvertFromPopulationRoe( E_PopulationRoe, E_Conversion = eToSim );
-    const std::string& ConvertFromUnitTiredness( E_UnitTiredness, E_Conversion = eToSim );
-    const std::string& ConvertFromUnitMorale( E_UnitMorale, E_Conversion = eToSim );
-    const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
-    const std::string& ConvertFromUnitStress( E_UnitStress, E_Conversion = eToSim );
-    const std::string& ConvertFromLightingType( E_LightingType, E_Conversion = eToSim );
-    const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
-    const std::string& ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus, E_Conversion = eToSim );
-    const std::string& ConvertFromObstacleActivation( E_ObstacleActivation, E_Conversion = eToSim );
-    const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
-    const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
-    const std::string& ConvertFromCrossingType( E_CrossingType, E_Conversion = eToSim );
-    const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
-    const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
-    const std::string& ConvertFromHumanState( E_HumanState, E_Conversion = eToSim );
-    const std::string& ConvertFromHumanLocation( E_HumanLocation, E_Conversion = eToSim );
-    const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
-    const std::string& ConvertFromInjuriesSeriousness( E_InjuriesSeriousness, E_Conversion = eToSim );
-    const std::string& ConvertFromBreakdownType( E_BreakdownType, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
-    const std::string& ConvertFromBreakdownNTI( E_BreakdownNTI, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
-    const std::string& ConvertFromGhostType( E_GhostType, E_Conversion = eToSim );
-    const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
-    const std::string& ConvertFromModes( E_Modes, E_Conversion = eToSim );
-    const std::string& ConvertFromAgentNbcSuit( E_AgentNbcSuit, E_Conversion = eToSim );
-    const std::string& ConvertFromAviationRange( E_AviationRange, E_Conversion = eToSim );
-    const std::string& ConvertFromLayerType( E_LayerTypes, E_Conversion = eToTr );
-    const std::string& ConvertFromEventType( E_EventTypes, E_Conversion = eToTr );
-    const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
-    const std::string& ConvertFromEventDockModes( E_EventDockModes, E_Conversion = eToTr );
-    const std::string& ConvertFromMagicActionType( sword::MagicAction_Type, E_Conversion = eToTr );
-    const std::string& ConvertFromUnitMagicActionType( sword::UnitMagicAction_Type, E_Conversion = eToTr );
-    const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
-    const std::string& ConvertFromObjectMagicActionType( sword::ObjectMagicAction_Type, E_Conversion = eToTr );
-    const std::string& ConvertFromLogisticLevel( sword::EnumLogisticLevel, E_Conversion = eToTr );
-    const std::string& ConvertFromLogMaintenanceHandlingStatus( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus, E_Conversion = eToTr );
+    DECLARE_CONVERT_METHODS( AgentNbcSuit, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( AmmunitionType, eToSim, eToSim )
+    DECLARE_CONVERT_METHODS( AviationRange, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( BreakdownNTI, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( BreakdownType, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( CrossingType, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( Diplomacy, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( DotationFamily, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( EquipmentState, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( EventDockModes, eToTr, eToTr );
+    DECLARE_CONVERT_METHODS( EventTypes, eToTr, eToTr );
+    DECLARE_CONVERT_METHODS( FireAvailability, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( ForceRatioStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( GhostType, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( HumanLocation, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( HumanRank, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( HumanState, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( HumanWound, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( InjuriesSeriousness, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LayerTypes, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LightingType, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( Location, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LocationType, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LogFuneralHandlingStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LogMedicalHandlingStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( LogSupplyHandlingStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( MeetingEngagementStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( MissionType, eToTr, eToTr );
+    DECLARE_CONVERT_METHODS( Modes, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( NatureLevel, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( NbcState, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( ObstacleActivation, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( OperationalStatus, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( PopulationAttitude, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( PopulationRoe, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( Roe, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( UnitExperience, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( UnitMorale, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( UnitPosture, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( UnitStress, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( UnitTiredness, eToSim, eToSim );
+    DECLARE_CONVERT_METHODS( WeatherType, eToSim, eToSim );
 
-    // ConvertTo functions
-    E_LocationType ConvertToLocationType( const std::string& );
-    E_DotationFamily ConvertToDotationFamily( const std::string& );
-    E_AmmunitionType ConvertToAmmunitionType( const std::string& );
-    E_NatureLevel ConvertToNatureLevel( const std::string& );
-    E_Diplomacy ConvertToDiplomacy( const std::string& );
-    E_ForceRatioStatus ConvertToForceRatioStatus( const std::string& );
-    E_MeetingEngagementStatus ConvertToMeetingEngagementStatus( const std::string& );
-    E_OperationalStatus ConvertToOperationalStatus( const std::string& );
-    E_Roe ConvertToRoe( const std::string& );
-    E_UnitPosture ConvertToUnitPosture( const std::string& );
-    E_FireAvailability ConvertToFireAvailability( const std::string& );
-    E_PopulationRoe ConvertToPopulationRoe( const std::string& );
-    E_UnitTiredness ConvertToUnitTiredness( const std::string& );
-    E_UnitMorale ConvertToUnitMorale( const std::string& );
-    E_UnitExperience ConvertToUnitExperience( const std::string& );
-    E_UnitStress ConvertToUnitStress( const std::string& );
-    E_LightingType ConvertToLightingType( const std::string& );
-    E_WeatherType ConvertToWeatherType( const std::string& );
-    E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
-    E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
-    E_LogFuneralHandlingStatus ConvertToLogFuneralHandlingStatus( const std::string& );
-    E_ObstacleActivation ConvertToObstacleActivation( const std::string&, E_Conversion = eToSim );
-    E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
-    E_Location ConvertToLocation( const std::string& );
-    E_CrossingType ConvertToCrossingType( const std::string& );
-    E_HumanWound ConvertToHumanWound( const std::string&, E_Conversion = eToSim );
-    E_HumanRank ConvertToHumanRank( const std::string& );
-    E_HumanState ConvertToHumanState( const std::string& );
-    E_HumanLocation ConvertToHumanLocation( const std::string& );
-    E_EquipmentState ConvertToEquipmentState( const std::string& );
-    E_InjuriesSeriousness ConvertToInjuriesSeriousness( const std::string& );
-    E_BreakdownType ConvertToBreakdownType( const std::string& );
-    E_BreakdownNTI ConvertToBreakdownNTI( const std::string& );
-    E_GhostType ConvertToGhostType( const std::string& );
-    E_NbcState ConvertToNbcState( const std::string& );
-    E_Modes ConvertToModes( const std::string& );
-    E_AgentNbcSuit ConvertToAgentNbcSuit( const std::string& );
-    E_AviationRange ConvertToAviationRange( const std::string& );
-    E_LayerTypes ConvertToLayerType( const std::string& );
-    E_EventTypes ConvertToEventType( const std::string&, E_Conversion = eToTr );
-    E_MissionType ConvertToMissionType( const std::string&, E_Conversion = eToTr );
-    E_EventDockModes ConvertToEventDockModes( const std::string&, E_Conversion = eToTr );
-    sword::MagicAction_Type ConvertToMagicActionType( const std::string&, E_Conversion = eToSim );
-    sword::UnitMagicAction_Type ConvertToUnitMagicActionType( const std::string&, E_Conversion = eToSim );
-    sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );
-    sword::ObjectMagicAction_Type ConvertToObjectMagicActionType( const std::string&, E_Conversion = eToSim );
-    sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );
-    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string&, E_Conversion = eToSim );
+    DECLARE_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( UnitMagicAction, Type, UnitMagicActionType, eToTr, eToSim );
 }
 
 #endif // __ENT_Tr_h_

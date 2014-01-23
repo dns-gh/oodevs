@@ -43,7 +43,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, 
     , view_       ( view )
     , infoTooltip_( new InformationToolTip() )
     , selected_   ( controllers )
-    , name_       ( ENT_Tr::ConvertFromLayerType( type ).c_str() )
+    , name_       ( ENT_Tr::ConvertFromLayerTypes( type ).c_str() )
     , type_       ( type )
 {
     // NOTHING
