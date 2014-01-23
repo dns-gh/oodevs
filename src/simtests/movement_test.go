@@ -48,7 +48,7 @@ func checkSpeed(c *C, client *swapi.Client, from, to swapi.Point, expectedSpeed 
 		speed = m.Units[unit.Id].Speed
 		return true
 	})
-	tolerance := int32(3)
+	tolerance := int32(2)
 	c.Assert(speed, Greater, expectedSpeed-tolerance)
 	c.Assert(speed, Lesser, expectedSpeed+tolerance)
 }
@@ -69,20 +69,27 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 
 	// Speed formula is like:
 	//
-	//    speed * ( 1.0 - factor*slope)
+	//    speed * ( 1.0 - deceleration*slope/slopemax)
 	//
-	// and factor = 0.5 for this unit
+	// and for this unit:
+	baseSpeed := float64(130)
+	deceleration := 0.5
+	slopeMax := 0.7
+	// Compute expected speed for VW Combi located somewhere between minSlope
+	// and maxSlope.
+	expectedSpeed := func(minSlope, maxSlope float64) int32 {
+		slope := 0.5 * (minSlope + maxSlope)
+		return int32(baseSpeed * (1.0 - deceleration*(slope/slopeMax)))
+	}
 
-	// slope: 0 - 0.05
-	checkSlopeSpeed(28.2235, 130, true)
-	// slope: 0.25 - 0.30
-	checkSlopeSpeed(28.2584, 113, true)
-	// slope: 0.50 - 0.55
-	checkSlopeSpeed(28.3023, 90, true)
+	checkSlopeSpeed(28.2235, expectedSpeed(0, 0.05), true)
+	checkSlopeSpeed(28.2571, expectedSpeed(0.25, 0.30), true)
+	checkSlopeSpeed(28.3023, expectedSpeed(0.60, 0.65), true)
 	// Does not accelerate when moving downward
-	checkSlopeSpeed(28.3023, 130, false)
+	checkSlopeSpeed(28.3023, int32(baseSpeed), false)
 	// Downslope can stop the move too
-	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257}, swapi.Point{X: -15.7787, Y: 28.2258}, 0)
+	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257},
+		swapi.Point{X: -15.7787, Y: 28.2258}, 0)
 }
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
