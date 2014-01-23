@@ -161,3 +161,77 @@ integration.enforceAviationResourcesFromRange = function( range )
     DEC_EnforceAviationResources( myself, range )
 end
 
+--- Enables the sorting of wounded units.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.desactivateInjuredSorting
+integration.activateInjuredSorting = function()
+    DEC_Sante_ActiverFonctionTri()
+end
+
+--- Disables the sorting of wounded units.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.activateInjuredSorting
+integration.desactivateInjuredSorting = function()
+    DEC_Sante_DesactiverFonctionTri()
+end
+
+--- Enables the logistics system (medical, supply and maintenance chains).
+-- Returns true if the caller of this method is of a logistic type, false otherwise.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.desactivateLogisticChains
+-- @return Boolean, whether or not the caller is of a logistic type.
+integration.activateLogisticChains = function()
+    if integration.isLogisticTypeUnit() then
+        DEC_Sante_ActiverChaine()
+        DEC_Maintenance_ActiverChaine()
+        DEC_Ravitaillement_ActiverChaine()
+        DEC_Sante_ActiverFonctionSoin()
+        return true
+    else
+        return false
+    end
+end
+
+--- Disables the logistics system (medical, supply and maintenance chains).
+-- Returns true if the caller of this method is of a logistic type, false otherwise.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.activateLogisticChains
+-- @return Boolean, whether or not the caller is of a logistic type.
+integration.desactivateLogisticChains = function()
+    if integration.isLogisticTypeUnit() then
+        DEC_Sante_DesactiverChaine()
+        DEC_Maintenance_DesactiverChaine()
+        DEC_Ravitaillement_DesactiverChaine()
+        DEC_Sante_DesactiverFonctionSoin()
+        return true
+    else
+        return false
+    end
+end
+
+--- Enables the treatment of wounded units.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.desactivateInjuredTreatment
+integration.activateInjuredTreatment = function()
+    DEC_Sante_ActiverFonctionSoin()
+end
+
+--- Disables the treatment of wounded units.
+-- This method can only be called by a logistic agent or company.
+-- @see integration.activateInjuredTreatment
+integration.desactivateInjuredTreatment = function ( )
+    DEC_Sante_DesactiverFonctionSoin()
+end
+
+--- Changes the wounded units treatment priority.
+-- @see integration.changeHealthPriority
+-- @param woundedPriorities List of medical priority knowledges
+integration.modifyHumanWoundPriority = function ( woundedPriorities )
+    if ( woundedPriorities ~= nil ) then
+        local list = {}
+        for i = 1, #woundedPriorities do
+            list[ #list + 1 ] = woundedPriorities[i].source
+        end
+        integration.changeHealthPriority( list )
+    end
+end

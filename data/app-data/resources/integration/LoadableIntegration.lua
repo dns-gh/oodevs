@@ -6,6 +6,16 @@ integration.addToLoadedUnits = function( unit )
     myself.loadedUnits[ unit ] = true
 end
 
+--- Adds the given units to the table of units currently loaded by this entity.
+-- Creates the table if it does not already exist
+-- @param units Table of directia agents or agent knowledges
+integration.addListToLoadedUnits = function( units )
+    myself.loadedUnits = myself.loadedUnits or {}
+    for _, unit in pairs( units ) do
+        myself.loadedUnits[ unit ] = true
+    end
+end
+
 --- Adds the given unit to the table of units currently captured by this entity.
 -- Creates the table if it does not already exist
 -- @param unit Directia agent or agent knowledge
@@ -14,7 +24,17 @@ integration.addToCapturedUnits = function( unit )
     myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit
 end
 
---- Removes the given unit to the table of units currently loaded by this entity.
+--- Adds the given units to the table of units currently captured by this entity.
+-- Creates the table if it does not already exist
+-- @param units Table of directia agents or agent knowledges
+integration.addToCapturedUnits = function( units )
+    myself.capturedUnits = myself.capturedUnits or {}
+    for _, unit in pairs( units ) do
+        myself.capturedUnits[ #myself.capturedUnits + 1 ] = unit
+    end
+end
+
+--- Removes the given unit from the table of units currently loaded by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromLoadedUnits = function( unit )
     if myself.loadedUnits then
@@ -22,11 +42,29 @@ integration.removeFromLoadedUnits = function( unit )
     end
 end
 
---- Removes the given unit to the table of units currently captured by this entity.
+--- Removes the given units from the table of units currently loaded by this entity.
+-- @param units Table of directia agents or agent knowledges
+integration.removeListFromLoadedUnits = function( units )
+    if myself.loadedUnits then
+        for _, unit in pairs( units ) do
+            myself.loadedUnits[ unit ] = nil
+        end
+    end
+end
+
+--- Removes the given unit from the table of units currently captured by this entity.
 -- @param unit Directia agent or agent knowledge
 integration.removeFromCapturedUnits = function( unit )
     if myself.capturedUnits then
         myself.capturedUnits = removeFromList( unit, myself.capturedUnits )
+    end
+end
+
+--- Removes the given units from the table of units currently captured by this entity.
+-- @param units Table of directia agents or agent knowledges
+integration.removeListFromCapturedUnits = function( units )
+    if myself.capturedUnits then
+        myself.capturedUnits = removeListFromList( units, myself.capturedUnits )
     end
 end
 
@@ -143,13 +181,15 @@ end
 -- The agent will also be properly orientated if it is a refugee.
 -- @see integration.unloadFriend
 -- @param unit Directia agent
+-- @param transportOnlyLoadable Boolean, whether or not the transport of the units will only
+-- take into account components that are defined as 'loadable' in the physical database.
 -- @return Boolean, whether or not the loading succeeded
-integration.loadFriend = function( unit )
+integration.loadFriend = function( unit, transportOnlyLoadable )
     integration.addToLoadedUnits( unit )
     if DEC_Agent_EstRefugie( unit.source ) then
         DEC_Agent_OrienterEtEmbarquer( meKnowledge.source, unit.source )
     else
-        DEC_Transport_EmbarquerPionSansDelais( unit.source, false )
+        DEC_Transport_EmbarquerPionSansDelais( unit.source, transportOnlyLoadable )
     end
     return true
 end
@@ -163,6 +203,27 @@ integration.unloadFriend = function( unit )
     integration.removeFromCapturedUnits( unit )
     DEC_Transport_DebarquerPionSansDelais( unit.source )
     return true
+end
+
+--- Instantaneously loads the given agents.
+-- @see integration.unboardElementsWithoutDelay
+-- @param units List of directia agents
+-- @param transportOnlyLoadable Boolean, whether or not the transport of the units will only
+-- take into account components that are defined as 'loadable' in the physical database.
+-- @return Boolean, whether or not the loading succeeded
+integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
+    integration.addListToLoadedUnits( units )
+    DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
+end
+
+--- Instantaneously unloads the given agents.
+-- @see integration.boardElementsWithoutDelay
+-- @param units List of directia agents
+-- @return Boolean, whether or not the loading succeeded
+integration.unboardElementsWithoutDelay = function( units )
+    integration.removeListFromLoadedUnits( units )
+    integration.removeListFromCapturedUnits( units )
+    DEC_Transport_DebarquerPionsSansDelais( units )
 end
 
 --- Returns true if this entity is transported, false otherwise.
@@ -602,3 +663,9 @@ end
 integration.canLoadFriend = function( unit, onlyLoadable )
     return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
 end
+
+--- Deprecated
+integration.boardElementWithoutDelay = integration.loadFriend
+
+--- Deprecated
+integration.unboardElementWithoutDelay = integration.unloadFriend

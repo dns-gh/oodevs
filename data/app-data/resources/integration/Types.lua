@@ -346,3 +346,12 @@ eAviationRange_NoAmmunition = 3
 eBodyAgent = 0
 eBodyCommander = 1
 eBodyCrowd = 2
+
+-- NBC alert
+eEtatNbc_Niv0 = 0
+eEtatNbc_Niv4 = 1
+
+-- Radio state
+eEtatRadio_Ouverte = 0
+eEtatRadio_Silence = 1
+eEtatRadio_Silence_Partiel = 2
