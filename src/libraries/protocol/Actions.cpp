@@ -99,8 +99,8 @@ namespace
 const ActionParam automat_and_units_creation_params[] =
 {
     { "AutomatType", "identifier", 0 },
-    { "KnowledgeGroup", "identifier", 0 },
     { "Location", "point", 0 },
+    { "KnowledgeGroup", "identifier", 0 },
 };
 
 const ActionParam automat_creation_params[] =
