@@ -23,11 +23,9 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner,
                                 const tools::Resolver_ABC< Formation_ABC >& formations,
-                                const tools::Resolver_ABC< Automat_ABC >& automats,
-                                bool isBase )
+                                const tools::Resolver_ABC< Automat_ABC >& automats )
     : owner_( owner )
     , logisticHierarchy_( *this, formations, automats )
-    , isBase_( isBase )
 {
     // NOTHING
 }

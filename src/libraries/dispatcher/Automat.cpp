@@ -66,7 +66,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
-        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), msg.logistic_level() == sword::logistic_base ) );
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats() ) );
         AddExtension( *logisticEntity_ );
         AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }

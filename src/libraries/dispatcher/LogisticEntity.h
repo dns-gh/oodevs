@@ -44,8 +44,7 @@ public:
     //@{
              LogisticEntity( const LogisticEntityOwner_ABC& owner,
                              const tools::Resolver_ABC< Formation_ABC >& formations,
-                             const tools::Resolver_ABC< Automat_ABC >& automates,
-                             bool isBase );
+                             const tools::Resolver_ABC< Automat_ABC >& automates );
     virtual ~LogisticEntity();
     //@}
 
@@ -68,7 +67,6 @@ private:
     //@{
     const LogisticEntityOwner_ABC& owner_;
     LogisticHierarchy logisticHierarchy_;
-    bool isBase_;
     //@}
 };
 
