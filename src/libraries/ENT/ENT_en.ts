@@ -284,52 +284,8 @@
         <translation>novice</translation>
     </message>
     <message>
-        <source>moving toward logistic system</source>
-        <translation>moving toward logistics system</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation>waiting for available tow-truck</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation>tow-truck moving to target</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation>tow-truck loading</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation>tow-truck moving from target</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation>tow-truck unloading</translation>
-    </message>
-    <message>
         <source>diagnostic</source>
         <translation>diagnostic</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation>waiting to be handled by higher level</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation>waiting for available parts</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation>waiting for available mechanics</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation>repairing</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation>unit returning</translation>
     </message>
     <message>
         <source>finished</source>
@@ -1015,10 +971,6 @@
         <source>Seriousness level 3</source>
         <translation>Severity level 3</translation>
     </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>
@@ -1047,6 +999,65 @@
     </message>
     <message>
         <source>Knowledge Group Change Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation type="unfinished">moving toward logistics system</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation type="unfinished">waiting for available tow-truck</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation type="unfinished">tow-truck moving to target</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation type="unfinished">tow-truck loading</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation type="unfinished">tow-truck moving from target</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation type="unfinished">tow-truck unloading</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation type="unfinished">diagnostic</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation type="unfinished">waiting to be handled by higher level</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation type="unfinished">waiting for available parts</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation type="unfinished">waiting for available mechanics</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation type="unfinished">repairing</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation type="unfinished">unit returning</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">finished</translation>
+    </message>
+    <message>
+        <source>waiting for transporter selection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

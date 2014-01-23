@@ -118,7 +118,7 @@ void NameResolver::GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLo
 // -----------------------------------------------------------------------------
 void NameResolver::GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( static_cast< E_LogMaintenanceHandlingStatus >( eMaintenance ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( eMaintenance );
 }
 
 // -----------------------------------------------------------------------------

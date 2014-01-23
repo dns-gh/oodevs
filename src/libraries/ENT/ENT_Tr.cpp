@@ -36,7 +36,6 @@ typedef ENT_Tr::Converter< E_UnitExperience > T_ConverterUnitExperience;
 typedef ENT_Tr::Converter< E_UnitStress > T_ConverterUnitStress;
 typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
 typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
-typedef ENT_Tr::Converter< E_LogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
 typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
 typedef ENT_Tr::Converter< E_LogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
 typedef ENT_Tr::Converter< E_LogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
@@ -67,6 +66,7 @@ typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicAc
 typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
 typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
 typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterEnumLogisticLevel;
+typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -255,25 +255,6 @@ T_ConverterWeatherType WeatherTypeConverter_[] =
     T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
     T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
-};
-
-T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[] =
-{
-    T_ConverterLogMaintenanceHandlingStatus( "deplacement vers chaine", QT_TRANSLATE_NOOP( "ENT_Tr", "moving toward logistic system" ), eLogMaintenanceHandlingStatus_DeplacementVersChaine ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite remorqueur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available tow-truck" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving to target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck loading" ), eLogMaintenanceHandlingStatus_RemorqueurChargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving from target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck unloading" ), eLogMaintenanceHandlingStatus_RemorqueurDechargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMaintenanceHandlingStatus_Diagnostique ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente prise en charge par niveau superieur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting to be handled by higher level" ), eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite pieces", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available parts" ), eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite reparateur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available repairer" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur ),
-    T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "repairing" ), eLogMaintenanceHandlingStatus_Reparation ),
-    T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "unit returning" ), eLogMaintenanceHandlingStatus_RetourPion ),
-    T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMaintenanceHandlingStatus_Termine ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente selection de transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter selection" ), eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur ),
-    T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
 };
 
 T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
@@ -662,19 +643,38 @@ T_ConverterEnumLogisticLevel EnumLogisticLevelConverter_[] =
     T_ConverterEnumLogisticLevel( "", "", sword::EnumLogisticLevel_MAX )
 };
 
+T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[] =
+{
+    T_ConverterLogMaintenanceHandlingStatus( "moving_to_supply",                  QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "moving toward logistic system" ),         sword::LogMaintenanceHandlingUpdate::moving_to_supply ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_transporter",           QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available tow-truck" ),       sword::LogMaintenanceHandlingUpdate::waiting_for_transporter ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_moving_to_supply",      QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck moving to target" ),            sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_loading",               QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck loading" ),                     sword::LogMaintenanceHandlingUpdate::transporter_loading ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_moving_back",           QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck moving from target" ),          sword::LogMaintenanceHandlingUpdate::transporter_moving_back ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_unloading",             QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck unloading" ),                   sword::LogMaintenanceHandlingUpdate::transporter_unloading ),
+    T_ConverterLogMaintenanceHandlingStatus( "diagnosing",                        QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "diagnostic" ),                            sword::LogMaintenanceHandlingUpdate::diagnosing ),
+    T_ConverterLogMaintenanceHandlingStatus( "searching_upper_levels",            QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting to be handled by higher level" ), sword::LogMaintenanceHandlingUpdate::searching_upper_levels ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_parts",                 QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available parts" ),           sword::LogMaintenanceHandlingUpdate::waiting_for_parts ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_repairer",              QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available repairer" ),        sword::LogMaintenanceHandlingUpdate::waiting_for_repairer ),
+    T_ConverterLogMaintenanceHandlingStatus( "repairing",                         QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "repairing" ),                             sword::LogMaintenanceHandlingUpdate::repairing ),
+    T_ConverterLogMaintenanceHandlingStatus( "moving_back",                       QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "unit returning" ),                        sword::LogMaintenanceHandlingUpdate::moving_back ),
+    T_ConverterLogMaintenanceHandlingStatus( "finished",                          QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "finished" ),                              sword::LogMaintenanceHandlingUpdate::finished ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_transporter_selection", QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for transporter selection" ),     sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection ),
+    T_ConverterLogMaintenanceHandlingStatus( "", "", sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus_MAX )
+};
+
 }  // namespace
 
 #define INIT_TR( NAME )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
     InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
 
-#define INIT_PROTO_SUB_TYPE_TR( NAME )\
-    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## TypeConverter_ ) == ( sword:: ## NAME ## ::Type_ARRAYSIZE ) + 1 );\
-    InitTr( ( NAME ## TypeConverter_ ), "sword::" # NAME "::Type" );
-
 #define INIT_PROTO_TR( NAME )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( sword:: ## NAME ## _ARRAYSIZE ) + 1 );\
     InitTr( ( NAME ## Converter_ ), "sword::" # NAME );
+
+#define INIT_SUB_PROTO_TR( CONVERTER, CLASS, NAME )\
+    BOOST_STATIC_ASSERT( COUNT_OF( CONVERTER ) == ( sword:: ## CLASS ## :: ## NAME ## _ARRAYSIZE ) + 1 );\
+    InitTr( ( CONVERTER ), "sword::" # CLASS "::" # NAME );
 
 //-----------------------------------------------------------------------------
 // Name: InitTranslations
@@ -706,7 +706,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( Location );
     INIT_TR( LocationType );
     INIT_TR( LogFuneralHandlingStatus );
-    INIT_TR( LogMaintenanceHandlingStatus );
     INIT_TR( LogMedicalHandlingStatus );
     INIT_TR( LogSupplyHandlingStatus );
     INIT_TR( MeetingEngagementStatus );
@@ -725,11 +724,13 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitStress );
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
-    INIT_PROTO_SUB_TYPE_TR( KnowledgeMagicAction );
-    INIT_PROTO_SUB_TYPE_TR( MagicAction );
-    INIT_PROTO_SUB_TYPE_TR( ObjectMagicAction );
-    INIT_PROTO_SUB_TYPE_TR( UnitMagicAction );
+
     INIT_PROTO_TR( EnumLogisticLevel );
+    INIT_SUB_PROTO_TR( KnowledgeMagicActionTypeConverter_, KnowledgeMagicAction, Type );
+    INIT_SUB_PROTO_TR( MagicActionTypeConverter_, MagicAction, Type );
+    INIT_SUB_PROTO_TR( ObjectMagicActionTypeConverter_, ObjectMagicAction, Type );
+    INIT_SUB_PROTO_TR( UnitMagicActionTypeConverter_, UnitMagicAction, Type );
+    INIT_SUB_PROTO_TR( LogMaintenanceHandlingStatusConverter_, LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus );
 }
 
 //-----------------------------------------------------------------------------
@@ -892,15 +893,6 @@ const std::string& ENT_Tr::ConvertFromLightingType( E_LightingType nValue, E_Con
 const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr::E_Conversion nConverterType )
 {
     return InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogMaintenanceHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LogMaintenanceHandlingStatusConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1164,6 +1156,15 @@ const std::string& ENT_Tr::ConvertFromLogisticLevel( sword::EnumLogisticLevel va
     return InverseFindInConverter( EnumLogisticLevelConverter_, value, conversion );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLogMaintenanceHandlingStatus
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus value, E_Conversion conversion )
+{
+    return InverseFindInConverter( LogMaintenanceHandlingStatusConverter_, value, conversion );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1324,15 +1325,6 @@ E_LightingType ENT_Tr::ConvertToLightingType( const std::string& strName )
 E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
 {
     return FindInConverter( WeatherTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogMaintenanceHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogMaintenanceHandlingStatus ENT_Tr::ConvertToLogMaintenanceHandlingStatus( const std::string& strName )
-{
-    return FindInConverter( LogMaintenanceHandlingStatusConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1594,4 +1586,13 @@ sword::ObjectMagicAction::Type ENT_Tr::ConvertToObjectMagicActionType( const std
 sword::EnumLogisticLevel ENT_Tr::ConvertToLogisticLevel( const std::string& strName, E_Conversion mode )
 {
     return ENT_Tr::FindInConverter( EnumLogisticLevelConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLogMaintenanceHandlingStatus
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus ENT_Tr::ConvertToLogMaintenanceHandlingStatus( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( LogMaintenanceHandlingStatusConverter_, strName, mode );
 }

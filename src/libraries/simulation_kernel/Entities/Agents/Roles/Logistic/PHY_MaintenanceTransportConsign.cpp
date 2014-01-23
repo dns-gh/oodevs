@@ -159,7 +159,7 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    SetState( eWaitingForCarrier );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
     ResetTimer( 0 );
 }
 
@@ -172,7 +172,7 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    SetState( eGoingFrom );
+    SetState( sword::LogMaintenanceHandlingUpdate::moving_to_supply );
     ResetTimer( pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
     pComposanteState_->NotifyHandledByMaintenance();
 }
@@ -186,7 +186,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
     assert( pComposanteState_ );
     assert( pCarrier_ );
 
-    SetState( eCarrierGoingTo );
+    SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
     ResetTimer( pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() ) );
 }
 
@@ -199,7 +199,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
     assert( pComposanteState_ );
     assert( pCarrier_ );
 
-    SetState( eCarrierLoading );
+    SetState( sword::LogMaintenanceHandlingUpdate::transporter_loading );
     ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerLoadingTime() ));
     pComposanteState_->NotifyHandledByMaintenance();
 }
@@ -213,7 +213,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
     assert( pComposanteState_ );
     assert( pCarrier_ );
 
-    SetState( eCarrierGoingFrom );
+    SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_back );
     ResetTimer( pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
 }
 
@@ -226,7 +226,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
     assert( pComposanteState_ );
     assert( pCarrier_ );
 
-    SetState( eCarrierUnloading );
+    SetState( sword::LogMaintenanceHandlingUpdate::transporter_unloading );
     ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerUnloadingTime() ));
 }
 
@@ -246,7 +246,7 @@ void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
 
     if( pComposanteState_->NeedDiagnosis() )
     {
-        SetState( eDiagnosing );
+        SetState( sword::LogMaintenanceHandlingUpdate::diagnosing );
         ResetTimer( PHY_BreakdownType::GetDiagnosticTime() );
     }
     else
@@ -264,11 +264,11 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     ResetTimer( 0 );
-    SetState( eWaitingForSelection );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
 
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
-        SetState( eSearchingForUpperLevel );
+        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
     else if( !pLogisticManager->IsMaintenanceManual() )
         SelectNewState();
 }
@@ -280,24 +280,43 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 bool PHY_MaintenanceTransportConsign::Update()
 {
     if( DecrementTimer() )
-        return GetState() == eFinished;
+        return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 
     switch( GetState() )
     {
-        case eGoingFrom             :                               EnterStateDiagnosing        (); break;
-        case eWaitingForCarrier     : if( DoWaitingForCarrier() )   EnterStateCarrierGoingTo    (); break;
-        case eCarrierGoingTo        :                               EnterStateCarrierLoading    (); break;
-        case eCarrierLoading        :                               EnterStateCarrierGoingFrom  (); break;
-        case eCarrierGoingFrom      :                               EnterStateCarrierUnloading  (); break;
-        case eCarrierUnloading      :                               EnterStateDiagnosing        (); break;
-        case eDiagnosing            :                               ChooseStateAfterDiagnostic  (); break;
-        case eSearchingForUpperLevel: if( DoSearchForUpperLevel() ) EnterStateFinished          (); break;
-        case eWaitingForSelection   :                                                               break;
-        case eFinished              :                                                               break;
+        case sword::LogMaintenanceHandlingUpdate::moving_to_supply:
+            EnterStateDiagnosing();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter:
+            if( DoWaitingForCarrier() )
+                EnterStateCarrierGoingTo();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
+            EnterStateCarrierLoading();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::transporter_loading:
+            EnterStateCarrierGoingFrom();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::transporter_moving_back:
+            EnterStateCarrierUnloading();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::transporter_unloading:
+            EnterStateDiagnosing();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::diagnosing:
+            ChooseStateAfterDiagnostic();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::searching_upper_levels:
+            if( DoSearchForUpperLevel() )
+                EnterStateFinished();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
+        case sword::LogMaintenanceHandlingUpdate::finished:
+            break;
         default:
             assert( false );
     }
-    return GetState() == eFinished;
+    return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------
@@ -306,20 +325,20 @@ bool PHY_MaintenanceTransportConsign::Update()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
 {
-    return GetState() == eSearchingForUpperLevel && searchForUpperLevelDone_;
+    return GetState() == sword::LogMaintenanceHandlingUpdate::searching_upper_levels && searchForUpperLevelDone_;
 }
 
 void PHY_MaintenanceTransportConsign::SelectNewState()
 {
-    if( GetState() != eWaitingForSelection )
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         return;
     ResetTimer( 0 );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
-        SetState( eFinished ); // Managed by a 'repair consign'
+        SetState( sword::LogMaintenanceHandlingUpdate::finished ); // Managed by a 'repair consign'
     }
     else
-        SetState( eSearchingForUpperLevel );
+        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
 }

@@ -284,52 +284,8 @@
         <translation>conscrit</translation>
     </message>
     <message>
-        <source>moving toward logistic system</source>
-        <translation>déplacement vers chaîne logistique</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation>en attente de remorqueur disponible</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation>remorqueur en déplacement aller</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation>remorqueur en chargement</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation>remorqueur en déplacement retour</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation>remorqueur en déchargement</translation>
-    </message>
-    <message>
         <source>diagnostic</source>
         <translation>diagnostique</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation>en attente de prise en charge par supérieur</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation>en attente de pièce disponible</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation>en attente de reparateur disponible</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation>en cours de réparation</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation>équipement en retour vers unité d&apos;origine</translation>
     </message>
     <message>
         <source>finished</source>
@@ -1015,10 +971,6 @@
         <source>Seriousness level 3</source>
         <translation>Gravité niveau 3</translation>
     </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>
@@ -1048,6 +1000,65 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation>Changement de type de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation>déplacement vers chaîne logistique</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation>en attente de remorqueur disponible</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation>remorqueur en déplacement aller</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation>remorqueur en chargement</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation>remorqueur en déplacement retour</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation>remorqueur en déchargement</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation>diagnostique</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation>en attente de prise en charge par supérieur</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation>en attente de pièce disponible</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation>en attente de reparateur disponible</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation>en cours de réparation</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation>équipement en retour vers unité d&apos;origine</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
+    </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

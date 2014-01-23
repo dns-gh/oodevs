@@ -20,6 +20,11 @@
 #include "Types.h"
 #include "SubTypes.h"
 
+namespace sword
+{
+    enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
+}
+
 namespace kernel
 {
     class UrbanKnowledge_ABC;
@@ -340,9 +345,9 @@ struct Formatter< E_LogMedicalHandlingStatus >
 };
 
 template< >
-struct Formatter< E_LogMaintenanceHandlingStatus >
+struct Formatter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus >
 {
-    void operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >

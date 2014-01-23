@@ -230,25 +230,6 @@ enum E_LogFuneralHandlingStatus
     eNbrLogFuneralHandlingStatus
 };
 
-enum E_LogMaintenanceHandlingStatus
-{
-    eLogMaintenanceHandlingStatus_DeplacementVersChaine,
-    eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur,
-    eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller,
-    eLogMaintenanceHandlingStatus_RemorqueurChargement,
-    eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour,
-    eLogMaintenanceHandlingStatus_RemorqueurDechargement,
-    eLogMaintenanceHandlingStatus_Diagnostique,
-    eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur,
-    eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces,
-    eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur,
-    eLogMaintenanceHandlingStatus_Reparation,
-    eLogMaintenanceHandlingStatus_RetourPion,
-    eLogMaintenanceHandlingStatus_Termine,
-    eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur,
-    eNbrLogMaintenanceHandlingStatus
-};
-
 enum E_LogSupplyHandlingStatus
 {
     eLogSupplyHandlingStatus_ConvoiEnAttenteCamions,

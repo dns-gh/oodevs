@@ -29,6 +29,7 @@ namespace sword
     enum KnowledgeMagicAction_Type;
     enum ObjectMagicAction_Type;
     enum EnumLogisticLevel;
+    enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
 namespace ENT_Tr
@@ -61,7 +62,6 @@ namespace ENT_Tr
     const std::string& ConvertFromUnitStress( E_UnitStress, E_Conversion = eToSim );
     const std::string& ConvertFromLightingType( E_LightingType, E_Conversion = eToSim );
     const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
-    const std::string& ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus, E_Conversion = eToSim );
     const std::string& ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus, E_Conversion = eToSim );
     const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
     const std::string& ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus, E_Conversion = eToSim );
@@ -91,6 +91,7 @@ namespace ENT_Tr
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromObjectMagicActionType( sword::ObjectMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromLogisticLevel( sword::EnumLogisticLevel, E_Conversion = eToTr );
+    const std::string& ConvertFromLogMaintenanceHandlingStatus( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus, E_Conversion = eToTr );
 
     // ConvertTo functions
     E_LocationType ConvertToLocationType( const std::string& );
@@ -111,7 +112,6 @@ namespace ENT_Tr
     E_UnitStress ConvertToUnitStress( const std::string& );
     E_LightingType ConvertToLightingType( const std::string& );
     E_WeatherType ConvertToWeatherType( const std::string& );
-    E_LogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string& );
     E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
     E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
     E_LogFuneralHandlingStatus ConvertToLogFuneralHandlingStatus( const std::string& );
@@ -141,6 +141,7 @@ namespace ENT_Tr
     sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::ObjectMagicAction_Type ConvertToObjectMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string&, E_Conversion = eToSim );
 }
 
 #endif // __ENT_Tr_h_

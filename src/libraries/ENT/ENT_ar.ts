@@ -376,52 +376,8 @@
         <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-        <source>moving toward logistic system</source>
-        <translation type="unfinished">تتحرك باتجاه النظام السوقي</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation type="unfinished">في انتظار شاحنة جر المتاحة</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation type="unfinished">سحب الشاحنة تتحرك إلى الهدف</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation type="unfinished">جر شاحنة تحميل</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation type="unfinished">سحب-الشاحنة تتحرك من الهدف</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation type="unfinished">تفريغ شاحنة جر</translation>
-    </message>
-    <message>
         <source>diagnostic</source>
         <translation type="unfinished">التشخيص</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation type="unfinished">في انتظار أن يكون التعامل معها بمستوى أعلى</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation type="unfinished">في انتظار الأجزاء المتوفرة</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation type="unfinished">في انتظار مصلح المتاحة</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation type="unfinished">إصلاح</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation type="unfinished">وحدة العودة</translation>
     </message>
     <message>
         <source>finished</source>
@@ -1015,10 +971,6 @@
         <source>Seriousness level 3</source>
         <translation type="unfinished">خطورة المستوى 3</translation>
     </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>
@@ -1047,6 +999,65 @@
     </message>
     <message>
         <source>Knowledge Group Change Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation type="unfinished">تتحرك باتجاه النظام السوقي</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation type="unfinished">في انتظار شاحنة جر المتاحة</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation type="unfinished">سحب الشاحنة تتحرك إلى الهدف</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation type="unfinished">جر شاحنة تحميل</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation type="unfinished">سحب-الشاحنة تتحرك من الهدف</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation type="unfinished">تفريغ شاحنة جر</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation type="unfinished">التشخيص</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation type="unfinished">في انتظار أن يكون التعامل معها بمستوى أعلى</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation type="unfinished">في انتظار الأجزاء المتوفرة</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation type="unfinished">في انتظار مصلح المتاحة</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation type="unfinished">إصلاح</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation type="unfinished">وحدة العودة</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
+    </message>
+    <message>
+        <source>waiting for transporter selection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

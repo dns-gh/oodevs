@@ -150,7 +150,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForCarrier()
     assert( pComposanteState_ );
     assert( !pRepairer_ );
     ResetTimer( 0 );
-    SetState( eWaitingForCarrier );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
-        SetState( eFinished );
+        SetState( sword::LogMaintenanceHandlingUpdate::finished );
         return true;
     }
     return false;
@@ -179,7 +179,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 {
     assert( pComposanteState_ );
-    SetState( eWaitingForParts );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_parts );
     ResetTimer( 0 );
 }
 
@@ -190,7 +190,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 {
     assert( pComposanteState_ );
-    SetState( eWaitingForRepairer );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer );
     ResetTimer( 0 );
 }
 
@@ -201,7 +201,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 {
     assert( pComposanteState_ );
-    SetState( eRepairing );
+    SetState( sword::LogMaintenanceHandlingUpdate::repairing );
     ResetTimer( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
 }
 
@@ -217,7 +217,7 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
-    SetState( eGoingBackToWar );
+    SetState( sword::LogMaintenanceHandlingUpdate::moving_back );
     ResetTimer( pComposanteState_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetPionPosition() ) );
 }
 
@@ -228,20 +228,35 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 bool PHY_MaintenanceRepairConsign::Update()
 {
     if( DecrementTimer() )
-        return GetState() == eFinished;
+        return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 
     switch( GetState() )
     {
-        case eWaitingForCarrier       : if( DoSearchForCarrier  () ) EnterStateFinished          (); break;
-        case eWaitingForParts         : if( DoWaitingForParts   () ) EnterStateWaitingForRepairer(); break;
-        case eWaitingForRepairer      : if( DoWaitingForRepairer() ) EnterStateRepairing         (); break;
-        case eRepairing               :                              EnterStateGoingBackToWar    (); break;
-        case eGoingBackToWar          :      DoReturnComposante();   EnterStateFinished          (); break;
-        case eFinished                :                                                              break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter:
+            if( DoSearchForCarrier() )
+                EnterStateFinished();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_parts:
+            if( DoWaitingForParts() )
+                EnterStateWaitingForRepairer();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_repairer:
+            if( DoWaitingForRepairer() )
+                EnterStateRepairing();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::repairing:
+            EnterStateGoingBackToWar();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::moving_back:
+            DoReturnComposante();
+            EnterStateFinished();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::finished:
+            break;
         default:
             assert( false );
     }
-    return GetState() == eFinished;
+    return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 }
 
 void PHY_MaintenanceRepairConsign::SelectNewState()
