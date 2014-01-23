@@ -92,6 +92,7 @@ func (r *Resources) GetIdFromName(name string) (uint32, error) {
 type UnitResource struct {
 	Name        string `xml:"name,attr"`
 	Consumption uint32 `xml:"normalized-consumption,attr"`
+	Capacity    uint32 `xml:"capacity,attr"`
 }
 
 type Equipment struct {
@@ -158,11 +159,13 @@ type ResourceConsumption struct {
 
 type UnitConsumptions struct {
 	Consumptions map[uint32]*ResourceConsumption
+	Capacities   map[uint32]*ResourceConsumption
 }
 
 func (resources *Resources) ReadNormalizedConsumptions(physical PhysicalFile) (*UnitConsumptions, *Units, error) {
 	result := UnitConsumptions{}
 	result.Consumptions = map[uint32]*ResourceConsumption{}
+	result.Capacities = map[uint32]*ResourceConsumption{}
 	units, err := ReadUnits(physical)
 	if err != nil {
 		return nil, nil, err
@@ -189,6 +192,12 @@ func (resources *Resources) ReadNormalizedConsumptions(physical PhysicalFile) (*
 					result.Consumptions[unit.Id] = currentConsumptions
 				}
 				currentConsumptions.Consumption[id] += count * consumption.Consumption
+				currentCapacities := result.Capacities[unit.Id]
+				if currentCapacities == nil {
+					currentCapacities = &ResourceConsumption{Consumption: map[uint32]uint32{}}
+					result.Capacities[unit.Id] = currentCapacities
+				}
+				currentCapacities.Consumption[id] += count * consumption.Capacity
 			}
 		}
 	}
