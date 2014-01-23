@@ -265,6 +265,7 @@ void Model::Purge()
     weather_.Purge();
     limits_.Purge();
     logistics_.Purge();
+    historyLogistics_.Purge();
     fires_.Purge();
     knowledgeGroups_.Purge();
     agents_.Purge();
