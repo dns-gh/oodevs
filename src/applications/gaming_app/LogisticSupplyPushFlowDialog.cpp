@@ -134,16 +134,19 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    if( carriersTable_->IsOverloaded() )
+    if( profile_.IsSupervision() )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
-        return;
+        if( carriersTable_->IsOverloaded() )
+        {
+            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+            return;
+        }
+        if( carriersTable_->IsUnderloaded() &&
+            QMessageBox::warning( this, tr( "Error" ),
+                tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
+                QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
+            return;
     }
-    if( carriersTable_->IsUnderloaded() &&
-        QMessageBox::warning( this, tr( "Error" ),
-            tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
-            QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
-        return;
 
     if( pRecipientSelected_ )
         GetSuppliesFromTable( *pRecipientSelected_ );
