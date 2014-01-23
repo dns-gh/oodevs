@@ -53,10 +53,12 @@ public:
     virtual void Cancel();
     virtual bool Update() = 0;
 
-            void Clean     ();
-            bool HasChanged() const;
+    void Clean();
+    bool HasChanged() const;
 
-            void FinishSuccessfullyWithoutDelay();
+    void FinishSuccessfullyWithoutDelay();
+
+    virtual void SelectNewState() = 0;
 
     void ClearConsign();
     //@}
@@ -80,6 +82,7 @@ protected:
         eCarrierUnloading,
         eDiagnosing,
         eSearchingForUpperLevel,
+        eWaitingForSelection,
         eWaitingForParts,
         eWaitingForRepairer,
         eRepairing,
@@ -100,7 +103,7 @@ protected:
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
     //@}
 
-    MIL_Agent_ABC*                  pMaintenance_;
+    MIL_Agent_ABC* pMaintenance_;
 
 private:
     E_State  nState_;

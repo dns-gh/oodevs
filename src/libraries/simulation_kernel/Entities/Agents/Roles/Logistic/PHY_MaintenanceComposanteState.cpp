@@ -322,3 +322,11 @@ void PHY_MaintenanceComposanteState::NotifyDiagnosed()
 {
     bDiagnosed_ = true;
 }
+
+bool PHY_MaintenanceComposanteState::SelectNewState( uint32_t request )
+{
+    if( nID_ != request )
+        return false;
+    pConsign_->SelectNewState();
+    return true;
+}

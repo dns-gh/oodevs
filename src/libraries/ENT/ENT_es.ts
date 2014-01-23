@@ -1069,6 +1069,10 @@
         <source>Local Weather Destruction</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select New State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

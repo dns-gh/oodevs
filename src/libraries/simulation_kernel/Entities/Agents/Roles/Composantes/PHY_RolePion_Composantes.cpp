@@ -1304,6 +1304,14 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
     boost::remove_erase( maintenanceComposanteStates_, &composanteState );
 }
 
+bool PHY_RolePion_Composantes::SelectNewState( uint32_t request )
+{
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+        if( (*it)->SelectNewState( request ) )
+            return true;
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
 // Created: NLD 2006-07-17

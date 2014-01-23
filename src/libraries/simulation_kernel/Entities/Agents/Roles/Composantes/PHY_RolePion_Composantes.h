@@ -163,7 +163,8 @@ public:
     virtual void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
-    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
+    virtual void NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState );
+    virtual bool SelectNewState( uint32_t request );
     //@}
 
     //! @name Prisoners

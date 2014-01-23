@@ -66,6 +66,7 @@ public:
     //@{
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
+    bool SelectNewState( uint32_t request );
     //@}
 
     //! @name Network

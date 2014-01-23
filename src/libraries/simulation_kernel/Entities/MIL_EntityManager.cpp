@@ -66,6 +66,7 @@
 #include "Automates/MIL_Automate.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -1987,6 +1988,20 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     MIL_Tools::ConvertCoordMosToSim( point, targetPos );
     PHY_FireResults_Default fireResult;
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
+}
+
+void MIL_EntityManager::OnReceiveLogManualIntervention( const sword::MagicAction& msg )
+{
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto id = protocol::GetIdentifier( params, 0 );
+    bool found = false;
+    sink_->Apply( [&]( MIL_AgentPion& p )
+    {
+        found = found || p.GetRole< PHY_RoleInterface_Composantes >().SelectNewState( id );
+    } );
+    if( !found )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
 }
 
 // -----------------------------------------------------------------------------

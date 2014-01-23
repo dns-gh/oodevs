@@ -1069,6 +1069,10 @@
         <source>Debug internal</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select New State</source>
+        <translation>Passer à la prochaine étape logistique</translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>
