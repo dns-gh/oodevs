@@ -95,8 +95,8 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             checkpointCopyPanelLayout->addWidget( checkpointList_ );
         }
         copyTab_ = new QTabWidget();
-        copyTab_->addTab( contentList_, "Content to copy" );
-        copyTab_->addTab( checkpointCopyPanel_, "Checkpoint" );
+        contentListId_ = copyTab_->addTab( contentList_, "Content to copy" );
+        checkpointCopyPanelId_ = copyTab_->addTab( checkpointCopyPanel_, "Checkpoint" );
         connect( copyTab_, SIGNAL( currentChanged( int ) ), SLOT( CurrentTabChanged( int ) ) );
 
         saveAsGroupBox_ = new QGroupBox();
@@ -141,8 +141,8 @@ void CreateExerciceWidget::OnLanguageChanged()
     saveAsGroupBox_->setTitle( tools::translate( "CreateExerciceWidget", "Create as copy of:" ) );
     createLabel_->setText( tools::translate( "CreateExerciceWidget", "Create new exercise:" ) );
     copyLabel_->setText( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ) );
-    contentList_->setWindowTitle( tools::translate( "CreateExerciceWidget", "Content to copy" ) );
-    checkpointCopyPanel_->setWindowTitle( tools::translate( "CreateExerciceWidget", "Checkpoint" ) );
+    copyTab_->setTabText( contentListId_, tools::translate( "CreateExerciceWidget", "Content to copy" ) );
+    copyTab_->setTabText( checkpointCopyPanelId_, tools::translate( "CreateExerciceWidget", "Checkpoint" ) );
     sessionLabel_->setText( tools::translate( "CreateExerciceWidget", "Session:" ) );
 }
 

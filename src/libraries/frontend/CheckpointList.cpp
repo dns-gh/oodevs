@@ -23,20 +23,20 @@ using namespace frontend;
 // Created: SBO 2010-04-21
 // -----------------------------------------------------------------------------
 CheckpointList::CheckpointList( const tools::GeneralConfig& config )
-    : config_( config )
+    : gui::WidgetLanguageObserver_ABC< QWidget >()
+    , config_( config )
     , enabled_( false )
 {
-        QLabel* label = new QLabel( tools::translate( "CheckpointList", "Checkpoint:" ) );
+    label_ = new QLabel();
+    list_ = new QListWidget();
+    list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
 
-        list_ = new QListWidget();
-        list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-        connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectCheckpoint( int ) ) );
-
-        QVBoxLayout* verticalLayout = new QVBoxLayout( this );
-        verticalLayout->addWidget( label );
-        verticalLayout->addWidget( list_ );
-        verticalLayout->setSpacing( 5 );
-        verticalLayout->setMargin( 0 );
+    QVBoxLayout* verticalLayout = new QVBoxLayout( this );
+    verticalLayout->addWidget( label_ );
+    verticalLayout->addWidget( list_ );
+    verticalLayout->setSpacing( 5 );
+    verticalLayout->setMargin( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +46,15 @@ CheckpointList::CheckpointList( const tools::GeneralConfig& config )
 CheckpointList::~CheckpointList()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckpointList::OnLanguageChanged
+// Created: LGY 2014-01-23
+// -----------------------------------------------------------------------------
+void CheckpointList::OnLanguageChanged()
+{
+    label_->setText( tools::translate( "CheckpointList", "Checkpoint:" ) );
 }
 
 namespace
