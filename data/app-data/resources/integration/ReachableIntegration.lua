@@ -958,6 +958,12 @@ integration.getDestinationPoint = function( position )
     return DEC_GetDestPoint( position )
 end
 
+-- Returns the geometry of a pathPoint (a simulation point) allowing 
+-- the decisional models to create a ML knowledge of such a pathPoint
+integration.getSimPointFromPathPoint = function( pathPoint )
+    return DEC_GetRepPoint( pathPoint )
+end
+
 integration.findSafetyPositions = function( radius, safetyDistance )
     return DEC_FindSafetyPositions( radius, safetyDistance )
 end
