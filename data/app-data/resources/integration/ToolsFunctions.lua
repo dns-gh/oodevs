@@ -56,9 +56,12 @@ end
 -- @param separator String, the separator.
 -- @param str String, the string to split.
 -- @return List of strings
-explode =  function ( seperator, str ) 
+explode =  function ( separator, str ) 
+    if separator == "" then
+        error("Can't split a string with an empty separator")
+    end
     local pos, arr = 0, {}
-    for st, sp in function() return string.find( str, seperator, pos, true ) end do
+    for st, sp in function() return string.find( str, separator, pos, true ) end do
         arr[ #arr + 1 ] = string.sub( str, pos, st-1 )
         pos = sp + 1
     end
