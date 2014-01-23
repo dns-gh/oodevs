@@ -99,7 +99,7 @@ private:
     void ReadFireClasses( xml::xistream& xis );
     void ReadBreakdowns( xml::xistream& xis );
     void ReadBreakdownCategory( xml::xistream& xis );
-    void ReadBreakdown( xml::xistream& xis );
+    void ReadBreakdown( xml::xistream& xis, const std::string& category );
     void ReadVolumes( xml::xistream& xis );
     void ReadVolume( xml::xistream& xis );
     void ReadResourceNetworks( xml::xistream& xis );

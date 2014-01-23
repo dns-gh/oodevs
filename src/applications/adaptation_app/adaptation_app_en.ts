@@ -5217,26 +5217,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Injury extreme severity</translation>
     </message>
     <message>
-        <source>Eletronic</source>
-        <translation>Electronics</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobility</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Severity level 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Severity level 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Severity level 3</translation>
-    </message>
-    <message>
         <source>Real</source>
         <translation>Real</translation>
     </message>

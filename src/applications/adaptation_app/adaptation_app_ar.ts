@@ -5204,26 +5204,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-        <source>Eletronic</source>
-        <translation type="unfinished">الإلكترونية</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation type="unfinished">التنقل</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation type="unfinished">خطورة مستوى 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation type="unfinished">مستوى خطورة 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation type="unfinished">خطورة المستوى 3</translation>
-    </message>
-    <message>
         <source>Real</source>
         <translation type="unfinished">ريال مدريد</translation>
     </message>

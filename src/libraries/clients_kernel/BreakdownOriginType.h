@@ -19,8 +19,6 @@ namespace xml
 
 namespace kernel
 {
-    class BreakdownType;
-
 // =============================================================================
 /** @class  BreakdownOriginType
     @brief  BreakdownOriginType

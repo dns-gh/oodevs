@@ -140,7 +140,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type )
           >> xml::attribute( "average-repairing-time", repairTime_ )
           >> xml::attribute( "variance", repairTimeVariance_ );
-    nType_ = ADN_Tr::ConvertToBreakdownType( type );
+    nType_ = ENT_Tr::ConvertToBreakdownType( type );
     if( nType_ == E_BreakdownType( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).toStdString() );
     input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
@@ -234,7 +234,7 @@ void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 {
-    E_BreakdownNTI nti = ADN_Tr::ConvertToBreakdownNTI( input.attribute< std::string >( "name" ) );
+    E_BreakdownNTI nti = ENT_Tr::ConvertToBreakdownNTI( input.attribute< std::string >( "name" ) );
     input >> xml::list( "breakdown", *this, &ADN_Breakdowns_Data::ReadBreakdown, nti );
 }
 
@@ -269,7 +269,7 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output ) const
     {
         E_BreakdownNTI bd = static_cast< E_BreakdownNTI >( i );
         output << xml::start( "category" )
-                 << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( bd ) );
+                 << xml::attribute( "name", ENT_Tr::ConvertFromBreakdownNTI( bd ) );
         for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
             if( ( *it )->nNTI_ == bd )
                 ( *it )->WriteArchive( output );

@@ -5212,26 +5212,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Eletronic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Real</source>
         <translation type="unfinished"></translation>
     </message>

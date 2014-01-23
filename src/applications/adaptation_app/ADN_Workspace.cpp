@@ -173,8 +173,8 @@ ADN_Workspace::ADN_Workspace( ADN_MainWindow& mainWindow, const ADN_GeneralConfi
     INITIALIZE_ADN_ENUMTYPE( AgentTypeAutomate );
     INITIALIZE_ADN_ENUMTYPE( AgentTypePion );
     INITIALIZE_ENT_ENUMTYPE( AgentNbcSuit );
-    INITIALIZE_ADN_ENUMTYPE( BreakdownNTI );
-    INITIALIZE_ADN_ENUMTYPE( BreakdownType );
+    INITIALIZE_ENT_ENUMTYPE( BreakdownNTI );
+    INITIALIZE_ENT_ENUMTYPE( BreakdownType );
     INITIALIZE_ADN_ENUMTYPE( ConstructorType );
     INITIALIZE_ADN_ENUMTYPE( ConsumptionType );
     INITIALIZE_ADN_ENUMTYPE( CrossingHeight );

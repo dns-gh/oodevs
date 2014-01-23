@@ -74,6 +74,8 @@ namespace ENT_Tr
     const std::string& ConvertFromHumanLocation( E_HumanLocation, E_Conversion = eToSim );
     const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
     const std::string& ConvertFromInjuriesSeriousness( E_InjuriesSeriousness, E_Conversion = eToSim );
+    const std::string& ConvertFromBreakdownType( E_BreakdownType, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
+    const std::string& ConvertFromBreakdownNTI( E_BreakdownNTI, ENT_Tr::E_Conversion = ENT_Tr::eToSim );
     const std::string& ConvertFromGhostType( E_GhostType, E_Conversion = eToSim );
     const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
     const std::string& ConvertFromModes( E_Modes, E_Conversion = eToSim );
@@ -121,6 +123,8 @@ namespace ENT_Tr
     E_HumanLocation ConvertToHumanLocation( const std::string& );
     E_EquipmentState ConvertToEquipmentState( const std::string& );
     E_InjuriesSeriousness ConvertToInjuriesSeriousness( const std::string& );
+    E_BreakdownType ConvertToBreakdownType( const std::string& );
+    E_BreakdownNTI ConvertToBreakdownNTI( const std::string& );
     E_GhostType ConvertToGhostType( const std::string& );
     E_NbcState ConvertToNbcState( const std::string& );
     E_Modes ConvertToModes( const std::string& );

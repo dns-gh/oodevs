@@ -83,28 +83,27 @@ void UnitStateTableEquipment::OnItemChanged( QStandardItem* item )
 // Name: UnitStateTableEquipment::AddLines
 // Created: ABR 2011-07-08
 // -----------------------------------------------------------------------------
-void UnitStateTableEquipment::AddLines( const QString& name, const kernel::Entity_ABC& entity, int size, E_EquipmentState state, const QStringList& breakdowns,
+void UnitStateTableEquipment::AddLines( const QString& name, const kernel::Entity_ABC& entity, int equipments, E_EquipmentState state, const QStringList& breakdownTypes,
                                         const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ )
 {
-    if( !size )
+    if( !equipments )
         return;
-    if( !breakdowns.empty() )
-        delegate_.AddComboBox( dataModel_.rowCount(), dataModel_.rowCount() + size - 1, eBreakdown, eBreakdown, breakdowns );
-    int currentSize = static_cast< int >( currentBreakdowns.size() );
-    for( int i = 0; i < size; ++i )
+    if( !breakdownTypes.empty() )
+        delegate_.AddComboBox( dataModel_.rowCount(), dataModel_.rowCount() + equipments - 1, eBreakdown, eBreakdown, breakdownTypes );
+    for( int i = 0; i < equipments; ++i )
     {
-        unsigned int row = dataModel_.rowCount();
+        const unsigned int row = dataModel_.rowCount();
         AddItem( row, eName, name, name );
         AddItem( row, eUnit, GetDisplayName( entity ), entity.GetName() );
 
-        unsigned int currentIndex = ( currentSize <= i ) ? 0 : currentBreakdowns[ i ];
-        if( currentIndex < static_cast< unsigned int >( breakdowns.size() ) )
-            AddItem( row, eBreakdown, breakdowns[ currentIndex ], currentIndex, Qt::ItemIsEditable );
+        const unsigned int currentType = i < currentBreakdowns.size() ? currentBreakdowns[ i ] : 0;
+        if( currentType < static_cast< unsigned int >( breakdownTypes.size() ) )
+            AddItem( row, eBreakdown, breakdownTypes[ currentType ], currentType, Qt::ItemIsEditable );
 
         bool isReadOnly = state == eEquipmentState_InMaintenance || state == eEquipmentState_Prisonner;
         AddItem( row, eState, tools::ToString( state ), static_cast< int >( state ), Qt::ItemIsEditable );
         if( !isReadOnly )
-            delegate_.AddComboBox( row, row, eState, eState, ( breakdowns.size() <= 1 ) ? eEquipmentState_RepairableWithEvacuation : eEquipmentState_InMaintenance );
+            delegate_.AddComboBox( row, row, eState, eState, ( breakdownTypes.size() <= 1 ) ? eEquipmentState_RepairableWithEvacuation : eEquipmentState_InMaintenance );
     }
 }
 

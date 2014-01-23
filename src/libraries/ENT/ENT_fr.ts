@@ -995,6 +995,26 @@
         <source>Create new</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Electronic</source>
+        <translation>Electronique</translation>
+    </message>
+    <message>
+        <source>Mobility</source>
+        <translation>Mobilité</translation>
+    </message>
+    <message>
+        <source>Seriousness level 1</source>
+        <translation>Gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>Seriousness level 2</source>
+        <translation>Gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Seriousness level 3</source>
+        <translation>Gravité niveau 3</translation>
+    </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
