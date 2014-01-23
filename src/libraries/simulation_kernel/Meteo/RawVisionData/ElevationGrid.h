@@ -19,7 +19,7 @@ namespace weather
     class Meteo;
 }
 
-typedef unsigned char envBits;  // champ de bit
+typedef unsigned char envBits;  // bit field
 
 struct ElevationCell
 {

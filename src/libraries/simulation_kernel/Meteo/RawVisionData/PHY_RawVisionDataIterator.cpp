@@ -308,10 +308,9 @@ envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
     assert( pCurrentCell_ );
     if( bIsInGround_ )
         return static_cast< envBits >( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
-    else if( bIsInEnv_ )
+    if( bIsInEnv_ )
         return pCurrentCell_->GetEnv();
-    else
-        return static_cast< envBits >( PHY_RawVisionData::eVisionEmpty );
+    return static_cast< envBits >( PHY_RawVisionData::eVisionEmpty );
 }
 
 //-----------------------------------------------------------------------------
