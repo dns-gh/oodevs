@@ -63,11 +63,11 @@ end
 
 --- Start to build a planned work
 -- First the method searches if an object with the same type exists and has the same location
--- A same location depends of the distance parameter. 10 meters by default, 10 meters is the resolution used by the simulation
+-- A same location depends of the distance parameter. 10m by default
 -- If object exists, the agent will resume the construction
 -- If not exists, the agent will build a new one
 -- This process is needed when the simulation is restarted following a recovery backup
--- In this case, it's possible that the object is already beginning to construct, so resume the construction 
+-- In this case, it's possible that the object construction has already begun, so resume the construction 
 -- @param object Object knowledge
 -- @param objectType String, the type of the object
 -- @param distance, distance in meter
@@ -395,7 +395,7 @@ end
 --- Deprecated use integration.startFilterCrowds, integration.stopFilterCrowds and integration.disarmCrowd
 -- Filter the crowd, unit adopts a filtration posture
 -- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. The higher the percentage, the longer search time and will slow down the passage of the crowd through the checkpoint.
--- @param blockingStrength, percentage of the filter efficiency. A number in-between changes the density of the outgoing crowd in that proportion.
+-- @param blockingStrength, percentage of the filter efficiency. 100% means crowd is blocked. 0% means the filter has no effect. A number in-between changes the density of the outgoing crowd in that proportion.
 -- @param position Point knowledge
 integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
     -- Activate filtration capability on retrieved checkpoint 
@@ -529,7 +529,7 @@ end
 
 --- Allows the agent to decontaminate other agents equipments
 -- Build a decontamination site if it doesn't exist yet
--- The agents will be decontaminate when they will reach the site if they received...
+-- The agents will be decontaminated when they reach the site if they received...
 -- A decontamination mission (e.g. get decontaminated) with this decontamination site as parameter
 -- The time to decontaminate depends of physical database
 -- @param position Point knowledge
@@ -546,7 +546,7 @@ integration.buildInstantlyDecontaminatePlotOn = function( position )  -- Called 
 end
 
 --- Allows the unit to operate a decontamination site
--- A decontamination site must be operated by an agent to be effective. A report is sent when site os operated
+-- A decontamination site must be operated by an agent to be effective. A report is sent when site is operated
 -- @param position Point knowledge
 integration.animateDecontaminatePlot = function( position ) -- Called at each tick
     local DecontaminatePlot = nil
@@ -563,8 +563,8 @@ integration.animateDecontaminatePlot = function( position ) -- Called at each ti
 end
 
 --- Remove instantaneously a decontamination site
--- First the deconstamination site operating is stopped
--- A report is sent when agent has stopped to operate the decontamination plot
+-- First the decontamination site operating is stopped
+-- A report is sent when agent has stopped operating the decontamination site
 -- Then the site is removed if no unit operates it
 -- @param position Point knowledge
 integration.destroyInstantlyDecontaminatePlotOn = function( position )
@@ -611,7 +611,7 @@ integration.updateAffectMobility = function( target )
     return target[myself].actionBuildState == eActionObjetTerminee
 end
 
---- Stop to build an object
+--- Stop building an object
 -- A report is sent when the work is stopped
 -- Only works for objects constructed with integration.startAffectMobility
 -- @see integration.startAffectMobility
