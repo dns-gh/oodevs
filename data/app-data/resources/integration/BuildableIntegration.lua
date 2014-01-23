@@ -374,8 +374,7 @@ integration.getBarycentreZoneFromLocalisation = function( localisation )
     return _returnValue
 end
 
-
---- Start filtering crowd with a checkpoint
+--- Deprecated : use integration.buildInstantlyObjectOn 
 -- Create a checkpoint at the position
 -- A report is sent
 -- @param position Point knowledge
@@ -393,7 +392,8 @@ integration.buildInstantlyCheckPointOn = function( position )  -- called only on
     meKnowledge.localisationForFilterCrowd = nil
 end
 
---- Filter the crowd, unit adopts a filtration posture
+--- Deprecated use integration.startFilterCrowds, integration.stopFilterCrowds and integration.disarmCrowd
+-- Filter the crowd, unit adopts a filtration posture
 -- @param bodySearchStrength, percentage wich represents intensity of search. Allows to find weapons and disarms the crowd. The higher the percentage, the longer search time and will slow down the passage of the crowd through the checkpoint.
 -- @param blockingStrength, percentage of the filter efficiency. A number in-between changes the density of the outgoing crowd in that proportion.
 -- @param position Point knowledge
@@ -407,7 +407,8 @@ integration.doFiltration = function( bodySearchStrength, blockingStrength, posit
     integration.setBodySearchIntensity( bodySearchStrength , position, meKnowledge.checkPointForFilterCrowd )
 end
 
---- Change crowd density
+--- Deprecated use integration.startFilterCrowds, integration.stopFilterCrowds
+-- Change crowd density
 -- The density of the crowd changed between its entrance and its exit of the checkpoint depending of the filter intensity
 -- The crowd will slow down or block by the checkpoint
 -- @param blockingStrength, percentage of the filter efficiency. 100% means crowd is blocked. 0% means the filter has no effect.
@@ -421,7 +422,8 @@ integration.changeCrowdDensity = function( blockingStrength, checkpoint ) -- cal
     end
 end
 
---- Disarm the crowds
+--- Deprecated use integration.disarmCrowd
+-- Disarm the crowds
 -- @param bodySearchStrength, percentage which represents intensity of search. Allows to find weapons and disarms the crowd. More the percentage is higher more the time search is long and will slow down the passage of the crowd through the checkpoint.
 -- @param position Point knowledge
 -- @param checkpoint, Simulation object knowledge
