@@ -22,6 +22,7 @@ import (
 
 type SessionErrorsOpts struct {
 	IgnorePatterns []string
+	IgnoreDumps    bool
 }
 
 // Returns a list of dump files found in a dump directory.
@@ -150,16 +151,18 @@ func CheckSessionErrors(sessionPath string, opts *SessionErrorsOpts) error {
 		}
 	}
 
-	// We assume the debug directory is set to its default value, otherwise
-	// we would have to pass all kind of options and make things much harder.
-	dumpDir := filepath.Join(sessionPath, "debug")
-	dumps, err := ListDmpFiles(dumpDir)
-	if err != nil && !os.IsNotExist(err) {
-		return err
-	}
-	if len(dumps) > 0 {
-		s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
-		return fmt.Errorf("%s", s)
+	if !opts.IgnoreDumps {
+		// We assume the debug directory is set to its default value, otherwise
+		// we would have to pass all kind of options and make things much harder.
+		dumpDir := filepath.Join(sessionPath, "debug")
+		dumps, err := ListDmpFiles(dumpDir)
+		if err != nil && !os.IsNotExist(err) {
+			return err
+		}
+		if len(dumps) > 0 {
+			s := "dump files found:\n  " + strings.Join(dumps, "\n  ") + "\n"
+			return fmt.Errorf("%s", s)
+		}
 	}
 	return nil
 }

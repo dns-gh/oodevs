@@ -13,6 +13,7 @@ import (
 	"math"
 	"swapi"
 	"swapi/phy"
+	"swapi/simu"
 	"sword"
 )
 
@@ -238,7 +239,13 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallOrbat)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
-	defer stopSimAndClient(c, sim, client)
+	// TODO: simulation_app.exe crashes at termination in vc100, giving the
+	// move mission and waiting for the flow to be created is enough.
+	errOpts := simu.SessionErrorsOpts{
+		IgnoreDumps: true,
+	}
+	defer stopSim(c, sim, &errOpts)
+	defer client.Close()
 	step := func(n int32) {
 		tick := client.Model.GetTick()
 		if tick == 0 {
