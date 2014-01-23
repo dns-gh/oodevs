@@ -65,7 +65,7 @@ void SlopeSpeedModifier::ModifySpeed( double& rSpeed, double rSlopeDeceleration,
         double localSpeed = rSpeed;
         if( localSlope > 0 )
         {
-            if( rMaxSlope <= 0 || localSlope >= rMaxSlope )
+            if( localSlope >= rMaxSlope )
                 localSpeed = 0;
             else
                 localSpeed *= ( 1 - rSlopeDeceleration * localSlope / rMaxSlope );
