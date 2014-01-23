@@ -304,7 +304,7 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, parameters expected
 	params := swapi.MakeParameters()
