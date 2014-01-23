@@ -58,6 +58,7 @@ type Model struct {
 	handlerId    int32
 	handlers     map[int32]ModelHandler
 	timeouts     map[int32]time.Time
+	closed       bool
 
 	// State only touched by caller routines
 	condId      int
@@ -175,7 +176,14 @@ func (model *Model) run() error {
 	}
 }
 
+// Terminates model goroutine. After calling Close(), trying to interact with
+// the model, like calling WaitCondition, will panic. Calling Close() multiple
+// times is a no-op.
 func (model *Model) Close() {
+	if model.closed {
+		return
+	}
+	model.closed = true
 	// Wait for all listeners to be gone
 	model.listening.Wait()
 	close(model.requests)

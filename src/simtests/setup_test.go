@@ -365,16 +365,21 @@ func readFileAsString(c *C, path string) string {
 	return string(data)
 }
 
-func stopSim(c *C, sim *simu.SimProcess) {
+func stopSim(c *C, sim *simu.SimProcess, opts *simu.SessionErrorsOpts) {
 	sim.Stop()
 	if c.Failed() {
 		return
 	}
 	session := sim.Opts.GetSessionDir()
-	err := simu.CheckSessionErrors(session)
+	err := simu.CheckSessionErrors(session, opts)
 	if err != nil {
 		c.Fatalf("errors found in session %s:\n%s", session, err)
 	}
+}
+
+func stopSimAndClient(c *C, sim *simu.SimProcess, client *swapi.Client) {
+	client.Close()
+	stopSim(c, sim, nil)
 }
 
 func loadWWPhysical(c *C) *phy.PhysicalFile {

@@ -256,37 +256,40 @@ type Unit struct {
 }
 
 type Automat struct {
-	Id               uint32
-	PartyId          uint32
-	FormationId      uint32
-	Name             string
-	Engaged          bool
-	DebugBrain       bool
-	KnowledgeGroupId uint32
-	LogSuperiors     []uint32
-	SuperiorQuotas   map[uint32]int32
+	Id                   uint32
+	PartyId              uint32
+	FormationId          uint32
+	Name                 string
+	Engaged              bool
+	DebugBrain           bool
+	KnowledgeGroupId     uint32
+	LogSuperiors         []uint32
+	SuperiorQuotas       map[uint32]int32
+	LogMaintenanceManual bool
 }
 
 type Formation struct {
-	Id             uint32
-	PartyId        uint32
-	ParentId       uint32
-	Name           string
-	Level          string
-	LogLevel       string
-	LogSuperiors   []uint32
-	SuperiorQuotas map[uint32]int32
+	Id                   uint32
+	PartyId              uint32
+	ParentId             uint32
+	Name                 string
+	Level                string
+	LogLevel             string
+	LogSuperiors         []uint32
+	SuperiorQuotas       map[uint32]int32
+	LogMaintenanceManual bool
 }
 
 func NewFormation(id uint32, name string, parentId uint32,
-	partyId uint32, level, logLevel string) *Formation {
+	partyId uint32, level, logLevel string, logMaintenanceManual bool) *Formation {
 	return &Formation{
-		Id:       id,
-		PartyId:  partyId,
-		ParentId: parentId,
-		Name:     name,
-		Level:    level,
-		LogLevel: logLevel,
+		Id:                   id,
+		PartyId:              partyId,
+		ParentId:             parentId,
+		Name:                 name,
+		Level:                level,
+		LogLevel:             logLevel,
+		LogMaintenanceManual: logMaintenanceManual,
 	}
 }
 
@@ -928,6 +931,7 @@ var (
 		(*ModelData).handleFormationChangeSuperior,
 		(*ModelData).handleFormationCreation,
 		(*ModelData).handleFormationDestruction,
+		(*ModelData).handleFormationUpdate,
 		(*ModelData).handleFragOrder,
 		(*ModelData).handleKnowledgeGroupCreation,
 		(*ModelData).handleKnowledgeGroupDestruction,

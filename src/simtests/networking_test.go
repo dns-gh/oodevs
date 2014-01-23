@@ -28,8 +28,9 @@ func (s *TestSuite) TestEcho(c *C) {
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil)
-	defer sim.Stop()
+	defer stopSim(c, sim, nil)
 	client := connectAndWait(c, sim, "admin", "")
+	defer client.Close()
 
 	checkEcho(c, client, "")
 	checkEcho(c, client, "something")

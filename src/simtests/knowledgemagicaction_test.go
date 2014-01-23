@@ -17,7 +17,7 @@ import (
 
 func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid knowledge group
 	err := client.KnowledgeGroupMagicActionTest(sword.KnowledgeMagicAction_enable, swapi.MakeParameters(), 42)
@@ -58,7 +58,7 @@ func (s *TestSuite) TestEnableKnowledgeGroup(c *C) {
 
 func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
@@ -117,7 +117,7 @@ func (s *TestSuite) TestChangeParentKnowledgeGroup(c *C) {
 
 func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
@@ -142,7 +142,7 @@ func (s *TestSuite) TestChangeKnowledgeGroupType(c *C) {
 
 func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
@@ -219,7 +219,7 @@ func getSomeAutomat(c *C, data *swapi.ModelData) *swapi.Automat {
 
 func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 
 	// error: no knowledge group defined
 	data := client.Model.GetData()
