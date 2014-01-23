@@ -3471,10 +3471,6 @@ This data can&apos;t be projected.</source>
         <source>Random</source>
         <translation>Random</translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Unknown</translation>
-    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>

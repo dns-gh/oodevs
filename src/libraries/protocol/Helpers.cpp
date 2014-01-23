@@ -77,6 +77,7 @@ const mapping::MagicUnitAction mapping::MagicUnitAction::data_[] = {
     { "unload_unit",                        sword::UnitMagicAction::unload_unit },
     { "change_posture",                     sword::UnitMagicAction::change_posture },
     { "exec_script",                        sword::UnitMagicAction::exec_script },
+    { "automat_and_units_creation",         sword::UnitMagicAction::automat_and_units_creation },
 };
 const size_t mapping::MagicUnitAction::size_ = COUNT_OF( mapping::MagicUnitAction::data_ );
 BOOST_STATIC_ASSERT( sword::UnitMagicAction::Type_ARRAYSIZE == mapping::MagicUnitAction::size_ );

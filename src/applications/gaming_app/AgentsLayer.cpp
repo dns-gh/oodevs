@@ -82,5 +82,5 @@ void AgentsLayer::RequestCreation( const geometry::Point2f& point, const kernel:
     const kernel::Entity_ABC* parent = selected_->Get< kernel::TacticalHierarchies >().GetSuperior();
     if( !parent )
         return;
-    actionsModel_.PublishAgentCreationAction( type, point, *parent, false );
+    actionsModel_.PublishAgentCreationAction( type, point, *parent );
 }

@@ -177,7 +177,7 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
     std::string activityType;
     xis >> xml::attribute( "type", activityType );
 
-    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( activityType );
+    auto it = consumptionTypes.find( activityType );
     if( it != consumptionTypes.end() )
     {
         const PHY_ConsumptionType& conso = *it->second;

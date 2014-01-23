@@ -50,6 +50,8 @@ typedef ENT_Tr::Converter< E_HumanState > T_ConverterHumanState;
 typedef ENT_Tr::Converter< E_HumanLocation > T_ConverterHumanLocation;
 typedef ENT_Tr::Converter< E_EquipmentState > T_ConverterEquipmentState;
 typedef ENT_Tr::Converter< E_InjuriesSeriousness > T_ConverterInjuriesSeriousness;
+typedef ENT_Tr::Converter< E_BreakdownType > T_ConverterBreakdownType;
+typedef ENT_Tr::Converter< E_BreakdownNTI > T_ConverterBreakdownNTI;
 typedef ENT_Tr::Converter< E_GhostType > T_ConverterGhostType;
 typedef ENT_Tr::Converter< E_NbcState > T_ConverterNbcState;
 typedef ENT_Tr::Converter< E_Modes > T_ConverterModes;
@@ -439,6 +441,21 @@ T_ConverterInjuriesSeriousness InjuriesSeriousnessConverter_ [] =
     T_ConverterInjuriesSeriousness( "", "", ( E_InjuriesSeriousness ) - 1 )
 };
 
+T_ConverterBreakdownType BreakdownTypeConverter_[] =
+{
+    T_ConverterBreakdownType( "EA", QT_TRANSLATE_NOOP( "ENT_Tr", "Electronic" ), eBreakdownType_EA ),
+    T_ConverterBreakdownType( "M",  QT_TRANSLATE_NOOP( "ENT_Tr", "Mobility" ),   eBreakdownType_M ),
+    T_ConverterBreakdownType( "", "", (E_BreakdownType)-1 )
+};
+
+T_ConverterBreakdownNTI BreakdownNTIConverter_[] =
+{
+    T_ConverterBreakdownNTI( "NTI1", QT_TRANSLATE_NOOP( "ENT_Tr", "Seriousness level 1" ), eBreakdownNTI_NTI1 ),
+    T_ConverterBreakdownNTI( "NTI2", QT_TRANSLATE_NOOP( "ENT_Tr", "Seriousness level 2" ), eBreakdownNTI_NTI2 ),
+    T_ConverterBreakdownNTI( "NTI3", QT_TRANSLATE_NOOP( "ENT_Tr", "Seriousness level 3" ), eBreakdownNTI_NTI3 ),
+    T_ConverterBreakdownNTI( "", "", (E_BreakdownNTI)-1 )
+};
+
 T_ConverterGhostType GhostTypeConverter_ [] =
 {
     T_ConverterGhostType( "agent",   QT_TRANSLATE_NOOP( "ENT_Tr", "Agent" ),   eGhostType_Agent ),
@@ -553,6 +570,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
 
 T_ConverterUnitMagicActionType UnitMagicActionTypeConverter_[] =
 {
+    T_ConverterUnitMagicActionType( "automat_and_units_creation",       QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat and units creation" ), sword::UnitMagicAction::automat_and_units_creation ),
     T_ConverterUnitMagicActionType( "automat_creation",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Automat Creation" ), sword::UnitMagicAction::automat_creation ),
     T_ConverterUnitMagicActionType( "cancel_surrender",                 QT_TRANSLATE_NOOP( "sword::UnitMagicAction::Type", "Cancel - Surrender" ), sword::UnitMagicAction::cancel_surrender ),
     T_ConverterUnitMagicActionType( "change_automat_superior",          "" /* doesn't seems to work, but change_formation_superior does */, sword::UnitMagicAction::change_automat_superior ),
@@ -653,6 +671,8 @@ void ENT_Tr::InitTranslations()
     INIT_TR( AgentNbcSuit );
     INIT_TR( AmmunitionType );
     INIT_TR( AviationRange );
+    INIT_TR( BreakdownNTI );
+    INIT_TR( BreakdownType );
     INIT_TR( CrossingType );
     INIT_TR( Diplomacy );
     INIT_TR( DotationFamily );
@@ -983,6 +1003,24 @@ const std::string& ENT_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, E
 const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness nValue, ENT_Tr::E_Conversion nConverterType )
 {
     return InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromBreakdownType
+// Created: APE 2005-03-07
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_Conversion nConversion )
+{
+    return ENT_Tr::InverseFindInConverter( BreakdownTypeConverter_, nValue, nConversion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromBreakdownNTI
+// Created: SBO 2005-09-07
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Conversion nConversion )
+{
+    return ENT_Tr::InverseFindInConverter( BreakdownNTIConverter_, nValue, nConversion );
 }
 
 // -----------------------------------------------------------------------------
@@ -1388,6 +1426,24 @@ E_EquipmentState ENT_Tr::ConvertToEquipmentState( const std::string& strName )
 E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& strName )
 {
     return FindInConverter( InjuriesSeriousnessConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToBreakdownType
+// Created: APE 2005-03-07
+// -----------------------------------------------------------------------------
+E_BreakdownType ENT_Tr::ConvertToBreakdownType( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( BreakdownTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToBreakdownNTI
+// Created: SBO 2005-09-07
+// -----------------------------------------------------------------------------
+E_BreakdownNTI ENT_Tr::ConvertToBreakdownNTI( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( BreakdownNTIConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------

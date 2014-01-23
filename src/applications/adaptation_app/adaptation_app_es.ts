@@ -1552,6 +1552,10 @@ estacionado con motor encendido</translation>
         <source>Min volume carried</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -5180,26 +5184,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Eletronic</source>
-        <translation>Electronique</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Gravité niveau 3</translation>
     </message>
     <message>
         <source>radar</source>

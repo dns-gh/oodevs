@@ -43,6 +43,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/foreach.hpp>
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 
@@ -157,10 +158,10 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     xis >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ )
         >> xml::optional  >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ )
         >> xml::attribute( "weight", rWeight_ );
-    if( rMaxSlope_ < 0 || rMaxSlope_ > 1 )
-        throw MASA_EXCEPTION( xis.context() + "element: max-slope not in [0..1]" );
-    if( rSlopeDeceleration_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "element: slope-deceleration < 0" );
+    if( rMaxSlope_ < 0 )
+        throw MASA_EXCEPTION( xis.context() + "element: max-slope < 0" );
+    if( rSlopeDeceleration_ < 0 || rSlopeDeceleration_ > 1 )
+        throw MASA_EXCEPTION( xis.context() + "element: slope-deceleration not in [0..1]" );
     if( rWeight_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "element: weight <= 0" );
     InitializeWeapons         ( xis );
@@ -365,9 +366,9 @@ void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeRadars( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "radars" )
-                >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
-            >> xml::end;
+        >> xml::start( "radars" )
+            >> xml::list( "radar", *this, &PHY_ComposanteTypePion::ReadRadar )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -480,8 +481,7 @@ void PHY_ComposanteTypePion::InitializeObjects( xml::xistream& xis, const Object
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
-    std::string strType( xml::attribute( xis, "type", std::string() ) );
-
+    const std::string strType = xis.attribute< std::string >( "type", "" );
     try
     {
         const MIL_ObjectType_ABC& objectType = resolver.FindType( strType );
@@ -520,7 +520,7 @@ void PHY_ComposanteTypePion::InitializeAviationQuotas( xml::xistream& xis )
             {
                 E_AviationRange range = ENT_Tr::ConvertToAviationRange( xis.attribute< std::string >( "range" ) );
                 xis >> xml::list( "quota", *this, &PHY_ComposanteTypePion::ReadAviationQuotas, aviationResourceQuotas_[ range ] );
-            })
+            } )
         >> xml::end;
 }
 
@@ -531,7 +531,7 @@ void PHY_ComposanteTypePion::InitializeAviationQuotas( xml::xistream& xis )
 void PHY_ComposanteTypePion::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ConsumptionType::T_ConsumptionTypeMap& consumptionTypes = PHY_ConsumptionType::GetConsumptionTypes();
-    PHY_ConsumptionType::CIT_ConsumptionTypeMap it = consumptionTypes.find( xis.attribute< std::string >( "status" ) );
+    auto it = consumptionTypes.find( xis.attribute< std::string >( "status" ) );
     const PHY_ConsumptionType& consumptionType = *it->second;
     consumptions_[ consumptionType.GetID() ] = new PHY_DotationConsumptions( consumptionType.GetName(), xis );
 }
@@ -597,23 +597,14 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
 
     xis >> xml::attribute( "category", maintenanceType );
 
-    PHY_MaintenanceLevel::CIT_MaintenanceLevelMap it = maintenanceLevels.find( maintenanceType );
+    auto it = maintenanceLevels.find( maintenanceType );
     const PHY_MaintenanceLevel& maintenanceLevel = *it->second;
 
     sNTICapability ntiCapability( maintenanceLevel );
 
-    std::string types;
-    xis >> xml::attribute( "type", types );
-    std::stringstream stream( types );
-    std::string type;
-    while( std::getline( stream, type, ',' ) )
-    {
-        boost::trim( type );
-        if( type == "EA" )
-            ntiCapability.bElectronic_ = true;
-        if( type == "M" )
-            ntiCapability.bMobility_   = true;
-    }
+    const std::string types = xis.attribute< std::string >( "type" );
+    ntiCapability.bElectronic_ = boost::contains( types, "EA" );
+    ntiCapability.bMobility_   = boost::contains( types, "M" );
 
     double rTime = 0;
     if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
@@ -656,14 +647,11 @@ void PHY_ComposanteTypePion::ReadTowing( xml::xistream& xis )
 bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundCapabilityVector& container, const std::string attributeName ) const
 {
     bool bHasCapability = false;
-
-    std::string strWounds;
-    xis >> xml::optional >> xml::attribute( attributeName, strWounds );
-    std::stringstream stream( strWounds );
-    std::string wound;
-    while( std::getline( stream, wound, ',' ) )
+    const std::string strWounds = xis.attribute< std::string >( attributeName, "" );
+    std::vector< std::string > wounds;
+    boost::split( wounds, strWounds, boost::is_any_of( ", " ) );
+    BOOST_FOREACH( const std::string& wound, wounds )
     {
-        boost::trim( wound );
         if( const PHY_HumanWound* pWound = PHY_HumanWound::Find( wound ) )
         {
             bHasCapability = true;
@@ -681,11 +669,11 @@ bool PHY_ComposanteTypePion::ReadWoundCapabilities( xml::xistream& xis, T_WoundC
 void PHY_ComposanteTypePion::InitializeLogisticMedical( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "health-functions" )
-                >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
-                >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
-                >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
-            >> xml::end;
+        >> xml::start( "health-functions" )
+            >> xml::list( "caring", *this, &PHY_ComposanteTypePion::ReadCaring )
+            >> xml::list( "collecting", *this, &PHY_ComposanteTypePion::ReadCollecting )
+            >> xml::list( "relieving", *this, &PHY_ComposanteTypePion::ReadRelieving )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -767,9 +755,9 @@ void PHY_ComposanteTypePion::ReadCaring( xml::xistream& xis )
 void PHY_ComposanteTypePion::InitializeLogisticSupply( xml::xistream& xis )
 {
     xis >> xml::optional
-            >> xml::start( "supply-functions" )
-                >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
-            >> xml::end;
+        >> xml::start( "supply-functions" )
+            >> xml::list( "carrying", *this, &PHY_ComposanteTypePion::ReadSupply )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -859,16 +847,25 @@ double PHY_ComposanteTypePion::GetConstructionSpeed( const TerrainData& data ) c
     return speeds_.GetConstructionSpeed( data );
 }
 
+namespace
+{
+    template< typename Objects >
+    bool CanDoIt( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< bool( const PHY_ComposanteTypeObjectData& ) > f )
+    {
+        if( objectType.GetID() > objects.size() )
+            return false;
+        auto objectData = objects[ objectType.GetID() ];
+        return objectData && f( *objectData );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanConstruct();
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanConstruct(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -877,10 +874,7 @@ bool PHY_ComposanteTypePion::CanConstruct( const MIL_ObjectType_ABC& object ) co
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanDestroy();
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanDestroy(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -889,10 +883,7 @@ bool PHY_ComposanteTypePion::CanDestroy( const MIL_ObjectType_ABC& object ) cons
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanMine();
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanMine(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -901,10 +892,7 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanExtinguish();
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanExtinguish(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -913,10 +901,7 @@ bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) c
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanDemine();
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanDemine(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -925,10 +910,7 @@ bool PHY_ComposanteTypePion::CanDemine( const MIL_ObjectType_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool bObjectIsMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanBypass( bObjectIsMined );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanBypass( bObjectIsMined ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -937,10 +919,21 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object, bool isObjectMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return false;
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    return pObjectData && pObjectData->CanRemoveFromPath( isObjectMined );
+    return CanDoIt( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.CanRemoveFromPath( isObjectMined ); } );
+}
+
+namespace
+{
+    template< typename Objects >
+    double GetTime( const Objects& objects, const MIL_ObjectType_ABC& objectType, std::function< double( const PHY_ComposanteTypeObjectData& ) > f )
+    {
+        if( objectType.GetID() > objects.size() )
+            return std::numeric_limits< double >::max();
+        const auto objectData = objects[ objectType.GetID() ];
+        if( objectData )
+            return f( *objectData );
+        return std::numeric_limits< double >::max();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -949,12 +942,7 @@ bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetConstructionTime( rSizeCoef );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetConstructionTime( rSizeCoef ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -963,12 +951,7 @@ double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& ob
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetDestructionTime( rSizeCoef );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetDestructionTime( rSizeCoef ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -977,12 +960,7 @@ double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& obj
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetMiningTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetMiningTime(); } );
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetDeminingTime
@@ -990,12 +968,7 @@ double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object )
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetDeminingTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetDeminingTime(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -1004,12 +977,7 @@ double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetExtinguishingTime();
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetExtinguishingTime(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -1018,12 +986,7 @@ double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& o
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, double rSizeCoef, bool bObjectIsMined ) const
 {
-    if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< double >::max();
-    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
-    if( pObjectData )
-        return pObjectData->GetBypassTime( rSizeCoef, bObjectIsMined );
-    return std::numeric_limits< double >::max();
+    return GetTime( objectData_, object, [&]( const PHY_ComposanteTypeObjectData& data ){ return data.GetBypassTime( rSizeCoef, bObjectIsMined ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -1151,7 +1114,6 @@ double PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_A
 double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     double rRange = -1.;
-
     for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )

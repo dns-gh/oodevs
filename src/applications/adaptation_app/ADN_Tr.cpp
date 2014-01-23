@@ -42,8 +42,6 @@ typedef Converter< E_CrossingHeight >           T_ConverterCrossingHeight;
 typedef Converter< E_SensorWeatherModifiers >   T_ConverterSensorWeatherModifiers;
 typedef Converter< E_DoctorSkills >             T_ConverterDoctorSkills;
 typedef Converter< E_ProtectionType >           T_ConverterProtectionType;
-typedef Converter< E_BreakdownType >            T_ConverterBreakdownType;
-typedef Converter< E_BreakdownNTI >             T_ConverterBreakdownNTI;
 typedef Converter< E_RadarType >                T_ConverterRadarType;
 typedef Converter< E_EquipmentState_ADN >       T_ConverterEquipmentState;
 typedef Converter< E_TypeMunitionTirIndirect >  T_ConverterTypeMunitionTirIndirect;
@@ -223,21 +221,6 @@ T_ConverterProtectionType ProtectionTypeConverter_[] =
     T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "Equipment" ), eProtectionType_Material ),
     T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "Human" ),     eProtectionType_Human ),
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
-};
-
-T_ConverterBreakdownType BreakdownTypeConverter_[] =
-{
-    T_ConverterBreakdownType( "EA", QT_TRANSLATE_NOOP( "ADN_Tr", "Eletronic" ), eBreakdownType_EA ),
-    T_ConverterBreakdownType( "M",  QT_TRANSLATE_NOOP( "ADN_Tr", "Mobility" ),  eBreakdownType_M ),
-    T_ConverterBreakdownType( "", "", (E_BreakdownType)-1 )
-};
-
-T_ConverterBreakdownNTI BreakdownNTIConverter_[] =
-{
-    T_ConverterBreakdownNTI( "NTI1", QT_TRANSLATE_NOOP( "ADN_Tr", "Seriousness level 1" ), eBreakdownNTI_NTI1 ),
-    T_ConverterBreakdownNTI( "NTI2", QT_TRANSLATE_NOOP( "ADN_Tr", "Seriousness level 2" ), eBreakdownNTI_NTI2 ),
-    T_ConverterBreakdownNTI( "NTI3", QT_TRANSLATE_NOOP( "ADN_Tr", "Seriousness level 3" ), eBreakdownNTI_NTI3 ),
-    T_ConverterBreakdownNTI( "", "", (E_BreakdownNTI)-1 )
 };
 
 T_ConverterSupplyConvoyType SupplyConvoyTypeConverter_[] =
@@ -483,24 +466,6 @@ const std::string& ADN_Tr::ConvertFromProtectionType( E_ProtectionType nValue, E
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromBreakdownType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::InverseFindInConverter( BreakdownTypeConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromBreakdownNTI
-// Created: SBO 2005-09-07
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::InverseFindInConverter( BreakdownNTIConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromRadarType
 // Created: APE 2005-03-07
 // -----------------------------------------------------------------------------
@@ -699,24 +664,6 @@ E_ProtectionType ADN_Tr::ConvertToProtectionType( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToBreakdownType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-E_BreakdownType ADN_Tr::ConvertToBreakdownType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( BreakdownTypeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToBreakdownNTI
-// Created: SBO 2005-09-07
-// -----------------------------------------------------------------------------
-E_BreakdownNTI ADN_Tr::ConvertToBreakdownNTI( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( BreakdownNTIConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToRadarType
 // Created: APE 2005-03-07
 // -----------------------------------------------------------------------------
@@ -827,8 +774,6 @@ void ADN_Tr::InitTranslations()
 {
     INIT_TR( AgentTypeAutomate );
     INIT_TR( AgentTypePion );
-    INIT_TR( BreakdownNTI );
-    INIT_TR( BreakdownType );
     INIT_TR( ConstructorType );
     INIT_TR( ConsumptionType );
     INIT_TR( ContextParameters );

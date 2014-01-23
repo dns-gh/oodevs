@@ -995,6 +995,26 @@
         <source>Create new</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Electronic</source>
+        <translation type="unfinished">الإلكترونية</translation>
+    </message>
+    <message>
+        <source>Mobility</source>
+        <translation type="unfinished">التنقل</translation>
+    </message>
+    <message>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished">خطورة مستوى 1</translation>
+    </message>
+    <message>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة 2</translation>
+    </message>
+    <message>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished">خطورة المستوى 3</translation>
+    </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
@@ -1253,6 +1273,10 @@
     </message>
     <message>
         <source>Switch Log Maintenance To Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat and units creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

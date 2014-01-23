@@ -37,7 +37,6 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory,
                             Controllers& controllers,
                             const Time_ABC& simulation )
     : factory_( factory )
-    , defaultPublisher_( defaultPublisher )
     , controller_( controllers.controller_ )
     , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
 {
@@ -81,10 +80,9 @@ void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
 // Name: ActionsModel::PublishAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
-                                                 tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation )
+void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected )
 {
-    std::unique_ptr< Action_ABC > action( factory_.CreateAutomatCreationAction( type, selected, point, agentsModel, agentMessenger, *this, simulation ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateAutomatCreationAction( type, selected, point ) );
     Publish( *action, clock() );
 }
 
@@ -92,13 +90,10 @@ void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point,
 // Name: ActionsModel::PublishAgentCreationAction
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, bool force )
+void ActionsModel::PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateAgentCreationAction( type, point, selected ) );
-    if( force )
-        PublishForce( *action );
-    else
-        Publish( *action, 0 );
+    Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,15 +276,6 @@ void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* f
 void ActionsModel::Publish( const Action_ABC& action, int context )
 {
     action.Publish( *publisher_, context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::PublishForce
-// Created: HBD 2011-01-19
-// -----------------------------------------------------------------------------
-void ActionsModel::PublishForce( const Action_ABC& action )
-{
-    action.Publish( defaultPublisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------

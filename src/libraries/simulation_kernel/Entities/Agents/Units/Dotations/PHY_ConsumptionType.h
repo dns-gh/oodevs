@@ -23,7 +23,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_ConsumptionType* > T_ConsumptionTypeMap;
-    typedef T_ConsumptionTypeMap::const_iterator              CIT_ConsumptionTypeMap;
     //@}
 
     //! @name Modes

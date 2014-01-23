@@ -1548,6 +1548,10 @@ Parked engine running</translation>
         <source>Min volume carried</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>°</source>
+        <translation>°</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -5223,26 +5227,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Injury extreme severity</translation>
-    </message>
-    <message>
-        <source>Eletronic</source>
-        <translation>Electronics</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobility</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Severity level 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Severity level 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Severity level 3</translation>
     </message>
     <message>
         <source>Real</source>

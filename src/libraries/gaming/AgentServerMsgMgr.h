@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Types.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "actions/CreationListener_ABC.h"
 
 namespace sword
 {
@@ -216,7 +215,7 @@ class CommandHandler;
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr : public Publisher_ABC, public actions::CreationListener_ABC
+class AgentServerMsgMgr : public Publisher_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -241,11 +240,6 @@ public:
 
     void SetElements( Model& model, Profile& profile );
     void Reconnect( const std::string& login, const std::string& password );
-    //@}
-
-    //! @name Callbacks/listeners
-    //@{
-    void RegisterListener( boost::shared_ptr< sword::Listener >& listener );
     //@}
 
     //! @name Statistics
@@ -521,7 +515,6 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< boost::shared_ptr< sword::Listener > > T_Listeners;
     typedef std::vector< T_SimHandler >    T_SimHandlers;
     typedef std::vector< T_ReplayHandler > T_ReplayHandlers;
     //@}
@@ -537,7 +530,6 @@ private:
     Simulation&               simulation_;
     kernel::Logger_ABC&       logger_;
     CommandHandler&           commands_;
-    T_Listeners               listeners_;
     T_SimHandlers             simHandlers_;
     T_ReplayHandlers          replayHandlers_;
     //@}

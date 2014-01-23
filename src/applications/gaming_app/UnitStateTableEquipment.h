@@ -77,7 +77,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, int >   T_Changes;
-    typedef T_Changes::const_iterator     CIT_Changes;
     //@}
 
 private:

@@ -720,11 +720,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
-        <translation>L'automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
+        <translation>L&apos;automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
     </message>
     <message>
         <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
-        <translation>L'automate logistique &apos;%1&apos; contient au moins un pion non logistique.</translation>
+        <translation>L&apos;automate logistique &apos;%1&apos; contient au moins un pion non logistique.</translation>
     </message>
 </context>
 <context>
@@ -1555,6 +1555,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Min volume carried</source>
         <translation>Volume min transportable</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation>°</translation>
     </message>
 </context>
 <context>
@@ -5151,26 +5155,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Blessure extrêmement grave</translation>
-    </message>
-    <message>
-        <source>Eletronic</source>
-        <translation>Electronique</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobilité</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Gravité niveau 3</translation>
     </message>
     <message>
         <source>radar</source>

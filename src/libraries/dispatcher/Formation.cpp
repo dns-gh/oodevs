@@ -27,14 +27,15 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg )
-    : Formation_ABC  ( msg.formation().id(), QString( msg.name().c_str() ) )
-    , model_         ( model )
-    , name_          ( msg.name() )
-    , team_          ( model.Sides().Get( msg.party().id() ) )
-    , level_         ( static_cast< E_NatureLevel >( msg.level() ) )
-    , app6symbol_    ( msg.app6symbol() )
-    , logisticEntity_( 0 )
-    , parent_        ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
+    : Formation_ABC        ( msg.formation().id(), QString( msg.name().c_str() ) )
+    , model_               ( model )
+    , name_                ( msg.name() )
+    , team_                ( model.Sides().Get( msg.party().id() ) )
+    , level_               ( static_cast< E_NatureLevel >( msg.level() ) )
+    , app6symbol_          ( msg.app6symbol() )
+    , logisticEntity_      ( 0 )
+    , parent_              ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
+    , logMaintenanceManual_( msg.log_maintenance_manual() )
 {
     if( parent_ )
         parent_->Register( *this );
@@ -47,7 +48,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
-        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) ) );
         AddExtension( *logisticEntity_ );
         AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }
@@ -139,12 +140,13 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         *message().mutable_color() = color_;
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
+    message().set_log_maintenance_manual( logMaintenanceManual_ );
     message.Send( publisher );
 }
 
@@ -152,12 +154,13 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: Formation::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
+void Formation::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::FormationUpdate asn;
         asn().mutable_formation()->set_id( GetId() );
-        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        asn().set_log_maintenance_manual( logMaintenanceManual_ );
+        for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
             sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
             entry->set_name( it->first );
@@ -235,6 +238,7 @@ void Formation::Register( dispatcher::Formation_ABC& formation )
 {
     formations_.Register( formation.GetId(), formation );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-18
@@ -243,6 +247,7 @@ void Formation::Remove( dispatcher::Formation_ABC& formation )
 {
     formations_.Remove( formation.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetFormations
 // Created: MGD 2009-12-22
@@ -260,6 +265,7 @@ void Formation::Register( dispatcher::Automat_ABC& automat )
 {
     automats_.Register( automat.GetId(), automat );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::Register
 // Created: MGD 2009-12-21
@@ -268,6 +274,7 @@ void Formation::Remove( dispatcher::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Formation::GetAutomates
 // Created: MGD 2009-12-22
@@ -306,6 +313,8 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
+    if( msg.has_log_maintenance_manual() )
+        logMaintenanceManual_ = msg.log_maintenance_manual();
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +323,7 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
 // -----------------------------------------------------------------------------
 bool Formation::GetExtension( const std::string& key, std::string& result ) const
 {
-    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    auto it = extensions_.find( key );
     if( it == extensions_.end() )
         return false;
     result = it->second;

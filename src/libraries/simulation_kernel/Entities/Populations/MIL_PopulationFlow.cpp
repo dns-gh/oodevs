@@ -605,6 +605,15 @@ double MIL_PopulationFlow::GetSlopeDeceleration() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetMaxSlope
+// Created: JSR 2014-01-20
+// -----------------------------------------------------------------------------
+double MIL_PopulationFlow::GetMaxSlope() const
+{
+    return std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::SendRC
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------

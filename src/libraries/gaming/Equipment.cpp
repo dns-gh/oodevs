@@ -197,26 +197,23 @@ Equipment& Equipment::operator=( const Equipment& rhs )
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< int > Equipment::GetBreakdowns
+// Name: Equipment::GetBreakdowns
 // Created: LDC 2013-01-30
 // -----------------------------------------------------------------------------
-std::vector< int > Equipment::GetBreakdowns( bool isReadOnly ) const
+const std::vector< int >& Equipment::GetBreakdowns() const
 {
-    if( !isReadOnly )
-        return breakdowns_;
-    else
-        return std::vector< int >();
+    return breakdowns_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< int > Equipment::GetBreakdownsInTreatment
+// Name: Equipment::GetBreakdownsInTreatment
 // Created: LDC 2013-01-31
 // -----------------------------------------------------------------------------
-std::vector< int > Equipment::GetBreakdownsInTreatment( bool isReadOnly ) const
+std::vector< int > Equipment::GetBreakdownsInTreatment( bool isDiagnosed ) const
 {
     std::vector< int > result;
     for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
-        if( it->second.inMaintenance_ && ( !isReadOnly || it->second.diagnosed_ ) )
+        if( it->second.inMaintenance_ && it->second.diagnosed_ == isDiagnosed )
             result.push_back( it->second.type_ );
     return result;
 }

@@ -94,6 +94,7 @@ private:
     virtual double GetSpeed( const TerrainData& environment ) const;
     virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetSlopeDeceleration() const;
+    virtual double GetMaxSlope() const;
     //@}
 
     //! @name  Position operations
