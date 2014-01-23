@@ -355,6 +355,14 @@ integration.startMoveToIt = function( objective, pathType, waypoints )
     myself.location = nil
 
     -- -------------------------------------------------------------------------------- 
+    --if the agent is ordered to move and if it is deployed, undeploy before starting 
+    -- to move. 
+    -- -------------------------------------------------------------------------------- 
+    if integration.isDeployed() then
+        integration.undeploy() -- call once, but deployment takes delays.
+    end
+
+    -- -------------------------------------------------------------------------------- 
     -- Retreive current paused movement action if it was suspended
     -- --------------------------------------------------------------------------------
     if objective[ myself ].moveAction then
