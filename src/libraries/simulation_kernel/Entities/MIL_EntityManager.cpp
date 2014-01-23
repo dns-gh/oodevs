@@ -1301,7 +1301,7 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
     float angle = numberOfAgents > 1 ? 2 * pi / ( numberOfAgents - 1 ) : 0;
     unsigned int current = 0;
     std::vector< unsigned int > unitIds;
-    for( int index = 0; index < compositions.size(); ++index )
+    for( size_t index = 0; index < compositions.size(); ++index )
     {
         const auto content = compositions.at( index );
         if( const MIL_AgentTypePion* agentType = dynamic_cast< const MIL_AgentTypePion* >( content.first ) )
