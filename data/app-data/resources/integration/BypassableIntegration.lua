@@ -9,9 +9,9 @@ integration.canBypassIt = function( object )
     return DEC_Agent_PeutConstruireContournementObjet( object.source )
 end
 
---- Returns true if the object knowledge has the availability to be bypassed, false otherwise
+--- Returns true if the object knowledge can be bypassed, false otherwise
 -- @param object Object knowledge
--- @return Boolean, the availability as defined in the physical database
+-- @return Boolean, the capacity as defined in the physical database
 integration.canBeBypassed = function( object )
     return DEC_ConnaissanceObjet_PeutEtreContourne( object.source )
 end
@@ -23,8 +23,8 @@ integration.bypassLevel = function( object )
     return DEC_ConnaissanceObjet_EstContourne( object.source ) == eTristate_True and 100 or 0
 end
 
---- Allows the unit to begin work to permit to bypass the selected object
--- It will take time depending of the unit availability as defined in the physical database. Two reports are sent
+--- Allows the unit to begin work to permit bypassing the selected object
+-- It will take time depending on the unit ability as defined in the physical database. Two reports are sent
 -- @see integration.updateBypassIt
 -- @see integration.stopBypassIt
 -- @param object Object knowledge
@@ -37,7 +37,7 @@ integration.startBypassIt = function( object )
     reportFunction(eRC_DebutTravaux )
 end
 
---- Continue work to permit to bypass the selected object knowledge
+--- Continue work to permit bypassing the selected object knowledge
 -- @see integration.startBypassIt
 -- @see integration.stopBypassIt
 -- @param object Object knowledge
@@ -53,12 +53,12 @@ integration.updateBypassIt = function( object )
     return true
 end
 
---- Allows the unit to stop work to permit to bypass the selected object knowledge
+--- Allows the unit to stop work to permit bypassing the selected object knowledge
 -- A report is sent when work is finished
 -- @integration.startBypassIt
 -- @see integration.updateBypassIt
 -- @param object Object knowledge
--- @return Boolean, true if work is completed or impossible, false if work is paused (it could be resume later)
+-- @return Boolean, true if work is completed or impossible, false if work is paused (it could be resumed later)
 integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
     if object[myself].actionBypassState == eActionObjetTerminee then
@@ -77,7 +77,7 @@ integration.stopBypassIt = function( object )
     return true
 end
 
---- Returns true if the unit has the availability to do work to permit to bypass the selected object, false otherwise
+--- Returns true if the unit has the ability to do work to permit bypassing the selected object, false otherwise
 -- @param entity Simulation agent
 -- @param objectType String, the type of the object see ObjectNames.xml and Objects.xml in physical database
 -- @return Boolean, the availability as defined in the physical database
