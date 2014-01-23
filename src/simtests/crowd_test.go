@@ -352,7 +352,13 @@ const (
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
+	// TODO: simulation_app.exe crashes at termination in vc100, giving the
+	// move mission and waiting for the flow to be created is enough.
+	errOpts := simu.SessionErrorsOpts{
+		IgnoreDumps: true,
+	}
+	defer stopSim(c, sim, &errOpts)
+	defer client.Close()
 	crowd := CreateCrowd(c, client)
 
 	// Wait crowd update
