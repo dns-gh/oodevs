@@ -99,7 +99,7 @@ namespace logistic_helpers
     // Name: Tools::IsLogisticBase
     // Created: ABR 2014-01-20
     // -----------------------------------------------------------------------------
-    bool logistic_helpers::IsLogisticBase( const kernel::Entity_ABC& entity )
+    bool IsLogisticBase( const kernel::Entity_ABC& entity )
     {
         if( const gui::LogisticBase* extension = entity.Retrieve< gui::LogisticBase >() )
             return extension->IsBase();
