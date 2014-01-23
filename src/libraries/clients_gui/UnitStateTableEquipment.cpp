@@ -96,7 +96,8 @@ void UnitStateTableEquipment::AddLines( const QString& name, const kernel::Entit
         AddItem( row, eName, name, name );
         AddItem( row, eUnit, GetDisplayName( entity ), entity.GetName() );
 
-        const unsigned int currentType = i < currentBreakdowns.size() ? currentBreakdowns[ i ] : 0;
+        const unsigned int currentType = i < static_cast< int >( currentBreakdowns.size() )
+            ? currentBreakdowns[ i ] : 0;
         if( currentType < static_cast< unsigned int >( breakdownTypes.size() ) )
             AddItem( row, eBreakdown, breakdownTypes[ currentType ], currentType, Qt::ItemIsEditable );
 
