@@ -170,7 +170,8 @@ void LogisticSupplyPullFlowDialog::Validate()
             return;
     }
 
-    resourcesTable_->GetQuantities( supplierSupplies_ );
+    T_QuantitiesMap supplies;
+    resourcesTable_->GetQuantities( supplies );
     T_QuantitiesMap carriers;
     if( carriersUseCheck_->isChecked() )
         carriersTable_->GetQuantities( carriers );
@@ -197,7 +198,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     else if( pSupplierFormation )
         pullFlowParameters->SetSupplier( *pSupplierFormation );
 
-    for( auto it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
+    for( auto it = supplies.begin(); it != supplies.end(); ++it )
     {
         const DotationType* dotationType = availableSupplies_[ it.key() ].type_;
         assert( dotationType );
@@ -265,7 +266,6 @@ void LogisticSupplyPullFlowDialog::ClearSuppliersTable()
 void LogisticSupplyPullFlowDialog::ClearSuppliersData()
 {
     supplier_ = 0;
-    supplierSupplies_.clear();
 }
 
 namespace
