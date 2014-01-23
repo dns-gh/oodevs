@@ -148,6 +148,55 @@ bool LogisticBase::IsMaintenanceManual() const
 // -----------------------------------------------------------------------------
 void LogisticBase::SetMaintenanceManual( bool manual )
 {
+    if( manual == isMaintenanceManual_ )
+        return;
     isMaintenanceManual_ = manual;
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::DoUpdate
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+void LogisticBase::DoUpdate( const sword::AutomatCreation& message )
+{
+    Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::DoUpdate
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+void LogisticBase::DoUpdate( const sword::AutomatAttributes& message )
+{
+    Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::DoUpdate
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+void LogisticBase::DoUpdate( const sword::FormationCreation& message )
+{
+    Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::DoUpdate
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+void LogisticBase::DoUpdate( const sword::FormationUpdate& message )
+{
+    Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBase::Update
+// Created: ABR 2014-01-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void LogisticBase::Update( const T& message )
+{
+    if( message.has_log_maintenance_manual() )
+        SetMaintenanceManual( message.log_maintenance_manual() );
 }

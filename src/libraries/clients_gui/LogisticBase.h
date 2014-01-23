@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 #include <boost/noncopyable.hpp>
 
@@ -24,6 +25,10 @@ namespace kernel
 
 namespace sword
 {
+    class AutomatAttributes;
+    class AutomatCreation;
+    class FormationCreation;
+    class FormationUpdate;
     enum EnumLogisticLevel;
 }
 
@@ -39,6 +44,10 @@ namespace gui
 // =============================================================================
 class LogisticBase : public kernel::Extension_ABC
                    , public kernel::Serializable_ABC
+                   , public kernel::Updatable_ABC< sword::AutomatAttributes >
+                   , public kernel::Updatable_ABC< sword::AutomatCreation >
+                   , public kernel::Updatable_ABC< sword::FormationCreation >
+                   , public kernel::Updatable_ABC< sword::FormationUpdate >
                    , private boost::noncopyable
 {
 
@@ -63,9 +72,7 @@ public:
     bool IsBase() const;
     void SetBase( const bool& isBase );
     const kernel::Entity_ABC& GetEntity() const;
-
     bool IsMaintenanceManual() const;
-    void SetMaintenanceManual( bool manual );
     //@}
 
 private:
@@ -74,8 +81,19 @@ private:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
+    //! @name Updatable_ABC
+    //@{
+    virtual void DoUpdate( const sword::AutomatCreation& message );
+    virtual void DoUpdate( const sword::AutomatAttributes& message );
+    virtual void DoUpdate( const sword::FormationCreation& message );
+    virtual void DoUpdate( const sword::FormationUpdate& message );
+    //@}
+
     //! @name Helpers
     //@{
+    void SetMaintenanceManual( bool manual );
+    template< typename T >
+    void Update( const T& message );
     void CreateDictionary( gui::PropertiesDictionary& dictionary,
                            bool active,
                            bool readOnly );
