@@ -130,8 +130,8 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eTowerCapacity]->Connect( &pInfos->logInfos_.maintenanceInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eIsTower]->Connect( &pInfos->logInfos_.maintenanceInfos_.bIsTower_, bConnect );
     
-    vItemConnectors_[ADN_Equipments_GUI::eMaxSlope]->Connect( &pInfos->rMaxSlope_, bConnect );
-    vItemConnectors_[ADN_Equipments_GUI::eSlopeDeceleration]->Connect( &pInfos->rSlopeDeceleration_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eMaxSlope]->Connect( &pInfos->nMaxSlope_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSlopeDeceleration]->Connect( &pInfos->nSlopeDeceleration_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eLength]->Connect( &pInfos->length_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eWidth]->Connect( &pInfos->width_, bConnect );

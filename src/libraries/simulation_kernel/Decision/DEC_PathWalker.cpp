@@ -113,8 +113,14 @@ void DEC_PathWalker::ComputeCurrentSpeed()
     rCurrentSpeed_ = movingEntity_.GetSpeed( environment_ );
     if( curPathPoint.IsSlopeValid() )
     {
-        const double factor = 1 - curPathPoint.GetSlope() * movingEntity_.GetSlopeDeceleration();
-        rCurrentSpeed_ = std::max( 0., rCurrentSpeed_ * factor );
+        const double maxSlope = movingEntity_.GetMaxSlope();
+        if( maxSlope <= 0 || curPathPoint.GetSlope() >= maxSlope )
+            rCurrentSpeed_ = 0;
+        else
+        {
+            const double factor = 1 - curPathPoint.GetSlope() / maxSlope * movingEntity_.GetSlopeDeceleration();
+            rCurrentSpeed_ = std::max( 0., rCurrentSpeed_ * factor );
+        }
     }
 }
 
