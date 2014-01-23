@@ -351,9 +351,17 @@ func (c *Client) CreateAutomatAndUnits(formationId, automatType,
 	for i := 0; i < size; i++ {
 		value := GetParameterValue(result, i)
 		if i == 0 {
-			ids[i] = value.GetAutomat().GetId()
+			automat := value.GetAutomat()
+			if automat == nil {
+				return nil, units, invalid("result", result)
+			}
+			ids[i] = automat.GetId()
 		} else {
-			ids[i] = value.GetAgent().GetId()
+			agent := value.GetAgent()
+			if agent == nil {
+				return nil, units, invalid("result", result)
+			}
+			ids[i] = agent.GetId()
 		}
 	}
 	var automat *Automat
@@ -366,6 +374,7 @@ func (c *Client) CreateAutomatAndUnits(formationId, automatType,
 			if k != 0 {
 				unit := data.Units[v]
 				if unit == nil {
+					units = []*Unit{}
 					return false
 				}
 				units = append(units, unit)

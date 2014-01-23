@@ -77,7 +77,7 @@ func (s *TestSuite) TestAutomatReloadBrain(c *C) {
 
 func (s *TestSuite) TestCreateAutomat(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 
 	formation := getSomeFormation(c, model.GetData())
@@ -130,7 +130,7 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 
 func (s *TestSuite) TestCreateAutomatAndUnits(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer sim.Stop()
+	defer stopSimAndClient(c, sim, client)
 	model := client.Model
 
 	formation := getSomeFormation(c, model.GetData())
@@ -141,17 +141,12 @@ func (s *TestSuite) TestCreateAutomatAndUnits(c *C) {
 	knowledgeGroups := model.GetData().KnowledgeGroups
 	c.Assert(len(knowledgeGroups), Greater, 1)
 	var kg0 *swapi.KnowledgeGroup
-	var kg1 *swapi.KnowledgeGroup
 	for _, kg := range knowledgeGroups {
 		if kg0 == nil && kg.PartyId == formation.PartyId {
 			kg0 = kg
 		}
-		if kg1 == nil && kg.PartyId != formation.PartyId {
-			kg1 = kg
-		}
 	}
 	c.Assert(kg0, NotNil)
-	c.Assert(kg1, NotNil)
 
 	// No parent formation
 	_, _, err := client.CreateAutomatAndUnits(0, AutomatType, kg0.Id, pos)
