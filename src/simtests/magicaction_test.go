@@ -299,3 +299,57 @@ func (s *TestSuite) TestTriggerError(c *C) {
 	err := client.TriggerError("null_pointer")
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestSelectTransporter(c *C) {
+	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	// error: invalid parameters count, parameters expected
+	err := client.SelectTransporterTest(swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be an identifier
+	err = client.SelectTransporterTest(swapi.MakeParameters(nil))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be a valid identifier
+	err = client.SelectTransporter(1000)
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// set automat to manual mode
+	err = client.LogMaintenanceSetManual(14, true)
+	c.Assert(err, IsNil)
+	// trigger a breakdown
+	unit := client.Model.GetUnit(8)
+	equipmentId := uint32(39)
+	equipment := swapi.EquipmentDotation{
+		Available:  1,
+		Repairable: 1,
+		Breakdowns: []int32{11},
+	}
+	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+	var handlingId uint32
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, h := range data.MaintenanceHandlings {
+			if h.Provider != nil {
+				handlingId = h.Id
+				return true
+			}
+		}
+		return false
+	})
+	// wait for state to be wait for selection
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.MaintenanceHandlings[handlingId].Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+	})
+	// trigger select new state
+	err = client.SelectTransporter(handlingId)
+	c.Assert(err, IsNil)
+	// check state has changed
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.MaintenanceHandlings[handlingId].Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+	})
+}

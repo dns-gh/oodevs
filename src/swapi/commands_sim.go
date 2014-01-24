@@ -1587,3 +1587,12 @@ func (c *Client) LogMaintenanceSetManualTest(unitId uint32, parameters *sword.Mi
 func (c *Client) LogMaintenanceSetManual(unitId uint32, mode bool) error {
 	return c.LogMaintenanceSetManualTest(unitId, MakeParameters(MakeBoolean(mode)))
 }
+
+func (c *Client) SelectTransporterTest(params *sword.MissionParameters) error {
+	msg := CreateMagicAction(params, sword.MagicAction_select_new_logistic_state)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
+
+func (c *Client) SelectTransporter(handlingId uint32) error {
+	return c.SelectTransporterTest(MakeParameters(MakeIdentifier(handlingId)))
+}
