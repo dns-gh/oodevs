@@ -25,21 +25,25 @@ class LogisticSupplyPullFlowDialog : public LogisticSupplyFlowDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPullFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                     const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                     const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const kernel::Profile_ABC& profile );
+             LogisticSupplyPullFlowDialog( QWidget* parent,
+                                           kernel::Controllers& controllers,
+                                           actions::ActionsModel& actionsModel,
+                                           const ::StaticModel& staticModel,
+                                           const kernel::Time_ABC& simulation,
+                                           gui::ParametersLayer& layer,
+                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                           const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
     virtual ~LogisticSupplyPullFlowDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    void Show( const kernel::Entity_ABC& entity );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Show();
     virtual void Validate();
     virtual void Reject();
     void OnSupplierValueChanged();
@@ -47,12 +51,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticSupplyPullFlowDialog( const LogisticSupplyPullFlowDialog& );            //!< Copy constructor
-    LogisticSupplyPullFlowDialog& operator=( const LogisticSupplyPullFlowDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddResourceItem();

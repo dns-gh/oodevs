@@ -12,17 +12,16 @@
 #include "Dotation.h"
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
-#include "LogisticHierarchiesBase.h"
-#include "LogisticLevelAttribute.h"
 #include "AgentsModel.h"
 #include "GhostModel.h"
 #include "Model.h"
-#include "LogisticHierarchiesBase.h"
 #include "FormationModel.h"
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "UserProfile.h"
+
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -33,7 +32,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GhostPrototype.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/PropertiesDictionary.h"
@@ -328,7 +326,7 @@ void Ghost::FinalizeDotations( const ::StaticModel& staticModel, const Entity_AB
 void Ghost::Finalize( const ::StaticModel& staticModel )
 {
     // Compute logistic links
-    if( LogisticHierarchiesBase* logHierarchy = Retrieve< LogisticHierarchiesBase >() )
+    if( gui::LogisticHierarchiesBase* logHierarchy = Retrieve< gui::LogisticHierarchiesBase >() )
     {
         if( logisticSuperiorID_ != -1 )
             if( const kernel::Automat_ABC* superiorAutomat = model_.agents_->FindAutomat( logisticSuperiorID_ ) )
@@ -339,7 +337,7 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
         for( std::vector< int >::const_iterator it = logisticSubordinatesID_.begin(); it != logisticSubordinatesID_.end(); ++it )
             if( kernel::Automat_ABC* subordinateAutomat = model_.agents_->FindAutomat( *it ) )
             {
-                LogisticHierarchiesBase& subordinateHierarchy = subordinateAutomat->Get< LogisticHierarchiesBase >();
+                gui::LogisticHierarchiesBase& subordinateHierarchy = subordinateAutomat->Get< gui::LogisticHierarchiesBase >();
                 subordinateHierarchy.SetLogisticSuperior( this );
                 FinalizeDotations( staticModel, *subordinateAutomat, static_cast< LogisticBaseStates& >( subordinateHierarchy ) );
             }
@@ -349,7 +347,7 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
                 if( subordinateGhost )
                 {
                     assert( subordinateGhost->GetGhostType() == eGhostType_Automat );
-                    LogisticHierarchiesBase& subordinateHierarchy = subordinateGhost->Get< LogisticHierarchiesBase >();
+                    gui::LogisticHierarchiesBase& subordinateHierarchy = subordinateGhost->Get< gui::LogisticHierarchiesBase >();
                     subordinateHierarchy.SetLogisticSuperior( this );
                 }
             }
@@ -371,7 +369,7 @@ void Ghost::Finalize( const ::StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 void Ghost::SerializeGhostAttributes( xml::xostream& xos ) const
 {
-    if( const LogisticHierarchiesBase* logHierarchy = Retrieve< LogisticHierarchiesBase >() )
+    if( const gui::LogisticHierarchiesBase* logHierarchy = Retrieve< gui::LogisticHierarchiesBase >() )
     {
         xos << xml::start( "logistic" );
 
@@ -389,7 +387,7 @@ void Ghost::SerializeGhostAttributes( xml::xostream& xos ) const
             const kernel::Entity_ABC& entity = children.NextElement();
             xos << xml::start( "subordinate" )
                 << xml::attribute( "id", entity.GetId() );
-            const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+            const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< gui::LogisticHierarchiesBase >() );
             if( subordinateLogHierarchy )
                 subordinateLogHierarchy->SerializeQuotas( xos );
             xos << xml::end; //! subordinate
@@ -497,14 +495,4 @@ void Ghost::UpdateSymbol( const std::string& level, const std::string& nature, c
     level_ = level;
     nature_ = nature;
     symbol_ = symbol;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Ghost::GetLogisticLevel
-// Created: ABR 2012-06-25
-// -----------------------------------------------------------------------------
-const LogisticLevel& Ghost::GetLogisticLevel() const
-{
-    const LogisticLevelAttribute* logAttribut = Retrieve< LogisticLevelAttribute >();
-    return logAttribut ? logAttribut->GetLogisticLevel() : LogisticLevel::none_;
 }

@@ -247,6 +247,21 @@
     </message>
 </context>
 <context>
+    <name>LogisticBase</name>
+    <message>
+        <source>Info/Logistic base</source>
+        <translation>Info/Base logistique</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
+        <translation>En désactivant la fonction logistique sur cette formation, tous les subordonnés logistiques seront réinitialisés. Voulez-vous continuer ?</translation>
+    </message>
+</context>
+<context>
     <name>Menu</name>
     <message>
         <source>Increase symbol size</source>

@@ -9,14 +9,15 @@
 
 #include "preparation_app_pch.h"
 #include "LogisticSuperiorEditor.h"
-#include "preparation/LogisticHierarchiesBase.h"
+
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
@@ -55,7 +56,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Automat_ABC& automat = it.NextElement();
-            if( ( bObject && automat.GetLogisticLevel() != LogisticLevel::none_ )
+            if( ( bObject && automat.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( automat ) ) )
                 AddItem( GetDisplayName( automat ), &automat );
         }
@@ -66,7 +67,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Formation_ABC& formation = it.NextElement();
-            if( ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
+            if( ( bObject && formation.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( formation ) ) )
                 AddItem( GetDisplayName( formation ), &formation );
         }
@@ -77,7 +78,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
         while( it.HasMoreElements() )
         {
             const Ghost_ABC& ghost = it.NextElement();
-            if( ( bObject && ghost.GetLogisticLevel() != LogisticLevel::none_ )
+            if( ( bObject && ghost.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( ghost ) ) )
                 AddItem( GetDisplayName( ghost ), &ghost );
         }
@@ -174,17 +175,17 @@ LogisticBaseSuperior LogisticSuperiorEditor::GetValue()
 template< typename T >
 bool LogisticSuperiorEditor::IsValidSuperior( const T& superiorToTest ) const
 {
-    if( superiorToTest.GetLogisticLevel() == LogisticLevel::none_ )
+    if( !superiorToTest.Get< gui::LogisticBase >().IsBase() )
         return false;
     if( &selected_ == &superiorToTest )
         return false;
-    const LogisticHierarchiesBase* base = superiorToTest.Retrieve< LogisticHierarchiesBase >();
+    const gui::LogisticHierarchiesBase* base = superiorToTest.Retrieve< gui::LogisticHierarchiesBase >();
     while( base )
     {
         const Entity_ABC* superior = base->GetSuperior();
         if( superior && superior == &selected_ )
             return false;
-        base = superior ? superior->Retrieve< LogisticHierarchiesBase >() : 0;
+        base = superior ? superior->Retrieve< gui::LogisticHierarchiesBase >() : 0;
     }
     // Test same team
     return &selected_.Get< kernel::TacticalHierarchies >().GetTop() == &superiorToTest.Get< kernel::TacticalHierarchies >().GetTop();

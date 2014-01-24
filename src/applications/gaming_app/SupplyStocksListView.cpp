@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "SupplyStocksListView.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Dotation.h"
@@ -19,7 +18,6 @@
 #include <vector>
 
 using namespace kernel;
-using namespace EntityHelpers;
 using namespace logistic_helpers;
 
 // -----------------------------------------------------------------------------

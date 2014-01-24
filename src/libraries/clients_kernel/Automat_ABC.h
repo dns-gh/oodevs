@@ -15,7 +15,6 @@
 namespace kernel
 {
     class AutomatType;
-    class LogisticLevel;
 
 // =============================================================================
 /** @class  Automat_ABC
@@ -38,11 +37,13 @@ public:
     virtual ~Automat_ABC();
     //@}
 
-    //! @name Operations
+    //! @name Automat_ABC abstract method
     //@{
     virtual const AutomatType& GetType() const = 0;
-    virtual const LogisticLevel& GetLogisticLevel() const = 0;
+    //@}
 
+    //! @name Operations
+    //@{
     virtual const std::string& GetTypeName() const;
     virtual void Select( ActionController& controller ) const;
     virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const;

@@ -20,7 +20,6 @@
 
 #include "clients_kernel/AgentTypes.h"
 
-#include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 
 #include <boost/make_shared.hpp>
@@ -94,7 +93,7 @@ void EventMagicWidget::BlockSignals( bool blocked )
 void EventMagicWidget::Build( const gui::EventMagicViewState& state )
 {
     // Target
-    taskerWidget_->SetTasker( model_.agents_.FindAllAgent( state.target_ ) );
+    taskerWidget_->SetTasker( model_.FindEntity( state.target_ ) );
     taskerWidget_->setVisible( state.hasTarget_ );
     lastTaskerId_ = state.target_;
 

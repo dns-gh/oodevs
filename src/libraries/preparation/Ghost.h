@@ -22,7 +22,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class GhostPrototype;
     class Entity_ABC;
-    class LogisticLevel;
     class SymbolFactory;
 }
 
@@ -85,7 +84,6 @@ public:
     virtual bool IsConverted() const;
     virtual const std::string& GetNature() const;
     virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol );
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     virtual const T_Children& GetChildren() const;
     //@}
 

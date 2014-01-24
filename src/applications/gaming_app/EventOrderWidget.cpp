@@ -241,7 +241,7 @@ void EventOrderWidget::AddReplaceTargetToMenu( kernel::ContextMenu& menu )
         ( !taskerWidget_->GetTasker() ||
           taskerWidget_->GetTasker()->GetTypeName() == selectedEntity_->GetTypeName() &&
           taskerWidget_->GetTasker()->GetId() != selectedEntity_->GetId() ) )
-        menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 4 );
+        menu.InsertItem( "Order", tr( "Replace order recipient" ), this, SLOT( OnReplaceTargetClicked() ), false, 5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,18 +259,18 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel
             if( profile_.CanBeOrdered( *automat ) )
             {
                 selectedEngagedAutomat_ = automat;
-                QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderAutomatClicked() ), false, 2 );
+                QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderAutomatClicked() ), false, 3 );
                 action->setIcon( MAKE_PIXMAP( lock ) );
             }
             if( profile_.CanBeOrdered( agent ) )
             {
-                menu.InsertItem( "Order", tr( "New order (unit)" ), this, SLOT( OnOrderClicked() ), false, 3 );
+                menu.InsertItem( "Order", tr( "New order (unit)" ), this, SLOT( OnOrderClicked() ), false, 4 );
                 AddReplaceTargetToMenu( menu );
             }
         }
         else if( profile_.CanBeOrdered( agent ) )
         {
-            menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+            menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
             AddReplaceTargetToMenu( menu );
         }
         AddReplaceTargetToMenu( menu );
@@ -287,7 +287,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Automat_ABC& automat, ke
     selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( automat ) )
     {
-        QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+        QAction* action = menu.InsertItem( "Order", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
         if( tools::IsEngaged( automat ) )
             action->setIcon( MAKE_PIXMAP( lock ) );
         AddReplaceTargetToMenu( menu );
@@ -304,7 +304,7 @@ void EventOrderWidget::NotifyContextMenu( const kernel::Population_ABC& populati
     selectedEngagedAutomat_ = 0;
     if( profile_.CanBeOrdered( population ) )
     {
-        menu.InsertItem( "Mission", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 2 );
+        menu.InsertItem( "Mission", tr( "New order" ), this, SLOT( OnOrderClicked() ), false, 3 );
         AddReplaceTargetToMenu( menu );
     }
 }

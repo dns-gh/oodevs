@@ -20,7 +20,6 @@ namespace sword
 {
     class FormationCreation;
     class FormationUpdate;
-    class LogisticLevel;
 }
 
 namespace kernel
@@ -49,7 +48,6 @@ public:
     //! @name Accessors
     //@{
     virtual E_NatureLevel GetLevel() const;
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations
@@ -67,7 +65,6 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary();
     void InitializeSymbol() const;
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     bool HasAggregatedSubordinate() const;
@@ -79,7 +76,6 @@ private:
     //@{
     kernel::Controller&          controller_;
     E_NatureLevel                level_;
-    const kernel::LogisticLevel* logisticLevel_;
     DrawableUnitContainer        drawable_;
     //@}
 };

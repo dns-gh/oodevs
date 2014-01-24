@@ -10,11 +10,12 @@
 #ifndef __LogisticBaseStates_h__
 #define __LogisticBaseStates_h__
 
-#include "LogisticHierarchiesBase.h"
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityHierarchies.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
+
 #include <tools/Resolver.h>
 #include <boost/noncopyable.hpp>
 
@@ -39,7 +40,7 @@ class DotationsItem;
 */
 // Created: AHC 2010-09-29
 // =============================================================================
-class LogisticBaseStates : public gui::EntityHierarchies< LogisticHierarchiesBase >
+class LogisticBaseStates : public gui::EntityHierarchies< gui::LogisticHierarchiesBase >
                          , public kernel::Serializable_ABC
                          , public tools::Resolver< Dotation >
                          , public gui::Drawable_ABC

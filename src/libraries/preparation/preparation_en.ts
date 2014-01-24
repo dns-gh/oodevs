@@ -285,21 +285,6 @@
     </message>
 </context>
 <context>
-    <name>LogisticLevelAttribute</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticsLevel</translation>
-    </message>
-    <message>
-        <source>SWORD</source>
-        <translation>SWORD</translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation>By disabling the logistics function on this formation, all the logistics subordinates superiors will be reset. Do you want to proceed ?</translation>
-    </message>
-</context>
-<context>
     <name>MineAttribute</name>
     <message>
         <source>Info/Improvable/Value</source>

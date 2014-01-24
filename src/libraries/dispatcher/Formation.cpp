@@ -14,7 +14,6 @@
 #include "Team_ABC.h"
 #include "LogisticEntity.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -48,7 +47,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
-        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) ) );
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats() ) );
         AddExtension( *logisticEntity_ );
         AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }
@@ -291,17 +290,6 @@ const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() cons
 LogisticEntity_ABC* Formation::GetLogisticEntity() const
 {
     return logisticEntity_.get();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetLogisticLevel
-// Created: NLD 2011-01-17
-// -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Formation::GetLogisticLevel() const
-{
-    if( logisticEntity_.get() )
-        return logisticEntity_->GetLogisticLevel();
-    return kernel::LogisticLevel::none_;
 }
 
 // -----------------------------------------------------------------------------

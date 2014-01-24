@@ -9,15 +9,16 @@
 
 #include "preparation_pch.h"
 #include "LogisticAttribute.h"
+
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
-#include "LogisticLevelAttribute.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_gui/PropertiesDictionary.h"
-#include "clients_kernel/LogisticLevel.h"
+
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -131,8 +132,7 @@ bool LogisticAttribute::HasValidLogisticBase() const
 {
     if( !logisticBase_ )
         return false;
-    const LogisticLevelAttribute& attribute = logisticBase_->Get< LogisticLevelAttribute >();
-    return attribute.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_;
+    return logisticBase_ ? logisticBase_->Get< gui::LogisticBase >().IsBase() : false;
 }
 
 // -----------------------------------------------------------------------------

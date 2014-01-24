@@ -24,7 +24,6 @@ namespace kernel
     class Controller;
     class OrderParameter;
     class Entity_ABC;
-    class Profile_ABC;
     class Time_ABC;
 }
 
@@ -47,45 +46,37 @@ class LogisticSupplyValuesTableWidget;
 // Created: SBO 2006-07-03
 // =============================================================================
 class LogisticSupplyChangeQuotasDialog : public QDialog
-                                       , public tools::Observer_ABC
-                                       , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
-                                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyChangeQuotasDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const Model& model, const kernel::Profile_ABC& profile );
+             LogisticSupplyChangeQuotasDialog( QWidget* parent,
+                                               kernel::Controllers& controllers,
+                                               actions::ActionsModel& actionsModel,
+                                               const StaticModel& staticModel,
+                                               const kernel::Time_ABC& simulation,
+                                               const Model& model );
     virtual ~LogisticSupplyChangeQuotasDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
+    void Show( const kernel::Entity_ABC& entity );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Show();
     void Validate();
     void Reject();
     void OnSelectionChanged();
-    //void OnValueChanged( int row, int col );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticSupplyChangeQuotasDialog( const LogisticSupplyChangeQuotasDialog& );            //!< Copy constructor
-    LogisticSupplyChangeQuotasDialog& operator=( const LogisticSupplyChangeQuotasDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    // void AddItem();
     void AddDotation( const Dotation& dotation );
     //@}
 
@@ -95,20 +86,6 @@ private:
     //@}
 
 private:
-    struct SelectedHolder
-    {
-        SelectedHolder(kernel::Controllers& controllers);
-        const kernel::Entity_ABC* Selected () const;
-        operator const kernel::Entity_ABC* () const;
-        void Set( const kernel::Automat_ABC& agent );
-        void Set( const kernel::Formation_ABC& agent );
-        actions::Parameter_ABC* GetParameter(const kernel::OrderParameter& parameter, kernel::Controller& controller);
-        void Reset();
-
-    private:
-        kernel::SafePointer< kernel::Automat_ABC > selectedAutomat_;
-        kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
-    };
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -116,11 +93,10 @@ private:
     const ::StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const Model& model_;
-    const kernel::Profile_ABC& profile_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
 
     gui::ValuedComboBox< const kernel::Entity_ABC* >* targetCombo_;
     LogisticSupplyValuesTableWidget* table_;
-    SelectedHolder selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

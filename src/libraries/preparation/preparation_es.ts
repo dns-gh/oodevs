@@ -285,21 +285,6 @@
     </message>
 </context>
 <context>
-    <name>LogisticLevelAttribute</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SWORD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MedicalTreatment</name>
     <message>
         <source></source>

@@ -1021,6 +1021,17 @@
     </message>
 </context>
 <context>
+    <name>sword::EnumLogisticLevel</name>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Logistic base</source>
+        <translation>Base logistique</translation>
+    </message>
+</context>
+<context>
     <name>sword::KnowledgeMagicAction::Type</name>
     <message>
         <source>Knowledge Group Add knowledge</source>
@@ -1281,7 +1292,7 @@
     </message>
     <message>
         <source>Switch Log Maintenance To Manual</source>
-        <translation>Passer la maintenance en manuel</translation>
+        <translation>Changement de mode de maintenance</translation>
     </message>
     <message>
         <source>Automat and units creation</source>

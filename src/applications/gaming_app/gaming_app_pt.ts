@@ -1626,6 +1626,37 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>LogisticMagicInterface</name>
+    <message>
+        <source>Switch to automated maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allocate supply quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Push supply flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resupply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pull supply flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyCarriersTableWidget</name>
     <message>
         <source>The convoy is unable to carry that much weight</source>
@@ -1668,10 +1699,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Target:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allocate supply quotas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,7 +25,6 @@
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
-#include "LogisticLevelAttribute.h"
 #include "Inhabitant.h"
 #include "Affinities.h"
 #include "PeopleAffinities.h"
@@ -44,6 +43,8 @@
 #include "Symbol.h"
 #include "AgentAffinities.h"
 #include "UserProfile.h"
+
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
@@ -60,7 +61,6 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/Color_ABC.h"
-
 #include "clients_gui/AutomatDecisions.h"
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
@@ -134,8 +134,8 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = type.IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, isTC2, dictionary ) );
-    result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2 ) );
+    result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
@@ -266,8 +266,8 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, *model_.knowledgeGroups_ ) );
 
     bool isTC2 = type->IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, isTC2, dictionary ) );
-    result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, xis ) );
+    result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
@@ -390,18 +390,18 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     }
     // Logistic hierarchy
     {
-        const LogisticHierarchiesBase& ghostHierarchy = ghost.Get< LogisticHierarchiesBase >();
+        const gui::LogisticHierarchiesBase& ghostHierarchy = ghost.Get< gui::LogisticHierarchiesBase >();
         // $$$$ ABR 2012-06-27: TODO: Warn if dropping a non log base to a log base ghost.
         bool isTC2 = type.IsTC2(); //$$ NAZE
-        result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, isTC2, dictionary ) );
+        result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2 ) );
         LogisticBaseStates* logBaseStates = new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 );
-        result->Attach< LogisticHierarchiesBase >( *logBaseStates );
+        result->Attach< gui::LogisticHierarchiesBase >( *logBaseStates );
         logBaseStates->SetLogisticSuperior( ghostHierarchy.GetSuperior() );
         tools::Iterator< const kernel::Entity_ABC& > it = ghostHierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& child = it.NextElement();
-            LogisticHierarchiesBase& childHierarchy = const_cast< kernel::Entity_ABC& >( child ).Get< LogisticHierarchiesBase >();
+            gui::LogisticHierarchiesBase& childHierarchy = const_cast< kernel::Entity_ABC& >( child ).Get< gui::LogisticHierarchiesBase >();
             childHierarchy.SetLogisticSuperior( result );
         }
         tools::Iterator< const Dotation& > itDot = static_cast< const LogisticBaseStates& >( ghostHierarchy ).tools::Resolver< Dotation >::CreateIterator();

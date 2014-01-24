@@ -10,7 +10,6 @@
 #ifndef __LogisticSupplyFlowDialog_ABC_h_
 #define __LogisticSupplyFlowDialog_ABC_h_
 
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
@@ -24,7 +23,6 @@ namespace kernel
     class Entity_ABC;
     class EquipmentType;
     class Formation_ABC;
-    class Profile_ABC;
     class Time_ABC;
     class Location_ABC;
 }
@@ -53,8 +51,6 @@ class LogisticSupplyCarriersTableWidget;
 // Created: MMC 2012-10-18
 // =============================================================================
 class LogisticSupplyFlowDialog_ABC : public QDialog
-                                   , public tools::Observer_ABC
-                                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                    , public gui::ShapeHandler_ABC
                                    , public kernel::LocationVisitor_ABC
 {
@@ -63,10 +59,13 @@ class LogisticSupplyFlowDialog_ABC : public QDialog
 protected:
     //! @name Constructors/Destructor
     //@{
-    LogisticSupplyFlowDialog_ABC( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                                  const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer,
-                                  const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                  const kernel::Profile_ABC& profile );
+    LogisticSupplyFlowDialog_ABC( QWidget* parent,
+                                  kernel::Controllers& controllers,
+                                  actions::ActionsModel& actionsModel,
+                                  const ::StaticModel& staticModel,
+                                  const kernel::Time_ABC& simulation,
+                                  gui::ParametersLayer& layer,
+                                  const tools::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual ~LogisticSupplyFlowDialog_ABC();
     //@}
 
@@ -98,12 +97,6 @@ protected slots:
     //@}
 
 protected:
-    //! @name Copy/Assignment
-    //@{
-    LogisticSupplyFlowDialog_ABC( const LogisticSupplyFlowDialog_ABC& );            //!< Copy constructor
-    LogisticSupplyFlowDialog_ABC& operator=( const LogisticSupplyFlowDialog_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     class CustomStringListModel : public QStringListModel
@@ -164,7 +157,6 @@ protected:
     const ::StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
-    const kernel::Profile_ABC& profile_;
     gui::ParametersLayer& layer_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;

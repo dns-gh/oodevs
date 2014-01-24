@@ -21,28 +21,31 @@ class LogisticSupplyExclusiveListWidget;
 // Created: SBO 2006-07-03
 // =============================================================================
 class LogisticSupplyPushFlowDialog : public LogisticSupplyFlowDialog_ABC
-                                   , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent,
+                                           kernel::Controllers& controllers,
+                                           actions::ActionsModel& actionsModel,
+                                           const ::StaticModel& staticModel,
+                                           const kernel::Time_ABC& simulation,
+                                           gui::ParametersLayer& layer,
+                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
+    void PushFlow( const kernel::Entity_ABC& entity );
+    void Supply( const kernel::Entity_ABC& entity );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void PushFlow();
-    void Supply();
     virtual void Validate();
     virtual void Reject();
     void AddRecipient( const QString& recipientName );
@@ -53,7 +56,6 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     void GetSuppliesFromTable( const kernel::Automat_ABC& recipient );
     void SetSuppliesToTable( const kernel::Automat_ABC& recipient );
 

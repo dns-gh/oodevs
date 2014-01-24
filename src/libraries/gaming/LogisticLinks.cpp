@@ -17,7 +17,6 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
@@ -41,14 +40,12 @@ LogisticLinks::LogisticLinks( Controller& controller,
                               const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                               const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                              const kernel::LogisticLevel& currentLevel,
                               gui::PropertiesDictionary& dictionary,
                               kernel::Entity_ABC& entity )
     : controller_       ( controller )
     , automatResolver_  ( automatResolver )
     , formationResolver_( formationResolver )
     , dotationResolver_ ( dotationResolver )
-    , currentLevel_     ( currentLevel )
     , entity_           ( entity )
     , property_         ( tools::translate( "Logistic", "Logistic links/Superiors" ) )
 {

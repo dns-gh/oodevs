@@ -66,6 +66,7 @@ typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
 typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
 typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
+typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterEnumLogisticLevel;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -654,15 +655,26 @@ T_ConverterObjectMagicActionType ObjectMagicActionTypeConverter_[] =
     T_ConverterObjectMagicActionType( "", "", sword::ObjectMagicAction::Type_MAX )
 };
 
+T_ConverterEnumLogisticLevel EnumLogisticLevelConverter_[] =
+{
+    T_ConverterEnumLogisticLevel( "none",          QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "None" ),          sword::none ),
+    T_ConverterEnumLogisticLevel( "logistic-base", QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "Logistic base" ), sword::logistic_base ),
+    T_ConverterEnumLogisticLevel( "", "", sword::EnumLogisticLevel_MAX )
+};
+
 }  // namespace
 
 #define INIT_TR( NAME )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
     InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
 
-#define INIT_PROTO_TR( NAME )\
+#define INIT_PROTO_SUB_TYPE_TR( NAME )\
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## TypeConverter_ ) == ( sword:: ## NAME ## ::Type_ARRAYSIZE ) + 1 );\
     InitTr( ( NAME ## TypeConverter_ ), "sword::" # NAME "::Type" );
+
+#define INIT_PROTO_TR( NAME )\
+    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( sword:: ## NAME ## _ARRAYSIZE ) + 1 );\
+    InitTr( ( NAME ## Converter_ ), "sword::" # NAME );
 
 //-----------------------------------------------------------------------------
 // Name: InitTranslations
@@ -713,10 +725,11 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitStress );
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
-    INIT_PROTO_TR( KnowledgeMagicAction );
-    INIT_PROTO_TR( MagicAction );
-    INIT_PROTO_TR( ObjectMagicAction );
-    INIT_PROTO_TR( UnitMagicAction );
+    INIT_PROTO_SUB_TYPE_TR( KnowledgeMagicAction );
+    INIT_PROTO_SUB_TYPE_TR( MagicAction );
+    INIT_PROTO_SUB_TYPE_TR( ObjectMagicAction );
+    INIT_PROTO_SUB_TYPE_TR( UnitMagicAction );
+    INIT_PROTO_TR( EnumLogisticLevel );
 }
 
 //-----------------------------------------------------------------------------
@@ -1142,6 +1155,15 @@ const std::string& ENT_Tr::ConvertFromObjectMagicActionType( sword::ObjectMagicA
     return InverseFindInConverter( ObjectMagicActionTypeConverter_, value, conversion );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLogisticLevel
+// Created: ABR 2014-01-17
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLogisticLevel( sword::EnumLogisticLevel value, E_Conversion conversion )
+{
+    return InverseFindInConverter( EnumLogisticLevelConverter_, value, conversion );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1563,4 +1585,13 @@ sword::KnowledgeMagicAction::Type ENT_Tr::ConvertToKnowledgeMagicActionType( con
 sword::ObjectMagicAction::Type ENT_Tr::ConvertToObjectMagicActionType( const std::string& strName, E_Conversion mode )
 {
     return ENT_Tr::FindInConverter( ObjectMagicActionTypeConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLogisticLevel
+// Created: ABR 2014-01-17
+// -----------------------------------------------------------------------------
+sword::EnumLogisticLevel ENT_Tr::ConvertToLogisticLevel( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( EnumLogisticLevelConverter_, strName, mode );
 }

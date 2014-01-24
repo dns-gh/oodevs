@@ -13,6 +13,7 @@
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyExclusiveListWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -21,6 +22,7 @@
 #include "clients_gui/EntityType.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/AgentTypes.h"
@@ -29,24 +31,28 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/Dotations.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
+
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                                                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                                            gui::ParametersLayer& layer, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                                            const kernel::Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
+                                                            kernel::Controllers& controllers,
+                                                            actions::ActionsModel& actionsModel,
+                                                            const ::StaticModel& staticModel,
+                                                            const kernel::Time_ABC& simulation,
+                                                            gui::ParametersLayer& layer,
+                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
     , isPushFlow_( true )
 {
     recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
@@ -65,46 +71,16 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, ker
 // -----------------------------------------------------------------------------
 LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
-// Created: SBO 2006-07-03
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
-{
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        InsertMenuEntry( agent, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
-// Created: AHC 2010-10-13
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu )
-{
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        InsertMenuEntry( agent, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::InsertMenuEntry
-// Created: ABR 2011-06-29
-// -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
-{
-    selected_ = &agent;
-    menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( PushFlow() ) );
-    menu.InsertItem( "Command", tr( "Resupply" ), this, SLOT( Supply() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::PushFlow
 // Created: JSR 2013-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::PushFlow()
+void LogisticSupplyPushFlowDialog::PushFlow( const kernel::Entity_ABC& entity )
 {
+    selected_ = &entity;
     isPushFlow_ = true;
     setCaption( tr( "Push supply flow" ) );
     Show();
@@ -114,8 +90,9 @@ void LogisticSupplyPushFlowDialog::PushFlow()
 // Name: LogisticSupplyPushFlowDialog::Supply
 // Created: JSR 2013-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::Supply()
+void LogisticSupplyPushFlowDialog::Supply( const kernel::Entity_ABC& entity )
 {
+    selected_ = &entity;
     isPushFlow_ = false;
     setCaption( tr( "Resupply" ) );
     Show();
@@ -127,9 +104,6 @@ void LogisticSupplyPushFlowDialog::Supply()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Show()
 {
-    if( !selected_ )
-        return;
-
     controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
 

@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "CsvExport.h"
 #include "Progress_ABC.h"
+
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/ObjectsModel.h"
@@ -20,7 +21,10 @@
 #include "preparation/Stocks.h"
 #include "preparation/Dotation.h"
 #include "preparation/ProfilesModel.h"
-#include "preparation/LogisticHierarchiesBase.h"
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
+#include "clients_gui/EntityType.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -41,12 +45,10 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "clients_gui/EntityType.h"
-#include "clients_kernel/LogisticLevel.h"
-#include "clients_gui/LongNameHelper.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "meteo/PHY_Precipitation.h"
+
 #include <boost/foreach.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -380,14 +382,14 @@ void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Pat
     while( itTC2.HasMoreElements() )
     {
         const kernel::Automat_ABC& child = itTC2.NextElement();
-        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( child.Get< gui::LogisticBase >().IsBase() )
             file << separator << GetName( child );
     }
     tools::Iterator< const kernel::Formation_ABC& > itBL = model_.GetFormationResolver().CreateIterator();
     while( itBL.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itBL.NextElement();
-        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( child.Get< gui::LogisticBase >().IsBase() )
             file << separator << GetName( child );
     }
     file << std::endl;
@@ -403,7 +405,7 @@ void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Pat
     while( itFormation.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itFormation.NextElement();
-        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( child.Get< gui::LogisticBase >().IsBase() )
         {
             file << GetName( child );
             WriteLogistic( file, separator, child );
@@ -417,7 +419,7 @@ namespace
 {
     bool IsLogisticSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )
     {
-        if( const LogisticHierarchiesBase* pHierarchy = entity.Retrieve< LogisticHierarchiesBase >() )
+        if( const gui::LogisticHierarchiesBase* pHierarchy = entity.Retrieve< gui::LogisticHierarchiesBase >() )
             if( pHierarchy->GetSuperior() && pHierarchy->GetSuperior()->GetId() == superior.GetId() )
                 return true;
         return false;
@@ -434,7 +436,7 @@ void CsvExport::WriteLogistic( tools::Ofstream& file, const std::string& separat
     while( itTC2.HasMoreElements() )
     {
         const kernel::Automat_ABC& child = itTC2.NextElement();
-        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( child.Get< gui::LogisticBase >().IsBase() )
         {
             file << separator;
             if( IsLogisticSuperior( entity, child ) )
@@ -445,7 +447,7 @@ void CsvExport::WriteLogistic( tools::Ofstream& file, const std::string& separat
     while( itBL.HasMoreElements() )
     {
         const kernel::Formation_ABC& child = itBL.NextElement();
-        if( child.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        if( child.Get< gui::LogisticBase >().IsBase() )
         {
             file << separator;
             if( IsLogisticSuperior( entity, child ) )

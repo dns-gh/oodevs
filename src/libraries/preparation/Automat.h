@@ -51,7 +51,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     const kernel::AutomatType& GetType() const;
     //@}
 

@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "LogisticEntity.h"
 #include "LogisticEntityOwner_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <tools/Resolver_ABC.h>
@@ -22,10 +21,11 @@ using namespace dispatcher;
 // Name: LogisticEntity constructor
 // Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automats, const kernel::LogisticLevel& level )
-    : owner_            ( owner )
+LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner,
+                                const tools::Resolver_ABC< Formation_ABC >& formations,
+                                const tools::Resolver_ABC< Automat_ABC >& automats )
+    : owner_( owner )
     , logisticHierarchy_( *this, formations, automats )
-    , logisticLevel_    ( level )
 {
     // NOTHING
 }
@@ -36,15 +36,7 @@ LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner, const tool
 // -----------------------------------------------------------------------------
 LogisticEntity::~LogisticEntity()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEntity::FiGetLogisticLevelll
-// Created: AHC 2010-10-11
-// -----------------------------------------------------------------------------
-const kernel::LogisticLevel& LogisticEntity::GetLogisticLevel() const
-{
-    return logisticLevel_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +63,7 @@ void LogisticEntity::Send( sword::ParentEntity& msg ) const
 // -----------------------------------------------------------------------------
 void LogisticEntity::Send( sword::AutomatCreation& msg ) const
 {
-    msg.set_logistic_level( sword::EnumLogisticLevel( logisticLevel_.GetId() ) );
+    msg.set_logistic_level( sword::logistic_base );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +72,7 @@ void LogisticEntity::Send( sword::AutomatCreation& msg ) const
 // -----------------------------------------------------------------------------
 void LogisticEntity::Send( sword::FormationCreation& msg ) const
 {
-    msg.set_logistic_level( sword::EnumLogisticLevel( logisticLevel_.GetId() ) );
+    msg.set_logistic_level( sword::logistic_base );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,4 +83,3 @@ void LogisticEntity::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     logisticHierarchy_.SendFullUpdate( publisher );
 }
-

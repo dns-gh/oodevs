@@ -34,10 +34,11 @@
 #include "Color.h"
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
+
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
@@ -139,8 +140,9 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : symbol;
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol, model_.symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_, model_.GetFormationResolver(), model_.GetTeamResolver() ) );
-    if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dico, true, message.logistic_level() == sword::logistic_base ) );
+    if( result->Get< gui::LogisticBase >().IsBase() )
+        result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dico, *result ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
     result->Attach( *new Equipments( *result,controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );

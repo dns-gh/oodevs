@@ -61,7 +61,6 @@ public:
     virtual E_NatureLevel GetLevel() const;
     void Rename( const QString& name );
     void SetLevel( E_NatureLevel level );
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations

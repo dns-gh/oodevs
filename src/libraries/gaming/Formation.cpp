@@ -15,7 +15,6 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Tools.h"
@@ -31,12 +30,10 @@ Formation::Formation( const sword::FormationCreation& message, Controller& contr
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), true )
     , controller_   ( controller )
     , level_        ( static_cast< E_NatureLevel >( message.level() ) )
-    , logisticLevel_( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( message.formation().id() );
     AddExtension( *this );
-    CreateDictionary();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,25 +52,6 @@ Formation::~Formation()
 E_NatureLevel Formation::GetLevel() const
 {
     return level_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::CreateDictionary
-// Created: SBO 2007-04-11
-// -----------------------------------------------------------------------------
-void Formation::CreateDictionary()
-{
-    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), GetLogisticLevel() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetLogisticLevel
-// Created: AHC 2010-10-08
-// -------------------------------------------------------------------------------
-const kernel::LogisticLevel& Formation::GetLogisticLevel() const
-{
-    return *logisticLevel_;
 }
 
 // -----------------------------------------------------------------------------
