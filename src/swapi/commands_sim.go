@@ -1521,6 +1521,6 @@ func (c *Client) LogMaintenanceSetManual(unitId uint32, mode bool) error {
 }
 
 func (c *Client) SelectTransporterTest(params *sword.MissionParameters) error {
-	msg := CreateMagicAction(params, sword.MagicAction_select_new_state)
+	msg := CreateMagicAction(params, sword.MagicAction_select_new_logistic_state)
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
