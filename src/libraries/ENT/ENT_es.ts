@@ -1015,6 +1015,10 @@
         <source>Seriousness level 3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>

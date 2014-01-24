@@ -271,6 +271,7 @@ T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[]
     T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "repairing" ), eLogMaintenanceHandlingStatus_Reparation ),
     T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "unit returning" ), eLogMaintenanceHandlingStatus_RetourPion ),
     T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMaintenanceHandlingStatus_Termine ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente selection de transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter selection" ), eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur ),
     T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
 };
 
