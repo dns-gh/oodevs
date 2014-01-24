@@ -58,6 +58,7 @@ public:
     void AddParser( LocationParser_ABC* parser, const QString& name );
     bool GetPosition( geometry::Point2f& result );
     void UpdateField( const geometry::Point2f& position );
+    const LocationParser_ABC* GetCurrentParser() const;
     //@}
 
 public slots:

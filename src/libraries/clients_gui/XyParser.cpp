@@ -11,6 +11,7 @@
 #include "XyParser.h"
 
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 
 #include <boost/lexical_cast.hpp>
 
@@ -20,7 +21,9 @@ using namespace gui;
 // Name: XyParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-XyParser::XyParser()
+XyParser::XyParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystem )
+    : converter_( converter )
+    , coordinateSystem_( coordinateSystem )
 {
     // NOTHING
 }
@@ -106,4 +109,13 @@ QStringList XyParser::Split( const QString& input ) const
     auto list = input.split( ":" );
     std::swap( list[0], list[1] );
     return list;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XyParser::GetStringPosition
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+std::string XyParser::GetStringPosition( const geometry::Point2f& position ) const
+{
+    return converter_.GetStringPosition( position, coordinateSystem_ );
 }

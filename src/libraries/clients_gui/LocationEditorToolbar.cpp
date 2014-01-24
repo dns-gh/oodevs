@@ -88,7 +88,11 @@ void LocationEditorToolbar::AddParamPoint()
 {
     geometry::Point2f point;
     if( GetPosition( point ) )
-        controllers_.actions_.ContextMenu( point, mapToGlobal( paramsButton_->geometry().bottomLeft() ) );
+    {
+        menuPoint_ = point;
+        if( const LocationParser_ABC* parser = locBox_->GetCurrentParser() )
+            CreateBookmark( parser->GetStringPosition( menuPoint_ ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,16 +101,24 @@ void LocationEditorToolbar::AddParamPoint()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::CreateBookmark()
 {
+    CreateBookmark( converter_.GetStringPosition( menuPoint_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::CreateBookmark
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::CreateBookmark( const std::string& defaultName )
+{
     try
     {
-        const std::string utm = converter_.ConvertToMgrs( menuPoint_ );
         bool ok = false;
         const QString name = QInputDialog::getText( tr( "Create bookmark" ),
-            tr( "Enter text to name the bookmark: " ), RichLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
+            tr( "Enter text to name the bookmark: " ), RichLineEdit::Normal, defaultName.c_str(), &ok, topLevelWidget() );
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( Bookmark( name.toStdString(), utm ) );
+        bookmarks_.push_back( Bookmark( name.toStdString(), defaultName ) );
         layer_.AddLocation( menuPoint_ );
         for( size_t i = 0; i < bookmarks_.size(); ++i )
         {

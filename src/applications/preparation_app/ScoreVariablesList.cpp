@@ -20,6 +20,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
+#include "clients_kernel/CoordinateSystems.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/Variable.h"
@@ -37,7 +38,8 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
-    , parser_( new gui::UtmParser( controllers, [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); } ) )
+    , parser_( new gui::UtmParser( controllers, [&]( const std::string& mgrs ) { return staticModel.coordinateConverter_.ConvertToXY( mgrs ); },
+            [&]( const geometry::Point2f& position ) { return staticModel.coordinateConverter_.GetStringPosition( position, kernel::CoordinateSystems::E_Mgrs ); } ) )
 {
     gui::SubObjectName subObject( "ScoreVariablesList" );
     setMargin( 5 );
