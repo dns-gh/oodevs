@@ -322,13 +322,13 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// set automat to manual mode
-	err = client.LogMaintenanceSetManual(14,true)
+	err = client.LogMaintenanceSetManual(14, true)
 	c.Assert(err, IsNil)
 	// trigger a breakdown
 	unit := client.Model.GetUnit(8)
 	equipmentId := uint32(39)
 	equipment := swapi.EquipmentDotation{
-		Available: 1,
+		Available:  1,
 		Repairable: 1,
 		Breakdowns: []int32{11},
 	}
