@@ -32,6 +32,21 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
     , bHasChanged_( true )
 {
     pComposanteState_->SetConsign( this );
+
+    BOOST_STATIC_ASSERT( eGoingFrom == sword::LogMaintenanceHandlingUpdate::moving_to_supply );
+    BOOST_STATIC_ASSERT( eWaitingForCarrier == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+    BOOST_STATIC_ASSERT( eCarrierGoingTo == sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
+    BOOST_STATIC_ASSERT( eCarrierLoading == sword::LogMaintenanceHandlingUpdate::transporter_loading );
+    BOOST_STATIC_ASSERT( eCarrierGoingFrom == sword::LogMaintenanceHandlingUpdate::transporter_moving_back );
+    BOOST_STATIC_ASSERT( eCarrierUnloading == sword::LogMaintenanceHandlingUpdate::transporter_unloading );
+    BOOST_STATIC_ASSERT( eDiagnosing == sword::LogMaintenanceHandlingUpdate::diagnosing );
+    BOOST_STATIC_ASSERT( eSearchingForUpperLevel == sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
+    BOOST_STATIC_ASSERT( eWaitingForParts == sword::LogMaintenanceHandlingUpdate::waiting_for_parts );
+    BOOST_STATIC_ASSERT( eWaitingForRepairer == sword::LogMaintenanceHandlingUpdate::waiting_for_repairer );
+    BOOST_STATIC_ASSERT( eRepairing == sword::LogMaintenanceHandlingUpdate::repairing );
+    BOOST_STATIC_ASSERT( eGoingBackToWar == sword::LogMaintenanceHandlingUpdate::moving_back );
+    BOOST_STATIC_ASSERT( eFinished == sword::LogMaintenanceHandlingUpdate::finished );
+    BOOST_STATIC_ASSERT( eWaitingForSelection == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
 }
 
 // -----------------------------------------------------------------------------

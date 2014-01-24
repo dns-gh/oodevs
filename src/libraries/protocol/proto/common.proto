@@ -2003,18 +2003,18 @@ message LogMaintenanceHandlingUpdate {
         diagnosing                   = 6;
         //! Searching maintenance upper levels
         searching_upper_levels       = 7;
-        //! Waiting for transporter selection
-        waiting_for_selection        = 8;
         //! Waiting for parts
-        waiting_for_parts            = 9;
+        waiting_for_parts            = 8;
         //! Waiting for a repairer
-        waiting_for_repairer         = 10;
+        waiting_for_repairer         = 9;
         //! Being repaired
-        repairing                    = 11;
+        repairing                    = 10;
         //! Moving back
-        moving_back                  = 12;
+        moving_back                  = 11;
         //! Finished
-        finished                     = 13;
+        finished                     = 12;
+        //! Waiting for transporter selection
+        waiting_for_selection        = 13;
     }
     //! The request identifier
     required Id                               request                = 1;

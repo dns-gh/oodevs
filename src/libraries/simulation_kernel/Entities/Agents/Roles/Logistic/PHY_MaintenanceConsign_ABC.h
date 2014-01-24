@@ -82,12 +82,12 @@ protected:
         eCarrierUnloading,
         eDiagnosing,
         eSearchingForUpperLevel,
-        eWaitingForSelection,
         eWaitingForParts,
         eWaitingForRepairer,
         eRepairing,
         eGoingBackToWar,
-        eFinished
+        eFinished,
+        eWaitingForSelection
     };
     //@}
 
