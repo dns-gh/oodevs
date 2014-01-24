@@ -1070,7 +1070,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select New State</source>
+        <source>Select New Logistic State</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

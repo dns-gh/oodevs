@@ -254,7 +254,7 @@ message MagicAction {
         //! When a log consign is in state waiting for manual intervention,
         //! update the request to a new state automatically.
         //! parameters[0], Identifier: identifier of log request
-        select_new_state                   = 8;
+        select_new_logistic_state          = 8;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;

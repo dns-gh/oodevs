@@ -111,7 +111,7 @@ const mapping::MagicAction mapping::MagicAction::data_[] = {
     { "local_weather",             sword::MagicAction::local_weather },
     { "local_weather_destruction", sword::MagicAction::local_weather_destruction },
     { "debug_internal",            sword::MagicAction::debug_internal},
-    { "select_new_state",          sword::MagicAction::select_new_state},
+    { "select_new_logistic_state", sword::MagicAction::select_new_logistic_state},
 };
 
 const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_ );

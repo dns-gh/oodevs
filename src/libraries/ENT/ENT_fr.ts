@@ -1070,8 +1070,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select New State</source>
-        <translation>Passer à la prochaine étape logistique</translation>
+        <source>Select New Logistic State</source>
+        <translation>Passer à l&apos;étape logistique suivante</translation>
     </message>
 </context>
 <context>

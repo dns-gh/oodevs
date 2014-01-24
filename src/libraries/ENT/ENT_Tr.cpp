@@ -565,7 +565,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "global_weather",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Global Weather" ), sword::MagicAction::global_weather ),
     T_ConverterMagicActionType( "local_weather",             QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
     T_ConverterMagicActionType( "local_weather_destruction", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
-    T_ConverterMagicActionType( "select_new_state",          QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New State" ), sword::MagicAction::select_new_state ),
+    T_ConverterMagicActionType( "select_new_logistic_state", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New Logistic State" ), sword::MagicAction::select_new_logistic_state ),
     T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
 };
 

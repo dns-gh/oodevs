@@ -1990,7 +1990,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
 
-void MIL_EntityManager::OnReceiveLogManualIntervention( const sword::MagicAction& msg )
+void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
 {
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
