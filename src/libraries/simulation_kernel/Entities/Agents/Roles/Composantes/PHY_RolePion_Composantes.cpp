@@ -565,7 +565,8 @@ void PHY_RolePion_Composantes::Clean()
     bLoansChanged_            = false;
     bExternalMustChange_      = false;
     bOperationalStateChanged_ = false;
-    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+        it->second->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -1009,7 +1010,8 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState() const
 {
-    boost::for_each( maintenanceComposanteStates_, std::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+        it->second->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1019,7 +1021,7 @@ void PHY_RolePion_Composantes::SendChangedState() const
 void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 {
     for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        (*it)->SendFullState( context );
+        it->second->SendFullState( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -1291,7 +1293,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *owner_, composante );
     if( !pMaintenanceComposanteState )
         return 0;
-    maintenanceComposanteStates_.push_back( pMaintenanceComposanteState );
+    maintenanceComposanteStates_[ pMaintenanceComposanteState->GetID() ] = pMaintenanceComposanteState;
     return pMaintenanceComposanteState;
 }
 
@@ -1301,15 +1303,16 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState )
 {
-    boost::remove_erase( maintenanceComposanteStates_, &composanteState );
+    maintenanceComposanteStates_.erase( composanteState.GetID() );
 }
 
 bool PHY_RolePion_Composantes::SelectNewState( uint32_t request )
 {
-    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        if( (*it)->SelectNewState( request ) )
-            return true;
-    return false;
+    auto it = maintenanceComposanteStates_.find( request );
+    if( it == maintenanceComposanteStates_.end() )
+        return false;
+    it->second->SelectNewState();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1965,9 +1968,9 @@ bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
 void PHY_RolePion_Composantes::CancelLogisticRequests()
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( *it )->CancelLogisticRequests();
+        (*it)->CancelLogisticRequests();
     for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        ( *it )->Cancel();
+        it->second->Cancel();
 }
 
 // -----------------------------------------------------------------------------

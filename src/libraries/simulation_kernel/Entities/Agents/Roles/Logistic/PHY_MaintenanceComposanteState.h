@@ -44,6 +44,7 @@ public:
 
     //! @name Accessors
     //@{
+    unsigned int GetID() const;
     const MIL_Automate& GetAutomate() const;
     const PHY_ComposantePion& GetComposante() const;
     const PHY_Breakdown& GetComposanteBreakdown() const;
@@ -66,7 +67,7 @@ public:
     //@{
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
-    bool SelectNewState( uint32_t request );
+    void SelectNewState();
     //@}
 
     //! @name Network

@@ -349,7 +349,7 @@ private:
     bool bNeutralized_;
 
     // Maintenance
-    std::vector< PHY_MaintenanceComposanteState* > maintenanceComposanteStates_;
+    std::map< unsigned int, PHY_MaintenanceComposanteState* > maintenanceComposanteStates_;
     unsigned int nTickRcMaintenanceQuerySent_;
 };
 
