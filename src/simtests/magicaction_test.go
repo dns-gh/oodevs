@@ -307,18 +307,15 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, parameters expected
-	params := swapi.MakeParameters()
-	err := client.SelectTransporterTest(params)
+	err := client.SelectTransporterTest(swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier
-	params = swapi.MakeParameters(nil)
-	err = client.SelectTransporterTest(params)
+	err = client.SelectTransporterTest(swapi.MakeParameters(nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
-	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
-	err = client.SelectTransporterTest(params)
+	err = client.SelectTransporter(1000)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// set automat to manual mode
