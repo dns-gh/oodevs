@@ -688,30 +688,6 @@
         <translation>Prisonnier</translation>
     </message>
     <message>
-        <source>waiting for handling</source>
-        <translation>en attente de prise en charge</translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation>en cours de transport, non conditionné</translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation>en attente de conditionnement</translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation>conditionnement</translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation>en attente de transporteur</translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation>en cours de transport, conditionné</translation>
-    </message>
-    <message>
         <source>Agent</source>
         <translation>Pion</translation>
     </message>
@@ -1000,6 +976,37 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation>Changement de type de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
+    <message>
+        <source>waiting for handling</source>
+        <translation>en attente de prise en charge</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation>en cours de transport, non conditionné</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation>en attente de conditionnement</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation>conditionnement</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation>en attente de transporteur</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation>en cours de transport, conditionné</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
     </message>
 </context>
 <context>

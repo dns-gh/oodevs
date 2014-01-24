@@ -38,7 +38,6 @@ typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
 typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
 typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
 typedef ENT_Tr::Converter< E_LogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
-typedef ENT_Tr::Converter< E_LogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
 typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
 typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
 typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
@@ -67,6 +66,7 @@ typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowle
 typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
 typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterLogisticLevel;
 typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -294,18 +294,6 @@ T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
     T_ConverterLogMedicalHandlingStatus( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceRamassageDechargement ),
     T_ConverterLogMedicalHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMedicalHandlingStatus_Termine ),
     T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
-};
-
-T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
-{
-    T_ConverterLogFuneralHandlingStatus( "waiting for handling", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for handling" ), eLogFuneralHandlingStatus_WaitingForHandling ),
-    T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting unpackaged" ), eLogFuneralHandlingStatus_TransportingUnpackaged ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for packaging" ), eLogFuneralHandlingStatus_WaitingForPackaging ),
-    T_ConverterLogFuneralHandlingStatus( "packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "packaging" ), eLogFuneralHandlingStatus_Packaging ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter" ), eLogFuneralHandlingStatus_WaitingForTransporter ),
-    T_ConverterLogFuneralHandlingStatus( "transporting packaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting packaged" ), eLogFuneralHandlingStatus_TransportingPackaged ),
-    T_ConverterLogFuneralHandlingStatus( "finished", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogFuneralHandlingStatus_Finished ),
-    T_ConverterLogFuneralHandlingStatus( "", "", (E_LogFuneralHandlingStatus)-1 )
 };
 
 T_ConverterObstacleActivation ObstacleActivationConverter_[] =
@@ -662,6 +650,18 @@ T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[]
     T_ConverterLogMaintenanceHandlingStatus( "", "", sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus_MAX )
 };
 
+T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
+{
+    T_ConverterLogFuneralHandlingStatus( "waiting for handling",    QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for handling" ),    sword::LogFuneralHandlingUpdate::waiting_for_handling ),
+    T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting unpackaged" ), sword::LogFuneralHandlingUpdate::transporting_unpackaged ),
+    T_ConverterLogFuneralHandlingStatus( "waiting for packaging",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for packaging" ),   sword::LogFuneralHandlingUpdate::waiting_for_packaging ),
+    T_ConverterLogFuneralHandlingStatus( "packaging",               QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "packaging" ),               sword::LogFuneralHandlingUpdate::packaging ),
+    T_ConverterLogFuneralHandlingStatus( "waiting for transporter", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for transporter" ), sword::LogFuneralHandlingUpdate::waiting_for_transporter ),
+    T_ConverterLogFuneralHandlingStatus( "transporting packaged",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting packaged" ),   sword::LogFuneralHandlingUpdate::transporting_packaged ),
+    T_ConverterLogFuneralHandlingStatus( "finished",                QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "finished" ),                sword::LogFuneralHandlingUpdate::finished ),
+    T_ConverterLogFuneralHandlingStatus( "", "", sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus_MAX )
+};
+
 }  // namespace
 
 #define INIT_TR( NAME )\
@@ -741,7 +741,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LightingType );
     INIT_TR( Location );
     INIT_TR( LocationType );
-    INIT_TR( LogFuneralHandlingStatus );
     INIT_TR( LogMedicalHandlingStatus );
     INIT_TR( LogSupplyHandlingStatus );
     INIT_TR( MeetingEngagementStatus );
@@ -763,6 +762,7 @@ void ENT_Tr::InitTranslations()
 
     INIT_PROTO_TR( EnumLogisticLevel, LogisticLevel );
     INIT_SUB_PROTO_TR( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
+    INIT_SUB_PROTO_TR( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
     INIT_SUB_PROTO_TR( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
     INIT_SUB_PROTO_TR( MagicAction, Type, MagicActionType );
     INIT_SUB_PROTO_TR( ObjectMagicAction, Type, ObjectMagicActionType );
@@ -792,7 +792,6 @@ IMPLEMENT_CONVERT_METHODS( LayerTypes );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
 IMPLEMENT_CONVERT_METHODS( LocationType );
-IMPLEMENT_CONVERT_METHODS( LogFuneralHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( LogMedicalHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( LogSupplyHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
@@ -814,6 +813,7 @@ IMPLEMENT_CONVERT_METHODS( WeatherType );
 
 IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType );

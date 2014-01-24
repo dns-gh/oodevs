@@ -174,7 +174,7 @@ void  Formatter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingS
     displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( e ) ) );
 }
 
-void  Formatter< E_LogFuneralHandlingStatus >::operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus >::operator()( const sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogFuneralHandlingStatus( e ) ) );
 }

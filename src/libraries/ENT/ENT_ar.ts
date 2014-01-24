@@ -488,30 +488,6 @@
         <translation type="unfinished">جمع وتفريغ سيارة إسعاف</translation>
     </message>
     <message>
-        <source>waiting for handling</source>
-        <translation type="unfinished">في انتظار معالجة</translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation type="unfinished">نقل غير معبأة</translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation type="unfinished">في انتظار للتعبئة والتغليف</translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation type="unfinished">التعبئة والتغليف</translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation type="unfinished">في انتظار للناقل</translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation type="unfinished">نقل حزم</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation type="unfinished">هادئة</translation>
     </message>
@@ -1000,6 +976,37 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
+    <message>
+        <source>waiting for handling</source>
+        <translation type="unfinished">في انتظار معالجة</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation type="unfinished">نقل غير معبأة</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation type="unfinished">في انتظار للتعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation type="unfinished">التعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation type="unfinished">في انتظار للناقل</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation type="unfinished">نقل حزم</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
     </message>
 </context>
 <context>

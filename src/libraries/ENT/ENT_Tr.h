@@ -15,12 +15,13 @@
 
 namespace sword
 {
-    enum MagicAction_Type;
-    enum UnitMagicAction_Type;
-    enum KnowledgeMagicAction_Type;
-    enum ObjectMagicAction_Type;
     enum EnumLogisticLevel;
+    enum KnowledgeMagicAction_Type;
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
+    enum LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
+    enum MagicAction_Type;
+    enum ObjectMagicAction_Type;
+    enum UnitMagicAction_Type;
 }
 
 #define DECLARE_CONVERT_METHODS( NAME, DEFAULT_FROM, DEFAULT_TO )                       \
@@ -75,7 +76,6 @@ namespace ENT_Tr
     DECLARE_CONVERT_METHODS( LightingType, eToSim, eToSim );
     DECLARE_CONVERT_METHODS( Location, eToSim, eToSim );
     DECLARE_CONVERT_METHODS( LocationType, eToSim, eToSim );
-    DECLARE_CONVERT_METHODS( LogFuneralHandlingStatus, eToSim, eToSim );
     DECLARE_CONVERT_METHODS( LogMedicalHandlingStatus, eToSim, eToSim );
     DECLARE_CONVERT_METHODS( LogSupplyHandlingStatus, eToSim, eToSim );
     DECLARE_CONVERT_METHODS( MeetingEngagementStatus, eToSim, eToSim );
@@ -97,6 +97,7 @@ namespace ENT_Tr
 
     DECLARE_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel, eToTr, eToSim );
     DECLARE_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType, eToTr, eToSim );
+    DECLARE_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus, eToTr, eToSim );
     DECLARE_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus, eToTr, eToSim );
     DECLARE_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType, eToTr, eToSim );
     DECLARE_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType, eToTr, eToSim );

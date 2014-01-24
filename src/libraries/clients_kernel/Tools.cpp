@@ -347,15 +347,6 @@ QString tools::ToString( E_LogMedicalHandlingStatus nType )
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
-// Created: AGE 2007-06-19
-// -----------------------------------------------------------------------------
-QString tools::ToString( E_LogFuneralHandlingStatus nType )
-{
-    return ENT_Tr::ConvertFromLogFuneralHandlingStatus( nType, ENT_Tr::eToTr ).c_str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
 // Created: AGE 2008-02-05
 // -----------------------------------------------------------------------------
 QString tools::ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion /* = ENT_Tr::eToSim */ )

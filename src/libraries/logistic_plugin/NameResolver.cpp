@@ -127,7 +127,7 @@ void NameResolver::GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate
 // -----------------------------------------------------------------------------
 void NameResolver::GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogFuneralHandlingStatus( static_cast< E_LogFuneralHandlingStatus >( eFuneral ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogFuneralHandlingStatus( eFuneral );
 }
 
 // -----------------------------------------------------------------------------

@@ -688,30 +688,6 @@
         <translation>Prisoner</translation>
     </message>
     <message>
-        <source>waiting for handling</source>
-        <translation>waiting for handling</translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation>transporting unpackaged</translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation>waiting for packaging</translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation>packaging</translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation>waiting for transporter</translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation>transporting packaged</translation>
-    </message>
-    <message>
         <source>Agent</source>
         <translation>Agent</translation>
     </message>
@@ -1000,6 +976,37 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
+    <message>
+        <source>waiting for handling</source>
+        <translation type="unfinished">waiting for handling</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation type="unfinished">transporting unpackaged</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation type="unfinished">waiting for packaging</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation type="unfinished">packaging</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation type="unfinished">waiting for transporter</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation type="unfinished">transporting packaged</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">finished</translation>
     </message>
 </context>
 <context>

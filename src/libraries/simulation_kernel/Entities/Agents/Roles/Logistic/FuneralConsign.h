@@ -15,6 +15,11 @@
 
 class Human_ABC;
 
+namespace sword
+{
+    enum sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
+}
+
 namespace logistic
 {
     class FuneralHandler_ABC;
@@ -69,21 +74,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_State
-    {
-        eWaitingForHandling,
-        eTransportingUnpackaged,
-        eWaitingForPackaging,
-        ePackaging,
-        eWaitingForTransporter,
-        eTransportingPackaged,
-        eFinished
-    };
-    //@}
-
-private:
     //! @name Network
     //@{
     void SendMsgCreation() const;
@@ -93,7 +83,7 @@ private:
     //! @name Operations
     //@{
     void UpdateTimer( unsigned timeRemaining );
-    void SetState( E_State newState );
+    void SetState( sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus newState );
     bool IsActionDone( unsigned timeRemaining );
 
     void DoWaitForHandling();
@@ -113,7 +103,7 @@ private:
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
     const FuneralPackagingResource* packaging_;
 
-    E_State state_;
+    sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus state_;
     unsigned currentStateEndTimeStep_;
     LogisticVirtualAction currentAction_;
     MT_Vector2D position_; //$$$ TMP - wrapper dans un 'convoi virtuel'

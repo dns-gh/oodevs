@@ -46,7 +46,7 @@ LogFuneralConsign::LogFuneralConsign( Controller& controller, const sword::LogFu
     , handler_            ( controller )
     , convoy_             ( controller )
     , packagingResource_  ( 0 )
-    , nState_             ( eLogFuneralHandlingStatus_Finished )
+    , nState_             ( sword::LogFuneralHandlingUpdate::finished )
 {
     // NOTHING
 }
@@ -67,7 +67,7 @@ LogFuneralConsign::~LogFuneralConsign()
 void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, kernel::Entity_ABC* handler, kernel::Agent_ABC* convoy )
 {
     if( message.has_state() )
-        nState_ = E_LogFuneralHandlingStatus( message.state() );
+        nState_ = message.state();
     handler_ = handler;
     convoy_ = convoy;
     if( message.has_current_state_end_tick() )
@@ -93,8 +93,8 @@ void LogFuneralConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
     glColor4f( COLOR_AQUA );
     switch( nState_ )
     {
-        case eLogFuneralHandlingStatus_TransportingUnpackaged:
-        case eLogFuneralHandlingStatus_TransportingPackaged:
+        case sword::LogFuneralHandlingUpdate::transporting_unpackaged:
+        case sword::LogFuneralHandlingUpdate::transporting_packaged:
             glLineStipple( 1, tools.StipplePattern() );
             break;
         default:
@@ -174,7 +174,7 @@ const kernel::DotationType* LogFuneralConsign::GetPackagingResource() const
 // Name: LogFuneralConsign::GetStatus
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-E_LogFuneralHandlingStatus LogFuneralConsign::GetStatus() const
+sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus LogFuneralConsign::GetStatus() const
 {
     return nState_;
 }
@@ -185,7 +185,7 @@ E_LogFuneralHandlingStatus LogFuneralConsign::GetStatus() const
 // -----------------------------------------------------------------------------
 QString LogFuneralConsign::GetStatusDisplay() const
 {
-    return tools::ToString( nState_ );
+    return QString::fromStdString( ENT_Tr::ConvertFromLogFuneralHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,8 +194,9 @@ QString LogFuneralConsign::GetStatusDisplay() const
 // -----------------------------------------------------------------------------
 QString LogFuneralConsign::GetStatusDisplay( int status ) const
 {
-    if( 0 <= status && status < eNbrLogFuneralHandlingStatus )
-        return tools::ToString( static_cast< E_LogFuneralHandlingStatus >( status ) );
+    if( sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus_IsValid( status ) )
+        return QString::fromStdString( ENT_Tr::ConvertFromLogFuneralHandlingStatus(
+            static_cast< sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus >( status ) ) );
     return QString();
 }
 
