@@ -13,7 +13,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-#include <iostream>
 #include <QtCore/qstring.h>
 
 // -----------------------------------------------------------------------------

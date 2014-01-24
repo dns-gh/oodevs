@@ -16,7 +16,6 @@
 #include <hla/HLA_Lib.h>
 #include <hla/AttributeFunctor_ABC.h>
 #include <boost/foreach.hpp>
-#include <iostream>
 
 using namespace plugins::hla;
 using namespace hla;

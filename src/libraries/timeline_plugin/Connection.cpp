@@ -9,7 +9,6 @@
 
 #include "timeline_plugin_pch.h"
 #include "Connection.h"
-#include <iostream>
 
 using namespace plugins::timeline;
 

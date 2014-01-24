@@ -9,7 +9,6 @@
 
 #include "timeline_plugin_pch.h"
 #include "RestClient.h"
-#include <iostream>
 
 using namespace plugins::timeline;
 
