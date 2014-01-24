@@ -303,7 +303,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 func (s *TestSuite) TestSelectTransporter(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallLog)
 	opts.Step = 300
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallLog))
+	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, parameters expected
