@@ -1988,31 +1988,33 @@ message LogMaintenanceHandlingUpdate {
     */
     enum EnumLogMaintenanceHandlingStatus {
         //! Moving to supply
-        moving_to_supply             = 0;
+        moving_to_supply                  = 0;
         //! Waiting for transporter
-        waiting_for_transporter      = 1;
+        waiting_for_transporter           = 1;
         //! Transporter moving to supply
-        transporter_moving_to_supply = 2;
+        transporter_moving_to_supply      = 2;
         //! Transporter loading
-        transporter_loading          = 3;
+        transporter_loading               = 3;
         //! Transporter moving back
-        transporter_moving_back      = 4;
+        transporter_moving_back           = 4;
         //! Transporter unloading
-        transporter_unloading        = 5;
+        transporter_unloading             = 5;
         //! Being diagnosed
-        diagnosing                   = 6;
+        diagnosing                        = 6;
         //! Searching maintenance upper levels
-        searching_upper_levels       = 7;
+        searching_upper_levels            = 7;
         //! Waiting for parts
-        waiting_for_parts            = 8;
+        waiting_for_parts                 = 8;
         //! Waiting for a repairer
-        waiting_for_repairer         = 9;
+        waiting_for_repairer              = 9;
         //! Being repaired
-        repairing                    = 10;
+        repairing                         = 10;
         //! Moving back
-        moving_back                  = 11;
+        moving_back                       = 11;
         //! Finished
-        finished                     = 12;
+        finished                          = 12;
+        //! Waiting for transporter selection
+        waiting_for_transporter_selection = 13;
     }
     //! The request identifier
     required Id                               request                = 1;

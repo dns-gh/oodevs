@@ -271,6 +271,7 @@ T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[]
     T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "repairing" ), eLogMaintenanceHandlingStatus_Reparation ),
     T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "unit returning" ), eLogMaintenanceHandlingStatus_RetourPion ),
     T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMaintenanceHandlingStatus_Termine ),
+    T_ConverterLogMaintenanceHandlingStatus( "attente selection de transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter selection" ), eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur ),
     T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
 };
 
@@ -565,6 +566,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "global_weather",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Global Weather" ), sword::MagicAction::global_weather ),
     T_ConverterMagicActionType( "local_weather",             QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
     T_ConverterMagicActionType( "local_weather_destruction", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
+    T_ConverterMagicActionType( "select_new_logistic_state", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New Logistic State" ), sword::MagicAction::select_new_logistic_state ),
     T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
 };
 

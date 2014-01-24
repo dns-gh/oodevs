@@ -95,6 +95,7 @@ public:
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante ) = 0;
     virtual void NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual bool SelectNewState( uint32_t request ) = 0;
 
     //! @name Operations
     //@{

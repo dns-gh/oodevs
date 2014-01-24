@@ -36,6 +36,8 @@ public:
     //@{
     virtual void Cancel();
     virtual bool Update();
+
+    virtual void SelectNewState();
     //@}
 
 private:

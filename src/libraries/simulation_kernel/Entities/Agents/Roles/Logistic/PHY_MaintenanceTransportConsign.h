@@ -38,6 +38,8 @@ public:
     virtual bool Update();
 
     bool SearchForUpperLevelNotFound() const;
+
+    virtual void SelectNewState();
     //@}
 
 private:

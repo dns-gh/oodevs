@@ -1015,6 +1015,10 @@
         <source>Seriousness level 3</source>
         <translation>Gravité niveau 3</translation>
     </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
@@ -1068,6 +1072,10 @@
     <message>
         <source>Debug internal</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select New Logistic State</source>
+        <translation>Passer à l&apos;étape logistique suivante</translation>
     </message>
 </context>
 <context>

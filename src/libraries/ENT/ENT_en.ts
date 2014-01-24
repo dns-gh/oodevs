@@ -1015,6 +1015,10 @@
         <source>Seriousness level 3</source>
         <translation>Severity level 3</translation>
     </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
@@ -1068,6 +1072,10 @@
     <message>
         <source>Local Weather Destruction</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select New Logistic State</source>
+        <translation>Select new logistic state</translation>
     </message>
 </context>
 <context>

@@ -245,6 +245,7 @@ enum E_LogMaintenanceHandlingStatus
     eLogMaintenanceHandlingStatus_Reparation,
     eLogMaintenanceHandlingStatus_RetourPion,
     eLogMaintenanceHandlingStatus_Termine,
+    eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur,
     eNbrLogMaintenanceHandlingStatus
 };
 
