@@ -24,7 +24,11 @@ SupplyRecipientResourcesRequest::SupplyRecipientResourcesRequest( const tools::R
     : recipient_       ( resolver.Get( msg.recipient().id() ) )
     , dotationResolver_( dotationResolver )
 {
-    Update( msg );
+    BOOST_FOREACH( const sword::SupplyResourceRequest& data, msg.resources() )
+    {
+        Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ),
+            data.requested(), data.granted(), data.convoyed() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -38,27 +42,21 @@ SupplyRecipientResourcesRequest::~SupplyRecipientResourcesRequest()
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRecipientResourcesRequest::Update
-// Created: NLD 2004-12-30
+// Created: LGY 2014-01-27
 // -----------------------------------------------------------------------------
-void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourcesRequest& msg )
+void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourceRequests& msg )
 {
-    BOOST_FOREACH( const sword::SupplyResourceRequest& data, msg.resources() )
+    bool modified = false;
+    BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, msg.requests() )
     {
-        SupplyResourceRequest* request = Find( data.resource().id() );
-        if( request )
+        if( data.recipient().id() == recipient_.GetId() )
         {
-            request->requested_ = data.requested();
-            request->granted_   = data.granted();
-            request->convoyed_  = data.convoyed();
-        }
-        else
-        {
-            Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ),
-                                                                   data.requested(),
-                                                                   data.granted(),
-                                                                   data.convoyed() ) );
+            Apply( boost::bind( &SupplyResourceRequest::Update, _1,  boost::cref( data.resources() ) ) );
+            modified = true;
         }
     }
+    if( !modified )
+        Apply( boost::bind( &SupplyResourceRequest::Done, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

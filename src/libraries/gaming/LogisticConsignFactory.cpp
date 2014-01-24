@@ -58,7 +58,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const s
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, simulation_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, simulation_, message );
 }
 
 // -----------------------------------------------------------------------------

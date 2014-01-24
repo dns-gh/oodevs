@@ -48,10 +48,12 @@ public:
     //@{
     LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                             const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
-                            const QStringList& requestsHeader = QStringList() )
-        : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader ) {}
-
-    ~LogisticConsignsWidget() {}
+                            LogisticsConsign_ABC::E_Logistics type, const QStringList& requestsHeader = QStringList() )
+        : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader )
+        , type_( type )
+        {}
+    ~LogisticConsignsWidget()
+        {}
     //@}
 
 public:
@@ -100,8 +102,15 @@ protected:
     //@{
     virtual void NotifyUpdated( const typename Request::History& history )
     {
-        DisplayHistory( history );
+        if( history.GetConsign().GetType() == type_ )
+            DisplayHistory( history );
     }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    LogisticsConsign_ABC::E_Logistics type_;
     //@}
 };
 

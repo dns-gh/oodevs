@@ -219,3 +219,12 @@ bool LogMaintenanceConsign::NeedResolution() const
 {
     return nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection;
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::GetType
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+LogMaintenanceConsign::E_Logistics LogMaintenanceConsign::GetType() const
+{
+    return eMaintenance;
+}

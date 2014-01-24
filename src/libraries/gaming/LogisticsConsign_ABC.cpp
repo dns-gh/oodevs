@@ -148,16 +148,6 @@ void LogisticsConsign_ABC::UpdateHistory( int start, int end,
                 state.nStatus_ = sub.update().state();
             state.handler_ = GetRequestHandler( sub.update().provider().id() );
         }
-        else if( msg.has_supply() )
-        {
-            const auto& sub = msg.supply();
-            if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
-                continue;
-            state.handler_ = GetRequestHandler(
-                protocol::GetParentEntityId( sub.creation().supplier() ));
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-        }
         else
             continue;
         state.startedTick_ = msg.tick();

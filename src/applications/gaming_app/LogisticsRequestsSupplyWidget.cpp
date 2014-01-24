@@ -44,7 +44,7 @@ namespace
 // -----------------------------------------------------------------------------
 LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                                                               const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, GetRequestsHeader() )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, LogisticsConsign_ABC::eSupply, GetRequestsHeader() )
 {
     supplyTable_ = new LogisticsRequestsSupplyTable( "Logistics requests supply details", this );
     connect( supplyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
@@ -125,8 +125,36 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
     detailsTable_->Add( tools::translate( "Logistic", "State:"),                c.GetStatusDisplay() );
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ),             c.GetCurrentStartedTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Ending:" ),              SupervisionFilter( c.GetCurrentEndTime() ) );
+    FillSupplyTable( c );
+}
 
-    tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = c.CreateIterator();
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsSupplyWidget::DisplayHistory
+// Created: LGY 2014-01-28
+// -----------------------------------------------------------------------------
+void LogisticsRequestsSupplyWidget::DisplayHistory( const LogSupplyConsign::History& history )
+{
+    const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( history.GetConsign() );
+    // Update requests table
+    requestsTable_->SetData( 1, GetRecipientsLinks( c, false ), history.GetConsign() );
+    if( requestSelected_ && requestSelected_->GetId() == history.GetConsign().GetId() )
+    {
+        // Update details table
+        detailsTable_->SetData( 0, 1, GetRecipientsLinks( c, true ) );
+        // Update supply table
+        FillSupplyTable( c );
+        DisplayCurrentHistory();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsSupplyWidget::FillSupplyTable
+// Created: LGY 2014-01-28
+// -----------------------------------------------------------------------------
+void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& consign )
+{
+    supplyTable_->Purge();
+    tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = consign.CreateIterator();
     while( itRecipient.HasMoreElements() )
     {
         const SupplyRecipientResourcesRequest& curRecipient = itRecipient.NextElement();
@@ -134,14 +162,9 @@ void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_AB
         while( itRequest.HasMoreElements() )
         {
             const SupplyResourceRequest& curRequest = itRequest.NextElement();
-            curRequest.GetTypeName();
-            curRequest.GetRequested();
-            curRequest.GetGranted();
-            curRequest.GetConvoyed();
-            supplyTable_->AddRecipientResource( GetDisplayName( &curRecipient.recipient_ ), curRequest.GetTypeName()
-                                                , curRequest.GetRequested()
-                                                , curRequest.GetGranted()
-                                                , curRequest.GetConvoyed() );
+            supplyTable_->AddRecipientResource( GetDisplayName( &curRecipient.recipient_ ), curRequest.GetTypeName(),
+                                            curRequest.GetRequested(), curRequest.GetGranted(),
+                                            curRequest.GetConvoyed(), curRequest.IsDone() );
         }
     }
     supplyTable_->ResizeColumnsToContents();

@@ -89,7 +89,7 @@ protected:
 protected:
     //! @name Helpers
     //@{
-    void DisplayRequestHistory( const LogisticsConsign_ABC& consign );
+    virtual void DisplayRequestHistory( const LogisticsConsign_ABC& consign );
     void SendHistoryRequest( const LogisticsConsign_ABC& consign );
     QString GetDisplayName( const kernel::Entity_ABC* pEntity ) const;
     QString SupervisionFilter( const QString& value ) const;

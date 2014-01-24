@@ -1901,6 +1901,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Conveyed</source>
         <translation>Convoyées</translation>
     </message>
+    <message>
+        <source>Done</source>
+        <translation>Fini</translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsSupplyWidget</name>

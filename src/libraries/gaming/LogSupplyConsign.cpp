@@ -12,7 +12,6 @@
 #include "LogisticConsigns.h"
 #include "Simulation.h"
 #include "SupplyRecipientResourcesRequest.h"
-#include "SupplyResourceRequest.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LogisticHelpers.h"
@@ -24,6 +23,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 
@@ -37,13 +37,14 @@ using namespace kernel;
 LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
                                   , const tools::Resolver_ABC< Formation_ABC >& formationResolver
-
+                                  , const tools::Resolver_ABC< kernel::DotationType >& dotationResolver
                                   , const Simulation& simulation
                                   , const sword::LogSupplyHandlingCreation& message )
     : LogisticsConsign_ABC               ( message.request().id(), controller, simulation, message.tick() )
     , resolver_                          ( resolver )
     , agentResolver_                     ( agentResolver )
     , formationResolver_                 ( formationResolver )
+    , dotationResolver_                  ( dotationResolver )
     , pLogHandlingEntity_                ( controller_, FindLogEntity( message.supplier() ) )
     , pPionLogConvoying_                 ( controller_ )
     , pLogProvidingConvoyResourcesEntity_( controller_, FindLogEntity( message.transporters_provider() ) )
@@ -62,7 +63,7 @@ LogSupplyConsign::~LogSupplyConsign()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::OnReceiveMsgUpdate
+// Name: LogSupplyConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying )
@@ -75,6 +76,24 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, ke
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::Update
+// Created: LGY 2014-01-28
+// -----------------------------------------------------------------------------
+void LogSupplyConsign::Update( const sword::SupplyRecipientResourceRequests& message )
+{
+    if( Count() == 0 )
+    {
+        BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests() )
+        {
+            SupplyRecipientResourcesRequest* request = new SupplyRecipientResourcesRequest( dotationResolver_, resolver_, data );
+            Register( data.recipient().id(), *request );
+        }
+    }
+    else
+        Apply( boost::bind( &SupplyRecipientResourcesRequest::Update, _1, message ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,4 +251,51 @@ kernel::Entity_ABC* LogSupplyConsign::GetRequestHandler( uint32_t entityId ) con
     if( handler )
         return handler;
     return formationResolver_.Find( entityId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::UpdateHistory
+// Created: LGY 2014-01-28
+// -----------------------------------------------------------------------------
+void LogSupplyConsign::UpdateHistory( int start, int end,
+                                      const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
+                                      unsigned int currentTick )
+{
+    history_->Clear();
+    for( int i = start; i != end; ++i )
+    {
+        const auto& msg = history.Get( i );
+        if( static_cast< unsigned int >( msg.tick() ) > currentTick )
+            continue;
+
+        HistoryState state;
+        if( msg.has_supply() )
+        {
+            const auto& sub = msg.supply();
+            if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
+                continue;
+            state.handler_ = GetRequestHandler(
+                protocol::GetParentEntityId( sub.creation().supplier() ));
+
+            if( sub.update().has_requests() )
+                Update( sub.update().requests() );
+
+            if( sub.update().has_state() )
+                state.nStatus_ = sub.update().state();
+        }
+        else
+            continue;
+        state.startedTick_ = msg.tick();
+        history_->Add( state );
+    }
+    controller_.Update( *history_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::GetType
+// Created: LGY 2014-01-28
+// -----------------------------------------------------------------------------
+LogSupplyConsign::E_Logistics LogSupplyConsign::GetType() const
+{
+    return eSupply;
 }

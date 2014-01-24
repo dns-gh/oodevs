@@ -47,9 +47,9 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual void AddRecipientResource( const QString& recipient, const QString& resource
-                                     , unsigned int requested, unsigned int granted, unsigned int conveyed );
-    virtual void SetData( int row, int col, QVariant text );
+    virtual void AddRecipientResource( const QString& recipient, const QString& resource,
+                                       unsigned int requested, unsigned int granted,
+                                       unsigned int conveyed, bool done );
     //@}
 
     //! @name Accessors
@@ -57,7 +57,13 @@ public:
     const gui::LinkItemDelegate* GetLinkItemDelegate() const;
     //@}
 
-protected:
+private:
+    //! @name Operations
+    //@{
+    void SetData( int row, int col, QVariant text, bool checkable = false, bool checked = false );
+    //@}
+
+private:
     //! @name Data Members
     //@{
     QStandardItemModel    dataModel_;

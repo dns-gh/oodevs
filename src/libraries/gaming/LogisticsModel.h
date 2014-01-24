@@ -22,6 +22,7 @@ namespace sword
     class LogMedicalHandlingUpdate;
     class LogFuneralHandlingUpdate;
     class LogSupplyHandlingUpdate;
+    class SupplyRecipientResourceRequests;
     class ParentEntity;
     class LogisticHistoryAck;
     class LogHistoryEntry;

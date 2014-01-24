@@ -178,6 +178,21 @@ void LogisticsRequestsTable::SetData( int row, int col, QString text, const Logi
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::SetData
+// Created: MMC 2013-09-11
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::SetData( int col, QString text, const LogisticsConsign_ABC& consign )
+{
+    int rowIndex = GetRequestRow( consign );
+    QStandardItem* item = dataModel_.item( rowIndex, col );
+    if( item )
+    {
+        item->setData( QVariant( text ), Qt::DisplayRole );
+        resizeColumnToContents( col );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable::GetRequest
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------

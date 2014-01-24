@@ -30,7 +30,8 @@ LogisticsRequestsSupplyTable::LogisticsRequestsSupplyTable( const QString& objec
         << tools::translate( "LogisticsRequestsSupplyTable", "Resource" )
         << tools::translate( "LogisticsRequestsSupplyTable", "Requested" )
         << tools::translate( "LogisticsRequestsSupplyTable", "Granted" )
-        << tools::translate( "LogisticsRequestsSupplyTable", "Conveyed" );
+        << tools::translate( "LogisticsRequestsSupplyTable", "Conveyed" )
+        << tools::translate( "LogisticsRequestsSupplyTable", "Done" );
 
     dataModel_.setColumnCount( horizontalHeaders_.size() );
     proxyModel_.setSourceModel( &dataModel_ );
@@ -87,8 +88,9 @@ void LogisticsRequestsSupplyTable::Purge()
 // Name: LogisticsRequestsSupplyTable::AddRecipientResource
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipient, const QString& resource
-                                                       , unsigned int requested, unsigned int granted, unsigned int conveyed )
+void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipient, const QString& resource,
+                                                         unsigned int requested, unsigned int granted,
+                                                         unsigned int conveyed, bool done )
 {
     int rowIndex = dataModel_.rowCount();
     SetData( rowIndex, 0, recipient );
@@ -96,19 +98,25 @@ void LogisticsRequestsSupplyTable::AddRecipientResource( const QString& recipien
     SetData( rowIndex, 2, requested );
     SetData( rowIndex, 3, granted );
     SetData( rowIndex, 4, conveyed );
+    SetData( rowIndex, 5, QVariant(), true, done );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text )
+void LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, bool checkable, bool checked )
 {
     QStandardItem* item = dataModel_.item( row, col );
     if( !item )
         item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setData( text, Qt::DisplayRole );
-    item->setTextAlignment( Qt::AlignCenter );
+    if( !checkable )
+    {
+        item->setData( text, Qt::DisplayRole );
+        item->setTextAlignment( Qt::AlignCenter );
+    }
+    else
+        item->setCheckState( checked ? Qt::Checked : Qt::Unchecked );
     dataModel_.setItem( row, col, item );
 }
