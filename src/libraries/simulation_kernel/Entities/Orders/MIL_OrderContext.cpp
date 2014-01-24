@@ -45,9 +45,9 @@ MT_Vector2D ReadDirections( const sword::MissionParameters& params, int index )
     const auto& param = GetParam( params, index, "heading" );
     if( param.null_value() )
         return defaultDirection;
-    if( !param.value_size() || !param.value().Get( 0 ).has_heading() )
+    if( !param.value_size() || !param.value( 0 ).has_heading() )
         throw ORDER_BADPARAM( "parameters[" << index << "] is invalid, heading expected" );
-    return weather::ReadDirection( param.value().Get( 0 ).heading() );
+    return weather::ReadDirection( param.value( 0 ).heading() );
 }
 
 void ReadPhaseLines( const sword::MissionParameters& params, int index,
@@ -56,12 +56,12 @@ void ReadPhaseLines( const sword::MissionParameters& params, int index,
     const auto& param = GetParam( params, index, "phaseline" );
     if( param.null_value() )
         return;
-    if( !param.value_size() || !param.value().Get( 0 ).has_phaseline() )
+    if( !param.value_size() || !param.value( 0 ).has_phaseline() )
         throw ORDER_BADPARAM( "parameters[" << index
                 << "] is invalid, phaseline expected" );
     const int count = param.value().size();
     for( int i = 0; i < count; ++i )
-        phaselines.push_back( MIL_LimaOrder( param.value().Get( i ).phaseline().elem( 0 )));
+        phaselines.push_back( MIL_LimaOrder( param.value( i ).phaseline().elem( 0 )));
 }
 
 void ReadPointVector( const sword::MissionParameters& params, int index,
@@ -70,9 +70,9 @@ void ReadPointVector( const sword::MissionParameters& params, int index,
     const auto& limit = GetParam( params, index, "limit" );
     if( limit.null_value() )
         return;
-    if( !limit.value().Get( 0 ).has_limit() )
+    if( !limit.value( 0 ).has_limit() )
         throw ORDER_BADLIMIT( "parameters[" << index << "] must be a limit" );
-    if( !NET_ASN_Tools::ReadLine( limit.value().Get( 0 ).limit(), points ) )
+    if( !NET_ASN_Tools::ReadLine( limit.value( 0 ).limit(), points ) )
         throw ORDER_BADLIMIT( "parameters[" << index << "] limit value is invalid" );
 }
 

@@ -511,9 +511,9 @@ void MIL_Formation::SetExtensions( const std::vector< std::pair< std::string, st
 // -----------------------------------------------------------------------------
 void MIL_Formation::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations )
 {
-    if( msg.parameters().elem( 0 ).value().Get(0).has_formation() )
+    if( msg.parameters().elem( 0 ).value(0).has_formation() )
     {
-        MIL_Formation* pNewFormation = formations.Find( msg.parameters().elem( 0 ).value().Get(0).formation().id() );
+        MIL_Formation* pNewFormation = formations.Find( msg.parameters().elem( 0 ).value(0).formation().id() );
         if( !pNewFormation )
             throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )

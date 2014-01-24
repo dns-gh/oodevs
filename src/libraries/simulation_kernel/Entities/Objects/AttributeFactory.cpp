@@ -181,7 +181,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
     Initialize( object );
     for( int i = 0; i < parameter.value_size(); ++i )
     {
-        const sword::MissionParameter_Value& attributes = parameter.value().Get( i );
+        const sword::MissionParameter_Value& attributes = parameter.value( i );
         if( attributes.list_size() > 0 )
         {
             const sword::MissionParameter_Value& attribute = attributes.list( 0 );

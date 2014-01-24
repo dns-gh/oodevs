@@ -78,7 +78,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     }
     else if( !type.IsList()  && message.value_size() == 1 )
     {
-        return Create( message.value().Get( 0 ), resolver );
+        return Create( message.value( 0 ), resolver );
     }
     else
     {
