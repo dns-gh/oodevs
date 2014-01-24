@@ -56,25 +56,25 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
 
     display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Details" ) )
-                .AddLabel( "Identifier", tools::findTranslation( "Crowd", "Identifier:" ) )
-                .AddLabel( "Associated", tools::findTranslation( "Crowd", "Associated crowd:" ) )
-                .AddLabel( "Side", tools::findTranslation( "Crowd", "Side:" ) )
-                .AddLabel( "Critical", tools::findTranslation( "Crowd", "Critical intelligence:" ) );
+                .AddLabel( "Identifier", tools::translate( "Crowd", "Identifier:" ) )
+                .AddLabel( "Associated", tools::translate( "Crowd", "Associated crowd:" ) )
+                .AddLabel( "Side", tools::translate( "Crowd", "Side:" ) )
+                .AddLabel( "Critical", tools::translate( "Crowd", "Critical intelligence:" ) );
 
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Concentration" ) )
-                .AddLabel( "Alive", tools::findTranslation( "Crowd", "Alive people:" ) )
-                .AddLabel( "Dead", tools::findTranslation( "Crowd", "Dead people:" ) )
-                .AddLabel( "Mood", tools::findTranslation( "Crowd", "Mood:" ) )
-                .AddLabel( "Perceived", tools::findTranslation( "Crowd", "Perceived:" ) )
-                .AddLabel( "Relevance", tools::findTranslation( "Crowd", "Relevance:" ) );
+                .AddLabel( "Alive", tools::translate( "Crowd", "Alive people:" ) )
+                .AddLabel( "Dead", tools::translate( "Crowd", "Dead people:" ) )
+                .AddLabel( "Mood", tools::translate( "Crowd", "Mood:" ) )
+                .AddLabel( "Perceived", tools::translate( "Crowd", "Perceived:" ) )
+                .AddLabel( "Relevance", tools::translate( "Crowd", "Relevance:" ) );
 
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Flow" ) )
-                .AddLabel( "Heading", tools::findTranslation( "Crowd", "Heading:" ) )
-                .AddLabel( "Speed", tools::findTranslation( "Crowd", "Speed:" ) )
-                .AddLabel( "Alive", tools::findTranslation( "Crowd", "Alive people:" ) )
-                .AddLabel( "Dead", tools::findTranslation( "Crowd", "Dead people:" ) )
-                .AddLabel( "Mood", tools::findTranslation( "Crowd", "Mood:" ) )
-                .AddLabel( "Perceived", tools::findTranslation( "Crowd", "Perceived:" ) );
+                .AddLabel( "Heading", tools::translate( "Crowd", "Heading:" ) )
+                .AddLabel( "Speed", tools::translate( "Crowd", "Speed:" ) )
+                .AddLabel( "Alive", tools::translate( "Crowd", "Alive people:" ) )
+                .AddLabel( "Dead", tools::translate( "Crowd", "Dead people:" ) )
+                .AddLabel( "Mood", tools::translate( "Crowd", "Mood:" ) )
+                .AddLabel( "Perceived", tools::translate( "Crowd", "Perceived:" ) );
 
     connect( knowledgeList_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
     connect( knowledgeList_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenuRequested( const QPoint & ) ) );
