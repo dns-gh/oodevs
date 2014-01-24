@@ -22,11 +22,6 @@ namespace client
     class UnitAttributes;
 }
 
-namespace logistic
-{
-    class SupplyRequestContainer_ABC;
-}
-
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_Dotation;
