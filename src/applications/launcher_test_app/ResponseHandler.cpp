@@ -12,7 +12,6 @@
 #include <boost/thread.hpp>
 #include "protocol/LauncherSenders.h"
 //#include <google/protobuf/text_format.h>
-#include <iostream>
 
 #include "PBTools.h"
 

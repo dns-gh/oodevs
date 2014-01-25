@@ -14,7 +14,6 @@
 #include "tools/ClientNetworker.h"
 #include "tools/FileWrapper.h"
 #include <string>
-#include <iostream>
 
 // =============================================================================
 /** @class  LoggerApplication

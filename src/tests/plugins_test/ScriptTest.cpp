@@ -72,8 +72,6 @@ BOOST_AUTO_TEST_CASE( ScriptTest_CommandParsing )
     }
 }
 
-#include <iostream>
-
 namespace
 {
     void TestLibrary( const tools::Path& name )
@@ -81,7 +79,6 @@ namespace
         tools::Path filename = testOptions.GetDataPath(
                 tools::Path( "script_plugin" ) / name + ".lua" ).Normalize();
         const std::string brainParam = "brain={file='" + filename.ToUTF8() + "',type='test_suite'} plugins={} cwd='" + filename.Parent().ToUTF8() + "'";
-        std::cerr << "Param = " << brainParam << std::endl;
         directia::brain::Brain brain( brainParam );
         brain[ "RunTest" ]();
     }

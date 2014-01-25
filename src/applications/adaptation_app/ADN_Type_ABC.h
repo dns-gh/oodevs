@@ -11,7 +11,6 @@
 #define __ADN_Type_ABC_h_
 
 #include "ADN_Connector_ABC.h"
-#include <iostream>
 
 //*****************************************************************************
 // Created: JDY 03-07-02

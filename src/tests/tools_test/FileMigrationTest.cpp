@@ -12,7 +12,6 @@
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
-#include <iostream>
 
 namespace
 {

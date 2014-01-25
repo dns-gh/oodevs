@@ -10,7 +10,6 @@
 #include "client_proxy_test_pch.h"
 #include <google/protobuf/stubs/common.h>
 #include <boost/lexical_cast.hpp>
-#include <iostream>
 #include <string>
 
 unsigned short PORT = 30000;

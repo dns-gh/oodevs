@@ -14,7 +14,6 @@
 #include "dispatcher/Logger_ABC.h" 
 #include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
-#include <iostream>
 
 MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
 {
