@@ -55,23 +55,23 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 
     display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tools::translate( "AgentKnowledge", "Details" ) )
-                .AddLabel( "Identifier", tools::findTranslation( "AgentKnowledge",  "Identifier:" ) )
-                .AddLabel( "AssociatedAgent", tools::findTranslation( "AgentKnowledge",  "Associated agent:" ) )
-                .AddLabel( "Location", tools::findTranslation( "AgentKnowledge",  "Location:" ) )
-                .AddLabel( "Heading", tools::findTranslation( "AgentKnowledge",  "Heading:" ) )
-                .AddLabel( "Speed", tools::findTranslation( "AgentKnowledge",  "Speed:" ) )
-                .AddLabel( "Operational state", tools::findTranslation( "AgentKnowledge",  "Operational state:" ) )
-                .AddLabel( "PerceptionLevel", tools::findTranslation( "AgentKnowledge",  "Perception level:" ) )
-                .AddLabel( "MaxPerceptionLevel", tools::findTranslation( "AgentKnowledge",  "Max perception level:" ) )
-                .AddLabel( "Side", tools::findTranslation( "AgentKnowledge",  "Side:" ) )
-                .AddLabel( "Level", tools::findTranslation( "AgentKnowledge",  "Level:" ) )
-                .AddLabel( "Nature", tools::findTranslation( "AgentKnowledge",  "Nature:" ) )
-                .AddLabel( "Surrender", tools::findTranslation( "AgentKnowledge",  "Surrender:" ) )
-                .AddLabel( "Prisoner", tools::findTranslation( "AgentKnowledge",  "Prisoner:" ) )
-                .AddLabel( "RefugeesPickedUp", tools::findTranslation( "AgentKnowledge",  "Refugees picked up:" ) )
-                .AddLabel( "CommandPost", tools::findTranslation( "AgentKnowledge",  "Command post:" ) )
-                .AddLabel( "Relevance", tools::findTranslation( "AgentKnowledge",  "Relevance:" ) )
-                .AddLabel( "CriticalIntelligence", tools::findTranslation( "AgentKnowledge",  "Critical intelligence:" ) );
+                .AddLabel( "Identifier", tools::translate( "AgentKnowledge",  "Identifier:" ) )
+                .AddLabel( "AssociatedAgent", tools::translate( "AgentKnowledge",  "Associated agent:" ) )
+                .AddLabel( "Location", tools::translate( "AgentKnowledge",  "Location:" ) )
+                .AddLabel( "Heading", tools::translate( "AgentKnowledge",  "Heading:" ) )
+                .AddLabel( "Speed", tools::translate( "AgentKnowledge",  "Speed:" ) )
+                .AddLabel( "Operational state", tools::translate( "AgentKnowledge",  "Operational state:" ) )
+                .AddLabel( "PerceptionLevel", tools::translate( "AgentKnowledge",  "Perception level:" ) )
+                .AddLabel( "MaxPerceptionLevel", tools::translate( "AgentKnowledge",  "Max perception level:" ) )
+                .AddLabel( "Side", tools::translate( "AgentKnowledge",  "Side:" ) )
+                .AddLabel( "Level", tools::translate( "AgentKnowledge",  "Level:" ) )
+                .AddLabel( "Nature", tools::translate( "AgentKnowledge",  "Nature:" ) )
+                .AddLabel( "Surrender", tools::translate( "AgentKnowledge",  "Surrender:" ) )
+                .AddLabel( "Prisoner", tools::translate( "AgentKnowledge",  "Prisoner:" ) )
+                .AddLabel( "RefugeesPickedUp", tools::translate( "AgentKnowledge",  "Refugees picked up:" ) )
+                .AddLabel( "CommandPost", tools::translate( "AgentKnowledge",  "Command post:" ) )
+                .AddLabel( "Relevance", tools::translate( "AgentKnowledge",  "Relevance:" ) )
+                .AddLabel( "CriticalIntelligence", tools::translate( "AgentKnowledge",  "Critical intelligence:" ) );
 
     //perception tree view configuration
     pPerceptionListView_ = new QTreeView();
