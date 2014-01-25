@@ -982,9 +982,9 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
+    if( !parametre.value_size() == 1 || !parametre.value(0).has_point() )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    const sword::Point& point = parametre.value().Get(0).point();
+    const sword::Point& point = parametre.value(0).point();
     if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
@@ -1083,16 +1083,16 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
         for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
         {
-            if ( msg.elem( 0 ).value().Get( i ).list_size() < 2 )
+            if ( msg.elem( 0 ).value( i ).list_size() < 2 )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 0 ).value().Get( i ).list( 0 ).has_identifier() )
+            if ( !msg.elem( 0 ).value( i ).list( 0 ).has_identifier() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 0 ).value().Get( i ).list( 1 ).has_quantity() )
+            if ( !msg.elem( 0 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
             sword::Id type;
-            type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
-            int number = msg.elem( 0 ).value().Get( i ).list( 1 ).quantity();
+            type.set_id( msg.elem( 0 ).value( i ).list( 0 ).identifier() );
+            int number = msg.elem( 0 ).value( i ).list( 1 ).quantity();
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
             if( pComposanteType )
                 roleComposantes.ChangeComposantesAvailability( *pComposanteType, number );
@@ -1103,15 +1103,15 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
         for( int i = 0 ; i < msg.elem( 1 ).value_size(); ++i )
         {
-            if ( msg.elem( 1 ).value().Get( i ).list_size() < 2 )
+            if ( msg.elem( 1 ).value( i ).list_size() < 2 )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 1 ).value().Get( i ).list( 0 ).has_identifier() )
+            if ( !msg.elem( 1 ).value( i ).list( 0 ).has_identifier() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 1 ).value().Get( i ).list( 1 ).has_quantity() )
+            if ( !msg.elem( 1 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
-            unsigned int rank = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
-            int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
+            unsigned int rank = msg.elem( 1 ).value( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value( i ).list( 1 ).quantity();
             const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( rank );
             if( pHumanRank )
                 roleHumans.ChangeHumansAvailability( *pHumanRank, number );
@@ -1122,15 +1122,15 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( int i = 0; i < msg.elem( 2 ).value_size(); ++i )
         {
-            if ( msg.elem( 2 ).value().Get( i ).list_size() < 2 )
+            if ( msg.elem( 2 ).value( i ).list_size() < 2 )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 2 ).value().Get( i ).list( 0 ).has_identifier() )
+            if ( !msg.elem( 2 ).value( i ).list( 0 ).has_identifier() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 2 ).value().Get( i ).list( 1 ).has_quantity() )
+            if ( !msg.elem( 2 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
-            unsigned int dotation = msg.elem( 2 ).value().Get( i ).list( 0 ).identifier();
-            int number = msg.elem( 2 ).value().Get( i ).list( 1 ).quantity();
+            unsigned int dotation = msg.elem( 2 ).value( i ).list( 0 ).identifier();
+            int number = msg.elem( 2 ).value( i ).list( 1 ).quantity();
             const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotation );
             if( pDotationType )
                 roleDotations.ResupplyDotations( *pDotationType, number / 100. );
@@ -1141,15 +1141,15 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
         for( int i = 0; i < msg.elem( 3 ).value_size(); ++i )
         {
-            if ( msg.elem( 3 ).value().Get( i ).list_size() < 2 )
+            if ( msg.elem( 3 ).value( i ).list_size() < 2 )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 3 ).value().Get( i ).list( 0 ).has_identifier() )
+            if ( !msg.elem( 3 ).value( i ).list( 0 ).has_identifier() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 3 ).value().Get( i ).list( 1 ).has_quantity() )
+            if ( !msg.elem( 3 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
-            unsigned int munition = msg.elem( 3 ).value().Get( i ).list( 0 ).identifier();
-            int number = msg.elem( 3 ).value().Get( i ).list( 1 ).quantity();
+            unsigned int munition = msg.elem( 3 ).value( i ).list( 0 ).identifier();
+            int number = msg.elem( 3 ).value( i ).list( 1 ).quantity();
             const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( munition );
             if( pAmmoClass )
                 roleDotations.ResupplyDotations( *pAmmoClass, number / 100. );
@@ -1159,15 +1159,15 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
     if( roleSupply && msg.elem( 4 ).value_size() > 0 ) // stocks
         for( int i = 0; i < msg.elem( 4 ).value_size(); ++i )
         {
-            if ( msg.elem( 4 ).value().Get( i ).list_size() < 2 )
+            if ( msg.elem( 4 ).value( i ).list_size() < 2 )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 4 ).value().Get( i ).list( 0 ).has_identifier() )
+            if ( !msg.elem( 4 ).value( i ).list( 0 ).has_identifier() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-            if ( !msg.elem( 4 ).value().Get( i ).list( 1 ).has_quantity() )
+            if ( !msg.elem( 4 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
-            unsigned int stock = msg.elem( 4 ).value().Get( i ).list( 0 ).identifier();
-            int number = msg.elem( 4 ).value().Get( i ).list( 1 ).quantity();
+            unsigned int stock = msg.elem( 4 ).value( i ).list( 0 ).identifier();
+            int number = msg.elem( 4 ).value( i ).list( 1 ).quantity();
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
             if( pDotationCategory )
                 roleSupply->ResupplyStocks( *pDotationCategory, number );
@@ -1836,7 +1836,7 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
     std::vector< std::pair< const PHY_ComposanteTypePion*, const sword::MissionParameter_Value > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
-        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value( i );
         CheckSubParameterCount( elem.list_size() != 8, i, "must have 8 parameters" );
 
         CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );
@@ -1890,7 +1890,7 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
     CheckParameterCount( msg.elem_size() != 1, "invalid parameters count, 1 parameter expected" );
     for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
     {
-        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value( i );
         CheckSubParameterCount( elem.list_size() != 6, i, "must have 6 parameters" );
 
         CHECK_PARAM( elem, i, 0, quantity, "must be a Quantity" );
@@ -1926,7 +1926,7 @@ void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg
     std::vector< std::tuple< const PHY_DotationCategory*, unsigned int, float > > content;
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
-        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
+        const sword::MissionParameter_Value& elem = msg.elem( 0 ).value( i );
         CheckSubParameterCount( elem.list_size() != 3, i, "must have 3 parameters" );
 
         CHECK_PARAM( elem, i, 0, identifier, "must be an Identifer" );

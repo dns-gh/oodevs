@@ -1235,7 +1235,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 
     MIL_DictionaryExtensions extensions;
     if( count > 3 )
-        extensions.ReadExtensions( msg.parameters().elem( 3 ).value().Get(0).extensionlist() );
+        extensions.ReadExtensions( msg.parameters().elem( 3 ).value(0).extensionlist() );
 
     // auto-registration
     const MIL_Automate& a = MIL_AgentServer::GetWorkspace().GetEntityManager()
@@ -1384,40 +1384,40 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     if( !message.has_parameters() || message.parameters().elem_size() != 6 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count, 6 parameters expected" );
     if( message.parameters().elem( 0 ).value_size() != 1 ||
-            !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr() )
+            !message.parameters().elem( 0 ).value( 0 ).has_acharstr() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be an ACharStr" );
     if( message.parameters().elem( 1 ).value_size() != 1 ||
-            !message.parameters().elem( 1 ).value().Get( 0 ).has_point() )
+            !message.parameters().elem( 1 ).value( 0 ).has_point() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a Point" );
     if( message.parameters().elem( 2 ).value_size() != 1 ||
-            !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity() )
+            !message.parameters().elem( 2 ).value( 0 ).has_quantity() )
         throw MASA_BADPARAM_UNIT( "parameters[2] must be a Quantity" );
     if( message.parameters().elem( 3 ).value_size() != 1
-            || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity() )
+            || !message.parameters().elem( 3 ).value( 0 ).has_quantity() )
         throw MASA_BADPARAM_UNIT( "parameters[3] must be a Quantity" );
     if( message.parameters().elem( 4 ).value_size() != 1 ||
-            !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity() )
+            !message.parameters().elem( 4 ).value( 0 ).has_quantity() )
         throw MASA_BADPARAM_UNIT( "parameters[4] must be a Quantity" );
     if( message.parameters().elem( 5 ).value_size() != 1 ||
-            !message.parameters().elem( 5 ).value().Get( 0 ).has_acharstr() )
+            !message.parameters().elem( 5 ).value( 0 ).has_acharstr() )
         throw MASA_BADPARAM_UNIT( "parameters[5] must be an ACharStr" );
 
     const ::MissionParameters& parameters = message.parameters();
-    std::string type = parameters.elem( 0 ).value().Get( 0 ).acharstr();
-    ::Location location = parameters.elem( 1 ).value().Get( 0 ).point().location();
+    std::string type = parameters.elem( 0 ).value( 0 ).acharstr();
+    ::Location location = parameters.elem( 1 ).value( 0 ).point().location();
     if( !location.has_coordinates() )
         throw MASA_BADPARAM_UNIT( "invalid crowd location" );
 
-    const unsigned int healthy = parameters.elem( 2 ).value().Get( 0 ).quantity();
-    const unsigned int wounded = parameters.elem( 3 ).value().Get( 0 ).quantity();
-    const unsigned int dead = parameters.elem( 4 ).value().Get( 0 ).quantity();
+    const unsigned int healthy = parameters.elem( 2 ).value( 0 ).quantity();
+    const unsigned int wounded = parameters.elem( 3 ).value( 0 ).quantity();
+    const unsigned int dead = parameters.elem( 4 ).value( 0 ).quantity();
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = healthy + wounded + dead;
     if( number == 0 )
         throw MASA_BADPARAM_UNIT( "crowd cannot be created empty" );
 
-    std::string name = parameters.elem( 5 ).value().Get( 0 ).acharstr();
+    std::string name = parameters.elem( 5 ).value( 0 ).acharstr();
     MIL_Population& popu = populationFactory_->Create( type, point, number, name, *parent, 0, context );
     popu.ChangeComposition( healthy, wounded, 0, dead );
 
@@ -1827,9 +1827,9 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     MIL_AutomateLOG* pBrainLog = FindBrainLogistic( *tasker );
     if( !pBrainLog )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
-    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )
+    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value( 0 ).has_push_flow_parameters() )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value().Get( 0 ).push_flow_parameters(), *automateFactory_ );
+    pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value( 0 ).push_flow_parameters(), *automateFactory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1841,9 +1841,9 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
     if( !pAutomate )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_pull_flow_parameters() )
+    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value( 0 ).has_pull_flow_parameters() )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value().Get( 0 ).pull_flow_parameters();
+    const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value( 0 ).pull_flow_parameters();
     MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
     if( !supplier )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
@@ -1917,18 +1917,18 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
         throw MASA_BADPARAM_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit, "invalid tasker, the receiver must be a valid unit" );
 
     const MissionParameter& target = msg.parameters().elem( 0 );
-    if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
+    if( target.value_size() != 1 || !target.value(0).has_identifier() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be an identifier" );
 
-    boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
+    boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value(0).identifier() );
     if( !targetKn )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be a valid knowledge identifier in reporter's knowledge group" );
 
     const MissionParameter& ammo = msg.parameters().elem( 1 );
-    if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
+    if( ammo.value_size() != 1 || !ammo.value(0).has_resourcetype() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a resource type" );
 
-    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value(0).resourcetype().id() );
     if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
         throw MASA_BADPARAM_UNIT( "parameters[1] must be a dotation category "
                                   "identifier that can be used for indirect fire" );
@@ -1937,10 +1937,10 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
         throw MASA_BADPARAM_UNIT( "parameters[1] is a guided dotation but the target is not illuminated" );
 
     const MissionParameter& iterations = msg.parameters().elem( 2 );
-    if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
+    if( iterations.value_size() != 1 || !iterations.value(0).has_areal() )
         throw MASA_BADPARAM_UNIT( "parameters[2] must be a real" );
 
-    const float value = iterations.value().Get( 0 ).areal();
+    const float value = iterations.value( 0 ).areal();
     if( value <= 0.f )
         throw MASA_BADPARAM_UNIT( "parameters[2] must be a positive real number" );
 
@@ -2627,19 +2627,19 @@ void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& m
 
     client::FormationChangeSuperior resendMessage;
     resendMessage().mutable_formation()->set_id( message.tasker().formation().id() );
-    if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
+    if( message.parameters().elem( 0 ).value( 0 ).has_formation() )
     {
-        MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        MIL_Formation* pFormation = FindFormation( message.parameters().elem( 0 ).value( 0 ).formation().id() );
         if( !pFormation )
             throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent formation" );
-        resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value( 0 ).formation().id() );
     }
-    else if( message.parameters().elem( 0 ).value().Get( 0 ).has_party() )
+    else if( message.parameters().elem( 0 ).value( 0 ).has_party() )
     {
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value( 0 ).party().id() );
         if( !pArmy1 )
             throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid new parent army" );
-        resendMessage().mutable_superior()->mutable_party()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
+        resendMessage().mutable_superior()->mutable_party()->set_id( message.parameters().elem( 0 ).value( 0 ).party().id() );
     }
     else
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode,

@@ -95,7 +95,7 @@ ActionParameterFactory::~ActionParameterFactory()
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter& message, const kernel::Entity_ABC* entity ) const
 {
     if( ( !parameter.IsList() && message.value_size() == 1 ) )
-        return CreateParameter( parameter, message.value().Get( 0 ), entity, message.null_value() );
+        return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
     else
         return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }
