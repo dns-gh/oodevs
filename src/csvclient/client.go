@@ -65,19 +65,23 @@ func OutputConsumptions(resources phy.Resources, physical phy.PhysicalFile, out 
 	defer outFile.Close()
 	writer := csv.NewWriter(outFile)
 	writer.Comma = ';'
-	record := []string{"Type Unité", "Id", "Ressource", "Consommation normalisée"}
+	record := []string{"Type Unité", "Id", "Ressource", "Capacité", "Consommation normalisée"}
 	writer.Write(record)
 	for unit, consumption := range consumptions.Consumptions {
+		name, err := units.GetName(unit)
+		if err != nil {
+			log.Fatalf("Error getting unit %d", unit)
+		}
 		for resourceId, amount := range consumption.Consumption {
 			resource := resources.GetResource(resourceId)
 			if resource == nil {
 				log.Fatalf("Error getting resource %d", resourceId)
 			}
-			name, err := units.GetName(unit)
-			if err != nil {
-				log.Fatalf("Error getting unit %d", unit)
+			if consumptions.Capacities[unit] == nil {
+				log.Fatalf("No capacity for unit %d", unit)
 			}
-			record = []string{name, UintToString(unit), resource.Name, UintToString(amount)}
+			capacity := consumptions.Capacities[unit].Consumption[resourceId]
+			record = []string{name, UintToString(unit), resource.Name, UintToString(capacity), UintToString(amount)}
 			writer.Write(record)
 		}
 	}

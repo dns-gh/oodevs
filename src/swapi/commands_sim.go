@@ -320,6 +320,74 @@ func (c *Client) CreateAutomat(formationId, automatType,
 	return created, err
 }
 
+func (c *Client) CreateAutomatAndUnits(formationId, automatType,
+	knowledgeGroupId uint32, location Point) (*Automat, []*Unit, error) {
+	tasker := MakeFormationTasker(formationId)
+	msg := CreateUnitMagicAction(tasker, MakeParameters(
+		MakeIdentifier(automatType),
+		MakePointParam(location),
+		MakeIdentifier(knowledgeGroupId),
+	), sword.UnitMagicAction_automat_and_units_creation)
+	var result *sword.MissionParameters
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetAutomatCreation(); reply != nil {
+			// Ignore this message, its context should not be set anyway
+			return ErrContinue
+		}
+		reply, _, err := getUnitMagicActionAck(msg)
+		if err != nil {
+			return err
+		}
+		result = reply.GetResult()
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	units := []*Unit{}
+	if err != nil {
+		return nil, units, err
+	}
+	size := len(result.GetElem())
+	ids := make([]uint32, size)
+	for i := 0; i < size; i++ {
+		value := GetParameterValue(result, i)
+		if i == 0 {
+			automat := value.GetAutomat()
+			if automat == nil {
+				return nil, units, invalid("result", result)
+			}
+			ids[i] = automat.GetId()
+		} else {
+			agent := value.GetAgent()
+			if agent == nil {
+				return nil, units, invalid("result", result)
+			}
+			ids[i] = agent.GetId()
+		}
+	}
+	var automat *Automat
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		automat = data.Automats[ids[0]]
+		if automat == nil {
+			return false
+		}
+		for k, v := range ids {
+			if k != 0 {
+				unit := data.Units[v]
+				if unit == nil {
+					units = []*Unit{}
+					return false
+				}
+				units = append(units, unit)
+			}
+		}
+		return true
+	})
+	if !ok {
+		return nil, units, ErrTimeout
+	}
+	return automat, units, nil
+}
+
 func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	location Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
 
@@ -1518,4 +1586,13 @@ func (c *Client) LogMaintenanceSetManualTest(unitId uint32, parameters *sword.Mi
 
 func (c *Client) LogMaintenanceSetManual(unitId uint32, mode bool) error {
 	return c.LogMaintenanceSetManualTest(unitId, MakeParameters(MakeBoolean(mode)))
+}
+
+func (c *Client) SelectTransporterTest(params *sword.MissionParameters) error {
+	msg := CreateMagicAction(params, sword.MagicAction_select_new_logistic_state)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
+
+func (c *Client) SelectTransporter(handlingId uint32) error {
+	return c.SelectTransporterTest(MakeParameters(MakeIdentifier(handlingId)))
 }
