@@ -36,7 +36,7 @@ func IsConnectionError(err error) bool {
 	return ok
 }
 
-type MessageHandler func(msg *SwordMessage, context int32, err error) bool
+type MessageHandler func(msg *SwordMessage, client, context int32, err error) bool
 type MessageLogger func(in bool, size int, msg *SwordMessage)
 
 type MessagePost struct {
@@ -217,7 +217,7 @@ func (c *Client) remove(context int32) {
 
 func (c *Client) apply(msg *SwordMessage) {
 	for context, handler := range c.handlers {
-		if handler(msg, context, nil) {
+		if handler(msg, c.clientId, context, nil) {
 			c.remove(context)
 		}
 	}
@@ -228,7 +228,7 @@ func (c *Client) abort(context int32, err error) {
 	if !ok {
 		return
 	}
-	handler(nil, context, err)
+	handler(nil, c.clientId, context, err)
 	c.remove(context)
 }
 
@@ -261,11 +261,11 @@ func (c *Client) serve() {
 					cmd.done <- 1
 				}
 				for data := range c.registers {
-					data.handler(nil, 0, ErrConnectionClosed)
+					data.handler(nil, 0, 0, ErrConnectionClosed)
 				}
 			}
 			for context, handler := range c.handlers {
-				handler(nil, context, ErrConnectionClosed)
+				handler(nil, c.clientId, context, ErrConnectionClosed)
 			}
 			c.handlers = nil
 			if quit {
@@ -274,7 +274,7 @@ func (c *Client) serve() {
 		case data, ok := <-c.registers:
 			if ok {
 				if closed {
-					data.handler(nil, 0, ErrConnectionClosed)
+					data.handler(nil, 0, 0, ErrConnectionClosed)
 				} else {
 					c.register(data)
 				}

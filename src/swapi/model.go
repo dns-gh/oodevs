@@ -192,7 +192,7 @@ func (model *Model) Close() {
 
 // Register a handler on supplied client and start processing messages
 func (model *Model) Listen(client *Client) {
-	handler := func(msg *SwordMessage, context int32, err error) bool {
+	handler := func(msg *SwordMessage, client, context int32, err error) bool {
 		if err != nil {
 			model.listening.Done()
 			return true

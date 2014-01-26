@@ -61,14 +61,14 @@ type simHandler func(msg *sword.SimToClient_Content) error
 
 func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan error {
 	quit := make(chan error, 1)
-	wrapper := func(msg *SwordMessage, context int32, err error) bool {
+	wrapper := func(msg *SwordMessage, client, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true
 		}
 		if msg.SimulationToClient == nil ||
 			msg.SimulationToClient.GetMessage() == nil ||
-			msg.ClientId != c.clientId ||
+			msg.ClientId != client ||
 			msg.Context != context {
 			return false
 		}
@@ -1290,7 +1290,7 @@ func (c *Client) CreateCheckpoint(name string, sendState bool) (string, *ModelDa
 	var snapshot *ModelData
 	var snapshotErr error
 	if sendState {
-		handlerId := c.Register(func(msg *SwordMessage, ctx int32, err error) bool {
+		handlerId := c.Register(func(msg *SwordMessage, id, ctx int32, err error) bool {
 			if err != nil {
 				snapshotErr = err
 				return true

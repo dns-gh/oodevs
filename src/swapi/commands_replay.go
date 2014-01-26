@@ -21,14 +21,14 @@ func (c *Client) postReplayWithClientId(msg *sword.ClientToReplay_Content,
 	checkClientId bool, handler replayHandler) <-chan error {
 
 	quit := make(chan error, 1)
-	wrapper := func(msg *SwordMessage, context int32, err error) bool {
+	wrapper := func(msg *SwordMessage, client, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true
 		}
 		if msg.ReplayToClient == nil ||
 			msg.ReplayToClient.GetMessage() == nil ||
-			(checkClientId && (msg.ClientId != c.clientId || msg.ClientId == 0)) ||
+			(checkClientId && (msg.ClientId != client || msg.ClientId == 0)) ||
 			(checkClientId && msg.Context != context) {
 			return false
 		}
