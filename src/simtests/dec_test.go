@@ -113,12 +113,19 @@ func (s *TestSuite) TestGenericLuaErrors(c *C) {
 	// Floating point division by zero used to trigger exceptions in the sim
 	checkScript(c, client, `function TestFunction() return 1.0/0.0 end`, nil, "(?i).*inf.*", "")
 
-	// Interpolating with start == stop triggers an error()
+	// Interpolating with minFrom == maxFrom triggers an error()
 	checkScript(c, client, `
 function TestFunction()
     return LinearInterpolation(1, 2, 3, 3, 0, 1.5)
 end
 `, nil, "", "error_invalid_parameter:.*Can't interpolate.*")
+
+	// Splitting a string with an empty separator triggers an error()
+	checkScript(c, client, `
+function TestFunction()
+    return explode( "", "abc" )
+end
+`, nil, "", "error_invalid_parameter:.*Can't split.*")
 }
 
 func (s *TestSuite) TestDecUnit(c *C) {
