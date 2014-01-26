@@ -264,15 +264,13 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     ResetTimer( 0 );
+    SetState( eWaitingForSelection );
 
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
-    {
-        pComposanteState_ = 0;
-        SetState( eFinished ); // Managed by a 'repair consign'
-    }
-    else
+    if( !pLogisticManager )
         SetState( eSearchingForUpperLevel );
+    else if( !pLogisticManager->IsMaintenanceManual() )
+        SelectNewState();
 }
 
 // -----------------------------------------------------------------------------
@@ -294,6 +292,7 @@ bool PHY_MaintenanceTransportConsign::Update()
         case eCarrierUnloading      :                               EnterStateDiagnosing        (); break;
         case eDiagnosing            :                               ChooseStateAfterDiagnostic  (); break;
         case eSearchingForUpperLevel: if( DoSearchForUpperLevel() ) EnterStateFinished          (); break;
+        case eWaitingForSelection   :                                                               break;
         case eFinished              :                                                               break;
         default:
             assert( false );
@@ -308,4 +307,19 @@ bool PHY_MaintenanceTransportConsign::Update()
 bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
 {
     return GetState() == eSearchingForUpperLevel && searchForUpperLevelDone_;
+}
+
+void PHY_MaintenanceTransportConsign::SelectNewState()
+{
+    if( GetState() != eWaitingForSelection )
+        return;
+    ResetTimer( 0 );
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    {
+        pComposanteState_ = 0;
+        SetState( eFinished ); // Managed by a 'repair consign'
+    }
+    else
+        SetState( eSearchingForUpperLevel );
 }

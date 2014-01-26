@@ -99,8 +99,8 @@ namespace
 const ActionParam automat_and_units_creation_params[] =
 {
     { "AutomatType", "identifier", 0 },
-    { "KnowledgeGroup", "identifier", 0 },
     { "Location", "point", 0 },
+    { "KnowledgeGroup", "identifier", 0 },
 };
 
 const ActionParam automat_creation_params[] =
@@ -116,7 +116,7 @@ const ActionParam change_automat_superior_params[] =
 
 const ActionParam change_brain_debug_params[] =
 {
-    { "Enable", "bool", 0 },
+    { "Enable", "boolean", 0 },
 };
 
 const ActionParam change_critical_intelligence_params[] =
@@ -179,7 +179,7 @@ const ActionParam change_logistic_links_params[] =
 const ActionParam change_resource_links_params[] =
 {
     { "Target", "identifier", 0 },
-    { "Urban", "bool", 0 },
+    { "Urban", "boolean", 0 },
     { "Nodes", "list", 0 },
 };
 
@@ -286,12 +286,12 @@ const ActionParam inhabitant_change_affinities_params[] =
 
 const ActionParam inhabitant_change_alerted_state_params[] =
 {
-    { "Alerted", "bool", 0 },
+    { "Alerted", "boolean", 0 },
 };
 
 const ActionParam inhabitant_change_confined_state_params[] =
 {
-    { "Confined", "bool", 0 },
+    { "Confined", "boolean", 0 },
 };
 
 const ActionParam inhabitant_change_health_state_params[] =
@@ -309,7 +309,7 @@ const ActionParam knowledge_group_add_knowledge_params[] =
 
 const ActionParam knowledge_group_enable_params[] =
 {
-    { "Enabled", "bool", 0 },
+    { "Enabled", "boolean", 0 },
 };
 
 const ActionParam knowledge_group_update_side_params[] =
@@ -366,7 +366,7 @@ const ActionParam log_supply_push_flow_params[] =
 
 const ActionParam log_maintenance_set_manual_params[] =
 {
-    { "Manual", "bool", 0 },
+    { "Manual", "boolean", 0 },
 };
 
 const ActionParam partial_recovery_params[] =

@@ -12,8 +12,9 @@
 #include "clients_kernel/Tools.h"
 #include "Dotation.h"
 #include "DotationsItem.h"
-#include "LogisticLevelAttribute.h"
+
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -21,9 +22,9 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "MT_Tools/MT_Logger.h"
+
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -32,7 +33,7 @@
 // -----------------------------------------------------------------------------
 LogisticBaseStates::LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity,
                                         const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dico, bool canHaveQuotas )
-    : gui::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
+    : gui::EntityHierarchies< gui::LogisticHierarchiesBase >( controller, entity, 0 )
     , controller_   ( controller )
     , entity_       ( entity )
     , resolver_     ( resolver )
@@ -58,7 +59,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
-    dico.RegisterExtension( entity, static_cast< const LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
+    dico.RegisterExtension( entity, static_cast< const gui::LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
     {
         item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *static_cast< Resolver< Dotation >* >( this ), false );
@@ -162,7 +163,7 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     superior_ = superior;
-    gui::EntityHierarchies< LogisticHierarchiesBase >::SetSuperiorInternal( superior );
+    gui::EntityHierarchies< gui::LogisticHierarchiesBase >::SetSuperiorInternal( superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +173,7 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 void LogisticBaseStates::SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
-    gui::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
+    gui::EntityHierarchies< gui::LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
     controller_.Update( *this );
 }
 
@@ -182,10 +183,10 @@ void LogisticBaseStates::SetLogisticSuperior( const kernel::LogisticBaseSuperior
 // -----------------------------------------------------------------------------
 bool LogisticBaseStates::HasMissingLogisticLinks() const
 {
-    if( entity_.GetTypeName() == kernel::Automat_ABC::typeName_ && ! superior_ )
+    if( entity_.GetTypeName() == kernel::Automat_ABC::typeName_ && !superior_ )
         return true;
-    if( const LogisticLevelAttribute* attribute = entity_.Retrieve< LogisticLevelAttribute >() )
-        return attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ && ! superior_;
+    if( const gui::LogisticBase* attribute = entity_.Retrieve< gui::LogisticBase >() )
+        return attribute->IsBase() && !superior_;
     return false;
 }
 
@@ -240,12 +241,12 @@ bool LogisticBaseStates::CleanBadSubordinates()
     {
         const kernel::Entity_ABC& entity = it.NextElement();
         const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &entity );
-        if( formation && formation->GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+        if( formation && !formation->Get< gui::LogisticBase >().IsBase() )
             badEntities.push_back( &entity );
     }
     for( std::vector< const kernel::Entity_ABC* >::const_iterator it = badEntities.begin(); it != badEntities.end(); ++it )
     {
-        LogisticBaseStates* subordinateHierarchy = dynamic_cast< LogisticBaseStates* >( const_cast< LogisticHierarchiesBase* >( (*it)->Retrieve< LogisticHierarchiesBase >() ) );
+        LogisticBaseStates* subordinateHierarchy = dynamic_cast< LogisticBaseStates* >( const_cast< gui::LogisticHierarchiesBase* >( (*it)->Retrieve< gui::LogisticHierarchiesBase >() ) );
         if( subordinateHierarchy )
             subordinateHierarchy->ChangeSuperior( 0 );
         else
@@ -275,7 +276,7 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
                 << xml::attribute( "id", entity.GetId());
 
         //$$$ Ca me parait bien compliqué et bien foireux... // $$$$ ABR 2012-06-25: Ca l'est... si pas de superieur les quotas ne sont pas enregistrés -> pertes d'information.
-        const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+        const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< gui::LogisticHierarchiesBase >() );
         if( subordinateLogHierarchy )
             subordinateLogHierarchy->SerializeQuotas( xos );
         xos << xml::end;

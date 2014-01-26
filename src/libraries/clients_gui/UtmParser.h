@@ -34,11 +34,13 @@ class UtmParser : public LocationParser_ABC
                 , private boost::noncopyable
 {
     typedef std::function< geometry::Point2f( const std::string& ) > T_Converter;
+    typedef std::function< std::string( const geometry::Point2f& ) > T_StringConverter;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UtmParser( kernel::Controllers& controllers, const T_Converter& converter );
+             UtmParser( kernel::Controllers& controllers, const T_Converter& converter,
+                        const T_StringConverter& stringConverter );
     virtual ~UtmParser();
     //@}
 
@@ -47,6 +49,7 @@ public:
     virtual const LocationParserDescriptor& GetDescriptor() const;
     virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual QStringList Split( const QString& input ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
     //@}
 
 private:
@@ -60,6 +63,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const T_Converter converter_;
+    const T_StringConverter stringConverter_;
     std::string zone_;
     //@}
 };

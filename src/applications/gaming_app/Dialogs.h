@@ -27,12 +27,6 @@ namespace tools
     class ExerciseConfig;
 }
 
-namespace gui
-{
-    class ParametersLayer;
-}
-
-class Model;
 class StaticModel;
 class Publisher_ABC;
 class CommandHandler;
@@ -48,9 +42,15 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel,
-                      Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation,
-                      const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, gui::ParametersLayer& layer );
+             Dialogs( QWidget* parent,
+                      kernel::Controllers& controllers,
+                      const StaticModel& staticModel,
+                      Publisher_ABC& publisher,
+                      actions::ActionsModel& actionsModel,
+                      const kernel::Time_ABC& simulation,
+                      const kernel::Profile_ABC& profile,
+                      CommandHandler& handler,
+                      const tools::ExerciseConfig& config );
     virtual ~Dialogs();
     //@}
 };

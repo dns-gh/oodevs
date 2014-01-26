@@ -33,7 +33,6 @@ namespace kernel
     class Formation_ABC;
     class Displayer_ABC;
     class AutomatType;
-    class LogisticLevel;
     class Entity_ABC;
 }
 
@@ -63,7 +62,6 @@ public:
                             const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                             const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
                             const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                            const kernel::LogisticLevel& currentLevel,
                             gui::PropertiesDictionary& dictionary,
                             kernel::Entity_ABC& entity );
     virtual ~LogisticLinks();
@@ -105,7 +103,6 @@ private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
-    const kernel::LogisticLevel& currentLevel_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     T_SuperiorLinks superiorLinks_;
     std::vector< const kernel::Entity_ABC* > superiors_;

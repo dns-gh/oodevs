@@ -12,7 +12,6 @@
 #include "FormationHierarchies.h"
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttribute.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -166,15 +165,6 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     gui::EntityImplementation< kernel::Formation_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::SerializeAttributes
-// Created: AHC 2010-10-07
-// -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Formation::GetLogisticLevel() const
-{
-    return Get< LogisticLevelAttribute >().GetLogisticLevel();
 }
 
 // -----------------------------------------------------------------------------

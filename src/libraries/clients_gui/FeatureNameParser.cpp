@@ -80,3 +80,12 @@ QStringList FeatureNameParser::Split( const QString& input ) const
 {
     return QStringList() << input;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FeatureNameParser::GetStringPosition
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+std::string FeatureNameParser::GetStringPosition( const geometry::Point2f& ) const
+{
+    return lastRequest_.toStdString();
+}

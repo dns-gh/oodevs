@@ -55,7 +55,6 @@ public:
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
     virtual LogisticEntity_ABC* GetLogisticEntity() const;
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     virtual bool GetExtension( const std::string& key, std::string& result ) const;
     virtual const std::string& GetApp6Symbol() const;
     //@}

@@ -10,9 +10,9 @@
 #include "preparation_pch.h"
 #include "StaticModel.h"
 
-#include "LogisticLevel.h"
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
+
 #include "clients_gui/DrawingTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -33,7 +33,6 @@ StaticModel::StaticModel( kernel::Controllers& controllers )
     , gaugeTypes_              ( *new indicators::GaugeTypes() )
     , drawings_                ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , successFactorActionTypes_( *new SuccessFactorActionTypes() )
-    , logisticLevels_          ( *new preparation::LogisticLevel() )
     , teamKarmas_              ( *new TeamKarmas() )
 {
     // NOTHING
@@ -46,7 +45,6 @@ StaticModel::StaticModel( kernel::Controllers& controllers )
 StaticModel::~StaticModel()
 {
     delete &teamKarmas_;
-    delete &logisticLevels_;
     delete &successFactorActionTypes_;
     delete &drawings_;
     delete &gaugeTypes_;

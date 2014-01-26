@@ -342,10 +342,10 @@ namespace
     void CheckQuantity( const sword::MissionParameters& parameters, unsigned int index )
     {
         const sword::MissionParameter& parameter = parameters.elem( index );
-        if( !parameter.value().Get( 0 ).has_quantity() )
+        if( !parameter.value( 0 ).has_quantity() )
             throw MASA_BADPARAM_MAGICACTION( "parameters[" + boost::lexical_cast< std::string >( index )
             + "] must be a Quantity" );
-        int quantity = parameter.value().Get( 0 ).quantity();
+        int quantity = parameter.value( 0 ).quantity();
         if( quantity < 0 )
             throw MASA_BADPARAM_MAGICACTION( "parameters[" + boost::lexical_cast< std::string >( index )
                 + "] must be a positive number" );
@@ -366,9 +366,9 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     CheckQuantity( parameters, 1 );
     CheckQuantity( parameters, 2 );
 
-    nNbrHealthyHumans_ = parameters.elem( 0 ).value().Get( 0 ).quantity();
-    nNbrWoundedHumans_ = parameters.elem( 1 ).value().Get( 0 ).quantity();
-    nNbrDeadHumans_ = parameters.elem( 2 ).value().Get( 0 ).quantity();
+    nNbrHealthyHumans_ = parameters.elem( 0 ).value( 0 ).quantity();
+    nNbrWoundedHumans_ = parameters.elem( 1 ).value( 0 ).quantity();
+    nNbrDeadHumans_ = parameters.elem( 2 ).value( 0 ).quantity();
 
     healthStateChanged_ = true;
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );

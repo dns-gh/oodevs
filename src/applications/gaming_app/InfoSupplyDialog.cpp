@@ -15,14 +15,13 @@
 #include "SupplyStocksListView.h"
 #include "SupplyTransportersListView.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/LogSupplyConsign.h"
 
 using namespace kernel;
-using namespace EntityHelpers;
 
 // -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog constructor
@@ -94,7 +93,7 @@ void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
     selected_ = entity;
     if( entity )
     {
-        if( kernel::EntityHelpers::IsLogisticBase( *entity ) )
+        if( logistic_helpers::IsLogisticBase( *entity ) )
         {
             if( tabs_->widget( 2 ) != supplyQuotasWidget_ )
                 tabs_->insertTab( 2, supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );

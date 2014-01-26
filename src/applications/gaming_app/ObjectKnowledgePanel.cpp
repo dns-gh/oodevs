@@ -55,50 +55,50 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     layout->addWidget( pKnowledgeListView_ );
 
     display_ = new DisplayBuilder( view, factory );
-    display_->AddGroup( tools::findTranslation( "Object", "Information" ) )
-                .AddLabel( "Identifier", tools::findTranslation( "Object", "Identifier:" ) )
-                .AddLabel( "Associatedobject", tools::findTranslation( "Object", "Associated object:" ) )
-                .AddLabel( "Location", tools::findTranslation( "Object", "Location:" ) )
-                .AddLabel( "Type", tools::findTranslation( "Object", "Type:" ) )
-                .AddLabel( "Construction", tools::findTranslation( "Object", "Construction:" ) )
-                .AddLabel( "Constructionresource", tools::findTranslation( "Object", "Construction resource:" ) )
-                .AddLabel( "Mining", tools::findTranslation( "Object", "Mining:" ) )
-                .AddLabel( "Developmentresource", tools::findTranslation( "Object", "Development resource:" ) )
-                .AddLabel( "Bypass", tools::findTranslation( "Object", "Bypass:" ) )
-                .AddLabel( "Obstacleactivated", tools::findTranslation( "Object", "Obstacle activated:" ) )
-                .AddLabel( "Activationtime", tools::findTranslation( "Object", "Activation time:" ) )
-                .AddLabel( "Activitytime", tools::findTranslation( "Object", "Activity time:" ) )
-                .AddLabel( "Perceived", tools::findTranslation( "Object", "Perceived:" ) )
-                .AddLabel( "Relevance", tools::findTranslation( "Object", "Relevance:" ) )
-                .AddLabel( "Delaytime", tools::findTranslation( "Object", "Delay time:" ) );
+    display_->AddGroup( tools::translate( "Object", "Information" ) )
+                .AddLabel( "Identifier", tools::translate( "Object", "Identifier:" ) )
+                .AddLabel( "Associatedobject", tools::translate( "Object", "Associated object:" ) )
+                .AddLabel( "Location", tools::translate( "Object", "Location:" ) )
+                .AddLabel( "Type", tools::translate( "Object", "Type:" ) )
+                .AddLabel( "Construction", tools::translate( "Object", "Construction:" ) )
+                .AddLabel( "Constructionresource", tools::translate( "Object", "Construction resource:" ) )
+                .AddLabel( "Mining", tools::translate( "Object", "Mining:" ) )
+                .AddLabel( "Developmentresource", tools::translate( "Object", "Development resource:" ) )
+                .AddLabel( "Bypass", tools::translate( "Object", "Bypass:" ) )
+                .AddLabel( "Obstacleactivated", tools::translate( "Object", "Obstacle activated:" ) )
+                .AddLabel( "Activationtime", tools::translate( "Object", "Activation time:" ) )
+                .AddLabel( "Activitytime", tools::translate( "Object", "Activity time:" ) )
+                .AddLabel( "Perceived", tools::translate( "Object", "Perceived:" ) )
+                .AddLabel( "Relevance", tools::translate( "Object", "Relevance:" ) )
+                .AddLabel( "Delaytime", tools::translate( "Object", "Delay time:" ) );
 
-    display_->AddGroup( tools::findTranslation( "Object", "Crossing site" ) )
-                .AddLabel( "width", tools::findTranslation( "Object", "Width:" ) )
-                .AddLabel( "depth", tools::findTranslation( "Object", "Depth:" ) )
-                .AddLabel( "StreamSpeed", tools::findTranslation( "Object", "Stream speed:" ) )
-                .AddLabel( "buildRiverBanks", tools::findTranslation( "Object", "Build river banks:" ) );
+    display_->AddGroup( tools::translate( "Object", "Crossing site" ) )
+                .AddLabel( "width", tools::translate( "Object", "Width:" ) )
+                .AddLabel( "depth", tools::translate( "Object", "Depth:" ) )
+                .AddLabel( "StreamSpeed", tools::translate( "Object", "Stream speed:" ) )
+                .AddLabel( "buildRiverBanks", tools::translate( "Object", "Build river banks:" ) );
 
-    display_->AddGroup( tools::findTranslation( "Object", "Camp" ) )
-                .AddLabel( "superior", tools::findTranslation( "Object", "Logistic superior:" ) );
+    display_->AddGroup( tools::translate( "Object", "Camp" ) )
+                .AddLabel( "superior", tools::translate( "Object", "Logistic superior:" ) );
 
-    display_->AddGroup( tools::findTranslation( "NBC", "NBC" ) )
-                .AddLabel( "danger", tools::findTranslation( "NBC", "Danger:" ) )
-                .AddLabel( "nbcAgents", tools::findTranslation( "NBC", "NBC agent(s):" ) );
+    display_->AddGroup( tools::translate( "NBC", "NBC" ) )
+                .AddLabel( "danger", tools::translate( "NBC", "Danger:" ) )
+                .AddLabel( "nbcAgents", tools::translate( "NBC", "NBC agent(s):" ) );
 
-    display_->AddGroup( tools::findTranslation( "Object"   , "Logistic route" ) )
-        .AddLabel( "Equipped", tools::findTranslation( "Object", "Equipped:" ) )
-        .AddLabel( "Flow", tools::findTranslation( "Object", "Flow:" ) )
-        .AddLabel( "Width", tools::findTranslation( "Object", "Width:" ) )
-        .AddLabel( "Length", tools::findTranslation( "Object", "Length:" ) )
-        .AddLabel( "Maximum weight", tools::findTranslation( "Object", "Maximum weight:" ) );
+    display_->AddGroup( tools::translate( "Object"   , "Logistic route" ) )
+        .AddLabel( "Equipped", tools::translate( "Object", "Equipped:" ) )
+        .AddLabel( "Flow", tools::translate( "Object", "Flow:" ) )
+        .AddLabel( "Width", tools::translate( "Object", "Width:" ) )
+        .AddLabel( "Length", tools::translate( "Object", "Length:" ) )
+        .AddLabel( "Maximum weight", tools::translate( "Object", "Maximum weight:" ) );
 
-    display_->AddGroup( tools::findTranslation( "Object", "Mine parameters" ) )
-                .AddLabel( "activityTime", tools::findTranslation( "Object", "Activity time:" ) )
-                .AddLabel( "density", tools::findTranslation( "Object", "Density:" ) );
+    display_->AddGroup( tools::translate( "Object", "Mine parameters" ) )
+                .AddLabel( "activityTime", tools::translate( "Object", "Activity time:" ) )
+                .AddLabel( "density", tools::translate( "Object", "Density:" ) );
 
-    display_->AddGroup( tools::findTranslation( "Object", "Fire" ) )
-                .AddLabel( "fireClass", tools::findTranslation( "Object", "Fire class:" ) )
-                .AddLabel( "maxConsumptionEnergy", tools::findTranslation( "Object", "Max combustion energy:" ) );
+    display_->AddGroup( tools::translate( "Object", "Fire" ) )
+                .AddLabel( "fireClass", tools::translate( "Object", "Fire class:" ) )
+                .AddLabel( "maxConsumptionEnergy", tools::translate( "Object", "Max combustion energy:" ) );
 
     pPerceptionListView_ = new QTreeView();
     pPerceptionListView_->setRootIsDecorated( false );

@@ -24,7 +24,6 @@
 #include <vector>
 #include <map>
 #include <set>
-#include <iostream>
 #undef GetObject
 
 #undef max

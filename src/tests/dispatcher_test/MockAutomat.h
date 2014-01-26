@@ -47,7 +47,6 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( IsEngaged, 0 );
     MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
     MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
-    MOCK_METHOD( GetLogisticLevel, 0);
     MOCK_METHOD( GetApp6Symbol, 0);
 
     // dispatcher::Sendable< kernel::Automat_ABC >

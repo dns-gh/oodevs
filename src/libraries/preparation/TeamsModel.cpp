@@ -14,13 +14,14 @@
 #include "TeamFactory_ABC.h"
 #include "Model.h"
 #include "FormationModel.h"
-#include "LogisticHierarchiesBase.h"
 #include "ObjectsModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
 #include "GhostModel.h"
 #include "Objects.h"
 #include "Object.h"
+
+#include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -29,6 +30,7 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -262,7 +264,7 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
             entity = model.ghosts_->Find( id );
         if( entity )
         {
-            LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();
+            gui::LogisticHierarchiesBase* hierarchies = entity->Retrieve< gui::LogisticHierarchiesBase >();
             if( hierarchies )
                 hierarchies->Load( xis, &superior );
         }

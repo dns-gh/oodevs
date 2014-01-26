@@ -10,7 +10,11 @@
 #include "preparation_app_pch.h"
 #include "LogisticStockEditor.h"
 #include "moc_LogisticStockEditor.cpp"
+
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/LogisticHelpers.h"
+#include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWidget.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -22,22 +26,18 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/LogisticBaseStates.h"
-#include "preparation/LogisticHierarchiesBase.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Stocks.h"
 
 using namespace kernel;
-using namespace EntityHelpers;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor constructor
@@ -212,7 +212,7 @@ void LogisticStockEditor::ShowQuotasDialog()
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::NotifyContextMenu( const Automat_ABC& automat, ContextMenu& menu )
 {
-    if( automat.GetLogisticLevel() == LogisticLevel::logistic_base_ )
+    if( automat.Get< gui::LogisticBase >().IsBase() )
         Update( automat, menu );
 }
 
@@ -222,7 +222,7 @@ void LogisticStockEditor::NotifyContextMenu( const Automat_ABC& automat, Context
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
-    if( formation.GetLogisticLevel() == LogisticLevel::logistic_base_ )
+    if( formation.Get< gui::LogisticBase >().IsBase() )
         Update( formation, menu );
 }
 
@@ -246,10 +246,10 @@ void LogisticStockEditor::Update( const Entity_ABC& entity, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyHierarchy( SafePointer< Entity_ABC > entity )
 {
-    const LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< LogisticHierarchiesBase >();
+    const gui::LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< gui::LogisticHierarchiesBase >();
     if( !pLogHierarchy )
         return;
-    if( !EntityHelpers::IsLogisticBase( *entity ) )
+    if( !logistic_helpers::IsLogisticBase( *entity ) )
         return;
 
     if( showStocks_ )
@@ -299,11 +299,11 @@ void LogisticStockEditor::FillSupplyRequirements( const Entity_ABC& entity, cons
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::SupplyLogisticBaseStocks( const Entity_ABC& blLogBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements )
 {
-    tools::Iterator< const Entity_ABC& > logChildren = blLogBase.Get< LogisticHierarchiesBase >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > logChildren = blLogBase.Get< gui::LogisticHierarchiesBase >().CreateSubordinateIterator();
     while( logChildren.HasMoreElements() )
     {
         const Entity_ABC& entity = logChildren.NextElement();
-        if( EntityHelpers::IsLogisticBase( entity ) )
+        if( logistic_helpers::IsLogisticBase( entity ) )
         {
             if( blLogBase.GetId() != entity.GetId() )
                 SupplyLogisticBaseStocks( entity, logType, requirements );
@@ -312,7 +312,7 @@ void LogisticStockEditor::SupplyLogisticBaseStocks( const Entity_ABC& blLogBase,
             FillSupplyRequirements( entity, logType, requirements );
     }
     const Automat_ABC* pTC2 = dynamic_cast< const Automat_ABC* >( &blLogBase );
-    if( pTC2 && pTC2->GetLogisticLevel() == LogisticLevel::logistic_base_ )
+    if( pTC2 && pTC2->Get< gui::LogisticBase >().IsBase() )
         FillSupplyRequirements( blLogBase, logType, requirements );
 }
 
@@ -326,7 +326,7 @@ void LogisticStockEditor::FindStocks( const Entity_ABC& rootEntity , const Entit
     if( !pTacticalHierarchies )
         return;
 
-    if( entity.GetId() != rootEntity.GetId() && EntityHelpers::IsLogisticBase( entity ) )
+    if( entity.GetId() != rootEntity.GetId() && logistic_helpers::IsLogisticBase( entity ) )
         return;
 
     tools::Iterator< const Entity_ABC& > children = pTacticalHierarchies->CreateSubordinateIterator();
@@ -548,15 +548,15 @@ bool LogisticStockEditor::IsStockValid( const Agent_ABC& stockUnit, const Dotati
 // Name: LogisticStockEditor::GenerateLogChildrenQuotas
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::GenerateLogChildrenQuotas( const LogisticHierarchiesBase& logHierarchy )
+void LogisticStockEditor::GenerateLogChildrenQuotas( const gui::LogisticHierarchiesBase& logHierarchy )
 {
     tools::Iterator< const Entity_ABC& > itLogChildren = logHierarchy.CreateSubordinateIterator();
     while( itLogChildren.HasMoreElements() )
     {
         const Entity_ABC& logChildren = itLogChildren.NextElement();
-        if( EntityHelpers::IsLogisticBase( logChildren ) )
+        if( logistic_helpers::IsLogisticBase( logChildren ) )
         {
-            const LogisticHierarchiesBase* pLogChildrenHierarchy = logChildren.Retrieve< LogisticHierarchiesBase >();
+            const gui::LogisticHierarchiesBase* pLogChildrenHierarchy = logChildren.Retrieve< gui::LogisticHierarchiesBase >();
             if( pLogChildrenHierarchy )
             {
                 T_Requirements requirements;
@@ -577,7 +577,7 @@ void LogisticStockEditor::GenerateLogChildrenQuotas( const LogisticHierarchiesBa
 // Name: LogisticStockEditor::SetQuotas
 // Created: MMC 2012-03-23
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::SetQuotas( const LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements )
+void LogisticStockEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements )
 {
     const LogisticBaseStates* pBaseStates = dynamic_cast< const LogisticBaseStates* >( &logHierarchy );
     if( !pBaseStates )

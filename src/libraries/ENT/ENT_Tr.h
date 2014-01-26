@@ -28,6 +28,7 @@ namespace sword
     enum UnitMagicAction_Type;
     enum KnowledgeMagicAction_Type;
     enum ObjectMagicAction_Type;
+    enum EnumLogisticLevel;
 }
 
 namespace ENT_Tr
@@ -89,6 +90,7 @@ namespace ENT_Tr
     const std::string& ConvertFromUnitMagicActionType( sword::UnitMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction_Type, E_Conversion = eToTr );
     const std::string& ConvertFromObjectMagicActionType( sword::ObjectMagicAction_Type, E_Conversion = eToTr );
+    const std::string& ConvertFromLogisticLevel( sword::EnumLogisticLevel, E_Conversion = eToTr );
 
     // ConvertTo functions
     E_LocationType ConvertToLocationType( const std::string& );
@@ -138,6 +140,7 @@ namespace ENT_Tr
     sword::UnitMagicAction_Type ConvertToUnitMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::KnowledgeMagicAction_Type ConvertToKnowledgeMagicActionType( const std::string&, E_Conversion = eToSim );
     sword::ObjectMagicAction_Type ConvertToObjectMagicActionType( const std::string&, E_Conversion = eToSim );
+    sword::EnumLogisticLevel ConvertToLogisticLevel( const std::string&, E_Conversion = eToSim );
 }
 
 #endif // __ENT_Tr_h_

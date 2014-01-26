@@ -26,7 +26,6 @@ namespace dispatcher
         {}
         MOCK_METHOD( IsEngaged, 0 );
         MOCK_METHOD( GetTeam, 0 );
-        MOCK_METHOD( GetLogisticLevel, 0 );
         MOCK_METHOD( GetKnowledgeGroup, 0 );
         MOCK_METHOD( GetAgents, 0 );
         MOCK_METHOD( GetParentAutomat, 0 );

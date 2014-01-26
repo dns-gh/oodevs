@@ -160,6 +160,11 @@ void PHY_MaintenanceComposanteState::Cancel()
     }
 }
 
+unsigned int PHY_MaintenanceComposanteState::GetID() const
+{
+    return nID_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::GetAutomate
 // Created: JVT 2005-05-04
@@ -321,4 +326,9 @@ bool PHY_MaintenanceComposanteState::NeedDiagnosis() const
 void PHY_MaintenanceComposanteState::NotifyDiagnosed()
 {
     bDiagnosed_ = true;
+}
+
+void PHY_MaintenanceComposanteState::SelectNewState()
+{
+    pConsign_->SelectNewState();
 }

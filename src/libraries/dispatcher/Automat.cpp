@@ -18,7 +18,6 @@
 #include "Side.h"
 #include "LogisticEntity.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -67,7 +66,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
-        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats() ) );
         AddExtension( *logisticEntity_ );
         AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }
@@ -481,17 +480,6 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
 LogisticEntity_ABC* Automat::GetLogisticEntity() const
 {
     return logisticEntity_.get();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetLogisticLevel
-// Created: NLD 2011-01-17
-// -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Automat::GetLogisticLevel() const
-{
-    if( logisticEntity_.get() )
-        return logisticEntity_->GetLogisticLevel();
-    return kernel::LogisticLevel::none_;
 }
 
 // -----------------------------------------------------------------------------

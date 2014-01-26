@@ -700,7 +700,7 @@ Raison: %3
     <name>EventMagicWidget</name>
     <message>
         <source>Supervisor action:</source>
-        <translation type="unfinished"></translation>
+        <translation>Action superviseur:</translation>
     </message>
 </context>
 <context>
@@ -1629,6 +1629,37 @@ Voulez-vous le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticMagicInterface</name>
+    <message>
+        <source>Switch to automated maintenance</source>
+        <translation>Passer en maintenance automatique</translation>
+    </message>
+    <message>
+        <source>Switch to manual maintenance</source>
+        <translation>Passer en maintenance manuelle</translation>
+    </message>
+    <message>
+        <source>Logistic actions</source>
+        <translation>Actions logistiques</translation>
+    </message>
+    <message>
+        <source>Allocate supply quotas</source>
+        <translation>Allouer les quotas de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Push supply flow</source>
+        <translation>Pousser un flux de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Resupply</source>
+        <translation>Ravitailler</translation>
+    </message>
+    <message>
+        <source>Pull supply flow</source>
+        <translation>Tirer flux</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyCarriersTableWidget</name>
     <message>
         <source>The convoy is unable to carry that much weight</source>
@@ -1672,10 +1703,6 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Allocate supply quotas</source>
-        <translation>Allouer les quotas de ravitaillement</translation>
     </message>
 </context>
 <context>

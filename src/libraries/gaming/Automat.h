@@ -20,7 +20,6 @@
 namespace kernel
 {
     class Controller;
-    class LogisticLevel;
     class StaticModel;
     class AutomatType;
 }
@@ -50,7 +49,6 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Extensions
@@ -60,16 +58,9 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void CreateDictionary( const kernel::AutomatType& type );
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::AutomatType& type_;
-    const kernel::LogisticLevel* logisticLevel_;
     DrawableUnitContainer drawable_;
     //@}
 };

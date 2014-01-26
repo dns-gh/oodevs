@@ -33,6 +33,7 @@
 #include "LinkInterpreter.h"
 #include "LockMapViewController.h"
 #include "LoggerProxy.h"
+#include "LogisticMagicInterface.h"
 #include "ConnectLoginDialog.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
@@ -202,7 +203,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers ) );
     preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers, *firePlayer_ ) );
     new VisionConesToggler( controllers, simulationController, this );
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter, staticModel.coordinateConverter_ );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
     // First layers
@@ -216,9 +217,10 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Misc
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile_, *selector_ );
+    new LogisticMagicInterface( this, controllers_, model_, staticModel_, simulation, profile_, *parameters_ );
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config, *parameters_ );
+    new Dialogs( this, controllers, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, profile_, network.GetCommands(), config );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, profile_, *icons_, model_.userProfileFactory_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );

@@ -667,7 +667,7 @@ void MIL_UrbanObject::OnUpdate( const sword::MissionParameters& params )
     for( auto i = 0; i < size; ++i )
     {
         const unsigned int actionId = protocol::GetIdentifier( params, 0, i, 0 );
-        const sword::MissionParameter_Value& attribute = params.elem( 0 ).value().Get( i );
+        const sword::MissionParameter_Value& attribute = params.elem( 0 ).value( i );
         switch( actionId )
         {
         case sword::ObjectMagicAction::alerted:

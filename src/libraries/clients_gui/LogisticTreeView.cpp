@@ -9,22 +9,27 @@
 
 #include "clients_gui_pch.h"
 #include "LogisticTreeView.h"
+#include "LogisticBase.h"
 #include "LongNameHelper.h"
 #include "DragAndDropHelpers.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace gui;
 
 namespace
 {
+    sword::EnumLogisticLevel level_none = sword::none;
+    sword::EnumLogisticLevel level_base = sword::logistic_base;
+
     int GetDepth( const QModelIndex& index )
     {
         int depth = 0;
@@ -81,22 +86,6 @@ void LogisticTreeView::OnActivate( const QModelIndex& index )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticTreeView::GetLogisticLevel
-// Created: ABR 2011-09-14
-// -----------------------------------------------------------------------------
-const kernel::LogisticLevel& LogisticTreeView::GetLogisticLevel( const kernel::Entity_ABC& entity ) const
-{
-    if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
-        return static_cast< const kernel::Formation_ABC* >( &entity )->GetLogisticLevel();
-    else if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
-        return static_cast< const kernel::Automat_ABC* >( &entity )->GetLogisticLevel();
-    else if( entity.GetTypeName() == kernel::Ghost_ABC::typeName_ )
-        return static_cast< const kernel::Ghost_ABC* >( &entity )->GetLogisticLevel();
-    assert( false );
-    return kernel::LogisticLevel::none_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticTreeView::RetrieveTeamItem
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
@@ -115,8 +104,7 @@ QStandardItem& LogisticTreeView::RetrieveTeamItem( const kernel::Entity_ABC& ent
 // -----------------------------------------------------------------------------
 QStandardItem& LogisticTreeView::RetrieveTypeItem( const kernel::Entity_ABC& entity, QStandardItem& teamItem )
 {
-    const kernel::LogisticLevel& logisticLevel = GetLogisticLevel( entity );
-    QStandardItem* typeItem = dataModel_.FindDataItem( logisticLevel, &teamItem );
+    QStandardItem* typeItem = dataModel_.FindDataItem( entity.Get< gui::LogisticBase >().IsBase() ? level_base : level_none, &teamItem );
     assert( typeItem );
     return *typeItem;
 }
@@ -128,7 +116,7 @@ QStandardItem& LogisticTreeView::RetrieveTypeItem( const kernel::Entity_ABC& ent
 void LogisticTreeView::CreateOrReplace( const kernel::Entity_ABC& entity )
 {
     QStandardItem* item = dataModel_.FindDataItem( entity );
-    if( GetLogisticLevel( entity ) == kernel::LogisticLevel::none_ && entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
+    if( !entity.Get< gui::LogisticBase >().IsBase() && entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
     {
         if( item )
         {
@@ -210,10 +198,10 @@ void LogisticTreeView::NotifyCreated( const kernel::Team_ABC& team )
         return;
 
     teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team );
-    QStandardItem* item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Unsupported units" ), "", kernel::LogisticLevel::none_, Qt::ItemIsDropEnabled );
+    QStandardItem* item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Unsupported units" ), "", level_none, Qt::ItemIsDropEnabled );
     if( item )
         item->setSelectable( false );
-    item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Supported units" ), "", kernel::LogisticLevel::logistic_base_, Qt::ItemIsDropEnabled );
+    item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Supported units" ), "", level_base, Qt::ItemIsDropEnabled );
     if( item )
         item->setSelectable( false );
 }
@@ -368,7 +356,7 @@ QStringList LogisticTreeView::MimeTypes() const
 {
     QStringList l;
     l << typeid( kernel::Automat_ABC ).name() << typeid( kernel::Formation_ABC ).name()
-      << typeid( kernel::LogisticLevel ).name();
+      << typeid( gui::LogisticBase ).name();
     return l;
 }
 
@@ -387,6 +375,16 @@ void LogisticTreeView::dragMoveEvent( QDragMoveEvent* pEvent )
     pEvent->ignore();
 }
 
+namespace
+{
+    sword::EnumLogisticLevel* GetTargetLogistic( QStandardItem& targetItem, const StandardModel& model )
+    {
+        return dnd::IsA< sword::EnumLogisticLevel >( targetItem )
+               ? model.GetDataFromItem< sword::EnumLogisticLevel >( targetItem )
+               : 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticTreeView::CanDrop
 // Created: ABR 2012-09-21
@@ -401,36 +399,30 @@ bool LogisticTreeView::CanDrop( QDragMoveEvent* pEvent ) const
 
     if( IsReadOnly() )
         return false; // can drop only if not read only
-
     if( ( !sourceAutomatType && !sourceEntity ) || !targetItem )
         return false; // can drop only if we have a source and a target
-
     if( !targetItem->isDropEnabled() )
         return false;
 
-    kernel::LogisticLevel* targetLogistic  = ( dnd::IsA< kernel::LogisticLevel >( *targetItem ) ) ? dataModel_.GetDataFromItem< kernel::LogisticLevel >( *targetItem ) : 0;
+    sword::EnumLogisticLevel* targetLogistic = GetTargetLogistic( *targetItem, dataModel_ );
     kernel::Entity_ABC* targetEntity = dnd::FindSafeEntityData< kernel::Formation_ABC, kernel::Automat_ABC, kernel::Ghost_ABC >( dataModel_, *targetItem );
 
     if( sourceItem && sourceItem->parent() == targetItem )
         return false; // cannot drop an item on his parent
-
     if( sourceAutomatType && ( ( targetEntity && targetEntity->GetTypeName() != kernel::Ghost_ABC::typeName_ ) || !targetEntity ) )
         return false; // can drop automat type only on a ghost
-
     if( ( sourceEntity && !profile_.CanDoMagic( *sourceEntity ) ) || ( targetEntity && !profile_.CanDoMagic( *targetEntity ) ) )
         return false; // can drop only if we can do magic
 
-
     if( sourceEntity )
     {
-        const kernel::LogisticLevel& sourceLogLevel = GetLogisticLevel( *sourceEntity );
+        const sword::EnumLogisticLevel& sourceLogLevel = sourceEntity->Get< gui::LogisticBase >().IsBase() ? level_base : level_none;
         const kernel::Entity_ABC* targetTeam = 0;
         if( targetEntity )
         {
             if( const kernel::TacticalHierarchies* targetHierarchies = targetEntity->Retrieve< kernel::TacticalHierarchies >() )
                 targetTeam = &targetHierarchies->GetTop();
-            const kernel::LogisticLevel& targetLogLevel = GetLogisticLevel( *targetEntity );
-            if( targetLogLevel == kernel::LogisticLevel::none_ )
+            if( !targetEntity->Get< gui::LogisticBase >().IsBase() )
                 return false; // can only drop to an automat / formation which is a logistic base
             if( targetEntity == sourceEntity )
                 return false; // cannot drop to itself
@@ -441,7 +433,7 @@ bool LogisticTreeView::CanDrop( QDragMoveEvent* pEvent ) const
             QStandardItem* targetTeamItem = targetItem->parent();
             assert( targetTeamItem );
             targetTeam = dataModel_.GetDataFromItem< kernel::Team_ABC >( *targetTeamItem );
-            if( sourceLogLevel != *targetLogistic )
+            if( &sourceLogLevel != targetLogistic )
                 return false; // cannot drop logistic base to unsupported item, and vice & versa
         }
         const kernel::Entity_ABC* sourceTeam = 0;
@@ -451,7 +443,6 @@ bool LogisticTreeView::CanDrop( QDragMoveEvent* pEvent ) const
         if( sourceTeam != targetTeam )
             return false; // can only drop to the same team
     }
-
     return true;
 }
 
@@ -464,7 +455,7 @@ void LogisticTreeView::Drop( const QString& mimeType, void* data, QStandardItem&
     if( IsReadOnly() )
         return;
 
-    kernel::LogisticLevel* targetLogistic  = ( dnd::IsA< kernel::LogisticLevel >( targetItem ) ) ? dataModel_.GetDataFromItem< kernel::LogisticLevel >( targetItem ) : 0;
+    sword::EnumLogisticLevel* targetLogistic = GetTargetLogistic( targetItem, dataModel_ );
     kernel::Entity_ABC* targetEntity = dnd::FindSafeEntityData< kernel::Formation_ABC, kernel::Automat_ABC, kernel::Ghost_ABC >( dataModel_, targetItem );
 
     if( mimeType == typeid( kernel::AutomatType ).name() && targetEntity ) // Drop AutomatType on Ghost
@@ -503,7 +494,7 @@ void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
     if( !IsReadOnly() && event )
     {
         QStandardItem* targetItem = dataModel_.GetItemFromIndex( indexAt( event->pos() ) );
-        if( targetItem && !dnd::IsA< kernel::LogisticLevel >( *targetItem ) )
+        if( targetItem && !dnd::IsA< gui::LogisticBase>( *targetItem ) )
             HierarchyTreeView_ABC::contextMenuEvent( event );
     }
 }

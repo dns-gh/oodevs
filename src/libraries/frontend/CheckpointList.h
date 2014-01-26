@@ -10,6 +10,9 @@
 #ifndef __CheckpointList_h_
 #define __CheckpointList_h_
 
+#include "clients_gui/WidgetLanguageObserver_ABC.h"
+#include <QtGui/QLabel>
+
 namespace tools
 {
     class GeneralConfig;
@@ -24,7 +27,7 @@ namespace frontend
 */
 // Created: SBO 2010-04-21
 // =============================================================================
-class CheckpointList : public QWidget
+class CheckpointList : public gui::WidgetLanguageObserver_ABC< QWidget >
 {
     Q_OBJECT;
 
@@ -39,6 +42,7 @@ public:
     //@{
     void Update( const tools::Path& exercice, const tools::Path& session );
     void ClearSelection();
+    virtual void OnLanguageChanged();
     //@}
 
 signals:
@@ -64,6 +68,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QListWidget* list_;
+    QLabel* label_;
     tools::Path exercise_;
     tools::Path session_;
     tools::Path::T_Paths checkpoints_;

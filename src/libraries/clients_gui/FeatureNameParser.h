@@ -43,6 +43,7 @@ public:
     virtual const LocationParserDescriptor& GetDescriptor() const;
     virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual QStringList Split( const QString& input ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
     //@}
 
 private:

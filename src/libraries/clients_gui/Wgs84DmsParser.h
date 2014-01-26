@@ -32,7 +32,7 @@ class Wgs84DmsParser : public LocationParser_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter );
+             Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter, int coordinateSystems );
     virtual ~Wgs84DmsParser();
     //@}
 
@@ -41,6 +41,7 @@ public:
     virtual const LocationParserDescriptor& GetDescriptor() const;
     virtual bool Parse( const QStringList& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual QStringList Split( const QString& input ) const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
     //@}
 
 private:
@@ -53,6 +54,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    int coordinateSystems_;
     //@}
 };
 

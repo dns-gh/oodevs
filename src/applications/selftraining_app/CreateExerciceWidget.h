@@ -91,6 +91,9 @@ private:
     QLabel*                     copyLabel_;
     QLabel*                     sessionLabel_;
 
+    int contentListId_;
+    int checkpointCopyPanelId_;
+
     tools::Path session_;
     tools::Path checkpoint_;
     //@}

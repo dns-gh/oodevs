@@ -10,13 +10,15 @@
 #include "preparation_app_pch.h"
 #include "LogisticLinksEditor.h"
 #include "moc_LogisticLinksEditor.cpp"
+
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
 #include "preparation/LinkGenerator.h"
+
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -59,7 +61,7 @@ LogisticLinksEditor::~LogisticLinksEditor()
 // -----------------------------------------------------------------------------
 void LogisticLinksEditor::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
 {
-    if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+    if( automat.Get< gui::LogisticBase >().IsBase() )
     {
         Create( tools::translate( "LogisticLinksEditor", "Assign logistic subordinates" ), automat, menu, *pAddAutomatMapper_ );
         Create( tools::translate( "LogisticLinksEditor", "Remove logistic subordinates" ), automat, menu, *pRemoveAutomatMapper_ );
@@ -72,7 +74,7 @@ void LogisticLinksEditor::NotifyContextMenu( const kernel::Automat_ABC& automat,
 // -----------------------------------------------------------------------------
 void LogisticLinksEditor::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
-    if( formation.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+    if( formation.Get< gui::LogisticBase >().IsBase() )
     {
         Create( tools::translate( "LogisticLinksEditor", "Assign logistic subordinates" ), formation, menu, *pAddFormationMapper_ );
         Create( tools::translate( "LogisticLinksEditor", "Remove logistic subordinates" ), formation, menu, *pRemoveFormationMapper_ );

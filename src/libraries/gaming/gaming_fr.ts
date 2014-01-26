@@ -256,13 +256,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/NiveauLogistique</translation>
-    </message>
-</context>
-<context>
     <name>Block</name>
     <message>
         <source>Info/StructuralState</source>
@@ -476,13 +469,6 @@
     <message>
         <source>On site fixable</source>
         <translation>Réparable sur place</translation>
-    </message>
-</context>
-<context>
-    <name>Formation</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/NiveauLogistique</translation>
     </message>
 </context>
 <context>

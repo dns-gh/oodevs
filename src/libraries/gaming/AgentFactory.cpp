@@ -72,20 +72,20 @@
 #include "Color.h"
 #include "CommandPostAttributes.h"
 
+#include "clients_gui/AutomatDecisions.h"
+#include "clients_gui/CriticalIntelligence.h"
+#include "clients_gui/EntityType.h"
+#include "clients_gui/LogisticBase.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-
-#include "clients_gui/AutomatDecisions.h"
-#include "clients_gui/CriticalIntelligence.h"
-#include "clients_gui/EntityType.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -136,7 +136,8 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol, model_.symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dictionary, *result ) );
+    result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, type->IsTC2(), message.logistic_level() == sword::logistic_base ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dictionary, *result ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );

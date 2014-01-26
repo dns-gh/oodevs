@@ -115,6 +115,7 @@ public:
     void PublishObjectMagicAction( const std::string& action, unsigned long targetId );
     void PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
     void PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
+    void PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
     //@}
 
 private:

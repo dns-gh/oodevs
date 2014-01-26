@@ -12,6 +12,7 @@
 #include "moc_LogisticSupplyPullFlowDialog.cpp"
 #include "LogisticSupplyAvailabilityTableWidget.h"
 #include "LogisticSupplyCarriersTableWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -20,6 +21,7 @@
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/PullFlowParameters.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
@@ -34,7 +36,6 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
@@ -47,6 +48,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "protocol/SimulationSenders.h"
+
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
@@ -59,14 +61,17 @@ using namespace parameters;
 // Name: LogisticSupplyPullFlowDialog constructor
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel,
-                                                            const ::StaticModel& staticModel, const Time_ABC& simulation,
-                                                            ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                            const tools::Resolver_ABC< Formation_ABC >& formations,
-                                                            const Profile_ABC& profile )
-    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
-    ,  formations_( formations )
-    , supplier_   ( 0 )
+LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
+                                                            Controllers& controllers,
+                                                            ActionsModel& actionsModel,
+                                                            const ::StaticModel& staticModel,
+                                                            const Time_ABC& simulation,
+                                                            ParametersLayer& layer,
+                                                            const tools::Resolver_ABC< Automat_ABC >& automats,
+                                                            const tools::Resolver_ABC< Formation_ABC >& formations )
+    : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
+    , formations_( formations )
+    , supplier_( 0 )
 {
     setCaption( tr( "Pull supply flow" ) );
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
@@ -83,29 +88,16 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Con
 // -----------------------------------------------------------------------------
 LogisticSupplyPullFlowDialog::~LogisticSupplyPullFlowDialog()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyPullFlowDialog::NotifyContextMenu
-// Created : AHC 2010-10-14
-// -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
-{
-    if( !profile_.CanBeOrdered( agent ) || agent.GetLogisticLevel() == LogisticLevel::none_ )
-        return;
-    selected_ = &agent;
-    menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::Show
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::Show()
+void LogisticSupplyPullFlowDialog::Show( const kernel::Entity_ABC& entity )
 {
-    if( !selected_ )
-        return;
+    selected_ = &entity;
 
     controllers_.Update( *routeLocationCreator_ );
     routeLocationCreator_->StartLine();
@@ -362,8 +354,8 @@ namespace
         while( it.HasMoreElements() )
         {
             const auto& element = it.NextElement();
-            if( &element != selected && 
-                element.GetLogisticLevel() != LogisticLevel::none_ &&
+            if( &element != selected &&
+                element.Get< LogisticBase >().IsBase() &&
                 &element.Get< TacticalHierarchies >().GetTop() == &team )
                     suppliers[ element.GetName() ] = &element;
         }

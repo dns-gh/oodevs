@@ -12,6 +12,11 @@
 
 #include "gaming/CommandHandler_ABC.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace gui
 {
     class View_ABC;
@@ -30,7 +35,8 @@ class ZoomViewCommand : public CommandHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view );
+             ZoomViewCommand( CommandHandler& handler, gui::View_ABC& view,
+                              const kernel::CoordinateConverter_ABC& converter );
     virtual ~ZoomViewCommand();
     //@}
 
@@ -56,6 +62,7 @@ private:
     //@{
     CommandHandler& handler_;
     gui::View_ABC& view_;
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

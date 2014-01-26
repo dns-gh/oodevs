@@ -256,13 +256,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticsLevel</translation>
-    </message>
-</context>
-<context>
     <name>Block</name>
     <message>
         <source>Infrastructure/Enable</source>
@@ -476,13 +469,6 @@
     <message>
         <source>Prisoner</source>
         <translation>Prisoner</translation>
-    </message>
-</context>
-<context>
-    <name>Formation</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticsLevel</translation>
     </message>
 </context>
 <context>

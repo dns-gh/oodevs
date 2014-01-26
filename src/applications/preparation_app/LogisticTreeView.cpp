@@ -9,10 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "LogisticTreeView.h"
+
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/ModelObserver_ABC.h"
-#include "clients_kernel/StrongType.h"
 #include "preparation/LogisticBaseStates.h"
-#include "preparation/LogisticLevelAttribute.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticTreeView constructor
@@ -39,7 +39,7 @@ LogisticTreeView::~LogisticTreeView()
 // -----------------------------------------------------------------------------
 void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* superior )
 {
-    LogisticHierarchiesBase* hierarchy = const_cast< kernel::Entity_ABC& >( entity ).Retrieve< LogisticHierarchiesBase >();
+    gui::LogisticHierarchiesBase* hierarchy = const_cast< kernel::Entity_ABC& >( entity ).Retrieve< gui::LogisticHierarchiesBase >();
     assert( hierarchy );
     hierarchy->SetLogisticSuperior( ( superior ) ? superior : kernel::LogisticBaseSuperior() );
 }
@@ -50,7 +50,7 @@ void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kern
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* LogisticTreeView::RetrieveSuperior( const kernel::Entity_ABC& entity ) const
 {
-    const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+    const LogisticBaseStates* hierarchy = static_cast< const LogisticBaseStates* >( entity.Retrieve< gui::LogisticHierarchiesBase >() );
     return ( hierarchy ) ? hierarchy->GetSuperior() : 0;
 }
 
@@ -67,7 +67,7 @@ void LogisticTreeView::NotifyUpdated( const LogisticBaseStates& hierarchy )
 // Name: LogisticTreeView::NotifyUpdated
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-void LogisticTreeView::NotifyUpdated( const LogisticLevelAttribute& hierarchy )
+void LogisticTreeView::NotifyUpdated( const gui::LogisticBase& hierarchy )
 {
     CreateOrReplace( hierarchy.GetEntity() );
 }

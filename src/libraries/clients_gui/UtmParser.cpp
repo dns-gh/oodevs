@@ -25,9 +25,11 @@ namespace
 // Name: UtmParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter )
+UtmParser::UtmParser( kernel::Controllers& controllers, const T_Converter& converter,
+                      const T_StringConverter& stringConverter )
     : controllers_( controllers )
     , converter_( converter )
+    , stringConverter_( stringConverter )
 {
     controllers_.Register( *this );
 }
@@ -108,4 +110,13 @@ QStringList UtmParser::Split( const QString& input ) const
         << input.left( MaxFieldSize )
         << input.mid( MaxFieldSize, left )
         << input.mid( MaxFieldSize + left );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UtmParser::GetStringPosition
+// Created: LGY 2014-01-22
+// -----------------------------------------------------------------------------
+std::string UtmParser::GetStringPosition( const geometry::Point2f& position ) const
+{
+    return stringConverter_( position );
 }

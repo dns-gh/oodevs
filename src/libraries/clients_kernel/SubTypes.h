@@ -19,7 +19,6 @@ namespace kernel
     class Formation_ABC;
     class Entity_ABC;
     class Karma;
-    class LogisticLevel;
 
     #define DECLARE_SUBTYPE( name, base ) \
     struct name##_{};\
@@ -27,7 +26,6 @@ namespace kernel
 
     DECLARE_SUBTYPE( LogisticBaseSuperior, const Entity_ABC* );
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
-    DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
     DECLARE_SUBTYPE( CriticalIntelligenceType, QString );
     DECLARE_SUBTYPE( DisasterDirectory, tools::Path );
 }

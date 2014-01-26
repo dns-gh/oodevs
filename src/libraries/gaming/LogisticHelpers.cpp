@@ -9,18 +9,19 @@
 
 #include "gaming_pch.h"
 #include "LogisticHelpers.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/LogisticHelpers.h"
 #include "gaming/Attributes.h"
 #include "gaming/SupplyStates.h"
+
 #include <boost/bind.hpp>
 
 using namespace kernel;
-using namespace EntityHelpers;
 
 namespace logistic_helpers
 {

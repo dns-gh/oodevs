@@ -37,7 +37,6 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -353,15 +352,6 @@ void BaseDisplayer::Call( const kernel::KnowledgeGroup_ABC& value )
 void BaseDisplayer::Clear()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BaseDisplayer::Call
-// Created: JSR 2010-04-19
-// -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const kernel::LogisticLevel& value )
-{
-    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------

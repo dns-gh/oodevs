@@ -243,3 +243,8 @@ bool PHY_MaintenanceRepairConsign::Update()
     }
     return GetState() == eFinished;
 }
+
+void PHY_MaintenanceRepairConsign::SelectNewState()
+{
+    // NOTHING
+}

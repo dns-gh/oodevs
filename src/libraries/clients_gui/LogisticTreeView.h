@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class LogisticLevel;
     class TacticalHierarchies;
 }
 
@@ -74,8 +73,6 @@ private:
 
     QStandardItem& RetrieveTeamItem( const kernel::Entity_ABC& entity );
     QStandardItem& RetrieveTypeItem( const kernel::Entity_ABC& entity, QStandardItem& teamItem );
-
-    const kernel::LogisticLevel& GetLogisticLevel( const kernel::Entity_ABC& entity ) const;
     //@}
 
     //! @name Observer implementation
