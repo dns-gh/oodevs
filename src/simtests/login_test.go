@@ -146,7 +146,7 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	defer client.Close()
 
 	msgch := make(chan *swapi.SwordMessage)
-	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+	handler := func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
 			msgch <- nil
 			return true

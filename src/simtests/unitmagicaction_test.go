@@ -44,7 +44,7 @@ func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 
 func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) error {
 	quit := make(chan error)
-	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
+	handler := func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true
@@ -705,7 +705,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Check unit damages messages
 	var damagesErrors []error
-	handlerId := client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+	handlerId := client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
 			return true
 		}
@@ -940,7 +940,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 
 	// Give a mission and wait for debug reports to be emitted
 	seen := make(chan error)
-	client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+	client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			seen <- err
 			return true

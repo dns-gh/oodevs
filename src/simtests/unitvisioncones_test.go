@@ -18,7 +18,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
 	client2 := loginAndWaitModel(c, sim, NewAdminOpts(""))
-	client2.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+	client2.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if msg != nil && msg.SimulationToClient != nil {
 			// should not receive vision cones updates on another client
 			c.Assert(msg.SimulationToClient.GetMessage().GetUnitVisionCones(), IsNil)
@@ -37,7 +37,7 @@ func (s *TestSuite) TestUnitVisionCones(c *C) {
 
 	receive := func() bool {
 		received := make(chan int, 1)
-		handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
+		handler := func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 			if msg != nil && msg.SimulationToClient != nil {
 				m := msg.SimulationToClient.GetMessage().GetUnitVisionCones()
 				if m != nil && m.GetUnit().GetId() == 11 {
