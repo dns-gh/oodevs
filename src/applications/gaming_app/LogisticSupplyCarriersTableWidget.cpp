@@ -80,11 +80,12 @@ double LogisticSupplyCarriersTableWidget::ComputeMaxMass( const std::string& nat
     double result = 0;
     for( int row = 0; row < model()->rowCount() - 1; ++row )
     {
-        const QString name = model()->data( model()->index( row, eName ), Qt::DisplayRole ).value< QString >();
-        const int quantity = model()->data( model()->index( row, eValue ), Qt::UserRole ).value< int >();
         const auto function = GetLogSupplyFunctionCarrying( row );
         if( function && function->stockNature_ == nature )
+        {
+            const int quantity = model()->data( model()->index( row, eValue ), Qt::UserRole ).value< int >();
             result += quantity * function->stockMaxWeightCapacity_;
+        }
     }
     return result;
 }
