@@ -95,7 +95,7 @@ private:
     const Path terrainConfigFile_;
     const Path exerciseConfigFile_;
 
-    std::string featuresOptions_;
+    std::string features_;
     std::auto_ptr< const Languages > languages_;
     std::string commandLineLanguage_;
     std::vector< std::string > devFeatures_;

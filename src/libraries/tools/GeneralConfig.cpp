@@ -37,7 +37,7 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
         ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
         ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    )
         ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          )
-        ( "dev-features"  , po::value( &featuresOptions_                                   ), "specify development features to be activated" );
+        ( "dev-features"  , po::value( &features_                                          ), "specify development features to be activated" );
     AddOptions( desc );
 }
 
@@ -61,7 +61,7 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( rootDir_, modelsDir_ );
     ResolveRelativePath( rootDir_, exercisesDir_ );
     ResolveRelativePath( rootDir_, populationDir_ );
-    boost::algorithm::split( devFeatures_, featuresOptions_, boost::algorithm::is_any_of( "," ) );
+    boost::algorithm::split( devFeatures_, features_, boost::algorithm::is_any_of( ";" ) );
 }
 
 // -----------------------------------------------------------------------------
