@@ -258,6 +258,20 @@ integration.getCollidingCrowds = function()
     return crowds
 end
 
+--- Returns true if the given agent is neutralized, false otherwise.
+-- @param unit Directia agent knowledge
+-- @return Boolean
+integration.UnitIsNeutralized = function( unit )
+    return unit.source:DEC_Agent_EtatOpsMajeur() == 0
+end
+
+--- Returns true if the given agent is dead, false otherwise.
+-- @param unit Directia agent knowledge
+-- @return Boolean
+integration.UnitIsDead = function( unit )
+    return unit.source:DEC_Agent_EstMort()
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
