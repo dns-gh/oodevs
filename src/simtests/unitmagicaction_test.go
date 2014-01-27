@@ -81,6 +81,16 @@ func getSomeFormation(c *C, data *swapi.ModelData) *swapi.Formation {
 	return nil
 }
 
+func getSomeFormationByName(c *C, data *swapi.ModelData, substring string) *swapi.Formation {
+	for _, f := range data.Formations {
+		if strings.Contains(f.Name, substring) {
+			return f
+		}
+	}
+	c.Fatal("no formation whose name contains'" + substring + "'")
+	return nil
+}
+
 func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
 	for _, cr := range data.Crowds {
 		return cr

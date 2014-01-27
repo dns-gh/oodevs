@@ -217,6 +217,16 @@ func getSomeAutomat(c *C, data *swapi.ModelData) *swapi.Automat {
 	return nil
 }
 
+func getSomeAutomatByName(c *C, data *swapi.ModelData, substring string) *swapi.Automat {
+	for _, a := range data.Automats {
+		if strings.Contains(a.Name, substring) {
+			return a
+		}
+	}
+	c.Fatal("no automat whose name contains'" + substring + "'")
+	return nil
+}
+
 func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
