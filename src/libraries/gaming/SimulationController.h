@@ -63,7 +63,6 @@ public:
     void SendHistoryRequests( const std::set< unsigned int >& requests ) const;
     void RequestCheckpoint( const std::string& name );
     void ForceReplayDataRequest();
-    void ApplyRequestResolution() const;
     void SendEnableVisionCones( bool value ) const;
     void PublishAction( const actions::Action_ABC& action ) const;
     void RegisterSimHandler( Publisher_ABC::T_SimHandler handler );

@@ -12,6 +12,7 @@
 #include "ConsignDialog.h"
 #include "moc_LogisticsRequestsTable.cpp"
 #include "clients_gui/LinkItemDelegate.h"
+#include "clients_gui/InternalLinks.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
@@ -124,9 +125,9 @@ int LogisticsRequestsTable::GetRequestRow( const LogisticsConsign_ABC& consign )
 
 namespace
 {
-    QString CreateLink( const QString& message )
+    QString CreateLink( const QString& message, unsigned long id )
     {
-        return QString( "<a href>%1</a>" ).arg( message );
+        return gui::InternalLinks::CreateLink( "request", id, message );
     }
 }
 
@@ -152,7 +153,7 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, consign.NeedResolution() && currentMode_ != eModes_Replay ? CreateLink( state ) : state, consign );
+    SetData( rowIndex, 3, consign.NeedResolution() && currentMode_ != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
 }
 
 // -----------------------------------------------------------------------------
