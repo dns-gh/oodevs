@@ -13,6 +13,7 @@
 #include "moc_LogisticsRequestsTable.cpp"
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/InternalLinks.h"
+#include "clients_kernel/Controllers.h"
 #include "gaming/LogisticsConsign_ABC.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
@@ -22,14 +23,14 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
-                                                actions::ActionsModel& actionsModel, E_Modes currentMode )
+                                                actions::ActionsModel& actionsModel, const kernel::Controllers& controllers )
     : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( new QSortFilterProxyModel( parent ) )
     , delegate_  ( parent )
     , horizontalHeaders_( horizontalHeaders )
     , consignDialog_( new ConsignDialog( "consign_dialog", parent, actionsModel ) )
-    , currentMode_( currentMode )
+    , controllers_( controllers )
 {
     if( horizontalHeaders_.isEmpty() )
     {
@@ -153,7 +154,8 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, consign.NeedResolution() && currentMode_ != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
+    SetData( rowIndex, 3, consign.NeedResolution()
+        && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
 }
 
 // -----------------------------------------------------------------------------

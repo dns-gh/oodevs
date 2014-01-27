@@ -22,6 +22,7 @@ namespace actions
 namespace kernel
 {
     class Entity_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
-                                     actions::ActionsModel& actionsModel, E_Modes currentMode );
+                                     actions::ActionsModel& actionsModel, const kernel::Controllers& controllers );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -78,13 +79,13 @@ public slots:
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel      dataModel_;
-    QSortFilterProxyModel*  proxyModel_;
-    gui::CommonDelegate     delegate_;
-    gui::LinkItemDelegate*  linkItemDelegate_;
-    QStringList             horizontalHeaders_;
-    ConsignDialog*          consignDialog_;
-    E_Modes                 currentMode_;
+    QStandardItemModel         dataModel_;
+    QSortFilterProxyModel*     proxyModel_;
+    gui::CommonDelegate        delegate_;
+    gui::LinkItemDelegate*     linkItemDelegate_;
+    QStringList                horizontalHeaders_;
+    ConsignDialog*             consignDialog_;
+    const kernel::Controllers& controllers_;
     //@}
 };
 
