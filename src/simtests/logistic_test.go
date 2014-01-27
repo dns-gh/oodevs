@@ -23,6 +23,7 @@ import (
 	"swapi/simu"
 	"sword"
 	"swtest"
+	"sync"
 	"time"
 )
 
@@ -320,15 +321,24 @@ func makeBreakdown(c *C, id uint32, eq *swapi.EquipmentDotation, count int32, br
 }
 
 type BreakdownType int32
+type ResourceType int32
 
 const (
 	// replace with swapi/phy
+	// breakdowns
 	electronic_1 BreakdownType = 108
 	electronic_2               = 109
 	electronic_3               = 110
 	mobility_1                 = 111
 	mobility_2                 = 112
 	mobility_3                 = 113
+	// resources
+	electrogen_1 ResourceType = 108
+	electrogen_2              = 109
+	electrogen_3              = 110
+	gyroscope_1               = 111
+	gyroscope_2               = 112
+	gyroscope_3               = 113
 )
 
 type MaintenanceCheckContext struct {
@@ -341,6 +351,7 @@ type MaintenanceCheckContext struct {
 	diagnosed   bool
 	deleted     bool
 	last        sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
+	group       sync.WaitGroup
 }
 
 type MaintenanceChecker interface {
@@ -412,6 +423,23 @@ func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, ms
 	return true
 }
 
+type MaintenanceApplyChecker struct {
+	MaintenanceChecker
+	operand func()
+}
+
+func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
+	ok := m.MaintenanceChecker.Check(c, ctx, msg)
+	if ok {
+		ctx.group.Add(1)
+		go func() {
+			defer ctx.group.Done()
+			m.operand()
+		}()
+	}
+	return ok
+}
+
 type MaintenanceDeleteChecker struct{}
 
 func (MaintenanceDeleteChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
@@ -431,7 +459,7 @@ func (MaintenanceDeleteChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *s
 	return true
 }
 
-func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown BreakdownType, updates []MaintenanceUpdateChecker) {
+func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, breakdown BreakdownType, checkers ...MaintenanceChecker) {
 	client.Pause()
 	check := MaintenanceCheckContext{
 		data:      client.Model.GetData(),
@@ -440,11 +468,6 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown Br
 	}
 	eqid, eq := getSomeEquipment(c, unit)
 	check.equipmentId = eqid
-	checkers := []MaintenanceChecker{MaintenanceCreateChecker{}}
-	for i := range updates {
-		checkers = append(checkers, &updates[i])
-	}
-	checkers = append(checkers, MaintenanceDeleteChecker{})
 	idx := 0
 	quit := make(chan struct{})
 	ctx := client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
@@ -461,7 +484,7 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown Br
 			idx++
 		}
 		if c.Failed() {
-			c.Log("invalid check at index ", prev-1)
+			c.Log("checker error at index ", prev+offset)
 		}
 		if c.Failed() || idx == len(checkers) || check.deleted {
 			close(quit)
@@ -476,9 +499,33 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown Br
 	select {
 	case <-quit:
 	case <-time.After(1 * time.Minute):
-		c.Fatal("timeout")
+		c.Error("timeout")
 	}
+	check.group.Wait()
 	c.Assert(idx, Equals, len(checkers))
+}
+
+func checkMaintenanceUpdates(c *C, client *swapi.Client, unit *swapi.Unit, breakdown BreakdownType, updates []MaintenanceUpdateChecker) {
+	checkers := []MaintenanceChecker{MaintenanceCreateChecker{}}
+	for i := range updates {
+		checkers = append(checkers, &updates[i])
+	}
+	checkers = append(checkers, MaintenanceDeleteChecker{})
+	checkMaintenance(c, client, unit, -1, breakdown, checkers...)
+}
+
+func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, resources ...ResourceType) {
+	d := client.Model.GetData()
+	for _, u := range d.Units {
+		if IsProvider(d, u.Id, provider) {
+			next := map[uint32]*swapi.ResourceDotation{}
+			for _, id := range resources {
+				next[uint32(id)] = &swapi.ResourceDotation{Quantity: qty}
+			}
+			err := client.ChangeDotation(u.Id, next)
+			c.Check(err, IsNil)
+		}
+	}
 }
 
 func (s *TestSuite) TestMaintenanceHandlings(c *C) {
@@ -489,14 +536,14 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLT").Id)
-	checkMaintenance(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"waiting_for_repairer", tc2},
 		{"repairing", tc2},
 		{"moving_back", tc2},
 	})
-	checkMaintenance(c, client, unit, mobility_1, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, mobility_1, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -506,7 +553,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"repairing", tc2},
 		{"moving_back", tc2},
 	})
-	checkMaintenance(c, client, unit, electronic_2, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, electronic_2, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"searching_upper_levels", tc2},
@@ -515,7 +562,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"repairing", bld},
 		{"moving_back", bld},
 	})
-	checkMaintenance(c, client, unit, mobility_2, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, mobility_2, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -531,7 +578,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"repairing", bld},
 		{"moving_back", bld},
 	})
-	checkMaintenance(c, client, unit, electronic_3, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, electronic_3, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"searching_upper_levels", tc2},
@@ -542,7 +589,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"repairing", blt},
 		{"moving_back", blt},
 	})
-	checkMaintenance(c, client, unit, mobility_3, []MaintenanceUpdateChecker{
+	checkMaintenanceUpdates(c, client, unit, mobility_3, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
 		{"transporter_loading", tc2},
 		{"transporter_moving_back", tc2},
@@ -564,4 +611,47 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"repairing", blt},
 		{"moving_back", blt},
 	})
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
+	setParts(c, client, tc2, 0, electrogen_1)
+	checkMaintenance(c, client, unit, 0, electronic_1,
+		MaintenanceCreateChecker{},
+		&MaintenanceUpdateChecker{"moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
+			func() {
+				setParts(c, client, tc2, 10, electrogen_1)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
+		&MaintenanceUpdateChecker{"repairing", tc2},
+		&MaintenanceUpdateChecker{"moving_back", tc2},
+		MaintenanceDeleteChecker{},
+	)
+	setParts(c, client, tc2, 0, gyroscope_1)
+	checkMaintenance(c, client, unit, 0, mobility_1,
+		MaintenanceCreateChecker{},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
+			func() {
+				setParts(c, client, tc2, 10, gyroscope_1)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
+		&MaintenanceUpdateChecker{"repairing", tc2},
+		&MaintenanceUpdateChecker{"moving_back", tc2},
+		MaintenanceDeleteChecker{},
+	)
 }
