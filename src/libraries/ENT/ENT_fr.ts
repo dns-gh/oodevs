@@ -284,10 +284,6 @@
         <translation>conscrit</translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation>diagnostique</translation>
-    </message>
-    <message>
         <source>finished</source>
         <translation>terminé</translation>
     </message>
@@ -318,78 +314,6 @@
     <message>
         <source>convoy moving back</source>
         <translation>convoi sur le retour</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance</source>
-        <translation>en attente d&apos;ambulance de relève</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance coming</source>
-        <translation>ambulance de relève en route</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance loading</source>
-        <translation>ambulance de relève en chargement</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance loading</source>
-        <translation>en attente de chargement ambulance de relève</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance going back</source>
-        <translation>ambulance de relève sur le retour</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance unloading</source>
-        <translation>ambulance de relève en déchargement</translation>
-    </message>
-    <message>
-        <source>waiting for doctor</source>
-        <translation>en attente de médecin</translation>
-    </message>
-    <message>
-        <source>waiting for triage</source>
-        <translation>en attente de tri</translation>
-    </message>
-    <message>
-        <source>triage</source>
-        <translation>tri</translation>
-    </message>
-    <message>
-        <source>looking for treatment area</source>
-        <translation>recherche zone de traitement</translation>
-    </message>
-    <message>
-        <source>waiting for doctor (treatment)</source>
-        <translation>en attente de médecin (traitement)</translation>
-    </message>
-    <message>
-        <source>treatment</source>
-        <translation>traitement</translation>
-    </message>
-    <message>
-        <source>hospitalization</source>
-        <translation>hospitalisation</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance</source>
-        <translation>en attente d&apos;ambulance de collecte</translation>
-    </message>
-    <message>
-        <source>collection ambulance loading</source>
-        <translation>ambulance de collecte en chargement</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance loading</source>
-        <translation>en attente de chargement ambulance de collecte</translation>
-    </message>
-    <message>
-        <source>collection ambulance coming</source>
-        <translation>ambulance de collecte en route</translation>
-    </message>
-    <message>
-        <source>collection ambulance unloading</source>
-        <translation>ambulance de collecte en déchargement</translation>
     </message>
     <message>
         <source>quiet</source>
@@ -482,10 +406,6 @@
     <message>
         <source>Extinguisher agent</source>
         <translation>Agent extincteur</translation>
-    </message>
-    <message>
-        <source>looking for triage area</source>
-        <translation>recherche d&apos;un secteur de triage</translation>
     </message>
     <message>
         <source>Energy</source>
@@ -1066,6 +986,93 @@
     <message>
         <source>waiting for transporter selection</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>
+    <message>
+        <source>waiting for evacuation ambulance</source>
+        <translation>en attente d&apos;ambulance de relève</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance coming</source>
+        <translation>ambulance de relève en route</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance loading</source>
+        <translation>ambulance de relève en chargement</translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance loading</source>
+        <translation>en attente de chargement ambulance de relève</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance going back</source>
+        <translation>ambulance de relève sur le retour</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance unloading</source>
+        <translation>ambulance de relève en déchargement</translation>
+    </message>
+    <message>
+        <source>waiting for doctor</source>
+        <translation>en attente de médecin</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation>diagnostique</translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation>recherche d&apos;un secteur de triage</translation>
+    </message>
+    <message>
+        <source>waiting for triage</source>
+        <translation>en attente de tri</translation>
+    </message>
+    <message>
+        <source>triage</source>
+        <translation>tri</translation>
+    </message>
+    <message>
+        <source>looking for treatment area</source>
+        <translation>recherche zone de traitement</translation>
+    </message>
+    <message>
+        <source>waiting for doctor (treatment)</source>
+        <translation>en attente de médecin (traitement)</translation>
+    </message>
+    <message>
+        <source>treatment</source>
+        <translation>traitement</translation>
+    </message>
+    <message>
+        <source>hospitalization</source>
+        <translation>hospitalisation</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance</source>
+        <translation>en attente d&apos;ambulance de collecte</translation>
+    </message>
+    <message>
+        <source>collection ambulance loading</source>
+        <translation>ambulance de collecte en chargement</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance loading</source>
+        <translation>en attente de chargement ambulance de collecte</translation>
+    </message>
+    <message>
+        <source>collection ambulance coming</source>
+        <translation>ambulance de collecte en route</translation>
+    </message>
+    <message>
+        <source>collection ambulance unloading</source>
+        <translation>ambulance de collecte en déchargement</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
     </message>
 </context>
 <context>

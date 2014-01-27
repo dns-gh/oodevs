@@ -40,7 +40,7 @@ LogMedicalConsign::LogMedicalConsign( kernel::Controller& controller, const tool
     , bMentalDeceased_    ( message.mental_wound() )
     , bContaminated_      ( message.nbc_contaminated() )
     , diagnosed_          ( false )
-    , nState_             ( eLogMedicalHandlingStatus_Termine )
+    , nState_             ( sword::LogMedicalHandlingUpdate::finished )
     , rank_               ( (E_HumanRank)message.rank() )
 {
     // NOTHING
@@ -69,7 +69,7 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message, 
     if( message.has_wound() )
         wound_ = E_HumanWound( message.wound() );
     if( message.has_state() )
-        nState_ = E_LogMedicalHandlingStatus( message.state() );
+        nState_ = message.state();
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
     else
@@ -93,11 +93,11 @@ void LogMedicalConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport
     glColor4f( COLOR_PINK );
     switch( nState_ )
     {
-    case eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller:
-    case eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller:
+    case sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in:
+    case sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in:
         glLineStipple( 1, tools.StipplePattern() );
         break;
-    case eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour:
+    case sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out:
         glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:
@@ -192,7 +192,7 @@ E_HumanWound LogMedicalConsign::GetWound() const
 // Name: LogMedicalConsign::GetStatus
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-E_LogMedicalHandlingStatus LogMedicalConsign::GetStatus() const
+sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus LogMedicalConsign::GetStatus() const
 {
     return nState_;
 }
@@ -203,7 +203,7 @@ E_LogMedicalHandlingStatus LogMedicalConsign::GetStatus() const
 // -----------------------------------------------------------------------------
 QString LogMedicalConsign::GetStatusDisplay() const
 {
-    return tools::ToString( nState_ );
+    return QString::fromStdString( ENT_Tr::ConvertFromLogMedicalHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,8 +212,9 @@ QString LogMedicalConsign::GetStatusDisplay() const
 // -----------------------------------------------------------------------------
 QString LogMedicalConsign::GetStatusDisplay( int status ) const
 {
-    if( 0 <= status && status < eNbrLogMedicalHandlingStatus )
-        return tools::ToString( static_cast< E_LogMedicalHandlingStatus >( status ) );
+    if( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus_IsValid( status ) )
+        return QString::fromStdString( ENT_Tr::ConvertFromLogMedicalHandlingStatus(
+            static_cast< sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus >( status ) ) );
     return QString();
 }
 

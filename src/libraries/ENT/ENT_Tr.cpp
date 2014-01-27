@@ -37,7 +37,6 @@ typedef ENT_Tr::Converter< E_UnitStress > T_ConverterUnitStress;
 typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
 typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
 typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
-typedef ENT_Tr::Converter< E_LogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
 typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
 typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
 typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
@@ -65,8 +64,9 @@ typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicAc
 typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
 typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
 typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterLogisticLevel;
-typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
 typedef ENT_Tr::Converter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -268,32 +268,6 @@ T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
     T_ConverterLogSupplyHandlingStatus( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving back" ), eLogSupplyHandlingStatus_ConvoiDeplacementRetour ),
     T_ConverterLogSupplyHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogSupplyHandlingStatus_Termine ),
     T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
-};
-
-T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
-{
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceReleveChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance going back" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceReleveDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMedicalHandlingStatus_Diagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for triage area" ), eLogMedicalHandlingStatus_RechercheSecteurTri ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for triage" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri ),
-    T_ConverterLogMedicalHandlingStatus( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "triage" ), eLogMedicalHandlingStatus_Tri ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for treatment area" ), eLogMedicalHandlingStatus_RechercheSecteurSoin ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor (treatment)" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin ),
-    T_ConverterLogMedicalHandlingStatus( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "treatment" ), eLogMedicalHandlingStatus_Soin ),
-    T_ConverterLogMedicalHandlingStatus( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalization" ), eLogMedicalHandlingStatus_Hospitalisation ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceRamassageChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceRamassageDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMedicalHandlingStatus_Termine ),
-    T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
 };
 
 T_ConverterObstacleActivation ObstacleActivationConverter_[] =
@@ -652,14 +626,40 @@ T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[]
 
 T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
 {
-    T_ConverterLogFuneralHandlingStatus( "waiting for handling",    QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for handling" ),    sword::LogFuneralHandlingUpdate::waiting_for_handling ),
-    T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting unpackaged" ), sword::LogFuneralHandlingUpdate::transporting_unpackaged ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for packaging",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for packaging" ),   sword::LogFuneralHandlingUpdate::waiting_for_packaging ),
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_handling",    QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for handling" ),    sword::LogFuneralHandlingUpdate::waiting_for_handling ),
+    T_ConverterLogFuneralHandlingStatus( "transporting_unpackaged", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting unpackaged" ), sword::LogFuneralHandlingUpdate::transporting_unpackaged ),
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_packaging",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for packaging" ),   sword::LogFuneralHandlingUpdate::waiting_for_packaging ),
     T_ConverterLogFuneralHandlingStatus( "packaging",               QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "packaging" ),               sword::LogFuneralHandlingUpdate::packaging ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for transporter", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for transporter" ), sword::LogFuneralHandlingUpdate::waiting_for_transporter ),
-    T_ConverterLogFuneralHandlingStatus( "transporting packaged",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting packaged" ),   sword::LogFuneralHandlingUpdate::transporting_packaged ),
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_transporter", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for transporter" ), sword::LogFuneralHandlingUpdate::waiting_for_transporter ),
+    T_ConverterLogFuneralHandlingStatus( "transporting_packaged",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting packaged" ),   sword::LogFuneralHandlingUpdate::transporting_packaged ),
     T_ConverterLogFuneralHandlingStatus( "finished",                QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "finished" ),                sword::LogFuneralHandlingUpdate::finished ),
     T_ConverterLogFuneralHandlingStatus( "", "", sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus_MAX )
+};
+
+T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
+{
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_evacuation",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for evacuation ambulance" ),         sword::LogMedicalHandlingUpdate::waiting_for_evacuation ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_moving_in",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance coming" ),              sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_loading",                QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance loading" ),             sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_evacuation_loading_completion",   QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for evacuation ambulance loading" ), sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_moving_out",             QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance going back" ),          sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_unloading",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance unloading" ),           sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_diagnostic",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for doctor" ),                       sword::LogMedicalHandlingUpdate::waiting_for_diagnostic ),
+    T_ConverterLogMedicalHandlingStatus( "diagnosing",                                  QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "diagnostic" ),                               sword::LogMedicalHandlingUpdate::diagnosing ),
+    T_ConverterLogMedicalHandlingStatus( "looking_for_triage",                          QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "looking for triage area" ),                  sword::LogMedicalHandlingUpdate::looking_for_triage ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_triage",                          QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for triage" ),                       sword::LogMedicalHandlingUpdate::waiting_for_triage ),
+    T_ConverterLogMedicalHandlingStatus( "triaging",                                    QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "triage" ),                                   sword::LogMedicalHandlingUpdate::triaging ),
+    T_ConverterLogMedicalHandlingStatus( "looking_for_medical_attention",               QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "looking for treatment area" ),               sword::LogMedicalHandlingUpdate::looking_for_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_medical_attention",               QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for doctor (treatment)" ),           sword::LogMedicalHandlingUpdate::waiting_for_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "receiving_medical_attention",                 QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "treatment" ),                                sword::LogMedicalHandlingUpdate::receiving_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "resting",                                     QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "hospitalization" ),                          sword::LogMedicalHandlingUpdate::resting ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_collection",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for collection ambulance" ),         sword::LogMedicalHandlingUpdate::waiting_for_collection ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_loading",                QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance loading" ),             sword::LogMedicalHandlingUpdate::collection_ambulance_loading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_collection_loading_completion",   QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for collection ambulance loading" ), sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_moving_in",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance coming" ),              sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_unloading",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance unloading" ),           sword::LogMedicalHandlingUpdate::collection_ambulance_unloading ),
+    T_ConverterLogMedicalHandlingStatus( "finished",                                    QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "finished" ),                                 sword::LogMedicalHandlingUpdate::finished ),
+    T_ConverterLogMedicalHandlingStatus( "", "", sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus_MAX )
 };
 
 }  // namespace
@@ -741,7 +741,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LightingType );
     INIT_TR( Location );
     INIT_TR( LocationType );
-    INIT_TR( LogMedicalHandlingStatus );
     INIT_TR( LogSupplyHandlingStatus );
     INIT_TR( MeetingEngagementStatus );
     INIT_TR( MissionType );
@@ -764,6 +763,7 @@ void ENT_Tr::InitTranslations()
     INIT_SUB_PROTO_TR( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
     INIT_SUB_PROTO_TR( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
     INIT_SUB_PROTO_TR( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
+    INIT_SUB_PROTO_TR( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
     INIT_SUB_PROTO_TR( MagicAction, Type, MagicActionType );
     INIT_SUB_PROTO_TR( ObjectMagicAction, Type, ObjectMagicActionType );
     INIT_SUB_PROTO_TR( UnitMagicAction, Type, UnitMagicActionType );
@@ -792,7 +792,6 @@ IMPLEMENT_CONVERT_METHODS( LayerTypes );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
 IMPLEMENT_CONVERT_METHODS( LocationType );
-IMPLEMENT_CONVERT_METHODS( LogMedicalHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( LogSupplyHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
 IMPLEMENT_CONVERT_METHODS( MissionType );
@@ -815,6 +814,7 @@ IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( UnitMagicAction, Type, UnitMagicActionType );

@@ -231,32 +231,6 @@ enum E_LogSupplyHandlingStatus
     eNbrLogSupplyHandlingStatus
 };
 
-enum E_LogMedicalHandlingStatus
-{
-    eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve,
-    eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller,
-    eLogMedicalHandlingStatus_AmbulanceReleveChargement,
-    eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve,
-    eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour,
-    eLogMedicalHandlingStatus_AmbulanceReleveDechargement,
-    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique,
-    eLogMedicalHandlingStatus_Diagnostique,
-    eLogMedicalHandlingStatus_RechercheSecteurTri,
-    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri,
-    eLogMedicalHandlingStatus_Tri,
-    eLogMedicalHandlingStatus_RechercheSecteurSoin,
-    eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin,
-    eLogMedicalHandlingStatus_Soin,
-    eLogMedicalHandlingStatus_Hospitalisation,
-    eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage,
-    eLogMedicalHandlingStatus_AmbulanceRamassageChargement,
-    eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage,
-    eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller,
-    eLogMedicalHandlingStatus_AmbulanceRamassageDechargement,
-    eLogMedicalHandlingStatus_Termine,
-    eNbrLogMedicalHandlingStatus
-};
-
 enum E_ObstacleActivation
 {
     eObstacleActivation_Activated,

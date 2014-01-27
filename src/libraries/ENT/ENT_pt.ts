@@ -376,10 +376,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,82 +405,6 @@
     </message>
     <message>
         <source>convoy moving back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>evacuation ambulance coming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>evacuation ambulance loading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance loading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>evacuation ambulance going back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>evacuation ambulance unloading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for doctor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>looking for triage area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for triage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>triage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>looking for treatment area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for doctor (treatment)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>treatment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hospitalization</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>collection ambulance loading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance loading</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>collection ambulance coming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>collection ambulance unloading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1065,6 +985,93 @@
     </message>
     <message>
         <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>
+    <message>
+        <source>waiting for evacuation ambulance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>evacuation ambulance coming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>evacuation ambulance loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>evacuation ambulance going back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>evacuation ambulance unloading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for doctor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for triage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>triage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>looking for treatment area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for doctor (treatment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hospitalization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collection ambulance loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collection ambulance coming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collection ambulance unloading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>finished</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

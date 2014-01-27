@@ -164,9 +164,9 @@ void  Formatter< E_LogSupplyHandlingStatus >::operator()( const E_LogSupplyHandl
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogMedicalHandlingStatus >::operator()( const E_LogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus >::operator()( const sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogMedicalHandlingStatus( e ) ) );
 }
 
 void  Formatter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus >::operator()( const sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const

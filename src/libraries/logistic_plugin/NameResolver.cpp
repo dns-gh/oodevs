@@ -109,7 +109,7 @@ void NameResolver::GetWoundName( const sword::EnumHumanWound& eWound, std::strin
 // -----------------------------------------------------------------------------
 void NameResolver::GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogMedicalHandlingStatus( static_cast< E_LogMedicalHandlingStatus >( eMedical ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogMedicalHandlingStatus( eMedical );
 }
 
 // -----------------------------------------------------------------------------
