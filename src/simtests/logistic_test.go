@@ -23,6 +23,7 @@ import (
 	"swapi/simu"
 	"sword"
 	"swtest"
+	"sync"
 )
 
 // Parse the header and return a list of field matching regexps for fields
@@ -305,4 +306,196 @@ func (s *TestSuite) TestLogisticHistory(c *C) {
 	entries, err = client.ReplayListLogisticRequests(-1, -1, unitIds...)
 	c.Assert(err, IsNil)
 	c.Assert(len(entries), Greater, 0)
+}
+
+func makeBreakdown(c *C, id uint32, eq *swapi.EquipmentDotation, count int32, breakdown BreakdownType) map[uint32]*swapi.EquipmentDotation {
+	c.Assert(eq.Available, Greater, count)
+	return map[uint32]*swapi.EquipmentDotation{
+		id: &swapi.EquipmentDotation{
+			Available:  eq.Available - count,
+			Repairable: count,
+			Breakdowns: []int32{int32(breakdown)},
+		},
+	}
+}
+
+func getSomeEquipment(c *C, unit *swapi.Unit) (uint32, *swapi.EquipmentDotation) {
+	for k, v := range unit.EquipmentDotations {
+		return k, v
+	}
+	c.Fatal("unable to find any equipment")
+	return 0, nil
+}
+
+type BreakdownType int32
+
+const (
+	// replace with swapi/phy
+	electronic_1 BreakdownType = 108
+	electronic_2               = 109
+	electronic_3               = 110
+	mobility_1                 = 111
+	mobility_2                 = 112
+	mobility_3                 = 113
+)
+
+func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown BreakdownType, names ...string) {
+	client.Pause()
+	states := []sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus{}
+	for _, name := range names {
+		value, ok := sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus_value[name]
+		c.Assert(ok, Equals, true)
+		states = append(states, sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus(value))
+	}
+	verbose := false
+	eqid, eq := getSomeEquipment(c, unit)
+	hid := uint32(0)
+	done := false
+	idx := 0
+	diagnosed := false
+	mutex := &sync.Mutex{}
+	ctx := client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
+		if err != nil {
+			return true
+		}
+		if msg == nil ||
+			msg.SimulationToClient == nil {
+			return false
+		}
+		mutex.Lock()
+		defer mutex.Unlock()
+		mm := msg.SimulationToClient.GetMessage()
+		if pkt := mm.LogMaintenanceHandlingCreation; pkt != nil {
+			if verbose {
+				fmt.Printf("+ %+v\n", pkt)
+			}
+			c.Check(hid, Equals, uint32(0))
+			c.Check(pkt.GetUnit().GetId(), Equals, unit.Id)
+			c.Check(pkt.GetEquipement().GetId(), Equals, eqid)
+			c.Check(pkt.GetBreakdown().GetId(), Equals, uint32(breakdown))
+			hid = pkt.GetRequest().GetId()
+		}
+		if pkt := mm.LogMaintenanceHandlingUpdate; pkt != nil {
+			if verbose {
+				fmt.Printf("* %+v\n", pkt)
+			}
+			c.Check(hid, Not(Equals), uint32(0))
+			c.Check(pkt.GetRequest().GetId(), Equals, hid)
+			c.Check(idx, Lesser, len(states))
+			if idx < len(states) {
+				c.Check(states[idx], Equals, pkt.GetState())
+			}
+			if diagnosed != pkt.GetDiagnosed() {
+				c.Check(idx, Greater, 1)
+				if idx > 1 {
+					c.Check(states[idx-1], Equals, sword.LogMaintenanceHandlingUpdate_diagnosing)
+				}
+			}
+			diagnosed = diagnosed || pkt.GetDiagnosed()
+			idx++
+		}
+		if pkt := mm.LogMaintenanceHandlingDestruction; pkt != nil {
+			if verbose {
+				fmt.Printf("- %+v\n", pkt)
+			}
+			c.Check(hid, Not(Equals), uint32(0))
+			c.Check(pkt.GetRequest().GetId(), Equals, hid)
+			c.Check(pkt.GetUnit().GetId(), Equals, unit.Id)
+			done = true
+		}
+		return false
+	})
+	defer client.Unregister(ctx)
+	err := client.ChangeEquipmentState(unit.Id, makeBreakdown(c, eqid, eq, 1, breakdown))
+	c.Assert(err, IsNil)
+	client.Resume(0)
+	waitCondition(c, client.Model, func(d *swapi.ModelData) bool {
+		mutex.Lock()
+		defer mutex.Unlock()
+		return c.Failed() || done
+	})
+	c.Assert(idx, Equals, len(states))
+}
+
+func (s *TestSuite) TestMaintenanceHandlings(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	c.Assert(unit, NotNil)
+	checkMaintenance(c, client, unit, electronic_1,
+		"moving_to_supply",
+		"diagnosing",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
+	checkMaintenance(c, client, unit, mobility_1,
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"diagnosing",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
+	checkMaintenance(c, client, unit, electronic_2,
+		"moving_to_supply",
+		"diagnosing",
+		"searching_upper_levels",
+		"moving_to_supply",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
+	checkMaintenance(c, client, unit, mobility_2,
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"diagnosing",
+		"searching_upper_levels",
+		"waiting_for_transporter",
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
+	checkMaintenance(c, client, unit, electronic_3,
+		"moving_to_supply",
+		"diagnosing",
+		"searching_upper_levels",
+		"moving_to_supply",
+		"searching_upper_levels",
+		"moving_to_supply",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
+	checkMaintenance(c, client, unit, mobility_3,
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"diagnosing",
+		"searching_upper_levels",
+		"waiting_for_transporter",
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"searching_upper_levels",
+		"waiting_for_transporter",
+		"transporter_moving_to_supply",
+		"transporter_loading",
+		"transporter_moving_back",
+		"transporter_unloading",
+		"waiting_for_repairer",
+		"repairing",
+		"moving_back",
+	)
 }
