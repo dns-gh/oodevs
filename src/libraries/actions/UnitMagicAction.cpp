@@ -108,8 +108,6 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
         message().mutable_tasker()->mutable_party()->set_id( id );
     else if( typeName == kernel::Inhabitant_ABC::typeName_ )
         message().mutable_tasker()->mutable_population()->set_id( id );
-    else
-        throw MASA_EXCEPTION( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

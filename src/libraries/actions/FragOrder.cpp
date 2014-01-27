@@ -96,8 +96,6 @@ void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
         message().mutable_tasker()->mutable_automat()->set_id( id );
     else if( typeName == kernel::Population_ABC::typeName_ )
         message().mutable_tasker()->mutable_crowd()->set_id( id );
-    else
-        throw MASA_EXCEPTION( "Unknown tasker" );
     message().mutable_type()->set_id( GetType() ? GetType()->GetId() : 0 );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );

@@ -133,12 +133,10 @@ void ActionFactory::AddTasker( Action_ABC& action, const sword::Tasker& tasker, 
         entity = entities_.FindInhabitant( id );
         type = kernel::Inhabitant_ABC::typeName_;
     }
-    if( entity )
-        AddTasker( action, entity, isSimulation );
-    else if( id != 0 && !type.empty() )
+    if( !entity && id != 0 && !type.empty() )
         AddTasker( action, id, type, isSimulation );
     else
-        throw MASA_EXCEPTION( "Invalid sword::Tasker" );
+        AddTasker( action, entity, isSimulation );
 }
 
 // -----------------------------------------------------------------------------
