@@ -121,7 +121,10 @@ void LocationEditorBox::SelectParser( int index )
 {
     auto actions = menu_->actions();
     for( int i = 0; i < actions.size(); ++i )
+    {
+        actions[i]->setCheckable( true );
         actions[i]->setChecked( i == index );
+    }
     current_ = &parsers_->GetParser( index );
     QToolTip::add( combo_, menu_->text( index ) );
     UpdateParamZone();
