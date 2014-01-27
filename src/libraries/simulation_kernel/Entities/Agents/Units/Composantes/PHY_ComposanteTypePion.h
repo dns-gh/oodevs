@@ -387,8 +387,8 @@ private:
 
     // Logistic : supply
     const PHY_DotationNature* pStockTransporterNature_;
-          double              rStockTransporterWeightCapacity_;
-          double              rStockTransporterVolumeCapacity_;
+    double rStockTransporterMaxWeightCapacity_;
+    double rStockTransporterMaxVolumeCapacity_;
 
     // Logistic : aviation resources quotas
     T_AviationResourceQuotas aviationResourceQuotas_;
