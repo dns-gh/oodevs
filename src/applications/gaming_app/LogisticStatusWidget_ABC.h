@@ -127,12 +127,17 @@ private:
 
     virtual void OnUpdated( const Extension& element ) = 0;
 
+protected:
+    //! @name Protected member data
+    //@{
+    QStandardItemModel* dataModel_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QStandardItemModel* dataModel_;
     QSortFilterProxyModel* proxyModel_;
     gui::CommonDelegate* delegate_;
     //@}
