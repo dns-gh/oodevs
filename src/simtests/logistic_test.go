@@ -475,7 +475,7 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, breakdown Br
 	client.Resume(0)
 	select {
 	case <-quit:
-	case <-time.After(10 * time.Second):
+	case <-time.After(1 * time.Minute):
 		c.Fatal("timeout")
 	}
 	c.Assert(idx, Equals, len(checkers))
