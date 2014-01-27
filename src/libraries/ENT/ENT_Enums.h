@@ -218,19 +218,6 @@ enum E_WeatherType
     eNbrWeatherType
 };
 
-enum E_LogSupplyHandlingStatus
-{
-    eLogSupplyHandlingStatus_ConvoiEnAttenteCamions,
-    eLogSupplyHandlingStatus_ConvoiConstitution,
-    eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement,
-    eLogSupplyHandlingStatus_ConvoiChargement,
-    eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement,
-    eLogSupplyHandlingStatus_ConvoiDechargement,
-    eLogSupplyHandlingStatus_ConvoiDeplacementRetour,
-    eLogSupplyHandlingStatus_Termine,
-    eNbrLogSupplyHandlingStatus
-};
-
 enum E_ObstacleActivation
 {
     eObstacleActivation_Activated,

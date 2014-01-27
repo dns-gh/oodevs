@@ -159,9 +159,9 @@ void  Formatter< E_HumanRank >::operator()( const E_HumanRank& e, Displayer_ABC&
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogSupplyHandlingStatus >::operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus >::operator()( const sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogSupplyHandlingStatus( e ) ) );
 }
 
 void  Formatter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus >::operator()( const sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const

@@ -25,6 +25,7 @@ namespace sword
     enum LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
     enum LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus;
+    enum LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus;
 }
 
 namespace kernel
@@ -335,9 +336,9 @@ struct Formatter< E_HumanRank >
 };
 
 template< >
-struct Formatter< E_LogSupplyHandlingStatus >
+struct Formatter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus >
 {
-    void operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >

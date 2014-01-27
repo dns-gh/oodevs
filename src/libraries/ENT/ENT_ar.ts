@@ -376,38 +376,6 @@
         <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-        <source>finished</source>
-        <translation type="unfinished">الانتهاء</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation type="unfinished">قافلة الشاحنات في انتظار</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation type="unfinished">إعداد القافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation type="unfinished">القافلة تتحرك لتحميل النقطة</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation type="unfinished">تحميل قافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation type="unfinished">القافلة تتحرك إلى نقطة التفريغ</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation type="unfinished">تفريغ قافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation type="unfinished">القافلة تتحرك إلى الوراء</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation type="unfinished">هادئة</translation>
     </message>
@@ -1069,6 +1037,41 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation type="unfinished">جمع وتفريغ سيارة إسعاف</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation type="unfinished">قافلة الشاحنات في انتظار</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation type="unfinished">إعداد القافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation type="unfinished">القافلة تتحرك لتحميل النقطة</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation type="unfinished">تحميل قافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation type="unfinished">القافلة تتحرك إلى نقطة التفريغ</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation type="unfinished">تفريغ قافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation type="unfinished">القافلة تتحرك إلى الوراء</translation>
     </message>
     <message>
         <source>finished</source>

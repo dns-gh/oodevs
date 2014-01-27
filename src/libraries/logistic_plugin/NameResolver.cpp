@@ -82,7 +82,7 @@ void NameResolver::GetFormationName( int id, std::string& name ) const
 // -----------------------------------------------------------------------------
 void NameResolver::GetSupplykName( const sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus& eSupply, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogSupplyHandlingStatus( static_cast< E_LogSupplyHandlingStatus >( eSupply ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogSupplyHandlingStatus( eSupply );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,7 +36,6 @@ typedef ENT_Tr::Converter< E_UnitExperience > T_ConverterUnitExperience;
 typedef ENT_Tr::Converter< E_UnitStress > T_ConverterUnitStress;
 typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
 typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
-typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
 typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
 typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
 typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
@@ -67,6 +66,7 @@ typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterLogisticLevel;
 typedef ENT_Tr::Converter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
 typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
 typedef ENT_Tr::Converter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -255,19 +255,6 @@ T_ConverterWeatherType WeatherTypeConverter_[] =
     T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
     T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
-};
-
-T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
-{
-    T_ConverterLogSupplyHandlingStatus( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy waiting for trucks" ), eLogSupplyHandlingStatus_ConvoiEnAttenteCamions ),
-    T_ConverterLogSupplyHandlingStatus( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy setting up" ), eLogSupplyHandlingStatus_ConvoiConstitution ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to loading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy loading" ), eLogSupplyHandlingStatus_ConvoiChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to unloading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy unloading" ), eLogSupplyHandlingStatus_ConvoiDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving back" ), eLogSupplyHandlingStatus_ConvoiDeplacementRetour ),
-    T_ConverterLogSupplyHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogSupplyHandlingStatus_Termine ),
-    T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
 };
 
 T_ConverterObstacleActivation ObstacleActivationConverter_[] =
@@ -662,6 +649,19 @@ T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
     T_ConverterLogMedicalHandlingStatus( "", "", sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus_MAX )
 };
 
+T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
+{
+    T_ConverterLogSupplyHandlingStatus( "convoy_waiting_for_transporters",     QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy waiting for trucks" ),        sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_setup",                        QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy setting up" ),                sword::LogSupplyHandlingUpdate::convoy_setup ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_to_loading_point",      QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving to loading point" ),   sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_loading",                      QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy loading" ),                   sword::LogSupplyHandlingUpdate::convoy_loading ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_to_unloading_point",    QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving to unloading point" ), sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_unloading",                    QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy unloading" ),                 sword::LogSupplyHandlingUpdate::convoy_unloading ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_back_to_loading_point", QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving back" ),               sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_finished",                     QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "finished" ),                         sword::LogSupplyHandlingUpdate::convoy_finished ),
+    T_ConverterLogSupplyHandlingStatus( "", "", sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus_MAX )
+};
+
 }  // namespace
 
 #define INIT_TR( NAME )\
@@ -741,7 +741,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LightingType );
     INIT_TR( Location );
     INIT_TR( LocationType );
-    INIT_TR( LogSupplyHandlingStatus );
     INIT_TR( MeetingEngagementStatus );
     INIT_TR( MissionType );
     INIT_TR( Modes );
@@ -764,6 +763,7 @@ void ENT_Tr::InitTranslations()
     INIT_SUB_PROTO_TR( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
     INIT_SUB_PROTO_TR( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
     INIT_SUB_PROTO_TR( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
+    INIT_SUB_PROTO_TR( LogSupplyHandlingUpdate, EnumLogSupplyHandlingStatus, LogSupplyHandlingStatus );
     INIT_SUB_PROTO_TR( MagicAction, Type, MagicActionType );
     INIT_SUB_PROTO_TR( ObjectMagicAction, Type, ObjectMagicActionType );
     INIT_SUB_PROTO_TR( UnitMagicAction, Type, UnitMagicActionType );
@@ -792,7 +792,6 @@ IMPLEMENT_CONVERT_METHODS( LayerTypes );
 IMPLEMENT_CONVERT_METHODS( LightingType );
 IMPLEMENT_CONVERT_METHODS( Location );
 IMPLEMENT_CONVERT_METHODS( LocationType );
-IMPLEMENT_CONVERT_METHODS( LogSupplyHandlingStatus );
 IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
 IMPLEMENT_CONVERT_METHODS( MissionType );
 IMPLEMENT_CONVERT_METHODS( Modes );
@@ -815,6 +814,7 @@ IMPLEMENT_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicA
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogSupplyHandlingUpdate, EnumLogSupplyHandlingStatus, LogSupplyHandlingStatus );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType );
 IMPLEMENT_CONVERT_METHODS_SUB_PROTO( UnitMagicAction, Type, UnitMagicActionType );

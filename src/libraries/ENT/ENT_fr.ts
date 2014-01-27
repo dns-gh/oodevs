@@ -284,38 +284,6 @@
         <translation>conscrit</translation>
     </message>
     <message>
-        <source>finished</source>
-        <translation>terminé</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation>convoi en attente de camion</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation>convoi en constitution</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation>convoi en déplacement vers point de chargement</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation>convoi en chargement</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation>convoi en déplacement vers point de déchargement</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation>convoi en déchargement</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation>convoi sur le retour</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation>calme</translation>
     </message>
@@ -1069,6 +1037,41 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation>ambulance de collecte en déchargement</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation>convoi en attente de camion</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation>convoi en constitution</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation>convoi en déplacement vers point de chargement</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation>convoi en chargement</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation>convoi en déplacement vers point de déchargement</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation>convoi en déchargement</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation>convoi sur le retour</translation>
     </message>
     <message>
         <source>finished</source>

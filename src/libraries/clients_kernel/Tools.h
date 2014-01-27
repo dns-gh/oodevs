@@ -70,7 +70,6 @@ namespace tools
     QString ToString( E_UnitStress nType );
     QString ToString( E_UnitTiredness nType );
     QString ToString( E_HumanWound nType );
-    QString ToString( E_LogSupplyHandlingStatus nType );
     QString ToString( E_LocationType nType );
     QString ToString( E_AgentNbcSuit nType );
     QString ToString( E_DotationFamily nType, ENT_Tr::E_Conversion conversion = ENT_Tr::eToSim );

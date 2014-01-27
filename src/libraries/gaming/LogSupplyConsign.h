@@ -33,6 +33,7 @@ namespace sword
     class ParentEntity;
     class LogSupplyHandlingCreation;
     class LogSupplyHandlingUpdate;
+    enum LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus;
 }
 
 class Simulation;
@@ -70,7 +71,7 @@ public:
     virtual kernel::Entity_ABC* GetHandler() const;
     virtual kernel::Agent_ABC* GetConvoy() const;
     const kernel::Entity_ABC* GetProviding() const;
-    E_LogSupplyHandlingStatus GetStatus() const;
+    sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
@@ -78,11 +79,6 @@ public:
 
 private:
     virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
-    //! @name Copy/Assignment
-    //@{
-    LogSupplyConsign( const LogSupplyConsign& );
-    LogSupplyConsign& operator=( const LogSupplyConsign& );
-    //@}
 
     //! @name Tools
     //@{
@@ -98,7 +94,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > pLogHandlingEntity_;
     kernel::SafePointer< kernel::Agent_ABC > pPionLogConvoying_;
     kernel::SafePointer< kernel::Entity_ABC > pLogProvidingConvoyResourcesEntity_;
-    E_LogSupplyHandlingStatus nState_;
+    sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus nState_;
     //@}
 };
 

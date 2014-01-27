@@ -284,38 +284,6 @@
         <translation>novice</translation>
     </message>
     <message>
-        <source>finished</source>
-        <translation>finished</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation>convoy waiting for truck</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation>convoy setting up</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation>convoy moving to loading point</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation>convoy loading</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation>convoy moving to unloading point</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation>convoy unloading</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation>convoy moving back</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation>quiet</translation>
     </message>
@@ -1069,6 +1037,41 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation type="unfinished">collection ambulance unloading</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">finished</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation type="unfinished">convoy waiting for truck</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation type="unfinished">convoy setting up</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation type="unfinished">convoy moving to loading point</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation type="unfinished">convoy loading</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation type="unfinished">convoy moving to unloading point</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation type="unfinished">convoy unloading</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation type="unfinished">convoy moving back</translation>
     </message>
     <message>
         <source>finished</source>

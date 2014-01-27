@@ -22,6 +22,11 @@ class MIL_Agent_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
+namespace sword
+{
+    enum LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus;
+}
+
 namespace logistic
 {
     class SupplyConvoy_ABC;
@@ -91,25 +96,13 @@ private:
     typedef tools::Map< const PHY_DotationCategory*, double >                                 T_Resources;
     typedef tools::Map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
     typedef std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > >                       T_RecipientRequests;
-
-    enum E_State
-    {
-        eConvoyWaitingForTransporters,
-        eConvoySetup,
-        eConvoyGoingToLoadingPoint,
-        eConvoyLoading,
-        eConvoyGoingToUnloadingPoint,
-        eConvoyUnloading,
-        eConvoyGoingBackToFormingPoint,
-        eFinished
-    };
     //@}
 
 private:
     //! @name Operations
     //@{
     void UpdateTimer( unsigned timeRemaining );
-    void SetState    ( E_State newState );
+    void SetState    ( sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus newState );
     bool IsActionDone( unsigned timeRemaining );
     SupplyRecipient_ABC* GetCurrentSupplyRecipient() const;
     void SupplyAndProceedWithNextRecipient();
@@ -139,7 +132,7 @@ private:
     unsigned long creationTick_;
     SupplySupplier_ABC* supplier_;
     const MIL_Agent_ABC* provider_;
-    E_State state_;
+    sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus state_;
     unsigned int currentStateEndTimeStep_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
     T_Resources resources_;

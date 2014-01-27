@@ -284,38 +284,6 @@
         <translation>novato</translation>
     </message>
     <message>
-        <source>finished</source>
-        <translation>terminado</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation>convoy esperando por camiones</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation>convoy conformándose</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation>convoy moviéndose a punto de carga</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation>convoy cargando</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation>convoy moviéndose a punto de descarga</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation>convoy descargando</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation>convoy en retorno</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation>calmado</translation>
     </message>
@@ -1069,6 +1037,41 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation type="unfinished">ambulancia de recolección descargando</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">terminado</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation type="unfinished">convoy esperando por camiones</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation type="unfinished">convoy conformándose</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation type="unfinished">convoy moviéndose a punto de carga</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation type="unfinished">convoy cargando</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation type="unfinished">convoy moviéndose a punto de descarga</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation type="unfinished">convoy descargando</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation type="unfinished">convoy en retorno</translation>
     </message>
     <message>
         <source>finished</source>
