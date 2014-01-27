@@ -472,6 +472,8 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, 
 	quit := make(chan struct{})
 	ctx := client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
+			c.Error(err)
+			close(quit)
 			return true
 		}
 		if msg == nil ||
