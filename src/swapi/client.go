@@ -54,7 +54,10 @@ type HandlerRegister struct {
 func MakeHandlerRegister(handler MessageHandler, timeout time.Duration) HandlerRegister {
 	return HandlerRegister{
 		handler: handler,
-		context: make(chan int32),
+		// Set capacity to 1 so serve() goroutine does not have to wait for
+		// Register() / PostWithTimeout() to be ready before processing more
+		// events.
+		context: make(chan int32, 1),
 		timeout: timeout,
 	}
 }
