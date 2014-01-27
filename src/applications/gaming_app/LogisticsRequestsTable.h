@@ -19,6 +19,11 @@ namespace actions
     class ActionsModel;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Entity_ABC;
@@ -47,7 +52,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
-                                     actions::ActionsModel& actionsModel, const kernel::Controllers& controllers );
+                                     actions::ActionsModel& actionsModel, const kernel::Controllers& controllers,
+                                     const tools::ExerciseConfig& config );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -86,6 +92,7 @@ protected:
     QStringList                horizontalHeaders_;
     ConsignDialog*             consignDialog_;
     const kernel::Controllers& controllers_;
+    bool                       manualLogisticActivated_;
     //@}
 };
 

@@ -68,6 +68,7 @@ public:
     Path BuildPopulationChildFile( const Path& file ) const;
 
     virtual void Parse( int argc, char** argv );
+    virtual bool IsActivated( const std::string& feature ) const;
 
     const Languages& GetLanguages() const;
     const std::string& GetCommandLineLanguage() const;
@@ -94,8 +95,10 @@ private:
     const Path terrainConfigFile_;
     const Path exerciseConfigFile_;
 
+    std::string featuresOptions_;
     std::auto_ptr< const Languages > languages_;
     std::string commandLineLanguage_;
+    std::vector< std::string > devFeatures_;
     //@}
 };
 

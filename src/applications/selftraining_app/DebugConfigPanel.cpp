@@ -20,10 +20,13 @@
 #include "frontend/CreateSession.h"
 
 #include <QScrollArea>
+#include <boost/assign.hpp>
 
 namespace
 {
     const int maxIntegrationDir = 5;
+
+    const std::vector< QString > namesFeature = boost::assign::list_of( "manual-logistic" );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,6 +149,16 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     connect( mapnikLayerBox_, SIGNAL( clicked( bool ) ), SLOT( OnMapnikLayerChecked( bool ) ) );
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
+    // development features
+    featuresBox_ = new QGroupBox();
+    QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
+    for( auto it = namesFeature.begin(); it != namesFeature.end(); ++it )
+    {
+        QCheckBox* checkbox = new QCheckBox( *it );
+        featuresLayout->addWidget( checkbox );
+        features_.push_back( checkbox );
+    }
+
     //general Layout
     QGroupBox* box = new QGroupBox();
     QVBoxLayout* layout = new QVBoxLayout( box );
@@ -154,6 +167,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     layout->addWidget( profilingBox_ );
     layout->addWidget( pathfindsBox_ );
     layout->addWidget( mapnikBox_ );
+    layout->addWidget( featuresBox_ );
     layout->setAlignment( Qt::AlignTop );
     QScrollArea* scroll = new QScrollArea();
     scroll->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -316,4 +330,13 @@ void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
 void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
 {
     registry::WriteBool( "HasMapnikLayer", checked );
+}
+
+QString DebugConfigPanel::GetDevFeatures() const
+{
+    QString result;
+    for( auto it = features_.begin(); it != features_.end(); ++it )
+        if( (*it)->isChecked() )
+            result += ( !result.isEmpty() ? ";" : "" ) + (*it)->text();
+    return result;
 }

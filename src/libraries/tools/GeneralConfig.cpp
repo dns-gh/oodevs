@@ -36,7 +36,8 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
         ( "population-dir", po::value( &populationDir_ )->default_value( "data/population" ), "specify population root directory" )
         ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
         ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    )
-        ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          );
+        ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          )
+        ( "dev-features"  , po::value( &featuresOptions_                                   ), "specify development features to be activated" );
     AddOptions( desc );
 }
 
@@ -60,6 +61,7 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( rootDir_, modelsDir_ );
     ResolveRelativePath( rootDir_, exercisesDir_ );
     ResolveRelativePath( rootDir_, populationDir_ );
+    boost::algorithm::split( devFeatures_, featuresOptions_, boost::algorithm::is_any_of( "," ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,4 +333,9 @@ const Languages& GeneralConfig::GetLanguages() const
 const std::string& GeneralConfig::GetCommandLineLanguage() const
 {
     return commandLineLanguage_;
+}
+
+bool GeneralConfig::IsActivated( const std::string& feature ) const
+{
+    return std::find( devFeatures_.begin(), devFeatures_.end(), feature ) != devFeatures_.end();
 }

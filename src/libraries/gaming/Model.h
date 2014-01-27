@@ -123,6 +123,7 @@ public:
     // $$$$ _RC_ JSR 2011-04-05: Passer en private ce qui peut l'être, voire utiliser des accesseurs.
     kernel::Controllers& controllers_;
     const StaticModel& static_;
+    const tools::ExerciseConfig& config_;
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;

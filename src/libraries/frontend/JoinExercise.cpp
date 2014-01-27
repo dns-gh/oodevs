@@ -34,7 +34,8 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
 // Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
+                            const QString& profile, const QString& devFeatures )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
@@ -44,6 +45,8 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
         AddArgument( "login", "anonymous" );
     else
         AddArgument( "login", profile.toStdString() );
+    if( !devFeatures.isEmpty() )
+        AddArgument( "dev-features", devFeatures.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

@@ -35,6 +35,7 @@ namespace tools
 class Application;
 class ExerciseList;
 class ProgressPage;
+class DebugConfigPanel;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -106,6 +107,7 @@ private:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          hasClient_;
+    DebugConfigPanel*             configPanel_;
     //@}
 };
 
