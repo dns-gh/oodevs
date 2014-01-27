@@ -509,7 +509,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver )
 {
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder;
-    if( parameters.has_supply() && parameters.supply() == true )
+    if( parameters.supply() )
         builder.reset( new logistic::SupplyDotationManualRequestBuilder( parameters, *this, automateResolver ) );
     else
         builder.reset( new logistic::SupplyStockPushFlowRequestBuilder( parameters, *this, automateResolver ) );
