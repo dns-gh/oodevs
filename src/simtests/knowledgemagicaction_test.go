@@ -10,7 +10,6 @@ package simtests
 
 import (
 	. "launchpad.net/gocheck"
-	"strings"
 	"swapi"
 	"sword"
 )
@@ -189,42 +188,6 @@ func (s *TestSuite) TestAddKnowledgeInKnowledgeGroup(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(objectKnowledge.KnowledgeGroupId, Equals, kg.Id)
 	c.Assert(objectKnowledge.ObjectId, Equals, object.Id)
-}
-
-func getSomeUnit(c *C, data *swapi.ModelData) *swapi.Unit {
-	for _, a := range data.Units {
-		return a
-	}
-	c.Fatal("missing units")
-	return nil
-}
-
-func getSomeUnitByName(c *C, data *swapi.ModelData, substring string) *swapi.Unit {
-	for _, a := range data.Units {
-		if strings.Contains(a.Name, substring) {
-			return a
-		}
-	}
-	c.Fatal("no unit whose name contains'" + substring + "'")
-	return nil
-}
-
-func getSomeAutomat(c *C, data *swapi.ModelData) *swapi.Automat {
-	for _, a := range data.Automats {
-		return a
-	}
-	c.Fatal("missing automats")
-	return nil
-}
-
-func getSomeAutomatByName(c *C, data *swapi.ModelData, substring string) *swapi.Automat {
-	for _, a := range data.Automats {
-		if strings.Contains(a.Name, substring) {
-			return a
-		}
-	}
-	c.Fatal("no automat whose name contains'" + substring + "'")
-	return nil
 }
 
 func (s *TestSuite) TestChangeKnowledgeGroup(c *C) {

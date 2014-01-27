@@ -319,14 +319,6 @@ func makeBreakdown(c *C, id uint32, eq *swapi.EquipmentDotation, count int32, br
 	}
 }
 
-func getSomeEquipment(c *C, unit *swapi.Unit) (uint32, *swapi.EquipmentDotation) {
-	for k, v := range unit.EquipmentDotations {
-		return k, v
-	}
-	c.Fatal("unable to find any equipment")
-	return 0, nil
-}
-
 type BreakdownType int32
 
 const (

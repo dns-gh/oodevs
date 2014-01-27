@@ -73,32 +73,6 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 	return err
 }
 
-func getSomeFormation(c *C, data *swapi.ModelData) *swapi.Formation {
-	for _, f := range data.Formations {
-		return f
-	}
-	c.Fatal("missing formations")
-	return nil
-}
-
-func getSomeFormationByName(c *C, data *swapi.ModelData, substring string) *swapi.Formation {
-	for _, f := range data.Formations {
-		if strings.Contains(f.Name, substring) {
-			return f
-		}
-	}
-	c.Fatal("no formation whose name contains'" + substring + "'")
-	return nil
-}
-
-func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
-	for _, cr := range data.Crowds {
-		return cr
-	}
-	c.Fatal("missing crowds")
-	return nil
-}
-
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
@@ -578,34 +552,10 @@ func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formatio
 	return formation
 }
 
-func getAnyKnowledgeGroupId(c *C, data *swapi.ModelData) uint32 {
-	for id := range data.KnowledgeGroups {
-		return id
-	}
-	c.Fatal("unable to find any knowledge group")
-	return 0
-}
-
-func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int) uint32 {
-	parties := map[uint32]struct{}{}
-	for id, group := range data.KnowledgeGroups {
-		_, found := parties[group.PartyId]
-		if found {
-			continue
-		}
-		if len(parties) == index {
-			return id
-		}
-		parties[group.PartyId] = struct{}{}
-	}
-	c.Fatal("unable to find a knowledge group with party index", index)
-	return 0
-}
-
 func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swapi.Automat {
 	data := client.Model.GetData()
 	if groupId == 0 {
-		groupId = getAnyKnowledgeGroupId(c, data)
+		groupId = getSomeKnowledgeGroup(c, data).Id
 	}
 	kg0, ok := data.KnowledgeGroups[groupId]
 	c.Assert(ok, Equals, true)
