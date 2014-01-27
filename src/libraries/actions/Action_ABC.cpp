@@ -218,12 +218,9 @@ bool Action_ABC::CheckKnowledgeValidity() const
 // -----------------------------------------------------------------------------
 void Action_ABC::CommitTo( sword::MissionParameters& message ) const
 {
-    if( CheckKnowledgeValidity() && IsValid() )
-    {
-        // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
-        for( auto it = elements_.begin(); it != elements_.end(); ++it )
-            it->second->CommitTo( *message.add_elem() );
-    }
+    // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CommitTo( *message.add_elem() );
 }
 
 // -----------------------------------------------------------------------------
