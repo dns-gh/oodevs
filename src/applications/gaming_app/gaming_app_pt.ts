@@ -1105,6 +1105,14 @@ Do you want to replace it?</source>
         <source>Chain status</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -2092,6 +2100,21 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
