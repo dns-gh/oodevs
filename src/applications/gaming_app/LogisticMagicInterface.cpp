@@ -40,28 +40,30 @@ LogisticMagicInterface::LogisticMagicInterface( QWidget* parent,
     , actionsModel_( model.actions_ )
     , selected_( controllers.controller_ )
     , profile_( profile )
+    , changeQuotasDialog_( new LogisticSupplyChangeQuotasDialog( parent,
+                                                                 controllers,
+                                                                 model.actions_,
+                                                                 staticModel,
+                                                                 simulation,
+                                                                 model ) )
+    , pushFlowDialog_( new LogisticSupplyPushFlowDialog( parent,
+                                                         controllers,
+                                                         model.actions_,
+                                                         staticModel,
+                                                         simulation,
+                                                         layer,
+                                                         model.agents_,
+                                                         profile ) )
+    , pullFlowDialog_( new LogisticSupplyPullFlowDialog( parent,
+                                                         controllers,
+                                                         model.actions_,
+                                                         staticModel,
+                                                         simulation,
+                                                         layer,
+                                                         model.agents_,
+                                                         model.teams_,
+                                                         profile ) )
 {
-    changeQuotasDialog_ = new LogisticSupplyChangeQuotasDialog( parent,
-                                                                controllers,
-                                                                model.actions_,
-                                                                staticModel,
-                                                                simulation,
-                                                                model );
-    pushFlowDialog_ = new LogisticSupplyPushFlowDialog( parent,
-                                                        controllers,
-                                                        model.actions_,
-                                                        staticModel,
-                                                        simulation,
-                                                        layer,
-                                                        model.agents_ );
-    pullFlowDialog_ = new LogisticSupplyPullFlowDialog( parent,
-                                                        controllers,
-                                                        model.actions_,
-                                                        staticModel,
-                                                        simulation,
-                                                        layer,
-                                                        model.agents_,
-                                                        model.teams_ );
     controllers_.Register( *this );
 }
 

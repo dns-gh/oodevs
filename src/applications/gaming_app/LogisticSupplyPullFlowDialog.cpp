@@ -68,10 +68,12 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
                                                             const Time_ABC& simulation,
                                                             ParametersLayer& layer,
                                                             const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                            const tools::Resolver_ABC< Formation_ABC >& formations )
+                                                            const tools::Resolver_ABC< Formation_ABC >& formations,
+                                                            const kernel::Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
     , formations_( formations )
     , supplier_( 0 )
+    , profile_( profile )
 {
     setCaption( tr( "Pull supply flow" ) );
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
