@@ -976,12 +976,53 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
 }
 
-func (c *Client) LogisticsSupplyPullFlow(supplierId, suppliedId uint32) error {
-	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
-	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
-	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
-	return c.sendUnitMagicAction(MakeAutomatTasker(suppliedId), MakeParameters(param),
+func (c *Client) LogisticsSupplyPullFlowTest(receiverId uint32, params *sword.MissionParameters) ([]bool, error) {
+	msg := CreateUnitMagicAction(MakeAutomatTasker(receiverId), params,
 		sword.UnitMagicAction_log_supply_pull_flow)
+	var result []bool
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply, _, err := getUnitMagicActionAck(msg)
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			if err == nil {
+				return invalid("result", reply.GetResult())
+			}
+			return err
+		}
+		for _, e := range value.GetList() {
+			result = append(result, e.GetBooleanValue())
+		}
+		return err
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return result, err
+}
+
+func (c *Client) LogisticsSupplyPullFlow(receiverId, supplierId uint32,
+	supplies, equipments map[uint32]uint32) ([]bool, error) {
+
+	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
+	resources := []*sword.SupplyFlowResource{}
+	for resource, quantity := range supplies {
+		resources = append(resources, &sword.SupplyFlowResource{
+			ResourceType: MakeId(resource),
+			Quantity:     proto.Uint32(quantity),
+		})
+	}
+	transporters := []*sword.SupplyFlowTransporter{}
+	for equipment, quantity := range equipments {
+		transporters = append(transporters, &sword.SupplyFlowTransporter{
+			EquipmentType: MakeId(equipment),
+			Quantity:      proto.Uint32(quantity),
+		})
+	}
+	pullFlowParams := &sword.PullFlowParameters{
+		Supplier:     supplier,
+		Resources:    resources,
+		Transporters: transporters,
+	}
+	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
+	return c.LogisticsSupplyPullFlowTest(receiverId, MakeParameters(param))
 }
 
 func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*KnowledgeGroup, error) {
