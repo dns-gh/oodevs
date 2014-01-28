@@ -63,7 +63,7 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	var reIgn *regexp.Regexp
 	var err error
 	if len(opts.IgnorePatterns) > 0 {
-		reIgn, err = regexp.Compile("(" + strings.Join(opts.IgnorePatterns, "|") + ")")
+		reIgn, err = regexp.Compile("(?:(?:" + strings.Join(opts.IgnorePatterns, ")|(?:") + "))")
 		if err != nil {
 			return "", err
 		}
