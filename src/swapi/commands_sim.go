@@ -953,7 +953,7 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 	for resource, quantity := range supplies {
 		resources = append(resources, &sword.SupplyFlowResource{
 			ResourceType: MakeId(resource),
-			Quantity:     &quantity,
+			Quantity:     proto.Uint32(quantity),
 		})
 	}
 	recipient := &sword.SupplyFlowRecipient{
@@ -964,8 +964,8 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 	transporters := []*sword.SupplyFlowTransporter{}
 	for equipment, quantity := range equipments {
 		transporters = append(transporters, &sword.SupplyFlowTransporter{
-			EquipmentType: &sword.Id{Id: &equipment},
-			Quantity:      &quantity,
+			EquipmentType: MakeId(equipment),
+			Quantity:      proto.Uint32(quantity),
 		})
 	}
 	pushFlowParams := &sword.PushFlowParameters{
