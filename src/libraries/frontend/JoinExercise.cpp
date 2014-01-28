@@ -46,7 +46,7 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
     else
         AddArgument( "login", profile.toStdString() );
     if( !devFeatures.isEmpty() )
-        AddArgument( "dev-features", devFeatures.toStdString() );
+        AddArgument( "features", devFeatures.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

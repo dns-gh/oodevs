@@ -37,7 +37,7 @@ GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
         ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
         ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    )
         ( "language,l"    , po::value( &commandLineLanguage_ )->default_value( ""          ), "specify current language"          )
-        ( "dev-features"  , po::value( &features_                                          ), "specify development features to be activated" );
+        ( "features"  , po::value( &features_                                              ), "specify development features to be activated" );
     AddOptions( desc );
 }
 
