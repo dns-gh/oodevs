@@ -1108,6 +1108,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Chain status</source>
         <translation>Etat de la chaîne</translation>
     </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
 </context>
 <context>
     <name>InfoMedicalDialog</name>
@@ -2097,6 +2105,21 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Lent</source>
         <translation>prêté</translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation>Mode</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
     </message>
 </context>
 <context>

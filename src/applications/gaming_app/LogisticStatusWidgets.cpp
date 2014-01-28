@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticStatusWidgets.h"
 #include "clients_gui/BaseDisplayer.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -77,6 +78,49 @@ void MaintenanceStatusWidget::OnUpdated( const kernel::MaintenanceStates_ABC& st
 {
     DisplayerAdapter< MaintenanceStatusWidget > displayer( *this );
     states.Display( displayer );
+}
+
+void MaintenanceStatusWidget::OnUpdated( const gui::LogisticBase& base )
+{
+    Add( tools::translate( "MaintenanceStatusWidget", "Mode" ), base.IsMaintenanceManual()
+         ? tools::translate( "MaintenanceStatusWidget", "Manual" )
+         : tools::translate( "MaintenanceStatusWidget", "Automatic" ) );
+}
+
+void MaintenanceStatusWidget::Update()
+{
+    dataModel_->clear();
+    if( const auto* extension = selected_->Retrieve< gui::LogisticBase >() )
+        OnUpdated( *extension );
+    if( const auto* extension = selected_->Retrieve< kernel::MaintenanceStates_ABC >() )
+        OnUpdated( *extension );
+}
+
+void MaintenanceStatusWidget::NotifyUpdated( const kernel::MaintenanceStates_ABC& states )
+{
+    if( selected_ && selected_->Retrieve< kernel::MaintenanceStates_ABC >() == &states )
+        Update();
+}
+
+void MaintenanceStatusWidget::NotifyUpdated( const gui::LogisticBase& base )
+{
+    if( selected_ && selected_->Retrieve< gui::LogisticBase >() == &base )
+        Update();
+}
+
+void MaintenanceStatusWidget::NotifySelected( const kernel::Entity_ABC* element )
+{
+    selected_ = element;
+    if( !selected_ )
+        return;
+    if( selected_->Retrieve< kernel::MaintenanceStates_ABC >() ||
+        selected_->Retrieve< gui::LogisticBase >() )
+    {
+        show();
+        Update();
+    }
+    else
+        hide();
 }
 
 // -----------------------------------------------------------------------------

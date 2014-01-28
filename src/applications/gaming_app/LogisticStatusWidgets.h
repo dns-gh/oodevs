@@ -15,6 +15,11 @@
 #include "gaming/MedicalStates.h"
 #include "gaming/SupplyStates.h"
 
+namespace gui
+{
+    class LogisticBase;
+}
+
 // =============================================================================
 /** @class  MaintenanceStatusWidget
     @brief  MaintenanceStatusWidget
@@ -22,6 +27,7 @@
 // Created: SBO 2007-02-19
 // =============================================================================
 class MaintenanceStatusWidget : public LogisticStatusWidget_ABC< kernel::MaintenanceStates_ABC >
+                              , public tools::ElementObserver_ABC< gui::LogisticBase >
 {
 public:
     //! @name Constructors/Destructor
@@ -32,6 +38,11 @@ public:
 
 private:
     virtual void OnUpdated( const kernel::MaintenanceStates_ABC& states );
+    virtual void OnUpdated( const gui::LogisticBase& base );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& state );
+    virtual void NotifyUpdated( const gui::LogisticBase& base );
+    void Update();
 };
 
 // =============================================================================
