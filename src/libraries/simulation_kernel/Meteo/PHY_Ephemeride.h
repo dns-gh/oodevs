@@ -39,13 +39,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Ephemeride();
-    explicit PHY_Ephemeride( xml::xistream& xis );
+             PHY_Ephemeride( xml::xistream& xis, uint32_t epochTime );
     virtual ~PHY_Ephemeride();
     //@}
 
     //! @name Operations
     //@{
-    bool UpdateNight( unsigned int date );
+    bool UpdateNight( uint32_t date );
     const weather::PHY_Lighting& GetLightingBase() const;
     bool IsNight() const;
     //@}

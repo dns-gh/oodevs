@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Ephemeride.h"
-#include "MIL_AgentServer.h"
 #include "meteo/PHY_Lighting.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -35,7 +34,7 @@ PHY_Ephemeride::PHY_Ephemeride()
 // Name: PHY_Ephemeride constructor
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
+PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis, uint32_t epochTime )
     : bIsNight_( false )
 {
     xis >> xml::start( "ephemerides" );
@@ -53,13 +52,6 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     }
     if( !pDayBase_ || !pNightBase_ )
         throw MASA_EXCEPTION( xis.context() + "Unknown lighting" );
-    std::string date;
-    xis >> xml::end
-        >> xml::start( "exercise-date" )
-            >> xml::attribute( "value", date )
-        >> xml::end;
-    const unsigned int time = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) ).total_seconds();
-    MIL_AgentServer::GetWorkspace().SetInitialRealTime( time );
     {
         char tmp = 0;
         std::istringstream strTmp( sunRise );
@@ -76,7 +68,8 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     }
     if( sunriseTime_ >= sunsetTime_  )
         throw MASA_EXCEPTION( xis.context() + "Sunrise time should be before sunset time" );
-    UpdateNight( MIL_Time_ABC::GetTime().GetRealTime() );
+    xis >> xml::end;
+    UpdateNight( epochTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +133,7 @@ void PHY_Ephemeride::WriteUrban( xml::xostream& xos )
 // Name: PHY_Ephemeride::UpdateNight
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
-bool PHY_Ephemeride::UpdateNight( unsigned int date )
+bool PHY_Ephemeride::UpdateNight( uint32_t date )
 {
     bpt::ptime pdate( bpt::from_time_t( date ) );
     bpt::time_duration time = pdate.time_of_day();

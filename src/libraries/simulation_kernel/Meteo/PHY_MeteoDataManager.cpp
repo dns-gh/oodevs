@@ -92,7 +92,17 @@ void PHY_MeteoDataManager::Initialize()
 void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
 {
     xis >> xml::start( "weather" );
-    pEphemeride_ = new PHY_Ephemeride( xis );
+
+    // Extract and configure exercise start time
+    std::string date;
+    xis >> xml::start( "exercise-date" )
+            >> xml::attribute( "value", date )
+        >> xml::end;
+    const auto since = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) );
+    MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
+    const auto startTime = MIL_Time_ABC::GetTime().GetRealTime();
+
+    pEphemeride_ = new PHY_Ephemeride( xis, startTime );
     InitializeGlobalMeteo( xis );
     pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
     InitializeLocalMeteos( xis );
