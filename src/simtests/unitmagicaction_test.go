@@ -44,7 +44,7 @@ func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 
 func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) error {
 	quit := make(chan error)
-	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
+	handler := func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true
@@ -71,22 +71,6 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 	client.Post(*msg, handler)
 	err := <-quit
 	return err
-}
-
-func getSomeFormation(c *C, data *swapi.ModelData) *swapi.Formation {
-	for _, f := range data.Formations {
-		return f
-	}
-	c.Fatal("missing formations")
-	return nil
-}
-
-func getSomeCrowd(c *C, data *swapi.ModelData) *swapi.Crowd {
-	for _, cr := range data.Crowds {
-		return cr
-	}
-	c.Fatal("missing crowds")
-	return nil
 }
 
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
@@ -568,34 +552,10 @@ func CreateFormation(c *C, client *swapi.Client, partyId uint32) *swapi.Formatio
 	return formation
 }
 
-func getAnyKnowledgeGroupId(c *C, data *swapi.ModelData) uint32 {
-	for id := range data.KnowledgeGroups {
-		return id
-	}
-	c.Fatal("unable to find any knowledge group")
-	return 0
-}
-
-func getAnyKnowledgeGroupIdWithPartyIndex(c *C, data *swapi.ModelData, index int) uint32 {
-	parties := map[uint32]struct{}{}
-	for id, group := range data.KnowledgeGroups {
-		_, found := parties[group.PartyId]
-		if found {
-			continue
-		}
-		if len(parties) == index {
-			return id
-		}
-		parties[group.PartyId] = struct{}{}
-	}
-	c.Fatal("unable to find a knowledge group with party index", index)
-	return 0
-}
-
 func CreateAutomat(c *C, client *swapi.Client, formationId, groupId uint32) *swapi.Automat {
 	data := client.Model.GetData()
 	if groupId == 0 {
-		groupId = getAnyKnowledgeGroupId(c, data)
+		groupId = getSomeKnowledgeGroup(c, data).Id
 	}
 	kg0, ok := data.KnowledgeGroups[groupId]
 	c.Assert(ok, Equals, true)
@@ -705,7 +665,7 @@ func (s *TestSuite) TestFireOrderCreationOnUnit(c *C) {
 
 	// Check unit damages messages
 	var damagesErrors []error
-	handlerId := client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+	handlerId := client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
 			return true
 		}
@@ -940,7 +900,7 @@ func (s *TestSuite) TestDebugBrain(c *C) {
 
 	// Give a mission and wait for debug reports to be emitted
 	seen := make(chan error)
-	client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+	client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			seen <- err
 			return true

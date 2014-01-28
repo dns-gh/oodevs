@@ -39,11 +39,12 @@ func init() {
 }
 
 const (
-	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
+	ExCrossroadBreakdown   = "crossroad-breakdown"
 	ExCrossroadSmallEmpty  = "crossroad-small-empty"
-	ExCrossroadSmallTest   = "crossroad-small-test"
 	ExCrossroadSmallLog    = "crossroad-small-log"
+	ExCrossroadSmallOrbat  = "crossroad-small-orbat"
 	ExCrossroadSmallScores = "crossroad-small-scores"
+	ExCrossroadSmallTest   = "crossroad-small-test"
 	ExGradXYTestEmpty      = "grad-x.y-test-empty"
 	ExLandOfStripesEmpty   = "land-of-stripes-empty"
 )
@@ -316,14 +317,6 @@ const (
 	// Standard Crowd
 	CrowdType = "Standard Crowd"
 )
-
-func getSomeParty(c *C, model *swapi.ModelData) *swapi.Party {
-	for _, party := range model.Parties {
-		return party
-	}
-	c.Fatal("no party found")
-	return nil
-}
 
 func createSpecificAutomat(c *C, client *swapi.Client, partyName string, automatType uint32) *swapi.Automat {
 	data := client.Model.GetData()

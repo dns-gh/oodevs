@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.3.2/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="party1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="76" level="xxx" name="F3" symbol="symbols/sfgpusx">
+          <formation id="83" level="xx" name="F2" symbol="symbols/sfgpusx">
+            <formation id="90" level="x" name="F1" symbol="symbols/sfgpusx">
+              <automat engaged="true" id="91" knowledge-group="3" logistic-level="logistic-base" name="TC2" symbol="symbols/sfgpusx" type="Log Automat 1">
+                <unit command-post="true" id="92" name="Log Unit 1" position="28RDS1398330726" type="Log Unit 1"/>
+                <unit command-post="false" id="93" name="Log Unit 1" position="28RDS1398430826" type="Log Unit 1"/>
+                <unit command-post="false" id="94" name="Log Unit 1" position="28RDS1408330725" type="Log Unit 1"/>
+                <unit command-post="false" id="95" name="Log Unit 1" position="28RDS1398330626" type="Log Unit 1"/>
+                <unit command-post="false" id="96" name="Log Unit 1" position="28RDS1388330727" type="Log Unit 1"/>
+              </automat>
+              <automat engaged="true" id="97" knowledge-group="3" name="Mobile Infantry Platoon" symbol="symbols/sfgpu" type="Mobile Infantry Platoon">
+                <unit command-post="true" id="98" name="Mobile Infantry" position="28RDS1330530703" type="Mobile Infantry"/>
+                <unit command-post="false" id="99" name="Mobile Infantry" position="28RDS1330530802" type="Mobile Infantry"/>
+                <unit command-post="false" id="100" name="Mobile Infantry" position="28RDS1339130652" type="Mobile Infantry"/>
+                <unit command-post="false" id="101" name="Mobile Infantry" position="28RDS1321830654" type="Mobile Infantry"/>
+              </automat>
+            </formation>
+            <formation id="104" level="x" logistic-level="logistic-base" name="BLD" symbol="symbols/sfgpusx">
+              <automat engaged="true" id="84" knowledge-group="3" name="Log Automat 2" symbol="symbols/sfgpusx" type="Log Automat 2">
+                <unit command-post="true" id="85" name="Log Unit 2" position="28RDS1461530716" type="Log Unit 2"/>
+                <unit command-post="false" id="86" name="Log Unit 2" position="28RDS1461630815" type="Log Unit 2"/>
+                <unit command-post="false" id="87" name="Log Unit 2" position="28RDS1471630715" type="Log Unit 2"/>
+                <unit command-post="false" id="88" name="Log Unit 2" position="28RDS1461530616" type="Log Unit 2"/>
+                <unit command-post="false" id="89" name="Log Unit 2" position="28RDS1451530716" type="Log Unit 2"/>
+              </automat>
+            </formation>
+          </formation>
+          <formation id="103" level="xx" logistic-level="logistic-base" name="BLT" symbol="symbols/sfgpusx">
+            <automat engaged="true" id="77" knowledge-group="3" name="Log Automat 3" symbol="symbols/sfgpusx" type="Log Automat 3">
+              <unit command-post="true" id="78" name="Log Unit 3" position="28RDS1535830734" type="Log Unit 3"/>
+              <unit command-post="false" id="79" name="Log Unit 3" position="28RDS1535930834" type="Log Unit 3"/>
+              <unit command-post="false" id="80" name="Log Unit 3" position="28RDS1545830733" type="Log Unit 3"/>
+              <unit command-post="false" id="81" name="Log Unit 3" position="28RDS1535730635" type="Log Unit 3"/>
+              <unit command-post="false" id="82" name="Log Unit 3" position="28RDS1525830735" type="Log Unit 3"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="3" name="knowledge group [3]" type="knowledge group"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="91">
+          <subordinate id="97"/>
+        </logistic-base>
+        <logistic-base id="104">
+          <subordinate id="91">
+            <quotas>
+              <resource name="electrogen 1" quantity="1"/>
+              <resource name="gyroscope 1" quantity="1"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+        <logistic-base id="103">
+          <subordinate id="104">
+            <quotas>
+              <resource name="electrogen 1" quantity="1"/>
+              <resource name="electrogen 2" quantity="1"/>
+              <resource name="gyroscope 1" quantity="1"/>
+              <resource name="gyroscope 2" quantity="1"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party id="2" name="party2" type="friend">
+      <objects/>
+      <tactical/>
+      <communication>
+        <knowledge-group id="4" name="knowledge group[4]" type="knowledge group"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="neutral" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>

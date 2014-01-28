@@ -37,7 +37,7 @@ func (s *TestSuite) TestPostTimeout(c *C) {
 	}
 	// Post some dummy never ending handler
 	quit := make(chan error)
-	client.Post(msg, func(msg *swapi.SwordMessage, context int32, err error) bool {
+	client.Post(msg, func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true

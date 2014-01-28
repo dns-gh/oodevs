@@ -193,7 +193,7 @@ used to exercise swapi.Model update against real world scenarii.
 
 	swapi.ConnectClient(client)
 	// Detect server-side termination
-	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+	client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
 			termination <- 1
 		}

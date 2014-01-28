@@ -34,7 +34,7 @@ func (s *TestSuite) TestCheckpointMessages(c *C) {
 
 	check := func(input, errmsg string) {
 		boundaries := []string{}
-		ctx := client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+		ctx := client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 			if err != nil {
 				return true
 			}
@@ -106,7 +106,7 @@ func (s *TestSuite) TestCheckpointSendState(c *C) {
 
 	check := func(sendState bool) {
 		boundaries := ""
-		ctx := client.Register(func(msg *swapi.SwordMessage, context int32, err error) bool {
+		ctx := client.Register(func(msg *swapi.SwordMessage, id, context int32, err error) bool {
 			if err != nil {
 				return true
 			}

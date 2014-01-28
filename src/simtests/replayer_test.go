@@ -237,7 +237,7 @@ func (s *TestSuite) TestReplayerTimetable(c *C) {
 	c.Assert(err, IsNil)
 
 	broadcasts := 0
-	client.Register(func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+	client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
 			return true
 		}

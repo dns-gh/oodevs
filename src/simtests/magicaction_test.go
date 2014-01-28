@@ -191,14 +191,6 @@ func (s *TestSuite) TestResourceNetworkChange(c *C) {
 	})
 }
 
-func getSomeKnowledgeGroup(c *C, data *swapi.ModelData) *swapi.KnowledgeGroup {
-	for _, k := range data.KnowledgeGroups {
-		return k
-	}
-	c.Fatal("missing knowledge groups")
-	return nil
-}
-
 func (s *TestSuite) TestKnowledgeGroupCreation(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)

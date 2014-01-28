@@ -57,14 +57,14 @@ type authHandler func(msg *sword.AuthenticationToClient_Content, clientId int32)
 
 func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler authHandler, checkClientId bool) <-chan error {
 	quit := make(chan error, 1)
-	wrapper := func(msg *SwordMessage, context int32, err error) bool {
+	wrapper := func(msg *SwordMessage, client, context int32, err error) bool {
 		if err != nil {
 			quit <- err
 			return true
 		}
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
-			(checkClientId && (msg.ClientId != c.clientId || msg.ClientId == 0)) ||
+			(checkClientId && (msg.ClientId != client || msg.ClientId == 0)) ||
 			msg.Context != context {
 			return false
 		}

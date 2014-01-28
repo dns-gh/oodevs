@@ -23,11 +23,6 @@ import (
 	"text/template"
 )
 
-func getRandomUnit(c *C, client *swapi.Client) *swapi.Unit {
-	data := client.Model.GetData()
-	return getSomeUnit(c, data)
-}
-
 func (s *TestSuite) TestExecScript(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)

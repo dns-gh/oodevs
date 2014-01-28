@@ -38,14 +38,6 @@ func CheckResidentCount(c *C, client *swapi.Client,
 	})
 }
 
-func getSomePopulation(c *C, data *swapi.ModelData) *swapi.Population {
-	for _, p := range data.Populations {
-		return p
-	}
-	c.Fatal("missing populations")
-	return nil
-}
-
 func (s *TestSuite) TestChangeHealthState(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
 	defer stopSimAndClient(c, sim, client)
