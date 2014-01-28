@@ -17,6 +17,11 @@ namespace client
     class LogMaintenanceHandlingUpdate;
 }
 
+namespace sword
+{
+    enum sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
+}
+
 class PHY_MaintenanceComposanteState;
 class MIL_Agent_ABC;
 class PHY_RoleInterface_Maintenance;
@@ -70,33 +75,11 @@ public:
     //@}
 
 protected:
-    //! @name Types
-    //@{
-    enum E_State
-    {
-        eGoingFrom,         // La composante se déplace seule vers le TC2
-        eWaitingForCarrier,
-        eCarrierGoingTo,
-        eCarrierLoading,
-        eCarrierGoingFrom,
-        eCarrierUnloading,
-        eDiagnosing,
-        eSearchingForUpperLevel,
-        eWaitingForParts,
-        eWaitingForRepairer,
-        eRepairing,
-        eGoingBackToWar,
-        eFinished,
-        eWaitingForSelection
-    };
-    //@}
-
-protected:
     //! @name Tools
     //@{
     void EnterStateFinished();
-    E_State GetState() const;
-    void    SetState      ( E_State nNewState );
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetState() const;
+    void    SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState );
     void    ResetTimer    ( int timer );
     bool    DecrementTimer();
 
@@ -106,7 +89,7 @@ protected:
     MIL_Agent_ABC* pMaintenance_;
 
 private:
-    E_State  nState_;
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nState_;
     int      nTimer_;
     unsigned currentStateEndTimeStep_; // Only used to send the information over the network
     bool     bHasChanged_;

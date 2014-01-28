@@ -107,7 +107,7 @@ void LogisticsRequestsSupplyWidget::DisplayRequest( const LogisticsConsign_ABC& 
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
     kernel::Entity_ABC* handler = c.GetHandler();
-    LogisticConsignsWidget_ABC::DisplayRequest( c, GetRecipientsLinks( c, false ), handler ? handler->GetName() : "", tools::ToString( c.GetStatus() ) );
+    LogisticConsignsWidget_ABC::DisplayRequest( c, GetRecipientsLinks( c, false ), handler ? handler->GetName() : "", c.GetStatusDisplay() );
 }
 
 // -----------------------------------------------------------------------------

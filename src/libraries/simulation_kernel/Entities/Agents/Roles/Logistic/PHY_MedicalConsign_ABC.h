@@ -17,6 +17,11 @@ namespace client
     class LogMedicalHandlingUpdate;
 }
 
+namespace sword
+{
+    enum LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus;
+}
+
 class MIL_Agent_ABC;
 class PHY_RoleInterface_Medical;
 class PHY_MedicalHumanState;
@@ -67,41 +72,11 @@ public:
     //@}
 
 protected:
-    //! @name Types
-    //@{
-    enum E_State
-    {
-        eWaitingForEvacuation,
-        eEvacuationGoingTo,
-        eEvacuationLoading,
-        eEvacuationWaitingForFullLoading,
-        eEvacuationGoingFrom,
-        eEvacuationUnloading,
-        eWaitingForDiagnostic,
-        eDiagnosing,
-        eSearchingForSortingArea,
-        eWaitingForSorting,
-        eSorting,
-        eSearchingForHealingArea,
-        eWaitingForHealing,
-        eHealing,
-        eResting,
-        eWaitingForCollection,
-        eCollectionLoading,
-        eCollectionWaitingForFullLoading,
-        eCollectionGoingTo,
-        eCollectionUnloading,
-//        eCollectionGoingFrom,           Juste pour les ambulances
-        eFinished
-   };
-    //@}
-
-protected:
     //! @name
     void EnterStateFinished();
 
-    E_State GetState() const;
-    void    SetState( E_State nNewState );
+    sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus GetState() const;
+    void SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState );
     void ResetTimer( int timer );
     bool DecrementTimer();
     void SendExternalTimerValue( int timer );
@@ -111,7 +86,7 @@ protected:
 
 private:
     int nTimer_;
-    E_State nState_;
+    sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nState_;
     int32_t currentStateEndTimeStep_; // Only used to send the information over the network
     bool bHasChanged_;
     MIL_Agent_ABC* pMedical_;

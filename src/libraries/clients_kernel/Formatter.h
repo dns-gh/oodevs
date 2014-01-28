@@ -20,6 +20,14 @@
 #include "Types.h"
 #include "SubTypes.h"
 
+namespace sword
+{
+    enum LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
+    enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
+    enum LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus;
+    enum LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus;
+}
+
 namespace kernel
 {
     class UrbanKnowledge_ABC;
@@ -328,27 +336,27 @@ struct Formatter< E_HumanRank >
 };
 
 template< >
-struct Formatter< E_LogSupplyHandlingStatus >
+struct Formatter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus >
 {
-    void operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_LogMedicalHandlingStatus >
+struct Formatter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus >
 {
-    void operator()( const E_LogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_LogMaintenanceHandlingStatus >
+struct Formatter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus >
 {
-    void operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 template< >
-struct Formatter< E_LogFuneralHandlingStatus >
+struct Formatter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus >
 {
-    void operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const;
+    void operator()( const sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

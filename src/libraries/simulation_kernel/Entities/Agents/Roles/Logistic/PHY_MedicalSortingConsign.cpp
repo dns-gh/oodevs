@@ -79,7 +79,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForSorting()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    SetState( eWaitingForSorting );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_triage );
     ResetTimer( 0 );
 }
 
@@ -122,7 +122,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
 {
     assert( pHumanState_ );
     assert( pDoctor_ );
-    SetState( eSorting );
+    SetState( sword::LogMedicalHandlingUpdate::triaging );
     ResetTimer( PHY_HumanWound::GetSortingTime() );
 }
 
@@ -134,7 +134,7 @@ void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
 
-    SetState( eSearchingForHealingArea );
+    SetState( sword::LogMedicalHandlingUpdate::looking_for_medical_attention );
     ResetTimer( 0 );
 
     // Sorting
@@ -155,7 +155,7 @@ void PHY_MedicalSortingConsign::DoSearchForHealingArea()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
-        SetState( eFinished );
+        SetState( sword::LogMedicalHandlingUpdate::finished );
         ResetTimer( 0 );
         pHumanState_ = 0;
         return;
@@ -173,7 +173,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForCollection()
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     ResetTimer( 0 );
-    SetState( eWaitingForCollection );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,13 +193,13 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
     if( pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
-        SetState( eFinished );
+        SetState( sword::LogMedicalHandlingUpdate::finished );
         return true;
     }
     else if( pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
-        SetState( eFinished );
+        SetState( sword::LogMedicalHandlingUpdate::finished );
         return true;
     }
     return false;
@@ -212,20 +212,31 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
 bool PHY_MedicalSortingConsign::Update()
 {
     if( DecrementTimer() )
-        return GetState() == eFinished;
+        return GetState() == sword::LogMedicalHandlingUpdate::finished;
 
     switch( GetState() )
     {
-        case eWaitingForSorting      : if( DoWaitingForSorting() )    EnterStateSorting                (); break;
-        case eSorting                :                                EnterStateSearchingForHealingArea(); break;
-        case eSearchingForHealingArea: DoSearchForHealingArea();                                           break;
-        case eWaitingForCollection   : if( DoWaitingForCollection() ) EnterStateFinished               (); break;
-        case eFinished               :                                                                     break;
+        case sword::LogMedicalHandlingUpdate::waiting_for_triage:
+            if( DoWaitingForSorting() )
+                EnterStateSorting();
+            break;
+        case sword::LogMedicalHandlingUpdate::triaging:
+            EnterStateSearchingForHealingArea();
+            break;
+        case sword::LogMedicalHandlingUpdate::looking_for_medical_attention:
+            DoSearchForHealingArea();
+            break;
+        case sword::LogMedicalHandlingUpdate::waiting_for_collection:
+            if( DoWaitingForCollection() )
+                EnterStateFinished();
+            break;
+        case sword::LogMedicalHandlingUpdate::finished:
+            break;
 
         default:
             assert( false );
     }
-    return GetState() == eFinished;
+    return GetState() == sword::LogMedicalHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

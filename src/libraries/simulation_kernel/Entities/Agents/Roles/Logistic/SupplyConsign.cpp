@@ -40,7 +40,7 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
     , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( &supplier )
     , provider_                 ( 0 )
-    , state_                    ( eConvoyWaitingForTransporters )
+    , state_                    ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
     , convoy_                   ( parameters.GetConvoyFactory().Create( *this, supplier, parameters ) )
     , currentRecipient_         ( 0 )
@@ -60,7 +60,7 @@ SupplyConsign::SupplyConsign()
     , creationTick_             ( 0 ) 
     , supplier_                 ( 0 )
     , provider_                 ( 0 )
-    , state_                    ( eConvoyWaitingForTransporters )
+    , state_                    ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
     , currentRecipient_         ( 0 )
     , needNetworkUpdate_        ( true )
@@ -199,7 +199,7 @@ void SupplyConsign::UpdateRequestsIfUnitDestroyed()
             convoy_->ResetConveyors( *this );
             convoy_->Finish();
         }
-        SetState( eFinished );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_finished );
         SendChangedState();
     }
 }
@@ -225,7 +225,7 @@ bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory, c
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsFinished() const
 {
-    return state_ == eFinished;
+    return state_ == sword::LogSupplyHandlingUpdate::convoy_finished;
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,9 @@ bool SupplyConsign::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
     {
         convoy_->ResetConveyors( *this );
         convoy_->Finish( convoy_->IsFinished() );
-        SetState( state_ == eConvoyGoingBackToFormingPoint ? eFinished : eConvoyWaitingForTransporters );
+        SetState( state_ == sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point
+                  ? sword::LogSupplyHandlingUpdate::convoy_finished
+                  : sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters );
         SendChangedState();
         return true;
     }
@@ -273,7 +275,7 @@ void SupplyConsign::ResetConsign()
     BOOST_FOREACH( const auto& data, requestsQueued_ )
         data.first->OnSupplyCanceled( shared_from_this() );
     requestsQueued_.clear();
-    SetState( eFinished );
+    SetState( sword::LogSupplyHandlingUpdate::convoy_finished );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +309,7 @@ namespace
 
 void SupplyConsign::FinishSuccessfullyWithoutDelay()
 {
-    E_State state = eFinished;
+    sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus state = sword::LogSupplyHandlingUpdate::convoy_finished;
     while( state != state_ )
     {
         state = state_;
@@ -320,7 +322,7 @@ void SupplyConsign::FinishSuccessfullyWithoutDelay()
 // Name: SupplyConsign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyConsign::SetState( E_State newState )
+void SupplyConsign::SetState( sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus newState )
 {
     if( newState != state_ )
     {
@@ -357,9 +359,9 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
     currentRecipient_ = GetCurrentSupplyRecipient();
     convoy_->SetCurrentSupplyRecipient( currentRecipient_ );
     if( !currentRecipient_ )
-        SetState( eConvoyGoingBackToFormingPoint );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point );
     else
-        SetState( eConvoyGoingToUnloadingPoint );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +371,7 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
 void SupplyConsign::DoConvoyReserveTransporters()
 {
     if( IsActionDone( convoy_->ReserveTransporters( resources_ ) ) )
-        SetState( eConvoySetup );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_setup );
     if( convoy_->IsImpossible() )
         ResetConsign();
 }
@@ -382,7 +384,7 @@ void SupplyConsign::DoConvoySetup()
 {
     if( IsActionDone( convoy_->Setup() ) )
     {
-        SetState( eConvoyGoingToLoadingPoint );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point );
         convoy_->SetProvider( provider_ );
         convoy_->GetTransportersProvider().OnSupplyConvoyLeaving( shared_from_this() );
     }
@@ -396,7 +398,7 @@ void SupplyConsign::DoConvoyMoveToSupplier()
 {
     if( IsActionDone( convoy_->MoveToSupplier() ) )
     {
-        SetState( eConvoyLoading );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_loading );
         supplier_->OnSupplyConvoyArriving( shared_from_this() );
     }
 }
@@ -424,7 +426,7 @@ void SupplyConsign::DoConvoyMoveToSupplyRecipient()
     if( IsActionDone( convoy_->MoveToSupplyRecipient( ) ) )
     {
         currentRecipient_->OnSupplyConvoyArriving( shared_from_this() );
-        SetState( eConvoyUnloading );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_unloading );
     }
 }
 
@@ -450,7 +452,7 @@ void SupplyConsign::DoConvoyMoveToTransportersProvider()
 {
     if( IsActionDone( convoy_->MoveToTransportersProvider() ) )
     {
-        SetState( eFinished );
+        SetState( sword::LogSupplyHandlingUpdate::convoy_finished );
         convoy_->GetTransportersProvider().OnSupplyConvoyArriving( shared_from_this() );
     }
 }
@@ -464,18 +466,34 @@ bool SupplyConsign::Update()
     UpdateRequestsIfUnitDestroyed();
     switch( state_ )
     {
-        case eConvoyWaitingForTransporters  : DoConvoyReserveTransporters(); break;
-        case eConvoySetup                   : DoConvoySetup(); break;
-        case eConvoyGoingToLoadingPoint     : DoConvoyMoveToSupplier(); break;
-        case eConvoyLoading                 : DoConvoyLoad(); break; 
-        case eConvoyGoingToUnloadingPoint   : DoConvoyMoveToSupplyRecipient(); break;
-        case eConvoyUnloading               : DoConvoyUnload(); break;
-        case eConvoyGoingBackToFormingPoint : DoConvoyMoveToTransportersProvider(); break;
-        case eFinished                      : convoy_->Finish(); break;
+        case sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters:
+            DoConvoyReserveTransporters();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_setup:
+            DoConvoySetup();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point:
+            DoConvoyMoveToSupplier();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_loading:
+            DoConvoyLoad();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point:
+            DoConvoyMoveToSupplyRecipient();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_unloading:
+            DoConvoyUnload();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point:
+            DoConvoyMoveToTransportersProvider();
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_finished:
+            convoy_->Finish();
+            break;
         default:
             assert( false );
     }
-    return state_ == eFinished;
+    return state_ == sword::LogSupplyHandlingUpdate::convoy_finished;
 }
 
 // -----------------------------------------------------------------------------
@@ -634,14 +652,29 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
     unsigned check = 0;
     switch( state_ )
     {
-        case eConvoyWaitingForTransporters  : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoySetup                   : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoyGoingToLoadingPoint     : check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoyLoading                 : check = eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoyGoingToUnloadingPoint   : check = eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoyUnloading               : check = eCheckRecipients | eCheckTransportersProvider; break;
-        case eConvoyGoingBackToFormingPoint : check = eCheckTransportersProvider; break;
-        case eFinished                      : break;
+        case sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters:
+            check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_setup:
+            check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point:
+            check = eCheckSupplier | eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_loading:
+            check = eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point:
+            check = eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_unloading:
+            check = eCheckRecipients | eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point:
+            check = eCheckTransportersProvider;
+            break;
+        case sword::LogSupplyHandlingUpdate::convoy_finished:
+            break;
     }
 
     if( (check & eCheckSupplier) && supplier_->BelongsToLogisticBase( destination ) )
@@ -663,14 +696,14 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsAt( const MIL_AutomateLOG& destination ) const
 {
-    if( state_ == eConvoyLoading )
+    if( state_ == sword::LogSupplyHandlingUpdate::convoy_loading )
         return supplier_->BelongsToLogisticBase( destination );
-    if( state_ == eConvoyUnloading )
+    if( state_ == sword::LogSupplyHandlingUpdate::convoy_unloading )
     {
         assert( currentRecipient_ );
         return currentRecipient_->BelongsToLogisticBase( destination );
     }
-    if( state_ == eFinished )
+    if( state_ == sword::LogSupplyHandlingUpdate::convoy_finished )
         return convoy_->GetTransportersProvider().BelongsToLogisticBase( destination );
     return false;
 }

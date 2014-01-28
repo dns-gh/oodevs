@@ -82,7 +82,7 @@ void NameResolver::GetFormationName( int id, std::string& name ) const
 // -----------------------------------------------------------------------------
 void NameResolver::GetSupplykName( const sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus& eSupply, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogSupplyHandlingStatus( static_cast< E_LogSupplyHandlingStatus >( eSupply ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogSupplyHandlingStatus( eSupply );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void NameResolver::GetWoundName( const sword::EnumHumanWound& eWound, std::strin
 // -----------------------------------------------------------------------------
 void NameResolver::GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus& eMedical, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogMedicalHandlingStatus( static_cast< E_LogMedicalHandlingStatus >( eMedical ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogMedicalHandlingStatus( eMedical );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ void NameResolver::GetMedicalName( const sword::LogMedicalHandlingUpdate::EnumLo
 // -----------------------------------------------------------------------------
 void NameResolver::GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus& eMaintenance, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( static_cast< E_LogMaintenanceHandlingStatus >( eMaintenance ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( eMaintenance );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void NameResolver::GetMaintenanceName( const sword::LogMaintenanceHandlingUpdate
 // -----------------------------------------------------------------------------
 void NameResolver::GetFuneralName( const sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus& eFuneral, std::string& name ) const
 {
-    name = ENT_Tr::ConvertFromLogFuneralHandlingStatus( static_cast< E_LogFuneralHandlingStatus >( eFuneral ), ENT_Tr::eToTr );
+    name = ENT_Tr::ConvertFromLogFuneralHandlingStatus( eFuneral );
 }
 
 // -----------------------------------------------------------------------------

@@ -159,22 +159,22 @@ void  Formatter< E_HumanRank >::operator()( const E_HumanRank& e, Displayer_ABC&
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
-void  Formatter< E_LogSupplyHandlingStatus >::operator()( const E_LogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus >::operator()( const sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogSupplyHandlingStatus( e ) ) );
 }
 
-void  Formatter< E_LogMedicalHandlingStatus >::operator()( const E_LogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus >::operator()( const sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogMedicalHandlingStatus( e ) ) );
 }
 
-void  Formatter< E_LogMaintenanceHandlingStatus >::operator()( const E_LogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus >::operator()( const sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( e ) ) );
 }
 
-void  Formatter< E_LogFuneralHandlingStatus >::operator()( const E_LogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const
+void  Formatter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus >::operator()( const sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus& e, Displayer_ABC& displayer ) const
 {
-    displayer.AddToDisplay( tools::ToString( e ) );
+    displayer.AddToDisplay( QString::fromStdString( ENT_Tr::ConvertFromLogFuneralHandlingStatus( e ) ) );
 }

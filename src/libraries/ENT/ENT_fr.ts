@@ -284,158 +284,6 @@
         <translation>conscrit</translation>
     </message>
     <message>
-        <source>moving toward logistic system</source>
-        <translation>déplacement vers chaîne logistique</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation>en attente de remorqueur disponible</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation>remorqueur en déplacement aller</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation>remorqueur en chargement</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation>remorqueur en déplacement retour</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation>remorqueur en déchargement</translation>
-    </message>
-    <message>
-        <source>diagnostic</source>
-        <translation>diagnostique</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation>en attente de prise en charge par supérieur</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation>en attente de pièce disponible</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation>en attente de reparateur disponible</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation>en cours de réparation</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation>équipement en retour vers unité d&apos;origine</translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation>terminé</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation>convoi en attente de camion</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation>convoi en constitution</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation>convoi en déplacement vers point de chargement</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation>convoi en chargement</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation>convoi en déplacement vers point de déchargement</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation>convoi en déchargement</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation>convoi sur le retour</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance</source>
-        <translation>en attente d&apos;ambulance de relève</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance coming</source>
-        <translation>ambulance de relève en route</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance loading</source>
-        <translation>ambulance de relève en chargement</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance loading</source>
-        <translation>en attente de chargement ambulance de relève</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance going back</source>
-        <translation>ambulance de relève sur le retour</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance unloading</source>
-        <translation>ambulance de relève en déchargement</translation>
-    </message>
-    <message>
-        <source>waiting for doctor</source>
-        <translation>en attente de médecin</translation>
-    </message>
-    <message>
-        <source>waiting for triage</source>
-        <translation>en attente de tri</translation>
-    </message>
-    <message>
-        <source>triage</source>
-        <translation>tri</translation>
-    </message>
-    <message>
-        <source>looking for treatment area</source>
-        <translation>recherche zone de traitement</translation>
-    </message>
-    <message>
-        <source>waiting for doctor (treatment)</source>
-        <translation>en attente de médecin (traitement)</translation>
-    </message>
-    <message>
-        <source>treatment</source>
-        <translation>traitement</translation>
-    </message>
-    <message>
-        <source>hospitalization</source>
-        <translation>hospitalisation</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance</source>
-        <translation>en attente d&apos;ambulance de collecte</translation>
-    </message>
-    <message>
-        <source>collection ambulance loading</source>
-        <translation>ambulance de collecte en chargement</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance loading</source>
-        <translation>en attente de chargement ambulance de collecte</translation>
-    </message>
-    <message>
-        <source>collection ambulance coming</source>
-        <translation>ambulance de collecte en route</translation>
-    </message>
-    <message>
-        <source>collection ambulance unloading</source>
-        <translation>ambulance de collecte en déchargement</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation>calme</translation>
     </message>
@@ -526,10 +374,6 @@
     <message>
         <source>Extinguisher agent</source>
         <translation>Agent extincteur</translation>
-    </message>
-    <message>
-        <source>looking for triage area</source>
-        <translation>recherche d&apos;un secteur de triage</translation>
     </message>
     <message>
         <source>Energy</source>
@@ -730,30 +574,6 @@
     <message>
         <source>Prisoner</source>
         <translation>Prisonnier</translation>
-    </message>
-    <message>
-        <source>waiting for handling</source>
-        <translation>en attente de prise en charge</translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation>en cours de transport, non conditionné</translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation>en attente de conditionnement</translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation>conditionnement</translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation>en attente de transporteur</translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation>en cours de transport, conditionné</translation>
     </message>
     <message>
         <source>Agent</source>
@@ -1015,10 +835,6 @@
         <source>Seriousness level 3</source>
         <translation>Gravité niveau 3</translation>
     </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>
@@ -1048,6 +864,218 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation>Changement de type de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
+    <message>
+        <source>waiting for handling</source>
+        <translation>en attente de prise en charge</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation>en cours de transport, non conditionné</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation>en attente de conditionnement</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation>conditionnement</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation>en attente de transporteur</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation>en cours de transport, conditionné</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation>déplacement vers chaîne logistique</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation>en attente de remorqueur disponible</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation>remorqueur en déplacement aller</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation>remorqueur en chargement</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation>remorqueur en déplacement retour</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation>remorqueur en déchargement</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation>diagnostique</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation>en attente de prise en charge par supérieur</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation>en attente de pièce disponible</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation>en attente de reparateur disponible</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation>en cours de réparation</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation>équipement en retour vers unité d&apos;origine</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
+    </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>
+    <message>
+        <source>waiting for evacuation ambulance</source>
+        <translation>en attente d&apos;ambulance de relève</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance coming</source>
+        <translation>ambulance de relève en route</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance loading</source>
+        <translation>ambulance de relève en chargement</translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance loading</source>
+        <translation>en attente de chargement ambulance de relève</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance going back</source>
+        <translation>ambulance de relève sur le retour</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance unloading</source>
+        <translation>ambulance de relève en déchargement</translation>
+    </message>
+    <message>
+        <source>waiting for doctor</source>
+        <translation>en attente de médecin</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation>diagnostique</translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation>recherche d&apos;un secteur de triage</translation>
+    </message>
+    <message>
+        <source>waiting for triage</source>
+        <translation>en attente de tri</translation>
+    </message>
+    <message>
+        <source>triage</source>
+        <translation>tri</translation>
+    </message>
+    <message>
+        <source>looking for treatment area</source>
+        <translation>recherche zone de traitement</translation>
+    </message>
+    <message>
+        <source>waiting for doctor (treatment)</source>
+        <translation>en attente de médecin (traitement)</translation>
+    </message>
+    <message>
+        <source>treatment</source>
+        <translation>traitement</translation>
+    </message>
+    <message>
+        <source>hospitalization</source>
+        <translation>hospitalisation</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance</source>
+        <translation>en attente d&apos;ambulance de collecte</translation>
+    </message>
+    <message>
+        <source>collection ambulance loading</source>
+        <translation>ambulance de collecte en chargement</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance loading</source>
+        <translation>en attente de chargement ambulance de collecte</translation>
+    </message>
+    <message>
+        <source>collection ambulance coming</source>
+        <translation>ambulance de collecte en route</translation>
+    </message>
+    <message>
+        <source>collection ambulance unloading</source>
+        <translation>ambulance de collecte en déchargement</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation>convoi en attente de camion</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation>convoi en constitution</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation>convoi en déplacement vers point de chargement</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation>convoi en chargement</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation>convoi en déplacement vers point de déchargement</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation>convoi en déchargement</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation>convoi sur le retour</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminé</translation>
     </message>
 </context>
 <context>

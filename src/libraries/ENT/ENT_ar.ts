@@ -376,186 +376,6 @@
         <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-        <source>moving toward logistic system</source>
-        <translation type="unfinished">تتحرك باتجاه النظام السوقي</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation type="unfinished">في انتظار شاحنة جر المتاحة</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation type="unfinished">سحب الشاحنة تتحرك إلى الهدف</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation type="unfinished">جر شاحنة تحميل</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation type="unfinished">سحب-الشاحنة تتحرك من الهدف</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation type="unfinished">تفريغ شاحنة جر</translation>
-    </message>
-    <message>
-        <source>diagnostic</source>
-        <translation type="unfinished">التشخيص</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation type="unfinished">في انتظار أن يكون التعامل معها بمستوى أعلى</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation type="unfinished">في انتظار الأجزاء المتوفرة</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation type="unfinished">في انتظار مصلح المتاحة</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation type="unfinished">إصلاح</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation type="unfinished">وحدة العودة</translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation type="unfinished">الانتهاء</translation>
-    </message>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation type="unfinished">قافلة الشاحنات في انتظار</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation type="unfinished">إعداد القافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation type="unfinished">القافلة تتحرك لتحميل النقطة</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation type="unfinished">تحميل قافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation type="unfinished">القافلة تتحرك إلى نقطة التفريغ</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation type="unfinished">تفريغ قافلة</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation type="unfinished">القافلة تتحرك إلى الوراء</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance</source>
-        <translation type="unfinished">في انتظار سيارات الإسعاف من إجلاء</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance coming</source>
-        <translation type="unfinished">سيارة إسعاف الإجلاء القادمة</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance loading</source>
-        <translation type="unfinished">تحميل سيارات الإسعاف من إجلاء</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance loading</source>
-        <translation type="unfinished">في انتظار سيارات الإسعاف إجلاء تحميل</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance going back</source>
-        <translation type="unfinished">سيارات الإسعاف إجلاء عودة إلى الوراء</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance unloading</source>
-        <translation type="unfinished">تفريغ سيارات الإسعاف إجلاء</translation>
-    </message>
-    <message>
-        <source>waiting for doctor</source>
-        <translation type="unfinished">في انتظار الطبيب</translation>
-    </message>
-    <message>
-        <source>looking for triage area</source>
-        <translation type="unfinished">ابحث عن منطقة الفرز</translation>
-    </message>
-    <message>
-        <source>waiting for triage</source>
-        <translation type="unfinished">في انتظار للفرز</translation>
-    </message>
-    <message>
-        <source>triage</source>
-        <translation type="unfinished">الفرز</translation>
-    </message>
-    <message>
-        <source>looking for treatment area</source>
-        <translation type="unfinished">ابحث عن مجال العلاج</translation>
-    </message>
-    <message>
-        <source>waiting for doctor (treatment)</source>
-        <translation type="unfinished">في انتظار الطبيب (العلاج)</translation>
-    </message>
-    <message>
-        <source>treatment</source>
-        <translation type="unfinished">العلاج</translation>
-    </message>
-    <message>
-        <source>hospitalization</source>
-        <translation type="unfinished">العلاج في المستشفيات</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance</source>
-        <translation type="unfinished">في انتظار جمع سيارة إسعاف</translation>
-    </message>
-    <message>
-        <source>collection ambulance loading</source>
-        <translation type="unfinished">تحميل مجموعة الإسعاف</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance loading</source>
-        <translation type="unfinished">في انتظار جمع سيارة إسعاف تحميل</translation>
-    </message>
-    <message>
-        <source>collection ambulance coming</source>
-        <translation type="unfinished">جمع سيارة الإسعاف قادمة</translation>
-    </message>
-    <message>
-        <source>collection ambulance unloading</source>
-        <translation type="unfinished">جمع وتفريغ سيارة إسعاف</translation>
-    </message>
-    <message>
-        <source>waiting for handling</source>
-        <translation type="unfinished">في انتظار معالجة</translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation type="unfinished">نقل غير معبأة</translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation type="unfinished">في انتظار للتعبئة والتغليف</translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation type="unfinished">التعبئة والتغليف</translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation type="unfinished">في انتظار للناقل</translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation type="unfinished">نقل حزم</translation>
-    </message>
-    <message>
         <source>quiet</source>
         <translation type="unfinished">هادئة</translation>
     </message>
@@ -1015,10 +835,6 @@
         <source>Seriousness level 3</source>
         <translation type="unfinished">خطورة المستوى 3</translation>
     </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>sword::EnumLogisticLevel</name>
@@ -1048,6 +864,218 @@
     <message>
         <source>Knowledge Group Change Type</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
+    <message>
+        <source>waiting for handling</source>
+        <translation type="unfinished">في انتظار معالجة</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation type="unfinished">نقل غير معبأة</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation type="unfinished">في انتظار للتعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation type="unfinished">التعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation type="unfinished">في انتظار للناقل</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation type="unfinished">نقل حزم</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation type="unfinished">تتحرك باتجاه النظام السوقي</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation type="unfinished">في انتظار شاحنة جر المتاحة</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation type="unfinished">سحب الشاحنة تتحرك إلى الهدف</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation type="unfinished">جر شاحنة تحميل</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation type="unfinished">سحب-الشاحنة تتحرك من الهدف</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation type="unfinished">تفريغ شاحنة جر</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation type="unfinished">التشخيص</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation type="unfinished">في انتظار أن يكون التعامل معها بمستوى أعلى</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation type="unfinished">في انتظار الأجزاء المتوفرة</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation type="unfinished">في انتظار مصلح المتاحة</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation type="unfinished">إصلاح</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation type="unfinished">وحدة العودة</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
+    </message>
+    <message>
+        <source>waiting for transporter selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>
+    <message>
+        <source>waiting for evacuation ambulance</source>
+        <translation type="unfinished">في انتظار سيارات الإسعاف من إجلاء</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance coming</source>
+        <translation type="unfinished">سيارة إسعاف الإجلاء القادمة</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance loading</source>
+        <translation type="unfinished">تحميل سيارات الإسعاف من إجلاء</translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance loading</source>
+        <translation type="unfinished">في انتظار سيارات الإسعاف إجلاء تحميل</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance going back</source>
+        <translation type="unfinished">سيارات الإسعاف إجلاء عودة إلى الوراء</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance unloading</source>
+        <translation type="unfinished">تفريغ سيارات الإسعاف إجلاء</translation>
+    </message>
+    <message>
+        <source>waiting for doctor</source>
+        <translation type="unfinished">في انتظار الطبيب</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation type="unfinished">التشخيص</translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation type="unfinished">ابحث عن منطقة الفرز</translation>
+    </message>
+    <message>
+        <source>waiting for triage</source>
+        <translation type="unfinished">في انتظار للفرز</translation>
+    </message>
+    <message>
+        <source>triage</source>
+        <translation type="unfinished">الفرز</translation>
+    </message>
+    <message>
+        <source>looking for treatment area</source>
+        <translation type="unfinished">ابحث عن مجال العلاج</translation>
+    </message>
+    <message>
+        <source>waiting for doctor (treatment)</source>
+        <translation type="unfinished">في انتظار الطبيب (العلاج)</translation>
+    </message>
+    <message>
+        <source>treatment</source>
+        <translation type="unfinished">العلاج</translation>
+    </message>
+    <message>
+        <source>hospitalization</source>
+        <translation type="unfinished">العلاج في المستشفيات</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance</source>
+        <translation type="unfinished">في انتظار جمع سيارة إسعاف</translation>
+    </message>
+    <message>
+        <source>collection ambulance loading</source>
+        <translation type="unfinished">تحميل مجموعة الإسعاف</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance loading</source>
+        <translation type="unfinished">في انتظار جمع سيارة إسعاف تحميل</translation>
+    </message>
+    <message>
+        <source>collection ambulance coming</source>
+        <translation type="unfinished">جمع سيارة الإسعاف قادمة</translation>
+    </message>
+    <message>
+        <source>collection ambulance unloading</source>
+        <translation type="unfinished">جمع وتفريغ سيارة إسعاف</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
+    </message>
+</context>
+<context>
+    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation type="unfinished">قافلة الشاحنات في انتظار</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation type="unfinished">إعداد القافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation type="unfinished">القافلة تتحرك لتحميل النقطة</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation type="unfinished">تحميل قافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation type="unfinished">القافلة تتحرك إلى نقطة التفريغ</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation type="unfinished">تفريغ قافلة</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation type="unfinished">القافلة تتحرك إلى الوراء</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation type="unfinished">الانتهاء</translation>
     </message>
 </context>
 <context>

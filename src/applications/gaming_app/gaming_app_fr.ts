@@ -2088,7 +2088,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2115,7 +2115,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2157,7 +2157,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2184,7 +2184,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2211,7 +2211,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -3154,7 +3154,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>

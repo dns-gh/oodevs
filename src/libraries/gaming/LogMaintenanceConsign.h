@@ -28,6 +28,7 @@ namespace sword
 {
     class LogMaintenanceHandlingCreation;
     class LogMaintenanceHandlingUpdate;
+    enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
 class Simulation;
@@ -66,7 +67,7 @@ public:
     const kernel::ComponentType* GetEquipment() const;
     const kernel::BreakdownType* GetBreakdown() const;
     bool IsDiagnosed() const;
-    E_LogMaintenanceHandlingStatus GetStatus() const;
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
@@ -74,11 +75,6 @@ public:
 
 private:
     kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
-    //! @name Copy/Assignment
-    //@{
-    LogMaintenanceConsign( const LogMaintenanceConsign& );
-    LogMaintenanceConsign& operator=( const LogMaintenanceConsign& );
-    //@}
 
 private:
     //! @name Member data
@@ -89,7 +85,7 @@ private:
     const kernel::ComponentType* equipmentType_;
     const kernel::BreakdownType* breakdownType_;
     bool diagnosed_;
-    E_LogMaintenanceHandlingStatus nState_;
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nState_;
     //@}
 };
 

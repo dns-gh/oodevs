@@ -59,7 +59,7 @@ EventPresenter::~EventPresenter()
 void EventPresenter::AddSubPresenter( const EventPresenter_ABC::T_SharedPtr& presenter )
 {
     if( presenters_.find( presenter->GetType() ) != presenters_.end() )
-        throw MASA_EXCEPTION( "EventPresent already have a sub presenter for type " + ENT_Tr::ConvertFromEventType( presenter->GetType(), ENT_Tr::eToSim ) );
+        throw MASA_EXCEPTION( "EventPresent already have a sub presenter for type " + ENT_Tr::ConvertFromEventTypes( presenter->GetType(), ENT_Tr::eToSim ) );
     presenters_[ presenter->GetType() ] = presenter;
 }
 
@@ -80,7 +80,7 @@ EventPresenter_ABC& EventPresenter::GetPresenter( E_EventTypes type ) const
 {
     auto presenter = presenters_.find( type );
     if( presenter == presenters_.end() || !presenter->second )
-        throw MASA_EXCEPTION( "EventPresenter can't found a sub presenter for type " + ENT_Tr::ConvertFromEventType( type, ENT_Tr::eToSim ) );
+        throw MASA_EXCEPTION( "EventPresenter can't found a sub presenter for type " + ENT_Tr::ConvertFromEventTypes( type, ENT_Tr::eToSim ) );
     return *presenter->second;
 }
 
@@ -438,9 +438,9 @@ void EventPresenter::ResetView( E_EventDockModes mode,
         EventPresenter_ABC& current = GetCurrentPresenter();
         if( state_->event_->GetType() != current.GetType() )
             throw MASA_EXCEPTION( "Trying to fill a presenter of type "
-                                  + ENT_Tr::ConvertFromEventType( current.GetType() )
+                                  + ENT_Tr::ConvertFromEventTypes( current.GetType() )
                                   + " with an event of type "
-                                  + ENT_Tr::ConvertFromEventType( state_->event_->GetType() ) );
+                                  + ENT_Tr::ConvertFromEventTypes( state_->event_->GetType() ) );
         current.FillFrom( *state_->event_ );
     }
     BuildView();
