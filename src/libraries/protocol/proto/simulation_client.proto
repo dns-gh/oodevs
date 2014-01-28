@@ -178,6 +178,13 @@ message UnitMagicActionAck {
     //! More detailed account of the returned error
     optional string                  error_msg  = 3;
     //! Action results, depends on the action type and outcome.
+    //! In case type is log_supply_pull_flow or log_supply_push_flow for each
+    //! transporter in the original supply request a list of 4 boolean values
+    //! are added to the result indicating whether:
+    //! . the transporter is underloaded in weight
+    //! . the transporter is overloaded in weight
+    //! . the transporter is underloaded in volume
+    //! . the transporter is overloaded in volume
     optional MissionParameters       result     = 4;
      //! Action parameters, copied from UnitMagicAction
     optional MissionParameters       parameters = 5;
