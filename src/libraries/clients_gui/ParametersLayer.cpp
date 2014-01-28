@@ -243,7 +243,7 @@ void ParametersLayer::StartCircle( ShapeHandler_ABC& handler )
 void ParametersLayer::StartPath( ShapeHandler_ABC& handler, const Positions& position )
 {
     cursors_->SelectTool( MAKE_PIXMAP( path_cursor ), true );
-    Start( handler, Path( position ) );
+    Start( handler, Path( &position ) );
 }
 
 // -----------------------------------------------------------------------------

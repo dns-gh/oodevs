@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: Path constructor
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-Path::Path( const Positions& position )
-    : position_( &position )
+Path::Path( const Positions* position )
+    : position_( position )
 {
     // NOTHING
 }
