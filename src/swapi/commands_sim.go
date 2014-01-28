@@ -946,13 +946,13 @@ func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.Mi
 	return result, err
 }
 
-func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, recipientId uint32,
-	supplies map[uint32]uint32, equipments map[uint32]uint32) ([]bool, error) {
+func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
+	supplies, equipments map[uint32]uint32) ([]bool, error) {
 
 	resources := []*sword.SupplyFlowResource{}
 	for resource, quantity := range supplies {
 		resources = append(resources, &sword.SupplyFlowResource{
-			ResourceType: &sword.Id{Id: &resource},
+			ResourceType: MakeId(resource),
 			Quantity:     &quantity,
 		})
 	}
@@ -976,7 +976,7 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, recipientId uint32,
 	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
 }
 
-func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) error {
+func (c *Client) LogisticsSupplyPullFlow(supplierId, suppliedId uint32) error {
 	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
 	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
