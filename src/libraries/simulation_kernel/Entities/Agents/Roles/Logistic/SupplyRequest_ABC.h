@@ -47,7 +47,7 @@ public:
     //@{
     virtual void AddResource( const boost::shared_ptr< SupplyResource_ABC >& resource, const MIL_AgentPion& pion, double quantity ) = 0;
     virtual bool AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
-    virtual bool AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
+    virtual bool AffectSupplier( SupplyRecipient_ABC& recipient, const boost::shared_ptr< LogisticLink_ABC >& supplier ) = 0;
 
     virtual double Supply          () = 0; // Return the quantity supplied;
     virtual double Convoy          ( double quantity ) = 0; // Return the quantity convoyed
