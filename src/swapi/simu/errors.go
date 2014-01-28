@@ -52,6 +52,9 @@ var reFunctErr *regexp.Regexp = regexp.MustCompile("(" +
 	`|string_input.*missing elements in content model` +
 	// Invalid coordinates may be a problem but not a functERR
 	`|Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range` +
+	// Happens if client is a bit slow and simulation wants to disconnect it,
+	// not a fatal error...
+	`|Client hasn't answered messages from last tick!` +
 	")")
 
 // Reads fp and possibly returns a concatenation of all <functERR> lines, or an
