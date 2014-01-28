@@ -101,7 +101,7 @@ private:
 
 protected:
     SupplyConvoyEventsObserver_ABC* eventsObserver_;
-    SupplyRequestParameters_ABC* parameters_;
+    const SupplyRequestParameters_ABC* parameters_;
     SupplySupplier_ABC* supplier_;
     SupplySupplier_ABC* transportersProvider_;
     T_Conveyors conveyors_;
