@@ -21,11 +21,8 @@
 #include <boost/foreach.hpp>
 
 using namespace logistic;
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoy )
 
-// =============================================================================
-// Constructor / destructor 
-// =============================================================================
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoy )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoy constructor
@@ -42,7 +39,7 @@ SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, Supp
     , provider_                     ( 0 )
     , autoAllocateNewTransporters_  ( parameters.GetTransporters().empty() )
     , finished_                     ( false )
-	, impossible_                   ( false )
+    , impossible_                   ( false )
 {
 }
 
@@ -61,7 +58,7 @@ SupplyConvoy::SupplyConvoy()
     , provider_                     ( 0 )
     , autoAllocateNewTransporters_  ( false )
     , finished_                     ( false )
-	, impossible_                   ( false )
+    , impossible_                   ( false )
 {
         // NOTHING
 }
@@ -113,11 +110,11 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
                 break;
         }
     }
-	else if( quantity > 0. )
-	{
-		// Conveyors selected manually are not enough to handle the request: Cancel the request and emit a warning.
-		impossible_ = true;
-	}
+    else if( quantity > 0. )
+    {
+        // Conveyors selected manually are not enough to handle the request: Cancel the request and emit a warning.
+        impossible_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
