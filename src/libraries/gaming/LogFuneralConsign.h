@@ -32,6 +32,7 @@ namespace sword
     class LogFuneralHandlingCreation;
     class LogFuneralHandlingUpdate;
     class ParentEntity;
+    enum LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus;
 }
 
 class Simulation;
@@ -71,22 +72,16 @@ public:
     virtual kernel::Entity_ABC* GetHandler() const;
     kernel::Agent_ABC* GetConvoy() const;
     const kernel::DotationType* GetPackagingResource() const;
-    E_LogFuneralHandlingStatus GetStatus() const;
+    sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
     kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
-    //! @name Copy/Assignment
-    //@{
-    LogFuneralConsign( const LogFuneralConsign& );
-    LogFuneralConsign& operator=( const LogFuneralConsign& );
-    //@}
-
-    //! @name Tools
-    //@{
     //@}
 
 private:
@@ -101,7 +96,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > handler_;
     kernel::SafePointer< kernel::Agent_ABC > convoy_;
     const kernel::DotationType* packagingResource_;
-    E_LogFuneralHandlingStatus nState_;
+    sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus nState_;
     //@}
 };
 

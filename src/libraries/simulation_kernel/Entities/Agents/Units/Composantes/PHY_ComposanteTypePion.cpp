@@ -152,8 +152,10 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rNbrHumansUnloadedForEvacuationPerTimeStep_( 0. )
     , woundHealingCapabilities_                  ( PHY_HumanWound::GetHumanWounds().size(), false )
     , pStockTransporterNature_                   ( 0 )
-    , rStockTransporterWeightCapacity_           ( 0. )
-    , rStockTransporterVolumeCapacity_           ( 0. )
+    , rStockTransporterMinWeightCapacity_        ( 0 )
+    , rStockTransporterMaxWeightCapacity_        ( 0 )
+    , rStockTransporterMinVolumeCapacity_        ( 0 )
+    , rStockTransporterMaxVolumeCapacity_        ( 0 )
 {
     xis >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ )
         >> xml::optional  >> xml::attribute( "slope-deceleration", rSlopeDeceleration_ )
@@ -768,15 +770,16 @@ void PHY_ComposanteTypePion::ReadSupply( xml::xistream& xis )
 {
     std::string strNature;
     xis >> xml::attribute( "nature", strNature )
-        >> xml::attribute( "max-mass", rStockTransporterWeightCapacity_ )
-        >> xml::attribute( "max-volume", rStockTransporterVolumeCapacity_ );
-
+        >> xml::attribute( "min-mass", rStockTransporterMinWeightCapacity_ )
+        >> xml::attribute( "max-mass", rStockTransporterMaxWeightCapacity_ )
+        >> xml::attribute( "min-volume", rStockTransporterMinVolumeCapacity_ )
+        >> xml::attribute( "max-volume", rStockTransporterMaxVolumeCapacity_ );
     pStockTransporterNature_ = PHY_DotationNature::Find( strNature );
     if( !pStockTransporterNature_ )
         throw MASA_EXCEPTION( xis.context() + "Unkown dotation nature" );
-    if( rStockTransporterWeightCapacity_ <= 0 )
+    if( rStockTransporterMaxWeightCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "supply: mass <= 0" );
-    if( rStockTransporterVolumeCapacity_ <= 0 )
+    if( rStockTransporterMaxVolumeCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "supply: volume <= 0" );
 }
 
@@ -1336,13 +1339,9 @@ unsigned int PHY_ComposanteTypePion::Heal( Human_ABC& human ) const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanTransportStock( const PHY_DotationCategory& dotationCategory ) const
 {
-    if( rStockTransporterWeightCapacity_ <= 0. || rStockTransporterVolumeCapacity_ <= 0. )
-        return false;
-
-    if( pStockTransporterNature_ && *pStockTransporterNature_ != dotationCategory.GetNature() )
-        return false;
-
-    return true;
+    return rStockTransporterMaxWeightCapacity_ > 0 &&
+        rStockTransporterMaxVolumeCapacity_ > 0 &&
+        pStockTransporterNature_ == &dotationCategory.GetNature();
 }
 
 // -----------------------------------------------------------------------------
@@ -1810,8 +1809,13 @@ double PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() co
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::GetStockTransporterCapacity( double& rWeightMax, double& rVolumeMax ) const
 {
-    rWeightMax = rStockTransporterWeightCapacity_;
-    rVolumeMax = rStockTransporterVolumeCapacity_;
+    rWeightMax = rStockTransporterMaxWeightCapacity_;
+    rVolumeMax = rStockTransporterMaxVolumeCapacity_;
+}
+
+std::pair< double, double > PHY_ComposanteTypePion::GetStockTransporterCapacity() const
+{
+    return std::make_pair( rStockTransporterMinWeightCapacity_, rStockTransporterMinVolumeCapacity_ );
 }
 
 // -----------------------------------------------------------------------------

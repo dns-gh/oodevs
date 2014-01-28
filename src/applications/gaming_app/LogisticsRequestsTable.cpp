@@ -9,9 +9,13 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticsRequestsTable.h"
+#include "ConsignDialog.h"
 #include "moc_LogisticsRequestsTable.cpp"
 #include "clients_gui/LinkItemDelegate.h"
+#include "clients_gui/InternalLinks.h"
+#include "clients_kernel/Controllers.h"
 #include "gaming/LogisticsConsign_ABC.h"
+#include "tools/ExerciseConfig.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 
@@ -19,12 +23,17 @@ Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 // Name: LogisticsRequestsTable constructor
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders )
+LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
+                                                actions::ActionsModel& actionsModel, const kernel::Controllers& controllers,
+                                                const tools::ExerciseConfig& config )
     : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( new QSortFilterProxyModel( parent ) )
     , delegate_  ( parent )
     , horizontalHeaders_( horizontalHeaders )
+    , consignDialog_( new ConsignDialog( "consign_dialog", parent, actionsModel ) )
+    , controllers_( controllers )
+    , manualLogisticActivated_( config.IsActivated( "manual-logistic" ) )
 {
     if( horizontalHeaders_.isEmpty() )
     {
@@ -44,8 +53,10 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
     setItemDelegate( &delegate_ );
 
     linkItemDelegate_ = new gui::LinkItemDelegate( this );
-    setItemDelegateForColumn( 1, linkItemDelegate_ );
-    setItemDelegateForColumn( 2, linkItemDelegate_ );
+    setItemDelegateForColumn( 3, linkItemDelegate_ );
+
+    connect( linkItemDelegate_, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
+                              , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
     setSortingEnabled( true );
     setShowGrid( true );
@@ -64,15 +75,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName, QWidg
 LogisticsRequestsTable::~LogisticsRequestsTable()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::GetLinkItemDelegate
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-const gui::LinkItemDelegate* LogisticsRequestsTable::GetLinkItemDelegate() const
-{ 
-    return linkItemDelegate_;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,6 +127,25 @@ int LogisticsRequestsTable::GetRequestRow( const LogisticsConsign_ABC& consign )
     return dataModel_.rowCount();
 }
 
+namespace
+{
+    QString CreateLink( const QString& message, unsigned long id )
+    {
+        return gui::InternalLinks::CreateLink( "request", id, message );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsTable::OnLinkClicked
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+void LogisticsRequestsTable::OnLinkClicked( const QString&, const QModelIndex& index )
+{
+    const LogisticsConsign_ABC* pRequest = GetRequest( index );
+    if( pRequest )
+        consignDialog_->Show( *pRequest );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable::AddRequest
 // Created: MMC 2013-09-11
@@ -136,7 +157,8 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, state , consign );
+    SetData( rowIndex, 3, manualLogisticActivated_ && consign.NeedResolution()
+        && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
 }
 
 // -----------------------------------------------------------------------------

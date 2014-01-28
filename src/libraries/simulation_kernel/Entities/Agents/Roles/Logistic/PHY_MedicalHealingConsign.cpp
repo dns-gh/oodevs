@@ -75,7 +75,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForHealing()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    SetState( eWaitingForHealing );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_medical_attention );
     ResetTimer( 0 );
 }
 
@@ -117,7 +117,7 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
 {
     assert( pHumanState_ );
     assert( pDoctor_ );
-    SetState( eHealing );
+    SetState( sword::LogMedicalHandlingUpdate::receiving_medical_attention );
     ResetTimer( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
 }
 
@@ -134,7 +134,7 @@ void PHY_MedicalHealingConsign::EnterStateResting()
     ResetTimer( pHumanState_->Heal( *pDoctor_ ) ); // Returns resting time
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
-    SetState( eResting );
+    SetState( sword::LogMedicalHandlingUpdate::resting );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void PHY_MedicalHealingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    SetState( eSearchingForHealingArea );
+    SetState( sword::LogMedicalHandlingUpdate::looking_for_medical_attention );
     ResetTimer( 0 );
 }
 
@@ -178,7 +178,7 @@ void PHY_MedicalHealingConsign::DoSearchForHealingArea()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
-        SetState( eFinished );
+        SetState( sword::LogMedicalHandlingUpdate::finished );
         ResetTimer( 0 );
         pHumanState_ = 0;
         return;
@@ -196,7 +196,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForCollection()
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     ResetTimer( 0 );
-    SetState( eWaitingForCollection );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
-        SetState( eFinished );
+        SetState( sword::LogMedicalHandlingUpdate::finished );
         return true;
     }
     return false;
@@ -239,20 +239,33 @@ void PHY_MedicalHealingConsign::DoReturnHuman()
 bool PHY_MedicalHealingConsign::Update()
 {
     if( DecrementTimer() )
-        return GetState() == eFinished;
+        return GetState() == sword::LogMedicalHandlingUpdate::finished;
 
     switch( GetState() )
     {
-        case eWaitingForHealing      : if( DoWaitingForHealing() )    EnterStateHealing      (); break;
-        case eHealing                :                                EnterStateResting      (); break;
-        case eResting                :                                ChooseStateAfterResting(); break;
-        case eSearchingForHealingArea: DoSearchForHealingArea();                                 break;
-        case eWaitingForCollection   : if( DoWaitingForCollection() ) EnterStateFinished     (); break;
-        case eFinished               :                                                           break;
+        case sword::LogMedicalHandlingUpdate::waiting_for_medical_attention:
+            if( DoWaitingForHealing() )
+                EnterStateHealing();
+            break;
+        case sword::LogMedicalHandlingUpdate::receiving_medical_attention:
+            EnterStateResting();
+            break;
+        case sword::LogMedicalHandlingUpdate::resting:
+            ChooseStateAfterResting();
+            break;
+        case sword::LogMedicalHandlingUpdate::looking_for_medical_attention:
+            DoSearchForHealingArea();
+            break;
+        case sword::LogMedicalHandlingUpdate::waiting_for_collection:
+            if( DoWaitingForCollection() )
+                EnterStateFinished();
+            break;
+        case sword::LogMedicalHandlingUpdate::finished:
+            break;
         default:
             assert( false );
     }
-    return GetState() == eFinished;
+    return GetState() == sword::LogMedicalHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ private:
     virtual void PurgeDetail();
     virtual void DisplayRequest( const LogisticsConsign_ABC& consign );
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
-    QString GetRecipientsLinks( const LogSupplyConsign& consign );
+    QString GetRecipientsLinks( const LogSupplyConsign& consign, bool link );
     //@}
 
 protected:

@@ -220,7 +220,7 @@ void SupplyRequestContainer::SetTransportersProvider( SupplySupplier_ABC* provid
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRequestContainer::SetTransporters
+// Name: SupplyRequestContainer::GetTransportersProvider
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 SupplySupplier_ABC* SupplyRequestContainer::GetTransportersProvider() const

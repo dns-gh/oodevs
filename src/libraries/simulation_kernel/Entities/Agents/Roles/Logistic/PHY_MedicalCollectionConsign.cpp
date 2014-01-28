@@ -77,7 +77,7 @@ void PHY_MedicalCollectionConsign::EnterStateWaitingForCollection()
     }
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     ResetTimer( 0 );
-    SetState( eWaitingForCollection );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +111,8 @@ void PHY_MedicalCollectionConsign::CreateCollectionAmbulance()
 void PHY_MedicalCollectionConsign::EnterStateCollectionLoading()
 {
     assert( pHumanState_ );
-    assert( GetState() == eWaitingForCollection );
-    SetState( eCollectionLoading );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::waiting_for_collection );
+    SetState( sword::LogMedicalHandlingUpdate::collection_ambulance_loading );
     ResetTimer( 0 );
 }
 
@@ -125,12 +125,12 @@ bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     ResetTimer( 0 );
-    if( GetState() == eCollectionLoading )
+    if( GetState() == sword::LogMedicalHandlingUpdate::collection_ambulance_loading )
     {
-        SetState( eCollectionWaitingForFullLoading );
+        SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion );
         return true;
     }
-    assert( GetState() == eCollectionWaitingForFullLoading );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion );
     return false;
 }
 
@@ -142,8 +142,10 @@ void PHY_MedicalCollectionConsign::EnterStateSearchingForDestinationArea()
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-    assert( GetState() == eCollectionWaitingForFullLoading );
-    SetState( pHumanState_->NeedSorting() ? eSearchingForSortingArea : eSearchingForHealingArea );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion );
+    SetState( pHumanState_->NeedSorting()
+              ? sword::LogMedicalHandlingUpdate::looking_for_triage
+              : sword::LogMedicalHandlingUpdate::looking_for_medical_attention );
     ResetTimer( 0 );
 }
 
@@ -155,8 +157,9 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo()
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-    assert( GetState() == eSearchingForSortingArea || GetState() == eSearchingForHealingArea );
-    SetState( eCollectionGoingTo );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::looking_for_triage ||
+            GetState() == sword::LogMedicalHandlingUpdate::looking_for_medical_attention );
+    SetState( sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in );
     ResetTimer( 0 );
 }
 
@@ -168,8 +171,8 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionUnloading()
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-    assert( GetState() == eCollectionGoingTo );
-    SetState( eCollectionUnloading );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in );
+    SetState( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading );
     ResetTimer( 0 );
 }
 
@@ -181,8 +184,8 @@ void PHY_MedicalCollectionConsign::TransferToDestinationArea( PHY_RoleInterface_
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-    assert( GetState() == eCollectionUnloading );
-    SetState( eFinished );
+    assert( GetState() == sword::LogMedicalHandlingUpdate::collection_ambulance_unloading );
+    SetState( sword::LogMedicalHandlingUpdate::finished );
     ResetTimer( 0 );
     if( pHumanState_->NeedSorting() )
         destinationArea.HandleHumanForSorting( *pHumanState_ );
@@ -199,7 +202,7 @@ void PHY_MedicalCollectionConsign::TransferToDestinationArea( PHY_RoleInterface_
 void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
 {
     assert( pHumanState_ );
-    SetState( eFinished );
+    SetState( sword::LogMedicalHandlingUpdate::finished );
     pCollectionAmbulance_ = 0;
     ResetTimer( 0 );
 }
@@ -211,24 +214,28 @@ void PHY_MedicalCollectionConsign::NotifyOutOfMedicalSystem()
 bool PHY_MedicalCollectionConsign::Update()
 {
     if( DecrementTimer() )
-        return GetState() == eFinished;
+        return GetState() == sword::LogMedicalHandlingUpdate::finished;
 
     switch( GetState() )
     {
-        case eWaitingForCollection            : CreateCollectionAmbulance(); break; // Géré par PHY_MedicalAmbulance
-        case eCollectionGoingTo               : break;                              // Géré par PHY_MedicalAmbulance
-        case eSearchingForSortingArea         : break;                              // Géré par PHY_MedicalAmbulance
-        case eSearchingForHealingArea         : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionLoading               : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionWaitingForFullLoading : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionUnloading             : break;                              // Géré par PHY_MedicalAmbulance
-        case eFinished                        : break;
+        case sword::LogMedicalHandlingUpdate::waiting_for_collection:
+            CreateCollectionAmbulance();
+            break;
+        case sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in:
+        case sword::LogMedicalHandlingUpdate::looking_for_triage:
+        case sword::LogMedicalHandlingUpdate::looking_for_medical_attention:
+        case sword::LogMedicalHandlingUpdate::collection_ambulance_loading:
+        case sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion:
+        case sword::LogMedicalHandlingUpdate::collection_ambulance_unloading:
+        case sword::LogMedicalHandlingUpdate::finished:
+            // Géré par PHY_MedicalAmbulance
+            break;
         default:
             assert( false );
     }
     if( pCollectionAmbulance_ )
         SendExternalTimerValue( pCollectionAmbulance_->GetTimer() );
-    return GetState() == eFinished;
+    return GetState() == sword::LogMedicalHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

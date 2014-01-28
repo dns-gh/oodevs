@@ -65,7 +65,7 @@ FuneralConsign::FuneralConsign( Human_ABC& human )
     , handler_                ( 0 )
     , position_               ( human.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , packaging_              ( 0 )
-    , state_                  ( eWaitingForHandling )
+    , state_                  ( sword::LogFuneralHandlingUpdate::waiting_for_handling )
     , currentStateEndTimeStep_( std::numeric_limits< unsigned >::max() )
     , needNetworkUpdate_      ( true )
 {
@@ -105,7 +105,7 @@ void FuneralConsign::UpdateTimer( unsigned timeRemaining )
 // Name: FuneralConsign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void FuneralConsign::SetState( E_State newState )
+void FuneralConsign::SetState( sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus newState )
 {
     if( newState != state_ )
     {
@@ -156,7 +156,7 @@ void FuneralConsign::DoWaitForHandling()
             handler_->RemoveSupplyConvoysObserver( *this );
         handler_ = &handler;
         handler_->AddSupplyConvoysObserver( *this );
-        SetState( eTransportingUnpackaged );
+        SetState( sword::LogFuneralHandlingUpdate::transporting_unpackaged );
     }
 }
 
@@ -168,7 +168,7 @@ void FuneralConsign::DoTransportUnpackaged()
 {
     assert( handler_ );
     if( IsActionDone( MoveTo( handler_->GetPosition() ) ) )
-        SetState( eWaitingForPackaging );
+        SetState( sword::LogFuneralHandlingUpdate::waiting_for_packaging );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void FuneralConsign::DoWaitForPackaging()
     {
         needNetworkUpdate_ = true;
         packaging_ = newPacking;
-        SetState( ePackaging );
+        SetState( sword::LogFuneralHandlingUpdate::packaging );
     }
 }
 
@@ -195,7 +195,7 @@ void FuneralConsign::DoPackage()
 {
     assert( handler_ );
     assert( packaging_ );
-    if( !IsActionDone( currentAction_.GetTimeRemaining( ePackaging, packaging_->GetProcessDuration() ) ) )
+    if( !IsActionDone( currentAction_.GetTimeRemaining( sword::LogFuneralHandlingUpdate::packaging, packaging_->GetProcessDuration() ) ) )
         return;
     DoTransitionAfterPackaging();
 }
@@ -208,9 +208,9 @@ void FuneralConsign::DoTransitionAfterPackaging()
 {
     assert( handler_ );
     if( handler_->GetLogisticHierarchy().HasSuperior() )
-        SetState( eWaitingForTransporter );
+        SetState( sword::LogFuneralHandlingUpdate::waiting_for_transporter );
     else
-        SetState( eFinished );
+        SetState( sword::LogFuneralHandlingUpdate::finished );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,17 +221,26 @@ bool FuneralConsign::Update()
 {
     switch( state_ )
     {
-        case eWaitingForHandling    : DoWaitForHandling(); break;
-        case eTransportingUnpackaged: DoTransportUnpackaged(); break;
-        case eWaitingForPackaging   : DoWaitForPackaging(); break;
-        case ePackaging             : DoPackage(); break;
-        case eWaitingForTransporter : break; // Managed by the OnConvoyLeaving / Arriving events
-        case eTransportingPackaged  : break; // Managed by the OnConvoyLeaving / Arriving events
-        case eFinished              : break;
+        case sword::LogFuneralHandlingUpdate::waiting_for_handling:
+            DoWaitForHandling();
+            break;
+        case sword::LogFuneralHandlingUpdate::transporting_unpackaged:
+            DoTransportUnpackaged();
+            break;
+        case sword::LogFuneralHandlingUpdate::waiting_for_packaging:
+            DoWaitForPackaging();
+            break;
+        case sword::LogFuneralHandlingUpdate::packaging:
+            DoPackage();
+            break;
+        case sword::LogFuneralHandlingUpdate::waiting_for_transporter:// Managed by the OnConvoyLeaving / Arriving events
+        case sword::LogFuneralHandlingUpdate::transporting_packaged:// Managed by the OnConvoyLeaving / Arriving events
+        case sword::LogFuneralHandlingUpdate::finished:
+            break;
         default:
             assert( false );
     }
-    return state_ == eFinished;
+    return state_ == sword::LogFuneralHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +258,7 @@ bool FuneralConsign::IsFinished() const
 // -----------------------------------------------------------------------------
 void FuneralConsign::OnSupplyConvoyLeaving( const boost::shared_ptr< const SupplyConsign_ABC >& consign )
 {
-    if( state_ != eWaitingForTransporter )
+    if( state_ != sword::LogFuneralHandlingUpdate::waiting_for_transporter )
         return;
     assert( !convoy_ );
     assert( handler_ );
@@ -268,7 +277,7 @@ void FuneralConsign::OnSupplyConvoyLeaving( const boost::shared_ptr< const Suppl
             const MIL_Agent_ABC* reporter = convoy_ ? convoy_->GetReporter() : 0;
             if( reporter )
                 MIL_Report::PostEvent< MIL_Agent_ABC >( *reporter, report::eRC_CorpseTransported, packaging_->GetDotationCategory() );
-            SetState( eTransportingPackaged );
+            SetState( sword::LogFuneralHandlingUpdate::transporting_packaged );
             return;
         }
     }
@@ -280,11 +289,11 @@ void FuneralConsign::OnSupplyConvoyLeaving( const boost::shared_ptr< const Suppl
 // -----------------------------------------------------------------------------
 void FuneralConsign::OnSupplyConvoyArriving( const boost::shared_ptr< const SupplyConsign_ABC >& consign )
 {
-    if( state_ != eTransportingPackaged || consign->GetConvoy() != convoy_ )
+    if( state_ != sword::LogFuneralHandlingUpdate::transporting_packaged || consign->GetConvoy() != convoy_ )
         return;
     convoy_.reset();
     if( !packaging_->IsTerminal() )
-        SetState( eWaitingForPackaging );
+        SetState( sword::LogFuneralHandlingUpdate::waiting_for_packaging );
     else
         DoTransitionAfterPackaging();
 }
@@ -370,5 +379,5 @@ void FuneralConsign::FinishSuccessfullyWithoutDelay()
         handler_->RemoveSupplyConvoysObserver( *this );
     handler_ = 0;
     convoy_.reset();
-    SetState( eFinished );
+    SetState( sword::LogFuneralHandlingUpdate::finished );
 }

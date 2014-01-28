@@ -198,6 +198,7 @@ public:
     //@{
           bool                CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
           void                GetStockTransporterCapacity     ( double& rWeightMax, double& rVolumeMax ) const;
+    std::pair< double, double > GetStockTransporterCapacity() const;
           unsigned int        GetStockTransporterLoadingTime  () const;
           unsigned int        GetStockTransporterUnloadingTime() const;
     const PHY_DotationNature* GetStockTransporterNature       () const;
@@ -387,8 +388,10 @@ private:
 
     // Logistic : supply
     const PHY_DotationNature* pStockTransporterNature_;
-          double              rStockTransporterWeightCapacity_;
-          double              rStockTransporterVolumeCapacity_;
+    double rStockTransporterMinWeightCapacity_;
+    double rStockTransporterMaxWeightCapacity_;
+    double rStockTransporterMinVolumeCapacity_;
+    double rStockTransporterMaxVolumeCapacity_;
 
     // Logistic : aviation resources quotas
     T_AviationResourceQuotas aviationResourceQuotas_;

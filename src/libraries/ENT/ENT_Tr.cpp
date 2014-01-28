@@ -36,10 +36,6 @@ typedef ENT_Tr::Converter< E_UnitExperience > T_ConverterUnitExperience;
 typedef ENT_Tr::Converter< E_UnitStress > T_ConverterUnitStress;
 typedef ENT_Tr::Converter< E_LightingType > T_ConverterLightingType;
 typedef ENT_Tr::Converter< E_WeatherType > T_ConverterWeatherType;
-typedef ENT_Tr::Converter< E_LogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
-typedef ENT_Tr::Converter< E_LogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
-typedef ENT_Tr::Converter< E_LogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
-typedef ENT_Tr::Converter< E_LogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
 typedef ENT_Tr::Converter< E_ObstacleActivation > T_ConverterObstacleActivation;
 typedef ENT_Tr::Converter< E_PopulationAttitude > T_ConverterPopulationAttitude;
 typedef ENT_Tr::Converter< E_Location > T_ConverterLocation;
@@ -66,7 +62,11 @@ typedef ENT_Tr::Converter< sword::MagicAction::Type > T_ConverterMagicActionType
 typedef ENT_Tr::Converter< sword::UnitMagicAction::Type > T_ConverterUnitMagicActionType;
 typedef ENT_Tr::Converter< sword::KnowledgeMagicAction::Type > T_ConverterKnowledgeMagicActionType;
 typedef ENT_Tr::Converter< sword::ObjectMagicAction::Type > T_ConverterObjectMagicActionType;
-typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterEnumLogisticLevel;
+typedef ENT_Tr::Converter< sword::EnumLogisticLevel > T_ConverterLogisticLevel;
+typedef ENT_Tr::Converter< sword::LogFuneralHandlingUpdate_EnumLogFuneralHandlingStatus > T_ConverterLogFuneralHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus > T_ConverterLogMaintenanceHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus > T_ConverterLogMedicalHandlingStatus;
+typedef ENT_Tr::Converter< sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus > T_ConverterLogSupplyHandlingStatus;
 
 T_ConverterLocationType LocationTypeConverter_[] =
 {
@@ -255,76 +255,6 @@ T_ConverterWeatherType WeatherTypeConverter_[] =
     T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
     T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
-};
-
-T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[] =
-{
-    T_ConverterLogMaintenanceHandlingStatus( "deplacement vers chaine", QT_TRANSLATE_NOOP( "ENT_Tr", "moving toward logistic system" ), eLogMaintenanceHandlingStatus_DeplacementVersChaine ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite remorqueur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available tow-truck" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteRemorqueur ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving to target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck loading" ), eLogMaintenanceHandlingStatus_RemorqueurChargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck moving from target" ), eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour ),
-    T_ConverterLogMaintenanceHandlingStatus( "remorqueur dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "tow-truck unloading" ), eLogMaintenanceHandlingStatus_RemorqueurDechargement ),
-    T_ConverterLogMaintenanceHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMaintenanceHandlingStatus_Diagnostique ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente prise en charge par niveau superieur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting to be handled by higher level" ), eLogMaintenanceHandlingStatus_AttentePriseEnChargeParNiveauSuperieur ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite pieces", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available parts" ), eLogMaintenanceHandlingStatus_AttenteDisponibilitePieces ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente disponibilite reparateur", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for available repairer" ), eLogMaintenanceHandlingStatus_AttenteDisponibiliteReparateur ),
-    T_ConverterLogMaintenanceHandlingStatus( "reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "repairing" ), eLogMaintenanceHandlingStatus_Reparation ),
-    T_ConverterLogMaintenanceHandlingStatus( "retour pion", QT_TRANSLATE_NOOP( "ENT_Tr", "unit returning" ), eLogMaintenanceHandlingStatus_RetourPion ),
-    T_ConverterLogMaintenanceHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMaintenanceHandlingStatus_Termine ),
-    T_ConverterLogMaintenanceHandlingStatus( "attente selection de transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter selection" ), eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur ),
-    T_ConverterLogMaintenanceHandlingStatus( "", "", (E_LogMaintenanceHandlingStatus)-1 )
-};
-
-T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
-{
-    T_ConverterLogSupplyHandlingStatus( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy waiting for trucks" ), eLogSupplyHandlingStatus_ConvoiEnAttenteCamions ),
-    T_ConverterLogSupplyHandlingStatus( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy setting up" ), eLogSupplyHandlingStatus_ConvoiConstitution ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to loading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy loading" ), eLogSupplyHandlingStatus_ConvoiChargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement vers point dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving to unloading point" ), eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy unloading" ), eLogSupplyHandlingStatus_ConvoiDechargement ),
-    T_ConverterLogSupplyHandlingStatus( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoy moving back" ), eLogSupplyHandlingStatus_ConvoiDeplacementRetour ),
-    T_ConverterLogSupplyHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogSupplyHandlingStatus_Termine ),
-    T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
-};
-
-T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
-{
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceReleveChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceReleve ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance going back" ), eLogMedicalHandlingStatus_AmbulanceReleveDeplacementRetour ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "evacuation ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceReleveDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourDiagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostic" ), eLogMedicalHandlingStatus_Diagnostique ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for triage area" ), eLogMedicalHandlingStatus_RechercheSecteurTri ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for triage" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourTri ),
-    T_ConverterLogMedicalHandlingStatus( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "triage" ), eLogMedicalHandlingStatus_Tri ),
-    T_ConverterLogMedicalHandlingStatus( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "looking for treatment area" ), eLogMedicalHandlingStatus_RechercheSecteurSoin ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for doctor (treatment)" ), eLogMedicalHandlingStatus_AttenteDisponibiliteMedecinPourSoin ),
-    T_ConverterLogMedicalHandlingStatus( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "treatment" ), eLogMedicalHandlingStatus_Soin ),
-    T_ConverterLogMedicalHandlingStatus( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalization" ), eLogMedicalHandlingStatus_Hospitalisation ),
-    T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance loading" ), eLogMedicalHandlingStatus_AmbulanceRamassageChargement ),
-    T_ConverterLogMedicalHandlingStatus( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for collection ambulance loading" ), eLogMedicalHandlingStatus_AttenteChargementCompletAmbulanceRamassage ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance coming" ), eLogMedicalHandlingStatus_AmbulanceRamassageDeplacementAller ),
-    T_ConverterLogMedicalHandlingStatus( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "collection ambulance unloading" ), eLogMedicalHandlingStatus_AmbulanceRamassageDechargement ),
-    T_ConverterLogMedicalHandlingStatus( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogMedicalHandlingStatus_Termine ),
-    T_ConverterLogMedicalHandlingStatus( "", "", (E_LogMedicalHandlingStatus)-1 )
-};
-
-T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
-{
-    T_ConverterLogFuneralHandlingStatus( "waiting for handling", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for handling" ), eLogFuneralHandlingStatus_WaitingForHandling ),
-    T_ConverterLogFuneralHandlingStatus( "transporting unpackaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting unpackaged" ), eLogFuneralHandlingStatus_TransportingUnpackaged ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for packaging" ), eLogFuneralHandlingStatus_WaitingForPackaging ),
-    T_ConverterLogFuneralHandlingStatus( "packaging", QT_TRANSLATE_NOOP( "ENT_Tr", "packaging" ), eLogFuneralHandlingStatus_Packaging ),
-    T_ConverterLogFuneralHandlingStatus( "waiting for transporter", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for transporter" ), eLogFuneralHandlingStatus_WaitingForTransporter ),
-    T_ConverterLogFuneralHandlingStatus( "transporting packaged", QT_TRANSLATE_NOOP( "ENT_Tr", "transporting packaged" ), eLogFuneralHandlingStatus_TransportingPackaged ),
-    T_ConverterLogFuneralHandlingStatus( "finished", QT_TRANSLATE_NOOP( "ENT_Tr", "finished" ), eLogFuneralHandlingStatus_Finished ),
-    T_ConverterLogFuneralHandlingStatus( "", "", (E_LogFuneralHandlingStatus)-1 )
 };
 
 T_ConverterObstacleActivation ObstacleActivationConverter_[] =
@@ -655,11 +585,81 @@ T_ConverterObjectMagicActionType ObjectMagicActionTypeConverter_[] =
     T_ConverterObjectMagicActionType( "", "", sword::ObjectMagicAction::Type_MAX )
 };
 
-T_ConverterEnumLogisticLevel EnumLogisticLevelConverter_[] =
+T_ConverterLogisticLevel LogisticLevelConverter_[] =
 {
-    T_ConverterEnumLogisticLevel( "none",          QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "None" ),          sword::none ),
-    T_ConverterEnumLogisticLevel( "logistic-base", QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "Logistic base" ), sword::logistic_base ),
-    T_ConverterEnumLogisticLevel( "", "", sword::EnumLogisticLevel_MAX )
+    T_ConverterLogisticLevel( "none",          QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "None" ),          sword::none ),
+    T_ConverterLogisticLevel( "logistic-base", QT_TRANSLATE_NOOP( "sword::EnumLogisticLevel", "Logistic base" ), sword::logistic_base ),
+    T_ConverterLogisticLevel( "", "", sword::EnumLogisticLevel_MAX )
+};
+
+T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_[] =
+{
+    T_ConverterLogMaintenanceHandlingStatus( "moving_to_supply",                  QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "moving toward logistic system" ),         sword::LogMaintenanceHandlingUpdate::moving_to_supply ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_transporter",           QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available tow-truck" ),       sword::LogMaintenanceHandlingUpdate::waiting_for_transporter ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_moving_to_supply",      QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck moving to target" ),            sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_loading",               QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck loading" ),                     sword::LogMaintenanceHandlingUpdate::transporter_loading ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_moving_back",           QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck moving from target" ),          sword::LogMaintenanceHandlingUpdate::transporter_moving_back ),
+    T_ConverterLogMaintenanceHandlingStatus( "transporter_unloading",             QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "tow-truck unloading" ),                   sword::LogMaintenanceHandlingUpdate::transporter_unloading ),
+    T_ConverterLogMaintenanceHandlingStatus( "diagnosing",                        QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "diagnostic" ),                            sword::LogMaintenanceHandlingUpdate::diagnosing ),
+    T_ConverterLogMaintenanceHandlingStatus( "searching_upper_levels",            QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting to be handled by higher level" ), sword::LogMaintenanceHandlingUpdate::searching_upper_levels ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_parts",                 QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available parts" ),           sword::LogMaintenanceHandlingUpdate::waiting_for_parts ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_repairer",              QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for available repairer" ),        sword::LogMaintenanceHandlingUpdate::waiting_for_repairer ),
+    T_ConverterLogMaintenanceHandlingStatus( "repairing",                         QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "repairing" ),                             sword::LogMaintenanceHandlingUpdate::repairing ),
+    T_ConverterLogMaintenanceHandlingStatus( "moving_back",                       QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "unit returning" ),                        sword::LogMaintenanceHandlingUpdate::moving_back ),
+    T_ConverterLogMaintenanceHandlingStatus( "finished",                          QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "finished" ),                              sword::LogMaintenanceHandlingUpdate::finished ),
+    T_ConverterLogMaintenanceHandlingStatus( "waiting_for_transporter_selection", QT_TRANSLATE_NOOP( "sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus", "waiting for transporter selection" ),     sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection ),
+    T_ConverterLogMaintenanceHandlingStatus( "", "", sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus_MAX )
+};
+
+T_ConverterLogFuneralHandlingStatus LogFuneralHandlingStatusConverter_[] =
+{
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_handling",    QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for handling" ),    sword::LogFuneralHandlingUpdate::waiting_for_handling ),
+    T_ConverterLogFuneralHandlingStatus( "transporting_unpackaged", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting unpackaged" ), sword::LogFuneralHandlingUpdate::transporting_unpackaged ),
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_packaging",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for packaging" ),   sword::LogFuneralHandlingUpdate::waiting_for_packaging ),
+    T_ConverterLogFuneralHandlingStatus( "packaging",               QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "packaging" ),               sword::LogFuneralHandlingUpdate::packaging ),
+    T_ConverterLogFuneralHandlingStatus( "waiting_for_transporter", QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "waiting for transporter" ), sword::LogFuneralHandlingUpdate::waiting_for_transporter ),
+    T_ConverterLogFuneralHandlingStatus( "transporting_packaged",   QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "transporting packaged" ),   sword::LogFuneralHandlingUpdate::transporting_packaged ),
+    T_ConverterLogFuneralHandlingStatus( "finished",                QT_TRANSLATE_NOOP( "sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus", "finished" ),                sword::LogFuneralHandlingUpdate::finished ),
+    T_ConverterLogFuneralHandlingStatus( "", "", sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus_MAX )
+};
+
+T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_[] =
+{
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_evacuation",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for evacuation ambulance" ),         sword::LogMedicalHandlingUpdate::waiting_for_evacuation ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_moving_in",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance coming" ),              sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_loading",                QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance loading" ),             sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_evacuation_loading_completion",   QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for evacuation ambulance loading" ), sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_moving_out",             QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance going back" ),          sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out ),
+    T_ConverterLogMedicalHandlingStatus( "evacuation_ambulance_unloading",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "evacuation ambulance unloading" ),           sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_diagnostic",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for doctor" ),                       sword::LogMedicalHandlingUpdate::waiting_for_diagnostic ),
+    T_ConverterLogMedicalHandlingStatus( "diagnosing",                                  QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "diagnostic" ),                               sword::LogMedicalHandlingUpdate::diagnosing ),
+    T_ConverterLogMedicalHandlingStatus( "looking_for_triage",                          QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "looking for triage area" ),                  sword::LogMedicalHandlingUpdate::looking_for_triage ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_triage",                          QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for triage" ),                       sword::LogMedicalHandlingUpdate::waiting_for_triage ),
+    T_ConverterLogMedicalHandlingStatus( "triaging",                                    QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "triage" ),                                   sword::LogMedicalHandlingUpdate::triaging ),
+    T_ConverterLogMedicalHandlingStatus( "looking_for_medical_attention",               QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "looking for treatment area" ),               sword::LogMedicalHandlingUpdate::looking_for_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_medical_attention",               QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for doctor (treatment)" ),           sword::LogMedicalHandlingUpdate::waiting_for_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "receiving_medical_attention",                 QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "treatment" ),                                sword::LogMedicalHandlingUpdate::receiving_medical_attention ),
+    T_ConverterLogMedicalHandlingStatus( "resting",                                     QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "hospitalization" ),                          sword::LogMedicalHandlingUpdate::resting ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_collection",                      QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for collection ambulance" ),         sword::LogMedicalHandlingUpdate::waiting_for_collection ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_loading",                QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance loading" ),             sword::LogMedicalHandlingUpdate::collection_ambulance_loading ),
+    T_ConverterLogMedicalHandlingStatus( "waiting_for_collection_loading_completion",   QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "waiting for collection ambulance loading" ), sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_moving_in",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance coming" ),              sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in ),
+    T_ConverterLogMedicalHandlingStatus( "collection_ambulance_unloading",              QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "collection ambulance unloading" ),           sword::LogMedicalHandlingUpdate::collection_ambulance_unloading ),
+    T_ConverterLogMedicalHandlingStatus( "finished",                                    QT_TRANSLATE_NOOP( "sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus", "finished" ),                                 sword::LogMedicalHandlingUpdate::finished ),
+    T_ConverterLogMedicalHandlingStatus( "", "", sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus_MAX )
+};
+
+T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_[] =
+{
+    T_ConverterLogSupplyHandlingStatus( "convoy_waiting_for_transporters",     QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy waiting for trucks" ),        sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_setup",                        QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy setting up" ),                sword::LogSupplyHandlingUpdate::convoy_setup ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_to_loading_point",      QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving to loading point" ),   sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_loading",                      QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy loading" ),                   sword::LogSupplyHandlingUpdate::convoy_loading ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_to_unloading_point",    QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving to unloading point" ), sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_unloading",                    QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy unloading" ),                 sword::LogSupplyHandlingUpdate::convoy_unloading ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_moving_back_to_loading_point", QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "convoy moving back" ),               sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point ),
+    T_ConverterLogSupplyHandlingStatus( "convoy_finished",                     QT_TRANSLATE_NOOP( "sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus", "finished" ),                         sword::LogSupplyHandlingUpdate::convoy_finished ),
+    T_ConverterLogSupplyHandlingStatus( "", "", sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus_MAX )
 };
 
 }  // namespace
@@ -668,13 +668,49 @@ T_ConverterEnumLogisticLevel EnumLogisticLevelConverter_[] =
     BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( eNbr ## NAME ) + 1 );\
     InitTr( ( NAME ## Converter_ ), "ENT_Tr" );
 
-#define INIT_PROTO_SUB_TYPE_TR( NAME )\
-    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## TypeConverter_ ) == ( sword:: ## NAME ## ::Type_ARRAYSIZE ) + 1 );\
-    InitTr( ( NAME ## TypeConverter_ ), "sword::" # NAME "::Type" );
+#define INIT_PROTO_TR( CLASS, ALIAS )\
+    BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## _ARRAYSIZE ) + 1 );\
+    InitTr( ( ALIAS ## Converter_ ), "sword::" # CLASS );
 
-#define INIT_PROTO_TR( NAME )\
-    BOOST_STATIC_ASSERT( COUNT_OF( NAME ## Converter_ ) == ( sword:: ## NAME ## _ARRAYSIZE ) + 1 );\
-    InitTr( ( NAME ## Converter_ ), "sword::" # NAME );
+#define INIT_SUB_PROTO_TR( CLASS, NAME, ALIAS )\
+    BOOST_STATIC_ASSERT( COUNT_OF( ALIAS ## Converter_ ) == ( sword:: ## CLASS ## :: ## NAME ## _ARRAYSIZE ) + 1 );\
+    InitTr( ( ALIAS ## Converter_ ), "sword::" # CLASS "::" # NAME );
+
+#define IMPLEMENT_CONVERT_METHODS( NAME )                                               \
+const std::string& ENT_Tr::ConvertFrom ## NAME ## ( E_ ## NAME value,                   \
+                                                    ENT_Tr::E_Conversion conversion )   \
+{                                                                                       \
+    return InverseFindInConverter( NAME ## Converter_, value, conversion );             \
+}                                                                                       \
+E_ ## NAME ENT_Tr::ConvertTo ## NAME ##( const std::string& text,                       \
+                                         E_Conversion conversion )                      \
+{                                                                                       \
+    return FindInConverter( NAME ## Converter_, text, conversion );                     \
+}                                                                                       \
+
+#define IMPLEMENT_CONVERT_METHODS_PROTO( CLASS, ALIAS )                                 \
+const std::string& ENT_Tr::ConvertFrom ## ALIAS ## ( sword:: ## CLASS value,            \
+                                                     ENT_Tr::E_Conversion conversion )  \
+{                                                                                       \
+    return InverseFindInConverter( ALIAS ## Converter_, value, conversion );            \
+}                                                                                       \
+sword:: ## CLASS ENT_Tr::ConvertTo ## ALIAS ##( const std::string& text,                \
+                                                E_Conversion conversion )               \
+{                                                                                       \
+    return FindInConverter( ALIAS ## Converter_, text, conversion );                    \
+}                                                                                       \
+
+#define IMPLEMENT_CONVERT_METHODS_SUB_PROTO( CLASS, NAME, ALIAS )                           \
+const std::string& ENT_Tr::ConvertFrom ## ALIAS ## ( sword:: ## CLASS ## :: ## NAME value,  \
+                                                     ENT_Tr::E_Conversion conversion )      \
+{                                                                                           \
+    return InverseFindInConverter( ALIAS ## Converter_, value, conversion );                \
+}                                                                                           \
+sword:: ## CLASS ## :: ## NAME ENT_Tr::ConvertTo ## ALIAS ##( const std::string& text,      \
+                                                              E_Conversion conversion )     \
+{                                                                                           \
+    return FindInConverter( ALIAS ## Converter_, text, conversion );                        \
+}                                                                                           \
 
 //-----------------------------------------------------------------------------
 // Name: InitTranslations
@@ -705,10 +741,6 @@ void ENT_Tr::InitTranslations()
     INIT_TR( LightingType );
     INIT_TR( Location );
     INIT_TR( LocationType );
-    INIT_TR( LogFuneralHandlingStatus );
-    INIT_TR( LogMaintenanceHandlingStatus );
-    INIT_TR( LogMedicalHandlingStatus );
-    INIT_TR( LogSupplyHandlingStatus );
     INIT_TR( MeetingEngagementStatus );
     INIT_TR( MissionType );
     INIT_TR( Modes );
@@ -725,873 +757,64 @@ void ENT_Tr::InitTranslations()
     INIT_TR( UnitStress );
     INIT_TR( UnitTiredness );
     INIT_TR( WeatherType );
-    INIT_PROTO_SUB_TYPE_TR( KnowledgeMagicAction );
-    INIT_PROTO_SUB_TYPE_TR( MagicAction );
-    INIT_PROTO_SUB_TYPE_TR( ObjectMagicAction );
-    INIT_PROTO_SUB_TYPE_TR( UnitMagicAction );
-    INIT_PROTO_TR( EnumLogisticLevel );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLocationType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLocationType( E_LocationType nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LocationTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromDotationFamily
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDotationFamily( E_DotationFamily nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( DotationFamilyConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAmmunitionType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAmmunitionType( E_AmmunitionType nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( AmmunitionTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromNatureLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromDiplomacy
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDiplomacy( E_Diplomacy nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( DiplomacyConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromForceRatioStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromForceRatioStatus( E_ForceRatioStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( ForceRatioStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMeetingEngagementStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMeetingEngagementStatus( E_MeetingEngagementStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( MeetingEngagementStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromOperationalStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromOperationalStatus( E_OperationalStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( OperationalStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromRoe
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromRoe( E_Roe nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( RoeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitPosture
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitPosture( E_UnitPosture nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( UnitPostureConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromFireAvailability
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromFireAvailability( E_FireAvailability nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( FireAvailabilityConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationRoe
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationRoe( E_PopulationRoe nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( PopulationRoeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitTiredness
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitTiredness( E_UnitTiredness nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( UnitTirednessConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitMorale
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitMorale( E_UnitMorale nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( UnitMoraleConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitExperience
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( UnitExperienceConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitStress
-// Created: LDC 2011-06-17
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitStress( E_UnitStress nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( UnitStressConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLightingType
-// Created: JSR 2010-07-12
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLightingType( E_LightingType nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LightingTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromWeatherType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogMaintenanceHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LogMaintenanceHandlingStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogSupplyHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LogSupplyHandlingStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogMedicalHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LogMedicalHandlingStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogFuneralHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogFuneralHandlingStatus( E_LogFuneralHandlingStatus nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LogFuneralHandlingStatusConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObstacleActivation
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObstacleActivation( E_ObstacleActivation nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( ObstacleActivationConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationAttitude
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLocation
-// Created: PHC
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLocation( E_Location nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LocationConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromCrossingType
-// Created: LGY 2011-07-19
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromCrossingType( E_CrossingType nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( CrossingTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanRank
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( HumanRankConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanState
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanState( E_HumanState nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( HumanStateConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanLocation
-// Created: ABR 2011-07-25
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanLocation( E_HumanLocation nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( HumanLocationConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromEquipmentState
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromEquipmentState( E_EquipmentState nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( EquipmentStateConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromInjuriesSeriousness
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromInjuriesSeriousness( E_InjuriesSeriousness nValue, ENT_Tr::E_Conversion nConverterType )
-{
-    return InverseFindInConverter( InjuriesSeriousnessConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromBreakdownType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::InverseFindInConverter( BreakdownTypeConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromBreakdownNTI
-// Created: SBO 2005-09-07
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::InverseFindInConverter( BreakdownNTIConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromGhostType
-// Created: ABR 2011-10-18
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromGhostType( E_GhostType nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( GhostTypeConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromNbcState
-// Created: ABR 2011-11-29
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( NbcStateConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromModes
-// Created: ABR 2012-05-10
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( ModesConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAgentNbcSuit
-// Created: LGY 2012-11-23
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( AgentNbcSuitConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAviationRange
-// Created: JSR 2013-10-16
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAviationRange( E_AviationRange nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( AviationRangeConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLayerType
-// Created: LGY 2013-02-27
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( LayerTypesConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromEventType
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( EventTypesConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMissionType
-// Created: NPT 2013-02-15
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( MissionTypeConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertFromEventDockModes
-// Created: ABR 2013-11-19
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromEventDockModes( E_EventDockModes nValue, E_Conversion nConverterType )
-{
-    return InverseFindInConverter( EventDockModesConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMagicActionType( sword::MagicAction::Type value, E_Conversion conversion )
-{
-    return InverseFindInConverter( MagicActionTypeConverter_, value, conversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitMagicActionType( sword::UnitMagicAction::Type value, E_Conversion conversion )
-{
-    return InverseFindInConverter( UnitMagicActionTypeConverter_, value, conversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromKnowledgeMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromKnowledgeMagicActionType( sword::KnowledgeMagicAction::Type value, E_Conversion conversion )
-{
-    return InverseFindInConverter( KnowledgeMagicActionTypeConverter_, value, conversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObjectMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObjectMagicActionType( sword::ObjectMagicAction::Type value, E_Conversion conversion )
-{
-    return InverseFindInConverter( ObjectMagicActionTypeConverter_, value, conversion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogisticLevel
-// Created: ABR 2014-01-17
-// -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogisticLevel( sword::EnumLogisticLevel value, E_Conversion conversion )
-{
-    return InverseFindInConverter( EnumLogisticLevelConverter_, value, conversion );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLocationType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LocationType ENT_Tr::ConvertToLocationType( const std::string& strName )
-{
-    return FindInConverter( LocationTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToDotationFamily
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_DotationFamily ENT_Tr::ConvertToDotationFamily( const std::string& strName )
-{
-    return FindInConverter( DotationFamilyConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAmmunitionType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_AmmunitionType ENT_Tr::ConvertToAmmunitionType( const std::string& strName )
-{
-    return FindInConverter( AmmunitionTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToNatureLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
-{
-    return FindInConverter( NatureLevelConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToDiplomacy
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_Diplomacy ENT_Tr::ConvertToDiplomacy( const std::string& strName )
-{
-    return FindInConverter( DiplomacyConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToForceRatioStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ForceRatioStatus ENT_Tr::ConvertToForceRatioStatus( const std::string& strName )
-{
-    return FindInConverter( ForceRatioStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMeetingEngagementStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_MeetingEngagementStatus ENT_Tr::ConvertToMeetingEngagementStatus( const std::string& strName )
-{
-    return FindInConverter( MeetingEngagementStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToOperationalStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_OperationalStatus ENT_Tr::ConvertToOperationalStatus( const std::string& strName )
-{
-    return FindInConverter( OperationalStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToRoe
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_Roe ENT_Tr::ConvertToRoe( const std::string& strName )
-{
-    return FindInConverter( RoeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitPosture
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitPosture ENT_Tr::ConvertToUnitPosture( const std::string& strName )
-{
-    return FindInConverter( UnitPostureConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToFireAvailability
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_FireAvailability ENT_Tr::ConvertToFireAvailability( const std::string& strName )
-{
-    return FindInConverter( FireAvailabilityConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationRoe
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_PopulationRoe ENT_Tr::ConvertToPopulationRoe( const std::string& strName )
-{
-    return FindInConverter( PopulationRoeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitTiredness
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitTiredness ENT_Tr::ConvertToUnitTiredness( const std::string& strName )
-{
-    return FindInConverter( UnitTirednessConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitMorale
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitMorale ENT_Tr::ConvertToUnitMorale( const std::string& strName )
-{
-    return FindInConverter( UnitMoraleConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitExperience
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
-{
-    return FindInConverter( UnitExperienceConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitStress
-// Created: LDC 2011-06-17
-// -----------------------------------------------------------------------------
-E_UnitStress ENT_Tr::ConvertToUnitStress( const std::string& strName )
-{
-    return FindInConverter( UnitStressConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLightingType
-// Created: ABR 2011-11-15
-// -----------------------------------------------------------------------------
-E_LightingType ENT_Tr::ConvertToLightingType( const std::string& strName )
-{
-    return FindInConverter( LightingTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToWeatherType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
-{
-    return FindInConverter( WeatherTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogMaintenanceHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogMaintenanceHandlingStatus ENT_Tr::ConvertToLogMaintenanceHandlingStatus( const std::string& strName )
-{
-    return FindInConverter( LogMaintenanceHandlingStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogSupplyHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::string& strName )
-{
-    return FindInConverter( LogSupplyHandlingStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogMedicalHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogMedicalHandlingStatus ENT_Tr::ConvertToLogMedicalHandlingStatus( const std::string& strName )
-{
-    return FindInConverter( LogMedicalHandlingStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogFuneralHandlingStatus
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std::string& strName )
-{
-    return FindInConverter( LogFuneralHandlingStatusConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObstacleActivation
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ObstacleActivation ENT_Tr::ConvertToObstacleActivation( const std::string& strName, E_Conversion mode /* = eToSim */ )
-{
-    return FindInConverter( ObstacleActivationConverter_, strName, mode );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationAttitude
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
-{
-    return FindInConverter( PopulationAttitudeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLocation
-// Created: PHC
-//-----------------------------------------------------------------------------
-E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
-{
-    return FindInConverter( LocationConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToCrossingType
-// Created: LGY 2011-07-19
-// -----------------------------------------------------------------------------
-E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
-{
-    return FindInConverter( CrossingTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName, E_Conversion mode )
-{
-    return FindInConverter( HumanWoundConverter_, strName, mode );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanRank
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
-{
-    return FindInConverter( HumanRankConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanState
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-E_HumanState ENT_Tr::ConvertToHumanState( const std::string& strName )
-{
-    return FindInConverter( HumanStateConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanLocation
-// Created: ABR 2011-07-25
-// -----------------------------------------------------------------------------
-E_HumanLocation ENT_Tr::ConvertToHumanLocation( const std::string& strName )
-{
-    return FindInConverter( HumanLocationConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToEquipmentState
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-E_EquipmentState ENT_Tr::ConvertToEquipmentState( const std::string& strName )
-{
-    return FindInConverter( EquipmentStateConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToInjuriesSeriousness
-// Created: ABR 2011-07-19
-// -----------------------------------------------------------------------------
-E_InjuriesSeriousness ENT_Tr::ConvertToInjuriesSeriousness( const std::string& strName )
-{
-    return FindInConverter( InjuriesSeriousnessConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToBreakdownType
-// Created: APE 2005-03-07
-// -----------------------------------------------------------------------------
-E_BreakdownType ENT_Tr::ConvertToBreakdownType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( BreakdownTypeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToBreakdownNTI
-// Created: SBO 2005-09-07
-// -----------------------------------------------------------------------------
-E_BreakdownNTI ENT_Tr::ConvertToBreakdownNTI( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( BreakdownNTIConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToGhostType
-// Created: ABR 2011-10-18
-// -----------------------------------------------------------------------------
-E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
-{
-    return FindInConverter( GhostTypeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToNbcState
-// Created: ABR 2011-11-29
-// -----------------------------------------------------------------------------
-E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
-{
-    return FindInConverter( NbcStateConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToModes
-// Created: ABR 2012-05-10
-// -----------------------------------------------------------------------------
-E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
-{
-    return FindInConverter( ModesConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAgentNbcSuit
-// Created: LGY 2012-11-23
-// -----------------------------------------------------------------------------
-E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
-{
-    return FindInConverter( AgentNbcSuitConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAviationRange
-// Created: JSR 2013-10-16
-// -----------------------------------------------------------------------------
-E_AviationRange ENT_Tr::ConvertToAviationRange( const std::string& strName )
-{
-    return FindInConverter( AviationRangeConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLayerType
-// Created: LGY 2013-02-27
-// -----------------------------------------------------------------------------
-E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
-{
-    return FindInConverter( LayerTypesConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToEventType
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversion mode )
-{
-    return FindInConverter( EventTypesConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMissionType
-// Created: NPT 2013-02-15
-// -----------------------------------------------------------------------------
-E_MissionType ENT_Tr::ConvertToMissionType( const std::string& strName, E_Conversion mode )
-{
-    return FindInConverter( MissionTypeConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr_Gen::ConvertToEventDockModes
-// Created: ABR 2013-11-19
-// -----------------------------------------------------------------------------
-E_EventDockModes ENT_Tr::ConvertToEventDockModes( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( EventDockModesConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-sword::MagicAction::Type ENT_Tr::ConvertToMagicActionType( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( MagicActionTypeConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-sword::UnitMagicAction::Type ENT_Tr::ConvertToUnitMagicActionType( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( UnitMagicActionTypeConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToKnowledgeMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-sword::KnowledgeMagicAction::Type ENT_Tr::ConvertToKnowledgeMagicActionType( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( KnowledgeMagicActionTypeConverter_, strName, mode );
-}
 
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObjectMagicActionType
-// Created: ABR 2014-01-09
-// -----------------------------------------------------------------------------
-sword::ObjectMagicAction::Type ENT_Tr::ConvertToObjectMagicActionType( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( ObjectMagicActionTypeConverter_, strName, mode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogisticLevel
-// Created: ABR 2014-01-17
-// -----------------------------------------------------------------------------
-sword::EnumLogisticLevel ENT_Tr::ConvertToLogisticLevel( const std::string& strName, E_Conversion mode )
-{
-    return ENT_Tr::FindInConverter( EnumLogisticLevelConverter_, strName, mode );
-}
+    INIT_PROTO_TR( EnumLogisticLevel, LogisticLevel );
+    INIT_SUB_PROTO_TR( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
+    INIT_SUB_PROTO_TR( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
+    INIT_SUB_PROTO_TR( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
+    INIT_SUB_PROTO_TR( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
+    INIT_SUB_PROTO_TR( LogSupplyHandlingUpdate, EnumLogSupplyHandlingStatus, LogSupplyHandlingStatus );
+    INIT_SUB_PROTO_TR( MagicAction, Type, MagicActionType );
+    INIT_SUB_PROTO_TR( ObjectMagicAction, Type, ObjectMagicActionType );
+    INIT_SUB_PROTO_TR( UnitMagicAction, Type, UnitMagicActionType );
+}
+
+IMPLEMENT_CONVERT_METHODS( AgentNbcSuit );
+IMPLEMENT_CONVERT_METHODS( AmmunitionType )
+IMPLEMENT_CONVERT_METHODS( AviationRange );
+IMPLEMENT_CONVERT_METHODS( BreakdownNTI );
+IMPLEMENT_CONVERT_METHODS( BreakdownType );
+IMPLEMENT_CONVERT_METHODS( CrossingType );
+IMPLEMENT_CONVERT_METHODS( Diplomacy );
+IMPLEMENT_CONVERT_METHODS( DotationFamily );
+IMPLEMENT_CONVERT_METHODS( EquipmentState );
+IMPLEMENT_CONVERT_METHODS( EventDockModes );
+IMPLEMENT_CONVERT_METHODS( EventTypes );
+IMPLEMENT_CONVERT_METHODS( FireAvailability );
+IMPLEMENT_CONVERT_METHODS( ForceRatioStatus );
+IMPLEMENT_CONVERT_METHODS( GhostType );
+IMPLEMENT_CONVERT_METHODS( HumanLocation );
+IMPLEMENT_CONVERT_METHODS( HumanRank );
+IMPLEMENT_CONVERT_METHODS( HumanState );
+IMPLEMENT_CONVERT_METHODS( HumanWound );
+IMPLEMENT_CONVERT_METHODS( InjuriesSeriousness );
+IMPLEMENT_CONVERT_METHODS( LayerTypes );
+IMPLEMENT_CONVERT_METHODS( LightingType );
+IMPLEMENT_CONVERT_METHODS( Location );
+IMPLEMENT_CONVERT_METHODS( LocationType );
+IMPLEMENT_CONVERT_METHODS( MeetingEngagementStatus );
+IMPLEMENT_CONVERT_METHODS( MissionType );
+IMPLEMENT_CONVERT_METHODS( Modes );
+IMPLEMENT_CONVERT_METHODS( NatureLevel );
+IMPLEMENT_CONVERT_METHODS( NbcState );
+IMPLEMENT_CONVERT_METHODS( ObstacleActivation );
+IMPLEMENT_CONVERT_METHODS( OperationalStatus );
+IMPLEMENT_CONVERT_METHODS( PopulationAttitude );
+IMPLEMENT_CONVERT_METHODS( PopulationRoe );
+IMPLEMENT_CONVERT_METHODS( Roe );
+IMPLEMENT_CONVERT_METHODS( UnitExperience );
+IMPLEMENT_CONVERT_METHODS( UnitMorale );
+IMPLEMENT_CONVERT_METHODS( UnitPosture );
+IMPLEMENT_CONVERT_METHODS( UnitStress );
+IMPLEMENT_CONVERT_METHODS( UnitTiredness );
+IMPLEMENT_CONVERT_METHODS( WeatherType );
+
+IMPLEMENT_CONVERT_METHODS_PROTO( EnumLogisticLevel, LogisticLevel );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( KnowledgeMagicAction, Type, KnowledgeMagicActionType );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogFuneralHandlingUpdate, EnumLogFuneralHandlingStatus, LogFuneralHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMaintenanceHandlingUpdate, EnumLogMaintenanceHandlingStatus, LogMaintenanceHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogMedicalHandlingUpdate, EnumLogMedicalHandlingStatus, LogMedicalHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( LogSupplyHandlingUpdate, EnumLogSupplyHandlingStatus, LogSupplyHandlingStatus );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( MagicAction, Type, MagicActionType );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( ObjectMagicAction, Type, ObjectMagicActionType );
+IMPLEMENT_CONVERT_METHODS_SUB_PROTO( UnitMagicAction, Type, UnitMagicActionType );

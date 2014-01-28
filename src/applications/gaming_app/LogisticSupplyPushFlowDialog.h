@@ -14,6 +14,11 @@
 
 class LogisticSupplyExclusiveListWidget;
 
+namespace kernel
+{
+    class Profile_ABC;
+}
+
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
     @brief  LogisticSupplyPushFlowDialog
@@ -33,7 +38,8 @@ public:
                                            const ::StaticModel& staticModel,
                                            const kernel::Time_ABC& simulation,
                                            gui::ParametersLayer& layer,
-                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automats );
+                                           const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                           const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -90,6 +96,7 @@ private:
     T_RecipientSupplies recipientSupplies_;
     T_RecipientsNames recipientsNames_;
     const kernel::Automat_ABC* pRecipientSelected_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -70,6 +70,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     : EntityResolverFacade( static_cast< kernel::Model_ABC& >( *this ) )
     , controllers_             ( controllers )
     , static_                  ( staticModel )
+    , config_                  ( config )
     , agentsKnowledgeFactory_  ( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , objectKnowledgeFactory_  ( *new ObjectKnowledgeFactory( controllers, *this, staticModel, simulation ) )
     , urbanKnowledgeFactory_   ( *new UrbanKnowledgeFactory( controllers.controller_, *this ) )

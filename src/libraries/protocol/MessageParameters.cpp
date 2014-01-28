@@ -263,8 +263,7 @@ std::vector< sword::CoordLatLong > protocol::GetLocation(
 
 sword::Location_Geometry protocol::GetLocationType( const sword::MissionParameters& params, int i )
 {
-    const auto& location = GetValue< Location >( params, i, -1, -1 );
-    return location.type();
+    return GetValue< Location >( params, i, -1, -1 ).type();
 }
 
 uint32_t protocol::GetIdentifier( const sword::MissionParameters& params, int i, int j, int k )

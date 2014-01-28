@@ -13,6 +13,7 @@
 #include "Simulation.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {

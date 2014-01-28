@@ -496,6 +496,17 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>ConsignDialog</name>
+    <message>
+        <source>request</source>
+        <translation>requête</translation>
+    </message>
+    <message>
+        <source>Apply the automated resolution</source>
+        <translation>Appliquer une résolution automatique</translation>
+    </message>
+</context>
+<context>
     <name>CreateFormationDialog</name>
     <message>
         <source>Create formation</source>
@@ -2077,7 +2088,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2104,7 +2115,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2146,7 +2157,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2173,7 +2184,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -2200,7 +2211,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>
@@ -3143,7 +3154,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Lent</source>
-        <translation>prêté</translation>
+        <translation>Prêté</translation>
     </message>
 </context>
 <context>

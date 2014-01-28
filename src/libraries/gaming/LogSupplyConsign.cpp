@@ -47,7 +47,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     , pLogHandlingEntity_                ( controller_, FindLogEntity( message.supplier() ) )
     , pPionLogConvoying_                 ( controller_ )
     , pLogProvidingConvoyResourcesEntity_( controller_, FindLogEntity( message.transporters_provider() ) )
-    , nState_                            ( eLogSupplyHandlingStatus_Termine )
+    , nState_                            ( sword::LogSupplyHandlingUpdate::convoy_finished )
 {
     // NOTHING
 }
@@ -70,7 +70,7 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message, ke
     pPionLogConvoying_ = pionLogConvoying;
 
     if( message.has_state()  )
-        nState_ = E_LogSupplyHandlingStatus( message.state() );
+        nState_ = message.state();
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
     else
@@ -99,11 +99,11 @@ void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport,
             glColor4f( COLOR_ORANGE );
             switch( nState_ )
             {
-                case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointChargement:
-                case eLogSupplyHandlingStatus_ConvoiDeplacementVersPointDechargement:
+                case sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point:
+                case sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point:
                     glLineStipple( 1, tools.StipplePattern() );
                     break;
-                case eLogSupplyHandlingStatus_ConvoiDeplacementRetour:
+                case sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point:
                     glLineStipple( 1, tools.StipplePattern(-1) );
                     break;
                 default:
@@ -191,7 +191,7 @@ const kernel::Entity_ABC* LogSupplyConsign::GetProviding() const
 // Name: LogSupplyConsign::GetStatus
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-E_LogSupplyHandlingStatus LogSupplyConsign::GetStatus() const
+sword::LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus LogSupplyConsign::GetStatus() const
 {
     return nState_;
 }
@@ -202,7 +202,7 @@ E_LogSupplyHandlingStatus LogSupplyConsign::GetStatus() const
 // -----------------------------------------------------------------------------
 QString LogSupplyConsign::GetStatusDisplay() const
 {
-    return tools::ToString( nState_ );
+    return QString::fromStdString( ENT_Tr::ConvertFromLogSupplyHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,8 +211,9 @@ QString LogSupplyConsign::GetStatusDisplay() const
 // -----------------------------------------------------------------------------
 QString LogSupplyConsign::GetStatusDisplay( int status ) const
 {
-    if( 0 <= status && status < eNbrLogSupplyHandlingStatus )
-        return tools::ToString( static_cast< E_LogSupplyHandlingStatus >( status ) );
+    if( sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus_IsValid( status ) )
+        return QString::fromStdString( ENT_Tr::ConvertFromLogSupplyHandlingStatus(
+            static_cast< sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus >( status ) ) );
     return QString();
 }
 

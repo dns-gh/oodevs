@@ -26,6 +26,7 @@ namespace sword
 {
     class LogMedicalHandlingCreation;
     class LogMedicalHandlingUpdate;
+    enum LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus;
 }
 
 class Simulation;
@@ -64,18 +65,16 @@ public:
     bool IsContamined() const;
     bool IsDiagnosed() const;
     E_HumanWound GetWound() const;
-    E_LogMedicalHandlingStatus GetStatus() const;
+    sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus GetStatus() const;
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
     //@}
 
 private:
-    virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    LogMedicalConsign( const LogMedicalConsign& );
-    LogMedicalConsign& operator=( const LogMedicalConsign& );
+    virtual kernel::Entity_ABC* GetRequestHandler( uint32_t entityId ) const;
     //@}
 
 private:
@@ -89,7 +88,7 @@ private:
     bool    bContaminated_;
     bool    diagnosed_;
     E_HumanWound wound_;
-    E_LogMedicalHandlingStatus nState_;
+    sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nState_;
     //@}
 };
 

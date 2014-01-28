@@ -68,10 +68,12 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
                                                             const Time_ABC& simulation,
                                                             ParametersLayer& layer,
                                                             const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                            const tools::Resolver_ABC< Formation_ABC >& formations )
+                                                            const tools::Resolver_ABC< Formation_ABC >& formations,
+                                                            const kernel::Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
     , formations_( formations )
     , supplier_( 0 )
+    , profile_( profile )
 {
     setCaption( tr( "Pull supply flow" ) );
     supplierCombo_ = new ValuedComboBox< const Entity_ABC* >( "supplierCombo", resourcesTab_ );
@@ -156,18 +158,22 @@ void LogisticSupplyPullFlowDialog::Validate()
 {
     if( !selected_ || !supplier_ )
         return;
-    if( carriersTable_->IsOverloaded() )
+    if( profile_.IsSupervision() )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
-        return;
+        if( carriersTable_->IsOverloaded() )
+        {
+            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+            return;
+        }
+        if( carriersTable_->IsUnderloaded() &&
+            QMessageBox::warning( this, tr( "Error" ),
+                tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
+                QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
+            return;
     }
-    if( carriersTable_->IsUnderloaded() &&
-        QMessageBox::warning( this, tr( "Error" ),
-            tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
-            QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
-        return;
 
-    resourcesTable_->GetQuantities( supplierSupplies_ );
+    T_QuantitiesMap supplies;
+    resourcesTable_->GetQuantities( supplies );
     T_QuantitiesMap carriers;
     if( carriersUseCheck_->isChecked() )
         carriersTable_->GetQuantities( carriers );
@@ -194,7 +200,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     else if( pSupplierFormation )
         pullFlowParameters->SetSupplier( *pSupplierFormation );
 
-    for( auto it = supplierSupplies_.begin(); it != supplierSupplies_.end(); ++it )
+    for( auto it = supplies.begin(); it != supplies.end(); ++it )
     {
         const DotationType* dotationType = availableSupplies_[ it.key() ].type_;
         assert( dotationType );
@@ -262,7 +268,6 @@ void LogisticSupplyPullFlowDialog::ClearSuppliersTable()
 void LogisticSupplyPullFlowDialog::ClearSuppliersData()
 {
     supplier_ = 0;
-    supplierSupplies_.clear();
 }
 
 namespace

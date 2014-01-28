@@ -28,7 +28,7 @@ PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( MIL_Agent_ABC& medical, PHY_Medi
     , nTimer_                 ( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< int32_t >::max() )
     , bHasChanged_            ( true )
-    , nState_                 ( eWaitingForEvacuation )
+    , nState_                 ( sword::LogMedicalHandlingUpdate::waiting_for_evacuation )
 {
     pHumanState_->SetConsign( this );
 }
@@ -43,7 +43,7 @@ PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC()
     , nTimer_                 ( 0 )
     , currentStateEndTimeStep_( std::numeric_limits< int32_t >::max() )
     , bHasChanged_            ( true )
-    , nState_                 ( eWaitingForEvacuation )
+    , nState_                 ( sword::LogMedicalHandlingUpdate::waiting_for_evacuation )
 {
     // NOTHING
 }
@@ -93,7 +93,7 @@ void PHY_MedicalConsign_ABC::ClearConsign()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::Cancel()
 {
-    SetState( eFinished );
+    SetState( sword::LogMedicalHandlingUpdate::finished );
     ResetTimer( 0 );
     pHumanState_ = 0;
 }
@@ -104,7 +104,7 @@ void PHY_MedicalConsign_ABC::Cancel()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::EnterStateFinished()
 {
-    SetState( eFinished );
+    SetState( sword::LogMedicalHandlingUpdate::finished );
     ResetTimer( 0 );
 }
 
@@ -116,7 +116,7 @@ void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& as
 {
     assert( pMedical_ );
     asn().mutable_provider()->set_id( pMedical_->GetID() );
-    asn().set_state( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus( nState_ ) );
+    asn().set_state( nState_ );
     if( currentStateEndTimeStep_ != std::numeric_limits< int32_t >::max() )
         asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
@@ -144,7 +144,7 @@ void PHY_MedicalConsign_ABC::Clean()
 // Name: PHY_MedicalConsign_ABC::SetTimer
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SetState( E_State nNewState )
+void PHY_MedicalConsign_ABC::SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState )
 {
     nState_ = nNewState;
     bHasChanged_ = true;
@@ -154,7 +154,7 @@ void PHY_MedicalConsign_ABC::SetState( E_State nNewState )
 // Name: PHY_MedicalConsign_ABC::GetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-PHY_MedicalConsign_ABC::E_State PHY_MedicalConsign_ABC::GetState() const
+sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus PHY_MedicalConsign_ABC::GetState() const
 {
     return nState_;
 }
@@ -218,7 +218,7 @@ bool PHY_MedicalConsign_ABC::HasChanged() const
 // -----------------------------------------------------------------------------
 bool PHY_MedicalConsign_ABC::IsFinished() const
 {
-    return nState_ == eFinished;
+    return nState_ == sword::LogMedicalHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------

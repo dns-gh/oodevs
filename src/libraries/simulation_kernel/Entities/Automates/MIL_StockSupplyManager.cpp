@@ -280,8 +280,7 @@ void MIL_StockSupplyManager::Serialize( sword::Id& msg ) const
 // -----------------------------------------------------------------------------
 bool MIL_StockSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
 {
-    const MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
-    return logisticManager && logisticManager == &logisticBase;
+    return pAutomate_->FindLogisticManager() == &logisticBase;
 }
 
 // -----------------------------------------------------------------------------

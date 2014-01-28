@@ -197,6 +197,16 @@ void ActionsModel::PublishLogMaintenanceSetManualAction( const kernel::Entity_AB
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishSelectNewLogisticState
+// Created: LGY 2014-01-24
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishSelectNewLogisticState( unsigned int consignId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateSelectNewLogisticState( consignId ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

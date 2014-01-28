@@ -118,7 +118,7 @@ void LocationEditorToolbar::CreateBookmark( const std::string& defaultName )
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( Bookmark( name.toStdString(), defaultName ) );
+        bookmarks_.push_back( Bookmark( name.toStdString(), converter_.ConvertToMgrs( menuPoint_ ) ) );
         layer_.AddLocation( menuPoint_ );
         for( size_t i = 0; i < bookmarks_.size(); ++i )
         {

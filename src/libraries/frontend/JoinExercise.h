@@ -27,7 +27,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile );
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
+                           const QString& profile, const QString& devFeatures );
     virtual ~JoinExercise();
     //@}
 

@@ -69,6 +69,8 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
+#include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
@@ -121,6 +123,7 @@
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include <boost/lexical_cast.hpp>
+#include <tuple>
 
 #include "Adapters/Legacy/Sink.h"
 
@@ -1121,7 +1124,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_BADUNIT_UNIT( "invalid formation or automat: " << id );
             break;
         case UnitMagicAction::log_supply_push_flow:
-            ProcessLogSupplyPushFlow( message );
+            ProcessLogSupplyPushFlow( message, ack() );
             break;
         case UnitMagicAction::log_supply_pull_flow:
             ProcessLogSupplyPullFlow( message );
@@ -1815,21 +1818,106 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
         MIL_Report::PostEvent( **supplierIt, report::eRC_SupplierUnavailable );
 }
 
+namespace
+{
+    double ComputeMaxMass( const PHY_ComposanteTypePion& type,
+        const tools::Map< const PHY_ComposanteTypePion*, unsigned >& transporters )
+    {
+        double mass = 0;
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
+            if( type.GetStockTransporterNature() == it->first->GetStockTransporterNature() )
+            {
+                double maxMass, maxVolume;
+                it->first->GetStockTransporterCapacity( maxMass, maxVolume );
+                mass += it->second * maxMass;
+            }
+        return mass;
+    }
+
+    std::pair< double, double > ComputeMassVolume( const PHY_ComposanteTypePion& type,
+        const tools::Map< const PHY_ComposanteTypePion*, unsigned >& transporters,
+        const tools::Map< const PHY_DotationCategory*, double >& supplies )
+    {
+        double mass = 0;
+        double volume = 0;
+        for( auto it = supplies.begin(); it != supplies.end(); ++it )
+            if( type.CanTransportStock( *it->first ) )
+            {
+                mass += it->second * it->first->GetWeight();
+                volume += it->second * it->first->GetVolume();
+            }
+        const double total = ComputeMaxMass( type, transporters );
+        double maxMass, maxVolume;
+        type.GetStockTransporterCapacity( maxMass, maxVolume );
+        return std::make_pair( mass / total, volume * maxMass / total / maxVolume );
+    }
+
+    void FillConvoyStatus( const sword::PushFlowParameters& params, sword::UnitMagicActionAck& ack )
+    {
+        tools::Map< const PHY_ComposanteTypePion*, unsigned > transporters;
+        for( auto it = params.transporters().begin(); it != params.transporters().end(); ++it )
+        {
+            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype() );
+            protocol::Check( type, "invalid transporter" );
+            const unsigned quantity = it->quantity();
+            protocol::Check( quantity > 0, "transporter quantity must be positive" );
+            transporters[ type ] += quantity;
+        }
+        tools::Map< const PHY_DotationCategory*, double > supplies;
+        protocol::Check( params.recipients().size() > 0, "at least one recipient expected" );
+        for( auto it = params.recipients().begin(); it != params.recipients().end(); ++it )
+        {
+            protocol::Check( it->resources().size() > 0, "at least one resource expected" );
+            for( auto it2 = it->resources().begin(); it2 != it->resources().end(); ++it2 )
+            {
+                const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( it2->resourcetype().id() );
+                protocol::Check( category, "invalid resource" );
+                const double quantity = it2->quantity();
+                protocol::Check( quantity > 0, "resource quantity must be positive" );
+                supplies[ category ] += quantity;
+            }
+        }
+        bool massOverloaded = false;
+        bool volumeOverloaded = false;
+        auto states = ack.mutable_result()->add_elem()->add_value();
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
+        {
+            double mass, volume, minMass, maxMass, minVolume, maxVolume;
+            it->first->GetStockTransporterCapacity( maxMass, maxVolume );
+            std::tie( minMass, minVolume ) = it->first->GetStockTransporterCapacity();
+            std::tie( mass, volume ) = ComputeMassVolume( *it->first, transporters, supplies );
+            states->add_list()->set_booleanvalue( mass * maxMass < minMass );
+            if( mass > 1 )
+                massOverloaded = true;
+            states->add_list()->set_booleanvalue( mass > 1 );
+            states->add_list()->set_booleanvalue( volume * maxVolume < minVolume );
+            if( volume > 1 )
+                volumeOverloaded = true;
+            states->add_list()->set_booleanvalue( volume > 1 );
+        }
+        protocol::Check( !massOverloaded, "transporter capacity mass overloaded" );
+        protocol::Check( !volumeOverloaded, "transporter capacity volume overloaded" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message )
+void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
 {
     const auto tasker = protocol::TryGetTasker( message.tasker() );
     if( !tasker )
         throw MASA_INVALIDTASKER;
     MIL_AutomateLOG* pBrainLog = FindBrainLogistic( *tasker );
-    if( !pBrainLog )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
-    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value( 0 ).has_push_flow_parameters() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value( 0 ).push_flow_parameters(), *automateFactory_ );
+    protocol::Check( pBrainLog, "invalid supplier" );
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_push_flow_parameters(), "invalid receiver" );
+    const auto& flowParams = value.push_flow_parameters();
+    FillConvoyStatus( flowParams, ack );
+    pBrainLog->OnReceiveLogSupplyPushFlow( flowParams, *automateFactory_ );
 }
 
 // -----------------------------------------------------------------------------

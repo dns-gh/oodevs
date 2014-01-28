@@ -42,7 +42,7 @@ LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const swor
     , equipmentType_      ( & componentResolver.Get( message.equipement().id() ) )
     , breakdownType_      ( & breakdownResolver.Get( message.breakdown().id() ) )
     , diagnosed_          ( false )
-    , nState_             ( eLogMaintenanceHandlingStatus_Termine )
+    , nState_             ( sword::LogMaintenanceHandlingUpdate::finished )
 {
    // NOTHING
 }
@@ -62,9 +62,9 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message, kernel::Entity_ABC* handler )
 {
-    if( message.has_state()  )
-        nState_ = E_LogMaintenanceHandlingStatus( message.state() );
-    if( message.has_diagnosed()  )
+    if( message.has_state() )
+        nState_ = message.state();
+    if( message.has_diagnosed() )
         diagnosed_ = message.diagnosed();
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
@@ -90,10 +90,10 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
     glColor4f( COLOR_MAROON );
     switch( nState_ )
     {
-    case eLogMaintenanceHandlingStatus_RemorqueurDeplacementAller:
+    case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
         glLineStipple( 1, tools.StipplePattern() );
         break;
-    case eLogMaintenanceHandlingStatus_RemorqueurDeplacementRetour:
+    case sword::LogMaintenanceHandlingUpdate::transporter_moving_back:
         glLineStipple( 1, tools.StipplePattern(-1) );
         break;
     default:
@@ -171,7 +171,7 @@ bool LogMaintenanceConsign::IsDiagnosed() const
 // Name: LogMaintenanceConsign::GetStatus
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
-E_LogMaintenanceHandlingStatus LogMaintenanceConsign::GetStatus() const
+sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus LogMaintenanceConsign::GetStatus() const
 {
     return nState_;
 }
@@ -182,7 +182,7 @@ E_LogMaintenanceHandlingStatus LogMaintenanceConsign::GetStatus() const
 // -----------------------------------------------------------------------------
 QString LogMaintenanceConsign::GetStatusDisplay() const
 {
-    return tools::ToString( nState_ );
+    return QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,8 +191,9 @@ QString LogMaintenanceConsign::GetStatusDisplay() const
 // -----------------------------------------------------------------------------
 QString LogMaintenanceConsign::GetStatusDisplay( int status ) const
 {
-    if( 0 <= status && status < eNbrLogMaintenanceHandlingStatus )
-        return tools::ToString( static_cast< E_LogMaintenanceHandlingStatus >( status ) );
+    if( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus_IsValid( status ) )
+        return QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus(
+            static_cast< sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus >( status ) ) );
     return QString();
 }
 
@@ -208,4 +209,13 @@ QString LogMaintenanceConsign::GetCurrentStartedTime() const
 kernel::Entity_ABC* LogMaintenanceConsign::GetRequestHandler( uint32_t entityId ) const
 {
     return resolver_.Find( entityId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::NeedResolution
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+bool LogMaintenanceConsign::NeedResolution() const
+{
+    return nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection;
 }

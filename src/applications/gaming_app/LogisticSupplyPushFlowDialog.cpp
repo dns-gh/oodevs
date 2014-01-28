@@ -51,9 +51,11 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent,
                                                             const ::StaticModel& staticModel,
                                                             const kernel::Time_ABC& simulation,
                                                             gui::ParametersLayer& layer,
-                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats )
+                                                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                                            const kernel::Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats )
     , isPushFlow_( true )
+    , profile_( profile )
 {
     recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
     connect( recipientsList_, SIGNAL( ItemAdded( const QString& ) ), SLOT( AddRecipient( const QString& ) ) );
@@ -134,16 +136,19 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    if( carriersTable_->IsOverloaded() )
+    if( profile_.IsSupervision() )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
-        return;
+        if( carriersTable_->IsOverloaded() )
+        {
+            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );
+            return;
+        }
+        if( carriersTable_->IsUnderloaded() &&
+            QMessageBox::warning( this, tr( "Error" ),
+                tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
+                QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
+            return;
     }
-    if( carriersTable_->IsUnderloaded() &&
-        QMessageBox::warning( this, tr( "Error" ),
-            tr( "The convoy is under its minimal mass and/or volume threshold. Do you want to continue?" ),
-            QMessageBox::Ok, QMessageBox::Cancel | QMessageBox::Escape ) != QMessageBox::Ok )
-        return;
 
     if( pRecipientSelected_ )
         GetSuppliesFromTable( *pRecipientSelected_ );

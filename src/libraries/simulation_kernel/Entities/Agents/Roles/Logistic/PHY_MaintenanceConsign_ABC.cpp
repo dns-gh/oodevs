@@ -24,7 +24,7 @@
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
-    : nState_( eGoingFrom )
+    : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
     , pMaintenance_( &maintenanceAgent )
     , pComposanteState_( &composanteState )
     , nTimer_( 0 )
@@ -32,21 +32,6 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
     , bHasChanged_( true )
 {
     pComposanteState_->SetConsign( this );
-
-    BOOST_STATIC_ASSERT( eGoingFrom == sword::LogMaintenanceHandlingUpdate::moving_to_supply );
-    BOOST_STATIC_ASSERT( eWaitingForCarrier == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
-    BOOST_STATIC_ASSERT( eCarrierGoingTo == sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
-    BOOST_STATIC_ASSERT( eCarrierLoading == sword::LogMaintenanceHandlingUpdate::transporter_loading );
-    BOOST_STATIC_ASSERT( eCarrierGoingFrom == sword::LogMaintenanceHandlingUpdate::transporter_moving_back );
-    BOOST_STATIC_ASSERT( eCarrierUnloading == sword::LogMaintenanceHandlingUpdate::transporter_unloading );
-    BOOST_STATIC_ASSERT( eDiagnosing == sword::LogMaintenanceHandlingUpdate::diagnosing );
-    BOOST_STATIC_ASSERT( eSearchingForUpperLevel == sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
-    BOOST_STATIC_ASSERT( eWaitingForParts == sword::LogMaintenanceHandlingUpdate::waiting_for_parts );
-    BOOST_STATIC_ASSERT( eWaitingForRepairer == sword::LogMaintenanceHandlingUpdate::waiting_for_repairer );
-    BOOST_STATIC_ASSERT( eRepairing == sword::LogMaintenanceHandlingUpdate::repairing );
-    BOOST_STATIC_ASSERT( eGoingBackToWar == sword::LogMaintenanceHandlingUpdate::moving_back );
-    BOOST_STATIC_ASSERT( eFinished == sword::LogMaintenanceHandlingUpdate::finished );
-    BOOST_STATIC_ASSERT( eWaitingForSelection == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +39,7 @@ PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC(  MIL_Agent_ABC& maintena
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MaintenanceConsign_ABC::PHY_MaintenanceConsign_ABC()
-    : nState_( eGoingFrom )
+    : nState_( sword::LogMaintenanceHandlingUpdate::moving_to_supply )
     , pMaintenance_( 0 )
     , pComposanteState_( 0 )
     , nTimer_( 0 )
@@ -101,7 +86,7 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 void PHY_MaintenanceConsign_ABC::Cancel()
 {
     assert( pComposanteState_ );
-    SetState( eFinished );
+    SetState( sword::LogMaintenanceHandlingUpdate::finished );
     ResetTimer( 0 );
     pComposanteState_ = 0;
 }
@@ -112,7 +97,7 @@ void PHY_MaintenanceConsign_ABC::Cancel()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 {
-    SetState( eFinished );
+    SetState( sword::LogMaintenanceHandlingUpdate::finished );
     ResetTimer( 0 );
 }
 
@@ -124,7 +109,7 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
 {
     assert( pMaintenance_ );
     asn().mutable_provider()->set_id( pMaintenance_->GetID() );
-    asn().set_state( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus( nState_ ) );
+    asn().set_state( nState_ );
     if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
         asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
@@ -152,7 +137,7 @@ void PHY_MaintenanceConsign_ABC::Clean()
 // Name: PHY_MaintenanceConsign_ABC::SetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SetState( E_State nNewState )
+void PHY_MaintenanceConsign_ABC::SetState( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState )
 {
     nState_ = nNewState;
     bHasChanged_ = true;
@@ -179,7 +164,7 @@ void PHY_MaintenanceConsign_ABC::ResetTimer( int timer )
 // Name: PHY_MaintenanceConsign_ABC::GetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-PHY_MaintenanceConsign_ABC::E_State PHY_MaintenanceConsign_ABC::GetState() const
+sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus PHY_MaintenanceConsign_ABC::GetState() const
 {
     return nState_;
 }
@@ -208,7 +193,7 @@ bool PHY_MaintenanceConsign_ABC::HasChanged() const
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceConsign_ABC::IsFinished() const
 {
-    return nState_ == eFinished;
+    return nState_ == sword::LogMaintenanceHandlingUpdate::finished;
 }
 
 // -----------------------------------------------------------------------------
