@@ -1834,6 +1834,7 @@ namespace
             }
         return mass;
     }
+
     std::pair< double, double > ComputeMassVolume( const PHY_ComposanteTypePion& type,
         const tools::Map< const PHY_ComposanteTypePion*, unsigned >& transporters,
         const tools::Map< const PHY_DotationCategory*, double >& supplies )
@@ -1851,6 +1852,7 @@ namespace
         type.GetStockTransporterCapacity( maxMass, maxVolume );
         return std::make_pair( mass / total, volume * maxMass / total / maxVolume );
     }
+
     void FillConvoyStatus( const sword::PushFlowParameters& params, sword::UnitMagicActionAck& ack )
     {
         tools::Map< const PHY_ComposanteTypePion*, unsigned > transporters;
