@@ -500,19 +500,12 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 10000000}, map[uint32]uint32{62: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
 	c.Assert(result, HasLen, 4)
-	c.Assert(result[0], Equals, false)
-	c.Assert(result[1], Equals, true)
-	c.Assert(result[2], Equals, false)
-	c.Assert(result[3], Equals, true)
+	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
 	// valid transporter neither underloaded nor overloaded
 	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 1}, map[uint32]uint32{62: 1})
 	c.Assert(err, IsNil)
-	c.Assert(result, HasLen, 4)
-	c.Assert(result[0], Equals, false)
-	c.Assert(result[1], Equals, false)
-	c.Assert(result[2], Equals, false)
-	c.Assert(result[3], Equals, false)
+	c.Assert(result, DeepEquals, []bool{false, false, false, false})
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
