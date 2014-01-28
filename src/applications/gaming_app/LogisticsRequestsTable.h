@@ -14,9 +14,20 @@
 #include "clients_gui/CommonDelegate.h"
 #include "clients_gui/RichTableView.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Entity_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -25,6 +36,7 @@ namespace gui
 }
 
 class LogisticsConsign_ABC;
+class ConsignDialog;
 
 // =============================================================================
 /** @class  LogisticsRequestsTable
@@ -39,7 +51,9 @@ class LogisticsRequestsTable : public gui::RichTableView
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders );
+             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
+                                     actions::ActionsModel& actionsModel, const kernel::Controllers& controllers,
+                                     const tools::ExerciseConfig& config );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -55,10 +69,6 @@ public:
     void FindRequestsIds( std::set< unsigned int >& requests );
     //@}
 
-    //! @name Accessors
-    const gui::LinkItemDelegate* GetLinkItemDelegate() const;
-    //@}
-
 protected:
     //! @name Helpers
     //@{
@@ -66,14 +76,23 @@ protected:
      void SetData( int row, int col, QString text, const LogisticsConsign_ABC& consign );
     //@}
 
+public slots:
+    //! @name Slots
+    //@{
+    void OnLinkClicked( const QString& url, const QModelIndex& index );
+    //@}
+
 protected:
     //! @name Data Members
     //@{
-    QStandardItemModel      dataModel_;
-    QSortFilterProxyModel*  proxyModel_;
-    gui::CommonDelegate     delegate_;
-    gui::LinkItemDelegate*  linkItemDelegate_;
-    QStringList             horizontalHeaders_;
+    QStandardItemModel         dataModel_;
+    QSortFilterProxyModel*     proxyModel_;
+    gui::CommonDelegate        delegate_;
+    gui::LinkItemDelegate*     linkItemDelegate_;
+    QStringList                horizontalHeaders_;
+    ConsignDialog*             consignDialog_;
+    const kernel::Controllers& controllers_;
+    bool                       manualLogisticActivated_;
     //@}
 };
 

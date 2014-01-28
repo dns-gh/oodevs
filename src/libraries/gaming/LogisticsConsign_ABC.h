@@ -56,6 +56,7 @@ public:
     unsigned int GetId() const;
     QString GetCreationTime() const;
     QString GetCurrentEndTime() const;
+    virtual bool NeedResolution() const;
     virtual bool RefersToAgent( unsigned long id ) const = 0;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const = 0;
     virtual QString GetCurrentStartedTime() const = 0;

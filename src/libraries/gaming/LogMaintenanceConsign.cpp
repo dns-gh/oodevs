@@ -209,3 +209,12 @@ kernel::Entity_ABC* LogMaintenanceConsign::GetRequestHandler( uint32_t entityId 
 {
     return resolver_.Find( entityId );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceConsign::NeedResolution
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+bool LogMaintenanceConsign::NeedResolution() const
+{
+    return nState_ == eLogMaintenanceHandlingStatus_AttenteSelectionTransporteur;
+}

@@ -42,6 +42,11 @@ public:
     virtual void OnLanguageChanged();
     //@}
 
+    //! @name Accessors
+    //@{
+    QString GetDevFeatures() const;
+    //@}
+
 signals:
     //! @name Signals
     //@{
@@ -100,6 +105,10 @@ private:
     // mapnik
     QGroupBox* mapnikBox_;
     QCheckBox* mapnikLayerBox_;
+
+    // development features
+    QGroupBox* featuresBox_;
+    std::vector< QCheckBox* > features_;
     //@}
 };
 

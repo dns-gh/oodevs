@@ -112,6 +112,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , exercise_         ( 0 )
     , hasClient_        ( !registry::ReadBool( "NoClientSelected" ) )
     , integrationDir_   ( "" )
+    , configPanel_      ( 0 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -153,10 +154,10 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
 
     //debug config panel
     auto parent = config.IsOnDebugMode() ? configTabs_ : nullptr;
-    DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( parent, config_ ) );
-    connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
-    connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
-    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel, SLOT( OnExerciseNumberChanged( int ) ) );
+    configPanel_ = AddPlugin( new DebugConfigPanel( parent, config_ ) );
+    connect( configPanel_, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
+    connect( configPanel_, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
+    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel_, SLOT( OnExerciseNumberChanged( int ) ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();
@@ -254,8 +255,11 @@ void ScenarioLauncherPage::OnStart()
     process->Add( boost::make_shared< frontend::StartTimeline >(
         config_, exerciseName, session.first ) );
     if( hasClient_ )
+    {
+        QString devFeatures = configPanel_ ? configPanel_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session.first, profile_.GetLogin() ) );
+            config_, exerciseName, session.first, profile_.GetLogin(), devFeatures ) );
+    }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

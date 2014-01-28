@@ -51,6 +51,15 @@ unsigned int LogisticsConsign_ABC::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticsConsign_ABC NeedResolution
+// Created: LGY 2014-01-21
+// -----------------------------------------------------------------------------
+bool LogisticsConsign_ABC::NeedResolution() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticsConsign_ABC ConvertTimeToString
 // Created: MMC 2013-09-16
 // -----------------------------------------------------------------------------
