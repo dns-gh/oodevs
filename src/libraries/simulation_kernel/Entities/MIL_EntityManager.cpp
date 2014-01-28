@@ -123,7 +123,6 @@
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/foreach.hpp>
 #include <tuple>
 
 #include "Adapters/Legacy/Sink.h"
@@ -1856,24 +1855,24 @@ namespace
     void FillConvoyStatus( const sword::PushFlowParameters& params, sword::UnitMagicActionAck& ack )
     {
         tools::Map< const PHY_ComposanteTypePion*, unsigned > transporters;
-        BOOST_FOREACH( const sword::SupplyFlowTransporter& transporter, params.transporters() )
+        for( auto it = params.transporters().begin(); it != params.transporters().end(); ++it )
         {
-            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( transporter.equipmenttype() );
+            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype() );
             protocol::Check( type, "invalid transporter" );
-            const unsigned quantity = transporter.quantity();
+            const unsigned quantity = it->quantity();
             protocol::Check( quantity > 0, "transporter quantity must be positive" );
             transporters[ type ] += quantity;
         }
         tools::Map< const PHY_DotationCategory*, double > supplies;
         protocol::Check( params.recipients().size() > 0, "at least one recipient expected" );
-        BOOST_FOREACH( const sword::SupplyFlowRecipient& recipient, params.recipients() )
+        for( auto it = params.recipients().begin(); it != params.recipients().end(); ++it )
         {
-            protocol::Check( recipient.resources().size() > 0, "at least one resource expected" );
-            BOOST_FOREACH( const sword::SupplyFlowResource& resource, recipient.resources() )
+            protocol::Check( it->resources().size() > 0, "at least one resource expected" );
+            for( auto it2 = it->resources().begin(); it2 != it->resources().end(); ++it2 )
             {
-                const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( resource.resourcetype().id() );
+                const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( it2->resourcetype().id() );
                 protocol::Check( category, "invalid resource" );
-                const double quantity = resource.quantity();
+                const double quantity = it2->quantity();
                 protocol::Check( quantity > 0, "resource quantity must be positive" );
                 supplies[ category ] += quantity;
             }
@@ -1881,12 +1880,12 @@ namespace
         bool massOverloaded = false;
         bool volumeOverloaded = false;
         auto states = ack.mutable_result()->add_elem()->add_value();
-        BOOST_FOREACH( const auto& transporter, transporters )
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
         {
             double mass, volume, minMass, maxMass, minVolume, maxVolume;
-            transporter.first->GetStockTransporterCapacity( maxMass, maxVolume );
-            std::tie( minMass, minVolume ) = transporter.first->GetStockTransporterCapacity();
-            std::tie( mass, volume ) = ComputeMassVolume( *transporter.first, transporters, supplies );
+            it->first->GetStockTransporterCapacity( maxMass, maxVolume );
+            std::tie( minMass, minVolume ) = it->first->GetStockTransporterCapacity();
+            std::tie( mass, volume ) = ComputeMassVolume( *it->first, transporters, supplies );
             states->add_list()->set_booleanvalue( mass * maxMass < minMass );
             if( mass > 1 )
                 massOverloaded = true;
