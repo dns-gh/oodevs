@@ -54,6 +54,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
+#include "meteo/RawVisionData/PHY_RawVisionData.h"
 #include "meteo/PHY_Precipitation.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army.h"
@@ -1339,7 +1340,9 @@ bool DEC_AgentFunctions::IsInSmoke( DEC_Decision_ABC* pAgent )
     if( !pAgent )
         return false;
     const MT_Vector2D position = pAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
-    return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( position ).GetPrecipitation().GetID() == weather::PHY_Precipitation::smoke_.GetID();
+    const auto& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
+    const auto id = data.GetPrecipitation( position ).GetID();
+    return id == weather::PHY_Precipitation::smoke_.GetID();
 }
 
 // -----------------------------------------------------------------------------

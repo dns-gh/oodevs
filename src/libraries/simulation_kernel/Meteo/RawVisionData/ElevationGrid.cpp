@@ -10,13 +10,13 @@
 #include "simulation_kernel_pch.h"
 #include "ElevationGrid.h"
 
-ElevationGrid::sCell ElevationGrid::emptyCell_;
+ElevationCell ElevationGrid::emptyCell_;
 
 // -----------------------------------------------------------------------------
 // Name: ElevationGrid constructor
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int height, sCell** ppCells )
+ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells )
     : ElevationBaseGrid( cellSize, width, height )
     , ppCells_( ppCells )
 {
@@ -48,7 +48,7 @@ short ElevationGrid::GetCellAltitude( unsigned int col, unsigned int row ) const
 // Name: ElevationGrid::GetCell
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::sCell& ElevationGrid::GetCell( unsigned int x, unsigned int y ) const
+ElevationCell& ElevationGrid::GetCell( unsigned int x, unsigned int y ) const
 {
     return ( x < width_ && y < height_ ) ? ppCells_[ x ][ y ] : emptyCell_;
 }
@@ -57,7 +57,7 @@ ElevationGrid::sCell& ElevationGrid::GetCell( unsigned int x, unsigned int y ) c
 // Name: ElevationGrid::GetEmptyCell
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::sCell& ElevationGrid::GetEmptyCell() const
+ElevationCell& ElevationGrid::GetEmptyCell() const
 {
     return emptyCell_;
 }

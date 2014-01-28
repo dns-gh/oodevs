@@ -380,7 +380,7 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
 // Name: PHY_SensorTypeAgent::ComputeEnvironmentFactor
 // Created: JVT 03-04-28
 //-----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::ComputeEnvironmentFactor( ElevationGrid::envBits nEnv ) const
+double PHY_SensorTypeAgent::ComputeEnvironmentFactor( envBits nEnv ) const
 {
     double res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
     for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObject; mask <<= 1, ++idx )

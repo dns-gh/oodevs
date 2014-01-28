@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"

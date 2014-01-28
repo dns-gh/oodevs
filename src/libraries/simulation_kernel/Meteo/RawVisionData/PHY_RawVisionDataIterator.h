@@ -10,12 +10,16 @@
 #ifndef __PHY_RawVisionDataIterator_h_
 #define __PHY_RawVisionDataIterator_h_
 
-#include "ElevationGrid.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 
+struct ElevationCell;
+typedef unsigned char envBits;
+class PHY_RawVisionData;
+
 namespace weather
 {
+    class PHY_Lighting;
     class PHY_Precipitation;
 }
 
@@ -36,7 +40,7 @@ public:
 
     bool End() const;
     double Length() const;
-    ElevationGrid::envBits GetCurrentEnv() const;
+    envBits GetCurrentEnv() const;
     const weather::PHY_Lighting& GetLighting() const;
     const weather::PHY_Precipitation& GetPrecipitation() const;
 
@@ -52,7 +56,7 @@ protected:
     void OffsetToRealSpace( int& dX, int& dY ) const;
 
 private:
-    inline void AlignFirstPointOnGrid();
+    void AlignFirstPointOnGrid();
 
 protected:
     // Informations statiques environnementales
@@ -107,11 +111,9 @@ protected:
     double rEnvCoeff_;
 
     // Environnement courrant
-    const ElevationGrid::sCell* pCurrentCell_;
+    const ElevationCell* pCurrentCell_;
     bool bIsInGround_;
     bool bIsInEnv_;
 };
-
-#include "PHY_RawVisionDataIterator.inl"
 
 #endif // __PHY_RawVisionDataIterator_h_

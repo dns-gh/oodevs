@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_WeaponType.h"
 #include "DefaultDotationComputer.h"
+#include "MIL_Time_ABC.h"
 #include "PHY_LauncherType.h"
 #include "PHY_WeaponDataType_IndirectFire.h"
 #include "PHY_WeaponDataType_DirectFire.h"

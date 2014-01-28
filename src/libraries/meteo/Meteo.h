@@ -12,7 +12,6 @@
 
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
-#include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
@@ -42,7 +41,6 @@ namespace weather
 {
     class PHY_Lighting;
     class PHY_Precipitation;
-    class PHY_RawVisionData_ABC;
 
 struct WindData
 {
@@ -123,7 +121,7 @@ public:
     virtual void Update( const PHY_Lighting& lighting );
     virtual void Update( const PHY_Precipitation& precipitation);
     virtual void Update( const Meteo& );
-    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< Meteo > meteo );
+            void SendCreationIfModified();
     virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction() const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;

@@ -12,6 +12,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include "PHY_MeteoDataManager.h"
+#include "RawVisionData/PHY_RawVisionData.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -150,7 +151,8 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
 // Name: PHY_LocalMeteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< weather::Meteo > meteo )
+void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData& dataVision,
+        const boost::shared_ptr< weather::Meteo >& meteo )
 {
     bool bNeedToBePatched = ( date > startTime_ && date < endTime_ );
     if( !bIsPatched_ && bNeedToBePatched )
@@ -166,7 +168,7 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
         modified_ = false;
         SendDestruction();
     }
-    Meteo::UpdateMeteoPatch( date, dataVision, meteo );
+    SendCreationIfModified();
 }
 
 namespace

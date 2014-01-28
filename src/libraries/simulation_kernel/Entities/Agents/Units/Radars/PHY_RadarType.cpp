@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RadarType.h"
+#include "MIL_Time_ABC.h"
 #include "PHY_RadarClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

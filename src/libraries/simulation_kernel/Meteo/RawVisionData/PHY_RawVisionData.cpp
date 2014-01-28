@@ -11,33 +11,13 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
+#include "meteo/Meteo.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
-
-const weather::Meteo* ElevationGrid::sCell::pGlobalMeteo_ = 0;
-
-//-----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::sCell::GetPrecipitation
-// Created: JVT 04-03-24
-//-----------------------------------------------------------------------------
-const weather::PHY_Precipitation& ElevationGrid::sCell::GetPrecipitation() const
-{
-    const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
-    return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::GetLighting
-// Created: JVT 04-03-24
-//-----------------------------------------------------------------------------
-const weather::PHY_Lighting& ElevationGrid::sCell::GetLighting() const
-{
-    const weather::PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
-    return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting;
-}
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData constructor
@@ -49,10 +29,10 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::
     , nNbrRow_( 0 )
     , meteoManager_( manager )
     , pElevationGrid_( 0 )
+    , globalMeteo_( globalMeteo )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
-    ElevationGrid::sCell::pGlobalMeteo_ = &globalMeteo;
 }
 
 //-----------------------------------------------------------------------------
@@ -86,7 +66,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            ElevationGrid::sCell& cell = pElevationGrid_->GetCell( nXBeg, y );
+            ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
             cell.pMeteo = pMeteo;
         }
         ++nXBeg;
@@ -114,7 +94,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            ElevationGrid::sCell& cell = pElevationGrid_->GetCell( nXBeg, y );
+            ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
             boost::shared_ptr< weather::Meteo > meteo = meteoManager_->GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
             if( meteo.get() && cell.pMeteo.get() != meteo.get() )
                 cell.pMeteo = meteo;
@@ -140,7 +120,7 @@ void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const 
         for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                ElevationGrid::sCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
+                ElevationCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
                 if( &cell == &pElevationGrid_->GetEmptyCell() )
                     continue;
                 PHY_AmmoEffect* pEffect = new PHY_AmmoEffect( weaponClass, cell.pEffects );
@@ -164,7 +144,7 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
         for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                 ElevationGrid::sCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
+                 ElevationCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
                 if( &cell == &pElevationGrid_->GetEmptyCell() )
                     continue;
 
@@ -205,11 +185,11 @@ bool PHY_RawVisionData::Read( const tools::Path& path )
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
 
-    ElevationGrid::sCell** ppCells = new ElevationGrid::sCell*[ nNbrCol_ ];
+    ElevationCell** ppCells = new ElevationCell*[ nNbrCol_ ];
 
     for( unsigned int x = 0; x < nNbrCol_; ++x )
     {
-        ElevationGrid::sCell* pTmp = new ElevationGrid::sCell[ nNbrRow_ ];
+        ElevationCell* pTmp = new ElevationCell[ nNbrRow_ ];
         ppCells[ x ] = pTmp;
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
@@ -277,7 +257,7 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
 // Name: PHY_RawVisionData::operator ()
 // Created: JVT 02-11-05
 //-----------------------------------------------------------------------------
-const ElevationGrid::sCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
+const ElevationCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
 {
     return pElevationGrid_->GetCell( col, row );
 }
@@ -286,7 +266,7 @@ const ElevationGrid::sCell& PHY_RawVisionData::operator () ( unsigned int col, u
 // Name: PHY_RawVisionData::operator
 // Created: JVT 02-11-15
 //-----------------------------------------------------------------------------
-const ElevationGrid::sCell& PHY_RawVisionData::operator() ( const MT_Vector2D& pos ) const
+const ElevationCell& PHY_RawVisionData::operator() ( const MT_Vector2D& pos ) const
 {
     return pElevationGrid_->GetCell( GetCol( pos.rX_ ), GetRow( pos.rY_ ) );
 }
@@ -295,7 +275,7 @@ const ElevationGrid::sCell& PHY_RawVisionData::operator() ( const MT_Vector2D& p
 // Name: PHY_RawVisionData::operator
 // Created: JVT 02-11-15
 //-----------------------------------------------------------------------------
-const ElevationGrid::sCell& PHY_RawVisionData::operator() ( double x, double y ) const
+const ElevationCell& PHY_RawVisionData::operator() ( double x, double y ) const
 {
     return operator () ( GetCol( x ), GetRow( y ) );
 }
@@ -304,7 +284,7 @@ const ElevationGrid::sCell& PHY_RawVisionData::operator() ( double x, double y )
 // Name: PHY_RawVisionData::operator
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-ElevationGrid::sCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
+ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 {
     return pElevationGrid_->GetCell( GetCol( rCol ), GetRow( rRow ) );
 }
@@ -315,7 +295,23 @@ ElevationGrid::sCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 // -----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_Vector2D& vPos ) const
 {
-    return operator() ( vPos ).GetPrecipitation();
+    return GetPrecipitation( operator()( vPos ) );
+}
+
+const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const ElevationCell& cell ) const
+{
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    if( cell.pEffects )
+        return cell.pEffects->GetPrecipitation( meteo.GetPrecipitation() );
+    return meteo.GetPrecipitation();
+}
+
+const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const ElevationCell& cell ) const
+{
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    if( cell.pEffects )
+        return cell.pEffects->GetLighting( meteo.GetLighting() );
+    return meteo.GetLighting();
 }
 
 //-----------------------------------------------------------------------------
@@ -341,7 +337,7 @@ double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos, bool applyOnCell 
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
 //-----------------------------------------------------------------------------
-ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
+envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 {
     return operator()( pos ).GetEnv();
 }
@@ -352,14 +348,16 @@ ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& po
 // -----------------------------------------------------------------------------
 const weather::WindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    return operator()( vPos ).GetWind();
+    const auto& cell = operator()( vPos );
+    const auto& meteo = cell.pMeteo ? *cell.pMeteo : globalMeteo_;
+    return meteo.GetWind();
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
 //-----------------------------------------------------------------------------
-ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
+envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
 {
     return operator()( rX_, rY_ ).GetEnv();
 }
@@ -410,15 +408,6 @@ double PHY_RawVisionData::GetMaxAltitude() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::GetWind
-// Created: JVT 2004-10-29
-// -----------------------------------------------------------------------------
-const weather::WindData& ElevationGrid::sCell::GetWind() const
-{
-    return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetVisionObjectsInSurface
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
@@ -438,7 +427,7 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& l
             if( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
                 continue;
 
-            const ElevationGrid::envBits env = operator () ( nX, nY ).GetEnv();
+            const envBits env = operator () ( nX, nY ).GetEnv();
 
             if( env == eVisionEmpty )
                 ++nEmptySurface;

@@ -318,10 +318,10 @@ void Meteo::Update( const Meteo& other )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Meteo::UpdateMeteoPatch
+// Name: Meteo::SendCreationIfModified
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_*/, boost::shared_ptr< Meteo > /*meteo*/ )
+void Meteo::SendCreationIfModified()
 {
     if( modified_ )
     {

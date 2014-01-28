@@ -10,15 +10,22 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
-#include "ElevationGrid.h"
-#include "meteo/PHY_RawVisionData_ABC.h"
-
+typedef unsigned char envBits;
+struct ElevationCell;
+class ElevationGrid;
 class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
 class PHY_MeteoDataManager;
 class TER_Localisation;
 class TER_Localisation_ABC;
+
+namespace geometry
+{
+    template< typename T > class Point2;
+    typedef Point2< float > Point2f;
+    typedef Point2< double > Point2d;
+}
 
 namespace tools
 {
@@ -27,7 +34,9 @@ namespace tools
 
 namespace weather
 {
+    class Meteo;
     class PHY_Precipitation;
+    class PHY_Lighting;
     struct WindData;
 }
 
@@ -35,8 +44,7 @@ namespace weather
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24
 //*****************************************************************************
-class PHY_RawVisionData : public weather::PHY_RawVisionData_ABC
-                        , private boost::noncopyable
+class PHY_RawVisionData : private boost::noncopyable
 {
 public:
     // environnement visuel statique
@@ -58,18 +66,20 @@ public:
 
     // @name Operations
     //@{
-    const ElevationGrid::sCell& operator () ( const MT_Vector2D& ) const;
-    const ElevationGrid::sCell& operator () ( double, double ) const;
+    const ElevationCell& operator () ( const MT_Vector2D& ) const;
+    const ElevationCell& operator () ( double, double ) const;
 
     double GetCellSize() const;
 
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
+    const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
+    const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
 
     double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
     double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;
 
-    ElevationGrid::envBits GetVisionObject( const MT_Vector2D& pos ) const;
-    ElevationGrid::envBits GetVisionObject( double rX_, double rY_ ) const;
+    envBits GetVisionObject( const MT_Vector2D& pos ) const;
+    envBits GetVisionObject( double rX_, double rY_ ) const;
 
     const weather::WindData& GetWind( const MT_Vector2D& vPos ) const;
 
@@ -98,8 +108,8 @@ private:
     // Convertisseurs de coordonnées SIM en coordonnées du tableau
     unsigned int GetCol( double ) const;
     unsigned int GetRow( double ) const;
-    const ElevationGrid::sCell& operator () ( unsigned int col, unsigned int row ) const;
-    ElevationGrid::sCell& operator () ( double, double );
+    const ElevationCell& operator () ( unsigned int col, unsigned int row ) const;
+    ElevationCell& operator () ( double, double );
 
     double rCellSize_; // taille (en metre) du côté de la cellule
 
@@ -111,7 +121,7 @@ private:
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
     PHY_MeteoDataManager* meteoManager_;
-
+    weather::Meteo& globalMeteo_;
 };
 
 #endif // __PHY_RawVisionData_h_
