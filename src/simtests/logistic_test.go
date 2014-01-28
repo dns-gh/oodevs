@@ -431,6 +431,9 @@ type MaintenanceApplyChecker struct {
 func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
 	ok := m.MaintenanceChecker.Check(c, ctx, msg)
 	if ok {
+		// we are inside a gosword register callback hence we cannot call
+		// callbacks which would use swapi.Client. We do it in another
+		// goroutine and wait for all of them to finish at the end of all tests
 		ctx.group.Add(1)
 		go func() {
 			defer ctx.group.Done()
