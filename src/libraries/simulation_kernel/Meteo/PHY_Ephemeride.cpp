@@ -30,6 +30,21 @@ PHY_Ephemeride::PHY_Ephemeride()
         // NOTHING
 }
 
+namespace
+{
+
+bool ParseTime( const std::string& s, std::pair< int, int >& result )
+{
+    char sep = 0;
+    std::istringstream stream( s );
+    stream >> result.first >> sep >> result.second;
+    return sep == 'h'
+        && result.first >= 0 && result.first <= 23
+        && result.second >= 0 && result.second <= 59;
+}
+
+}  // namespace
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Ephemeride constructor
 // Created: NLD 2004-08-31
@@ -51,23 +66,13 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis, uint32_t epochTime )
         pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "night-lighting" ) );
     }
     if( !pDayBase_ || !pNightBase_ )
-        throw MASA_EXCEPTION( xis.context() + "Unknown lighting" );
-    {
-        char tmp = 0;
-        std::istringstream strTmp( sunRise );
-        strTmp >> sunriseTime_.first >> tmp >> sunriseTime_.second;
-        if( tmp != 'h' || sunriseTime_.first < 0 || sunriseTime_.first > 23 || sunriseTime_.second < 0 || sunriseTime_.second > 59 )
-            throw MASA_EXCEPTION( xis.context() + "Bad time format (use 00h00)" );
-    }
-    {
-        char tmp = 0;
-        std::istringstream strTmp( sunSet );
-        strTmp >> sunsetTime_.first >> tmp >> sunsetTime_.second;
-        if( tmp != 'h' || sunsetTime_.first < 0 || sunsetTime_.first > 23 || sunsetTime_.second < 0 || sunsetTime_.second > 59 )
-            throw MASA_EXCEPTION( xis.context() + "Bad time format (use 00h00)" );
-    }
+        throw MASA_EXCEPTION( xis.context() + "unknown lighting" );
+    if( !ParseTime( sunRise, sunriseTime_ ))
+        throw MASA_EXCEPTION( xis.context() + "invalid sunrise time, use 00h00" );
+    if( !ParseTime( sunSet, sunsetTime_ ))
+        throw MASA_EXCEPTION( xis.context() + "invalid sunset time, use 00h00" );
     if( sunriseTime_ >= sunsetTime_  )
-        throw MASA_EXCEPTION( xis.context() + "Sunrise time should be before sunset time" );
+        throw MASA_EXCEPTION( xis.context() + "sunrise time should be before sunset time" );
     xis >> xml::end;
     UpdateNight( epochTime );
 }
