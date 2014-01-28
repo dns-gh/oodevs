@@ -95,13 +95,13 @@ SupplyConveyor_ABC* SupplyConvoy::CreateConveyor( const T& constraint )
 void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCategory, double quantity )
 {
     // Fill the previously used conveyors
-    for( auto it = conveyors_.begin(); it != conveyors_.end() && quantity > 0.; ++it )
+    for( auto it = conveyors_.begin(); it != conveyors_.end() && quantity > 0; ++it )
         quantity -= it->second->Convoy( *eventsObserver_, dotationCategory, quantity );
 
     // Allocate new conveyors
     if( autoAllocateNewTransporters_ )
     {
-        while( quantity > 0. )
+        while( quantity > 0 )
         {
             SupplyConveyor_ABC* conveyor = CreateConveyor( dotationCategory );
             if( conveyor )
@@ -110,17 +110,14 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
                 break;
         }
     }
-    else if( quantity > 0. )
-    {
-        // Conveyors selected manually are not enough to handle the request: Cancel the request and emit a warning.
-        impossible_ = true;
-    }
+    else if( quantity > 0 )
+        impossible_ = true; // Conveyors selected manually are not enough to handle the request
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoy::IsImpossible
 // Returns true if the convoy will never be able to be created for lack of transporters
-// (when specified transporters are not enough to carry the quantty requested for instance).
+// (when specified transporters are not enough to carry the quantity requested for instance).
 // Created: LDC 2013-05-15
 // -----------------------------------------------------------------------------
 bool SupplyConvoy::IsImpossible() const
@@ -225,7 +222,7 @@ void SupplyConvoy::SetCurrentSupplyRecipient( SupplyRecipient_ABC* supplyRecipie
 // -----------------------------------------------------------------------------
 void SupplyConvoy::Supply( SupplyRecipient_ABC& /*supplyRecipient*/, const PHY_DotationCategory& dotationCategory, double quantity )
 {
-    for( auto it = conveyors_.begin(); it != conveyors_.end() && quantity > 0.; ++it )
+    for( auto it = conveyors_.begin(); it != conveyors_.end() && quantity > 0; ++it )
     {
         SupplyConveyor_ABC& conveyor = *it->second;
         quantity -= conveyor.Supply( dotationCategory, quantity );
