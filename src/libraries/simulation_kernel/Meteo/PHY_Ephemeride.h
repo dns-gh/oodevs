@@ -12,7 +12,11 @@
 #ifndef __PHY_Ephemeride_h_
 #define __PHY_Ephemeride_h_
 
-#include "MIL.h"
+#include <boost/noncopyable.hpp>
+#include <utility>
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace weather
 {
@@ -22,6 +26,7 @@ namespace weather
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 //*****************************************************************************
