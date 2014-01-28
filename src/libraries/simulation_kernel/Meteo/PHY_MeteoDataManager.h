@@ -117,7 +117,7 @@ private:
 private:
     //! @name Member data
     //@{
-    PHY_Ephemeride* pEphemeride_;
+    boost::shared_ptr< PHY_Ephemeride > pEphemeride_;
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;

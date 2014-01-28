@@ -15,6 +15,7 @@
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <boost/make_shared.hpp>
 
 namespace bpt = boost::posix_time;
 
@@ -45,35 +46,46 @@ bool ParseTime( const std::string& s, std::pair< int, int >& result )
 
 }  // namespace
 
-// -----------------------------------------------------------------------------
-// Name: PHY_Ephemeride constructor
-// Created: NLD 2004-08-31
-// -----------------------------------------------------------------------------
-PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis, uint32_t epochTime )
-    : bIsNight_( false )
+boost::shared_ptr< PHY_Ephemeride > ReadEphemeride(
+        xml::xistream& xis, uint32_t epochTime )
 {
     xis >> xml::start( "ephemerides" );
     std::string sunRise = xis.attribute< std::string >( "sunrise" );
     std::string sunSet = xis.attribute< std::string >( "sunset" );
+    std::string dayBase, nightBase;
     if( xis.has_attribute( "moon" ) )
     {
-        pDayBase_ = &weather::PHY_Lighting::jourSansNuage_;
-        pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "moon" ) );
+        dayBase = weather::PHY_Lighting::jourSansNuage_.GetName();
+        nightBase = xis.attribute< std::string >( "moon" );
     }
     else
     {
-        pDayBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "day-lighting" ) );
-        pNightBase_ = weather::PHY_Lighting::FindLighting( xis.attribute< std::string >( "night-lighting" ) );
+        dayBase = xis.attribute< std::string >( "day-lighting" );
+        nightBase = xis.attribute< std::string >( "night-lighting" );
     }
-    if( !pDayBase_ || !pNightBase_ )
-        throw MASA_EXCEPTION( xis.context() + "unknown lighting" );
-    if( !ParseTime( sunRise, sunriseTime_ ))
-        throw MASA_EXCEPTION( xis.context() + "invalid sunrise time, use 00h00" );
-    if( !ParseTime( sunSet, sunsetTime_ ))
-        throw MASA_EXCEPTION( xis.context() + "invalid sunset time, use 00h00" );
-    if( sunriseTime_ >= sunsetTime_  )
-        throw MASA_EXCEPTION( xis.context() + "sunrise time should be before sunset time" );
     xis >> xml::end;
+    return boost::make_shared< PHY_Ephemeride >(
+            dayBase, nightBase, sunRise, sunSet, epochTime );
+}
+
+PHY_Ephemeride::PHY_Ephemeride(
+        const std::string& dayBase, const std::string& nightBase,
+        const std::string& sunrise, const std::string& sunset, uint32_t epochTime )
+    : bIsNight_( false )
+{
+    pDayBase_ = weather::PHY_Lighting::FindLighting( dayBase );
+    if( !pDayBase_ )
+        throw MASA_EXCEPTION( "invalid day lighting: " + dayBase );
+    pNightBase_ = weather::PHY_Lighting::FindLighting( nightBase );
+    if( !pNightBase_ )
+        throw MASA_EXCEPTION( "invalid night lighting: " + nightBase );
+
+    if( !ParseTime( sunrise, sunriseTime_ ))
+        throw MASA_EXCEPTION( "invalid sunrise time, use 00h00" );
+    if( !ParseTime( sunset, sunsetTime_ ))
+        throw MASA_EXCEPTION( "invalid sunset time, use 00h00" );
+    if( sunriseTime_ >= sunsetTime_  )
+        throw MASA_EXCEPTION( "sunrise time should be before sunset time" );
     UpdateNight( epochTime );
 }
 

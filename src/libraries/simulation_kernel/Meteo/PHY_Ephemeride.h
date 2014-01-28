@@ -13,6 +13,7 @@
 #define __PHY_Ephemeride_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <utility>
 
 class MIL_CheckPointInArchive;
@@ -39,7 +40,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Ephemeride();
-             PHY_Ephemeride( xml::xistream& xis, uint32_t epochTime );
+             PHY_Ephemeride( const std::string& dayBase, const std::string& nightBase,
+                const std::string& sunrise, const std::string& sunset,
+                uint32_t epochTime );
     virtual ~PHY_Ephemeride();
     //@}
 
@@ -69,5 +72,9 @@ private:
     const weather::PHY_Lighting* pNightBase_;
     //@}
 };
+
+boost::shared_ptr< PHY_Ephemeride > ReadEphemeride(
+        xml::xistream& xis, uint32_t epochTime );
+
 
 #endif // __PHY_Ephemeride_h_

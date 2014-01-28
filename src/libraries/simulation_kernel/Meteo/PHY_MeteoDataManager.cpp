@@ -28,11 +28,12 @@
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
 
@@ -56,8 +57,7 @@ PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager()
-    : pEphemeride_ ( 0 )
-    , pGlobalMeteo_( 0 )
+    : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
     // NOTHING
@@ -68,8 +68,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager()
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
-    : pEphemeride_ ( 0 )
-    , pGlobalMeteo_( 0 )
+    : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
     config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Load, this, _1, boost::ref( config ) ) );
@@ -102,7 +101,7 @@ void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
     MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
     const auto startTime = MIL_Time_ABC::GetTime().GetRealTime();
 
-    pEphemeride_ = new PHY_Ephemeride( xis, startTime );
+    pEphemeride_ = ReadEphemeride( xis, startTime );
     InitializeGlobalMeteo( xis );
     pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
     InitializeLocalMeteos( xis );
