@@ -92,6 +92,7 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent, kern
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     header()->setResizeMode( QHeaderView::ResizeToContents );
+    header()->setStretchLastSection( false );
     setModel( &model_ );
     controllers_.Register( *this );
 }
