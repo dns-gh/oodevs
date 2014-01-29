@@ -452,7 +452,7 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	const supplier = 91
@@ -518,7 +518,7 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	const supplier = 91
