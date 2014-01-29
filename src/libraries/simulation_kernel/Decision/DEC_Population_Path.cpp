@@ -36,6 +36,8 @@
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 
+#include <boost/make_shared.hpp>
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
 // Created: JVT 02-09-17
@@ -98,52 +100,49 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     // Objects
-    if( pathClass_.AvoidObjects() )
+    if( !pathClass_.AvoidObjects() )
+        return;
+    T_KnowledgeObjectVector knowledgesObject;
+    auto knowledges = population_.GetArmy().GetKnowledgeGroups();
+    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        T_KnowledgeObjectVector knowledgesObject;
-        auto knowledges = population_.GetArmy().GetKnowledgeGroups();
-        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+        if( it->second->IsJammed() )
+            continue;
+        auto knowledge = it->second->GetKnowledge();
+        if( !knowledge )
+            continue;
+        T_KnowledgeObjectVector knowledgesObjectTmp;
+        knowledge->GetKnowledgeObjectContainer().GetObjects( knowledgesObjectTmp );
+        knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
+    }
+    T_PointVector firstPointVector;
+    if( !pathPoints.empty() )
+        firstPointVector.push_back( *pathPoints.begin() );
+    for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+    {
+        const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+        if( !knowledge.CanCollideWithEntity() )
+            continue;
+        if( knowledge.IsObjectInsidePathPoint( firstPointVector, 0 ) )
         {
-            if( it->second->IsJammed() )
+            double rMaxSpeed = pathClass_.GetObjectCost( knowledge.GetType() );
+            if( rMaxSpeed <= 0. || rMaxSpeed == std::numeric_limits< double >::max() || rMaxSpeed >= pathClass_.GetThreshold() )
                 continue;
-            auto knowledge = it->second->GetKnowledge();
-            if( knowledge )
-            {
-                T_KnowledgeObjectVector knowledgesObjectTmp;
-                knowledge->GetKnowledgeObjectContainer().GetObjects( knowledgesObjectTmp );
-                knowledgesObject.insert( knowledgesObject.end(), knowledgesObjectTmp.begin(), knowledgesObjectTmp.end() );
-            }
         }
-        T_PointVector firstPointVector;
-        if( !pathPoints.empty() )
-            firstPointVector.push_back( *pathPoints.begin() );
-        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
-        {
-            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWithEntity() )
-            {
-                if( knowledge.IsObjectInsidePathPoint( firstPointVector, 0 ) )
-                {
-                    double rMaxSpeed = pathClass_.GetObjectCost( knowledge.GetType() );
-                    if( rMaxSpeed <= 0. || rMaxSpeed == std::numeric_limits< double >::max() || rMaxSpeed >= pathClass_.GetThreshold() )
-                        continue;
-                }
-                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
-                if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    throw MASA_EXCEPTION( "Size of path knowledge objects list is invalid" );
+        if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+            pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
+        if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
+            throw MASA_EXCEPTION( "Size of path knowledge objects list is invalid" );
 
-                T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
-                if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectFlood( eCrossingHeightNever, knowledge ) ) );
-                else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
-                else
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) ) );
-                if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
-                    rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
-            }
-        }
+        T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+        if( knowledge.GetType().GetCapacity< FloodCapacity >() )
+            pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( eCrossingHeightNever, knowledge ) );
+        else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
+            pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
+        else
+            pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( pathClass_, knowledge ) );
+        if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
+            rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
     }
 }
 
