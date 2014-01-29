@@ -1116,6 +1116,10 @@
         <source>Select New Logistic State</source>
         <translation>Passer à l&apos;étape logistique suivante</translation>
     </message>
+    <message>
+        <source>Transfer To Logistic Superior</source>
+        <translation>Transfère au supérieur logistique</translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

@@ -255,6 +255,12 @@ message MagicAction {
         //! update the request to a new state automatically.
         //! parameters[0], Identifier: identifier of log request
         select_new_logistic_state          = 8;
+        //! When a maintenance log consign is in "select transporter" state,
+        //!  "select diagnosis team" state or "select repair team" state in
+        //!  manual intervention, update the request to delegate to the
+        //!  superior logistic base.
+        //! parameters[0], Identifier: identifier of log request
+        transfer_to_logistic_superior      = 9;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;
