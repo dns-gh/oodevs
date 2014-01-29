@@ -496,17 +496,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>ConsignDialog</name>
-    <message>
-        <source>request</source>
-        <translation>requête</translation>
-    </message>
-    <message>
-        <source>Apply the automated resolution</source>
-        <translation>Appliquer une résolution automatique</translation>
-    </message>
-</context>
-<context>
     <name>CreateFormationDialog</name>
     <message>
         <source>Create formation</source>
@@ -1676,6 +1665,33 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Pull supply flow</source>
         <translation>Tirer flux</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticMaintenanceSelectionDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Resolve automatically</source>
+        <translation>Résoudre automatiquement</translation>
+    </message>
+    <message>
+        <source>Request evacuation by logistic superior</source>
+        <translation>Demander l&apos;évacuation par le supérieur logistique</translation>
+    </message>
+    <message>
+        <source>Select tow truck</source>
+        <translation>Selectionner un remorqueur</translation>
+    </message>
+    <message>
+        <source>Request #%1 - %2</source>
+        <translation>Requête #%1 - %2</translation>
     </message>
 </context>
 <context>

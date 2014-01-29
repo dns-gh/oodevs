@@ -494,17 +494,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>ConsignDialog</name>
-    <message>
-        <source>request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply the automated resolution</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CreateFormationDialog</name>
     <message>
         <source>Create formation</source>
@@ -1674,6 +1663,33 @@ Do you want to replace it?</translation>
     <message>
         <source>Pull supply flow</source>
         <translation type="unfinished">Pull supply flow</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticMaintenanceSelectionDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Resolve automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request evacuation by logistic superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select tow truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request #%1 - %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

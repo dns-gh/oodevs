@@ -36,7 +36,6 @@ namespace gui
 }
 
 class LogisticsConsign_ABC;
-class ConsignDialog;
 
 // =============================================================================
 /** @class  LogisticsRequestsTable
@@ -51,8 +50,10 @@ class LogisticsRequestsTable : public gui::RichTableView
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticsRequestsTable( const QString& objectName, QWidget* parent, const QStringList& horizontalHeaders,
-                                     actions::ActionsModel& actionsModel, const kernel::Controllers& controllers,
+             LogisticsRequestsTable( const QString& objectName,
+                                     QWidget* parent,
+                                     const QStringList& horizontalHeaders,
+                                     const kernel::Controllers& controllers,
                                      const tools::ExerciseConfig& config );
     virtual ~LogisticsRequestsTable();
     //@}
@@ -77,6 +78,12 @@ protected:
      void SetData( int row, int col, QString text, const LogisticsConsign_ABC& consign );
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+     void RequestSelectionDialog( const LogisticsConsign_ABC& consign );
+    //@}
+
 public slots:
     //! @name Slots
     //@{
@@ -91,7 +98,6 @@ protected:
     gui::CommonDelegate        delegate_;
     gui::LinkItemDelegate*     linkItemDelegate_;
     QStringList                horizontalHeaders_;
-    ConsignDialog*             consignDialog_;
     const kernel::Controllers& controllers_;
     bool                       manualLogisticActivated_;
     //@}
