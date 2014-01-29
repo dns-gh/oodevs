@@ -159,7 +159,11 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->IsMaintenanceManual() )
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
+    else
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
     ResetTimer( 0 );
 }
 
@@ -264,13 +268,15 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     ResetTimer( 0 );
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
 
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( !pLogisticManager )
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    {
+        pComposanteState_ = 0;
+        SetState( sword::LogMaintenanceHandlingUpdate::finished ); // Managed by a 'repair consign'
+    }
+    else
         SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
-    else if( !pLogisticManager->IsMaintenanceManual() )
-        SelectNewState();
 }
 
 // -----------------------------------------------------------------------------
@@ -291,6 +297,8 @@ bool PHY_MaintenanceTransportConsign::Update()
             if( DoWaitingForCarrier() )
                 EnterStateCarrierGoingTo();
             break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
+            break;
         case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
             EnterStateCarrierLoading();
             break;
@@ -310,7 +318,6 @@ bool PHY_MaintenanceTransportConsign::Update()
             if( DoSearchForUpperLevel() )
                 EnterStateFinished();
             break;
-        case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
         case sword::LogMaintenanceHandlingUpdate::finished:
             break;
         default:
@@ -328,17 +335,14 @@ bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
     return GetState() == sword::LogMaintenanceHandlingUpdate::searching_upper_levels && searchForUpperLevelDone_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::SelectNewState
+// Created: MCO 2014-01-24
+// -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::SelectNewState()
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         return;
-    ResetTimer( 0 );
-    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
-    {
-        pComposanteState_ = 0;
-        SetState( sword::LogMaintenanceHandlingUpdate::finished ); // Managed by a 'repair consign'
-    }
-    else
-        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+
 }
