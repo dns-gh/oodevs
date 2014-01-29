@@ -207,6 +207,16 @@ void ActionsModel::PublishSelectNewLogisticState( unsigned int consignId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishTransferToLogisticSuperior
+// Created: ABR 2014-01-29
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishTransferToLogisticSuperior( unsigned int consignId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateTransferToLogisticSuperior( consignId ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

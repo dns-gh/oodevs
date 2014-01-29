@@ -117,6 +117,7 @@ public:
     void PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     void PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
     void PublishSelectNewLogisticState( unsigned int consignId );
+    void PublishTransferToLogisticSuperior( unsigned int consignId );
     //@}
 
 private:

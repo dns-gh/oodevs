@@ -93,6 +93,7 @@ public:
 
     virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const;
+    virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}
