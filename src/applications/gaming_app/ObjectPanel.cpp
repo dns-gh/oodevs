@@ -25,52 +25,52 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
     // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
     // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
-    GetBuilder().AddGroup( tools::translate( "Object", "Information" ) )
-                .AddLabel( "Identifier", tools::translate( "Object", "Identifier:" ) )
-                .AddLabel( "Name", tools::translate( "Object", "Name:" ) )
-                .AddLabel( "type", tools::translate( "Object", "Type:" ) )
-                .AddLabel( "Location", tools::translate( "Object", "Location:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Information" ) )
+                .AddLabel( "Identifier", tools::findTranslation( "Object", "Identifier:" ) )
+                .AddLabel( "Name", tools::findTranslation( "Object", "Name:" ) )
+                .AddLabel( "type", tools::findTranslation( "Object", "Type:" ) )
+                .AddLabel( "Location", tools::findTranslation( "Object", "Location:" ) );
 
-    GetBuilder().Group( tools::translate( "Object", "Information" ) )
-                .AddLabel( "Construction", tools::translate( "Object", "Construction:" ) )
-                .AddLabel( "ConstructionResource", tools::translate( "Object", "Construction resource:" ) )
-                .AddLabel( "Mining", tools::translate( "Object", "Mining:" ) )
-                .AddLabel( "DevelopmentResource", tools::translate( "Object", "Development resource:" ) )
-                .AddLabel( "Bypass", tools::translate( "Object", "Bypass:" ) )
-                .AddLabel( "ObstacleActivated", tools::translate( "Object", "Obstacle activated:" ) )
-                .AddLabel( "ActivationTime", tools::translate( "Object", "Activation time:" ) )
-                .AddLabel( "ActivityTime", tools::translate( "Object", "Activity time:" ) )
-                .AddLabel( "DelayTime", tools::translate( "Object", "Delay time:" ) );
+    GetBuilder().Group( tools::findTranslation( "Object", "Information" ) )
+                .AddLabel( "Construction", tools::findTranslation( "Object", "Construction:" ) )
+                .AddLabel( "ConstructionResource", tools::findTranslation( "Object", "Construction resource:" ) )
+                .AddLabel( "Mining", tools::findTranslation( "Object", "Mining:" ) )
+                .AddLabel( "DevelopmentResource", tools::findTranslation( "Object", "Development resource:" ) )
+                .AddLabel( "Bypass", tools::findTranslation( "Object", "Bypass:" ) )
+                .AddLabel( "ObstacleActivated", tools::findTranslation( "Object", "Obstacle activated:" ) )
+                .AddLabel( "ActivationTime", tools::findTranslation( "Object", "Activation time:" ) )
+                .AddLabel( "ActivityTime", tools::findTranslation( "Object", "Activity time:" ) )
+                .AddLabel( "DelayTime", tools::findTranslation( "Object", "Delay time:" ) );
 
-    GetBuilder().AddGroup( tools::translate( "Object", "Crossing site" ) )
-                .AddLabel( "Width", tools::translate( "Object", "Width:" ) )
-                .AddLabel( "Depth", tools::translate( "Object", "Depth:" ) )
-                .AddLabel( "Stream", tools::translate( "Object", "Stream speed:" ) )
-                .AddLabel( "Build", tools::translate( "Object", "Build river banks:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Crossing site" ) )
+                .AddLabel( "Width", tools::findTranslation( "Object", "Width:" ) )
+                .AddLabel( "Depth", tools::findTranslation( "Object", "Depth:" ) )
+                .AddLabel( "Stream", tools::findTranslation( "Object", "Stream speed:" ) )
+                .AddLabel( "Build", tools::findTranslation( "Object", "Build river banks:" ) );
 
-    GetBuilder().AddGroup( tools::translate( "Object", "Camp" ) )
-                .AddLabel( "Build", tools::translate( "Object", "Logistic superior:" ) )
-                .AddLabel( "capacity", tools::translate( "Object", "Lodging capacity:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Camp" ) )
+                .AddLabel( "Build", tools::findTranslation( "Object", "Logistic superior:" ) )
+                .AddLabel( "capacity", tools::findTranslation( "Object", "Lodging capacity:" ) );
 
-    GetBuilder().AddGroup( tools::translate( "NBC", "NBC" ) )
-                .AddLabel( "Danger", tools::translate( "NBC", "Danger:" ) )
-                .AddLabel( "NBCAgent", tools::translate( "NBC", "NBC agent(s):" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "NBC", "NBC" ) )
+                .AddLabel( "Danger", tools::findTranslation( "NBC", "Danger:" ) )
+                .AddLabel( "NBCAgent", tools::findTranslation( "NBC", "NBC agent(s):" ) );
 
-    GetBuilder().AddGroup( tools::translate( "Object", "Logistic route" ) )
-                .AddLabel( "Equipped", tools::translate( "Object", "Equipped:" ) )
-                .AddLabel( "Flow", tools::translate( "Object", "Flow:" ) )
-                .AddLabel( "Width", tools::translate( "Object", "Width:" ) )
-                .AddLabel( "Length", tools::translate( "Object", "Length:" ) )
-                .AddLabel( "Maximumheight", tools::translate( "Object", "Maximum weight:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Logistic route" ) )
+                .AddLabel( "Equipped", tools::findTranslation( "Object", "Equipped:" ) )
+                .AddLabel( "Flow", tools::findTranslation( "Object", "Flow:" ) )
+                .AddLabel( "Width", tools::findTranslation( "Object", "Width:" ) )
+                .AddLabel( "Length", tools::findTranslation( "Object", "Length:" ) )
+                .AddLabel( "Maximumheight", tools::findTranslation( "Object", "Maximum weight:" ) );
 
-    GetBuilder().AddGroup( tools::translate( "Object", "Mine parameters" ) )
-                .AddLabel( "Density", tools::translate( "Object", "Density:" ) )
-                .AddLabel( "Activity", tools::translate( "Object", "Activity time:" ) )
-                .AddLabel( "Life", tools::translate( "Object", "Life time:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Mine parameters" ) )
+                .AddLabel( "Density", tools::findTranslation( "Object", "Density:" ) )
+                .AddLabel( "Activity", tools::findTranslation( "Object", "Activity time:" ) )
+                .AddLabel( "Life", tools::findTranslation( "Object", "Life time:" ) );
 
-    GetBuilder().AddGroup( tools::translate( "Object", "Fire" ) )
-                .AddLabel( "Fire", tools::translate( "Object", "Fire class:" ) )
-                .AddLabel( "combustion", tools::translate( "Object", "Max combustion energy:" ) );
+    GetBuilder().AddGroup( tools::findTranslation( "Object", "Fire" ) )
+                .AddLabel( "Fire", tools::findTranslation( "Object", "Fire class:" ) )
+                .AddLabel( "combustion", tools::findTranslation( "Object", "Max combustion energy:" ) );
 }
 
 // -----------------------------------------------------------------------------
