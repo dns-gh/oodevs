@@ -458,23 +458,7 @@ void TimelineWebView::ReadActions( xml::xisubstream xis )
 void TimelineWebView::ReadAction( xml::xistream& xis )
 {
     boost::scoped_ptr< actions::Action_ABC > action;
-    // $$$$ ABR 2013-06-19: The dual try catch was in actionsModel, so i keep it for now but it's ugly and should be remove asap
-    try
-    {
-        action.reset( model_.actionFactory_.CreateAction( xis, false ) );
-    }
-    catch( const std::exception& )
-    {
-        try
-        {
-            action.reset( model_.actionFactory_.CreateStubAction( xis ) );
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
-    }
-
+    action.reset( model_.actionFactory_.CreateAction( xis, false ) );
     if( !action )
         return;
 
@@ -564,7 +548,6 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
         {
             xos << xml::start( "action" );
             action->Serialize( xos );
-            xos << xml::attribute( "time", event.GetEvent().begin );
             xos << xml::end; //! action
         }
     }

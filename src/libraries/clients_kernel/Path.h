@@ -30,7 +30,7 @@ class Path : public Location_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Path( const Positions& position );
+    explicit Path( const Positions* position );
     virtual ~Path();
     //@}
 

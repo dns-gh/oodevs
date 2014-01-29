@@ -110,7 +110,7 @@ bool SupplyRequest::AffectSupplier( SupplySupplier_ABC& supplier )
 // Name: SupplyRequest::AffectSupplier
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-bool SupplyRequest::AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier )
+bool SupplyRequest::AffectSupplier( SupplyRecipient_ABC& recipient, const boost::shared_ptr< LogisticLink_ABC >& supplier )
 {
     if( supplier_ )
         return true;

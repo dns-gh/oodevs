@@ -15,6 +15,8 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "Parameter.h"
+
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace google
@@ -53,7 +55,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ParameterList( const kernel::OrderParameter& parameter );
-             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC* entity );
+             ParameterList( const kernel::OrderParameter& parameter,
+                            const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list,
+                            const actions::ParameterFactory_ABC& factory,
+                            boost::optional< const kernel::Entity_ABC& > entity );
     virtual ~ParameterList();
     //@}
 
@@ -63,7 +68,6 @@ public:
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
-    //virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;
     virtual bool IsSet() const;

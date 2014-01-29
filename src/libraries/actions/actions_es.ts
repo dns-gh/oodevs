@@ -15,28 +15,8 @@
 <context>
     <name>ActionFactory</name>
     <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation>Parámetro incorrecto en acción &apos;%1&apos; (id: %2) : parámetro faltante &apos;%3&apos;.</translation>
-    </message>
-    <message>
-        <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation>No se puede encontrar entidad ejecutante &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation>Acción mágica de tipo &apos;%1&apos; desconocida.</translation>
-    </message>
-    <message>
-        <source>too many parameters provided</source>
-        <translation>Muchos parámetros provistos</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
-        <translation>Parámetros incorrectos en accion &apos;%1&apos; (id: %2) : %3.</translation>
-    </message>
-    <message>
-        <source>Executing target not set</source>
-        <translation>Blanco de ejecución no definido</translation>
+        <source>Incomplete order</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -95,13 +75,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParameterFactory</name>
-    <message>
-        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation>Se espera &apos;%2&apos;,se encuentró &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
@@ -128,24 +101,6 @@
     <message>
         <source>Disengage</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FragOrder</name>
-    <message>
-        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Mission</name>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
-        <translation>La entidad &apos;%1&apos; (id: %2) no puede ejecutar la misión &apos;%3&apos; (id: %4)</translation>
-    </message>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
-        <translation>La entidad &apos;%1&apos; (id: %2) recibió una misión desconocida</translation>
     </message>
 </context>
 <context>

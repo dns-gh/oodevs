@@ -11,6 +11,7 @@
 #define __actions_ActionFactory_h_
 
 #include "ActionFactory_ABC.h"
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -56,7 +57,6 @@ public:
     //@{
     // From xml
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
-    virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const;
 
     // From proto
     virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const;
@@ -74,6 +74,7 @@ public:
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const;
     virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder ) const;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, E_MissionType type ) const;
 
     virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point ) const;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const;
@@ -107,16 +108,9 @@ private:
     Action_ABC* CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const;
     Action_ABC* AutomateChangeModeMagicAction( xml::xistream& xis, bool readonly ) const;
 
-    Action_ABC* CreateStubMission( xml::xistream& xis ) const;
-    Action_ABC* CreateStubFragOrder( xml::xistream& xis ) const;
-
-    Action_ABC* CreateMission( xml::xistream& xis, bool readonly, bool stub ) const;
-    Action_ABC* CreateFragOrder( xml::xistream& xis, bool readonly, bool stub ) const;
-
     void AddParameters( Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message ) const;
-    void ReadParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
-    void ReadParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it ) const;
-    void ReadStubParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
+    void AddParameters( Action_ABC& action, xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
+    void ReadParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, boost::optional< const kernel::Entity_ABC& > entity ) const;
     template< typename Message >
     void AddTiming( Action_ABC& action, const Message& message ) const;
     void AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;
@@ -139,6 +133,6 @@ private:
     //@}
 };
 
-}
+} //! namespace actions
 
 #endif // __actions_ActionFactory_h_

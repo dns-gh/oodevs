@@ -489,15 +489,16 @@ T_ConverterEventDockModes EventDockModesConverter_[] =
 
 T_ConverterMagicActionType MagicActionTypeConverter_[] =
 {
-    T_ConverterMagicActionType( "change_diplomacy",          QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change diplomacy" ), sword::MagicAction::change_diplomacy ),
-    T_ConverterMagicActionType( "change_resource_links",     QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change resource links" ), sword::MagicAction::change_resource_network_properties ),
-    T_ConverterMagicActionType( "create_knowledge_group",    QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Create Knowledge Group" ), sword::MagicAction::create_knowledge_group ),
-    T_ConverterMagicActionType( "debug_internal",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Debug internal" ), sword::MagicAction::debug_internal),
-    T_ConverterMagicActionType( "fire_order_on_location",    QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Strike order on location" ), sword::MagicAction::create_fire_order_on_location ),
-    T_ConverterMagicActionType( "global_weather",            QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Global Weather" ), sword::MagicAction::global_weather ),
-    T_ConverterMagicActionType( "local_weather",             QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
-    T_ConverterMagicActionType( "local_weather_destruction", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
-    T_ConverterMagicActionType( "select_new_logistic_state", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New Logistic State" ), sword::MagicAction::select_new_logistic_state ),
+    T_ConverterMagicActionType( "change_diplomacy",              QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change diplomacy" ), sword::MagicAction::change_diplomacy ),
+    T_ConverterMagicActionType( "change_resource_links",         QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change resource links" ), sword::MagicAction::change_resource_network_properties ),
+    T_ConverterMagicActionType( "create_knowledge_group",        QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Create Knowledge Group" ), sword::MagicAction::create_knowledge_group ),
+    T_ConverterMagicActionType( "debug_internal",                QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Debug internal" ), sword::MagicAction::debug_internal),
+    T_ConverterMagicActionType( "fire_order_on_location",        QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Strike order on location" ), sword::MagicAction::create_fire_order_on_location ),
+    T_ConverterMagicActionType( "global_weather",                QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Global Weather" ), sword::MagicAction::global_weather ),
+    T_ConverterMagicActionType( "local_weather",                 QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
+    T_ConverterMagicActionType( "local_weather_destruction",     QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
+    T_ConverterMagicActionType( "select_new_logistic_state",     QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New Logistic State" ), sword::MagicAction::select_new_logistic_state ),
+    T_ConverterMagicActionType( "transfer_to_logistic_superior", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Transfer To Logistic Superior" ), sword::MagicAction::transfer_to_logistic_superior ),
     T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
 };
 

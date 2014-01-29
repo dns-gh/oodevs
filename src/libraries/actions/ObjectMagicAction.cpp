@@ -26,7 +26,7 @@ using namespace actions;
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 ObjectMagicAction::ObjectMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /* = true*/ )
-    : Action_ABC ( controller, magic )
+    : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
 {
@@ -38,7 +38,7 @@ ObjectMagicAction::ObjectMagicAction( const kernel::MagicActionType& magic, kern
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC ( xis, controller, magic )
+    : Action_ABC ( xis, controller, &magic )
     , controller_( controller )
     , registered_( true )
 {
@@ -71,7 +71,7 @@ void ObjectMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetName() )
+    xos << xml::attribute( "id", GetType()->GetName() )
         << xml::attribute( "type", "magicobject" )
         << xml::attribute( "target", Get< ActionTasker >().GetId() );
     Action_ABC::Serialize( xos );
@@ -83,7 +83,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
-    sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType().GetId();
+    sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType()->GetId();
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( Get< ActionTasker >().GetId() );
     message().set_type( type );

@@ -87,11 +87,8 @@ void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void ParamPath::Visit( const actions::parameters::Path& param )
 {
-    if( !entity_ )
-        return;
-
     ActivateOptionalIfNeeded( param );
-    location_.reset( new kernel::Path( entity_->Get< kernel::Positions >() ) );
+    location_.reset( new kernel::Path( entity_ ? entity_->Retrieve< kernel::Positions >() : 0 ) );
     pPosLabel_->setText( location_->GetName() );
 
     auto it = param.CreateIterator();

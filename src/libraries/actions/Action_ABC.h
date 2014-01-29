@@ -12,6 +12,8 @@
 
 #include "clients_kernel/Entity_ABC.h"
 #include "ParameterContainer_ABC.h"
+
+#include <boost/optional.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
@@ -67,8 +69,8 @@ class Action_ABC : public kernel::Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type );
-             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type );
+             Action_ABC( kernel::Controller& controller, const kernel::OrderType* type );
+             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType* type );
     virtual ~Action_ABC();
     //@}
 
@@ -78,8 +80,9 @@ public:
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
     virtual bool IsValid() const;
+    virtual bool CheckValidity() const;
 
-    virtual const kernel::OrderType& GetType() const;
+    virtual const boost::optional< const kernel::OrderType& >& GetType() const;
     virtual void AddParameter( Parameter_ABC& parameter );
     virtual void Draw( const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
@@ -115,10 +118,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::OrderType& type_;
+    boost::optional< const kernel::OrderType& > type_;
     const unsigned long id_;
     QString name_;
-    mutable bool valid_;
+    bool valid_;
     //@}
 };
 

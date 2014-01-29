@@ -25,30 +25,14 @@
 
 using namespace actions;
 
-namespace
-{
-    const kernel::OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::FragOrderType >& missions )
-    {
-        const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
-        const kernel::OrderType* type = missions.Find( id );
-        if( !type )
-        {
-            const std::string name = xis.attribute< std::string >( "name", "" );
-            throw MASA_EXCEPTION( tools::translate( "FragOrder", "Cannot execute fragmentary order '%3' (id: %4)" )
-                                  .arg( name.c_str() ).arg( id ).toStdString() );
-        }
-        return *type;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered )
+FragOrder::FragOrder( const kernel::FragOrderType* fragOrder, kernel::Controller& controller, bool registered )
     : Action_ABC( controller, fragOrder )
-    , controller_         ( controller )
-    , registered_         ( registered )
+    , controller_( controller )
+    , registered_( registered )
 {
     // NOTHING
 }
@@ -58,7 +42,7 @@ FragOrder::FragOrder( const kernel::FragOrderType& fragOrder, kernel::Controller
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 FragOrder::FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders )
-    : Action_ABC( xis, controller, ResolveType( xis, fragOrders ) )
+    : Action_ABC( xis, controller, fragOrders.Find( xis.attribute< unsigned int >( "id", 0 ) ) )
     , controller_( controller )
     , registered_( true )
 {
@@ -91,7 +75,7 @@ void FragOrder::Polish()
 // -----------------------------------------------------------------------------
 void FragOrder::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetId() )
+    xos << xml::attribute( "id", GetType() ? GetType()->GetId() : 0 )
         << xml::attribute( "type", "fragorder" );
     Action_ABC::Serialize( xos );
 }
@@ -112,9 +96,7 @@ void FragOrder::Publish( Publisher_ABC& publisher, int context ) const
         message().mutable_tasker()->mutable_automat()->set_id( id );
     else if( typeName == kernel::Population_ABC::typeName_ )
         message().mutable_tasker()->mutable_crowd()->set_id( id );
-    else
-        throw MASA_EXCEPTION( "Unknown tasker" );
-    message().mutable_type()->set_id( GetType().GetId() );
+    message().mutable_type()->set_id( GetType() ? GetType()->GetId() : 0 );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
     message.Send( publisher, context );

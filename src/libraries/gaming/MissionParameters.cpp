@@ -65,7 +65,7 @@ void MissionParameters::UpdateMessage( const T& message )
         {
             const Action_ABC& action = it.NextElement();
             const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming>();
-            if( timing && action.GetType().GetId() == message.type().id() && timing->GetTime() == time )
+            if( timing && action.GetType() && action.GetType()->GetId() == message.type().id() && timing->GetTime() == time )
                 return;
         }
     }
@@ -177,8 +177,8 @@ void MissionParameters::UpdateMessageAck( const T& message )
 void MissionParameters::NotifyCreated( const actions::Action_ABC& action )
 {
     const ActionTasker* tasker = action.Retrieve< ActionTasker >();
-    if( tasker && tasker->GetId() == entityId_ )
-        currentMission_ = &action.GetType();
+    if( tasker && tasker->GetId() == entityId_ && action.GetType() )
+        currentMission_ = &*action.GetType();
 }
 
 // -----------------------------------------------------------------------------

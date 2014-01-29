@@ -15,28 +15,8 @@
 <context>
     <name>ActionFactory</name>
     <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : paramètre manquant &apos;%3&apos;.</translation>
-    </message>
-    <message>
-        <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation>Impossible de trouver l&apos;unité &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation>L&apos;action magique de type &apos;%1&apos; est inconnue.</translation>
-    </message>
-    <message>
-        <source>too many parameters provided</source>
-        <translation>Trop de paramètres</translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
-        <translation>Paramètre incorrect dans l&apos;action &apos;%1&apos; (id: %2) : %3.</translation>
-    </message>
-    <message>
-        <source>Executing target not set</source>
-        <translation>Unité exécutante non trouvée</translation>
+        <source>Incomplete order</source>
+        <translation>Ordre incomplet</translation>
     </message>
 </context>
 <context>
@@ -95,13 +75,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParameterFactory</name>
-    <message>
-        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation>&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
-    </message>
-</context>
-<context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
@@ -128,24 +101,6 @@
     <message>
         <source>Disengage</source>
         <translation>Débrayer</translation>
-    </message>
-</context>
-<context>
-    <name>FragOrder</name>
-    <message>
-        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation>Impossible d&apos;exécuter l&apos;ordre de conduite &apos;%3&apos; (id: %4)</translation>
-    </message>
-</context>
-<context>
-    <name>Mission</name>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
-        <translation>L&apos;entité &apos;%1&apos; (id: %2) ne peut pas exécuter la mission &apos;%3&apos; (id: %4)</translation>
-    </message>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
-        <translation>L&apos;entité &apos;%1&apos; (id: %2) a une mission inconnue</translation>
     </message>
 </context>
 <context>

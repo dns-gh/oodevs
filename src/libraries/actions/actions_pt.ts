@@ -15,27 +15,7 @@
 <context>
     <name>ActionFactory</name>
     <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): missing parameter &apos;%3&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to find executing entity &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Executing target not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>too many parameters provided</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameter mismatch in action &apos;%1&apos; (id: %2): %3.</source>
+        <source>Incomplete order</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -95,13 +75,6 @@
     </message>
 </context>
 <context>
-    <name>ActionParameterFactory</name>
-    <message>
-        <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
@@ -127,24 +100,6 @@
     </message>
     <message>
         <source>Disengage</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FragOrder</name>
-    <message>
-        <source>Cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Mission</name>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

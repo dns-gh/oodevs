@@ -82,6 +82,25 @@ EventOrderPresenter::~EventOrderPresenter()
     // NOTHING
 }
 
+namespace
+{
+    E_MissionType ResolveMissionType( const kernel::Entity_ABC* entity, const boost::optional< const kernel::OrderType& >& type )
+    {
+        if( type )
+            return type->GetType();
+        else if( entity )
+        {
+            if( entity->GetTypeName() == kernel::Agent_ABC::typeName_ )
+                return eMissionType_Pawn;
+            else if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+                return eMissionType_Automat;
+            else if( entity->GetTypeName() == kernel::Population_ABC::typeName_ )
+                return eMissionType_Population;
+        }
+        return eMissionType_Pawn;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventOrderPresenter::FillFromAction
 // Created: ABR 2013-11-22
@@ -92,7 +111,8 @@ void EventOrderPresenter::FillFrom( const Event& event )
     {
         if( const actions::ActionTasker* tasker = action->Retrieve< actions::ActionTasker >() )
             entity_ = tasker->GetTasker();
-        Select( action->GetType().GetType(), action->GetType().GetName(), action );
+        auto type = action->GetType();
+        Select( ResolveMissionType( entity_, type ), type ? type->GetName() : "", action );
     }
 }
 
@@ -179,14 +199,16 @@ namespace
 {
     actions::Action_ABC* CreateAction( E_MissionType type,
                                        actions::ActionFactory_ABC& actionsFactory,
-                                       const kernel::OrderType& orderType,
+                                       const kernel::OrderType* orderType,
                                        const kernel::Entity_ABC* entity )
     {
         if( type == eNbrMissionType )
             throw MASA_EXCEPTION( "Can't create action with an invalid type" );
+        if( !orderType )
+            return actionsFactory.CreateAction( entity, type );
         if( type == eMissionType_FragOrder )
-            return actionsFactory.CreateAction( entity, static_cast< const kernel::FragOrderType& >( orderType ) );
-        return actionsFactory.CreateAction( entity, static_cast< const kernel::MissionType& >( orderType ) );
+            return actionsFactory.CreateAction( entity, static_cast< const kernel::FragOrderType& >( *orderType ) );
+        return actionsFactory.CreateAction( entity, static_cast< const kernel::MissionType& >( *orderType ) );
     }
 }
 
@@ -213,15 +235,15 @@ void EventOrderPresenter::CommitTo( timeline::Event& event ) const
 {
     event.name.clear();
     event.action.payload.clear();
-    if( order_ )
-        if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, *order_, entity_ ) )
-        {
-            missionInterface_.CommitTo( *action );
-            action->Publish( timelinePublisher_, 0 );
-            event.name = action->GetName();
-            event.action.payload = timelinePublisher_.GetPayload();
-            delete action;
-        }
+    if( actions::Action_ABC* action = CreateAction( state_->currentType_, actionFactory_, order_, entity_ ) )
+    {
+        missionInterface_.CommitTo( *action );
+        action->Publish( timelinePublisher_, 0 );
+        event.name = action->GetName();
+        event.action.payload = timelinePublisher_.GetPayload();
+        delete action;
+    }
+
     event.action.apply = true;
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

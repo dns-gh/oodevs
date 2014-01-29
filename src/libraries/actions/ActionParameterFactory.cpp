@@ -66,9 +66,12 @@ using namespace actions;
 // Name: ActionParameterFactory constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
-                                              , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                              , kernel::Controller& controller )
+ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter,
+                                                const kernel::EntityResolver_ABC& entities,
+                                                const kernel::StaticModel& staticModel,
+                                                kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter,
+                                                kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter,
+                                                kernel::Controller& controller )
     : converter_               ( converter )
     , entities_                ( entities )
     , staticModel_             ( staticModel )
@@ -92,19 +95,23 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter& message, const kernel::Entity_ABC* entity ) const
+Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
+                                                        const sword::MissionParameter& message,
+                                                        boost::optional< const kernel::Entity_ABC& > entity ) const
 {
     if( ( !parameter.IsList() && message.value_size() == 1 ) )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
-    else
-        return new parameters::ParameterList( parameter, message.value(), *this, entity );
+    return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateParameter
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC* entity, bool nullValue /* = false*/ ) const
+Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
+                                                        const sword::MissionParameter_Value& message,
+                                                        boost::optional< const kernel::Entity_ABC& > entity,
+                                                        bool nullValue ) const
 {
     if( message.has_booleanvalue() )
         return ( nullValue ) ? new parameters::Bool( parameter )                            : new parameters::Bool( parameter, message.booleanvalue() != 0 );
@@ -127,7 +134,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_agentknowledge() )
         return ( nullValue ) ? new parameters::Agent( parameter, controller_, true )        : new parameters::Agent( parameter, message.agentknowledge().id(), entities_, controller_, true );
     if( message.has_objectknowledge() )
-        return ( nullValue ) ? new parameters::ObjectKnowledge( parameter, controller_ )    : new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::ObjectKnowledge( parameter, controller_ )    : new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity ? &*entity : 0, controller_, entities_ );
     if( message.has_crowdknowledge() )
         return ( nullValue ) ? new parameters::PopulationKnowledge( parameter, controller_ ): new parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), entities_, controller_ );
     if( message.has_location() )
@@ -192,12 +199,6 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 
 namespace
 {
-    void ThrowUnexpected( const kernel::OrderParameter& expected, xml::xistream& xis )
-    {
-        const std::string found = xis.attribute< std::string >( "type" );
-        throw MASA_EXCEPTION( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetType().c_str() ).arg( found.c_str() ).toStdString() );
-    }
-
     class NullParameter : public actions::Parameter_ABC
     {
     public:
@@ -217,36 +218,19 @@ namespace
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
-{
-    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
-    type = parameter.CompatibleType( type );
-
-    if( type.empty() )
-        return new NullParameter( parameter.GetName() );
-
-    std::auto_ptr< Parameter_ABC > param;
-    bool found = DoCreateParameter( parameter, xis, entity, type, param );
-    if( found == false || !param.get() )
-        found = DoCreateParameter( parameter, xis, type, param );
-    if( found == false )
-        throw MASA_EXCEPTION( "Unknown parameter type '" + type + "'" );
-    return param.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionParameterFactory::CreateParameter
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
+Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter,
+                                                        xml::xistream& xis,
+                                                        boost::optional< const kernel::Entity_ABC& > entity ) const
 {
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
     type = parameter.CompatibleType( type );
     if( type.empty() )
         return new NullParameter( parameter.GetName() );
-    std::auto_ptr< Parameter_ABC > param;
-    if( DoCreateParameter( parameter, xis, type, param ) == false )
-        throw MASA_EXCEPTION( "Unknown parameter type '" + type + "'" );
+    std::unique_ptr< Parameter_ABC > param;
+    if( entity )
+        DoCreateParameter( parameter, xis, *entity, type, param );
+    if( !param )
+        DoCreateParameter( parameter, xis, type, param );
     return param.release();
 }
 
@@ -254,7 +238,9 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // Name: ActionParameterFactory::CreateListParameter
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list, const std::string& parent ) const
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis,
+                                                  parameters::ParameterList& list,
+                                                  const std::string& parent ) const
 {
     std::string name = xis.attribute< std::string >( "name", "" );
     if( name.empty() )
@@ -262,14 +248,17 @@ void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters
     const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
     if( type.empty() )
         return list.AddParameter( *new NullParameter( parent ) );
-    list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis ) );
+    list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis, boost::none ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateListParameter
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list, const kernel::Entity_ABC& entity, const std::string& parent ) const
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis,
+                                                  parameters::ParameterList& list,
+                                                  const kernel::Entity_ABC& entity,
+                                                  const std::string& parent ) const
 {
     std::string name = xis.attribute< std::string >( "name", "" );
     if( name.empty() )
@@ -284,7 +273,10 @@ void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters
 // Name: ActionParameterFactory::DoCreateParameter
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< Parameter_ABC >& param ) const
+bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter,
+                                                xml::xistream& xis,
+                                                const std::string& type,
+                                                std::unique_ptr< Parameter_ABC >& param ) const
 {
     if( parameter.IsList() || type == "list" || type == "locationcomposite" )
     {
@@ -368,7 +360,11 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
 // Name: ActionParameterFactory::DoCreateParameter
 // Created: MGD 2010-11-10
 // -----------------------------------------------------------------------------
-bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< Parameter_ABC >& param ) const
+bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter,
+                                                xml::xistream& xis,
+                                                const kernel::Entity_ABC& entity,
+                                                const std::string& type,
+                                                std::unique_ptr< Parameter_ABC >& param ) const
 {
     if( !parameter.IsList() && type == "locationcomposite" )
         xis >> xml::list( *this, &ActionParameterFactory::CreateLocationComposite, parameter, entity, param );
@@ -395,8 +391,12 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
 // Name: ActionParameterFactory::CreateLocationComposite
 // Created: ABN 2010-03-13
 // -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateLocationComposite( const std::string &type, xml::xistream& xis, const kernel::OrderParameter& parameter, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const
+void ActionParameterFactory::CreateLocationComposite( const std::string &type,
+                                                      xml::xistream& xis,
+                                                      const kernel::OrderParameter& parameter,
+                                                      const kernel::Entity_ABC& entity,
+                                                      std::unique_ptr< actions::Parameter_ABC >& param ) const
 {
-    if( !DoCreateParameter( parameter, xis, entity, type, param ) )
+    if( !DoCreateParameter( parameter, xis, entity, type, param ) || !param )
         DoCreateParameter( parameter, xis, type, param );
 }

@@ -43,6 +43,7 @@ namespace tools
     QTranslator* AddTranslator( QApplication& application, const std::string& languageCode, const char* t );
 
     QString translate( const char* context, const char* what );
+    QString findTranslation( const char* context, const char* what );
 
     // We should really do something about our enum.
     // I think that an enum base class with the following support would be very helpful:

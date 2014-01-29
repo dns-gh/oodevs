@@ -33,7 +33,7 @@ namespace
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------
 EngageMagicAction::EngageMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered /* = true*/ )
-    : Action_ABC ( controller, magic )
+    : Action_ABC ( controller, &magic )
     , controller_( controller )
     , registered_( registered )
     , engaged_( engaged )
@@ -46,7 +46,7 @@ EngageMagicAction::EngageMagicAction( const kernel::MagicActionType& magic, kern
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------
 EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const bool engaged )
-    : Action_ABC( xis, controller, magic )
+    : Action_ABC( xis, controller, &magic )
     , controller_( controller )
     , registered_( true )
     , engaged_( engaged )

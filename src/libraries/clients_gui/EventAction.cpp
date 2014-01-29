@@ -103,6 +103,8 @@ void EventAction::Update( const timeline::Event& event )
     if( msg.has_message() )
     {
         action_ = model_.CreateAction( msg, true );
+        if( action_ && action_->GetName().isEmpty() && !event.name.empty() )
+            action_.ConstCast()->Rename( QString::fromStdString( event.name ) );
         UpdateTiming();
         type_ = ::GetEventType( msg );
     }
@@ -153,7 +155,7 @@ QString EventAction::GetTooltip() const
 void EventAction::Select( kernel::ActionController& eventController, kernel::ActionController& actionController ) const
 {
     eventController.Select( static_cast< const Event& >( *this ) );
-    if( action_ && event_ && event_->done )
+    if( action_ && event_ )
         actionController.Select( *action_ );
 }
 

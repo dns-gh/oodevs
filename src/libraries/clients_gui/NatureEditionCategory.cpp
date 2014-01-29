@@ -82,7 +82,7 @@ void NatureEditionCategory::OnComboChange()
 {
     assert( rule_ );
     const QString current = box_->currentText();
-    if( tools::translate( "models::app6", current_ ) != current )
+    if( tools::findTranslation( "models::app6", current_ ) != current )
     {
         current_ = internalNames_[current].c_str();
         Clear();
@@ -99,7 +99,7 @@ void NatureEditionCategory::StartCategory( const std::string& title )
 {
     if( current_.isNull() )
     {
-        QString label = tools::translate( "models::app6", title.c_str() );
+        QString label = tools::findTranslation( "models::app6", title.c_str() );
         if( !label.isEmpty() )
         {
             QString tmp = label[ 0 ];
@@ -109,7 +109,7 @@ void NatureEditionCategory::StartCategory( const std::string& title )
         label_->setText( label );
         box_->clear();
         internalNames_.clear();
-        internalNames_[ tools::translate( "models::app6", "undefined" ) ] = "undefined";
+        internalNames_[ tools::findTranslation( "models::app6", "undefined" ) ] = "undefined";
     }
 }
 
@@ -121,7 +121,7 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
 {
     if( current_.isNull() )
     {
-        QString translatedName = tools::translate( "models::app6", name.c_str() );
+        QString translatedName = tools::findTranslation( "models::app6", name.c_str() );
         internalNames_[ translatedName ] = name;
     }
     else if( rule && name == current_.toStdString() && deep_ != 0 )
@@ -143,7 +143,7 @@ void NatureEditionCategory::EndCategory()
         box_->clear();
         for( std::map< QString, std::string >::const_iterator it = internalNames_.begin(); it != internalNames_.end(); ++it )
             box_->insertItem( it->first );
-        Select( tools::translate( "models::app6", "undefined" ) );
+        Select( tools::findTranslation( "models::app6", "undefined" ) );
     }
 }
 
@@ -176,7 +176,7 @@ void NatureEditionCategory::SetNature( const QString& nature )
 {
     if( nature.isEmpty() )
     {
-        Select( tools::translate( "models::app6", "undefined" ) );
+        Select( tools::findTranslation( "models::app6", "undefined" ) );
         if( next_ )
             next_->SetNature( nature );
         return;
@@ -202,7 +202,7 @@ void NatureEditionCategory::SetNature( const QString& nature )
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::Select( const QString& value )
 {
-    QString translatedValue = tools::translate( "models::app6",  value );
+    QString translatedValue = tools::findTranslation( "models::app6",  value );
     for( int i = 0; i < box_->count(); ++i )
     {
         if( translatedValue == box_->text( i ) )
