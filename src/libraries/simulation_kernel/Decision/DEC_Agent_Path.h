@@ -83,7 +83,7 @@ public:
     //! @name Tools
     //@{
     virtual void InsertDecPoints();
-    virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
+    virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
@@ -110,13 +110,13 @@ private:
     void InsertPointAvants();
     void InsertLimas();
 
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent );
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant );
-    bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint );
-    void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant );
+    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent );
+    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant );
+    bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint );
+    void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant );
     void InsertLima              ( const MIL_LimaOrder& lima );
 
-    IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
+    T_PathPoints::iterator GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator );
     //@}
 
 private:

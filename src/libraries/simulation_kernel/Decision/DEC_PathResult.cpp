@@ -55,8 +55,8 @@ bool DEC_PathResult::IsOnPath( const MT_Vector2D& vPos ) const
     static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
     if( resultList_.size() == 1 )
         return ( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue );
-    CIT_PathPointList itStart = resultList_.begin();
-    CIT_PathPointList itEnd = resultList_.begin();
+    auto itStart = resultList_.begin();
+    auto itEnd = resultList_.begin();
     ++itEnd;
     for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
@@ -72,12 +72,12 @@ bool DEC_PathResult::IsOnPath( const MT_Vector2D& vPos ) const
 // Created: NLD 2004-09-22
 // Last modified: CMA 2012-04-13
 // -----------------------------------------------------------------------------
-DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath() const
+DEC_PathResult::T_PathPoints::const_iterator DEC_PathResult::GetCurrentKeyOnPath() const
 {
     if( itCurrentPathPoint_ == resultList_.end() )
         return itCurrentPathPoint_;
-    CIT_PathPointList itStart = itCurrentPathPoint_;
-    CIT_PathPointList itEnd = itCurrentPathPoint_;
+    auto itStart = itCurrentPathPoint_;
+    auto itEnd = itCurrentPathPoint_;
     ++itEnd;
     for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
@@ -93,14 +93,14 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath() const
 // Name: DEC_PathResult::InternalGetFuturePosition
 // Created: JVT 03-09-25
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const
+MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const
 {
     if( itCurrentPos == resultList_.end() )
         throw MASA_EXCEPTION( "Current position is invalid" );
 
     // recherche du prochain point sur le path
     // on passe tous les points spéciaux, car il n'y a des changement de direction que sur les PathPoint_Point
-    CIT_PathPointList itNextPos = itCurrentPos;
+    auto itNextPos = itCurrentPos;
     while ( ++itNextPos != resultList_.end() && (*itNextPos)->GetType() != DEC_PathPoint::eTypePointPath )
         ;
     const MT_Vector2D& vCurrentPos = (*itCurrentPos)->GetPos();
@@ -125,10 +125,10 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const
 {
-    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath();
+    auto itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return vStartPos;
-    CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
+    auto itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
     // Recherche du premier pathpoint
     if( itNextPathPoint == resultList_.end() )
@@ -159,16 +159,16 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
         return false;
     if( resultList_.empty() )
         return false;
-    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath();
+    auto itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return false;
-    CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
+    auto itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
     // Path hull
     TER_Polygon pathHull;
     T_PointVector hullPoints;
     hullPoints.reserve( 1 + resultList_.size() );
-    for( CIT_PathPointList itPathPoint = itCurrentPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
+    for( auto itPathPoint = itCurrentPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         hullPoints.push_back( (*itPathPoint)->GetPos() );
     if( itCurrentPathPoint != resultList_.end() )
         hullPoints.push_back( (*itCurrentPathPoint)->GetPos() );
@@ -209,7 +209,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
             const T_PointVector& borderPoints = pathHull.GetBorderPoints();
             if( borderPoints.empty() )
                 continue;
-            T_PointVector::const_iterator itPathHullPoint = borderPoints.begin();
+            auto itPathHullPoint = borderPoints.begin();
             const MT_Vector2D* pPrevPathHullPos = &(*itPathHullPoint);
             ++itPathHullPoint;
             bool hullIntersected = false;
@@ -231,7 +231,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
         }
         double rDistanceSum = 0.;
         const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
-        for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
+        for( auto itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
             MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
             TER_DistanceLess colCmp( *pPrevPos );
@@ -266,7 +266,7 @@ void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeTh
 {
     assert( !resultList_.empty() );
     int index = 0;
-    CIT_PathPointList it = resultList_.begin();
+    auto it = resultList_.begin();
     std::advance( it, firstPoint );
     for( firstPoint; it != resultList_.end(); ++it )
     {
@@ -306,12 +306,12 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
             {
                 const MT_Line segment( startPoint, vPos );
                 const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                boost::shared_ptr< DEC_PathPoint > point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint );
+                auto point = boost::make_shared< DEC_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint );
                 resultList_.push_back( point );
             }
         }
     }
-    boost::shared_ptr< DEC_PathPoint > point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint );
+    auto point = boost::make_shared< DEC_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint );
     resultList_.push_back( point );
     if( resultList_.size() == 1 )
         itCurrentPathPoint_ = resultList_.begin();
@@ -330,7 +330,7 @@ void DEC_PathResult::NotifySectionEnded()
 // Name: DEC_PathResult::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
-void DEC_PathResult::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
+void DEC_PathResult::NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint )
 {
     itCurrentPathPoint_ = itCurrentPathPoint;
 }

@@ -50,10 +50,10 @@ float DEC_Population_PathfinderRule::EvaluateCost( const geometry::Point2f& from
 // -----------------------------------------------------------------------------
 float DEC_Population_PathfinderRule::GetChannelingCost( const MT_Vector2D& vFrom, const MT_Vector2D& vTo, const TerrainData& terrainTo, const TerrainData& terrainBetween ) const
 {
-    const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path_.GetChannelers();
+    const auto& channelers = path_.GetChannelers();
     if( channelers.empty() )
         return 0.f;
-    for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
+    for( auto it = channelers.begin(); it != channelers.end(); ++it )
         if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< double >::min() ) // Inside channel
             return 0.f;
     return static_cast< float >( path_.GetCostOutsideOfChanneling() );
@@ -87,12 +87,12 @@ float DEC_Population_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, co
 {
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
-    const DEC_Population_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
-    for( DEC_Population_Path::CIT_PathKnowledgeObjectByTypesVector itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
+    const auto& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    for( auto itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
         bool bInsideObjectType = false;
-        const DEC_Population_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
-        for( DEC_Population_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+        const auto& knowledges = *itType;
+        for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, 0. );
             if( rCurrentObjectCost != std::numeric_limits< double >::min()  )

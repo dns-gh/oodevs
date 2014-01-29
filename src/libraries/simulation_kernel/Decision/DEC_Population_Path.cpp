@@ -134,7 +134,7 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoi
         if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
             throw MASA_EXCEPTION( "Size of path knowledge objects list is invalid" );
 
-        T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+        auto& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
         if( knowledge.GetType().GetCapacity< FloodCapacity >() )
             pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( eCrossingHeightNever, knowledge ) );
         else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )

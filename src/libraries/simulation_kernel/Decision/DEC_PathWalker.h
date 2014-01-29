@@ -146,8 +146,8 @@ private:
     //@{
     PHY_MovingEntity_ABC& movingEntity_;
     TerrainData environment_;
-    DEC_PathResult::CIT_PathPointList itNextPathPoint_;
-    DEC_PathResult::CIT_PathPointList itCurrentPathPoint_;
+    DEC_PathResult::T_PathPoints::const_iterator itNextPathPoint_;
+    DEC_PathResult::T_PathPoints::const_iterator itCurrentPathPoint_;
     // Effect
     MIL_Effect_Move effectMove_;
     MT_Vector2D vNewPos_;

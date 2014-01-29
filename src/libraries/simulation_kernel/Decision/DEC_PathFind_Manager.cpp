@@ -238,6 +238,7 @@ namespace
         const T& cont2_;
         AreNotEmpty_& operator=( const AreNotEmpty_& );
     };
+
     template< typename T >
     AreNotEmpty_< T > AreNotEmpty( const T& cont, const T& cont2 ) { return AreNotEmpty_< T >( cont, cont2 ); };
 

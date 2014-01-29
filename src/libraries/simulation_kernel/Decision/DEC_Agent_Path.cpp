@@ -155,7 +155,7 @@ void DEC_Agent_Path::Destroy()
 {
     if( destroyed_ )
         return;
-    for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
+    for( auto it = resultList_.begin(); it!= resultList_.end(); it++ )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
     fuseau_.Reset();
@@ -174,7 +174,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
     if( points.empty() )
         MT_LOG_ERROR_MSG( "Initializing empty agent path" );
     const MT_Vector2D* pLastPoint = 0;
-    for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+    for( auto itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
         if( pLastPoint )
         {
@@ -320,7 +320,7 @@ bool DEC_Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const 
 // Created: JVT 2005-07-08
 // -----------------------------------------------------------------------------
 inline
-DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
+DEC_Agent_Path::T_PathPoints::iterator DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( T_PathPoints::iterator itCurrent )
 {
     if( itCurrent == resultList_.end() )
         throw MASA_EXCEPTION( "Current path point is invalid" );
@@ -337,7 +337,7 @@ DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferent
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent )
 {
     double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
@@ -355,7 +355,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             }
 
             // remise en position des itérateurs
-            IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
+            auto itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
             itCurrent = itPrev;
             ++itCurrent;
             if( ( *itCurrent )->GetPos() != vCurrentPos )
@@ -400,7 +400,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPointAvant )
 {
     static const double rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
@@ -414,7 +414,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint )
 {
     static double rDist = 500.;
     if( rDistSinceLastPoint > rDist )
@@ -430,7 +430,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
 // Name: DEC_Agent_Path::InsertPointAndPointAvant
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, T_PathPoints::iterator itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
 {
     if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
         InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
@@ -446,7 +446,7 @@ void DEC_Agent_Path::InsertPointAvants()
     double rDistSinceLastPoint = std::numeric_limits< double >::max();
     TerrainData nObjectTypesBefore;
     DEC_PathPoint* pPrevPoint = 0;
-    for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
+    for( auto itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         DEC_PathPoint& current = **itPoint;
         if( pPrevPoint )
@@ -506,7 +506,7 @@ void DEC_Agent_Path::InsertPointAvants()
 void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 {
     boost::shared_ptr< DEC_PathPoint > pLastPoint;
-    for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
+    for( auto itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *itPoint;
         if( !pCurrentPoint )
@@ -523,7 +523,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
                 for( auto itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
                 {
                     auto pPoint = boost::make_shared< DEC_Rep_PathPoint_Lima >( posIntersect, TerrainData(), lima.GetID(), **itFunction );
-                    IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
+                    auto itTmp = resultList_.insert( itPoint, pPoint );
                     InsertPointAvant( pPoint, itTmp );
                 }
             }
@@ -610,7 +610,7 @@ void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
     }
 
 #ifndef NDEBUG
-    for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )
+    for( auto itPoint = resultList_.begin(); itPoint != resultList_.end(); )
     {
         DEC_PathPoint& point = **itPoint;
 
@@ -655,7 +655,7 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // Name: DEC_Agent_Path::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
+void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint )
 {
     const T_PointVector& computedWaypoints = GetComputedWaypoints();
     if( nextWaypoints_.size() > 1 && computedWaypoints.size() > 1 &&

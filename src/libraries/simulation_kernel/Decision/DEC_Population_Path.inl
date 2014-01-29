@@ -24,7 +24,7 @@ void DEC_Population_Path::InsertDecPoints()
 // Created: SBO 2006-01-16
 // -----------------------------------------------------------------------------
 inline
-const DEC_Population_Path::T_PopulationPathChannelerVector& DEC_Population_Path::GetChannelers() const
+const DEC_Population_Path::T_PopulationPathChannelers& DEC_Population_Path::GetChannelers() const
 {
     return channelers_;
 }
@@ -34,7 +34,7 @@ const DEC_Population_Path::T_PopulationPathChannelerVector& DEC_Population_Path:
 // Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
 inline
-const DEC_Population_Path::T_PathKnowledgeObjectByTypesVector& DEC_Population_Path::GetPathKnowledgeObjects() const
+const DEC_Population_Path::T_PathKnowledgeObjectsByTypes& DEC_Population_Path::GetPathKnowledgeObjects() const
 {
     return pathKnowledgeObjects_;
 }
