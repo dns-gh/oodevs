@@ -952,28 +952,14 @@ func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.Mi
 func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 	supplies, equipments map[uint32]uint32) ([]bool, error) {
 
-	resources := []*sword.SupplyFlowResource{}
-	for resource, quantity := range supplies {
-		resources = append(resources, &sword.SupplyFlowResource{
-			ResourceType: MakeId(resource),
-			Quantity:     proto.Uint32(quantity),
-		})
-	}
 	recipient := &sword.SupplyFlowRecipient{
 		Receiver:  MakeId(recipientId),
-		Resources: resources,
+		Resources: MakeSupplyFlowResources(supplies),
 	}
 	recipients := []*sword.SupplyFlowRecipient{recipient}
-	transporters := []*sword.SupplyFlowTransporter{}
-	for equipment, quantity := range equipments {
-		transporters = append(transporters, &sword.SupplyFlowTransporter{
-			EquipmentType: MakeId(equipment),
-			Quantity:      proto.Uint32(quantity),
-		})
-	}
 	pushFlowParams := &sword.PushFlowParameters{
 		Recipients:   recipients,
-		Transporters: transporters,
+		Transporters: MakeSupplyFlowTransporters(equipments),
 	}
 	param := MakeParameter(&sword.MissionParameter_Value{PushFlowParameters: pushFlowParams})
 	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
@@ -987,24 +973,10 @@ func (c *Client) LogisticsSupplyPullFlow(receiverId, supplierId uint32,
 	supplies, equipments map[uint32]uint32) ([]bool, error) {
 
 	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
-	resources := []*sword.SupplyFlowResource{}
-	for resource, quantity := range supplies {
-		resources = append(resources, &sword.SupplyFlowResource{
-			ResourceType: MakeId(resource),
-			Quantity:     proto.Uint32(quantity),
-		})
-	}
-	transporters := []*sword.SupplyFlowTransporter{}
-	for equipment, quantity := range equipments {
-		transporters = append(transporters, &sword.SupplyFlowTransporter{
-			EquipmentType: MakeId(equipment),
-			Quantity:      proto.Uint32(quantity),
-		})
-	}
 	pullFlowParams := &sword.PullFlowParameters{
 		Supplier:     supplier,
-		Resources:    resources,
-		Transporters: transporters,
+		Resources:    MakeSupplyFlowResources(supplies),
+		Transporters: MakeSupplyFlowTransporters(equipments),
 	}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
 	return c.LogisticsSupplyPullFlowTest(receiverId, MakeParameters(param))

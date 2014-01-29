@@ -461,3 +461,25 @@ func MakePopulationTasker(id uint32) *sword.Tasker {
 func MakeUnitTasker(id uint32) *sword.Tasker {
 	return &sword.Tasker{Unit: MakeId(id)}
 }
+
+func MakeSupplyFlowResources(supplies map[uint32]uint32) []*sword.SupplyFlowResource {
+	resources := []*sword.SupplyFlowResource{}
+	for resource, quantity := range supplies {
+		resources = append(resources, &sword.SupplyFlowResource{
+			ResourceType: MakeId(resource),
+			Quantity:     proto.Uint32(quantity),
+		})
+	}
+	return resources
+}
+
+func MakeSupplyFlowTransporters(equipments map[uint32]uint32) []*sword.SupplyFlowTransporter {
+	transporters := []*sword.SupplyFlowTransporter{}
+	for equipment, quantity := range equipments {
+		transporters = append(transporters, &sword.SupplyFlowTransporter{
+			EquipmentType: MakeId(equipment),
+			Quantity:      proto.Uint32(quantity),
+		})
+	}
+	return transporters
+}
