@@ -13,48 +13,39 @@
 
 using namespace weather;
 
-PHY_Lighting::T_LightingMap PHY_Lighting::lightings_;
+const PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_ );
+const PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ );
+const PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_ );
+const PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_ );
+const PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0 );
+const PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_ );
+const PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_ );
+const PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_ );
+const PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_ );
+const PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0 );
+const PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0 );
 
-PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_ );
-PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ );
-PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_ );
-PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_ );
-PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0 );
-PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_ );
-PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_ );
-PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_ );
-PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_ );
-PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0 );
-PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0 );
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Lighting::Initialize
-// Created: NLD 2004-08-05
-// -----------------------------------------------------------------------------
-void PHY_Lighting::Initialize()
+namespace
 {
-    // MT_LOG_INFO_MSG( "Initializing lightings" );
-    lightings_[ jourSansNuage_         .GetName() ] = &jourSansNuage_;
-    lightings_[ jourPeuNuageux_        .GetName() ] = &jourPeuNuageux_;
-    lightings_[ jourMoyennementNuageux_.GetName() ] = &jourMoyennementNuageux_;
-    lightings_[ jourAssezNuageux_      .GetName() ] = &jourAssezNuageux_;
-    lightings_[ jourTresNuageux_       .GetName() ] = &jourTresNuageux_;
-    lightings_[ nuitPleineLune_        .GetName() ] = &nuitPleineLune_;
-    lightings_[ nuitTroisQuartDeLune_  .GetName() ] = &nuitTroisQuartDeLune_;
-    lightings_[ nuitDemiLune_          .GetName() ] = &nuitDemiLune_;
-    lightings_[ nuitQuartDeLune_       .GetName() ] = &nuitQuartDeLune_;
-    lightings_[ nuitNouvelleLune_      .GetName() ] = &nuitNouvelleLune_;
-    lightings_[ eclairant_             .GetName() ] = &eclairant_;
+
+std::map< std::string, const PHY_Lighting* > MakeLightings()
+{
+    std::map< std::string, const PHY_Lighting* > lightings;
+    lightings[ PHY_Lighting::jourSansNuage_         .GetName() ] = &PHY_Lighting::jourSansNuage_;
+    lightings[ PHY_Lighting::jourPeuNuageux_        .GetName() ] = &PHY_Lighting::jourPeuNuageux_;
+    lightings[ PHY_Lighting::jourMoyennementNuageux_.GetName() ] = &PHY_Lighting::jourMoyennementNuageux_;
+    lightings[ PHY_Lighting::jourAssezNuageux_      .GetName() ] = &PHY_Lighting::jourAssezNuageux_;
+    lightings[ PHY_Lighting::jourTresNuageux_       .GetName() ] = &PHY_Lighting::jourTresNuageux_;
+    lightings[ PHY_Lighting::nuitPleineLune_        .GetName() ] = &PHY_Lighting::nuitPleineLune_;
+    lightings[ PHY_Lighting::nuitTroisQuartDeLune_  .GetName() ] = &PHY_Lighting::nuitTroisQuartDeLune_;
+    lightings[ PHY_Lighting::nuitDemiLune_          .GetName() ] = &PHY_Lighting::nuitDemiLune_;
+    lightings[ PHY_Lighting::nuitQuartDeLune_       .GetName() ] = &PHY_Lighting::nuitQuartDeLune_;
+    lightings[ PHY_Lighting::nuitNouvelleLune_      .GetName() ] = &PHY_Lighting::nuitNouvelleLune_;
+    lightings[ PHY_Lighting::eclairant_             .GetName() ] = &PHY_Lighting::eclairant_;
+    return lightings;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_Lighting::Terminate
-// Created: NLD 2004-08-05
-// -----------------------------------------------------------------------------
-void PHY_Lighting::Terminate()
-{
-    lightings_.clear();
-}
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting constructor
@@ -92,9 +83,10 @@ const PHY_Lighting& PHY_Lighting::GetDegradedLighting( unsigned int nDegradation
 // Name: PHY_Lighting::GetLightings
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-const PHY_Lighting::T_LightingMap& PHY_Lighting::GetLightings()
+const std::map< std::string, const PHY_Lighting* >& PHY_Lighting::GetLightings()
 {
-    return lightings_;
+    static const std::map< std::string, const PHY_Lighting* > lightings = MakeLightings();
+    return lightings;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,8 +95,9 @@ const PHY_Lighting::T_LightingMap& PHY_Lighting::GetLightings()
 // -----------------------------------------------------------------------------
 const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
 {
-    CIT_LightingMap it = lightings_.find( strName );
-    if( it == lightings_.end() )
+    const auto& lightings = PHY_Lighting::GetLightings();
+    const auto it = lightings.find( strName );
+    if( it == lightings.end() )
         return 0;
     return it->second;
 }
@@ -115,7 +108,8 @@ const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_Lighting* PHY_Lighting::FindLighting( E_LightingType value )
 {
-    for( auto it = lightings_.begin(); it != lightings_.end(); ++it )
+    const auto& lightings = PHY_Lighting::GetLightings();
+    for( auto it = lightings.begin(); it != lightings.end(); ++it )
     {
         const PHY_Lighting& lighting = *it->second;
         if( lighting.GetID() == value )

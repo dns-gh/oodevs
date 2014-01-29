@@ -81,7 +81,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 void PHY_MeteoDataManager::Initialize()
 {
     weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +115,6 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
     delete pGlobalMeteo_;
-    weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
 

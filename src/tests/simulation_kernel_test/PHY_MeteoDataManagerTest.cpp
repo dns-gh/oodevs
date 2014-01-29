@@ -9,14 +9,11 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Meteo/PHY_Ephemeride.h"
-#include "meteo/PHY_Lighting.h"
 #include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 {
-    weather::PHY_Lighting::Initialize();
-
     const std::string invalid[] =
     {
         // Invalid day, night and moon lighting
