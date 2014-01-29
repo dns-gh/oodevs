@@ -374,6 +374,11 @@ const ActionParam select_new_logistic_state_params[] =
     { "Request", "identifier", 0 },
 };
 
+const ActionParam transfer_to_logistic_superior_params[] =
+{
+    { "Request", "identifier", 0 },
+};
+
 const ActionParam partial_recovery_params[] =
 {
     { "Equipments", "list", 0 },
@@ -486,6 +491,7 @@ const Action actions[] =
     ACTION( surrender ),
     ACTION( teleport ),
     ACTION( transfer_equipment ),
+    ACTION( transfer_to_logistic_superior ),
     ACTION( unit_change_affinities ),
     ACTION( unit_change_superior ),
     ACTION( unit_creation ),
