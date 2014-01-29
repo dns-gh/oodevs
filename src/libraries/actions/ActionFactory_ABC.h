@@ -36,6 +36,7 @@ namespace kernel
     class AutomatType;
     class Automat_ABC;
     class Entity_ABC;
+    class EquipmentType;
     class FragOrderType;
     class MagicActionType;
     class MissionType;
@@ -117,6 +118,7 @@ public:
     virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const = 0;
+    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}
