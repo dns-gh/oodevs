@@ -924,20 +924,59 @@ func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, supplied *sword.
 		sword.UnitMagicAction_log_supply_change_quotas)
 }
 
-func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) error {
-	return c.sendUnitMagicAction(MakeUnitTasker(supplierId), params,
+func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) ([]bool, error) {
+	msg := CreateUnitMagicAction(MakeUnitTasker(supplierId), params,
 		sword.UnitMagicAction_log_supply_push_flow)
+	var result []bool
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply, _, err := getUnitMagicActionAck(msg)
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			if err == nil {
+				return invalid("result", reply.GetResult())
+			}
+			return err
+		}
+		for _, e := range value.GetList() {
+			result = append(result, e.GetBooleanValue())
+		}
+		return err
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return result, err
 }
 
-func (c *Client) LogisticsSupplyPushFlow(supplierId uint32, suppliedId uint32) error {
-	recipient := &sword.SupplyFlowRecipient{Receiver: MakeId(suppliedId)}
+func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
+	supplies, equipments map[uint32]uint32) ([]bool, error) {
+
+	resources := []*sword.SupplyFlowResource{}
+	for resource, quantity := range supplies {
+		resources = append(resources, &sword.SupplyFlowResource{
+			ResourceType: MakeId(resource),
+			Quantity:     proto.Uint32(quantity),
+		})
+	}
+	recipient := &sword.SupplyFlowRecipient{
+		Receiver:  MakeId(recipientId),
+		Resources: resources,
+	}
 	recipients := []*sword.SupplyFlowRecipient{recipient}
-	pushFlowParams := &sword.PushFlowParameters{Recipients: recipients}
+	transporters := []*sword.SupplyFlowTransporter{}
+	for equipment, quantity := range equipments {
+		transporters = append(transporters, &sword.SupplyFlowTransporter{
+			EquipmentType: MakeId(equipment),
+			Quantity:      proto.Uint32(quantity),
+		})
+	}
+	pushFlowParams := &sword.PushFlowParameters{
+		Recipients:   recipients,
+		Transporters: transporters,
+	}
 	param := MakeParameter(&sword.MissionParameter_Value{PushFlowParameters: pushFlowParams})
 	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
 }
 
-func (c *Client) LogisticsSupplyPullFlow(supplierId uint32, suppliedId uint32) error {
+func (c *Client) LogisticsSupplyPullFlow(supplierId, suppliedId uint32) error {
 	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
 	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
