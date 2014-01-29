@@ -1127,7 +1127,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessLogSupplyPushFlow( message, ack() );
             break;
         case UnitMagicAction::log_supply_pull_flow:
-            ProcessLogSupplyPullFlow( message );
+            ProcessLogSupplyPullFlow( message, ack() );
             break;
         case UnitMagicAction::log_supply_change_quotas:
             ProcessLogSupplyChangeQuotas( message );
@@ -1852,40 +1852,29 @@ namespace
         return std::make_pair( mass / total, volume * maxMass / total / maxVolume );
     }
 
-    void FillConvoyStatus( const sword::PushFlowParameters& params, sword::UnitMagicActionAck& ack )
+    template< typename Transporters >
+    void CheckTransporters( const Transporters& transporters,
+        const tools::Map< const PHY_DotationCategory*, double >& supplies,
+        sword::UnitMagicActionAck& ack )
     {
-        tools::Map< const PHY_ComposanteTypePion*, unsigned > transporters;
-        for( auto it = params.transporters().begin(); it != params.transporters().end(); ++it )
+        tools::Map< const PHY_ComposanteTypePion*, unsigned > result;
+        for( auto it = transporters.begin(); it != transporters.end(); ++it )
         {
             const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype() );
             protocol::Check( type, "invalid transporter" );
             const unsigned quantity = it->quantity();
             protocol::Check( quantity > 0, "transporter quantity must be positive" );
-            transporters[ type ] += quantity;
-        }
-        tools::Map< const PHY_DotationCategory*, double > supplies;
-        protocol::Check( params.recipients().size() > 0, "at least one recipient expected" );
-        for( auto it = params.recipients().begin(); it != params.recipients().end(); ++it )
-        {
-            protocol::Check( it->resources().size() > 0, "at least one resource expected" );
-            for( auto it2 = it->resources().begin(); it2 != it->resources().end(); ++it2 )
-            {
-                const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( it2->resourcetype().id() );
-                protocol::Check( category, "invalid resource" );
-                const double quantity = it2->quantity();
-                protocol::Check( quantity > 0, "resource quantity must be positive" );
-                supplies[ category ] += quantity;
-            }
+            result[ type ] += quantity;
         }
         bool massOverloaded = false;
         bool volumeOverloaded = false;
         auto states = ack.mutable_result()->add_elem()->add_value();
-        for( auto it = transporters.begin(); it != transporters.end(); ++it )
+        for( auto it = result.begin(); it != result.end(); ++it )
         {
             double mass, volume, minMass, maxMass, minVolume, maxVolume;
             it->first->GetStockTransporterCapacity( maxMass, maxVolume );
             std::tie( minMass, minVolume ) = it->first->GetStockTransporterCapacity();
-            std::tie( mass, volume ) = ComputeMassVolume( *it->first, transporters, supplies );
+            std::tie( mass, volume ) = ComputeMassVolume( *it->first, result, supplies );
             states->add_list()->set_booleanvalue( mass * maxMass < minMass );
             if( mass > 1 )
                 massOverloaded = true;
@@ -1897,6 +1886,20 @@ namespace
         }
         protocol::Check( !massOverloaded, "transporter capacity mass overloaded" );
         protocol::Check( !volumeOverloaded, "transporter capacity volume overloaded" );
+    }
+
+    template< typename Resources >
+    void ReadResources( const Resources& resources, tools::Map< const PHY_DotationCategory*, double >& supplies )
+    {
+        protocol::Check( resources.size() > 0, "at least one resource expected" );
+        for( auto it2 = resources.begin(); it2 != resources.end(); ++it2 )
+        {
+            const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( it2->resourcetype().id() );
+            protocol::Check( category, "invalid resource" );
+            const double quantity = it2->quantity();
+            protocol::Check( quantity > 0, "resource quantity must be positive" );
+            supplies[ category ] += quantity;
+        }
     }
 }
 
@@ -1911,30 +1914,35 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
         throw MASA_INVALIDTASKER;
     MIL_AutomateLOG* pBrainLog = FindBrainLogistic( *tasker );
     protocol::Check( pBrainLog, "invalid supplier" );
-    const auto& params = message.parameters();
-    protocol::CheckCount( params, 1 );
+    protocol::CheckCount( message.parameters(), 1 );
     const auto& value = message.parameters().elem( 0 ).value( 0 );
-    protocol::Check( value.has_push_flow_parameters(), "invalid receiver" );
-    const auto& flowParams = value.push_flow_parameters();
-    FillConvoyStatus( flowParams, ack );
-    pBrainLog->OnReceiveLogSupplyPushFlow( flowParams, *automateFactory_ );
+    protocol::Check( value.has_push_flow_parameters(), "invalid parameters" );
+    const auto& parameters = value.push_flow_parameters();
+    tools::Map< const PHY_DotationCategory*, double > supplies;
+    protocol::Check( parameters.recipients().size() > 0, "at least one recipient expected" );
+    for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
+        ReadResources( it->resources(), supplies );
+    CheckTransporters( parameters.transporters(), supplies, ack );
+    pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessLogSupplyPullFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message )
+void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, sword::UnitMagicActionAck& ack )
 {
     MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-    if( !pAutomate )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value( 0 ).has_pull_flow_parameters() )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid receiver" );
-    const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value( 0 ).pull_flow_parameters();
+    protocol::Check( pAutomate, "invalid receiver" );
+    protocol::CheckCount( message.parameters(), 1 );
+    const auto& value = message.parameters().elem( 0 ).value( 0 );
+    protocol::Check( value.has_pull_flow_parameters(), "invalid parameters" );
+    const auto& parameters = value.pull_flow_parameters();
     MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
-    if( !supplier )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid supplier" );
+    protocol::Check( supplier, "invalid supplier" );
+    tools::Map< const PHY_DotationCategory*, double > supplies;
+    ReadResources( parameters.resources(), supplies );
+    CheckTransporters( parameters.transporters(), supplies, ack );
     pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
 }
 

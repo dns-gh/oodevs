@@ -249,7 +249,7 @@ private:
     void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int taskerId );
     void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message );
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, sword::UnitMagicActionAck& ack );
-    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message );
+    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, sword::UnitMagicActionAck& ack );
     void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int taskerId );
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message );
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack );
