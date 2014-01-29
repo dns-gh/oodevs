@@ -9,7 +9,6 @@
 
 #include "MeteoModel_ABC.h"
 #include "meteo/Meteo.h"
-#include "meteo/PHY_Precipitation.h"
 
 using namespace weather;
 
@@ -21,7 +20,6 @@ MeteoModel_ABC::MeteoModel_ABC( kernel::CoordinateConverter_ABC& converter )
     : converter_  ( converter )
     , globalMeteo_( 0 )
 {
-    weather::PHY_Precipitation::Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +28,6 @@ MeteoModel_ABC::MeteoModel_ABC( kernel::CoordinateConverter_ABC& converter )
 // -----------------------------------------------------------------------------
 MeteoModel_ABC::~MeteoModel_ABC()
 {
-    weather::PHY_Precipitation::Terminate();
 }
 
 // -----------------------------------------------------------------------------

@@ -202,7 +202,6 @@ void MIL_AgentServer::ReadStaticData()
     nTimeFactor_ = config_.GetTimeFactor();
     ReadTerData();
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
-    PHY_MeteoDataManager::Initialize();
     MIL_EntityManager::Initialize( config_.GetPhyLoader(), *this, *pObjectFactory_ );
     pAgentServer_ = new NET_AgentServer( config_, *this );
 }

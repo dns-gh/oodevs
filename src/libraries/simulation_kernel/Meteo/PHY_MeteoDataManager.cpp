@@ -75,15 +75,6 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::Initialize
-// Created: JSR 2011-11-22
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Initialize()
-{
-    weather::PHY_Precipitation::Initialize();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::Load
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
@@ -115,7 +106,6 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
     delete pGlobalMeteo_;
-    weather::PHY_Precipitation::Terminate();
 }
 
 // -----------------------------------------------------------------------------

@@ -57,11 +57,6 @@ public:
     virtual ~PHY_MeteoDataManager();
     //@}
 
-    //! @name Operations
-    //@{
-    static void Initialize();
-    //@}
-
     //! @name Raw Data management
     //@{
     virtual const PHY_RawVisionData& GetRawVisionData() const;
