@@ -257,12 +257,12 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 bool empty = pathKnowledges.empty();
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) ) );
+                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectFlood >( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
+                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObjectBurnSurface >( knowledge ) );
                 else if( ( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
                      || knowledge.HasAgentMaxSpeedMultiplier() )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( knowledge, pathClass_.GetObjectCost( knowledge.GetType() ), pathClass_.GetThreshold() ) ) );
+                    pathKnowledges.push_back( boost::make_shared< DEC_Path_KnowledgeObject >( knowledge, pathClass_.GetObjectCost( knowledge.GetType() ), pathClass_.GetThreshold() ) );
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
@@ -349,7 +349,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             const MT_Vector2D& vCurrentPos = ( *itCurrent )->GetPos();
             if( itCurrent == resultList_.begin() )
             {
-                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint ) );
+                auto pNewPoint = boost::make_shared< DEC_Rep_PathPoint_Front >( vCurrentPos, spottedPathPoint );
                 resultList_.insert( ++itCurrent, pNewPoint );
                 break;
             }
@@ -370,7 +370,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             if( rDistanceLeft == 0. )
             {
                 // Positionnement du point avant au même endroit qu'un autre point
-                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint ) );
+                auto pNewPoint = boost::make_shared< DEC_Rep_PathPoint_Front >( vPreviousPos, spottedPathPoint );
                 resultList_.insert( itPrev, pNewPoint );
                 break;
             }
@@ -380,7 +380,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
                 vTmp /= vTmpMag;
                 vTmp *= rDistanceLeft;
                 vTmp += vPreviousPos;
-                boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint ) );
+                auto pNewPoint = boost::make_shared< DEC_Rep_PathPoint_Front >( vTmp, spottedPathPoint );
                 resultList_.insert( itCurrent, pNewPoint );
                 break;
             }
@@ -474,25 +474,25 @@ void DEC_Agent_Path::InsertPointAvants()
 
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Urban
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPoint( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint );
+            InsertPoint( boost::make_shared< DEC_Rep_PathPoint >( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ), itPoint, rDistSinceLastPoint );
 
         // Forest
         else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Forest() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint >( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() )
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::make_shared< DEC_Rep_PathPoint_Special >( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
         pPrevPoint = &current;
@@ -522,7 +522,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
             {
                 for( auto itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
                 {
-                    boost::shared_ptr< DEC_PathPoint > pPoint( new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima.GetID(), **itFunction ) );
+                    auto pPoint = boost::make_shared< DEC_Rep_PathPoint_Lima >( posIntersect, TerrainData(), lima.GetID(), **itFunction );
                     IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
                     InsertPointAvant( pPoint, itTmp );
                 }
