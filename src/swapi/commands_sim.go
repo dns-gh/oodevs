@@ -924,9 +924,8 @@ func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, supplied *sword.
 		sword.UnitMagicAction_log_supply_change_quotas)
 }
 
-func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) ([]bool, error) {
-	msg := CreateUnitMagicAction(MakeUnitTasker(supplierId), params,
-		sword.UnitMagicAction_log_supply_push_flow)
+func (c *Client) LogisticsSupplyFlowTest(unitId uint32, params *sword.MissionParameters, action sword.UnitMagicAction_Type) ([]bool, error) {
+	msg := CreateUnitMagicAction(MakeAutomatTasker(unitId), params, action)
 	var result []bool
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply, _, err := getUnitMagicActionAck(msg)
@@ -944,6 +943,10 @@ func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.Mi
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return result, err
+}
+
+func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) ([]bool, error) {
+	return c.LogisticsSupplyFlowTest(supplierId, params, sword.UnitMagicAction_log_supply_push_flow)
 }
 
 func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
@@ -977,25 +980,7 @@ func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 }
 
 func (c *Client) LogisticsSupplyPullFlowTest(receiverId uint32, params *sword.MissionParameters) ([]bool, error) {
-	msg := CreateUnitMagicAction(MakeAutomatTasker(receiverId), params,
-		sword.UnitMagicAction_log_supply_pull_flow)
-	var result []bool
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply, _, err := getUnitMagicActionAck(msg)
-		value := GetParameterValue(reply.GetResult(), 0)
-		if value == nil {
-			if err == nil {
-				return invalid("result", reply.GetResult())
-			}
-			return err
-		}
-		for _, e := range value.GetList() {
-			result = append(result, e.GetBooleanValue())
-		}
-		return err
-	}
-	err := <-c.postSimRequest(msg, handler)
-	return result, err
+	return c.LogisticsSupplyFlowTest(receiverId, params, sword.UnitMagicAction_log_supply_pull_flow)
 }
 
 func (c *Client) LogisticsSupplyPullFlow(receiverId, supplierId uint32,
