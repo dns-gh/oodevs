@@ -120,9 +120,9 @@ bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
 void AmmoEffect::ApplyEffect( weather::Meteo& meteo ) const
 {
     if( type_ == sword::StartFireEffect::light )
-        meteo.Update( weather::PHY_Lighting::eclairant_ );
+        meteo.SetLighting( weather::PHY_Lighting::eclairant_ );
     else if( type_ == sword::StartFireEffect::smoke )
-        meteo.Update( weather::PHY_Precipitation::smoke_ );
+        meteo.SetPrecipitation( weather::PHY_Precipitation::smoke_ );
 }
 
 // -----------------------------------------------------------------------------

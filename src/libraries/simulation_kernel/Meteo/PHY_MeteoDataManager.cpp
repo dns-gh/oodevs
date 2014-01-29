@@ -116,7 +116,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
-    pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
+    pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
 
@@ -328,9 +328,9 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_INFO_MSG( "Ephemeris is now: " << pEphemeride_->GetLightingBase().GetName() );
-        pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
+        pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-            it->second->Update( pEphemeride_->GetLightingBase() );
+            it->second->SetLighting( pEphemeride_->GetLightingBase() );
     }
     pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
@@ -392,6 +392,6 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::AddMeteo( const boost::shared_ptr< PHY_LocalMeteo >& meteo )
 {
-    meteo->Update( pEphemeride_->GetLightingBase() );
+    meteo->SetLighting( pEphemeride_->GetLightingBase() );
     meteos_[ meteo->GetId() ] = meteo;
 }
