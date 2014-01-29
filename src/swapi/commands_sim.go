@@ -924,9 +924,8 @@ func (c *Client) LogisticsSupplyChangeQuotas(supplierId uint32, supplied *sword.
 		sword.UnitMagicAction_log_supply_change_quotas)
 }
 
-func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) ([]bool, error) {
-	msg := CreateUnitMagicAction(MakeUnitTasker(supplierId), params,
-		sword.UnitMagicAction_log_supply_push_flow)
+func (c *Client) LogisticsSupplyFlowTest(unitId uint32, params *sword.MissionParameters, action sword.UnitMagicAction_Type) ([]bool, error) {
+	msg := CreateUnitMagicAction(MakeAutomatTasker(unitId), params, action)
 	var result []bool
 	handler := func(msg *sword.SimToClient_Content) error {
 		reply, _, err := getUnitMagicActionAck(msg)
@@ -946,42 +945,41 @@ func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.Mi
 	return result, err
 }
 
+func (c *Client) LogisticsSupplyPushFlowTest(supplierId uint32, params *sword.MissionParameters) ([]bool, error) {
+	return c.LogisticsSupplyFlowTest(supplierId, params, sword.UnitMagicAction_log_supply_push_flow)
+}
+
 func (c *Client) LogisticsSupplyPushFlow(supplierId, recipientId uint32,
 	supplies, equipments map[uint32]uint32) ([]bool, error) {
 
-	resources := []*sword.SupplyFlowResource{}
-	for resource, quantity := range supplies {
-		resources = append(resources, &sword.SupplyFlowResource{
-			ResourceType: MakeId(resource),
-			Quantity:     proto.Uint32(quantity),
-		})
-	}
 	recipient := &sword.SupplyFlowRecipient{
 		Receiver:  MakeId(recipientId),
-		Resources: resources,
+		Resources: MakeSupplyFlowResources(supplies),
 	}
 	recipients := []*sword.SupplyFlowRecipient{recipient}
-	transporters := []*sword.SupplyFlowTransporter{}
-	for equipment, quantity := range equipments {
-		transporters = append(transporters, &sword.SupplyFlowTransporter{
-			EquipmentType: MakeId(equipment),
-			Quantity:      proto.Uint32(quantity),
-		})
-	}
 	pushFlowParams := &sword.PushFlowParameters{
 		Recipients:   recipients,
-		Transporters: transporters,
+		Transporters: MakeSupplyFlowTransporters(equipments),
 	}
 	param := MakeParameter(&sword.MissionParameter_Value{PushFlowParameters: pushFlowParams})
 	return c.LogisticsSupplyPushFlowTest(supplierId, MakeParameters(param))
 }
 
-func (c *Client) LogisticsSupplyPullFlow(supplierId, suppliedId uint32) error {
+func (c *Client) LogisticsSupplyPullFlowTest(receiverId uint32, params *sword.MissionParameters) ([]bool, error) {
+	return c.LogisticsSupplyFlowTest(receiverId, params, sword.UnitMagicAction_log_supply_pull_flow)
+}
+
+func (c *Client) LogisticsSupplyPullFlow(receiverId, supplierId uint32,
+	supplies, equipments map[uint32]uint32) ([]bool, error) {
+
 	supplier := &sword.ParentEntity{Formation: MakeId(supplierId)}
-	pullFlowParams := &sword.PullFlowParameters{Supplier: supplier}
+	pullFlowParams := &sword.PullFlowParameters{
+		Supplier:     supplier,
+		Resources:    MakeSupplyFlowResources(supplies),
+		Transporters: MakeSupplyFlowTransporters(equipments),
+	}
 	param := MakeParameter(&sword.MissionParameter_Value{PullFlowParameters: pullFlowParams})
-	return c.sendUnitMagicAction(MakeAutomatTasker(suppliedId), MakeParameters(param),
-		sword.UnitMagicAction_log_supply_pull_flow)
+	return c.LogisticsSupplyPullFlowTest(receiverId, MakeParameters(param))
 }
 
 func (c *Client) CreateKnowledgeGroupTest(params *sword.MissionParameters) (*KnowledgeGroup, error) {
