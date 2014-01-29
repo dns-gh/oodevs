@@ -425,7 +425,7 @@ func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, ms
 
 type MaintenanceApplyChecker struct {
 	MaintenanceChecker
-	operand func()
+	operand func(ctx *MaintenanceCheckContext)
 }
 
 func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
@@ -437,7 +437,7 @@ func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg 
 		ctx.group.Add(1)
 		go func() {
 			defer ctx.group.Done()
-			m.operand()
+			m.operand(ctx)
 		}()
 	}
 	return ok
@@ -631,7 +631,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
-			func() {
+			func(ctx *MaintenanceCheckContext) {
 				setParts(c, client, tc2, 10, electrogen_1)
 			},
 		},
@@ -650,13 +650,56 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
-			func() {
+			func(ctx *MaintenanceCheckContext) {
 				setParts(c, client, tc2, 10, gyroscope_1)
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
 		&MaintenanceUpdateChecker{"repairing", tc2},
 		&MaintenanceUpdateChecker{"moving_back", tc2},
+		MaintenanceDeleteChecker{},
+	)
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+
+	// set automat to manual mode
+	err := client.LogMaintenanceSetManual(tc2Id, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[tc2Id].LogMaintenanceManual
+	})
+	c.Assert(err, IsNil)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err = client.SelectTransporter(ctx.handlingId)
+				c.Assert(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
 		MaintenanceDeleteChecker{},
 	)
 }
