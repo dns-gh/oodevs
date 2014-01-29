@@ -1120,6 +1120,10 @@
         <source>Transfer To Logistic Superior</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select Maintenance Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>
