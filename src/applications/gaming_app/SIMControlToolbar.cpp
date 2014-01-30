@@ -377,13 +377,14 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
+    const bool time = profile.HasTimeControl();
+    pPlayButton_->setEnabled( time );
+    pStepButton_->setEnabled( time );
+    pGoToEndAction_->setEnabled( time );
+    pGoToStartAction_->setEnabled( time );
+    pSpeedSpinBox_->setEnabled( time );
+    pSpeedButton_->setEnabled( time );
     const bool super = profile.IsSupervision();
-    pPlayButton_->setEnabled( super );
-    pStepButton_->setEnabled( super );
-    pGoToEndAction_->setEnabled( super );
-    pGoToStartAction_->setEnabled( super );
-    pSpeedSpinBox_->setEnabled( super );
-    pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
     pCheckpointAction_->setVisible( super && controllers_.GetCurrentMode() != eModes_Replay );
 }

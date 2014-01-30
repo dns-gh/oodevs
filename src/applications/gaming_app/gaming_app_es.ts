@@ -3674,6 +3674,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <source>Supervisor actions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

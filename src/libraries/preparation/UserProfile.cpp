@@ -36,6 +36,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     : controller_     ( controller )
     , model_          ( model )
     , supervisor_     ( false )
+    , timeControl_    ( false )
     , isClone_        ( false )
 {
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
@@ -48,6 +49,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
+        >> xml::attribute( "time-control", timeControl_ )
         >> xml::start( "rights" );
     rights_.Read( xis, teamChecker, formationChecker, automatChecker, populationChecker, ghostChecker );
     xis >> xml::end;
@@ -66,6 +68,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , login_          ( login )
     , password_       ( "" )
     , supervisor_     ( false )
+    , timeControl_    ( false )
     , isClone_        ( false )
 {
     controller_.Create( *this );
@@ -81,6 +84,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , login_           ( p.login_ )
     , password_        ( p.password_ )
     , supervisor_      ( p.supervisor_ )
+    , timeControl_     ( p.timeControl_ )
     , rights_          ( p.rights_ )
     , isClone_         ( true )
 {
@@ -107,6 +111,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             << xml::attribute( "name", login_.toStdString() )
             << xml::attribute( "password", password_.toStdString() )
             << xml::attribute( "supervision", supervisor_ )
+            << xml::attribute( "time-control", timeControl_ )
             << xml::start( "rights" );
     rights_.Serialize( xos );
     xos     << xml::end
@@ -138,6 +143,15 @@ QString UserProfile::GetPassword() const
 bool UserProfile::IsSupervisor() const
 {
     return supervisor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool UserProfile::HasTimeControl() const
+{
+    return timeControl_;
 }
 
 // -----------------------------------------------------------------------------
@@ -192,6 +206,17 @@ void UserProfile::SetSupervisor( bool value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::SetTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+void UserProfile::SetTimeControl( bool value )
+{
+    timeControl_ = value;
+    if( !isClone_ )
+        controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetReadable
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
@@ -219,6 +244,7 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     login_            = p.login_;
     password_         = p.password_;
     supervisor_       = p.supervisor_;
+    timeControl_      = p.timeControl_;
     rights_           = p.rights_;
     if( !isClone_ && changed )
         controller_.Update( *this );

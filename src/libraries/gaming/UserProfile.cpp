@@ -29,6 +29,7 @@ UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Control
     , registered_ ( true )
     , login_      ( "" )
     , supervision_( false )
+    , timeControl_( false )
 {
     controller_.Register( *this );
     controller_.Create( *this );
@@ -47,6 +48,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , registered_ ( false )
     , login_      ( login )
     , supervision_( false )
+    , timeControl_( false )
 {
     controller_.Register( *this );
 }
@@ -56,14 +58,15 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
-    : RightsResolver   ( (const RightsResolver&) p )
-    , controller_      ( p.controller_ )
-    , publisher_       ( p.publisher_ )
-    , model_           ( p.model_ )
-    , registered_      ( false )
-    , login_           ( p.login_ )
-    , password_        ( p.password_ )
-    , supervision_     ( p.supervision_ )
+    : RightsResolver( (const RightsResolver&) p )
+    , controller_   ( p.controller_ )
+    , publisher_    ( p.publisher_ )
+    , model_        ( p.model_ )
+    , registered_   ( false )
+    , login_        ( p.login_ )
+    , password_     ( p.password_ )
+    , supervision_  ( p.supervision_ )
+    , timeControl_  ( p.timeControl_ )
 {
     controller_.Register( *this );
 }
@@ -88,6 +91,7 @@ void UserProfile::RequestCreation()
     authentication::ProfileCreationRequest message;
     message().mutable_profile()->set_login( login_.toStdString() );
     message().mutable_profile()->set_supervisor( supervision_ );
+    message().mutable_profile()->set_time_control( timeControl_ );
     message.Send( publisher_ );
 }
 
@@ -124,6 +128,7 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_login( newLogin.toStdString() );
     profile.set_password( password_.toStdString() );
     profile.set_supervisor( supervision_ );
+    profile.set_time_control( timeControl_ );
     CopyList( rights_.GetReadSides(), *profile.mutable_read_only_parties() );
     CopyList( rights_.GetWriteSides(), *profile.mutable_read_write_parties() );
     CopyList( rights_.GetReadFormations(), *profile.mutable_read_only_formations() );
@@ -154,6 +159,8 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_password() )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
+    if( profile.has_time_control() )
+        timeControl_ = profile.time_control();
 
     RightsResolver::Update( profile );
 
@@ -216,6 +223,15 @@ void UserProfile::SetSupervisor( bool supervisor )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::SetTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+void UserProfile::SetTimeControl( bool timeControl )
+{
+    timeControl_ = timeControl;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetReadable
 // Created: JSR 2012-05-09
 // -----------------------------------------------------------------------------
@@ -249,4 +265,13 @@ QString UserProfile::GetLogin() const
 bool UserProfile::IsSupervision() const
 {
     return supervision_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool UserProfile::HasTimeControl() const
+{
+    return timeControl_;
 }

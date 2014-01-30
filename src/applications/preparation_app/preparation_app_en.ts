@@ -2841,6 +2841,10 @@ This data can&apos;t be projected.</translation>
         <source>Invalid profile information</source>
         <translation>Invalid profile information</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Time Control</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

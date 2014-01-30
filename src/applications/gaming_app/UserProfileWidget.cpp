@@ -37,6 +37,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     group->setMargin( 5 );
     Q3HBox* holder = new Q3HBox( group );
     supervisor_ = new QCheckBox( tr( "Supervisor actions" ), holder );
+    timeControl_ = new QCheckBox( tr( "Time Control" ), holder );
     QTabWidget* tabs = new QTabWidget( group );
     UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, icons, tr( "Units" ), profile );
     tabs->addTab( unitRights, tr( "Units" ) );
@@ -74,6 +75,7 @@ void UserProfileWidget::Display( const UserProfile& profile )
     login_->setText( editedProfile_->GetLogin() );
     password_->setText( editedProfile_->GetPassword() );
     supervisor_->setChecked( editedProfile_->IsSupervision() );
+    timeControl_->setChecked( editedProfile_->HasTimeControl() );
     unitRights_->Display( *editedProfile_ );
     populationRights_->Display( *editedProfile_ );
     selectedProfile_ = &profile;
@@ -85,16 +87,16 @@ void UserProfileWidget::Display( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Commit()
 {
-    if( selectedProfile_ )
-    {
-        editedProfile_->SetPassword  ( password_->text() );
-        editedProfile_->SetSupervisor( supervisor_->isChecked() );
-        if( unitRights_->NeedsSaving() )
-            unitRights_->Commit( true );
-        if( populationRights_->NeedsSaving() )
-            populationRights_->Commit( true );
-        editedProfile_->RequestUpdate( login_->text() );
-    }
+    if( !selectedProfile_ )
+        return;
+    editedProfile_->SetPassword  ( password_->text() );
+    editedProfile_->SetSupervisor( supervisor_->isChecked() );
+    editedProfile_->SetTimeControl( timeControl_->isChecked() );
+    if( unitRights_->NeedsSaving() )
+        unitRights_->Commit( true );
+    if( populationRights_->NeedsSaving() )
+        populationRights_->Commit( true );
+    editedProfile_->RequestUpdate( login_->text() );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,5 +129,6 @@ bool UserProfileWidget::NeedsSaving() const
         return false;
     return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
         || selectedProfile_->IsSupervision() != supervisor_->isChecked()
+        || selectedProfile_->HasTimeControl() != timeControl_->isChecked()
         || unitRights_->NeedsSaving() || populationRights_->NeedsSaving();
 }

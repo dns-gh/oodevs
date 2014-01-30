@@ -67,6 +67,7 @@ public:
     bool DisplayMessage( unsigned int messageClientId ) const;
     unsigned int GetProfileCount( const std::string& login ) const;
     virtual bool IsSupervision() const;
+    virtual bool HasTimeControl() const;
     //@}
 
     //! @name Operations
@@ -107,6 +108,7 @@ private:
     mutable std::string password_;
     bool loggedIn_;
     bool supervision_;
+    bool timeControl_;
     bool simulation_;
     T_Profiles profiles_;
     unsigned int clientId_;

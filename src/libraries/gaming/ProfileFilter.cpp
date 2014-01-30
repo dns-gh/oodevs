@@ -95,6 +95,15 @@ bool ProfileFilter::IsSupervision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileFilter::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool ProfileFilter::HasTimeControl() const
+{
+    return pUnitFilter_->HasTimeControl();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsPerceived
 // Created: LDC 2013-07-02
 // -----------------------------------------------------------------------------

@@ -48,6 +48,7 @@ public:
     QString GetLogin() const;
     QString GetPassword() const;
     bool IsSupervisor() const;
+    bool HasTimeControl() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     void Visit( std::vector< unsigned long >& elements ) const;
@@ -59,6 +60,7 @@ public:
     virtual void SetLogin( const QString& value );
     void SetPassword( const QString& value );
     void SetSupervisor( bool value );
+    void SetTimeControl( bool value );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
     //@}
@@ -82,6 +84,7 @@ private:
     QString login_;
     QString password_;
     bool supervisor_;
+    bool timeControl_;
     bool isClone_;
     kernel::UserRights rights_;
     //@}
