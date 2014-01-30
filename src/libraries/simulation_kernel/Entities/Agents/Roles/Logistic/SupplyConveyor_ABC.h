@@ -15,7 +15,8 @@
 class PHY_DotationCategory;
 class MIL_AgentPion;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConvoyEventsObserver_ABC;
 
 // =============================================================================
@@ -36,7 +37,6 @@ public:
     //! @name Operations
     //@{
     virtual double   Convoy               ( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
-    virtual bool     IsEmpty              () const = 0;
     virtual void     LendTo               ( MIL_AgentPion& convoyPion ) = 0;
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos ) const = 0;
     virtual double   Supply               ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;

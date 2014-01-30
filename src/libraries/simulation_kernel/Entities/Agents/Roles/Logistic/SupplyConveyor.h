@@ -19,8 +19,8 @@ class MIL_AgentPion;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
-namespace logistic {
-
+namespace logistic
+{
 // =============================================================================
 /** @class  SupplyConveyor
     @brief  SupplyConveyor
@@ -40,7 +40,6 @@ public:
     //! @name Operations
     //@{
     virtual double   Convoy               ( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity );
-    virtual bool     IsEmpty              () const;
     virtual void     LendTo               ( MIL_AgentPion& convoyPion );
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     virtual double   Supply               ( const PHY_DotationCategory& dotationCategory, double quantity );

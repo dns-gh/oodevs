@@ -37,9 +37,9 @@ SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory )
     , convoyedQuantity_   ( 0 )
     , suppliedQuantity_   ( 0 )
     , complementarySupply_( true )
-    , supplierQuotas_     ()
     , provider_           ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +54,9 @@ SupplyRequest::SupplyRequest()
     , convoyedQuantity_   ( 0 )
     , suppliedQuantity_   ( 0 )
     , complementarySupply_( true )
-    , supplierQuotas_     ()
     , provider_           ( 0 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

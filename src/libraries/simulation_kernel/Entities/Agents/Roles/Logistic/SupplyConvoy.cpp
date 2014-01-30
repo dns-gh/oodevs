@@ -141,15 +141,6 @@ unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
     BOOST_FOREACH( const T_Resources::value_type& data, resources )
         ReserveTransporters( *data.first, data.second );
 
-    // Remove the empty transporters (can happen when the transporters are explicitly specified by the user)
-    for( auto it = conveyors_.begin(); it != conveyors_.end(); )
-    {
-        if( it->second->IsEmpty() )
-            it = conveyors_.erase( it );
-        else 
-            ++it;
-    }
-
     if( conveyors_.empty() )
         return std::numeric_limits< unsigned >::max();
 
