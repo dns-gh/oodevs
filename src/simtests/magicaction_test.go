@@ -340,13 +340,17 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	})
 	// wait for state to be wait for selection
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+		h := data.MaintenanceHandlings[handlingId]
+		return h != nil && h.Provider != nil &&
+			h.Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 	// trigger select new state
 	err = client.SelectTransporter(handlingId)
 	c.Assert(err, IsNil)
 	// check state has changed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+		h := data.MaintenanceHandlings[handlingId]
+		return h == nil || h.Provider != nil ||
+			h.Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 }
