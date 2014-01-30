@@ -14,6 +14,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 	"swapi"
 	"swapi/phy"
 	"time"
@@ -29,6 +31,14 @@ func IntToString(d int32) string {
 
 func FloatToString(f float64) string {
 	return fmt.Sprintf("%f", f)
+}
+
+func atoi(s string) uint32 {
+	result, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatalf("Error %s is not a number %s", s, err)
+	}
+	return uint32(result)
 }
 
 func OutputResources(resources phy.Resources, out string) {
@@ -52,7 +62,7 @@ func OutputResources(resources phy.Resources, out string) {
 	writer.Flush()
 }
 
-func OutputConsumptions(resources phy.Resources, physical phy.PhysicalFile, out string) {
+func OutputConsumptions(resources phy.Resources, physical phy.PhysicalFile, out string) *phy.Units {
 	consumptions, units, err := resources.ReadNormalizedConsumptions(physical)
 	if err != nil {
 		log.Fatalf("Error reading consumptions %s", err)
@@ -86,9 +96,10 @@ func OutputConsumptions(resources phy.Resources, physical phy.PhysicalFile, out 
 		}
 	}
 	writer.Flush()
+	return units
 }
 
-func ComputePhysicalData(xmlDir string, out string) (*phy.Resources, error) {
+func ComputePhysicalData(xmlDir string, out string) (*phy.Resources, *phy.Units, error) {
 	log.Printf("--Data read")
 	physicalFile, err := phy.ReadPhysical(xmlDir)
 	if err != nil {
@@ -99,8 +110,8 @@ func ComputePhysicalData(xmlDir string, out string) (*phy.Resources, error) {
 		log.Fatalf("Error reading resources: %s", err)
 	}
 	OutputResources(*resources, out)
-	OutputConsumptions(*resources, *physicalFile, out)
-	return resources, nil
+	units := OutputConsumptions(*resources, *physicalFile, out)
+	return resources, units, nil
 }
 
 func main() {
@@ -115,10 +126,10 @@ func main() {
 	user := flag.String("user", "Superviseur", "user name")
 	physical := flag.String("physical", "../data/data/models/ada/physical/worldwide", "resources file directory")
 	out := flag.String("out", "Output", "Output prefix")
-	root := flag.Uint("root", 0, "root logistic unit id - if 0 or unset, all units are dumped")
+	rootList := flag.String("root", "0", "root logistic units id, separated by commas - if '0' or unset, all units are dumped")
 	flag.Parse()
 
-	resources, err := ComputePhysicalData(*physical, *out)
+	resources, units, err := ComputePhysicalData(*physical, *out)
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 	log.Printf("connecting to %s\n", addr)
 	log.Printf("logging in as %s\n", *user)
@@ -137,11 +148,25 @@ func main() {
 	client.Model.WaitReady(2 * time.Second)
 	data := client.Model.GetData()
 
-	WriteOrbat(*out, data, *resources, uint32(*root))
-	WriteNumberOfUnits(*out, data, uint32(*root))
+	root := ParseRoot(*rootList)
+	WriteOrbat(*out, data, *resources, root)
+	WriteNumberOfUnits(*out, data, units, root)
 }
 
-func WriteOrbat(out string, data *swapi.ModelData, resources phy.Resources, root uint32) {
+func ParseRoot(rootList string) []uint32 {
+	var result []uint32
+	for _, value := range strings.Split(rootList, ",") {
+		result = append(result, atoi(value))
+	}
+	return result
+}
+
+type Pair struct {
+	Stock    int32
+	Dotation int32
+}
+
+func WriteOrbat(out string, data *swapi.ModelData, resources phy.Resources, root []uint32) {
 	outName := out + "-orbat.csv"
 	outFile, err := os.Create(outName)
 	if err != nil {
@@ -151,22 +176,44 @@ func WriteOrbat(out string, data *swapi.ModelData, resources phy.Resources, root
 	writer := csv.NewWriter(outFile)
 	writer.Comma = ';'
 	//idealement quantite en UF
-	record := []string{"Id Unité", "Nom Unité", "Id Type Unité", "Ressource", "Quantité"}
+	record := []string{"Id Unité", "Nom Unité", "Id Type Unité", "Ressource", "Stock", "Dotation"}
 	writer.Write(record)
 	for id, unit := range data.Units {
-		if isLogisticSubordinate(data, unit, root) {
+		if isLogisticSubordinateList(data, unit, root) {
+			stocks := map[uint32]*Pair{}
 			for _, stock := range unit.Stocks {
 				amount := stock.Quantity
-				resource := resources.GetResource(stock.Type)
-				if resource == nil {
-					log.Fatalf("Error getting resource: %d", stock.Type)
+				if stocks[stock.Type] == nil {
+					stocks[stock.Type] = &Pair{}
 				}
-				record = []string{UintToString(id), unit.Name, UintToString(unit.Type), resource.Name, IntToString(amount)}
+				stocks[stock.Type].Stock = amount
+			}
+			for idResource, dotation := range unit.ResourceDotations {
+				if stocks[idResource] == nil {
+					stocks[idResource] = &Pair{}
+				}
+				stocks[idResource].Dotation = dotation.Quantity
+			}
+			for idResource, pair := range stocks {
+				resource := resources.GetResource(idResource)
+				if resource == nil {
+					log.Fatalf("Error getting resource: %d", idResource)
+				}
+				record = []string{UintToString(id), unit.Name, UintToString(unit.Type), resource.Name, IntToString(pair.Stock), IntToString(pair.Dotation)}
 				writer.Write(record)
 			}
 		}
 	}
 	writer.Flush()
+}
+
+func isLogisticSubordinateList(data *swapi.ModelData, unit *swapi.Unit, root []uint32) bool {
+	for _, value := range root {
+		if isLogisticSubordinate(data, unit, value) {
+			return true
+		}
+	}
+	return false
 }
 
 func isLogisticSubordinate(data *swapi.ModelData, unit *swapi.Unit, root uint32) bool {
@@ -182,6 +229,31 @@ func isLogisticSubordinate(data *swapi.ModelData, unit *swapi.Unit, root uint32)
 	}
 	for _, superior := range automat.LogSuperiors {
 		if superior == root {
+			return true
+		}
+		if isAutomatLogisticSubordinate(data, superior, root) || isFormationLogisticSubordinate(data, superior, root) {
+			return true
+		}
+	}
+	return isFormationLogisticSubordinate(data, automat.FormationId, root)
+}
+
+func isAutomatLogisticSubordinate(data *swapi.ModelData, id uint32, root uint32) bool {
+	if root == 0 {
+		return true
+	}
+	automat := data.Automats[id]
+	if automat == nil {
+		return false
+	}
+	if automat.Id == root {
+		return true
+	}
+	for _, superior := range automat.LogSuperiors {
+		if superior == root {
+			return true
+		}
+		if isAutomatLogisticSubordinate(data, superior, root) || isFormationLogisticSubordinate(data, superior, root) {
 			return true
 		}
 	}
@@ -204,10 +276,10 @@ func isFormationLogisticSubordinate(data *swapi.ModelData, id uint32, root uint3
 	return isFormationLogisticSubordinate(data, formation.ParentId, root)
 }
 
-func WriteNumberOfUnits(out string, data *swapi.ModelData, root uint32) {
+func WriteNumberOfUnits(out string, data *swapi.ModelData, units *phy.Units, root []uint32) {
 	amounts := map[uint32]uint32{}
 	for _, unit := range data.Units {
-		if isLogisticSubordinate(data, unit, root) {
+		if isLogisticSubordinateList(data, unit, root) {
 			amounts[unit.Type] = amounts[unit.Type] + 1
 		}
 	}
@@ -219,10 +291,14 @@ func WriteNumberOfUnits(out string, data *swapi.ModelData, root uint32) {
 	defer outFile.Close()
 	writer := csv.NewWriter(outFile)
 	writer.Comma = ';'
-	record := []string{"Id Type Unité", "Nombre"}
+	record := []string{"Id Type Unité", "Nombre", "Type"}
 	writer.Write(record)
 	for id, amount := range amounts {
-		record = []string{UintToString(id), UintToString(amount)}
+		name, err := units.GetName(id)
+		if err != nil {
+			log.Fatalf("Error getting name of unit %d %s", id, err)
+		}
+		record = []string{UintToString(id), UintToString(amount), name}
 		writer.Write(record)
 	}
 	writer.Flush()
