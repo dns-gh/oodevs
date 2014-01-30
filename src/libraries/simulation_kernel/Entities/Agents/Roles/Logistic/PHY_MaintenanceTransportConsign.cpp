@@ -159,8 +159,7 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
-    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    if( pLogisticManager && pLogisticManager->IsMaintenanceManual() )
+    if( IsManualMode() )
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
     else
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
@@ -298,6 +297,7 @@ bool PHY_MaintenanceTransportConsign::Update()
                 EnterStateCarrierGoingTo();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
+            EnterStateWaitingForCarrier();
             break;
         case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
             EnterStateCarrierLoading();
@@ -345,4 +345,14 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
         return;
     SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::IsManualMode
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceTransportConsign::IsManualMode() const
+{
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
+    return pLogisticManager && pLogisticManager->IsMaintenanceManual();
 }
