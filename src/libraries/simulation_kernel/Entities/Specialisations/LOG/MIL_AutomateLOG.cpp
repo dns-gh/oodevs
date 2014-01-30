@@ -395,6 +395,28 @@ void MIL_AutomateLOG::SupplyHandleRequest( const boost::shared_ptr < logistic::S
     supplyConsigns_.push_back( consign );
 }
 
+namespace
+{
+    struct SupplyStockContainerVisitor : MIL_LogisticEntitiesVisitor
+    {
+        SupplyStockContainerVisitor( const PHY_DotationCategory& dotationCategory )
+            : dotationCategory_( &dotationCategory )
+            , found_( false )
+        {}
+
+        void Visit( const MIL_AgentPion& p )
+        {
+            if( found_ )
+                return;
+            const PHY_RoleInterface_Supply* candidate = p.RetrieveRole< PHY_RoleInterface_Supply >();
+            found_ = candidate && candidate->CanReserveStock( *dotationCategory_ );
+        }
+
+        const PHY_DotationCategory* dotationCategory_;
+        bool found_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyHasStock
 // Created: NLD 2005-02-01
@@ -403,7 +425,7 @@ bool MIL_AutomateLOG::SupplyHasStock( const PHY_DotationCategory& dotationCatego
 {
     SupplyStockContainerVisitor visitor( dotationCategory );
     Visit( visitor );
-    return visitor.selected_ != 0;
+    return visitor.found_;
 }
 
 // -----------------------------------------------------------------------------
@@ -476,6 +498,47 @@ void MIL_AutomateLOG::SupplyDestroyConvoyPion( MIL_AgentPion& convoyPion )
     convoyPion.GetAutomate().DestroyPion( convoyPion );
 }
 
+namespace
+{
+    struct SupplyConvoyAvailabilityVisitor : MIL_LogisticEntitiesVisitor
+    {
+            SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory )
+                : dotationCategory_( &dotationCategory )
+                , pConvoySelected_( 0 )
+                , selected_( 0 )
+                , rTotalWeightMax_( 0 )
+            {}
+
+            void Visit( const MIL_AgentPion& tmp )
+            {
+                // NLD 2011-04-07 : Totally bugged ...
+                // We must not use BL internal TC2 for external use
+                //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+                //if( bExternalTransfert_ && testBrain )
+                    //return;
+                const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
+                PHY_ComposantePion* pTmpConvoySelected = candidate ? candidate->GetAvailableConvoyTransporter( *dotationCategory_ ) : 0;
+                if( pTmpConvoySelected )
+                {
+                    double rTotalWeightMax = 0.;
+                    double rTotalVolumeMax = 0.;
+                    pTmpConvoySelected->GetStockTransporterCapacity( rTotalWeightMax, rTotalVolumeMax );
+                    if( !selected_ || rTotalWeightMax_ > rTotalWeightMax )
+                    {
+                        rTotalWeightMax_ = rTotalWeightMax;
+                        pConvoySelected_ = pTmpConvoySelected;
+                        selected_       = const_cast<MIL_AgentPion*>(&tmp);
+                    }
+                }
+            }
+
+            const PHY_DotationCategory* dotationCategory_;
+            PHY_ComposantePion* pConvoySelected_;
+            MIL_AgentPion* selected_;
+            double rTotalWeightMax_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
 // Created: NLD 2005-01-27
@@ -484,7 +547,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 {
     SupplyConvoyAvailabilityVisitor visitor( dotationCategory );
     Visit( visitor );
-    pConvoyTransporter     = visitor.pConvoySelected_;
+    pConvoyTransporter = visitor.pConvoySelected_;
     pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
 }

@@ -258,13 +258,13 @@ double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategor
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Supply::CanReserveStock(
+// Name: PHY_RolePionLOG_Supply::CanReserveStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Supply::CanReserveStock( const PHY_DotationCategory& dotationCategory ) const
 {
     if( !bSystemEnabled_ && !owner_.IsDead() ) // <== Stock à terre quand pion mort = libre service
-        return 0.;
+        return 0;
     return GetStockValue( dotationCategory ) + GetResourceNetworkConnectedStockValue( dotationCategory ) > 0;
 }
 
