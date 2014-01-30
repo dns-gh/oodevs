@@ -23,6 +23,12 @@ namespace geometry
 namespace sword
 {
     class MagicAction;
+    class MagicActionAck;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace weather
@@ -35,7 +41,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_Config;
 class MT_Ellipse;
 class PHY_Ephemeride;
 class PHY_GlobalMeteo;
@@ -53,7 +58,8 @@ public:
     //! @name Constructor/Destructor
     //@{
              PHY_MeteoDataManager();
-    explicit PHY_MeteoDataManager( MIL_Config& config );
+             PHY_MeteoDataManager(
+                 xml::xistream& xis, const tools::Path& detectionFile, uint32_t now );
     virtual ~PHY_MeteoDataManager();
     //@}
 
@@ -96,7 +102,6 @@ private:
     //@{
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
-    void Load( xml::xistream& xis, MIL_Config& config );
     void UpdateGlobalWeather( const sword::MagicAction& msg );
     void ManageLocalWeather( const sword::MagicAction& msg, sword::MagicActionAck& ack );
     void RemoveLocalWeather( const sword::MagicAction& msg );

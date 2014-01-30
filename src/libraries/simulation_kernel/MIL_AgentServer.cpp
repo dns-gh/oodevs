@@ -35,6 +35,8 @@
 #pragma warning( pop )
 #include <boost/algorithm/string/regex.hpp>
 
+namespace bpt = boost::posix_time;
+
 unsigned long FindMaxIdInFile( const tools::Path& filePath )
 {
     static const boost::regex idRegex( "id=\"([0-9]+)\"" );
@@ -81,6 +83,24 @@ namespace
         unsigned long maxUrbanId = FindMaxIdInFile( config.GetUrbanFile() );
         unsigned long maxOrbatId = FindMaxIdInFile( config.GetOrbatFile() );
         return std::max( maxUrbanId, maxOrbatId ) + 2;
+    }
+
+    PHY_MeteoDataManager* CreateMeteoManager( MIL_Config& config )
+    {
+        auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
+
+        // Extract and configure exercise start time
+        std::string date;
+        *xis >> xml::start( "weather" )
+                >> xml::start( "exercise-date" )
+                    >> xml::attribute( "value", date )
+                >> xml::end
+            >> xml::end;
+        const auto since = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) );
+        MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
+        const auto now = MIL_Time_ABC::GetTime().GetRealTime();
+
+        return new PHY_MeteoDataManager( *xis, config.GetDetectionFile(), now );
     }
 }
 
@@ -144,7 +164,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
+        pMeteoDataManager_ = CreateMeteoManager( config );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );

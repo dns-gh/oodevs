@@ -33,7 +33,6 @@ public:
     virtual unsigned int GetCurrentTimeStep() const = 0;
     //@}
 
-protected:
     //! @name For tests only
     //@{
     static void RegisterTime( const MIL_Time_ABC& time );

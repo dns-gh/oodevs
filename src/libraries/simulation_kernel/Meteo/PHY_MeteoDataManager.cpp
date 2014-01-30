@@ -41,17 +41,6 @@ unsigned int PHY_MeteoDataManager::localCounter_ = 1;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 
-namespace
-{
-
-PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
-        weather::Meteo& globalMeteo, MIL_Config& config )
-{
-    return new PHY_RawVisionData( globalMeteo, config.GetDetectionFile(), m );
-}
-
-} // namespace
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
 // Created: JSR 2011-11-22
@@ -67,33 +56,15 @@ PHY_MeteoDataManager::PHY_MeteoDataManager()
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
-PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
+PHY_MeteoDataManager::PHY_MeteoDataManager( xml::xistream& xis,
+       const tools::Path& detectionFile, uint32_t now )
     : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
-    config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Load, this, _1, boost::ref( config ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::Load
-// Created: LDC 2010-12-02
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
-{
     xis >> xml::start( "weather" );
-
-    // Extract and configure exercise start time
-    std::string date;
-    xis >> xml::start( "exercise-date" )
-            >> xml::attribute( "value", date )
-        >> xml::end;
-    const auto since = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) );
-    MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
-    const auto startTime = MIL_Time_ABC::GetTime().GetRealTime();
-
-    pEphemeride_ = ReadEphemeride( xis, startTime );
+    pEphemeride_ = ReadEphemeride( xis, now );
     InitializeGlobalMeteo( xis );
-    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile, this );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -241,7 +212,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pEphemeride_
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {
