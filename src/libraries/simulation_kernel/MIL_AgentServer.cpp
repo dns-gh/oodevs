@@ -88,7 +88,7 @@ namespace
         return std::max( maxUrbanId, maxOrbatId ) + 2;
     }
 
-    PHY_MeteoDataManager* CreateMeteoManager( MIL_Config& config )
+    PHY_MeteoDataManager* CreateMeteoManager( MIL_Config& config, uint32_t tickDuration )
     {
         auto xis = config.GetLoader().LoadFile( config.GetWeatherFile() );
 
@@ -103,7 +103,8 @@ namespace
         MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
         const auto now = MIL_Time_ABC::GetTime().GetRealTime();
 
-        return new PHY_MeteoDataManager( *xis, config.GetDetectionFile(), now );
+        return new PHY_MeteoDataManager(
+                *xis, config.GetDetectionFile(), now, tickDuration );
     }
 }
 
@@ -168,7 +169,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pMeteoDataManager_ = CreateMeteoManager( config );
+        pMeteoDataManager_ = CreateMeteoManager( config, GetTickDuration() );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
@@ -447,7 +448,8 @@ void MIL_AgentServer::WriteKnowledges( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::WriteWeather( xml::xostream& xos ) const
 {
-    GetWorkspace().GetMeteoDataManager().WriteWeather( xos );
+    const uint32_t now = MIL_Time_ABC::GetTime().GetRealTime();
+    GetWorkspace().GetMeteoDataManager().WriteWeather( xos, now );
 }
 
 // -----------------------------------------------------------------------------

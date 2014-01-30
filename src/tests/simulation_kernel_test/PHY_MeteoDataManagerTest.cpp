@@ -15,47 +15,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
-namespace
-{
-
-class FakeTime : public MIL_Time_ABC
-{
-public:
-    virtual unsigned int GetTickDuration() const
-    {
-        return 10;
-    }
-    virtual unsigned int GetRealTime() const
-    {
-        return 0;
-    }
-    virtual unsigned int GetCurrentTimeStep() const
-    {
-        return 1;
-    }
-};
-
-struct TimeSetter : private boost::noncopyable
-{
-    TimeSetter( const MIL_Time_ABC& time )
-        : previous_( MIL_Time_ABC::GetTime() )
-    {
-        MIL_Time_ABC::UnregisterTime( MIL_Time_ABC::GetTime() );
-        MIL_Time_ABC::RegisterTime( time );
-    }
-
-    ~TimeSetter()
-    {
-        MIL_Time_ABC::UnregisterTime( MIL_Time_ABC::GetTime() );
-        MIL_Time_ABC::RegisterTime( previous_ );
-    }
-
-private:
-    const MIL_Time_ABC& previous_;
-};
-
-}  // namespace
-
 BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 {
     const std::string invalid[] =
@@ -107,9 +66,6 @@ BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 
 BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
 {
-    FakeTime time;
-    TimeSetter setter( time );
-
     // This test may look useless but it actually creates a PHY_MeteoDataManager
     // without MIL_AgentServer *and without crashing*.
     // So who is the boss, hmm?
@@ -131,5 +87,5 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
     );
     tools::Path detectionFile = testOptions.GetDataPath(
             "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    PHY_MeteoDataManager meteo( xis, detectionFile, 0 );
+    PHY_MeteoDataManager meteo( xis, detectionFile, 0, 10 );
 }

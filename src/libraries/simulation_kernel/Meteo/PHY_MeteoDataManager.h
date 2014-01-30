@@ -58,8 +58,8 @@ public:
     //! @name Constructor/Destructor
     //@{
              PHY_MeteoDataManager();
-             PHY_MeteoDataManager(
-                 xml::xistream& xis, const tools::Path& detectionFile, uint32_t now );
+             PHY_MeteoDataManager( xml::xistream& xis, const tools::Path& detectionFile,
+                     uint32_t now, uint32_t tickDuration );
     virtual ~PHY_MeteoDataManager();
     //@}
 
@@ -91,7 +91,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    void WriteWeather( xml::xostream& xos ) const;
+    void WriteWeather( xml::xostream& xos, uint32_t now ) const;
     //@}
 
 private:
@@ -123,6 +123,7 @@ private:
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
     std::map< uint32_t, boost::shared_ptr< PHY_LocalMeteo > > meteos_;
+    uint32_t tickDuration_;
     static unsigned int localCounter_;
     //@}
 };

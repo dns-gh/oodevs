@@ -48,6 +48,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 PHY_MeteoDataManager::PHY_MeteoDataManager()
     : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
+    , tickDuration_( 1 )
 {
     // NOTHING
 }
@@ -57,9 +58,10 @@ PHY_MeteoDataManager::PHY_MeteoDataManager()
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager( xml::xistream& xis,
-       const tools::Path& detectionFile, uint32_t now )
+       const tools::Path& detectionFile, uint32_t now, uint32_t tickDuration )
     : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
+    , tickDuration_( tickDuration )
 {
     xis >> xml::start( "weather" );
     pEphemeride_ = ReadEphemeride( xis, now );
@@ -86,7 +88,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), tickDuration_ );
     pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
@@ -110,7 +112,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
     AddMeteo( boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
-        pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() ) );
+        pEphemeride_->GetLightingBase(), tickDuration_ ));
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +138,7 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, sw
     if( id == 0 )
     {
         auto meteo = boost::make_shared< PHY_LocalMeteo >( localCounter_++,
-                params, pEphemeride_->GetLightingBase(),
-                MIL_Time_ABC::GetTime().GetTickDuration() );
+                params, pEphemeride_->GetLightingBase(), tickDuration_ );
         id = meteo->GetId();
         AddMeteo( meteo );
     }
@@ -210,6 +211,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> localCounter_
          >> pGlobalMeteo_
          >> pEphemeride_
+         >> tickDuration_
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
@@ -231,6 +233,7 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << localCounter_
          << pGlobalMeteo_
          << pEphemeride_
+         << tickDuration_
          << size;
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
@@ -243,13 +246,13 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
 // Name: PHY_MeteoDataManager::WriteWeather
 // Created: NPT 2012-09-06
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos ) const
+void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos, uint32_t now ) const
 {
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "weather" );
     schemaWriter.WriteSchema( xos, "exercise", "weather" );
     xos << xml::start( "exercise-date" )
-            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( MIL_Time_ABC::GetTime().GetRealTime() ) ) )
+            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( now ) ) )
         << xml::end
         << xml::start( "ephemerides" );
             pEphemeride_->WriteUrban( xos );
