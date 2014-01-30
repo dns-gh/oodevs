@@ -26,7 +26,7 @@
 LogisticsRequestsFuneralWidget::LogisticsRequestsFuneralWidget( QWidget* parent, kernel::Controllers& controllers,
                                                                 gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                                                 const SimulationController& simulationController, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, LogisticsConsign_ABC::eFuneral )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eFuneral )
 {
     // NOTHING
 }

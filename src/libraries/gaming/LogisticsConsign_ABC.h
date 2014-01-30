@@ -33,6 +33,14 @@ namespace google
     }
 }
 
+enum E_LogisticChain
+{
+    eFuneral = 0,
+    eMaintenance,
+    eMedical,
+    eSupply,
+};
+
 class Simulation;
 
 // =============================================================================
@@ -45,14 +53,6 @@ class LogisticsConsign_ABC : public gui::Drawable_ABC
                            , private boost::noncopyable
 {
 public:
-    enum E_Logistics
-    {
-        eFuneral = 0,
-        eMaintenance,
-        eMedical,
-        eSupply,
-    };
-
     //! @name Constructor / Destructor
     //@{
              LogisticsConsign_ABC( unsigned int nID,  kernel::Controller& controller, const Simulation& simulation, unsigned int creationTick );
@@ -71,17 +71,10 @@ public:
     virtual QString GetStatusDisplay() const = 0;
     virtual kernel::Agent_ABC* GetConsumer() const = 0;
     virtual kernel::Entity_ABC* GetHandler() const = 0;
-    virtual E_Logistics GetType() const = 0;
+    virtual E_LogisticChain GetType() const = 0;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
-        unsigned int currentTick );
-    //@}
-
-    //! @name Types
+     //! @name Types
     //@{
     struct HistoryState
     {
@@ -130,6 +123,14 @@ public:
         const LogisticsConsign_ABC* consign_;
         std::vector< HistoryState > states_;
     };
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state );
+    void UpdateHistory( int start, int end,
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
+        unsigned int currentTick );
     //@}
 
     //! @name Operations

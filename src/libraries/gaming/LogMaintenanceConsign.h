@@ -71,7 +71,7 @@ public:
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
-    virtual E_Logistics GetType() const;
+    virtual E_LogisticChain GetType() const;
     //@}
 
 private:

@@ -51,8 +51,8 @@ public:
     unsigned int GetRequested() const;
     unsigned int GetGranted() const;
     unsigned int GetConvoyed() const;
-    bool IsDone() const;
-    void Done();
+    bool IsDelivered() const;
+    void Deliver();
     void Update( const ::google::protobuf::RepeatedPtrField< ::sword::SupplyResourceRequest >& resources );
     //@}
 
@@ -62,7 +62,7 @@ public:
     unsigned int requested_;
     unsigned int granted_;
     unsigned int convoyed_;
-    bool done_;
+    bool delivered_;
     //@}
 };
 

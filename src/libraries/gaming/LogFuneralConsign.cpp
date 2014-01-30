@@ -217,7 +217,7 @@ kernel::Entity_ABC* LogFuneralConsign::GetRequestHandler( uint32_t entityId ) co
     return formationResolver_.Find( entityId );
 }
 
-LogFuneralConsign::E_Logistics LogFuneralConsign::GetType() const
+E_LogisticChain LogFuneralConsign::GetType() const
 {
     return eFuneral;
 }

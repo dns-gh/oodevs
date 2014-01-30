@@ -46,17 +46,22 @@ SupplyRecipientResourcesRequest::~SupplyRecipientResourcesRequest()
 // -----------------------------------------------------------------------------
 void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourceRequests& msg )
 {
-    bool modified = false;
+    bool delivered = true;
     BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, msg.requests() )
     {
         if( data.recipient().id() == recipient_.GetId() )
         {
+            // Update supply resource
             Apply( boost::bind( &SupplyResourceRequest::Update, _1,  boost::cref( data.resources() ) ) );
-            modified = true;
+            // If one resource is present, the resident isn't totally supply
+            delivered = false;
         }
     }
-    if( !modified )
-        Apply( boost::bind( &SupplyResourceRequest::Done, _1 ) );
+    // if the message doesns't contain resources for the recipient,
+    //    then all resources are delivered and the resident is
+    //    totally supply
+    if( delivered )
+        Apply( boost::bind( &SupplyResourceRequest::Deliver, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

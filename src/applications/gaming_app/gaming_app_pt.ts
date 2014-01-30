@@ -1899,7 +1899,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Done</source>
+        <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1902,8 +1902,8 @@ Voulez-vous le remplacer ?</translation>
         <translation>Convoyées</translation>
     </message>
     <message>
-        <source>Done</source>
-        <translation>Fini</translation>
+        <source>Delivered</source>
+        <translation>Livrées</translation>
     </message>
 </context>
 <context>

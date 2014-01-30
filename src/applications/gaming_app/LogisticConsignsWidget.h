@@ -48,7 +48,7 @@ public:
     //@{
     LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                             const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
-                            LogisticsConsign_ABC::E_Logistics type, const QStringList& requestsHeader = QStringList() )
+                            E_LogisticChain type, const QStringList& requestsHeader = QStringList() )
         : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader )
         , type_( type )
         {}
@@ -110,7 +110,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    LogisticsConsign_ABC::E_Logistics type_;
+    E_LogisticChain type_;
     //@}
 };
 

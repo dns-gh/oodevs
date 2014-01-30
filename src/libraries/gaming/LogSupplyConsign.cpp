@@ -254,48 +254,34 @@ kernel::Entity_ABC* LogSupplyConsign::GetRequestHandler( uint32_t entityId ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogSupplyConsign::UpdateHistory
+// Name: LogSupplyConsign::UpdateHistoryState
 // Created: LGY 2014-01-28
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::UpdateHistory( int start, int end,
-                                      const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
-                                      unsigned int currentTick )
+bool LogSupplyConsign::UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state )
 {
-    history_->Clear();
-    for( int i = start; i != end; ++i )
+    if( entry.has_supply() )
     {
-        const auto& msg = history.Get( i );
-        if( static_cast< unsigned int >( msg.tick() ) > currentTick )
-            continue;
+        const auto& sub = entry.supply();
+        if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
+            return false;
+        state.handler_ = GetRequestHandler(
+            protocol::GetParentEntityId( sub.creation().supplier() ));
 
-        HistoryState state;
-        if( msg.has_supply() )
-        {
-            const auto& sub = msg.supply();
-            if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
-                continue;
-            state.handler_ = GetRequestHandler(
-                protocol::GetParentEntityId( sub.creation().supplier() ));
+        if( sub.update().has_requests() )
+            Update( sub.update().requests() );
 
-            if( sub.update().has_requests() )
-                Update( sub.update().requests() );
-
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-        }
-        else
-            continue;
-        state.startedTick_ = msg.tick();
-        history_->Add( state );
+        if( sub.update().has_state() )
+            state.nStatus_ = sub.update().state();
+        return true;
     }
-    controller_.Update( *history_ );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyConsign::GetType
 // Created: LGY 2014-01-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::E_Logistics LogSupplyConsign::GetType() const
+E_LogisticChain LogSupplyConsign::GetType() const
 {
     return eSupply;
 }

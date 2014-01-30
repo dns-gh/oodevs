@@ -49,7 +49,7 @@ public:
     virtual void Purge();
     virtual void AddRecipientResource( const QString& recipient, const QString& resource,
                                        unsigned int requested, unsigned int granted,
-                                       unsigned int conveyed, bool done );
+                                       unsigned int conveyed, bool delivered );
     //@}
 
     //! @name Accessors
@@ -66,11 +66,11 @@ private:
 private:
     //! @name Data Members
     //@{
-    QStandardItemModel    dataModel_;
-    QSortFilterProxyModel proxyModel_;
-    gui::CommonDelegate   delegate_;
+    QStandardItemModel     dataModel_;
+    QSortFilterProxyModel  proxyModel_;
+    gui::CommonDelegate*   delegate_;
     gui::LinkItemDelegate* linkItemDelegate_;
-    QStringList           horizontalHeaders_;
+    QStringList            horizontalHeaders_;
     //@}
 };
 

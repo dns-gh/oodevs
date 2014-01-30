@@ -67,9 +67,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned long id ) const;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
-    virtual void UpdateHistory( int start, int end,
-                                const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
-                                unsigned int currentTick );
+    virtual bool UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state );
     //@}
 
     //! @name Accessors
@@ -82,7 +80,7 @@ public:
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
-    virtual E_Logistics GetType() const;
+    virtual E_LogisticChain GetType() const;
     //@}
 
 private:

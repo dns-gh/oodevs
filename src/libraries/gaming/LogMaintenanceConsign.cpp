@@ -224,7 +224,7 @@ bool LogMaintenanceConsign::NeedResolution() const
 // Name: LogMaintenanceConsign::GetType
 // Created: LGY 2014-01-21
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::E_Logistics LogMaintenanceConsign::GetType() const
+E_LogisticChain LogMaintenanceConsign::GetType() const
 {
     return eMaintenance;
 }

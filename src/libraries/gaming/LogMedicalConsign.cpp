@@ -232,7 +232,7 @@ kernel::Entity_ABC* LogMedicalConsign::GetRequestHandler( uint32_t entityId ) co
     return resolver_.Find( entityId );
 }
 
-LogMedicalConsign::E_Logistics LogMedicalConsign::GetType() const
+E_LogisticChain LogMedicalConsign::GetType() const
 {
     return eMedical;
 }

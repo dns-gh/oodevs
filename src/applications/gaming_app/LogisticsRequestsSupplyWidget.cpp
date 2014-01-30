@@ -44,7 +44,7 @@ namespace
 // -----------------------------------------------------------------------------
 LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                                                               const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, LogisticsConsign_ABC::eSupply, GetRequestsHeader() )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eSupply, GetRequestsHeader() )
 {
     supplyTable_ = new LogisticsRequestsSupplyTable( "Logistics requests supply details", this );
     connect( supplyTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
@@ -164,7 +164,7 @@ void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& con
             const SupplyResourceRequest& curRequest = itRequest.NextElement();
             supplyTable_->AddRecipientResource( GetDisplayName( &curRecipient.recipient_ ), curRequest.GetTypeName(),
                                             curRequest.GetRequested(), curRequest.GetGranted(),
-                                            curRequest.GetConvoyed(), curRequest.IsDone() );
+                                            curRequest.GetConvoyed(), curRequest.IsDelivered() );
         }
     }
     supplyTable_->ResizeColumnsToContents();
