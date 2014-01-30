@@ -23,9 +23,12 @@ class PHY_ComposantePion;
 class PHY_MaintenanceTransportConsign : public PHY_MaintenanceConsign_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState );
              PHY_MaintenanceTransportConsign();
     virtual ~PHY_MaintenanceTransportConsign();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -43,7 +46,7 @@ public:
     //@}
 
 private:
-    //! @name
+    //! @name States
     //@{
     bool DoWaitingForCarrier               ();
     bool DoSearchForUpperLevel             ();
@@ -58,9 +61,17 @@ private:
     void ChooseStateAfterDiagnostic        ();
     //@}
 
+    //! @name Helpers
+    //@{
+    bool IsManualMode() const;
+    //@}
+
 private:
+    //! @name Member data
+    //@{
     PHY_ComposantePion* pCarrier_;
     bool searchForUpperLevelDone_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceTransportConsign )
