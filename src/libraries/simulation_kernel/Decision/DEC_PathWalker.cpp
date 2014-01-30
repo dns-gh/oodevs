@@ -90,7 +90,7 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        return movingEntity_.GetPosition();    
+        return movingEntity_.GetPosition();
     }
 }
 
@@ -130,7 +130,7 @@ void DEC_PathWalker::ComputeCurrentSpeed()
 // -----------------------------------------------------------------------------
 void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 {
-    DEC_PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
+    DEC_PathResult::T_PathPoints::const_iterator itPathPointTmp = itCurrentPathPoint_;
     while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != DEC_PathPoint::eTypePointPath )
         ++itPathPointTmp;
     if( itPathPointTmp == path.GetResult().end() )
@@ -145,7 +145,7 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 }
 
 namespace
-{    
+{
     bool IsDifficultToPassThrough( const MT_Vector2D& lastWaypoint, const MIL_Object_ABC& object, PHY_MovingEntity_ABC& movingEntity, const TerrainData& environment )
     {
         return object.IsInside( lastWaypoint )
@@ -163,7 +163,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
-    
+
     pointsPassed_ = 0;
     DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
@@ -633,6 +633,6 @@ bool DEC_PathWalker::HasCurrentPath() const
 void DEC_PathWalker::Clean()
 {
     if( !bHasMoved_ )
-        bForcePathCheck_ = true;    
+        bForcePathCheck_ = true;
     bHasMoved_ = false;
 }

@@ -12,7 +12,7 @@
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
 inline
-const DEC_PathResult::T_PathPointList& DEC_PathResult::GetResult( bool useCheck ) const
+const DEC_PathResult::T_PathPoints& DEC_PathResult::GetResult( bool useCheck ) const
 {
     if( useCheck && GetState() == eComputing )
         MT_LOG_ERROR_MSG( "Path is being computed" );

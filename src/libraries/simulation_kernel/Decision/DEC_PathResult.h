@@ -34,11 +34,8 @@ class DEC_PathResult : public DEC_Path
 public:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr< DEC_PathPoint > >          T_PathPointList;
-    typedef T_PathPointList::iterator                                IT_PathPointList;
-    typedef T_PathPointList::const_iterator                          CIT_PathPointList;
-    typedef std::list< std::pair< MT_Vector2D, CIT_PathPointList > > T_FollowingPathList;
-    typedef T_FollowingPathList::const_iterator                      CIT_FollowingPathList;
+    typedef std::list< boost::shared_ptr< DEC_PathPoint > >                     T_PathPoints;
+    typedef std::list< std::pair< MT_Vector2D, T_PathPoints::const_iterator > > T_FollowingPaths;
     //@}
 
 public:
@@ -50,18 +47,18 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PathPointList& GetResult( bool useCheck = true ) const;
+    const T_PathPoints& GetResult( bool useCheck = true ) const;
     const DEC_PathType& GetPathType() const;
     //@}
 
     //! @name Tools
     //@{
     bool IsOnPath( const MT_Vector2D& vPos ) const;
-    CIT_PathPointList GetCurrentKeyOnPath() const;
+    T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     virtual void InsertDecPoints() = 0;
-    virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
+    virtual void NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
@@ -75,14 +72,14 @@ private:
     //@{
     virtual void NotifySectionEnded();
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const;
+    MT_Vector2D InternalGetFuturePosition( const T_PathPoints::const_iterator& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
 protected:
     //! @name Member data
     //@{
-    T_PathPointList resultList_; //$$$
-    CIT_PathPointList itCurrentPathPoint_;
+    T_PathPoints resultList_; //$$$
+    T_PathPoints::const_iterator itCurrentPathPoint_;
     //@}
 
 private:
