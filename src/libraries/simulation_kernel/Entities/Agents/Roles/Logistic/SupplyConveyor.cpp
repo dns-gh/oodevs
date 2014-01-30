@@ -114,15 +114,6 @@ double SupplyConveyor::Convoy( SupplyConvoyEventsObserver_ABC& eventsObserver, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConveyor::IsEmpty
-// Created: NLD 2011-07-25
-// -----------------------------------------------------------------------------
-bool SupplyConveyor::IsEmpty() const
-{
-    return resourcesConvoyed_.empty();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SupplyConveyor::LendTo
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
