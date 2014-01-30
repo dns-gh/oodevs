@@ -750,3 +750,107 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		MaintenanceDeleteChecker{},
 	)
 }
+
+func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+
+	// set automat to manual mode
+	err := client.LogMaintenanceSetManual(tc2Id, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[tc2Id].LogMaintenanceManual
+	})
+	c.Assert(err, IsNil)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err = client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Assert(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceUpdateChecker{"diagnosing", bld},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
+		MaintenanceDeleteChecker{},
+	)
+}
+
+func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bld := swapi.MakeFormationTasker(bldId)
+	bltId := getSomeFormationByName(c, d, "BLT").Id
+	blt := swapi.MakeFormationTasker(bltId)
+
+	// set automat, bld and blt to manual mode
+	err := client.LogMaintenanceSetManual(tc2Id, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[tc2Id].LogMaintenanceManual
+	})
+	c.Assert(err, IsNil)
+	err = client.LogMaintenanceSetManual(bldId, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Formations[bldId].LogMaintenanceManual
+	})
+	c.Assert(err, IsNil)
+	err = client.LogMaintenanceSetManual(bltId, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Formations[bltId].LogMaintenanceManual
+	})
+	c.Assert(err, IsNil)
+
+	phydb := loadWWPhysical(c)
+	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")
+	reporter.Start(client.Model)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err = client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Assert(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
+			func(ctx *MaintenanceCheckContext) {
+				err = client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Assert(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", bld},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", blt},
+			func(ctx *MaintenanceCheckContext) {
+				err = client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Assert(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", blt},
+	)
+	client.Model.WaitTicks(2)
+	reports := reporter.Stop()
+	c.Assert(len(reports), Equals, 1)
+}

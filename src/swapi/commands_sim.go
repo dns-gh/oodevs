@@ -1633,3 +1633,8 @@ func (c *Client) SelectTransporterTest(params *sword.MissionParameters) error {
 func (c *Client) SelectTransporter(handlingId uint32) error {
 	return c.SelectTransporterTest(MakeParameters(MakeIdentifier(handlingId)))
 }
+
+func (c *Client) TransferToLogisticSuperior(handlingId uint32) error {
+	msg := CreateMagicAction(MakeParameters(MakeIdentifier(handlingId)), sword.MagicAction_transfer_to_logistic_superior)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
