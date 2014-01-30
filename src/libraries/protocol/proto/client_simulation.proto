@@ -261,6 +261,13 @@ message MagicAction {
         //!  superior logistic base.
         //! parameters[0], Identifier: identifier of log request
         transfer_to_logistic_superior      = 9;
+        //! When a maintenance log consign is in state "waiting for transporter
+        //!  selection", update the request to a new state with a manually
+        //!  selected transporter.
+        //! parameters[0], Identifier: identifier of log request.
+        //! parameters[1], Identifier: identifier of the type of the selected
+        //!  transporter.
+        select_maintenance_transporter     = 10;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;

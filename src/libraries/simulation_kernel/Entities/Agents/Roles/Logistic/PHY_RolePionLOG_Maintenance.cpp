@@ -219,9 +219,9 @@ namespace
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& composanteType ) const
+PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& carried ) const
 {
-    AvailableHaulerComputer functor( composanteType );
+    AvailableHaulerComputer functor( carried );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *componentComputer );
     return functor.pSelectedHauler_;

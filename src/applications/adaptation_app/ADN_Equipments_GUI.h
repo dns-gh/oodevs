@@ -110,7 +110,6 @@ public:
         eTreatsNBC = eDoctorSkills + eNbrDoctorSkills,
         eTreatsShock,
         eIsLogSupply,
-        eIsLogCarrier,
         eLogCarryMinWeightCapacity,
         eLogCarryMaxWeightCapacity,
         eLogCarryMinVolumeCapacity,

@@ -30,14 +30,9 @@ class DEC_Population_Path : public DEC_PathResult
 public:
     //! @name Types
     //@{
-    typedef std::vector< DEC_Population_Path_Channeler >    T_PopulationPathChannelerVector;
-    typedef T_PopulationPathChannelerVector::const_iterator CIT_PopulationPathChannelerVector;
-
-    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > T_PathKnowledgeObjectVector;
-    typedef T_PathKnowledgeObjectVector::const_iterator  CIT_PathKnowledgeObjectVector;
-
-    typedef std::vector< T_PathKnowledgeObjectVector >         T_PathKnowledgeObjectByTypesVector;
-    typedef T_PathKnowledgeObjectByTypesVector::const_iterator CIT_PathKnowledgeObjectByTypesVector;
+    typedef std::vector< DEC_Population_Path_Channeler >                     T_PopulationPathChannelers;
+    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > T_PathKnowledgeObjects;
+    typedef std::vector< T_PathKnowledgeObjects >                            T_PathKnowledgeObjectsByTypes;
     //@}
 
 public:
@@ -55,9 +50,9 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PopulationPathChannelerVector& GetChannelers() const;
+    const T_PopulationPathChannelers& GetChannelers() const;
     double GetCostOutsideOfChanneling() const;
-    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
+    const T_PathKnowledgeObjectsByTypes& GetPathKnowledgeObjects() const;
     double GetCostOutsideOfAllObjects() const;
     //@}
 
@@ -81,10 +76,10 @@ private:
     const size_t id_;
     const DEC_Population_PathClass& pathClass_;
     const MIL_Population& population_;
-    T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
+    T_PathKnowledgeObjectsByTypes pathKnowledgeObjects_;
     double rCostOutsideOfAllObjects_;
     MT_Profiler profiler_;
-    T_PopulationPathChannelerVector channelers_;
+    T_PopulationPathChannelers channelers_;
     //@}
 };
 

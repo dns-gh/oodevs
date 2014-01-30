@@ -953,7 +953,7 @@
     </message>
     <message>
         <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
+        <translation>en attente de selection d&apos;un remorqueur</translation>
     </message>
 </context>
 <context>
@@ -1119,6 +1119,10 @@
     <message>
         <source>Transfer To Logistic Superior</source>
         <translation>Transfère au supérieur logistique</translation>
+    </message>
+    <message>
+        <source>Select Maintenance Transporter</source>
+        <translation>Maintenance - Selection d&apos;un remorqueur</translation>
     </message>
 </context>
 <context>

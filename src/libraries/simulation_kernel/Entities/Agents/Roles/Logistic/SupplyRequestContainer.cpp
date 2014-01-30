@@ -173,14 +173,13 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
             else if( !request->IsComplementary() )
                 mandatoryRequestsFullySatisfied = false;
         }
-    BOOST_FOREACH( const auto& data, consigns_ )
-        data.second->Activate();
-    std::vector< SupplySupplier_ABC* > consignsToRemove;
     for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        it->second->Activate();
+    for( auto it = consigns_.begin(); it != consigns_.end(); )
         if( it->second->GrantsNothing() )
-            consignsToRemove.push_back( it->first );
-    for( auto it = consignsToRemove.begin(); it != consignsToRemove.end(); ++it ) 
-        consigns_.erase( *it );
+            consigns_.erase( it++ );
+        else
+            ++it;
     return mandatoryRequestsFullySatisfied;
 }
 

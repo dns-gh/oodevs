@@ -103,16 +103,17 @@ const size_t mapping::MagicObjectAction::size_ = COUNT_OF( mapping::MagicObjectA
 BOOST_STATIC_ASSERT( sword::ObjectMagicAction::Type_ARRAYSIZE == mapping::MagicObjectAction::size_ );
 
 const mapping::MagicAction mapping::MagicAction::data_[] = {
-    { "change_diplomacy",              sword::MagicAction::change_diplomacy },
-    { "change_resource_links",         sword::MagicAction::change_resource_network_properties },
-    { "create_knowledge_group",        sword::MagicAction::create_knowledge_group },
-    { "fire_order_on_location",        sword::MagicAction::create_fire_order_on_location },
-    { "global_weather",                sword::MagicAction::global_weather },
-    { "local_weather",                 sword::MagicAction::local_weather },
-    { "local_weather_destruction",     sword::MagicAction::local_weather_destruction },
-    { "debug_internal",                sword::MagicAction::debug_internal},
-    { "select_new_logistic_state",     sword::MagicAction::select_new_logistic_state},
-    { "transfer_to_logistic_superior", sword::MagicAction::transfer_to_logistic_superior},
+    { "change_diplomacy",               sword::MagicAction::change_diplomacy },
+    { "change_resource_links",          sword::MagicAction::change_resource_network_properties },
+    { "create_knowledge_group",         sword::MagicAction::create_knowledge_group },
+    { "fire_order_on_location",         sword::MagicAction::create_fire_order_on_location },
+    { "global_weather",                 sword::MagicAction::global_weather },
+    { "local_weather",                  sword::MagicAction::local_weather },
+    { "local_weather_destruction",      sword::MagicAction::local_weather_destruction },
+    { "debug_internal",                 sword::MagicAction::debug_internal},
+    { "select_maintenance_transporter", sword::MagicAction::select_maintenance_transporter},
+    { "select_new_logistic_state",      sword::MagicAction::select_new_logistic_state},
+    { "transfer_to_logistic_superior",  sword::MagicAction::transfer_to_logistic_superior},
 };
 
 const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_ );
