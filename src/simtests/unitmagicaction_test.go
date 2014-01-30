@@ -455,8 +455,9 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
-	const supplier = 91
-	const receiver = 97
+	data := client.Model.GetData()
+	supplier := getSomeAutomatByName(c, data, "TC2").Id
+	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
 	const resource = 96
 	const transporter = 12
 
@@ -521,8 +522,9 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
-	const supplier = 91
-	const receiver = 97
+	data := client.Model.GetData()
+	supplier := getSomeAutomatByName(c, data, "TC2").Id
+	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
 	const resource = 96
 	const transporter = 12
 
