@@ -43,6 +43,7 @@ public:
     bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
+    virtual void TransferToLogisticSuperior();
     //@}
 
 private:
@@ -71,6 +72,7 @@ private:
     //@{
     PHY_ComposantePion* pCarrier_;
     bool searchForUpperLevelDone_;
+    bool forceTransferToLogisticSuperior_;
     //@}
 };
 

@@ -32,6 +32,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC&
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
     , pCarrier_                 ( 0 )
     , searchForUpperLevelDone_  ( false )
+    , forceTransferToLogisticSuperior_( false )
 {
     const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
 
@@ -49,6 +50,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
     : PHY_MaintenanceConsign_ABC()
     , pCarrier_                 ( 0 )
     , searchForUpperLevelDone_  ( false )
+    , forceTransferToLogisticSuperior_( false )
 {
     // NOTHING
 }
@@ -136,11 +138,6 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
         return false;
-    if( pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
-    {
-        pComposanteState_ = 0;
-        return true;
-    }
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
@@ -297,7 +294,13 @@ bool PHY_MaintenanceTransportConsign::Update()
                 EnterStateCarrierGoingTo();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
-            EnterStateWaitingForCarrier();
+            if( forceTransferToLogisticSuperior_ )
+            {
+                SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
+                forceTransferToLogisticSuperior_ = false;
+            }
+            else
+                EnterStateWaitingForCarrier();
             break;
         case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
             EnterStateCarrierLoading();
@@ -355,4 +358,11 @@ bool PHY_MaintenanceTransportConsign::IsManualMode() const
 {
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     return pLogisticManager && pLogisticManager->IsMaintenanceManual();
+}
+
+void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
+{
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        return;
+    forceTransferToLogisticSuperior_ = true;
 }

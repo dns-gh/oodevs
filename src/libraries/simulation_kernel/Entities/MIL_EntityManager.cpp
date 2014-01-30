@@ -2116,6 +2116,21 @@ void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicActio
     ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){ request.SelectNewState(); } );
 }
 
+void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicAction& msg )
+{
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto id = protocol::GetIdentifier( params, 0 );
+
+    bool found = false;
+    sink_->Apply( [&]( MIL_AgentPion& p )
+    {
+        found = found || p.GetRole< PHY_RoleInterface_Composantes >().TransferToLogisticSuperior( id );
+    } );
+    if( !found )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveBurningCellRequest
 // Created: BCI 2011-03-01
