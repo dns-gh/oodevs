@@ -24,8 +24,6 @@ const DEC_PathType DEC_PathType::logistic_     ( eLogistic     , "logistic"     
 const DEC_PathType DEC_PathType::criminal_     ( eCriminal     , "criminal"     );
 const DEC_PathType DEC_PathType::nbc_          ( eNBC          , "nbc"          );
 
-
-
 DEC_PathType::T_PathTypeFromIDVector DEC_PathType::pathTypesFromID_;
 DEC_PathType::T_PathTypeMap          DEC_PathType::pathTypes_;
 
@@ -81,7 +79,6 @@ DEC_PathType::DEC_PathType( E_PathType nType, const std::string& strName )
 {
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DEC_PathType destructor
 // Created: JDY 03-04-14
@@ -90,3 +87,51 @@ DEC_PathType::~DEC_PathType()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::Find
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+const DEC_PathType* DEC_PathType::Find( const std::string& strName )
+{
+    CIT_PathTypeMap it = pathTypes_.find ( strName );
+    if( it == pathTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::Find
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+const DEC_PathType* DEC_PathType::Find( unsigned int nID )
+{
+    assert( pathTypesFromID_.size() > nID );
+    return pathTypesFromID_[ nID ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::GetID
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+unsigned int DEC_PathType::GetID() const
+{
+    return nPathType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::GetName
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+const std::string& DEC_PathType::GetName() const
+{
+    return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::GetPathTypes
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+DEC_PathType::T_PathTypeMap& DEC_PathType::GetPathTypes()
+{
+    return pathTypes_;
+}

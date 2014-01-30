@@ -84,3 +84,66 @@ bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, fl
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::GetPosStart
+// Created: AGE 2005-02-25
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_PathSection_ABC::GetPosStart() const
+{
+    return startPoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::GetPosEnd
+// Created: AGE 2005-02-25
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_PathSection_ABC::GetPosEnd() const
+{
+    return endPoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::IsImpossible
+// Created: AGE 2005-03-04
+// -----------------------------------------------------------------------------
+bool DEC_PathSection_ABC::IsImpossible() const
+{
+    return nAddedPoints_ < 2;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::Cancel
+// Created: AGE 2005-02-28
+// -----------------------------------------------------------------------------
+void DEC_PathSection_ABC::Cancel()
+{
+    bCanceled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::GetLength
+// Created: AGE 2005-02-28
+// -----------------------------------------------------------------------------
+double DEC_PathSection_ABC::GetLength() const
+{
+    return startPoint_.Distance( endPoint_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::GetPath
+// Created: CMA 2011-04-18
+// -----------------------------------------------------------------------------
+const DEC_Path_ABC& DEC_PathSection_ABC::GetPath() const
+{
+    return path_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::SetPosStart
+// Created: CMA 2011-04-18
+// -----------------------------------------------------------------------------
+void DEC_PathSection_ABC::SetPosStart( const MT_Vector2D& point )
+{
+    startPoint_ = point;
+}

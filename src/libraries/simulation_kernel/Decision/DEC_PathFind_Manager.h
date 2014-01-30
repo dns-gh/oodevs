@@ -103,6 +103,4 @@ private:
     //@}
 };
 
-#include "DEC_PathFind_Manager.inl"
-
 #endif // __DEC_PathFind_Manager_h_

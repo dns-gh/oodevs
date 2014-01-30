@@ -29,7 +29,6 @@ namespace brain
 }
 }
 
-
 //*****************************************************************************
 // Created: JVT 02-06-28
 // Last modified: AGN 02-11-05
@@ -94,7 +93,5 @@ private:
     T_MissionTypeNameMap                automatMissionsNames_ ;
     T_MissionTypeNameMap                populationMissionsNames_ ;
 };
-
-#include "DEC_Workspace.inl"
 
 #endif // __DEC_Workspace_h_

@@ -83,6 +83,4 @@ private:
     //@}
 };
 
-#include "DEC_Population_Path.inl"
-
 #endif // __DEC_Population_Path_h_
