@@ -69,7 +69,9 @@ public:
     virtual const PHY_Ephemeride& GetEphemeride() const;
     virtual void Update( unsigned int date );
     void SendStateToNewClient();
-    boost::shared_ptr< weather::Meteo > GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const;
+    boost::shared_ptr< const weather::Meteo > GetLocalWeather(
+        const geometry::Point2f& position, 
+        const boost::shared_ptr< const weather::Meteo >& pMeteo ) const;
     //@}
 
     //! @name Weather effects

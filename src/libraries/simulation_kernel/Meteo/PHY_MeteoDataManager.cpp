@@ -323,9 +323,11 @@ void PHY_MeteoDataManager::SendStateToNewClient()
 // Name: PHY_MeteoDataManager::GetLocalWeather
 // Created: ABR 2012-03-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< weather::Meteo > PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::GetLocalWeather(
+    const geometry::Point2f& position,
+    const boost::shared_ptr< const weather::Meteo >& pMeteo ) const
 {
-    boost::shared_ptr< weather::Meteo > result;
+    boost::shared_ptr< const weather::Meteo > result;
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         const auto meteo = it->second.get();

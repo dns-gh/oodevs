@@ -49,7 +49,9 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft,
+        const geometry::Point2d& downRight,
+        const boost::shared_ptr< const weather::Meteo >& pMeteo )
 {
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
@@ -77,7 +79,9 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
+void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft,
+        const geometry::Point2d& downRight,
+        const boost::shared_ptr< const weather::Meteo >& pMeteo )
 {
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
@@ -95,11 +99,10 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
-            boost::shared_ptr< weather::Meteo > meteo = meteoManager_->GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
-            if( meteo.get() && cell.pMeteo.get() != meteo.get() )
-                cell.pMeteo = meteo;
-            else if( !meteo )
-                cell.pMeteo.reset();
+            const auto pos = geometry::Point2f(
+                    static_cast< float >( nXBeg * rCellSize_ ),
+                    static_cast< float >( y * rCellSize_ ) );
+            cell.pMeteo = meteoManager_->GetLocalWeather( pos, pMeteo );
         }
         ++nXBeg;
     }
