@@ -312,40 +312,32 @@ namespace
 {
     void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )
     {
-        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( hirearchies )
+        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchies )
+            return;
+        auto it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
         {
-            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& childEntity = it.NextElement();
-                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );
-                if( pAutomat )
-                    automats.insert( pAutomat->GetId() );
-                else
-                    InsertAutomats( automats, childEntity, model );
-            }
+            const auto& childEntity = it.NextElement();
+            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
+                automats.insert( pAutomat->GetId() );
+            else
+                InsertAutomats( automats, childEntity, model );
         }
     }
 
     void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )
     {
-        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )
-        {
-            kernel::Team_ABC* pTeam = model.FindTeam( *it );
-            if( pTeam )
+        for( auto it = teams.begin();  it != teams.end(); ++it )
+            if( auto pTeam = model.FindTeam( *it ) )
                 InsertAutomats( automats, *pTeam, model );
-        }
     }
 
     void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
     {
-        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )
-        {
-            kernel::Formation_ABC* pFormation = model.FindFormation( *it );
-            if( pFormation )
+        for( auto it = formations.begin();  it != formations.end(); ++it )
+            if( auto pFormation = model.FindFormation( *it ) )
                 InsertAutomats( automats, *pFormation, model );
-        }
     }
 }
 
