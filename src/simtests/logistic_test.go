@@ -682,10 +682,59 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
+				// Select automatically a transporter
 				err = client.SelectTransporter(ctx.handlingId)
 				c.Assert(err, IsNil)
 			},
 		},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
+		MaintenanceDeleteChecker{},
+	)
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+
+	// set automat to manual mode
+	err := client.LogMaintenanceSetManual(tc2Id, true)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[tc2Id].LogMaintenanceManual
+	})
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				// set automat back to automatic mode
+				err := client.LogMaintenanceSetManual(tc2Id, false)
+				c.Assert(err, IsNil)
+				waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+					return data.Automats[tc2Id].LogMaintenanceManual == false
+				})
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
 		&MaintenanceUpdateChecker{"transporter_loading", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
