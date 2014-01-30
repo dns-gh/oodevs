@@ -144,7 +144,7 @@ public:
     virtual const MT_Vector2D& GetPosition() const;
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
 
-    void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
+    bool OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
 
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetConsignsForProvider( const MIL_AgentPion& pion );

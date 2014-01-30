@@ -569,7 +569,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 // Name: MIL_AutomateLOG::OnReceiveLogSupplyPushFlow
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver )
+bool MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver )
 {
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder;
     if( parameters.supply() )
@@ -580,6 +580,7 @@ void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
     logistic::SupplyRequestManualDispatcher dispatcher( *this );
     requestContainer->Execute( dispatcher );
     supplyRequests_.push_back( requestContainer );
+    return dispatcher.AllowSupply();
 }
 
 // -----------------------------------------------------------------------------

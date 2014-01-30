@@ -287,15 +287,17 @@ bool MIL_StockSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logis
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier )
+bool MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier )
 {
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder( new logistic::SupplyStockPullFlowRequestBuilder( parameters, *pAutomate_, supplier ) );
     boost::shared_ptr< logistic::SupplyRequestContainer > requestContainer( new logistic::SupplyRequestContainer( builder ) );
     logistic::SupplyRequestManualDispatcher dispatcher( supplier );
     requestContainer->Execute( dispatcher );
     manualSupplyRequests_.push_back( requestContainer );
-    if( !dispatcher.AllowSupply() )
-        MIL_Report::PostEvent( *pAutomate_, report::eRC_SupplierUnavailable );
+    if( dispatcher.AllowSupply() )
+        return true;
+    MIL_Report::PostEvent( *pAutomate_, report::eRC_SupplierUnavailable );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
