@@ -662,7 +662,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -672,10 +672,10 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 
 	// set automat to manual mode
 	err := client.LogMaintenanceSetManual(tc2Id, true)
+	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Automats[tc2Id].LogMaintenanceManual
 	})
-	c.Assert(err, IsNil)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
