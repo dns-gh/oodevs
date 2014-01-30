@@ -39,7 +39,7 @@ func init() {
 }
 
 const (
-	ExCrossroadBreakdown   = "crossroad-breakdown"
+	ExCrossroadLog         = "crossroad-log"
 	ExCrossroadSmallEmpty  = "crossroad-small-empty"
 	ExCrossroadSmallLog    = "crossroad-small-log"
 	ExCrossroadSmallOrbat  = "crossroad-small-orbat"

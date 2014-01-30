@@ -452,76 +452,131 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
+	data := client.Model.GetData()
+	supplier := getSomeAutomatByName(c, data, "TC2").Id
+	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
+	const resource = 96
+	const transporter = 12
+
 	// error: invalid supplier
-	result, err := client.LogisticsSupplyPushFlow(42, 9, nil, nil)
+	result, err := client.LogisticsSupplyPushFlow(1000, receiver, nil, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid supplier")
 	c.Assert(result, HasLen, 0)
 
-	// error: invalid receiver
+	// error: invalid parameters
 	param := swapi.MakeParameter(&sword.MissionParameter_Value{})
-	result, err = client.LogisticsSupplyPushFlowTest(23, swapi.MakeParameters(param))
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid receiver")
+	result, err = client.LogisticsSupplyPushFlowTest(supplier, swapi.MakeParameters(param))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters")
 	c.Assert(result, HasLen, 0)
 
 	// error: invalid recipients
-	result, err = client.LogisticsSupplyPushFlow(23, 9, nil, nil)
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, nil, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: at least one resource expected")
 	c.Assert(result, HasLen, 0)
 
 	// error: invalid resource
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{1000: 1}, nil)
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{1000: 1}, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid resource")
 	c.Assert(result, HasLen, 0)
 
 	// error: invalid resource quantity
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 0}, nil)
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 0}, nil)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: resource quantity must be positive")
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 1}, nil)
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
 	c.Assert(result, HasLen, 0)
 
 	// error: invalid transporter
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 1}, map[uint32]uint32{1000: 1})
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{1000: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid transporter")
 	c.Assert(result, HasLen, 0)
 
 	// error: invalid transporter quantity
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 1}, map[uint32]uint32{62: 0})
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 0})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter quantity must be positive")
 	c.Assert(result, HasLen, 0)
 
 	// error: transporter overloaded
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 10000000}, map[uint32]uint32{62: 1})
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 10000000}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
 	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
-	// valid transporter neither underloaded nor overloaded
-	result, err = client.LogisticsSupplyPushFlow(23, 9, map[uint32]uint32{7: 1}, map[uint32]uint32{62: 1})
+	// valid underloaded transporter
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 1})
+	c.Assert(err, IsNil)
+	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+
+	// valid transporter
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{false, false, false, false})
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallOrbat))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
+	data := client.Model.GetData()
+	supplier := getSomeAutomatByName(c, data, "TC2").Id
+	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
+	const resource = 96
+	const transporter = 12
+
 	// error: invalid supplier parameter
-	err := client.LogisticsSupplyPullFlow(23, 42)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	result, err := client.LogisticsSupplyPullFlow(receiver, 1000, nil, nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid supplier")
+	c.Assert(result, HasLen, 0)
 
 	// error: invalid receiver parameter
-	err = client.LogisticsSupplyPullFlow(42, 9)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
+	result, err = client.LogisticsSupplyPullFlow(1000, supplier, nil, nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid receiver")
+	c.Assert(result, HasLen, 0)
 
-	// valid supplier parameter
-	err = client.LogisticsSupplyPullFlow(23, 9)
+	// error: invalid parameters
+	param := swapi.MakeParameter(&sword.MissionParameter_Value{})
+	result, err = client.LogisticsSupplyPullFlowTest(receiver, swapi.MakeParameters(param))
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid parameters")
+	c.Assert(result, HasLen, 0)
+
+	// error: invalid resource
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{1000: 1}, nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid resource")
+	c.Assert(result, HasLen, 0)
+
+	// valid no transporter
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
+
+	// error: invalid transporter
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{1000: 1})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid transporter")
+	c.Assert(result, HasLen, 0)
+
+	// error: invalid transporter quantity
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 0})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter quantity must be positive")
+	c.Assert(result, HasLen, 0)
+
+	// error: transporter overloaded
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 10000000}, map[uint32]uint32{transporter: 1})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
+	c.Assert(result, DeepEquals, []bool{false, true, false, true})
+
+	// valid underloaded transporter
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 1})
+	c.Assert(err, IsNil)
+	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+
+	// valid transporter
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
+	c.Assert(err, IsNil)
+	c.Assert(result, DeepEquals, []bool{false, false, false, false})
 }
 
 func CheckUnitSuperior(model *swapi.Model, c *C,

@@ -311,15 +311,20 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// set automat to manual mode
-	err = client.LogMaintenanceSetManual(14, true)
+	automatLog := uint32(14)
+	err = client.LogMaintenanceSetManual(automatLog, true)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[automatLog].LogMaintenanceManual
+	})
 	c.Assert(err, IsNil)
 	// trigger a breakdown
 	unit := client.Model.GetUnit(8)
 	equipmentId := uint32(39)
+	MOBBreakdown2EBEvac := int32(13)
 	equipment := swapi.EquipmentDotation{
 		Available:  1,
 		Repairable: 1,
-		Breakdowns: []int32{11},
+		Breakdowns: []int32{MOBBreakdown2EBEvac},
 	}
 	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
@@ -335,13 +340,17 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	})
 	// wait for state to be wait for selection
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+		h := data.MaintenanceHandlings[handlingId]
+		return h != nil && h.Provider != nil &&
+			h.Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 	// trigger select new state
 	err = client.SelectTransporter(handlingId)
 	c.Assert(err, IsNil)
 	// check state has changed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+		h := data.MaintenanceHandlings[handlingId]
+		return h == nil || h.Provider != nil ||
+			h.Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 }
