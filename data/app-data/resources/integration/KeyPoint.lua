@@ -30,16 +30,19 @@ end
 
 -------------------------------------------------------------------
 --- RECONNOITRING INTERFACE IMPLEMENTATION SPECIFIC TO A KEYPOINT
+-- deprecated
 ------------------------------------------------------------------
 local estimateReconnaissanceLevel = function( self, objective )
     estimateReconnaissanceLevels = estimateReconnaissanceLevels or setmetatable( {}, { __mode = "kv" } )
     if not estimateReconnaissanceLevels[ objective ] then
         local values = {}
-        values[ self ] = masalife.brain.knowledge.me.body:computeReconnaissanceCapability( objective, self )
+        values[ self ] = meknowledge.computeReconnaissanceCapability 
+                        and meknowledge:computeReconnaissanceCapability( objective, self ) or 100
         estimateReconnaissanceLevels[ objective ] = values
     else
         if not estimateReconnaissanceLevels[ objective ][ self ] then
-            estimateReconnaissanceLevels[ objective ][ self ] = masalife.brain.knowledge.me.body:computeReconnaissanceCapability( objective, self )
+            estimateReconnaissanceLevels[ objective ][ self ] = meknowledge.computeReconnaissanceCapability 
+                                                                and meknowledge:computeReconnaissanceCapability( objective, self ) or 100
         end
     end
     return estimateReconnaissanceLevels[ objective ][ self ]
