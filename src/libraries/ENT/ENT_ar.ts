@@ -924,7 +924,7 @@
         <translation type="unfinished">تفريغ شاحنة جر</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">التشخيص</translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation type="unfinished">في انتظار الطبيب</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">التشخيص</translation>
     </message>
     <message>

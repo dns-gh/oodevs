@@ -924,7 +924,7 @@
         <translation type="unfinished">remolque descargando</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">diagnóstico</translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation type="unfinished">esperando por médico</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">diagnóstico</translation>
     </message>
     <message>

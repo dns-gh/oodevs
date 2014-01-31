@@ -924,8 +924,8 @@
         <translation type="unfinished">tow-truck unloading</translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation type="unfinished">diagnostic</translation>
+        <source>diagnosis</source>
+        <translation type="unfinished">diagnosis</translation>
     </message>
     <message>
         <source>waiting to be handled by higher level</source>
@@ -995,8 +995,8 @@
         <translation type="unfinished">waiting for doctor</translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation type="unfinished">diagnostic</translation>
+        <source>diagnosis</source>
+        <translation type="unfinished">diagnosis</translation>
     </message>
     <message>
         <source>looking for triage area</source>

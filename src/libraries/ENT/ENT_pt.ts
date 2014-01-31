@@ -924,7 +924,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -924,7 +924,7 @@
         <translation>remorqueur en déchargement</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation>diagnostique</translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation>en attente de médecin</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation>diagnostique</translation>
     </message>
     <message>
