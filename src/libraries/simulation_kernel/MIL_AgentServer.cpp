@@ -96,7 +96,7 @@ namespace
                     >> xml::attribute( "value", date )
                 >> xml::end
             >> xml::end;
-        const auto since = ( bpt::from_iso_string( date ) - bpt::from_time_t( 0 ) );
+        const auto since = bpt::from_iso_string( date ) - bpt::from_time_t( 0 );
         MIL_AgentServer::GetWorkspace().SetInitialRealTime( since.total_seconds() );
         const auto now = MIL_Time_ABC::GetTime().GetRealTime();
 
