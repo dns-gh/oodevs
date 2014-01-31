@@ -2089,18 +2089,20 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
 namespace
 {
     template< typename Agents, typename Func >
-    void ApplyOnRequest( const Agents& agents, uint32_t id, Func f )
+    void ApplyOnRequest( const Agents& agents, uint32_t id, const Func& f )
     {
-        PHY_MaintenanceComposanteState* request = 0;
+        bool found = false;
         agents.Apply( [&]( const MIL_AgentPion& p )
         {
-            if( request )
-                return;
-            request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
+            if( !found )
+            {
+                auto* request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
+                found = true;
+                f( *request );
+            }
         } );
-        if( !request )
+        if( !found )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
-        f( *request );
     }
 }
 
