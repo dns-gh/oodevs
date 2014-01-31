@@ -16,6 +16,19 @@ namespace kernel
     class DisplayExtractor_ABC;
 }
 
+namespace sword
+{
+    class SupplyResourceRequest;
+}
+
+namespace google
+{
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
+}
+}
+
 // =============================================================================
 /** @class  SupplyResourceRequest
     @brief  SupplyResourceRequest
@@ -32,13 +45,15 @@ public:
     //@}
 
 public:
-
     //! @name Accessors
     //@{
     QString GetTypeName() const;
     unsigned int GetRequested() const;
     unsigned int GetGranted() const;
     unsigned int GetConvoyed() const;
+    bool IsDelivered() const;
+    void Deliver();
+    void Update( const ::google::protobuf::RepeatedPtrField< ::sword::SupplyResourceRequest >& resources );
     //@}
 
     //! @name Member data
@@ -47,6 +62,7 @@ public:
     unsigned int requested_;
     unsigned int granted_;
     unsigned int convoyed_;
+    bool delivered_;
     //@}
 };
 

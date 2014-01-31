@@ -170,14 +170,8 @@ void HistoryLogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingU
             pPionLogConvoying = resolver_.Find( message.convoyer().id() );
 
         if( message.has_requests() )
-        {
-            consign->DeleteAll();
-            BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests().requests() )
-            {
-                SupplyRecipientResourcesRequest* request = new SupplyRecipientResourcesRequest( dotationResolver_, automatResolver_, data );
-                consign->Register( data.recipient().id(), *request );
-            }
-        }
+            consign->Update( message.requests() );
+
         consign->Update( message, pPionLogConvoying );
     }
 }

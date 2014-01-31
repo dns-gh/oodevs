@@ -23,6 +23,7 @@ namespace kernel
 namespace sword
 {
     class SupplyRecipientResourcesRequest;
+    class SupplyRecipientResourceRequests;
 }
 
 // =============================================================================
@@ -42,7 +43,7 @@ public:
 
     //! @name Accessors
     //@{
-    void Update( const sword::SupplyRecipientResourcesRequest& msg );
+    void Update( const sword::SupplyRecipientResourceRequests& msg );
     QString GetRecipientTooltip() const;
     //@}
 

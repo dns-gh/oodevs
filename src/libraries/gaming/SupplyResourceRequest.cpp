@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "SupplyResourceRequest.h"
 #include "clients_kernel/DotationType.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -22,6 +23,7 @@ SupplyResourceRequest::SupplyResourceRequest( const DotationType& type, unsigned
     , requested_( requested )
     , granted_( granted )
     , convoyed_( convoyed )
+    , delivered_( false )
 {
     // NOTHING
 }
@@ -71,4 +73,42 @@ unsigned int SupplyResourceRequest::GetGranted() const
 unsigned int SupplyResourceRequest::GetConvoyed() const
 {
     return convoyed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::IsDelivered
+// Created: LGY 2014-01-24
+// -----------------------------------------------------------------------------
+bool SupplyResourceRequest::IsDelivered() const
+{
+    return delivered_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::Deliver
+// Created: LGY 2014-01-24
+// -----------------------------------------------------------------------------
+void SupplyResourceRequest::Deliver()
+{
+    delivered_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::Update
+// Created: LGY 2014-01-24
+// -----------------------------------------------------------------------------
+void SupplyResourceRequest::Update( const ::google::protobuf::RepeatedPtrField< ::sword::SupplyResourceRequest >& resources )
+{
+    auto it = std::find_if( resources.begin(), resources.end(),
+        [&]( const ::sword::SupplyResourceRequest& value )->bool {
+            return value.resource().id() == type_->GetId(); } );
+    if( it == resources.end() )
+        Deliver();
+    else
+    {
+        requested_ = it->requested();
+        granted_ = it->granted();
+        convoyed_ = it->convoyed();
+        delivered_ = false;
+    }
 }

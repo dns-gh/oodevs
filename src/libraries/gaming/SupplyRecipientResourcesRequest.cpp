@@ -24,7 +24,11 @@ SupplyRecipientResourcesRequest::SupplyRecipientResourcesRequest( const tools::R
     : recipient_       ( resolver.Get( msg.recipient().id() ) )
     , dotationResolver_( dotationResolver )
 {
-    Update( msg );
+    BOOST_FOREACH( const sword::SupplyResourceRequest& data, msg.resources() )
+    {
+        Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ),
+            data.requested(), data.granted(), data.convoyed() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -38,27 +42,26 @@ SupplyRecipientResourcesRequest::~SupplyRecipientResourcesRequest()
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRecipientResourcesRequest::Update
-// Created: NLD 2004-12-30
+// Created: LGY 2014-01-27
 // -----------------------------------------------------------------------------
-void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourcesRequest& msg )
+void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResourceRequests& msg )
 {
-    BOOST_FOREACH( const sword::SupplyResourceRequest& data, msg.resources() )
+    bool delivered = true;
+    BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, msg.requests() )
     {
-        SupplyResourceRequest* request = Find( data.resource().id() );
-        if( request )
+        if( data.recipient().id() == recipient_.GetId() )
         {
-            request->requested_ = data.requested();
-            request->granted_   = data.granted();
-            request->convoyed_  = data.convoyed();
-        }
-        else
-        {
-            Register( data.resource().id(), *new SupplyResourceRequest( dotationResolver_.Get( data.resource().id() ),
-                                                                   data.requested(),
-                                                                   data.granted(),
-                                                                   data.convoyed() ) );
+            // Update supply resource
+            Apply( boost::bind( &SupplyResourceRequest::Update, _1,  boost::cref( data.resources() ) ) );
+            // If one resource is present, the resident isn't totally supply
+            delivered = false;
         }
     }
+    // if the message doesns't contain resources for the recipient,
+    //    then all resources are delivered and the resident is
+    //    totally supply
+    if( delivered )
+        Apply( boost::bind( &SupplyResourceRequest::Deliver, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

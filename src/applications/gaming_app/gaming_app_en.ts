@@ -1899,6 +1899,10 @@ Do you want to replace it?</translation>
         <source>Conveyed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsSupplyWidget</name>

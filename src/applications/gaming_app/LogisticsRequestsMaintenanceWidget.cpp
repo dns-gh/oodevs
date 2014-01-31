@@ -28,7 +28,7 @@
 LogisticsRequestsMaintenanceWidget::LogisticsRequestsMaintenanceWidget( QWidget* parent, kernel::Controllers& controllers,
                                                                         gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                                                         const SimulationController& simulationController, Model& model )
-    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model )
+    : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eMaintenance )
 {
     // NOTHING
 }

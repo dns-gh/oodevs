@@ -26,6 +26,7 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class DisplayExtractor_ABC;
+    class DotationType;
 }
 
 namespace sword
@@ -34,6 +35,7 @@ namespace sword
     class LogSupplyHandlingCreation;
     class LogSupplyHandlingUpdate;
     enum LogSupplyHandlingUpdate_EnumLogSupplyHandlingStatus;
+    class SupplyRecipientResourceRequests;
 }
 
 class Simulation;
@@ -52,7 +54,8 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
-                               const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
+                               const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                                const Simulation& simulation, const sword::LogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
@@ -60,9 +63,11 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::LogSupplyHandlingUpdate& message, kernel::Agent_ABC* pionLogConvoying );
+    void Update( const sword::SupplyRecipientResourceRequests& message );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual bool RefersToAgent( unsigned long id ) const;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const;
+    virtual bool UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state );
     //@}
 
     //! @name Accessors
@@ -75,6 +80,7 @@ public:
     virtual QString GetStatusDisplay() const;
     virtual QString GetStatusDisplay( int status ) const;
     virtual QString GetCurrentStartedTime() const;
+    virtual E_LogisticChain GetType() const;
     //@}
 
 private:
@@ -91,6 +97,7 @@ private:
     const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     kernel::SafePointer< kernel::Entity_ABC > pLogHandlingEntity_;
     kernel::SafePointer< kernel::Agent_ABC > pPionLogConvoying_;
     kernel::SafePointer< kernel::Entity_ABC > pLogProvidingConvoyResourcesEntity_;
