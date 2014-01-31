@@ -12,6 +12,7 @@
 #include "FireResultListView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/tools.h"
 #include "gaming/Explosions.h"
 #include "gaming/Equipment.h"
 
@@ -20,7 +21,7 @@
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
 ObjectReportPanel::ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
-    : InfoPanel_ABC( parent, panel, tr( "Reports" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "ObjectReportPanel", "Reports" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {

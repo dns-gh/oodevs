@@ -11,6 +11,7 @@
 #include "PlanificationModePanel.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/tools.h"
 #include "tools/GeneralConfig.h"
 
 namespace
@@ -22,11 +23,11 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PlanificationModePanel constructor
+// }: PlanificationModePanel constructor
 // Created: LGY 2012-06-21
 // -----------------------------------------------------------------------------
 PlanificationModePanel::PlanificationModePanel( QMainWindow* parent, kernel::Controllers& controllers )
-    : gui::RichDockWidget( controllers, parent, "planification", tr( "Planification mode" ) )
+    : gui::RichDockWidget( controllers, parent, "planification", tools::translate( "PlanificationModePanel", "Planification mode" ) )
     , controllers_( controllers )
 {
     QWidget* main = new QWidget( this );

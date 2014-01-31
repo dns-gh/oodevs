@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ChatDock.h"
 #include "ChatWidget.h"
+#include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChatDock constructor
@@ -20,7 +21,7 @@ ChatDock::ChatDock( QWidget* parent, kernel::Controllers& controllers, Publisher
 {
     setObjectName( "chat" );
     setWidget( new ChatWidget( this, controllers, publisher, handler ) );
-    setCaption( tr( "Chat" ) );
+    setCaption( tools::translate( "ChatDock", "Chat" ) );
     hide();
 }
 
