@@ -50,3 +50,22 @@ bool Displayer_ABC::IsValid() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::End
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+Displayer_ABC& Displayer_ABC::End()
+{
+    EndDisplay();
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::AddToDisplay
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void Displayer_ABC::AddToDisplay( const QString& element )
+{
+    DisplayFormatted( element );
+}

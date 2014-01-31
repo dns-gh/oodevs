@@ -203,7 +203,7 @@ target_link_libraries( 3a
 )
 
 # clients_kernel
-add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol qtwarnings )
+add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol )
 target_link_libraries( clients_kernel
     ent
     sword_tools
