@@ -1060,7 +1060,7 @@ void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
 
     if( pHeadPath_ && std::find( pointsToInsert_.begin(), pointsToInsert_.end(), headPoint ) == pointsToInsert_.end() )
     {
-        const DEC_PathResult::T_PathPointList& list = pHeadPath_->GetResult();
+        const DEC_PathResult::T_PathPoints& list = pHeadPath_->GetResult();
         for( auto it = list.begin(); it != list.end(); ++it )
         {
             if( ( *it )->GetPos().SquareDistance( headPoint ) < 1 )
