@@ -72,6 +72,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -2091,18 +2092,15 @@ namespace
     template< typename Agents, typename Func >
     void ApplyOnRequest( const Agents& agents, uint32_t id, const Func& f )
     {
-        bool found = false;
+        PHY_MaintenanceComposanteState* request = 0;
         agents.Apply( [&]( const MIL_AgentPion& p )
         {
-            if( !found )
-            {
-                auto* request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
-                found = true;
-                f( *request );
-            }
+            if( !request )
+                request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
         } );
-        if( !found )
+        if( !request )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
+        f( *request );
     }
 }
 
