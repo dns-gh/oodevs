@@ -299,15 +299,15 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	// error: invalid parameters count, parameters expected
-	err := client.SelectTransporterTest(swapi.MakeParameters())
+	err := client.SelectNewLogisticStateTest(swapi.MakeParameters())
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be an identifier
-	err = client.SelectTransporterTest(swapi.MakeParameters(nil))
+	err = client.SelectNewLogisticStateTest(swapi.MakeParameters(nil))
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// error: first parameter must be a valid identifier
-	err = client.SelectTransporter(1000)
+	err = client.SelectNewLogisticState(1000)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// set automat to manual mode
@@ -345,7 +345,7 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 			h.Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 	// trigger select new state
-	err = client.SelectTransporter(handlingId)
+	err = client.SelectNewLogisticState(handlingId)
 	c.Assert(err, IsNil)
 	// check state has changed
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {

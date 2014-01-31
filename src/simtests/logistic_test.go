@@ -689,8 +689,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
-				// Select automatically a transporter
-				err := client.SelectTransporter(ctx.handlingId)
+				err = client.SelectNewLogisticState(ctx.handlingId)
 				c.Assert(err, IsNil)
 			},
 		},
