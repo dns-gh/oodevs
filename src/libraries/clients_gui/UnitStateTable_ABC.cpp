@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "UnitStateTable_ABC.h"
 
+#include "clients_gui/Roles.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -81,5 +82,18 @@ void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& selected )
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
             RecursiveLoad( const_cast< kernel::Entity_ABC& >( it.NextElement() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTable_ABC::SetColor
+// Created: ABR 2014-01-31
+// -----------------------------------------------------------------------------
+void UnitStateTable_ABC::SetColor( int row, int col, const QBrush& brush, int colorIndex )
+{
+    if( QStandardItem* item = dataModel_.item( row, col ) )
+    {
+        item->setBackground( brush );
+        item->setData( colorIndex >= 0 ? static_cast< unsigned int >( colorIndex ) : QVariant(), gui::Roles::ExcelColorRole );
     }
 }
