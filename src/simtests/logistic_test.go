@@ -689,8 +689,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
-				err = client.SelectNewLogisticState(ctx.handlingId)
-				c.Assert(err, IsNil)
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
@@ -701,8 +701,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
-				err = client.SelectNewLogisticState(ctx.handlingId)
-				c.Assert(err, IsNil)
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
