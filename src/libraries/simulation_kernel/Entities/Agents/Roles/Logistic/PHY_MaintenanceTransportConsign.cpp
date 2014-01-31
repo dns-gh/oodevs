@@ -360,9 +360,10 @@ bool PHY_MaintenanceTransportConsign::IsManualMode() const
     return pLogisticManager && pLogisticManager->IsMaintenanceManual();
 }
 
-void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
+bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        return;
+        return false;
     forceTransferToLogisticSuperior_ = true;
+    return true;
 }

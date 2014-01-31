@@ -68,7 +68,7 @@ public:
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
     void SelectNewState();
-    void TransferToLogisticSuperior();
+    bool TransferToLogisticSuperior();
     //@}
 
     //! @name Network

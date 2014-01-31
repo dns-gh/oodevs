@@ -43,7 +43,7 @@ public:
     bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
-    virtual void TransferToLogisticSuperior();
+    virtual bool TransferToLogisticSuperior();
     //@}
 
 private:

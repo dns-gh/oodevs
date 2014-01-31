@@ -333,7 +333,7 @@ void PHY_MaintenanceComposanteState::SelectNewState()
     pConsign_->SelectNewState();
 }
 
-void PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
+bool PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
 {
-    pConsign_->TransferToLogisticSuperior();
+    return pConsign_->TransferToLogisticSuperior();
 }

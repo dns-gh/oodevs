@@ -1318,15 +1318,6 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::FindRequest( uint32_t 
     return it->second;
 }
 
-bool PHY_RolePion_Composantes::TransferToLogisticSuperior( uint32_t request )
-{
-    auto it = maintenanceComposanteStates_.find( request );
-    if( it == maintenanceComposanteStates_.end() )
-        return false;
-    it->second->TransferToLogisticSuperior();
-    return true;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
 // Created: NLD 2006-07-17

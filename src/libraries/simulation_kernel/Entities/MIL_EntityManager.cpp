@@ -2121,14 +2121,10 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-
-    bool found = false;
-    sink_->Apply( [&]( MIL_AgentPion& p )
-    {
-        found = found || p.GetRole< PHY_RoleInterface_Composantes >().TransferToLogisticSuperior( id );
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){
+        if( !request.TransferToLogisticSuperior() )
+            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
     } );
-    if( !found )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
 }
 
 // -----------------------------------------------------------------------------
