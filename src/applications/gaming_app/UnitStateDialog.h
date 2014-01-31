@@ -74,6 +74,7 @@ private slots:
     void ToggleResource( bool );
     void ToggleEquipment( bool );
     void OnTabChanged( QWidget* );
+    void OnExportClicked();
     //@}
 
 signals:
@@ -88,6 +89,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Profile_ABC& profile_;
+    QAbstractButton*           exportButton_;
     const QString              equipmentToolTip_;
     const QString              resourceToolTip_;
     bool                       disconnected_;

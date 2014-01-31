@@ -564,6 +564,7 @@ target_link_libraries( gaming_app
     actions_gui
     gaming
     ${TIMELINE_LIBRARIES}
+    ${EXCEL_LIBRARIES}
     ${EXTRACTOR_LIBRARIES}
     ${TERRAIN_LIBRARIES}
     ${GEODATA_LIBRARIES}

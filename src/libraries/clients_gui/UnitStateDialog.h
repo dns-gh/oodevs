@@ -70,6 +70,7 @@ protected:
     //@{
     kernel::Controllers&                                   controllers_;
     kernel::SafePointer< kernel::Entity_ABC >              selected_;
+    QHBoxLayout*                                           headerLayout_;
     RichWidget< QTabWidget >*                              tabWidget_;
     std::vector< boost::shared_ptr< UnitStateTable_ABC > > tabs_;
     RichPushButton*                                        resetButton_;

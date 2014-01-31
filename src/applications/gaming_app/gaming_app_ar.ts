@@ -3529,6 +3529,18 @@ This data can&apos;t be projected.</source>
         <source>Equipments</source>
         <translation type="unfinished">معدات</translation>
     </message>
+    <message>
+        <source>Excel (*.xls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export unit state</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableEquipment</name>
