@@ -3,7 +3,7 @@
 -------------------------------------------------------------------
 
 --- Returns the company location
--- @param commander Ditectia commander
+-- @param commander Directia commander
 -- @return Simulation point
 integration.getCommanderPosition = function( commander )
     return DEC_Automate_Position( commander.source )
@@ -103,7 +103,7 @@ integration.getCommanderROEExist = function( )
 end
 
 --- Returns true if the company is engaged, false otherwise
--- @return Boolean, whether or not the company is engagd 
+-- @return Boolean, whether or not the company is engaged 
 integration.isEngagedCommander = function( )
     return DEC_Automate_EstEmbraye( )
 end
@@ -132,8 +132,8 @@ integration.getHQ = function( )
     return DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( myself ) )
 end
 
----- Returns the HQ (directIA agent knowledge) of a company
--- @return knowledge HQ
+---- Returns the HQ (DirectIA agent) of a company
+-- @return DirectIA agent
 integration.getKnowledgeHQ = function( )
     return CreateKnowledge( integration.ontology.types.agent, integration.getHQ() )
 end
