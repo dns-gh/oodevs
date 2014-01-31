@@ -432,8 +432,8 @@ void Controller::CountNodes( Reply_ABC& rpy, const Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::GetNode( Reply_ABC& rpy, const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    WriteHttpReply( rpy, agent_.GetNode( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_PLAYER, "id" );
+    WriteHttpReply( rpy, agent_.GetNode( node ) );
 }
 
 namespace
