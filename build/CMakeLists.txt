@@ -606,7 +606,7 @@ target_link_libraries( preparation
 )
 
 # preparation_app
-add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable qtwarnings )
+add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable )
 target_link_libraries( preparation_app
     actions_gui
     frontend

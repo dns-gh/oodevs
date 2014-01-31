@@ -1441,6 +1441,17 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>MultipleResolverEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>NewProfileDialog</name>
     <message>
         <source>New profile</source>
@@ -2291,6 +2302,33 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>ScoreVariablesList</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Coller</translation>
+    </message>
+</context>
+<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
@@ -2623,6 +2661,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Urban blocks cannot be created on top of existing blocks.</source>
         <translation>Les blocs urbains ne peuvent pas être créés au dessus de blocs existants.</translation>
+    </message>
+    <message>
+        <source>Road width (m):</source>
+        <translation>Largeur de route (m):</translation>
     </message>
 </context>
 <context>
