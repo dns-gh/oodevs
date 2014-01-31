@@ -482,18 +482,13 @@ void ADN_Table::SaveToXls( const tools::Path& path, const QString& sheetName ) c
             // Content
             QString content = qItem->text();
             bool ok = false;
-            content.toInt( &ok );
-            if( ok )
-                cell->Set( content.toInt() );
-            else
+            cell->Set( locale().toInt( content, &ok ) );
+            if( !ok )
             {
-                content.toDouble( &ok );
-                if( ok )
-                    cell->Set( content.toDouble() );
-                else
+                cell->Set( locale().toDouble( content, &ok ) );
+                if( !ok )
                     cell->Set( content.toStdWString().c_str() );
             }
-
             // Column size
             if( columnMaxContentSize[ col ] < content.size() )
                 columnMaxContentSize[ col ] = content.size();
