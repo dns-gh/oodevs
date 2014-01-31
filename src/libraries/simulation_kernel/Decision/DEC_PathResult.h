@@ -90,6 +90,4 @@ private:
     //@}
 };
 
-#include "DEC_PathResult.inl"
-
 #endif // __DEC_PathResult_h_

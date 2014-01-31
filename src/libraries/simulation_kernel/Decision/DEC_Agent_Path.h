@@ -144,6 +144,4 @@ private:
     //@}
 };
 
-#include "DEC_Agent_Path.inl"
-
 #endif // __DEC_Agent_Path_h_

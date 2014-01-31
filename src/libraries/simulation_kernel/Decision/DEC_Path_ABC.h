@@ -76,6 +76,4 @@ private:
     static unsigned int nIDIdx_;
 };
 
-#include "DEC_Path_ABC.inl"
-
 #endif // __DEC_Path_ABC_h_

@@ -342,3 +342,12 @@ void DEC_PathFind_Manager::UpdateInSimulationThread()
             ++treatedRequests_;
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::GetMaxComputationDuration
+// Created: NLD 2005-10-11
+// -----------------------------------------------------------------------------
+unsigned int DEC_PathFind_Manager::GetMaxComputationDuration() const
+{
+    return nMaxComputationDuration_;
+}

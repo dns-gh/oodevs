@@ -87,6 +87,4 @@ private:
     static T_PathTypeMap          pathTypes_;
 };
 
-#include "DEC_PathType.inl"
-
 #endif // __DEC_PathType_h_

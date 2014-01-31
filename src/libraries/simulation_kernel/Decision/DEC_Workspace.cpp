@@ -1,4 +1,3 @@
-
 // Created: JVT 02-06-28
 //*****************************************************************************
 
@@ -170,7 +169,6 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
     if( !tools::CheckVersion( decisionalVersion, runtimeVersion, 2u ) )
         throw MASA_EXCEPTION( "Decisional model version (" + decisionalVersion + ") does not match runtime version (" + runtimeVersion + ")" );
 
-
     std::map< std::string, tools::Path > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
             >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
@@ -306,4 +304,40 @@ float DEC_Workspace::GetTime() const
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
     config.GetPhyLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelPion
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+const DEC_Model_ABC* DEC_Workspace::FindModelPion( const std::string& strModelName ) const
+{
+    CIT_ModelMap it = pionModels_.find( strModelName );
+    if( it == pionModels_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelAutomate
+// Created: NLD 2004-09-03
+// -----------------------------------------------------------------------------
+const DEC_Model_ABC* DEC_Workspace::FindModelAutomate( const std::string& strModelName ) const
+{
+    CIT_ModelMap it = automateModels_.find( strModelName );
+    if( it == automateModels_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelPopulation
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+const DEC_Model_ABC* DEC_Workspace::FindModelPopulation( const std::string& strModelName  ) const
+{
+    CIT_ModelMap it = populationModels_.find( strModelName );
+    if( it == populationModels_.end() )
+        return 0;
+    return it->second;
 }

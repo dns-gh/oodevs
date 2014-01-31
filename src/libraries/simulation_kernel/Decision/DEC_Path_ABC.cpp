@@ -53,3 +53,30 @@ void DEC_Path_ABC::DecRef()
     if( --nNbrRefs_ <= 0 )
         MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::GetID
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+unsigned int DEC_Path_ABC::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::operator==
+// Created: NLD 2004-10-18
+// -----------------------------------------------------------------------------
+bool DEC_Path_ABC::operator==( const DEC_Path_ABC& rhs ) const
+{
+    return nID_ == rhs.nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::operator!=
+// Created: NLD 2004-10-18
+// -----------------------------------------------------------------------------
+bool DEC_Path_ABC::operator!=( const DEC_Path_ABC& rhs ) const
+{
+    return nID_ != rhs.nID_;
+}
