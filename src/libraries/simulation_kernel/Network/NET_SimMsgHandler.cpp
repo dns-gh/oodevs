@@ -51,12 +51,7 @@ NET_SimMsgHandler::~NET_SimMsgHandler()
 // -----------------------------------------------------------------------------
 bool NET_SimMsgHandler::RemoveClient( const std::string& client )
 {
-    if( clients_.find( client ) != clients_.end() )
-    {
-        clients_.erase( client );
-        return true;
-    }
-    return false;
+    return clients_.erase( client ) > 0;
 }
 
 //-----------------------------------------------------------------------------

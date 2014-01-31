@@ -129,7 +129,7 @@ public:
 
     //! @name Supply
     //@{
-    virtual void           SupplyHandleRequest                ( const boost::shared_ptr < logistic::SupplyConsign_ABC >& consign );
+    virtual void           SupplyHandleRequest                ( const boost::shared_ptr< logistic::SupplyConsign_ABC >& consign );
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const;
     virtual bool           SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const;

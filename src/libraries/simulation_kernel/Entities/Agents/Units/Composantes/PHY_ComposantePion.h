@@ -63,7 +63,7 @@ class PHY_ComposantePion : public PHY_Composante_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< PHY_ComposantePion* >  T_ComposantePionVector;
+    typedef std::vector< PHY_ComposantePion* > T_ComposantePionVector;
     //@}
 
     //! @name Constructors/Destructor
