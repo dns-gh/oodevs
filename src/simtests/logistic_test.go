@@ -661,15 +661,15 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	)
 }
 
-func SetUnitInMaintenanceManualMode(c *C, client *swapi.Client, unitId uint32) {
-	err := client.LogMaintenanceSetManual(unitId, true)
+func SetMaintenanceManualMode(c *C, client *swapi.Client, id uint32) {
+	err := client.LogMaintenanceSetManual(id, true)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		automatId := data.Automats[unitId]
-		if automatId != nil {
-			return automatId.LogMaintenanceManual
+		automat := data.Automats[id]
+		if automat != nil {
+			return automat.LogMaintenanceManual
 		}
-		return data.Formations[unitId].LogMaintenanceManual
+		return data.Formations[id].LogMaintenanceManual
 	})
 }
 
@@ -682,7 +682,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	SetUnitInMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -721,7 +721,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	SetUnitInMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -764,7 +764,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	SetUnitInMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -772,7 +772,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Assert(err, IsNil)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
@@ -785,7 +785,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 			&MaintenanceUpdateChecker{"diagnosing", bld},
 			func(ctx *MaintenanceCheckContext) {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Assert(err, IsSwordError, "error_invalid_parameter")
+				c.Check(err, IsSwordError, "error_invalid_parameter")
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
@@ -807,9 +807,9 @@ func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
 	bltId := getSomeFormationByName(c, d, "BLT").Id
 	blt := swapi.MakeFormationTasker(bltId)
 
-	SetUnitInMaintenanceManualMode(c, client, tc2Id)
-	SetUnitInMaintenanceManualMode(c, client, bldId)
-	SetUnitInMaintenanceManualMode(c, client, bltId)
+	SetMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, bldId)
+	SetMaintenanceManualMode(c, client, bltId)
 
 	phydb := loadWWPhysical(c)
 	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")
@@ -821,7 +821,7 @@ func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Assert(err, IsNil)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
@@ -829,7 +829,7 @@ func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
 			func(ctx *MaintenanceCheckContext) {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Assert(err, IsNil)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", bld},
@@ -837,7 +837,7 @@ func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", blt},
 			func(ctx *MaintenanceCheckContext) {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Assert(err, IsNil)
+				c.Check(err, IsNil)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", blt},
