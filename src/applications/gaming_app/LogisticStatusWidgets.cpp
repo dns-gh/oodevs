@@ -82,9 +82,10 @@ void MaintenanceStatusWidget::OnUpdated( const kernel::MaintenanceStates_ABC& st
 
 void MaintenanceStatusWidget::OnUpdated( const gui::LogisticBase& base )
 {
-    Add( tools::translate( "MaintenanceStatusWidget", "Mode" ), base.IsMaintenanceManual()
-         ? tools::translate( "MaintenanceStatusWidget", "Manual" )
-         : tools::translate( "MaintenanceStatusWidget", "Automatic" ) );
+    if( base.IsBase() )
+        Add( tools::translate( "MaintenanceStatusWidget", "Mode" ), base.IsMaintenanceManual()
+             ? tools::translate( "MaintenanceStatusWidget", "Manual" )
+             : tools::translate( "MaintenanceStatusWidget", "Automatic" ) );
 }
 
 void MaintenanceStatusWidget::Update()
