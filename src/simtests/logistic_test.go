@@ -661,6 +661,14 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	)
 }
 
+func SetAutomatInMaintenanceManualMode(c *C, client *swapi.Client, automatId uint32) {
+	err := client.LogMaintenanceSetManual(automatId, true)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[automatId].LogMaintenanceManual
+	})
+}
+
 func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
@@ -670,12 +678,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	// set automat to manual mode
-	err := client.LogMaintenanceSetManual(tc2Id, true)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[tc2Id].LogMaintenanceManual
-	})
+	SetAutomatInMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -683,7 +686,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
 				// Select automatically a transporter
-				err = client.SelectTransporter(ctx.handlingId)
+				err := client.SelectTransporter(ctx.handlingId)
 				c.Assert(err, IsNil)
 			},
 		},
@@ -714,12 +717,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	// set automat to manual mode
-	err := client.LogMaintenanceSetManual(tc2Id, true)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[tc2Id].LogMaintenanceManual
-	})
+	SetAutomatInMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
