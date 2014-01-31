@@ -279,16 +279,16 @@ integration.updateLaunchProjectile = function( target, dotation )
         if target[ myself ].attackState == eIndirectFireState_Running then
             return false
         elseif target[ myself ].attackState == eIndirectFireState_Finished then
-            meKnowledge:sendReport( eRC_TirExecute )
+            reportFunction( eRC_TirExecute )
             return true
         elseif target[ myself ].attackState == eIndirectFireState_NoAmmo then
-            meKnowledge:sendReport( eRC_TirImpossiblePlusDeMunitions )
+            reportFunction( eRC_TirImpossiblePlusDeMunitions )
             return true
         elseif eIndirectFireState_Impossible then
-            meKnowledge:sendReport( eRC_TirIndirectImpossible )
+            reportFunction( eRC_TirIndirectImpossible )
             return true
         elseif eIndirectFireState_NoCapacity then
-            meKnowledge:sendReport( eRC_TirIndirectNoCapacity )
+            reportFunction( eRC_TirIndirectNoCapacity )
             return true
         end
     end

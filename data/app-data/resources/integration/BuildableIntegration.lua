@@ -282,13 +282,13 @@ integration.updateBuildItSecu = function( object )
         return true
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
-            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+            reportFunction( eRC_ConstructionObjetImpossible )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
-            meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+            reportFunction( eRC_PasDotationConstructionObjet )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
-            meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+            reportFunction( eRC_PasDotationConstructionObjet )
             return true
         end
     end

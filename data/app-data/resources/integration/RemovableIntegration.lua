@@ -140,16 +140,16 @@ end
 -- ============================================================================
 integration.updateRemoveItSecu = function( object )
     if object[myself].actionRemoveState == eActionObjetImpossible then
-        meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+        reportFunction( eRC_ConstructionObjetImpossible )
         DEC_Trace( "impossible works" )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetManqueDotation then
         DEC_Trace( "not enough dotation" )
-         meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+         reportFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetPasDeCapacite then
         DEC_Trace( "no capacity" )
-        meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+        reportFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetTerminee then
         reportFunction(eRC_FinDegagement )
