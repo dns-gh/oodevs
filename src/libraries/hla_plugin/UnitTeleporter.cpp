@@ -210,8 +210,14 @@ void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const s
 // -----------------------------------------------------------------------------
 void UnitTeleporter::LocalCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    identifiers_[ identifier ] = localResolver_.Resolve( identifier );
-    objects_[ identifier ]=&object;
+    const unsigned long simId = localResolver_.Resolve( identifier );
+    const unsigned long parentId = localResolver_.ParentAutomat( simId );
+    if( parentId != 0 )
+    {
+        identifiers_[ identifier ] = simId;
+        automatIds_[ identifier ] = parentId;
+        objects_[ identifier ]=&object;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -229,6 +235,14 @@ void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 // -----------------------------------------------------------------------------
 void UnitTeleporter::Divested( const std::string& identifier )
 {
+    T_Identifiers::const_iterator automatIt = automatIds_.find( identifier );
+    if( automatIt != automatIds_.end() )
+    {
+        simulation::SetAutomatMode disengageMessage;
+        disengageMessage().mutable_automate()->set_id( automatIt->second );
+        disengageMessage().set_mode( sword::disengaged );
+        disengageMessage.Send( publisher_, contextFactory_.Create() );
+    }
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)
         return;

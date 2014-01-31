@@ -103,6 +103,7 @@ private:
     const CallsignResolver_ABC& callsignResolver_;
     dispatcher::Logger_ABC& logger_;
     T_Identifiers identifiers_;
+    T_Identifiers automatIds_;
     T_Objects objects_;
     T_EmbeddedUnitsMap pendingLoaded_;
     //@}

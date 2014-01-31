@@ -36,21 +36,25 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Add( unsigned long simulationIdentifier, dispatcher::Agent_ABC& agent );
     virtual void Add( unsigned long simulationIdentifier, const std::string& objectIdentifier );
     virtual std::string Resolve( unsigned long simulationIdentifier ) const;
     virtual unsigned long Resolve( const std::string& objectIdentifier ) const;
+    virtual unsigned long ParentAutomat( unsigned long simulationIdentifier ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef boost::bimap< unsigned long, std::string > T_Identifiers;
+    typedef std::map< unsigned long, dispatcher::Agent_ABC* > T_Agents;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_Identifiers identifiers_;
+    T_Agents agents_;
     //@}
 };
 
