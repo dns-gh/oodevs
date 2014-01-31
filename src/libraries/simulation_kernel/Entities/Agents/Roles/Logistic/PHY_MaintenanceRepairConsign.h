@@ -38,6 +38,7 @@ public:
     virtual bool Update();
 
     virtual void SelectNewState();
+    virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
     virtual bool TransferToLogisticSuperior();
     //@}
 

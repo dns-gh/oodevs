@@ -2101,7 +2101,7 @@ namespace
                 request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
         } );
         if( !request )
-            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
+            throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
         f( *request );
     }
 }
@@ -2126,6 +2126,23 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){
         if( !request.TransferToLogisticSuperior() )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
+    } );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveSelectMaintenanceTransporter
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::MagicAction& message )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    const auto requestId = protocol::GetIdentifier( params, 0 );
+    const auto equipmentTypeId = protocol::GetIdentifier( params, 1 );
+    ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
+    { 
+        if( !request.SelectMaintenanceTransporter( equipmentTypeId ) )
+            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
     } );
 }
 

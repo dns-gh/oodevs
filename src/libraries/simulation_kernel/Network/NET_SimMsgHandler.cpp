@@ -170,6 +170,8 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             manager.OnReceiveChangeDiplomacy( msg, ctx );
         else if( type == sword::MagicAction::select_new_logistic_state )
             manager.OnReceiveSelectNewLogisticState( msg );
+        else if( type == sword::MagicAction::select_maintenance_transporter )
+            manager.OnReceiveSelectMaintenanceTransporter( msg );
         else if( type == sword::MagicAction::transfer_to_logistic_superior )
             manager.OnReceiveTransferToLogisticSuperior( msg );
         else if( type == sword::MagicAction::global_weather ||
