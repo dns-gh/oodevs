@@ -1306,13 +1306,16 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
     maintenanceComposanteStates_.erase( composanteState.GetID() );
 }
 
-bool PHY_RolePion_Composantes::SelectNewState( uint32_t request )
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::FindRequest
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::FindRequest( uint32_t request ) const
 {
     auto it = maintenanceComposanteStates_.find( request );
     if( it == maintenanceComposanteStates_.end() )
-        return false;
-    it->second->SelectNewState();
-    return true;
+        return 0;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------

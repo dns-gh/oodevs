@@ -164,7 +164,7 @@ public:
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState );
-    virtual bool SelectNewState( uint32_t request );
+    virtual PHY_MaintenanceComposanteState* FindRequest( uint32_t request ) const;
     //@}
 
     //! @name Prisoners

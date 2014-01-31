@@ -2086,18 +2086,34 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
 
+namespace
+{
+    template< typename Agents, typename Func >
+    void ApplyOnRequest( const Agents& agents, uint32_t id, Func f )
+    {
+        PHY_MaintenanceComposanteState* request = 0;
+        agents.Apply( [&]( const MIL_AgentPion& p )
+        {
+            if( request )
+                return;
+            request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
+        } );
+        if( !request )
+            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
+        f( *request );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveSelectNewLogisticState
+// Created: MCO 2014-01-30
+// -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
 {
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    bool found = false;
-    sink_->Apply( [&]( MIL_AgentPion& p )
-    {
-        found = found || p.GetRole< PHY_RoleInterface_Composantes >().SelectNewState( id );
-    } );
-    if( !found )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){ request.SelectNewState(); } );
 }
 
 // -----------------------------------------------------------------------------
