@@ -15,6 +15,11 @@
 #include "ResponseObserver_ABC.h"
 #include <map>
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace sword
 {
     class UnitCreation;
@@ -34,6 +39,7 @@ namespace hla
     class ContextFactory_ABC;
     class LocalAgentResolver_ABC;
     class CallsignResolver_ABC;
+    class MissionResolver_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
 
 // =============================================================================
@@ -49,9 +55,10 @@ class UnitTeleporter : private ResponseObserver_ABC< sword::UnitCreation >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
-                             dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
-                             const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
+             UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject,
+                             ContextHandler_ABC< sword::UnitCreation >& contextHandler, dispatcher::SimulationPublisher_ABC& publisher,
+                             const ContextFactory_ABC& contextFactory, const LocalAgentResolver_ABC& localResolver,
+                             const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
     virtual ~UnitTeleporter();
     //@}
 
@@ -95,6 +102,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const unsigned int cancelId_;
     RemoteAgentSubject_ABC& agentSubject_;
     ContextHandler_ABC< sword::UnitCreation >& contextHandler_;
     dispatcher::SimulationPublisher_ABC& publisher_;

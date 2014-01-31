@@ -72,7 +72,8 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
                                     const UnitTypeResolver_ABC& unitTypeResolver, const UnitTypeResolver_ABC& automatTypeResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                     dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
-                                    const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject )
+                                    const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
+                                    const MissionResolver_ABC& missionResolver )
     : sideResolver_( sideResolver )
     , pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
@@ -80,7 +81,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pAutomatDisengager_         ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, automatTypeResolver, dynamicModel.KnowledgeGroups() ) )
-    , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, localResolver, callsignResolver, logger ) )
+    , pUnitTeleporter_            ( new UnitTeleporter( xis, missionResolver, remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, localResolver, callsignResolver, logger ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )

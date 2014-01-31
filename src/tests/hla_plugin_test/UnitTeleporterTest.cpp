@@ -19,7 +19,10 @@
 #include "MockLogger.h"
 #include "MockLocalAgentResolver.h"
 #include "MockCallsignResolver.h"
+#include "MockMissionResolver.h"
 #include "protocol/Simulation.h"
+#include <xeumeuleu/xml.hpp>
+
 
 using namespace plugins::hla;
 
@@ -29,20 +32,30 @@ namespace
     {
     public:
         Fixture()
-            : unitId( 42 )
+            : xis ( "<configuration>"
+                    "    <missions>"
+                    "        <fragOrders>"
+                    "            <cancel>cancel</cancel>"
+                    "        </fragOrders>"
+                    "    </missions>"
+                    "</configuration>" )
+            , unitId( 42 )
             , automatId( 45 )
             , latitude( 1. )
             , longitude( 2. )
             , remoteClassListener( 0 )
             , unitCreationObserver( 0 )
         {
+            xis >> xml::start( "configuration" );
             MOCK_EXPECT( agentSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( contextHandler.Register ).once().with( mock::retrieve( unitCreationObserver ) );
             MOCK_EXPECT( agentSubject.Unregister ).once();
             MOCK_EXPECT( contextHandler.Unregister ).once();
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().returns( 89 );
             creationMessage.mutable_unit()->set_id( unitId );
             creationMessage.mutable_automat()->set_id( automatId );
         }
+        xml::xistringstream xis;
         const unsigned long unitId;
         const unsigned long automatId;
         const double latitude;
@@ -58,12 +71,13 @@ namespace
         MockLocalAgentResolver agentResolver;
         MockCallsignResolver callsignResolver;
         dispatcher::MockLogger logger;
+        MockMissionResolver missionResolver;
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 {
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver,callsignResolver, logger );
+    UnitTeleporter teleporter( xis, missionResolver, agentSubject, contextHandler, publisher, contextFactory, agentResolver,callsignResolver, logger );
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;
     MockHlaObject object;
@@ -89,7 +103,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_only_when_unit_has_been_created, Fixture )
 {
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
+    UnitTeleporter teleporter( xis, missionResolver, agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;
     MockHlaObject object;
@@ -132,7 +146,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
     std::vector< std::vector< char > > transported; transported.push_back( MakeUniqueId( TRANSPORTED_UNITS[0] ) ); transported.push_back( MakeUniqueId( TRANSPORTED_UNITS[1] ) );
     sword::ClientToSim loadMessage;
 
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
+    UnitTeleporter teleporter( xis, missionResolver, agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
 
     ObjectListener_ABC* remoteAgentListener( 0 );
     MockHlaClass hlaClass;
@@ -152,7 +166,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
 
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_disengage_automaton_when_divested, Fixture )
 {
-    UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
+    UnitTeleporter teleporter( xis, missionResolver, agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
 
     MockHlaClass hlaClass;
     MockHlaObject object;
@@ -161,15 +175,21 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_disengage_automaton_when_divested, Fixt
     remoteClassListener->LocalCreated( "identifier", hlaClass, object );
 
     ObjectListener_ABC* remoteAgentListener( 0 );
-    sword::ClientToSim message;
+    sword::ClientToSim message1, message2;
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
     MOCK_EXPECT( contextFactory.Create ).once().returns( 18 );
-    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message1 ) );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message2 ) );
     remoteClassListener->Divested(  "identifier" );
     BOOST_REQUIRE( remoteAgentListener );
 
-    BOOST_CHECK( message.message().has_set_automat_mode() );
-    const sword::SetAutomatMode& action = message.message().set_automat_mode();
+    BOOST_CHECK( message1.message().has_set_automat_mode() );
+    const sword::SetAutomatMode& action = message1.message().set_automat_mode();
     BOOST_CHECK_EQUAL( action.automate().id(), 45u );
     BOOST_CHECK_EQUAL( action.mode(), sword::disengaged );
+
+    BOOST_CHECK( message2.message().has_frag_order() );
+    const sword::FragOrder& order = message2.message().frag_order();
+    BOOST_CHECK_EQUAL( order.tasker().unit().id(), 42u );
+    BOOST_CHECK_EQUAL( order.type().id(), 89u );
 }

@@ -15,20 +15,36 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "HlaObject_ABC.h"
+#include "MissionResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 
+#include <xeumeuleu/xml.hpp>
+
 using namespace plugins::hla;
+
+namespace
+{
+    std::string GetName( xml::xisubstream xis, const std::string& category, const std::string& mission )
+    {
+        std::string name;
+        xis >> xml::start( "missions" )
+                >> xml::start( category )
+                    >> xml::content( mission, name );
+        return name;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: UnitTeleporter constructor
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-UnitTeleporter::UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
+UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
                                 dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
                                 const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
-    : agentSubject_  ( agentSubject )
+    : cancelId_      ( resolver.ResolveUnit( GetName( xis, "fragOrders", "cancel" ) ) )
+    , agentSubject_  ( agentSubject )
     , contextHandler_( contextHandler )
     , publisher_     ( publisher )
     , contextFactory_( contextFactory )
@@ -242,6 +258,14 @@ void UnitTeleporter::Divested( const std::string& identifier )
         disengageMessage().mutable_automate()->set_id( automatIt->second );
         disengageMessage().set_mode( sword::disengaged );
         disengageMessage.Send( publisher_, contextFactory_.Create() );
+    }
+    T_Identifiers::const_iterator unitId = identifiers_.find( identifier );
+    if( identifiers_.end() != unitId )
+    {
+        simulation::FragOrder order;
+        order().mutable_tasker()->mutable_unit()->set_id( unitId->second );
+        order().mutable_type()->set_id( cancelId_ );
+        order.Send( publisher_ );
     }
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)
