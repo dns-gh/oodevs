@@ -706,7 +706,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadBreakdown))
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
