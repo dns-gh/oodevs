@@ -120,6 +120,7 @@ private:
     void UpdateCrowdCollisions();
     bool ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions );
     bool AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions );
+    void ComputeSpeedLimit();
     //@}
 
     //! @name Notifications
@@ -189,6 +190,7 @@ private:
     const MIL_Object_ABC* pFirstSplittingObject_;
     double armedIndividualsBeforeSplit_;
     unsigned int personsPassedThroughObject_;
+    double speedLimit_;
     static MIL_IDManager idManager_;
     double objectDensity_;
     //@}

@@ -94,6 +94,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , speedLimit_( std::numeric_limits< double >::max() )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -127,6 +128,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , speedLimit_( std::numeric_limits< double >::max() )
 {
     IT_PointList itSplit = std::find( flowShape_.begin(), flowShape_.end(), splitPoint );
     if( itSplit != flowShape_.end() )
@@ -160,6 +162,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , speedLimit_( std::numeric_limits< double >::max() )
 {
     // NOTHING
 }
@@ -540,7 +543,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         return;
     if( ManageObjectSplit() )
         return;
-    const double rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+    const double rWalkedDistance = GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
     unsigned int nNbrHumans = 0;
     if( pSourceConcentration_ )
@@ -554,7 +557,10 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
             nNbrHumans = GetAllHumans();
     }
     if( nNbrHumans == 0 )
+    {
+        ComputeSpeedLimit();
         return;
+    }
     SetDirection( direction );
     SetSpeed( rWalkedDistance );
     if( pSourceConcentration_ )
@@ -592,6 +598,33 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
+    ComputeSpeedLimit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ComputeSpeedLimit
+// Created: JSR 2014-01-31
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::ComputeSpeedLimit()
+{
+    speedLimit_ = std::numeric_limits< double >::max();
+    if( canCollideWithFlow_ )
+    {
+        TER_PopulationFlowManager::T_PopulationFlowVector flows;
+        const double radius = 2 * GetPopulation().GetMaxSpeed();
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( GetHeadPosition(), radius, flows );
+        for( auto it = flows.begin(); it != flows.end(); ++it )
+        {
+            const MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
+            if( flow != this && GetHeadPosition().SquareDistance( flow->GetTailPosition() ) < radius * radius )
+            {
+                if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
+                    speedLimit_ = 0;
+                else
+                    speedLimit_ = std::min( speedLimit_, flow->GetSpeed() );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -713,7 +746,7 @@ double MIL_PopulationFlow::GetMaxSpeed() const
 {
     if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
         return 0;
-    return GetPopulation().GetMaxSpeed();
+    return std::min( speedLimit_, GetPopulation().GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
