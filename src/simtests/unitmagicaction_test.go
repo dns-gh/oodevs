@@ -1866,7 +1866,7 @@ func Helitransport(c *C, client *swapi.Client, transported, carrier *swapi.Unit)
 
 	// Mission 'AAVN - Air lift'
 	params = swapi.MakeParameters(heading, nil, nil, nil,
-		swapi.MakeAgent(transported.Id),
+		swapi.MakeAgentKnowledge(transported.Id),
 		swapi.MakePolygonParam(makeRectPoints(pos, 0.0001, 0.0001)...),
 		swapi.MakeLinePathParam(pos, to),
 		dest,
