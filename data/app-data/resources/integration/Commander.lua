@@ -3,32 +3,29 @@
 -------------------------------------------------------------------
 
 --- Returns the company location
--- Can be called by an agent or a company
 -- @param commander Ditectia commander
--- @return location Simulation location
+-- @return Simulation point
 integration.getCommanderPosition = function( commander )
     return DEC_Automate_Position( commander.source )
 end
 
---- Returns the company subordinates with the HQ
--- Can be called by an agent or a company
+--- Returns the company subordinates including the HQ
 -- @param commander Directia commander
 -- @return list of simulation agents
 integration.getSubordinateAgentsFromCommander = function( commander )
     return DEC_Automate_PionsDeAutomateAvecPC( commander.source )
 end
 
---- Deprecated  : use integration.getCommanderPosition
+--- Deprecated : use integration.getCommanderPosition
 -- Returns the company location
--- Can be called by an agent or a company
 -- @param subordinate Directia commander
--- @return location Simulation location 
+-- @return Simulation point 
 integration.getSubordinatePosition = function( commander )
     return DEC_Automate_Position( commander.source ) 
 end
 
---- Returns the company subordinates with the HQ
--- Can be called by an agent or a company
+--- Deprecated : use integration.getSubordinateAgentsFromCommander
+-- Returns the company subordinates including the HQ
 -- @param commander Simulation commander
 -- @return list of simulation agents
 integration.getAgentsFromCommander = function( commander )
@@ -37,14 +34,13 @@ end
 
 --- Returns true if the company is engaged, false otherwise
 -- This method can only be called by an agent
--- @param self Deprecated, unused
 -- @return Boolean, whether or not the company is engaged
-integration.isCommanderEngaged = function( self )
+integration.isCommanderEngaged = function( )
     return DEC_Agent_AutomateEstEmbraye()
 end
 
---- Returns true if the company of the provided simulation agent is engaged, false otherwise
--- This method can only be called by an agent
+--- Returns true if the company is engaged, false otherwise
+-- This method can only be called by a company
 -- @param agent Simulation agent
 -- @return Boolean, whether or not the company is engaged
 integration.isAgentCommanderEngaged = function( agent )
@@ -52,22 +48,19 @@ integration.isAgentCommanderEngaged = function( agent )
 end
 
 --- Returns the HQ of the company
--- Can be called by an agent or a company
--- @param self Deprecated, unused
 -- @return Simulation agent
-integration.commanderGetHQUnit = function( self )
+integration.commanderGetHQUnit = function( )
     return DEC_Automate_PionPC()
 end
 
---- Returns the company of the unit
--- Can be called by an agent or a company
+--- Returns the company of the agent
 -- @param entity Simulation agent
 -- @return Simulation commander
 integration.getCommander = function( entity )
     return DEC_GetAutomate( entity )
 end
 
---- Returns true if the unit is contaminated, false otherwise
+--- Returns true if the agent is contaminated, false otherwise
 -- This method can only be called by a company
 -- @param entity Simulation agent
 -- @return Boolean, whether or not the company is contaminated
@@ -83,22 +76,17 @@ integration.isCommanderPoisoned = function( entity )
     return DEC_Automate_PionEstEmpoisonne( entity )
 end
 
---- Returns the rules of engagement for company against crowd
+--- Returns the rules of engagement for this company against crowd
 -- This method can only be called by a company
 -- @return Integer, the rules of engagement type among one of the following : 
 -- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (forbidden fire) </li>
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (non-lethal weapons) </li>
 -- <li> eEtatROEPopulation_ArmesLetalesAutorisees (lethal weapons allowed) </li> </ul>
-integration.getPopulationROE = function( )
-    return DEC_Automate_ROEPopulation( )
-end
+integration.getPopulationROE = DEC_Automate_ROEPopulation
 
---- Returns true if method DEC_Automate_ROEPopulation exists in simulation
--- This method can only be called by a company
--- @see integration.getCommanderROE
--- @return Boolean, whether or not the method exists in simulation
+--- Returns function integration.getPopulationROE
 integration.getPopulationROEExist = function( )
-    return DEC_Automate_ROEPopulation
+    return integration.getPopulationROE
 end
 
 --- Returns the rules of engagement for company against military units 
@@ -107,20 +95,14 @@ end
 -- <ul> <li> eRoeStateFreeFire </li>
 -- <li> eRoeStateRestrictedFire </li>
 -- <li> eRoeStateFireByOrder </li> </ul>  
-integration.getCommanderROE = function( )
-    return DEC_Automate_ROE( )
-end
+integration.getCommanderROE = DEC_Automate_ROE
 
---- Returns true if method DEC_Automate_ROEPopulation exists in simulation
--- This method can only be called by a company
--- @see integration.getCommanderROE 
--- @return Boolean, whether or not the method exists in simulation
+--- Returns function integration.getCommanderROE
 integration.getCommanderROEExist = function( )
-    return DEC_Automate_ROE
+    return integration.getCommanderROE
 end
 
 --- Returns true if the company is engaged, false otherwise
--- Can be called by an agent or a company
 -- @return Boolean, whether or not the company is engagd 
 integration.isEngagedCommander = function( )
     return DEC_Automate_EstEmbraye( )
@@ -130,7 +112,7 @@ end
 -- This method can only be called by a company
 -- @param agent DirectIA agent
 -- @param capacity, Integer among one of the following :
--- <ul> <li> PionEfficiencyRecon </li>
+-- <ul> <li> ePionEfficiencyRecon </li>
 -- <li> ePionEfficiencyCombatSupport </li>
 -- <li> ePionEfficiencyCombat </li>
 -- <li> ePionEfficiencyMobilitySupport </li>
@@ -145,14 +127,12 @@ integration.getCommanderEfficacity = function( agent, capacity )
 end
 
 ---- Returns the HQ (simulation agent) of a company
--- Can be called by an agent or a company
 -- @return Simulation agent
 integration.getHQ = function( )
     return DEC_Automate_PionPCDeAutomate( DEC_GetAutomate( myself ) )
 end
 
 ---- Returns the HQ (directIA agent knowledge) of a company
--- Can be called by an agent or a company
 -- @return knowledge HQ
 integration.getKnowledgeHQ = function( )
     return CreateKnowledge( integration.ontology.types.agent, integration.getHQ() )
