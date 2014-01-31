@@ -47,7 +47,7 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
-    void MoveAlong( const MT_Vector2D& destination );
+    void MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void CancelMove();
     virtual bool IsReady() const;
     MIL_PopulationFlow* Split( const MT_Vector2D& splittingPoint, std::size_t segmentIndex );
@@ -147,6 +147,7 @@ private:
     bool ManageSplit();
     void MoveToAlternateDestination( const MT_Vector2D& destination );
     void ComputePath( const MT_Vector2D& destination );
+    void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void DetachFromDestConcentration();
     //@}
 

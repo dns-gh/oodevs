@@ -200,6 +200,18 @@ void MIL_PopulationFlow::DetachFromDestConcentration()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 {
+    boost::shared_ptr< MT_Vector2D > pDestination = boost::make_shared< MT_Vector2D >( destination );
+    std::vector< boost::shared_ptr< MT_Vector2D > > vDestination;
+    vDestination.push_back( pDestination );
+    ComputePathAlong( vDestination);
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ComputePathAlong
+// Created: JSR 2014-01-16
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
+{
     CancelMove();
     if( pTailPath_ )
     {
@@ -542,6 +554,8 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     if( ManageSplit() )
         return;
     if( ManageObjectSplit() )
+        return;
+    if( bBlocked_ && canCollideWithFlow_ )
         return;
     const double rWalkedDistance = GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
@@ -1187,14 +1201,14 @@ bool MIL_PopulationFlow::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter
 // Name: MIL_PopulationFlow::MoveAlong
 // Created: LDC 2013-03-29
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::MoveAlong( const MT_Vector2D& destination )
+void MIL_PopulationFlow::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
 {
-    if( destination == primaryDestination_ || !pHeadPath_ )
-        Move( destination );
-    else
-        Move( primaryDestination_ );
+    if( !pHeadPath_ )
+        ComputePathAlong( destination );
+    primaryDestination_ = *destination.back();
+    Move( primaryDestination_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::CancelMove
 // Created: LDC 2013-03-29

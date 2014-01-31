@@ -967,8 +967,8 @@ void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2
 {
     if( destination.empty() )
         return;
-    APPLY_ON_CONCENTRATIONS( concentration.Move( *destination[0] ); )
-    APPLY_ON_FLOWS( flow.MoveAlong( *destination[0] ); ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
+    APPLY_ON_CONCENTRATIONS( concentration.Move( *destination.back() ); )
+    APPLY_ON_FLOWS( flow.MoveAlong( destination ); )
     UpdateBarycenter();
 }
 
