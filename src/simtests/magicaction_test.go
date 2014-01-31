@@ -293,7 +293,7 @@ func (s *TestSuite) TestTriggerError(c *C) {
 }
 
 func (s *TestSuite) TestSelectTransporter(c *C) {
-	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts := NewAllUserOpts(ExCrossroadSmallLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)

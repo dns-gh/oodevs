@@ -534,7 +534,7 @@ func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, res
 }
 
 func (s *TestSuite) TestMaintenanceHandlings(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -619,7 +619,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -674,7 +674,7 @@ func SetMaintenanceManualMode(c *C, client *swapi.Client, id uint32) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
