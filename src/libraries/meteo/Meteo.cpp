@@ -101,7 +101,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
         throw MASA_EXCEPTION( xis.context() + "Unknown Precipitation type '" + strVal + "'" );
 
     wind_.rSpeed_ *= conversionFactor_;
-    Update( *pLighting_ );
+    SetLighting( *pLighting_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
     , temperature_     ( 20 )
 {
     Update( msg );
-    Update( light );
+    SetLighting( light );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,26 +280,6 @@ void Meteo::Update( const sword::MissionParameters& msg )
     cloud_.nCeiling_ = cloudCeiling;
     cloud_.nDensityPercentage_ = std::min( std::max( cloudDensity, 0 ), 100 );
     cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Meteo::Update
-// Created: JVT 03-08-07
-//-----------------------------------------------------------------------------
-void Meteo::Update( const PHY_Lighting& light )
-{
-    pLighting_ = &light.GetDegradedLighting( (unsigned int)( cloud_.rDensity_ * ( cloud_.nCeiling_ - cloud_.nFloor_ ) / 2000 ) );
-    modified_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Meteo::Update
-// Created: HBD 2010-04-06
-// -----------------------------------------------------------------------------
-void Meteo::Update( const PHY_Precipitation& precipitation)
-{
-    pPrecipitation_ = &precipitation;
-    modified_ = true;
 }
 
 // -----------------------------------------------------------------------------

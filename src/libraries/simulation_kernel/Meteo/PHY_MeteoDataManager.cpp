@@ -28,11 +28,12 @@
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 namespace bpt = boost::posix_time;
 
@@ -40,24 +41,12 @@ unsigned int PHY_MeteoDataManager::localCounter_ = 1;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 
-namespace
-{
-
-PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
-        weather::Meteo& globalMeteo, MIL_Config& config )
-{
-    return new PHY_RawVisionData( globalMeteo, config.GetDetectionFile(), m );
-}
-
-} // namespace
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 PHY_MeteoDataManager::PHY_MeteoDataManager()
-    : pEphemeride_ ( 0 )
-    , pGlobalMeteo_( 0 )
+    : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
     // NOTHING
@@ -67,34 +56,15 @@ PHY_MeteoDataManager::PHY_MeteoDataManager()
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------
-PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
-    : pEphemeride_ ( 0 )
-    , pGlobalMeteo_( 0 )
+PHY_MeteoDataManager::PHY_MeteoDataManager( xml::xistream& xis,
+       const tools::Path& detectionFile, uint32_t now )
+    : pGlobalMeteo_( 0 )
     , pRawData_    ( 0 )
 {
-    config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Load, this, _1, boost::ref( config ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::Initialize
-// Created: JSR 2011-11-22
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Initialize()
-{
-    weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::Load
-// Created: LDC 2010-12-02
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
-{
     xis >> xml::start( "weather" );
-    pEphemeride_ = new PHY_Ephemeride( xis );
+    pEphemeride_ = ReadEphemeride( xis, now );
     InitializeGlobalMeteo( xis );
-    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, detectionFile, this );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -107,8 +77,6 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
     delete pGlobalMeteo_;
-    weather::PHY_Lighting::Terminate();
-    weather::PHY_Precipitation::Terminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +87,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
-    pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
+    pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
 
@@ -244,7 +212,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pEphemeride_
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile(), this );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {
@@ -331,9 +299,9 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_INFO_MSG( "Ephemeris is now: " << pEphemeride_->GetLightingBase().GetName() );
-        pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
+        pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
-            it->second->Update( pEphemeride_->GetLightingBase() );
+            it->second->SetLighting( pEphemeride_->GetLightingBase() );
     }
     pGlobalMeteo_->SendCreationIfModified();
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
@@ -395,6 +363,6 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::AddMeteo( const boost::shared_ptr< PHY_LocalMeteo >& meteo )
 {
-    meteo->Update( pEphemeride_->GetLightingBase() );
+    meteo->SetLighting( pEphemeride_->GetLightingBase() );
     meteos_[ meteo->GetId() ] = meteo;
 }

@@ -14,8 +14,6 @@
 #include "clients_kernel/Tools.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
-#include "meteo/PHY_Precipitation.h"
-#include "meteo/PHY_Lighting.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -39,8 +37,6 @@ WeatherModel::WeatherModel( Controller& controller, const CoordinateConverter_AB
     , nightLighting_( eLightingType_NuitPleineLune )
     , globalWeather_( new weather::Meteo( 0, 0 ) )
 {
-    weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
     controller_.Create( *this );
 }
 
@@ -50,8 +46,6 @@ WeatherModel::WeatherModel( Controller& controller, const CoordinateConverter_AB
 // -----------------------------------------------------------------------------
 WeatherModel::~WeatherModel()
 {
-    weather::PHY_Lighting::Terminate();
-    weather::PHY_Precipitation::Terminate();
     Purge();
     controller_.Delete( *this );
 }

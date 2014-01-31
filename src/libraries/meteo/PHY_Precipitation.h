@@ -27,19 +27,7 @@ namespace weather
 class PHY_Precipitation : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const PHY_Precipitation* > T_PrecipitationMap;
-    typedef T_PrecipitationMap::const_iterator CIT_PrecipitationMap;
-    //@}
-
-public:
-    //! @name Manager
-    //@{
-    static void Initialize();
-    static void Terminate ();
-
-    static const T_PrecipitationMap& GetPrecipitations();
+    static const std::map< std::string, const PHY_Precipitation* >& GetPrecipitations();
     static const PHY_Precipitation* FindPrecipitation( const std::string& strName );
     static const PHY_Precipitation* FindPrecipitation( E_WeatherType type );
     //@}
@@ -51,13 +39,13 @@ public:
     //@}
 
 public:
-    static PHY_Precipitation none_;
-    static PHY_Precipitation sandStorm_;
-    static PHY_Precipitation fog_;
-    static PHY_Precipitation drizzle_;
-    static PHY_Precipitation rain_;
-    static PHY_Precipitation snow_;
-    static PHY_Precipitation smoke_;
+    static const PHY_Precipitation none_;
+    static const PHY_Precipitation sandStorm_;
+    static const PHY_Precipitation fog_;
+    static const PHY_Precipitation drizzle_;
+    static const PHY_Precipitation rain_;
+    static const PHY_Precipitation snow_;
+    static const PHY_Precipitation smoke_;
 
 private:
     //! @name Constructors/Destructor
@@ -71,11 +59,6 @@ private:
     //@{
     const std::string strName_;
     const E_WeatherType nType_;
-    //@}
-
-    //! @name Static data
-    //@{
-    static T_PrecipitationMap precipitations_;
     //@}
 };
 

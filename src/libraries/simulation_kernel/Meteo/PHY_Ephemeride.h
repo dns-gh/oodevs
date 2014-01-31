@@ -12,7 +12,12 @@
 #ifndef __PHY_Ephemeride_h_
 #define __PHY_Ephemeride_h_
 
-#include "MIL.h"
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <utility>
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace weather
 {
@@ -22,6 +27,7 @@ namespace weather
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 //*****************************************************************************
@@ -34,13 +40,15 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Ephemeride();
-    explicit PHY_Ephemeride( xml::xistream& xis );
+             PHY_Ephemeride( const std::string& dayBase, const std::string& nightBase,
+                const std::string& sunrise, const std::string& sunset,
+                uint32_t epochTime );
     virtual ~PHY_Ephemeride();
     //@}
 
     //! @name Operations
     //@{
-    bool UpdateNight( unsigned int date );
+    bool UpdateNight( uint32_t date );
     const weather::PHY_Lighting& GetLightingBase() const;
     bool IsNight() const;
     //@}
@@ -64,5 +72,9 @@ private:
     const weather::PHY_Lighting* pNightBase_;
     //@}
 };
+
+boost::shared_ptr< PHY_Ephemeride > ReadEphemeride(
+        xml::xistream& xis, uint32_t epochTime );
+
 
 #endif // __PHY_Ephemeride_h_

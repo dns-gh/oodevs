@@ -26,19 +26,7 @@ namespace weather
 class PHY_Lighting : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const PHY_Lighting* > T_LightingMap;
-    typedef T_LightingMap::const_iterator              CIT_LightingMap;
-    //@}
-
-public:
-    //! @name Manager
-    //@{
-    static void Initialize();
-    static void Terminate ();
-
-    static const T_LightingMap& GetLightings();
+    static const std::map< std::string, const PHY_Lighting* >& GetLightings();
     static const PHY_Lighting* FindLighting( const std::string& strName );
     static const PHY_Lighting* FindLighting( E_LightingType value );
     //@}
@@ -55,29 +43,26 @@ public:
     //@}
 
 public:
-    static PHY_Lighting jourSansNuage_;
-    static PHY_Lighting jourPeuNuageux_;
-    static PHY_Lighting jourMoyennementNuageux_;
-    static PHY_Lighting jourAssezNuageux_;
-    static PHY_Lighting jourTresNuageux_;
-    static PHY_Lighting nuitPleineLune_;
-    static PHY_Lighting nuitTroisQuartDeLune_;
-    static PHY_Lighting nuitDemiLune_;
-    static PHY_Lighting nuitQuartDeLune_;
-    static PHY_Lighting nuitNouvelleLune_;
-    static PHY_Lighting eclairant_;
+    static const PHY_Lighting jourSansNuage_;
+    static const PHY_Lighting jourPeuNuageux_;
+    static const PHY_Lighting jourMoyennementNuageux_;
+    static const PHY_Lighting jourAssezNuageux_;
+    static const PHY_Lighting jourTresNuageux_;
+    static const PHY_Lighting nuitPleineLune_;
+    static const PHY_Lighting nuitTroisQuartDeLune_;
+    static const PHY_Lighting nuitDemiLune_;
+    static const PHY_Lighting nuitQuartDeLune_;
+    static const PHY_Lighting nuitNouvelleLune_;
+    static const PHY_Lighting eclairant_;
 
 private:
      PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting );
     ~PHY_Lighting();
 
 private:
-    const std::string    strName_;
-    const E_LightingType     nType_;
+    const std::string strName_;
+    const E_LightingType nType_;
     const PHY_Lighting* pNextDegradedLighting_;
-
-private:
-    static T_LightingMap lightings_;
 };
 
 }

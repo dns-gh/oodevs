@@ -118,8 +118,6 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Update( const sword::WeatherAttributes& msg );
     virtual void Update( const sword::MissionParameters& asn );
-    virtual void Update( const PHY_Lighting& lighting );
-    virtual void Update( const PHY_Precipitation& precipitation);
     virtual void Update( const Meteo& );
             void SendCreationIfModified();
     virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
