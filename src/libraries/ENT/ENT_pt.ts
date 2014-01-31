@@ -1335,11 +1335,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Log Maintenance To Manual</source>
+        <source>Automat and units creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat and units creation</source>
+        <source>Switch Log Maintenance Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
