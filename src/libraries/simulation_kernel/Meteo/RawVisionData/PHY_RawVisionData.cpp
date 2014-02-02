@@ -24,7 +24,8 @@
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::Path& detection, PHY_MeteoDataManager* manager )
+PHY_RawVisionData::PHY_RawVisionData( const weather::Meteo& globalMeteo,
+        const tools::Path& detection, PHY_MeteoDataManager* manager )
     : nNbrCol_( 0 )
     , nNbrRow_( 0 )
     , meteoManager_( manager )

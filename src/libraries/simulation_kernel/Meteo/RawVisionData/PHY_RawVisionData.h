@@ -60,7 +60,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::Path& detection, PHY_MeteoDataManager* manager );
+             PHY_RawVisionData( const weather::Meteo& globalMeteo,
+                     const tools::Path& detection, PHY_MeteoDataManager* manager );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -123,7 +124,7 @@ private:
     std::auto_ptr< ElevationGrid > pElevationGrid_;
 
     PHY_MeteoDataManager* meteoManager_;
-    weather::Meteo& globalMeteo_;
+    const weather::Meteo& globalMeteo_;
 };
 
 #endif // __PHY_RawVisionData_h_
