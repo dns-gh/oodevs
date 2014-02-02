@@ -101,18 +101,39 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 {
     xis >> xml::optional
         >> xml::start( "local-weather" )
-            >> xml::list( "local", *this, &PHY_MeteoDataManager::ReadPatchLocal )
+            >> xml::list( "local", [&]( xml::xistream& xis )
+            {
+                InternalAddLocalWeather( xis );
+            })
         >> xml::end;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::ReadPatchLocal
-// Created: ABL 2007-07-27
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::InternalAddLocalWeather(
+        xml::xistream& xis )
 {
-    AddMeteo( boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
-        pEphemeride_->GetLightingBase(), tickDuration_ ));
+    const auto w = boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
+        pEphemeride_->GetLightingBase(), tickDuration_ );
+    AddMeteo( w );
+    return w;
+}
+
+boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::AddLocalWeather(
+        xml::xistream& xis )
+{
+    xis >> xml::start( "local" );
+    auto w = InternalAddLocalWeather( xis );
+    xis >> xml::end;
+    return w;
+}
+
+bool PHY_MeteoDataManager::RemoveLocalWeather( uint32_t id )
+{
+    const auto it = meteos_.find( id );
+    if( it == meteos_.end() )
+        return false;
+    it->second->SendDestruction();
+    meteos_.erase( it );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,12 +187,8 @@ void PHY_MeteoDataManager::RemoveLocalWeather( const sword::MagicAction& msg )
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const uint32_t id = protocol::GetIdentifier( params, 0 );
-    const auto it = meteos_.find( id );
-    if( it == meteos_.end() )
+    if( !RemoveLocalWeather( id ) )
         throw MASA_BADPARAM_MAGICACTION( "parameters[0] must be a local weather identifier" );
-
-    it->second->SendDestruction();
-    meteos_.erase( it );
 }
 
 // -----------------------------------------------------------------------------

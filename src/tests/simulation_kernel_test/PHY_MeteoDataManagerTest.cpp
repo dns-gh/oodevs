@@ -11,9 +11,26 @@
 #include "simulation_kernel/Meteo/PHY_Ephemeride.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "simulation_kernel/MIL_Time_ABC.h"
+#include "simulation_kernel/Network/NET_Publisher_ABC.h"
+#include "StubTER_World.h"
+#include <meteo/Meteo.h>
 #include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
+
+namespace
+{
+
+class FakePublisher : public NET_Publisher_ABC
+{
+public:
+    FakePublisher() {}
+    virtual ~FakePublisher() {}
+
+    virtual void Send( sword::SimToClient& ) {}
+};
+
+} // namespace
 
 BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
 {
@@ -64,11 +81,11 @@ BOOST_AUTO_TEST_CASE( phy_ephemeride_test )
     BOOST_REQUIRE( moon );
 }
 
-BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
+namespace
 {
-    // This test may look useless but it actually creates a PHY_MeteoDataManager
-    // without MIL_AgentServer *and without crashing*.
-    // So who is the boss, hmm?
+
+boost::shared_ptr< PHY_MeteoDataManager > CreateMeteoManager()
+{
     xml::xistringstream xis(
     "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
     "<weather model-version=\"4.8.2\" "
@@ -87,5 +104,37 @@ BOOST_AUTO_TEST_CASE( phy_meteodatamanager )
     );
     tools::Path detectionFile = testOptions.GetDataPath(
             "../../data/terrains/Paris_Est/Detection/detection.dat" );
-    PHY_MeteoDataManager meteo( xis, detectionFile, 0, 10 );
+    return boost::make_shared< PHY_MeteoDataManager >( xis, detectionFile, 0, 10 );
+}
+
+boost::shared_ptr< xml::xistringstream > ReadXml( const std::string& data )
+{
+    return boost::make_shared< xml::xistringstream >( data );
+}
+
+}  // namespace
+
+BOOST_AUTO_TEST_CASE( phy_meteodatamanager_weather_api )
+{
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+    FakePublisher publisher;
+
+    auto man = CreateMeteoManager();
+
+    // Remove imaginary weather
+    BOOST_CHECK( !man->RemoveLocalWeather( 1234 ) );
+
+    // Add and remove a valid one
+    const std::string valid(
+    "<local bottom-right=\"31UEQ1312638405\" end-time=\"20110409T095036\" start-time=\"20110408T095036\" top-left=\"31UDQ7958368892\">"
+    "  <wind direction=\"0\" speed=\"0\"/>"
+    "  <cloud-cover ceiling=\"0\" density=\"0\" floor=\"0\"/>"
+    "  <temperature value=\"20\"/>"
+    "  <precipitation value=\"PasDePrecipitation\"/>"
+    "</local>"
+    );
+
+    const auto w1 = man->AddLocalWeather( *ReadXml( valid ) );
+    BOOST_CHECK( w1 );
+    BOOST_CHECK( man->RemoveLocalWeather( w1->GetId() ));
 }
