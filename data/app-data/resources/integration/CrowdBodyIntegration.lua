@@ -190,7 +190,7 @@ end
 -- on the domination value if the controlling unit cannot use lethal weapons (between 0 and 10).
 -- @param lethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
 -- on the domination value if the controlling unit can use lethal weapons (between 0 and 10).
--- @return Negative float, the computed domination differential (between -1 and -0.1).
+-- @return Negative float, the computed domination differential (between -0.1 and 0).
 function S_EffetSecurisationSurDomination( roe, nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
     local nbrPersonne = DEC_GetNombrePersonne()
     local valeurNominale = -10
