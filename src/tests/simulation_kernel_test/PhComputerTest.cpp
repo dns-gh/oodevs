@@ -38,22 +38,11 @@
 
 namespace
 {
-    struct WorldFixture
-    {
-        WorldFixture()
-        {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
-        }
-        ~WorldFixture()
-        {
-            TER_World::DestroyWorld();
-        }
-    };
-
-    struct Fixture : WorldFixture
+    struct Fixture
     {
         Fixture()
-            : firerFixture ( controller, effectManager )
+            : world( "worldwide/tests/EmptyParis-ML" )
+            , firerFixture ( controller, effectManager )
             , targetFixture( controller, effectManager )
             , vertices     ( boost::assign::list_of( MT_Vector2D( 0, 0 ) )( MT_Vector2D( 0, 2 ) )
                                                    ( MT_Vector2D( 2, 2 ) )( MT_Vector2D( 2, 0 ) ) )
@@ -78,6 +67,7 @@ namespace
             TER_Localisation localisation( TER_Localisation::ePolygon, vertices );
             urbanBlock->UpdateLocalisation( localisation );
         }
+        FakeWorld world;
         MissionController controller;
         MIL_EffectManager effectManager;
         FixturePion firerFixture;

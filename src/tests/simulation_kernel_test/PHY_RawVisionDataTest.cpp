@@ -13,23 +13,10 @@
 #include "meteo/Meteo.h"
 #include "StubTER_World.h"
 
-namespace
+BOOST_AUTO_TEST_CASE( phy_rawvisiondata_getaltitude_offsets )
 {
-    struct Fixture
-    {
-        Fixture()
-        {
-            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
-        }
-        ~Fixture()
-        {
-            TER_World::DestroyWorld();
-        }
-    };
-}
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
 
-BOOST_FIXTURE_TEST_CASE( phy_rawvisiondata_getaltitude_offsets, Fixture )
-{
     weather::Meteo meteo;
     tools::Path detectionFile = testOptions.GetDataPath( "../../data/terrains/Paris_Est/Detection/detection.dat" );
     PHY_RawVisionData vision( meteo, detectionFile, 0 );

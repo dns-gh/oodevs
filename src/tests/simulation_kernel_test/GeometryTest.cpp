@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
 
 BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
@@ -126,13 +126,12 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
         BOOST_CHECK_EQUAL( result.rX_, 16 );
         BOOST_CHECK_EQUAL( result.rY_, 20 );
     }
-
-    TER_World::DestroyWorld();
 }
 
 BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
+
     std::vector< TER_Localisation* > locations;
     locations.push_back( new TER_Localisation( TER_Localisation::ePolygon,
              boost::assign::list_of( MT_Vector2D( 100, 100 ) )
@@ -158,5 +157,4 @@ BOOST_AUTO_TEST_CASE( GeometryComputeConvexHull )
                                                    ( MT_Vector2D( 103, 98 ) );
 
     BOOST_CHECK_EQUAL_COLLECTIONS( result->GetPoints().begin(), result->GetPoints().end(), expected.begin(), expected.end() );
-    TER_World::DestroyWorld();
 }

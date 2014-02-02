@@ -48,7 +48,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
-    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
+    FakeWorld world( "worldwide/tests/EmptyParis-ML" );
     {
         MIL_ObjectFactory factory;
         {
@@ -85,5 +85,4 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
             BOOST_CHECK( kn.GetCurrentRecceProgress() > 0. );
         }
     }
-    TER_World::DestroyWorld();
 }
