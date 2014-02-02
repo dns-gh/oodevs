@@ -65,7 +65,7 @@ ammoClass[ eEtatROEPopulation_ArmesLetalesAutorisees ] = "mitraille"
 -- @see integration.stopShootingOnCrowd
 -- @param crowd Crowd knowledge
 -- @return Boolean, false if a current engaging action involving this entity
--- and the given crowd is currently occurring, nothing otherwise.
+-- and the given crowd is currently occurring, true otherwise.
 integration.startShootingOnCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionTir then
@@ -74,6 +74,7 @@ integration.startShootingOnCrowd = function( crowd )
     end
     crowd[myself].actionTir = DEC__StartTirSurPopulation( crowd.source, ammoClass[ integration.getCrowdROEForAgent() ] )
     actionCallbacks[ crowd[myself].actionTir ] = function( arg ) crowd[myself].eTir = arg end
+    return true
 end
 
 --- Makes this entity stop engaging the given crowd.
@@ -104,7 +105,7 @@ integration.isKnowledgeInCrowd = function( target )
     return DEC_ConnaissanceAgent_EstDansFoule( target.source )
 end
 
---- Returns a list of all crowds known by this entity or this company.
+--- Returns a list of all crowds known by this entity.
 -- This method can only be called by an agent or a company.
 -- @return List of simulation crowds
 integration.getCrowds = function()
@@ -131,10 +132,9 @@ end
 -- displays reports, and gives information about whether
 -- this entity's attempt at controlling the given crowd is working, or
 -- if the crowd is out of control.
--- For the crowd controlling to work, the domination value of this crowd must have
--- decreased at least at the given decrease rate since the last time this method
--- checked it. This method checks the decreasing of the domination value
--- with the given periodicity.
+-- If the domination value has decreased less than the given decrease rate
+-- over the last period, then the control fails and the method returns false. 
+-- This method checks the decreasing of the domination value with the given periodicity.
 -- Once the crowd is completely controlled, it gives additional informations
 -- about itself.
 -- This method can only be called by an agent.
@@ -186,8 +186,7 @@ integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
     return nil
 end
 
---- Makes this entity start intervening on the given crowd,
---- in order to retaliate against its potential assault.
+--- Makes this entity start periodically firing on the given crowd.
 -- @param crowd Crowd knowledge
 -- @see integration.updateInterveneOnCrowd
 -- @see integration.stopInterveneOnCrowd
@@ -196,8 +195,7 @@ integration.startInterveneOnCrowd = function( crowd )
     crowd.rTempsDebut = getSimulationTime()
 end
 
---- Makes this entity continue intervening on the given crowd,
---- in order to retaliate against its potential assault.
+--- Makes this entity continue periodically firing on the given crowd.
 -- This entity will engage the crowd with the given periodicity.
 -- This method can only be called by an agent.
 -- @see integration.startInterveneOnCrowd
@@ -220,7 +218,7 @@ integration.updateInterveneOnCrowd = function( crowd, periodicity )
     return true
 end
 
---- Makes this entity stop intervening on the given crowd.
+--- Makes this entity stop firing on the given crowd.
 -- Ceases fire against the given crowd.
 -- @see integration.startInterveneOnCrowd
 -- @see integration.updateInterveneOnCrowd
@@ -256,8 +254,7 @@ end
 --- Returns the affinity level of the given crowd towards this entity's side.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
--- @return Float, the affinity level of the given crowd between 0 and 100
--- (the result of a linear interpolation from [-1;1] to [0;100]).
+-- @return Float, the affinity level of the given crowd between 0 and 100.
 integration.affinityLevel = function( crowd )
     return ( DEC_GetAdhesionPopulation( crowd.source ) + 1 ) * 50
 end
@@ -326,9 +323,9 @@ integration.getNbPersonConcentration = function ( crowd, concentration )
 end
 
 --- Extracts wounded humans from the given crowd.
--- This method creates a concentration on a safe position near the given crowd
--- (or at this entity's position if there is no such position) with all the wounded
--- humans of the given crowd.
+-- This method creates a concentration on a safe position near the given crowd (i.e. a closeby
+-- position at the periphery of the given crowd at the opposite of the current danger direction)
+-- with all the wounded humans of the given crowd.
 -- This method does nothing if there is no wounded humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
@@ -423,7 +420,7 @@ integration.healWoundedInCrowd = function( crowd )
     return DEC_Crowd_HealWoundedHumans( crowd.source )
 end
 
---- Returns the number of wounded units in the given crowd.
+--- Returns the number of wounded humans in the given crowd.
 -- This method can only be called by an agent or by a company.
 -- @see integration.crowdGetHumansFromAllTypes
 -- @param crowd Crowd knowledge
@@ -457,9 +454,11 @@ integration.isKnowledgeCrowdInsideArea = function( crowd, area )
 end
 
 --- Locks the given crowd knowledge in order to guarantee that
---- it will not be lost by this entity, as long as the knowledge
+--- it will not be forgotten by this entity, as long as the knowledge
 --- remains locked (i.e. until the integration.unlockCrowdKnowledge
 --- method is called on the given crowd).
+-- This method is most notably used for crowd transporting, because
+-- a transported crowd is not perceived and its knowledge may be forgotten.
 -- This method can only be called by an agent.
 -- @see integration.unlockCrowdKnowledge
 -- @param crowd Crowd knowledge
@@ -478,7 +477,7 @@ integration.unlockCrowdKnowledge = function( crowd )
     DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
 end
 
---- Returns true if the given crowd id is valid, false otherwise.
+--- Returns true if the given crowd knowledge is valid, false otherwise.
 -- @param crowd Simulation crowd
 -- @return Boolean
 integration.isKnowledgeCrowdValid = function( crowd )
@@ -486,10 +485,12 @@ integration.isKnowledgeCrowdValid = function( crowd )
 end
 
 --- Makes this entity start hiding in the given crowd.
--- An enemy with a favorable rule of engagement towards crowd
--- will not be able to engage an agent that is hiding in a crowd.
+-- This entity will be among the returned entities of
+-- the integration.getAgentsHiddenInCrowd method for as
+-- long as this entity will remain hidden in the given crowd.
 -- This method can only be called by an agent.
 -- @see integration.stopHidingInCrowd
+-- @see integration.getAgentsHiddenInCrowd
 -- @param crowd Crowd knowledge
 integration.startHidingInCrowd = function( crowd )
     DEC_StartHidingInCrowd( crowd.source )
@@ -517,6 +518,7 @@ integration.getAgentsHiddenInCrowd = function( crowd )
 end
 
 --- Returns the given crowd's head position.
+-- If the given crowd has several flows, the position of the first created flow's head is returned.
 -- If the given crowd has no flow, then this method will return this crowd's position.
 -- Otherwise, this method will return the position at the head of this crowd's flow
 -- (or the position returned at the previous call of this method, if it is located
@@ -532,7 +534,7 @@ integration.getHeadPosition = function( crowd, refreshDistance )
         refreshDistance = refreshDistance or 30
         local pointEnTete = DEC_ConnaissancePopulation_PointEnTeteDeFlux( myself, crowd.source )
         if not crowd.getPointEnTeteResult then
-            crowd.getPointEnTeteResult = pointEnTe
+            crowd.getPointEnTeteResult = pointEnTete
         elseif DEC_Geometrie_DistanceBetweenPoints( crowd.getPointEnTeteResult,  pointEnTete ) > refreshDistance then
             crowd.getPointEnTeteResult = pointEnTete
         end

@@ -42,6 +42,12 @@ integration.crowdRC = function ( ... )
     integration.report( ... )
 end
 
+--- Returns this crowd's aggressiveness coefficient.
+-- This method can only be called by a crowd.
+-- @see integration.startAttackingIt
+-- @see integration.updateAttackingIt
+-- @return Float between 0 and 1, 0 meaning this crowd is
+-- quiet and 1 meaning that this crowd is aggressive.
 local coeffAgressionForCurrentAttitude = function()
     local attitude =  DEC_Population_Attitude()
     if attitude == eAttitudePopulation_Calme then
@@ -65,7 +71,7 @@ end
 -- @see integration.stopAttackingIt
 -- @param target Directia agent
 -- @return Boolean, false if a current attacking action involving this crowd
--- and the given agent is currently occurring, nothing otherwise.
+-- and the given agent is currently occurring, true otherwise.
 integration.startAttackingIt = function( target )
     target[myself] = target[myself] or {}
     if target[myself].actionTir then
@@ -74,6 +80,7 @@ integration.startAttackingIt = function( target )
     end
     target[myself].intensity = coeffAgressionForCurrentAttitude()
     target[myself].actionTir = DEC_StartTirSurPion( target[myself].intensity, target.source )
+    return true
 end
 
 --- Makes this crowd continue attacking the given agent.
@@ -84,16 +91,17 @@ end
 -- @see integration.startAttackingIt
 -- @see integration.stopAttackingIt
 -- @param target Directia agent
--- @return Boolean, false if this crowd has a new attitude, nothing otherwise.
+-- @return Boolean, false if this crowd has a new attitude, true otherwise.
 integration.updateAttackingIt = function( target )
-   target[myself] = target[myself] or {}
-   local currentIntensity = coeffAgressionForCurrentAttitude()
-   if currentIntensity ~= target[myself].intensity then
-       DEC__StopAction( target[myself].actionTir )
-       target[myself].intensity = currentIntensity
-       target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
-       return false
-   end
+    target[myself] = target[myself] or {}
+    local currentIntensity = coeffAgressionForCurrentAttitude()
+    if currentIntensity ~= target[myself].intensity then
+        DEC__StopAction( target[myself].actionTir )
+        target[myself].intensity = currentIntensity
+        target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
+        return false
+    end
+    return true
 end
 
 
@@ -104,7 +112,7 @@ end
 -- @see integration.updateAttackingIt
 -- @param target Directia agent
 -- @return Boolean, false if an attacking action has been stopped,
--- nothing otherwise.
+-- true otherwise.
 integration.stopAttackingIt = function( target )
     target[myself] = target[myself] or {}
     if target[myself].actionTir then
@@ -112,6 +120,7 @@ integration.stopAttackingIt = function( target )
         target[myself].actionTir = nil
         return false
     end
+    return true
 end
 
 --- Returns true if this crowd has reached the border of the given urban block, false otherwise.
@@ -343,7 +352,7 @@ end
 -- This method can only be called by a crowd.
 -- @param object Object knowledge
 -- @param damageFactor Float between 0 and 1, the damage caused to the given object,
--- 0 meaning no damage and 1 meaning full damage.
+-- 0 meaning no damage and 1 meaning total destruction.
 -- @return Integer, 0 if the damaging was successful, 1 otherwise.
 integration.damageObject = function( object, damageFactor )
     return DEC_ConnaissanceObjet_Degrader( object.source, damageFactor )
