@@ -142,7 +142,7 @@ end
 -- @see integration.controlItCrowd
 -- @param crowd Crowd knowledge
 -- @param periodicity Integer, the number of seconds between every domination value
--- decreasing check.
+-- decrease check.
 -- @param decreaseRate Float between 0 and 100, the expected decrease rate for the
 -- domination value of the controlled crowd for the controlling to be working.
 -- @return Boolean, true if the given crowd's domination value has reached zero (meaning
@@ -340,9 +340,9 @@ integration.extractVictimsFromCrowd = function( crowd )
 end
 
 --- Extracts dead humans from the given crowd.
--- This method creates a concentration on a safe position near the given crowd
--- (or at this entity's position if there is no such position) with all the dead
--- humans of the given crowd.
+-- This method creates a concentration on a safe position near the given crowd (i.e. a closeby
+-- position at the periphery of the given crowd at the opposite of the current danger direction)
+-- with all the dead humans of the given crowd.
 -- This method does nothing if there is no dead humans in the crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
