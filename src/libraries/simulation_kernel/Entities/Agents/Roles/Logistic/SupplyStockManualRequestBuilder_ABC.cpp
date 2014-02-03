@@ -68,24 +68,25 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
     if( !pDotationCategory )
         return;
 
-    std::vector< SupplyStockQuantity > pionStocks;
-    BOOST_FOREACH( MIL_AgentPion* pion, recipient.GetPions() )
-        if( PHY_RoleInterface_Supply* stockPion = pion->RetrieveRole< PHY_RoleInterface_Supply >() )
-            if( PHY_DotationStock* pStock = stockPion->GetStock( *pDotationCategory ) )
-                pionStocks.push_back( SupplyStockQuantity( pion, pStock ) );
+    const auto& pions = recipient.GetPions();
+    std::vector< SupplyStockQuantity > stocks;
+    for( auto it = pions.begin(); it != pions.end(); ++it )
+        if( PHY_RoleInterface_Supply* pion = (*it)->RetrieveRole< PHY_RoleInterface_Supply >() )
+            if( PHY_DotationStock* stock = pion->GetStock( *pDotationCategory ) )
+                stocks.push_back( SupplyStockQuantity( *it, stock ) );
     // Add dynamically a slot for the dotation category, if no initial stock received can hold this kind of dotation
-    if( pionStocks.empty() )
-        BOOST_FOREACH( MIL_AgentPion* pion, recipient.GetPions() )
-            if( PHY_RoleInterface_Supply* stockPion = pion->RetrieveRole< PHY_RoleInterface_Supply >() )
-                if( PHY_DotationStock* pStock = stockPion->AddStock( *pDotationCategory ) )
+    if( stocks.empty() )
+        for( auto it = pions.begin(); it != pions.end(); ++it )
+            if( PHY_RoleInterface_Supply* pion = (*it)->RetrieveRole< PHY_RoleInterface_Supply >() )
+                if( PHY_DotationStock* stock = pion->AddStock( *pDotationCategory ) )
                 {
-                    pionStocks.push_back( SupplyStockQuantity( pion, pStock ) );
+                    stocks.push_back( SupplyStockQuantity( *it, stock ) );
                     break;
                 }
 
     double rTotalValue = resource.quantity();
     // Priority for pions needing supply
-    for( auto it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )
+    for( auto it = stocks.begin(); it != stocks.end() && rTotalValue > 0.; ++it )
     {
         const PHY_DotationStock& stock = *it->stock_;
         const double rAffectedValue = std::min( rTotalValue, std::max( 0., stock.GetCapacity() - stock.GetValue() ) );
@@ -94,19 +95,19 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
     }
 
     // Overhead
-    if( rTotalValue > 0. && !pionStocks.empty() )
+    if( rTotalValue > 0 && !stocks.empty() )
     {
-        const double rAffectedValue = rTotalValue / pionStocks.size();
-        for( auto it = pionStocks.begin(); it != pionStocks.end(); ++it )
+        const double rAffectedValue = rTotalValue / stocks.size();
+        for( auto it = stocks.begin(); it != stocks.end(); ++it )
             it->quantity_ += rAffectedValue;
     }
 
-    BOOST_FOREACH( SupplyStockQuantity& request, pionStocks )
+    for( auto it = stocks.begin(); it != stocks.end(); ++it )
         container.AddResource(
             recipient.GetStockSupplyManager(),
-            *request.pion_,
-            boost::make_shared< SupplyResourceStock >( *request.stock_ ),
-            request.quantity_ );
+            *it->pion_,
+            boost::make_shared< SupplyResourceStock >( *it->stock_ ),
+            it->quantity_ );
 }
 
 // -----------------------------------------------------------------------------

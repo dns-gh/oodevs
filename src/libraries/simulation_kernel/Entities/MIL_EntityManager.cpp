@@ -1924,7 +1924,8 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
         ReadResources( it->resources(), supplies );
     CheckTransporters( parameters.transporters(), supplies, ack );
-    pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ );
+    if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
+        throw MASA_EXCEPTION( "unable to create push flow request" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1944,7 +1945,8 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     tools::Map< const PHY_DotationCategory*, double > supplies;
     ReadResources( parameters.resources(), supplies );
     CheckTransporters( parameters.transporters(), supplies, ack );
-    pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
+    if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
+        throw MASA_EXCEPTION( "unable to create pull flow request" );
 }
 
 // -----------------------------------------------------------------------------

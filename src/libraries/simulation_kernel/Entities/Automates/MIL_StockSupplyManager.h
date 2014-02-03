@@ -59,7 +59,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier );
+    bool OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, logistic::SupplySupplier_ABC& supplier );
 
     void SendChangedState() const;
     void SendFullState   () const;

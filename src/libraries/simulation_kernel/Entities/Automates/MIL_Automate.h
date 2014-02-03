@@ -200,7 +200,7 @@ public:
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg );
     void OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg );
     void OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& msg, MIL_AutomateLOG& supplier );
+    bool OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& msg, MIL_AutomateLOG& supplier );
     void OnReloadBrain( const sword::MissionParameters& msg );
     void OnChangeBrainDebug( const sword::MissionParameters& msg );
 
