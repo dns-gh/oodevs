@@ -456,10 +456,25 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
-	supplier := getSomeAutomatByName(c, data, "TC2").Id
-	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
+	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
+	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
 	const resource = 96
 	const transporter = 12
+
+	// deploy supplier
+	MissionLogDeploy := uint32(8)
+	heading := swapi.MakeHeading(0)
+	_, err := client.SendAutomatOrder(supplier, MissionLogDeploy,
+		swapi.MakeParameters(heading, nil,
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7594, Y: 28.2861},
+				swapi.Point{X: -15.7647, Y: 28.2761}),
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7538, Y: 28.2819},
+				swapi.Point{X: -15.7570, Y: 28.2744}),
+			nil))
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
 
 	// error: invalid supplier
 	result, err := client.LogisticsSupplyPushFlow(1000, receiver, nil, nil)
@@ -488,9 +503,14 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
+	unit := getSomeUnitByName(c, data, "Log Unit 4 1").Id
+	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
 	c.Assert(result, HasLen, 0)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+	})
 
 	// error: invalid transporter
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{1000: 1})
@@ -507,15 +527,23 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
 	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
-	// valid underloaded transporter
-	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 1})
+	// valid underloaded transporters
+	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-2
+	})
 
-	// valid transporter
+	// valid transporters
+	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{false, false, false, false})
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+	})
 }
 
 func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
@@ -523,10 +551,25 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
-	supplier := getSomeAutomatByName(c, data, "TC2").Id
-	receiver := getSomeAutomatByName(c, data, "Mobile Infantry Platoon").Id
+	supplier := getSomeAutomatByName(c, data, "Supply 1").Id
+	receiver := getSomeAutomatByName(c, data, "Supply 2").Id
 	const resource = 96
 	const transporter = 12
+
+	// deploy receiver
+	MissionLogDeploy := uint32(8)
+	heading := swapi.MakeHeading(0)
+	_, err := client.SendAutomatOrder(receiver, MissionLogDeploy,
+		swapi.MakeParameters(heading, nil,
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7594, Y: 28.2861},
+				swapi.Point{X: -15.7647, Y: 28.2761}),
+			swapi.MakeLimit(
+				swapi.Point{X: -15.7538, Y: 28.2819},
+				swapi.Point{X: -15.7570, Y: 28.2744}),
+			nil))
+	c.Assert(err, IsNil)
+	client.Model.WaitTicks(2)
 
 	// error: invalid supplier parameter
 	result, err := client.LogisticsSupplyPullFlow(receiver, 1000, nil, nil)
@@ -550,8 +593,14 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(result, HasLen, 0)
 
 	// valid no transporter
+	unit := getSomeUnitByName(c, data, "Log Unit 4 2").Id
+	transporters := client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, nil)
 	c.Assert(err, IsNil)
+	c.Assert(result, HasLen, 0)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+	})
 
 	// error: invalid transporter
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{1000: 1})
@@ -569,14 +618,22 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(result, DeepEquals, []bool{false, true, false, true})
 
 	// valid underloaded transporter
-	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 1})
+	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
+	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 2})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{true, false, true, false})
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-2
+	})
 
 	// valid transporter
+	transporters = client.Model.GetUnit(unit).EquipmentDotations[transporter].Available
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 5}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, IsNil)
 	c.Assert(result, DeepEquals, []bool{false, false, false, false})
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit].EquipmentDotations[transporter].Available == transporters-1
+	})
 }
 
 func CheckUnitSuperior(model *swapi.Model, c *C,

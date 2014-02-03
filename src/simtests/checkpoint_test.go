@@ -353,12 +353,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 
 	// Find the supply base
 	model := client.Model.GetData()
-	var supplyAutomat *swapi.Automat
-	for _, a := range model.Automats {
-		if strings.Contains(a.Name, "LOG.Supply logistic area") {
-			supplyAutomat = a
-		}
-	}
+	supplyAutomat := getSomeAutomatByName(c, model, "LOG.Supply logistic area")
 	c.Assert(supplyAutomat, NotNil)
 
 	// Deploy it
