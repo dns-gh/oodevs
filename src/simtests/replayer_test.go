@@ -34,6 +34,9 @@ func makeSimpleReplay(c *C) (*simu.SimOpts, *swapi.Formation) {
 	party := getSomeParty(c, client.Model.GetData())
 	formation := CreateFormation(c, client, party.Id)
 	client.Model.WaitTicks(1)
+	// TODO: make sure the following tick is not empty, the replayer has problems
+	// reaching the last non-empty tick.
+	CreateFormation(c, client, party.Id)
 	return sim.Opts, formation
 }
 
