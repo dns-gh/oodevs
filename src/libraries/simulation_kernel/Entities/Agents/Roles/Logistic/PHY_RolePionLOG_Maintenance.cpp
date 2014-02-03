@@ -187,11 +187,10 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
 
 namespace
 {
-    typedef std::function< bool( const PHY_ComposantePion& component ) > T_Checker;
     struct AvailableHaulerComputer : public OnComponentFunctor_ABC
     {
     public:
-        AvailableHaulerComputer( T_Checker checker, double carriedWeight )
+        AvailableHaulerComputer( const std::function< bool( const PHY_ComposantePion& component ) >& checker, double carriedWeight )
             : checker_       ( checker )
             , carriedWeight_ ( carriedWeight )
             , score_         ( std::numeric_limits< double >::max() )
@@ -208,7 +207,7 @@ namespace
                 selectedHauler_ = &component;
             }
         }
-        T_Checker checker_;
+        std::function< bool( const PHY_ComposantePion& component ) > checker_;
         double carriedWeight_;
         double score_;
         PHY_ComposantePion* selectedHauler_;
