@@ -167,3 +167,12 @@ double TER_Object_ABC::GetPrecision() const
 {
     return epsilon_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::IsUniversal
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+bool TER_Object_ABC::IsUniversal() const
+{
+    return false;
+}
