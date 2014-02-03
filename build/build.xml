@@ -1,7 +1,7 @@
 <project name="sword-proto" default="all">
 
     <property environment="env"/>
-    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
+    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/delivery/internal/poney/5.3"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <target name="update">
