@@ -107,7 +107,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
 
         Q3HBox* holder = new Q3HBox();
         supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ), holder );
-        timeControl_  = new gui::RichCheckBox( "supervisorActions", tr( "Time Control" ), holder );
+        timeControl_  = new gui::RichCheckBox( "timeControl", tr( "Time Control" ), holder );
         gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
         UserProfileUnitRights* unitRights = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
