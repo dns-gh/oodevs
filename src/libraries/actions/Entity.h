@@ -119,7 +119,8 @@ Entity< ConcreteEntity >::~Entity()
 template< typename ConcreteEntity >
 void Entity< ConcreteEntity >::CommitTo( T_Setter setter ) const
 {
-    setter( GetValue()->GetId() );
+    if( GetValue() )
+        setter( GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

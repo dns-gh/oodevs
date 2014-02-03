@@ -35,7 +35,7 @@ Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const k
     : Entity< Team_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetTeam( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindTeam( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ Army::Army( const kernel::OrderParameter& parameter, xml::xistream& xis, const k
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
 Army::Army( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Team_ABC >( parameter, &resolver.GetTeam( id ), controller )
+    : Entity< Team_ABC >( parameter, resolver.FindTeam( id ), controller )
 {
     // NOTHING
 }
@@ -56,7 +56,7 @@ Army::Army( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kern
     : Entity< Team_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "army", false ), controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetTeam( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindTeam( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

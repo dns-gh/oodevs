@@ -37,7 +37,7 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, kernel::Controller& con
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< UrbanObject_ABC >( parameter, &resolver.GetUrbanObject( id ), controller )
+    : Entity< UrbanObject_ABC >( parameter, resolver.FindUrbanObject( id ), controller )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ UrbanBlock::UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& re
     : Entity< UrbanObject_ABC >( OrderParameter( xis.attribute< std::string >( "name", "" ), "UrbanBlock", false ), controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, con
     : Entity< UrbanObject_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

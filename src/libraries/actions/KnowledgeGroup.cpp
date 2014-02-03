@@ -32,7 +32,7 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, kernel:
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< KnowledgeGroup_ABC >( parameter, &resolver.GetKnowledgeGroup( id ), controller )
+    : Entity< KnowledgeGroup_ABC >( parameter, resolver.FindKnowledgeGroup( id ), controller )
 {
     // NOTHING
 }
@@ -45,7 +45,7 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xi
     : Entity< KnowledgeGroup_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
