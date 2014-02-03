@@ -222,8 +222,8 @@ namespace
                 cell->SetFormat( format );
             }
         }
-        static int charactereSize = 300;
-        static int minimumSize = 1000;
+        static const int charactereSize = 300;
+        static const int minimumSize = 1000;
         for( int col = 0; col < models.first->columnCount(); ++col )
             sheet.SetColWidth( col, static_cast< USHORT >( std::max( columnMaxContentSize[ col ] * charactereSize, minimumSize ) ) );
     }
