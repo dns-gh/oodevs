@@ -146,7 +146,7 @@ void MIL_FlowCollision::Update()
         {
             isFlowing_ = true;
             ++movingIndex_;
-            if( movingIndex_ >= collidingFlows_.size() )
+            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ) )
                 movingIndex_ = 0;
         }
     }
@@ -171,7 +171,7 @@ void MIL_FlowCollision::RemovedPassedOverFlows()
             it = collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
                 --movingIndex_;
-            if( movingIndex_ >= collidingFlows_.size() )
+            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ))
                 movingIndex_ = 0;
         }
         else
@@ -198,7 +198,7 @@ void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
             collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
                 --movingIndex_;
-            if( movingIndex_ >= collidingFlows_.size() )
+            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ))
                 movingIndex_ = 0;
             break;
         }
