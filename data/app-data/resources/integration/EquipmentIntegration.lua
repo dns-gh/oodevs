@@ -65,12 +65,12 @@ integration.equipNBCOutfitSecu = function()
     end
     local RNBCLevel = integration.getRNBCProtectionLevel()
     if RNBCLevel and RNBCLevel ~= 0 then
-        meKnowledge:sendReport( eRC_TenueProtectionNiveauNRBC, RNBCLevel )
+        reportFunction( eRC_TenueProtectionNiveauNRBC, RNBCLevel )
         DEC_Agent_MettreTenueProtectionNBC()
         meKnowledge.equipOutfit = true
         return true
     else
-        meKnowledge:sendReport( eRC_PasTenueNBC )
+        reportFunction( eRC_PasTenueNBC )
         return false
     end
 end
@@ -86,11 +86,11 @@ integration.unequipNBCOutfitSecu = function()
     end
     local RNBCLevel = integration.getRNBCProtectionLevel()
     if RNBCLevel and RNBCLevel ~= 0 then
-        meKnowledge:sendReport( eRC_TenueProtectionNBCEnlevee )
+        reportFunction( eRC_TenueProtectionNBCEnlevee )
         DEC_Agent_EnleverTenueProtectionNBC()
         meKnowledge.equipOutfit = false
     else
-        meKnowledge:sendReport( eRC_PasTenueNBC )
+        reportFunction( eRC_PasTenueNBC )
     end
 end
 

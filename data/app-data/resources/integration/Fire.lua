@@ -34,7 +34,7 @@ integration.updateExtinguish = function( fire )
         reportFunction(eRC_ObjectExtinguished )
         return true
     end
-    meKnowledge:sendReport( eRC_FireIsBeingExtinguished )
+    reportFunction( eRC_FireIsBeingExtinguished )
     return false
 end
 
@@ -48,7 +48,7 @@ integration.canBeExtinguished = function( object )
     if DEC_ObjectKnowledge_HasCapacity( object.source, "burn" ) then
         return true
     else
-        meKnowledge:sendReport( eRC_ImpossibleToExtinguishFire )
+        reportFunction( eRC_ImpossibleToExtinguishFire )
         return false
     end
 end
