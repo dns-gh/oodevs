@@ -1090,8 +1090,7 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
             if ( !msg.elem( 0 ).value( i ).list( 1 ).has_quantity() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
-            sword::Id type;
-            type.set_id( msg.elem( 0 ).value( i ).list( 0 ).identifier() );
+            auto type = msg.elem( 0 ).value( i ).list( 0 ).identifier();
             int number = msg.elem( 0 ).value( i ).list( 1 ).quantity();
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
             if( pComposanteType )
@@ -1776,9 +1775,7 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
     for( int i = 0; i < protocol::GetCount( msg, 0 ); ++ i )
     {
         const int count = protocol::CheckCount( 0, i, msg, 2, 3 );
-        const uint32_t identifier = protocol::GetIdentifier( msg, 0, i, 0 );
-        sword::Id type;
-        type.set_id( identifier );
+        const auto type = protocol::GetIdentifier( msg, 0, i, 0 );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
         protocol::Check( pComposanteType && pComposanteType->CanHaveBreakdown(),
             "must be a composante type which can breakdown", 0, i, 0 );
@@ -1858,8 +1855,7 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
                 "parameters[0][" + boost::lexical_cast< std::string >( i ) + "][7] size must be equal to parameters[0]["
                 + boost::lexical_cast< std::string >( i ) + "][3]" );
 
-        sword::Id type;
-        type.set_id( elem.list( 0 ).identifier() );
+        const auto type = elem.list( 0 ).identifier();
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
         CheckSubSubParameterCount( !pComposanteType, i, 0, "must be a valid dotation category identifier" );
 

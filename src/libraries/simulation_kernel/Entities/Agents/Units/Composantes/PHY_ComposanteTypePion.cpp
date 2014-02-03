@@ -1442,12 +1442,12 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 // Name: PHY_ComposanteTypePion::Find
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::Id nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( uint32_t id )
 {
     for( auto it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {
         const PHY_ComposanteTypePion& composanteType = *it->second;
-        if( composanteType.GetMosID().id() == nAsnID.id() )
+        if( composanteType.GetMosID().id() == id )
             return &composanteType;
     }
     return 0;

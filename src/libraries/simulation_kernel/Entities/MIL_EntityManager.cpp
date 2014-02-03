@@ -1861,7 +1861,7 @@ namespace
         tools::Map< const PHY_ComposanteTypePion*, unsigned > result;
         for( auto it = transporters.begin(); it != transporters.end(); ++it )
         {
-            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype() );
+            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype().id() );
             protocol::Check( type, "invalid transporter" );
             const unsigned quantity = it->quantity();
             protocol::Check( quantity > 0, "transporter quantity must be positive" );
@@ -2123,7 +2123,8 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
+    {
         if( !request.TransferToLogisticSuperior() )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
     } );
