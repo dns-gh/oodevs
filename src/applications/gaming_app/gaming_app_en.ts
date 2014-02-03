@@ -3670,6 +3670,10 @@ This data can&apos;t be projected.</source>
         <source>Profile has changed, commit modifications?</source>
         <translation>Profile has changed, commit modifications?</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Time Control</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

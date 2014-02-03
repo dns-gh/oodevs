@@ -24,8 +24,6 @@ namespace kernel
 namespace gui
 {
     class EntitySymbols;
-    class RichLineEdit;
-    class RichCheckBox;
 }
 
 class UserProfile;
@@ -63,6 +61,7 @@ private slots:
     void OnLoginChanged();
     void OnPasswordChanged( const QString& text );
     void OnSupervisorChanged( bool supervisor );
+    void OnTimeControlChanged( bool timeControl );
     //@}
 
 private:
@@ -73,11 +72,12 @@ private:
     ProfilesChecker_ABC& checker_;
     Model& model_;
     UserProfile* profile_;
-    gui::RichLineEdit* login_;
-    gui::RichLineEdit* password_;
-    gui::RichLineEdit* automats_;
-    gui::RichLineEdit* knowledgeGroups_;
-    gui::RichCheckBox* supervisor_;
+    QLineEdit* login_;
+    QLineEdit* password_;
+    QLineEdit* automats_;
+    QLineEdit* knowledgeGroups_;
+    QCheckBox* supervisor_;
+    QCheckBox* timeControl_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
     //@}

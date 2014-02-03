@@ -134,8 +134,9 @@ private:
     T_FormationSet readWriteFormations_;
     T_PopulationSet readWritePopulations_;
 
-    // Supervision
+    // Flags
     bool bSupervision_;
+    bool bTimeControl_;
     //@}
 };
 

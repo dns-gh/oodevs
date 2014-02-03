@@ -34,10 +34,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
+    , bTimeControl_( false )
 {
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
+        >> xml::attribute( "time-control", bTimeControl_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -64,6 +66,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
     , strLogin_     ( message.profile().login() )
     , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_ ( message.profile().supervisor() )
+    , bTimeControl_ ( message.profile().has_time_control() ? message.profile().time_control() : false )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -196,15 +199,15 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
 {
     const ::sword::ClientToSim_Content& message = wrapper.message();
     if( message.has_control_pause() )
-        return bSupervision_;
+        return bTimeControl_;
     if( message.has_control_resume() )
-        return bSupervision_;
+        return bTimeControl_;
     if( message.has_control_stop() )
-        return bSupervision_;
+        return bTimeControl_;
     if( message.has_control_change_time_factor() )
-        return bSupervision_;
+        return bTimeControl_;
     if( message.has_control_date_time_change() )
-        return bSupervision_;
+        return bTimeControl_;
     if( message.has_control_checkpoint_save_now() )
         return bSupervision_;
     if( message.has_control_checkpoint_set_frequency() )
@@ -311,7 +314,6 @@ namespace
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Profile::Send
 // Created: LGY 2013-10-08
@@ -338,6 +340,7 @@ void Profile::Send( sword::Profile& profile ) const
 {
     profile.set_login( strLogin_ );
     profile.set_supervisor( bSupervision_ );
+    profile.set_time_control( bTimeControl_ );
     Serialize( *profile.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *profile.mutable_read_write_automates(), readWriteAutomats_ );
     Serialize( *profile.mutable_read_only_parties(), readOnlySides_ );
@@ -381,6 +384,8 @@ void Profile::Update( const sword::ProfileUpdateRequest& message )
     if( message.profile().has_password()  )
         strPassword_ = message.profile().password();
     bSupervision_ = message.profile().supervisor() != 0;
+    if( message.profile().has_time_control() )
+        bTimeControl_ = message.profile().time_control();
     ReadRights( message.profile() );
 
     authentication::ProfileUpdate updatemessage;
@@ -431,6 +436,7 @@ void Profile::SerializeProfile( xml::xostream& xos ) const
             << xml::attribute( "name", strLogin_ )
             << xml::attribute( "password", strPassword_ )
             << xml::attribute( "supervision", bSupervision_ )
+            << xml::attribute( "time-control", bTimeControl_ )
             << xml::start( "rights" )
                 << xml::start( "readonly" );
     SerializeRights( xos, "side", readOnlySides_ );

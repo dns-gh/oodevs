@@ -3671,6 +3671,10 @@ This data can&apos;t be projected.</source>
         <source>Profile has changed, commit modifications?</source>
         <translation type="unfinished">تغيرت الشخصية، التعديلات الالتزام؟</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

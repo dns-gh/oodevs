@@ -36,6 +36,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     : controller_     ( controller )
     , model_          ( model )
     , supervisor_     ( false )
+    , timeControl_    ( false )
     , isClone_        ( false )
 {
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
@@ -48,6 +49,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
+        >> xml::attribute( "time-control", timeControl_ )
         >> xml::start( "rights" );
     rights_.Read( xis, teamChecker, formationChecker, automatChecker, populationChecker, ghostChecker );
     xis >> xml::end;
@@ -66,6 +68,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , login_          ( login )
     , password_       ( "" )
     , supervisor_     ( false )
+    , timeControl_    ( false )
     , isClone_        ( false )
 {
     controller_.Create( *this );
@@ -81,6 +84,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , login_           ( p.login_ )
     , password_        ( p.password_ )
     , supervisor_      ( p.supervisor_ )
+    , timeControl_     ( p.timeControl_ )
     , rights_          ( p.rights_ )
     , isClone_         ( true )
 {
@@ -107,6 +111,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             << xml::attribute( "name", login_.toStdString() )
             << xml::attribute( "password", password_.toStdString() )
             << xml::attribute( "supervision", supervisor_ )
+            << xml::attribute( "time-control", timeControl_ )
             << xml::start( "rights" );
     rights_.Serialize( xos );
     xos     << xml::end
@@ -138,6 +143,15 @@ QString UserProfile::GetPassword() const
 bool UserProfile::IsSupervisor() const
 {
     return supervisor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool UserProfile::HasTimeControl() const
+{
+    return timeControl_;
 }
 
 // -----------------------------------------------------------------------------
@@ -192,6 +206,17 @@ void UserProfile::SetSupervisor( bool value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::SetTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+void UserProfile::SetTimeControl( bool value )
+{
+    timeControl_ = value;
+    if( !isClone_ )
+        controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetReadable
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
@@ -219,6 +244,7 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     login_            = p.login_;
     password_         = p.password_;
     supervisor_       = p.supervisor_;
+    timeControl_      = p.timeControl_;
     rights_           = p.rights_;
     if( !isClone_ && changed )
         controller_.Update( *this );
@@ -286,40 +312,32 @@ namespace
 {
     void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )
     {
-        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( hirearchies )
+        const auto hierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( !hierarchies )
+            return;
+        auto it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
         {
-            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& childEntity = it.NextElement();
-                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );
-                if( pAutomat )
-                    automats.insert( pAutomat->GetId() );
-                else
-                    InsertAutomats( automats, childEntity, model );
-            }
+            const auto& childEntity = it.NextElement();
+            if( auto pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity ) )
+                automats.insert( pAutomat->GetId() );
+            else
+                InsertAutomats( automats, childEntity, model );
         }
     }
 
     void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )
     {
-        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )
-        {
-            kernel::Team_ABC* pTeam = model.FindTeam( *it );
-            if( pTeam )
+        for( auto it = teams.begin();  it != teams.end(); ++it )
+            if( auto pTeam = model.FindTeam( *it ) )
                 InsertAutomats( automats, *pTeam, model );
-        }
     }
 
     void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
     {
-        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )
-        {
-            kernel::Formation_ABC* pFormation = model.FindFormation( *it );
-            if( pFormation )
+        for( auto it = formations.begin();  it != formations.end(); ++it )
+            if( auto pFormation = model.FindFormation( *it ) )
                 InsertAutomats( automats, *pFormation, model );
-        }
     }
 }
 

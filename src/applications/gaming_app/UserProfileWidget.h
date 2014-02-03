@@ -67,6 +67,7 @@ private:
     QLineEdit* login_;
     QLineEdit* password_;
     QCheckBox* supervisor_;
+    QCheckBox* timeControl_;
     //@}
 };
 

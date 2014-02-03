@@ -3685,6 +3685,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Supervisor actions</source>
         <translation>Actions de supervision</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Contrôle du temps</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

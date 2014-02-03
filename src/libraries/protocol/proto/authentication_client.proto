@@ -248,9 +248,11 @@ message Profile {
     optional IdList read_write_crowds     = 10;
     //! Supervisor access grants a profile the right to execute "magic
     //! actions" such as teleporting or recompleting a unit, and also
-    //! edit profiles and control the simulation (pause, resume, changing
-    //! speed factor)
+    //! edit profiles
     required bool   supervisor            = 11;
+    //! Time Control grants a profile the right to control the
+    //! simulation time (pause, resume, speed factor)
+    optional bool   time_control          = 12;
 }
 
 /** @struct ConnectedProfileList

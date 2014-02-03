@@ -37,6 +37,7 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
     , login_      ( profile )
     , loggedIn_   ( false )
     , supervision_( false )
+    , timeControl_( false )
     , simulation_ ( true )
     , clientId_   ( 0 )
 {
@@ -170,6 +171,8 @@ void Profile::Update( const sword::Profile& profile )
     else
         password_ = "";
     supervision_ = profile.supervisor();
+    if( profile.has_time_control() )
+        timeControl_ = profile.time_control();
 
     RightsResolver::Update( profile );
 }
@@ -208,6 +211,15 @@ bool Profile::DisplayMessage( unsigned int messageClientId ) const
 bool Profile::IsSupervision() const
 {
     return supervision_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool Profile::HasTimeControl() const
+{
+    return timeControl_;
 }
 
 // -----------------------------------------------------------------------------
@@ -251,6 +263,7 @@ void Profile::Clean()
     login_ = "";
     password_ = static_cast< char >( 0x7f ); // mantis 0003178
     supervision_ = false;
+    timeControl_ = false;
     loggedIn_ = false;
     readEntities_.clear();
     readWriteEntities_.clear();
