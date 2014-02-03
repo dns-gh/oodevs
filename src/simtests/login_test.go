@@ -333,3 +333,43 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	c.Assert(err, IsNil)
 	user.Close()
 }
+
+func (s *TestSuite) TestProfileTimeControl(c *C) {
+	sim := startSimOnExercise(c, NewAdminOpts(ExCrossroadSmallEmpty))
+	defer stopSim(c, sim, nil)
+
+	client := connectAndWait(c, sim, "admin", "")
+	without, err := client.CreateProfile(&swapi.Profile{
+		Login:       "without",
+		Password:    "",
+		Supervisor:  true,
+		TimeControl: false,
+	})
+	c.Assert(err, IsNil)
+	with, err := client.CreateProfile(&swapi.Profile{
+		Login:       "with",
+		Password:    "",
+		Supervisor:  true,
+		TimeControl: true,
+	})
+	c.Assert(err, IsNil)
+	client.Close()
+
+	client = connectAndWait(c, sim, without.Login, without.Password)
+	err = client.Pause()
+	c.Assert(err, NotNil)
+	err = client.Resume(0)
+	c.Assert(err, NotNil)
+	err = client.Stop()
+	c.Assert(err, NotNil)
+	client.Close()
+
+	client = connectAndWait(c, sim, with.Login, with.Password)
+	err = client.Pause()
+	c.Assert(err, IsNil)
+	err = client.Resume(0)
+	c.Assert(err, IsNil)
+	err = client.Stop()
+	c.Assert(err, IsNil)
+	client.Close()
+}
