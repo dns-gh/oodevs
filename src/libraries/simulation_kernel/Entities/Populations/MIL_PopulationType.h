@@ -54,6 +54,7 @@ public:
     double GetDefaultFlowDensity() const;
     double GetMaxSpeed() const;
     double GetDelay() const;
+    bool CanCollideWithFlow() const;
     const DEC_Model_ABC& GetModel() const;
     //@}
 
@@ -159,6 +160,7 @@ private:
     T_UrbanDestructionData urbanDestructionData_;
     const DEC_Model_ABC* pModel_;
     double decontaminationDelay_;
+    bool canCollideWithFlow_;
     //@}
 
 private:

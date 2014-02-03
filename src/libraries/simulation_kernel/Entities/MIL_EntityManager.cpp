@@ -74,6 +74,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
+#include "Entities/Populations/MIL_FlowCollisionManager.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
@@ -299,6 +300,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
+    , flowCollisionManager_         ( new MIL_FlowCollisionManager() )
 {
     // NOTHING
 }
@@ -325,6 +327,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
     , sink_                         ( sink )
+    , flowCollisionManager_         ( new MIL_FlowCollisionManager() ) // todo : delete if saved in checkpoint
 {
     // NOTHING
 }
@@ -959,6 +962,15 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::UpdateFlowCollisionManager
+// Created: JSR 2014-01-09
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::UpdateFlowCollisionManager()
+{
+    flowCollisionManager_->Update();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Update
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
@@ -968,6 +980,7 @@ void MIL_EntityManager::Update()
     UpdateKnowledges();
     UpdateDecisions();
     UpdateActions();
+    UpdateFlowCollisionManager();
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
@@ -2564,6 +2577,15 @@ bool MIL_EntityManager::ConvertIdToUrbanId( unsigned int& id ) const
         return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetFlowCollisionManager
+// Created: JSR 2014-01-09
+// -----------------------------------------------------------------------------
+MIL_FlowCollisionManager& MIL_EntityManager::GetFlowCollisionManager() const
+{
+    return *flowCollisionManager_;
 }
 
 // -----------------------------------------------------------------------------

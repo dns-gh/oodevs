@@ -50,6 +50,7 @@ public:
     void MoveAlong( const MT_Vector2D& destination );
     void CancelMove();
     virtual bool IsReady() const;
+    MIL_PopulationFlow* Split( const MT_Vector2D& splittingPoint, std::size_t segmentIndex );
     //@}
 
     //! @name Accessors
@@ -58,10 +59,13 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     virtual const TER_Localisation& GetLocation() const;
     double GetSpeed() const;
+    bool CanCollideWithFlow() const;
+    bool CanCollideWith( MIL_PopulationFlow* flow ) const;
     virtual boost::shared_ptr< MT_Vector2D > GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
     virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     virtual bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& shape ) const;
     const T_PointList& GetFlowShape() const;
+    void ApplyOnShape( const boost::function< bool( const MT_Line& ) >& f ) const;
     //@}
 
     //! @name Concentration management
@@ -88,6 +92,11 @@ protected:
     MIL_PopulationFlow( MIL_Population& population, unsigned int nID );
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > > T_FlowCollisions;
+    //@}
+
     //! @name Helpers
     //@{
     virtual double GetMaxSpeed() const;
@@ -108,6 +117,9 @@ private:
     void SetDirection( const MT_Vector2D& direction );
     void SetSpeed( const double rSpeed );
     void UpdateLocation();
+    void UpdateCrowdCollisions();
+    bool ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions );
+    bool AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions );
     //@}
 
     //! @name Notifications
@@ -170,6 +182,7 @@ private:
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
     bool bBlocked_;
+    bool canCollideWithFlow_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
     const MIL_Object_ABC* pBlockingObject_;
