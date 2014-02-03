@@ -23,6 +23,8 @@ namespace xml
 namespace sword
 {
     class UnitCreation;
+    class FormationCreation;
+    class AutomatCreation;
 }
 
 namespace dispatcher
@@ -49,6 +51,8 @@ namespace hla
 // Created: SLI 2011-09-13
 // =============================================================================
 class UnitTeleporter : private ResponseObserver_ABC< sword::UnitCreation >
+                     , private ResponseObserver_ABC< sword::FormationCreation >
+                     , private ResponseObserver_ABC< sword::AutomatCreation >
                      , private ClassListener_ABC
                      , private ObjectListener_ABC
 {
@@ -58,7 +62,8 @@ public:
              UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject,
                              ContextHandler_ABC< sword::UnitCreation >& contextHandler, dispatcher::SimulationPublisher_ABC& publisher,
                              const ContextFactory_ABC& contextFactory, const LocalAgentResolver_ABC& localResolver,
-                             const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
+                             const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger,
+                             ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler  );
     virtual ~UnitTeleporter();
     //@}
 
@@ -89,6 +94,8 @@ private:
     //! @name Operations
     //@{
     virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::FormationCreation& message, const std::string& identifier );
+    virtual void Notify( const sword::AutomatCreation& message, const std::string& identifier );
     //@}
 
 private:
@@ -104,7 +111,9 @@ private:
     //@{
     const unsigned int cancelId_;
     RemoteAgentSubject_ABC& agentSubject_;
-    ContextHandler_ABC< sword::UnitCreation >& contextHandler_;
+    ContextHandler_ABC< sword::UnitCreation >& unitContextHandler_;
+    ContextHandler_ABC< sword::FormationCreation >& formationContextHandler_;
+    ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     const ContextFactory_ABC& contextFactory_;
     const LocalAgentResolver_ABC& localResolver_;

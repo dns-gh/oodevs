@@ -40,20 +40,25 @@ namespace
 // Name: UnitTeleporter constructor
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
+UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& unitContextHandler,
                                 dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
-                                const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
-    : cancelId_      ( resolver.ResolveUnit( GetName( xis, "fragOrders", "cancel" ) ) )
-    , agentSubject_  ( agentSubject )
-    , contextHandler_( contextHandler )
-    , publisher_     ( publisher )
-    , contextFactory_( contextFactory )
-    , localResolver_ ( localResolver )
-    , callsignResolver_ ( callsignResolver )
-    , logger_        ( logger )
+                                const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger,
+                                ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler )
+    : cancelId_               ( resolver.ResolveUnit( GetName( xis, "fragOrders", "cancel" ) ) )
+    , agentSubject_           ( agentSubject )
+    , unitContextHandler_     ( unitContextHandler )
+    , formationContextHandler_( formationContextHandler )
+    , automatContextHandler_  ( automatContextHandler )
+    , publisher_              ( publisher )
+    , contextFactory_         ( contextFactory )
+    , localResolver_          ( localResolver )
+    , callsignResolver_       ( callsignResolver )
+    , logger_                 ( logger )
 {
     agentSubject_.Register( *this );
-    contextHandler_.Register( *this );
+    unitContextHandler_.Register( *this );
+    formationContextHandler_.Register( *this );
+    automatContextHandler_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +67,9 @@ UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC&
 // -----------------------------------------------------------------------------
 UnitTeleporter::~UnitTeleporter()
 {
-    contextHandler_.Unregister( *this );
+    unitContextHandler_.Unregister( *this );
+    formationContextHandler_.Unregister( *this );
+    automatContextHandler_.Unregister( *this );
     agentSubject_.Unregister( *this );
 }
 
@@ -354,4 +361,26 @@ void UnitTeleporter::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, 
 void UnitTeleporter::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
 {
     // NOTHING
+}
+
+
+void UnitTeleporter::Notify( const sword::FormationCreation& /*message*/, const std::string& identifier )
+{
+    // do not listen to updates on formations
+    T_Objects::const_iterator it = objects_.find(identifier);
+    if( objects_.end() != it )
+    {
+        it->second->Unregister(*this);
+        objects_.erase( it );
+    }
+}
+void UnitTeleporter::Notify( const sword::AutomatCreation& /*message*/, const std::string& identifier )
+{
+    // do not listen to updates on automats
+    T_Objects::const_iterator it = objects_.find(identifier);
+    if( objects_.end() != it )
+    {
+        it->second->Unregister(*this);
+        objects_.erase( it );
+    }
 }
