@@ -40,7 +40,6 @@ integration.isCommanderEngaged = function( )
 end
 
 --- Returns true if the company is engaged, false otherwise
--- This method can only be called by a company
 -- @param agent Simulation agent
 -- @return Boolean, whether or not the company is engaged
 integration.isAgentCommanderEngaged = function( agent )
