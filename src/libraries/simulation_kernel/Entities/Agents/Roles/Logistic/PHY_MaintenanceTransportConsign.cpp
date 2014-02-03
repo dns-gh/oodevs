@@ -128,6 +128,24 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection
+// Created: SLI 2014-02-03
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection()
+{
+    if( forceTransferToLogisticSuperior_ )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
+        forceTransferToLogisticSuperior_ = false;
+    }
+    else if( !IsManualMode() )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+        ResetTimer( 0 );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::DoSearchForUpperLevel
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -309,13 +327,7 @@ bool PHY_MaintenanceTransportConsign::Update()
                 EnterStateCarrierGoingTo();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
-            if( forceTransferToLogisticSuperior_ )
-            {
-                SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
-                forceTransferToLogisticSuperior_ = false;
-            }
-            else
-                EnterStateWaitingForCarrier();
+            DoWaitingForCarrierSelection();
             break;
         case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
             EnterStateCarrierLoading();

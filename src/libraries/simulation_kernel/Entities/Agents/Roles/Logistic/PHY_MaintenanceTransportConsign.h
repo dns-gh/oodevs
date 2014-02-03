@@ -51,6 +51,7 @@ private:
     //! @name States
     //@{
     bool DoWaitingForCarrier               ();
+    void DoWaitingForCarrierSelection      ();
     bool DoSearchForUpperLevel             ();
 
     void EnterStateWaitingForCarrier       ();
