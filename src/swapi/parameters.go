@@ -115,6 +115,13 @@ func MakeAgent(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeAgentKnowledge(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			AgentKnowledge: MakeId(value),
+		})
+}
+
 func MakeAutomat(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
