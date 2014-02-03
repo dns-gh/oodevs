@@ -136,12 +136,19 @@ void Logger::Clear()
 // -----------------------------------------------------------------------------
 void Logger::WriteLog( const std::string& message, const QColor& color )
 {
+    static const uint32_t maxSampleSize = 256;
+    static const std::string ellipsis = "[...]";
+
     log_ << message << std::endl;
+    std::string sample = message;
+    if( sample.size() > maxSampleSize )
+        sample = sample.substr( 0, maxSampleSize - ellipsis.size() ) + ellipsis;
+        
     LoggerItem* item = new LoggerItem( treeWidget_ );
     item->setData( 0, Qt::UserRole, counter_++ );
     item->setText( 0, QTime::currentTime().toString() );
     item->setText( 1, simulation_.GetTimeAsString() );
-    item->setText( 2, message.c_str() );
+    item->setText( 2, sample.c_str() );
     item->setForeground( 0, color );
     item->setForeground( 1, color );
     item->setForeground( 2, color );

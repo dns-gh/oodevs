@@ -96,8 +96,9 @@ public:
             throw MASA_EXCEPTION( "Error deserializing message of type \"" + t.GetDescriptor()->full_name() + '"' );
         static const unsigned long threshold = 32 * 1024; // 32 kB
         if( message.Size() > threshold )
-            callback.OnWarning( link,
-                "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );
+            callback.OnWarning( link, "Long message detected (" + 
+                boost::lexical_cast< std::string >( message.Size() ) + " bytes): " +
+                t.ShortDebugString() );
         OnMessage( link, t );
         OnMessage( link, static_cast< const T& >( t ) );
     }
