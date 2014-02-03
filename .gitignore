@@ -1,0 +1,5 @@
+/bin/
+/build/parser.out
+/dist/
+/out/
+*.pyc
