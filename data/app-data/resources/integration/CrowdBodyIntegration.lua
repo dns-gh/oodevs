@@ -142,16 +142,16 @@ integration.hasEntirelyReachedDestination = function( localizedElement )
     return DEC_Population_HasReachedDestinationCompletely( localizedElement:getPosition() )
 end
 
---- Manages the effects of units trying to control this crowd on the latter's domination value.
--- The exact effects on this crowd's domination are computed by a call to the integration.FouleEstSecurisee method.
+--- Sets the domination value to the result of integration.FouleEstSecurisee computation.
 -- May display reports.
 -- This method can only be called by a crowd.
 -- @see integration.FouleEstSecurisee
--- @param nonLethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling units cannot use lethal weapons (between 0 and 10).
--- @param lethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling units can use lethal weapons (between 0 and 10).
--- if the controlling units cannot use lethal weapons.
+-- @param nonLethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units cannot use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to non-lethal weapons.
+-- @param lethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units can use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to lethal weapons.
 integration.manageInteractionsWithUnits = function( nonLethalWeaponsAuthorizedFactor, 
                                                     lethalWeaponsAuthorizedFactor )
     myself.domination = myself.domination or {}
@@ -186,10 +186,12 @@ end
 -- A crowd's domination value is a float value between 0 and 1, 0 meaning
 -- the crowd is fully controlled, and 1 meaning it is not controlled at all.
 -- This method can only be called by a crowd.
--- @param nonLethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling unit cannot use lethal weapons (between 0 and 10).
--- @param lethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling unit can use lethal weapons (between 0 and 10).
+-- @param nonLethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units cannot use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to non-lethal weapons.
+-- @param lethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units can use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to lethal weapons.
 -- @return Negative float, the computed domination differential (between -0.1 and 0).
 function S_EffetSecurisationSurDomination( roe, nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
     local nbrPersonne = DEC_GetNombrePersonne()
@@ -230,10 +232,12 @@ end
 -- This method can only be called by a crowd.
 -- @see integration.manageInteractionsWithUnits
 -- @see S_EffetSecurisationSurDomination
--- @param nonLethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling units cannot use lethal weapons (between 0 and 10).
--- @param lethalWeaponsAuthorizedFactor Float, the multiplicative factor applied on the total effect
--- on the domination value if the controlling units can use lethal weapons (between 0 and 10).
+-- @param nonLethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units cannot use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to non-lethal weapons.
+-- @param lethalWeaponsAuthorizedFactor Float, the positive multiplicative factor applied on the total effect
+-- on the domination value if the controlling units can use lethal weapons. The bigger this factor,
+-- the more sensitive the crowd is to lethal weapons.
 integration.FouleEstSecurisee = function( nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
     local pions = DEC_Connaissances_PionsSecurisant()
     

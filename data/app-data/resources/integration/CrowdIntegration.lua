@@ -186,7 +186,7 @@ integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
     return nil
 end
 
---- Makes this entity start periodically firing on the given crowd.
+--- Starts periodically firing on the given crowd.
 -- @param crowd Crowd knowledge
 -- @see integration.updateInterveneOnCrowd
 -- @see integration.stopInterveneOnCrowd
@@ -195,7 +195,7 @@ integration.startInterveneOnCrowd = function( crowd )
     crowd.rTempsDebut = getSimulationTime()
 end
 
---- Makes this entity continue periodically firing on the given crowd.
+--- Continues periodically firing on the given crowd.
 -- This entity will engage the crowd with the given periodicity.
 -- This method can only be called by an agent.
 -- @see integration.startInterveneOnCrowd
@@ -218,7 +218,7 @@ integration.updateInterveneOnCrowd = function( crowd, periodicity )
     return true
 end
 
---- Makes this entity stop firing on the given crowd.
+--- Stops firing on the given crowd.
 -- Ceases fire against the given crowd.
 -- @see integration.startInterveneOnCrowd
 -- @see integration.updateInterveneOnCrowd
@@ -486,8 +486,10 @@ end
 
 --- Makes this entity start hiding in the given crowd.
 -- This entity will be among the returned entities of
--- the integration.getAgentsHiddenInCrowd method for as
--- long as this entity will remain hidden in the given crowd.
+-- the integration.getAgentsHiddenInCrowd method as
+-- long as this entity remains hidden in the given crowd
+-- (i.e. until the integration.stopHidingInCrowd method
+-- is called).
 -- This method can only be called by an agent.
 -- @see integration.stopHidingInCrowd
 -- @see integration.getAgentsHiddenInCrowd
