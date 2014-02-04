@@ -352,6 +352,7 @@ type MaintenanceCheckContext struct {
 	deleted     bool
 	last        sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus
 	group       sync.WaitGroup
+	errors      chan error
 }
 
 type MaintenanceChecker interface {
@@ -425,7 +426,7 @@ func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, ms
 
 type MaintenanceApplyChecker struct {
 	MaintenanceChecker
-	operand func(ctx *MaintenanceCheckContext)
+	operand func(ctx *MaintenanceCheckContext) error
 }
 
 func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
@@ -437,7 +438,7 @@ func (m *MaintenanceApplyChecker) Check(c *C, ctx *MaintenanceCheckContext, msg 
 		ctx.group.Add(1)
 		go func() {
 			defer ctx.group.Done()
-			m.operand(ctx)
+			ctx.errors <- m.operand(ctx)
 		}()
 	}
 	return ok
@@ -468,6 +469,7 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, 
 		data:      client.Model.GetData(),
 		unitId:    unit.Id,
 		breakdown: breakdown,
+		errors:    make(chan error),
 	}
 	eqid, eq := getSomeEquipment(c, unit)
 	check.equipmentId = eqid
@@ -506,7 +508,13 @@ func checkMaintenance(c *C, client *swapi.Client, unit *swapi.Unit, offset int, 
 	case <-time.After(1 * time.Minute):
 		c.Error("timeout")
 	}
-	check.group.Wait()
+	go func() {
+		check.group.Wait()
+		close(check.errors)
+	}()
+	for err := range check.errors {
+		c.Check(err, IsNil)
+	}
 	c.Assert(idx, Equals, len(checkers))
 }
 
@@ -519,7 +527,7 @@ func checkMaintenanceUpdates(c *C, client *swapi.Client, unit *swapi.Unit, break
 	checkMaintenance(c, client, unit, -1, breakdown, checkers...)
 }
 
-func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, resources ...ResourceType) {
+func setParts(client *swapi.Client, provider *sword.Tasker, qty int32, resources ...ResourceType) error {
 	d := client.Model.GetData()
 	for _, u := range d.Units {
 		if IsProvider(d, u.Id, provider) {
@@ -528,9 +536,12 @@ func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, res
 				next[uint32(id)] = &swapi.ResourceDotation{Quantity: qty}
 			}
 			err := client.ChangeDotation(u.Id, next)
-			c.Check(err, IsNil)
+			if err != nil {
+				return err
+			}
 		}
 	}
+	return nil
 }
 
 func (s *TestSuite) TestMaintenanceHandlings(c *C) {
@@ -624,15 +635,16 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
-	setParts(c, client, tc2, 0, electrogen_1)
+	err := setParts(client, tc2, 0, electrogen_1)
+	c.Assert(err, IsNil)
 	checkMaintenance(c, client, unit, 0, electronic_1,
 		MaintenanceCreateChecker{},
 		&MaintenanceUpdateChecker{"moving_to_supply", tc2},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				setParts(c, client, tc2, 10, electrogen_1)
+			func(ctx *MaintenanceCheckContext) error {
+				return setParts(client, tc2, 10, electrogen_1)
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
@@ -640,7 +652,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"moving_back", tc2},
 		MaintenanceDeleteChecker{},
 	)
-	setParts(c, client, tc2, 0, gyroscope_1)
+	err = setParts(client, tc2, 0, gyroscope_1)
+	c.Assert(err, IsNil)
 	checkMaintenance(c, client, unit, 0, mobility_1,
 		MaintenanceCreateChecker{},
 		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
@@ -650,8 +663,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_parts", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				setParts(c, client, tc2, 10, gyroscope_1)
+			func(ctx *MaintenanceCheckContext) error {
+				return setParts(client, tc2, 10, gyroscope_1)
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
@@ -688,9 +701,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		MaintenanceCreateChecker{},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.SelectNewLogisticState(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
@@ -700,9 +712,8 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.SelectNewLogisticState(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
@@ -734,13 +745,19 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		MaintenanceCreateChecker{},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
-			func(ctx *MaintenanceCheckContext) {
+			func(ctx *MaintenanceCheckContext) error {
 				// set automat back to automatic mode
 				err := client.LogMaintenanceSetManual(tc2Id, false)
-				c.Assert(err, IsNil)
-				waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+				if err != nil {
+					return err
+				}
+				ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
 					return data.Automats[tc2Id].LogMaintenanceManual == false
 				})
+				if !ok {
+					return fmt.Errorf("condition not reached")
+				}
+				return nil
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
@@ -777,9 +794,8 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 		MaintenanceCreateChecker{},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.TransferToLogisticSuperior(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
@@ -790,9 +806,13 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 		&MaintenanceUpdateChecker{"transporter_unloading", bld},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"diagnosing", bld},
-			func(ctx *MaintenanceCheckContext) {
+			func(ctx *MaintenanceCheckContext) error {
 				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Check(err, IsSwordError, "error_invalid_parameter")
+				ok, msg := IsSwordError.Check([]interface{}{err, "error_invalid_parameter"}, nil)
+				if !ok {
+					return fmt.Errorf(msg)
+				}
+				return nil
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
@@ -826,25 +846,22 @@ func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
 		MaintenanceCreateChecker{},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.TransferToLogisticSuperior(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.TransferToLogisticSuperior(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", bld},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", blt},
-			func(ctx *MaintenanceCheckContext) {
-				err := client.TransferToLogisticSuperior(ctx.handlingId)
-				c.Check(err, IsNil)
+			func(ctx *MaintenanceCheckContext) error {
+				return client.TransferToLogisticSuperior(ctx.handlingId)
 			},
 		},
 		&MaintenanceUpdateChecker{"searching_upper_levels", blt},
