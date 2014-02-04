@@ -159,6 +159,7 @@ QWidget* ParamLocationComposite::BuildInterface( const QString& objectName, QWid
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::InternalBuildInterface()
 {
+    disconnect( group_, SIGNAL( clicked() ), this, SLOT( Update() ) );
     for( auto it = params_.begin(); it != params_.end(); ++it )
     {
         QWidget* widget = (*it)->BuildInterface( (*it)->GetType().c_str(), stack_ );
@@ -241,6 +242,7 @@ void ParamLocationComposite::OnChecked( bool checked )
         static_cast< QGroupBox* >( *it )->setChecked( checked );
         connect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
     }
+    Update();
 }
 
 // -----------------------------------------------------------------------------
