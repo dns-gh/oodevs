@@ -58,6 +58,23 @@ integration.removeListFromCapturedUnits = function( units )
     end
 end
 
+--- Adds the given crowd to the table of crowds currently loaded by this entity.
+-- Creates the table if it does not already exist
+-- @param crowd Crowd knowledge
+integration.addToLoadedCrowds = function( crowd )
+    myself.loadedCrowds = myself.loadedCrowds or {}
+    myself.loadedCrowds[ crowd ] = true
+end
+
+--- Removes the given crowd from the table of crowds currently loaded by this entity.
+-- @param crowd Crowd knowledge
+integration.removeFromLoadedCrowds = function( crowd )
+    if myself.loadedCrowds then
+        myself.loadedCrowds[ crowd ] = nil
+    end
+end
+
+
 --- Instantaneously unloads the given agent into the provided camp.
 -- If the given unit is a refugee, then it will be taken into account by
 -- the logistic units in the camp upon unloading.
@@ -516,9 +533,11 @@ end
 -- Displays a report if the loading is impossible.
 -- @see integration.startLoadCrowd
 -- @see integration.stopLoadCrowd
+-- @param crowd Crowd knowledge
 -- @return Boolean, true if the loading is finished or impossible, false otherwise.
-integration.startedLoadCrowd = function()
+integration.startedLoadCrowd = function( crowd )
     if myself.eEtatTransportCrowd == eActionTransport_Finished then
+        integration.addToLoadedCrowds( crowd )
         return true
     elseif myself.eEtatTransportCrowd == eActionTransport_Impossible then
         DEC_Trace( "transportation impossible" )
@@ -559,9 +578,11 @@ end
 -- Displays a report if the unloading is impossible.
 -- @see integration.startUnloadCrowd
 -- @see integration.stopUnloadCrowd
+-- @param crowd Crowd knowledge
 -- @return Boolean, true if the unloading is finished or impossible, false otherwise.
-integration.startedUnloadCrowd = function()
+integration.startedUnloadCrowd = function( crowd )
     if myself.eEtatTransportUnloadCrowd == eActionTransport_Finished then
+        integration.removeFromLoadedCrowds( crowd )
         return true
     elseif myself.eEtatTransportUnloadCrowd == eActionTransport_Impossible then
         reportFunction(eRC_TransportImpossiblePasDeMoyens )
