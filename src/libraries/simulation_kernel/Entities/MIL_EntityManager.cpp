@@ -2106,10 +2106,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveSelectNewLogisticState
-// Created: MCO 2014-01-30
-// -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
 {
     const auto& params = msg.parameters();
@@ -2127,6 +2123,19 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     {
         if( !request.TransferToLogisticSuperior() )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
+    } );
+}
+
+void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& message )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    const auto requestId = protocol::GetIdentifier( params, 0 );
+    const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
+    protocol::Check( equipment, "invalid component type identifier" );
+    ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
+    {
+        request.SelectDiagnosisTeam( *equipment );
     } );
 }
 

@@ -62,11 +62,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::~PHY_MaintenanceTransportConsign()
 {
-    if( pCarrier_ )
-    {
-        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-        pCarrier_ = 0;
-    }
+    ResetCarrier();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,11 +82,7 @@ void PHY_MaintenanceTransportConsign::serialize( Archive& file, const unsigned i
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::Cancel()
 {
-    if( pCarrier_ )
-    {
-        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-        pCarrier_ = 0;
-    }
+    ResetCarrier();
     PHY_MaintenanceConsign_ABC::Cancel();
 }
 
@@ -177,6 +169,15 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     ResetTimer( 0 );
 }
 
+void PHY_MaintenanceTransportConsign::ResetCarrier()
+{
+    if( pCarrier_ )
+    {
+        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
+        pCarrier_ = 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::EnterStateGoingFrom
 // Created: NLD 2004-12-23
@@ -246,11 +247,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
 
 void PHY_MaintenanceTransportConsign::EnterStateWaitingForDiagnosisTeam()
 {
-    if( pCarrier_ )
-    {
-        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-        pCarrier_ = 0;
-    }
+    ResetCarrier();
     assert( pComposanteState_ );
     if( !pComposanteState_->NeedDiagnosis() )
         ChooseStateAfterDiagnostic();
@@ -260,7 +257,14 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForDiagnosisTeam()
         ResetTimer( 0 );
     }
     else
-        EnterStateDiagnosing();
+    {
+        pCarrier_ = GetPionMaintenance().GetAvailableDiagnoser();
+        if( pCarrier_ )
+        {
+            GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+            EnterStateDiagnosing();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -279,12 +283,11 @@ void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 {
+    ResetCarrier();
     assert( pComposanteState_ );
-
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     ResetTimer( 0 );
-
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
     {
@@ -362,16 +365,14 @@ bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
     return GetState() == sword::LogMaintenanceHandlingUpdate::searching_upper_levels && searchForUpperLevelDone_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceTransportConsign::SelectNewState
-// Created: MCO 2014-01-24
-// -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::SelectNewState()
 {
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter ); };
     else if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         next_ = [&]() { EnterStateDiagnosing(); };
+    else
+        throw MASA_EXCEPTION( "transport consign not in a waiting state" );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,4 +400,15 @@ bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
         return false;
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels ); };
     return true;
+}
+
+void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
+{
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+        throw MASA_EXCEPTION( "transport consign not in a waiting state for diagnosis team selection state" );
+    pCarrier_ = GetPionMaintenance().GetAvailableDiagnoser( type );
+    if( !pCarrier_ )
+        throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
+    GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    EnterStateDiagnosing();
 }

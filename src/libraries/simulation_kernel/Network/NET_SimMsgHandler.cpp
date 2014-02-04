@@ -174,6 +174,8 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
             manager.OnReceiveSelectMaintenanceTransporter( msg );
         else if( type == sword::MagicAction::transfer_to_logistic_superior )
             manager.OnReceiveTransferToLogisticSuperior( msg );
+        else if( type == sword::MagicAction::select_diagnosis_team )
+            manager.OnReceiveSelectDiagnosisTeam( msg );
         else if( type == sword::MagicAction::global_weather ||
             type == sword::MagicAction::local_weather ||
             type == sword::MagicAction::local_weather_destruction )

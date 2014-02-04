@@ -84,6 +84,8 @@ public:
     //@{
     virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& carried ) const;
     virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& carried, uint32_t carrierType ) const;
+    virtual PHY_ComposantePion* GetAvailableDiagnoser() const;
+    virtual PHY_ComposantePion* GetAvailableDiagnoser( const PHY_ComposanteTypePion& type ) const;
     virtual PHY_ComposantePion* GetAvailableRepairer( const PHY_Breakdown& breakdown ) const;
     virtual bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const;
     virtual bool ConsumePartsForBreakdown( const PHY_Breakdown& breakdown );

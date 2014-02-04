@@ -114,6 +114,7 @@ const mapping::MagicAction mapping::MagicAction::data_[] = {
     { "select_maintenance_transporter", sword::MagicAction::select_maintenance_transporter},
     { "select_new_logistic_state",      sword::MagicAction::select_new_logistic_state},
     { "transfer_to_logistic_superior",  sword::MagicAction::transfer_to_logistic_superior},
+    { "select_diagnosis_team",          sword::MagicAction::select_diagnosis_team},
 };
 
 const size_t mapping::MagicAction::size_ = COUNT_OF( mapping::MagicAction::data_ );
