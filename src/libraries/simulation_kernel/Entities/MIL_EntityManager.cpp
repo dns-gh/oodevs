@@ -72,6 +72,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/MIL_FlowCollisionManager.h"
@@ -1936,7 +1937,8 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
         ReadResources( it->resources(), supplies );
     CheckTransporters( parameters.transporters(), supplies, ack );
-    pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ );
+    if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
+        throw MASA_EXCEPTION( "unable to create push flow request" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1956,7 +1958,8 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     tools::Map< const PHY_DotationCategory*, double > supplies;
     ReadResources( parameters.resources(), supplies );
     CheckTransporters( parameters.transporters(), supplies, ack );
-    pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
+    if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
+        throw MASA_EXCEPTION( "unable to create pull flow request" );
 }
 
 // -----------------------------------------------------------------------------
@@ -2099,18 +2102,44 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
 }
 
+namespace
+{
+    template< typename Agents, typename Func >
+    void ApplyOnRequest( const Agents& agents, uint32_t id, const Func& f )
+    {
+        PHY_MaintenanceComposanteState* request = 0;
+        agents.Apply( [&]( const MIL_AgentPion& p )
+        {
+            if( !request )
+                request = p.GetRole< PHY_RoleInterface_Composantes >().FindRequest( id );
+        } );
+        if( !request )
+            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
+        f( *request );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveSelectNewLogisticState
+// Created: MCO 2014-01-30
+// -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
 {
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    bool found = false;
-    sink_->Apply( [&]( MIL_AgentPion& p )
-    {
-        found = found || p.GetRole< PHY_RoleInterface_Composantes >().SelectNewState( id );
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){ request.SelectNewState(); } );
+}
+
+void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicAction& msg )
+{
+    const auto& params = msg.parameters();
+    protocol::CheckCount( params, 1 );
+    const auto id = protocol::GetIdentifier( params, 0 );
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){
+        if( !request.TransferToLogisticSuperior() )
+            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
     } );
-    if( !found )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid log request identifier" );
 }
 
 // -----------------------------------------------------------------------------

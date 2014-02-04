@@ -107,6 +107,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
 
         Q3HBox* holder = new Q3HBox();
         supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ), holder );
+        timeControl_  = new gui::RichCheckBox( "timeControl", tr( "Time Control" ), holder );
         gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
         UserProfileUnitRights* unitRights = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
@@ -119,6 +120,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
 
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
+        connect( timeControl_, SIGNAL( toggled( bool ) ), SLOT( OnTimeControlChanged( bool ) ) );
         QLabel* readPermissionlabel = new QLabel( tr( "'Read' permission allows you to see a unit.\n"
                         "'Write' permission allows you to control a unit." ) );
 
@@ -188,6 +190,7 @@ void UserProfileWidget::Display( UserProfile& profile )
     automats_->setText( locale().toString( automats.size() ) );
     knowledgeGroups_->setText( locale().toString( GetKGCount( automats, model_ ) ) );
     supervisor_->setChecked( profile.IsSupervisor() );
+    timeControl_->setChecked( profile.HasTimeControl() );
     unitRights_->Display( profile );
     populationRights_->Display( profile );
     SetEnabled( true );
@@ -236,6 +239,16 @@ void UserProfileWidget::OnSupervisorChanged( bool supervisor )
 {
     if( profile_ )
         profile_->SetSupervisor( supervisor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnTimeControlChanged
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnTimeControlChanged( bool timeControl )
+{
+    if( profile_ )
+        profile_->SetTimeControl( timeControl );
 }
 
 // -----------------------------------------------------------------------------

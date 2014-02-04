@@ -45,7 +45,7 @@ namespace
         holder->setLayout( hLayout );
 
         // Description label
-        hLayout->addWidget( new QLabel( button->tr( "Road width (m):" ) ) );
+        hLayout->addWidget( new QLabel( tools::translate( "TerrainToolBar", "Road width (m):" ) ) );
 
         // Spin box
         gui::RichDoubleSpinBox* spinBox = new gui::RichDoubleSpinBox( "doubleSpinBox" );
@@ -77,7 +77,7 @@ QPixmap MakePixmap( const std::string& name )
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
 TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog )
-    : gui::RichToolBar( controllers, parent, "terrainToolBar", tr( "Terrain" ) )
+    : gui::RichToolBar( controllers, parent, "terrainToolBar", tools::translate( "TerrainToolBar", "Terrain" ) )
     , eventStrategy_( eventStrategy )
     , paramLayer_   ( paramLayer )
     , urbanModel_   ( urbanModel )
@@ -88,15 +88,15 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
 {
     gui::SubObjectName subObject( "TerrainToolBar" );
     // Terrain button
-    switchModeButton_ = AddButton( "switchModeButton", this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
+    switchModeButton_ = AddButton( "switchModeButton", this, this, SLOT( OnSwitchMode() ), tools::translate( "TerrainToolBar", "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
     roadWidthSpinBox_ = CreateSwitchModeButtonContextMenu( switchModeButton_ );
 
     // Block creation button
-    blockCreationButton_ = AddButton( "blockCreationButton", this, this, SLOT( OnBlockCreation() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
+    blockCreationButton_ = AddButton( "blockCreationButton", this, this, SLOT( OnBlockCreation() ), tools::translate( "TerrainToolBar", "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
     // Multi blocks creation button
-    blockCreationAutoButton_ = AddButton( "blockCreationAutoButton", this, this, SLOT( OnBlockCreationAuto() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
+    blockCreationAutoButton_ = AddButton( "blockCreationAutoButton", this, this, SLOT( OnBlockCreationAuto() ), tools::translate( "TerrainToolBar", "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
     // Remove blocks button
-    blockRemoveButton_ = AddButton( "blockRemoveButton", this, &removeBlocksDialog, SLOT( show() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
+    blockRemoveButton_ = AddButton( "blockRemoveButton", this, &removeBlocksDialog, SLOT( show() ), tools::translate( "TerrainToolBar", "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
     // Layout
     addWidget( switchModeButton_ );
     addSeparator();
@@ -184,7 +184,7 @@ void TerrainToolBar::NotifyContextMenu( const kernel::UrbanObject_ABC& object, k
     if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
     {
         selected_ = &object;
-        menu.InsertItem( "Urban", tr( "Change shape" ), this, SLOT( OnChangeShape() ) );
+        menu.InsertItem( "Urban", tools::translate( "TerrainToolBar", "Change shape" ), this, SLOT( OnChangeShape() ) );
     }
 }
 
@@ -213,7 +213,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
             ptr->ConstCast()->Get< kernel::UrbanColor_ABC >().SetColor( 255, 0, 0, 255 );
         }
         QTimer::singleShot( 250, this, SLOT( OnBlink() ) );
-        QMessageBox::warning( this, tr( "Warning" ), tr( "Urban blocks cannot be created on top of existing blocks." ) );
+        QMessageBox::warning( this, tools::translate( "TerrainToolBar", "Warning" ), tools::translate( "TerrainToolBar", "Urban blocks cannot be created on top of existing blocks." ) );
     }
 }
 
@@ -274,7 +274,7 @@ void TerrainToolBar::OnBlockCreationAuto()
     }
     catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tr( "Error during automatic process creation of urban blocks" ), tools::GetExceptionMsg( e ).c_str() );
+        QMessageBox::critical( 0, tools::translate( "TerrainToolBar", "Error during automatic process creation of urban blocks" ), tools::GetExceptionMsg( e ).c_str() );
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }

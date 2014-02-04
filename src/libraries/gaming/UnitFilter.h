@@ -48,6 +48,7 @@ public:
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
+    virtual bool HasTimeControl() const;
     virtual bool IsPerceived( const kernel::Entity_ABC& ) const;
     virtual bool IsFiltered() const;
     virtual QString GetFilter() const;

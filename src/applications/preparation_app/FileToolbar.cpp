@@ -9,8 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "FileToolbar.h"
-#include "clients_gui/RichWidget.h"
 #include "Menu.h"
+
+#include "clients_kernel/Tools.h"
+#include "clients_gui/RichWidget.h"
 
 namespace
 {
@@ -27,7 +29,7 @@ namespace
 // Created: SBO 2006-12-13
 // -----------------------------------------------------------------------------
 FileToolbar::FileToolbar( QWidget* parent, kernel::Controllers& controllers )
-    : gui::RichToolBar( controllers, parent, "filetoolbar", tr( "Standard" ) )
+    : gui::RichToolBar( controllers, parent, "filetoolbar", tools::translate( "FileToolbar", "Standard" ) )
 {
     // NOTHING
 }

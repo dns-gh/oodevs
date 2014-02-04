@@ -233,17 +233,8 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
         }
 
         if( message.has_requests() )
-        {
-            for( auto it = consign->CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *consign );
-            consign->DeleteAll();
-            BOOST_FOREACH( const sword::SupplyRecipientResourcesRequest& data, message.requests().requests() )
-            {
-                SupplyRecipientResourcesRequest* request = new SupplyRecipientResourcesRequest( dotationResolver_, automatResolver_, data );
-                consign->Register( data.recipient().id(), *request );
-                request->recipient_.Get< LogSupplyConsigns >().AddConsign( *consign );
-            }
-        }
+          consign->Update( message.requests() );
+
         consign->Update( message, pPionLogConvoying );
         controller_.Update( *consign );
     }

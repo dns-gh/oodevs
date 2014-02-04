@@ -170,6 +170,4 @@ private:
     static T_Rules rules_;
 };
 
-#include "DEC_Agent_PathClass.inl"
-
 #endif // __DEC_Agent_PathClass_h_

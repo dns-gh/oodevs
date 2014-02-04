@@ -73,7 +73,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
 
     std::vector< std::string > sounds;
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer, preferences );
-    prefDialog_->AddPage( tr( "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
+    prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, tools );

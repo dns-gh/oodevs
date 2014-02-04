@@ -206,3 +206,57 @@ void DEC_Population_Path::Execute( TER_Pathfinder_ABC& pathfind )
                             ", Result : " << stream.str() );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::InsertDecPoints
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void DEC_Population_Path::InsertDecPoints()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetChannelers
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+const DEC_Population_Path::T_PopulationPathChannelers& DEC_Population_Path::GetChannelers() const
+{
+    return channelers_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetPathKnowledgeObjects
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+const DEC_Population_Path::T_PathKnowledgeObjectsByTypes& DEC_Population_Path::GetPathKnowledgeObjects() const
+{
+    return pathKnowledgeObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetCostOutsideOfAllObjects
+// Created: CMA 2011-11-24
+// -----------------------------------------------------------------------------
+double DEC_Population_Path::GetCostOutsideOfAllObjects() const
+{
+    return rCostOutsideOfAllObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::NeedRefine
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+bool DEC_Population_Path::NeedRefine() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::UseStrictClosest
+// Created: AGE 2007-05-09
+// -----------------------------------------------------------------------------
+bool DEC_Population_Path::UseStrictClosest() const
+{
+    return false;
+}

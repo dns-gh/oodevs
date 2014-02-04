@@ -63,6 +63,7 @@ public:
     //@{
     virtual QString GetLogin() const;
     virtual bool IsSupervision() const;
+    virtual bool HasTimeControl() const;
 
     QString GetPassword() const;
     bool IsPasswordProtected() const;
@@ -70,6 +71,7 @@ public:
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     void SetPassword( const QString& password );
     void SetSupervisor( bool supervisor );
+    void SetTimeControl( bool timeControl );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
     //@}
@@ -100,6 +102,7 @@ private:
     QString login_;
     QString password_;
     bool supervision_;
+    bool timeControl_;
     //@}
 };
 

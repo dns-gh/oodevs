@@ -118,6 +118,11 @@
 					<xs:documentation xml:lang="en">Grants access to supervision operations for this profile.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="time-control" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Grants access to supervision operations for this profile.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

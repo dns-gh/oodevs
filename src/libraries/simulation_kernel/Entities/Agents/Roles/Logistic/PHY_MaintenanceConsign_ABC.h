@@ -64,6 +64,7 @@ public:
     void FinishSuccessfullyWithoutDelay();
 
     virtual void SelectNewState() = 0;
+    virtual bool TransferToLogisticSuperior() = 0;
 
     void ClearConsign();
     //@}

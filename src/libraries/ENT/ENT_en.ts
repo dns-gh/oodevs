@@ -955,6 +955,14 @@
         <source>waiting for transporter selection</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>waiting for repair team selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waiting for diagnosis team selection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>

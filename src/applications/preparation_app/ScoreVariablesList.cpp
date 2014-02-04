@@ -21,6 +21,7 @@
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/Tools.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/Variable.h"
@@ -46,16 +47,16 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
     {
         list_->setColumnCount( 3 );
         QStringList headers;
-        headers << tr( "Name" ) << tr( "Type" ) << tr( "Value" );
+        headers << tools::translate( "ScoreVariablesList", "Name" ) << tools::translate( "ScoreVariablesList", "Type" ) << tools::translate( "ScoreVariablesList", "Value" );
         list_->setHeaderLabels( headers );
         list_->setRootIsDecorated( false );
         connect( list_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnPaste() ) );
     }
     {
         Q3HBox* box = new Q3HBox( this );
-        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "Add" ), box );
-        gui::RichPushButton* del = new gui::RichPushButton( "del", tr( "Del" ), box );
-        gui::RichPushButton* paste = new gui::RichPushButton( "paste",  tr( "Paste" ), box );
+        gui::RichPushButton* add = new gui::RichPushButton( "add", tools::translate( "ScoreVariablesList", "Add" ), box );
+        gui::RichPushButton* del = new gui::RichPushButton( "del", tools::translate( "ScoreVariablesList", "Del" ), box );
+        gui::RichPushButton* paste = new gui::RichPushButton( "paste",  tools::translate( "ScoreVariablesList", "Paste" ), box );
         connect( add, SIGNAL( clicked() ), SLOT( OnAdd() ) );
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );

@@ -73,6 +73,4 @@ private:
     unsigned int nAddedPoints_;
 };
 
-#include "DEC_PathSection_ABC.inl"
-
 #endif // __DEC_PathSection_ABC_h_

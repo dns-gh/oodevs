@@ -263,3 +263,8 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
 {
     // NOTHING
 }
+
+bool PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
+{
+    return false;
+}

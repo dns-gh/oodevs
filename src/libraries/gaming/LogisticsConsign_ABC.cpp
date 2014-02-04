@@ -119,47 +119,40 @@ void LogisticsConsign_ABC::UpdateHistory( int start, int end,
             continue;
 
         HistoryState state;
-        if( msg.has_funeral() )
+        if( !UpdateHistoryState( msg, state ) )
         {
-            const auto& sub = msg.funeral();
-            if( sub.has_destruction() || !sub.has_update() )
-                // Creation messages are not really interesting
+            if( msg.has_funeral() )
+            {
+                const auto& sub = msg.funeral();
+                if( sub.has_destruction() || !sub.has_update() )
+                    // Creation messages are not really interesting
+                    continue;
+                if( sub.update().has_state() )
+                    state.nStatus_ = sub.update().state();
+                state.handler_ = GetRequestHandler(
+                    protocol::GetParentEntityId( sub.update().handling_unit() ));
+            }
+            else if( msg.has_maintenance() )
+            {
+                const auto& sub = msg.maintenance();
+                if( sub.has_destruction() || !sub.has_update() )
+                    continue;
+                if( sub.update().has_state() )
+                    state.nStatus_ = sub.update().state();
+                state.handler_ = GetRequestHandler( sub.update().provider().id() );
+            }
+            else if( msg.has_medical() )
+            {
+                const auto& sub = msg.medical();
+                if( sub.has_destruction() || !sub.has_update() )
+                    continue;
+                if( sub.update().has_state() )
+                    state.nStatus_ = sub.update().state();
+                state.handler_ = GetRequestHandler( sub.update().provider().id() );
+            }
+            else
                 continue;
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-            state.handler_ = GetRequestHandler(
-                protocol::GetParentEntityId( sub.update().handling_unit() ));
         }
-        else if( msg.has_maintenance() )
-        {
-            const auto& sub = msg.maintenance();
-            if( sub.has_destruction() || !sub.has_update() )
-                continue;
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-            state.handler_ = GetRequestHandler( sub.update().provider().id() );
-        }
-        else if( msg.has_medical() )
-        {
-            const auto& sub = msg.medical();
-            if( sub.has_destruction() || !sub.has_update() )
-                continue;
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-            state.handler_ = GetRequestHandler( sub.update().provider().id() );
-        }
-        else if( msg.has_supply() )
-        {
-            const auto& sub = msg.supply();
-            if( sub.has_destruction() || !sub.has_update() || !sub.has_creation() )
-                continue;
-            state.handler_ = GetRequestHandler(
-                protocol::GetParentEntityId( sub.creation().supplier() ));
-            if( sub.update().has_state() )
-                state.nStatus_ = sub.update().state();
-        }
-        else
-            continue;
         state.startedTick_ = msg.tick();
         history_->Add( state );
     }
@@ -177,4 +170,13 @@ QString LogisticsConsign_ABC::GetStatusLastStarted( int status ) const
         if( it->nStatus_ == status && it->startedTick_ > tickStarted )
             tickStarted = it->startedTick_;
     return ConvertTickToTimeString( tickStarted );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsConsign_ABC::UpdateHistoryState
+// Created: LGY 2014-01-30
+// -----------------------------------------------------------------------------
+bool LogisticsConsign_ABC::UpdateHistoryState( const sword::LogHistoryEntry& /*entry*/, HistoryState& /*state*/ )
+{
+    return false;
 }

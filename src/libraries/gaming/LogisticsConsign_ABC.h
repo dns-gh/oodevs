@@ -33,6 +33,14 @@ namespace google
     }
 }
 
+enum E_LogisticChain
+{
+    eFuneral = 0,
+    eMaintenance,
+    eMedical,
+    eSupply,
+};
+
 class Simulation;
 
 // =============================================================================
@@ -63,16 +71,10 @@ public:
     virtual QString GetStatusDisplay() const = 0;
     virtual kernel::Agent_ABC* GetConsumer() const = 0;
     virtual kernel::Entity_ABC* GetHandler() const = 0;
+    virtual E_LogisticChain GetType() const = 0;
     //@}
 
-    //! @name Operations
-    //@{
-    void UpdateHistory( int start, int end,
-        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
-        unsigned int currentTick );
-    //@}
-
-    //! @name Types
+     //! @name Types
     //@{
     struct HistoryState
     {
@@ -121,6 +123,14 @@ public:
         const LogisticsConsign_ABC* consign_;
         std::vector< HistoryState > states_;
     };
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool UpdateHistoryState( const sword::LogHistoryEntry& entry, HistoryState& state );
+    void UpdateHistory( int start, int end,
+        const google::protobuf::RepeatedPtrField< sword::LogHistoryEntry >& history,
+        unsigned int currentTick );
     //@}
 
     //! @name Operations

@@ -82,3 +82,13 @@ bool PreparationProfile::IsSupervision() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PreparationProfile::HasTimeControl
+// Created: BAX 2014-01-30
+// -----------------------------------------------------------------------------
+bool PreparationProfile::HasTimeControl() const
+{
+    return true;
+}
+

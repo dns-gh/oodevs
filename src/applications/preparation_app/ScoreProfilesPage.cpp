@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreProfilesPage.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
 #include "clients_gui/RichGroupBox.h"
@@ -30,17 +31,17 @@ ScoreProfilesPage::ScoreProfilesPage( QWidget* parent, kernel::Controllers& cont
     {
 
         //label
-        QLabel* scoreProfilesLabel = new QLabel( tr( "Selected profiles will have access to the score during the exercise." ) );
+        QLabel* scoreProfilesLabel = new QLabel( tools::translate( "ScoreProfilesPage", "Selected profiles will have access to the score during the exercise." ) );
         //tree view
         gui::RichTreeView* scoreProfilesView = new gui::RichTreeView( "scoreProfilesView" );
         scoreProfilesView->setRootIsDecorated( false );
         scoreProfilesView->setEditTriggers( 0 );
         model_ = new QStandardItemModel( this );
         scoreProfilesView->setModel( model_ );
-        model_->setHorizontalHeaderLabels( QStringList( tr( "Profile" ) ) );
+        model_->setHorizontalHeaderLabels( QStringList( tools::translate( "ScoreProfilesPage", "Profile" ) ) );
 
         //group box parent
-        gui::RichGroupBox* scoreProfilesBox = new gui::RichGroupBox( "scoreProfilesBox", tr( "Access rights" ), this );
+        gui::RichGroupBox* scoreProfilesBox = new gui::RichGroupBox( "scoreProfilesBox", tools::translate( "ScoreProfilesPage", "Access rights" ), this );
         QVBoxLayout* scoreProfileLayout = new QVBoxLayout( scoreProfilesBox );
         scoreProfileLayout->addWidget( scoreProfilesLabel );
         scoreProfileLayout->addWidget( scoreProfilesView );

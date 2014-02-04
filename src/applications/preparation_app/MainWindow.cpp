@@ -274,10 +274,10 @@ void MainWindow::Load()
 {
     if( config_.GetExerciseFile().Exists() )
     {
-        SetProgression( 0, tr( "Initialize data ..." ) );
+        SetProgression( 0, tools::translate( "MainWindow", "Initialize data ..." ) );
         if( DoLoad() )
             LoadExercise();
-        SetProgression( 100, tr( "Loading complete" ) );
+        SetProgression( 100, tools::translate( "MainWindow", "Loading complete" ) );
     }
 }
 
@@ -330,26 +330,26 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     // Drawing order
     gui::PreferencesDialog& preferences = dialogContainer_->GetPrefDialog();
     AddLayer( *glProxy_, preferences, defaultLayer );
-    AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tr( "Elevation" ) );
-    AddLayer( *glProxy_, preferences, raster,                   "main",                         tr( "Raster" ) );
-    AddLayer( *glProxy_, preferences, terrain,                  "main",                         tr( "Terrain" ) );
-    AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tr( "Contour Lines" ) );
-    AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tr( "Urban blocks" ) );
-    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tr( "Resource networks" ) );
-    AddLayer( *glProxy_, preferences, watershed,                "main",                         tr( "Watershed" ) );
+    AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tools::translate( "MainWindow", "Elevation" ) );
+    AddLayer( *glProxy_, preferences, raster,                   "main",                         tools::translate( "MainWindow", "Raster" ) );
+    AddLayer( *glProxy_, preferences, terrain,                  "main",                         tools::translate( "MainWindow", "Terrain" ) );
+    AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tools::translate( "MainWindow", "Contour Lines" ) );
+    AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tools::translate( "MainWindow", "Urban blocks" ) );
+    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tools::translate( "MainWindow", "Resource networks" ) );
+    AddLayer( *glProxy_, preferences, watershed,                "main",                         tools::translate( "MainWindow", "Watershed" ) );
     AddLayer( *glProxy_, preferences, elevation3d );
     AddLayer( *glProxy_, preferences, grid,                     "main" );
     AddLayer( *glProxy_, preferences, metrics,                  "main" );
     AddLayer( *glProxy_, preferences, weather,                  "main" );
     AddLayer( *glProxy_, preferences, limits,                   "main" );
     AddLayer( *glProxy_, preferences, indicatorCreationLayer );
-    AddLayer( *glProxy_, preferences, inhabitantLayer,          "main",                         tr( "Populations" ) );
-    AddLayer( *glProxy_, preferences, objectsLayer,             "main",                         tr( "Objects" ) );
-    AddLayer( *glProxy_, preferences, populations,              "main",                         tr( "Crowd" ) );
-    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tr( "Ghost" ) );
-    AddLayer( *glProxy_, preferences, agents,                   "main",                         tr( "Units" ) );
-    AddLayer( *glProxy_, preferences, automats,                 "main",                         tr( "Automats" ) );
-    AddLayer( *glProxy_, preferences, formation,                "main",                         tr( "Formations" ) );
+    AddLayer( *glProxy_, preferences, inhabitantLayer,          "main",                         tools::translate( "MainWindow", "Populations" ) );
+    AddLayer( *glProxy_, preferences, objectsLayer,             "main",                         tools::translate( "MainWindow", "Objects" ) );
+    AddLayer( *glProxy_, preferences, populations,              "main",                         tools::translate( "MainWindow", "Crowd" ) );
+    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tools::translate( "MainWindow", "Ghost" ) );
+    AddLayer( *glProxy_, preferences, agents,                   "main",                         tools::translate( "MainWindow", "Units" ) );
+    AddLayer( *glProxy_, preferences, automats,                 "main",                         tools::translate( "MainWindow", "Automats" ) );
+    AddLayer( *glProxy_, preferences, formation,                "main",                         tools::translate( "MainWindow", "Formations" ) );
     AddLayer( *glProxy_, preferences, objectCreationLayer,      "main" );
     AddLayer( *glProxy_, preferences, inhabitantCreationLayer,  "main" );
     AddLayer( *glProxy_, preferences, parameters,               "main" );
@@ -411,7 +411,7 @@ void MainWindow::DoLoad( const tools::Path& filename )
 {
     if( filename.IsEmpty() )
         return;
-    SetProgression( 0, tr( "Initialize data ..." ) );
+    SetProgression( 0, tools::translate( "MainWindow", "Initialize data ..." ) );
     try
     {
         config_.LoadExercise( filename );
@@ -426,7 +426,7 @@ void MainWindow::DoLoad( const tools::Path& filename )
         SetWindowTitle( true );
         LoadExercise();
     }
-    SetProgression( 100, tr( "Loading complete" ) );
+    SetProgression( 100, tools::translate( "MainWindow", "Loading complete" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,18 +492,18 @@ bool MainWindow::DoLoad()
 {
     try
     {
-        SetProgression( 10, tr( "Loading configuration ..." ) );
+        SetProgression( 10, tools::translate( "MainWindow", "Loading configuration ..." ) );
         controllers_.SaveOptions( eModes_Prepare );
         dockContainer_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
-        SetProgression( 20, tr( "Loading physical model ..." ) );
+        SetProgression( 20, tools::translate( "MainWindow", "Loading physical model ..." ) );
         staticModel_.Load( config_ );
-        SetProgression( 50, tr( "Loading graphical interface ..." ) );
+        SetProgression( 50, tools::translate( "MainWindow", "Loading graphical interface ..." ) );
         dialogContainer_->Purge();
         dialogContainer_->Load();
-        SetProgression( 60, tr( "Loading options ..." ) );
+        SetProgression( 60, tools::translate( "MainWindow", "Loading options ..." ) );
         SetWindowTitle( false );
     }
     catch( const xml::exception& e )
@@ -511,7 +511,7 @@ bool MainWindow::DoLoad()
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , tr( "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
+                                   , tools::translate( "tools", "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
         return false;
     }
     controllers_.LoadOptions( eModes_Prepare );
@@ -557,7 +557,7 @@ void MainWindow::LoadExercise()
     try
     {
         loading_ = true;
-        SetProgression( 70, tr( "Loading exercise ..." ) );
+        SetProgression( 70, tools::translate( "MainWindow", "Loading exercise ..." ) );
         model_.Load( config_ );
         dockContainer_->Load();
         if( config_.HasGenerateScores() )
@@ -568,7 +568,7 @@ void MainWindow::LoadExercise()
                 model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
             return;
         }
-        SetProgression( 90, tr( "Generate symbols" ) );
+        SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
         icons_->GenerateSymbols( *model_.teams_ );
 
         loading_ = false;
@@ -581,7 +581,7 @@ void MainWindow::LoadExercise()
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , tr( "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
+                                   , tools::translate( "tools", "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -619,10 +619,10 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
 // -----------------------------------------------------------------------------
 void MainWindow::SaveAs()
 {
-    static const QString title = tr( "Save exercise as ..." );
-    static const QString enterNewName = tr( "Enter an exercise name:" );
-    static const QString nameAlreadyExist = tr( "The exercise '%1' already exists. Please, enter a new exercise name:" );
-    static const QString content = tr( "Type exercise name here" );
+    static const QString title = tools::translate( "MainWindow", "Save exercise as ..." );
+    static const QString enterNewName = tools::translate( "MainWindow", "Enter an exercise name:" );
+    static const QString nameAlreadyExist = tools::translate( "MainWindow", "The exercise '%1' already exists. Please, enter a new exercise name:" );
+    static const QString content = tools::translate( "MainWindow", "Type exercise name here" );
     bool exist = false;
     tools::Path exerciseName;
     tools::Path exerciseDirectory;
@@ -745,14 +745,14 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     if( model_.IsLoaded() && isVisible() )
     {
         filename = model_.exercise_->GetName().isEmpty()
-            ? ( config_.GetExerciseName().IsEmpty() ? tr( "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
+            ? ( config_.GetExerciseName().IsEmpty() ? tools::translate( "MainWindow", "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
             : model_.exercise_->GetName();
         filename += ( needsSaving ) ? "*" : "";
     }
     if( filename.isEmpty() )
-        setCaption( tr( "Preparation - [%1]" ).arg( tr( "No file loaded" ) ) );
+        setCaption( tools::translate( "MainWindow", "Preparation - [%1]" ).arg( tools::translate( "MainWindow", "No file loaded" ) ) );
     else
-        setCaption( tr( "Preparation - %1 - [%2]" ).arg( mode ).arg( filename ) );
+        setCaption( tools::translate( "MainWindow", "Preparation - %1 - [%2]" ).arg( mode ).arg( filename ) );
     if( menu_.get() )
         menu_->GetSaveAction()->setEnabled( needsSaving );
 }
@@ -776,7 +776,7 @@ QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = 
     if( needsSaving_ )
     {
         result = QMessageBox::question( this, tools::translate( "Application", "SWORD" ),
-                                        tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().ToUTF8().c_str() ),
+                                        tools::translate( "tools", "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().ToUTF8().c_str() ),
                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
         if( result == QMessageBox::Yes )
             Save( !checkConsistency );
@@ -859,7 +859,7 @@ void MainWindow::OnAddRaster()
     {
         if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
         {
-            QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
+            QMessageBox::warning( 0, tools::translate( "MainWindow", "Warning" ), tools::translate( "MainWindow", "This functionality is not available with old terrain format." ) );
             return;
         }
 
@@ -875,12 +875,12 @@ void MainWindow::OnAddRaster()
     }
     catch( const geodata::ProjectionException& )
     {
-        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
+        QMessageBox::information( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
     catch( ... )
     {
-        QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
+        QMessageBox::critical( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
     }
 }
 
@@ -896,10 +896,10 @@ void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output 
                 output.FileName().ToUTF8() );
         raster.SetPasses( "main" );
         selector_->AddLayer( raster );
-        dialogContainer_->GetPrefDialog().AddLayer( tr( "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
+        dialogContainer_->GetPrefDialog().AddLayer( tools::translate( "MainWindow", "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
         raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
         raster.GenerateTexture();
     }
     else
-        QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
+        QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "Error while loading Raster source." ) );
 }

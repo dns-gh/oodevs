@@ -1901,6 +1901,10 @@ Voulez-vous le remplacer ?</translation>
         <source>Conveyed</source>
         <translation>Convoyées</translation>
     </message>
+    <message>
+        <source>Delivered</source>
+        <translation>Livrées</translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsSupplyWidget</name>
@@ -3680,6 +3684,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Supervisor actions</source>
         <translation>Actions de supervision</translation>
+    </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Contrôle du temps</translation>
     </message>
 </context>
 <context>

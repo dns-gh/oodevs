@@ -1898,6 +1898,10 @@ Do you want to replace it?</source>
         <source>Conveyed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsSupplyWidget</name>
@@ -3672,6 +3676,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
     <message>
         <source>Supervisor actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Control</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

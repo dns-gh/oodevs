@@ -170,9 +170,9 @@ namespace
             pLayout->addWidget( text_, 0, 2 );
 
             Q3HBox* buttonBox = new Q3HBox( this );
-            QPushButton* ok = new QPushButton( tr( "Ok" ), buttonBox );
+            QPushButton* ok = new QPushButton( tools::translate( "AlarmEditor", "Ok" ), buttonBox );
             connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
-            QPushButton* cancel = new QPushButton( tr( "Cancel" ), buttonBox );
+            QPushButton* cancel = new QPushButton( tools::translate( "AlarmEditor", "Cancel" ), buttonBox );
             connect( cancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
             pLayout->addMultiCellWidget( buttonBox, 1, 1, 0, 2 );

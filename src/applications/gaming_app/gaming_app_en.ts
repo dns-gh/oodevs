@@ -1899,6 +1899,10 @@ Do you want to replace it?</translation>
         <source>Conveyed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticsRequestsSupplyWidget</name>
@@ -3665,6 +3669,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Profile has changed, commit modifications?</source>
         <translation>Profile has changed, commit modifications?</translation>
+    </message>
+    <message>
+        <source>Time Control</source>
+        <translation>Time Control</translation>
     </message>
 </context>
 <context>

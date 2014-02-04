@@ -38,6 +38,7 @@ public:
     virtual bool Update();
 
     virtual void SelectNewState();
+    virtual bool TransferToLogisticSuperior();
     //@}
 
 private:

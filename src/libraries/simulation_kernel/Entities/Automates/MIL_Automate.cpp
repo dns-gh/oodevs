@@ -1206,9 +1206,9 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 // Name: MIL_Automate::OnReceiveLogSupplyPullFlow
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, MIL_AutomateLOG& supplier )
+bool MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::PullFlowParameters& parameters, MIL_AutomateLOG& supplier )
 {
-    pStockSupplyManager_->OnReceiveLogSupplyPullFlow( parameters, supplier );
+    return pStockSupplyManager_->OnReceiveLogSupplyPullFlow( parameters, supplier );
 }
 
 // -----------------------------------------------------------------------------

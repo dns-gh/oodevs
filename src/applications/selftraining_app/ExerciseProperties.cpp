@@ -30,7 +30,7 @@ namespace
         void showPopup()
         {
             auto w = view();
-            w->setMinimumWidth( w->sizeHintForColumn( 0 ) );
+            w->setMinimumWidth( w->sizeHintForColumn( 0 ) + 16 );
             QComboBox::showPopup();
         }
     };

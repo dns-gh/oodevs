@@ -953,7 +953,15 @@
     </message>
     <message>
         <source>waiting for transporter selection</source>
-        <translation>en attente de selection d&apos;un remorqueur</translation>
+        <translation>en attente de sélection d&apos;un remorqueur</translation>
+    </message>
+    <message>
+        <source>waiting for repair team selection</source>
+        <translation>en attente de sélection d&apos;une équipe de diagnostique</translation>
+    </message>
+    <message>
+        <source>waiting for diagnosis team selection</source>
+        <translation>en attente de sélection d&apos;une équipe de réparation</translation>
     </message>
 </context>
 <context>

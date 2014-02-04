@@ -16,6 +16,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/tools.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/statusicons.h"
@@ -94,7 +95,7 @@ namespace
         {
             Q3HBox* box = new Q3HBox( parent );
             box->setMargin( 5 );
-            new QLabel( tr( "Checkpoint name: " ), box );
+            new QLabel( tools::translate( "LineEdit", "Checkpoint name: " ), box );
             QLineEdit* lineEdit = new QLineEdit( box );
             connect( lineEdit, SIGNAL( returnPressed() ), toolbar_, SLOT( SlotNamedCheckPoint() ) );
             return box;
@@ -377,13 +378,14 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
+    const bool time = profile.HasTimeControl();
+    pPlayButton_->setEnabled( time );
+    pStepButton_->setEnabled( time );
+    pGoToEndAction_->setEnabled( time );
+    pGoToStartAction_->setEnabled( time );
+    pSpeedSpinBox_->setEnabled( time );
+    pSpeedButton_->setEnabled( time );
     const bool super = profile.IsSupervision();
-    pPlayButton_->setEnabled( super );
-    pStepButton_->setEnabled( super );
-    pGoToEndAction_->setEnabled( super );
-    pGoToStartAction_->setEnabled( super );
-    pSpeedSpinBox_->setEnabled( super );
-    pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
     pCheckpointAction_->setVisible( super && controllers_.GetCurrentMode() != eModes_Replay );
 }
