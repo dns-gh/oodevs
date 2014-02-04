@@ -133,7 +133,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         }
         catch( ... )
         {
-            sad69 = "invalid";
+            sad69 = tr( "invalid" );
         }
         coordinateFields_[ CoordinateSystems::E_SanC ]->setText( QString::fromStdString( sad69 ) );
 
