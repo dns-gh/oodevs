@@ -230,27 +230,33 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
     ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerUnloadingTime() ));
 }
 
+void PHY_MaintenanceTransportConsign::EnterStateWaitingForDiagnosisTeam()
+{
+    if( pCarrier_ )
+    {
+        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
+        pCarrier_ = 0;
+    }
+    assert( pComposanteState_ );
+    if( !pComposanteState_->NeedDiagnosis() )
+        ChooseStateAfterDiagnostic();
+    else if( IsManualMode() )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection );
+        ResetTimer( 0 );
+    }
+    else
+        EnterStateDiagnosing();
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::EnterStateDiagnosing
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
 {
-    assert( pComposanteState_ );
-
-    if( pCarrier_ )
-    {
-        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-        pCarrier_ = 0;
-    }
-
-    if( pComposanteState_->NeedDiagnosis() )
-    {
-        SetState( sword::LogMaintenanceHandlingUpdate::diagnosing );
-        ResetTimer( PHY_BreakdownType::GetDiagnosticTime() );
-    }
-    else
-        ChooseStateAfterDiagnostic();
+    SetState( sword::LogMaintenanceHandlingUpdate::diagnosing );
+    ResetTimer( PHY_BreakdownType::GetDiagnosticTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,13 +287,19 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceTransportConsign::Update()
 {
+    if( next_ )
+    {
+        next_();
+        next_ = 0;
+        return false;
+    }
     if( DecrementTimer() )
         return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 
     switch( GetState() )
     {
         case sword::LogMaintenanceHandlingUpdate::moving_to_supply:
-            EnterStateDiagnosing();
+            EnterStateWaitingForDiagnosisTeam();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter:
             if( DoWaitingForCarrier() )
@@ -312,7 +324,11 @@ bool PHY_MaintenanceTransportConsign::Update()
             EnterStateCarrierUnloading();
             break;
         case sword::LogMaintenanceHandlingUpdate::transporter_unloading:
-            EnterStateDiagnosing();
+            EnterStateWaitingForDiagnosisTeam();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection:
+            if( !IsManualMode() )
+                EnterStateDiagnosing();
             break;
         case sword::LogMaintenanceHandlingUpdate::diagnosing:
             ChooseStateAfterDiagnostic();
@@ -344,10 +360,10 @@ bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::SelectNewState()
 {
-    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        return;
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
-
+    if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter ); };
+    else if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+        next_ = [&]() { EnterStateDiagnosing(); };
 }
 
 // -----------------------------------------------------------------------------
