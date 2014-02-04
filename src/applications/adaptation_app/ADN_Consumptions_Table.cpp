@@ -20,8 +20,8 @@ ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_C
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Resource network" )
-                      << tr( "Consumption" );
+    horizontalHeaders << tools::translate( "ADN_Consumptions_Table", "Resource network" )
+                      << tools::translate( "ADN_Consumptions_Table", "Consumption" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
@@ -60,9 +60,9 @@ void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
         return;
     Q3PopupMenu* pMenu = new Q3PopupMenu( this );
     if( bDisplayAdd )
-        pMenu->insertItem( tr( "Add resource" ), pTargetMenu.get(), 0 );
+        pMenu->insertItem( tools::translate( "ADN_Consumptions_Table", "Add resource" ), pTargetMenu.get(), 0 );
     if( bDisplayRem )
-        pMenu->insertItem( tr( "Remove resource"), 1 );
+        pMenu->insertItem( tools::translate( "ADN_Consumptions_Table", "Remove resource"), 1 );
     int nMenu = pMenu->exec( pt );
     if( nMenu == 1 )
         RemoveCurrentConsumption();

@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_GUI.h"
 #include "moc_ADN_Resources_GUI.cpp"
+#include "ADN_ComboBoxItem.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Resources_AmmoListView.h"
 #include "ADN_Resources_AttritionGraph.h"

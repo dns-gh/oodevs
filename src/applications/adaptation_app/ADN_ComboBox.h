@@ -10,9 +10,8 @@
 #ifndef __ADN_ComboBox_h_
 #define __ADN_ComboBox_h_
 
-#include "ADN_Types.h"
 #include "ADN_Gfx_ABC.h"
-#include "ADN_ComboBoxItem.h"
+#include "ADN_Connector_ABC.h"
 #include "ADN_Connector_Enum.h"
 #include "ADN_Connector_Combo.h"
 

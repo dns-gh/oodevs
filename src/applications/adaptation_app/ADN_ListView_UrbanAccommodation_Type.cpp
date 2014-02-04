@@ -83,6 +83,6 @@ std::string ADN_ListView_UrbanAccommodation_Type::GetToolTipFor( const QModelInd
     FillMultiUsersList( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Inhabitants" ),
                             ADN_Workspace::GetWorkspace().GetInhabitants().GetData().GetSchedulesThatUse( *pCastData ), result );
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toStdString();
+        result = tools::translate( "ADN_ListView_UrbanAccommodation_Type", "<b>Unused</b>" ).toStdString();
     return result;
 }

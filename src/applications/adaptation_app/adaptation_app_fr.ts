@@ -169,7 +169,7 @@
     </message>
 </context>
 <context>
-    <name>ADN_Armors_Data::ArmorInfos</name>
+    <name>ADN_Armors_Data</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
@@ -481,6 +481,13 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_BaseMultiPercentage</name>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Breakdowns_Data</name>
     <message>
         <source>Required parts</source>
@@ -717,14 +724,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
-    </message>
-    <message>
-        <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
-        <translation>L&apos;automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
-    </message>
-    <message>
-        <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
-        <translation>L&apos;automate logistique &apos;%1&apos; contient au moins un pion non logistique.</translation>
     </message>
 </context>
 <context>
@@ -1560,6 +1559,10 @@ Arrêt moteur allumé</translation>
         <source>°</source>
         <translation>°</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipement</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -1698,9 +1701,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Urban attritions</source>
         <translation>Attritions urbaines</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
@@ -3042,10 +3042,6 @@ PNG (*.png)
 <context>
     <name>ADN_MultiPercentage</name>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Warning: total of percentages must equal 100%.</source>
         <translation>Attention : la somme des pourcentages doit être égale à 100%.</translation>
     </message>
@@ -3865,24 +3861,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Created object</source>
         <translation>Objet créé</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Equipement - Matériel urbain invalid &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipement - Type de dotation invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation>Equipement - Posture invalide &apos;%1&apos;</translation>
@@ -3890,6 +3868,14 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation>Equipement - Munition de tir indirect invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Equipement - Matériel urbain invalid &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4554,13 +4540,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Material</source>
         <translation type="unfinished">Matériau</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Speeds_Table</name>
-    <message>
-        <source>Equipment</source>
-        <translation>Equipement</translation>
     </message>
 </context>
 <context>
@@ -5946,9 +5925,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Infrastructure</source>
         <translation>Infrastructure</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
@@ -6457,6 +6433,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
+    </message>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
         <source>Doctrine model</source>
@@ -6727,13 +6710,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Protection</source>
         <translation>Protection</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 </TS>

@@ -38,6 +38,9 @@ protected slots:
     virtual void OnPercentageChanged() {}
     virtual void OnEditingFinished() {}
     //@}
+
+protected:
+    QString GetPercentLabel() { return tr( "%" ); }
 };
 
 // =============================================================================
@@ -49,7 +52,6 @@ protected slots:
 template< typename EditLine >
 class ADN_MultiPercentage : public ADN_BaseMultiPercentage
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -71,7 +73,7 @@ public:
     //@{
     void AddLine( const char* szName, ADN_Connector_ABC*& itemConnector, const char* lineObjectName )
     {
-        EditLine* pLine = builder_.AddField< EditLine >( parent_, lineObjectName, szName, itemConnector, tr( "%" ), ePercentage );
+        EditLine* pLine = builder_.AddField< EditLine >( parent_, lineObjectName, szName, itemConnector, GetPercentLabel(), ePercentage );
         connect( pLine, SIGNAL( textEdited( const QString& ) ), this, SLOT( OnPercentageChanged() ) );
         connect( pLine, SIGNAL( StartEditing() ), this, SLOT( OnPercentageChanged() ) );
         connect( pLine, SIGNAL( editingFinished() ), this, SLOT( OnEditingFinished() ) );

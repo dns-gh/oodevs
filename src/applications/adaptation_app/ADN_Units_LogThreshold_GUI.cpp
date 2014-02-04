@@ -24,8 +24,8 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( const QString& objectNam
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Logistic supply class" )
-        << tr( "Log threshold (%)" );
+    horizontalHeaders << tools::translate( "ADN_Units_LogThreshold_GUI", "Logistic supply class" )
+                      << tools::translate( "ADN_Units_LogThreshold_GUI", "Log threshold (%)" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( 0, QHeaderView::Fixed );
     horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
@@ -89,9 +89,9 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
         }
     }
     if( targetMenu.count() > 0 )
-        menu.insertItem( tr( "Add class"), &targetMenu ,0 );
+        menu.insertItem( tools::translate( "ADN_Units_LogThreshold_GUI", "Add class"), &targetMenu ,0 );
     if( GetSelectedData() != 0 )
-        menu.insertItem( tr( "Remove class" ), 1 );
+        menu.insertItem( tools::translate( "ADN_Units_LogThreshold_GUI", "Remove class" ), 1 );
 
     int nMenuResult = menu.exec(pt);
     if( nMenuResult == 1 )

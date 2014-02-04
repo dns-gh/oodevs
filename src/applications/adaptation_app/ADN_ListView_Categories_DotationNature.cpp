@@ -99,6 +99,6 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     }
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toStdString();
+        result = tools::translate( "ADN_ListView_Categories_DotationNature", "<b>Unused</b>" ).toStdString();
     return result;
 }

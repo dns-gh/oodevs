@@ -169,7 +169,7 @@
     </message>
 </context>
 <context>
-    <name>ADN_Armors_Data::ArmorInfos</name>
+    <name>ADN_Armors_Data</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">Categories - Invalid armor type &apos;%1&apos;</translation>
@@ -478,6 +478,13 @@ Parked engine running</translation>
     <message>
         <source>Percentage</source>
         <translation>Percentage</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_BaseMultiPercentage</name>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -1544,6 +1551,10 @@ Parked engine running</translation>
         <source>°</source>
         <translation>°</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipment</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -1682,9 +1693,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>Urban attritions</source>
         <translation>Urban attritions</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation>Fire - Location type not found &apos;%1&apos;</translation>
@@ -3026,10 +3034,6 @@ PNG (*.png)
 <context>
     <name>ADN_MultiPercentage</name>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Warning: total of percentages must equal 100%.</source>
         <translation>Warning: total of percentages must equal 100%.</translation>
     </message>
@@ -3849,24 +3853,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Created object</source>
         <translation>Created object</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid armor type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid urban Material type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation>Equipment - Invalid posture &apos;%1&apos;</translation>
@@ -3874,6 +3860,14 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipment - Invalid armor type &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Equipment - Invalid urban Material type &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4538,13 +4532,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Material</source>
         <translation>Material</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Speeds_Table</name>
-    <message>
-        <source>Equipment</source>
-        <translation>Equipment</translation>
     </message>
 </context>
 <context>
@@ -5919,9 +5906,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Infrastructure</source>
         <translation>Infrastructure</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipment - Invalid armor type &apos;%1&apos;</translation>
@@ -6430,6 +6414,13 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation>Categories - Invalid equipment state &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
         <source>Doctrine model</source>
@@ -6700,13 +6691,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Protection</source>
         <translation type="unfinished">Protection</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Categories - Invalid equipment state &apos;%1&apos;</translation>
     </message>
 </context>
 </TS>

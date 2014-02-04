@@ -11,6 +11,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_DialogLog.h"
+
+#include "clients_kernel/Tools.h"
 #include "MT_Tools/MT_FormatString.h"
 
 class QMessageTextView : public Q3TextView
@@ -38,7 +40,7 @@ ADN_DialogLog::ADN_DialogLog( QWidget * parent, const char * name)
     grid->addWidget(pMsg_,0,1,Qt::AlignLeft);
     pText_= new QMessageTextView( this, "errors" );
     grid->addMultiCellWidget( pText_, 1, 1 , 0 , 1 );
-    pOk_ = new QPushButton( tr( "&OK" ), this, "ok" );
+    pOk_ = new QPushButton( tools::translate( "ADN_DialogLog", "&OK" ), this, "ok" );
     connect( pOk_, SIGNAL(clicked()), this, SLOT(accept()) );
     pOk_->setFocus();
     grid->addMultiCellWidget( pOk_, 2, 2, 0, 1, Qt::AlignCenter );
