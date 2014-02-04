@@ -38,7 +38,7 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel:
     , isKnowledge_( isKnowledge )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindAgent( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel:
 // -----------------------------------------------------------------------------
 Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver,
               kernel::Controller& controller, bool isKnowledge )
-    : Entity< Agent_ABC >( parameter, &resolver.GetAgent( id ), controller )
+    : Entity< Agent_ABC >( parameter, resolver.FindAgent( id ), controller )
     , isKnowledge_( isKnowledge )
 {
     // NOTHING
@@ -62,7 +62,7 @@ Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, ke
     , isKnowledge_( isKnowledge )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindAgent( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -231,6 +231,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         DoCreateParameter( parameter, xis, *entity, type, param );
     if( !param )
         DoCreateParameter( parameter, xis, type, param );
+    if( !param )
+        return new NullParameter( parameter.GetName() );
     return param.release();
 }
 
@@ -378,7 +380,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::Agent( parameter, xis, entities_, controller_, true ) );
     else if( type == "crowdknowledge" )
         param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, controller_ ) );
-    else if( type == "objectknowledge" ) 
+    else if( type == "objectknowledge" )
         param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "urbanknowledge" || type == "urbanblock" )
         param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );

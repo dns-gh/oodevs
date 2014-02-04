@@ -31,7 +31,7 @@ Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, kernel::Control
 // Created: FPO 2011-05-30
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Inhabitant_ABC >( parameter, &resolver.GetInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Inhabitant_ABC >( parameter, resolver.FindInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }
@@ -41,7 +41,7 @@ Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, xml::xistream& 
 // Created: FPO 2011-05-30
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Inhabitant_ABC >( parameter, &resolver.GetInhabitant( id ), controller )
+    : Entity< Inhabitant_ABC >( parameter, resolver.FindInhabitant( id ), controller )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ Inhabitant::Inhabitant( const kernel::OrderParameter& parameter, unsigned int id
 // Created: FPO 2011-05-30
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Inhabitant_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "inhabitant", false ), &resolver.GetInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
+    : Entity< Inhabitant_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "inhabitant", false ), resolver.FindInhabitant( xis.attribute< unsigned long >( "value" ) ), controller )
 {
     // NOTHING
 }
