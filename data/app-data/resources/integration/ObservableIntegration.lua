@@ -89,10 +89,8 @@ integration.getUrbanBlockCurrentReconnaissanceState = function( urbanBlock )
   return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanBlock )
 end
 
---- Observe a knowledge
--- @param position of a knowledge
--- @author SLG
--- @release 2010-01-27
+-- Orientate the agent's sensors toward the given entities (a localized element)
+-- @param a 'LocalizedElement' knowledge (such as 'Point', 'Area', UrbanBlock', 'Object' types of objective)
 integration.observeIt = function( objective )
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
         DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
@@ -100,6 +98,12 @@ integration.observeIt = function( objective )
         DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
     end
   -- reportFunction(eRC_VisionVerrouilleeSur ) @TODO GGE à déplacer pour être gérer sans boucler
+end
+
+--- Orientate the agent's sensors toward the given direction
+-- @param a 'Direction'  knowledge 
+integration.observeDirection = function( direction )
+        DEC_Perception_VisionVerrouilleeSurDirection( direction.source )
 end
 
 --- Find the perception level from position to objective for static objects
