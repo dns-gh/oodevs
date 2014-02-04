@@ -498,7 +498,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "local_weather",                  QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
     T_ConverterMagicActionType( "local_weather_destruction",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
     T_ConverterMagicActionType( "select_maintenance_transporter", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Maintenance Transporter" ), sword::MagicAction::select_maintenance_transporter ),
-    T_ConverterMagicActionType( "select_new_logistic_state",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select New Logistic State" ), sword::MagicAction::select_new_logistic_state ),
+    T_ConverterMagicActionType( "select_new_logistic_state",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select logistic automated resolution" ), sword::MagicAction::select_new_logistic_state ),
     T_ConverterMagicActionType( "transfer_to_logistic_superior",  QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Transfer To Logistic Superior" ), sword::MagicAction::transfer_to_logistic_superior ),
     T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
 };

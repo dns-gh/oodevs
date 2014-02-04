@@ -1121,16 +1121,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select New Logistic State</source>
-        <translation>Passer à l&apos;étape logistique suivante</translation>
-    </message>
-    <message>
         <source>Transfer To Logistic Superior</source>
         <translation>Transfère au supérieur logistique</translation>
     </message>
     <message>
         <source>Select Maintenance Transporter</source>
         <translation>Maintenance - Selection d&apos;un remorqueur</translation>
+    </message>
+    <message>
+        <source>Select logistic automated resolution</source>
+        <translation>Passer automatiquement à l&apos;étape logistique suivante</translation>
     </message>
 </context>
 <context>
