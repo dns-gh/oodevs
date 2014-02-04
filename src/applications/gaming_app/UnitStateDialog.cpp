@@ -249,7 +249,7 @@ void UnitStateDialog::OnExportClicked()
         filename.ReplaceExtension( ".xls" );
     QList< QTableView* > views;
     QStringList names;
-    for( int i = 0; i < tabs_.size() && i < tabWidget_->count(); ++i )
+    for( int i = 0; i < static_cast< int >( tabs_.size() ) && i < tabWidget_->count(); ++i )
     {
          views << tabs_[ i ].get();
          names << tabWidget_->tabText( i );
