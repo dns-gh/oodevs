@@ -718,14 +718,6 @@ Arrêt moteur allumé</translation>
         <source>Invalid scan depth, should be greater than scan width.</source>
         <translation>Profondeur de scan invalide, elle doit être supérieure à la largeur.</translation>
     </message>
-    <message>
-        <source>The non-logistic automat &apos;%1&apos; contains one or more logistic units.</source>
-        <translation>L&apos;automate non logistique &apos;%1&apos; contient au moins un pion logistique.</translation>
-    </message>
-    <message>
-        <source>The logistic automat &apos;%1&apos; contains one or more non-logistic units.</source>
-        <translation>L&apos;automate logistique &apos;%1&apos; contient au moins un pion non logistique.</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -1002,11 +994,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une protection acrive</translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer une protection active</translation>
     </message>
 </context>
 <context>
@@ -1639,11 +1631,11 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Add weapon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un système d&apos;armes</translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer un système d&apos;armes</translation>
     </message>
 </context>
 <context>
@@ -2314,7 +2306,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2325,7 +2317,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2343,7 +2335,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Select an image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner une image</translation>
     </message>
     <message>
         <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
@@ -2352,35 +2344,40 @@ JPEG (*.jpg *jpeg)
 GIF (*.gif)
 PNG (*.png)
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tous formats supportés (*.bmp *.jpg *.jpeg *.gif *.png)
+Fichier Bitmap (*.bmp)
+JPEG (*.jpg *.jpeg)
+GIF (*.gif)
+PNG (*.png)
+</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le caractère &apos;$&apos; est interdit dnas le chemin d&apos;une image.</translation>
     </message>
     <message>
         <source>Existing file found</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier non trouvé</translation>
     </message>
     <message>
         <source>The file you want to copy already exists in the base, your file will be renamed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier que vous voulez copier existe déjà dans la base, votre fichier sera renommé</translation>
     </message>
     <message>
         <source>Add File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un fichier</translation>
     </message>
     <message>
         <source>Copy name</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le nom</translation>
     </message>
     <message>
         <source>Remove File</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer un fichier</translation>
     </message>
 </context>
 <context>
@@ -2394,7 +2391,7 @@ PNG (*.png)
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2405,11 +2402,11 @@ PNG (*.png)
     </message>
     <message>
         <source>Add object</source>
-        <translation type="unfinished">Ajouter un objet</translation>
+        <translation>Ajouter un objet</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation type="unfinished">Enlever cet objet</translation>
+        <translation>Enlever cet objet</translation>
     </message>
 </context>
 <context>
@@ -2420,19 +2417,19 @@ PNG (*.png)
     </message>
     <message>
         <source>Unit models</source>
-        <translation type="unfinished">Modèles de pions</translation>
+        <translation>Modèles de pions</translation>
     </message>
     <message>
         <source>Automata models</source>
-        <translation type="unfinished">Modèles d&apos;automates</translation>
+        <translation>Modèles d&apos;automates</translation>
     </message>
     <message>
         <source>Crowds models</source>
-        <translation type="unfinished">Modèles de foules</translation>
+        <translation>Modèles de foules</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2446,7 +2443,7 @@ PNG (*.png)
     <name>ADN_ListView_Objects</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2510,7 +2507,7 @@ PNG (*.png)
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2963,7 +2960,7 @@ PNG (*.png)
     </message>
     <message>
         <source>DIA type</source>
-        <translation type="unfinished">Type DIA</translation>
+        <translation>Type DIA</translation>
     </message>
     <message>
         <source>Mission name cannot contain the following characters: %1</source>
@@ -3675,7 +3672,7 @@ PNG (*.png)
     </message>
     <message>
         <source>DIA type</source>
-        <translation type="unfinished">Type DIA</translation>
+        <translation>Type DIA</translation>
     </message>
 </context>
 <context>
@@ -3802,7 +3799,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_AmmoListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3821,7 +3818,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Undamaged</source>
-        <translation type="unfinished"></translation>
+        <translation>Indemne</translation>
     </message>
 </context>
 <context>
@@ -4135,7 +4132,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_GenericListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -4553,7 +4550,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Material</source>
-        <translation type="unfinished">Matériau</translation>
+        <translation>Matériau</translation>
     </message>
 </context>
 <context>
@@ -4831,7 +4828,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Invalid time duration &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5593,11 +5590,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_Type_LocalizedString</name>
     <message>
         <source>Unfinished translation</source>
-        <translation type="unfinished">Traduction non terminée</translation>
+        <translation>Traduction non terminée</translation>
     </message>
     <message>
         <source>Duplicate translation key with different translation values</source>
-        <translation type="unfinished">Clef de traduction dupliquées avec des valeurs de traduction differentes</translation>
+        <translation>Clef de traduction dupliquées avec des valeurs de traduction differentes</translation>
     </message>
 </context>
 <context>
@@ -6278,7 +6275,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arme ou munition non spécifiée. Assurez-vous que les deux sont renseignées.</translation>
     </message>
 </context>
 <context>
@@ -6365,19 +6362,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Building GUI: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction de l&apos;interface : %1...</translation>
     </message>
     <message>
         <source>Closing: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermeture : %1...</translation>
     </message>
     <message>
         <source>Loading: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement : %1...</translation>
     </message>
     <message>
         <source>Saving: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde : %1...</translation>
     </message>
 </context>
 <context>
