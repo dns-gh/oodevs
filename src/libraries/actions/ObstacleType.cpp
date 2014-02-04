@@ -32,7 +32,7 @@ ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned in
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
-    : Parameter< QString >( kernel::OrderParameter( xis.attribute< std::string >( "name" ).c_str(), xis.attribute< std::string >( "type" ), false ) )
+    : Parameter< QString >( kernel::OrderParameter( xis.attribute< std::string >( "name", "" ), xis.attribute< std::string >( "type" ), false ) )
     , value_( sword::ObstacleType_DemolitionTargetType( xis.attribute< unsigned int >( "value" ) ) )
 {
     SetValue( tools::ToString( E_ObstacleActivation( value_ ) ) );
