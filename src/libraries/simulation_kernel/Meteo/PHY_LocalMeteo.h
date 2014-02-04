@@ -11,6 +11,8 @@
 #define __PHY_LocalMeteo_h_
 
 #include "meteo/Meteo.h"
+#include <boost/serialization/split_member.hpp>
+#include <memory>
 
 namespace sword
 {
@@ -22,7 +24,10 @@ namespace xml
     class xistream;
 }
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 class PHY_RawVisionData;
+class TER_World;
 
 // =============================================================================
 /** @class  PHY_LocalMeteo
@@ -36,8 +41,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_LocalMeteo();
-             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep );
-             PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, const weather::PHY_Lighting& light, unsigned int timeStep );
+             PHY_LocalMeteo( unsigned int id, xml::xistream& xis,
+                 const weather::PHY_Lighting& light, unsigned int timeStep,
+                 const std::shared_ptr< TER_World >& world );
+             PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message,
+                 const weather::PHY_Lighting& light, unsigned int timeStep,
+                 const std::shared_ptr< TER_World >& world );
     virtual ~PHY_LocalMeteo();
     //@}
 
@@ -54,7 +63,9 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& ar, const unsigned int );
+    void save( MIL_CheckPointOutArchive& ar, const unsigned int ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
@@ -67,6 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::shared_ptr< TER_World > world_;
     int startTime_;
     int endTime_;
     MT_Vector2D upLeft_;

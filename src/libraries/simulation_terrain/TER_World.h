@@ -20,7 +20,7 @@
 #define __TER_World_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 class TerrainData;
 class MT_Ellipse;
@@ -64,9 +64,12 @@ public:
     //@}
 
 public:
+    ~TER_World();
+
     //! @name Operations
     //@{
     static TER_World& GetWorld();
+    static std::shared_ptr< TER_World > GetWorldPtr();
     static void Initialize( const tools::ExerciseConfig& config );
     static void DestroyWorld();
     //@}
@@ -103,13 +106,11 @@ private:
     //! @name Constructors/Destructor
     //@{
     explicit TER_World( const tools::ExerciseConfig& config );
-            ~TER_World();
     //@}
 
 private:
     //! @name Member data
     //@{
-    static TER_World*      pInstance_;
     TER_AgentManager*      pAgentManager_;
     TER_ObjectManager*     pObjectManager_;
     TER_CoordinateManager* pCoordinateManager_;
@@ -117,7 +118,7 @@ private:
     TER_PathFindManager*   pPathfindManager_;
     TER_AnalyzerManager*   pAnalyzerManager_;
     TER_PopulationManager* pPopulationManager_;
-    boost::scoped_ptr< TER_LimitDataManager > limitManager_;
+    std::unique_ptr< TER_LimitDataManager > limitManager_;
     //@}
 };
 

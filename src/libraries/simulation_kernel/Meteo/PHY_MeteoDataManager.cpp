@@ -27,6 +27,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/EnumMaps.h"
 #include "protocol/MessageParameters.h"
+#include "simulation_terrain/TER_World.h"
 
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -111,8 +112,9 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 boost::shared_ptr< const weather::Meteo > PHY_MeteoDataManager::InternalAddLocalWeather(
         xml::xistream& xis )
 {
+    const auto world = TER_World::GetWorldPtr();
     const auto w = boost::make_shared< PHY_LocalMeteo >( localCounter_++, xis,
-        pEphemeride_->GetLightingBase(), tickDuration_ );
+        pEphemeride_->GetLightingBase(), tickDuration_, world );
     AddMeteo( w );
     return w;
 }
@@ -158,8 +160,9 @@ void PHY_MeteoDataManager::ManageLocalWeather( const sword::MagicAction& msg, sw
         id = protocol::GetIdentifier( params, 10 );
     if( id == 0 )
     {
+        const auto world = TER_World::GetWorldPtr();
         auto meteo = boost::make_shared< PHY_LocalMeteo >( localCounter_++,
-                params, pEphemeride_->GetLightingBase(), tickDuration_ );
+                params, pEphemeride_->GetLightingBase(), tickDuration_, world );
         id = meteo->GetId();
         AddMeteo( meteo );
     }

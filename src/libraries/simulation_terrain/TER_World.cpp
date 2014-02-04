@@ -31,7 +31,12 @@
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
-TER_World*  TER_World::pInstance_ = 0;
+namespace
+{
+
+std::shared_ptr< TER_World > world_;
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: TER_World::Initialize
@@ -39,8 +44,7 @@ TER_World*  TER_World::pInstance_ = 0;
 // -----------------------------------------------------------------------------
 void TER_World::Initialize( const tools::ExerciseConfig& config )
 {
-    assert( ! pInstance_ );
-    pInstance_ = new TER_World( config );
+    world_ = std::shared_ptr< TER_World >( new TER_World( config ));
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +53,7 @@ void TER_World::Initialize( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void TER_World::DestroyWorld()
 {
-    delete pInstance_;
-    pInstance_ = 0;
+    world_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +187,12 @@ MT_Vector2D TER_World::ClipPointInsideWorld( const MT_Vector2D& pos ) const
 // -----------------------------------------------------------------------------
 TER_World& TER_World::GetWorld()
 {
-    return *pInstance_;
+    return *world_;
+}
+
+std::shared_ptr< TER_World > TER_World::GetWorldPtr()
+{
+    return world_;
 }
 
 // -----------------------------------------------------------------------------
