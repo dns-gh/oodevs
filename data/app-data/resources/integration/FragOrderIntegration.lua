@@ -87,6 +87,12 @@ integration.changeCrowdROEForAgent = function( roe )
     DEC_Agent_ChangeEtatROEPopulation( roe )
 end
 
+--- Returns the current rule of engagement towards crowds for this entity.
+-- This method can only be called by an agent.
+-- @return Integer, the current rule of crowd engagement among one of the following constants :
+-- <ul> <li> eEtatROEPopulation_EmploiForceInterdit (lethal fire forbidden) </li>
+-- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (maintaining distances with non-lethal fire) </li>
+-- <li> eEtatROEPopulation_ArmesLetalesAutorisees (lethal fire authorized) </li> </ul>
 integration.getCrowdROEForAgent = function()
     return DEC_Agent_RoePopulation()
 end

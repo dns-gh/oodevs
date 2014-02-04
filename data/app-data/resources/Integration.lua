@@ -66,6 +66,7 @@ include "integration/ReinforcableIntegration.lua"
 include "integration/FragOrderIntegration.lua"
 include "integration/EquipmentIntegration.lua"
 
+include "integration/CrowdBodyIntegration.lua"
 include "integration/CrowdIntegration.lua"
 include "integration/LogisticIntegration.lua"
 
