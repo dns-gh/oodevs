@@ -170,8 +170,6 @@ func (sim *SimProcess) Stop() error {
 			return nil
 		}
 		err = errors.New("wait timed out")
-	} else if err == nil {
-		err = errors.New("simulation supposedly stopping but no command issued")
 	}
 	sim.Kill()
 	return err
