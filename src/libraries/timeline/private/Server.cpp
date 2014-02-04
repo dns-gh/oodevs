@@ -41,9 +41,8 @@ namespace
         Widget( ipc::Device& device, QWidget* parent )
             : QWidget( parent )
             , device_( device )
-            , resize_( controls::ResizeClient( 0, 0 ) )
         {
-            controls::ResizeClient( &resize_[0], resize_.size() );
+            controls::TryResizeClient( device_ );
         }
 
     protected:
@@ -51,7 +50,7 @@ namespace
         {
             try
             {
-                device_.TryWrite( &resize_[0], resize_.size() );
+                controls::TryResizeClient( device_ );
             }
             catch( ... )
             {
@@ -62,7 +61,6 @@ namespace
 
     private:
         ipc::Device& device_;
-        std::vector< uint8_t > resize_;
     };
 }
 
@@ -117,70 +115,71 @@ void Server::OnError( QProcess::ProcessError error )
 
 void Server::Reload()
 {
-    Write( *write_, &controls::ReloadClient );
+    controls::ReloadClient( *write_ );
 }
 
 void Server::Load( const std::string& url )
 {
-    Write( *write_, boost::bind( &controls::LoadClient, _1, _2, url ) );
+    controls::LoadClient( *write_, url );
 }
 
 void Server::Center()
 {
-    Write( *write_, &controls::CenterClient );
+    controls::CenterClient( *write_ );
 }
 
 void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
 {
-    Write( *write_, boost::bind( &controls::UpdateQuery, _1, _2, boost::cref( parameters ) ) );
+    controls::UpdateQuery( *write_, parameters );
 }
 
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    return Write( *write_, boost::bind( &controls::CreateEvent, _1, _2, event ) );
+    return controls::CreateEvent( *write_, event );
 }
 
 bool Server::SelectEvent( const std::string& uuid )
 {
-    return Write( *write_, boost::bind( &controls::SelectEvent, _1, _2, uuid ) );
+    return controls::SelectEvent( *write_, uuid );
 }
 
 bool Server::ReadEvents()
 {
-    return Write( *write_, static_cast< size_t ( * )( void*, size_t ) >( &controls::ReadEvents ) );
+    return controls::ReadEvents( *write_ );
 }
 
 bool Server::ReadEvent( const std::string& uuid )
 {
-    return Write( *write_, boost::bind( &controls::ReadEvent, _1, _2, uuid ) );
+    return controls::ReadEvent( *write_, uuid );
 }
 
 bool Server::UpdateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    return Write( *write_, boost::bind( &controls::UpdateEvent, _1, _2, event ) );
+    return controls::UpdateEvent( *write_, event );
 }
 
 bool Server::DeleteEvent( const std::string& uuid )
 {
-    return Write( *write_, boost::bind( &controls::DeleteEvent, _1, _2, uuid ) );
+    return controls::DeleteEvent( *write_, uuid );
 }
 
 void Server::LoadEvents( const std::string& events )
 {
-    Write( *write_, boost::bind( &controls::LoadEvents, _1, _2, events ) );
+    controls::LoadEvents( *write_, events );
 }
 
 void Server::SaveEvents() const
 {
-    Write( *write_, &controls::SaveEvents );
+    controls::SaveEvents( *write_ );
 }
 
 void Server::Run()
 {
+    const controls::T_Logger none;
     try
     {
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
@@ -191,7 +190,7 @@ void Server::Run()
                     buffer.resize( read );
                 else
                 {
-                    controls::ParseServer( *this, &buffer[0], read );
+                    controls::ParseServer( *this, &buffer[0], read, none );
                     buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
                 }
             }

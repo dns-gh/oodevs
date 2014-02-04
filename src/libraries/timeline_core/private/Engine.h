@@ -17,6 +17,7 @@
 #pragma warning( pop )
 #endif
 #include <boost/noncopyable.hpp>
+#include <functional>
 
 namespace tools
 {
@@ -40,7 +41,8 @@ namespace core
 class Engine : public boost::noncopyable
 {
 public:
-             Engine( tools::ipc::Device& device );
+    typedef std::function< void( const std::string& ) > T_Logger;
+             Engine( tools::ipc::Device& device, const T_Logger& log );
     virtual ~Engine();
 
     /// Public methods
@@ -88,6 +90,7 @@ protected:
     IMPLEMENT_REFCOUNTING( Engine );
 
 private:
+    const T_Logger log_;
     CefRefPtr< CefV8Context > ctx_;
     tools::ipc::Device& device_;
 };

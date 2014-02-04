@@ -13,7 +13,6 @@
 #include "timeline/api.h"
 
 #include <tools/Base64Converters.h>
-#include <tools/IpcDevice.h>
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -21,8 +20,9 @@
 
 using namespace timeline::core;
 
-Engine::Engine( tools::ipc::Device& device )
-    : device_( device )
+Engine::Engine( tools::ipc::Device& device, const T_Logger& log )
+    : log_   ( log )
+    , device_( device )
 {
     // NOTHING
 }
@@ -143,7 +143,7 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
-    SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady, this, _1 ) );
+    SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady,                 this, _1 ) );
     SetValue( gaming, "created_event",          2, boost::bind( &Engine::OnCreatedEvent,          this, _1 ) );
     SetValue( gaming, "get_read_events",        2, boost::bind( &Engine::OnReadEvents,            this, _1 ) );
     SetValue( gaming, "get_read_event",         2, boost::bind( &Engine::OnReadEvent,             this, _1 ) );
@@ -322,12 +322,12 @@ void Engine::SelectEvent( const std::string& uuid )
 
 void Engine::SendCreatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::CreatedEvent, _1, _2, event, error ) );
+    controls::CreatedEvent( device_, log_, event, error );
 }
 
 CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 {
-    Write( device_, &controls::ReadyServer );
+    controls::ReadyServer( device_, log_ );
     return 0;
 }
 
@@ -339,56 +339,49 @@ CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
 
 CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::SelectedEvent, _1, _2, event ) );
+    controls::SelectedEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ )
 {
-    Write( device_, &controls::DeselectedEvent );
+    controls::DeselectedEvent( device_, log_ );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::ActivatedEvent, _1, _2, event ) );
+    controls::ActivatedEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::ContextMenuEvent, _1, _2, event ) );
+    controls::ContextMenuEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& args )
 {
-    const std::string time = args[0]->GetStringValue();
-    Write( device_, boost::bind( &controls::ContextMenuBackground, _1, _2, time ) );
+    controls::ContextMenuBackground( device_, log_, args[0]->GetStringValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyDown( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyDown, _1, _2, key ) );
+    controls::KeyDown( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyPress( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyPress, _1, _2, key ) );
+    controls::KeyPress( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyUp( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyUp, _1, _2, key ) );
+    controls::KeyUp( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
@@ -440,17 +433,17 @@ CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
 
 void Engine::SendDeletedEvent( const std::string& uuid, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::DeletedEvent, _1, _2, uuid, error ) );
+    controls::DeletedEvent( device_, log_, uuid, error );
 }
 
 void Engine::SendLoadedEvents( const timeline::Error& err )
 {
-    Write( device_, boost::bind( &controls::LoadedEvents, _1, _2, err ) );
+    controls::LoadedEvents( device_, log_, err );
 }
 
 void Engine::SendSavedEvents( const std::string& events, const timeline::Error& err )
 {
-    Write( device_, boost::bind( &controls::SavedEvents, _1, _2, events, err ) );
+    controls::SavedEvents( device_, log_, events, err );
 }
 
 CefRefPtr< CefV8Value > Engine::OnLoadedEvents( const CefV8ValueList& args )
@@ -489,7 +482,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvents( const CefV8ValueList& args )
 
 void Engine::SendReadEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::ReadEvents, _1, _2, events, error ) );
+    controls::ReadEvents( device_, log_, events, error );
 }
 
 void Engine::ReadEvent( const std::string& uuid )
@@ -514,7 +507,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvent( const CefV8ValueList& args )
 
 void Engine::SendReadEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::ReadEvent, _1, _2, event, error ) );
+    controls::ReadEvent( device_, log_, event, error );
 }
 
 void Engine::UpdateEvent( const timeline::Event& event )
@@ -541,5 +534,5 @@ CefRefPtr< CefV8Value > Engine::OnUpdatedEvent( const CefV8ValueList& args )
 
 void Engine::SendUpdatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::UpdatedEvent, _1, _2, event, error ) );
+    controls::UpdatedEvent( device_, log_, event, error );
 }

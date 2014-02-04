@@ -173,6 +173,7 @@ struct Configuration
     }
     tools::Path rundir;
     tools::Path binary;
+    tools::Path log;
     QWidget*    widget;
     std::string url;
     bool        external;   ///< use external process

@@ -8,6 +8,8 @@
 // *****************************************************************************
 #include "controls.h"
 
+#include <tools/IpcDevice.h>
+
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
 #endif
@@ -16,6 +18,7 @@
 #pragma warning( pop )
 #endif
 
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/interprocess/streams/bufferstream.hpp>
 #include <boost/interprocess/streams/vectorstream.hpp>
 
@@ -27,74 +30,99 @@ using sdk::ServerCommand;
 
 namespace
 {
+    const controls::T_Logger none;
+
+    typedef std::function< size_t( const char*, size_t ) > T_Writer;
+
     template< typename T >
-    size_t Marshall( void* dst, size_t size, const T& src )
+    size_t PackWith( const T_Writer& write, const controls::T_Logger& log, const T& src )
     {
-        const size_t need = src.ByteSize();
-        if( !dst )
-            return need;
-        if( need > size )
-            return SIZE_MAX;
-        bip::obufferstream stream( reinterpret_cast< char* >( dst ), size );
+        if( log )
+            log( src.ShortDebugString() );
+        bip::basic_vectorstream< std::vector< char> > stream;
         src.SerializeToOstream( &stream );
-        return need;
+        const auto& buf = stream.vector();
+        if( buf.empty() )
+            return 0;
+        return write( &buf[0], buf.size() );
     }
 
     template< typename T >
-    void Unmarshall( T& dst, const void* src, size_t size )
+    size_t Pack( tools::ipc::Device& device, const controls::T_Logger& log, const T& src )
+    {
+        return PackWith( [&]( const char* data, size_t size ) {
+            return device.Write( data, size );
+        }, log, src );
+    }
+
+    template< typename T >
+    void Unpack( T& dst, const void* src, size_t size, const controls::T_Logger& log )
     {
         bip::ibufferstream stream( reinterpret_cast< const char* >( src ), size );
         dst.ParseFromIstream( &stream );
+        if( log )
+            log( dst.ShortDebugString() );
     }
 
     template< typename CMD, typename TYPE >
-    size_t MarshallType( void* data, size_t size, TYPE type )
+    size_t PackType( tools::ipc::Device& device, const controls::T_Logger& log, TYPE type )
     {
         CMD cmd;
         cmd.set_type( type );
-        return Marshall( data, size, cmd );
+        return Pack( device, log, cmd );
     }
 }
 
-size_t tic::ResizeClient( void* data, size_t size )
+size_t tic::TryResizeClient( tools::ipc::Device& device )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_RESIZE );
+    // this command is called a LOTS of time, so let's avoid recreating
+    // a new packet each time
+    static const ClientCommand resize = []() -> ClientCommand {
+        ClientCommand cmd;
+        cmd.set_type( sdk::CLIENT_RESIZE );
+        return cmd;
+    }();
+    return Pack( device, none, resize );
 }
 
-size_t tic::QuitClient( void* data, size_t size )
+size_t tic::QuitClient( tools::ipc::Device& device, int millisecs )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_QUIT );
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_QUIT );
+    return PackWith( [&]( const char* data, size_t size ){
+        return device.TimedWrite( data, size, boost::posix_time::milliseconds( millisecs ) );
+    }, controls::T_Logger(), cmd );
 }
 
-size_t tic::ReloadClient( void* data, size_t size )
+size_t tic::ReloadClient( tools::ipc::Device& device )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_RELOAD );
+    return PackType< ClientCommand >( device, none, sdk::CLIENT_RELOAD );
 }
 
-size_t tic::LoadClient( void* data, size_t size, const std::string& url )
+size_t tic::LoadClient( tools::ipc::Device& device, const std::string& url )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_LOAD );
     cmd.set_url( url );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t controls::UpdateQuery( void* data, size_t size, const std::map< std::string, std::string >& parameters )
+size_t controls::UpdateQuery( tools::ipc::Device& device, const std::map< std::string, std::string >& parameters )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_QUERY_UPDATE );
     for( auto it = parameters.begin(); it != parameters.end(); ++it )
     {
-        sdk::QueryParameter* parameter = cmd.add_query();
+        auto parameter = cmd.add_query();
         parameter->set_key( it->first );
         parameter->set_value( it->second );
     }
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::CenterClient( void* data, size_t size )
+size_t tic::CenterClient( tools::ipc::Device& device )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_CENTER );
+    return PackType< ClientCommand >( device, none, sdk::CLIENT_CENTER );
 }
 
 namespace
@@ -175,68 +203,69 @@ namespace
     }
 }
 
-size_t tic::CreateEvent( void* data, size_t size, const Event& event )
+size_t tic::CreateEvent( tools::ipc::Device& device, const Event& event )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_CREATE );
     SetEvent( *cmd.mutable_event(), event );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::SelectEvent( void* data, size_t size, const std::string& uuid )
+size_t tic::SelectEvent( tools::ipc::Device& device, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_SELECT );
     cmd.mutable_event()->set_uuid( uuid );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::ReadEvents( void* data, size_t size )
+size_t tic::ReadEvents( tools::ipc::Device& device )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_EVENT_READ_ALL );
+    return PackType< ClientCommand >( device, none, sdk::CLIENT_EVENT_READ_ALL );
 }
 
-size_t tic::ReadEvent( void* data, size_t size, const std::string& uuid )
+size_t tic::ReadEvent( tools::ipc::Device& device, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_READ_ONE );
     cmd.mutable_event()->set_uuid( uuid );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::UpdateEvent( void* data, size_t size, const Event& event )
+size_t tic::UpdateEvent( tools::ipc::Device& device, const Event& event )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_UPDATE );
     SetEvent( *cmd.mutable_event(), event );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::DeleteEvent( void* data, size_t size, const std::string& uuid )
+size_t tic::DeleteEvent( tools::ipc::Device& device, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_DELETE );
     cmd.mutable_event()->set_uuid( uuid );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::LoadEvents( void* data, size_t size, const std::string& events )
+size_t tic::LoadEvents( tools::ipc::Device& device, const std::string& events )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENTS_LOAD );
     cmd.set_data( events );
-    return Marshall( data, size, cmd );
+    return Pack( device, none, cmd );
 }
 
-size_t tic::SaveEvents( void* data, size_t size )
+size_t tic::SaveEvents( tools::ipc::Device& device )
 {
-    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_EVENTS_SAVE );
+    return PackType< ClientCommand >( device, none, sdk::CLIENT_EVENTS_SAVE );
 }
 
-void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size )
+void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size,
+                       const T_Logger& log )
 {
     ClientCommand cmd;
-    Unmarshall( cmd, data, size );
+    Unpack( cmd, data, size, log );
     switch( cmd.type() )
     {
         case sdk::CLIENT_RESIZE:                return handler.OnResizeClient();
@@ -256,139 +285,140 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
     }
 }
 
-size_t tic::ReadyServer( void* data, size_t size )
+size_t tic::ReadyServer( tools::ipc::Device& device, const T_Logger& log )
 {
-    return MarshallType< ServerCommand >( data, size, sdk::SERVER_READY );
+    return PackType< ServerCommand >( device, log, sdk::SERVER_READY );
 }
 
-size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Error& error )
+size_t tic::CreatedEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_CREATED );
     SetEvent( *cmd.mutable_event(), event );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::ReadEvents( void* data, size_t size, const Events& events, const Error& error )
+size_t tic::ReadEvents( tools::ipc::Device& device, const T_Logger& log, const Events& events, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_READ_ALL );
     for( auto it = events.begin(); it != events.end(); ++it )
         SetEvent( *cmd.mutable_events()->Add(), *it );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::ReadEvent( void* data, size_t size, const Event& event, const Error& error )
+size_t tic::ReadEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_READ_ONE );
     SetEvent( *cmd.mutable_event(), event );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::UpdatedEvent( void* data, size_t size, const Event& event, const Error& error )
+size_t tic::UpdatedEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_UPDATED );
     SetEvent( *cmd.mutable_event(), event );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, const Error& error )
+size_t tic::DeletedEvent( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_DELETED );
     cmd.mutable_event()->set_uuid( uuid );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::LoadedEvents( void* data, size_t size, const Error& error )
+size_t tic::LoadedEvents( tools::ipc::Device& device, const T_Logger& log, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENTS_LOADED );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::SavedEvents( void* data, size_t size, const std::string& events, const Error& error )
+size_t tic::SavedEvents( tools::ipc::Device& device, const T_Logger& log, const std::string& events, const Error& error )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENTS_SAVED );
     cmd.set_data( events );
     SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::SelectedEvent( void* data, size_t size, const Event& event )
+size_t tic::SelectedEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_SELECTED );
     SetEvent( *cmd.mutable_event(), event );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::DeselectedEvent( void* data, size_t size )
+size_t tic::DeselectedEvent( tools::ipc::Device& device, const T_Logger& log )
 {
-    return MarshallType< ServerCommand >( data, size, sdk::SERVER_EVENT_DESELECTED );
+    return PackType< ServerCommand >( device, log, sdk::SERVER_EVENT_DESELECTED );
 }
 
-size_t tic::ActivatedEvent( void* data, size_t size, const Event& event )
+size_t tic::ActivatedEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_ACTIVATED );
     SetEvent( *cmd.mutable_event(), event );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::ContextMenuEvent( void* data, size_t size, const Event& event )
+size_t tic::ContextMenuEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENU );
     SetEvent( *cmd.mutable_event(), event );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::ContextMenuBackground( void* data, size_t size, const std::string& time )
+size_t tic::ContextMenuBackground( tools::ipc::Device& device, const T_Logger& log, const std::string& time )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND );
     cmd.set_time( time );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::KeyDown( void* data, size_t size, int key )
+size_t tic::KeyDown( tools::ipc::Device& device, const T_Logger& log, int key )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_KEYBOARD_KEYDOWN );
     cmd.mutable_keyboardevent()->set_keydown( key );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::KeyPress( void* data, size_t size, int key )
+size_t tic::KeyPress( tools::ipc::Device& device, const T_Logger& log, int key )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_KEYBOARD_KEYPRESS );
     cmd.mutable_keyboardevent()->set_keypress( key );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::KeyUp( void* data, size_t size, int key )
+size_t tic::KeyUp( tools::ipc::Device& device, const T_Logger& log, int key )
 {
     ServerCommand cmd;
     cmd.set_type( sdk::SERVER_KEYBOARD_KEYUP );
     cmd.mutable_keyboardevent()->set_keyup( key );
-    return Marshall( data, size, cmd );
+    return Pack( device, log, cmd );
 }
 
-void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
+void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size,
+                       const T_Logger& log )
 {
     ServerCommand cmd;
-    Unmarshall( cmd, data, size );
+    Unpack( cmd, data, size, log );
     switch( cmd.type() )
     {
         case sdk::SERVER_READY:                       return handler.OnReadyServer();

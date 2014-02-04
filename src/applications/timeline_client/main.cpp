@@ -37,6 +37,7 @@ int main( int argc, char* argv[] )
             ( "widget",         bpo::value( &cfg.wid )->required(), "set parent widget id" )
             ( "uuid",           bpo::value( &cfg.uuid )->required(), "set parent uuid" )
             ( "url",            bpo::value( &cfg.url )->required(), "set url target" )
+            ( "log",            bpo::value( &cfg.log ), "optional log file" )
             ( "debug_port",     bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
         bpo::variables_map args;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );

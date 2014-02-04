@@ -12,6 +12,7 @@
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
+#include <tools/Path.h>
 #include <QWidget>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/lexical_cast.hpp>
@@ -35,9 +36,7 @@ namespace
 
     void StopClient( ipc::Device& device )
     {
-        std::vector< uint8_t > quit( controls::QuitClient( 0, 0 ) );
-        controls::QuitClient( &quit[0], quit.size() );
-        device.TimedWrite( &quit[0], quit.size(), boost::posix_time::seconds( 4 ) );
+        controls::QuitClient( device, 4*1000 );
     }
 
     std::runtime_error Win32Exception( const std::string& err )
@@ -87,6 +86,8 @@ namespace
                  << QString::fromStdString( cfg.url );
             if( cfg.debug_port )
                 list << "--debug_port" << QString::number( cfg.debug_port );
+            if( !cfg.log.IsEmpty() )
+                list << "--log" << QString::fromStdString( cfg.log.ToUTF8() );
             const auto join = list.join( " " ).toStdWString();
             std::vector< wchar_t > args;
             args.push_back( L' ' );
@@ -151,6 +152,7 @@ namespace
             next.uuid = uuid;
             next.url = cfg.url;
             next.debug_port = cfg.debug_port;
+            next.log = cfg.log;
             client_ = core::MakeClient( next );
             thread_.reset( new boost::thread( &core::Client_ABC::Run, client_.get() ) );
         }
