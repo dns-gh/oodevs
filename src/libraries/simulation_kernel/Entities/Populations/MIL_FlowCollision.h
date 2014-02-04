@@ -64,7 +64,7 @@ private:
     MIL_PopulationFlow* going_;
     bool isFlowing_;
     bool markedForDestruction_;
-    int movingIndex_;
+    std::size_t movingIndex_;
     int start_;
     //@}
 };

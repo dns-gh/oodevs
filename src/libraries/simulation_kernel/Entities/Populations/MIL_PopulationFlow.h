@@ -164,6 +164,12 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::list< std::pair< MT_Vector2D, std::size_t > > T_FlowShape;
+    //@}
+
+private:
     //! @name Member data
     //@{
     MIL_PopulationConcentration* pSourceConcentration_;
@@ -174,8 +180,9 @@ private:
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
     MT_Vector2D direction_;
     double rSpeed_;
-    T_PointList flowShape_; // begin() == head ...
-    std::vector< MT_Vector2D >pointsToInsert_;
+    T_FlowShape flowShape_; 
+    mutable T_PointList computedFlowShape_;
+    std::vector< MT_Vector2D > pointsToInsert_;
     TER_Localisation location_; // For terrain
     bool bHeadMoveFinished_;
     // Network
@@ -195,7 +202,6 @@ private:
     static MIL_IDManager idManager_;
     double objectDensity_;
     std::vector< boost::shared_ptr< MT_Vector2D > > moveAlongPath_;
-    std::vector< unsigned int > nextWaypoints_;
     //@}
 };
 
