@@ -194,6 +194,8 @@ private:
     double speedLimit_;
     static MIL_IDManager idManager_;
     double objectDensity_;
+    std::vector< boost::shared_ptr< MT_Vector2D > > moveAlongPath_;
+    std::vector< unsigned int > nextWaypoints_;
     //@}
 };
 
