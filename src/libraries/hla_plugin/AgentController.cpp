@@ -113,7 +113,7 @@ namespace
 AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                                   const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                                   tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
-                                  bool sendPlatforms, const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver,
+                                  bool sendPlatforms, const SideResolver_ABC& sideResolver, LocalAgentResolver_ABC& localAgentResolver,
                                   bool fullOrbat, dispatcher::Logger_ABC& logger, const rpr::EntityTypeResolver_ABC& automatEntityTypeResolver,
                                   int netnVersion )
     : model_                 ( model )
@@ -191,6 +191,9 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
     std::string remoteExt;
     bool isRemote = agent.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+
+    if( !isRemote )
+        localAgentResolver_.Add( agent.GetId(), agent );
 
     std::vector< char > uniqueId;
     GetUniqueId( agent, uniqueId, logger_, netnVersion_ );

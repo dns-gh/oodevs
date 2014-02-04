@@ -68,6 +68,7 @@ namespace hla
     class RemoteTacticalObjectController;
     class RemoteTacticalObjectSubject_ABC;
     class RemoteOrbatShaper;
+    class MissionResolver_ABC;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -85,7 +86,8 @@ public:
                                const UnitTypeResolver_ABC& unitTypeResolver, const UnitTypeResolver_ABC& automatTypeResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
-                               const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject );
+                               const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
+                               const MissionResolver_ABC& missionResolver );
     virtual ~SimulationFacade();
     //@}
 

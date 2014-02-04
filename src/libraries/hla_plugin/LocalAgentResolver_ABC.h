@@ -13,6 +13,11 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 
+namespace dispatcher
+{
+    class Agent_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -34,9 +39,11 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Add( unsigned long simulationIdentifier, dispatcher::Agent_ABC& agent ) = 0;
     virtual void Add( unsigned long simulationIdentifier, const std::string& objectIdentifier ) = 0;
     virtual std::string Resolve( unsigned long simulationIdentifier ) const = 0;
     virtual unsigned long Resolve( const std::string& objectIdentifier ) const = 0;
+    virtual unsigned long ParentAutomat( unsigned long simulationIdentifier ) const = 0;
     //@}
 };
 

@@ -9,6 +9,9 @@
 
 #include "hla_plugin_pch.h"
 #include "LocalAgentResolver.h"
+#include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
+
 
 using namespace plugins::hla;
 
@@ -61,4 +64,17 @@ unsigned long LocalAgentResolver::Resolve( const std::string& objectIdentifier )
     if( it == identifiers_.right.end() )
         return 0;
     return it->second;
+}
+
+void LocalAgentResolver::Add( unsigned long simulationIdentifier, dispatcher::Agent_ABC& agent )
+{
+    agents_[ simulationIdentifier ] = &agent;
+}
+
+unsigned long LocalAgentResolver::ParentAutomat( unsigned long simulationIdentifier ) const
+{
+    T_Agents::const_iterator it = agents_.find( simulationIdentifier );
+    if( agents_.end() == it )
+        return 0;
+    return it->second->GetSuperior().GetId();
 }
