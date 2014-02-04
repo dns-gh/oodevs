@@ -131,21 +131,31 @@ type SimProcess struct {
 	Opts *SimOpts
 }
 
-func logAndStop(host string) error {
+// Connects and asks the simulation to stop. Returns true if the stop command
+// was issued, false if some error prevented doing it. Note that even the
+// command was issued, there is no guarantee the simulation received it,
+// as Stop() seem unreliable. What you know is if it was not issued there is
+// little reason for the simulation to stop unless it reaches it max-tick,
+// hence less reasons to wait for it.
+func logAndStop(host string) (bool, error) {
 	client, err := swapi.NewClient(host)
-	if err == nil {
-		client.EnableModel = false
-		go client.Run()
-		defer client.Close()
-		key, err := client.GetAuthenticationKey()
-		if err == nil {
-			err = client.LoginWithAuthenticationKey("", "", key)
-		}
-		if err == nil {
-			err = client.Stop()
-		}
+	if err != nil {
+		return false, err
 	}
-	return err
+	client.EnableModel = false
+	client.PostTimeout = 30 * time.Second
+	go client.Run()
+	defer client.Close()
+	key, err := client.GetAuthenticationKey()
+	if err != nil {
+		return false, err
+	}
+	err = client.LoginWithAuthenticationKey("", "", key)
+	if err != nil {
+		return false, err
+	}
+	err = client.Stop()
+	return true, err
 }
 
 // Connect to the simulation and execute a Login/Stop sequence using
@@ -154,12 +164,15 @@ func (sim *SimProcess) Stop() error {
 	if sim == nil {
 		return errors.New("simulation is stopped already")
 	}
-	logAndStop(sim.ClientAddr)
-	if sim.Wait(10 * time.Second) {
-		return nil
+	stopped, err := logAndStop(sim.ClientAddr)
+	if stopped {
+		if sim.Wait(10 * time.Second) {
+			return nil
+		}
+		err = errors.New("wait timed out")
 	}
 	sim.Kill()
-	return errors.New("Wait timed out")
+	return err
 }
 
 // Start a simulation using supplied options. On success, the simulation
