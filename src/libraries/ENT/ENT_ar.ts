@@ -924,7 +924,7 @@
         <translation type="unfinished">تفريغ شاحنة جر</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">التشخيص</translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation type="unfinished">في انتظار الطبيب</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished">التشخيص</translation>
     </message>
     <message>
@@ -1335,11 +1335,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Log Maintenance To Manual</source>
+        <source>Automat and units creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat and units creation</source>
+        <source>Switch Log Maintenance Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

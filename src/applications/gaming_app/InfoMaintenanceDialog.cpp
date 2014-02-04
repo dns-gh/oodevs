@@ -91,7 +91,8 @@ void InfoMaintenanceDialog::NotifySelected( const kernel::Entity_ABC* entity )
     {
         InfoDialog< kernel::MaintenanceStates_ABC >::NotifySelected( entity );
         if( const auto* base = entity->Retrieve< gui::LogisticBase >() )
-            manual = base->IsMaintenanceManual();
+            if( base->IsBase() )
+                manual = base->IsMaintenanceManual();
     }
     UpdateTitle( manual );
 }

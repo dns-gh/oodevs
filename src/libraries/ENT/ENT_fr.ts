@@ -924,7 +924,7 @@
         <translation>remorqueur en déchargement</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation>diagnostique</translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation>en attente de médecin</translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation>diagnostique</translation>
     </message>
     <message>
@@ -1335,12 +1335,12 @@
         <translation>Décharger un pion</translation>
     </message>
     <message>
-        <source>Switch Log Maintenance To Manual</source>
-        <translation>Changement de mode de maintenance</translation>
-    </message>
-    <message>
         <source>Automat and units creation</source>
         <translation>Création d&apos;automate</translation>
+    </message>
+    <message>
+        <source>Switch Log Maintenance Mode</source>
+        <translation>Changement de mode de maintenance</translation>
     </message>
 </context>
 </TS>
