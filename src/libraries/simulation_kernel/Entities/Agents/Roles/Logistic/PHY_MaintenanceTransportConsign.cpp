@@ -398,16 +398,6 @@ bool PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equ
     return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceTransportConsign::IsManualMode
-// Created: SLI 2014-01-30
-// -----------------------------------------------------------------------------
-bool PHY_MaintenanceTransportConsign::IsManualMode() const
-{
-    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
-    return pLogisticManager && pLogisticManager->IsMaintenanceManual();
-}
-
 bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )

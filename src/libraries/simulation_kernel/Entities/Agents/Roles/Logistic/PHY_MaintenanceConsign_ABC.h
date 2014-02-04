@@ -81,9 +81,10 @@ protected:
     //@{
     void EnterStateFinished();
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetState() const;
-    void    SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState );
-    void    ResetTimer    ( int timer );
-    bool    DecrementTimer();
+    void SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState );
+    void ResetTimer    ( int timer );
+    bool DecrementTimer();
+    bool IsManualMode() const;
 
     PHY_RoleInterface_Maintenance& GetPionMaintenance() const;
     //@}
