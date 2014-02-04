@@ -95,6 +95,7 @@ the dispatcher and the simulation. The simulation must be started with
 		started := false
 		start := time.Now()
 		ticker := time.NewTicker(1 * time.Second)
+		defer ticker.Stop()
 		for {
 			select {
 			case now := <-ticker.C:

@@ -65,6 +65,7 @@ func TailFiles(paths []string, quit chan int, handler TailHandler) {
 	}
 
 	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
 	terminate := false
 	for {
 		select {

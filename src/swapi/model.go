@@ -121,6 +121,7 @@ func (model *Model) run() error {
 	}()
 
 	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
 	for {
 		select {
 		case rq, ok := <-model.requests:
