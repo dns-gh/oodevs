@@ -75,7 +75,6 @@ private:
     //@{
     PHY_ComposantePion* pCarrier_;
     bool searchForUpperLevelDone_;
-    bool forceTransferToLogisticSuperior_;
     std::function< void() > next_;
     //@}
 };

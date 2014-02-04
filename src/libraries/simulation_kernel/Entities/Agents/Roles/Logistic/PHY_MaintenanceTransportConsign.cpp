@@ -35,7 +35,6 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC&
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
     , pCarrier_                 ( 0 )
     , searchForUpperLevelDone_  ( false )
-    , forceTransferToLogisticSuperior_( false )
 {
     const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
 
@@ -53,7 +52,6 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
     : PHY_MaintenanceConsign_ABC()
     , pCarrier_                 ( 0 )
     , searchForUpperLevelDone_  ( false )
-    , forceTransferToLogisticSuperior_( false )
 {
     // NOTHING
 }
@@ -133,12 +131,7 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection()
 {
-    if( forceTransferToLogisticSuperior_ )
-    {
-        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
-        forceTransferToLogisticSuperior_ = false;
-    }
-    else if( !IsManualMode() )
+    if( !IsManualMode() )
     {
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
         ResetTimer( 0 );
@@ -410,8 +403,10 @@ bool PHY_MaintenanceTransportConsign::IsManualMode() const
 
 bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 {
-    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus state = GetState();
+    if( state != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection &&
+        state != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         return false;
-    forceTransferToLogisticSuperior_ = true;
+    next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels ); };
     return true;
 }
