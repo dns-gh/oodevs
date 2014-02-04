@@ -119,7 +119,8 @@ bool ResourceNetworkDialog::IsNetworkValid( const gui::ResourceNetwork_ABC::Reso
             if( array.insert( object->GetId() ).second == false )
             {
                 // node already visited
-                QMessageBox::warning( this, tr( "Warning" ), tr( "A cycle has been detected in the resource network for the block %1.\n The network automatic generation cannot be computed." ).arg( object->GetId() ), QMessageBox::Ok, QMessageBox::NoButton );
+                QMessageBox::warning( this, tools::translate( "ResourceNetworkDialog", "Warning" ),
+                    tools::translate( "ResourceNetworkDialog", "A cycle has been detected in the resource network for the block %1.\n The network automatic generation cannot be computed." ).arg( object->GetId() ), QMessageBox::Ok, QMessageBox::NoButton );
                 return false;
             }
             // Apply to children

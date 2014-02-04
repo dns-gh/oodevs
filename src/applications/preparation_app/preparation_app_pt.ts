@@ -1440,6 +1440,17 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>MultipleResolverEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NewProfileDialog</name>
     <message>
         <source>New profile</source>
@@ -2290,6 +2301,33 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>ScoreVariablesList</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
@@ -2621,6 +2659,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error during automatic process creation of urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Road width (m):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

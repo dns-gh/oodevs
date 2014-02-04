@@ -203,7 +203,7 @@ target_link_libraries( 3a
 )
 
 # clients_kernel
-add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol qtwarnings )
+add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol )
 target_link_libraries( clients_kernel
     ent
     sword_tools
@@ -519,7 +519,7 @@ add_target( client_proxy_test tests "tests/client_proxy_test" OPTIONS protocol t
 target_link_libraries( client_proxy_test client_proxy )
 
 # clients_gui
-add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol qtwarnings )
+add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol )
 target_link_libraries( clients_gui
     clients_kernel
     htmlhelp
@@ -559,7 +559,7 @@ target_link_libraries( gaming
 )
 
 # gaming_app
-add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol executable qtwarnings )
+add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol executable )
 target_link_libraries( gaming_app
     actions_gui
     gaming
@@ -606,7 +606,7 @@ target_link_libraries( preparation
 )
 
 # preparation_app
-add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable qtwarnings )
+add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable )
 target_link_libraries( preparation_app
     actions_gui
     frontend

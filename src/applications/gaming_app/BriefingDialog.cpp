@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "BriefingDialog.h"
+#include "clients_kernel/tools.h"
 #include "gaming/CommandPublisher.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/Command.h"
@@ -25,7 +26,7 @@ BriefingDialog::BriefingDialog( QWidget* parent, kernel::Controllers& controller
     , publisher_( new CommandPublisher( controllers, publisher ) )
     , handler_( handler )
 {
-    setCaption( tr( "Briefing" ) );
+    setCaption( tools::translate( "BriefingDialog", "Briefing" ) );
     Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
     mainLayout->setMargin( 0 );
 
@@ -35,7 +36,7 @@ BriefingDialog::BriefingDialog( QWidget* parent, kernel::Controllers& controller
     {
         Q3HBox* box = new Q3HBox( this );
         box->layout()->setAlignment( Qt::AlignRight );
-        QPushButton* ok = new QPushButton( tr( "Ok" ), box );
+        QPushButton* ok = new QPushButton( tools::translate( "BriefingDialog", "Ok" ), box );
         ok->setFocus();
         mainLayout->addWidget( box );
         connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );

@@ -16,6 +16,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/tools.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/statusicons.h"
@@ -94,7 +95,7 @@ namespace
         {
             Q3HBox* box = new Q3HBox( parent );
             box->setMargin( 5 );
-            new QLabel( tr( "Checkpoint name: " ), box );
+            new QLabel( tools::translate( "LineEdit", "Checkpoint name: " ), box );
             QLineEdit* lineEdit = new QLineEdit( box );
             connect( lineEdit, SIGNAL( returnPressed() ), toolbar_, SLOT( SlotNamedCheckPoint() ) );
             return box;
