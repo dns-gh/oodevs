@@ -1828,6 +1828,10 @@ Voulez-vous le supprimer?</translation>
         <source>h:%L1 </source>
         <translation>h:%L1 </translation>
     </message>
+    <message>
+        <source>invalid</source>
+        <translation>invalide</translation>
+    </message>
 </context>
 <context>
     <name>gui::StockPrototype_ABC</name>

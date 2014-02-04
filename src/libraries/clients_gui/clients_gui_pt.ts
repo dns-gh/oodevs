@@ -1823,6 +1823,10 @@ Do you want to remove it?</source>
         <source>Lat:%L1 Lon:%L2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::StockPrototype_ABC</name>
