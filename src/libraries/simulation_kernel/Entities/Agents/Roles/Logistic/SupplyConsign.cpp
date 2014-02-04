@@ -632,6 +632,10 @@ void SupplyConsign::SendChangedState() const
 // -----------------------------------------------------------------------------
 void SupplyConsign::SendMsgDestruction() const
 {
+    client::LogSupplyHandlingUpdate update;
+    update().mutable_request()->set_id( id_ );
+    update().set_state( sword::LogSupplyHandlingUpdate::convoy_finished );
+    update.Send( NET_Publisher_ABC::Publisher() );
     client::LogSupplyHandlingDestruction msg;
     msg().mutable_request()->set_id( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
