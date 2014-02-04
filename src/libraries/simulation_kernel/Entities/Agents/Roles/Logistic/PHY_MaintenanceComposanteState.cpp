@@ -259,6 +259,7 @@ void PHY_MaintenanceComposanteState::SendMsgDestruction() const
     update().mutable_request()->set_id( nID_ );
     update().mutable_unit()->set_id( pPion_->GetID() );
     update().mutable_provider()->set_id( 0 );
+    update().set_diagnosed( bDiagnosed_ );
     update().set_state( sword::LogMaintenanceHandlingUpdate::finished );
     update.Send( NET_Publisher_ABC::Publisher() );
     client::LogMaintenanceHandlingDestruction asn;
