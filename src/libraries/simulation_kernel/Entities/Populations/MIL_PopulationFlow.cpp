@@ -555,7 +555,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
-    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
         return; 
     if( ! CanMove() )
         return;
@@ -766,7 +766,7 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetMaxSpeed() const
 {
-    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
         return 0;
     return std::min( speedLimit_, GetPopulation().GetMaxSpeed() );
 }

@@ -968,7 +968,7 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateFlowCollisionManager()
 {
-    flowCollisionManager_->Update();
+    flowCollisionManager_->Update( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FlowCollision.h"
-#include "MIL_Time_ABC.h"
 #include "MIL_PopulationFlow.h"
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,7 @@ MIL_FlowCollision::~MIL_FlowCollision()
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 )
 {
-    if( flow1 == going_ || flow2 == going_ )
+    if( flow1 == flow2 || flow1 == going_ || flow2 == going_ )
         return;
     bool flow1Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end();
     bool flow2Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
@@ -56,18 +55,10 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
     {
         const MT_Vector2D& p1 = flow1->GetFlowShape().back();
         const MT_Vector2D& p2 = flow2->GetFlowShape().back();
-        MIL_PopulationFlow* orderedFlow1 = 0;
-        MIL_PopulationFlow* orderedFlow2 = 0;
-        if( p1.SquareDistance( point_ ) > p2.SquareDistance( point_ ) )
-        {
-            orderedFlow1 = flow1;
-            orderedFlow2 = flow2;
-        }
-        else
-        {
-            orderedFlow1 = flow2;
-            orderedFlow2 = flow1;
-        }
+        MIL_PopulationFlow* orderedFlow1 = flow1;
+        MIL_PopulationFlow* orderedFlow2 = flow2;
+        if( p1.SquareDistance( point_ ) <= p2.SquareDistance( point_ ) )
+            std::swap( orderedFlow1, orderedFlow2 );
         collidingFlows_.push_back( orderedFlow1 );
         collidingFlows_.push_back( orderedFlow2 );
     }
@@ -77,13 +68,13 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
 // Name: MIL_FlowCollision::CanMove
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
+bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow, unsigned int timeStep ) const
 {
     if( markedForDestruction_ )
         return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
     if( flowIt != collidingFlows_.end() )
-        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ >= 5 )
+        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || timeStep - start_ >= 5 )
             return false;
     return true;
 }
@@ -92,7 +83,7 @@ bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
 // Name: MIL_FlowCollision::HasCollision
 // Created: JSR 2014-01-14
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 )
+bool MIL_FlowCollision::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const
 {
     return std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end()
         && std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
@@ -126,11 +117,10 @@ namespace
 // Name: MIL_FlowCollision::Update
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-void MIL_FlowCollision::Update()
+void MIL_FlowCollision::Update( unsigned int timeStep )
 {
     if( markedForDestruction_ )
         return;
-    const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( start_ == 0 ) // first update
     {
         Split();

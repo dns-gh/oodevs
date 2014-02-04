@@ -32,11 +32,11 @@ public:
     //! @name Operations
     //@{
     void SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 );
-    bool CanMove( const MIL_PopulationFlow* flow );
-    bool HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 );
+    bool CanMove( const MIL_PopulationFlow* flow, unsigned int timeStep ) const;
+    bool HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const;
     void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
     bool MarkedForDestruction() const;
-    void Update();
+    void Update( unsigned int timeStep );
     //@}
 
 
