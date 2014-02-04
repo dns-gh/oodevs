@@ -380,6 +380,9 @@ func (MaintenanceCreateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *s
 }
 
 func IsProvider(d *swapi.ModelData, obtained uint32, expected *sword.Tasker) bool {
+	if obtained == 0 {
+		return expected.Automat == nil && expected.Formation == nil
+	}
 	// abuse profile queries to check whether our unit is in automat/formation
 	profile := swapi.Profile{}
 	if expected.Automat != nil {
@@ -544,7 +547,7 @@ func setParts(client *swapi.Client, provider *sword.Tasker, qty int32, resources
 	return nil
 }
 
-func (s *TestSuite) TestMaintenanceHandlings(c *C) {
+func (s *TestSuite) TestMaintenanceHandlingsBase(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
@@ -552,12 +555,14 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 	blt := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLT").Id)
+	zero := &sword.Tasker{}
 	checkMaintenanceUpdates(c, client, unit, electronic_1, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
 		{"diagnosing", tc2},
 		{"waiting_for_repairer", tc2},
 		{"repairing", tc2},
 		{"moving_back", tc2},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_1, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
@@ -568,6 +573,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"waiting_for_repairer", tc2},
 		{"repairing", tc2},
 		{"moving_back", tc2},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, electronic_2, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
@@ -577,6 +583,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"waiting_for_repairer", bld},
 		{"repairing", bld},
 		{"moving_back", bld},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_2, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
@@ -593,6 +600,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"waiting_for_repairer", bld},
 		{"repairing", bld},
 		{"moving_back", bld},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, electronic_3, []MaintenanceUpdateChecker{
 		{"moving_to_supply", tc2},
@@ -604,6 +612,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"waiting_for_repairer", blt},
 		{"repairing", blt},
 		{"moving_back", blt},
+		{"finished", zero},
 	})
 	checkMaintenanceUpdates(c, client, unit, mobility_3, []MaintenanceUpdateChecker{
 		{"transporter_moving_to_supply", tc2},
@@ -626,6 +635,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 		{"waiting_for_repairer", blt},
 		{"repairing", blt},
 		{"moving_back", blt},
+		{"finished", zero},
 	})
 }
 
@@ -635,6 +645,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
 	tc2 := swapi.MakeAutomatTasker(getSomeAutomatByName(c, d, "TC2").Id)
+	zero := &sword.Tasker{}
 	err := setParts(client, tc2, 0, electrogen_1)
 	c.Assert(err, IsNil)
 	checkMaintenance(c, client, unit, 0, electronic_1,
@@ -650,6 +661,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
 		&MaintenanceUpdateChecker{"repairing", tc2},
 		&MaintenanceUpdateChecker{"moving_back", tc2},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 	err = setParts(client, tc2, 0, gyroscope_1)
@@ -670,6 +682,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 		&MaintenanceUpdateChecker{"waiting_for_repairer", tc2},
 		&MaintenanceUpdateChecker{"repairing", tc2},
 		&MaintenanceUpdateChecker{"moving_back", tc2},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -694,6 +707,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
 
@@ -726,6 +740,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -738,6 +753,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
 
@@ -775,6 +791,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 }
@@ -787,6 +804,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
 
@@ -818,6 +836,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 }
