@@ -68,6 +68,7 @@ public:
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
     void SelectNewState();
+    bool SelectMaintenanceTransporter( uint32_t equipmentType );
     bool TransferToLogisticSuperior();
     //@}
 

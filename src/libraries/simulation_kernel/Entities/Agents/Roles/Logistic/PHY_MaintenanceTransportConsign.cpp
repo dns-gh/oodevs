@@ -14,13 +14,16 @@
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_RoleInterface_Maintenance.h"
 #include "PHY_MaintenanceComposanteState.h"
+#include "OnComponentComputer_ABC.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 
@@ -122,6 +125,24 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
         }
     }
     return pCarrier_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection
+// Created: SLI 2014-02-03
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection()
+{
+    if( forceTransferToLogisticSuperior_ )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
+        forceTransferToLogisticSuperior_ = false;
+    }
+    else if( !IsManualMode() )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+        ResetTimer( 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -306,13 +327,7 @@ bool PHY_MaintenanceTransportConsign::Update()
                 EnterStateCarrierGoingTo();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection:
-            if( forceTransferToLogisticSuperior_ )
-            {
-                SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels );
-                forceTransferToLogisticSuperior_ = false;
-            }
-            else
-                EnterStateWaitingForCarrier();
+            DoWaitingForCarrierSelection();
             break;
         case sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply:
             EnterStateCarrierLoading();
@@ -364,6 +379,23 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
         next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter ); };
     else if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         next_ = [&]() { EnterStateDiagnosing(); };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equipmentType )
+{
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        return false;
+    PHY_ComposantePion* carrier = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), equipmentType );
+    if( !carrier )
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid equipment type identifier" );
+    pCarrier_ = carrier;
+    GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    EnterStateCarrierGoingTo();
+    return true;
 }
 
 // -----------------------------------------------------------------------------

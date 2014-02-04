@@ -43,6 +43,7 @@ public:
     bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
+    virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
     virtual bool TransferToLogisticSuperior();
     //@}
 
@@ -50,6 +51,7 @@ private:
     //! @name States
     //@{
     bool DoWaitingForCarrier               ();
+    void DoWaitingForCarrierSelection      ();
     bool DoSearchForUpperLevel             ();
 
     void EnterStateWaitingForCarrier       ();

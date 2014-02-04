@@ -328,6 +328,10 @@ void PHY_MaintenanceComposanteState::NotifyDiagnosed()
     bDiagnosed_ = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::SelectNewState
+// Created: MCO 2014-01-30
+// -----------------------------------------------------------------------------
 void PHY_MaintenanceComposanteState::SelectNewState()
 {
     pConsign_->SelectNewState();
@@ -336,4 +340,13 @@ void PHY_MaintenanceComposanteState::SelectNewState()
 bool PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
 {
     return pConsign_->TransferToLogisticSuperior();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::SelectMaintenanceTransporter
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( uint32_t equipmentType )
+{
+    return pConsign_->SelectMaintenanceTransporter( equipmentType );
 }
