@@ -534,7 +534,7 @@ func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, res
 }
 
 func (s *TestSuite) TestMaintenanceHandlings(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -619,7 +619,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -674,7 +674,7 @@ func SetMaintenanceManualMode(c *C, client *swapi.Client, id uint32) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -689,15 +689,22 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
-				// Select automatically a transporter
-				err := client.SelectTransporter(ctx.handlingId)
-				c.Assert(err, IsNil)
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
 			},
 		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
 		&MaintenanceUpdateChecker{"transporter_loading", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
 		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
