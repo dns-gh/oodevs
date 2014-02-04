@@ -61,6 +61,7 @@ protected:
     void SetData( int row, int col, QString text, T value );
     void SetEnabled( int row, int col, bool enabled );
     void SetCheckedState( int row, int col, bool checked );
+    void SetColor( int row, int col, const QBrush& brush, int colorIndex );
 
     QVariant GetUserData( int row, int col ) const;
     QString GetDisplayData( int row, int col ) const;

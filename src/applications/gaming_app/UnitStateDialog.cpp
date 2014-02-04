@@ -16,9 +16,13 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_gui/FileDialog.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichWidget.h"
+#include "clients_gui/XlsHelpers.h"
 #include "gaming/Equipments.h"
 #include "gaming/Troops.h"
+#include "tools/GeneralConfig.h"
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -42,6 +46,12 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tr( "Resources" ) );
     connect( tabWidget_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnTabChanged( QWidget* ) ) );
+
+    exportButton_ = new gui::RichWidget< QToolButton >( "export_button", 0 );
+    exportButton_->setIconSet( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/export.png" ) ) );
+    exportButton_->setToolTip( tr( "Export" ) );
+    headerLayout_->addWidget( exportButton_ );
+    connect( exportButton_, SIGNAL( clicked() ), SLOT( OnExportClicked() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +222,41 @@ void UnitStateDialog::NotifySelected( const kernel::Entity_ABC* element )
     bool readOnly = ( element ) ? !profile_.CanDoMagic( *element ) : true;
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->SetReadOnly( readOnly );
-    bool enabled = element && element->Retrieve< Equipments >() != 0 && element->Retrieve< kernel::Dotations_ABC >() != 0 && element->Retrieve< Troops >() != 0;
+    bool enabled = element &&
+                   element->Retrieve< Equipments >() != 0 &&
+                   element->Retrieve< kernel::Dotations_ABC >() != 0 &&
+                   element->Retrieve< Troops >() != 0;
     emit Disabled( !enabled );
+    exportButton_->setEnabled( element != 0 );
     gui::UnitStateDialog::NotifySelected( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateDialog::OnExportClicked
+// Created: ABR 2014-01-31
+// -----------------------------------------------------------------------------
+void UnitStateDialog::OnExportClicked()
+{
+    if( !selected_ )
+        throw MASA_EXCEPTION( "Not supposed to export without an entity" );
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(),
+                                                             tr( "Export unit state" ),
+                                                             tools::Path::FromUnicode( selected_->GetName().toStdWString() ),
+                                                             tr( "Excel (*.xls)" ) );
+    if( filename.IsEmpty() )
+        return;
+    if( filename.Extension() != ".xls" )
+        filename.ReplaceExtension( ".xls" );
+    QList< QTableView* > views;
+    QStringList names;
+    for( int i = 0; i < tabs_.size() && i < tabWidget_->count(); ++i )
+    {
+         views << tabs_[ i ].get();
+         names << tabWidget_->tabText( i );
+    }
+    gui::QTablesToXls( filename,
+                       views,
+                       names,
+                       QColor( 200, 200, 200 ),
+                       QList< QColor >() << QColor( 100, 100, 100 ) );
 }

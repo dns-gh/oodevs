@@ -219,8 +219,8 @@ void UnitStateTableCrew::AddLine( int number /* = 0*/,
         SetCheckedState( row, ePsy, false );
         SetCheckedState( row, eContaminated, false );
         for( int i = 0; i <= static_cast< int >( eNumber ); ++i )
-            if( !isColumnHidden( i ))
-                dataModel_.item( row, i )->setBackground( QBrush( Qt::gray ) );
+            if( !isColumnHidden( i ) )
+                SetColor( row, i, Qt::gray, 0 );
     }
     updating_ = false;
     OnItemChanged( dataModel_.item( row, eState ) );

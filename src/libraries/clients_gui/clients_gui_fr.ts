@@ -2283,4 +2283,19 @@ Voulez-vous le supprimer?</translation>
         <translation>°C</translation>
     </message>
 </context>
+<context>
+    <name>gui::XlsHelpers</name>
+    <message>
+        <source>true</source>
+        <translation>vrai</translation>
+    </message>
+    <message>
+        <source>false</source>
+        <translation>faux</translation>
+    </message>
+    <message>
+        <source>sheet</source>
+        <translation>feuille</translation>
+    </message>
+</context>
 </TS>

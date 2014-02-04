@@ -2278,4 +2278,19 @@ Do you want to remove it?</source>
         <translation>° C</translation>
     </message>
 </context>
+<context>
+    <name>gui::XlsHelpers</name>
+    <message>
+        <source>true</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>false</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
