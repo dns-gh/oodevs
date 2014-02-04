@@ -45,20 +45,22 @@ public:
 private:
     //! @name
     //@{
-    bool DoWaitingForParts                 ();
-    bool DoWaitingForRepairer              ();
-    void DoReturnComposante                ();
-    bool DoSearchForCarrier                ();
+    bool DoWaitingForParts();
+    bool DoWaitingForRepairer();
+    void DoReturnComposante();
+    bool DoSearchForCarrier();
 
-    void EnterStateWaitingForCarrier       ();
-    void EnterStateWaitingForParts         ();
-    void EnterStateWaitingForRepairer      ();
-    void EnterStateRepairing               ();
-    void EnterStateGoingBackToWar          ();
+    void EnterStateWaitingForCarrier();
+    void EnterStateWaitingForParts();
+    void EnterStateWaitingForRepairer();
+    void EnterStateWaitingForRepairerSelection();
+    void EnterStateRepairing();
+    void EnterStateGoingBackToWar();
     //@}
 
 private:
     PHY_ComposantePion* pRepairer_;
+    std::function< void() > next_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceRepairConsign )
