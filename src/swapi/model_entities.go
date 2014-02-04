@@ -39,6 +39,7 @@ type Profile struct {
 	Login               string
 	Password            string
 	Supervisor          bool
+	TimeControl         bool
 	ReadOnlyFormations  map[uint32]struct{}
 	ReadWriteFormations map[uint32]struct{}
 	ReadOnlyAutomats    map[uint32]struct{}
@@ -64,6 +65,7 @@ func NewProfile(profile *sword.Profile) *Profile {
 		Login:               profile.GetLogin(),
 		Password:            profile.GetPassword(),
 		Supervisor:          profile.GetSupervisor(),
+		TimeControl:         profile.GetTimeControl(),
 		ReadOnlyFormations:  mapIds(profile.GetReadOnlyFormations()),
 		ReadWriteFormations: mapIds(profile.GetReadWriteFormations()),
 		ReadOnlyAutomats:    mapIds(profile.GetReadOnlyAutomates()),

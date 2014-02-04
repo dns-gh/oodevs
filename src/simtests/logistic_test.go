@@ -534,7 +534,7 @@ func setParts(c *C, client *swapi.Client, provider *sword.Tasker, qty int32, res
 }
 
 func (s *TestSuite) TestMaintenanceHandlings(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -619,7 +619,7 @@ func (s *TestSuite) TestMaintenanceHandlings(c *C) {
 }
 
 func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
@@ -661,7 +661,65 @@ func (s *TestSuite) TestMaintenanceHandlingsWithMissingParts(c *C) {
 	)
 }
 
+func SetMaintenanceManualMode(c *C, client *swapi.Client, id uint32) {
+	err := client.LogMaintenanceSetManual(id, true)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		automat := data.Automats[id]
+		if automat != nil {
+			return automat.LogMaintenanceManual
+		}
+		return data.Formations[id].LogMaintenanceManual
+	})
+}
+
 func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+
+	SetMaintenanceManualMode(c, client, tc2Id)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.SelectNewLogisticState(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
+		MaintenanceDeleteChecker{},
+	)
+}
+
+func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()
@@ -670,22 +728,22 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 
-	// set automat to manual mode
-	err := client.LogMaintenanceSetManual(tc2Id, true)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[tc2Id].LogMaintenanceManual
-	})
+	SetMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) {
-				err = client.SelectTransporter(ctx.handlingId)
+				// set automat back to automatic mode
+				err := client.LogMaintenanceSetManual(tc2Id, false)
 				c.Assert(err, IsNil)
+				waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+					return data.Automats[tc2Id].LogMaintenanceManual == false
+				})
 			},
 		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
 		&MaintenanceUpdateChecker{"transporter_loading", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
@@ -702,4 +760,96 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualBase(c *C) {
 		&MaintenanceUpdateChecker{"moving_back", bld},
 		MaintenanceDeleteChecker{},
 	)
+}
+
+func (s *TestSuite) TestMaintenanceTransferToLogisticSuperior(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+
+	SetMaintenanceManualMode(c, client, tc2Id)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"diagnosing", bld},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Check(err, IsSwordError, "error_invalid_parameter")
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
+		MaintenanceDeleteChecker{},
+	)
+}
+
+func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bld := swapi.MakeFormationTasker(bldId)
+	bltId := getSomeFormationByName(c, d, "BLT").Id
+	blt := swapi.MakeFormationTasker(bltId)
+
+	SetMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, bldId)
+	SetMaintenanceManualMode(c, client, bltId)
+
+	phydb := loadWWPhysical(c)
+	reporter := newReporter(c, unit.Id, phydb, "Unable to repair")
+	reporter.Start(client.Model)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", bld},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", blt},
+			func(ctx *MaintenanceCheckContext) {
+				err := client.TransferToLogisticSuperior(ctx.handlingId)
+				c.Check(err, IsNil)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", blt},
+	)
+	client.Model.WaitTicks(2)
+	reports := reporter.Stop()
+	c.Assert(len(reports), Equals, 1)
 }

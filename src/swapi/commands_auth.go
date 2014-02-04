@@ -179,9 +179,10 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 
 func (p *Profile) Proto() *sword.Profile {
 	return &sword.Profile{
-		Login:      proto.String(p.Login),
-		Password:   proto.String(p.Password),
-		Supervisor: proto.Bool(p.Supervisor),
+		Login:       proto.String(p.Login),
+		Password:    proto.String(p.Password),
+		Supervisor:  proto.Bool(p.Supervisor),
+		TimeControl: proto.Bool(p.TimeControl),
 	}
 }
 

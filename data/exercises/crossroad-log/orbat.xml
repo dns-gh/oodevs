@@ -40,6 +40,16 @@
               <unit command-post="false" id="82" name="Log Unit 3" position="28RDS1525830735" type="Log Unit 3"/>
             </automat>
           </formation>
+          <automat engaged="true" id="126" knowledge-group="3" logistic-level="logistic-base" name="Supply 1" symbol="symbols/sfgpuss" type="Log Automat 4">
+            <unit command-post="true" id="127" name="Log Unit 4 1" position="28RDS2595928743" type="Log Unit 4">
+              <stocks>
+                <resource name="ammunition" quantity="100"/>
+              </stocks>
+            </unit>
+          </automat>
+          <automat engaged="true" id="128" knowledge-group="3" logistic-level="logistic-base" name="Supply 2" symbol="symbols/sfgpuss" type="Log Automat 4">
+            <unit command-post="true" id="129" name="Log Unit 4 2" position="28RDS2843930786" type="Log Unit 4"/>
+          </automat>
         </formation>
       </tactical>
       <communication>
