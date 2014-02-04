@@ -114,6 +114,7 @@ const mapping::MagicAction mapping::MagicAction::data_[] = {
     { "select_diagnosis_team",          sword::MagicAction::select_diagnosis_team},
     { "select_maintenance_transporter", sword::MagicAction::select_maintenance_transporter},
     { "select_new_logistic_state",      sword::MagicAction::select_new_logistic_state},
+    { "select_repair_team",             sword::MagicAction::select_repair_team},
     { "transfer_to_logistic_superior",  sword::MagicAction::transfer_to_logistic_superior},
 };
 

@@ -500,6 +500,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "select_diagnosis_team",          QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Diagnosis Team" ), sword::MagicAction::select_diagnosis_team ),
     T_ConverterMagicActionType( "select_maintenance_transporter", QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Maintenance Transporter" ), sword::MagicAction::select_maintenance_transporter ),
     T_ConverterMagicActionType( "select_new_logistic_state",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select logistic automated resolution" ), sword::MagicAction::select_new_logistic_state ),
+    T_ConverterMagicActionType( "select_repair_team",             QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Select Repair Team" ), sword::MagicAction::select_repair_team ),
     T_ConverterMagicActionType( "transfer_to_logistic_superior",  QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Transfer To Logistic Superior" ), sword::MagicAction::transfer_to_logistic_superior ),
     T_ConverterMagicActionType( "", "", sword::MagicAction::Type_MAX )
 };
