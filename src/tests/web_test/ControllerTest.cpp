@@ -171,12 +171,13 @@ namespace
         ExpectReply( rpy, status, ToJson( dst ) );
     }
 
+    template< bool secure = false >
     struct Fixture
     {
         Fixture()
             : fs        ( log )
             , plugins   ( fs, testOptions.GetDataPath( "plugins" ).ToUTF8() )
-            , controller( plugins, log, agent, users, false )
+            , controller( plugins, log, agent, users, secure )
         {
             // NOTHING
         }
@@ -198,7 +199,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_get_cluster, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_get_cluster, Fixture<> )
 {
     ExpectRequest( "GET", "/get_cluster" );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -207,7 +208,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_cluster, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture<> )
 {
     ExpectRequest( "GET", "/start_cluster" );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -216,7 +217,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture<> )
 {
     ExpectRequest( "GET", "/stop_cluster" );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -225,7 +226,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture<> )
 {
     ExpectRequest( "GET", "/list_nodes", boost::assign::map_list_of
         ( "offset", "5" )
@@ -238,7 +239,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture<> )
 {
     ExpectRequest( "GET", "/count_nodes" );
     const size_t expected = 13;
@@ -247,12 +248,24 @@ BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture<> )
 {
     ExpectRequest( "GET", "/get_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( agent.GetNode ).once().with( defaultId ).returns( FromJson( expected ) );
     ExpectReply( reply, web::OK, expected );
+    controller.DoGet( reply, request );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_get_node_works_on_users, Fixture< true > )
+{
+    ExpectRequest( "GET", "/get_node", boost::assign::map_list_of( "id", defaultIdString ) );
+    const std::string expected = "{\"dummy\":\"ymmud\"}";
+    MOCK_EXPECT( agent.GetNode ).once().with( defaultId ).returns( FromJson( expected ) );
+    ExpectReply( reply, web::OK, expected );
+    MOCK_EXPECT( request.GetSid ).once().returns( "user" );
+    const std::string user = "{\"type\":\"user\",\"node\":\"" + defaultIdString + "\"}";
+    MOCK_EXPECT( users.IsAuthenticated ).once().with( "user" ).returns( FromJson( user ) );
     controller.DoGet( reply, request );
 }
 
@@ -268,7 +281,7 @@ bool Equal( const node::Config& actual, const node::Config& expected )
 }
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture<> )
 {
     node::Config cfg;
     cfg.name = "some_name";
@@ -285,7 +298,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
     controller.DoPost( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture<> )
 {
     ExpectRequest( "GET", "/delete_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -294,7 +307,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_start_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_start_node, Fixture<> )
 {
     ExpectRequest( "GET", "/start_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -303,7 +316,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_node, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_stop_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_stop_node, Fixture<> )
 {
     ExpectRequest( "GET", "/stop_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -312,7 +325,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_node, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture<> )
 {
     ExpectRequest( "GET", "/list_sessions", boost::assign::map_list_of
         ( "node",   defaultIdString )
@@ -326,7 +339,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture<> )
 {
     ExpectRequest( "GET", "/list_sessions", boost::assign::map_list_of
         ( "node",   defaultIdString )
@@ -339,7 +352,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture<> )
 {
     ExpectRequest( "GET", "/count_sessions", boost::assign::map_list_of( "node", defaultIdString ) );
     MOCK_EXPECT( agent.CountSessions ).once().with( defaultId ).returns( 17 );
@@ -347,7 +360,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture<> )
 {
     ExpectRequest( "GET", "/get_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -357,7 +370,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture<> )
 {
     const std::string name = "session_name";
     const std::string exercise = "exercise_name";
@@ -374,7 +387,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
     controller.DoPost( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_returns_bad_request, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_returns_bad_request, Fixture<> )
 {
     MOCK_EXPECT( request.GetUri ).once().returns( "/create_session" );
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
@@ -382,7 +395,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_return
     controller.DoPost( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture<> )
 {
     ExpectRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -392,7 +405,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture<> )
 {
     ExpectRequest( "GET", "/start_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -403,7 +416,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture<> )
 {
     ExpectRequest( "GET", "/stop_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -413,7 +426,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture<> )
 {
     ExpectRequest( "GET", "/list_exercises", boost::assign::map_list_of
         ( "id", defaultIdString )
@@ -427,7 +440,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture<> )
 {
     ExpectRequest( "GET", "/count_exercises", boost::assign::map_list_of( "id", defaultIdString ) );
     MOCK_EXPECT( agent.CountExercises ).once().with( defaultId ).returns( 13 );
@@ -435,7 +448,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture<> )
 {
     static const std::string targets[] =
     {
@@ -454,7 +467,7 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture<> )
 {
     ExpectRequest( "GET", "/list_exercises", boost::assign::map_list_of( "id", defaultIdString )( "offset", "abc" ) );
     ExpectReply( reply, web::BAD_REQUEST, std::string() );
@@ -470,7 +483,7 @@ bool RegisterMime( Request_ABC::MimeHandler& dst, const Request_ABC::MimeHandler
 }
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture<> )
 {
     ExpectRequest( "POST", "/upload_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     Request_ABC::MimeHandler handler;
@@ -485,7 +498,7 @@ BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture )
     controller.DoPost( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture<> )
 {
     ExpectRequest( "GET", "/get_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -494,7 +507,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture<> )
 {
     ExpectRequest( "GET", "/delete_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
@@ -503,7 +516,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
     controller.DoGet( reply, request );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_create_node_rejects_invalid_idents, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_create_node_rejects_invalid_idents, Fixture<> )
 {
     Tree dst;
     MOCK_EXPECT( request.ParseBodyAsJson ).once().returns( dst );
