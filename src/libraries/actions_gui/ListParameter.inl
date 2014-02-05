@@ -25,6 +25,7 @@ ListParameter< ConcreteElement >::ListParameter( const InterfaceBuilder_ABC& bui
     , createEnabled_( true )
     , count_        ( 0 )
     , entity_       ( builder.GetControllers() )
+    , potential_    ( 0 )
 {
     CreatePotential();
 }
@@ -50,7 +51,7 @@ ListParameter< ConcreteElement >::~ListParameter()
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::CreatePotential()
 {
-    potential_ = 0;
+    potential_ = 0; // Because CreateElement uses potential_
     potential_ = CreateElement();
     if( potential_ )
     {
@@ -502,5 +503,5 @@ bool ListParameter< ConcreteElement >::HasParameter( const Param_ABC& param ) co
     for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
         if( it->first && it->first->HasParameter( param ) )
             return true;
-    return Param_ABC::HasParameter( param ) || potential_->HasParameter( param );
+    return Param_ABC::HasParameter( param ) || ( potential_ && potential_->HasParameter( param ) );
 }
