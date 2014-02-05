@@ -57,7 +57,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     dataModel_ = new QStandardItemModel( this );
 
     delegate_ = new gui::CommonDelegate( this );
-    delegate_->AddSpinBoxOnColumn( eDays, 0, std::numeric_limits< int >::max() );
+    delegate_->AddDoubleSpinBoxOnRow( eDays, 0, std::numeric_limits< double >::max() );
 
     tableView_ = new gui::RichWidget< QTableView >( "tableView", this );
     tableView_->setModel( dataModel_ );
@@ -477,6 +477,15 @@ double LogisticStockEditor::DoDotationDistribution( std::set< const Agent_ABC* >
     return DoDotationDistribution( entStocks, dotationType, quantity );
 };
 
+namespace
+{
+    double GetQuantity( const QStandardItemModel& dataModel, int row, double requirement )
+    {
+        const double days = dataModel.item( row, 1 )->data( Qt::EditRole ).asDouble();
+        return days * requirement + 0.5;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::SupplyStocks
 // Created: MMC 2011-08-31
@@ -498,8 +507,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const Agent_ABC* >& entStocks,
 
         if( dataModel_->item( row )->checkState() == Qt::Checked )
         {
-            int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
-            unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+            const double quantity = GetQuantity( *dataModel_, row, itRequired->second );
 
             std::set< const Agent_ABC* > entDotationStocks;
             for( auto it = entStocks.begin(); it != entStocks.end(); ++it )
@@ -594,8 +602,7 @@ void LogisticStockEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHier
             {
                 if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
                 {
-                    int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
-                    unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+                    const unsigned int quantity = static_cast< unsigned int >( GetQuantity( *dataModel_, row, itRequired->second ) );
                     baseStates.SetDotation( dotationType, quantity );
                 }
             }
