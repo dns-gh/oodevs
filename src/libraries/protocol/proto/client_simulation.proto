@@ -253,26 +253,25 @@ message MagicAction {
         debug_internal                     = 7;
         //! When a log consign is in state waiting for manual intervention,
         //! update the request to a new state automatically.
-        //! parameters[0], Identifier: identifier of log request
+        //! parameters[0], Identifier: log request identifier.
         select_new_logistic_state          = 8;
         //! When a maintenance log consign is in "select transporter" state,
         //!  "select diagnosis team" state or "select repair team" state in
         //!  manual intervention, update the request to delegate to the
         //!  superior logistic base.
-        //! parameters[0], Identifier: identifier of log request
+        //! parameters[0], Identifier: log request identifier.
         transfer_to_logistic_superior      = 9;
         //! When a maintenance log consign is in state "waiting for transporter
         //!  selection", update the request to a new state with a manually
         //!  selected transporter.
-        //! parameters[0], Identifier: identifier of log request.
-        //! parameters[1], Identifier: identifier of the type of the selected
-        //!  transporter.
+        //! parameters[0], Identifier: log request identifier.
+        //! parameters[1], Identifier: selected transporter type identifier.
         select_maintenance_transporter     = 10;
         //! When a maintenance log consign is in state "waiting for diagnosis
         //!  team selection", update the request to a new state with a manually
-        //!  selected team.
-        //! parameters[0], Identifier: identifier of log request.
-        //! parameters[1], Identifier: identifier of the type of the selected
+        //!  selected diagnoser.
+        //! parameters[0], Identifier: log request identifier.
+        //! parameters[1], Identifier: selected diagnoser type identifier.
         //!  diagnosis team.
         select_diagnosis_team              = 11;
     }
