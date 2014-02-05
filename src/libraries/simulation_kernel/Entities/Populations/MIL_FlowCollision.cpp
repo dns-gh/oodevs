@@ -218,9 +218,13 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
     double r = line.ProjectPointOnLine( point_, result );
     if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
     {
-        going_ = collidingFlows_[ movingIndex_ ]->Split( point_, segmentIndex );
-        isFlowing_ = false;
-        return true;
+        MIL_PopulationFlow* splitFlow = collidingFlows_[ movingIndex_ ]->Split( point_, segmentIndex );
+        if( splitFlow )
+        {
+            going_ = splitFlow;
+            isFlowing_ = false;
+            return true;
+        }
     }
     ++segmentIndex;
     return false;

@@ -131,9 +131,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , speedLimit_( std::numeric_limits< double >::max() )
     , moveAlongPath_( source.moveAlongPath_ )
 {
-    auto itSplit = std::find_if( flowShape_.begin(), flowShape_.end(),
-        [ & ]( std::pair< MT_Vector2D, std::size_t > value )->bool {
-            return splitPoint == value.first; } );
+    auto itSplit = FindPointInShape( splitPoint );
     if( itSplit != flowShape_.end() )
         flowShape_.erase( flowShape_.begin(), itSplit );
     assert( flowShape_.size() >= 2 );
@@ -399,8 +397,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
     bFlowShapeUpdated_ = true;
     // $$$$ A NETTOYER
     MT_Vector2D vCur = GetTailPosition();
-    auto itNext = flowShape_.begin();
-    ++itNext;
+    auto itNext = std::next( flowShape_.begin() );
     MT_Vector2D vNext = itNext->first;
     MT_Vector2D vDir  = vNext - vCur;
     double rDist = rWalkedDistance;
@@ -414,8 +411,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
         if( rDist < rDirLength )
         {
             vCur = vCur + ( vDir * rDist );
-            auto itStart = flowShape_.begin();
-            ++ itStart;
+            auto itStart = std::next( flowShape_.begin() );
             flowShape_.erase( itStart, itNext );
             SetTailPosition( vCur );
             break;
@@ -427,10 +423,8 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
             ++itNext;
             if( itNext == flowShape_.end() )
             {
-                auto itTmp = flowShape_.end();
-                --itTmp;
-                auto itStart = flowShape_.begin();
-                ++ itStart;
+                auto itTmp = std::prev( flowShape_.end() );
+                auto itStart = std::next( flowShape_.begin() );
                 flowShape_.erase( itStart, itTmp );
                 SetTailPosition( GetHeadPosition() );
                 break;
@@ -452,9 +446,7 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
 {
     assert( canCollideWithFlow_ );
     const double rDensityBeforeSplit = GetDensity();
-    auto insertIt = std::find_if( flowShape_.begin(), flowShape_.end(),
-        [ & ]( std::pair< MT_Vector2D, std::size_t > value )->bool {
-            return splittingPoint == value.first; } );
+    auto insertIt = FindPointInShape( splittingPoint );
     if( insertIt == flowShape_.end() )
     {
         if( segmentIndex < flowShape_.size() )
@@ -462,13 +454,14 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
             insertIt = flowShape_.begin();
             std::advance( insertIt, segmentIndex + 1 );
         }
-        auto itPoint = insertIt;
-        --itPoint;
+        auto itPoint = std::prev( insertIt );
         insertIt = flowShape_.insert( insertIt, std::make_pair( splittingPoint, itPoint->second ) );
     }
+    else if( flowShape_.size() == 2 )
+        return 0;
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, splittingPoint );
     newFlow.CancelMove();
-    flowShape_.erase( ++insertIt, flowShape_.end() );
+    flowShape_.erase( std::next( insertIt ), flowShape_.end() );
     CancelMove();
     assert( flowShape_.size() >= 2 );
 
@@ -510,7 +503,7 @@ bool MIL_PopulationFlow::ManageSplit()
     // new  flow => from split position to head position
     const double rDensityBeforeSplit = GetDensity();
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, itSplit->first );
-    flowShape_.erase( ++itSplit, flowShape_.end() );
+    flowShape_.erase( std::next( itSplit ), flowShape_.end() );
     flowShape_.insert( flowShape_.end(), flowShape_.back() ); // split position is a way point
     assert( flowShape_.size() >= 2 );
     bFlowShapeUpdated_ = true;
@@ -640,12 +633,23 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
             const MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
             if( flow != this && GetHeadPosition().SquareDistance( flow->GetTailPosition() ) < radius * radius )
             {
+                // TODO uniquement si c'est dans le même sens
                 if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
                     speedLimit_ = 0;
                 else
                     speedLimit_ = std::min( speedLimit_, flow->GetSpeed() );
             }
         }
+    }
+}
+
+namespace
+{
+    bool AreReverse( const MT_Vector2D& v1, const MT_Vector2D& v2 )
+    {
+        const MT_Vector2D nV1 = v1.Normalized();
+        const MT_Vector2D nV2 = v2.Normalized();
+        return CrossProduct( nV1, nV2 ) < 0.1 && DotProduct( nV1, nV2 ) < 0;
     }
 }
 
@@ -658,6 +662,42 @@ bool MIL_PopulationFlow::AddFlowCollision( const MT_Line& line, const MT_Line& f
     MT_Vector2D intersection;
     if( flowSegment.Intersect2D( line, intersection ) == eDoIntersect )
     {
+        const MT_Vector2D vLine( line.GetPosEnd() - line.GetPosStart() );
+        if( AreReverse( vLine, flowSegment.GetPosEnd() - flowSegment.GetPosStart() ) )
+            return false;
+
+        if( intersection.SquareDistance( flowSegment.GetPosEnd() ) < 100 )
+        {
+            auto it = FindPointInShape( flowSegment.GetPosEnd() );
+            bool relevantSegment = true;
+            while( relevantSegment && it != flowShape_.end() && std::next( it ) != flowShape_.end() )
+            {
+                const MT_Vector2D v = std::next( it )->first - it->first;
+                if( AreReverse( vLine, v ) )
+                    return false;
+                relevantSegment = ( v.Magnitude() < 20 ); // 20?
+                ++it;
+            }
+        }
+
+        if( intersection.SquareDistance( flowSegment.GetPosStart() ) < 100 )
+        {
+            auto it = FindPointInShape( flowSegment.GetPosStart() );
+            if( it != flowShape_.end() )
+            {
+                bool relevantSegment = true;
+                while( relevantSegment )
+                {
+                    if( it == flowShape_.begin() )
+                        return false;
+                    const MT_Vector2D v = it->first - std::prev( it )->first;
+                    if( AreReverse( vLine, v ) )
+                        return false;
+                    relevantSegment = ( v.Magnitude() < 20 ); // 20?
+                    --it;
+                }
+            }
+        }
         collisions.push_back( std::make_pair( this, intersection ) );
         return true;
     }
@@ -696,6 +736,8 @@ bool MIL_PopulationFlow::CanCollideWith( MIL_PopulationFlow* flow ) const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions )
 {
+    if( line.Magnitude() < 20 ) // ?
+        return false;
     TER_PopulationFlowManager::T_PopulationFlowVector flows;
     TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListIntersectingLine( line.GetPosStart(), line.GetPosEnd(), flows );
     for( auto it = flows.begin(); it != flows.end(); ++it )
@@ -818,8 +860,7 @@ boost::shared_ptr< MT_Vector2D > MIL_PopulationFlow::GetSafetyPosition( const MI
     GetLocation().ComputeNearestPoint( agentPosition, nearestPointOnFlow );
     // find flow segment containing nearestPointOnFlow
     auto itStart = flowShape_.begin();
-    auto itEnd   = itStart;
-    ++itEnd;
+    auto itEnd = std::next( itStart );
     for( ; itEnd != flowShape_.end(); ++itStart, ++itEnd )
         if( MT_Line( itStart->first, itEnd->first ).IsInside( nearestPointOnFlow, 10.0f ) ) // $$$$ SBO 2006-02-22: epsilon should be 0
             break;
@@ -1131,8 +1172,7 @@ void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
     
     for( auto it = pointsToInsert_.begin(); it != pointsToInsert_.end(); ++it )
     {
-        auto itTmp = flowShape_.end();
-        --itTmp;
+        auto itTmp = std::prev( flowShape_.end() );
         flowShape_.insert( itTmp, std::make_pair( *it, flowShape_.back().second ) );
     }
     pointsToInsert_.clear();
@@ -1175,7 +1215,7 @@ double MIL_PopulationFlow::GetSpeed() const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::IsValid() const
 {
-    return GetAllHumans() > 0. || pSourceConcentration_;
+    return !GetPopulation().HasDoneMagicMove() && ( GetAllHumans() > 0. || pSourceConcentration_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1288,12 +1328,22 @@ const T_PointList& MIL_PopulationFlow::GetFlowShape() const
 void MIL_PopulationFlow::ApplyOnShape( const boost::function< bool( const MT_Line& ) >& f ) const
 {
     auto itStart = flowShape_.begin();
-    auto itEnd   = itStart;
-    ++itEnd;
+    auto itEnd = std::next( itStart );
     for( ; itEnd != flowShape_.end(); ++itStart, ++itEnd )
     {
         MT_Line line( itStart->first, itEnd->first );
         if( f( line ) )
             return;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::FindPointInShape
+// Created: JSR 2014-02-04
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow::T_FlowShape::const_iterator MIL_PopulationFlow::FindPointInShape( const MT_Vector2D& v ) const
+{
+    return std::find_if( flowShape_.begin(), flowShape_.end(),
+        [ & ]( std::pair< MT_Vector2D, std::size_t > value )->bool {
+            return v == value.first; } );
 }

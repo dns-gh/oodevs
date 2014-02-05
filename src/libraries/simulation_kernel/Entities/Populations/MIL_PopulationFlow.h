@@ -95,6 +95,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > > T_FlowCollisions;
+    typedef std::list< std::pair< MT_Vector2D, std::size_t > > T_FlowShape;
     //@}
 
     //! @name Helpers
@@ -149,6 +150,7 @@ private:
     void ComputePath( const MT_Vector2D& destination );
     void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void DetachFromDestConcentration();
+    T_FlowShape::const_iterator FindPointInShape( const MT_Vector2D& v ) const;
     //@}
 
     //! @name Serialization
@@ -161,12 +163,6 @@ private:
     //@{
     void SendDestruction() const;
     bool HasChanged     () const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::list< std::pair< MT_Vector2D, std::size_t > > T_FlowShape;
     //@}
 
 private:
