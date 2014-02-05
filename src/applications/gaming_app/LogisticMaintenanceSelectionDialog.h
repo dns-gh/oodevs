@@ -35,6 +35,8 @@ namespace sword
     enum LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus;
 }
 
+class MaintenanceHaulersListView;
+
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
     @brief  LogisticMaintenanceSelectionDialog
@@ -100,7 +102,7 @@ private:
     QAbstractButton* evacuateButton_;
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
-    QTreeView* transporters_;
+    MaintenanceHaulersListView* transporters_;
     //@}
 };
 

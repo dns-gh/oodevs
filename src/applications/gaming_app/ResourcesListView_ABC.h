@@ -43,7 +43,9 @@ class ResourcesListView_ABC : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourcesListView_ABC( QWidget* parent, kernel::Controllers& controllers );
+             ResourcesListView_ABC( QWidget* parent,
+                                    kernel::Controllers& controllers,
+                                    bool registerInController = true );
     virtual ~ResourcesListView_ABC();
     //@}
 
@@ -78,6 +80,7 @@ protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel model_;
     std::vector< kernel::Availability > availabilities_;
+    bool registered_;
     //@}
 };
 
@@ -86,17 +89,21 @@ protected:
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 template< typename Extension >
-ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent, kernel::Controllers& controllers )
+ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
+                                                           kernel::Controllers& controllers,
+                                                           bool registerInController )
     : QTreeView( parent )
     , controllers_( controllers )
     , selected_( controllers )
+    , registered_( registerInController )
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     header()->setResizeMode( QHeaderView::ResizeToContents );
     header()->setStretchLastSection( false );
     setModel( &model_ );
-    controllers_.Register( *this );
+    if( registered_ )
+        controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +113,8 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent, kern
 template< typename Extension >
 ResourcesListView_ABC<  Extension >::~ResourcesListView_ABC()
 {
-    controllers_.Unregister( *this );
+    if( registered_ )
+        controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

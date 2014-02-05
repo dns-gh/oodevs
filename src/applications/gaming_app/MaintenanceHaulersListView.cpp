@@ -19,8 +19,10 @@
 // Name: MaintenanceHaulersListView constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent, kernel::Controllers& controllers )
-    : LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >( "maintenance_haulers_listview", parent, controllers )
+MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent,
+                                                        kernel::Controllers& controllers,
+                                                        bool registerInController /* = true */ )
+    : LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >( "maintenance_haulers_listview", parent, controllers, registerInController )
 {
     QStringList list;
     list.append( tools::translate( "MaintenanceHaulersListView", "Tow trucks" ) );

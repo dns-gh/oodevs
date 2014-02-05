@@ -32,7 +32,8 @@ public:
     //@{
              LogisticResourcesListView_ABC( const QString& objectName,
                                             QWidget* parent,
-                                            kernel::Controllers& controllers );
+                                            kernel::Controllers& controllers,
+                                            bool registerInController = true );
     virtual ~LogisticResourcesListView_ABC();
     //@}
 
@@ -50,8 +51,9 @@ public:
 template< typename Extension >
 LogisticResourcesListView_ABC< Extension >::LogisticResourcesListView_ABC( const QString& objectName,
                                                                            QWidget* parent,
-                                                                           kernel::Controllers& controllers )
-    : ResourcesListView_ABC< Extension >( parent, controllers )
+                                                                           kernel::Controllers& controllers,
+                                                                           bool registerInController /* = true */ )
+    : ResourcesListView_ABC< Extension >( parent, controllers, registerInController )
 {
     gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }

@@ -28,7 +28,9 @@ class MaintenanceHaulersListView : public LogisticResourcesListView_ABC< kernel:
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceHaulersListView( QWidget* parent, kernel::Controllers& controllers );
+             MaintenanceHaulersListView( QWidget* parent,
+                                         kernel::Controllers& controllers,
+                                         bool registerInController = true );
     virtual ~MaintenanceHaulersListView();
     //@}
 

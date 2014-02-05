@@ -38,11 +38,11 @@ namespace
         return button;
     }
     template< typename T >
-    QTreeView* AddResourceListView( const QString& objectName,
+    T* AddResourceListView( const QString& objectName,
                                     kernel::Controllers& controllers,
                                     QWidget* parent )
     {
-        QTreeView* view = new T( parent, controllers );
+        T* view = new T( parent, controllers, false );
         view->setObjectName( objectName );
         for( int i = 3; i < view->model()->columnCount(); ++i )
             view->setColumnHidden( i, true );
@@ -161,6 +161,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     manualButton_->setChecked( true );
     transporters_->selectionModel()->clear();
+    transporters_->NotifySelected( handler_ );
     UpdateDisplay();
     show();
 }
@@ -266,8 +267,12 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
 // Name: LogisticMaintenanceSelectionDialog::NotifyUpdated
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::MaintenanceStates_ABC& )
+void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::MaintenanceStates_ABC& state )
 {
+    if( !isVisible() ||
+        !handler_ ||
+        handler_->Retrieve< kernel::MaintenanceStates_ABC >() != &state )
+        return;
     if( manualButton_->isChecked() )
     {
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
