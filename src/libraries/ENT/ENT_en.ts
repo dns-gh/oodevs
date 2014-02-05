@@ -924,8 +924,8 @@
         <translation type="unfinished">tow-truck unloading</translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation type="unfinished">diagnostic</translation>
+        <source>diagnosis</source>
+        <translation type="unfinished">diagnosis</translation>
     </message>
     <message>
         <source>waiting to be handled by higher level</source>
@@ -995,8 +995,8 @@
         <translation type="unfinished">waiting for doctor</translation>
     </message>
     <message>
-        <source>diagnostic</source>
-        <translation type="unfinished">diagnostic</translation>
+        <source>diagnosis</source>
+        <translation type="unfinished">diagnosis</translation>
     </message>
     <message>
         <source>looking for triage area</source>
@@ -1121,16 +1121,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select New Logistic State</source>
-        <translation>Select new logistic state</translation>
-    </message>
-    <message>
         <source>Transfer To Logistic Superior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select Maintenance Transporter</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select logistic automated resolution</source>
+        <translation>Select logistic automated resolution</translation>
     </message>
 </context>
 <context>
@@ -1335,11 +1335,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Log Maintenance To Manual</source>
+        <source>Automat and units creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat and units creation</source>
+        <source>Switch Log Maintenance Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -23,8 +23,6 @@ namespace kernel
 namespace gui
 {
     class UnitStateTable_ABC;
-    class RichPushButton;
-    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  UnitStateDialog
@@ -70,10 +68,11 @@ protected:
     //@{
     kernel::Controllers&                                   controllers_;
     kernel::SafePointer< kernel::Entity_ABC >              selected_;
-    RichWidget< QTabWidget >*                                         tabWidget_;
+    QHBoxLayout*                                           headerLayout_;
+    QTabWidget*                                            tabWidget_;
     std::vector< boost::shared_ptr< UnitStateTable_ABC > > tabs_;
-    RichPushButton*                                        resetButton_;
-    RichPushButton*                                        validateButton_;
+    QPushButton*                                           resetButton_;
+    QPushButton*                                           validateButton_;
     QLabel*                                                selectedEntityLabel_;
     //@}
 };

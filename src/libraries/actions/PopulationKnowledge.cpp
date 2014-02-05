@@ -36,7 +36,7 @@ PopulationKnowledge::PopulationKnowledge( const kernel::OrderParameter& paramete
     : Entity< Population_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetPopulation( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ PopulationKnowledge::PopulationKnowledge( const kernel::OrderParameter& paramete
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned int id,
                                           const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Population_ABC >( parameter, &resolver.GetPopulation( id ), controller )
+    : Entity< Population_ABC >( parameter, resolver.FindPopulation( id ), controller )
 {
     // NOTHING
 }

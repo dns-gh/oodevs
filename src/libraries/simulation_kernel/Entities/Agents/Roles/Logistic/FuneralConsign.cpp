@@ -359,6 +359,10 @@ void FuneralConsign::SendChangedState() const
 // -----------------------------------------------------------------------------
 void FuneralConsign::SendMsgDestruction() const
 {
+    client::LogFuneralHandlingUpdate update;
+    update().mutable_request()->set_id( id_ );
+    update().set_state( sword::LogFuneralHandlingUpdate::finished );
+    update.Send( NET_Publisher_ABC::Publisher() );    
     client::LogFuneralHandlingDestruction msg;
     msg().mutable_request()->set_id( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );

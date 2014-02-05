@@ -31,17 +31,15 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     , controllers_( controllers )
     , selected_   ( controllers )
 {
-    // Init dialog
+    // Init
     SubObjectName subObject( "UnitStateDialog" );
     setCaption( tr( "State" ) );
     resize( 900, 600 );
-    // Main layout
-    QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "UnitStateDialog_VBoxLayout_MainLayout" );
-    mainLayout->setMargin( 5 );
+
     // Header
-    Q3HBox* header = new Q3HBox( this, "UnitStateDialog_HBox_Header" );
-    header->setSpacing( 5 );
-    selectedEntityLabel_ = new QLabel( header, "UnitStateDialog_Label_SelectedEntity" );
+    Q3HBox* targetBox = new Q3HBox( this, "UnitStateDialog_HBox_Header" );
+    targetBox->setSpacing( 5 );
+    selectedEntityLabel_ = new QLabel( targetBox, "UnitStateDialog_Label_SelectedEntity" );
     selectedEntityLabel_->setMinimumHeight( 40 );
     selectedEntityLabel_->setMinimumWidth( 150 );
     selectedEntityLabel_->setAlignment( Qt::AlignCenter );
@@ -49,21 +47,33 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     // Tabs
     tabWidget_ = new RichWidget< QTabWidget >( "tabs", this );
     // Buttons
-    Q3HBox* buttons = new Q3HBox( this, "UnitStateDialog_HBox_Buttons" );
-    buttons->setSpacing( 5 );
-    resetButton_             = new RichPushButton( "reset", tr( "Reset" ) , buttons );
-    validateButton_          = new RichPushButton( "validate", tr( "Validate" ), buttons );
-    RichPushButton* closeButton = new RichPushButton( "close", tr( "Close" )   , buttons );
+    resetButton_ = new RichPushButton( "reset", tr( "Reset" ) );
+    validateButton_ = new RichPushButton( "validate", tr( "Validate" ) );
     validateButton_->setDefault( true );
+    RichPushButton* closeButton = new RichPushButton( "close", tr( "Close" ) );
+
     // Layouts
-    mainLayout->add( header );
-    mainLayout->add( tabWidget_ );
-    mainLayout->add( buttons );
-    // Signals
+    headerLayout_ = new QHBoxLayout( );
+    headerLayout_->setSpacing( 5 );
+    headerLayout_->addWidget( targetBox, 1 );
+
+    QHBoxLayout* buttonsLayout = new QHBoxLayout();
+    buttonsLayout->addStretch( 1 );
+    buttonsLayout->addWidget( closeButton );
+    buttonsLayout->addWidget( resetButton_ );
+    buttonsLayout->addWidget( validateButton_ );
+
+    QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "UnitStateDialog_VBoxLayout_MainLayout" );
+    mainLayout->setMargin( 5 );
+    mainLayout->addLayout( headerLayout_ );
+    mainLayout->addWidget( tabWidget_, 1 );
+    mainLayout->addLayout( buttonsLayout );
+
+    // Connections
     connect( resetButton_   , SIGNAL( clicked() ), SLOT( Reset() ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( closeButton    , SIGNAL( clicked() ), SLOT( hide() ) );
-    // Register
+
     controllers_.Register( *this );
 }
 

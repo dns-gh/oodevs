@@ -126,7 +126,16 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         pElevation_->setText( elev );
 
         coordinateFields_[ CoordinateSystems::E_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
-        coordinateFields_[ CoordinateSystems::E_SanC ]->setText( converter_.ConvertTo( position, "SAN-C" ).c_str() );
+        auto sad69 = converter_.ConvertTo( position, "SAN-C" );
+        try
+        {
+            converter_.ConvertFrom( sad69, "SAN-C" );
+        }
+        catch( ... )
+        {
+            sad69 = tr( "invalid" );
+        }
+        coordinateFields_[ CoordinateSystems::E_SanC ]->setText( QString::fromStdString( sad69 ) );
 
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%L1 Lon:%L2" ).arg( latLong.Y(), 0, 'g', 6 )

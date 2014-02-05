@@ -31,7 +31,7 @@ PathPoint::PathPoint( const kernel::OrderParameter& parameter, const kernel::Coo
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 PathPoint::PathPoint( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-: Location( kernel::OrderParameter( xis.attribute< std::string >( "name" ), "pathpoint", false ), converter, xis )
+: Location( kernel::OrderParameter( xis.attribute< std::string >( "name", "" ), "pathpoint", false ), converter, xis )
 {
     // NOTHING
 }

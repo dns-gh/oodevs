@@ -58,8 +58,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< std::string >     T_Clients;
-    typedef T_Clients::const_iterator CIT_Clients;
+    typedef std::set< std::string > T_Clients;
     //@}
 
 private:

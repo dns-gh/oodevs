@@ -15,29 +15,50 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "HlaObject_ABC.h"
+#include "MissionResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 
+#include <xeumeuleu/xml.hpp>
+
 using namespace plugins::hla;
+
+namespace
+{
+    std::string GetName( xml::xisubstream xis, const std::string& category, const std::string& mission )
+    {
+        std::string name;
+        xis >> xml::start( "missions" )
+                >> xml::start( category )
+                    >> xml::content( mission, name );
+        return name;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: UnitTeleporter constructor
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-UnitTeleporter::UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
+UnitTeleporter::UnitTeleporter( xml::xisubstream xis, const MissionResolver_ABC& resolver, RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& unitContextHandler,
                                 dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
-                                const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
-    : agentSubject_  ( agentSubject )
-    , contextHandler_( contextHandler )
-    , publisher_     ( publisher )
-    , contextFactory_( contextFactory )
-    , localResolver_ ( localResolver )
-    , callsignResolver_ ( callsignResolver )
-    , logger_        ( logger )
+                                const LocalAgentResolver_ABC& localResolver, const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger,
+                                ContextHandler_ABC< sword::FormationCreation >& formationContextHandler, ContextHandler_ABC< sword::AutomatCreation >& automatContextHandler )
+    : cancelId_               ( resolver.ResolveUnit( GetName( xis, "fragOrders", "cancel" ) ) )
+    , agentSubject_           ( agentSubject )
+    , unitContextHandler_     ( unitContextHandler )
+    , formationContextHandler_( formationContextHandler )
+    , automatContextHandler_  ( automatContextHandler )
+    , publisher_              ( publisher )
+    , contextFactory_         ( contextFactory )
+    , localResolver_          ( localResolver )
+    , callsignResolver_       ( callsignResolver )
+    , logger_                 ( logger )
 {
     agentSubject_.Register( *this );
-    contextHandler_.Register( *this );
+    unitContextHandler_.Register( *this );
+    formationContextHandler_.Register( *this );
+    automatContextHandler_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +67,9 @@ UnitTeleporter::UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHan
 // -----------------------------------------------------------------------------
 UnitTeleporter::~UnitTeleporter()
 {
-    contextHandler_.Unregister( *this );
+    unitContextHandler_.Unregister( *this );
+    formationContextHandler_.Unregister( *this );
+    automatContextHandler_.Unregister( *this );
     agentSubject_.Unregister( *this );
 }
 
@@ -210,8 +233,14 @@ void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const s
 // -----------------------------------------------------------------------------
 void UnitTeleporter::LocalCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    identifiers_[ identifier ] = localResolver_.Resolve( identifier );
-    objects_[ identifier ]=&object;
+    const unsigned long simId = localResolver_.Resolve( identifier );
+    const unsigned long parentId = localResolver_.ParentAutomat( simId );
+    if( parentId != 0 )
+    {
+        identifiers_[ identifier ] = simId;
+        automatIds_[ identifier ] = parentId;
+        objects_[ identifier ]=&object;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -229,6 +258,22 @@ void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 // -----------------------------------------------------------------------------
 void UnitTeleporter::Divested( const std::string& identifier )
 {
+    T_Identifiers::const_iterator automatIt = automatIds_.find( identifier );
+    if( automatIt != automatIds_.end() )
+    {
+        simulation::SetAutomatMode disengageMessage;
+        disengageMessage().mutable_automate()->set_id( automatIt->second );
+        disengageMessage().set_mode( sword::disengaged );
+        disengageMessage.Send( publisher_, contextFactory_.Create() );
+    }
+    T_Identifiers::const_iterator unitId = identifiers_.find( identifier );
+    if( identifiers_.end() != unitId )
+    {
+        simulation::FragOrder order;
+        order().mutable_tasker()->mutable_unit()->set_id( unitId->second );
+        order().mutable_type()->set_id( cancelId_ );
+        order.Send( publisher_ );
+    }
     T_Objects::iterator it( objects_.find( identifier ) );
     if( objects_.end() == it)
         return;
@@ -316,4 +361,26 @@ void UnitTeleporter::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, 
 void UnitTeleporter::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
 {
     // NOTHING
+}
+
+
+void UnitTeleporter::Notify( const sword::FormationCreation& /*message*/, const std::string& identifier )
+{
+    // do not listen to updates on formations
+    T_Objects::const_iterator it = objects_.find(identifier);
+    if( objects_.end() != it )
+    {
+        it->second->Unregister(*this);
+        objects_.erase( it );
+    }
+}
+void UnitTeleporter::Notify( const sword::AutomatCreation& /*message*/, const std::string& identifier )
+{
+    // do not listen to updates on automats
+    T_Objects::const_iterator it = objects_.find(identifier);
+    if( objects_.end() != it )
+    {
+        it->second->Unregister(*this);
+        objects_.erase( it );
+    }
 }

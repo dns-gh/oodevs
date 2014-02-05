@@ -24,9 +24,11 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockLocalAgentResolver, LocalAgentResolver_ABC )
 {
-    MOCK_METHOD( Add, 2 )
+    MOCK_METHOD( Add, 2, void( unsigned long, const std::string& ), Add )
+    MOCK_METHOD( Add, 2, void( unsigned long, dispatcher::Agent_ABC& ), AddObject )
     MOCK_METHOD( Resolve, 1, std::string( unsigned long ), ResolveIdentifier )
     MOCK_METHOD( Resolve, 1, unsigned long( const std::string& ), ResolveName )
+    MOCK_METHOD( ParentAutomat, 1 )
 };
 
 }

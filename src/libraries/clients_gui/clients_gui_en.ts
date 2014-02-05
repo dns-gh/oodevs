@@ -1832,6 +1832,10 @@ Do you want to remove it?</translation>
         <source>Lat:%L1 Lon:%L2</source>
         <translation>Lat:%L1 Lon:%L2</translation>
     </message>
+    <message>
+        <source>invalid</source>
+        <translation>invalid</translation>
+    </message>
 </context>
 <context>
     <name>gui::StockPrototype_ABC</name>
@@ -2281,6 +2285,21 @@ Do you want to remove it?</translation>
     <message>
         <source>°C</source>
         <translation>°C</translation>
+    </message>
+</context>
+<context>
+    <name>gui::XlsHelpers</name>
+    <message>
+        <source>true</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>false</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sheet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -787,15 +787,11 @@ void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet&
         // Content
         QString content = ItemText( qItem, col );
         bool ok = false;
-        content.toInt( &ok );
-        if( ok )
-            cell->Set( content.toInt() );
-        else
+        cell->Set( locale().toInt( content, &ok ) );
+        if( !ok )
         {
-            content.toDouble( &ok );
-            if( ok )
-                cell->Set( content.toDouble() );
-            else
+            cell->Set( locale().toDouble( content, &ok ) );
+            if( !ok )
                 cell->Set( content.toStdWString().c_str() );
         }
 

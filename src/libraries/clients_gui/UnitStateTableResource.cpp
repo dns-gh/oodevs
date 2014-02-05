@@ -93,8 +93,16 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
             double percentage = std::min( quantity * 100. / static_cast< double >( maximum ), 100. );
             SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
         }
-        dataModel_.item( item->row(), eMaximum )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
-        dataModel_.item( item->row(), ePercentage )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
+        if( quantity <= maximum )
+        {
+            SetColor( item->row(), eMaximum, item->background(), -1 );
+            SetColor( item->row(), ePercentage, item->background(), -1 );
+        }
+        else
+        {
+            SetColor( item->row(), eMaximum, Qt::gray, 0 );
+            SetColor( item->row(), ePercentage, Qt::gray, 0 );
+        }
         if( maximum == 0 )
         {
             QStandardItem* itemPercentage = dataModel_.item( item->row(), ePercentage );

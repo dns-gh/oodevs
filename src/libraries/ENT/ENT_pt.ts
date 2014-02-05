@@ -924,7 +924,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -995,7 +995,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostic</source>
+        <source>diagnosis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1121,15 +1121,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select New Logistic State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Transfer To Logistic Superior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select Maintenance Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select logistic automated resolution</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1335,11 +1335,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Log Maintenance To Manual</source>
+        <source>Automat and units creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat and units creation</source>
+        <source>Switch Log Maintenance Mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

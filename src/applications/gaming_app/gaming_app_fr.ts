@@ -3543,6 +3543,18 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Equipments</source>
         <translation>Equipements</translation>
     </message>
+    <message>
+        <source>Excel (*.xls)</source>
+        <translation>Excel (*.xls)</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporter</translation>
+    </message>
+    <message>
+        <source>Export unit state</source>
+        <translation>Exporter l&apos;état de l&apos;unité</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableEquipment</name>

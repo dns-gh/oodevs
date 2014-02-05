@@ -259,12 +259,24 @@ bool PHY_MaintenanceRepairConsign::Update()
     return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::SelectNewState
+// Created: MCO 2014-01-30
+// -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::SelectNewState()
 {
     // NOTHING
 }
 
 bool PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
+{
+    return false;
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( uint32_t /*equipmentType*/ )
 {
     return false;
 }

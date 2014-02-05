@@ -43,7 +43,7 @@ Formation::Formation( const OrderParameter& parameter, const Formation_ABC& form
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
 Formation::Formation( const OrderParameter& parameter, const int& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.GetFormation( message ), controller )
+    : Entity< Formation_ABC >( parameter, resolver.FindFormation( message ), controller )
 {
     // NOTHING
 }
@@ -56,7 +56,7 @@ Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const
     : Entity< Formation_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
-        SetValue( &resolver.GetFormation( xis.attribute< unsigned long >( "value" ) ) );
+        SetValue( resolver.FindFormation( xis.attribute< unsigned long >( "value" ) ) );
 }
 
 // -----------------------------------------------------------------------------

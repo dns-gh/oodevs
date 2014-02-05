@@ -1828,6 +1828,10 @@ Voulez-vous le supprimer?</translation>
         <source>h:%L1 </source>
         <translation>h:%L1 </translation>
     </message>
+    <message>
+        <source>invalid</source>
+        <translation>invalide</translation>
+    </message>
 </context>
 <context>
     <name>gui::StockPrototype_ABC</name>
@@ -2281,6 +2285,21 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>°C</source>
         <translation>°C</translation>
+    </message>
+</context>
+<context>
+    <name>gui::XlsHelpers</name>
+    <message>
+        <source>true</source>
+        <translation>vrai</translation>
+    </message>
+    <message>
+        <source>false</source>
+        <translation>faux</translation>
+    </message>
+    <message>
+        <source>sheet</source>
+        <translation>feuille</translation>
     </message>
 </context>
 </TS>
