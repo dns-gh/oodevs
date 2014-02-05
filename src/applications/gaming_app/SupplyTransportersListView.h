@@ -10,8 +10,9 @@
 #ifndef __SupplyTransportersListView_h_
 #define __SupplyTransportersListView_h_
 
-#include "ResourcesListView_ABC.h"
-#include "gaming/SupplyStates.h"
+#include "LogisticResourcesListView_ABC.h"
+
+class SupplyStates;
 
 // =============================================================================
 /** @class  SupplyTransportersListView
@@ -19,7 +20,7 @@
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class SupplyTransportersListView : public ResourcesListView_ABC< SupplyStates >
+class SupplyTransportersListView : public LogisticResourcesListView_ABC< SupplyStates >
 {
 public:
     //! @name Constructors/Destructor
@@ -31,9 +32,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const SupplyStates& a );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const SupplyStates& states ) const;
     //@}
 };

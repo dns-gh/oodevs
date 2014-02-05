@@ -9,17 +9,17 @@
 
 #include "gaming_app_pch.h"
 #include "MedicalCollectAmbulancesListView.h"
-#include "clients_kernel/Tools.h"
+
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/Availability.h"
-#include <boost/bind.hpp>
+#include "clients_kernel/Tools.h"
+#include "gaming/MedicalStates.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalCollectAmbulancesListView constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 MedicalCollectAmbulancesListView::MedicalCollectAmbulancesListView( QWidget* parent, kernel::Controllers& controllers )
-    : ResourcesListView_ABC< MedicalStates >( parent, controllers )
+    : LogisticResourcesListView_ABC< MedicalStates >( "medical_collect_ambulances_listview", parent, controllers )
 {
     QStringList list;
     list.append( tools::translate( "MedicalCollectAmbulancesListView", "Collect ambulances" ) );
@@ -47,44 +47,4 @@ MedicalCollectAmbulancesListView::~MedicalCollectAmbulancesListView()
 const std::vector< kernel::Availability >* MedicalCollectAmbulancesListView::GetAvailabilities( const MedicalStates& states ) const
 {
     return &states.dispoRamassageAmbulances_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalCollectAmbulancesListView::NotifyUpdated
-// Created: SBO 2007-02-20
-// -----------------------------------------------------------------------------
-void MedicalCollectAmbulancesListView::NotifyUpdated( const MedicalStates& a )
-{
-    if( !isVisible() || !selected_ )
-        return;
-    if( !HasRetrieveForLogistic( *selected_, a ) )
-        return;
-    DisplaySelectionAvailabilities();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalCollectAmbulancesListView::NotifyUpdated
-// Created: MMC 2013-01-28
-// -----------------------------------------------------------------------------
-void MedicalCollectAmbulancesListView::NotifySelected( const kernel::Entity_ABC* entity )
-{
-    UpdateSelected( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalCollectAmbulancesListView::NotifyUpdated
-// Created: MMC 2013-01-28
-// -----------------------------------------------------------------------------
-void MedicalCollectAmbulancesListView::UpdateSelected( const kernel::Entity_ABC* entity )
-{
-    selected_ = entity;
-    if( !entity )
-        return;
-    if( !HasRetrieveForLogistic( *selected_ ) )
-    {
-        hide();
-        return;
-    }
-    DisplaySelectionAvailabilities();
-    show();
 }

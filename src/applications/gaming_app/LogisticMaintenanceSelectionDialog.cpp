@@ -18,6 +18,7 @@
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/LogisticLinks.h"

@@ -52,7 +52,6 @@ protected:
     //@{
     bool ShouldUpdate( const Extension& a ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     void ResizeModelOnNewContent( int wantedSize );
     //@}
 
@@ -158,20 +157,6 @@ void ResourcesListView_ABC< Extension >::NotifySelected( const kernel::Entity_AB
     }
     else
         hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourcesListView_ABC::UpdateSelected
-// Created: MMC 2012-10-02
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void ResourcesListView_ABC< Extension >::UpdateSelected( const kernel::Entity_ABC* entity )
-{
-    selected_ = entity;
-    if( !entity )
-        return;
-    if( const Extension* extension = selected_->Retrieve< Extension >() )
-        NotifyUpdated( *extension );
 }
 
 // -----------------------------------------------------------------------------

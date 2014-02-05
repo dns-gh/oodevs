@@ -15,6 +15,7 @@
 #include "SupplyStocksListView.h"
 #include "SupplyTransportersListView.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "gaming/LogisticConsigns.h"
