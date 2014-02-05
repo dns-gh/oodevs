@@ -120,7 +120,7 @@ void SupplyStockManualRequestBuilder_ABC::SetTransporters( const google::protobu
         return;
     std::vector< std::pair< const PHY_ComposanteTypePion* , unsigned > > newTransporters;
     BOOST_FOREACH( const sword::SupplyFlowTransporter& transporter, transporters )
-        if( const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( transporter.equipmenttype() ) )
+        if( const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( transporter.equipmenttype().id() ) )
             newTransporters.push_back( std::make_pair( type, transporter.quantity() ) );
     container.SetTransporters( newTransporters );
 }

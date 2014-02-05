@@ -90,6 +90,7 @@ void ParamBool::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamBool::OnCurrentIndexChanged( int index )
 {
     value_ = ( index == 0 );
+    Update();
 }
 
 // -----------------------------------------------------------------------------

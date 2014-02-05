@@ -23,7 +23,9 @@ ADN_SurfaceFireInfos_Table::ADN_SurfaceFireInfos_Table( const QString& objectNam
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Ground type" ) << tr( "Ignition threshold" ) << tr( "Max combustion energy" );
+    horizontalHeaders << tools::translate( "ADN_SurfaceFireInfos_Table", "Ground type" )
+                      << tools::translate( "ADN_SurfaceFireInfos_Table", "Ignition threshold" )
+                      << tools::translate( "ADN_SurfaceFireInfos_Table", "Max combustion energy" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddSpinBoxOnColumn( 1, std::numeric_limits< int >::min(), std::numeric_limits< int >::max() );
     delegate_.AddSpinBoxOnColumn( 2, std::numeric_limits< int >::min(), std::numeric_limits< int >::max() );

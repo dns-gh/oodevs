@@ -23,7 +23,8 @@ ADN_ExtinguisherAgentInfos_Table::ADN_ExtinguisherAgentInfos_Table( const QStrin
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Agent" ) << tr( "Heat decrease rate" );
+    horizontalHeaders << tools::translate( "ADN_ExtinguisherAgentInfos_Table", "Agent" )
+                      << tools::translate( "ADN_ExtinguisherAgentInfos_Table", "Heat decrease rate" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddSpinBoxOnColumn( 1, std::numeric_limits< int >::min(), std::numeric_limits< int >::max() );
 }

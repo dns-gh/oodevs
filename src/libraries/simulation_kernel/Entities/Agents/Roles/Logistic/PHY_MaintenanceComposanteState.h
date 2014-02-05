@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class PHY_ComposantePion;
+class PHY_ComposanteTypePion;
 class PHY_MaintenanceConsign_ABC;
 class PHY_Breakdown;
 class MIL_Agent_ABC;
@@ -67,9 +68,11 @@ public:
     //@{
     void SetConsign( PHY_MaintenanceConsign_ABC* pConsign );
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
+
     void SelectNewState();
     bool SelectMaintenanceTransporter( uint32_t equipmentType );
     bool TransferToLogisticSuperior();
+    void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 
     //! @name Network

@@ -102,7 +102,7 @@ namespace
 bool ADN_WeaponFilter::Check() const
 {
     std::set< ADN_Weapons_Data_WeaponInfos* > toRemove;
-    auto weapons = ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos();
+    auto& weapons = ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos();
     QString invalidWeapons;
     for( auto it = weapons.begin(); it != weapons.end(); ++it )
     {

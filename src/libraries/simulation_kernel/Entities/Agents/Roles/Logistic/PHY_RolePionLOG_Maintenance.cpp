@@ -278,6 +278,30 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     return nNbrAvailableAllowedToWork;
 }
 
+namespace
+{
+    struct DiagnoserFinder : ComponentPredicate_ABC
+    {
+        explicit DiagnoserFinder( const PHY_ComposanteTypePion* type )
+            : type_( type )
+        {}
+        virtual bool operator() ( const PHY_ComposantePion& composante )
+        {
+            return composante.CanRepair() && (!type_ || composante.GetType() == *type_);
+        }
+        const PHY_ComposanteTypePion* type_;
+    };
+}
+
+PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PHY_ComposanteTypePion* type ) const
+{
+    DiagnoserFinder predicate( type );
+    GetComponentFunctor functor( predicate );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_.Execute( *computer );
+    return functor.result_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableRepairer
 // Created: NLD 2004-12-23

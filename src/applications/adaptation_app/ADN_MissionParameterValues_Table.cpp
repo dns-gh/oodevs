@@ -22,7 +22,7 @@ ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( const QStrin
     setShowGrid( false );
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    dataModel_.setHorizontalHeaderLabels( QStringList( tr( "Name" ) ) );
+    dataModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "ADN_MissionParameterValues_Table", "Name" ) ) );
     delegate_.AddLineEditOnColumn( 0 );
 }
 
@@ -42,7 +42,7 @@ ADN_MissionParameterValues_Table::~ADN_MissionParameterValues_Table()
 void ADN_MissionParameterValues_Table::AddNewElement()
 {
     ADN_Missions_ParameterValue* newElement = new ADN_Missions_ParameterValue();
-    newElement->name_ = tr( "New value" ).toStdString();
+    newElement->name_ = tools::translate( "ADN_MissionParameterValues_Table", "New value" ).toStdString();
 
     ADN_Connector_Vector_ABC& pCTable = static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ );
     pCTable.AddItem( newElement );
@@ -57,9 +57,9 @@ void ADN_MissionParameterValues_Table::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popup( this );
 
-    popup.insertItem( tr( "Add value"), 0 );
+    popup.insertItem( tools::translate( "ADN_MissionParameterValues_Table", "Add value"), 0 );
     if( GetData( pt ) )
-        popup.insertItem( tr( "Remove value"), 1 );
+        popup.insertItem( tools::translate( "ADN_MissionParameterValues_Table", "Remove value"), 1 );
 
     int result = popup.exec( pt );
     if( result == 1 )

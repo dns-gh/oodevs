@@ -106,7 +106,6 @@ const std::string& ADN_Symbols_Data::SymbolsUnit::GetStaticSymbol() const
     return staticSymbol_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Symbols_Data::GenerateSymbol
 // Created: ABR 2013-04-09
@@ -182,7 +181,6 @@ QPixmap ADN_Symbols_Data::SymbolsUnit::GenerateSymbol( std::string& symbol, gui:
     glFlush();
     return QPixmap( image.smoothScale( QSize( 128, 128 ) ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // ADN_Symbols_Data
@@ -363,7 +361,7 @@ void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
     {
         std::string errorMsg;
         for( auto it = missingSymbols.begin(); it != missingSymbols.end(); ++it )
-            errorMsg += ( ( errorMsg.empty() ) ? "'" : ( it + 1 == missingSymbols.end() ) ? tr( " and '" ) : ", '" ) + ( *it ) + "'";
+            errorMsg += ( ( errorMsg.empty() ) ? "'" : ( it + 1 == missingSymbols.end() ) ? tools::translate( "ADN_Symbols_Data", " and '" ) : ", '" ) + ( *it ) + "'";
         checker.AddError( eMissingSymbols, errorMsg, eNbrWorkspaceElements );
     }
 }

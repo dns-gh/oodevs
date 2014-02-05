@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
+#include "LogisticMaintenanceSelectionDialog.h"
 #include "LogisticsRequestsMaintenanceWidget.h"
 #include "LogisticsRequestsDetailsTable.h"
 #include "LogisticsRequestsTable.h"
@@ -15,6 +16,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"
+#include "gaming/Model.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -30,7 +32,7 @@ LogisticsRequestsMaintenanceWidget::LogisticsRequestsMaintenanceWidget( QWidget*
                                                                         const SimulationController& simulationController, Model& model )
     : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eMaintenance )
 {
-    // NOTHING
+    selectionDialog_.reset( new LogisticMaintenanceSelectionDialog( "maintenance-selection-dialog", this, controllers, model.actions_ ) );
 }
 
 // -----------------------------------------------------------------------------

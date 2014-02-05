@@ -12,7 +12,10 @@
 #include "ADN_FileChooser.h"
 #include "moc_ADN_FileChooser.cpp"
 #include "ADN_Tools.h"
+
+#include "clients_kernel/Tools.h"
 #include "clients_gui/FileDialog.h"
+
 #include <boost/algorithm/string.hpp>
 
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";

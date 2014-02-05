@@ -169,7 +169,7 @@
     </message>
 </context>
 <context>
-    <name>ADN_Armors_Data::ArmorInfos</name>
+    <name>ADN_Armors_Data</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
@@ -478,6 +478,13 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Percentage</source>
         <translation>Pourcentage</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_BaseMultiPercentage</name>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -994,11 +1001,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une protection active</translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer une protection active</translation>
     </message>
 </context>
 <context>
@@ -1552,6 +1559,10 @@ Arrêt moteur allumé</translation>
         <source>°</source>
         <translation>°</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipement</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -1631,11 +1642,11 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Add weapon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un système d&apos;armes</translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer un système d&apos;armes</translation>
     </message>
 </context>
 <context>
@@ -1690,9 +1701,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Urban attritions</source>
         <translation>Attritions urbaines</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
@@ -2306,7 +2314,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2317,7 +2325,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2335,7 +2343,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Select an image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner une image</translation>
     </message>
     <message>
         <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
@@ -2344,35 +2352,40 @@ JPEG (*.jpg *jpeg)
 GIF (*.gif)
 PNG (*.png)
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tous formats supportés (*.bmp *.jpg *.jpeg *.gif *.png)
+Fichier Bitmap (*.bmp)
+JPEG (*.jpg *.jpeg)
+GIF (*.gif)
+PNG (*.png)
+</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le caractère &apos;$&apos; est interdit dans le chemin d&apos;une image.</translation>
     </message>
     <message>
         <source>Existing file found</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier non trouvé</translation>
     </message>
     <message>
         <source>The file you want to copy already exists in the base, your file will be renamed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier que vous voulez copier existe déjà dans la base, votre fichier sera renommé</translation>
     </message>
     <message>
         <source>Add File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un fichier</translation>
     </message>
     <message>
         <source>Copy name</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier le nom</translation>
     </message>
     <message>
         <source>Remove File</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer un fichier</translation>
     </message>
 </context>
 <context>
@@ -2386,7 +2399,7 @@ PNG (*.png)
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2397,11 +2410,11 @@ PNG (*.png)
     </message>
     <message>
         <source>Add object</source>
-        <translation type="unfinished">Ajouter un objet</translation>
+        <translation>Ajouter un objet</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation type="unfinished">Enlever cet objet</translation>
+        <translation>Enlever cet objet</translation>
     </message>
 </context>
 <context>
@@ -2412,19 +2425,19 @@ PNG (*.png)
     </message>
     <message>
         <source>Unit models</source>
-        <translation type="unfinished">Modèles de pions</translation>
+        <translation>Modèles de pions</translation>
     </message>
     <message>
         <source>Automata models</source>
-        <translation type="unfinished">Modèles d&apos;automates</translation>
+        <translation>Modèles d&apos;automates</translation>
     </message>
     <message>
         <source>Crowds models</source>
-        <translation type="unfinished">Modèles de foules</translation>
+        <translation>Modèles de foules</translation>
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2438,7 +2451,7 @@ PNG (*.png)
     <name>ADN_ListView_Objects</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2502,7 +2515,7 @@ PNG (*.png)
     </message>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2955,7 +2968,7 @@ PNG (*.png)
     </message>
     <message>
         <source>DIA type</source>
-        <translation type="unfinished">Type DIA</translation>
+        <translation>Type DIA</translation>
     </message>
     <message>
         <source>Mission name cannot contain the following characters: %1</source>
@@ -3033,10 +3046,6 @@ PNG (*.png)
 </context>
 <context>
     <name>ADN_MultiPercentage</name>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
     <message>
         <source>Warning: total of percentages must equal 100%.</source>
         <translation>Attention : la somme des pourcentages doit être égale à 100%.</translation>
@@ -3667,7 +3676,7 @@ PNG (*.png)
     </message>
     <message>
         <source>DIA type</source>
-        <translation type="unfinished">Type DIA</translation>
+        <translation>Type DIA</translation>
     </message>
 </context>
 <context>
@@ -3794,7 +3803,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_AmmoListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -3813,7 +3822,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Undamaged</source>
-        <translation type="unfinished"></translation>
+        <translation>Indemne</translation>
     </message>
 </context>
 <context>
@@ -3857,24 +3866,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Created object</source>
         <translation>Objet créé</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Equipement - Matériel urbain invalid &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipement - Type de dotation invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation>Equipement - Posture invalide &apos;%1&apos;</translation>
@@ -3882,6 +3873,14 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation>Equipement - Munition de tir indirect invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Equipement - Matériel urbain invalid &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4127,7 +4126,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Resources_GenericListView</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -4545,14 +4544,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Material</source>
-        <translation type="unfinished">Matériau</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Speeds_Table</name>
-    <message>
-        <source>Equipment</source>
-        <translation>Equipement</translation>
+        <translation>Matériau</translation>
     </message>
 </context>
 <context>
@@ -4823,7 +4815,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Invalid time duration &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5585,11 +5577,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_Type_LocalizedString</name>
     <message>
         <source>Unfinished translation</source>
-        <translation type="unfinished">Traduction non terminée</translation>
+        <translation>Traduction non terminée</translation>
     </message>
     <message>
         <source>Duplicate translation key with different translation values</source>
-        <translation type="unfinished">Clef de traduction dupliquées avec des valeurs de traduction differentes</translation>
+        <translation>Clef de traduction dupliquée avec des valeurs de traduction différentes</translation>
     </message>
 </context>
 <context>
@@ -5938,9 +5930,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Infrastructure</source>
         <translation>Infrastructure</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
@@ -6270,7 +6259,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arme ou munition non spécifiée. Assurez-vous que les deux soient renseignées.</translation>
     </message>
 </context>
 <context>
@@ -6357,19 +6346,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Building GUI: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction de l&apos;interface : %1...</translation>
     </message>
     <message>
         <source>Closing: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermeture : %1...</translation>
     </message>
     <message>
         <source>Loading: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement : %1...</translation>
     </message>
     <message>
         <source>Saving: %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde : %1...</translation>
     </message>
 </context>
 <context>
@@ -6446,6 +6435,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
+    </message>
+</context>
+<context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 <context>
@@ -6719,13 +6715,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Protection</source>
         <translation>Protection</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
     </message>
 </context>
 </TS>

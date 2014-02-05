@@ -14,6 +14,7 @@
 #include "MedicalCollectAmbulancesListView.h"
 #include "MedicalDoctorsListView.h"
 #include "MedicalReliefAmbulancesListView.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"

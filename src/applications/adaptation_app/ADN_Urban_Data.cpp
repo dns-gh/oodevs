@@ -298,7 +298,7 @@ void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
     std::string protection = input.attribute< std::string >( "protection" );
     auto itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ) );
     if( itAttrition == vAttritionInfos_.end() )
-        throw MASA_EXCEPTION( tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Urban_Data", "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     ( *itAttrition )->ReadArchive( input );
 }
 

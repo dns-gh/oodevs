@@ -28,7 +28,7 @@ MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter()
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
 MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter( const sword::Id & asn )
-    : pType_( PHY_ComposanteTypePion::Find( asn ) )
+    : pType_( PHY_ComposanteTypePion::Find( asn.id() ) )
 {
     // NOTHING
 }

@@ -11,15 +11,20 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
+
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr.h"
 #include "tools/VersionHelper.h"
-#include <windows.h>
+
+#include <xeumeuleu/xml.hpp>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+
 #include <direct.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <xeumeuleu/xml.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
+#include <windows.h>
 
 namespace ADN_Tools
 {

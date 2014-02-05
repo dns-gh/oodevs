@@ -24,7 +24,7 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const QS
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     QStringList horizontalHeaders;
-    horizontalHeaders << strName << tr( "Coefficient" );
+    horizontalHeaders << strName << tools::translate( "ADN_ActiveProtections_WeaponsTable", "Coefficient" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 1, 0.01 );
 }
@@ -69,8 +69,8 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     }
     ADN_Tools::SortMenu( addMenu );
 
-    menu.insertItem( tr( "New" ), &addMenu );
-    menu.insertItem( tr( "Delete" ), 1 );
+    menu.insertItem( tools::translate( "ADN_ActiveProtections_WeaponsTable", "New" ), &addMenu );
+    menu.insertItem( tools::translate( "ADN_ActiveProtections_WeaponsTable", "Delete" ), 1 );
     menu.setItemEnabled( 1, GetSelectedData() != 0 );
 
     int nMenuResult = menu.exec( pt );

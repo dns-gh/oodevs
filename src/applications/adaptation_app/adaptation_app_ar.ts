@@ -169,7 +169,7 @@
     </message>
 </context>
 <context>
-    <name>ADN_Armors_Data::ArmorInfos</name>
+    <name>ADN_Armors_Data</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">فئات--اكتب الدروع غير صالح &apos;%1&apos;</translation>
@@ -466,6 +466,13 @@ Parked engine running</source>
     <message>
         <source>Percentage</source>
         <translation type="unfinished">النسبة المئوية</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_BaseMultiPercentage</name>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
 </context>
 <context>
@@ -1540,6 +1547,10 @@ Parked engine running</source>
         <source>°</source>
         <translation type="unfinished">°</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">المعدات</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>
@@ -1678,9 +1689,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Urban attritions</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished">النار-موقع النوع لا تم العثور على &apos;%1&apos;</translation>
@@ -3021,10 +3029,6 @@ PNG (*.png)
 <context>
     <name>ADN_MultiPercentage</name>
     <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
         <source>Warning: total of percentages must equal 100%.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3844,24 +3848,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Created object</source>
         <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished">معدات-موقف غير صالح &apos;%1&apos;</translation>
@@ -3869,6 +3855,14 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع الذخيرة النيران غير المباشرة غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
     </message>
 </context>
 <context>
@@ -4533,13 +4527,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Material</source>
         <translation type="unfinished">المواد</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Speeds_Table</name>
-    <message>
-        <source>Equipment</source>
-        <translation type="unfinished">المعدات</translation>
     </message>
 </context>
 <context>
@@ -5914,9 +5901,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Infrastructure</source>
         <translation type="unfinished">البنية التحتية</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
@@ -6425,6 +6409,13 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation type="unfinished">فئات-المعدات غير صالح الدولة &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
         <source>Doctrine model</source>
@@ -6695,13 +6686,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Protection</source>
         <translation type="unfinished">حماية</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation type="unfinished">فئات-المعدات غير صالح الدولة &apos;%1&apos;</translation>
     </message>
 </context>
 </TS>

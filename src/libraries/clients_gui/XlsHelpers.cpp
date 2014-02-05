@@ -255,5 +255,12 @@ void gui::QTablesToXls( const tools::Path& output,
                           xls.workbook_.palette_,
                           headerColor.isValid() );
     }
-    xls.SaveAs( output.ToUnicode().c_str() );
+    int res = QMessageBox::Retry;
+    while( res == QMessageBox::Retry && !xls.SaveAs( output.ToUnicode().c_str() ) )
+        res = QMessageBox::warning( qApp ? qApp->activeWindow() : 0,
+                                    tools::translate( "XlsHelpers", "Warning" ),
+                                    tools::translate( "XlsHelpers", "Unable to save '%1'. "
+                                                                    "Close any programs that might be using the file and try again" ).arg( QString::fromStdWString( output.ToUnicode() ) ),
+                                    QMessageBox::Retry | QMessageBox::Abort,
+                                    QMessageBox::Retry );
 }

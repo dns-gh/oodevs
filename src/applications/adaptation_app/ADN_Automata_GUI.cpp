@@ -57,19 +57,19 @@ void ADN_Automata_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddLocalizedField( data_.GetAutomata(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddLocalizedField( data_.GetAutomata(), pInfoHolder, "name", tools::translate( "ADN_Automata_GUI", "Name" ), vInfosConnectors[eName] );
     // Automaton type
-    builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eAgentType] );
+    builder.AddEnumField( pInfoHolder, "type", tools::translate( "ADN_Automata_GUI", "Type" ), vInfosConnectors[eAgentType] );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Automat );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "doctrine-model", tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "doctrine-model", tools::translate( "ADN_Automata_GUI", "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     // Unit
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "command-post", tr( "Command post" ), vInfosConnectors[eUnit] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "command-post", tools::translate( "ADN_Automata_GUI", "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
-    builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
+    builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tools::translate( "ADN_Automata_GUI", "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     // Sub units
-    QGroupBox* pSubUnitsGroup = new gui::RichGroupBox( "sub-units", tr( "Sub-units" ) );
+    QGroupBox* pSubUnitsGroup = new gui::RichGroupBox( "sub-units", tools::translate( "ADN_Automata_GUI", "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( builder.GetChildName( "sub-units-table" ), vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
@@ -166,7 +166,7 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             {
                 ADN_Units_Data::ComposanteInfos* composantes = *it3;
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );
-                QString strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
+                QString strText = tools::translate( "ADN_Automata_GUI", "(%1..%2) x %3 x %4 [ %5 ]" );
                 strText = strText.arg( pUnit->min_.GetData() )
                     .arg( pUnit->max_.GetData() )
                     .arg( composantes->nNb_.GetData() )
@@ -176,7 +176,7 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 nTroops += composantes->nNb_.GetData() * composantes->nNbrHumanInCrew_.GetData();
             }
             int nRowSpan = std::max( 1, static_cast< int >( unit.vComposantes_.size() ) );
-            QString strText = tr( "(%1..%2) x %3 [ %4/%5/%6 ]" );
+            QString strText = tools::translate( "ADN_Automata_GUI", "(%1..%2) x %3 [ %4/%5/%6 ]" );
             strText = strText.arg( pUnit->min_.GetData() )
                 .arg( pUnit->max_.GetData() )
                 .arg( unit.strName_.GetData().c_str() )
@@ -188,7 +188,7 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             nAutoNCOfficer += nNbUnit * unit.nNbNCOfficer_.GetData();
             nAutoTroops    += nNbUnit * ( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
             if( nSubRow == 0 )
-                strText = strText + " ( " + tr( "CP" ) +" )";
+                strText = strText + " ( " + tools::translate( "ADN_Automata_GUI", "CP" ) +" )";
             else
                 ++it2;
             pTable->AddItem( nRow + nSubRow, 1, nRowSpan, 1, pUnit, strText );
@@ -197,7 +197,7 @@ QWidget* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 
         int nRowSpan = std::max( 1, nSubRow );
         QString strText;
-        strText = tr( "%1 [ %2/%3/%4 ]" );
+        strText = tools::translate( "ADN_Automata_GUI", "%1 [ %2/%3/%4 ]" );
         strText = strText.arg( automaton.strName_.GetData().c_str() )
                          .arg( nAutoOfficer )
                          .arg( nAutoNCOfficer )
@@ -233,7 +233,7 @@ QWidget* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Automata compositions" ), boost::bind( &ADN_Automata_GUI::CreateAutomataCompositionsTable, this ) );
-    mainWindow.AddListView( tr( "Logistic per automat" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTable, this ) );
-    mainWindow.AddListView( tr( "Logistic per resource" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTablePerDotation, this ) );
+    mainWindow.AddTable( tools::translate( "ADN_Automata_GUI", "Automata compositions" ), boost::bind( &ADN_Automata_GUI::CreateAutomataCompositionsTable, this ) );
+    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Logistic per automat" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTable, this ) );
+    mainWindow.AddListView( tools::translate( "ADN_Automata_GUI", "Logistic per resource" ), boost::bind( &ADN_Automata_GUI::CreateAutomataLogTablePerDotation, this ) );
 }

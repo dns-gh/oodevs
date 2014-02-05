@@ -386,6 +386,17 @@
     </message>
 </context>
 <context>
+    <name>XlsHelpers</name>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>Unable to save &apos;%1&apos;. Close any programs that might be using the file and try again</source>
+        <translation>Impossible de sauvegarder &apos;%1&apos;. Fermez les programmes susceptibles d&apos;utiliser le fichier et réessayez.</translation>
+    </message>
+</context>
+<context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>

@@ -93,6 +93,6 @@ std::string ADN_ListView_Categories_LogisticSupplyClass::GetToolTipFor( const QM
                         ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toStdString();
+        result = tools::translate( "ADN_ListView_Categories_LogisticSupplyClass", "<b>Unused</b>" ).toStdString();
     return result;
 }

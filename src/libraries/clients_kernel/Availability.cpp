@@ -29,6 +29,21 @@ Availability::Availability()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Availability constructor
+// Created: ABR 2014-01-30
+// -----------------------------------------------------------------------------
+Availability::Availability( const Availability& other )
+    : type_( other.type_ )
+    , total_( other.total_)
+    , available_( other.available_ )
+    , atWork_( other.atWork_ )
+    , atRest_( other.atRest_ )
+    , lent_( other.lent_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Availability destructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------

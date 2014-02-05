@@ -45,6 +45,7 @@ public:
     virtual void SelectNewState();
     virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
     virtual bool TransferToLogisticSuperior();
+    virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 
 private:
@@ -67,13 +68,13 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsManualMode() const;
+    void ResetComponent();
     //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_ComposantePion* pCarrier_;
+    PHY_ComposantePion* component_;
     bool searchForUpperLevelDone_;
     std::function< void() > next_;
     //@}

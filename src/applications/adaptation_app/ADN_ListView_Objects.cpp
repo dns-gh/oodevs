@@ -387,6 +387,6 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
                             ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toStdString();
+        result = tools::translate( "ADN_ListView_Objects", "<b>Unused</b>" ).toStdString();
     return result;
 }

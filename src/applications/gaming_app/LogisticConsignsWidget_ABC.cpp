@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "LogisticConsignsWidget_ABC.h"
+#include "LogisticSelectionDialog_ABC.h"
 #include "LogisticsRequestsTable.h"
 #include "LogisticsRequestsDetailsTable.h"
 #include "moc_LogisticConsignsWidget_ABC.cpp"
@@ -25,7 +26,6 @@
 #include "gaming/HistoryLogisticsModel.h"
 #include "gaming/SimulationController.h"
 #include "protocol/Protocol.h"
-
 #include "ENT/ENT_Enums.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
@@ -61,10 +61,11 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     connect( completedCheckbox_, SIGNAL( stateChanged( int ) ), SLOT( OnCompletedFilter() ) );
     pCheckBoxLayout->addWidget( completedCheckbox_ );
 
-    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, model.actions_, controllers, model.config_ );
+    requestsTable_ = new LogisticsRequestsTable( "Logistics requests", this, requestsHeader, controllers, model.config_ );
     connect( requestsTable_->selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) )
                                              , SLOT( OnRequestsTableSelected( const QModelIndex&, const QModelIndex& ) ) );
-
+    connect( requestsTable_, SIGNAL( RequestSelectionDialog( const LogisticsConsign_ABC& ) ),
+                             SLOT( OnSelectionDialogRequested( const LogisticsConsign_ABC& ) ) );
     detailsTable_ = new LogisticsRequestsDetailsTable( "Logistics requests details", this );
     connect( detailsTable_->GetLinkItemDelegate(), SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                                                  , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
@@ -290,4 +291,14 @@ void LogisticConsignsWidget_ABC::SendHistoryRequests()
     if( requestsIds.empty() )
         return;
     simulationController_.SendHistoryRequests( requestsIds );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::OnSelectionDialogRequested
+// Created: ABR 2014-01-27
+// -----------------------------------------------------------------------------
+void LogisticConsignsWidget_ABC::OnSelectionDialogRequested( const LogisticsConsign_ABC& consign ) const
+{
+    if( selectionDialog_ )
+        selectionDialog_->Show( consign );
 }

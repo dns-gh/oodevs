@@ -1132,6 +1132,10 @@
         <source>Select logistic automated resolution</source>
         <translation>Select logistic automated resolution</translation>
     </message>
+    <message>
+        <source>Select Diagnosis Team</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>
