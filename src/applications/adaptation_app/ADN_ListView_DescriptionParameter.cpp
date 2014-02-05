@@ -18,7 +18,7 @@
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
 ADN_ListView_DescriptionParameter::ADN_ListView_DescriptionParameter()
-    : ADN_ListView( 0, "ADN_ListView_DescriptionParameter", tr( "Parameters" ) )
+    : ADN_ListView( 0, "ADN_ListView_DescriptionParameter", tools::translate( "ADN_ListView_DescriptionParameter", "Parameters" ) )
 {
     pConnector_.reset( new ADN_Connector_ListView< ADN_Missions_Parameter >( *this ) );
     setHeaderHidden( true );

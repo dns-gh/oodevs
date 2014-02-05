@@ -70,8 +70,8 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     }
     ADN_Tools::SortMenu( subMenu );
 
-    menu.insertItem( tr( "Add required part"), &subMenu );
-    menu.insertItem( tr( "Remove required part"), 0 );
+    menu.insertItem( tools::translate( "ADN_Breakdowns_PartsTable", "Add required part"), &subMenu );
+    menu.insertItem( tools::translate( "ADN_Breakdowns_PartsTable", "Remove required part"), 0 );
     menu.setItemEnabled( 0, GetSelectedData() != 0 );
 
     int nMenuResult = menu.exec( pt );

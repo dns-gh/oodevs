@@ -12,9 +12,10 @@
 #ifndef __ADN_Tools_h_
 #define __ADN_Tools_h_
 
-#include "ADN_Types.h"
+#include "ADN_Connector_ABC.h"
+#include "ADN_Enums.h"
 
-enum E_UnitPosture;
+template< typename T > class ADN_Type_ABC;
 
 // =============================================================================
 /** @class  ADN_Tools
@@ -26,7 +27,7 @@ namespace ADN_Tools
 {
     // -----------------------------------------------------------------------------
     template< typename T, typename FieldType >
-    bool FieldCompare( const T& element, boost::function< const ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
+    bool FieldCompare( const T& element, boost::function< const typename ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
     {
         return fieldExtractor( element ) == value;
     }

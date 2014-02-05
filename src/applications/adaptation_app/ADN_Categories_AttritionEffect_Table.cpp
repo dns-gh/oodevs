@@ -23,9 +23,9 @@ ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( cons
 {
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "State" )
-                      << tr( "Wounded %" )
-                      << tr( "Dead %" );
+    horizontalHeaders << tools::translate( "ADN_Categories_AttritionEffect_Table", "State" )
+                      << tools::translate( "ADN_Categories_AttritionEffect_Table", "Wounded %" )
+                      << tools::translate( "ADN_Categories_AttritionEffect_Table", "Dead %" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

@@ -309,7 +309,7 @@ void ADN_Fires_Data::FireClassInfos::ReadSurface( xml::xistream& input )
     std::string type = input.attribute< std::string >( "type" );
     auto it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
     if( it == surfaceInfos_.end() )
-        throw MASA_EXCEPTION( tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Fires_Data", "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
     ( *it )->ReadArchive( input );
 }
 

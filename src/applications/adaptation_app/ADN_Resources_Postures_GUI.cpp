@@ -25,7 +25,7 @@ ADN_Resources_Postures_GUI::ADN_Resources_Postures_GUI( const QString& objectNam
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
     horizontalHeaders << strColCaption
-                      << tr( "PH factor" );
+                      << tools::translate( "ADN_Resources_Postures_GUI", "PH factor" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

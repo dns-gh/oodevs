@@ -78,47 +78,47 @@ void ADN_Equipments_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddLocalizedField( data_.GetEquipments(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddLocalizedField( data_.GetEquipments(), pInfoHolder, "name", tools::translate( "ADN_Equipments_GUI", "Name" ), vInfosConnectors[ eName ] );
     // Comments
-    builder.AddLocalizedOptionalField( data_.GetEquipments(), pInfoHolder, "comments", tr( "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
+    builder.AddLocalizedOptionalField( data_.GetEquipments(), pInfoHolder, "comments", tools::translate( "ADN_Equipments_GUI", "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
     // Armors
-    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
+    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tools::translate( "ADN_Equipments_GUI", "Armor-Plating" ), vInfosConnectors[ eArmor ] );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     // Size
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "volume", tr( "Volume" ), vInfosConnectors[ eSize ]  );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "volume", tools::translate( "ADN_Equipments_GUI", "Volume" ), vInfosConnectors[ eSize ]  );
     // Weight
-    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "weight", tr( "Weight" ), vInfosConnectors[ eWeight ], tr( "T" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "weight", tools::translate( "ADN_Equipments_GUI", "Weight" ), vInfosConnectors[ eWeight ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterZero );
 
     // Slope groupbox
-    Q3GroupBox* pSlopeGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Slope" ) );
-    ADN_EditLine_Int* maxSlope = builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "max-slope", tr( "Max slope" ), vInfosConnectors[ eMaxSlope ], tr( "°" ) );
+    Q3GroupBox* pSlopeGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Slope" ) );
+    ADN_EditLine_Int* maxSlope = builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "max-slope", tools::translate( "ADN_Equipments_GUI", "Max slope" ), vInfosConnectors[ eMaxSlope ], tools::translate( "ADN_Equipments_GUI", "°" ) );
     maxSlope->GetValidator().setRange( 0, 90 );
-    builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "slope_deceleration", tr( "Deceleration" ), vInfosConnectors[ eSlopeDeceleration ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSlopeGroupBox, "slope_deceleration", tools::translate( "ADN_Equipments_GUI", "Deceleration" ), vInfosConnectors[ eSlopeDeceleration ], tools::translate( "ADN_Equipments_GUI", "%" ), ePercentage );
 
     // Troop/Crew groupbox
-    QGroupBox* pTroopGroupBox = new gui::RichGroupBox( "troop-crew", tr( "Troop/Crew" ) );
+    QGroupBox* pTroopGroupBox = new gui::RichGroupBox( "troop-crew", tools::translate( "ADN_Equipments_GUI", "Troop/Crew" ) );
 
     //troop transport
     builder.PushSubName( "troop-transport" );
-    ADN_GroupBox* pEmbarkTimesGroupBox = builder.AddGroupBox( pTroopGroupBox, "troop-transport", tr( "Troop transport" ), vInfosConnectors[ eHasEmbarkTimes ], 3 );
-    builder.AddField< ADN_TimeField >( pEmbarkTimesGroupBox, "embark-time-per-person", tr( "Embark time per person" ), vInfosConnectors[ eEmbarkingTimePerPerson ] );
-    builder.AddField< ADN_TimeField >( pEmbarkTimesGroupBox, "disembark-time-per-person", tr( "Disembark time per person" ), vInfosConnectors[ eDisembarkingTimePerPerson ] );
+    ADN_GroupBox* pEmbarkTimesGroupBox = builder.AddGroupBox( pTroopGroupBox, "troop-transport", tools::translate( "ADN_Equipments_GUI", "Troop transport" ), vInfosConnectors[ eHasEmbarkTimes ], 3 );
+    builder.AddField< ADN_TimeField >( pEmbarkTimesGroupBox, "embark-time-per-person", tools::translate( "ADN_Equipments_GUI", "Embark time per person" ), vInfosConnectors[ eEmbarkingTimePerPerson ] );
+    builder.AddField< ADN_TimeField >( pEmbarkTimesGroupBox, "disembark-time-per-person", tools::translate( "ADN_Equipments_GUI", "Disembark time per person" ), vInfosConnectors[ eDisembarkingTimePerPerson ] );
     builder.PopSubName(); //! troop-transport
 
     // Cargo transport groupbox
     builder.PushSubName( "cargo-transport" );
-    ADN_GroupBox* pCargoGroupBox = builder.AddGroupBox( pTroopGroupBox, "cargo-transport", tr( "Cargo transport" ), vInfosConnectors[ eCanCarryCargo ], 3 );
-    builder.AddField< ADN_EditLine_Double >( pCargoGroupBox, "weight-capacity", tr( "Weight capacity" ), vInfosConnectors[ eWeightCapacity ], tr( "T" ), eGreaterZero );
-    builder.AddField< ADN_TimeField >( pCargoGroupBox, "loading-time-per-ton", tr( "Loading time per ton" ), vInfosConnectors[ eEmbarkingTimePerTon ] );
-    builder.AddField< ADN_TimeField >( pCargoGroupBox, "unloading-time-per-ton", tr( "Unloading time per ton" ), vInfosConnectors[ eDisembarkingTimePerTon ] );
+    ADN_GroupBox* pCargoGroupBox = builder.AddGroupBox( pTroopGroupBox, "cargo-transport", tools::translate( "ADN_Equipments_GUI", "Cargo transport" ), vInfosConnectors[ eCanCarryCargo ], 3 );
+    builder.AddField< ADN_EditLine_Double >( pCargoGroupBox, "weight-capacity", tools::translate( "ADN_Equipments_GUI", "Weight capacity" ), vInfosConnectors[ eWeightCapacity ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterZero );
+    builder.AddField< ADN_TimeField >( pCargoGroupBox, "loading-time-per-ton", tools::translate( "ADN_Equipments_GUI", "Loading time per ton" ), vInfosConnectors[ eEmbarkingTimePerTon ] );
+    builder.AddField< ADN_TimeField >( pCargoGroupBox, "unloading-time-per-ton", tools::translate( "ADN_Equipments_GUI", "Unloading time per ton" ), vInfosConnectors[ eDisembarkingTimePerTon ] );
     builder.PopSubName(); //! cargo-transport
 
     // Crowd transport groupbox
     builder.PushSubName( "crowd-transport" );
-    ADN_GroupBox* pCrowdGroupBox = builder.AddGroupBox( pTroopGroupBox, "crowd-transport", tr( "Crowd transport" ), vInfosConnectors[ eCanCarryCrowd ], 3 );
-    builder.AddField< ADN_EditLine_Int >( pCrowdGroupBox, "capacity", tr( "Capacity" ), vInfosConnectors[ eCrowdCapacity ], tr( "persons" ), eGreaterZero );
-    builder.AddField< ADN_TimeField >( pCrowdGroupBox, "embark-time-per-person", tr( "Embark time per person" ), vInfosConnectors[ eCrowdEmbarkingTimePerPerson ] );
-    builder.AddField< ADN_TimeField >( pCrowdGroupBox, "disembark-time-per-person", tr( "Disembark time per person" ), vInfosConnectors[ eCrowdDisembarkingTimePerPerson ] );
+    ADN_GroupBox* pCrowdGroupBox = builder.AddGroupBox( pTroopGroupBox, "crowd-transport", tools::translate( "ADN_Equipments_GUI", "Crowd transport" ), vInfosConnectors[ eCanCarryCrowd ], 3 );
+    builder.AddField< ADN_EditLine_Int >( pCrowdGroupBox, "capacity", tools::translate( "ADN_Equipments_GUI", "Capacity" ), vInfosConnectors[ eCrowdCapacity ], tools::translate( "ADN_Equipments_GUI", "persons" ), eGreaterZero );
+    builder.AddField< ADN_TimeField >( pCrowdGroupBox, "embark-time-per-person", tools::translate( "ADN_Equipments_GUI", "Embark time per person" ), vInfosConnectors[ eCrowdEmbarkingTimePerPerson ] );
+    builder.AddField< ADN_TimeField >( pCrowdGroupBox, "disembark-time-per-person", tools::translate( "ADN_Equipments_GUI", "Disembark time per person" ), vInfosConnectors[ eCrowdDisembarkingTimePerPerson ] );
     builder.PopSubName(); //! crowd-transport
 
     // Troop/Crew layout
@@ -128,84 +128,84 @@ void ADN_Equipments_GUI::Build()
     pTroopGroupBoxLayout->addWidget( pCrowdGroupBox );
 
     // ID groupbox
-    Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ) );
+    Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Military codes" ) );
     optionalWidgets_.push_back( pIdGroupBox );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-nno", tr( "Code NNO" ),   vInfosConnectors[ eNNOCode ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat8", tr( "Code EMAT8" ), vInfosConnectors[ eEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat6", tr( "Code EMAT6" ), vInfosConnectors[ eEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-lfril", tr( "Code LFRIL" ), vInfosConnectors[ eLFRILCode ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-nno", tools::translate( "ADN_Equipments_GUI", "Code NNO" ),   vInfosConnectors[ eNNOCode ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat8", tools::translate( "ADN_Equipments_GUI", "Code EMAT8" ), vInfosConnectors[ eEMAT8Code ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat6", tools::translate( "ADN_Equipments_GUI", "Code EMAT6" ), vInfosConnectors[ eEMAT6Code ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-lfril", tools::translate( "ADN_Equipments_GUI", "Code LFRIL" ), vInfosConnectors[ eLFRILCode ] );
 
     // Operational information groupbox
-    Q3GroupBox* pInfoGroupBox = new Q3VGroupBox( tr( "Operational Information" ) );
+    Q3GroupBox* pInfoGroupBox = new Q3VGroupBox( tools::translate( "ADN_Equipments_GUI", "Operational Information" ) );
     QWidget* operationalHolder = builder.AddFieldHolder( pInfoGroupBox );
     optionalWidgets_.push_back( pInfoGroupBox );
-    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "native-country", tr( "Native country:" ), vInfosConnectors[ eNativeCountry ] );
-    builder.AddField< ADN_EditLine_String >( operationalHolder, "starting-country", tr( "Starting country:" ), vInfosConnectors[ eStartingCountry ] );
-    builder.AddField< ADN_DateEdit >( operationalHolder, "starting-date", tr( "Starting date:" ), vInfosConnectors[ eStartingDate ] );
-    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "information-origin", tr( "Information origin:" ), vInfosConnectors[ eInformationOrigin ] );
-    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "category", tr( "Equipment category:" ), vInfosConnectors[ eEquipmentCategory ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "native-country", tools::translate( "ADN_Equipments_GUI", "Native country:" ), vInfosConnectors[ eNativeCountry ] );
+    builder.AddField< ADN_EditLine_String >( operationalHolder, "starting-country", tools::translate( "ADN_Equipments_GUI", "Starting country:" ), vInfosConnectors[ eStartingCountry ] );
+    builder.AddField< ADN_DateEdit >( operationalHolder, "starting-date", tools::translate( "ADN_Equipments_GUI", "Starting date:" ), vInfosConnectors[ eStartingDate ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "information-origin", tools::translate( "ADN_Equipments_GUI", "Information origin:" ), vInfosConnectors[ eInformationOrigin ] );
+    builder.AddLocalizedField( data_.GetEquipments(), operationalHolder, "category", tools::translate( "ADN_Equipments_GUI", "Equipment category:" ), vInfosConnectors[ eEquipmentCategory ] );
 
-    Q3GroupBox* pDimensionsGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Equipment dimensions" ) );
-    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "length", tr( "Length" ), vInfosConnectors[ eLength ], tr("m"), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "width", tr( "Width" ), vInfosConnectors[ eWidth ], tr("m"), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "frontSeparationDistance", tr( "Front separation distance" ), vInfosConnectors[ eFrontSeparationDistance ], tr("m"), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "safetyDistance_", tr( "Safety Distance" ), vInfosConnectors[ eSafetyDistance ], tr("m"), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "speedSafetyDistance_", tr( "Speed Safety Distance" ), vInfosConnectors[ eSpeedSafetyDistance ], tr("m"), eGreaterEqualZero );
+    Q3GroupBox* pDimensionsGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Equipment dimensions" ) );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "length", tools::translate( "ADN_Equipments_GUI", "Length" ), vInfosConnectors[ eLength ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "width", tools::translate( "ADN_Equipments_GUI", "Width" ), vInfosConnectors[ eWidth ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "frontSeparationDistance", tools::translate( "ADN_Equipments_GUI", "Front separation distance" ), vInfosConnectors[ eFrontSeparationDistance ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "safetyDistance_", tools::translate( "ADN_Equipments_GUI", "Safety Distance" ), vInfosConnectors[ eSafetyDistance ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "speedSafetyDistance_", tools::translate( "ADN_Equipments_GUI", "Speed Safety Distance" ), vInfosConnectors[ eSpeedSafetyDistance ], tr("m"), eGreaterEqualZero );
 
     // Breakdowns
-    pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
+    pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Breakdowns" ) );
     ADN_Equipments_BreakdownsTable* pAttritionBreakdowns = new ADN_Equipments_BreakdownsTable( builder.GetChildName( "breakdowns-table" ),
-                                                                                               tr( "Attrition breakdowns" ),
+                                                                                               tools::translate( "ADN_Equipments_GUI", "Attrition breakdowns" ),
                                                                                                vInfosConnectors[ eAttritionBreakdowns ],
                                                                                                pBreakdownsGroup_ );
     pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     ADN_Equipments_BreakdownsTable* pRandomBreakdowns = new ADN_Equipments_BreakdownsTable( builder.GetChildName( "random-breakdowns-table" ),
-                                                                                            tr( "Random breakdowns" ),
+                                                                                            tools::translate( "ADN_Equipments_GUI", "Random breakdowns" ),
                                                                                             vInfosConnectors[ eRandomBreakdowns ],
                                                                                             pBreakdownsGroup_ );
     pRandomBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
 
     // Speeds
-    Q3VGroupBox* pSpeedGroup = new Q3VGroupBox( tr( "Speeds" ) );
+    Q3VGroupBox* pSpeedGroup = new Q3VGroupBox( tools::translate( "ADN_Equipments_GUI", "Speeds" ) );
     QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
     // Max speed
-    ADN_EditLine_Double* maxSpeed = builder.AddField< ADN_EditLine_Double >( pMaxSpeedHolder, "max-speed", tr( "Max speed" ), vInfosConnectors[ eMaxSpeed ], tr( "km/h" ), eGreaterZero );
+    ADN_EditLine_Double* maxSpeed = builder.AddField< ADN_EditLine_Double >( pMaxSpeedHolder, "max-speed", tools::translate( "ADN_Equipments_GUI", "Max speed" ), vInfosConnectors[ eMaxSpeed ], tools::translate( "ADN_Equipments_GUI", "km/h" ), eGreaterZero );
     pSpeeds_ = new ADN_Equipments_Speeds_GUI( maxSpeed, builder.GetChildName( "speeds-table" ), vInfosConnectors[ eSpeeds ], pSpeedGroup );
 
     // Sensors
-    Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
+    Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Sensors" ) );
     auto pSensors = new ADN_Equipments_Sensors_GUI< ADN_Equipments_Data::SensorInfos, ADN_Sensors_Data::SensorInfos >( builder.GetChildName( "sensors-table" ), vInfosConnectors[ eSensors ], pSensorsGroup );
     pSensors->SetGoToOnDoubleClick( ::eSensors, 0 );
     pSensors_ = pSensors;
     // Special sensors
-    Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ) );
+    Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Special sensors" ) );
     auto pRadars = new ADN_Equipments_Sensors_GUI< ADN_Equipments_Data::RadarInfos, ADN_Radars_Data::RadarInfos >( builder.GetChildName( "radars-list" ), vInfosConnectors[ eRadars ], pRadarsGroup );
     pRadars->SetGoToOnDoubleClick( ::eSensors, 1 );
     pRadars_ = pRadars;
     // Weapons
-    Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tr( "Weapon systems" ) );
+    Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Weapon systems" ) );
     pWeapons_ = builder.AddWidget< ADN_Equipments_WeaponsListView >( "weapons-list", pWeaponsGroup );
     pWeapons_->SetGoToOnDoubleClick( ::eWeapons );
     vInfosConnectors[ eWeapons ] = &pWeapons_->GetConnector();
     // Active Protections
-    Q3HGroupBox* pActiveProtectionsGroup = new Q3HGroupBox( tr( "Active Protections" ) );
+    Q3HGroupBox* pActiveProtectionsGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Active Protections" ) );
     pActiveProtections_ = builder.AddWidget< ADN_Equipments_ActiveProtectionsListView >( "active-protections-list", pActiveProtectionsGroup );
     pActiveProtections_->SetGoToOnDoubleClick( ::eActiveProtections );
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
 
     // Resources allocation & consumptions
-    QGroupBox* pResourcesGroup = new QGroupBox( tr( "Resources" ) );
+    QGroupBox* pResourcesGroup = new QGroupBox( tools::translate( "ADN_Equipments_GUI", "Resources" ) );
     QVBoxLayout* pResourceLayout = new QVBoxLayout;
     pResourcesGroup->setLayout( pResourceLayout );
     pResourceLayout->setMargin( 5 );
     pResources_ = new ADN_Equipments_Resources_Tables( builder.GetChildName( "resources-tables" ), vInfosConnectors[ eDotations ], vInfosConnectors[ eDotationsAllocation ], vInfosConnectors[ eConsumptions ], pResourcesGroup );
-    ADN_GroupBox* pAviationQuotasBox = builder.AddGroupBox( pResourcesGroup, "has-aviation-quotas", tr( "Enforce resource quotas for aviation equipments" ), vInfosConnectors[ eHasAviationResourceQuotas ], 1 );
+    ADN_GroupBox* pAviationQuotasBox = builder.AddGroupBox( pResourcesGroup, "has-aviation-quotas", tools::translate( "ADN_Equipments_GUI", "Enforce resource quotas for aviation equipments" ), vInfosConnectors[ eHasAviationResourceQuotas ], 1 );
     pAviationResourceQuotas_ = new ADN_Equipments_AviationResourceQuotas_GUI( "aviation-quotas-tab", vInfosConnectors[ eAviationResourceQuotas ], pAviationQuotasBox );
     pResourceLayout->addWidget( pResources_ );
     pResourceLayout->addWidget( pAviationQuotasBox );
 
     // Objects
-    Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
+    Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tools::translate( "ADN_Equipments_GUI", "Objects" ) );
     ADN_ListView_Equipments_Objects* pListObjects = builder.AddWidget< ADN_ListView_Equipments_Objects >( "objects-table", pObjectsGroup );
     pListObjects->SetGoToOnDoubleClick( ::eObjects );
     vInfosConnectors[ eObjects ] = &pListObjects->GetConnector();
@@ -214,25 +214,25 @@ void ADN_Equipments_GUI::Build()
     T_ConnectorVector vInfoObjectsConnectors( eNbrObjGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     QWidget* pObjectGrid = builder.AddFieldHolder( pObjectsGroup );
     // InitialBuildTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-construction-time", tr( "Initial Construction Time" ), vInfoObjectsConnectors[ eHasInitialBuildTime ], vInfoObjectsConnectors[ eInitialBuildTime ] ) ;
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-construction-time", tools::translate( "ADN_Equipments_GUI", "Initial Construction Time" ), vInfoObjectsConnectors[ eHasInitialBuildTime ], vInfoObjectsConnectors[ eInitialBuildTime ] ) ;
     // InitialDestructionTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-destruction-time", tr( "Initial Destruction Time" ), vInfoObjectsConnectors[ eHasInitialDestructionTime ], vInfoObjectsConnectors[ eInitialDestructionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-destruction-time", tools::translate( "ADN_Equipments_GUI", "Initial Destruction Time" ), vInfoObjectsConnectors[ eHasInitialDestructionTime ], vInfoObjectsConnectors[ eInitialDestructionTime ] );
     // CoeffBuildTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-construction-coefficient", tr( "Time Construction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffBuildTime ], vInfoObjectsConnectors[ eCoeffBuildTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-construction-coefficient", tools::translate( "ADN_Equipments_GUI", "Time Construction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffBuildTime ], vInfoObjectsConnectors[ eCoeffBuildTime ] );
     // CoeffDestructionTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-destruction-coefficient", tr( "Time Destruction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffDestructionTime ], vInfoObjectsConnectors[ eCoeffDestructionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-destruction-coefficient", tools::translate( "ADN_Equipments_GUI", "Time Destruction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffDestructionTime ], vInfoObjectsConnectors[ eCoeffDestructionTime ] );
     // ValorizationTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "mining-time", tr( "Mining time" ), vInfoObjectsConnectors[ eHasValorizationTime ], vInfoObjectsConnectors[ eValorizationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "mining-time", tools::translate( "ADN_Equipments_GUI", "Mining time" ), vInfoObjectsConnectors[ eHasValorizationTime ], vInfoObjectsConnectors[ eValorizationTime ] );
     // DevalorizationTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "demining-time", tr( "Demining time" ), vInfoObjectsConnectors[ eHasDevalorizationTime ], vInfoObjectsConnectors[ eDevalorizationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "demining-time", tools::translate( "ADN_Equipments_GUI", "Demining time" ), vInfoObjectsConnectors[ eHasDevalorizationTime ], vInfoObjectsConnectors[ eDevalorizationTime ] );
     // ExtinguishingTime
-    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "extinguishing-time", tr( "Extinguishing time" ), vInfoObjectsConnectors[ eHasExtinguishingTime ], vInfoObjectsConnectors[ eExtinguishingTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "extinguishing-time", tools::translate( "ADN_Equipments_GUI", "Extinguishing time" ), vInfoObjectsConnectors[ eHasExtinguishingTime ], vInfoObjectsConnectors[ eExtinguishingTime ] );
     // CoeffCircTime
-    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "bypass-coefficient", tr( "Bypass coefficient" ), vInfoObjectsConnectors[ eHasCoeffCircTime ], vInfoObjectsConnectors[ eCoeffCircTime ], 0, eGreaterEqualZero );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "bypass-coefficient", tools::translate( "ADN_Equipments_GUI", "Bypass coefficient" ), vInfoObjectsConnectors[ eHasCoeffCircTime ], vInfoObjectsConnectors[ eCoeffCircTime ], 0, eGreaterEqualZero );
     // SpeedCirc
-    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-bypassed", tr( "Speed when bypassed" ), vInfoObjectsConnectors[ eHasSpeedCirc ], vInfoObjectsConnectors[ eSpeedCirc ], tr( "km/h" ) );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-bypassed", tools::translate( "ADN_Equipments_GUI", "Speed when bypassed" ), vInfoObjectsConnectors[ eHasSpeedCirc ], vInfoObjectsConnectors[ eSpeedCirc ], tools::translate( "ADN_Equipments_GUI", "km/h" ) );
     // SpeedNotCirc
-    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-not-bypassed", tr( "Speed when not bypassed" ), vInfoObjectsConnectors[ eHasSpeedNotCirc ], vInfoObjectsConnectors[ eSpeedNotCirc ], tr( "km/h" ) );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-not-bypassed", tools::translate( "ADN_Equipments_GUI", "Speed when not bypassed" ), vInfoObjectsConnectors[ eHasSpeedNotCirc ], vInfoObjectsConnectors[ eSpeedNotCirc ], tools::translate( "ADN_Equipments_GUI", "km/h" ) );
     pListObjects->SetItemConnectors( vInfoObjectsConnectors );
 
     builder.PopSubName(); //! data-tab
@@ -289,10 +289,10 @@ void ADN_Equipments_GUI::Build()
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();
-    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "data-tab" ), *pContent, 0 ), tr( "Data" ) );
-    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "log-tab" ), *pLogPage, 0 ), tr( "Log" ) );
+    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "data-tab" ), *pContent, 0 ), tools::translate( "ADN_Equipments_GUI", "Data" ) );
+    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "log-tab" ), *pLogPage, 0 ), tools::translate( "ADN_Equipments_GUI", "Log" ) );
     QWidget* widget = CreateScrollArea( builder.GetChildName( "power-indicator-tab" ), *pPowerIndicatorsPage, 0 );
-    int tabIndex = pTabWidget->addTab( widget, tr( "Power indicators" ) );
+    int tabIndex = pTabWidget->addTab( widget, tools::translate( "ADN_Equipments_GUI", "Power indicators" ) );
     optionalTabs_[ pTabWidget->tabText( tabIndex ) ] = OptionalTab( pTabWidget, tabIndex, widget );
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pTabWidget, pSearchListView, true, true, false );
@@ -307,17 +307,17 @@ QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& v
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "health" );
 
-    ADN_GroupBox* pHealthGroup = builder.AddGroupBox( pParent, "health", tr( "Medical system" ), vInfosConnectors[ eHasHealthLog ], 1 );
+    ADN_GroupBox* pHealthGroup = builder.AddGroupBox( pParent, "health", tools::translate( "ADN_Equipments_GUI", "Medical system" ), vInfosConnectors[ eHasHealthLog ], 1 );
 
     Q3HBox* pAmbulanceHolder = new Q3HBox( pHealthGroup );
-    this->BuildAmbulance( pAmbulanceHolder, "ambulance-evacuation", tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance, builder );
-    this->BuildAmbulance( pAmbulanceHolder, "ambulance-collection", tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance, builder );
+    this->BuildAmbulance( pAmbulanceHolder, "ambulance-evacuation", tools::translate( "ADN_Equipments_GUI", "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance, builder );
+    this->BuildAmbulance( pAmbulanceHolder, "ambulance-collection", tools::translate( "ADN_Equipments_GUI", "Ambulance, collection" ), vInfosConnectors, eHasAmbulance, builder );
 
-    ADN_GroupBox* pDoctorGroup = builder.AddGroupBox( pHealthGroup, "doctor", tr( "Doctor" ), vInfosConnectors[ eIsDoctor ], 3 );
+    ADN_GroupBox* pDoctorGroup = builder.AddGroupBox( pHealthGroup, "doctor", tools::translate( "ADN_Equipments_GUI", "Doctor" ), vInfosConnectors[ eIsDoctor ], 3 );
     QWidget* pHolder = builder.AddFieldHolder( pDoctorGroup );
-    builder.AddField< ADN_CheckBox >( pHolder, "triage", tr( "Triage" ), vInfosConnectors[ eIsSortingDoctor ] );
+    builder.AddField< ADN_CheckBox >( pHolder, "triage", tools::translate( "ADN_Equipments_GUI", "Triage" ), vInfosConnectors[ eIsSortingDoctor ] );
 
-    ADN_GroupBox* pCureDoctorGroup = builder.AddGroupBox( pDoctorGroup, "treats", tr( "Treats" ), vInfosConnectors[ eIsCuringDoctor ], 1, Qt::Vertical );
+    ADN_GroupBox* pCureDoctorGroup = builder.AddGroupBox( pDoctorGroup, "treats", tools::translate( "ADN_Equipments_GUI", "Treats" ), vInfosConnectors[ eIsCuringDoctor ], 1, Qt::Vertical );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         QWidget* pHolder = builder.AddFieldHolder( pCureDoctorGroup );
@@ -328,8 +328,8 @@ QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& v
     }
 
     pHolder = builder.AddFieldHolder( pDoctorGroup );
-    builder.AddField< ADN_CheckBox >( pHolder, "treats-nbc", tr( "Treats NBC" ), vInfosConnectors[ eTreatsNBC ] );
-    builder.AddField< ADN_CheckBox >( pHolder, "treats-psyop", tr( "Treats psyop" ), vInfosConnectors[ eTreatsShock ] );
+    builder.AddField< ADN_CheckBox >( pHolder, "treats-nbc", tools::translate( "ADN_Equipments_GUI", "Treats NBC" ), vInfosConnectors[ eTreatsNBC ] );
+    builder.AddField< ADN_CheckBox >( pHolder, "treats-psyop", tools::translate( "ADN_Equipments_GUI", "Treats psyop" ), vInfosConnectors[ eTreatsShock ] );
 
     builder.PopSubName(); //! health
     builder.PopSubName(); //! log-tab
@@ -349,13 +349,13 @@ QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objec
 
     Q3VBox* box = new Q3VBox( pAmbulanceGroup );
     QWidget* pHolder = builder.AddFieldHolder( box );
-    builder.AddField< ADN_EditLine_Int >( pHolder, "capacity", tr( "Capacity" ), vInfosConnectors[ nIndex + 1 ], tr( "persons"), eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pHolder, "capacity", tools::translate( "ADN_Equipments_GUI", "Capacity" ), vInfosConnectors[ nIndex + 1 ], tools::translate( "ADN_Equipments_GUI", "persons"), eGreaterZero );
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField< ADN_TimeField >( pHolder, "loading-duration-per-person", tr( "Loading duration per person" ), vInfosConnectors[ nIndex + 2 ] );
+    builder.AddField< ADN_TimeField >( pHolder, "loading-duration-per-person", tools::translate( "ADN_Equipments_GUI", "Loading duration per person" ), vInfosConnectors[ nIndex + 2 ] );
     pHolder = builder.AddFieldHolder( box );
-    builder.AddField< ADN_TimeField >( pHolder, "unloading-duration-per-person", tr( "Unloading duration per person" ), vInfosConnectors[ nIndex + 3 ] );
+    builder.AddField< ADN_TimeField >( pHolder, "unloading-duration-per-person", tools::translate( "ADN_Equipments_GUI", "Unloading duration per person" ), vInfosConnectors[ nIndex + 3 ] );
 
-    Q3GroupBox* pSkillsBox = new Q3GroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Capabilities" ), pAmbulanceGroup );
+    Q3GroupBox* pSkillsBox = new Q3GroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Capabilities" ), pAmbulanceGroup );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         pHolder = builder.AddFieldHolder( pSkillsBox );
@@ -365,9 +365,9 @@ QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objec
             vInfosConnectors[ nIndex + 6 + n ] );
     }
     pHolder = builder.AddFieldHolder( pSkillsBox );
-    builder.AddField< ADN_CheckBox >( pHolder, "nbc", tr( "NBC" ), vInfosConnectors[ nIndex + 4 ] );
+    builder.AddField< ADN_CheckBox >( pHolder, "nbc", tools::translate( "ADN_Equipments_GUI", "NBC" ), vInfosConnectors[ nIndex + 4 ] );
     pHolder = builder.AddFieldHolder( pSkillsBox );
-    builder.AddField< ADN_CheckBox >( pHolder, "psyop", tr( "psyop" ), vInfosConnectors[ nIndex + 5 ] );
+    builder.AddField< ADN_CheckBox >( pHolder, "psyop", tools::translate( "ADN_Equipments_GUI", "psyop" ), vInfosConnectors[ nIndex + 5 ] );
 
     builder.PopSubName(); //! objectName
     builder.PopSubName(); //! log-tab
@@ -383,13 +383,13 @@ QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& v
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "supply" );
 
-    ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tr( "Supply system" ), vInfosConnectors[ eIsLogSupply ], 3 );
+    ADN_GroupBox* pSupplyGroup = builder.AddGroupBox( pParent, "supply-system", tools::translate( "ADN_Equipments_GUI", "Supply system" ), vInfosConnectors[ eIsLogSupply ], 3 );
 
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-weight-carried", tr( "Min weight carried"  ), vInfosConnectors[ eLogCarryMinWeightCapacity ], tr( "T" ), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryMaxWeightCapacity ], tr( "T" ), eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-volume-carried", tr( "Min volume carried"  ), vInfosConnectors[ eLogCarryMinVolumeCapacity ], tr( "m3" ), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryMaxVolumeCapacity ], tr( "m3" ), eGreaterZero );
-    builder.AddField< ADN_ComboBox_Vector >( pSupplyGroup, "resource-nature-carried", tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-weight-carried", tools::translate( "ADN_Equipments_GUI", "Min weight carried"  ), vInfosConnectors[ eLogCarryMinWeightCapacity ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-weight-carried", tools::translate( "ADN_Equipments_GUI", "Max weight carried"  ), vInfosConnectors[ eLogCarryMaxWeightCapacity ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "min-volume-carried", tools::translate( "ADN_Equipments_GUI", "Min volume carried"  ), vInfosConnectors[ eLogCarryMinVolumeCapacity ], tools::translate( "ADN_Equipments_GUI", "m3" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pSupplyGroup, "max-volume-carried", tools::translate( "ADN_Equipments_GUI", "Max volume carried"  ), vInfosConnectors[ eLogCarryMaxVolumeCapacity ], tools::translate( "ADN_Equipments_GUI", "m3" ), eGreaterZero );
+    builder.AddField< ADN_ComboBox_Vector >( pSupplyGroup, "resource-nature-carried", tools::translate( "ADN_Equipments_GUI", "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
 
     builder.PopSubName(); //! supply
     builder.PopSubName(); //! log-tab
@@ -405,18 +405,18 @@ QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVect
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "maintenance" );
 
-    ADN_GroupBox* pMaintenanceGroup = builder.AddGroupBox( pParent, "maintenance-system", tr( "Maintenance system" ), vInfosConnectors[ eIsMaintenance ], 1 );
-    ADN_GroupBox* pTowerGroup = builder.AddGroupBox( pMaintenanceGroup, "tow-truck", tr( "Tow truck" ), vInfosConnectors[ eIsTower ], 3 );
+    ADN_GroupBox* pMaintenanceGroup = builder.AddGroupBox( pParent, "maintenance-system", tools::translate( "ADN_Equipments_GUI", "Maintenance system" ), vInfosConnectors[ eIsMaintenance ], 1 );
+    ADN_GroupBox* pTowerGroup = builder.AddGroupBox( pMaintenanceGroup, "tow-truck", tools::translate( "ADN_Equipments_GUI", "Tow truck" ), vInfosConnectors[ eIsTower ], 3 );
 
-    builder.AddField< ADN_EditLine_Double >( pTowerGroup, "capacity", tr( "Capacity" ), vInfosConnectors[ eTowerCapacity ], tr( "T" ), eGreaterZero );
-    builder.AddField< ADN_TimeField >( pTowerGroup, "loading-duration", tr( "Loading duration" ), vInfosConnectors[ eMaintenanceLoadTime ] );
-    builder.AddField< ADN_TimeField >( pTowerGroup, "unloading-duration", tr( "Unloading duration" ), vInfosConnectors[ eMaintenanceUnloadTime ] );
+    builder.AddField< ADN_EditLine_Double >( pTowerGroup, "capacity", tools::translate( "ADN_Equipments_GUI", "Capacity" ), vInfosConnectors[ eTowerCapacity ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterZero );
+    builder.AddField< ADN_TimeField >( pTowerGroup, "loading-duration", tools::translate( "ADN_Equipments_GUI", "Loading duration" ), vInfosConnectors[ eMaintenanceLoadTime ] );
+    builder.AddField< ADN_TimeField >( pTowerGroup, "unloading-duration", tools::translate( "ADN_Equipments_GUI", "Unloading duration" ), vInfosConnectors[ eMaintenanceUnloadTime ] );
 
     Q3HBox* pNTIHolder = new Q3HBox( pMaintenanceGroup );
 
-    this->BuildNTI( pNTIHolder, "seriousness-level-1", tr( "Seriousness level 1" ), vInfosConnectors, eNTI1, builder );
-    this->BuildNTI( pNTIHolder, "seriousness-level-2", tr( "Seriousness level 2" ), vInfosConnectors, eNTI2, builder );
-    this->BuildNTI( pNTIHolder, "seriousness-level-3", tr( "Seriousness level 3" ), vInfosConnectors, eNTI3, builder );
+    this->BuildNTI( pNTIHolder, "seriousness-level-1", tools::translate( "ADN_Equipments_GUI", "Seriousness level 1" ), vInfosConnectors, eNTI1, builder );
+    this->BuildNTI( pNTIHolder, "seriousness-level-2", tools::translate( "ADN_Equipments_GUI", "Seriousness level 2" ), vInfosConnectors, eNTI2, builder );
+    this->BuildNTI( pNTIHolder, "seriousness-level-3", tools::translate( "ADN_Equipments_GUI", "Seriousness level 3" ), vInfosConnectors, eNTI3, builder );
 
     builder.PopSubName(); //! maintenance
     builder.PopSubName(); //! log-tab
@@ -435,9 +435,9 @@ QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* objectName,
 
     ADN_GroupBox* pNTIGroup = builder.AddGroupBox( pParent, objectName, szName, vInfosConnectors[ nIndex + eNTIIsPresent ], 1 );
 
-    builder.AddCheckableField< ADN_TimeField >( pNTIGroup, "max-repair-duration", tr( "Max repair duration" ), vInfosConnectors[ nIndex + eHasMaxRepairTime ], vInfosConnectors[nIndex + eMaxRepairTime] );
-    builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-eletronic-breakdowns", tr( "Can fix electronic breakdowns" ), vInfosConnectors[ nIndex + eCanRepairEA ] );
-    builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-mobility-breakdowns", tr( "Can fix mobility breakdowns" ), vInfosConnectors[ nIndex + eCanRepairM ] );
+    builder.AddCheckableField< ADN_TimeField >( pNTIGroup, "max-repair-duration", tools::translate( "ADN_Equipments_GUI", "Max repair duration" ), vInfosConnectors[ nIndex + eHasMaxRepairTime ], vInfosConnectors[nIndex + eMaxRepairTime] );
+    builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-eletronic-breakdowns", tools::translate( "ADN_Equipments_GUI", "Can fix electronic breakdowns" ), vInfosConnectors[ nIndex + eCanRepairEA ] );
+    builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-mobility-breakdowns", tools::translate( "ADN_Equipments_GUI", "Can fix mobility breakdowns" ), vInfosConnectors[ nIndex + eCanRepairM ] );
 
     builder.PopSubName(); //! objectName
     builder.PopSubName(); //! maintenance
@@ -453,15 +453,15 @@ QWidget* ADN_Equipments_GUI::BuildPowerIndicators( QWidget* pParent, T_Connector
 {
     builder.PushSubName( "power-indicator-tab" );
 
-    Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
+    Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "ADN_Equipments_GUI", "Power indicators" ), pParent );
 
     pPowerIndicatorsGroup->setMinimumWidth(400);
     pPowerIndicatorsGroup->setMinimumHeight(130);
 
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "direct-fire", tr( "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "indirect-fire", tr( "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "close-combat", tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "engineering", tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "direct-fire", tools::translate( "ADN_Equipments_GUI", "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "indirect-fire", tools::translate( "ADN_Equipments_GUI", "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "close-combat", tools::translate( "ADN_Equipments_GUI", "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, "engineering", tools::translate( "ADN_Equipments_GUI", "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
 
     builder.PopSubName(); //! power-indicator-tab
 
@@ -482,7 +482,7 @@ namespace
             setSortingEnabled( true );
             setShowGrid( true );
             QStringList horizontalHeaders;
-            horizontalHeaders.append( tr( "Equipment" ) );
+            horizontalHeaders.append( tools::translate( "ADN_Equipments_GUI", "Equipment" ) );
             for( unsigned int n = 0; n < eNbrLocation; ++n )
                 horizontalHeaders.append( ENT_Tr::ConvertFromLocation( static_cast< E_Location >( n ), ENT_Tr::eToTr ).c_str() );
             dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
@@ -526,7 +526,7 @@ QWidget* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
 // -----------------------------------------------------------------------------
 void ADN_Equipments_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Equipment speeds" ), boost::bind( &ADN_Equipments_GUI::CreateComposanteSpeedsTable, this ) );
+    mainWindow.AddTable( tools::translate( "ADN_Equipments_GUI", "Equipment speeds" ), boost::bind( &ADN_Equipments_GUI::CreateComposanteSpeedsTable, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -535,10 +535,10 @@ void ADN_Equipments_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tr( "Equipments/" ).toStdWString() );
+    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tools::translate( "ADN_Equipments_GUI", "Equipments/" ).toStdWString() );
     strLocalPath.CreateDirectories();
     ADN_HtmlBuilder indexBuilder;
-    indexBuilder.BeginHtml( tr( "Equipments" ) );
+    indexBuilder.BeginHtml( tools::translate( "ADN_Equipments_GUI", "Equipments" ) );
     indexBuilder.BeginList();
 
     int n = 0;
@@ -551,28 +551,28 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.BeginHtml( composante.strName_.GetData().c_str() );
         builder.Section( "Properties" );
         builder.BeginList();
-        builder.ListItem( tr( "Name" ), composante.strName_.GetData().c_str() );
-        builder.ListItem( tr( "Comments" ), composante.strAdditionalComments_.GetData().c_str() );
-        builder.ListItem( tr( "Code NNO" ), composante.strCodeNNO_.GetData().c_str() );
-        builder.ListItem( tr( "Code EMAT8" ), composante.strCodeEMAT8_.GetData().c_str() );
-        builder.ListItem( tr( "Code EMAT6" ), composante.strCodeEMAT6_.GetData().c_str() );
-        builder.ListItem( tr( "Code LFRIL" ), composante.strCodeLFRIL_.GetData().c_str() );
-        builder.ListItem( tr( "MOS Id" ), composante.nId_.GetData() );
-        builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData() ? composante.ptrArmor_.GetData()->strName_.GetData().c_str() : "" );
-        builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData() ? composante.ptrSize_.GetData()->strName_.GetData().c_str() : "" );
-        builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
-        builder.ListItem( tr( "Max slope" ), composante.nMaxSlope_.GetData() );
-        builder.ListItem( tr( "Slope deceleration" ), composante.nSlopeDeceleration_.GetData() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Name" ), composante.strName_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Comments" ), composante.strAdditionalComments_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Code NNO" ), composante.strCodeNNO_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Code EMAT8" ), composante.strCodeEMAT8_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Code EMAT6" ), composante.strCodeEMAT6_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Code LFRIL" ), composante.strCodeLFRIL_.GetData().c_str() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "MOS Id" ), composante.nId_.GetData() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Armor-Plating" ), composante.ptrArmor_.GetData() ? composante.ptrArmor_.GetData()->strName_.GetData().c_str() : "" );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Volume" ), composante.ptrSize_.GetData() ? composante.ptrSize_.GetData()->strName_.GetData().c_str() : "" );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Weight" ), composante.rWeight_.GetData(), tools::translate( "ADN_Equipments_GUI", "T" ) );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Max slope" ), composante.nMaxSlope_.GetData() );
+        builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Slope deceleration" ), composante.nSlopeDeceleration_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )
         {
-            builder.ListItem( tr( "Mounting duration per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
-            builder.ListItem( tr( "Dismounting duration per person" ), composante.disembarkingTimePerPerson_.GetData().c_str() );
+            builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Mounting duration per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
+            builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Dismounting duration per person" ), composante.disembarkingTimePerPerson_.GetData().c_str() );
         }
         if( composante.bCanCarryCargo_.GetData() )
         {
-            builder.ListItem( tr( "Weight capacity" ), composante.rWeightTransportCapacity_.GetData(), tr( "T" ) );
-            builder.ListItem( tr( "Loading duration per ton" ), composante.embarkingTimePerTon_.GetData().c_str() );
-            builder.ListItem( tr( "Unloading duration per ton" ), composante.disembarkingTimePerTon_.GetData().c_str() );
+            builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Weight capacity" ), composante.rWeightTransportCapacity_.GetData(), tools::translate( "ADN_Equipments_GUI", "T" ) );
+            builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Loading duration per ton" ), composante.embarkingTimePerTon_.GetData().c_str() );
+            builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Unloading duration per ton" ), composante.disembarkingTimePerTon_.GetData().c_str() );
         }
         builder.EndList();
 
@@ -595,7 +595,7 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.Section( tr("Active protection") );
         builder.CreateTableFrom( *pActiveProtections_ );
 
-        builder.Section( tr( "Objects" ) );
+        builder.Section( tools::translate( "ADN_Equipments_GUI", "Objects" ) );
         for( auto it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )
         {
             ADN_Equipments_Data::ObjectInfos& object = **it2;
@@ -604,31 +604,31 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
             builder.SubSection( object.GetCrossedElement()->strName_.GetData().c_str() );
             builder.BeginList();
             if( object.bInitialBuildTime_.GetData() )
-                builder.ListItem( tr( "Initial construction duration" ), object.initialBuildTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Initial construction duration" ), object.initialBuildTime_.GetData().c_str() );
             if( object.bInitialDestructionTime_.GetData() )
-                builder.ListItem( tr( "Initial destruction duration" ), object.initialDestructionTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Initial destruction duration" ), object.initialDestructionTime_.GetData().c_str() );
             if( object.bCoeffBuildTime_.GetData() )
-                builder.ListItem( tr( "Duration construction factor" ), object.coeffBuildTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Duration construction factor" ), object.coeffBuildTime_.GetData().c_str() );
             if( object.bCoeffDestructionTime_.GetData() )
-                builder.ListItem( tr( "Duration destruction factor" ), object.coeffDestructionTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Duration destruction factor" ), object.coeffDestructionTime_.GetData().c_str() );
             if( object.bValorizationTime_.GetData() )
-                builder.ListItem( tr( "Mining duration" ), object.valorizationTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Mining duration" ), object.valorizationTime_.GetData().c_str() );
             if( object.bDevalorizationTime_.GetData() )
-                builder.ListItem( tr( "Mine clearing duration" ), object.devalorizationTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Mine clearing duration" ), object.devalorizationTime_.GetData().c_str() );
             if( object.bExtinguishingTime_.GetData() )
-                builder.ListItem( tr( "Extinguishing duration" ), object.extinguishingTime_.GetData().c_str() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Extinguishing duration" ), object.extinguishingTime_.GetData().c_str() );
             if( object.bCoeffCircTime_.GetData() )
-                builder.ListItem( tr( "Bypass factor" ), object.rCoeffCirc_.GetData() );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Bypass factor" ), object.rCoeffCirc_.GetData() );
             if( object.bSpeedCirc_.GetData() )
-                builder.ListItem( tr( "Speed when bypassed" ), object.rSpeedCirc_.GetData(), tr( "km/h" ) );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Speed when bypassed" ), object.rSpeedCirc_.GetData(), tools::translate( "ADN_Equipments_GUI", "km/h" ) );
             if( object.bSpeedNotCirc_.GetData() )
-                builder.ListItem( tr( "Speed when not bypassed" ), object.rSpeedNotCirc_.GetData(), tr( "km/h" ) );
+                builder.ListItem( tools::translate( "ADN_Equipments_GUI", "Speed when not bypassed" ), object.rSpeedNotCirc_.GetData(), tools::translate( "ADN_Equipments_GUI", "km/h" ) );
             builder.EndList();
         }
 
         builder.EndHtml();
 
-        tools::Path strFileName = tools::Path::FromUnicode( tr( "Equipment_%1.htm" ).arg( n ).toStdWString() );
+        tools::Path strFileName = tools::Path::FromUnicode( tools::translate( "ADN_Equipments_GUI", "Equipment_%1.htm" ).arg( n ).toStdWString() );
         QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + composante.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
         builder.WriteToFile( strLocalPath / strFileName );
@@ -637,7 +637,7 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
     indexBuilder.EndHtml();
     indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
-    QString strText = "<a href=\"" + tr( "Equipments/" ) + "index.htm\">" + tr( "Equipments" ) + "</a>";
+    QString strText = "<a href=\"" + tools::translate( "ADN_Equipments_GUI", "Equipments/" ) + "index.htm\">" + tools::translate( "ADN_Equipments_GUI", "Equipments" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
 

@@ -302,7 +302,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::ReadPh( xml::xistream& input )
             vModifStance_[i]->ReadArchive( input );
             return;
         }
-    throw MASA_EXCEPTION( tr( "Equipment - Invalid stance '%1'" ).arg( posture.c_str() ).toStdString() );
+    throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid stance '%1'" ).arg( posture.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& inp
     input >> xml::attribute( "type", type );
     E_TypeMunitionTirIndirect indirect = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
     if( indirect == (E_TypeMunitionTirIndirect)-1 )
-        throw MASA_EXCEPTION( tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).toStdString() );
 
     switch( indirect )
     {
@@ -540,7 +540,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input )
     std::string protection = input.attribute< std::string >( "protection" );
     auto itAttrition = std::find_if( attritions_.begin(), attritions_.end(), helpers::AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
-        throw MASA_EXCEPTION( tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     (*itAttrition)->ReadArchive( input );
 }
 
@@ -553,7 +553,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& inpu
     std::string material = input.attribute< std::string >( "material-type" );
     auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        throw MASA_EXCEPTION( tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
 }
 
@@ -572,7 +572,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     {
         nType_ = ENT_Tr::ConvertToAmmunitionType( type );
         if( nType_ == E_AmmunitionType( -1 ) )
-            throw MASA_EXCEPTION( tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).toStdString() );
     }
 
     if( input.has_child( "illuminating" ) )
@@ -809,7 +809,7 @@ void ADN_Resources_Data::ReadResource( xml::xistream& input )
     std::string category = input.attribute< std::string >( "category" );
     E_DotationFamily nResourceType = ENT_Tr::ConvertToDotationFamily( category );
     if( nResourceType == -1 )
-        throw MASA_EXCEPTION( tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
     resources_.at( nResourceType )->ReadArchive( input, *translations_ );
 }
 

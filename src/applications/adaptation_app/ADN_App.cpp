@@ -175,7 +175,7 @@ int ADN_App::Run()
     catch( const std::exception& e )
     {
         if( outputFile.IsEmpty() && newFile.IsEmpty() )
-            QMessageBox::critical( mainWindow_.get(), tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
+            QMessageBox::critical( mainWindow_.get(), tools::translate( "ADN_App", "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
         {
             std::stringstream ss;

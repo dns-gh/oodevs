@@ -61,7 +61,7 @@ void ADN_Armors_Data::ArmorInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
-        throw MASA_EXCEPTION( tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Armors_Data", "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toStdString() );
 
     input >> xml::start( "neutralization" )
         >> xml::attribute( "average-time", neutralizationAverageTime_ )
@@ -111,7 +111,7 @@ void ADN_Armors_Data::ArmorInfos::FixConsistency()
 void ADN_Armors_Data::ArmorInfos::WriteArchive( xml::xostream& output ) const
 {
     if( strName_.GetData().empty() )
-        throw MASA_EXCEPTION( tr( "Categories - Duplicated armor type name" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Armors_Data", "Categories - Duplicated armor type name" ).toStdString() );
 
     output << xml::start( "protection" )
         << xml::attribute( "name", *this )
@@ -152,8 +152,6 @@ ADN_Armors_Data::ArmorInfos* ADN_Armors_Data::ArmorInfos::CreateCopy()
         pCopy->vAttritionEffects_.AddItem( *it );
     return pCopy;
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Armors_Data constructor
