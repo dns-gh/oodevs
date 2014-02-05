@@ -994,7 +994,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation>Ajouter une protection acrive</translation>
+        <translation>Ajouter une protection active</translation>
     </message>
     <message>
         <source>Remove active protections</source>
