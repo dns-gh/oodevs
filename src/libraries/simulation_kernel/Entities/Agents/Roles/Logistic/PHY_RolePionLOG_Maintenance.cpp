@@ -187,33 +187,20 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
 
 namespace
 {
-    struct AvailableHaulerComputer : OnComponentFunctor_ABC
+    struct ComponentFunctor : OnComponentFunctor_ABC
     {
         template< typename Checker >
-        AvailableHaulerComputer( const Checker& checker,
-            const PHY_ComposanteTypePion* type, double carriedWeight )
-            : checker_       ( checker )
-            , type_          ( type )
-            , carriedWeight_ ( carriedWeight )
-            , score_         ( std::numeric_limits< double >::max() )
-            , selectedHauler_( 0 )
+        ComponentFunctor( const Checker& checker )
+            : checker_  ( checker )
+            , component_( 0 )
         {}
         void operator()( PHY_ComposantePion& component )
         {
-            if( type_ && component.GetType() != *type_ || !checker_( component ) )
-                return;
-            const double newScore = component.GetType().GetHaulerWeightCapacity() - carriedWeight_;
-            if( newScore < score_ )
-            {
-                score_ = newScore;
-                selectedHauler_ = &component;
-            }
+            if( checker_( component ) )
+                component_ = &component;
         }
         std::function< bool( const PHY_ComposantePion& component ) > checker_;
-        const PHY_ComposanteTypePion* type_;
-        const double carriedWeight_;
-        double score_;
-        PHY_ComposantePion* selectedHauler_;
+        PHY_ComposantePion* component_;
     };
 }
 
@@ -223,13 +210,20 @@ namespace
 // -----------------------------------------------------------------------------
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& carried, const PHY_ComposanteTypePion* type ) const
 {
-    AvailableHaulerComputer functor( [&]( const PHY_ComposantePion& component )
+    double score = std::numeric_limits< double >::max();
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component ) -> bool
     {
-        return component.CanHaul1( carried );
-    }, type, carried.GetWeight() );
+        if( type && component.GetType() != *type || !component.CanHaul1( carried ) )
+            return false;
+        const double newScore = component.GetType().GetHaulerWeightCapacity() - carried.GetWeight();
+        if( newScore >= score )
+            return false;
+        score = newScore;
+        return true;
+    } );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *componentComputer );
-    return functor.selectedHauler_;
+    return functor.component_;
 }
 
 // -----------------------------------------------------------------------------
@@ -269,28 +263,15 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     return nNbrAvailableAllowedToWork;
 }
 
-namespace
-{
-    struct DiagnoserFinder : ComponentPredicate_ABC
-    {
-        explicit DiagnoserFinder( const PHY_ComposanteTypePion* type )
-            : type_( type )
-        {}
-        virtual bool operator() ( const PHY_ComposantePion& composante )
-        {
-            return composante.CanRepair() && (!type_ || composante.GetType() == *type_);
-        }
-        const PHY_ComposanteTypePion* type_;
-    };
-}
-
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PHY_ComposanteTypePion* type ) const
 {
-    DiagnoserFinder predicate( type );
-    GetComponentFunctor functor( predicate );
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component )
+    {
+        return component.CanRepair() && (!type || component.GetType() == *type);
+    } );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
-    return functor.result_;
+    return functor.component_;
 }
 
 // -----------------------------------------------------------------------------
