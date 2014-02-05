@@ -172,10 +172,8 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
 void PHY_MaintenanceTransportConsign::ResetCarrier()
 {
     if( pCarrier_ )
-    {
         GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-        pCarrier_ = 0;
-    }
+    pCarrier_ = 0;
 }
 
 // -----------------------------------------------------------------------------
