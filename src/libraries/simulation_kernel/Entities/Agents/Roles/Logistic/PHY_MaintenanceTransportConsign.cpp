@@ -362,22 +362,6 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
         throw MASA_EXCEPTION( "transport consign not in a waiting state" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter
-// Created: SLI 2014-01-30
-// -----------------------------------------------------------------------------
-void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equipmentType )
-{
-    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
-    PHY_ComposantePion* carrier = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), equipmentType );
-    if( !carrier )
-        throw MASA_EXCEPTION( "invalid equipment type identifier" );
-    component_ = carrier;
-    GetPionMaintenance().StartUsingForLogistic( *component_ );
-    EnterStateCarrierGoingTo();
-}
-
 void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 {
     const auto state = GetState();
@@ -385,6 +369,22 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
         state != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         throw MASA_EXCEPTION( "transport consign not in a waiting state" );
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type )
+{
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+        throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
+    PHY_ComposantePion* carrier = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
+    if( !carrier )
+        throw MASA_EXCEPTION( "invalid equipment type identifier" );
+    component_ = carrier;
+    GetPionMaintenance().StartUsingForLogistic( *component_ );
+    EnterStateCarrierGoingTo();
 }
 
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )

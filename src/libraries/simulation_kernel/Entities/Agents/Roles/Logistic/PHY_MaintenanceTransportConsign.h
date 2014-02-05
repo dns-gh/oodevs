@@ -43,8 +43,8 @@ public:
     bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
-    virtual void SelectMaintenanceTransporter( uint32_t equipmentType );
     virtual void TransferToLogisticSuperior();
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type );
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 

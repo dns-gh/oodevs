@@ -2150,10 +2150,11 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     const auto& params = message.parameters();
     protocol::CheckCount( params, 2 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
-    const auto equipmentTypeId = protocol::GetIdentifier( params, 1 );
+    const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
+    protocol::Check( equipment, "invalid component type identifier" );
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
-        request.SelectMaintenanceTransporter( equipmentTypeId );
+        request.SelectMaintenanceTransporter( *equipment );
     } );
 }
 

@@ -64,8 +64,8 @@ public:
     void FinishSuccessfullyWithoutDelay();
 
     virtual void SelectNewState() = 0;
-    virtual void SelectMaintenanceTransporter( uint32_t equipmentType ) = 0;
     virtual void TransferToLogisticSuperior() = 0;
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type ) = 0;
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type ) = 0;
 
     void ClearConsign();
