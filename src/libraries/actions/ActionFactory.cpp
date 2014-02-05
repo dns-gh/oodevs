@@ -918,6 +918,35 @@ Action_ABC* ActionFactory::CreateSelectNewLogisticState( unsigned int consignId 
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateTransferToLogisticSuperior
+// Created: ABR 2014-01-29
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateTransferToLogisticSuperior( unsigned int consignId ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "transfer_to_logistic_superior" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectMaintenanceTransporter
+// Created: ABR 2014-01-29
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "select_maintenance_transporter" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

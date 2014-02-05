@@ -10,8 +10,12 @@
 #ifndef __MaintenanceRepairersListView_h_
 #define __MaintenanceRepairersListView_h_
 
-#include "ResourcesListView_ABC.h"
-#include "clients_kernel/MaintenanceStates_ABC.h"
+#include "LogisticResourcesListView_ABC.h"
+
+namespace kernel
+{
+    class MaintenanceStates_ABC;
+}
 
 // =============================================================================
 /** @class  MaintenanceRepairersListView
@@ -19,7 +23,7 @@
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class MaintenanceRepairersListView : public ResourcesListView_ABC< kernel::MaintenanceStates_ABC >
+class MaintenanceRepairersListView : public LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -31,9 +35,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const kernel::MaintenanceStates_ABC& states ) const;
     //@}
 };

@@ -10,8 +10,9 @@
 #ifndef __MedicalCollectAmbulancesListView_h_
 #define __MedicalCollectAmbulancesListView_h_
 
-#include "ResourcesListView_ABC.h"
-#include "gaming/MedicalStates.h"
+#include "LogisticResourcesListView_ABC.h"
+
+class MedicalStates;
 
 // =============================================================================
 /** @class  MedicalCollectAmbulancesListView
@@ -19,7 +20,7 @@
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class MedicalCollectAmbulancesListView : public ResourcesListView_ABC< MedicalStates >
+class MedicalCollectAmbulancesListView : public LogisticResourcesListView_ABC< MedicalStates >
 {
 public:
     //! @name Constructors/Destructor
@@ -31,9 +32,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const MedicalStates& a );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const MedicalStates& states ) const;
     //@}
 };

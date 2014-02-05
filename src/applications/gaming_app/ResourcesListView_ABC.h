@@ -26,6 +26,8 @@ namespace kernel
     class Displayer_ABC;
 }
 
+Q_DECLARE_METATYPE( const kernel::Availability* );
+
 // =============================================================================
 /** @class  ResourcesListView_ABC
     @brief  ResourcesListView_ABC
@@ -41,7 +43,9 @@ class ResourcesListView_ABC : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourcesListView_ABC( QWidget* parent, kernel::Controllers& controllers );
+             ResourcesListView_ABC( QWidget* parent,
+                                    kernel::Controllers& controllers,
+                                    bool registerInController = true );
     virtual ~ResourcesListView_ABC();
     //@}
 
@@ -50,7 +54,6 @@ protected:
     //@{
     bool ShouldUpdate( const Extension& a ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     void ResizeModelOnNewContent( int wantedSize );
     //@}
 
@@ -65,6 +68,7 @@ protected:
     void DisplaySelectionAvailabilities();
     void AddAvailability( const kernel::Entity_ABC& entity );
     virtual const std::vector< kernel::Availability >* GetAvailabilities( const Extension& ) const { return nullptr; }
+    void AddItem( int row, int column, const QString& text, const kernel::Availability& type );
     //@}
 
     //! @name Member data
@@ -75,7 +79,8 @@ private:
 protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel model_;
-    std::map< std::string, kernel::Availability > availabilities_;
+    std::vector< kernel::Availability > availabilities_;
+    bool registered_;
     //@}
 };
 
@@ -84,16 +89,21 @@ protected:
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 template< typename Extension >
-ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent, kernel::Controllers& controllers )
+ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
+                                                           kernel::Controllers& controllers,
+                                                           bool registerInController )
     : QTreeView( parent )
     , controllers_( controllers )
     , selected_( controllers )
+    , registered_( registerInController )
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     header()->setResizeMode( QHeaderView::ResizeToContents );
+    header()->setStretchLastSection( false );
     setModel( &model_ );
-    controllers_.Register( *this );
+    if( registered_ )
+        controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +113,8 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent, kern
 template< typename Extension >
 ResourcesListView_ABC<  Extension >::~ResourcesListView_ABC()
 {
-    controllers_.Unregister( *this );
+    if( registered_ )
+        controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,20 +168,6 @@ void ResourcesListView_ABC< Extension >::NotifySelected( const kernel::Entity_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourcesListView_ABC::UpdateSelected
-// Created: MMC 2012-10-02
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void ResourcesListView_ABC< Extension >::UpdateSelected( const kernel::Entity_ABC* entity )
-{
-    selected_ = entity;
-    if( !entity )
-        return;
-    if( const Extension* extension = selected_->Retrieve< Extension >() )
-        NotifyUpdated( *extension );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourcesListView_ABC::ResizeModelOnContent
 // Created: NPT 2012-10-23
 // -----------------------------------------------------------------------------
@@ -211,6 +208,18 @@ bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::E
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::AddItem
+// Created: ABR 2014-01-29
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::AddItem( int row, int column, const QString& text, const kernel::Availability& availability )
+{
+    QStandardItem* item = model_.item( row, column );
+    item->setText( text );
+    item->setData( QVariant::fromValue( &availability ), Qt::UserRole );
+}
+
+// -----------------------------------------------------------------------------
 // Name: HasRetrieveForLogistic
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
@@ -221,12 +230,14 @@ void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities()
     unsigned int index = 0;
     for( auto it = availabilities_.begin(); it != availabilities_.end(); ++it )
     {
-        model_.item( index, 0 )->setText( QString( it->first.c_str() ) );
-        model_.item( index, 1 )->setText( QString::number( it->second.total_ ) );
-        model_.item( index, 2 )->setText( QString::number( it->second.available_ ) );
-        model_.item( index, 3 )->setText( QString::number( it->second.atWork_ ) );
-        model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
-        model_.item( index, 5 )->setText( QString::number( it->second.lent_ ) );
+        if( it->type_ == 0 )
+            throw MASA_EXCEPTION( "Missing equipment type on Availability" );
+        AddItem( index, 0, QString::fromStdString( it->type_->GetName() ), *it );
+        AddItem( index, 1, QString::number( it->total_ ), *it );
+        AddItem( index, 2, QString::number( it->available_ ), *it );
+        AddItem( index, 3, QString::number( it->atWork_ ), *it );
+        AddItem( index, 4, QString::number( it->atRest_ ), *it );
+        AddItem( index, 5, QString::number( it->lent_ ), *it );
         ++index;
     }
 }
@@ -243,7 +254,7 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
         const std::vector< kernel::Availability >* curAvailabilies = GetAvailabilities( *pState );
         if( curAvailabilies )
             for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
-                availabilities_[ it->type_->GetName() ] += *it;
+                availabilities_.push_back( *it );
     }
 }
 

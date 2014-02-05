@@ -29,6 +29,7 @@ namespace gui
     class RichCheckBox;
 }
 
+class LogisticSelectionDialog_ABC;
 class LogisticsRequestsTable;
 class LogisticsRequestsDetailsTable;
 class SimulationController;
@@ -70,6 +71,7 @@ public slots:
     void OnLinkClicked( const QString& url, const QModelIndex& index );
     void OnRequestsTableSelected( const QModelIndex& current, const QModelIndex& previous );
     void OnCompletedFilter();
+    void OnSelectionDialogRequested( const LogisticsConsign_ABC& consign ) const;
     //@}
 
 protected:
@@ -113,6 +115,7 @@ protected:
     bool needUpdating_;
     const LogisticsConsign_ABC* requestSelected_;
     unsigned int lastRequestId_;
+    std::unique_ptr< LogisticSelectionDialog_ABC > selectionDialog_;
     //@}
 };
 

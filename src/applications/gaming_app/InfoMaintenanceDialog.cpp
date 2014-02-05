@@ -15,6 +15,7 @@
 #include "MaintenanceRepairersListView.h"
 
 #include "clients_gui/LogisticBase.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogisticHelpers.h"

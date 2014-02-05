@@ -28,16 +28,17 @@ class Availability
 public:
     //! @name Constructors/Destructor
     //@{
-        Availability();
-        template< typename Message >
-        Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-                : type_     ( & resolver.Get( message.equipment().id() ) )
-                , total_    ( message.total() )
-                , available_( message.available() )
-                , atWork_   ( message.working() )
-                , atRest_   ( message.has_resting() ? message.resting() : 0 )
-                , lent_     ( message.has_lent() ? message.lent() : 0 )
-             {};
+             Availability();
+    explicit Availability( const Availability& other );
+    template< typename Message >
+    Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
+        : type_     ( & resolver.Get( message.equipment().id() ) )
+        , total_    ( message.total() )
+        , available_( message.available() )
+        , atWork_   ( message.working() )
+        , atRest_   ( message.has_resting() ? message.resting() : 0 )
+        , lent_     ( message.has_lent() ? message.lent() : 0 )
+        {};
     virtual ~Availability();
     //@}
 

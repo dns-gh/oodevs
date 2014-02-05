@@ -85,7 +85,7 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
         dispoRepairers_.push_back( kernel::Availability( resolver_, message.repairers().elem( i ) ) );
 
     controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
-    controller_.Update( *this );
+    controller_.Update( static_cast< const MaintenanceStates_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
