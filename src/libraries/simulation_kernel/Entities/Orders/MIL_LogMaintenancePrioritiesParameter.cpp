@@ -34,8 +34,8 @@ MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( co
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        sword::Id nCompTypeMosID = asn.elem(i);
-        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
+        const auto type = asn.elem( i ).id();
+        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( type );
         if( !pType )
         {
             priorities_.clear();

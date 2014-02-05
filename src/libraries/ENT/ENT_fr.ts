@@ -1122,15 +1122,19 @@
     </message>
     <message>
         <source>Transfer To Logistic Superior</source>
-        <translation>Transfère au supérieur logistique</translation>
+        <translation>Transférer au supérieur logistique</translation>
     </message>
     <message>
         <source>Select Maintenance Transporter</source>
-        <translation>Maintenance - Selection d&apos;un remorqueur</translation>
+        <translation>Sélectionner un remorqueur</translation>
     </message>
     <message>
         <source>Select logistic automated resolution</source>
         <translation>Passer automatiquement à l&apos;étape logistique suivante</translation>
+    </message>
+    <message>
+        <source>Select Diagnosis Team</source>
+        <translation>Sélectionner une équipe de diagnostique</translation>
     </message>
 </context>
 <context>

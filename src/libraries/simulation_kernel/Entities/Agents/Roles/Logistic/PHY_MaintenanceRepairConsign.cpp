@@ -305,3 +305,8 @@ bool PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( uint32_t /*equi
 {
     return false;
 }
+
+void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& /*type*/ )
+{
+    throw MASA_EXCEPTION( "cannot select a diagnosis team for a repair consign" );
+}

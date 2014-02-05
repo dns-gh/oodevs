@@ -1861,7 +1861,7 @@ namespace
         tools::Map< const PHY_ComposanteTypePion*, unsigned > result;
         for( auto it = transporters.begin(); it != transporters.end(); ++it )
         {
-            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype() );
+            const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( it->equipmenttype().id() );
             protocol::Check( type, "invalid transporter" );
             const unsigned quantity = it->quantity();
             protocol::Check( quantity > 0, "transporter quantity must be positive" );
@@ -2106,10 +2106,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveSelectNewLogisticState
-// Created: MCO 2014-01-30
-// -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicAction& msg )
 {
     const auto& params = msg.parameters();
@@ -2123,9 +2119,23 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
+    {
         if( !request.TransferToLogisticSuperior() )
             throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
+    } );
+}
+
+void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& message )
+{
+    const auto& params = message.parameters();
+    protocol::CheckCount( params, 2 );
+    const auto requestId = protocol::GetIdentifier( params, 0 );
+    const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
+    protocol::Check( equipment, "invalid component type identifier" );
+    ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
+    {
+        request.SelectDiagnosisTeam( *equipment );
     } );
 }
 

@@ -202,6 +202,7 @@ public:
     void OnReceiveCreateFireOrderOnLocation   ( const sword::MagicAction&          message );
     void OnReceiveSelectNewLogisticState      ( const sword::MagicAction&          message );
     void OnReceiveSelectMaintenanceTransporter( const sword::MagicAction&          message );
+    void OnReceiveSelectDiagnosisTeam         ( const sword::MagicAction&          message );
     void OnReceiveTransferToLogisticSuperior  ( const sword::MagicAction&          message );
     void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&          message, sword::MagicActionAck& ack );

@@ -66,6 +66,7 @@ public:
     virtual void SelectNewState() = 0;
     virtual bool SelectMaintenanceTransporter( uint32_t equipmentType ) = 0;
     virtual bool TransferToLogisticSuperior() = 0;
+    virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type ) = 0;
 
     void ClearConsign();
     //@}

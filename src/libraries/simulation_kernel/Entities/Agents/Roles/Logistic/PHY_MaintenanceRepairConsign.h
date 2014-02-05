@@ -40,6 +40,7 @@ public:
     virtual void SelectNewState();
     virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
     virtual bool TransferToLogisticSuperior();
+    virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 
 private:

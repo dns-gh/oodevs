@@ -96,7 +96,5 @@ void boost::archive::load( MIL_CheckPointInArchive& a, const PHY_ComposanteType_
 {
     int id;
     a >> id;
-    sword::Id type;
-    type.set_id( id );
-    t = PHY_ComposanteTypePion::Find( type );
+    t = PHY_ComposanteTypePion::Find( id );
 }

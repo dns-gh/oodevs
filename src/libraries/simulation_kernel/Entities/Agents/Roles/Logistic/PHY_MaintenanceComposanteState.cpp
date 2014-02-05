@@ -357,3 +357,8 @@ bool PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( uint32_t equi
 {
     return pConsign_->SelectMaintenanceTransporter( equipmentType );
 }
+
+void PHY_MaintenanceComposanteState::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
+{
+    pConsign_->SelectDiagnosisTeam( type );
+}
