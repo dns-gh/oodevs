@@ -59,9 +59,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 
     QHBoxLayout* buttonsLayout = new QHBoxLayout();
     buttonsLayout->addStretch( 1 );
-    buttonsLayout->addWidget( closeButton );
-    buttonsLayout->addWidget( resetButton_ );
     buttonsLayout->addWidget( validateButton_ );
+    buttonsLayout->addWidget( resetButton_ );
+    buttonsLayout->addWidget( closeButton );
 
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 0, 5, "UnitStateDialog_VBoxLayout_MainLayout" );
     mainLayout->setMargin( 5 );
