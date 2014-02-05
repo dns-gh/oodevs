@@ -407,5 +407,5 @@ void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteT
     if( !component_ )
         throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
     GetPionMaintenance().StartUsingForLogistic( *component_ );
-    EnterStateDiagnosing();
+    next_ = [&]() { EnterStateDiagnosing(); };
 }
