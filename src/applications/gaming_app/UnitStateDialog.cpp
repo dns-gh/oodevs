@@ -258,5 +258,5 @@ void UnitStateDialog::OnExportClicked()
                        views,
                        names,
                        QColor( 200, 200, 200 ),
-                       QList< QColor >() << QColor( 100, 100, 100 ) );
+                       QList< QColor >() << QColor( 175, 175, 175 ) );
 }
