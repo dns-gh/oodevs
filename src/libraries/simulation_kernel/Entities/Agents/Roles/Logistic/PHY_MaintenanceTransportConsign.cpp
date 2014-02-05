@@ -33,7 +33,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
-    , pCarrier_                 ( 0 )
+    , component_                ( 0 )
     , searchForUpperLevelDone_  ( false )
 {
     const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
@@ -50,7 +50,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC&
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
     : PHY_MaintenanceConsign_ABC()
-    , pCarrier_                 ( 0 )
+    , component_                ( 0 )
     , searchForUpperLevelDone_  ( false )
 {
     // NOTHING
@@ -62,7 +62,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::~PHY_MaintenanceTransportConsign()
 {
-    ResetCarrier();
+    ResetComponent();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ template< typename Archive >
 void PHY_MaintenanceTransportConsign::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_MaintenanceConsign_ABC >( *this )
-         & pCarrier_;
+         & component_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void PHY_MaintenanceTransportConsign::serialize( Archive& file, const unsigned i
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::Cancel()
 {
-    ResetCarrier();
+    ResetComponent();
     PHY_MaintenanceConsign_ABC::Cancel();
 }
 
@@ -93,12 +93,12 @@ void PHY_MaintenanceTransportConsign::Cancel()
 bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
 {
     assert( pComposanteState_ );
-    assert( !pCarrier_ );
+    assert( !component_ );
 
     ResetTimer( 0 );
-    pCarrier_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
-    if( pCarrier_ )
-        GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType() );
+    if( component_ )
+        GetPionMaintenance().StartUsingForLogistic( *component_ );
     else
     {
         // Find alternative transport unit
@@ -114,7 +114,7 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
             }
         }
     }
-    return pCarrier_ != 0;
+    return component_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ void PHY_MaintenanceTransportConsign::DoWaitingForCarrierSelection()
 bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
 {
     assert( pComposanteState_ );
-    assert( !pCarrier_ );
+    assert( !component_ );
 
     searchForUpperLevelDone_ = true;
     ResetTimer( 0 );
@@ -160,7 +160,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
 void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
 {
     assert( pComposanteState_ );
-    assert( !pCarrier_ );
+    assert( !component_ );
 
     if( IsManualMode() )
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection );
@@ -169,11 +169,11 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForCarrier()
     ResetTimer( 0 );
 }
 
-void PHY_MaintenanceTransportConsign::ResetCarrier()
+void PHY_MaintenanceTransportConsign::ResetComponent()
 {
-    if( pCarrier_ )
-        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
-    pCarrier_ = 0;
+    if( component_ )
+        GetPionMaintenance().StopUsingForLogistic( *component_ );
+    component_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,6 @@ void PHY_MaintenanceTransportConsign::ResetCarrier()
 void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 {
     assert( pComposanteState_ );
-    assert( !pCarrier_ );
 
     SetState( sword::LogMaintenanceHandlingUpdate::moving_to_supply );
     ResetTimer( pComposanteState_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
@@ -197,10 +196,10 @@ void PHY_MaintenanceTransportConsign::EnterStateGoingFrom()
 void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 {
     assert( pComposanteState_ );
-    assert( pCarrier_ );
+    assert( component_ );
 
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
-    ResetTimer( pCarrier_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() ) );
+    ResetTimer( component_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetComposantePosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,10 +209,10 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingTo()
 void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
 {
     assert( pComposanteState_ );
-    assert( pCarrier_ );
+    assert( component_ );
 
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_loading );
-    ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerLoadingTime() ));
+    ResetTimer( static_cast< int >( component_->GetType().GetHaulerLoadingTime() ));
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -224,10 +223,10 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
 void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 {
     assert( pComposanteState_ );
-    assert( pCarrier_ );
+    assert( component_ );
 
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_moving_back );
-    ResetTimer( pCarrier_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
+    ResetTimer( component_->ApproximateTravelTime( pComposanteState_->GetComposantePosition(), pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,15 +236,15 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierGoingFrom()
 void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
 {
     assert( pComposanteState_ );
-    assert( pCarrier_ );
+    assert( component_ );
 
     SetState( sword::LogMaintenanceHandlingUpdate::transporter_unloading );
-    ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerUnloadingTime() ));
+    ResetTimer( static_cast< int >( component_->GetType().GetHaulerUnloadingTime() ) );
 }
 
 void PHY_MaintenanceTransportConsign::EnterStateWaitingForDiagnosisTeam()
 {
-    ResetCarrier();
+    ResetComponent();
     assert( pComposanteState_ );
     if( !pComposanteState_->NeedDiagnosis() )
         ChooseStateAfterDiagnostic();
@@ -256,10 +255,10 @@ void PHY_MaintenanceTransportConsign::EnterStateWaitingForDiagnosisTeam()
     }
     else
     {
-        pCarrier_ = GetPionMaintenance().GetAvailableDiagnoser();
-        if( pCarrier_ )
+        component_ = GetPionMaintenance().GetAvailableDiagnoser();
+        if( component_ )
         {
-            GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+            GetPionMaintenance().StartUsingForLogistic( *component_ );
             EnterStateDiagnosing();
         }
     }
@@ -281,7 +280,7 @@ void PHY_MaintenanceTransportConsign::EnterStateDiagnosing()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
 {
-    ResetCarrier();
+    ResetComponent();
     assert( pComposanteState_ );
     pComposanteState_->NotifyDiagnosed();
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
@@ -384,8 +383,8 @@ bool PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equ
     PHY_ComposantePion* carrier = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), equipmentType );
     if( !carrier )
         throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid equipment type identifier" );
-    pCarrier_ = carrier;
-    GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    component_ = carrier;
+    GetPionMaintenance().StartUsingForLogistic( *component_ );
     EnterStateCarrierGoingTo();
     return true;
 }
@@ -404,9 +403,9 @@ void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteT
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
         throw MASA_EXCEPTION( "transport consign not in a waiting for diagnosis team selection state" );
-    pCarrier_ = GetPionMaintenance().GetAvailableDiagnoser( type );
-    if( !pCarrier_ )
+    component_ = GetPionMaintenance().GetAvailableDiagnoser( type );
+    if( !component_ )
         throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
-    GetPionMaintenance().StartUsingForLogistic( *pCarrier_ );
+    GetPionMaintenance().StartUsingForLogistic( *component_ );
     EnterStateDiagnosing();
 }

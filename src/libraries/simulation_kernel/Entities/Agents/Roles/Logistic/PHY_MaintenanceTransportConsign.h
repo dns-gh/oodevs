@@ -68,13 +68,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ResetCarrier();
+    void ResetComponent();
     //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_ComposantePion* pCarrier_;
+    PHY_ComposantePion* component_;
     bool searchForUpperLevelDone_;
     std::function< void() > next_;
     //@}
