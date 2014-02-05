@@ -392,7 +392,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to save &apos;%1&apos;.Close any programs that might be using the file and try again</source>
+        <source>Unable to save &apos;%1&apos;. Close any programs that might be using the file and try again</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
