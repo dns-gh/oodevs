@@ -70,8 +70,8 @@ public:
     const PHY_MaintenanceConsign_ABC* GetConsign() const;
 
     void SelectNewState();
-    bool SelectMaintenanceTransporter( uint32_t equipmentType );
-    bool TransferToLogisticSuperior();
+    void SelectMaintenanceTransporter( uint32_t equipmentType );
+    void TransferToLogisticSuperior();
     void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 

@@ -43,8 +43,8 @@ public:
     bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
-    virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
-    virtual bool TransferToLogisticSuperior();
+    virtual void SelectMaintenanceTransporter( uint32_t equipmentType );
+    virtual void TransferToLogisticSuperior();
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 
@@ -76,6 +76,7 @@ private:
     //@{
     PHY_ComposantePion* component_;
     bool searchForUpperLevelDone_;
+    bool forceTransferToLogisticSuperior_;
     std::function< void() > next_;
     //@}
 };

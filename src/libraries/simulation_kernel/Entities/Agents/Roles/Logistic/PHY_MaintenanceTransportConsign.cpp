@@ -23,7 +23,6 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
-#include "Tools/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 
@@ -376,27 +375,25 @@ void PHY_MaintenanceTransportConsign::SelectNewState()
 // Name: PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equipmentType )
+void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( uint32_t equipmentType )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        return false;
+        throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
     PHY_ComposantePion* carrier = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), equipmentType );
     if( !carrier )
-        throw MASA_BADPARAM_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter, "invalid equipment type identifier" );
+        throw MASA_EXCEPTION( "invalid equipment type identifier" );
     component_ = carrier;
     GetPionMaintenance().StartUsingForLogistic( *component_ );
     EnterStateCarrierGoingTo();
-    return true;
 }
 
-bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
+void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 {
-    sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus state = GetState();
+    const auto state = GetState();
     if( state != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection &&
         state != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        return false;
+        throw MASA_EXCEPTION( "transport consign not in a waiting state" );
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels ); };
-    return true;
 }
 
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )

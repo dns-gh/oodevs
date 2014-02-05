@@ -293,17 +293,18 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
         next_ = [&]() { EnterStateWaitingForRepairer(); };
 }
 
-bool PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
+void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
 {
-    return false;
+    throw MASA_EXCEPTION( "cannot treansfer a repair consign to superior" );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( uint32_t /*equipmentType*/ )
+void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( uint32_t /*equipmentType*/ )
 {
-    return false;
+    throw MASA_EXCEPTION( "cannot select a transporter for a repair consign" );
 }
 
 void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& /*type*/ )
