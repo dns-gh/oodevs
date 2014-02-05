@@ -705,11 +705,13 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 	d := client.Model.GetData()
 	unit := getSomeUnitByName(c, d, "Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	bldId := getSomeFormationByName(c, d, "BLD").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	bld := swapi.MakeFormationTasker(bldId)
 	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, bldId)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
 		MaintenanceCreateChecker{},
@@ -732,11 +734,23 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
 		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
 		&MaintenanceUpdateChecker{"transporter_loading", bld},
 		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
 		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
