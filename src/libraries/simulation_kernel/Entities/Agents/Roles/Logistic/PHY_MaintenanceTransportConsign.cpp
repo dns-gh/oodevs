@@ -383,7 +383,7 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
     if( !component_ )
         throw MASA_EXCEPTION( "invalid equipment type identifier" );
     GetPionMaintenance().StartUsingForLogistic( *component_ );
-    EnterStateCarrierGoingTo();
+    next_ = [&]() { EnterStateCarrierGoingTo(); };
 }
 
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
