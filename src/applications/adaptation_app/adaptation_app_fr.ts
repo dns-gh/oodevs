@@ -2357,7 +2357,7 @@ PNG (*.png)
     </message>
     <message>
         <source>&apos;$&apos; character if forbidden in image&apos;s path.</source>
-        <translation>Le caractère &apos;$&apos; est interdit dnas le chemin d&apos;une image.</translation>
+        <translation>Le caractère &apos;$&apos; est interdit dans le chemin d&apos;une image.</translation>
     </message>
     <message>
         <source>Existing file found</source>
@@ -5594,7 +5594,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Duplicate translation key with different translation values</source>
-        <translation>Clef de traduction dupliquées avec des valeurs de traduction differentes</translation>
+        <translation>Clef de traduction dupliquée avec des valeurs de traduction différentes</translation>
     </message>
 </context>
 <context>
@@ -6275,7 +6275,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Empty weapon or ammunition. Please ensure that both are filled.</source>
-        <translation>Arme ou munition non spécifiée. Assurez-vous que les deux sont renseignées.</translation>
+        <translation>Arme ou munition non spécifiée. Assurez-vous que les deux soient renseignées.</translation>
     </message>
 </context>
 <context>
