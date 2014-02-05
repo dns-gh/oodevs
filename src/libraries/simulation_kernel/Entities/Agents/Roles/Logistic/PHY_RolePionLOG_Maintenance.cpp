@@ -278,15 +278,16 @@ PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PH
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableRepairer
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY_Breakdown& breakdown ) const
+PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableRepairer( const PHY_Breakdown& breakdown, const PHY_ComposanteTypePion* type ) const
 {
-    PHY_ComposantePredicate1< PHY_Breakdown > predicate( &PHY_ComposantePion::CanRepair, breakdown );
-    GetComponentFunctor functor( predicate );
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component )
+    {
+        return component.CanRepair( breakdown ) && ( !type || component.GetType() == *type );
+    } );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
-    PHY_ComposantePion* pRepairer = functor.result_;
-    if( pRepairer && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
-        return pRepairer;
+    if( functor.component_ && GetNbrAvailableRepairersAllowedToWork( breakdown ) > 0 )
+        return functor.component_;
     return 0;
 }
 
