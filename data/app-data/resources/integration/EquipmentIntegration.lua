@@ -722,7 +722,7 @@ end
 
 --- Instantaneously decontaminates this entity.
 -- This method can only be called by an NBC agent.
--- @return Boolean, true if the method can be called, false otherwise
+-- @return Boolean, true if the unit can self-decontaminate, false otherwise
 integration.selfDecontaminate = function()
     if DEC_Agent_SeDecontaminer then
         DEC_Agent_SeDecontaminer()
