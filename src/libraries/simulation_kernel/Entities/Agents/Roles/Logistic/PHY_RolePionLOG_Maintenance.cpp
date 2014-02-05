@@ -282,11 +282,8 @@ namespace
 {
     struct DiagnoserFinder : ComponentPredicate_ABC
     {
-        DiagnoserFinder()
-            : type_( 0 )
-        {}
-        explicit DiagnoserFinder( const PHY_ComposanteTypePion& type )
-            : type_( &type )
+        explicit DiagnoserFinder( const PHY_ComposanteTypePion* type )
+            : type_( type )
         {}
         virtual bool operator() ( const PHY_ComposantePion& composante )
         {
@@ -296,16 +293,7 @@ namespace
     };
 }
 
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser() const
-{
-    DiagnoserFinder predicate;
-    GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
-    return functor.result_;
-}
-
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PHY_ComposanteTypePion& type ) const
+PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PHY_ComposanteTypePion* type ) const
 {
     DiagnoserFinder predicate( type );
     GetComponentFunctor functor( predicate );
