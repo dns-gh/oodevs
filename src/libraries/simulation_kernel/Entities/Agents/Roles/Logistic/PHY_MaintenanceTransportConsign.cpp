@@ -405,7 +405,7 @@ bool PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        throw MASA_EXCEPTION( "transport consign not in a waiting state for diagnosis team selection state" );
+        throw MASA_EXCEPTION( "transport consign not in a waiting for diagnosis team selection state" );
     pCarrier_ = GetPionMaintenance().GetAvailableDiagnoser( type );
     if( !pCarrier_ )
         throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
