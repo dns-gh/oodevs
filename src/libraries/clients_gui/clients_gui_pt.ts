@@ -383,6 +383,17 @@
     </message>
 </context>
 <context>
+    <name>XlsHelpers</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to save &apos;%1&apos;.Close any programs that might be using the file and try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>
