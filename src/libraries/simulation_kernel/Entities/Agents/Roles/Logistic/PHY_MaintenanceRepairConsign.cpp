@@ -184,6 +184,22 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection
+// Created: ABR 2014-02-04
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection()
+{
+    assert( pComposanteState_ );
+    if( IsManualMode() )
+    {
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection );
+        ResetTimer( 0 );
+    }
+    else
+        EnterStateWaitingForRepairer();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -204,7 +220,6 @@ void PHY_MaintenanceRepairConsign::EnterStateRepairing()
     SetState( sword::LogMaintenanceHandlingUpdate::repairing );
     ResetTimer( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar
@@ -227,9 +242,14 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 // -----------------------------------------------------------------------------
 bool PHY_MaintenanceRepairConsign::Update()
 {
+    if( next_ )
+    {
+        next_();
+        next_ = 0;
+        return false;
+    }
     if( DecrementTimer() )
         return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
-
     switch( GetState() )
     {
         case sword::LogMaintenanceHandlingUpdate::waiting_for_transporter:
@@ -238,11 +258,15 @@ bool PHY_MaintenanceRepairConsign::Update()
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_parts:
             if( DoWaitingForParts() )
-                EnterStateWaitingForRepairer();
+                EnterStateWaitingForRepairerSelection();
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_repairer:
             if( DoWaitingForRepairer() )
                 EnterStateRepairing();
+            break;
+        case sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection:
+            if( !IsManualMode() )
+                EnterStateWaitingForRepairer();
             break;
         case sword::LogMaintenanceHandlingUpdate::repairing:
             EnterStateGoingBackToWar();
@@ -265,7 +289,8 @@ bool PHY_MaintenanceRepairConsign::Update()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::SelectNewState()
 {
-    // NOTHING
+    if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        next_ = [&]() { EnterStateWaitingForRepairer(); };
 }
 
 bool PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()

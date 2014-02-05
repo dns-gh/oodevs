@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -246,4 +247,14 @@ void PHY_MaintenanceConsign_ABC::ClearConsign()
     if( pComposanteState_ )
         const_cast< PHY_ComposantePion& >( pComposanteState_->GetComposante() ).DeleteMaintenanceState();
     pComposanteState_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::IsManualMode
+// Created: SLI 2014-01-30
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceConsign_ABC::IsManualMode() const
+{
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
+    return pLogisticManager && pLogisticManager->IsMaintenanceManual();
 }

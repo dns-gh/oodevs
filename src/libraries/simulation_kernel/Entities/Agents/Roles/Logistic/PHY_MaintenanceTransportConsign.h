@@ -65,11 +65,6 @@ private:
     void ChooseStateAfterDiagnostic        ();
     //@}
 
-    //! @name Helpers
-    //@{
-    bool IsManualMode() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
