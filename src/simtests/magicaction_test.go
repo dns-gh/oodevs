@@ -354,3 +354,81 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 			h.Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
 	})
 }
+
+func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
+	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+	const TRANSHeavyEquipmentTransporterSystem = 24
+
+	// error: invalid parameters count, parameters expected
+	err := client.SelectMaintenanceTransporterTest(swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be an identifier
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeEmpty(), swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem)))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: second parameter must be an identifier
+	err = client.SelectMaintenanceTransporterTest(swapi.MakeParameters(swapi.MakeIdentifier(TRANSHeavyEquipmentTransporterSystem), swapi.MakeEmpty()))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be a valid request identifier
+	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
+
+	// set automat to manual mode
+	automatLog := uint32(14)
+	err = client.LogMaintenanceSetManual(automatLog, true)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Automats[automatLog].LogMaintenanceManual
+	})
+	// trigger a breakdown
+	unit := client.Model.GetUnit(8)
+	equipmentId := uint32(39)
+	MOBBreakdown2EBEvac := int32(13)
+	equipment := swapi.EquipmentDotation{
+		Available:  1,
+		Repairable: 1,
+		Breakdowns: []int32{MOBBreakdown2EBEvac},
+	}
+	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+	var handlingId uint32
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		for _, h := range data.MaintenanceHandlings {
+			if h.Provider != nil {
+				handlingId = h.Id
+				return true
+			}
+		}
+		return false
+	})
+	// wait for state to be wait for selection
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.MaintenanceHandlings[handlingId].Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+	})
+
+	// error: second parameter is an unknown equipment type identifier
+	err = client.SelectMaintenanceTransporter(handlingId, 1000)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+
+	// error: second parameter is not an equipment type identifier managed by unit
+	err = client.SelectMaintenanceTransporter(handlingId, 57)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+
+	// error: second parameter is a valid equipment type identifier but cannot haul
+	err = client.SelectMaintenanceTransporter(handlingId, 26)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+
+	// trigger select maintenance transporter
+	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem)
+	c.Assert(err, IsNil)
+
+	// check state has changed
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.MaintenanceHandlings[handlingId].Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+	})
+}
