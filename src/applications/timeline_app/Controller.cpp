@@ -66,6 +66,8 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyPress( int ) ), this, SLOT( OnKeyPress( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+
+    ctx_->Start();
 }
 
 Controller::~Controller()

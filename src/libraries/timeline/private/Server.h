@@ -44,6 +44,7 @@ public:
     virtual ~Server();
 
     /// Server_ABC methods
+    virtual void Start();
     virtual void Reload();
     virtual void Load( const std::string& url );
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters );

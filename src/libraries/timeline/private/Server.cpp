@@ -90,8 +90,6 @@ Server::Server( const Configuration& cfg )
     auto widget = new Widget( *write_, logger_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
-    embedded_->Start( cfg_, uuid_ );
-    thread_.reset( new boost::thread( &Server::Run, this ) );
 }
 
 Server::~Server()
@@ -99,6 +97,12 @@ Server::~Server()
     embedded_.reset();
     thread_->interrupt();
     thread_->join();
+}
+
+void Server::Start()
+{
+    thread_.reset( new boost::thread( &Server::Run, this ) );
+    embedded_->Start( cfg_, uuid_ );
 }
 
 namespace

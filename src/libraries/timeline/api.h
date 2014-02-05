@@ -124,6 +124,8 @@ public:
              Server_ABC() {}
     virtual ~Server_ABC() {}
 
+    virtual void Start() = 0;
+
     // Public slots
 public slots:
     virtual void Reload() = 0;
