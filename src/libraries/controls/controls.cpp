@@ -30,12 +30,10 @@ using sdk::ServerCommand;
 
 namespace
 {
-    const controls::T_Logger none;
-
     typedef std::function< size_t( const char*, size_t ) > T_Writer;
 
     template< typename T >
-    size_t PackWith( const T_Writer& write, const controls::T_Logger& log, const T& src )
+    size_t PackWith( const T_Writer& write, const tic::T_Logger& log, const T& src )
     {
         if( log )
             log( src.ShortDebugString() );
@@ -48,7 +46,7 @@ namespace
     }
 
     template< typename T >
-    size_t Pack( tools::ipc::Device& device, const controls::T_Logger& log, const T& src )
+    size_t Pack( tools::ipc::Device& device, const tic::T_Logger& log, const T& src )
     {
         return PackWith( [&]( const char* data, size_t size ) {
             return device.Write( data, size );
@@ -56,7 +54,7 @@ namespace
     }
 
     template< typename T >
-    void Unpack( T& dst, const void* src, size_t size, const controls::T_Logger& log )
+    void Unpack( T& dst, const void* src, size_t size, const tic::T_Logger& log )
     {
         bip::ibufferstream stream( reinterpret_cast< const char* >( src ), size );
         dst.ParseFromIstream( &stream );
@@ -65,7 +63,7 @@ namespace
     }
 
     template< typename CMD, typename TYPE >
-    size_t PackType( tools::ipc::Device& device, const controls::T_Logger& log, TYPE type )
+    size_t PackType( tools::ipc::Device& device, const tic::T_Logger& log, TYPE type )
     {
         CMD cmd;
         cmd.set_type( type );
@@ -73,7 +71,7 @@ namespace
     }
 }
 
-size_t tic::TryResizeClient( tools::ipc::Device& device )
+size_t tic::TryResizeClient( tools::ipc::Device& device, const T_Logger& log )
 {
     // this command is called a LOTS of time, so let's avoid recreating
     // a new packet each time
@@ -82,32 +80,32 @@ size_t tic::TryResizeClient( tools::ipc::Device& device )
         cmd.set_type( sdk::CLIENT_RESIZE );
         return cmd;
     }();
-    return Pack( device, none, resize );
+    return Pack( device, log, resize );
 }
 
-size_t tic::QuitClient( tools::ipc::Device& device, int millisecs )
+size_t tic::QuitClient( tools::ipc::Device& device, const T_Logger& log, int millisecs )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_QUIT );
     return PackWith( [&]( const char* data, size_t size ){
         return device.TimedWrite( data, size, boost::posix_time::milliseconds( millisecs ) );
-    }, controls::T_Logger(), cmd );
+    }, log, cmd );
 }
 
-size_t tic::ReloadClient( tools::ipc::Device& device )
+size_t tic::ReloadClient( tools::ipc::Device& device, const T_Logger& log )
 {
-    return PackType< ClientCommand >( device, none, sdk::CLIENT_RELOAD );
+    return PackType< ClientCommand >( device, log, sdk::CLIENT_RELOAD );
 }
 
-size_t tic::LoadClient( tools::ipc::Device& device, const std::string& url )
+size_t tic::LoadClient( tools::ipc::Device& device, const T_Logger& log, const std::string& url )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_LOAD );
     cmd.set_url( url );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t controls::UpdateQuery( tools::ipc::Device& device, const std::map< std::string, std::string >& parameters )
+size_t tic::UpdateQuery( tools::ipc::Device& device, const T_Logger& log, const std::map< std::string, std::string >& parameters )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_QUERY_UPDATE );
@@ -117,12 +115,12 @@ size_t controls::UpdateQuery( tools::ipc::Device& device, const std::map< std::s
         parameter->set_key( it->first );
         parameter->set_value( it->second );
     }
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::CenterClient( tools::ipc::Device& device )
+size_t tic::CenterClient( tools::ipc::Device& device, const T_Logger& log )
 {
-    return PackType< ClientCommand >( device, none, sdk::CLIENT_CENTER );
+    return PackType< ClientCommand >( device, log, sdk::CLIENT_CENTER );
 }
 
 namespace
@@ -203,62 +201,62 @@ namespace
     }
 }
 
-size_t tic::CreateEvent( tools::ipc::Device& device, const Event& event )
+size_t tic::CreateEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_CREATE );
     SetEvent( *cmd.mutable_event(), event );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::SelectEvent( tools::ipc::Device& device, const std::string& uuid )
+size_t tic::SelectEvent( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_SELECT );
     cmd.mutable_event()->set_uuid( uuid );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::ReadEvents( tools::ipc::Device& device )
+size_t tic::ReadEvents( tools::ipc::Device& device, const T_Logger& log )
 {
-    return PackType< ClientCommand >( device, none, sdk::CLIENT_EVENT_READ_ALL );
+    return PackType< ClientCommand >( device, log, sdk::CLIENT_EVENT_READ_ALL );
 }
 
-size_t tic::ReadEvent( tools::ipc::Device& device, const std::string& uuid )
+size_t tic::ReadEvent( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_READ_ONE );
     cmd.mutable_event()->set_uuid( uuid );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::UpdateEvent( tools::ipc::Device& device, const Event& event )
+size_t tic::UpdateEvent( tools::ipc::Device& device, const T_Logger& log, const Event& event )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_UPDATE );
     SetEvent( *cmd.mutable_event(), event );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::DeleteEvent( tools::ipc::Device& device, const std::string& uuid )
+size_t tic::DeleteEvent( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENT_DELETE );
     cmd.mutable_event()->set_uuid( uuid );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::LoadEvents( tools::ipc::Device& device, const std::string& events )
+size_t tic::LoadEvents( tools::ipc::Device& device, const T_Logger& log, const std::string& events )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENTS_LOAD );
     cmd.set_data( events );
-    return Pack( device, none, cmd );
+    return Pack( device, log, cmd );
 }
 
-size_t tic::SaveEvents( tools::ipc::Device& device )
+size_t tic::SaveEvents( tools::ipc::Device& device, const T_Logger& log )
 {
-    return PackType< ClientCommand >( device, none, sdk::CLIENT_EVENTS_SAVE );
+    return PackType< ClientCommand >( device, log, sdk::CLIENT_EVENTS_SAVE );
 }
 
 void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size,

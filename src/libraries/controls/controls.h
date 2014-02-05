@@ -28,20 +28,20 @@ namespace controls
 {
     typedef std::function< void( const std::string& msg ) > T_Logger;
 
-    size_t TryResizeClient( tools::ipc::Device& device );
-    size_t QuitClient     ( tools::ipc::Device& device, int millisecs );
-    size_t ReloadClient   ( tools::ipc::Device& device);
-    size_t LoadClient     ( tools::ipc::Device& device, const std::string& url );
-    size_t UpdateQuery    ( tools::ipc::Device& device, const std::map< std::string, std::string >& query );
-    size_t CenterClient   ( tools::ipc::Device& device);
-    size_t CreateEvent    ( tools::ipc::Device& device, const Event& event );
-    size_t SelectEvent    ( tools::ipc::Device& device, const std::string& uuid );
-    size_t ReadEvents     ( tools::ipc::Device& device );
-    size_t ReadEvent      ( tools::ipc::Device& device, const std::string& uuid );
-    size_t UpdateEvent    ( tools::ipc::Device& device, const Event& event );
-    size_t DeleteEvent    ( tools::ipc::Device& device, const std::string& uuid );
-    size_t LoadEvents     ( tools::ipc::Device& device, const std::string& events );
-    size_t SaveEvents     ( tools::ipc::Device& device );
+    size_t TryResizeClient( tools::ipc::Device& device, const T_Logger& log );
+    size_t QuitClient     ( tools::ipc::Device& device, const T_Logger& log, int millisecs );
+    size_t ReloadClient   ( tools::ipc::Device& device, const T_Logger& log );
+    size_t LoadClient     ( tools::ipc::Device& device, const T_Logger& log, const std::string& url );
+    size_t UpdateQuery    ( tools::ipc::Device& device, const T_Logger& log, const std::map< std::string, std::string >& query );
+    size_t CenterClient   ( tools::ipc::Device& device, const T_Logger& log );
+    size_t CreateEvent    ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t SelectEvent    ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t ReadEvents     ( tools::ipc::Device& device, const T_Logger& log );
+    size_t ReadEvent      ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t UpdateEvent    ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t DeleteEvent    ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t LoadEvents     ( tools::ipc::Device& device, const T_Logger& log, const std::string& events );
+    size_t SaveEvents     ( tools::ipc::Device& device, const T_Logger& log );
 
     struct ClientHandler_ABC : public boost::noncopyable
     {

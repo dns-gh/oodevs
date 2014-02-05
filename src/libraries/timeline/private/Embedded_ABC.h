@@ -10,6 +10,7 @@
 #define EMBEDDED_ABC_H__
 
 #include <timeline/api.h>
+#include <functional>
 #include <QProcess>
 
 /// enable this line to enable embedded core
@@ -26,6 +27,14 @@ namespace ipc
 
 namespace timeline
 {
+namespace controls
+{
+    typedef std::function< void( const std::string& ) > T_Logger;
+}
+}
+
+namespace timeline
+{
 class Embedded_ABC : public QObject
                    , public boost::noncopyable
 {
@@ -36,7 +45,7 @@ public:
     virtual ~Embedded_ABC() {}
 
     /// Default factory
-    static std::auto_ptr< Embedded_ABC > Factory( tools::ipc::Device& device, bool external );
+    static std::auto_ptr< Embedded_ABC > Factory( tools::ipc::Device& device, const controls::T_Logger& log, bool external );
 
     /// Public methods
     virtual void Start( const Configuration& cfg, const std::string& uuid ) = 0;

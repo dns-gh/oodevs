@@ -16,10 +16,12 @@
 namespace boost
 {
     class thread;
+    class mutex;
 }
 
 namespace tools
 {
+    class Ofstream;
 namespace ipc
 {
     class Device;
@@ -76,6 +78,8 @@ public:
 private:
     void Run();
     void StartProcess();
+    void Log( const std::string& msg );
+    void Log( const std::string& msg, bool read );
 
 private slots:
     void OnError( QProcess::ProcessError error );
@@ -83,10 +87,13 @@ private slots:
 private:
     const Configuration cfg_;
     const std::string uuid_;
-    std::auto_ptr< tools::ipc::Device > write_;
-    std::auto_ptr< tools::ipc::Device > read_;
-    std::auto_ptr< Embedded_ABC > embedded_;
-    std::auto_ptr< boost::thread > thread_;
+    const std::function< void( const std::string& msg ) > logger_;
+    std::unique_ptr< boost::mutex > lock_;
+    std::unique_ptr< tools::Ofstream > log_;
+    std::unique_ptr< tools::ipc::Device > write_;
+    std::unique_ptr< tools::ipc::Device > read_;
+    std::unique_ptr< Embedded_ABC > embedded_;
+    std::unique_ptr< boost::thread > thread_;
 };
 }
 

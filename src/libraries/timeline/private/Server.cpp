@@ -13,7 +13,10 @@
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
+#include <tools/StdFileWrapper.h>
+
 #include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
@@ -31,6 +34,7 @@
 #endif
 
 using namespace timeline;
+namespace bpt = boost::posix_time;
 namespace ipc = tools::ipc;
 
 namespace
@@ -38,11 +42,12 @@ namespace
     class Widget : public QWidget
     {
     public:
-        Widget( ipc::Device& device, QWidget* parent )
+        Widget( ipc::Device& device, const controls::T_Logger& log, QWidget* parent )
             : QWidget( parent )
             , device_( device )
+            , log_   ( log )
         {
-            controls::TryResizeClient( device_ );
+            controls::TryResizeClient( device_, log_ );
         }
 
     protected:
@@ -50,7 +55,7 @@ namespace
         {
             try
             {
-                controls::TryResizeClient( device_ );
+                controls::TryResizeClient( device_, log_ );
             }
             catch( ... )
             {
@@ -61,23 +66,28 @@ namespace
 
     private:
         ipc::Device& device_;
+        const controls::T_Logger log_;
     };
 }
 
 Server::Server( const Configuration& cfg )
     : cfg_     ( cfg )
     , uuid_    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
+    , logger_  ( cfg.server_log.IsEmpty() ? controls::T_Logger() : [&]( const std::string& msg ){ Log( msg, false ); } )
+    , lock_    ( new boost::mutex() )
     , write_   ( new ipc::Device( uuid_ + "_write", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , embedded_( Embedded_ABC::Factory( *write_, cfg.external ) )
+    , embedded_( Embedded_ABC::Factory( *write_, logger_, cfg.external ).release() )
 {
+    if( !cfg_.server_log.IsEmpty() )
+        log_.reset( new tools::Ofstream( cfg_.server_log, std::ios::out | std::ios::binary ) );
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
     qRegisterMetaType< std::string >( "std::string" );
     qRegisterMetaType< Event >( "timeline::Event" );
     qRegisterMetaType< Events >( "timeline::Events" );
     qRegisterMetaType< Error >( "timeline::Error" );
     auto layout = new QVBoxLayout( cfg.widget );
-    auto widget = new Widget( *write_, cfg.widget );
+    auto widget = new Widget( *write_, logger_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
     embedded_->Start( cfg_, uuid_ );
@@ -108,80 +118,97 @@ namespace
     }
 }
 
+void Server::Log( const std::string& msg )
+{
+    boost::lock_guard< boost::mutex > lock( *lock_ );
+    if( log_ )
+        *log_ << bpt::to_simple_string( bpt::second_clock::local_time() )
+              << msg << std::endl;
+}
+
+void Server::Log( const std::string& msg, bool read )
+{
+    Log( ( read ? " read:  " : " write: " ) + msg );
+}
+
 void Server::OnError( QProcess::ProcessError error )
 {
-    qDebug() << GetError( error );
+    const auto err = GetError( error );
+    qDebug() << err;
+    Log( std::string( "error: " ) + err );
 }
 
 void Server::Reload()
 {
-    controls::ReloadClient( *write_ );
+    controls::ReloadClient( *write_, logger_ );
 }
 
 void Server::Load( const std::string& url )
 {
-    controls::LoadClient( *write_, url );
+    controls::LoadClient( *write_, logger_, url );
 }
 
 void Server::Center()
 {
-    controls::CenterClient( *write_ );
+    controls::CenterClient( *write_, logger_ );
 }
 
 void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
 {
-    controls::UpdateQuery( *write_, parameters );
+    controls::UpdateQuery( *write_, logger_, parameters );
 }
 
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    return controls::CreateEvent( *write_, event );
+    return controls::CreateEvent( *write_, logger_, event );
 }
 
 bool Server::SelectEvent( const std::string& uuid )
 {
-    return controls::SelectEvent( *write_, uuid );
+    return controls::SelectEvent( *write_, logger_, uuid );
 }
 
 bool Server::ReadEvents()
 {
-    return controls::ReadEvents( *write_ );
+    return controls::ReadEvents( *write_, logger_ );
 }
 
 bool Server::ReadEvent( const std::string& uuid )
 {
-    return controls::ReadEvent( *write_, uuid );
+    return controls::ReadEvent( *write_, logger_, uuid );
 }
 
 bool Server::UpdateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    return controls::UpdateEvent( *write_, event );
+    return controls::UpdateEvent( *write_, logger_, event );
 }
 
 bool Server::DeleteEvent( const std::string& uuid )
 {
-    return controls::DeleteEvent( *write_, uuid );
+    return controls::DeleteEvent( *write_, logger_, uuid );
 }
 
 void Server::LoadEvents( const std::string& events )
 {
-    controls::LoadEvents( *write_, events );
+    controls::LoadEvents( *write_, logger_, events );
 }
 
 void Server::SaveEvents() const
 {
-    controls::SaveEvents( *write_ );
+    controls::SaveEvents( *write_, logger_ );
 }
 
 void Server::Run()
 {
-    const controls::T_Logger none;
     try
     {
+        controls::T_Logger logger;
+        if( log_ )
+            logger = [&]( const std::string& msg ){ Log( msg, true ); };
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !thread_->interruption_requested() )
             if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
@@ -190,7 +217,7 @@ void Server::Run()
                     buffer.resize( read );
                 else
                 {
-                    controls::ParseServer( *this, &buffer[0], read, none );
+                    controls::ParseServer( *this, &buffer[0], read, logger );
                     buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
                 }
             }
