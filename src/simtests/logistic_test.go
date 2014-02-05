@@ -849,6 +849,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
+	zero := &sword.Tasker{}
 
 	SetMaintenanceManualMode(c, client, tc2Id)
 
@@ -881,6 +882,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
+		&MaintenanceUpdateChecker{"finished", zero},
 		MaintenanceDeleteChecker{},
 	)
 }
