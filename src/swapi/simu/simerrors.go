@@ -40,22 +40,26 @@ func ListDmpFiles(path string) ([]string, error) {
 	return dmps, nil
 }
 
-var reFunctErr *regexp.Regexp = regexp.MustCompile("(" +
+func makePattern(patterns ...string) string {
+	return "(?:(?:" + strings.Join(patterns, ")|(?:") + "))"
+}
+
+var reFunctErr *regexp.Regexp = regexp.MustCompile(makePattern(
 	// Many log files have no schemas. This can be fixed but is certainly not a
 	// fatal error.
-	`doesn't have any schema` +
+	`doesn't have any schema`,
 	// Probably happens when the dispatcher waits for the simulation, attempts
 	// should not be logged as fatal errors, only when the time out is reached.
-	`|<Dispatcher> <functERR> exception caught: Not connected to` +
+	`<Dispatcher> <functERR> exception caught: Not connected to`,
 	// Schema validation is a joke.
-	`|string_input.*attribute.*is not declared for element` +
-	`|string_input.*missing elements in content model` +
+	`string_input.*attribute.*is not declared for element`,
+	`string_input.*missing elements in content model`,
 	// Invalid coordinates may be a problem but not a functERR
-	`|Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range` +
+	`Exception caught in TER_CoordinateManager::MosToSimMgrsCoord.*out of valid range`,
 	// Happens if client is a bit slow and simulation wants to disconnect it,
 	// not a fatal error...
-	`|Client hasn't answered messages from last tick!` +
-	")")
+	`Client hasn't answered messages from last tick!`,
+))
 
 // Reads fp and possibly returns a concatenation of all <functERR> lines, or an
 // empty string.
@@ -63,7 +67,7 @@ func FindLoggedFatalErrors(fp io.Reader, opts *SessionErrorsOpts) (string, error
 	var reIgn *regexp.Regexp
 	var err error
 	if len(opts.IgnorePatterns) > 0 {
-		reIgn, err = regexp.Compile("(?:(?:" + strings.Join(opts.IgnorePatterns, ")|(?:") + "))")
+		reIgn, err = regexp.Compile(makePattern(opts.IgnorePatterns...))
 		if err != nil {
 			return "", err
 		}
