@@ -124,9 +124,6 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
-	// http://jira.masagroup.net/browse/SWBUG-11396
-	c.Skip("unreliable")
-
 	waitForMessages := func(timeout time.Duration, seen chan *swapi.SwordMessage) {
 		select {
 		case <-time.After(timeout):
@@ -145,10 +142,12 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	client := connectClient(c, sim, nil)
 	defer client.Close()
 
-	msgch := make(chan *swapi.SwordMessage)
+	msgch := make(chan *swapi.SwordMessage, 1)
 	handler := func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
-			msgch <- nil
+			if len(msgch) < cap(msgch) {
+				msgch <- nil
+			}
 			return true
 		}
 		if msg != nil && msg.AuthenticationToClient != nil {
@@ -165,9 +164,11 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 			return false
 		}
 
-		received := &swapi.SwordMessage{}
-		swapi.DeepCopy(received, msg)
-		msgch <- received
+		if len(msgch) < cap(msgch) {
+			received := &swapi.SwordMessage{}
+			swapi.DeepCopy(received, msg)
+			msgch <- received
+		}
 		return true
 	}
 	client.Register(handler)
