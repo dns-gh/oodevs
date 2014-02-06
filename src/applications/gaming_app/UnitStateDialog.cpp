@@ -22,7 +22,7 @@
 #include "clients_gui/XlsHelpers.h"
 #include "gaming/Equipments.h"
 #include "gaming/Troops.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -30,9 +30,16 @@
 // Name: UnitStateDialog constructor
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
-UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                  const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, gui::DisplayExtractor& extractor )
+UnitStateDialog::UnitStateDialog( QWidget* parent,
+                                  kernel::Controllers& controllers,
+                                  const tools::ExerciseConfig& config,
+                                  const StaticModel& staticModel,
+                                  actions::ActionsModel& actionsModel,
+                                  const kernel::Time_ABC& simulation,
+                                  const kernel::Profile_ABC& profile,
+                                  gui::DisplayExtractor& extractor )
     : gui::UnitStateDialog( parent, controllers )
+    , config_          ( config )
     , profile_         ( profile )
     , disconnected_    ( false )
     , resourceToolTip_ ( tr( "Resources" ) )
@@ -239,9 +246,10 @@ void UnitStateDialog::OnExportClicked()
 {
     if( !selected_ )
         throw MASA_EXCEPTION( "Not supposed to export without an entity" );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( tools::Path::FromUnicode( selected_->GetName().toStdWString() ) + ".xls" ).Normalize();
     tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(),
                                                              tr( "Export unit state" ),
-                                                             tools::Path::FromUnicode( selected_->GetName().toStdWString() ),
+                                                             defaultPath,
                                                              tr( "Excel (*.xls)" ) );
     if( filename.IsEmpty() )
         return;

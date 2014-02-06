@@ -31,6 +31,11 @@ namespace gui
     class DisplayExtractor;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class Model;
 class LogisticDialog_ABC;
 class Simulation;
@@ -69,9 +74,15 @@ class InfoButtonsWidget : public Q3GroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
-                                const kernel::Profile_ABC& profile, SimulationController& simulationController );
+             InfoButtonsWidget( QWidget* widget,
+                                kernel::Controllers& controllers,
+                                const tools::ExerciseConfig& config,
+                                gui::ItemFactory_ABC& factory,
+                                gui::DisplayExtractor& extractor,
+                                Model& model,
+                                const Simulation& simulation,
+                                const kernel::Profile_ABC& profile,
+                                SimulationController& simulationController );
     virtual ~InfoButtonsWidget();
     //@}
 

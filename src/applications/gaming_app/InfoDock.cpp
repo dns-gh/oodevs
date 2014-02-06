@@ -17,13 +17,20 @@
 // Name: InfoDock constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
-                    gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
+InfoDock::InfoDock( QWidget* parent,
+                    kernel::Controllers& controllers,
+                    const tools::ExerciseConfig& config,
+                    const kernel::Profile_ABC& profile,
+                    const gui::EntitySymbols& icons,
+                    gui::ItemFactory_ABC& itemFactory,
+                    gui::DisplayExtractor& extractor,
+                    Model& model,
+                    const Simulation& simulation,
                     SimulationController& simulationController )
     : gui::RichDockWidget( controllers, parent, "info" )
 {
     setObjectName( "info" );
-    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, model, simulation, simulationController ) );
+    setWidget( new InfoWidget( this, controllers_, config, profile, icons, itemFactory, extractor, model, simulation, simulationController ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     hide();
 }

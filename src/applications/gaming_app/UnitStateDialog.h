@@ -28,6 +28,11 @@ namespace gui
     class DisplayExtractor;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -43,8 +48,13 @@ class UnitStateDialog : public gui::UnitStateDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                              actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile,
+             UnitStateDialog( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              const tools::ExerciseConfig& config,
+                              const StaticModel& staticModel,
+                              actions::ActionsModel& actionsModel,
+                              const kernel::Time_ABC& simulation,
+                              const kernel::Profile_ABC& profile,
                               gui::DisplayExtractor& extractor );
     virtual ~UnitStateDialog();
     //@}
@@ -88,6 +98,7 @@ signals:
 private:
     //! @name Member data
     //@{
+    const tools::ExerciseConfig& config_;
     const kernel::Profile_ABC& profile_;
     QAbstractButton*           exportButton_;
     const QString              equipmentToolTip_;

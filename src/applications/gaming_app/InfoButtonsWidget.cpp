@@ -47,8 +47,13 @@ namespace
 // Name: InfoButtonsWidget constructor
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
-InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                      gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
+InfoButtonsWidget::InfoButtonsWidget( QWidget* widget,
+                                      kernel::Controllers& controllers,
+                                      const tools::ExerciseConfig& config,
+                                      gui::ItemFactory_ABC& factory,
+                                      gui::DisplayExtractor& extractor,
+                                      Model& model,
+                                      const Simulation& simulation,
                                       const kernel::Profile_ABC& profile,
                                       SimulationController& simulationController )
     : Q3GroupBox( 2, Qt::Horizontal, widget, "InfoButtonsWidget" )
@@ -73,7 +78,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
 
     connect( timer_, SIGNAL( timeout() ), SLOT( OnUpdate() ) );
 
-    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, model.static_, model.actions_, simulation, profile, extractor );
+    UnitStateDialog* unitStateDialog = new UnitStateDialog( topLevelWidget(), controllers, config, model.static_, model.actions_, simulation, profile, extractor );
     AddButton< InfoCompositionDialog >( MakePixmap( "composition" ), controllers, factory );
     AddButton( unitStateDialog, MakePixmap( "ordnance" ), unitStateDialog->GetResourceToolTip(), SLOT( ToggleResource( bool ) ), SIGNAL( OnToggleResource( bool ) ) );
 
