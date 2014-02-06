@@ -94,6 +94,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
@@ -128,6 +129,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
     , moveAlongPath_( source.moveAlongPath_ )
 {
@@ -163,6 +165,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , armedIndividualsBeforeSplit_( 0 )
     , objectDensity_              ( 1. )
     , canCollideWithFlow_( population.GetType().CanCollideWithFlow() )
+    , hasDoneMagicMove_( false )
     , speedLimit_( std::numeric_limits< double >::max() )
 {
     // NOTHING
@@ -174,8 +177,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::~MIL_PopulationFlow()
 {
-    assert( !pSourceConcentration_ );
-    assert( !pDestConcentration_ );
     if( MIL_AgentServer::IsInitialized() )
         GetFlowCollisionManager().NotifyFlowDestruction( this );
     SendDestruction();
@@ -235,6 +236,7 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
 {
+    hasDoneMagicMove_ = true;
     MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
     newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
     newConcentration.SetAttitude( GetAttitude() );
@@ -1215,7 +1217,7 @@ double MIL_PopulationFlow::GetSpeed() const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::IsValid() const
 {
-    return !GetPopulation().HasDoneMagicMove() && ( GetAllHumans() > 0. || pSourceConcentration_ );
+    return !hasDoneMagicMove_ && ( GetAllHumans() > 0. || pSourceConcentration_ );
 }
 
 // -----------------------------------------------------------------------------

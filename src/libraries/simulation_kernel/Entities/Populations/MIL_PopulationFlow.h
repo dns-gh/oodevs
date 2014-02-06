@@ -188,6 +188,7 @@ private:
     bool bSpeedUpdated_;
     bool bBlocked_;
     bool canCollideWithFlow_;
+    bool hasDoneMagicMove_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
     const MIL_Object_ABC* pBlockingObject_;
