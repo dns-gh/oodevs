@@ -769,6 +769,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 	zero := &sword.Tasker{}
 	const TowTruck = 4
+	const gyroscrew_1 = 6
 
 	SetMaintenanceManualMode(c, client, tc2Id)
 
@@ -787,7 +788,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithManualSelection(c *C) {
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
 			func(ctx *MaintenanceCheckContext) error {
-				return client.SelectNewLogisticState(ctx.handlingId)
+				return client.SelectDiagnosisTeam(ctx.handlingId, gyroscrew_1)
 			},
 		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
@@ -815,6 +816,21 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 	bld := swapi.MakeFormationTasker(getSomeFormationByName(c, d, "BLD").Id)
 	zero := &sword.Tasker{}
 
+	toAutomatic := func() error {
+		// set automat back to automatic mode
+		err := client.LogMaintenanceSetManual(tc2Id, false)
+		if err != nil {
+			return err
+		}
+		ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+			return data.Automats[tc2Id].LogMaintenanceManual == false
+		})
+		if !ok {
+			return fmt.Errorf("condition not reached")
+		}
+		return nil
+	}
+
 	SetMaintenanceManualMode(c, client, tc2Id)
 
 	checkMaintenance(c, client, unit, 0, mobility_2,
@@ -822,18 +838,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		&MaintenanceApplyChecker{
 			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
 			func(ctx *MaintenanceCheckContext) error {
-				// set automat back to automatic mode
-				err := client.LogMaintenanceSetManual(tc2Id, false)
-				if err != nil {
-					return err
-				}
-				ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-					return data.Automats[tc2Id].LogMaintenanceManual == false
-				})
-				if !ok {
-					return fmt.Errorf("condition not reached")
-				}
-				return nil
+				return toAutomatic()
 			},
 		},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
@@ -841,6 +846,41 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 		&MaintenanceUpdateChecker{"transporter_loading", tc2},
 		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
 		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
+		&MaintenanceUpdateChecker{"repairing", bld},
+		&MaintenanceUpdateChecker{"moving_back", bld},
+		&MaintenanceUpdateChecker{"finished", zero},
+		MaintenanceDeleteChecker{},
+	)
+
+	SetMaintenanceManualMode(c, client, tc2Id)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
+			func(ctx *MaintenanceCheckContext) error {
+				return toAutomatic()
+			},
+		},
 		&MaintenanceUpdateChecker{"diagnosing", tc2},
 		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
 		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
@@ -947,7 +987,7 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 	)
 }
 
-func (s *TestSuite) TestMaintenanceSuperiorUnabletoRepair(c *C) {
+func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	d := client.Model.GetData()

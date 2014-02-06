@@ -1,17 +1,18 @@
 gosword library contains the following modules:
-- csvclient: an application to export logistic data from a simulation under csv format
-- dumpreplay:
+- csvclient: an application to export logistic data from a simulation under csv
+  format
+- dumpreplay: utility to extract and print information from replay data
 - simtests: functional tests on the simulation
 - stressclient: spam a simulation with crafted messages and check their replies
 - swapi: a protobuf client for Sword
 - swapi/phy: helpers to read physical data
-- swapi/replay:
+- swapi/replay: helpers to parse replay data
 - swapi/simu: helpers to configure and run a simulation and process log files
 - sword: auto generated protobuf library from sword .proto files
 - testclient: a simple client creating an swapi.Client instance, connecting it
   to a running simulation and wait for connection termination. Use it to test
   the model behaviour against real world scenarii.
-- testproto:
+- testproto: test goprotobuf behaviour with regard to .proto changes
 
 To run the tests from a cygwin shell, starting at project root:
 

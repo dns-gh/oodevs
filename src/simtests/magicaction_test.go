@@ -292,32 +292,16 @@ func (s *TestSuite) TestTriggerError(c *C) {
 	c.Assert(err, IsNil)
 }
 
-func (s *TestSuite) TestSelectTransporter(c *C) {
-	opts := NewAllUserOpts(ExCrossroadSmallLog)
-	opts.Step = 300
-	sim, client := connectAndWaitModel(c, opts)
-	defer stopSimAndClient(c, sim, client)
-
-	// error: invalid parameters count, parameters expected
-	err := client.SelectNewLogisticStateTest(swapi.MakeParameters())
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// error: first parameter must be an identifier
-	err = client.SelectNewLogisticStateTest(swapi.MakeParameters(nil))
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// error: first parameter must be a valid identifier
-	err = client.SelectNewLogisticState(1000)
-	c.Assert(err, IsSwordError, "error_invalid_parameter")
-
-	// set automat to manual mode
+func SetAutomatManualMode(c *C, client *swapi.Client) {
 	automatLog := uint32(14)
-	err = client.LogMaintenanceSetManual(automatLog, true)
+	err := client.LogMaintenanceSetManual(automatLog, true)
+	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.Automats[automatLog].LogMaintenanceManual
 	})
-	c.Assert(err, IsNil)
-	// trigger a breakdown
+}
+
+func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
 	unit := client.Model.GetUnit(8)
 	equipmentId := uint32(39)
 	MOBBreakdown2EBEvac := int32(13)
@@ -326,7 +310,7 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 		Repairable: 1,
 		Breakdowns: []int32{MOBBreakdown2EBEvac},
 	}
-	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	err := client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
 	var handlingId uint32
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
@@ -338,25 +322,31 @@ func (s *TestSuite) TestSelectTransporter(c *C) {
 		}
 		return false
 	})
-	// wait for state to be wait for selection
+	return handlingId
+}
+
+func WaitStateEntered(c *C, client *swapi.Client, handlingId uint32,
+	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus) {
+
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		h := data.MaintenanceHandlings[handlingId]
 		return h != nil && h.Provider != nil &&
-			h.Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+			h.Provider.State == state
 	})
-	// trigger select new state
-	err = client.SelectNewLogisticState(handlingId)
-	c.Assert(err, IsNil)
-	// check state has changed
+}
+
+func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
+	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus) {
+
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		h := data.MaintenanceHandlings[handlingId]
-		return h == nil || h.Provider != nil ||
-			h.Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
+		return h == nil || h.Provider != nil &&
+			h.Provider.State != state
 	})
 }
 
 func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
-	opts := NewAdminOpts(ExCrossroadSmallLog)
+	opts := NewAllUserOpts(ExCrossroadSmallLog)
 	opts.Step = 300
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
@@ -378,38 +368,11 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 	err = client.SelectMaintenanceTransporter(1000, TRANSHeavyEquipmentTransporterSystem)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
 
-	// set automat to manual mode
-	automatLog := uint32(14)
-	err = client.LogMaintenanceSetManual(automatLog, true)
-	c.Assert(err, IsNil)
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Automats[automatLog].LogMaintenanceManual
-	})
-	// trigger a breakdown
-	unit := client.Model.GetUnit(8)
-	equipmentId := uint32(39)
-	MOBBreakdown2EBEvac := int32(13)
-	equipment := swapi.EquipmentDotation{
-		Available:  1,
-		Repairable: 1,
-		Breakdowns: []int32{MOBBreakdown2EBEvac},
-	}
-	err = client.ChangeEquipmentState(unit.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, IsNil)
-	var handlingId uint32
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, h := range data.MaintenanceHandlings {
-			if h.Provider != nil {
-				handlingId = h.Id
-				return true
-			}
-		}
-		return false
-	})
-	// wait for state to be wait for selection
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State == sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
-	})
+	SetAutomatManualMode(c, client)
+	handlingId := TriggerBreakdown(c, client)
+
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
 
 	// error: second parameter is an unknown equipment type identifier
 	err = client.SelectMaintenanceTransporter(handlingId, 1000)
@@ -417,18 +380,66 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 
 	// error: second parameter is not an equipment type identifier managed by unit
 	err = client.SelectMaintenanceTransporter(handlingId, 57)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// error: second parameter is a valid equipment type identifier but cannot haul
 	err = client.SelectMaintenanceTransporter(handlingId, 26)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// trigger select maintenance transporter
 	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem)
 	c.Assert(err, IsNil)
 
-	// check state has changed
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.MaintenanceHandlings[handlingId].Provider.State != sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection
-	})
+	WaitStateLeft(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
+}
+
+func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
+	opts := NewAllUserOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	// error: invalid parameters count, parameters expected
+	err := client.SelectDiagnosisTeamTest(swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	const MobilityRepairsTeam = 91
+
+	// error: first parameter must be an identifier
+	err = client.SelectDiagnosisTeamTest(swapi.MakeParameters(nil, swapi.MakeIdentifier(MobilityRepairsTeam)))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be a valid identifier
+	err = client.SelectDiagnosisTeam(1000, MobilityRepairsTeam)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
+
+	SetAutomatManualMode(c, client)
+	handlingId := TriggerBreakdown(c, client)
+
+	// error: not in diagnosis team waiting state
+	err = client.SelectDiagnosisTeam(handlingId, MobilityRepairsTeam)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: transport consign not in a waiting for diagnosis team selection state")
+
+	// skip transporter selection
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
+	err = client.SelectNewLogisticState(handlingId)
+	c.Assert(err, IsNil)
+
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
+
+	// error: second parameter must be a valid identifier
+	err = client.SelectDiagnosisTeam(handlingId, 1000)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+
+	// error: component type specified not available
+	err = client.SelectDiagnosisTeam(handlingId, 39)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for diagnosis team selection")
+
+	err = client.SelectDiagnosisTeam(handlingId, MobilityRepairsTeam)
+	c.Assert(err, IsNil)
+	WaitStateLeft(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
 }
