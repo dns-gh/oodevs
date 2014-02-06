@@ -369,6 +369,12 @@ const ActionParam log_maintenance_set_manual_params[] =
     { "Manual", "boolean", 0 },
 };
 
+const ActionParam select_repair_team_params[] =
+{
+    { "Request", "identifier", 0 },
+    { "EquipmentType", "identifier", 0 },
+};
+
 const ActionParam select_maintenance_transporter_params[] =
 {
     { "Request", "identifier", 0 },

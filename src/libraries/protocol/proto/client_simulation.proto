@@ -272,8 +272,13 @@ message MagicAction {
         //!  selected diagnoser.
         //! parameters[0], Identifier: log request identifier.
         //! parameters[1], Identifier: selected diagnoser type identifier.
-        //!  diagnosis team.
         select_diagnosis_team              = 11;
+        //! When a maintenance log consign is in state "waiting for repair team
+        //!  selection", update the request to a new state with a manually
+        //!  selected repair team.
+        //! parameters[0], Identifier: identifier of log request.
+        //! parameters[1], Identifier: selected repair team type identifier.
+        select_repair_team                 = 12;
     }
     required Type              type       = 1;
     required MissionParameters parameters = 2;
