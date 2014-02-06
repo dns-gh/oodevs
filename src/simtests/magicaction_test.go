@@ -326,7 +326,7 @@ func TriggerBreakdown(c *C, client *swapi.Client) uint32 {
 }
 
 func WaitStateEntered(c *C, client *swapi.Client, handlingId uint32,
-	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus ) {
+	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus) {
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		h := data.MaintenanceHandlings[handlingId]
@@ -336,7 +336,7 @@ func WaitStateEntered(c *C, client *swapi.Client, handlingId uint32,
 }
 
 func WaitStateLeft(c *C, client *swapi.Client, handlingId uint32,
-	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus ) {
+	state sword.LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus) {
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		h := data.MaintenanceHandlings[handlingId]
