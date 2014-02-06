@@ -37,6 +37,7 @@ public:
     //@{
     virtual QSize sizeHint() const;
     virtual void hideEvent( QHideEvent* );
+    virtual void showEvent( QShowEvent* event );
     QWidget* RootWidget(); // $$$$ SBO 2007-02-19:
     //@}
 
@@ -51,6 +52,7 @@ signals:
     //@{
     void Closed();
     void Disabled( bool );
+    void Shown();
     //@}
 
 private:

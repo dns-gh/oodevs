@@ -141,3 +141,12 @@ void InfoSupplyDialog::FillHistoryModel()
 {
     widget_->FillHistoryModel();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::IsVisible
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+bool InfoSupplyDialog::IsVisible() const
+{
+    return isVisible();
+}

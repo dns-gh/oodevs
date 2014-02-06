@@ -87,3 +87,13 @@ void InfoDialog_Base::SetEnabled( bool state )
 {
     emit Disabled( !state );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoDialog_Base::showEvent
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+void InfoDialog_Base::showEvent( QShowEvent* event )
+{
+    emit Shown();
+    QDialog::showEvent( event );
+}
