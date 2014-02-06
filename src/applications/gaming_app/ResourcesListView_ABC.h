@@ -49,10 +49,8 @@ public:
     virtual ~ResourcesListView_ABC();
     //@}
 
-    //! @name Operations
-    //@{
-    void SetFilter( const std::function< bool( const kernel::Availability& ) >& validator );
-    //@}
+    // If a validator is set, only accepted Availability will be registered by AddAvailability
+    void SetFilter( const std::function< bool( const kernel::Availability& ) >& filter );
 
 protected:
     //! @name Operations
@@ -86,7 +84,7 @@ protected:
     QStandardItemModel model_;
     std::vector< kernel::Availability > availabilities_;
     bool registered_;
-    std::function< bool( const kernel::Availability& ) > validator_;
+    std::function< bool( const kernel::Availability& ) > filter_;
     //@}
 };
 
@@ -260,7 +258,7 @@ void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_A
         const std::vector< kernel::Availability >* curAvailabilies = GetAvailabilities( *pState );
         if( curAvailabilies )
             for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
-                if( !validator_ || validator_( *it ) )
+                if( !filter_ || filter_( *it ) )
                     availabilities_.push_back( *it );
     }
 }
@@ -284,9 +282,9 @@ void ResourcesListView_ABC< Extension >::DisplaySelectionAvailabilities()
 // Created: ABR 2014-02-05
 // -----------------------------------------------------------------------------
 template< typename Extension >
-void ResourcesListView_ABC< Extension >::SetFilter( const std::function< bool( const kernel::Availability& ) >& validator )
+void ResourcesListView_ABC< Extension >::SetFilter( const std::function< bool( const kernel::Availability& ) >& filter )
 {
-    validator_ = validator;
+    filter_ = filter;
 }
 
 #endif // __ResourcesListView_ABC_h_
