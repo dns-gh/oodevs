@@ -180,12 +180,3 @@ bool LogisticsConsign_ABC::UpdateHistoryState( const sword::LogHistoryEntry& /*e
 {
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: LogisticsConsign_ABC::GetEquipment
-// Created: ABR 2014-02-05
-// -----------------------------------------------------------------------------
-const kernel::ComponentType* LogisticsConsign_ABC::GetEquipment() const
-{
-    throw MASA_EXCEPTION( "cannot get the broken equipment for a non maintenance consign" );
-}

@@ -162,12 +162,13 @@ void LogisticMaintenanceSelectionDialog::SetCurrentWidget()
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consign )
 {
-    id_ = consign.GetId();
-    handler_ = consign.GetHandler();
-    componentType_ = consign.GetEquipment();
     if( consign.GetType() != eMaintenance )
         throw MASA_EXCEPTION( "Not supposed to display a maintenance dialog on a non-maintenance consign" );
-    status_ = static_cast< const LogMaintenanceConsign& >( consign ).GetStatus();
+    const LogMaintenanceConsign& maintenanceConsign = static_cast< const LogMaintenanceConsign& >( consign );
+    id_ = consign.GetId();
+    handler_ = consign.GetHandler();
+    componentType_ = maintenanceConsign.GetEquipment();
+    status_ = maintenanceConsign.GetStatus();
     SetCurrentWidget();
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     manualButton_->setChecked( true );
