@@ -17,6 +17,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Controller;
+    class ComponentType;
     class Entity_ABC;
 }
 
@@ -64,6 +65,7 @@ public:
     unsigned int GetId() const;
     QString GetCreationTime() const;
     QString GetCurrentEndTime() const;
+    virtual const kernel::ComponentType* GetEquipment() const;
     virtual bool NeedResolution() const;
     virtual bool RefersToAgent( unsigned long id ) const = 0;
     virtual bool RefersToAgent( const std::set< unsigned long >& id ) const = 0;

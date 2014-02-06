@@ -64,7 +64,7 @@ public:
     virtual bool NeedResolution() const;
     virtual kernel::Agent_ABC* GetConsumer() const;
     virtual kernel::Entity_ABC* GetHandler() const;
-    const kernel::ComponentType* GetEquipment() const;
+    virtual const kernel::ComponentType* GetEquipment() const;
     const kernel::BreakdownType* GetBreakdown() const;
     bool IsDiagnosed() const;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetStatus() const;
