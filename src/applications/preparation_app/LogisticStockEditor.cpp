@@ -479,10 +479,10 @@ double LogisticStockEditor::DoDotationDistribution( std::set< const Agent_ABC* >
 
 namespace
 {
-    double GetQuantity( const QStandardItemModel& dataModel, int row, double requirement )
+    unsigned int GetQuantity( const QStandardItemModel& dataModel, int row, double requirement )
     {
         const double days = dataModel.item( row, 1 )->data( Qt::EditRole ).asDouble();
-        return days * requirement + 0.5;
+        return static_cast< unsigned int >( days * requirement + 0.5 );
     }
 }
 
@@ -507,7 +507,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const Agent_ABC* >& entStocks,
 
         if( dataModel_->item( row )->checkState() == Qt::Checked )
         {
-            const double quantity = GetQuantity( *dataModel_, row, itRequired->second );
+            const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
 
             std::set< const Agent_ABC* > entDotationStocks;
             for( auto it = entStocks.begin(); it != entStocks.end(); ++it )
@@ -602,7 +602,7 @@ void LogisticStockEditor::SetQuotas( const gui::LogisticHierarchiesBase& logHier
             {
                 if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
                 {
-                    const unsigned int quantity = static_cast< unsigned int >( GetQuantity( *dataModel_, row, itRequired->second ) );
+                    const unsigned int quantity = GetQuantity( *dataModel_, row, itRequired->second );
                     baseStates.SetDotation( dotationType, quantity );
                 }
             }
