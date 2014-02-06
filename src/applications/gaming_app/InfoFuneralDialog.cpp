@@ -112,3 +112,12 @@ void InfoFuneralDialog::FillHistoryModel()
 {
     widget_->FillHistoryModel();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoFuneralDialog::IsVisible
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+bool InfoFuneralDialog::IsVisible() const
+{
+    return isVisible();
+}

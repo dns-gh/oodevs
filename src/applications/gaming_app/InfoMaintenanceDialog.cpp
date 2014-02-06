@@ -159,3 +159,12 @@ void InfoMaintenanceDialog::NotifyUpdated( const gui::LogisticBase& ext )
     if( selected_ && selected_->GetId() == ext.GetEntity().GetId() )
         UpdateTitle( ext.IsMaintenanceManual() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoMaintenanceDialog::IsVisible
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+bool InfoMaintenanceDialog::IsVisible() const
+{
+    return isVisible();
+}

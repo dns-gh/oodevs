@@ -112,6 +112,7 @@ private slots:
     //! @name Helpers
     //@{
     void OnUpdate();
+    void Refresh();
     //@}
 
 private:

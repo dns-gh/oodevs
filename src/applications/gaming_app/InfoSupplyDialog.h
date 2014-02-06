@@ -58,6 +58,7 @@ public:
     virtual void Purge();
     virtual void FillCurrentModel( const kernel::Entity_ABC& entity );
     virtual void FillHistoryModel();
+    virtual bool IsVisible() const;
     //@}
 
 private:

@@ -146,6 +146,7 @@ void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Contro
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
     connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    connect( dialog, SIGNAL( Shown() ), SLOT( Refresh() ) );
     logisticDialogs_.push_back( dialog );
 }
 
@@ -163,6 +164,7 @@ void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Contro
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
     connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    connect( dialog, SIGNAL( Shown() ), SLOT( Refresh() ) );
     logisticDialogs_.push_back( dialog );
 }
 
@@ -189,13 +191,18 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
     entities_.clear();
     if( element_ )
     {
+        bool needRequests = false;
         for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            (*it)->FillCurrentModel( *element_ );
-
+            if( (*it)->IsVisible() )
+            {
+                (*it)->FillCurrentModel( *element_ );
+                needRequests = true;
+            }
         logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element, [&]( const kernel::Entity_ABC& entity ) {
             entities_.insert( entity.GetId() );
         } );
-        if( !entities_.empty() )
+
+        if( !entities_.empty() && needRequests )
             simulationController_.SendLogisticRequests( entities_ );
     }
     else
@@ -212,7 +219,8 @@ void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*me
     if( element_ )
     {
         for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            (*it)->FillHistoryModel();
+            if( (*it)->IsVisible() )
+                (*it)->FillHistoryModel();
     }
 }
 
@@ -325,4 +333,14 @@ void InfoButtonsWidget::OnUpdate()
             lastTick_ = tick;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoButtonsWidget::Refresh
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+void InfoButtonsWidget::Refresh()
+{
+    if( element_ )
+        NotifySelected( element_ );
 }
