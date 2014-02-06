@@ -40,7 +40,7 @@ public:
     virtual void Cancel();
     virtual bool Update();
 
-    bool SearchForUpperLevelNotFound() const;
+    virtual bool SearchForUpperLevelNotFound() const;
 
     virtual void SelectNewState();
     virtual void TransferToLogisticSuperior();
