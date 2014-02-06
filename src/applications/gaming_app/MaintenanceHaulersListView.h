@@ -30,7 +30,7 @@ public:
     //@{
              MaintenanceHaulersListView( QWidget* parent,
                                          kernel::Controllers& controllers,
-                                         bool registerInController = true );
+                                         bool listenSelectionChanged = true );
     virtual ~MaintenanceHaulersListView();
     //@}
 

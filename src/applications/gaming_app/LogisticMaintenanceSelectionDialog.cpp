@@ -178,13 +178,13 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     {
         manualButton_->setText( tr( "Select tow truck" ) );
         transporters_->selectionModel()->clear();
-        transporters_->NotifySelected( handler_ );
+        transporters_->SelectEntity( handler_ );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
     {
         manualButton_->setText( tr( "Select diagnosis team" ) );
         repairers_->selectionModel()->clear();
-        repairers_->NotifySelected( handler_ );
+        repairers_->SelectEntity( handler_ );
     }
     UpdateDisplay();
     show();

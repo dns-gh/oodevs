@@ -33,14 +33,19 @@ public:
              LogisticResourcesListView_ABC( const QString& objectName,
                                             QWidget* parent,
                                             kernel::Controllers& controllers,
-                                            bool registerInController = true );
+                                            bool listenSelectionChanged = true );
     virtual ~LogisticResourcesListView_ABC();
     //@}
 
     //! @name Operations
     //@{
+    virtual void SelectEntity( const kernel::Entity_ABC* entity );
+    //@}
+
+private:
+    //! @name Observer implementation
+    //@{
     virtual void NotifyUpdated( const Extension& a );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     //@}
 };
 
@@ -52,8 +57,8 @@ template< typename Extension >
 LogisticResourcesListView_ABC< Extension >::LogisticResourcesListView_ABC( const QString& objectName,
                                                                            QWidget* parent,
                                                                            kernel::Controllers& controllers,
-                                                                           bool registerInController /* = true */ )
-    : ResourcesListView_ABC< Extension >( parent, controllers, registerInController )
+                                                                           bool listenSelectionChanged /* = true */ )
+    : ResourcesListView_ABC< Extension >( parent, controllers, listenSelectionChanged )
 {
     gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
@@ -83,11 +88,11 @@ void LogisticResourcesListView_ABC< Extension >::NotifyUpdated( const Extension&
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticResourcesListView_ABC::NotifySelected
-// Created: ABR 2014-02-05
+// Name: LogisticResourcesListView_ABC::SelectEntity
+// Created: ABR 2014-02-06
 // -----------------------------------------------------------------------------
 template< typename Extension >
-void LogisticResourcesListView_ABC< Extension >::NotifySelected( const kernel::Entity_ABC* entity )
+void LogisticResourcesListView_ABC< Extension >::SelectEntity( const kernel::Entity_ABC* entity )
 {
     selected_ = entity;
     if( !entity )
