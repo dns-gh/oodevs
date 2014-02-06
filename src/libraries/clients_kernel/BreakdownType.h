@@ -40,6 +40,8 @@ public:
     unsigned long GetId() const;
     const std::string& GetName() const;
     std::string GetUnknownName() const;
+    E_BreakdownNTI GetNTI() const;
+    E_BreakdownType GetType() const;
     //@}
 
 private:

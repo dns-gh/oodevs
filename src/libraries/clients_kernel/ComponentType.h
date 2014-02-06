@@ -14,6 +14,7 @@ namespace xml { class xistream; };
 
 namespace kernel
 {
+    // $$$$ 2014-02-06: TODO: remove this class, use EquipmentType instead
 
 // =============================================================================
 /** @class  ComponentType
