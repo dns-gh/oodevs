@@ -1690,6 +1690,10 @@ Do you want to replace it?</source>
         <source>Request #%1 - %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select diagnosis team</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>

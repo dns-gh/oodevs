@@ -375,6 +375,12 @@ const ActionParam select_maintenance_transporter_params[] =
     { "EquipmentType", "identifier", 0 },
 };
 
+const ActionParam select_diagnosis_team_params[] =
+{
+    { "Request", "identifier", 0 },
+    { "EquipmentType", "identifier", 0 },
+};
+
 const ActionParam select_new_logistic_state_params[] =
 {
     { "Request", "identifier", 0 },
@@ -492,6 +498,7 @@ const Action actions[] =
     ACTION( log_supply_push_flow ),
     ACTION( log_maintenance_set_manual ),
     ACTION( select_maintenance_transporter ),
+    ACTION( select_diagnosis_team ),
     ACTION( select_new_logistic_state ),
     ACTION( partial_recovery ),
     ACTION( reload_brain ),

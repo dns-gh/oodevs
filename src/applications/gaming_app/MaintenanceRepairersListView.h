@@ -28,7 +28,7 @@ class MaintenanceRepairersListView : public LogisticResourcesListView_ABC< kerne
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceRepairersListView( QWidget* parent, kernel::Controllers& controllers );
+             MaintenanceRepairersListView( QWidget* parent, kernel::Controllers& controllers, bool registerInController = true );
     virtual ~MaintenanceRepairersListView();
     //@}
 
