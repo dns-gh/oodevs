@@ -61,10 +61,10 @@ void MIL_FlowCollisionManager::SetCollisions( MIL_PopulationFlow* flow, const st
 // Name: MIL_FlowCollisionManager::CanMove
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow, unsigned int timeStep ) const
+bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow ) const
 {
     for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
-        if( !it->second->CanMove( flow, timeStep ) )
+        if( !it->second->CanMove( flow ) )
             return false;
     return true;
 }
@@ -73,7 +73,7 @@ bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow, unsigned
 // Name: MIL_FlowCollisionManager::Update
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-void MIL_FlowCollisionManager::Update( unsigned int timeStep )
+void MIL_FlowCollisionManager::Update()
 {
     for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); )
     {
@@ -81,7 +81,7 @@ void MIL_FlowCollisionManager::Update( unsigned int timeStep )
             it = flowCollisions_.erase( it );
         else
         {
-            it->second->Update( timeStep );
+            it->second->Update();
             ++it;
         }
     }

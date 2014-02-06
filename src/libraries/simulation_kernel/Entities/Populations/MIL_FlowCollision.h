@@ -32,13 +32,12 @@ public:
     //! @name Operations
     //@{
     void SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 );
-    bool CanMove( const MIL_PopulationFlow* flow, unsigned int timeStep ) const;
+    bool CanMove( const MIL_PopulationFlow* flow ) const;
     bool HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const;
     void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
     bool MarkedForDestruction() const;
-    void Update( unsigned int timeStep );
+    void Update();
     //@}
-
 
     //! @name CheckPoints
     //@{
@@ -54,6 +53,7 @@ private:
     void Split();
     bool SplitOnSegment( const MT_Line& line, std::size_t& segmentIndex );
     void RemovedPassedOverFlows();
+    bool IsTimerOver();
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     bool isFlowing_;
     bool markedForDestruction_;
     std::size_t movingIndex_;
-    int start_;
+    double randomThreshold_;
     //@}
 };
 

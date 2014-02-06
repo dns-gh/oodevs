@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_FlowCollision.h"
 #include "MIL_PopulationFlow.h"
+#include "MIL_Random.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision constructor
@@ -17,11 +18,11 @@
 // -----------------------------------------------------------------------------
 MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     : point_( point )
-    , isFlowing_( false )
+    , isFlowing_( true )
     , markedForDestruction_( false )
     , movingIndex_( 0 )
     , going_( 0 )
-    , start_( 0 )
+    , randomThreshold_( 0 )
 {
     // NOTHING
 }
@@ -68,13 +69,13 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
 // Name: MIL_FlowCollision::CanMove
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow, unsigned int timeStep ) const
+bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow ) const
 {
     if( markedForDestruction_ )
         return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
     if( flowIt != collidingFlows_.end() )
-        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || timeStep - start_ >= 5 )
+        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow )
             return false;
     return true;
 }
@@ -117,29 +118,19 @@ namespace
 // Name: MIL_FlowCollision::Update
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-void MIL_FlowCollision::Update( unsigned int timeStep )
+void MIL_FlowCollision::Update()
 {
     if( markedForDestruction_ )
         return;
-    if( start_ == 0 ) // first update
+    if( !isFlowing_ )
     {
+        isFlowing_ = true;
+        if( ++movingIndex_ >= collidingFlows_.size() )
+            movingIndex_ = 0;
+    }
+    else if( IsTimerOver() )
         Split();
-        start_ = timeStep;
-        return;
-    }
-    if( timeStep - start_ >= 5 && isFlowing_ || ( timeStep - start_ >= 5 && !isFlowing_ ) )
-    {
-        start_ = timeStep;
-        if( isFlowing_ )
-            Split();
-        else
-        {
-            isFlowing_ = true;
-            ++movingIndex_;
-            if( movingIndex_ >= collidingFlows_.size() )
-                movingIndex_ = 0;
-        }
-    }
+
     if( isFlowing_ )
         RemovedPassedOverFlows();
 }
@@ -227,5 +218,20 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
         }
     }
     ++segmentIndex;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::IsTimerOver
+// Created: JSR 2014-02-06
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::IsTimerOver()
+{
+    if( MIL_Random::rand_ii() >= randomThreshold_ )
+    {
+        randomThreshold_ = 1.;
+        return true;
+    }
+    randomThreshold_ *= 0.95;
     return false;
 }

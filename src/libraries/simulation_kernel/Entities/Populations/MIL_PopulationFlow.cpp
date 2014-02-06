@@ -449,6 +449,8 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
     assert( canCollideWithFlow_ );
     const double rDensityBeforeSplit = GetDensity();
     auto insertIt = FindPointInShape( splittingPoint );
+    if( insertIt == std::prev( flowShape_.end() ) )
+        return 0;
     if( insertIt == flowShape_.end() )
     {
         if( segmentIndex < flowShape_.size() )
@@ -462,9 +464,8 @@ MIL_PopulationFlow* MIL_PopulationFlow::Split( const MT_Vector2D& splittingPoint
     else if( flowShape_.size() == 2 )
         return 0;
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, splittingPoint );
-    newFlow.CancelMove();
     flowShape_.erase( std::next( insertIt ), flowShape_.end() );
-    CancelMove();
+    pHeadPath_.reset();
     assert( flowShape_.size() >= 2 );
 
     bFlowShapeUpdated_ = true;
@@ -550,7 +551,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
-    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
         return; 
     if( ! CanMove() )
         return;
@@ -738,7 +739,7 @@ bool MIL_PopulationFlow::CanCollideWith( MIL_PopulationFlow* flow ) const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions )
 {
-    if( line.Magnitude() < 20 ) // ?
+    if( line.Magnitude() < 1 )
         return false;
     TER_PopulationFlowManager::T_PopulationFlowVector flows;
     TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListIntersectingLine( line.GetPosStart(), line.GetPosEnd(), flows );
@@ -810,7 +811,7 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetMaxSpeed() const
 {
-    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
+    if( canCollideWithFlow_ && !GetFlowCollisionManager().CanMove( this ) )
         return 0;
     return std::min( speedLimit_, GetPopulation().GetMaxSpeed() );
 }

@@ -56,6 +56,7 @@ public:
     //! @name Operations
     //@{
     virtual const TER_Localisation& GetLocation() const = 0;
+    virtual bool IsValid() const = 0;
 
     void UpdatePatch    ();
     void RemoveFromPatch();

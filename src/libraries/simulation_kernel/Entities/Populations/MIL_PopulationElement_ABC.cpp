@@ -244,6 +244,11 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 
     collidingPopulationFlows_.clear();
     TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocation(), collidingPopulationFlows_, TER_Localisation::DefaultPrecision() );
+    for( auto it = collidingPopulationFlows_.begin(); it != collidingPopulationFlows_.end(); )
+        if( ( *it )->IsValid() )
+            ++it;
+        else
+            it = collidingPopulationFlows_.erase( it );
 
     ClearCollidingAttackingAgents();
 }
