@@ -131,7 +131,8 @@ std::string SymbolRule::ConvertToNature( std::string symbol ) const
         symbol.erase( 0, 8 ); // remove symbols/
     symbol.erase( 0, 5 ); // remove s*gpu
     InternalConvertToNature( symbol, result );
-    result.erase( result.size() - 1, 1 ); // remove last /
+    if( result.size() > 0 )
+        result.erase( result.size() - 1, 1 ); // remove last /
     return result;
 }
 
