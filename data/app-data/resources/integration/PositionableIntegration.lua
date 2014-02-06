@@ -27,14 +27,14 @@ integration.takeUpPositionObject = function( object )
     end
 end
 
---- Returns true if this entity is posted, false otherwise.
+--- Returns true if this entity is posted or better, false otherwise.
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
 integration.isPosted = function()
     return DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste
 end
 
---- Returns true if this entity is parked, false otherwise.
+--- Returns true if this entity is parked or better, false otherwise.
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
 integration.isParked = function()
@@ -44,13 +44,13 @@ end
 --- Returns the installation level of this entity.
 -- This method can only be called by an agent or a crowd.
 -- @return Integer, the installation level among one of the following constants :
--- <ul> <li> eNiveauInstallation_Mouvement </li>
--- <li> eNiveauInstallation_MouvementDiscret </li>
--- <li> eNiveauInstallation_Arret </li>
--- <li> eNiveauInstallation_PosteReflexe </li>
--- <li> eNiveauInstallation_Poste </li>
--- <li> eNiveauInstallation_PosteAmenage </li>
--- <li> eNiveauInstallation_PostePrepareGenie </li> </ul>
+-- <ul> <li> eNiveauInstallation_Mouvement (movement) </li>
+-- <li> eNiveauInstallation_MouvementDiscret (stealthy movement) </li>
+-- <li> eNiveauInstallation_Arret (stopped) </li>
+-- <li> eNiveauInstallation_PosteReflexe (posted and ready to move) </li>
+-- <li> eNiveauInstallation_Poste (posted) </li>
+-- <li> eNiveauInstallation_PosteAmenage (parked) </li>
+-- <li> eNiveauInstallation_PostePrepareGenie (parked and ready to build) </li> </ul>
 integration.getInstallationLevel = function()
     return DEC_Agent_NiveauInstallation()
 end
