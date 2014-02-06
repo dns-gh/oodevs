@@ -37,6 +37,7 @@ namespace sword
 }
 
 class MaintenanceHaulersListView;
+class MaintenanceRepairersListView;
 
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
@@ -105,6 +106,7 @@ private:
     QPushButton* acceptButton_;
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
+    MaintenanceRepairersListView* repairers_;
     //@}
 };
 

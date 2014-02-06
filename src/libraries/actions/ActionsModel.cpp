@@ -227,6 +227,16 @@ void ActionsModel::PublishSelectMaintenanceTransporter( unsigned int consignId, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishSelectMaintenanceDiagnosisTeam
+// Created: SLI 2014-02-06
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceDiagnosisTeam( consignId, equipmentTypeId ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

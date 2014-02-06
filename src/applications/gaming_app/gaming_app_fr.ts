@@ -1687,11 +1687,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Select tow truck</source>
-        <translation>Selectionner un remorqueur</translation>
+        <translation>Sélectionner un remorqueur</translation>
     </message>
     <message>
         <source>Request #%1 - %2</source>
         <translation>Requête #%1 - %2</translation>
+    </message>
+    <message>
+        <source>Select diagnosis team</source>
+        <translation>Sélectionner une équipe de diagnostique</translation>
     </message>
 </context>
 <context>
