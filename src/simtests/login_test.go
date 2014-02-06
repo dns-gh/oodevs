@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"swapi"
 	"swapi/simu"
+	"sword"
 	"time"
 )
 
@@ -150,7 +151,10 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 			}
 			return true
 		}
-		if msg != nil && msg.AuthenticationToClient != nil {
+		if msg == nil {
+			return false
+		}
+		if msg.AuthenticationToClient != nil {
 			auth := msg.AuthenticationToClient
 			if auth.GetMessage().GetAuthenticationResponse() != nil ||
 				// ConnectedProfileList is sent after a failed authentication
@@ -158,10 +162,24 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 				return false
 			}
 		}
-		if msg != nil && msg.DispatcherToClient != nil &&
+		if msg.DispatcherToClient != nil &&
 			msg.DispatcherToClient.GetMessage() != nil &&
 			msg.DispatcherToClient.GetMessage().ServicesDescription != nil {
 			return false
+		}
+		if msg.SimulationToClient != nil &&
+			msg.SimulationToClient.GetMessage() != nil {
+			// Ignore "forbidden" messages
+			m := msg.SimulationToClient.GetMessage()
+			if m.ControlPauseAck != nil {
+				if m.ControlPauseAck.GetErrorCode() == sword.ControlAck_error_forbidden {
+					return false
+				}
+			} else if m.ControlResumeAck != nil {
+				if m.ControlResumeAck.GetErrorCode() == sword.ControlAck_error_forbidden {
+					return false
+				}
+			}
 		}
 
 		if len(msgch) < cap(msgch) {
@@ -176,6 +194,11 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	// Trigger simulation_client messages
 	other := loginAndWaitModel(c, sim, NewAllUserOpts(""))
 	createAutomat(c, other)
+
+	// Try invalid login followed by Pause/Resume (SWBUG-11716)
+	client.Login("foo", "bar")
+	client.Pause()
+	client.Resume(0)
 	waitForMessages(2*time.Second, msgch)
 
 	// Trigger destruction events
