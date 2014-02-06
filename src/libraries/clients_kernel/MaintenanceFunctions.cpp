@@ -18,10 +18,10 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceFunctions::NTI constructor
+// Name: MaintenanceFunctions::TowCapacity constructor
 // Created: ABR 2014-02-06
 // -----------------------------------------------------------------------------
-MaintenanceFunctions::Towing::Towing( xml::xistream& xis )
+MaintenanceFunctions::TowCapacity::TowCapacity( xml::xistream& xis )
     : capacity_( xis.attribute< float >( "capacity" ) )
     , loadTime_( xis.attribute< std::string >( "loading-time" ) )
     , unloadTime_( xis.attribute< std::string >( "unloading-time" ) )
@@ -30,10 +30,10 @@ MaintenanceFunctions::Towing::Towing( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaintenanceFunctions::NTI constructor
+// Name: MaintenanceFunctions::RepairCapacity constructor
 // Created: ABR 2014-02-06
 // -----------------------------------------------------------------------------
-MaintenanceFunctions::NTI::NTI( xml::xistream& xis )
+MaintenanceFunctions::RepairCapacity::RepairCapacity( xml::xistream& xis )
     : maxRepairTime_( boost::none )
 {
     const std::string maxRepairTime = xis.attribute< std::string >( "max-reparation-time", "" );
@@ -54,19 +54,19 @@ MaintenanceFunctions::NTI::NTI( xml::xistream& xis )
 // Created: ABR 2014-02-06
 // -----------------------------------------------------------------------------
 MaintenanceFunctions::MaintenanceFunctions( xml::xistream& xis )
-    : towing_( boost::none )
+    : towCapacity_( boost::none )
 {
     xis >> xml::list( "towing", [&] ( xml::xistream& xis )
             {
-                towing_ = MaintenanceFunctions::Towing( xis );
+                towCapacity_ = MaintenanceFunctions::TowCapacity( xis );
             } )
         >> xml::list( "repairing", [&] ( xml::xistream& xis )
             {
                 const std::string categoryStr = xis.attribute< std::string >( "category" );
                 E_BreakdownNTI category = ENT_Tr::ConvertToBreakdownNTI( categoryStr );
-                if( repairing_.find( category ) != repairing_.end() )
+                if( repairCapacities_.find( category ) != repairCapacities_.end() )
                     throw MASA_EXCEPTION( "Category " + categoryStr + " already defined" );
-                repairing_.insert( std::make_pair( category, MaintenanceFunctions::NTI( xis ) ) );
+                repairCapacities_.insert( std::make_pair( category, MaintenanceFunctions::RepairCapacity( xis ) ) );
             } );
 }
 
@@ -85,7 +85,7 @@ MaintenanceFunctions::~MaintenanceFunctions()
 // -----------------------------------------------------------------------------
 bool MaintenanceFunctions::CanHaul( const EquipmentType& equipment ) const
 {
-    return towing_ && towing_->capacity_ >= equipment.GetWeight();
+    return towCapacity_ && towCapacity_->capacity_ >= equipment.GetWeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ bool MaintenanceFunctions::CanHaul( const EquipmentType& equipment ) const
 // -----------------------------------------------------------------------------
 bool MaintenanceFunctions::CanHaul( const ComponentType& component ) const
 {
-    return towing_ && towing_->capacity_ >= component.GetWeight();
+    return towCapacity_ && towCapacity_->capacity_ >= component.GetWeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,11 +103,11 @@ bool MaintenanceFunctions::CanHaul( const ComponentType& component ) const
 // -----------------------------------------------------------------------------
 bool MaintenanceFunctions::CanRepair( const BreakdownType& breakdown ) const
 {
-    auto nti = repairing_.find( breakdown.GetNTI() );
-    return nti != repairing_.end() &&
-           std::find( nti->second.supportedTypes_.begin(),
-                      nti->second.supportedTypes_.end(),
-                      breakdown.GetType() ) != nti->second.supportedTypes_.end();
+    auto repairCapacity = repairCapacities_.find( breakdown.GetNTI() );
+    return repairCapacity!= repairCapacities_.end() &&
+           std::find( repairCapacity->second.supportedTypes_.begin(),
+                      repairCapacity->second.supportedTypes_.end(),
+                      breakdown.GetType() ) != repairCapacity->second.supportedTypes_.end();
     // $$$$ 2014-02-06: TODO compute TheoricRepairTime in BreakdownType, then check
-    // nti->maxRepairTime_ && breakdown->GetTheoricRepairTime() < nti->maxRepairTime_
+    // repairCapacity->maxRepairTime_ && breakdown->GetTheoricRepairTime() < repairCapacity->maxRepairTime_
 }

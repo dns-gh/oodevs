@@ -46,16 +46,16 @@ public:
 private:
     //! @name Types
     //@{
-    struct Towing
+    struct TowCapacity
     {
-        explicit Towing( xml::xistream& xis );
+        explicit TowCapacity( xml::xistream& xis );
         float capacity_;
         std::string loadTime_;
         std::string unloadTime_;
     };
-    struct NTI
+    struct RepairCapacity
     {
-        explicit NTI( xml::xistream& xis );
+        explicit RepairCapacity( xml::xistream& xis );
         boost::optional< std::string > maxRepairTime_;
         std::vector< E_BreakdownType > supportedTypes_;
     };
@@ -63,8 +63,8 @@ private:
 
     //! @name Member data
     //@{
-    boost::optional< Towing > towing_;
-    std::map< E_BreakdownNTI, const NTI > repairing_;
+    boost::optional< TowCapacity > towCapacity_;
+    std::map< E_BreakdownNTI, const RepairCapacity > repairCapacities_;
     //@}
 };
 
