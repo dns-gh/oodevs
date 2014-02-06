@@ -17,9 +17,10 @@ namespace xml { class xistream; };
 
 namespace kernel
 {
-    class WeaponSystemType;
-    class DotationCapacityType;
     class BreakdownOriginType;
+    class DotationCapacityType;
+    class MaintenanceFunctions;
+    class WeaponSystemType;
 
 // =============================================================================
 /** @class  EquipmentType
@@ -70,6 +71,7 @@ public:
     tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     const CarryingSupplyFunction* GetLogSupplyFunctionCarrying() const;
+    const MaintenanceFunctions* GetMaintenanceFunctions() const;
     //@}
 
 private:
@@ -86,7 +88,6 @@ private:
     void ReadBreakdown( xml::xistream& xis );
     void ReadResourceCategory( xml::xistream& xis );
     void ReadResource( xml::xistream& xis );
-    void ReadLogSupplyFunction( xml::xistream& xis );
     //@}
 
 private:
@@ -97,7 +98,8 @@ private:
     unsigned long id_;
     T_Breakdowns breakdowns_;
     T_Resources resources_;
-    std::auto_ptr< CarryingSupplyFunction > carryingSupplyFunction_;
+    std::unique_ptr< CarryingSupplyFunction > supplyFunction_;
+    std::unique_ptr< MaintenanceFunctions > maintenanceFunctions_;
     float weight_;
     //@}
 };

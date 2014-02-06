@@ -91,7 +91,6 @@ void PHY_MaintenanceRepairConsign::DoReturnComposante()
 {
     assert( pComposanteState_ );
     assert( !pRepairer_ );
-    ResetTimer( 0 );
     pComposanteState_->NotifyRepaired();
     pComposanteState_ = 0;
 }
@@ -104,7 +103,6 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForParts()
 {
     assert( pComposanteState_ );
     assert( !pRepairer_ );
-    ResetTimer( 0 );
     return GetPionMaintenance().ConsumePartsForBreakdown( pComposanteState_->GetComposanteBreakdown() );
 }
 
@@ -117,7 +115,6 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
     assert( pComposanteState_ );
     assert( !pRepairer_ );
 
-    ResetTimer( 0 );
     pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown() );
     if( !pRepairer_ )
     {
@@ -147,10 +144,7 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForCarrier()
 {
-    assert( pComposanteState_ );
-    assert( !pRepairer_ );
-    ResetTimer( 0 );
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +160,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
-        SetState( sword::LogMaintenanceHandlingUpdate::finished );
+        EnterStateFinished();
         return true;
     }
     return false;
@@ -179,8 +173,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 {
     assert( pComposanteState_ );
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_parts );
-    ResetTimer( 0 );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_parts, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,10 +184,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection()
 {
     assert( pComposanteState_ );
     if( IsManualMode() )
-    {
-        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection );
-        ResetTimer( 0 );
-    }
+        SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, 0 );
     else
         EnterStateWaitingForRepairer();
 }
@@ -206,8 +196,7 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection()
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 {
     assert( pComposanteState_ );
-    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer );
-    ResetTimer( 0 );
+    SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,8 +206,8 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 void PHY_MaintenanceRepairConsign::EnterStateRepairing()
 {
     assert( pComposanteState_ );
-    SetState( sword::LogMaintenanceHandlingUpdate::repairing );
-    ResetTimer( pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
+    SetState( sword::LogMaintenanceHandlingUpdate::repairing,
+        pComposanteState_->GetComposanteBreakdown().GetRepairTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,8 +221,10 @@ void PHY_MaintenanceRepairConsign::EnterStateGoingBackToWar()
 
     GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
     pRepairer_ = 0;
-    SetState( sword::LogMaintenanceHandlingUpdate::moving_back );
-    ResetTimer( pComposanteState_->ApproximateTravelTime( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(), pComposanteState_->GetPionPosition() ) );
+    SetState( sword::LogMaintenanceHandlingUpdate::moving_back,
+        pComposanteState_->ApproximateTravelTime(
+            pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition(),
+            pComposanteState_->GetPionPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,19 +282,22 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
 {
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
         next_ = [&]() { EnterStateWaitingForRepairer(); };
+    else
+        throw MASA_EXCEPTION( "repair consign not in a waiting state" );
 }
 
-bool PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
+void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
 {
-    return false;
+    throw MASA_EXCEPTION( "cannot transfer a repair consign to superior" );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( uint32_t /*equipmentType*/ )
+void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/ )
 {
-    return false;
+    throw MASA_EXCEPTION( "cannot select a transporter for a repair consign" );
 }
 
 void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& /*type*/ )

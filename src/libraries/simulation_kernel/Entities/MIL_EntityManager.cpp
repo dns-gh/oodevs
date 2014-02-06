@@ -2124,7 +2124,10 @@ void MIL_EntityManager::OnReceiveSelectNewLogisticState( const sword::MagicActio
     const auto& params = msg.parameters();
     protocol::CheckCount( params, 1 );
     const auto id = protocol::GetIdentifier( params, 0 );
-    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request ){ request.SelectNewState(); } );
+    ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
+    {
+        request.SelectNewState();
+    } );
 }
 
 void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicAction& msg )
@@ -2134,8 +2137,7 @@ void MIL_EntityManager::OnReceiveTransferToLogisticSuperior( const sword::MagicA
     const auto id = protocol::GetIdentifier( params, 0 );
     ApplyOnRequest( *sink_, id, []( PHY_MaintenanceComposanteState& request )
     {
-        if( !request.TransferToLogisticSuperior() )
-            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request state" );
+        request.TransferToLogisticSuperior();
     } );
 }
 
@@ -2145,7 +2147,7 @@ void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& 
     protocol::CheckCount( params, 2 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
-    protocol::Check( equipment, "invalid component type identifier" );
+    protocol::Check( equipment, "invalid equipment type identifier" );
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectDiagnosisTeam( *equipment );
@@ -2161,11 +2163,11 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     const auto& params = message.parameters();
     protocol::CheckCount( params, 2 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
-    const auto equipmentTypeId = protocol::GetIdentifier( params, 1 );
+    const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
+    protocol::Check( equipment, "invalid equipment type identifier" );
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
-    { 
-        if( !request.SelectMaintenanceTransporter( equipmentTypeId ) )
-            throw MASA_BADPARAM_ASN( sword::MagicActionAck::ErrorCode, sword::MagicActionAck::error_invalid_parameter, "invalid log request identifier" );
+    {
+        request.SelectMaintenanceTransporter( *equipment );
     } );
 }
 

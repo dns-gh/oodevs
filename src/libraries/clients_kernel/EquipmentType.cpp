@@ -11,6 +11,7 @@
 #include "EquipmentType.h"
 #include "BreakdownOriginType.h"
 #include "DotationCapacityType.h"
+#include "MaintenanceFunctions.h"
 #include "WeaponSystemType.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -36,8 +37,25 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
             >> xml::list( "category", *this, &EquipmentType::ReadResourceCategory )
         >> xml::end
         >> xml::optional >> xml::start( "logistic-functions" )
+            >> xml::list( "maintenance-functions", [&] ( xml::xistream& xis )
+            {
+                if( maintenanceFunctions_ )
+                    throw MASA_EXCEPTION( "Maintenance functions already defined for equipment " + name_ );
+                maintenanceFunctions_.reset( new MaintenanceFunctions( xis ) );
+            } )
             >> xml::optional >> xml::start( "supply-functions" )
-                >> xml::list( "carrying", *this, &EquipmentType::ReadLogSupplyFunction )
+                >>  xml::list( "carrying", [&] ( xml::xistream& xis )
+                {
+                    if( supplyFunction_ )
+                        throw MASA_EXCEPTION( "Supply functions already defined for equipment " + name_ );
+                    supplyFunction_.reset(
+                        new CarryingSupplyFunction(
+                            xis.attribute< std::string >( "nature" ),
+                            xis.attribute< double >( "min-mass" ),
+                            xis.attribute< double >( "max-mass" ),
+                            xis.attribute< double >( "min-volume" ),
+                            xis.attribute< double >( "max-volume" ) ) );
+                } )
             >> xml::end
         >> xml::end;
 }
@@ -150,25 +168,19 @@ void EquipmentType::ReadResource( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EquipmentType::ReadLogSupplyFunction
-// Created: MMC 2011-09-21
-// -----------------------------------------------------------------------------
-void EquipmentType::ReadLogSupplyFunction( xml::xistream& xis )
-{
-    carryingSupplyFunction_.reset(
-        new CarryingSupplyFunction(
-            xis.attribute< std::string >( "nature" ),
-            xis.attribute< double >( "min-mass" ),
-            xis.attribute< double >( "max-mass" ),
-            xis.attribute< double >( "min-volume" ),
-            xis.attribute< double >( "max-volume" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EquipmentType::GetLogSupplyFunctionCarrying
 // Created: JSR 2012-01-03
 // -----------------------------------------------------------------------------
 const EquipmentType::CarryingSupplyFunction* EquipmentType::GetLogSupplyFunctionCarrying() const
 {
-    return carryingSupplyFunction_.get();
+    return supplyFunction_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::GetMaintenanceFunctions
+// Created: ABR 2014-02-06
+// -----------------------------------------------------------------------------
+const MaintenanceFunctions* EquipmentType::GetMaintenanceFunctions() const
+{
+    return maintenanceFunctions_.get();
 }

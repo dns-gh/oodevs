@@ -128,3 +128,12 @@ void InfoMedicalDialog::FillHistoryModel()
 {
     widget_->FillHistoryModel();
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoMedicalDialog::IsVisible
+// Created: LGY 2014-02-05
+// -----------------------------------------------------------------------------
+bool InfoMedicalDialog::IsVisible() const
+{
+    return isVisible();
+}

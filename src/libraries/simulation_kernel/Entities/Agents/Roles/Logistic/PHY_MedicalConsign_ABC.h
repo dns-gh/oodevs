@@ -76,13 +76,15 @@ protected:
     void EnterStateFinished();
 
     sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus GetState() const;
-    void SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState );
-    void ResetTimer( int timer );
+    void SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState, int timer );
     bool DecrementTimer();
     void SendExternalTimerValue( int timer );
 
     PHY_RoleInterface_Medical& GetPionMedical() const;
     //@}
+
+private:
+    void ResetTimer( int timer );
 
 private:
     int nTimer_;

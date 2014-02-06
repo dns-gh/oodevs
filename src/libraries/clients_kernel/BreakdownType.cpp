@@ -63,3 +63,21 @@ std::string BreakdownType::GetUnknownName() const
 {
     return ENT_Tr::ConvertFromBreakdownType( type_, ENT_Tr::eToTr ) + " - " + ENT_Tr::ConvertFromBreakdownNTI( category_, ENT_Tr::eToTr );
 }
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownType::GetNTI
+// Created: ABR 2014-02-06
+// -----------------------------------------------------------------------------
+E_BreakdownNTI BreakdownType::GetNTI() const
+{
+    return category_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownType::GetType
+// Created: ABR 2014-02-06
+// -----------------------------------------------------------------------------
+E_BreakdownType BreakdownType::GetType() const
+{
+    return type_;
+}

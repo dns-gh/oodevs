@@ -54,7 +54,7 @@ class LogisticStockEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    LogisticStockEditor( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel );
+             LogisticStockEditor( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel );
     virtual ~LogisticStockEditor();
     //@}
 
@@ -70,7 +70,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< const kernel::DotationType*, double > T_Requirements;
-    typedef T_Requirements::const_iterator                CIT_Requirements;
     enum
     {
         eCategory,

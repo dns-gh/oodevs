@@ -1136,6 +1136,10 @@
         <source>Select Diagnosis Team</source>
         <translation>Sélectionner une équipe de diagnostique</translation>
     </message>
+    <message>
+        <source>Select Repair Team</source>
+        <translation>Sélectionner une equipe de réparation</translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

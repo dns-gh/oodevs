@@ -64,8 +64,8 @@ public:
     void FinishSuccessfullyWithoutDelay();
 
     virtual void SelectNewState() = 0;
-    virtual bool SelectMaintenanceTransporter( uint32_t equipmentType ) = 0;
-    virtual bool TransferToLogisticSuperior() = 0;
+    virtual void TransferToLogisticSuperior() = 0;
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type ) = 0;
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type ) = 0;
 
     void ClearConsign();
@@ -82,8 +82,7 @@ protected:
     //@{
     void EnterStateFinished();
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus GetState() const;
-    void SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState );
-    void ResetTimer    ( int timer );
+    void SetState      ( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState, int timer );
     bool DecrementTimer();
     bool IsManualMode() const;
 
@@ -91,6 +90,9 @@ protected:
     //@}
 
     MIL_Agent_ABC* pMaintenance_;
+
+private:
+    void ResetTimer( int timer );
 
 private:
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nState_;

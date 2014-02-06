@@ -95,6 +95,7 @@ public:
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const;
     virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
+    virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}

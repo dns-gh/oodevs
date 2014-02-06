@@ -79,8 +79,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForSorting()
 {
     assert( pHumanState_ );
     assert( !pDoctor_ );
-    SetState( sword::LogMedicalHandlingUpdate::waiting_for_triage );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_triage, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,8 +121,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
 {
     assert( pHumanState_ );
     assert( pDoctor_ );
-    SetState( sword::LogMedicalHandlingUpdate::triaging );
-    ResetTimer( PHY_HumanWound::GetSortingTime() );
+    SetState( sword::LogMedicalHandlingUpdate::triaging, PHY_HumanWound::GetSortingTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,8 +132,7 @@ void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 {
     assert( pHumanState_ );
 
-    SetState( sword::LogMedicalHandlingUpdate::looking_for_medical_attention );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::looking_for_medical_attention, 0 );
 
     // Sorting
     if( pDoctor_ )
@@ -155,8 +152,7 @@ void PHY_MedicalSortingConsign::DoSearchForHealingArea()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
-        SetState( sword::LogMedicalHandlingUpdate::finished );
-        ResetTimer( 0 );
+        EnterStateFinished();
         pHumanState_ = 0;
         return;
     }
@@ -172,8 +168,7 @@ void PHY_MedicalSortingConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    ResetTimer( 0 );
-    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,16 +185,11 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
         return false;
 
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
-    if( pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
+    if( pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) ||
+        pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
-        SetState( sword::LogMedicalHandlingUpdate::finished );
-        return true;
-    }
-    else if( pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
-    {
-        pHumanState_ = 0;
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return true;
     }
     return false;

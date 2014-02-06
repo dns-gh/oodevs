@@ -82,8 +82,7 @@ public:
 
     //! @name Tools
     //@{
-    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& carried ) const;
-    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& carried, uint32_t carrierType ) const;
+    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& carried, const PHY_ComposanteTypePion* type = 0 ) const;
     virtual PHY_ComposantePion* GetAvailableDiagnoser( const PHY_ComposanteTypePion* type = 0 ) const;
     virtual PHY_ComposantePion* GetAvailableRepairer( const PHY_Breakdown& breakdown ) const;
     virtual bool HasUsableRepairer( const PHY_Breakdown& breakdown ) const;

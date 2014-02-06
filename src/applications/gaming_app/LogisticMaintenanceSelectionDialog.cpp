@@ -11,13 +11,15 @@
 #include "LogisticMaintenanceSelectionDialog.h"
 #include "moc_LogisticMaintenanceSelectionDialog.cpp"
 #include "MaintenanceHaulersListView.h"
-
+#include "MaintenanceRepairersListView.h"
 #include "actions/ActionsModel.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
@@ -39,8 +41,8 @@ namespace
     }
     template< typename T >
     T* AddResourceListView( const QString& objectName,
-                                    kernel::Controllers& controllers,
-                                    QWidget* parent )
+                            kernel::Controllers& controllers,
+                            QWidget* parent )
     {
         T* view = new T( parent, controllers, false );
         view->setObjectName( objectName );
@@ -67,16 +69,25 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , handler_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , availability_( 0 )
+    , componentType_( 0 )
 {
     setMinimumSize( 400, 400 );
 
     // Radio buttons
     automaticButton_ = AddRadioButton( "automated_selection_button_automatic", tr( "Resolve automatically" ), this );
     evacuateButton_ = AddRadioButton( "automated_selection_button_evacuate", tr( "Request evacuation by logistic superior" ), this );
-    manualButton_ = AddRadioButton( "automated_selection_button_manual", tr( "Select tow truck" ), this );
+    manualButton_ = AddRadioButton( "automated_selection_button_manual", "", this );
 
     // Content
     transporters_ = AddResourceListView< MaintenanceHaulersListView >( "manual_selection_transporters_listview", controllers, this );
+    transporters_->SetFilter( [&] ( const kernel::Availability& availability )
+    {
+        return componentType_ &&
+               availability.type_ &&
+               availability.type_->GetMaintenanceFunctions() &&
+               availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
+    } );
+    repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
 
     // Buttons
     QPushButton* cancelButton = new gui::RichPushButton( "automated_selection_button_cancel", tr( "Cancel" ) );
@@ -88,6 +99,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     // Layouts
     stack_ = new QStackedWidget();
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection, transporters_ );
+    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, repairers_ );
 
     QHBoxLayout* bottomLayout = new QHBoxLayout();
     bottomLayout->addStretch( 1 );
@@ -152,16 +164,28 @@ void LogisticMaintenanceSelectionDialog::SetCurrentWidget()
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consign )
 {
-    id_ = consign.GetId();
-    handler_ = consign.GetHandler();
     if( consign.GetType() != eMaintenance )
         throw MASA_EXCEPTION( "Not supposed to display a maintenance dialog on a non-maintenance consign" );
-    status_ = static_cast< const LogMaintenanceConsign& >( consign ).GetStatus();
+    const LogMaintenanceConsign& maintenanceConsign = static_cast< const LogMaintenanceConsign& >( consign );
+    id_ = consign.GetId();
+    handler_ = consign.GetHandler();
+    componentType_ = maintenanceConsign.GetEquipment();
+    status_ = maintenanceConsign.GetStatus();
     SetCurrentWidget();
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     manualButton_->setChecked( true );
-    transporters_->selectionModel()->clear();
-    transporters_->NotifySelected( handler_ );
+    if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
+    {
+        manualButton_->setText( tr( "Select tow truck" ) );
+        transporters_->selectionModel()->clear();
+        transporters_->NotifySelected( handler_ );
+    }
+    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+    {
+        manualButton_->setText( tr( "Select diagnosis team" ) );
+        repairers_->selectionModel()->clear();
+        repairers_->NotifySelected( handler_ );
+    }
     UpdateDisplay();
     show();
 }
@@ -177,9 +201,11 @@ void LogisticMaintenanceSelectionDialog::accept()
     else if( manualButton_->isChecked() )
     {
         if( !availability_ || !availability_->type_ )
-            throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or it's equipment type" );
+            throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
             actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+            actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
@@ -257,6 +283,8 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
     {
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
             availability_ = transporters_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+            availability_ = repairers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
@@ -278,6 +306,11 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Maintenanc
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         {
             auto indexes = transporters_->selectionModel()->selectedIndexes();
+            OnSelectionChanged( indexes.size() > 0 ? indexes[ 0 ] : QModelIndex(), QModelIndex() );
+        }
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+        {
+            auto indexes = repairers_->selectionModel()->selectedIndexes();
             OnSelectionChanged( indexes.size() > 0 ? indexes[ 0 ] : QModelIndex(), QModelIndex() );
         }
         else

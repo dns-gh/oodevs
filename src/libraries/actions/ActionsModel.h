@@ -119,6 +119,7 @@ public:
     void PublishSelectNewLogisticState( unsigned int consignId );
     void PublishTransferToLogisticSuperior( unsigned int consignId );
     void PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
+    void PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
     //@}
 
 private:

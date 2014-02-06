@@ -613,7 +613,15 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.debug,package.ts,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
+    <target name="package" depends="
+         package.debug
+        ,package.ts
+        ,package.binaries
+        ,package.gaming_app
+        ,package.sdk
+        ,package.proto
+        ,package.xsd"
+        description="package the installers and packs"/>
 
     <!-- Package misc -->
     <target name="package.debug" description="create a zip with all PDB files">
@@ -722,6 +730,15 @@
                    <fileset dir="${data.dir}/app-data/resources/locales" includes="**/*.ts" excludes="license_*"/>
                    <flattenmapper/>
                </mappedresources>
+            </zip>
+        </safe-move>
+    </target>
+
+    <target name="package.xsd" description="create a zip with all schema files">
+        <safe-move file="${out.dir}/xsd.zip">
+            <zip destfile="@{file}" duplicate="fail">
+                <zipfileset dir="${data.dir}/app-data/resources/schemas/${version.major}"
+                    excludes="xsl/**" prefix="schemas"/>
             </zip>
         </safe-move>
     </target>

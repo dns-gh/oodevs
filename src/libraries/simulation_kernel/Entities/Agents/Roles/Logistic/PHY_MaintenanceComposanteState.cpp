@@ -344,18 +344,18 @@ void PHY_MaintenanceComposanteState::SelectNewState()
     pConsign_->SelectNewState();
 }
 
-bool PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
+void PHY_MaintenanceComposanteState::TransferToLogisticSuperior()
 {
-    return pConsign_->TransferToLogisticSuperior();
+    pConsign_->TransferToLogisticSuperior();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::SelectMaintenanceTransporter
 // Created: SLI 2014-01-30
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( uint32_t equipmentType )
+void PHY_MaintenanceComposanteState::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type )
 {
-    return pConsign_->SelectMaintenanceTransporter( equipmentType );
+    pConsign_->SelectMaintenanceTransporter( type );
 }
 
 void PHY_MaintenanceComposanteState::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )

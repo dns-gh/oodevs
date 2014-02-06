@@ -86,9 +86,7 @@ const PHY_Breakdown& PHY_MaintenanceConsign_ABC::GetComposanteBreakdown() const
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::Cancel()
 {
-    assert( pComposanteState_ );
-    SetState( sword::LogMaintenanceHandlingUpdate::finished );
-    ResetTimer( 0 );
+    EnterStateFinished();
     pComposanteState_ = 0;
 }
 
@@ -98,8 +96,7 @@ void PHY_MaintenanceConsign_ABC::Cancel()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 {
-    SetState( sword::LogMaintenanceHandlingUpdate::finished );
-    ResetTimer( 0 );
+    SetState( sword::LogMaintenanceHandlingUpdate::finished, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,10 +135,11 @@ void PHY_MaintenanceConsign_ABC::Clean()
 // Name: PHY_MaintenanceConsign_ABC::SetState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SetState( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState )
+void PHY_MaintenanceConsign_ABC::SetState( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus nNewState, int timer )
 {
     nState_ = nNewState;
     bHasChanged_ = true;
+    ResetTimer( timer );
 }
 
 // -----------------------------------------------------------------------------

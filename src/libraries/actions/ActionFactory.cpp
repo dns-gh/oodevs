@@ -932,19 +932,36 @@ Action_ABC* ActionFactory::CreateTransferToLogisticSuperior( unsigned int consig
     return action.release();
 }
 
+namespace
+{
+    Action_ABC* CreateMaintenanceSelection( unsigned int consignId, unsigned int equipmentTypeId, kernel::MagicActionType& actionType,
+                                            kernel::Controller& controller, const kernel::Time_ABC& simulation )
+    {
+        std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller, false ) );
+        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
+        action->Attach( *new ActionTiming( controller, simulation ) );
+        return action.release();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
 Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
 {
-    kernel::MagicActionType& actionType = magicActions_.Get( "select_maintenance_transporter" );
-    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), consignId ) );
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), equipmentTypeId ) );
-    action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    return action.release();
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectMaintenanceDiagnosisTeam
+// Created: SLI 2014-02-06
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_ );
 }
 
 namespace
@@ -957,10 +974,10 @@ namespace
         {
             Invalidate();
         }
-        virtual ~InvalidAction() {};
+        virtual ~InvalidAction() {}
     public:
-        virtual void Publish( Publisher_ABC&, int ) const {};
-        virtual void Polish() {};
+        virtual void Publish( Publisher_ABC&, int ) const {}
+        virtual void Polish() {}
     };
 }
 

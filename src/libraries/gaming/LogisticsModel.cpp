@@ -233,8 +233,13 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
         }
 
         if( message.has_requests() )
-          consign->Update( message.requests() );
-
+        {
+            for( auto it = consign->CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *consign );
+            consign->Update( message.requests() );
+            for( auto it = consign->CreateIterator(); it.HasMoreElements(); )
+                it.NextElement().recipient_.Get< LogSupplyConsigns >().AddConsign( *consign );
+        }
         consign->Update( message, pPionLogConvoying );
         controller_.Update( *consign );
     }

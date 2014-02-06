@@ -187,58 +187,43 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
 
 namespace
 {
-    struct AvailableHaulerComputer : public OnComponentFunctor_ABC
+    struct ComponentFunctor : OnComponentFunctor_ABC
     {
-    public:
-        AvailableHaulerComputer( const std::function< bool( const PHY_ComposantePion& component ) >& checker, double carriedWeight )
-            : checker_       ( checker )
-            , carriedWeight_ ( carriedWeight )
-            , score_         ( std::numeric_limits< double >::max() )
-            , selectedHauler_( 0 )
+        template< typename Checker >
+        ComponentFunctor( const Checker& checker )
+            : checker_  ( checker )
+            , component_( 0 )
         {}
         void operator()( PHY_ComposantePion& component )
         {
-            if( !checker_( component ) )
-                return;
-            const double newScore = component.GetType().GetHaulerWeightCapacity() - carriedWeight_;
-            if( newScore < score_ )
-            {
-                score_ = newScore;
-                selectedHauler_ = &component;
-            }
+            if( checker_( component ) )
+                component_ = &component;
         }
         std::function< bool( const PHY_ComposantePion& component ) > checker_;
-        double carriedWeight_;
-        double score_;
-        PHY_ComposantePion* selectedHauler_;
+        PHY_ComposantePion* component_;
     };
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
-// Created: NLD 2004-12-23
-// -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& carried ) const
-{
-    AvailableHaulerComputer functor( [&]( const PHY_ComposantePion& component ) -> bool{ return component.CanHaul1( carried ); }, carried.GetWeight() );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *componentComputer );
-    return functor.selectedHauler_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
 // Created: SLI 2014-01-31
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& carried, uint32_t carrierType ) const
+PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableHauler( const PHY_ComposanteTypePion& carried, const PHY_ComposanteTypePion* type ) const
 {
-    AvailableHaulerComputer functor( [&]( const PHY_ComposantePion& component ) -> bool
+    double score = std::numeric_limits< double >::max();
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component ) -> bool
     {
-        return component.GetType().GetMosID().id() == carrierType && component.CanHaul1( carried );
-    }, carried.GetWeight() );
+        if( type && component.GetType() != *type || !component.CanHaul1( carried ) )
+            return false;
+        const double newScore = component.GetType().GetHaulerWeightCapacity() - carried.GetWeight();
+        if( newScore >= score )
+            return false;
+        score = newScore;
+        return true;
+    } );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *componentComputer );
-    return functor.selectedHauler_;
+    return functor.component_;
 }
 
 // -----------------------------------------------------------------------------
@@ -278,28 +263,15 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     return nNbrAvailableAllowedToWork;
 }
 
-namespace
-{
-    struct DiagnoserFinder : ComponentPredicate_ABC
-    {
-        explicit DiagnoserFinder( const PHY_ComposanteTypePion* type )
-            : type_( type )
-        {}
-        virtual bool operator() ( const PHY_ComposantePion& composante )
-        {
-            return composante.CanRepair() && (!type_ || composante.GetType() == *type_);
-        }
-        const PHY_ComposanteTypePion* type_;
-    };
-}
-
 PHY_ComposantePion* PHY_RolePionLOG_Maintenance::GetAvailableDiagnoser( const PHY_ComposanteTypePion* type ) const
 {
-    DiagnoserFinder predicate( type );
-    GetComponentFunctor functor( predicate );
+    ComponentFunctor functor( [&]( const PHY_ComposantePion& component )
+    {
+        return component.CanRepair() && (!type || component.GetType() == *type);
+    } );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     owner_.Execute( *computer );
-    return functor.result_;
+    return functor.component_;
 }
 
 // -----------------------------------------------------------------------------
