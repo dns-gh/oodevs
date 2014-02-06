@@ -38,8 +38,8 @@ public:
     virtual bool Update();
 
     virtual void SelectNewState();
-    virtual bool SelectMaintenanceTransporter( uint32_t equipmentType );
-    virtual bool TransferToLogisticSuperior();
+    virtual void TransferToLogisticSuperior();
+    virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type );
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
     //@}
 

@@ -97,11 +97,10 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation()
     if( GetState() == sword::LogMedicalHandlingUpdate::finished || !pHumanState_ )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
-    SetState( sword::LogMedicalHandlingUpdate::waiting_for_evacuation );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_evacuation, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,11 +140,10 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingTo()
     if( GetState() != sword::LogMedicalHandlingUpdate::waiting_for_evacuation )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
-    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,12 +155,11 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     assert( GetState() == sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in || GetState() == sword::LogMedicalHandlingUpdate::waiting_for_evacuation );
-    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading, 0 );
     if( !pHumanState_ )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
     }
     else
         pHumanState_->NotifyHandledByMedical();
@@ -177,17 +174,16 @@ bool PHY_MedicalEvacuationConsign::EnterStateEvacuationWaitingForFullLoading()
     assert( pHumanState_ );
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
-    ResetTimer( 0 );
     if( GetState() == sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading )
     {
-        SetState( sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion );
+        SetState( sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion, 0 );
         return true;
     }
     assert( GetState() == sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion );
     if( GetState() != sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return true;
     }
     return false;
@@ -206,11 +202,10 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingFrom()
     if( GetState() != sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
-    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,11 +221,10 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationUnloading()
     if( GetState() != sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
-    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,11 +237,10 @@ void PHY_MedicalEvacuationConsign::ChooseStateAfterEvacuation()
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pEvacuationAmbulance_ = 0;
-    ResetTimer( 0 );
     if( pHumanState_->NeedDiagnosis() )
-        SetState( sword::LogMedicalHandlingUpdate::waiting_for_diagnostic );
+        SetState( sword::LogMedicalHandlingUpdate::waiting_for_diagnostic, 0 );
     else
-        SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
+        SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,11 +271,10 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     if( GetState() == sword::LogMedicalHandlingUpdate::finished )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
-    SetState( sword::LogMedicalHandlingUpdate::diagnosing );
-    ResetTimer( PHY_HumanWound::GetDiagnosticTime() );
+    SetState( sword::LogMedicalHandlingUpdate::diagnosing, PHY_HumanWound::GetDiagnosticTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,14 +289,13 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForCollection()
     if( GetState() == sword::LogMedicalHandlingUpdate::finished || !pHumanState_ )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return;
     }
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
     pHumanState_->NotifyDiagnosed();
-    ResetTimer( 0 );
-    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection );
+    SetState( sword::LogMedicalHandlingUpdate::waiting_for_collection, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +311,7 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
-        SetState( sword::LogMedicalHandlingUpdate::finished );
+        EnterStateFinished();
         return true;
     }
     return false;

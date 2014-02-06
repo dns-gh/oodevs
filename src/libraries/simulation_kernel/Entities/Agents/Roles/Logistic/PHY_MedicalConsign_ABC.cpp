@@ -93,8 +93,7 @@ void PHY_MedicalConsign_ABC::ClearConsign()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::Cancel()
 {
-    SetState( sword::LogMedicalHandlingUpdate::finished );
-    ResetTimer( 0 );
+    EnterStateFinished();
     pHumanState_ = 0;
 }
 
@@ -104,8 +103,7 @@ void PHY_MedicalConsign_ABC::Cancel()
 // -----------------------------------------------------------------------------
 void PHY_MedicalConsign_ABC::EnterStateFinished()
 {
-    SetState( sword::LogMedicalHandlingUpdate::finished );
-    ResetTimer( 0 );
+    SetState( sword::LogMedicalHandlingUpdate::finished, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,10 +142,11 @@ void PHY_MedicalConsign_ABC::Clean()
 // Name: PHY_MedicalConsign_ABC::SetTimer
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState )
+void PHY_MedicalConsign_ABC::SetState( sword::LogMedicalHandlingUpdate_EnumLogMedicalHandlingStatus nNewState, int timer )
 {
     nState_ = nNewState;
     bHasChanged_ = true;
+    ResetTimer( timer );
 }
 
 // -----------------------------------------------------------------------------
