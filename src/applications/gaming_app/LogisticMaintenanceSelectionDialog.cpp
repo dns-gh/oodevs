@@ -17,7 +17,9 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
@@ -39,8 +41,8 @@ namespace
     }
     template< typename T >
     T* AddResourceListView( const QString& objectName,
-                                    kernel::Controllers& controllers,
-                                    QWidget* parent )
+                            kernel::Controllers& controllers,
+                            QWidget* parent )
     {
         T* view = new T( parent, controllers, false );
         view->setObjectName( objectName );
@@ -67,6 +69,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , handler_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , availability_( 0 )
+    , componentType_( 0 )
 {
     setMinimumSize( 400, 400 );
 
@@ -77,6 +80,13 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
 
     // Content
     transporters_ = AddResourceListView< MaintenanceHaulersListView >( "manual_selection_transporters_listview", controllers, this );
+    transporters_->SetFilter( [&] ( const kernel::Availability& availability )
+    {
+        return componentType_ &&
+               availability.type_ &&
+               availability.type_->GetMaintenanceFunctions() &&
+               availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
+    } );
 
     // Buttons
     QPushButton* cancelButton = new gui::RichPushButton( "automated_selection_button_cancel", tr( "Cancel" ) );
@@ -154,6 +164,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
 {
     id_ = consign.GetId();
     handler_ = consign.GetHandler();
+    componentType_ = consign.GetEquipment();
     if( consign.GetType() != eMaintenance )
         throw MASA_EXCEPTION( "Not supposed to display a maintenance dialog on a non-maintenance consign" );
     status_ = static_cast< const LogMaintenanceConsign& >( consign ).GetStatus();
