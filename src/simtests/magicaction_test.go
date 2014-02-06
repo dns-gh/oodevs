@@ -380,11 +380,11 @@ func (s *TestSuite) TestSelectMaintenanceTransporter(c *C) {
 
 	// error: second parameter is not an equipment type identifier managed by unit
 	err = client.SelectMaintenanceTransporter(handlingId, 57)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// error: second parameter is a valid equipment type identifier but cannot haul
 	err = client.SelectMaintenanceTransporter(handlingId, 26)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for maintenance transporter selection")
 
 	// trigger select maintenance transporter
 	err = client.SelectMaintenanceTransporter(handlingId, TRANSHeavyEquipmentTransporterSystem)
@@ -429,6 +429,10 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 
 	WaitStateEntered(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
+
+	// error: second parameter must be a valid identifier
+	err = client.SelectDiagnosisTeam(handlingId, 1000)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
 
 	// error: component type specified not available
 	err = client.SelectDiagnosisTeam(handlingId, 39)
