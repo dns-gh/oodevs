@@ -17,6 +17,15 @@ import (
 	"sword"
 )
 
+// Simulation crashes when terminating because of some race between crowd
+// flows and pathfinding.
+// http://jira.masagroup.net/browse/SWBUG-11652
+func DisableDumpChecksForCrowds() *simu.SessionErrorsOpts {
+	return &simu.SessionErrorsOpts{
+		IgnoreDumps: true,
+	}
+}
+
 func CheckHumans(healthy, wounded, dead, contaminated int32, crowd *swapi.Crowd) bool {
 	return crowd.Healthy == healthy && crowd.Wounded == wounded &&
 		crowd.Dead == dead && crowd.Contaminated == contaminated
@@ -96,7 +105,8 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	defer stopSimAndClient(c, sim, client)
+	defer stopSim(c, sim, DisableDumpChecksForCrowds())
+	defer client.Close()
 
 	crowd := CreateCrowd(c, client)
 
@@ -239,12 +249,7 @@ func (s *TestSuite) TestCrowdTeleportation(c *C) {
 	opts := NewAdminOpts(ExCrossroadSmallOrbat)
 	opts.Paused = true
 	sim, client := connectAndWaitModel(c, opts)
-	// TODO: simulation_app.exe crashes at termination in vc100, giving the
-	// move mission and waiting for the flow to be created is enough.
-	errOpts := simu.SessionErrorsOpts{
-		IgnoreDumps: true,
-	}
-	defer stopSim(c, sim, &errOpts)
+	defer stopSim(c, sim, DisableDumpChecksForCrowds())
 	defer client.Close()
 	step := func(n int32) {
 		tick := client.Model.GetTick()
@@ -352,12 +357,7 @@ const (
 
 func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
 	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
-	// TODO: simulation_app.exe crashes at termination in vc100, giving the
-	// move mission and waiting for the flow to be created is enough.
-	errOpts := simu.SessionErrorsOpts{
-		IgnoreDumps: true,
-	}
-	defer stopSim(c, sim, &errOpts)
+	defer stopSim(c, sim, DisableDumpChecksForCrowds())
 	defer client.Close()
 	crowd := CreateCrowd(c, client)
 
