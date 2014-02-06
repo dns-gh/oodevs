@@ -842,6 +842,12 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
             end
         end
     end
+    
+    if self.params.forbidFlyingAgentsFromLanding == true then
+        for i = 1, #self.parameters.commandingEntities do
+            integration.SendMessage( "DeactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+        end
+    end
 
     if self.params.allInFront and self.params.allInFront ~= NIL then
         self.nbrFront = #self.parameters.commandingEntities -- All platoons in front
@@ -1153,4 +1159,10 @@ integration.leadDestroy = function ( self, setEchelonNone )
         end
     end
     self.parameters.pcObjective = nil
+    
+    if self.params.forbidFlyingAgentsFromLanding == true then
+        for i = 1, #entities do
+            integration.SendMessage( "ReactivateBehaviour", self.parameters.commandingEntities[i], { behaviour = "landWhenStationary" }, { type = "dynamic" } )
+        end
+    end
 end
