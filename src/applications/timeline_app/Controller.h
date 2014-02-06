@@ -42,9 +42,9 @@ public slots:
     void OnCenter();
     void OnSwitchLayout();
     void OnCreateEvent();
-    void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void OnCreatedEvents( const timeline::Events& events, const timeline::Error& error );
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
-    void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
+    void OnDeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error );
     void OnDeleteEvent();
     void OnTestCrud();
     void OnActivatedEvent( const timeline::Event& event );
@@ -86,13 +86,13 @@ public:
              OnSignal_ABC() {}
     virtual ~OnSignal_ABC() {}
 public slots:
-    virtual void OnCreatedEvent( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
-    virtual void OnReadEvents  ( const timeline::Events& /*events*/, const timeline::Error& /*error*/ ) {}
-    virtual void OnReadEvent   ( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
-    virtual void OnUpdatedEvent( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
-    virtual void OnDeletedEvent( const std::string& /*uuid*/, const timeline::Error& /*error*/ ) {}
-    virtual void OnLoadedEvents( const timeline::Error& /*error*/ ) {}
-    virtual void OnSavedEvents( const std::string& /*events*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnCreatedEvents( const timeline::Events& /*events*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnReadEvents   ( const timeline::Events& /*events*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnReadEvent    ( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
+    virtual void OnUpdatedEvent ( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
+    virtual void OnDeletedEvents( const std::vector< std::string >& /*uuids*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnLoadedEvents ( const timeline::Error& /*error*/ ) {}
+    virtual void OnSavedEvents  ( const std::string& /*events*/, const timeline::Error& /*error*/ ) {}
 };
 
 #endif//CONTROLLER_H__

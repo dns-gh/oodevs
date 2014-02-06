@@ -83,6 +83,7 @@ Server::Server( const Configuration& cfg )
         log_.reset( new tools::Ofstream( cfg_.server_log, std::ios::out | std::ios::binary ) );
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
     qRegisterMetaType< std::string >( "std::string" );
+    qRegisterMetaType< std::vector< std::string > >( "std::vector< std::string >" );
     qRegisterMetaType< Event >( "timeline::Event" );
     qRegisterMetaType< Events >( "timeline::Events" );
     qRegisterMetaType< Error >( "timeline::Error" );
@@ -162,11 +163,12 @@ void Server::UpdateQuery( const std::map< std::string, std::string >& parameters
     controls::UpdateQuery( *write_, logger_, parameters );
 }
 
-bool Server::CreateEvent( const Event& event )
+bool Server::CreateEvents( const Events& events )
 {
-    if( !event.IsValid() )
-        return false;
-    return controls::CreateEvent( *write_, logger_, event );
+    for( auto it = events.begin(); it != events.end(); ++it )
+        if( !it->IsValid() )
+            return false;
+    return controls::CreateEvents( *write_, logger_, events );
 }
 
 bool Server::SelectEvent( const std::string& uuid )
@@ -191,9 +193,9 @@ bool Server::UpdateEvent( const Event& event )
     return controls::UpdateEvent( *write_, logger_, event );
 }
 
-bool Server::DeleteEvent( const std::string& uuid )
+bool Server::DeleteEvents( const std::vector< std::string >& uuids )
 {
-    return controls::DeleteEvent( *write_, logger_, uuid );
+    return controls::DeleteEvents( *write_, logger_, uuids );
 }
 
 void Server::LoadEvents( const std::string& events )
@@ -245,9 +247,9 @@ void Server::OnReadyServer()
     emit Ready();
 }
 
-void Server::OnCreatedEvent( const Event& event, const Error& error )
+void Server::OnCreatedEvents( const Events& events, const Error& error )
 {
-    emit CreatedEvent( event, error );
+    emit CreatedEvents( events, error );
 }
 
 void Server::OnReadEvents( const Events& events, const Error& error )
@@ -265,9 +267,9 @@ void Server::OnUpdatedEvent( const Event& event, const Error& error )
     emit UpdatedEvent( event, error );
 }
 
-void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
+void Server::OnDeletedEvents( const std::vector< std::string >& uuids, const Error& error )
 {
-    emit DeletedEvent( uuid, error );
+    emit DeletedEvents( uuids, error );
 }
 
 void Server::OnLoadedEvents( const Error& error )

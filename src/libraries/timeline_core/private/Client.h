@@ -60,12 +60,12 @@ public:
     virtual void OnCenterClient();
     virtual void OnLoadClient( const std::string& url );
     virtual void OnUpdateQuery( const std::map< std::string, std::string >& query );
-    virtual void OnCreateEvent( const Event& event );
+    virtual void OnCreateEvents( const Events& events );
     virtual void OnSelectEvent( const std::string& uuid );
     virtual void OnReadEvents();
     virtual void OnReadEvent( const std::string& uuid );
     virtual void OnUpdateEvent( const Event& event );
-    virtual void OnDeleteEvent( const std::string& uuid );
+    virtual void OnDeleteEvents( const std::vector< std::string >& uuids );
     virtual void OnLoadEvents( const std::string& events );
     virtual void OnSaveEvents();
 

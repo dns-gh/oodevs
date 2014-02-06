@@ -49,22 +49,22 @@ public:
     virtual void Load( const std::string& url );
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters );
     virtual void Center();
-    virtual bool CreateEvent( const Event& event );
+    virtual bool CreateEvents( const Events& events );
     virtual bool SelectEvent( const std::string& uuid );
     virtual bool ReadEvents();
     virtual bool ReadEvent( const std::string& uuid );
     virtual bool UpdateEvent( const Event& event );
-    virtual bool DeleteEvent( const std::string& uuid );
+    virtual bool DeleteEvents( const std::vector< std::string >& uuids );
     virtual void LoadEvents( const std::string& events );
     virtual void SaveEvents() const;
 
     /// controls::Server_ABC methods
     virtual void OnReadyServer();
-    virtual void OnCreatedEvent( const Event& event, const Error& error );
+    virtual void OnCreatedEvents( const Events& events, const Error& error );
     virtual void OnReadEvents( const Events& events, const Error& error );
     virtual void OnReadEvent( const Event& event, const Error& error );
     virtual void OnUpdatedEvent( const Event& event, const Error& error );
-    virtual void OnDeletedEvent( const std::string& uuid, const Error& error );
+    virtual void OnDeletedEvents( const std::vector< std::string >& uuids, const Error& error );
     virtual void OnLoadedEvents( const Error& error );
     virtual void OnSavedEvents( const std::string& uuid, const Error& error );
     virtual void OnSelectedEvent( const Event& event );

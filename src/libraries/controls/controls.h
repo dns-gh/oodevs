@@ -34,12 +34,12 @@ namespace controls
     size_t LoadClient     ( tools::ipc::Device& device, const T_Logger& log, const std::string& url );
     size_t UpdateQuery    ( tools::ipc::Device& device, const T_Logger& log, const std::map< std::string, std::string >& query );
     size_t CenterClient   ( tools::ipc::Device& device, const T_Logger& log );
-    size_t CreateEvent    ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t CreateEvents   ( tools::ipc::Device& device, const T_Logger& log, const Events& events );
     size_t SelectEvent    ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
     size_t ReadEvents     ( tools::ipc::Device& device, const T_Logger& log );
     size_t ReadEvent      ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
     size_t UpdateEvent    ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
-    size_t DeleteEvent    ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t DeleteEvents   ( tools::ipc::Device& device, const T_Logger& log, const std::vector< std::string >& uuids );
     size_t LoadEvents     ( tools::ipc::Device& device, const T_Logger& log, const std::string& events );
     size_t SaveEvents     ( tools::ipc::Device& device, const T_Logger& log );
 
@@ -54,12 +54,12 @@ namespace controls
         virtual void OnLoadClient( const std::string& url ) = 0;
         virtual void OnUpdateQuery( const std::map< std::string, std::string >& query ) = 0;
         virtual void OnCenterClient() = 0;
-        virtual void OnCreateEvent( const Event& event ) = 0;
+        virtual void OnCreateEvents( const std::vector< Event >& events ) = 0;
         virtual void OnSelectEvent( const std::string& uuid ) = 0;
         virtual void OnReadEvents() = 0;
         virtual void OnReadEvent( const std::string& uuid ) = 0;
         virtual void OnUpdateEvent( const Event& event ) = 0;
-        virtual void OnDeleteEvent( const std::string& uuid ) = 0;
+        virtual void OnDeleteEvents( const std::vector< std::string >& uuids ) = 0;
         virtual void OnLoadEvents( const std::string& events ) = 0;
         virtual void OnSaveEvents() = 0;
     };
@@ -67,11 +67,11 @@ namespace controls
     void ParseClient( ClientHandler_ABC& client, const void* src, size_t size, const T_Logger& log );
 
     size_t ReadyServer          ( tools::ipc::Device& device, const T_Logger& log );
-    size_t CreatedEvent         ( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error );
+    size_t CreatedEvents        ( tools::ipc::Device& device, const T_Logger& log, const Events& events, const Error& error );
     size_t ReadEvents           ( tools::ipc::Device& device, const T_Logger& log, const Events& events, const Error& error );
     size_t ReadEvent            ( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error );
     size_t UpdatedEvent         ( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error );
-    size_t DeletedEvent         ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid, const Error& error );
+    size_t DeletedEvents        ( tools::ipc::Device& device, const T_Logger& log, const std::vector< std::string >& uuids, const Error& error );
     size_t LoadedEvents         ( tools::ipc::Device& device, const T_Logger& log, const Error& error );
     size_t SavedEvents          ( tools::ipc::Device& device, const T_Logger& log, const std::string& events, const Error& error );
     size_t SelectedEvent        ( tools::ipc::Device& device, const T_Logger& log,  const Event& event );
@@ -89,11 +89,11 @@ namespace controls
         virtual ~ServerHandler_ABC() {}
 
         virtual void OnReadyServer          () = 0;
-        virtual void OnCreatedEvent         ( const Event& event, const Error& error ) = 0;
+        virtual void OnCreatedEvents        ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvents           ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvent            ( const Event& event, const Error& error ) = 0;
         virtual void OnUpdatedEvent         ( const Event& event, const Error& error ) = 0;
-        virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
+        virtual void OnDeletedEvents        ( const std::vector< std::string >& uuids, const Error& error ) = 0;
         virtual void OnLoadedEvents         ( const Error& error ) = 0;
         virtual void OnSavedEvents          ( const std::string& events, const Error& error ) = 0;
         virtual void OnSelectedEvent        ( const Event& event ) = 0;

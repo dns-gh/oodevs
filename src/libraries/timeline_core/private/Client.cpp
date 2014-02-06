@@ -155,9 +155,9 @@ void Client::OnUpdateQuery( const std::map< std::string, std::string >& query )
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::UpdateQuery, query ) );
 }
 
-void Client::OnCreateEvent( const timeline::Event& event )
+void Client::OnCreateEvents( const timeline::Events& events )
 {
-    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CreateEvent, event ) );
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CreateEvents, events ) );
 }
 
 void Client::OnSelectEvent( const std::string& uuid )
@@ -180,9 +180,9 @@ void Client::OnUpdateEvent( const timeline::Event& event )
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::UpdateEvent, event ) );
 }
 
-void Client::OnDeleteEvent( const std::string& uuid )
+void Client::OnDeleteEvents( const std::vector< std::string >& uuids )
 {
-    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::DeleteEvent, uuid ) );
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::DeleteEvents, uuids ) );
 }
 
 void Client::OnLoadEvents( const std::string& events )

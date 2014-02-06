@@ -50,27 +50,28 @@ public:
     void Unregister ();
     void CenterClient();
     void UpdateQuery( const std::map< std::string, std::string >& query );
-    void CreateEvent( const Event& event );
+    void CreateEvents( const Events& events );
     void SelectEvent( const std::string& uuid );
     void ReadEvents ();
     void ReadEvent  ( const std::string& uuid );
     void UpdateEvent( const Event& event );
-    void DeleteEvent( const std::string& uuid );
+    void DeleteEvents( const std::vector< std::string >& uuids );
     void LoadEvents( const std::string& events );
     void SaveEvents();
 
 private:
-    void SendCreatedEvent( const Event& event, const Error& err );
-    void SendReadEvents  ( const Events& events, const Error& err );
-    void SendReadEvent   ( const Event& event, const Error& err );
-    void SendUpdatedEvent( const Event& event, const Error& err );
-    void SendDeletedEvent( const std::string& uuid, const Error& err );
-    void SendLoadedEvents( const Error& err );
-    void SendSavedEvents ( const std::string& events, const Error& err );
+    void SendCreatedEvents( const Events& events, const Error& err );
+    void SendReadEvents   ( const Events& events, const Error& err );
+    void SendReadEvent    ( const Event& event, const Error& err );
+    void SendUpdatedEvent ( const Event& event, const Error& err );
+    void SendDeletedEvents( const std::vector< std::string >& uuids, const Error& err );
+    void SendLoadedEvents ( const Error& err );
+    void SendSavedEvents  ( const std::string& events, const Error& err );
 
     // V8 handlers
     CefRefPtr< CefV8Value > OnReady                ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnCreatedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnCreatedEvents        ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnReadEvents           ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnReadEvent            ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnUpdatedEvent         ( const CefV8ValueList& args );
