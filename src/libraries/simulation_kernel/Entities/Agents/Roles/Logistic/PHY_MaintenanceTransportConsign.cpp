@@ -381,7 +381,7 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
         throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
     if( !component_ )
-        throw MASA_EXCEPTION( "invalid equipment type identifier" );
+        throw MASA_EXCEPTION( "no component of specified type available for maintenance transporter selection" );
     GetPionMaintenance().StartUsingForLogistic( *component_ );
     next_ = [&]() { EnterStateCarrierGoingTo(); };
 }

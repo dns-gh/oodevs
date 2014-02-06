@@ -2134,7 +2134,7 @@ void MIL_EntityManager::OnReceiveSelectDiagnosisTeam( const sword::MagicAction& 
     protocol::CheckCount( params, 2 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
-    protocol::Check( equipment, "invalid component type identifier" );
+    protocol::Check( equipment, "invalid equipment type identifier" );
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectDiagnosisTeam( *equipment );
@@ -2151,7 +2151,7 @@ void MIL_EntityManager::OnReceiveSelectMaintenanceTransporter( const sword::Magi
     protocol::CheckCount( params, 2 );
     const auto requestId = protocol::GetIdentifier( params, 0 );
     const auto equipment = PHY_ComposanteTypePion::Find( protocol::GetIdentifier( params, 1 ) );
-    protocol::Check( equipment, "invalid component type identifier" );
+    protocol::Check( equipment, "invalid equipment type identifier" );
     ApplyOnRequest( *sink_, requestId, [&]( PHY_MaintenanceComposanteState& request )
     {
         request.SelectMaintenanceTransporter( *equipment );
