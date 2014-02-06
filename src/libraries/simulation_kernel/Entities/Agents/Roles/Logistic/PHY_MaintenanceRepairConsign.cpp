@@ -286,7 +286,7 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
 
 void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
 {
-    throw MASA_EXCEPTION( "cannot treansfer a repair consign to superior" );
+    throw MASA_EXCEPTION( "cannot transfer a repair consign to superior" );
 }
 
 // -----------------------------------------------------------------------------
