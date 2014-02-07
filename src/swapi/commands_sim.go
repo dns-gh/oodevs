@@ -1659,3 +1659,13 @@ func (c *Client) SelectDiagnosisTeam(handlingId, equipmentId uint32) error {
 	return c.SelectDiagnosisTeamTest(
 		MakeParameters(MakeIdentifier(handlingId), MakeIdentifier(equipmentId)))
 }
+
+func (c *Client) SelectRepairTeamTest(params *sword.MissionParameters) error {
+	msg := CreateMagicAction(params, sword.MagicAction_select_repair_team)
+	return <-c.postSimRequest(msg, defaultMagicHandler)
+}
+
+func (c *Client) SelectRepairTeam(handlingId, equipmentId uint32) error {
+	return c.SelectRepairTeamTest(
+		MakeParameters(MakeIdentifier(handlingId), MakeIdentifier(equipmentId)))
+}
