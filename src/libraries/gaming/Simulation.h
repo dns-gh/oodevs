@@ -52,6 +52,14 @@ public:
         explicit sTimeTable( const sword::TimeTable& timeTable ) : timeTable_( timeTable ) {}
         const sword::TimeTable& timeTable_;
     };
+    struct Reconnection
+    {
+        explicit Reconnection( const std::string& login ) : login_( login ) {}
+                 Reconnection( const std::string& login, const std::string& password )
+                     : login_( login ), password_( password ) {}
+        std::string login_;
+        std::string password_;
+    };
 
 public:
     //! @name Constructors/Destructor
