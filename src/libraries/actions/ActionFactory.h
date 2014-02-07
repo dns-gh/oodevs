@@ -97,6 +97,8 @@ public:
     virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
     virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
 
+    virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
+
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}
 

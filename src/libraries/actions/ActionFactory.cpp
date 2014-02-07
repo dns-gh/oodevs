@@ -13,6 +13,7 @@
 #include "ActionTiming.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
+#include "Enumeration.h"
 #include "FragOrder.h"
 #include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
@@ -962,6 +963,22 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeDiplomacy
+// Created: ABR 2014-02-07
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy )
+{
+    MagicActionType& actionType = magicActions_.Get( "change_diplomacy" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), team1 ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), team2 ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), diplomacy ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
 }
 
 namespace

@@ -70,13 +70,5 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
 {
     if( team1.Get< kernel::Diplomacies_ABC >().GetDiplomacy( team2 ) == diplomacy )
         return;
-
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_diplomacy" );
-    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), team1.GetId() ) );
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), team2.GetId() ) );
-    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ResolveDiplomacy( diplomacy ) ) );
-    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.PublishChangeDiplomacy( team1.GetId(), team2.GetId(), ResolveDiplomacy( diplomacy ) );
 }

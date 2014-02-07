@@ -18,6 +18,11 @@
 
 class Publisher_ABC;
 
+namespace sword
+{
+    enum EnumDiplomacy;
+}
+
 namespace kernel
 {
     class AgentType;
@@ -120,6 +125,7 @@ public:
     void PublishTransferToLogisticSuperior( unsigned int consignId );
     void PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
     void PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
+    void PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
     //@}
 
 private:

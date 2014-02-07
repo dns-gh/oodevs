@@ -21,6 +21,7 @@ namespace sword
     class AutomatOrder;
     class ClientToSim;
     class CrowdOrder;
+    enum EnumDiplomacy;
     class FragOrder;
     class KnowledgeMagicAction;
     class MagicAction;
@@ -120,6 +121,8 @@ public:
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
     virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
+
+    virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}

@@ -237,6 +237,16 @@ void ActionsModel::PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeDiplomacy
+// Created: ABR 2014-02-07
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeDiplomacy( team1, team2, diplomacy ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
