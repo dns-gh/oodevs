@@ -74,7 +74,7 @@ int UnitStateTableEquipment::CountLines( const QString& name, int firstRow, E_Eq
 // Name: UnitStateTableEquipment::LineChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ ) const
+bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int >& currentBreakdowns ) const
 {
     for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
         if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
@@ -130,7 +130,7 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 // Name: UnitStateTableEquipment::HasChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const // $$$ SLI: Never called?
+bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
     assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     rowsChanged_.clear();
@@ -148,9 +148,11 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const /
         const QStringList* breakdowns = delegate_.GetComboContent( row, eBreakdown );
         if( LineChanged( name, row, equipment.available_,     eEquipmentState_Available ) ||
             LineChanged( name, row, equipment.unavailable_,   eEquipmentState_Destroyed ) ||
-            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns() ) : std::vector< unsigned int >()  ) ||
+            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation,
+                breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns() ) : std::vector< unsigned int >()  ) ||
             LineChanged( name, row, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable ) ||
-            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) : std::vector< unsigned int >() ) ||
+            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance,
+                breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) : std::vector< unsigned int >() ) ||
             LineChanged( name, row, equipment.prisonners_,    eEquipmentState_Prisonner ) )
             rowsChanged_[ equipment.type_.GetId() ] = first_row;
     }

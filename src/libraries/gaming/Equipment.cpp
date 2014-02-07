@@ -113,7 +113,7 @@ Equipment Equipment::operator+( const Equipment& diff ) const
         assert( diff.breakdowns_[ i ] != 0 );
         if( diff.breakdowns_[ i ] < 0 ) // Remove breakdown
         {
-            std::vector< int >::iterator it = equipment.breakdowns_.begin();
+            auto it = equipment.breakdowns_.begin();
             for( ; it != equipment.breakdowns_.end(); ++it )
                 if( -diff.breakdowns_[ i ] == *it )
                 {
@@ -130,7 +130,6 @@ Equipment Equipment::operator+( const Equipment& diff ) const
 
 // -----------------------------------------------------------------------------
 // Name: Equipment::operator-
-// Brief: Create difference between 2 Equipment
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
 Equipment Equipment::operator-( const Equipment& previous ) const
@@ -147,15 +146,15 @@ Equipment Equipment::operator-( const Equipment& previous ) const
     for( unsigned int i = 0; i < previous.breakdowns_.size(); ++i )
     {
         assert( previous.breakdowns_[ i ] > 0 );
-        bool founded = false;
-        for( std::vector< int >::iterator it = diff.breakdowns_.begin(); it != diff.breakdowns_.end(); ++it )
+        bool found = false;
+        for( auto it = diff.breakdowns_.begin(); it != diff.breakdowns_.end(); ++it )
             if( previous.breakdowns_[ i ] == *it )
             {
-                founded = true;
+                found = true;
                 diff.breakdowns_.erase( it );
                 break;
             }
-        if( !founded )
+        if( !found )
             diff.breakdowns_.push_back( -previous.breakdowns_[ i ] );
     }
     return diff;
@@ -163,7 +162,6 @@ Equipment Equipment::operator-( const Equipment& previous ) const
 
 // -----------------------------------------------------------------------------
 // Name: Equipment::operator-
-// Brief: Inverse a difference
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
 Equipment Equipment::operator-() const

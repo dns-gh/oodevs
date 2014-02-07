@@ -154,10 +154,8 @@ void PHY_MaintenanceComposanteState::NotifyRepaired()
 void PHY_MaintenanceComposanteState::Cancel()
 {
     if( pConsign_ )
-    {
         pConsign_->Cancel();
-        pConsign_ = 0;
-    }
+    pConsign_ = 0;
 }
 
 unsigned int PHY_MaintenanceComposanteState::GetID() const

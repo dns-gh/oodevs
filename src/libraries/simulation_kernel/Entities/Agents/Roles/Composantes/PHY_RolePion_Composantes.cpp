@@ -1866,7 +1866,9 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
     for( auto it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( &composante.GetType() == &composanteType && composante.GetState().IsUsable() && composante.GetState() != PHY_ComposanteState::repairableWithEvacuation_ )
+        if( composante.GetType() == composanteType &&
+            composante.GetState().IsUsable() &&
+            composante.GetState() != PHY_ComposanteState::repairableWithEvacuation_ )
         {
             composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_, breakdownType );
             --quantity;
@@ -1922,21 +1924,19 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( &composante.GetType() == &composanteType )
+        if( composante.GetType() == composanteType )
         {
             while( stateIt != repartition.end() && stateIt->second == 0 )
                 ++stateIt;
             if( stateIt == repartition.end() )
                 return;
+            const PHY_BreakdownType* breakdownType = 0;
             if( stateIt->first == &PHY_ComposanteState::repairableWithEvacuation_ )
             {
                 unsigned int breakdownId = message.list( 7 ).list( stateIt->second - 1 ).identifier();
-                const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
-                if( breakdownType )
-                    composante.ReinitializeState( *stateIt->first, breakdownType );
+                breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
             }
-            else
-                composante.ReinitializeState( *stateIt->first );
+            composante.ReinitializeState( *stateIt->first, breakdownType );
             stateIt->second -= 1;
         }
     }

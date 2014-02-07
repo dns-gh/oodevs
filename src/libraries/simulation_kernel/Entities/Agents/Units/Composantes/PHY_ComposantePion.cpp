@@ -220,8 +220,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     {
         if( !pType_->CanHaveBreakdown( breakdownType ) )
             return;
-        if( pBreakdown_ )
-            delete pBreakdown_;
+        delete pBreakdown_;
         pBreakdown_ = new PHY_Breakdown( breakdownType );
     }
     else if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
