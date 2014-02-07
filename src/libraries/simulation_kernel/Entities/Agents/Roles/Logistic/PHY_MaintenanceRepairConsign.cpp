@@ -324,7 +324,7 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
 void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-        throw MASA_EXCEPTION( "transport consign not in a waiting state" );
+        throw MASA_EXCEPTION( "repair consign not in a waiting state" );
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 

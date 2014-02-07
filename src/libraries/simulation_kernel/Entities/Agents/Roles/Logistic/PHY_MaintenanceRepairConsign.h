@@ -49,7 +49,7 @@ private:
     //@{
     bool DoWaitingForParts();
     bool DoWaitingForRepairer();
-    bool DoSearchForUpperLevel             ();
+    bool DoSearchForUpperLevel();
     void DoReturnComposante();
     bool DoSearchForCarrier();
 
