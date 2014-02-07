@@ -344,6 +344,7 @@ integration.moveToItGeneric = masalife.brain.integration.startStopAction(
 --  movement along computed path
 -- ****************************************************************************
 integration.startMoveToIt = function( objective, pathType, waypoints )
+    myself.blocked = nil
     objective[ myself ] = objective[ myself ] or {}
 
     -- -------------------------------------------------------------------------------- 
@@ -699,6 +700,7 @@ end
 -- ****************************************************************************
 integration.startMoveToItItinerary = function( objective )
     -- Leave tactical object
+    myself.blocked = nil
     if myself.actionOccupy then
         myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
     end
