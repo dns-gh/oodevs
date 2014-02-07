@@ -100,6 +100,7 @@ public:
     double GetPionTransporterWeightCapacity           () const;
     double GetPionTransporterWeightLoadedPerTimeStep  () const;
     double GetPionTransporterWeightUnloadedPerTimeStep() const;
+    bool CanTransportDestroyed() const;
 
     bool   CanTransportCrowd                     () const;
     unsigned int GetCrowdTransporterCapacity     () const;
@@ -343,6 +344,7 @@ private:
     double rPionTransporterWeightCapacity_;
     double rPionTransporterWeightLoadedPerTimeStep_;
     double rPionTransporterWeightUnloadedPerTimeStep_;
+    bool bCanTransportDestroyed_;
 
     // Crowd
     unsigned int nCrowdTransporterCapacity_;

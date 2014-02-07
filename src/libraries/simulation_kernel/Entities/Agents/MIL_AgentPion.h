@@ -110,6 +110,7 @@ public:
     virtual bool IsCivilian() const;
     virtual bool CanEmitReports() const;
     virtual bool CanBeDeleted() const;
+    bool CanTransportDestroyed() const;
 
     virtual bool IsImmobilized() const;
     virtual bool IsAutonomous() const; // Drones

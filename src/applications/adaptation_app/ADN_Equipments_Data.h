@@ -549,6 +549,7 @@ public:
         ADN_Type_Double rWeightTransportCapacity_;
         ADN_Type_Time embarkingTimePerTon_;
         ADN_Type_Time disembarkingTimePerTon_;
+        ADN_Type_Bool bCanTransportDestroyed_;
         ADN_Type_Bool bCanCarryCrowd_;
         ADN_Type_Int nCrowdTransportCapacity_;
         ADN_Type_Time crowdEmbarkingTimePerPerson_;

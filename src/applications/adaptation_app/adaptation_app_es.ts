@@ -1567,6 +1567,10 @@ estacionado con motor encendido</translation>
         <source>Equipment</source>
         <translation type="unfinished">Equipo</translation>
     </message>
+    <message>
+        <source>Can transport destroyed equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

@@ -1626,8 +1626,9 @@ void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& 
     bool loadedTransporters = owner_->GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersToRecover();
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        bool canBeLoaded = ( *it )->CanBeLoaded();
-        if( ( *it )->CanBeTransported() && ( !loadedTransporters || canBeLoaded ) )
+        bool destroyedTransported = algorithm.CanTransportDestroyed() && ( *it )->GetState() == PHY_ComposanteState::dead_;
+        bool canBeLoaded = destroyedTransported ? ( *it )->IsLoadable() : ( *it )->CanBeLoaded();
+        if( ( destroyedTransported || ( *it )->CanBeTransported() ) && ( !loadedTransporters || canBeLoaded ) )
             algorithm.AddTransportedWeight( ( *it )->GetWeight(), canBeLoaded );
     }
 }
@@ -2101,6 +2102,18 @@ void PHY_RolePion_Composantes::LoadForTransport( const MIL_Agent_ABC& /*transpor
 {
     if( bTransportOnlyLoadable )
         MarkAwayComposantesAsChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanTransportDestroyed
+// Created: JSR 2014-02-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanTransportDestroyed() const
+{
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->GetType().CanTransportDestroyed() )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

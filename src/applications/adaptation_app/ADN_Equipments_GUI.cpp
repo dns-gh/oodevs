@@ -111,6 +111,7 @@ void ADN_Equipments_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pCargoGroupBox, "weight-capacity", tools::translate( "ADN_Equipments_GUI", "Weight capacity" ), vInfosConnectors[ eWeightCapacity ], tools::translate( "ADN_Equipments_GUI", "T" ), eGreaterZero );
     builder.AddField< ADN_TimeField >( pCargoGroupBox, "loading-time-per-ton", tools::translate( "ADN_Equipments_GUI", "Loading time per ton" ), vInfosConnectors[ eEmbarkingTimePerTon ] );
     builder.AddField< ADN_TimeField >( pCargoGroupBox, "unloading-time-per-ton", tools::translate( "ADN_Equipments_GUI", "Unloading time per ton" ), vInfosConnectors[ eDisembarkingTimePerTon ] );
+    builder.AddField< ADN_CheckBox >( pCargoGroupBox, "can-transport-destroyed", tools::translate( "ADN_Equipments_GUI", "Can transport destroyed equipments" ), vInfosConnectors[ eCanTransportDestroyed ] );
     builder.PopSubName(); //! cargo-transport
 
     // Crowd transport groupbox

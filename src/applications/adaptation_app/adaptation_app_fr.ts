@@ -1563,6 +1563,10 @@ Arrêt moteur allumé</translation>
         <source>Equipment</source>
         <translation>Equipement</translation>
     </message>
+    <message>
+        <source>Can transport destroyed equipments</source>
+        <translation>Peut transporter des équipements détruits</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

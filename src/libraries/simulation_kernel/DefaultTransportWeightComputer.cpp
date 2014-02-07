@@ -66,4 +66,13 @@ double DefaultTransportWeightComputer::HeaviestTransportedWeight() const
  return  heaviestTransportedWeight_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DefaultTransportWeightComputer::CanTransportDestroyed
+// Created: JSR 2014-02-07
+// -----------------------------------------------------------------------------
+bool DefaultTransportWeightComputer::CanTransportDestroyed() const
+{
+    return strategy_ ? strategy_->CanTransportDestroyed() : false;
+}
+
 }

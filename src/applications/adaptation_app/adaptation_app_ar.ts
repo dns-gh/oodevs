@@ -1551,6 +1551,10 @@ Parked engine running</source>
         <source>Equipment</source>
         <translation type="unfinished">المعدات</translation>
     </message>
+    <message>
+        <source>Can transport destroyed equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

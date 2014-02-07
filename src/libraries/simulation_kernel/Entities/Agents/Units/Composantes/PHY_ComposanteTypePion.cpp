@@ -127,6 +127,7 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
     , rPionTransporterWeightCapacity_            ( 0. )
     , rPionTransporterWeightLoadedPerTimeStep_   ( 0. )
     , rPionTransporterWeightUnloadedPerTimeStep_ ( 0. )
+    , bCanTransportDestroyed_                    ( false )
     , nCrowdTransporterCapacity_                 ( 0 )
     , rCrowdTransporterLoadedPerTimeStep_        ( 0. )
     , rCrowdTransporterUnloadedPerTimeStep_      ( 0. )
@@ -422,6 +423,7 @@ void PHY_ComposanteTypePion::ReadTransportCrew( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
 {
+    bCanTransportDestroyed_ = xis.attribute< bool >( "can-transport-destroyed", false );
     rPionTransporterWeightCapacity_ = xis.attribute< double >( "capacity" );
     if( rPionTransporterWeightCapacity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "unit: capacity <= 0" );
@@ -1541,6 +1543,15 @@ double PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() const
 double PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() const
 {
     return rPionTransporterWeightUnloadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanTransportDestroyed
+// Created: JSR 2014-02-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanTransportDestroyed() const
+{
+    return bCanTransportDestroyed_;
 }
 
 // -----------------------------------------------------------------------------

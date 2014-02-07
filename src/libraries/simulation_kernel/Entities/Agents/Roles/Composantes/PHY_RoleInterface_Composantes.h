@@ -106,6 +106,7 @@ public:
     virtual       double              GetOperationalState      () const = 0;
     virtual       double              GetMajorOperationalState () const = 0;
     virtual       double              GetMaxWeight             ( bool loadedWeight = false ) const = 0;
+    virtual bool CanTransportDestroyed() const = 0;
     //@}
 
     //! @name Fire

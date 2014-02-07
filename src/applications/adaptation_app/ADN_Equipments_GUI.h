@@ -71,6 +71,7 @@ public:
         eWeightCapacity,
         eEmbarkingTimePerTon,
         eDisembarkingTimePerTon,
+        eCanTransportDestroyed,
         eCanCarryCrowd,
         eCrowdCapacity,
         eCrowdEmbarkingTimePerPerson,

@@ -2029,6 +2029,15 @@ bool MIL_AgentPion::CanBeDeleted() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanTransportDestroyed
+// Created: JSR 2014-02-07
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanTransportDestroyed() const
+{
+    return CallRole( &PHY_RoleInterface_Composantes::CanTransportDestroyed, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReloadBrain
 // Created: SLI 2011-09-20
 // -----------------------------------------------------------------------------
