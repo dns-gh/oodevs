@@ -221,6 +221,8 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
                   BreakdownIDToComboIndex( &breakdownTypes, maintenanceDiagnosedBreakdowns ) );
         AddLines( name, selected, static_cast< int >( maintenanceUndiagnosedBreakdowns.size() ), eEquipmentState_InMaintenance, displayTypes,
                   BreakdownIDToComboIndex( &breakdownTypes, maintenanceUndiagnosedBreakdowns ) );
+        const auto inMaintenance = equipment.inMaintenance_ - maintenanceDiagnosedBreakdowns.size() - maintenanceUndiagnosedBreakdowns.size();
+        AddLines( name, selected, static_cast< int >( inMaintenance ), eEquipmentState_InMaintenance, breakdownTypes );
         AddLines( name, selected, equipment.prisonners_, eEquipmentState_Prisonner, breakdownTypes );
     }
 }
