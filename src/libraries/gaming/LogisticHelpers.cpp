@@ -15,6 +15,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "gaming/Attributes.h"
 #include "gaming/SupplyStates.h"
@@ -97,5 +98,23 @@ namespace logistic_helpers
             }
         }
         return false;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: LogisticHelpers::GetLogisticBase
+    // Created: ABR 2014-02-07
+    // -----------------------------------------------------------------------------
+    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return 0;
+        if( auto superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
+        {
+            if( auto base = superior->Retrieve< gui::LogisticBase >() )
+                if( base->IsBase() )
+                    return superior;
+            return GetLogisticBase( superior );
+        }
+        return 0;
     }
 }
