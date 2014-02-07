@@ -162,7 +162,11 @@ void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& con
 void LogisticConsignsWidget_ABC::DisplayHistory( const LogisticsConsign_ABC::History& history )
 {
     if( requestSelected_ && requestSelected_->GetId() == history.GetConsign().GetId() )
+    {
         DisplayCurrentHistory();
+        // Update started date
+        detailsTable_->Set( tools::translate( "Logistic", "Started:" ), requestSelected_->GetCurrentStartedTime() );
+    }
 }
 
 // -----------------------------------------------------------------------------

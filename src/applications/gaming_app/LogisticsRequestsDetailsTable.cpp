@@ -105,17 +105,6 @@ void LogisticsRequestsDetailsTable::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsRequestsDetailsTable::SetData
-// Created: MMC 2013-09-11
-// -----------------------------------------------------------------------------
-void LogisticsRequestsDetailsTable::SetData( int row, int col, QString text )
-{
-    QStandardItem* item = dataModel_->item( row, col );
-    if( item )
-        item->setData( QVariant( text ), Qt::DisplayRole );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticsRequestsDetailsTable::Add
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
@@ -130,4 +119,21 @@ void LogisticsRequestsDetailsTable::Add( const QString& title, const QString& va
     if( itemValue )
         itemValue->setData( QVariant( value ), Qt::DisplayRole );
     ++detailIndex_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticsRequestsDetailsTable::Set
+// Created: LGY 2014-02-07
+// -----------------------------------------------------------------------------
+void LogisticsRequestsDetailsTable::Set( const QString& title, const QString& value )
+{
+    for( auto column = 0; column < dataModel_->columnCount(); ++column )
+    {
+        QList< QStandardItem* > items = dataModel_->findItems( title, Qt::MatchExactly, column );
+        if( !items.isEmpty() )
+            if( QStandardItem* nameItem = items[ 0 ] )
+                if( QStandardItem* itemValue = dataModel_->item( nameItem->row(), nameItem->column() + 1 ) )
+                    if( itemValue->data( Qt::DisplayRole ).toString() != value )
+                        itemValue->setData( QVariant( value ), Qt::DisplayRole );
+    }
 }
