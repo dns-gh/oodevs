@@ -371,10 +371,6 @@ void PHY_MaintenanceTransportConsign::TransferToLogisticSuperior()
     next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter
-// Created: SLI 2014-01-30
-// -----------------------------------------------------------------------------
 void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type )
 {
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
@@ -395,4 +391,9 @@ void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteT
         throw MASA_EXCEPTION( "no component of specified type available for diagnosis team selection" );
     GetPionMaintenance().StartUsingForLogistic( *component_ );
     next_ = [&]() { EnterStateDiagnosing(); };
+}
+
+void PHY_MaintenanceTransportConsign::SelectRepairTeam( const PHY_ComposanteTypePion& /*type*/ )
+{
+    throw MASA_EXCEPTION( "cannot select a repair team for a transport consign" );
 }

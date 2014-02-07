@@ -73,6 +73,7 @@ public:
     void TransferToLogisticSuperior();
     void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type );
     void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type );
+    void SelectRepairTeam( const PHY_ComposanteTypePion& type );
     //@}
 
     //! @name Network
