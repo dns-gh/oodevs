@@ -27,6 +27,11 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class Model;
 class Simulation;
 class SimulationController;
@@ -42,9 +47,16 @@ class InfoDock : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
-                       gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model,
-                       const Simulation& simulation, SimulationController& simulationController );
+             InfoDock( QWidget* parent,
+                       kernel::Controllers& controllers,
+                       const tools::ExerciseConfig& config,
+                       const kernel::Profile_ABC& profile,
+                       const gui::EntitySymbols& icons,
+                       gui::ItemFactory_ABC& itemFactory,
+                       gui::DisplayExtractor& extractor,
+                       Model& model,
+                       const Simulation& simulation,
+                       SimulationController& simulationController );
     virtual ~InfoDock();
     //@}
 };

@@ -14,6 +14,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/SearchLineEdit.h"
+#include "clients_gui/Tools.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/lexical_cast.hpp>
 
@@ -121,7 +122,7 @@ TimelineToolBar::~TimelineToolBar()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnLoadOrderFile()
 {
-    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-" + tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) + ".ord" );
+    tools::Path defaultPath = config_.BuildExerciseChildFile( "" ).Normalize();
     tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load actions file" ), defaultPath, filters_ );
     if( !filename.IsEmpty() && filename.Exists() && filename.IsRegularFile() )
     {
@@ -138,7 +139,8 @@ void TimelineToolBar::OnLoadOrderFile()
 // -----------------------------------------------------------------------------
 void TimelineToolBar::OnSaveOrderFile()
 {
-    tools::Path defaultPath = config_.BuildExerciseChildFile( config_.GetExerciseName() + "-" + tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) );
+    tools::Path defaultPath = config_.BuildExerciseChildFile(
+        tools::SanitizeFileName( QString::fromStdWString( config_.GetExerciseName().BaseName().ToUnicode() ), " " ) + "-" + tools::Path::FromUnicode( tr( "orders" ).toStdWString() ) + ".ord" ).Normalize();
     tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Save actions in active timeline to file" ), defaultPath, filters_ );
     if( filename.IsEmpty() )
         return;

@@ -27,6 +27,7 @@ namespace tools
     bool IsSuperiorEngaged( const kernel::Entity_ABC& entity );
     bool LessThanById( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
     bool LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2 );
+    tools::Path SanitizeFileName( QString text, const QString& after = "-" );
 
 }  //! namespace tools
 
