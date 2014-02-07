@@ -139,7 +139,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
                 else
                     perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
             }
-            else if( detectionComputer.CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
+            else if( detectionComputer.CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) && !perceiver_.IsKnown( agent ) )
                 if( !civiliansEncountered && agent.IsCivilian() )
                 {
                     MIL_Report::PostEvent( perceiver_.GetPion(), report::eRC_CiviliansEncountered );
