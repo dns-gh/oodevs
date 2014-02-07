@@ -537,15 +537,15 @@ void MIL_Population::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::ClearCollisions
+// Name: MIL_Population::ClearObjectCollisions
 // Created: LDC 2014-01-16
 // -----------------------------------------------------------------------------
-void MIL_Population::ClearCollisions()
+void MIL_Population::ClearObjectCollisions()
 {
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (*it)->ClearCollisions();
+        (*it)->ClearObjectCollisions();
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        (*it)->ClearCollisions();
+        (*it)->ClearObjectCollisions();
 }
 
 // -----------------------------------------------------------------------------

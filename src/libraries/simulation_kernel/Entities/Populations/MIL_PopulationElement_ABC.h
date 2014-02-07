@@ -89,7 +89,7 @@ public:
     void ApplyDecontamination( double rRatioWorkers );
     void NotifyUrbanDestructionStart();
     void NotifyObjectCollision( MIL_Object_ABC& object );
-    void ClearCollisions();
+    void ClearObjectCollisions();
     //@}
 
     //! @name Accessors

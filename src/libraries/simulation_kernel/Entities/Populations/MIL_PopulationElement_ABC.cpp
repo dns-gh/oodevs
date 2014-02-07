@@ -584,18 +584,12 @@ const MIL_PopulationElement_ABC::T_PopulationConcentrationVector& MIL_Population
 }
 
 // -----------------------------------------------------------------------------
-
-// Name: MIL_PopulationElement_ABC::ClearCollisions
-// Created: NLD 2005-12-06
+// Name: MIL_PopulationElement_ABC::ClearObjectCollisions
+// Created: LDC 2014-02-06
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ClearCollisions()
+void MIL_PopulationElement_ABC::ClearObjectCollisions()
 {
-    collidingAgents_.clear();
     collidingObjects_.clear();
-
-    collidingPopulationConcentrations_.clear();
-    collidingPopulationFlows_.clear();
-
 }
 
 // -----------------------------------------------------------------------------

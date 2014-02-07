@@ -561,6 +561,7 @@ bool MIL_PopulationFlow::Update()
         RemoveFromPatch();
         return false; // Must be destroyed
     }
+    
     // Collisions
     UpdateCollisions();
     return true;

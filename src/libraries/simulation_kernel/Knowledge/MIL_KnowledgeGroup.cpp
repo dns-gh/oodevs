@@ -1290,7 +1290,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesObjectPerception( int currentTimeStep 
         sCollidingPopulationVisitor< MIL_Object_ABC > visitor( boost::bind( &MIL_KnowledgeGroup::UpdateObjectKnowledgeFromCrowdPerception, this, _1 ), &MIL_PopulationElement_ABC::GetCollidingObjects );
         auto& population = *it;
         population->Apply( visitor );
-        population->ClearCollisions();
+        population->ClearObjectCollisions();
     }
 
     const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
