@@ -246,7 +246,7 @@ void TimelineWebView::OnCreatedEvents( const timeline::Events& events, const tim
         MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
     for( auto it = events.begin(); it != events.end(); ++it )
     {
-        model_.events_.Create( *it );
+        GetOrCreateEvent( *it );
         if( eventCreated_.empty() || it->uuid != eventCreated_ )
             continue;
         SelectEvent( it->uuid );
