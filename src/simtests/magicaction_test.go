@@ -443,3 +443,63 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 	WaitStateLeft(c, client, handlingId,
 		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
 }
+
+func (s *TestSuite) TestSelectRepairTeam(c *C) {
+	opts := NewAllUserOpts(ExCrossroadSmallLog)
+	opts.Step = 300
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	// error: invalid parameters count, parameters expected
+	err := client.SelectRepairTeamTest(swapi.MakeParameters())
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	const MobilityRepairsTeam = 91
+
+	// error: first parameter must be an identifier
+	err = client.SelectRepairTeamTest(swapi.MakeParameters(nil, swapi.MakeIdentifier(MobilityRepairsTeam)))
+	c.Assert(err, IsSwordError, "error_invalid_parameter")
+
+	// error: first parameter must be a valid identifier
+	err = client.SelectRepairTeam(1000, MobilityRepairsTeam)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid log request identifier")
+
+	SetAutomatManualMode(c, client)
+	handlingId := TriggerBreakdown(c, client)
+
+	// error: not a repair consign
+	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a repair team for a transport consign")
+
+	// skip transporter selection
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_transporter_selection)
+	err = client.SelectNewLogisticState(handlingId)
+	c.Assert(err, IsNil)
+
+	// skip diagnosis team selection
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_diagnosis_team_selection)
+	err = client.SelectNewLogisticState(handlingId)
+	c.Assert(err, IsNil)
+
+	WaitStateEntered(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_repair_team_selection)
+
+	// error: second parameter must be a valid identifier
+	err = client.SelectRepairTeam(handlingId, 1000)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: invalid equipment type identifier")
+
+	// error: component type specified not available
+	err = client.SelectRepairTeam(handlingId, 39)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: no component of specified type available for repair team selection")
+
+	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
+	c.Assert(err, IsNil)
+	WaitStateLeft(c, client, handlingId,
+		sword.LogMaintenanceHandlingUpdate_waiting_for_repair_team_selection)
+
+	// error: not in repair team waiting state
+	err = client.SelectRepairTeam(handlingId, MobilityRepairsTeam)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: repair consign not in a waiting for repair team selection state")
+}
