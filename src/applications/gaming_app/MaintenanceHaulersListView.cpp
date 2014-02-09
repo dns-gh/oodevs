@@ -21,8 +21,8 @@
 // -----------------------------------------------------------------------------
 MaintenanceHaulersListView::MaintenanceHaulersListView( QWidget* parent,
                                                         kernel::Controllers& controllers,
-                                                        bool registerInController /* = true */ )
-    : LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >( "maintenance_haulers_listview", parent, controllers, registerInController )
+                                                        bool listenSelectionChanged /* = true */ )
+    : LogisticResourcesListView_ABC< kernel::MaintenanceStates_ABC >( "maintenance_haulers_listview", parent, controllers, listenSelectionChanged )
 {
     QStringList list;
     list.append( tools::translate( "MaintenanceHaulersListView", "Tow trucks" ) );

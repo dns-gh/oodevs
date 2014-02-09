@@ -45,7 +45,7 @@ public:
     //@{
              ResourcesListView_ABC( QWidget* parent,
                                     kernel::Controllers& controllers,
-                                    bool registerInController = true );
+                                    bool listenSelectionChanged = true );
     virtual ~ResourcesListView_ABC();
     //@}
 
@@ -57,6 +57,7 @@ protected:
     //@{
     bool ShouldUpdate( const Extension& a ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void SelectEntity( const kernel::Entity_ABC* entity );
     void ResizeModelOnNewContent( int wantedSize );
     //@}
 
@@ -78,13 +79,13 @@ protected:
     //@{
 private:
     kernel::Controllers& controllers_;
+    std::function< bool( const kernel::Availability& ) > filter_;
+    bool listenSelectionChanged_;
 
 protected:
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel model_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::vector< kernel::Availability > availabilities_;
-    bool registered_;
-    std::function< bool( const kernel::Availability& ) > filter_;
     //@}
 };
 
@@ -95,19 +96,18 @@ protected:
 template< typename Extension >
 ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
                                                            kernel::Controllers& controllers,
-                                                           bool registerInController )
+                                                           bool listenSelectionChanged /* = true */ )
     : QTreeView( parent )
     , controllers_( controllers )
     , selected_( controllers )
-    , registered_( registerInController )
+    , listenSelectionChanged_( listenSelectionChanged )
 {
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     header()->setResizeMode( QHeaderView::ResizeToContents );
     header()->setStretchLastSection( false );
     setModel( &model_ );
-    if( registered_ )
-        controllers_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +117,7 @@ ResourcesListView_ABC< Extension >::ResourcesListView_ABC( QWidget* parent,
 template< typename Extension >
 ResourcesListView_ABC<  Extension >::~ResourcesListView_ABC()
 {
-    if( registered_ )
-        controllers_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +147,7 @@ void ResourcesListView_ABC< Extension >::polish()
 template< typename Extension >
 void ResourcesListView_ABC< Extension >::showEvent( QShowEvent* event )
 {
-    const kernel::Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
+    SelectEntity( selected_ );
     QTreeView::showEvent( event );
 }
 
@@ -160,6 +157,18 @@ void ResourcesListView_ABC< Extension >::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 template< typename Extension >
 void ResourcesListView_ABC< Extension >::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    if( !listenSelectionChanged_ )
+        return;
+    SelectEntity( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::SelectEntity
+// Created: ABR 2014-02-06
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::SelectEntity( const kernel::Entity_ABC* entity )
 {
     selected_ = entity;
     if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )

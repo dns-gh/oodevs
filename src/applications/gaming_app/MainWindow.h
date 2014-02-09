@@ -12,6 +12,7 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
+#include "gaming/Simulation.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
@@ -79,6 +80,7 @@ class LockMapViewController;
 class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Simulation >
+                 , public tools::ElementObserver_ABC< Simulation::Reconnection >
                  , public tools::ElementObserver_ABC< Services >
                  , public tools::ElementObserver_ABC< Profile >
                  , public kernel::ModesObserver_ABC
@@ -124,6 +126,7 @@ private:
 
     virtual void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Simulation::Reconnection& reconnection );
     virtual void NotifyUpdated( const Services& connection );
     virtual void NotifyUpdated( const Profile& profile );
 

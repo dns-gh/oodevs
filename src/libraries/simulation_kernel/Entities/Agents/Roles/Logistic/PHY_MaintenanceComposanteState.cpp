@@ -362,3 +362,12 @@ void PHY_MaintenanceComposanteState::SelectDiagnosisTeam( const PHY_ComposanteTy
 {
     pConsign_->SelectDiagnosisTeam( type );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::SelectRepairTeam
+// Created: ABR 2014-02-04
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceComposanteState::SelectRepairTeam( const PHY_ComposanteTypePion& type )
+{
+    pConsign_->SelectRepairTeam( type );
+}

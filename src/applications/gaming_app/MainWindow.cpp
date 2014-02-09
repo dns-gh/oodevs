@@ -522,6 +522,16 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::NotifyUpdated
+// Created: LGY 2014-02-07
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
+{
+    Load();
+    network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyUpdated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const ::Services& services )

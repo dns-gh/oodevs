@@ -19,11 +19,14 @@
 #include "ADN_enums.h"
 #include "ADN_Languages_Data.h"
 #include "ADN_WorkspaceElement.h"
+
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Context.h"
-#include "tools/Language.h"
 #include "clients_kernel/XmlTranslations.h"
 #include "ENT/ENT_Tr.h"
+#include "tools/Language.h"
 #include "tools/Loader_ABC.h"
+
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
@@ -46,15 +49,7 @@ namespace
         for( auto itMission = vector.begin(); itMission != vector.end(); ++itMission )
         {
             T* mission = *itMission;
-            QRegExp regExp( "[/\"<>|*\?:\\\\]" );
-            QString name( mission->strName_.GetData().c_str() );
-            int indexBadCharacter = regExp.lastIndexIn( name );
-            while( indexBadCharacter != -1 )
-            {
-                name.replace( indexBadCharacter, 1, "-" );
-                indexBadCharacter = regExp.lastIndexIn( name );
-            }
-            mission->strName_ = name.toStdString();
+            mission->strName_ = tools::SanitizeFileName( QString::fromStdString( mission->strName_.GetData() ) ).ToUTF8();
         }
     }
     void PurgePath( const tools::Path& path )

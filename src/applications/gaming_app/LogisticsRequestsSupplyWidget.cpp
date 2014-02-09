@@ -140,7 +140,8 @@ void LogisticsRequestsSupplyWidget::DisplayHistory( const LogSupplyConsign::Hist
     if( requestSelected_ && requestSelected_->GetId() == history.GetConsign().GetId() )
     {
         // Update details table
-        detailsTable_->SetData( 0, 1, GetRecipientsLinks( c, true ) );
+        detailsTable_->Set( tools::translate( "Logistic", "Recipient(s):" ), GetRecipientsLinks( c, true ) );
+        detailsTable_->Set( tools::translate( "Logistic", "Started:" ), requestSelected_->GetCurrentStartedTime() );
         // Update supply table
         FillSupplyTable( c );
         DisplayCurrentHistory();

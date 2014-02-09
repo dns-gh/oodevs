@@ -17,6 +17,7 @@
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/TeamsModel.h"
+#include "gaming/Simulation.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -184,16 +185,11 @@ void ProfilesPanel::Reconnect()
             const std::string& login = profile->GetLogin().toStdString();
             if( profile->IsPasswordProtected() )
             {
-                ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, filter_, network_ );
-                if( pLoginDialog->exec() == QDialog::Accepted )
-                    Clean();
+                ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, controllers_.controller_ );
+                pLoginDialog->exec();
             }
             else
-            {
-                filter_.RemoveFilter();
-                network_.GetMessageMgr().Reconnect( login, "" );
-                Clean();
-            }
+                controllers_.controller_.Update( Simulation::Reconnection( login ) );
         }
 }
 

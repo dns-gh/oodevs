@@ -51,11 +51,7 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceRepairConsign::~PHY_MaintenanceRepairConsign()
 {
-    if( pRepairer_ )
-    {
-        GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
-        pRepairer_ = 0;
-    }
+    ResetRepairer();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,12 +71,21 @@ void PHY_MaintenanceRepairConsign::serialize( Archive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::Cancel()
 {
+    ResetRepairer();
+    PHY_MaintenanceConsign_ABC::Cancel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::ResetRepairer
+// Created: ABR 2014-02-04
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceRepairConsign::ResetRepairer()
+{
     if( pRepairer_ )
     {
         GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
         pRepairer_ = 0;
     }
-    PHY_MaintenanceConsign_ABC::Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -291,10 +296,6 @@ void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
     throw MASA_EXCEPTION( "cannot transfer a repair consign to superior" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter
-// Created: SLI 2014-01-30
-// -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/ )
 {
     throw MASA_EXCEPTION( "cannot select a transporter for a repair consign" );
@@ -303,4 +304,15 @@ void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_Compo
 void PHY_MaintenanceRepairConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& /*type*/ )
 {
     throw MASA_EXCEPTION( "cannot select a diagnosis team for a repair consign" );
+}
+
+void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePion& type )
+{
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        throw MASA_EXCEPTION( "repair consign not in a waiting for repair team selection state" );
+    pRepairer_ = GetPionMaintenance().GetAvailableRepairer( pComposanteState_->GetComposanteBreakdown(), &type );
+    if( !pRepairer_ )
+        throw MASA_EXCEPTION( "no component of specified type available for repair team selection" );
+    GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
+    EnterStateRepairing();
 }

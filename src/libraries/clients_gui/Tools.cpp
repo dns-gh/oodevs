@@ -57,3 +57,9 @@ bool tools::LessThanByPC( const kernel::Entity_ABC& entity1, const kernel::Entit
         return false;
     return LessThanById( entity1, entity2 );
 }
+
+tools::Path tools::SanitizeFileName( QString text, const QString& after /*= "-"*/ )
+{
+    text.replace( QRegExp( "[/\"<>|*\?:\\\\]+" ), after );
+    return tools::Path::FromUnicode( text.simplified().toStdWString() );
+}

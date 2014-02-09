@@ -158,6 +158,29 @@ void LogisticMaintenanceSelectionDialog::SetCurrentWidget()
     stack_->setCurrentIndex( it->second );
 }
 
+namespace
+{
+    bool CanRequestEvacuationBySuperior( const kernel::Entity_ABC* entity )
+    {
+        if( !entity )
+            return false;
+        if( auto superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
+        {
+            if( auto base = superior->Retrieve< gui::LogisticBase >() )
+            {
+                if( base->IsBase() )
+                {
+                    if( auto links = superior->Retrieve< LogisticLinks >() )
+                        return links->GetCurrentSuperior() != 0;
+                    return false;
+                }
+            }
+            return CanRequestEvacuationBySuperior( superior );
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::Show
 // Created: ABR 2014-01-27
@@ -174,17 +197,18 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     SetCurrentWidget();
     setWindowTitle( tr( "Request #%1 - %2" ).arg( id_ ).arg( QString::fromStdString( ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) ) ) );
     manualButton_->setChecked( true );
+    evacuateButton_->setEnabled( CanRequestEvacuationBySuperior( handler_ ) );
     if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
     {
         manualButton_->setText( tr( "Select tow truck" ) );
         transporters_->selectionModel()->clear();
-        transporters_->NotifySelected( handler_ );
+        transporters_->SelectEntity( handler_ );
     }
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
     {
         manualButton_->setText( tr( "Select diagnosis team" ) );
         repairers_->selectionModel()->clear();
-        repairers_->NotifySelected( handler_ );
+        repairers_->SelectEntity( handler_ );
     }
     UpdateDisplay();
     show();
@@ -228,29 +252,6 @@ void LogisticMaintenanceSelectionDialog::Purge()
     status_ = sword::LogMaintenanceHandlingUpdate::finished;
 }
 
-namespace
-{
-    bool CanRequestEvacuationBySuperior( const kernel::Entity_ABC* entity )
-    {
-        if( !entity )
-            return false;
-        if( auto superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
-        {
-            if( auto base = superior->Retrieve< gui::LogisticBase >() )
-            {
-                if( base->IsBase() )
-                {
-                    if( auto links = superior->Retrieve< LogisticLinks >() )
-                        return links->GetCurrentSuperior() != 0;
-                    return false;
-                }
-            }
-            return CanRequestEvacuationBySuperior( superior );
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticMaintenanceSelectionDialog::UpdateDisplay
 // Created: ABR 2014-01-28
@@ -259,7 +260,7 @@ void LogisticMaintenanceSelectionDialog::UpdateDisplay()
 {
     acceptButton_->setEnabled( automaticButton_->isChecked() ||
                                manualButton_->isChecked() && availability_ && availability_->available_ > 0 ||
-                               evacuateButton_->isChecked() && CanRequestEvacuationBySuperior( handler_ ) );
+                               evacuateButton_->isChecked() );
     stack_->setEnabled( manualButton_->isChecked() );
 }
 

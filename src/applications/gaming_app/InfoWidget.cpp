@@ -26,8 +26,15 @@
 // Name: InfoWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons,
-                        gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, Model& model, const Simulation& simulation,
+InfoWidget::InfoWidget( QWidget* parent,
+                        kernel::Controllers& controllers,
+                        const tools::ExerciseConfig& config,
+                        const kernel::Profile_ABC& profile,
+                        const gui::EntitySymbols& icons,
+                        gui::ItemFactory_ABC& itemFactory,
+                        gui::DisplayExtractor& extractor,
+                        Model& model,
+                        const Simulation& simulation,
                         SimulationController& simulationController )
     : Q3HBox( parent, "InfoWidget" )
 {
@@ -42,7 +49,7 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     box->layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoSummariesWidget( box, controllers );
     new InfoStancesWidget( box, controllers );
-    new InfoButtonsWidget( this, controllers , itemFactory, extractor, model, simulation, profile, simulationController );
+    new InfoButtonsWidget( this, controllers, config, itemFactory, extractor, model, simulation, profile, simulationController );
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );

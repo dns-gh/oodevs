@@ -10,10 +10,9 @@
 #include "ReconnectLoginDialog.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Tools.h"
-#include "gaming/AgentServerMsgMgr.h"
-#include "gaming/Network.h"
-#include "gaming/ProfileFilter.h"
+#include "clients_kernel/Controller.h"
 #include "gaming/UserProfile.h"
+#include "gaming/Simulation.h"
 #include "tools/ExerciseConfig.h"
 
 namespace
@@ -45,11 +44,11 @@ namespace
 // Name: ReconnectLoginDialog constructor
 // Created: LGY 2011-11-23
 // -----------------------------------------------------------------------------
-ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile, ProfileFilter& filter, Network& network )
+ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile,
+                                            kernel::Controller& controller )
     : LoginDialog( pParent )
     , profile_( profile )
-    , filter_( filter )
-    , network_( network )
+    , controller_( controller )
 {
     new UserItem( users_, profile );
     if( users_->count() > 0 )
@@ -79,8 +78,7 @@ void ReconnectLoginDialog::OnAccept()
         item = static_cast< UserItem* >( users_->item( 0 ) );
     if( item )
     {
-        filter_.RemoveFilter();
-        network_.GetMessageMgr().Reconnect( item->Login().toStdString(), password_->text().toStdString() );
+        controller_.Update( Simulation::Reconnection( item->Login().toStdString(), password_->text().toStdString() ) );
         accept();
     }
 }

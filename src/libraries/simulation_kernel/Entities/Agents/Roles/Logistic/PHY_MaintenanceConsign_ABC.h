@@ -67,6 +67,7 @@ public:
     virtual void TransferToLogisticSuperior() = 0;
     virtual void SelectMaintenanceTransporter( const PHY_ComposanteTypePion& type ) = 0;
     virtual void SelectDiagnosisTeam( const PHY_ComposanteTypePion& type ) = 0;
+    virtual void SelectRepairTeam( const PHY_ComposanteTypePion& type ) = 0;
 
     void ClearConsign();
     //@}
