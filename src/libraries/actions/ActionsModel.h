@@ -125,6 +125,7 @@ public:
     int PublishTransferToLogisticSuperior( unsigned int consignId );
     int PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
     int PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
+    int PublishSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId );
     int PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
     int PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
     int PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType );

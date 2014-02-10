@@ -108,6 +108,7 @@ private:
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
     MaintenanceRepairersListView* repairers_;
+    MaintenanceRepairersListView* diagnosers_;
     //@}
 };
 

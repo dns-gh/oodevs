@@ -308,6 +308,16 @@ int ActionsModel::PublishLocalDestruction( unsigned int weatherId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishSelectMaintenanceRepairTeam
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceRepairTeam( consignId, equipmentTypeId ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

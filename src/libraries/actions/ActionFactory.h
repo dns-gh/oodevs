@@ -104,6 +104,7 @@ public:
     virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const;
+    virtual Action_ABC* CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId );
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}

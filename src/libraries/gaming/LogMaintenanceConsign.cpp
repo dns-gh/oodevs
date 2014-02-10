@@ -218,7 +218,8 @@ kernel::Entity_ABC* LogMaintenanceConsign::GetRequestHandler( uint32_t entityId 
 bool LogMaintenanceConsign::NeedResolution() const
 {
     return nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection
-        || nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection;
+        || nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection
+        || nState_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection;
 }
 
 // -----------------------------------------------------------------------------

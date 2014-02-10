@@ -1112,6 +1112,15 @@ Action_ABC* ActionFactory::CreateLocalDestruction( unsigned int weatherId ) cons
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectMaintenanceRepairTeam
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_repair_team" ), controller_, simulation_ );
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC
