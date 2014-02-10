@@ -1293,10 +1293,10 @@ bool PHY_ComposantePion::CanTransportHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::CanBeLoaded
+// Name: PHY_ComposantePion::IsLoadableAndUsable
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanBeLoaded() const
+bool PHY_ComposantePion::IsLoadableAndUsable() const
 {
     return pState_->IsUsable() && bLoadable_; //$$$$ CanBeUsed() ??
 }

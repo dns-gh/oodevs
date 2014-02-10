@@ -232,7 +232,7 @@ public:
 
     //! @name Load / unload / transport
     //@{
-    bool CanBeLoaded() const;
+    bool IsLoadableAndUsable() const;
     bool CanTransportHumans() const;
 
     bool CanBeTransported() const;

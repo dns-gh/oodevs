@@ -139,7 +139,7 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
     if( !compFirer.CanFire() || !weapon.CanDirectFire() )
         return;
 
-    if( nComposanteFiringType_ == eFireUsingOnlyComposantesLoadable && !compFirer.CanBeLoaded() )
+    if( nComposanteFiringType_ == eFireUsingOnlyComposantesLoadable && !compFirer.IsLoadableAndUsable() )
         return;
 
     if( nComposanteFiringType_ == eFireUsingOnlyComposantesCarrier && !compFirer.CanTransportHumans() )
