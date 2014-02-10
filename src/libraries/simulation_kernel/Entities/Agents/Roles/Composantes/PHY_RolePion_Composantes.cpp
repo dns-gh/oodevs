@@ -1941,7 +1941,7 @@ namespace
         return composanteType.GetRandomBreakdownType();
     }
 
-    template< typename Composantes, typename Repartition, typename  typename Breakdowns >
+    template< typename Composantes, typename Repartition, typename Breakdowns >
     void IgnoreUnchangedStates( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns )
     {
         for( auto it = composantes.begin(); it != composantes.end(); )
@@ -1960,7 +1960,7 @@ namespace
         }
     }
 
-    template< typename Composantes, typename Repartition, typename  typename Breakdowns >
+    template< typename Composantes, typename Repartition, typename Breakdowns >
     void UpdateRepairablesWithEvacuation( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
         const PHY_ComposanteTypePion& composanteType )
     {
@@ -1981,7 +1981,7 @@ namespace
         }
     }
 
-    template< typename Composantes, typename Repartition, typename  typename Breakdowns >
+    template< typename Composantes, typename Repartition, typename Breakdowns >
     void UpdateRemainingStates( const Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
         const PHY_ComposanteTypePion& composanteType )
     {
