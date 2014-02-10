@@ -303,7 +303,7 @@ private:
     HumansComposante_ABC* pHumans_;
     // Breakdowns
     unsigned int nAutoRepairTimeStep_;
-    const PHY_Breakdown* pBreakdown_;
+    std::unique_ptr< const PHY_Breakdown > pBreakdown_;
     PHY_MaintenanceComposanteState* pMaintenanceState_;
     // Random breakdowns
     unsigned int nRandomBreakdownNextTimeStep_;

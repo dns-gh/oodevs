@@ -40,6 +40,7 @@
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Tools/NET_AsnException.h"
 
 double PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
@@ -62,7 +63,6 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
     , nAutoRepairTimeStep_( 0 )
-    , pBreakdown_( 0 )
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
@@ -89,7 +89,6 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( 0 )
     , nAutoRepairTimeStep_( 0 )
-    , pBreakdown_( 0 )
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
@@ -133,7 +132,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
          >> bUsedForLogistic_
          >> pHumans_
          >> nAutoRepairTimeStep_
-         >> const_cast< PHY_Breakdown*& >( pBreakdown_ )
+         >> pBreakdown_
          >> pMaintenanceState_
          >> bRepairEvacuationNoMeansChecked_
          >> nRandomBreakdownNextTimeStep_;
@@ -217,11 +216,10 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     {
         if( !pType_->CanHaveBreakdown( breakdownType ) )
             return;
-        delete pBreakdown_;
-        pBreakdown_ = new PHY_Breakdown( breakdownType );
+        pBreakdown_.reset( new PHY_Breakdown( breakdownType ) );
     }
     else if( *pState == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-        pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
+        pBreakdown_.reset( new PHY_Breakdown( pType_->GetRandomBreakdownType() ) );
     bRepairEvacuationNoMeansChecked_ = false;
     std::swap( pState_, pState );
     ManageEndMaintenance();
@@ -364,7 +362,7 @@ void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNe
     {
         pState_ = &pNewState;
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
+            pBreakdown_.reset( new PHY_Breakdown( pType_->GetAttritionBreakdownType() ) );
         ManageEndMaintenance();
         pRole_->NotifyComposanteChanged( *this, oldState );
     }
@@ -586,11 +584,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
     // Appelée uniquement au changement de 'state'
     if( *pState_ != PHY_ComposanteState::maintenance_ && *pState_ != PHY_ComposanteState::repairableWithEvacuation_ )
     {
-        if( pBreakdown_ )
-        {
-            delete pBreakdown_;
-            pBreakdown_ = 0;
-        }
+        pBreakdown_.reset();
         if( pMaintenanceState_ )
         {
             assert( pHumans_ );
@@ -838,7 +832,7 @@ unsigned int PHY_ComposantePion::GetNbrHealthyHumans( const PHY_HumanRank& rank 
 // -----------------------------------------------------------------------------
 const PHY_Breakdown* PHY_ComposantePion::GetBreakdown() const
 {
-    return pBreakdown_;
+    return pBreakdown_.get();
 }
 
 // -----------------------------------------------------------------------------
