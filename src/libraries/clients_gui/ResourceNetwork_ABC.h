@@ -11,6 +11,7 @@
 #define CLIENTS_GUI_RESOURCE_NETWORK_H__
 
 #include "clients_kernel/Extension_ABC.h"
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 
 namespace gui

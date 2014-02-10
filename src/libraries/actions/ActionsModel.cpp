@@ -267,6 +267,16 @@ void ActionsModel::PublishFireOrderOnLocation( unsigned int resourceId, const ke
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeResourceLinks
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeResourceLinks( id, resourceNodes ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

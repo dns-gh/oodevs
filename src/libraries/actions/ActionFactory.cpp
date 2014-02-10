@@ -1016,6 +1016,40 @@ Action_ABC* ActionFactory::CreateFireOrderOnLocation( unsigned int resourceId, c
     return action.release();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeResourceLinks
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeResourceLinks( unsigned int id, const gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const
+{
+    MagicActionType& actionType = magicActions_.Get( "change_resource_links" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), id ) );
+    parameters::ParameterList* nodes = new parameters::ParameterList( it.NextElement() );
+    action->AddParameter( *nodes );
+    for( auto it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
+    {
+        const auto& resource = it->second;
+        parameters::ParameterList& node = nodes->AddList( "Node" );
+        node.AddString( "Resource", resource.resource_ );
+        node.AddQuantity( "Consumption", resource.consumption_ );
+        node.AddBool( "Critical", resource.critical_ );
+        node.AddBool( "Enabled", resource.isEnabled_ );
+        node.AddQuantity( "Production", resource.production_ );
+        node.AddQuantity( "MaxStock", resource.maxStock_ );
+        parameters::ParameterList& links = node.AddList( "Links" );
+        for( unsigned int i = 0; i < resource.links_.size(); ++i )
+        {
+            parameters::ParameterList& link = links.AddList( "Link" );
+            link.AddIdentifier( "Link", resource.links_[ i ].id_ );
+            link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
+        }
+    }
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

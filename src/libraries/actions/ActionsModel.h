@@ -128,6 +128,7 @@ public:
     void PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
     void PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
     void PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType );
+    void PublishChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes );
     //@}
 
 private:
