@@ -182,11 +182,7 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
     // Annulation log maintenance
     if( pMaintenanceState_ )
     {
-        pHumans_->NotifyComposanteBackFromMaintenance();
-        assert( pRole_ );
-        pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
-        pMaintenanceState_->Cancel();
-        pMaintenanceState_ = 0;
+        DeleteMaintenanceState();
         bRepairEvacuationNoMeansChecked_ = false;
     }
     pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
@@ -580,15 +576,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
     if( *pState_ == PHY_ComposanteState::maintenance_ || *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
         return;
     pBreakdown_.reset();
-    if( pMaintenanceState_ )
-    {
-        assert( pHumans_ );
-        pHumans_->NotifyComposanteBackFromMaintenance();
-        assert( pRole_ );
-        pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
-        pMaintenanceState_->Cancel();
-        pMaintenanceState_ = 0;
-    }
+    DeleteMaintenanceState();
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
     {
         assert( pType_ );
