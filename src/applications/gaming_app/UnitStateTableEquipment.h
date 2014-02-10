@@ -67,8 +67,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Equipments& dotations );
-    bool LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns = std::vector< unsigned int >() ) const;
-    std::vector< unsigned int > BreakdownIDToComboIndex( const QStringList& breakdowns, const std::vector< int >& breakdownIDs ) const;
+    bool LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int >& currentBreakdowns = std::vector< unsigned int >() ) const;
+    std::vector< unsigned int > BreakdownIDToComboIndex( const QStringList* breakdowns, const std::vector< int >& breakdownIDs ) const;
     int CountLines( const QString& name, int firstRow, E_EquipmentState state ) const;
     unsigned int BreakdownComboIndexToId( const QStringList& breakdowns, unsigned int index ) const;
     //@}

@@ -96,14 +96,12 @@ void UnitStateTableEquipment::AddLines( const QString& name, const kernel::Entit
         AddItem( row, eName, name, name );
         AddItem( row, eUnit, GetDisplayName( entity ), entity.GetName() );
 
-        const unsigned int currentType = i < static_cast< int >( currentBreakdowns.size() )
-            ? currentBreakdowns[ i ] : 0;
+        const unsigned int currentType = i < static_cast< int >( currentBreakdowns.size() ) ? currentBreakdowns[ i ] : 0;
         if( currentType < static_cast< unsigned int >( breakdownTypes.size() ) )
             AddItem( row, eBreakdown, breakdownTypes[ currentType ], currentType, Qt::ItemIsEditable );
 
-        bool isReadOnly = state == eEquipmentState_InMaintenance || state == eEquipmentState_Prisonner;
         AddItem( row, eState, tools::ToString( state ), static_cast< int >( state ), Qt::ItemIsEditable );
-        if( !isReadOnly )
+        if( state != eEquipmentState_InMaintenance && state != eEquipmentState_Prisonner )
             delegate_.AddComboBox( row, row, eState, eState, ( breakdownTypes.size() <= 1 ) ? eEquipmentState_RepairableWithEvacuation : eEquipmentState_InMaintenance );
     }
 }

@@ -1866,7 +1866,9 @@ void PHY_RolePion_Composantes::CreateBreakdowns( const PHY_ComposanteTypePion& c
     for( auto it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( &composante.GetType() == &composanteType && composante.GetState().IsUsable() && composante.GetState() != PHY_ComposanteState::repairableWithEvacuation_ )
+        if( composante.GetType() == composanteType &&
+            composante.GetState().IsUsable() &&
+            composante.GetState() != PHY_ComposanteState::repairableWithEvacuation_ )
         {
             composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_, breakdownType );
             --quantity;
@@ -1902,44 +1904,127 @@ void PHY_RolePion_Composantes::CreateWounds( unsigned int quantity, const PHY_Hu
     }
 }
 
+namespace
+{
+    template< typename M >
+    int32_t Add( M& m, const sword::MissionParameter_Value& message, const typename M::key_type& state, int i )
+    {
+        const auto q = message.list( i ).quantity();
+        if( q )
+            m[ state ] = q;
+        return q;
+    }
+
+    template< typename Breakdowns >
+    bool RemoveBreakdown( Breakdowns& breakdowns, const PHY_Breakdown* breakdown )
+    {
+        if( !breakdown )
+            return false;
+        for( auto it = breakdowns.begin(); it != breakdowns.end(); ++it )
+            if( *it && *it == &breakdown->GetType() )
+            {
+                breakdowns.erase( it );
+                return true;
+            }
+        return false;
+    }
+
+    template< typename Breakdowns >
+    const PHY_BreakdownType* RemoveBreakdown( const PHY_ComposanteTypePion& composanteType, Breakdowns& breakdowns )
+    {
+        if( breakdowns.empty() )
+            return 0;
+        const PHY_BreakdownType* breakdown = breakdowns.back();
+        breakdowns.pop_back();
+        if( breakdown )
+            return breakdown;
+        return composanteType.GetRandomBreakdownType();
+    }
+
+    template< typename Composantes, typename Repartition, typename Breakdowns >
+    void IgnoreUnchangedStates( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns )
+    {
+        for( auto it = composantes.begin(); it != composantes.end(); )
+        {
+            const PHY_ComposanteState& state = (*it)->GetState();
+            auto it2 = repartition.find( &state );
+            if( it2 != repartition.end() &&
+                ( state != PHY_ComposanteState::repairableWithEvacuation_ ||
+                    RemoveBreakdown( breakdowns, (*it)->GetBreakdown() ) ) )
+            {
+                if( --it2->second == 0 )
+                    repartition.erase( it2 );
+                composantes.erase( it++ );
+            }
+            else
+                ++it;
+        }
+    }
+
+    template< typename Composantes, typename Repartition, typename Breakdowns >
+    void UpdateRepairablesWithEvacuation( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
+        const PHY_ComposanteTypePion& composanteType )
+    {
+        for( auto it = composantes.begin(); it != composantes.end(); )
+        {
+            const PHY_ComposanteState& state = (*it)->GetState();
+            if( state == PHY_ComposanteState::repairableWithEvacuation_ && !breakdowns.empty() )
+            {
+                const PHY_BreakdownType* breakdown = RemoveBreakdown( composanteType, breakdowns );
+                (*it)->ReinitializeState( state, breakdown ); // $$$$ MCO 2014-02-07: no-op for now, see ReinitializeState
+                auto it2 = repartition.find( &PHY_ComposanteState::repairableWithEvacuation_ );
+                if( --it2->second == 0 )
+                    repartition.erase( it2 );
+                composantes.erase( it++ );
+            }
+            else
+                ++it;
+        }
+    }
+
+    template< typename Composantes, typename Repartition, typename Breakdowns >
+    void UpdateRemainingStates( const Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
+        const PHY_ComposanteTypePion& composanteType )
+    {
+        for( auto it = composantes.begin(); it != composantes.end(); ++it )
+        {
+            auto it2 = repartition.begin();
+            const PHY_ComposanteState& state = *it2->first;
+            if( state == PHY_ComposanteState::maintenance_ )
+                throw MASA_EXCEPTION( "cannot change an equipment state to in maintenance directly" );
+            const PHY_BreakdownType* breakdown = 0;
+            if( state == PHY_ComposanteState::repairableWithEvacuation_ )
+                breakdown = RemoveBreakdown( composanteType, breakdowns );
+            (*it)->ReinitializeState( state, breakdown );
+            if( --it2->second == 0 )
+                repartition.erase( it2 );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ChangeEquipmentState
 // Created: ABR 2011-08-10
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message )
 {
-    typedef std::pair< const PHY_ComposanteState*, unsigned int > T_Repartition;
-    std::vector< T_Repartition > repartition;
-
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::undamaged_,                   message.list( 1 ).quantity() ) );
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::dead_,                        message.list( 2 ).quantity() ) );
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::repairableWithEvacuation_,    message.list( 3 ).quantity() ) );
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::repairableWithoutEvacuation_, message.list( 4 ).quantity() ) );
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::maintenance_,                 message.list( 5 ).quantity() ) );
-    repartition.push_back( T_Repartition( &PHY_ComposanteState::prisoner_,                    message.list( 6 ).quantity() ) );
-
-    auto stateIt = repartition.begin();
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( &composante.GetType() == &composanteType )
-        {
-            while( stateIt != repartition.end() && stateIt->second == 0 )
-                ++stateIt;
-            if( stateIt == repartition.end() )
-                return;
-            if( stateIt->first == &PHY_ComposanteState::repairableWithEvacuation_ )
-            {
-                unsigned int breakdownId = message.list( 7 ).list( stateIt->second - 1 ).identifier();
-                const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( breakdownId );
-                if( breakdownType )
-                    composante.ReinitializeState( *stateIt->first, breakdownType );
-            }
-            else
-                composante.ReinitializeState( *stateIt->first );
-            stateIt->second -= 1;
-        }
-    }
+    int32_t count = 0;
+    std::map< const PHY_ComposanteState*, int32_t > repartition;
+    count += Add( repartition, message, &PHY_ComposanteState::undamaged_, 1 );
+    count += Add( repartition, message, &PHY_ComposanteState::dead_, 2 );
+    count += Add( repartition, message, &PHY_ComposanteState::repairableWithEvacuation_, 3 );
+    count += Add( repartition, message, &PHY_ComposanteState::repairableWithoutEvacuation_, 4 );
+    count += Add( repartition, message, &PHY_ComposanteState::maintenance_, 5 );
+    count += Add( repartition, message, &PHY_ComposanteState::prisoner_, 6 );
+    if( count != composantes_.size() )
+        throw MASA_EXCEPTION( "number of equipment states different from number of existing equipments" );
+    std::vector< const PHY_BreakdownType* > breakdowns;
+    for( auto it = message.list( 7 ).list().begin(); it != message.list( 7 ).list().end(); ++it )
+        breakdowns.push_back( PHY_BreakdownType::Find( it->identifier() ) );
+    std::list< PHY_ComposantePion* > composantes( composantes_.begin(), composantes_.end() );
+    IgnoreUnchangedStates( composantes, repartition, breakdowns );
+    UpdateRepairablesWithEvacuation( composantes, repartition, breakdowns, composanteType );
+    UpdateRemainingStates( composantes, repartition, breakdowns, composanteType );
 }
 
 // -----------------------------------------------------------------------------
