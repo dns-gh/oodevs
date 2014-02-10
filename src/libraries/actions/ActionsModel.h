@@ -126,6 +126,7 @@ public:
     void PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
     void PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
     void PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
+    void PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
     //@}
 
 private:

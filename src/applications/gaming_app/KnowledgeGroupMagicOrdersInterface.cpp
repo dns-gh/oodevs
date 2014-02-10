@@ -158,14 +158,5 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
 void KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type )
 {
     if( entity )
-    {
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-        std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
-        action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
-        action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( controllers_.controller_, entity, false ) );
-        actionsModel_.Publish( *action, 0 );
-    }
+        actionsModel_.PublishCreateKnowledgeGroup( entity->GetId(), type );
 }

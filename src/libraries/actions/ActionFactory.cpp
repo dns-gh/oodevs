@@ -981,6 +981,22 @@ Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned i
     return action.release();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateKnowledgeGroup
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateKnowledgeGroup( unsigned int id, const std::string& type ) const
+{
+    MagicActionType& actionType = magicActions_.Get( "create_knowledge_group" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), id ) );
+    action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
 namespace
 {
     class InvalidAction : public Action_ABC

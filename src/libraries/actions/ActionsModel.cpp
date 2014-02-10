@@ -247,6 +247,16 @@ void ActionsModel::PublishChangeDiplomacy( unsigned int team1, unsigned int team
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishCreateKnowledgeGroup
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishCreateKnowledgeGroup( unsigned int id, const std::string& type )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateKnowledgeGroup( id, type ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
