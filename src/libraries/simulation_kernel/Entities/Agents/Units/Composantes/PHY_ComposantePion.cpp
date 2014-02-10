@@ -573,10 +573,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ManageEndMaintenance()
 {
-    if( *pState_ == PHY_ComposanteState::maintenance_ || *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
+    if( *pState_ == PHY_ComposanteState::maintenance_ )
+        return;
+    DeleteMaintenanceState();
+    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
         return;
     pBreakdown_.reset();
-    DeleteMaintenanceState();
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
     {
         assert( pType_ );
