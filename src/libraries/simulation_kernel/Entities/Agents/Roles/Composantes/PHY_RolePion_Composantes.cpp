@@ -1916,7 +1916,7 @@ namespace
     }
 
     template< typename Breakdowns >
-    bool FindBreakdown( Breakdowns& breakdowns, const PHY_Breakdown* breakdown )
+    bool RemoveBreakdown( Breakdowns& breakdowns, const PHY_Breakdown* breakdown )
     {
         if( !breakdown )
             return false;
@@ -1930,7 +1930,7 @@ namespace
     }
 
     template< typename Breakdowns >
-    const PHY_BreakdownType* GetBreakdown( const PHY_ComposanteTypePion& composanteType, Breakdowns& breakdowns )
+    const PHY_BreakdownType* RemoveBreakdown( const PHY_ComposanteTypePion& composanteType, Breakdowns& breakdowns )
     {
         if( breakdowns.empty() )
             return 0;
@@ -1949,7 +1949,8 @@ namespace
             const PHY_ComposanteState& state = (*it)->GetState();
             auto it2 = repartition.find( &state );
             if( it2 != repartition.end() &&
-                ( state != PHY_ComposanteState::repairableWithEvacuation_ || FindBreakdown( breakdowns, (*it)->GetBreakdown() ) ) )
+                ( state != PHY_ComposanteState::repairableWithEvacuation_ ||
+                    RemoveBreakdown( breakdowns, (*it)->GetBreakdown() ) ) )
             {
                 if( --it2->second == 0 )
                     repartition.erase( it2 );
@@ -1969,7 +1970,7 @@ namespace
             const PHY_ComposanteState& state = (*it)->GetState();
             if( state == PHY_ComposanteState::repairableWithEvacuation_ && !breakdowns.empty() )
             {
-                const PHY_BreakdownType* breakdown = GetBreakdown( composanteType, breakdowns );
+                const PHY_BreakdownType* breakdown = RemoveBreakdown( composanteType, breakdowns );
                 (*it)->ReinitializeState( state, breakdown ); // $$$$ MCO 2014-02-07: no-op for now, see ReinitializeState
                 auto it2 = repartition.find( &PHY_ComposanteState::repairableWithEvacuation_ );
                 if( --it2->second == 0 )
@@ -1993,7 +1994,7 @@ namespace
                 throw MASA_EXCEPTION( "cannot change an equipment state to in maintenance directly" );
             const PHY_BreakdownType* breakdown = 0;
             if( state == PHY_ComposanteState::repairableWithEvacuation_ )
-                breakdown = GetBreakdown( composanteType, breakdowns );
+                breakdown = RemoveBreakdown( composanteType, breakdowns );
             (*it)->ReinitializeState( state, breakdown );
             if( --it2->second == 0 )
                 repartition.erase( it2 );
