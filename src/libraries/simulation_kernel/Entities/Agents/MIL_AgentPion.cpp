@@ -1867,7 +1867,7 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
             const PHY_BreakdownType* breakdownType = PHY_BreakdownType::Find( identifier );
             CheckSubSubParameterCount( identifier != 0 && !breakdownType, i, 7, "must be a breakdown identifier" );
             CheckSubSubParameterCount( breakdownType && !pComposanteType->CanHaveBreakdown( breakdownType ), i, 7,
-                "invalid breakdown identifier for the composante" );
+                "invalid breakdown identifier for the equipment" );
         }
         content.push_back( std::make_pair( pComposanteType, elem ) );
     }
