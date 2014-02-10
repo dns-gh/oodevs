@@ -81,7 +81,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // Name: ObjectMagicAction::Publish
 // Created: JSR 2010-04-21
 // -----------------------------------------------------------------------------
-void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
+void ObjectMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType()->GetId();
     simulation::ObjectMagicAction message;
@@ -89,5 +89,5 @@ void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }

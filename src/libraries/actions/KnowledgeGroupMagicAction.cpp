@@ -80,7 +80,7 @@ void KnowledgeGroupMagicAction::Polish()
 // Name: KnowledgeGroupMagicAction::Publish
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
+void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     sword::KnowledgeMagicAction_Type type =
         ( sword::KnowledgeMagicAction_Type ) GetType()->GetId();
@@ -89,5 +89,5 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }

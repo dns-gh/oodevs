@@ -79,12 +79,12 @@ void MagicAction::Serialize( xml::xostream& xos ) const
 // Name: MagicAction::Publish
 // Created: JSR 2010-04-23
 // -----------------------------------------------------------------------------
-void MagicAction::Publish( Publisher_ABC& publisher, int ) const
+void MagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     sword::MagicAction_Type type = ( sword::MagicAction_Type ) GetType()->GetId();
     simulation::MagicAction message;
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message().set_name( GetName().toStdString() );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }
