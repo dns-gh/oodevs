@@ -218,7 +218,7 @@ void FireCreationPanel::Commit()
             action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( controllers_.controller_, selectedReporter_, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     }
 }

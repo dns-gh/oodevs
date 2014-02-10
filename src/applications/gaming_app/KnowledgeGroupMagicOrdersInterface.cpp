@@ -111,7 +111,7 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
         action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -145,7 +145,7 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
         action->AddParameter( *new parameters::String( paramIt.NextElement(), type.GetName() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 

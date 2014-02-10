@@ -31,7 +31,6 @@ EventMagicPresenter::EventMagicPresenter( EventView_ABC< EventMagicViewState >& 
     : EventSubPresenter_ABC< EventMagicViewState >( eEventTypes_Magic, view )
     , actionsModel_( actionsModel )
     , entity_( controllers )
-    , context_( 0 )
 {
     // NOTHING
 }
@@ -81,7 +80,7 @@ bool EventMagicPresenter::ShouldEnableTrigger() const
 void EventMagicPresenter::Trigger( const gui::Event& event )
 {
     if( const actions::Action_ABC* action = event.GetAction() )
-        actionsModel_.Publish( *action, ++context_ );
+        actionsModel_.Publish( *action );
     else
         throw MASA_EXCEPTION( "Invalid action" );
 }

@@ -148,7 +148,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     }
     controllers_.Unregister( *magicMoveLocation_ );
@@ -181,7 +181,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
         std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -200,7 +200,7 @@ void PopulationMagicOrdersInterface::ReloadBrain(QAction* action)
         action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -220,7 +220,7 @@ void PopulationMagicOrdersInterface::ChangeArmedIndividuals()
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
 }
 
@@ -239,7 +239,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
         action->AddParameter( *new parameters::Enumeration( it.NextElement(), index ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -321,7 +321,7 @@ void PopulationMagicOrdersInterface::ActivateBrainDebug()
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -339,6 +339,6 @@ void PopulationMagicOrdersInterface::DeactivateBrainDebug()
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }

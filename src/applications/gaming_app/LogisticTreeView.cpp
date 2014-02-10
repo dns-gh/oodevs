@@ -84,5 +84,5 @@ void LogisticTreeView::SetSuperior( const kernel::Entity_ABC& entity, const kern
 
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, &entity, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }

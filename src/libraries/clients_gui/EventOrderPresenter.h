@@ -127,8 +127,6 @@ private:
     TimelinePublisher& timelinePublisher_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::OrderType* order_;
-
-    int context_;
     //@}
 };
 

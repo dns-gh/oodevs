@@ -514,7 +514,7 @@ void LogisticSupplyRecompletionDialog::Validate()
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 
     selected_ = 0;
 }

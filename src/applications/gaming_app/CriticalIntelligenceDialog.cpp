@@ -66,7 +66,7 @@ void CriticalIntelligenceDialog::OnAccept()
     action->AddParameter( *new actions::parameters::String( it.NextElement(), textEdit_->text().toStdString() ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
     accept();
     textEdit_->setText( "" );
     gui::CriticalIntelligenceDialog::OnAccept();

@@ -313,7 +313,7 @@ void CommunicationTreeView::Drop( const kernel::Agent_ABC& item, const kernel::E
             action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     }
 }
@@ -334,7 +334,7 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
             action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -366,6 +366,6 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
     {
         action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
