@@ -304,7 +304,7 @@ private:
     // Breakdowns
     unsigned int nAutoRepairTimeStep_;
     std::unique_ptr< const PHY_Breakdown > pBreakdown_;
-    PHY_MaintenanceComposanteState* pMaintenanceState_;
+    std::unique_ptr< PHY_MaintenanceComposanteState > pMaintenanceState_;
     // Random breakdowns
     unsigned int nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;

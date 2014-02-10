@@ -63,7 +63,6 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
     , nAutoRepairTimeStep_( 0 )
-    , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
 {
@@ -89,7 +88,6 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( 0 )
     , nAutoRepairTimeStep_( 0 )
-    , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
 {
@@ -109,7 +107,6 @@ PHY_ComposantePion::~PHY_ComposantePion()
     assert( pRole_ );
     pRole_->NotifyComposanteRemoved( *this );
     delete pHumans_;
-    delete pMaintenanceState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +186,6 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
         assert( pRole_ );
         pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
         pMaintenanceState_->Cancel();
-        delete pMaintenanceState_;
         pMaintenanceState_ = 0;
         bRepairEvacuationNoMeansChecked_ = false;
     }
@@ -581,25 +577,22 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ManageEndMaintenance()
 {
-    // Appelée uniquement au changement de 'state'
-    if( *pState_ != PHY_ComposanteState::maintenance_ && *pState_ != PHY_ComposanteState::repairableWithEvacuation_ )
+    if( *pState_ == PHY_ComposanteState::maintenance_ || *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
+        return;
+    pBreakdown_.reset();
+    if( pMaintenanceState_ )
     {
-        pBreakdown_.reset();
-        if( pMaintenanceState_ )
-        {
-            assert( pHumans_ );
-            pHumans_->NotifyComposanteBackFromMaintenance();
-            assert( pRole_ );
-            pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
-            pMaintenanceState_->Cancel();
-            delete pMaintenanceState_;
-            pMaintenanceState_ = 0;
-        }
-        if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
-        {
-            assert( pType_ );
-            nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, time_.GetCurrentTimeStep() + pType_->GetProtection().GetNeutralizationTime() );
-        }
+        assert( pHumans_ );
+        pHumans_->NotifyComposanteBackFromMaintenance();
+        assert( pRole_ );
+        pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
+        pMaintenanceState_->Cancel();
+        pMaintenanceState_ = 0;
+    }
+    if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
+    {
+        assert( pType_ );
+        nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, time_.GetCurrentTimeStep() + pType_->GetProtection().GetNeutralizationTime() );
     }
 }
 
@@ -755,7 +748,7 @@ void PHY_ComposantePion::Update()
     {
         assert( pBreakdown_ );
         assert( pRole_ );
-        pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
+        pMaintenanceState_.reset( pRole_->NotifyComposanteWaitingForMaintenance( *this ) );
     }
 
     assert( pRole_ );
@@ -1545,7 +1538,6 @@ void PHY_ComposantePion::DeleteMaintenanceState()
         pHumans_->NotifyComposanteBackFromMaintenance();
         pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
         pMaintenanceState_->Cancel();
-        delete pMaintenanceState_;
         pMaintenanceState_ = 0;
     }
 }
