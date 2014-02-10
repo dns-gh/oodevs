@@ -18,6 +18,7 @@
 #include "InfoFuneralDialog.h"
 #include "UnitStateDialog.h"
 #include "LogisticDialog_ABC.h"
+#include "LogButton.h"
 #include "gaming/LogMaintenanceConsign.h"
 #include "gaming/LogMedicalConsign.h"
 #include "gaming/LogSupplyConsign.h"
@@ -145,12 +146,12 @@ template< typename Dialog >
 void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
     , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model )
 {
-    QPushButton* btn = CreateButton( this, pixmap );
+    LogButton* btn = new LogButton( this, controllers, pixmap );
     Dialog* dialog = new Dialog( topLevelWidget(), controllers, factory, extractor, profile, simulationController_, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
-    connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( ChangePixmap( bool ) ) );
     connect( dialog, SIGNAL( Shown() ), SLOT( Refresh() ) );
     logisticDialogs_.push_back( dialog );
 }
@@ -163,12 +164,12 @@ template< typename Dialog >
 void InfoButtonsWidget::AddLogisticButton( const QPixmap& pixmap, kernel::Controllers& controllers
                                  , gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile, Model& model )
 {
-    QPushButton* btn = CreateButton( this, pixmap );
+    LogButton* btn = new LogButton( this, controllers, pixmap );
     Dialog* dialog = new Dialog( topLevelWidget(), controllers, extractor, profile, simulationController_, model );
     QToolTip::add( btn, dialog->caption() );
     connect( btn, SIGNAL( toggled( bool ) ), dialog, SLOT( OnToggle( bool ) ) );
     connect( dialog, SIGNAL( Closed() ), btn, SLOT( toggle() ) );
-    connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( setDisabled( bool ) ) );
+    connect( dialog, SIGNAL( Disabled( bool ) ), btn, SLOT( ChangePixmap( bool ) ) );
     connect( dialog, SIGNAL( Shown() ), SLOT( Refresh() ) );
     logisticDialogs_.push_back( dialog );
 }
