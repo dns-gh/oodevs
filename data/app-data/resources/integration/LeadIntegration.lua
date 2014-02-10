@@ -388,7 +388,8 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     local redone = false
 
     -- If the HQ is jammed, the company can not manage added and deleted units
-    if integration.agentEstBrouille( integration.getKnowledgeHQ() ) then
+    local HQunit = integration.getKnowledgeHQ()
+    if ( not HQunit ) or integration.agentEstBrouille( HQunit ) then
         return
     end
 
