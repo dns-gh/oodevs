@@ -284,6 +284,7 @@ private:
     bool CanBeUsedForMove() const;
     bool CanComponentBeUsed( const transport::PHY_RoleAction_Loading* role, bool bWithLoaded ) const;
     void ManageEndMaintenance();
+    bool HasRepairEvacuationMeans() const;
     //@}
 
 private:

@@ -743,21 +743,19 @@ void PHY_ComposantePion::Update()
         bRepairEvacuationNoMeansChecked_ ||
         *pState_ != PHY_ComposanteState::repairableWithEvacuation_ && pState_->IsUsable() )
         return;
-    assert( pType_ );
-    bool bRepairEvacuationNoMeans = false;
-    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
-        bRepairEvacuationNoMeans = true;
-    else if( pMaintenanceState_ )
-    {
-        const PHY_MaintenanceConsign_ABC* consign = pMaintenanceState_->GetConsign();
-        if( consign && consign->SearchForUpperLevelNotFound() )
-            bRepairEvacuationNoMeans = true;
-    }
-    if( bRepairEvacuationNoMeans )
-    {
-        bRepairEvacuationNoMeansChecked_ = true;
+    bRepairEvacuationNoMeansChecked_ = HasRepairEvacuationMeans();
+    if( bRepairEvacuationNoMeansChecked_ )
         MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
-    }
+}
+
+bool PHY_ComposantePion::HasRepairEvacuationMeans() const
+{
+    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
+        return true;
+    if( !pMaintenanceState_ )
+        return false;
+    const PHY_MaintenanceConsign_ABC* consign = pMaintenanceState_->GetConsign();
+    return consign && consign->SearchForUpperLevelNotFound();
 }
 
 // -----------------------------------------------------------------------------
