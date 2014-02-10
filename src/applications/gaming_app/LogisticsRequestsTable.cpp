@@ -13,6 +13,8 @@
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/InternalLinks.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/LogisticsConsign_ABC.h"
 #include "tools/ExerciseConfig.h"
 
@@ -26,13 +28,15 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
                                                 QWidget* parent,
                                                 const QStringList& horizontalHeaders,
                                                 const kernel::Controllers& controllers,
-                                                const tools::ExerciseConfig& config )
+                                                const tools::ExerciseConfig& config,
+                                                const kernel::Profile_ABC& profile )
     : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( new QSortFilterProxyModel( parent ) )
     , delegate_  ( parent )
     , horizontalHeaders_( horizontalHeaders )
     , controllers_( controllers )
+    , profile_( profile )
     , manualLogisticActivated_( config.IsActivated( "manual-logistic" ) )
 {
     if( horizontalHeaders_.isEmpty() )
@@ -152,11 +156,14 @@ void LogisticsRequestsTable::OnLinkClicked( const QString&, const QModelIndex& i
 void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, const QString& id, 
                                          const QString& requester, const QString& handler, const QString& state )
 {
+    auto base = logistic_helpers::GetLogisticBase( consign.GetHandler() );
+    if( !base )
+        throw MASA_EXCEPTION( "unabled to retrieve the logistic base reponsible for the consign " + consign.GetId() );
     int rowIndex = GetRequestRow( consign );
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, manualLogisticActivated_ && consign.NeedResolution()
+    SetData( rowIndex, 3, manualLogisticActivated_ && consign.NeedResolution() && profile_.CanBeOrdered( *base )
         && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
 }
 

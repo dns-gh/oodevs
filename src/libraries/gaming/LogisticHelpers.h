@@ -57,6 +57,7 @@ namespace logistic_helpers
         return CheckEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &RetrieveFunc< Extension >::Check, &retrieve, _1 ) );
     }
 
+    const kernel::Entity_ABC* GetLogisticBase( const kernel::Entity_ABC* entity );
 } // namespace
 
 #endif // __LogisticTools_h_
