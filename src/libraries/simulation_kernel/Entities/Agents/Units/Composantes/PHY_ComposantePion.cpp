@@ -208,14 +208,11 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
 void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, const PHY_BreakdownType* breakdownType /*= 0*/ )
 {
     assert( pType_ );
-    const PHY_ComposanteState* pNewState = &state;
-    if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
-        pNewState = &PHY_ComposanteState::undamaged_;
-    if( *pState_ == *pNewState )
+    const PHY_ComposanteState* pState = &state;
+    if( pType_->GetProtection().IsHuman() && ( state == PHY_ComposanteState::repairableWithEvacuation_ || state == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
+        pState = &PHY_ComposanteState::undamaged_;
+    if( *pState_ == *pState )
         return;
-    bRepairEvacuationNoMeansChecked_ = false;
-    const PHY_ComposanteState* pOldState = pState_;
-    pState_ = pNewState;
     if( breakdownType )
     {
         if( !pType_->CanHaveBreakdown( breakdownType ) )
@@ -223,11 +220,12 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
         delete pBreakdown_;
         pBreakdown_ = new PHY_Breakdown( breakdownType );
     }
-    else if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
+    else if( *pState == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
+    bRepairEvacuationNoMeansChecked_ = false;
+    std::swap( pState_, pState );
     ManageEndMaintenance();
-    assert( pRole_ );
-    pRole_->NotifyComposanteChanged( *this, *pOldState );
+    pRole_->NotifyComposanteChanged( *this, *pState );
 }
 
 // -----------------------------------------------------------------------------
