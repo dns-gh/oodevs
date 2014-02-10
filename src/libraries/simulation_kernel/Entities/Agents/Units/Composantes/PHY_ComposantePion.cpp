@@ -738,28 +738,25 @@ void PHY_ComposantePion::Update()
         assert( pRole_ );
         pMaintenanceState_.reset( pRole_->NotifyComposanteWaitingForMaintenance( *this ) );
     }
-
-    assert( pRole_ );
-    if( !pRole_->GetPion().IsJammed() && !pRole_->GetPion().IsLogisticJammed() )
+    if( pRole_->GetPion().IsJammed() ||
+        pRole_->GetPion().IsLogisticJammed() ||
+        bRepairEvacuationNoMeansChecked_ ||
+        *pState_ != PHY_ComposanteState::repairableWithEvacuation_ && pState_->IsUsable() )
+        return;
+    assert( pType_ );
+    bool bRepairEvacuationNoMeans = false;
+    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
+        bRepairEvacuationNoMeans = true;
+    else if( pMaintenanceState_ )
     {
-        if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
-        {
-            assert( pType_ );
-            bool bRepairEvacuationNoMeans = false;
-            if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
-                bRepairEvacuationNoMeans = true;
-            else if( pMaintenanceState_ )
-            {
-                const PHY_MaintenanceConsign_ABC* consign = pMaintenanceState_->GetConsign();
-                if( consign && consign->SearchForUpperLevelNotFound() )
-                    bRepairEvacuationNoMeans = true;
-            }
-            if( bRepairEvacuationNoMeans )
-            {
-                bRepairEvacuationNoMeansChecked_ = true;
-                MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
-            }
-        }
+        const PHY_MaintenanceConsign_ABC* consign = pMaintenanceState_->GetConsign();
+        if( consign && consign->SearchForUpperLevelNotFound() )
+            bRepairEvacuationNoMeans = true;
+    }
+    if( bRepairEvacuationNoMeans )
+    {
+        bRepairEvacuationNoMeansChecked_ = true;
+        MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
     }
 }
 
