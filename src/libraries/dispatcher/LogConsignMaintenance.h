@@ -60,7 +60,7 @@ private:
     const unsigned long nTickCreation_;
     const unsigned int  nEquipmentType_; // XML reference - not resolved by dispatcher
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
-    const kernel::Agent_ABC* pTreatingAgent_;
+    unsigned int providerId_;
     sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus nState_;
     unsigned long currentStateEndTick_;
     bool bDiagnosed_;

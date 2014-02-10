@@ -99,6 +99,16 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
     SetState( sword::LogMaintenanceHandlingUpdate::finished, 0 );
 }
 
+namespace
+{
+    bool IsStateManualSelection( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus state )
+    {
+        return state == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection
+            || state == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection
+            || state == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
@@ -106,7 +116,10 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
     assert( pMaintenance_ );
-    asn().mutable_provider()->set_id( pMaintenance_->GetID() );
+    if( IsManualMode() && IsStateManualSelection( GetState() ) )
+        asn().mutable_provider()->set_id( GetPionMaintenance().FindLogisticManager()->GetLogisticId() );
+    else
+        asn().mutable_provider()->set_id( pMaintenance_->GetID() );
     asn().set_state( nState_ );
     if( currentStateEndTimeStep_ != std::numeric_limits< unsigned int >::max() )
         asn().set_current_state_end_tick( currentStateEndTimeStep_ );

@@ -94,8 +94,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation,
-                 kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config,
-                 kernel::Profile_ABC& profile, const kernel::Profile_ABC& filter );
+                    kernel::Workers& workers, Publisher_ABC& publisher, const tools::ExerciseConfig& config,
+                    kernel::Profile_ABC& profile, const kernel::Profile_ABC& filter );
     virtual ~Model();
     //@}
 

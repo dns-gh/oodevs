@@ -22,6 +22,7 @@
 #include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace geometry;
@@ -32,13 +33,13 @@ using namespace kernel;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
-                                              const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver,
+                                              const kernel::EntityResolver_ABC& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver,
                                               const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver, const Simulation& simulation,
                                               kernel::Agent_ABC& consumer )
     : LogisticsConsign_ABC( message.request().id(), controller, simulation, message.tick() )
     , resolver_           ( resolver )
     , consumer_           ( consumer )
-    , pPionLogHandling_   ( 0 )
+    , provider_           ( 0 )
     , equipmentType_      ( & componentResolver.Get( message.equipement().id() ) )
     , breakdownType_      ( & breakdownResolver.Get( message.breakdown().id() ) )
     , diagnosed_          ( false )
@@ -70,7 +71,7 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
         currentStateEndTick_ = message.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned int >::max();
-    pPionLogHandling_ = handler;
+    provider_ = handler;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,9 +80,9 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! provider_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-    const Point2f from = logistic_helpers::GetLogisticPosition( *pPionLogHandling_ );
+    const Point2f from = logistic_helpers::GetLogisticPosition( *provider_ );
     const Point2f to   = logistic_helpers::GetLogisticPosition( consumer_ );
     if( from.IsZero() || to.IsZero() )
         return;
@@ -108,7 +109,7 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
 // -----------------------------------------------------------------------------
 bool LogMaintenanceConsign::RefersToAgent( unsigned long id ) const
 {
-    return consumer_.GetId() == id || ( pPionLogHandling_ && pPionLogHandling_->GetId() == id );
+    return consumer_.GetId() == id || ( provider_ && provider_->GetId() == id );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +120,7 @@ bool LogMaintenanceConsign::RefersToAgent( const std::set< unsigned long >& id )
 {
     if( id.find( consumer_.GetId() ) != id.end() )
         return true;
-    return pPionLogHandling_ && ( id.find( pPionLogHandling_->GetId() ) != id.end() );
+    return provider_ && ( id.find( provider_->GetId() ) != id.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +138,7 @@ kernel::Agent_ABC* LogMaintenanceConsign::GetConsumer() const
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* LogMaintenanceConsign::GetHandler() const
 {
-    return pPionLogHandling_;
+    return provider_;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +209,7 @@ QString LogMaintenanceConsign::GetCurrentStartedTime() const
 
 kernel::Entity_ABC* LogMaintenanceConsign::GetRequestHandler( uint32_t entityId ) const
 {
-    return resolver_.Find( entityId );
+    return resolver_.FindEntity( entityId );
 }
 
 // -----------------------------------------------------------------------------
