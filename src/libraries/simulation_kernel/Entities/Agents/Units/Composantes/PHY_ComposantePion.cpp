@@ -211,7 +211,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     const PHY_ComposanteState* pState = &state;
     if( pType_->GetProtection().IsHuman() && ( state == PHY_ComposanteState::repairableWithEvacuation_ || state == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pState = &PHY_ComposanteState::undamaged_;
-    if( *pState_ == *pState )
+    if( *pState_ == *pState && ( !pBreakdown_ || &pBreakdown_->GetType() == breakdownType ) )
         return;
     if( breakdownType )
     {
