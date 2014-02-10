@@ -32,6 +32,12 @@ namespace sword
     class UnitOrder;
 }
 
+namespace gui
+{
+    struct WeatherParameters;
+    struct LocalWeatherParameters;
+}
+
 namespace kernel
 {
     class AgentType;
@@ -128,6 +134,9 @@ public:
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const = 0;
     virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const = 0;
     virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const = 0;
+    virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const = 0;
+    virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
+    virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}

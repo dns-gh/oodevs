@@ -11,6 +11,8 @@
 #include "ActionFactory.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
+#include "DateTime.h"
+#include "Direction.h"
 #include "DotationType.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
@@ -29,6 +31,7 @@
 #include "String.h"
 #include "Bool.h"
 #include "UnitMagicAction.h"
+#include "clients_gui/WeatherHelpers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -1012,7 +1015,7 @@ Action_ABC* ActionFactory::CreateFireOrderOnLocation( unsigned int resourceId, c
     action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, location ) );
     action->AddParameter( *new parameters::DotationType( it.NextElement(), resourceId, staticModel_.objectTypes_ ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType ) );
-    action->Attach( *new actions::ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }
 
@@ -1046,6 +1049,64 @@ Action_ABC* ActionFactory::CreateChangeResourceLinks( unsigned int id, const gui
             link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
         }
     }
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateGlobalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateGlobalWeather( const gui::WeatherParameters& params ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "global_weather" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.temperature_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.windSpeed_ ) );
+    action->AddParameter( *new parameters::Direction( it.NextElement(), params.windDirection_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudFloor_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudCeiling_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudDensity_ ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), params.type_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLocalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLocalWeather( const gui::LocalWeatherParameters& params ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "local_weather" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.temperature_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.windSpeed_ ) );
+    action->AddParameter( *new parameters::Direction( it.NextElement(), params.globalParams_.windDirection_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudFloor_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudCeiling_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudDensity_ ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), params.globalParams_.type_ ) );
+    action->AddParameter( *new parameters::DateTime( it.NextElement(), params.startTime_ ) );
+    action->AddParameter( *new parameters::DateTime( it.NextElement(), params.endTime_ ) );
+    action->AddParameter( *new parameters::Location( it.NextElement(), coordinateConverter_, params.location_ ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), params.id_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLocalDestruction
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLocalDestruction( unsigned int weatherId ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "local_weather_destruction" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), weatherId ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }

@@ -277,6 +277,36 @@ void ActionsModel::PublishChangeResourceLinks( unsigned int id, const ::gui::Res
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishGlobalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishGlobalWeather( const gui::WeatherParameters& params )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateGlobalWeather( params ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLocalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishLocalWeather( const gui::LocalWeatherParameters& params )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLocalWeather( params ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLocalDestruction
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishLocalDestruction( unsigned int weatherId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLocalDestruction( weatherId ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

@@ -129,6 +129,9 @@ public:
     void PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
     void PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType );
     void PublishChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes );
+    void PublishGlobalWeather( const ::gui::WeatherParameters& params );
+    void PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
+    void PublishLocalDestruction( unsigned int weatherId );
     //@}
 
 private:

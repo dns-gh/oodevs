@@ -17,6 +17,11 @@ namespace actions
     class MagicAction;
 }
 
+namespace gui
+{
+    struct WeatherParameters;
+}
+
 namespace kernel
 {
     class OrderParameter;
@@ -44,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
+    gui::WeatherParameters CreateParameters();
     //@}
 };
 

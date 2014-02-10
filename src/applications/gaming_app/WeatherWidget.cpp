@@ -13,6 +13,7 @@
 #include "actions/Numeric.h"
 #include "actions/Direction.h"
 #include "actions/Enumeration.h"
+#include "clients_gui/WeatherHelpers.h"
 
 // -----------------------------------------------------------------------------
 // Name: WeatherWidget constructor
@@ -37,13 +38,15 @@ WeatherWidget::~WeatherWidget()
 // Name: WeatherWidget::CreateParameters
 // Created: JSR 2010-04-23
 // -----------------------------------------------------------------------------
-void WeatherWidget::CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it )
+gui::WeatherParameters WeatherWidget::CreateParameters()
 {
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( temperature_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( windSpeed_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Direction( it.NextElement(), windDirection_->value() ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudFloor_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudCeiling_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudDensity_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Enumeration( it.NextElement(), type_->GetValue() ) );
+    gui::WeatherParameters result = 
+           { type_->GetValue(),
+             static_cast< float >( temperature_->value() ),
+             static_cast< float >( windSpeed_->value() ),
+             windDirection_->value(),
+             static_cast< float >( cloudFloor_->value() ),
+             static_cast< float >( cloudCeiling_->value() ),
+             static_cast< float >( cloudDensity_->value() ) };
+    return result;
 }

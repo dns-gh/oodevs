@@ -104,7 +104,7 @@ void WeatherListView::DeleteItem()
 // Name: WeatherListView::PopTrashedWeather
 // Created: ABR 2011-11-28
 // -----------------------------------------------------------------------------
-unsigned long WeatherListView::PopTrashedWeather()
+unsigned int WeatherListView::PopTrashedWeather()
 {
     if( trashedWeather_.empty() )
         return 0;

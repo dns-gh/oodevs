@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void Update( const MeteoModel& model );
-    unsigned long PopTrashedWeather();
+    unsigned int PopTrashedWeather();
     //@}
 
 private:
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Time_ABC&     simulation_;
-    std::queue< unsigned long > trashedWeather_;
+    std::queue< unsigned int > trashedWeather_;
     //@}
 };
 
