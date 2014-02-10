@@ -29,10 +29,7 @@ PHY_Population_ActionMoveAlong::~PHY_Population_ActionMoveAlong()
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionMoveAlong::Execute()
 {
-    MT_Vector2D destination = *( destination_[0] );
     population_.MoveAlong( destination_ );
-    if( population_.HasReachedDestination( destination ) && destination_.size() > 1 )
-        destination_.erase( destination_.begin() );
 }
 
 // -----------------------------------------------------------------------------

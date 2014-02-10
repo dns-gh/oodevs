@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     void SetCollisions( MIL_PopulationFlow* flow, const std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > >& collisions );
-    bool CanMove( const MIL_PopulationFlow* flow );
+    bool CanMove( const MIL_PopulationFlow* flow ) const;
     void Update();
     void NotifyFlowDestruction( const MIL_PopulationFlow* flow );
     //@}

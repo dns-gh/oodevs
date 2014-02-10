@@ -35,14 +35,13 @@
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
-
 #include <boost/make_shared.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
-// Created: JVT 02-09-17
+// Created: JSR 2014-01-16
 //-----------------------------------------------------------------------------
-DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination )
+DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
     : DEC_PathResult( DEC_PathType::movement_ )
     , id_        ( population.GetID() )
     , pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
@@ -51,9 +50,10 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     , profiler_()
 {
     T_PointVector pointsTmp;
-    pointsTmp.reserve( 2 );
+    pointsTmp.reserve( 1 + destination.size() );
     pointsTmp.push_back( start );
-    pointsTmp.push_back( destination );
+    for( auto it = destination.begin(); it != destination.end(); ++it )
+        pointsTmp.push_back( **it );
     Initialize( pointsTmp );
 }
 

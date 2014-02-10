@@ -39,7 +39,7 @@ public:
     //@{
     bool Update();
     void Clean ();
-    bool IsValid() const; // false = will be deleted
+    virtual bool IsValid() const; // false = will be deleted
     virtual bool CanBePerceived() const;
     //@}
 
@@ -47,7 +47,7 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
-    void MoveAlong( const MT_Vector2D& destination );
+    void MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void CancelMove();
     virtual bool IsReady() const;
     MIL_PopulationFlow* Split( const MT_Vector2D& splittingPoint, std::size_t segmentIndex );
@@ -95,6 +95,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< MIL_PopulationFlow*, MT_Vector2D > > T_FlowCollisions;
+    typedef std::list< std::pair< MT_Vector2D, std::size_t > > T_FlowShape;
     //@}
 
     //! @name Helpers
@@ -120,6 +121,7 @@ private:
     void UpdateCrowdCollisions();
     bool ComputeFlowCollisions( const MT_Line& line, T_FlowCollisions& collisions );
     bool AddFlowCollision( const MT_Line& line, const MT_Line& flowSegment, T_FlowCollisions& collisions );
+    void ComputeSpeedLimit();
     //@}
 
     //! @name Notifications
@@ -146,7 +148,9 @@ private:
     bool ManageSplit();
     void MoveToAlternateDestination( const MT_Vector2D& destination );
     void ComputePath( const MT_Vector2D& destination );
+    void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
     void DetachFromDestConcentration();
+    T_FlowShape::const_iterator FindPointInShape( const MT_Vector2D& v ) const;
     //@}
 
     //! @name Serialization
@@ -172,8 +176,9 @@ private:
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
     MT_Vector2D direction_;
     double rSpeed_;
-    T_PointList flowShape_; // begin() == head ...
-    std::vector< MT_Vector2D >pointsToInsert_;
+    T_FlowShape flowShape_; 
+    mutable T_PointList computedFlowShape_;
+    std::vector< MT_Vector2D > pointsToInsert_;
     TER_Localisation location_; // For terrain
     bool bHeadMoveFinished_;
     // Network
@@ -183,14 +188,17 @@ private:
     bool bSpeedUpdated_;
     bool bBlocked_;
     bool canCollideWithFlow_;
+    bool hasDoneMagicMove_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
     const MIL_Object_ABC* pBlockingObject_;
     const MIL_Object_ABC* pFirstSplittingObject_;
     double armedIndividualsBeforeSplit_;
     unsigned int personsPassedThroughObject_;
+    double speedLimit_;
     static MIL_IDManager idManager_;
     double objectDensity_;
+    std::vector< boost::shared_ptr< MT_Vector2D > > moveAlongPath_;
     //@}
 };
 

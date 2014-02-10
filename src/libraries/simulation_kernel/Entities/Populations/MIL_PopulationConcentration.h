@@ -112,6 +112,7 @@ private:
     std::set< MIL_PopulationFlow* > pushingFlows_;
     const MIL_Object_ABC* pSplittingObject_;
     double rPullingFlowsDensity_;
+    bool hasDoneMagicMove_;
     static MIL_IDManager idManager_;
     //@}
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );

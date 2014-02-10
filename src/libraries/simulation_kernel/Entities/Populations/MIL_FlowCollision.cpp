@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FlowCollision.h"
-#include "MIL_Time_ABC.h"
 #include "MIL_PopulationFlow.h"
+#include "MIL_Random.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FlowCollision constructor
@@ -18,11 +18,11 @@
 // -----------------------------------------------------------------------------
 MIL_FlowCollision::MIL_FlowCollision( const MT_Vector2D& point )
     : point_( point )
-    , isFlowing_( false )
+    , isFlowing_( true )
     , markedForDestruction_( false )
     , movingIndex_( 0 )
     , going_( 0 )
-    , start_( 0 )
+    , randomThreshold_( 0 )
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ MIL_FlowCollision::~MIL_FlowCollision()
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationFlow* flow2 )
 {
-    if( flow1 == going_ || flow2 == going_ )
+    if( flow1 == flow2 || flow1 == going_ || flow2 == going_ )
         return;
     bool flow1Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end();
     bool flow2Found = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
@@ -56,18 +56,10 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
     {
         const MT_Vector2D& p1 = flow1->GetFlowShape().back();
         const MT_Vector2D& p2 = flow2->GetFlowShape().back();
-        MIL_PopulationFlow* orderedFlow1 = 0;
-        MIL_PopulationFlow* orderedFlow2 = 0;
-        if( p1.SquareDistance( point_ ) > p2.SquareDistance( point_ ) )
-        {
-            orderedFlow1 = flow1;
-            orderedFlow2 = flow2;
-        }
-        else
-        {
-            orderedFlow1 = flow2;
-            orderedFlow2 = flow1;
-        }
+        MIL_PopulationFlow* orderedFlow1 = flow1;
+        MIL_PopulationFlow* orderedFlow2 = flow2;
+        if( p1.SquareDistance( point_ ) <= p2.SquareDistance( point_ ) )
+            std::swap( orderedFlow1, orderedFlow2 );
         collidingFlows_.push_back( orderedFlow1 );
         collidingFlows_.push_back( orderedFlow2 );
     }
@@ -77,13 +69,13 @@ void MIL_FlowCollision::SetCollision( MIL_PopulationFlow* flow1, MIL_PopulationF
 // Name: MIL_FlowCollision::CanMove
 // Created: JSR 2014-01-10
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
+bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow ) const
 {
     if( markedForDestruction_ )
         return true;
     auto flowIt = std::find( collidingFlows_.begin(), collidingFlows_.end(), flow );
     if( flowIt != collidingFlows_.end() )
-        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow || MIL_Time_ABC::GetTime().GetCurrentTimeStep() - start_ >= 5 )
+        if ( !isFlowing_ || collidingFlows_[ movingIndex_ ] != flow )
             return false;
     return true;
 }
@@ -92,7 +84,7 @@ bool MIL_FlowCollision::CanMove( const MIL_PopulationFlow* flow )
 // Name: MIL_FlowCollision::HasCollision
 // Created: JSR 2014-01-14
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollision::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 )
+bool MIL_FlowCollision::HasCollision( const MIL_PopulationFlow* flow1, const MIL_PopulationFlow* flow2 ) const
 {
     return std::find( collidingFlows_.begin(), collidingFlows_.end(), flow1 ) != collidingFlows_.end()
         && std::find( collidingFlows_.begin(), collidingFlows_.end(), flow2 ) != collidingFlows_.end();
@@ -130,26 +122,15 @@ void MIL_FlowCollision::Update()
 {
     if( markedForDestruction_ )
         return;
-    const int timeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    if( start_ == 0 ) // first update
+    if( !isFlowing_ )
     {
+        isFlowing_ = true;
+        if( ++movingIndex_ >= collidingFlows_.size() )
+            movingIndex_ = 0;
+    }
+    else if( IsTimerOver() )
         Split();
-        start_ = timeStep;
-        return;
-    }
-    if( timeStep - start_ >= 5 && isFlowing_ || ( timeStep - start_ >= 5 && !isFlowing_ ) )
-    {
-        start_ = timeStep;
-        if( isFlowing_ )
-            Split();
-        else
-        {
-            isFlowing_ = true;
-            ++movingIndex_;
-            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ) )
-                movingIndex_ = 0;
-        }
-    }
+
     if( isFlowing_ )
         RemovedPassedOverFlows();
 }
@@ -160,7 +141,7 @@ void MIL_FlowCollision::Update()
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::RemovedPassedOverFlows()
 {
-    int nIndex = 0;
+    std::size_t nIndex = 0;
     for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); )
     {
         bool hasPassedOver = true;
@@ -171,7 +152,7 @@ void MIL_FlowCollision::RemovedPassedOverFlows()
             it = collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
                 --movingIndex_;
-            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ))
+            if( movingIndex_ >= collidingFlows_.size() )
                 movingIndex_ = 0;
         }
         else
@@ -190,7 +171,7 @@ void MIL_FlowCollision::RemovedPassedOverFlows()
 // -----------------------------------------------------------------------------
 void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
 {
-    int nIndex = 0;
+    std::size_t nIndex = 0;
     for( auto it = collidingFlows_.begin(); it != collidingFlows_.end(); ++it, ++nIndex )
     {
         if( *it == flow )
@@ -198,7 +179,7 @@ void MIL_FlowCollision::NotifyFlowDestruction( const MIL_PopulationFlow* flow )
             collidingFlows_.erase( it );
             if( movingIndex_ > nIndex )
                 --movingIndex_;
-            if( movingIndex_ >= static_cast< int >( collidingFlows_.size() ))
+            if( movingIndex_ >= collidingFlows_.size() )
                 movingIndex_ = 0;
             break;
         }
@@ -228,10 +209,29 @@ bool MIL_FlowCollision::SplitOnSegment( const MT_Line& line, std::size_t& segmen
     double r = line.ProjectPointOnLine( point_, result );
     if( r >= -0.0001 && r <= 1.0001 && result.SquareDistance( point_ ) < 100 )
     {
-        going_ = collidingFlows_[ movingIndex_ ]->Split( point_, segmentIndex );
-        isFlowing_ = false;
-        return true;
+        MIL_PopulationFlow* splitFlow = collidingFlows_[ movingIndex_ ]->Split( point_, segmentIndex );
+        if( splitFlow )
+        {
+            going_ = splitFlow;
+            isFlowing_ = false;
+            return true;
+        }
     }
     ++segmentIndex;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FlowCollision::IsTimerOver
+// Created: JSR 2014-02-06
+// -----------------------------------------------------------------------------
+bool MIL_FlowCollision::IsTimerOver()
+{
+    if( MIL_Random::rand_ii() >= randomThreshold_ )
+    {
+        randomThreshold_ = 1.;
+        return true;
+    }
+    randomThreshold_ *= 0.95;
     return false;
 }

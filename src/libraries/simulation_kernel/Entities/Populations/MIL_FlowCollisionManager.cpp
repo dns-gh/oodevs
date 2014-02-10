@@ -61,7 +61,7 @@ void MIL_FlowCollisionManager::SetCollisions( MIL_PopulationFlow* flow, const st
 // Name: MIL_FlowCollisionManager::CanMove
 // Created: JSR 2014-01-09
 // -----------------------------------------------------------------------------
-bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow )
+bool MIL_FlowCollisionManager::CanMove( const MIL_PopulationFlow* flow ) const
 {
     for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
         if( !it->second->CanMove( flow ) )

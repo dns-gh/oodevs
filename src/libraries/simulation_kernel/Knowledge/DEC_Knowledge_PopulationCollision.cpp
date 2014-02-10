@@ -169,7 +169,7 @@ void DEC_Knowledge_PopulationCollision::GetPositions( std::vector< MT_Vector2D >
         {
             const T_PointList& flowShape = (*it)->GetFlowShape();
             positions.insert( positions.end(), flowShape.begin(), flowShape.end() );
-}
+        }
     }
 }
 
