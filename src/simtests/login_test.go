@@ -12,6 +12,7 @@ import (
 	. "launchpad.net/gocheck"
 	"swapi"
 	"swapi/simu"
+	"sword"
 	"time"
 )
 
@@ -124,9 +125,6 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
-	// http://jira.masagroup.net/browse/SWBUG-11396
-	c.Skip("unreliable")
-
 	waitForMessages := func(timeout time.Duration, seen chan *swapi.SwordMessage) {
 		select {
 		case <-time.After(timeout):
@@ -145,13 +143,18 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	client := connectClient(c, sim, nil)
 	defer client.Close()
 
-	msgch := make(chan *swapi.SwordMessage)
+	msgch := make(chan *swapi.SwordMessage, 1)
 	handler := func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
-			msgch <- nil
+			if len(msgch) < cap(msgch) {
+				msgch <- nil
+			}
 			return true
 		}
-		if msg != nil && msg.AuthenticationToClient != nil {
+		if msg == nil {
+			return false
+		}
+		if msg.AuthenticationToClient != nil {
 			auth := msg.AuthenticationToClient
 			if auth.GetMessage().GetAuthenticationResponse() != nil ||
 				// ConnectedProfileList is sent after a failed authentication
@@ -159,15 +162,31 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 				return false
 			}
 		}
-		if msg != nil && msg.DispatcherToClient != nil &&
+		if msg.DispatcherToClient != nil &&
 			msg.DispatcherToClient.GetMessage() != nil &&
 			msg.DispatcherToClient.GetMessage().ServicesDescription != nil {
 			return false
 		}
+		if msg.SimulationToClient != nil &&
+			msg.SimulationToClient.GetMessage() != nil {
+			// Ignore "forbidden" messages
+			m := msg.SimulationToClient.GetMessage()
+			if m.ControlPauseAck != nil {
+				if m.ControlPauseAck.GetErrorCode() == sword.ControlAck_error_forbidden {
+					return false
+				}
+			} else if m.ControlResumeAck != nil {
+				if m.ControlResumeAck.GetErrorCode() == sword.ControlAck_error_forbidden {
+					return false
+				}
+			}
+		}
 
-		received := &swapi.SwordMessage{}
-		swapi.DeepCopy(received, msg)
-		msgch <- received
+		if len(msgch) < cap(msgch) {
+			received := &swapi.SwordMessage{}
+			swapi.DeepCopy(received, msg)
+			msgch <- received
+		}
 		return true
 	}
 	client.Register(handler)
@@ -175,6 +194,11 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	// Trigger simulation_client messages
 	other := loginAndWaitModel(c, sim, NewAllUserOpts(""))
 	createAutomat(c, other)
+
+	// Try invalid login followed by Pause/Resume (SWBUG-11716)
+	client.Login("foo", "bar")
+	client.Pause()
+	client.Resume(0)
 	waitForMessages(2*time.Second, msgch)
 
 	// Trigger destruction events
