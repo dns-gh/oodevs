@@ -1673,6 +1673,15 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
 	})
+
+	// Change breakdown
+	equipment.Breakdowns = []int32{83}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
+	})
 }
 
 func (s *TestSuite) TestUnitCreateBreakdowns(c *C) {
