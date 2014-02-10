@@ -99,6 +99,7 @@ public:
 
     virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const;
+    virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const;
     //@}

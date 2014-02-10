@@ -257,6 +257,16 @@ void ActionsModel::PublishCreateKnowledgeGroup( unsigned int id, const std::stri
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishFireOrderOnLocation
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+void ActionsModel::PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateFireOrderOnLocation( resourceId, location, interventionType ) );
+    Publish( *action, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

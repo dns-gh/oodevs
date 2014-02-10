@@ -203,17 +203,7 @@ void FireCreationPanel::Commit()
     if( CheckValidity() )
     {
         if( IsStrikeOnLocation() )
-        {
-            kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order_on_location" );
-            std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
-            tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
-            action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, *location_ ) );
-            action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
-            action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            actionsModel_.Publish( *action, 0 );
-        }
+            actionsModel_.PublishFireOrderOnLocation( ammunitionsBox_->GetValue(), *location_, interventionType_->text().toFloat() );
         else
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );

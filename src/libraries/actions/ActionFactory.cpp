@@ -11,6 +11,7 @@
 #include "ActionFactory.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
+#include "DotationType.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
 #include "Enumeration.h"
@@ -43,6 +44,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Point.h"
@@ -994,6 +996,23 @@ Action_ABC* ActionFactory::CreateKnowledgeGroup( unsigned int id, const std::str
     action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), id ) );
     action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateFireOrderOnLocation
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "fire_order_on_location" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, location ) );
+    action->AddParameter( *new parameters::DotationType( it.NextElement(), resourceId, staticModel_.objectTypes_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType ) );
+    action->Attach( *new actions::ActionTiming( controller_, simulation_ ) );
     return action.release();
 }
 

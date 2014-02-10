@@ -127,6 +127,7 @@ public:
     void PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
     void PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
     void PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
+    void PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType );
     //@}
 
 private:

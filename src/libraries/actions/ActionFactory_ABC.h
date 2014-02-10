@@ -39,6 +39,7 @@ namespace kernel
     class Entity_ABC;
     class EquipmentType;
     class FragOrderType;
+    class Location_ABC;
     class MagicActionType;
     class MissionType;
     class Object_ABC;
@@ -124,6 +125,7 @@ public:
 
     virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) = 0;
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const = 0;
+    virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}
