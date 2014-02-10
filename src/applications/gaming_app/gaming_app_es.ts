@@ -1694,6 +1694,14 @@ Do you want to replace it?</source>
         <source>Select diagnosis team</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>

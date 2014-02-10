@@ -1697,6 +1697,14 @@ Voulez-vous le remplacer ?</translation>
         <source>Select diagnosis team</source>
         <translation>Sélectionner une équipe de diagnostique</translation>
     </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation>Cette requête ne peut être resolue.</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
