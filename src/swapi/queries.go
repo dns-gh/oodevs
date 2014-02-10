@@ -93,6 +93,24 @@ func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bo
 	return false
 }
 
+func (d *ModelData) IsEqualTasker(tasker *sword.Tasker, id uint32) bool {
+	switch {
+	case tasker.Unit != nil:
+		return tasker.Unit.GetId() == id
+	case tasker.Automat != nil:
+		return tasker.Automat.GetId() == id
+	case tasker.Formation != nil:
+		return tasker.Formation.GetId() == id
+	case tasker.Party != nil:
+		return tasker.Party.GetId() == id
+	case tasker.Crowd != nil:
+		return tasker.Crowd.GetId() == id
+	case tasker.Population != nil:
+		return tasker.Population.GetId() == id
+	}
+	return false
+}
+
 func (d *ModelData) IsKnowledgeGroupInProfile(id uint32, profile *Profile) bool {
 	knowledgeGroup, ok := d.KnowledgeGroups[id]
 	return ok && d.IsPartyInProfile(knowledgeGroup.PartyId, profile)
