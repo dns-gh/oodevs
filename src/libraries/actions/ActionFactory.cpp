@@ -953,7 +953,7 @@ namespace
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
+Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_ );
 }
@@ -962,7 +962,7 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 // Name: ActionFactory::CreateSelectMaintenanceDiagnosisTeam
 // Created: SLI 2014-02-06
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
+Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_ );
 }
@@ -971,7 +971,7 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int co
 // Name: ActionFactory::CreateChangeDiplomacy
 // Created: ABR 2014-02-07
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy )
+Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const
 {
     MagicActionType& actionType = magicActions_.Get( "change_diplomacy" );
     std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );

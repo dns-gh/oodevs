@@ -121,10 +121,10 @@ public:
     virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const = 0;
-    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
-    virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
+    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const = 0;
+    virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const = 0;
 
-    virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) = 0;
+    virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const = 0;
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const = 0;
     virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const = 0;
     virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const = 0;
