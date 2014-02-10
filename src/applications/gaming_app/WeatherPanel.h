@@ -76,8 +76,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
-    const StaticModel& model_;
-    const kernel::Time_ABC& simulation_;
     MeteoModel* currentModel_;
     //@}
 };

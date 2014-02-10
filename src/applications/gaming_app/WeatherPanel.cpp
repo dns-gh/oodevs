@@ -15,18 +15,10 @@
 #include "WeatherListView.h"
 #include "WeatherWidget.h"
 #include "actions/ActionsModel.h"
-#include "actions/ActionTiming.h"
-#include "actions/DateTime.h"
-#include "actions/Location.h"
-#include "actions/MagicAction.h"
-#include "actions/Identifier.h"
 #include "clients_gui/WeatherHelpers.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/Rectangle.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/MeteoModel.h"
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
@@ -41,8 +33,6 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     : gui::WeatherPanel( parent, panel, layer )
     , controllers_ ( controllers )
     , actionsModel_( actionsModel )
-    , model_       ( model )
-    , simulation_  ( simulation )
     , currentModel_( 0 )
 {
     // Global Weather
@@ -50,7 +40,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     // Local Weather
     localWeatherWidget_ = new WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
     CreateLocalParameters();
-    localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation_ );
+    localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation );
     connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
 
     controllers_.Register( *this );

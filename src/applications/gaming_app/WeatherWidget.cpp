@@ -9,10 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "WeatherWidget.h"
-#include "actions/MagicAction.h"
-#include "actions/Numeric.h"
-#include "actions/Direction.h"
-#include "actions/Enumeration.h"
 #include "clients_gui/WeatherHelpers.h"
 
 // -----------------------------------------------------------------------------

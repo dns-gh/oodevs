@@ -15,8 +15,6 @@
 #include "actions/ActionTiming.h"
 #include "actions/DotationType.h"
 #include "actions/Identifier.h"
-#include "actions/Location.h"
-#include "actions/MagicAction.h"
 #include "actions/Numeric.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/GlTools_ABC.h"
@@ -39,9 +37,14 @@ using namespace actions;
 // Name: FireCreationPanel constructor
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
-FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                                    , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                                    , ::gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools )
+FireCreationPanel::FireCreationPanel( QWidget* parent,
+                                      ::gui::PanelStack_ABC& panel,
+                                      kernel::Controllers& controllers,
+                                      actions::ActionsModel& actionsModel,
+                                      const kernel::Time_ABC& simulation,
+                                      const StaticModel& staticModel,
+                                      ::gui::ParametersLayer& paramLayer,
+                                      const gui::GlTools_ABC& tools )
     : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )

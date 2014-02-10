@@ -12,24 +12,9 @@
 
 #include "clients_gui/WeatherWidget.h"
 
-namespace actions
-{
-    class MagicAction;
-}
-
 namespace gui
 {
     struct WeatherParameters;
-}
-
-namespace kernel
-{
-    class OrderParameter;
-}
-
-namespace tools
-{
-    template< typename Item > class Iterator;
 }
 
 // =============================================================================

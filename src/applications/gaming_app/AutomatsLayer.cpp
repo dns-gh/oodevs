@@ -101,26 +101,8 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
         return false;
     if( const kernel::AgentType* droppedItem = dnd::FindData< kernel::AgentType >( event ) )
     {
-        RequestCreation( point, *droppedItem );
+        actionsModel_.PublishAgentCreationAction( *droppedItem, point, *selected_ );
         return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::RequestCreation
-// Created: SBO 2007-06-20
-// -----------------------------------------------------------------------------
-void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
-{
-    actionsModel_.PublishAgentCreationAction( type, point, *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::RequestCreation
-// Created: LDC 2010-10-01
-// -----------------------------------------------------------------------------
-void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
-{
-    actionsModel_.PublishAutomatCreationAction( point, type, *selected_ );
 }
