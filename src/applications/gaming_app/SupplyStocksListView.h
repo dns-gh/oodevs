@@ -44,6 +44,7 @@ protected:
     //! @name Operations
     //@{
     virtual void UpdateSelected( const kernel::Entity_ABC* entity );
+    virtual void showEvent( QShowEvent* event );
     //@}
 
 private:
