@@ -29,6 +29,7 @@ public:
     {
         eName,
         eModel,
+        eCrowdCollision,
         eConcentrationDensity,
         eMoveDensity,
         eMoveSpeed,

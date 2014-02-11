@@ -382,6 +382,7 @@ void ADN_Crowds_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output ) co
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
     : nId_( ADN_Crowds_Data::idManager_.GetNextId() )
     , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population ), 0 )
+    , bCrowdCollision_( false )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_( 0. )
     , rMoveSpeed_( 0. )
@@ -403,6 +404,7 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
     : nId_( id )
     , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModels( eEntityType_Population ), 0 )
+    , bCrowdCollision_( false )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_( 0. )
     , rMoveSpeed_( 0. )
@@ -467,6 +469,7 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
     CrowdsInfos* pCopy = new CrowdsInfos();
 
     pCopy->ptrModel_              = ptrModel_.GetData();
+    pCopy->bCrowdCollision_       = bCrowdCollision_.GetData();
     pCopy->rConcentrationDensity_ = rConcentrationDensity_.GetData();
     pCopy->rMoveDensity_          = rMoveDensity_.GetData();
     pCopy->rMoveSpeed_            = rMoveSpeed_.GetData();
@@ -499,7 +502,9 @@ void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
           >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional
-          >> xml::attribute( "armed-individuals", rArmedIndividuals );
+          >> xml::attribute( "armed-individuals", rArmedIndividuals )
+          >> xml::optional
+          >> xml::attribute( "collides-with-crowds", bCrowdCollision_ );
 
     input >> xml::start( "slowing-effects" )
             >> xml::list( "slowing-effect", *this, &ADN_Crowds_Data::CrowdsInfos::ReadSlowingEffect )
@@ -597,6 +602,8 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
             << xml::attribute( "moving-base-density", rMoveDensity_ )
             << xml::attribute( "moving-speed", rMoveSpeed_ )
             << xml::attribute( "armed-individuals", armedIndividuals_.GetData() / 100. );
+    if( bCrowdCollision_.GetData() )
+        output << xml::attribute( "collides-with-crowds", true );
 
     output << xml::start( "slowing-effects" );
     for( auto it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )

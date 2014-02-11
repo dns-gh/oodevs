@@ -37,6 +37,7 @@
 						<xs:attribute name="moving-speed" type="xs:nonNegativeInteger" use="required"/>
 						<xs:attribute name="moving-mode" type="T_MovingType"/>
 						<xs:attribute name="armed-individuals" type="T_ZeroToOneDouble"/>
+						<xs:attribute name="collides-with-crowds" type="xs:boolean"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>

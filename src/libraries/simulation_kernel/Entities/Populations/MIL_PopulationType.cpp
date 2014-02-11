@@ -98,13 +98,14 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , attritionData_        ()
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
     , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
-    , canCollideWithFlow_( false )
+    , canCollideWithFlow_   ( false )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
         >> xml::attribute( "moving-base-density", rDefaultFlowDensity_ )
         >> xml::attribute( "moving-speed", rMaxSpeed_ )
-        >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals_ );
+        >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals_ )
+        >> xml::optional >> xml::attribute( "collides-with-crowds", canCollideWithFlow_ );
 
     if( rConcentrationDensity_ <= 0 )
         throw MASA_EXCEPTION( xis.context() + "population: concentration-density <= 0" );
