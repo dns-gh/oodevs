@@ -445,7 +445,7 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	c.Assert(party, NotNil)
 	// Create crowd in party
 	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd",
-	swapi.Point{X: -15.8105, Y: 28.3451}, 600, 0, 0, "crowd")
+		swapi.Point{X: -15.8105, Y: 28.3451}, 600, 0, 0, "crowd")
 
 	err = client.ChangeAttitude(crowd.Id, Agressive)
 	c.Assert(err, IsNil)
