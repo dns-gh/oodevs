@@ -57,6 +57,7 @@
 #include <boost/serialization/map.hpp>
 #include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
+#include <boost/lexical_cast.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Composantes )
 
@@ -1962,15 +1963,14 @@ namespace
     }
 
     template< typename Composantes, typename Repartition, typename Breakdowns >
-    void UpdateRepairablesWithEvacuation( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
-        const PHY_ComposanteTypePion& composanteType )
+    void UpdateRepairablesWithEvacuation( Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns )
     {
         for( auto it = composantes.begin(); it != composantes.end(); )
         {
             const PHY_ComposanteState& state = (*it)->GetState();
             if( state == PHY_ComposanteState::repairableWithEvacuation_ && !breakdowns.empty() )
             {
-                const PHY_BreakdownType* breakdown = RemoveBreakdown( composanteType, breakdowns );
+                const PHY_BreakdownType* breakdown = RemoveBreakdown( (*it)->GetType(), breakdowns );
                 (*it)->ReinitializeState( state, breakdown ); // $$$$ MCO 2014-02-07: no-op for now, see ReinitializeState
                 auto it2 = repartition.find( &PHY_ComposanteState::repairableWithEvacuation_ );
                 if( --it2->second == 0 )
@@ -1983,8 +1983,7 @@ namespace
     }
 
     template< typename Composantes, typename Repartition, typename Breakdowns >
-    void UpdateRemainingStates( const Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns,
-        const PHY_ComposanteTypePion& composanteType )
+    void UpdateRemainingStates( const Composantes& composantes, Repartition& repartition, Breakdowns& breakdowns )
     {
         for( auto it = composantes.begin(); it != composantes.end(); ++it )
         {
@@ -1994,7 +1993,7 @@ namespace
                 throw MASA_EXCEPTION( "cannot change an equipment state to in maintenance directly" );
             const PHY_BreakdownType* breakdown = 0;
             if( state == PHY_ComposanteState::repairableWithEvacuation_ )
-                breakdown = RemoveBreakdown( composanteType, breakdowns );
+                breakdown = RemoveBreakdown( (*it)->GetType(), breakdowns );
             (*it)->ReinitializeState( state, breakdown );
             if( --it2->second == 0 )
                 repartition.erase( it2 );
@@ -2016,15 +2015,21 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     count += Add( repartition, message, &PHY_ComposanteState::repairableWithoutEvacuation_, 4 );
     count += Add( repartition, message, &PHY_ComposanteState::maintenance_, 5 );
     count += Add( repartition, message, &PHY_ComposanteState::prisoner_, 6 );
-    if( count != static_cast< int32_t >( composantes_.size() ))
-        throw MASA_EXCEPTION( "number of equipment states different from number of existing equipments" );
+    std::list< PHY_ComposantePion* > composantes;
+    std::copy_if( composantes_.begin(), composantes_.end(), std::back_inserter( composantes ),
+        [&]( const PHY_ComposantePion* composante )
+        {
+            return composante->GetType() == composanteType;
+        } );
+    if( count != static_cast< int32_t >( composantes.size() ) )
+        throw MASA_EXCEPTION( "number of equipment states (" + boost::lexical_cast< std::string >( count ) +
+            ") different from number of existing equipments (" + boost::lexical_cast< std::string >( composantes.size() ) + ")" );
     std::vector< const PHY_BreakdownType* > breakdowns;
     for( auto it = message.list( 7 ).list().begin(); it != message.list( 7 ).list().end(); ++it )
         breakdowns.push_back( PHY_BreakdownType::Find( it->identifier() ) );
-    std::list< PHY_ComposantePion* > composantes( composantes_.begin(), composantes_.end() );
     IgnoreUnchangedStates( composantes, repartition, breakdowns );
-    UpdateRepairablesWithEvacuation( composantes, repartition, breakdowns, composanteType );
-    UpdateRemainingStates( composantes, repartition, breakdowns, composanteType );
+    UpdateRepairablesWithEvacuation( composantes, repartition, breakdowns );
+    UpdateRemainingStates( composantes, repartition, breakdowns );
 }
 
 // -----------------------------------------------------------------------------
