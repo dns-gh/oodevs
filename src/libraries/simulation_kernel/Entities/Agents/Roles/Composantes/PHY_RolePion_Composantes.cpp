@@ -2016,11 +2016,9 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     count += Add( repartition, message, &PHY_ComposanteState::maintenance_, 5 );
     count += Add( repartition, message, &PHY_ComposanteState::prisoner_, 6 );
     std::list< PHY_ComposantePion* > composantes;
-    std::copy_if( composantes_.begin(), composantes_.end(), std::back_inserter( composantes ),
-        [&]( const PHY_ComposantePion* composante )
-        {
-            return composante->GetType() == composanteType;
-        } );
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( (*it)->GetType() == composanteType )
+            composantes.push_back( *it );
     if( count != static_cast< int32_t >( composantes.size() ) )
         throw MASA_EXCEPTION( "number of equipment states (" + boost::lexical_cast< std::string >( count ) +
             ") different from number of existing equipments (" + boost::lexical_cast< std::string >( composantes.size() ) + ")" );
