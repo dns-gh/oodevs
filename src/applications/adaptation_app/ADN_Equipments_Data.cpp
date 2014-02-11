@@ -1442,6 +1442,7 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     , rWeightTransportCapacity_      ( 0 )
     , embarkingTimePerTon_           ( "0s" )
     , disembarkingTimePerTon_        ( "0s" )
+    , bCanTransportDestroyed_        ( false )
     , bCanCarryCrowd_                ( false )
     , nCrowdTransportCapacity_       ( 0 )
     , crowdEmbarkingTimePerPerson_   ( "0s" )
@@ -1484,6 +1485,7 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     , rWeightTransportCapacity_      ( 0 )
     , embarkingTimePerTon_           ( "0s" )
     , disembarkingTimePerTon_        ( "0s" )
+    , bCanTransportDestroyed_        ( false )
     , bCanCarryCrowd_                ( false )
     , nCrowdTransportCapacity_       ( 0 )
     , crowdEmbarkingTimePerPerson_   ( "0s" )
@@ -1622,6 +1624,7 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
     pCopy->rWeightTransportCapacity_ = rWeightTransportCapacity_.GetData();
     pCopy->embarkingTimePerTon_ = embarkingTimePerTon_.GetData();
     pCopy->disembarkingTimePerTon_ = disembarkingTimePerTon_.GetData();
+    pCopy->bCanTransportDestroyed_ = bCanTransportDestroyed_.GetData();
     pCopy->bCanCarryCrowd_ = bCanCarryCrowd_.GetData();
     pCopy->nCrowdTransportCapacity_ = nCrowdTransportCapacity_.GetData();
     pCopy->crowdEmbarkingTimePerPerson_ = crowdEmbarkingTimePerPerson_.GetData();
@@ -1809,6 +1812,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "capacity", rWeightTransportCapacity_ )
                 >> xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
                 >> xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
+                >> xml::optional >> xml::attribute( "can-transport-destroyed", bCanTransportDestroyed_ )
             >> xml::end
             >> xml::optional
             >> xml::start( "crowd" )
@@ -1969,11 +1973,15 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
                 << xml::attribute( "man-unloading-time", disembarkingTimePerPerson_ )
             << xml::end;
     if( bCanCarryCargo_.GetData() )
+    {
         output << xml::start( "unit" )
                 << xml::attribute( "capacity", rWeightTransportCapacity_ )
                 << xml::attribute( "ton-loading-time", embarkingTimePerTon_ )
-                << xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ )
-               << xml::end;
+                << xml::attribute( "ton-unloading-time", disembarkingTimePerTon_ );
+        if( bCanTransportDestroyed_.GetData() )
+            output << xml::attribute( "can-transport-destroyed", true );
+        output << xml::end;
+    }
     if( bCanCarryCrowd_.GetData() )
         output << xml::start( "crowd" )
                 << xml::attribute( "capacity", nCrowdTransportCapacity_ )

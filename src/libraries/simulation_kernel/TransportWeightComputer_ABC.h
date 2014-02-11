@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Authorize( bool canBeLoaded ) const = 0;
+    virtual bool CanTransportDestroyed() const = 0;
     //@}
 };
 
@@ -51,9 +52,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void AddTransportedWeight(double weight, bool canBeLoaded=false) =0;
-    virtual double TotalTransportedWeight() const =0;
-    virtual double HeaviestTransportedWeight() const =0;
+    virtual void AddTransportedWeight( double weight, bool canBeLoaded = false ) = 0;
+    virtual double TotalTransportedWeight() const = 0;
+    virtual double HeaviestTransportedWeight() const = 0;
+    virtual bool CanTransportDestroyed() const = 0;
     //@}
 };
 

@@ -1563,6 +1563,10 @@ Parked engine running</translation>
         <source>Equipment</source>
         <translation>Equipment</translation>
     </message>
+    <message>
+        <source>Can transport destroyed equipments</source>
+        <translation>Can transport destroyed equipments</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_Resources_Table</name>

@@ -310,10 +310,15 @@ namespace
     class LoadableStrategy : public TransportStrategy_ABC
     {
     public:
-        LoadableStrategy( bool bTransportOnlyLoadable ) : bTransportOnlyLoadable_ ( bTransportOnlyLoadable ) {}
+        LoadableStrategy( bool bTransportOnlyLoadable, bool bCanTransportDestroyed )
+            : bTransportOnlyLoadable_( bTransportOnlyLoadable )
+            , bCanTransportDestroyed_( bCanTransportDestroyed )
+        {}
         bool Authorize( bool canBeLoaded ) const { return  !bTransportOnlyLoadable_ || canBeLoaded ; }
+        bool CanTransportDestroyed() const { return bCanTransportDestroyed_; }
     private:
         bool bTransportOnlyLoadable_;
+        bool bCanTransportDestroyed_;
     };
 }
 // -----------------------------------------------------------------------------
@@ -330,7 +335,7 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
     if( !transported.Execute( *computer ).CanBeLoaded() )
         return false;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
+    LoadableStrategy strategy( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
     std::auto_ptr< TransportWeightComputer_ABC > weightComp(owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
     transported.Execute( *weightComp );
     if( weightComp->TotalTransportedWeight() <= 0. )
@@ -362,7 +367,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
     if(!transported.Execute( *permissionComputer ).CanBeLoaded())
          return;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
+    LoadableStrategy strategy( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
     transported.Apply(&TransportNotificationHandler_ABC::LoadForTransport, *owner_, bTransportOnlyLoadable, bTransportedByAnother );
     std::auto_ptr< TransportWeightComputer_ABC > weightComputer( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
     sTransportData& data = transportedPions_[ &transported ] =
@@ -421,7 +426,7 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
     if( *owner_ == transported || transported.IsMarkedForDestruction() )
         return false;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
+    LoadableStrategy strategy( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
     std::auto_ptr< TransportWeightComputer_ABC > weightComp( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
     transported.Execute( *weightComp );
     if( weightComp->TotalTransportedWeight() <= 0. )
@@ -444,7 +449,7 @@ double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_
     if( *owner_ == transported )
         return 0.;
 
-    LoadableStrategy strategy( bTransportOnlyLoadable );
+    LoadableStrategy strategy( bTransportOnlyLoadable, owner_->CanTransportDestroyed() );
     std::auto_ptr< TransportWeightComputer_ABC > weightComp( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
     transported.Execute( *weightComp );
 

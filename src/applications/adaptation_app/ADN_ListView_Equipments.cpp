@@ -73,6 +73,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eWeightCapacity]->Connect( &pInfos->rWeightTransportCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eEmbarkingTimePerTon]->Connect( &pInfos->embarkingTimePerTon_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eDisembarkingTimePerTon]->Connect( &pInfos->disembarkingTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eCanTransportDestroyed]->Connect( &pInfos->bCanTransportDestroyed_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eCanCarryCargo]->Connect( &pInfos->bCanCarryCargo_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eCrowdCapacity]->Connect( &pInfos->nCrowdTransportCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eCrowdEmbarkingTimePerPerson]->Connect( &pInfos->crowdEmbarkingTimePerPerson_, bConnect );

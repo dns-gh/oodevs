@@ -737,7 +737,7 @@ void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const 
     for( auto it = composantes.begin(); it != composantes.end() && rWeightToDamage > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( ( !bTransportOnlyLoadable || composante.CanBeLoaded() )
+        if( ( !bTransportOnlyLoadable || composante.IsLoadableAndUsable() )
             && newState < composante.GetState() )
         {
             composante.ReinitializeState( newState );
@@ -950,7 +950,7 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
         const PHY_ComposantePion& composante = **itComp;
         if( composante.CanTransportHumans() )
             ++ nNbrHumansCarrier;
-        if( composante.CanBeLoaded() )
+        if( composante.IsLoadableAndUsable() )
             nNbrHumansLoaded += composante.GetNbrUsableHumans();
     }
     assert( nNbrHumansCarrier != 0 );
@@ -958,7 +958,7 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
     for( itComp = composantes_.begin(); nNbrHumansToWound && itComp != composantes_.end(); ++itComp )
     {
         PHY_ComposantePion& composante = **itComp;
-        if( composante.CanBeLoaded() )
+        if( composante.IsLoadableAndUsable() )
         {
             nNbrHumansToWound -= std::min( nNbrHumansToWound, composante.GetNbrUsableHumans() );
             composante.ApplyHumansWounds( newState, fireDamages );
@@ -1626,8 +1626,9 @@ void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& 
     bool loadedTransporters = owner_->GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersToRecover();
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        bool canBeLoaded = ( *it )->CanBeLoaded();
-        if( ( *it )->CanBeTransported() && ( !loadedTransporters || canBeLoaded ) )
+        bool destroyedTransported = algorithm.CanTransportDestroyed() && ( *it )->GetState() == PHY_ComposanteState::dead_;
+        bool canBeLoaded = destroyedTransported ? ( *it )->IsLoadable() : ( *it )->IsLoadableAndUsable();
+        if( ( destroyedTransported || ( *it )->CanBeTransported() ) && ( !loadedTransporters || canBeLoaded ) )
             algorithm.AddTransportedWeight( ( *it )->GetWeight(), canBeLoaded );
     }
 }
@@ -1665,7 +1666,7 @@ void PHY_RolePion_Composantes::Execute( transport::HumanLoadingTimeComputer_ABC&
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante= **it;
-        if( composante.CanBeLoaded() )
+        if( composante.IsLoadableAndUsable() )
             algorithm.AddHumans(composante.GetNbrUsableHumans());
         if( composante.CanTransportHumans() )
         {
@@ -1685,7 +1686,7 @@ void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyCompute
     {
         const PHY_ComposantePion& composante= **it;
         algorithm.EnableCarrier(composante.CanTransportHumans());
-        algorithm.EnableLoadable(composante.CanBeLoaded());
+        algorithm.EnableLoadable(composante.IsLoadableAndUsable());
     }
 }
 
@@ -2101,6 +2102,18 @@ void PHY_RolePion_Composantes::LoadForTransport( const MIL_Agent_ABC& /*transpor
 {
     if( bTransportOnlyLoadable )
         MarkAwayComposantesAsChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanTransportDestroyed
+// Created: JSR 2014-02-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanTransportDestroyed() const
+{
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        if( ( *it )->GetType().CanTransportDestroyed() )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

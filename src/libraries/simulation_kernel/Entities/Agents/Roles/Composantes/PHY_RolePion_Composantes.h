@@ -223,6 +223,7 @@ public:
     double GetCrowdTransporterLoadedPerTimeStep() const;
     double GetCrowdTransporterUnloadedPerTimeStep() const;
     virtual void LoadForTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, bool& bTransportedByAnother );
+    virtual bool CanTransportDestroyed() const;
     //@}
 
     //! @name Notifications (internal)
