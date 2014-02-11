@@ -39,6 +39,7 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory,
     : factory_( factory )
     , controller_( controllers.controller_ )
     , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
+    , context_( 0 )
 {
     // NOTHING
 }
@@ -376,9 +377,8 @@ void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* f
 // -----------------------------------------------------------------------------
 int ActionsModel::Publish( const Action_ABC& action )
 {
-    static int context = 0;
-    action.Publish( *publisher_, ++context );
-    return context;
+    action.Publish( *publisher_, ++context_ );
+    return context_;
 }
 
 // -----------------------------------------------------------------------------

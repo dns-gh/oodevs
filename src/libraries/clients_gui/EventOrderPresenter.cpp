@@ -47,11 +47,6 @@
 
 using namespace gui;
 
-namespace
-{
-    int lastContext = 0;
-}
-
 // -----------------------------------------------------------------------------
 // Name: EventOrderPresenter constructor
 // Created: LGY 2013-10-03
@@ -73,6 +68,7 @@ EventOrderPresenter::EventOrderPresenter( EventView_ABC< EventOrderViewState >& 
     , timelinePublisher_( timelinePublisher )
     , entity_( controllers )
     , order_( 0 )
+    , lastContext_( 0 )
 {
     // NOTHING
 }
@@ -196,7 +192,7 @@ bool EventOrderPresenter::ShouldEnableClear() const
 // -----------------------------------------------------------------------------
 int EventOrderPresenter::GetLastContext() const
 {
-    return lastContext;
+    return lastContext_;
 }
 
 namespace
@@ -225,7 +221,7 @@ void EventOrderPresenter::Trigger( const gui::Event& event )
     if( const actions::Action_ABC* action = event.GetAction() )
     {
         missionInterface_.FixOrigin( true );
-        lastContext = actionsModel_.Publish( *action );
+        lastContext_ = actionsModel_.Publish( *action );
     }
     else
         throw MASA_EXCEPTION( "Invalid action" );

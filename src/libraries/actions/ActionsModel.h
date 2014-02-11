@@ -147,6 +147,7 @@ private:
     kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
     std::unique_ptr< ActionPublisher > publisher_;
+    int context_;
     //@}
 };
 
