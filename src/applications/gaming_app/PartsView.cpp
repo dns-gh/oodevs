@@ -23,7 +23,18 @@ PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     , base_        ( controllers.controller_ )
     , valid_       ( false )
 {
+    const QStringList headers = QStringList()
+        << tr( "Required Parts" )
+        << tr( "Required" )
+        << tr( "Available" );
+    verticalHeader()->setVisible( false );
     model_ = new QStandardItemModel( parent );
+    model_->setHorizontalHeaderLabels( headers );
+    auto header = horizontalHeader();
+    header->setResizeMode( 0, QHeaderView::Stretch );
+    header->setResizeMode( 1, QHeaderView::ResizeToContents );
+    header->setResizeMode( 2, QHeaderView::ResizeToContents );
+    header->setHighlightSections( false );
     setEditTriggers( 0 );
     setModel( model_ );
     setSortingEnabled( false );
@@ -41,18 +52,7 @@ PartsView::~PartsView()
 
 void PartsView::Purge()
 {
-    model_->clear();
-    const QStringList headers = QStringList()
-        << tr( "Required Parts" )
-        << tr( "Required" )
-        << tr( "Available" );
-    model_->setHorizontalHeaderLabels( headers );
-    auto header = horizontalHeader();
-    header->setResizeMode( 0, QHeaderView::Stretch );
-    header->setResizeMode( 1, QHeaderView::ResizeToContents );
-    header->setResizeMode( 2, QHeaderView::ResizeToContents );
-    header->setHighlightSections( false );
-    verticalHeader()->setVisible( false );
+    model_->removeRows( 0, model_->rowCount() );
     parts_.clear();
 }
 
