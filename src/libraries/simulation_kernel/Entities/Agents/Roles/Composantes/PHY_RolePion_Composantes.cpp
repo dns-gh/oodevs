@@ -2016,7 +2016,7 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
     count += Add( repartition, message, &PHY_ComposanteState::repairableWithoutEvacuation_, 4 );
     count += Add( repartition, message, &PHY_ComposanteState::maintenance_, 5 );
     count += Add( repartition, message, &PHY_ComposanteState::prisoner_, 6 );
-    if( count != composantes_.size() )
+    if( count != static_cast< int32_t >( composantes_.size() ))
         throw MASA_EXCEPTION( "number of equipment states different from number of existing equipments" );
     std::vector< const PHY_BreakdownType* > breakdowns;
     for( auto it = message.list( 7 ).list().begin(); it != message.list( 7 ).list().end(); ++it )
