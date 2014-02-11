@@ -125,6 +125,7 @@ func (s *TestSuite) TestMaxConnections(c *C) {
 }
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
+	c.Skip("unreliable, see http://jira.masagroup.net/browse/SWBUG-11396")
 	waitForMessages := func(timeout time.Duration, seen chan *swapi.SwordMessage) {
 		select {
 		case <-time.After(timeout):
