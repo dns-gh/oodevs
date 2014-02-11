@@ -11,6 +11,7 @@
 #include "WeatherWidget.h"
 #include "SubObjectName.h"
 #include "RichSpinBox.h"
+#include "WeatherHelpers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 #include "meteo/Meteo.h"
@@ -199,4 +200,21 @@ void WeatherWidget::CommitTo( weather::Meteo& meteo ) const
     if( !precipitation )
         throw MASA_EXCEPTION( "Unknown precipitation: " + tools::ToString( type_->GetValue() ).toStdString() );
     meteo.SetPrecipitation( *precipitation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherWidget::CreateParameters
+// Created: JSR 2010-04-23
+// -----------------------------------------------------------------------------
+gui::WeatherParameters WeatherWidget::CreateParameters()
+{
+    gui::WeatherParameters result = 
+           { type_->GetValue(),
+             static_cast< float >( temperature_->value() ),
+             static_cast< float >( windSpeed_->value() ),
+             windDirection_->value(),
+             static_cast< float >( cloudFloor_->value() ),
+             static_cast< float >( cloudCeiling_->value() ),
+             static_cast< float >( cloudDensity_->value() ) };
+    return result;
 }

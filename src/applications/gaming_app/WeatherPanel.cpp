@@ -13,9 +13,10 @@
 
 #include "WeatherLayer.h"
 #include "WeatherListView.h"
-#include "WeatherWidget.h"
+
 #include "actions/ActionsModel.h"
 #include "clients_gui/WeatherHelpers.h"
+#include "clients_gui/WeatherWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -36,9 +37,9 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     , currentModel_( 0 )
 {
     // Global Weather
-    globalWeatherWidget_ = new WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
+    globalWeatherWidget_ = new gui::WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
     // Local Weather
-    localWeatherWidget_ = new WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
+    localWeatherWidget_ = new gui::WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
     CreateLocalParameters();
     localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation );
     connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
@@ -90,7 +91,7 @@ void WeatherPanel::Commit()
     if( currentType_ == eWeatherGlobal )
     {
         assert( currentModel_->GetGlobalMeteo() );
-        gui::WeatherParameters params = static_cast< WeatherWidget* >( globalWeatherWidget_ )->CreateParameters();
+        gui::WeatherParameters params = globalWeatherWidget_->CreateParameters();
         actionsModel_.PublishGlobalWeather( params );
         const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );
         Reset();
@@ -111,7 +112,7 @@ void WeatherPanel::Commit()
                 {
                     localWeatherWidget_->Update( *local );
                     gui::LocalWeatherParameters params;
-                    params.globalParams_ = static_cast< WeatherWidget* >( localWeatherWidget_ )->CreateParameters();
+                    params.globalParams_ = localWeatherWidget_->CreateParameters();
                     params.startTime_ = tools::BoostTimeToQTime( local->GetStartTime() );
                     params.endTime_ = tools::BoostTimeToQTime( local->GetEndTime() );
                     params.location_.AddPoint( local->GetBottomRight() );

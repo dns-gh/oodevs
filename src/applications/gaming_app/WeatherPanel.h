@@ -35,7 +35,6 @@ namespace actions
 
 class Simulation;
 class StaticModel;
-class WeatherWidget;
 class MeteoModel;
 class WeatherLayer;
 

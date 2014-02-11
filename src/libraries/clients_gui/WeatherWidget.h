@@ -12,7 +12,12 @@
 
 #include "RichGroupBox.h"
 #include "ValuedComboBox.h"
-#include "clients_kernel/Types.h"
+#include "ENT/ENT_Enums.h"
+
+namespace gui
+{
+    struct WeatherParameters;
+}
 
 namespace weather
 {
@@ -40,6 +45,7 @@ public:
 
     //! @name Operations
     //@{
+    gui::WeatherParameters CreateParameters();
     void Update( const weather::Meteo& meteo );
     void CommitTo( weather::Meteo& meteo ) const;
     void Clear();
