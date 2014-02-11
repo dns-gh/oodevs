@@ -65,7 +65,7 @@ void PartsView::Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         model_->setItem( row, 0, new QStandardItem( QString::fromStdString( it->resource ) ) );
-        model_->setItem( row, 1, new QStandardItem( QString( "%1" ).arg( it->quantity ) ) );
+        model_->setItem( row, 1, new QStandardItem( QString::number( it->quantity ) ) );
         model_->setItem( row, 2, new QStandardItem( "0" ) );
         parts_.insert( std::make_pair( it->resource, row ) );
         row++;
