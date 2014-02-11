@@ -1619,7 +1619,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 		Unavailable: 10,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states different from number of existing equipments")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(4\\)")
 
 	// Error: Cannot change to repairing
 	equipment = swapi.EquipmentDotation{
