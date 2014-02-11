@@ -45,6 +45,7 @@ EquipmentTransferDialog::EquipmentTransferDialog( QWidget* pParent, kernel::Cont
     , profile_     ( profile )
     , selectedFrom_( controllers )
     , selectedTo_  ( controllers )
+    , selected_    ( controllers )
     , delegate_    ( new gui::CommonDelegate( this ) )
 {
     // Dialog
@@ -128,6 +129,7 @@ void EquipmentTransferDialog::Reject()
     reject();
     selectedFrom_ = 0;
     selectedTo_ = 0;
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +138,9 @@ void EquipmentTransferDialog::Reject()
 // -----------------------------------------------------------------------------
 void EquipmentTransferDialog::Show()
 {
-    if( !selectedFrom_ )
+    if( !selected_ )
         return;
+    selectedFrom_ = selected_;
     labelFrom_->setText( selectedFrom_->GetName() );
     InitializeEquipments();
     show();
@@ -185,7 +188,7 @@ void EquipmentTransferDialog::NotifyContextMenu( const kernel::Agent_ABC& agent,
 {
     if( profile_.CanDoMagic( agent ) )
     {
-        selectedFrom_ = &agent;
+        selected_ = &agent;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
         subMenu->insertItem( tr( "Equipment transfer" ), this, SLOT( Show() ) );
     }
