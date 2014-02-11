@@ -24,7 +24,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
-#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/MIL_Formation.h"
 #include "Entities/Objects/LogisticAttribute.h"
@@ -750,6 +750,30 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
     pLogisticHierarchy_->DisconnectFromHierarchy();
 }
 
+namespace
+{
+    class SurrenderedEntitiesVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+    {
+    public:
+        explicit SurrenderedEntitiesVisitor( MIL_AgentPion& pion ) : pion_( pion ) {}
+        virtual ~SurrenderedEntitiesVisitor() {}
+        virtual void Visit( const MIL_AgentPion& element )
+        {
+            auto knowledgeGroup = element.GetKnowledgeGroup();
+            if( knowledgeGroup )
+            {
+                const PHY_PerceptionLevel& level = knowledgeGroup->GetPerceptionLevel( pion_ );
+                if( level == PHY_PerceptionLevel::identified_ )
+                    MIL_Report::PostEvent( element, report::eRC_IdentifiedUnitSurrendered, pion_ );
+                else if( level == PHY_PerceptionLevel::recognized_ )
+                    MIL_Report::PostEvent( element, report::eRC_RecognizedUnitSurrendered );
+            }
+        }
+    private:
+        MIL_AgentPion& pion_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::SurrenderWithUnits
 // Created: MMC 2013-04-02
@@ -758,7 +782,18 @@ void MIL_Automate::SurrenderWithUnits( const MIL_Army_ABC& armySurrenderedTo )
 {
     Surrender( armySurrenderedTo );
     for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        ( **itPion ).UpdateSurrenderedState();
+    {
+        MIL_AgentPion& agent = **itPion;
+        agent.UpdateSurrenderedState();
+        SurrenderedEntitiesVisitor visitor( agent );
+        const MIL_Army& army = static_cast< const MIL_Army& >( armySurrenderedTo );
+        auto itFormation = army.tools::Resolver< MIL_Formation >::CreateIterator();
+        while( itFormation.HasMoreElements() )
+        {
+            const MIL_Formation& formation = itFormation.NextElement();
+            formation.Apply( visitor );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

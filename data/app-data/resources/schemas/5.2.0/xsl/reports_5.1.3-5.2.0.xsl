@@ -522,6 +522,8 @@
               <xsl:when test="@id=510">eRC_SurrenderedUnitRecognized</xsl:when>
               <xsl:when test="@id=511">eRC_SurrenderedUnitIdentified</xsl:when>
               <xsl:when test="@id=769">eRC_CorpseTransported</xsl:when>
+              <xsl:when test="@id=781">eRC_IdentifiedUnitSurrendered</xsl:when>
+              <xsl:when test="@id=782">eRC_RecognizedUnitSurrendered</xsl:when>
               <xsl:otherwise/>
             </xsl:choose>
           </xsl:attribute>
