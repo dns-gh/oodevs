@@ -27,14 +27,8 @@ PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
         << tr( "Required Parts" )
         << tr( "Required" )
         << tr( "Available" );
-    verticalHeader()->setVisible( false );
     model_ = new QStandardItemModel( parent );
     model_->setHorizontalHeaderLabels( headers );
-    auto header = horizontalHeader();
-    header->setResizeMode( 0, QHeaderView::Stretch );
-    header->setResizeMode( 1, QHeaderView::ResizeToContents );
-    header->setResizeMode( 2, QHeaderView::ResizeToContents );
-    header->setHighlightSections( false );
     setEditTriggers( 0 );
     setModel( model_ );
     setSortingEnabled( false );
@@ -42,6 +36,12 @@ PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectRows );
     setFocusPolicy( Qt::NoFocus );
+    auto header = horizontalHeader();
+    header->setResizeMode( 0, QHeaderView::Stretch );
+    header->setResizeMode( 1, QHeaderView::ResizeToContents );
+    header->setResizeMode( 2, QHeaderView::ResizeToContents );
+    header->setHighlightSections( false );
+    verticalHeader()->setVisible( false );
     controller_.Register( *this );
 }
 
