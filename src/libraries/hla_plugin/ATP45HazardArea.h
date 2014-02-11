@@ -49,6 +49,7 @@ namespace hla
 class ATP45HazardArea : public HlaObject_ABC
     , public TacticalObjectEventListener_ABC
     , public ObjectLocationEventListener_ABC
+    , public ObjectPropagationEventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -75,6 +76,7 @@ private:
     //@{
     virtual void SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos );
     virtual void ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& res );
+    virtual void PropagationChanged( const ObjectPropagationEventListener_ABC::T_DataVector& pos );
     void RegisterAttributes();
     //@}
     //! @name Attributes

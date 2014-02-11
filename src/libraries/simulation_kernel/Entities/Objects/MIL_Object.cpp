@@ -23,6 +23,7 @@
 #include "UndergroundAttribute.h"
 #include "TrafficabilityAttribute.h"
 #include "UniversalCapacity.h"
+#include "DisasterAttribute.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
@@ -392,6 +393,9 @@ void MIL_Object::OnUpdate( const sword::MissionParameters& params )
             break;
         case sword::ObjectMagicAction::trafficability:
             GetAttribute< TrafficabilityAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction::disaster:
+            GetAttribute< DisasterAttribute >().OnUpdate( attribute );
             break;
         default:
             break;

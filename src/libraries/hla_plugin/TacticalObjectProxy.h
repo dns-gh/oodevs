@@ -33,6 +33,7 @@ namespace plugins
 {
 namespace hla
 {
+class SimulationTimeManager_ABC;
 
 /// =============================================================================
 /// @class TacticalObjectProxy
@@ -48,7 +49,7 @@ class TacticalObjectProxy
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver );
+    TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver, const SimulationTimeManager_ABC& timeManager );
     virtual ~TacticalObjectProxy();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //@{
     dispatcher::Object_ABC& object_;
     const rpr::EntityTypeResolver_ABC& dotationResolver_;
+    const SimulationTimeManager_ABC& timeManager_;
     tools::SortedInterfaceContainer< TacticalObjectEventListener_ABC > listeners_;
     //@}
 };

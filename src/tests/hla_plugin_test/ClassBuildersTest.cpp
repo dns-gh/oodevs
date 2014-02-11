@@ -359,7 +359,7 @@ BOOST_FIXTURE_TEST_CASE( rawdatahazardcontourgroup_builder_registers_attributes,
     RawDataHazardContourGroupBuilder builder;
     attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
                                         ( "Time" )
-                                        ( "Materiel" )
+                                        ( "Material" )
                                         ( "HazardType" )
                                         ( "Contours" );
     Check( builder, "RawDataHazardContourGroup", true, true );

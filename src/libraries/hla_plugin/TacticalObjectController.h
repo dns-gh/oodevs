@@ -42,6 +42,7 @@ namespace hla
 {
     class TacticalObjectListener_ABC;
     class TacticalObjectProxy;
+    class SimulationTimeManager_ABC;
 
 /// =============================================================================
 /// @class TacticalObjectController
@@ -57,7 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver_ABC& objectResolver,
-            const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger );
+            const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger, const SimulationTimeManager_ABC& timeManager );
     virtual ~TacticalObjectController();
     //@}
 
@@ -90,6 +91,7 @@ private:
     const rpr::EntityTypeResolver_ABC& objectResolver_;
     const rpr::EntityTypeResolver_ABC& dotationResolver_;
     dispatcher::Logger_ABC& logger_;
+    const SimulationTimeManager_ABC& timeManager_;
     T_Listeners listeners_;
     T_Objects objects_;
     //@}

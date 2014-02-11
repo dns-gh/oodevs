@@ -442,3 +442,13 @@ void RemoteAgentController::SubEntitiesChanged(const std::string& rtiIdentifier,
         Send( message, rtiIdentifier );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void RemoteAgentController::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
+}

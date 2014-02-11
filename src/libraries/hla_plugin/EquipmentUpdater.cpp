@@ -351,7 +351,7 @@ void EquipmentUpdater::SubAgregatesChanged( const std::string& /*rtiIdentifier*/
 }
 
 // -----------------------------------------------------------------------------
-// Name: EquipmentUpdater::PerimeterChanged
+// Name: EquipmentUpdater::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void EquipmentUpdater::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
@@ -359,3 +359,12 @@ void EquipmentUpdater::SubEntitiesChanged( const std::string& /*rtiIdentifier*/,
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
+}

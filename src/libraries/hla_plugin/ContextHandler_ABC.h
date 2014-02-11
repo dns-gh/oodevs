@@ -16,6 +16,7 @@
 namespace simulation
 {
     class UnitMagicAction;
+    class ObjectMagicAction;
 }
 
 namespace plugins
@@ -45,6 +46,7 @@ public:
     virtual void Register( ResponseObserver_ABC< MessageResponse >& observer ) = 0;
     virtual void Unregister( ResponseObserver_ABC< MessageResponse >& observer ) = 0;
     virtual void Send( simulation::UnitMagicAction& message, const std::string& identifier ) = 0;
+    virtual void Send( simulation::ObjectMagicAction& message, const std::string& identifier ) = 0;
     //@}
 };
 

@@ -13,6 +13,8 @@
 #include "ExtentResolver_ABC.h"
 #include "SideResolver_ABC.h"
 #include "RemoteTacticalObjectSubject_ABC.h"
+#include "PropagationManager_ABC.h"
+#include "ContextHandler_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -21,8 +23,12 @@
 #include "clients_kernel/ObjectType.h"
 
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/smart_ptr/shared_array.hpp>
 #include <sstream>
 #include <limits>
+#include <fstream>
+
 
 using namespace plugins::hla;
 
@@ -31,14 +37,15 @@ using namespace plugins::hla;
 // Created: AHC 2012-09-06
 // -----------------------------------------------------------------------------
 RemoteTacticalObjectController::RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver,
-    const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, dispatcher::SimulationPublisher_ABC& publisher,
-    RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger )
+    const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler,
+    RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr )
     : extent_( extent )
     , sideResolver_( sideResolver )
     , objectEntityTypeResolver_( objectEntityTypeResolver )
-    , publisher_( publisher )
+    , contextHandler_( contextHandler )
     , subject_( subject )
     , logger_( logger )
+    , propagationManager_( propMgr )
 {
     subject_.RegisterTactical( *this );
 }
@@ -67,7 +74,7 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     --objId;
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
-    message().mutable_parameters()->add_elem()->add_value()->set_acharstr("remote"); // name FIXME
+    message().mutable_parameters()->add_elem()->add_value()->set_acharstr("remote"+boost::lexical_cast<std::string>(objId)); // name FIXME
     message().mutable_parameters()->add_elem(); // army
     message().mutable_parameters()->add_elem(); // attributes
     sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
@@ -300,7 +307,7 @@ void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& messag
         message().parameters().elem( 1 ).value_size() > 0 &&
         message().parameters().elem( 3 ).value_size() > 0 )
     {
-        message.Send( publisher_ );
+        contextHandler_.Send( message, identifier );
         objectCreations_.erase( identifier );
     }
 }
@@ -331,3 +338,45 @@ void RemoteTacticalObjectController::SubEntitiesChanged(const std::string& /*rti
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteTacticalObjectController::PropagationChanged
+// Created: AHC 2013-07-08
+// -----------------------------------------------------------------------------
+void RemoteTacticalObjectController::PropagationChanged( const std::string& identifier, const std::vector< ObjectListener_ABC::PropagationData >&  data,
+    int col, int lig, double xll, double yll, double dx, double dy)
+{
+    if( data.empty() )
+    {
+        logger_.LogWarning("RemoteTacticalObjectController empty propagation for " + identifier);
+        return;
+    }
+    // type, location, name, team, attributes, extension
+    T_ObjectCreations::iterator it( objectCreations_.find( identifier ) );
+    if( objectCreations_.end() == it)
+        return;
+    simulation::ObjectMagicAction& message = *it->second;
+
+    logger_.LogInfo("Received propagation data " + identifier);
+    // Location
+    sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->size() == 0 ?
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location() :
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
+    loc->set_type( sword::Location_Geometry_point );
+    loc->mutable_coordinates()->clear_elem();
+    sword::CoordLatLong *elem = loc->mutable_coordinates()->add_elem();
+    elem->set_latitude( data[0].latitude );
+    elem->set_longitude( data[0].longitude );
+    // side
+    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( 1 );
+    // attributes
+    sword::MissionParameter_Value* value = message().mutable_parameters()->mutable_elem( 4 )->add_value();
+    value->add_list()->set_identifier( sword::ObjectMagicAction::disaster );
+    value->add_list()->set_acharstr( identifier );
+
+    // FIXME save data locally
+    propagationManager_.saveDataFile( identifier, data, col, lig, xll, yll, std::max( dx, dy ) );
+
+    Send( message, identifier );
+}
+

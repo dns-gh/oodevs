@@ -488,13 +488,24 @@ void RemoteOrbatShaper::Acquired( const std::string& /*identifier*/ )
 // -----------------------------------------------------------------------------
 void RemoteOrbatShaper::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*embeddedUnits*/ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteOrbatShaper::PerimeterChanged
+// Name: RemoteOrbatShaper::GeometryChanged
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
 void RemoteOrbatShaper::GeometryChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/, ObjectListener_ABC::GeometryType /*type*/ )
-
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteOrbatShaper::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void RemoteOrbatShaper::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
 }

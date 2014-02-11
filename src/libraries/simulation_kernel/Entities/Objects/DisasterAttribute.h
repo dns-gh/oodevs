@@ -66,10 +66,12 @@ public:
     virtual void Register( MIL_Object_ABC& object ) const;
 
     void SendFullState( sword::ObjectAttributes& asn ) const;
+    bool SendUpdate( sword::ObjectAttributes& asn ) const;
     void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
     bool Update( const DisasterAttribute& rhs );
     float GetDose( const MT_Vector2D& position ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
+    void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ );
     //@}
 
 private:

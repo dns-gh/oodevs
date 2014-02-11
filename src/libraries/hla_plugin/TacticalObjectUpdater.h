@@ -2,81 +2,60 @@
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
-
-// Copyright (c) 2012 MASA Group
+//
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_RemoteTacticalObjectController_H
-#define plugins_hla_RemoteTacticalObjectController_H
+#ifndef plugins_hla_TacticalObjectUpdater_h
+#define plugins_hla_TacticalObjectUpdater_h
 
 #include "ClassListener_ABC.h"
 #include "ObjectListener_ABC.h"
-
-#include "rpr/Coordinates.h"
+#include "ResponseObserver_ABC.h"
 #include "tools/MessageObserver.h"
-
-#include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
-#include <map>
 
 namespace tools
 {
     template< typename T > class MessageController_ABC;
 }
-namespace dispatcher
-{
-    class Logger_ABC;
-}
-namespace rpr
-{
-    class EntityTypeResolver_ABC;
-}
-namespace simulation
-{
-    class ObjectMagicAction;
-}
+
 namespace sword
 {
-    class SimToClient_Content;
     class ObjectMagicActionAck;
+    class SimToClient_Content;
 }
+
+namespace dispatcher
+{
+    class SimulationPublisher_ABC;
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace hla
 {
-    class ExtentResolver_ABC;
-    class SideResolver_ABC;
-    class RemoteTacticalObjectSubject_ABC;
-    class PropagationManager_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
+    class PropagationManager_ABC;
+    class RemoteTacticalObjectSubject_ABC;
 
-/// =============================================================================
-/// @class hla::RemoteTacticalObjectController
-/// @brief hla::RemoteTacticalObjectController
-/// @thread This type is not thread safe
-///
-/// Created: ahc 6 sept. 2012
-/// =============================================================================
-class RemoteTacticalObjectController : private ClassListener_ABC
-                                     , private ObjectListener_ABC
-                                     , private boost::noncopyable
+// =============================================================================
+/** @class  TacticalObjectUpdater
+    @brief  TacticalObjectUpdater
+*/
+// Created: AHC 2013-09-09
+// =============================================================================
+class TacticalObjectUpdater : private ResponseObserver_ABC< sword::ObjectMagicActionAck >
+                            , private ClassListener_ABC
+                            , private ObjectListener_ABC
 {
 public:
-    //! @name Contructors destructors
+    //! @name Constructors/Destructor
     //@{
-    RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver,
-            ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger, PropagationManager_ABC& propMgr );
-    virtual ~RemoteTacticalObjectController();
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef boost::shared_ptr< simulation::ObjectMagicAction > T_ObjectCreation;
-    typedef std::map< std::string, T_ObjectCreation > T_ObjectCreations;
-    typedef std::map< std::string, std::pair< double, double > > T_Centers;
-    typedef std::map< std::string, std::vector< rpr::WorldLocation > > T_Perimeters;
+            TacticalObjectUpdater( dispatcher::SimulationPublisher_ABC& publisher, ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler, dispatcher::Logger_ABC& logger,
+                    PropagationManager_ABC& propMgr, RemoteTacticalObjectSubject_ABC& subject );
+    virtual ~TacticalObjectUpdater();
     //@}
 
 private:
@@ -99,33 +78,41 @@ private:
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
     virtual void GeometryChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter, ObjectListener_ABC::GeometryType type );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
-    virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
-    virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
+    virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
+    virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
     virtual void PropagationChanged( const std::string& rtiIdentifier, const std::vector< ObjectListener_ABC::PropagationData >& data,
                 int col, int lig, double xll, double yll, double dx, double dy );
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Notify( const sword::ObjectMagicActionAck& message, const std::string& identifier );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Send( simulation::ObjectMagicAction& message, const std::string& identifier );
     //@}
 
-    //! @name Attributes
+private:
+    //! @name Types
     //@{
-    const ExtentResolver_ABC& extent_;
-    const SideResolver_ABC& sideResolver_;
-    const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver_;
+    typedef std::map< std::string, unsigned long > T_Identifiers;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    dispatcher::SimulationPublisher_ABC& publisher_;
     ContextHandler_ABC< sword::ObjectMagicActionAck >& contextHandler_;
-    RemoteTacticalObjectSubject_ABC& subject_;
     dispatcher::Logger_ABC& logger_;
     PropagationManager_ABC& propagationManager_;
-    T_ObjectCreations objectCreations_;
-    T_Centers centers_;
-    T_Perimeters perimeters_;
+    RemoteTacticalObjectSubject_ABC& subject_;
+    T_Identifiers identifiers_;
     //@}
 };
 
 }
-} // namespace hla
-#endif // plugins_hla_RemoteTacticalObjectController_H
+}
+
+#endif // plugins_hla_TacticalObjectUpdater_h

@@ -47,7 +47,7 @@ namespace hla
 /// =============================================================================
 class RawDataHazardContourGroup : public HlaObject_ABC
     , public TacticalObjectEventListener_ABC
-    , public ObjectLocationEventListener_ABC
+    , public ObjectPropagationEventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -72,8 +72,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void SpatialChanged( const ObjectLocationEventListener_ABC::T_PositionVector& pos );
-    virtual void ResourcesChanged( const ObjectLocationEventListener_ABC::T_ResourceVector& res );
+    virtual void PropagationChanged( const ObjectPropagationEventListener_ABC::T_DataVector& pos );
     void RegisterAttributes();
     //@}
     //! @name Attributes
@@ -82,6 +81,10 @@ private:
     TacticalObject_ABC* object_;
     std::string identifier_;
     std::auto_ptr< AttributesUpdater > attributes_;
+    uint64_t time_;
+    uint16_t material_;
+    uint8_t hazardType_;
+    std::vector< RawDataHazardContour > contours_;
     //@}
 };
 

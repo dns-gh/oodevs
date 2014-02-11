@@ -75,6 +75,12 @@ public:
         contexts_[ context ] = identifier;
         message.Send( publisher_, context );
     }
+    virtual void Send( simulation::ObjectMagicAction& message, const std::string& identifier )
+    {
+        const int context = contextFactory_.Create();
+        contexts_[ context ] = identifier;
+        message.Send( publisher_, context );
+    }
     virtual void Notify( const MessageResponse& message, int context )
     {
         if( contexts_.find( context ) != contexts_.end() )

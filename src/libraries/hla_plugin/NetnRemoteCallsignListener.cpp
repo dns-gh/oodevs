@@ -222,10 +222,20 @@ void NetnRemoteCallsignListener::SubAgregatesChanged( const std::string& /*rtiId
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteCallsignListener::PerimeterChanged
+// Name: NetnRemoteCallsignListener::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void NetnRemoteCallsignListener::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
 {
     // NOTHING
 }

@@ -297,6 +297,7 @@ target_link_libraries( hla_plugin
     dispatcher
     rpr
     tic
+    propagation
     ${HLA_LIBRARIES}
 )
 add_plugin( logger_plugin )
