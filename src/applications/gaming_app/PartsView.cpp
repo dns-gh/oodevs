@@ -84,8 +84,7 @@ void PartsView::NotifyUpdated( const SupplyStates& states )
     if( !base_ || base_ != &states.entity_ )
         return;
     auto it = states.CreateIterator();
-    QBrush red;
-    red.setColor( Qt::red );
+    const QBrush red( Qt::red );
     bool valid = true;
     while( it.HasMoreElements() )
     {
