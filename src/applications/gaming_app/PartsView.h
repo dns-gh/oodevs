@@ -45,7 +45,7 @@ private:
     void NotifyUpdated( const SupplyStates& states );
 
 protected:
-    void setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ );
+    virtual void setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ );
 
 private:
     kernel::Controller& controller_;
