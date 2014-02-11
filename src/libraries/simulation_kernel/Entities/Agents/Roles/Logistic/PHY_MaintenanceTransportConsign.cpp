@@ -86,6 +86,30 @@ void PHY_MaintenanceTransportConsign::Cancel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit
+// Created: SLI 2014-02-11
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceTransportConsign::FindAlternativeTransportUnit( const PHY_ComposanteTypePion* type )
+{
+    if( MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager() )
+    {
+        PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( *pComposanteState_, type );
+        if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
+        {
+            if( type )
+            {
+                pComposanteState_->GetConsign()->SetState( GetState(), 0 );
+                pComposanteState_->SelectMaintenanceTransporter( *type );
+            }
+            EnterStateFinished();
+            pComposanteState_ = 0; // Crade
+            return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::DoWaitingForCarrier
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -99,18 +123,8 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
         GetPionMaintenance().StartUsingForLogistic( *component_ );
     else
     {
-        // Find alternative transport unit
-        MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
-        if( pLogisticManager )
-        {
-            PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( *pComposanteState_ );
-            if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
-            {
-                EnterStateFinished();
-                pComposanteState_ = 0; // Crade
-                return false;
-            }
-        }
+        FindAlternativeTransportUnit();
+        return false;
     }
     return component_ != 0;
 }
@@ -376,10 +390,13 @@ void PHY_MaintenanceTransportConsign::SelectMaintenanceTransporter( const PHY_Co
     if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
         throw MASA_EXCEPTION( "transport consign not in a waiting for transporter selection state" );
     component_ = GetPionMaintenance().GetAvailableHauler( GetComposanteType(), &type );
-    if( !component_ )
-        throw MASA_EXCEPTION( "no component of specified type available for maintenance transporter selection" );
-    GetPionMaintenance().StartUsingForLogistic( *component_ );
-    next_ = [&]() { EnterStateCarrierGoingTo(); };
+    if( component_ )
+    {
+        GetPionMaintenance().StartUsingForLogistic( *component_ );
+        next_ = [&]() { EnterStateCarrierGoingTo(); };
+    }
+    else if( !FindAlternativeTransportUnit( &type ) )
+            throw MASA_EXCEPTION( "no component of specified type available for maintenance transporter selection" );
 }
 
 void PHY_MaintenanceTransportConsign::SelectDiagnosisTeam( const PHY_ComposanteTypePion& type )

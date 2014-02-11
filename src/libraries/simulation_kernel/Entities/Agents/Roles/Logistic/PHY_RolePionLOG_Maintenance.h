@@ -68,7 +68,7 @@ public:
 
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
-    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const;
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 ) const;
 
     virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState );
     virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const;

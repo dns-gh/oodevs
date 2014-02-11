@@ -215,9 +215,9 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepair
 // Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type )
 {
-    MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
+    MaintenanceTransportVisitor visitor( composanteState.GetComposante(), type );
     Visit( visitor );
     return visitor.selected_;
 }

@@ -108,7 +108,7 @@ public:
 
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( PHY_MaintenanceComposanteState& composanteState );
-    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState );
+    PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 );
     //@}
 
     //! @name Medical

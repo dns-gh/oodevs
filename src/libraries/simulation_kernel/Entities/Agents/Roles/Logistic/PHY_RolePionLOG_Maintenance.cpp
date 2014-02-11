@@ -482,9 +482,9 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type ) const
 {
-    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
+    if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) || !GetAvailableHauler( composante.GetType(), type ) )
         return std::numeric_limits< int >::min();
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul1, &PHY_ComposanteTypePion::CanHaul1, composante.GetType() );

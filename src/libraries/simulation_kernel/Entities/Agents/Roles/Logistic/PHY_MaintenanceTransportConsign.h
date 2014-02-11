@@ -70,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     void ResetComponent();
+    bool FindAlternativeTransportUnit( const PHY_ComposanteTypePion* type = 0 );
     //@}
 
 private:
