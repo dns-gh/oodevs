@@ -1703,6 +1703,10 @@ Do you want to replace it?</translation>
         <source>This request cannot be resolved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select repair team</source>
+        <translation>Select repair team</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
@@ -2749,6 +2753,21 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Value</source>
         <translation>Value</translation>
+    </message>
+</context>
+<context>
+    <name>PartsView</name>
+    <message>
+        <source>Required Parts</source>
+        <translation>Required Parts</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>Required</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Available</translation>
     </message>
 </context>
 <context>

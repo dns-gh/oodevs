@@ -12,6 +12,7 @@
 #include "moc_LogisticMaintenanceSelectionDialog.cpp"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
+#include "PartsView.h"
 
 #include "actions/ActionsModel.h"
 #include "clients_gui/RichPushButton.h"
@@ -89,7 +90,13 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
     diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
+
+    auto* repair = new QWidget();
+    auto* layout = new QVBoxLayout( repair );
     repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
+    parts_ = new PartsView( controllers, this );
+    layout->addWidget( repairers_ );
+    layout->addWidget( parts_ );
 
     // Buttons
     QPushButton* cancelButton = new gui::RichPushButton( "automated_selection_button_cancel", tr( "Cancel" ) );
@@ -102,7 +109,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     stack_ = new QStackedWidget();
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection, transporters_ );
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, diagnosers_ );
-    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, repairers_ );
+    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, repair );
 
     QHBoxLayout* bottomLayout = new QHBoxLayout();
     bottomLayout->addStretch( 1 );
@@ -212,6 +219,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
         manualButton_->setText( tr( "Select repair team" ) );
         repairers_->selectionModel()->clear();
         repairers_->SelectEntity( handler_ );
+        parts_->Select( consign.GetHandler(), maintenanceConsign );
     }
     UpdateDisplay();
     show();
@@ -263,8 +271,10 @@ void LogisticMaintenanceSelectionDialog::Purge()
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::UpdateDisplay()
 {
-    acceptButton_->setEnabled( automaticButton_->isChecked() ||
-                               manualButton_->isChecked() && availability_ && availability_->available_ > 0 ||
+    bool manual = manualButton_->isChecked() && availability_ && availability_->available_ > 0;
+    if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        manual &= parts_->IsValid();
+    acceptButton_->setEnabled( automaticButton_->isChecked() || manual ||
                                evacuateButton_->isChecked() );
     stack_->setEnabled( manualButton_->isChecked() );
 }

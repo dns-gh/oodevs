@@ -38,6 +38,7 @@ namespace sword
 
 class MaintenanceHaulersListView;
 class MaintenanceRepairersListView;
+class PartsView;
 
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
@@ -109,6 +110,7 @@ private:
     MaintenanceHaulersListView* transporters_;
     MaintenanceRepairersListView* repairers_;
     MaintenanceRepairersListView* diagnosers_;
+    PartsView* parts_;
     //@}
 };
 

@@ -15,6 +15,21 @@
 
 using namespace kernel;
 
+namespace
+{
+    BreakdownType::T_Parts ReadParts( xml::xistream& xis )
+    {
+        BreakdownType::T_Parts parts;
+        xis >> xml::list( "part", [&]( xml::xistream& xis ){
+            BreakdownType::T_Part part;
+            xis >> xml::attribute( "quantity", part.quantity )
+                >> xml::attribute( "resource", part.resource );
+            parts.push_back( part );
+        });
+        return parts;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: BreakdownType constructor
 // Created: AGE 2006-04-05
@@ -24,6 +39,7 @@ BreakdownType::BreakdownType( xml::xistream& xis, const std::string& category )
     , type_    ( ENT_Tr::ConvertToBreakdownType( xis.attribute< std::string >( "type" ) ) )
     , id_      ( xis.attribute< unsigned long >( "id" ) )
     , name_    ( xis.attribute< std::string >( "name" ) )
+    , parts_   ( ReadParts( xis ) )
 {
     // NOTHING
 }
@@ -80,4 +96,13 @@ E_BreakdownNTI BreakdownType::GetNTI() const
 E_BreakdownType BreakdownType::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownType::GetParts
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+const BreakdownType::T_Parts& BreakdownType::GetParts() const
+{
+    return parts_;
 }
