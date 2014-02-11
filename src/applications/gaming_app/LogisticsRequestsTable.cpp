@@ -157,13 +157,11 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
                                          const QString& requester, const QString& handler, const QString& state )
 {
     auto base = logistic_helpers::GetLogisticBase( consign.GetHandler() );
-    if( !base )
-        throw MASA_EXCEPTION( "unabled to retrieve the logistic base reponsible for the consign " + consign.GetId() );
     int rowIndex = GetRequestRow( consign );
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, manualLogisticActivated_ && consign.NeedResolution() && profile_.CanBeOrdered( *base )
+    SetData( rowIndex, 3, manualLogisticActivated_ && ( consign.NeedResolution() && base && profile_.CanBeOrdered( *base ) )
         && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
 }
 
