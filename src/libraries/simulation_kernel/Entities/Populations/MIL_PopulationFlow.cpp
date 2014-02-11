@@ -575,10 +575,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
             nNbrHumans = GetAllHumans();
     }
     if( nNbrHumans == 0 )
-    {
-        ComputeSpeedLimit();
         return;
-    }
     SetDirection( direction );
     SetSpeed( rWalkedDistance );
     if( pSourceConcentration_ )
@@ -616,7 +613,6 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         UpdateLocation();
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
-    ComputeSpeedLimit();
 }
 
 // -----------------------------------------------------------------------------
@@ -629,18 +625,21 @@ void MIL_PopulationFlow::ComputeSpeedLimit()
     if( canCollideWithFlow_ )
     {
         TER_PopulationFlowManager::T_PopulationFlowVector flows;
-        const double radius = 2 * GetPopulation().GetMaxSpeed();
+        const double radius = GetPopulation().GetMaxSpeed();
         TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( GetHeadPosition(), radius, flows );
         for( auto it = flows.begin(); it != flows.end(); ++it )
         {
             const MIL_PopulationFlow* flow = static_cast< MIL_PopulationFlow* >( *it );
-            if( flow != this && GetHeadPosition().SquareDistance( flow->GetTailPosition() ) < radius * radius )
+            if( flow != this )
             {
-                // TODO uniquement si c'est dans le même sens
-                if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
-                    speedLimit_ = 0;
-                else
-                    speedLimit_ = std::min( speedLimit_, flow->GetSpeed() );
+                const double squareDistance = GetHeadPosition().SquareDistance( flow->GetTailPosition() );
+                if( squareDistance <= radius * radius )
+                {
+                    if( flow->pSourceConcentration_ && flow->pSourceConcentration_ != pDestConcentration_ )
+                        speedLimit_ = 0;
+                    else
+                        speedLimit_ = std::min( speedLimit_, sqrt( squareDistance ) );
+                }
             }
         }
     }
@@ -764,6 +763,7 @@ void MIL_PopulationFlow::UpdateCrowdCollisions()
         T_FlowCollisions collisions;
         ApplyOnShape( boost::bind( &MIL_PopulationFlow::ComputeFlowCollisions, this, _1, boost::ref( collisions ) ) );
         GetFlowCollisionManager().SetCollisions( this, collisions );
+        ComputeSpeedLimit();
     }
 }
 
