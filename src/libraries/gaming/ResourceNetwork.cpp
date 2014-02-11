@@ -25,6 +25,7 @@
 #include <time.h>
 
 using namespace geometry;
+using namespace gui;
 using namespace kernel;
 
 int ResourceNetwork::maxFlow_ = 0;
@@ -280,7 +281,7 @@ void ResourceNetwork::UpdateDictionary( const google::protobuf::RepeatedPtrField
         }
         else
         {
-            const ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
+            const ResourceNode& node = resourceNodes_[ resource ];
             const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
             dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node.isEnabled_ );
             dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node.totalFlow_ );

@@ -31,6 +31,7 @@
 #include "String.h"
 #include "Bool.h"
 #include "UnitMagicAction.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/WeatherHelpers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -1023,7 +1024,7 @@ Action_ABC* ActionFactory::CreateFireOrderOnLocation( unsigned int resourceId, c
 // Name: ActionFactory::CreateChangeResourceLinks
 // Created: ABR 2014-02-10
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateChangeResourceLinks( unsigned int id, const gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const
+Action_ABC* ActionFactory::CreateChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes ) const
 {
     MagicActionType& actionType = magicActions_.Get( "change_resource_links" );
     std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );

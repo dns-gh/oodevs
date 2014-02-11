@@ -41,7 +41,7 @@ private:
     virtual void DoValidate( kernel::Entity_ABC* element = 0 );
     virtual bool DoGenerateProduction();
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
-    bool IsNetworkValid( const gui::ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array );
+    bool IsNetworkValid( const gui::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array );
     unsigned int ComputeConsumption( unsigned int id, const std::string& resource, double inhabitantConsumption ) const;
     //@}
 

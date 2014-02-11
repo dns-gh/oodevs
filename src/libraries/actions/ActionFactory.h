@@ -100,7 +100,7 @@ public:
     virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const;
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const;
     virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const;
-    virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const;
+    virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes ) const;
     virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const;

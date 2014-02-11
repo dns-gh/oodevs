@@ -271,7 +271,7 @@ int ActionsModel::PublishFireOrderOnLocation( unsigned int resourceId, const ker
 // Name: ActionsModel::PublishChangeResourceLinks
 // Created: ABR 2014-02-10
 // -----------------------------------------------------------------------------
-int ActionsModel::PublishChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes )
+int ActionsModel::PublishChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateChangeResourceLinks( id, resourceNodes ) );
     return Publish( *action );

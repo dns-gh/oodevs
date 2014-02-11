@@ -11,7 +11,6 @@
 #define __actions_ActionFactory_ABC_h_
 
 #include "ENT/ENT_Enums.h"
-#include "clients_gui/ResourceNetwork_ABC.h"
 
 #include <tools/Resolver_ABC.h>
 #include <geometry/types.h>
@@ -36,6 +35,7 @@ namespace gui
 {
     struct WeatherParameters;
     struct LocalWeatherParameters;
+    struct ResourceNode;
 }
 
 namespace kernel
@@ -133,7 +133,7 @@ public:
     virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const = 0;
     virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const = 0;
     virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const = 0;
-    virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const ::gui::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes ) const = 0;
+    virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes ) const = 0;
     virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
     virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;

@@ -98,7 +98,7 @@ namespace
         return object;
     }
 
-    const gui::ResourceNetwork_ABC::ResourceNode* FindNode( const Entity_ABC& object, const std::string& resource )
+    const gui::ResourceNode* FindNode( const Entity_ABC& object, const std::string& resource )
     {
         if( auto blockNodes = object.Retrieve< gui::ResourceNetwork_ABC >() )
             return blockNodes->FindResourceNode( resource );
@@ -110,7 +110,7 @@ namespace
 // Name: ResourceNetworkDialog::IsNetworkValid
 // Created: JSR 2011-09-20
 // -----------------------------------------------------------------------------
-bool ResourceNetworkDialog::IsNetworkValid( const gui::ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array )
+bool ResourceNetworkDialog::IsNetworkValid( const gui::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array )
 {
     // Depth-first search algorithm to find back edges (cycles in graph)
     for( auto link = node.links_.begin(); link != node.links_.end(); ++link )

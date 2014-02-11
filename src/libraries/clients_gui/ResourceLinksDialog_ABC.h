@@ -10,7 +10,6 @@
 #ifndef __ResourceLinksDialog_ABC_h_
 #define __ResourceLinksDialog_ABC_h_
 
-#include "ResourceNetwork_ABC.h"
 #include "RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
@@ -29,6 +28,8 @@ namespace kernel
 
 namespace gui
 {
+    class ResourceNetwork_ABC;
+    struct ResourceNode;
     template< typename T > class RichWidget;
     class RichCheckBox;
     class RichGroupBox;
@@ -113,7 +114,7 @@ protected:
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
     kernel::Entity_ABC* sourceNode_;
     unsigned int id_;
-    gui::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
+    std::map< std::string, ::gui::ResourceNode > resourceNodes_;
     Q3VBox* pMainLayout_;
     RichWidget< QListWidget >* dotationList_;
     RichGroupBox* groupBox_;
