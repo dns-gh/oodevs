@@ -131,4 +131,6 @@ namespace report
     MAKE_REPORT( eRC_UrbanCollisionStarted )
     MAKE_REPORT( eRC_UrbanCollisionStopped )
     MAKE_REPORT( eRC_CrossedLima )
+    MAKE_REPORT( eRC_IdentifiedUnitSurrendered )
+    MAKE_REPORT( eRC_RecognizedUnitSurrendered )
 }
