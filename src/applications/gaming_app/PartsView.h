@@ -22,15 +22,15 @@ namespace kernel
 {
     class Controller;
     class Controllers;
+    class Dotations_ABC;
     class Entity_ABC;
 }
 
 class LogMaintenanceConsign;
-class SupplyStates;
 
 class PartsView : public gui::RichTableView
                 , public tools::Observer_ABC
-                , public tools::ElementObserver_ABC< SupplyStates >
+                , public tools::ElementObserver_ABC< kernel::Dotations_ABC >
 {
     Q_OBJECT
 public:
@@ -42,7 +42,7 @@ public:
 
 private:
     void Purge();
-    void NotifyUpdated( const SupplyStates& states );
+    void NotifyUpdated( const kernel::Dotations_ABC& dotations );
 
 protected:
     virtual void setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ );

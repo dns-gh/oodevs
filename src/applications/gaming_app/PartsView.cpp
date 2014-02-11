@@ -14,8 +14,9 @@
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "gaming/Dotation.h"
+#include "gaming/Dotations.h"
 #include "gaming/LogMaintenanceConsign.h"
-#include "gaming/SupplyStates.h"
 
 PartsView::PartsView( kernel::Controllers& controllers, QWidget* parent )
     : RichTableView( "manual_selection_repair_team_partsview", parent )
@@ -70,8 +71,8 @@ void PartsView::Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign
         parts_.insert( std::make_pair( it->resource, row ) );
         row++;
     }
-    if( auto states = base_->Retrieve< SupplyStates >() )
-        NotifyUpdated( *states );
+    if( auto dotations = base_->Retrieve< kernel::Dotations_ABC >() )
+        NotifyUpdated( *dotations );
 }
 
 void PartsView::setSelection( const QRect& /*rect*/, QItemSelectionModel::SelectionFlags /*flags*/ )
@@ -79,11 +80,14 @@ void PartsView::setSelection( const QRect& /*rect*/, QItemSelectionModel::Select
     // NOTHING
 }
 
-void PartsView::NotifyUpdated( const SupplyStates& states )
+void PartsView::NotifyUpdated( const kernel::Dotations_ABC& dotations )
 {
-    if( !base_ || base_ != &states.entity_ )
+    const auto dots = dynamic_cast< const Dotations* >( &dotations );
+    if( !dots )
         return;
-    auto it = states.CreateIterator();
+    if( !base_ || base_ != &dots->entity_ )
+        return;
+    auto it = dots->CreateIterator();
     const QBrush red( Qt::red );
     bool valid = true;
     while( it.HasMoreElements() )
