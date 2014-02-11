@@ -1614,24 +1614,29 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[1\] must be a positive number`)
 
-	// Can't exceed the initial quantity
+	// Error: Cannot exceed the initial quantity
 	equipment = swapi.EquipmentDotation{
 		Unavailable: 10,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, IsNil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: number of equipment states \\(10\\) different from number of existing equipments \\(4\\)")
 
-	equipment.Unavailable = 4
-	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return reflect.DeepEqual(data.Units[u1.Id].EquipmentDotations[equipmentId], &equipment)
-	})
-
-	// Change equipments
+	// Error: Cannot change to repairing
 	equipment = swapi.EquipmentDotation{
 		Available:   1,
 		Unavailable: 1,
 		Repairing:   1,
 		Captured:    1,
+	}
+	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot change an equipment state to in maintenance directly")
+
+	// Change equipments
+	equipment = swapi.EquipmentDotation{
+		Available:     1,
+		Unavailable:   1,
+		OnSiteFixable: 1,
+		Captured:      1,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, IsNil)
@@ -1642,10 +1647,10 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 
 	// Error: breakdown missing
 	equipment = swapi.EquipmentDotation{
-		Available:   1,
-		Unavailable: 1,
-		Repairable:  1,
-		Repairing:   1,
+		Available:     1,
+		Unavailable:   1,
+		Repairable:    1,
+		OnSiteFixable: 1,
 	}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
 	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] size must be equal to parameters\[0\]\[0\]\[3\]`)
@@ -1658,7 +1663,7 @@ func (s *TestSuite) TestUnitChangeEquipmentState(c *C) {
 	// Error: invalid breakdown for the composante
 	equipment.Breakdowns = []int32{1}
 	err = client.ChangeEquipmentState(u1.Id, map[uint32]*swapi.EquipmentDotation{equipmentId: &equipment})
-	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the composante`)
+	c.Assert(err, ErrorMatches, `error_invalid_parameter: parameters\[0\]\[0\]\[7\] invalid breakdown identifier for the equipment`)
 
 	// Change equipments
 	equipment.Breakdowns = []int32{82}
