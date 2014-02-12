@@ -1035,6 +1035,70 @@ func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForDiagnosing(c *C)
 	)
 }
 
+func (s *TestSuite) TestMaintenanceTransferToLogisticSuperiorForRepair(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	d := client.Model.GetData()
+	unit := getSomeUnitByName(c, d, "Mobile Infantry")
+	tc2Id := getSomeAutomatByName(c, d, "TC2").Id
+	tc2 := swapi.MakeAutomatTasker(tc2Id)
+	bldId := getSomeFormationByName(c, d, "BLD").Id
+	bld := swapi.MakeFormationTasker(bldId)
+	bltId := getSomeFormationByName(c, d, "BLT").Id
+	blt := swapi.MakeFormationTasker(bltId)
+	zero := &sword.Tasker{}
+
+	SetMaintenanceManualMode(c, client, tc2Id)
+	SetMaintenanceManualMode(c, client, bldId)
+
+	checkMaintenance(c, client, unit, 0, mobility_2,
+		MaintenanceCreateChecker{},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", tc2},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", tc2},
+		&MaintenanceUpdateChecker{"transporter_loading", tc2},
+		&MaintenanceUpdateChecker{"transporter_moving_back", tc2},
+		&MaintenanceUpdateChecker{"transporter_unloading", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_diagnosis_team_selection", tc2},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
+		&MaintenanceUpdateChecker{"diagnosing", tc2},
+		&MaintenanceUpdateChecker{"searching_upper_levels", tc2},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_transporter_selection", bld},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.SelectNewLogisticState(ctx.handlingId)
+			},
+		},
+		&MaintenanceUpdateChecker{"waiting_for_transporter", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_to_supply", bld},
+		&MaintenanceUpdateChecker{"transporter_loading", bld},
+		&MaintenanceUpdateChecker{"transporter_moving_back", bld},
+		&MaintenanceUpdateChecker{"transporter_unloading", bld},
+		&MaintenanceApplyChecker{
+			&MaintenanceUpdateChecker{"waiting_for_repair_team_selection", bld},
+			func(ctx *MaintenanceCheckContext) error {
+				return client.TransferToLogisticSuperior(ctx.handlingId)
+			},
+		},
+		&MaintenanceUpdateChecker{"searching_upper_levels", bld},
+		&MaintenanceUpdateChecker{"waiting_for_parts", blt},
+		&MaintenanceUpdateChecker{"waiting_for_repairer", blt},
+		&MaintenanceUpdateChecker{"repairing", blt},
+		&MaintenanceUpdateChecker{"moving_back", blt},
+		&MaintenanceUpdateChecker{"finished", zero},
+		MaintenanceDeleteChecker{},
+	)
+}
+
 func (s *TestSuite) TestMaintenanceSuperiorUnableToRepair(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
