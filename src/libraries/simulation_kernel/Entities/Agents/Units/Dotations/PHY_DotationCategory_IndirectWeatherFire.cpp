@@ -83,7 +83,7 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
 
     std::vector< unsigned int > fireEffectsIds;
     fireEffectsIds.push_back( pEffect->GetFireEffectId() );
-    ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, deploymentDuration );
+    ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds );
 
     TER_Agent_ABC::T_AgentPtrVector targets;
     TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );
