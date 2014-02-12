@@ -11,8 +11,12 @@
 #include "ActionFactory.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
+#include "DateTime.h"
+#include "Direction.h"
+#include "DotationType.h"
 #include "EngageMagicAction.h"
 #include "EntityMission.h"
+#include "Enumeration.h"
 #include "FragOrder.h"
 #include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
@@ -27,6 +31,8 @@
 #include "String.h"
 #include "Bool.h"
 #include "UnitMagicAction.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_gui/WeatherHelpers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -42,6 +48,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Point.h"
@@ -950,7 +957,7 @@ namespace
 // Name: ActionFactory::CreateSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
+Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_maintenance_transporter" ), controller_, simulation_ );
 }
@@ -959,9 +966,159 @@ Action_ABC* ActionFactory::CreateSelectMaintenanceTransporter( unsigned int cons
 // Name: ActionFactory::CreateSelectMaintenanceDiagnosisTeam
 // Created: SLI 2014-02-06
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
+Action_ABC* ActionFactory::CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const
 {
     return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_diagnosis_team" ), controller_, simulation_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeDiplomacy
+// Created: ABR 2014-02-07
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const
+{
+    MagicActionType& actionType = magicActions_.Get( "change_diplomacy" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), team1 ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), team2 ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), diplomacy ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateKnowledgeGroup
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateKnowledgeGroup( unsigned int id, const std::string& type ) const
+{
+    MagicActionType& actionType = magicActions_.Get( "create_knowledge_group" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), id ) );
+    action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateFireOrderOnLocation
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "fire_order_on_location" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, location ) );
+    action->AddParameter( *new parameters::DotationType( it.NextElement(), resourceId, staticModel_.objectTypes_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateChangeResourceLinks
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes ) const
+{
+    MagicActionType& actionType = magicActions_.Get( "change_resource_links" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), id ) );
+    parameters::ParameterList* nodes = new parameters::ParameterList( it.NextElement() );
+    action->AddParameter( *nodes );
+    for( auto it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
+    {
+        const auto& resource = it->second;
+        parameters::ParameterList& node = nodes->AddList( "Node" );
+        node.AddString( "Resource", resource.resource_ );
+        node.AddQuantity( "Consumption", resource.consumption_ );
+        node.AddBool( "Critical", resource.critical_ );
+        node.AddBool( "Enabled", resource.isEnabled_ );
+        node.AddQuantity( "Production", resource.production_ );
+        node.AddQuantity( "MaxStock", resource.maxStock_ );
+        parameters::ParameterList& links = node.AddList( "Links" );
+        for( unsigned int i = 0; i < resource.links_.size(); ++i )
+        {
+            parameters::ParameterList& link = links.AddList( "Link" );
+            link.AddIdentifier( "Link", resource.links_[ i ].id_ );
+            link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
+        }
+    }
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateGlobalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateGlobalWeather( const gui::WeatherParameters& params ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "global_weather" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.temperature_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.windSpeed_ ) );
+    action->AddParameter( *new parameters::Direction( it.NextElement(), params.windDirection_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudFloor_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudCeiling_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.cloudDensity_ ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), params.type_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLocalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLocalWeather( const gui::LocalWeatherParameters& params ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "local_weather" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.temperature_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.windSpeed_ ) );
+    action->AddParameter( *new parameters::Direction( it.NextElement(), params.globalParams_.windDirection_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudFloor_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudCeiling_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), params.globalParams_.cloudDensity_ ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), params.globalParams_.type_ ) );
+    action->AddParameter( *new parameters::DateTime( it.NextElement(), params.startTime_ ) );
+    action->AddParameter( *new parameters::DateTime( it.NextElement(), params.endTime_ ) );
+    action->AddParameter( *new parameters::Location( it.NextElement(), coordinateConverter_, params.location_ ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), params.id_ ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateLocalDestruction
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateLocalDestruction( unsigned int weatherId ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "local_weather_destruction" );
+    std::unique_ptr< MagicAction > action( new MagicAction( actionType, controller_, false ) );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), weatherId ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateSelectMaintenanceRepairTeam
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    return CreateMaintenanceSelection( consignId, equipmentTypeId, magicActions_.Get( "select_repair_team" ), controller_, simulation_ );
 }
 
 namespace

@@ -229,7 +229,7 @@ void ResourceLinksDialog_ABC::Update()
     }
     selectedItem_ = item;
     std::string resource = item->text().toStdString();
-    ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
+    ResourceNode& node = resourceNodes_[ resource ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );
     consumption_->setValue( node.consumption_ );
@@ -586,7 +586,7 @@ namespace
             const T& object = it.NextElement();
             if( const ResourceNetwork_ABC* srcNetwork = object.Retrieve< ResourceNetwork_ABC >() )
             {
-                if( const ResourceNetwork_ABC::ResourceNode* srcNode = srcNetwork->FindResourceNode( resource ) )
+                if( const ResourceNode* srcNode = srcNetwork->FindResourceNode( resource ) )
                 {
                     for( auto itLink = srcNode->links_.begin(); itLink != srcNode->links_.end(); ++itLink )
                         if( itLink->id_ == dstId )
@@ -600,7 +600,7 @@ namespace
     bool HasResourceLink( const ResourceNetwork_ABC& network, unsigned int dstId, const kernel::Model_ABC& model, const std::string& resource )
     {
         // outgoing links
-        const ResourceNetwork_ABC::ResourceNode* node = network.FindResourceNode( resource );
+        const ResourceNode* node = network.FindResourceNode( resource );
         if( node && !node->links_.empty() )
             return true;
         // incoming links
@@ -620,9 +620,7 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
     auto* node = sourceNode_->Retrieve< ResourceNetwork_ABC >();
     if( !node )
         return;
-    typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
-    typedef ResourceNetwork_ABC::ResourceLink ResourceLink;
-    typedef ResourceNetwork_ABC::T_ResourceNodes T_ResourceNodes;
+    typedef std::map< std::string, ResourceNode > T_ResourceNodes;
     tools::Iterator< const kernel::ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
     while( it.HasMoreElements() )
@@ -640,7 +638,7 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
                 destNode->FindOrCreateResourceNode( resource.GetName() );
                 bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
                 unsigned long destId = dest.GetId();
-                gui::ResourceNetwork_ABC::T_ResourceLinks::iterator itLink;
+                std::vector< ResourceLink >::iterator itLink;
                 for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
                     if( itLink->urban_ == destUrban && itLink->id_ == destId )
                         break;
@@ -713,7 +711,7 @@ void ResourceLinksDialog_ABC::OnRemoveNode( int resourceId )
                 bool isUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( selected ) != 0 );
                 resourceNetwork.RemoveNode( resource.GetName() );
                 controllers_.controller_.Update( resourceNetwork );
-                ResourceNetwork_ABC::Deletion deletion;
+                ResourceLinkDeletion deletion;
                 deletion.resource_ = resource.GetName();
                 deletion.isUrban_ = isUrban;
                 deletion.id_ = selected->GetId();
@@ -752,7 +750,7 @@ bool ResourceLinksDialog_ABC::IsDataUpdateEnabled()
     if( !selectedItem_ )
         return true;
     std::string resource = selectedItem_->text().toStdString();
-    ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
+    ResourceNode& node = resourceNodes_[ resource ];
     return ( production_->value() == ( int ) node.production_ 
                  && consumption_->value() == ( int ) node.consumption_ 
                  && maxStock_->value() == ( int ) node.maxStock_ ) 

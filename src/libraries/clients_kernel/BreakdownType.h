@@ -35,6 +35,16 @@ public:
     virtual ~BreakdownType();
     //@}
 
+    //! @name Parts
+    //@{
+    struct T_Part
+    {
+        int quantity;
+        std::string resource;
+    };
+    typedef std::vector< T_Part > T_Parts;
+    //@}
+
     //! @name Operations
     //@{
     unsigned long GetId() const;
@@ -42,6 +52,7 @@ public:
     std::string GetUnknownName() const;
     E_BreakdownNTI GetNTI() const;
     E_BreakdownType GetType() const;
+    const T_Parts& GetParts() const;
     //@}
 
 private:
@@ -51,6 +62,7 @@ private:
     const E_BreakdownType type_;
     const unsigned long id_;
     const std::string name_;
+    const T_Parts parts_;
     //@}
 };
 

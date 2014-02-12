@@ -11,6 +11,7 @@
 #define CLIENTS_GUI_RESOURCE_NETWORK_H__
 
 #include "clients_kernel/Extension_ABC.h"
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 
 namespace gui
@@ -21,18 +22,6 @@ namespace gui
 
 namespace gui
 {
-// =============================================================================
-/** @class  ResourceNetwork_ABC
-    @brief  ResourceNetwork_ABC
-*/
-// Created: JSR 2010-08-19
-// =============================================================================
-class ResourceNetwork_ABC : public kernel::Extension_ABC
-                          , public boost::noncopyable
-{
-public:
-    //! @name Types
-    //@{
     struct ResourceLink
     {
         ResourceLink( bool urban = true, unsigned int id = 0 )
@@ -88,14 +77,22 @@ public:
 
     typedef std::map< std::string, ResourceNode > T_ResourceNodes;
 
-    struct Deletion
+    struct ResourceLinkDeletion
     {
         std::string resource_;
         unsigned int id_;
         bool isUrban_;
     };
-    //@}
 
+// =============================================================================
+/** @class  ResourceNetwork_ABC
+    @brief  ResourceNetwork_ABC
+*/
+// Created: JSR 2010-08-19
+// =============================================================================
+class ResourceNetwork_ABC : public kernel::Extension_ABC
+                          , public boost::noncopyable
+{
 public:
     //! @name Constructors/Destructor
     //@{

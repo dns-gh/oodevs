@@ -119,7 +119,7 @@ void KnowledgeAddInGroupDialog::OnAccept()
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selectedKnowledgeGroup_, false ) );
     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
     action->AddParameter( *new actions::parameters::Enumeration( it.NextElement(), selectedPerception ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 
     Close();
 }

@@ -45,7 +45,7 @@ Dialogs::Dialogs( QWidget* parent,
                   const tools::ExerciseConfig& config )
     : QObject( parent )
 {
-    new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
+    new ChangeDiplomacyDialog( parent, controllers, actionsModel, profile );
     new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );

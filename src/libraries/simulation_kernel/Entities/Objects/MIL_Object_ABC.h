@@ -131,7 +131,6 @@ public:
     virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent ) = 0;
     virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent ) = 0;
-    virtual void PreprocessPopulation    ( MIL_PopulationElement_ABC& population ) = 0;
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population ) = 0;
     //@}
 

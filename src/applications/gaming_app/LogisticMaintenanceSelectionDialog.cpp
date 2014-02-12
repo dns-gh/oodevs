@@ -12,6 +12,8 @@
 #include "moc_LogisticMaintenanceSelectionDialog.cpp"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
+#include "PartsView.h"
+
 #include "actions/ActionsModel.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Roles.h"
@@ -37,6 +39,7 @@ namespace
         QObject::connect( button, SIGNAL( clicked() ), parent, SLOT( OnRadioButtonChanged() ) );
         return button;
     }
+
     template< typename T >
     T* AddResourceListView( const QString& objectName,
                             kernel::Controllers& controllers,
@@ -64,6 +67,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , controller_( controllers.controller_ )
     , actionsModel_( actionsModel )
     , id_( 0 )
+    , lastContext_( 0 )
     , handler_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , availability_( 0 )
@@ -85,7 +89,15 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
                availability.type_->GetMaintenanceFunctions() &&
                availability.type_->GetMaintenanceFunctions()->CanHaul( *componentType_ );
     } );
-    repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
+    diagnosers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_diagnosis_team_listview", controllers, this );
+
+    auto* repair = new QWidget();
+    auto* layout = new QVBoxLayout( repair );
+    repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
+    parts_ = new PartsView( controllers, this );
+    connect( parts_, SIGNAL( Updated() ), this, SLOT( UpdateDisplay() ) );
+    layout->addWidget( repairers_ );
+    layout->addWidget( parts_ );
 
     // Buttons
     QPushButton* cancelButton = new gui::RichPushButton( "automated_selection_button_cancel", tr( "Cancel" ) );
@@ -97,7 +109,8 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     // Layouts
     stack_ = new QStackedWidget();
     AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection, transporters_ );
-    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, repairers_ );
+    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection, diagnosers_ );
+    AddWidget( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, repair );
 
     QHBoxLayout* bottomLayout = new QHBoxLayout();
     bottomLayout->addStretch( 1 );
@@ -112,6 +125,12 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     mainLayout->addLayout( bottomLayout );
     setLayout( mainLayout );
 
+    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
+    {
+        if( message.message().has_magic_action_ack() && lastContext_ == message.context() &&
+            message.message().magic_action_ack().error_code() == sword::MagicActionAck_ErrorCode_error_invalid_parameter )
+             QMessageBox::warning( this, tr( "SWORD" ), tr( "This request cannot be resolved." ) );
+    } );
     controller_.Register( *this );
 }
 
@@ -193,8 +212,15 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
     else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
     {
         manualButton_->setText( tr( "Select diagnosis team" ) );
+        diagnosers_->selectionModel()->clear();
+        diagnosers_->SelectEntity( handler_ );
+    }
+    else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+    {
+        manualButton_->setText( tr( "Select repair team" ) );
         repairers_->selectionModel()->clear();
         repairers_->SelectEntity( handler_ );
+        parts_->Select( consign.GetHandler(), maintenanceConsign );
     }
     UpdateDisplay();
     show();
@@ -213,9 +239,11 @@ void LogisticMaintenanceSelectionDialog::accept()
         if( !availability_ || !availability_->type_ )
             throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-            actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
+            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-            actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
+            lastContext_ = actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+            lastContext_ = actionsModel_.PublishSelectMaintenanceRepairTeam( id_, availability_->type_->GetId() );
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
@@ -244,8 +272,10 @@ void LogisticMaintenanceSelectionDialog::Purge()
 // -----------------------------------------------------------------------------
 void LogisticMaintenanceSelectionDialog::UpdateDisplay()
 {
-    acceptButton_->setEnabled( automaticButton_->isChecked() ||
-                               manualButton_->isChecked() && availability_ && availability_->available_ > 0 ||
+    bool manual = manualButton_->isChecked() && availability_ && availability_->available_ > 0;
+    if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        manual &= parts_->IsValid();
+    acceptButton_->setEnabled( automaticButton_->isChecked() || manual ||
                                evacuateButton_->isChecked() );
     stack_->setEnabled( manualButton_->isChecked() );
 }
@@ -271,11 +301,23 @@ void LogisticMaintenanceSelectionDialog::OnSelectionChanged( const QModelIndex& 
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
             availability_ = transporters_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
+            availability_ = diagnosers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
             availability_ = repairers_->model()->data( current, gui::Roles::DataRole ).value< const kernel::Availability* >();
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
     UpdateDisplay();
+}
+
+namespace
+{
+    template< typename T >
+    void Select( const T* source, const std::function< void( const QModelIndex& ) >& select )
+    {
+        const auto indexes = source->selectionModel()->selectedIndexes();
+        select( indexes.isEmpty() ? QModelIndex() : indexes.front() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -290,16 +332,13 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Maintenanc
         return;
     if( manualButton_->isChecked() )
     {
+        auto selector = [&]( const QModelIndex& current ){ OnSelectionChanged( current, QModelIndex() ); };
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-        {
-            auto indexes = transporters_->selectionModel()->selectedIndexes();
-            OnSelectionChanged( indexes.size() > 0 ? indexes[ 0 ] : QModelIndex(), QModelIndex() );
-        }
+            Select( transporters_, selector );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-        {
-            auto indexes = repairers_->selectionModel()->selectedIndexes();
-            OnSelectionChanged( indexes.size() > 0 ? indexes[ 0 ] : QModelIndex(), QModelIndex() );
-        }
+            Select( diagnosers_, selector );
+        else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+            Select( repairers_, selector );
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }

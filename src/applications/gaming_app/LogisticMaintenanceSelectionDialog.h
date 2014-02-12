@@ -38,6 +38,7 @@ namespace sword
 
 class MaintenanceHaulersListView;
 class MaintenanceRepairersListView;
+class PartsView;
 
 // =============================================================================
 /** @class  LogisticMaintenanceSelectionDialog
@@ -75,7 +76,6 @@ private:
     //! @name Helpers
     //@{
     void Purge();
-    void UpdateDisplay();
     void AddWidget( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status, QWidget* widget );
     void SetCurrentWidget();
     //@}
@@ -86,6 +86,7 @@ private slots:
     virtual void accept();
     virtual void OnRadioButtonChanged();
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
+    void UpdateDisplay();
     //@}
 
 private:
@@ -94,6 +95,7 @@ private:
     kernel::Controller& controller_;
     actions::ActionsModel& actionsModel_;
     unsigned int id_;
+    int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
     const kernel::ComponentType* componentType_;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status_;
@@ -107,6 +109,8 @@ private:
     QStackedWidget* stack_;
     MaintenanceHaulersListView* transporters_;
     MaintenanceRepairersListView* repairers_;
+    MaintenanceRepairersListView* diagnosers_;
+    PartsView* parts_;
     //@}
 };
 

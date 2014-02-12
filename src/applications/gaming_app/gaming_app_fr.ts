@@ -1697,6 +1697,18 @@ Voulez-vous le remplacer ?</translation>
         <source>Select diagnosis team</source>
         <translation>Sélectionner une équipe de diagnostique</translation>
     </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation>Cette requête ne peut être resolue.</translation>
+    </message>
+    <message>
+        <source>Select repair team</source>
+        <translation>Sélectionner une équipe de réparation</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyCarriersTableWidget</name>
@@ -2755,6 +2767,21 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Value</source>
         <translation>Valeur</translation>
+    </message>
+</context>
+<context>
+    <name>PartsView</name>
+    <message>
+        <source>Required Parts</source>
+        <translation>Pièces requises</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation>Requis</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
     </message>
 </context>
 <context>

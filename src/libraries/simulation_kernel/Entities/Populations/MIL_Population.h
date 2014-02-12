@@ -134,6 +134,7 @@ public:
     void UpdateDecision( float duration );
     void UpdateState();
     void Clean();
+    void ClearObjectCollisions();
 
     void AddHidden( MIL_Agent_ABC& agent );
     void RemoveHidden( MIL_Agent_ABC& agent );

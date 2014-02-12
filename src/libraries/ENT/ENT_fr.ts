@@ -957,11 +957,11 @@
     </message>
     <message>
         <source>waiting for repair team selection</source>
-        <translation>en attente de sélection d&apos;une équipe de diagnostique</translation>
+        <translation>en attente de sélection d&apos;une équipe de réparation</translation>
     </message>
     <message>
         <source>waiting for diagnosis team selection</source>
-        <translation>en attente de sélection d&apos;une équipe de réparation</translation>
+        <translation>en attente de sélection d&apos;une équipe de diagnostique</translation>
     </message>
 </context>
 <context>

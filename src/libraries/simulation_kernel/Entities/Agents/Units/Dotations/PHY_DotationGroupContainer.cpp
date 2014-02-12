@@ -16,6 +16,7 @@
 #include "PHY_Dotation.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
@@ -101,9 +102,13 @@ void PHY_DotationGroupContainer::PurgeDotationNotOverloaded( PHY_Dotation& dotat
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_UnitType& unitType, T_DotationSet& overloadedDotations )
 {
-    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
+    const std::string name( xis.attribute< std::string >( "name" ) );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( name );
     if( !pDotationCategory )
-        throw MASA_EXCEPTION( xis.context() + "Unknown resource type" );
+    {
+        MT_LOG_ERROR_MSG( xis.context() + "Unknown resource type " + name );
+        return;
+    }
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
     {

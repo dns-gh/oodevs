@@ -254,16 +254,6 @@ void MIL_Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object::PreprocessPopulation
-// Created: JSR 2010-07-07
-// -----------------------------------------------------------------------------
-void MIL_Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
-{
-    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
-        (*it)->PreprocessPopulation( *this, population );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Object::ProcessPopulationInside
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------

@@ -90,11 +90,11 @@ void EngageMagicAction::Serialize( xml::xostream& xos ) const
 // Name: EngageMagicAction::Publish
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------
-void EngageMagicAction::Publish( Publisher_ABC& publisher, int ) const
+void EngageMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( Get< ActionTasker >().GetId() );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
     message().set_name( GetName().toStdString() );
-    message.Send( publisher );
+    message.Send( publisher, context );
 }

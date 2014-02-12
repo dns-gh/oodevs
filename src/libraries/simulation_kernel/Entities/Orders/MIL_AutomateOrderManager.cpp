@@ -18,6 +18,7 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConvoyConfig.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -115,7 +116,12 @@ void MIL_AutomateOrderManager::StopAllMissions()
             (**it).GetOrderManager().CancelMission();
 
         for( auto it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
-            (**it).GetOrderManager().CancelMission();
+        {
+            MIL_AgentPion* unit = *it;
+            // Do not reset convoy missions because it would destroy the unit.
+            if( &(unit->GetType()) != logistic::SupplyConvoyConfig::convoyAgentType_ )
+                unit->GetOrderManager().CancelMission();
+        }
     }
     // Destruction de toutes les missions préparées mais non données par l'automate à ses pions pendant la conduite
     preparedMissions_.clear();

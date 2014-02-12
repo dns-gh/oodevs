@@ -88,6 +88,8 @@ public:
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
     void NotifyUrbanDestructionStart();
+    void NotifyObjectCollision( MIL_Object_ABC& object );
+    void ClearObjectCollisions();
     //@}
 
     //! @name Accessors
@@ -124,13 +126,6 @@ public:
     double GetPionReloadingTimeFactor() const;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendCreation( unsigned int context = 0 ) const = 0;
-    virtual void SendFullState() const = 0;
-    virtual void SendChangedState() const = 0;
-    //@}
-
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -144,7 +139,6 @@ protected:
     //@{
     void UpdateDensity();
     void UpdateCollisions();
-    void ClearCollisions();
     //@}
 
     //! @name Network

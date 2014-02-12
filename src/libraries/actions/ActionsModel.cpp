@@ -39,6 +39,7 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory,
     : factory_( factory )
     , controller_( controllers.controller_ )
     , publisher_( new ActionPublisher( defaultPublisher, controllers, simulation ) )
+    , context_( 0 )
 {
     // NOTHING
 }
@@ -80,160 +81,240 @@ void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
 // Name: ActionsModel::PublishAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateAutomatCreationAction( type, selected, point ) );
-    Publish( *action, clock() );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishAgentCreationAction
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateAgentCreationAction( type, point, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishFormationCreationAction
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase )
+int ActionsModel::PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateFormationCreationAction( level, selected, isLogisticBase ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateCrowdCreationAction( type, numberHealthy, numberWounded, numberDead, point, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishCrowdChangeHealthStateAction
 // Created: JSR 2011-03-15
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateCrowdChangeHealthStateAction( healthy, wounded, contaminated, dead, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-void  ActionsModel::PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishInhabitantChangeAlertedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishInhabitantChangeConfinedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected )
+int ActionsModel::PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateInhabitantChangeConfinedStateAction( confined, selected ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishObjectMagicAction
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsigned long targetId )
+int ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsigned long targetId )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateObjectMagicAction( magicAction, targetId ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
+int ActionsModel::PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateObjectUpdateMagicAction( object, attribute ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishObjectDestroyMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object )
+int ActionsModel::PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateObjectDestroyMagicAction( object ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishLogMaintenanceSetManualAction
 // Created: ABR 2014-01-21
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual )
+int ActionsModel::PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateLogMaintenanceSetManualAction( tasker, manual ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishSelectNewLogisticState
 // Created: LGY 2014-01-24
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishSelectNewLogisticState( unsigned int consignId )
+int ActionsModel::PublishSelectNewLogisticState( unsigned int consignId )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateSelectNewLogisticState( consignId ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishTransferToLogisticSuperior
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishTransferToLogisticSuperior( unsigned int consignId )
+int ActionsModel::PublishTransferToLogisticSuperior( unsigned int consignId )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateTransferToLogisticSuperior( consignId ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishSelectMaintenanceTransporter
 // Created: ABR 2014-01-29
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
+int ActionsModel::PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceTransporter( consignId, equipmentTypeId ) );
-    Publish( *action, 0 );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::PublishSelectMaintenanceDiagnosisTeam
 // Created: SLI 2014-02-06
 // -----------------------------------------------------------------------------
-void ActionsModel::PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
+int ActionsModel::PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId )
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceDiagnosisTeam( consignId, equipmentTypeId ) );
-    Publish( *action, 0 );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeDiplomacy
+// Created: ABR 2014-02-07
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeDiplomacy( team1, team2, diplomacy ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishCreateKnowledgeGroup
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishCreateKnowledgeGroup( unsigned int id, const std::string& type )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateKnowledgeGroup( id, type ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishFireOrderOnLocation
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateFireOrderOnLocation( resourceId, location, interventionType ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeResourceLinks
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateChangeResourceLinks( id, resourceNodes ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishGlobalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishGlobalWeather( const gui::WeatherParameters& params )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateGlobalWeather( params ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLocalWeather
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishLocalWeather( const gui::LocalWeatherParameters& params )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLocalWeather( params ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishLocalDestruction
+// Created: ABR 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishLocalDestruction( unsigned int weatherId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateLocalDestruction( weatherId ) );
+    return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishSelectMaintenanceRepairTeam
+// Created: BAX 2014-02-10
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishSelectMaintenanceRepairTeam( unsigned int consignId, unsigned int equipmentTypeId )
+{
+    std::unique_ptr< Action_ABC > action( factory_.CreateSelectMaintenanceRepairTeam( consignId, equipmentTypeId ) );
+    return Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,9 +385,10 @@ void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* f
 // Name: ActionsModel::Publish
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void ActionsModel::Publish( const Action_ABC& action, int context )
+int ActionsModel::Publish( const Action_ABC& action )
 {
-    action.Publish( *publisher_, context );
+    action.Publish( *publisher_, ++context_ );
+    return context_;
 }
 
 // -----------------------------------------------------------------------------

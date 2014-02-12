@@ -109,7 +109,7 @@ namespace hla
             if( size == 0 )
                 return;
             writePadding( archive, 4 );
-            for( std::size_t i = 0; i < size; ++i)
+            for( int32_t i = 0; i < size; ++i)
             {
                 unsigned long st = archive.GetSize();
                 archive << list[i];

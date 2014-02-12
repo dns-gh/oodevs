@@ -91,6 +91,7 @@ private:
 
     kernel::SafePointer< kernel::Agent_ABC > selectedFrom_;
     kernel::SafePointer< kernel::Agent_ABC > selectedTo_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     QLabel*                                  labelFrom_;
     QLabel*                                  labelTo_;
     QPushButton*                             okButton_;

@@ -17,9 +17,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Bool.h"
-#include "actions/Identifier.h"
 #include "actions/KnowledgeGroupMagicAction.h"
-#include "actions/MagicAction.h"
 #include "actions/String.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
@@ -40,8 +38,8 @@ using namespace kernel;
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
 KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel,
-                                                                        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile,
-                                                                        const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+                                                                        const ::StaticModel& staticModel, const Time_ABC& simulation, const Profile_ABC& profile,
+                                                                        const tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : QObject( parent )
     , controllers_        ( controllers )
     , actionsModel_       ( actionsModel )
@@ -74,21 +72,21 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
+    ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
     if( entity.IsActivated() )
         magicMenu->insertItem( tr( "Desactivate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
     else
         magicMenu->insertItem( tr( "Activate" ), this, SLOT( OnToggleKnowledgeGroupActivation() ) );
-    kernel::ContextMenu* createKnowledgeGroup = menu.SubMenu( "Knowledge", tr( "Create Knowledge Group", false, 1 ) );
+    ContextMenu* createKnowledgeGroup = menu.SubMenu( "Knowledge", tr( "Create Knowledge Group", false, 1 ) );
     for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();
         QAction* action = createKnowledgeGroup->addAction( QString::fromStdString( type.GetName() ) );
         gui::connect( action, SIGNAL( triggered() ),
-            boost::bind( &KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup, this, kernel::SafePointer< kernel::Entity_ABC >( controllers_, &entity ), type.GetName() ) );
+            boost::bind( &KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup, this, SafePointer< Entity_ABC >( controllers_, &entity ), type.GetName() ) );
     }
     magicMenu->insertItem( tr( "Add knowledge" ), this, SLOT( OnAddKnowledgeInGroup() ) );
-    kernel::ContextMenu* typeMenu = menu.SubMenu( "Knowledge", tr( "Change Type" ) );
+    ContextMenu* typeMenu = menu.SubMenu( "Knowledge", tr( "Change Type" ) );
     for( auto it = types_.CreateIterator(); it.HasMoreElements(); )
     {
         const KnowledgeGroupType& type = it.NextElement();
@@ -113,7 +111,7 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
         action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -147,7 +145,7 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
         action->AddParameter( *new parameters::String( paramIt.NextElement(), type.GetName() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -155,17 +153,8 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType()
 // Name: KnowledgeGroupMagicOrdersInterface::CreateSubKnowledgeGroup
 // Created: FHD 2009-12-23
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type )
+void KnowledgeGroupMagicOrdersInterface::OnCreateKnowledgeGroup( const SafePointer< Entity_ABC >& entity, const std::string& type )
 {
     if( entity )
-    {
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-        std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
-        action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
-        action->AddParameter( *new parameters::String( paramIt.NextElement(), type ) );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new ActionTasker( controllers_.controller_, entity, false ) );
-        actionsModel_.Publish( *action, 0 );
-    }
+        actionsModel_.PublishCreateKnowledgeGroup( entity->GetId(), type );
 }
