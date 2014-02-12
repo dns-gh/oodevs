@@ -48,6 +48,7 @@ struct Runtime_ABC : public boost::noncopyable
                                                     const std::string& run,
                                                     const std::string& log ) const = 0;
     virtual boost::filesystem::path GetModuleFilename() const = 0;
+    virtual std::string GetLastError() const = 0;
     //@}
 };
 }

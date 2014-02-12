@@ -42,6 +42,7 @@ public:
                                                     const std::string& run,
                                                     const std::string& log ) const;
     virtual boost::filesystem::path GetModuleFilename() const;
+    virtual std::string GetLastError() const;
     //@}
 
 private:

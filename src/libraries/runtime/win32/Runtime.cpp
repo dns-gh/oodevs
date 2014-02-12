@@ -112,3 +112,12 @@ boost::filesystem::path Runtime::GetModuleFilename() const
 {
     return api_.GetModuleFilename();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Runtime::GetLastError
+// Created: BAX 2014-02-12
+// -----------------------------------------------------------------------------
+std::string Runtime::GetLastError() const
+{
+    return api_.GetLastError();
+}

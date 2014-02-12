@@ -373,7 +373,7 @@ struct Facade : SqlFacade
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
         Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( plugins, log, agent, users, true );
-        web::Server server( log, pool, controller, host->Get() );
+        web::Server server( runtime, log, pool, controller, host->Get() );
         server.Listen();
         proxy.Register( "api", "localhost", host->Get() );
         AddLicensePathToReg( cfg.session.simulation.parent_path().string() );

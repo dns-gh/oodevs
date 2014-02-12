@@ -18,17 +18,21 @@
 #include "runtime/Io.h"
 #include "runtime/Pool_ABC.h"
 #include "runtime/PropertyTree.h"
+#include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
+#include <cpplog/cpplog.hpp>
+
 #include <mongoose/mongoose.h>
 
 using namespace web;
 using runtime::Async;
 using runtime::Pool_ABC;
+using runtime::Runtime_ABC;
 
 namespace
 {
@@ -276,8 +280,10 @@ struct Reply : public Reply_ABC
     // Name: Reply::Reply
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    Reply( mg_connection* link )
-        : link_( link )
+    Reply( const Runtime_ABC& runtime, cpplog::BaseLogger& log, mg_connection* link )
+        : runtime_( runtime )
+        , log_    ( log )
+        , link_   ( link )
     {
         // NOTHING
     }
@@ -327,7 +333,12 @@ struct Reply : public Reply_ABC
     // -----------------------------------------------------------------------------
     int Write( const void* data, size_t size )
     {
-        return mg_write( link_, data, size );
+        const int write = mg_write( link_, data, size );
+        if( write != size )
+            LOG_ERROR( log_ ) << "[mg] write error"
+                              << " (" << write << "/" << size << ") "
+                              << runtime_.GetLastError();
+        return write;
     }
 
     // -----------------------------------------------------------------------------
@@ -341,6 +352,8 @@ struct Reply : public Reply_ABC
 
 private:
     typedef std::map< std::string, std::string > T_Headers;
+    const Runtime_ABC& runtime_;
+    cpplog::BaseLogger& log_;
     mg_connection* link_;
     T_Headers headers_;
     HttpStatus status_;
@@ -353,8 +366,14 @@ struct Server::Private : public boost::noncopyable
     // Name: Private::Private
     // Created: BAX 2012-09-14
     // -----------------------------------------------------------------------------
-    Private( Pool_ABC& pool, Observer_ABC& observer, int port )
+    Private( const Runtime_ABC& runtime,
+             cpplog::BaseLogger& log,
+             Pool_ABC& pool,
+             Observer_ABC& observer,
+             int port )
         : port_    ( boost::lexical_cast< std::string >( port ) )
+        , runtime_ ( runtime )
+        , log_     ( log )
         , pool_    ( pool )
         , observer_( observer )
         , context_ ( 0 )
@@ -454,7 +473,7 @@ struct Server::Private : public boost::noncopyable
     void Get( mg_connection* link, const mg_request_info* info )
     {
         WebRequest req( link, info );
-        Reply rpy( link );
+        Reply rpy( runtime_, log_, link );
         observer_.DoGet( rpy, req );
     }
 
@@ -465,12 +484,14 @@ struct Server::Private : public boost::noncopyable
     void Post( mg_connection* link, const mg_request_info* info )
     {
         BodyWebRequest req( pool_, link, info );
-        Reply rpy( link );
+        Reply rpy( runtime_, log_, link );
         observer_.DoPost( rpy, req );
     }
 
 private:
     const std::string port_;
+    const Runtime_ABC& runtime_;
+    cpplog::BaseLogger& log_;
     Pool_ABC& pool_;
     Observer_ABC& observer_;
     mg_context* context_;
@@ -481,8 +502,12 @@ private:
 // Name: Server::Server
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-Server::Server( cpplog::BaseLogger& /*log*/, Pool_ABC& pool, Observer_ABC& observer, int port )
-    : private_( new Private( pool, observer, port ) )
+Server::Server( const Runtime_ABC& runtime,
+                cpplog::BaseLogger& log,
+                Pool_ABC& pool,
+                Observer_ABC& observer,
+                int port )
+    : private_( new Private( runtime, log, pool, observer, port ) )
 {
     // NOTHING
 }
