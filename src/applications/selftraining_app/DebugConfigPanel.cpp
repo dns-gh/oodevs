@@ -18,6 +18,7 @@
 
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include "tools/GeneralConfig.h"
 
 #include <QScrollArea>
 #include <boost/assign.hpp>
@@ -150,13 +151,17 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
+    auto savedFeatures = tools::SplitFeatures(
+            registry::ReadString( "DevFeatures" ).toStdString() );
     featuresBox_ = new QGroupBox();
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
         QCheckBox* checkbox = new QCheckBox( *it );
+        checkbox->setChecked( savedFeatures.count( it->toStdString() ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
+        connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged( int ) ));
     }
 
     //general Layout
@@ -332,11 +337,16 @@ void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
     registry::WriteBool( "HasMapnikLayer", checked );
 }
 
+void DebugConfigPanel::OnDevFeaturesChanged( int )
+{
+    registry::WriteString( "DevFeatures", GetDevFeatures() );
+}
+
 QString DebugConfigPanel::GetDevFeatures() const
 {
-    QString result;
+    std::unordered_set< std::string > checked;
     for( auto it = features_.begin(); it != features_.end(); ++it )
         if( (*it)->isChecked() )
-            result += ( !result.isEmpty() ? ";" : "" ) + (*it)->text();
-    return result;
+            checked.insert( (*it)->text() );
+    return tools::JoinFeatures( checked ).c_str();
 }

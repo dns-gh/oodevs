@@ -18,6 +18,39 @@
 using namespace tools;
 namespace po = boost::program_options;
 
+std::unordered_set< std::string > tools::SplitFeatures( const std::string& s )
+{
+    std::vector< std::string > features;
+    boost::algorithm::split( features, s, boost::algorithm::is_any_of( ";" ) );
+    std::unordered_set< std::string > featuresSet;
+    for( auto it = features.begin(); it != features.end(); ++it )
+    {
+        auto f = *it;
+        boost::algorithm::trim( f );
+        if( !f.empty() )
+            featuresSet.insert( f ); 
+    }
+    return featuresSet;
+}
+
+std::string tools::JoinFeatures( const std::unordered_set< std::string >& features )
+{
+    std::vector< std::string > sorted;
+    for( auto it = features.begin(); it != features.end(); ++it )
+    {
+        auto f = *it;
+        boost::algorithm::trim( f );
+        if( !f.empty() )
+            sorted.push_back( f );
+    }
+    std::sort( sorted.begin(), sorted.end() );
+
+    std::stringstream output;
+    for( auto it = sorted.begin(); it != sorted.end(); ++it )
+        output << *it << ( it + 1 != sorted.end() ? ";" : "" );
+    return output.str();
+}
+
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig constructor
 // Created: NLD 2007-01-10
@@ -61,7 +94,7 @@ void GeneralConfig::Parse( int argc, char** argv )
     ResolveRelativePath( rootDir_, modelsDir_ );
     ResolveRelativePath( rootDir_, exercisesDir_ );
     ResolveRelativePath( rootDir_, populationDir_ );
-    boost::algorithm::split( devFeatures_, features_, boost::algorithm::is_any_of( ";" ) );
+    devFeatures_ = SplitFeatures( features_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,5 +370,5 @@ const std::string& GeneralConfig::GetCommandLineLanguage() const
 
 bool GeneralConfig::IsActivated( const std::string& feature ) const
 {
-    return std::find( devFeatures_.begin(), devFeatures_.end(), feature ) != devFeatures_.end();
+    return devFeatures_.count( feature ) > 0;
 }
