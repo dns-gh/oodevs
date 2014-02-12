@@ -1493,7 +1493,6 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
 {
     client::FragOrderAck ack;
     ack().set_error_code( OrderAck::no_error );
-    ack().mutable_tasker()->mutable_unit()->set_id( 0 );
     try
     {
         const auto taskerId = protocol::TryGetTasker( message.tasker() );
@@ -1510,12 +1509,12 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
             ack().mutable_tasker()->mutable_automat()->set_id( *taskerId );
             pAutomate->OnReceiveFragOrder( message, sendAck );
         }
-        else if( MIL_Population* pPopulation = populationFactory_->Find( *taskerId ) )
+        else if( MIL_Population* pPopulation = FindPopulation( *taskerId ) )
         {
             ack().mutable_tasker()->mutable_crowd()->set_id( *taskerId );
             pPopulation->OnReceiveFragOrder( message, sendAck );
         }
-        else if( MIL_AgentPion* pPion = FindAgentPion ( *taskerId ) )
+        else if( MIL_AgentPion* pPion = FindAgentPion( *taskerId ) )
         {
             ack().mutable_tasker()->mutable_unit()->set_id( *taskerId );
             pPion->OnReceiveFragOrder( message, sendAck );
@@ -1539,6 +1538,8 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
         ack().set_error_code( OrderAck::error_invalid_parameter );
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
+    if( !ack().has_tasker() )
+        ack().mutable_tasker()->mutable_unit()->set_id( 0 );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
