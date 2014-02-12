@@ -2171,11 +2171,11 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>ScoreProfilesPage</name>
     <message>
         <source>Access rights</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droits d&apos;accès</translation>
     </message>
     <message>
         <source>Selected profiles will have access to the score during the exercise.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Les profiles sélectionnés auront accès au score pendant l&apos;exercice.</translation>
     </message>
     <message>
         <source>Profile</source>
