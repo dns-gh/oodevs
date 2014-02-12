@@ -135,6 +135,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 {
     if( knowledge.IsValid() )
         knowledge.Invalidate();
+    knowledge.CleanObjectKnown();
     if( objectMap_.erase( knowledge.GetObjectId() ) < 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
