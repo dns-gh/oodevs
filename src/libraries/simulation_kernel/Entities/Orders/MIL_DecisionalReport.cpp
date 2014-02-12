@@ -133,4 +133,5 @@ namespace report
     MAKE_REPORT( eRC_CrossedLima )
     MAKE_REPORT( eRC_IdentifiedUnitSurrendered )
     MAKE_REPORT( eRC_RecognizedUnitSurrendered )
+    MAKE_REPORT( eRC_IEDHeard )
 }

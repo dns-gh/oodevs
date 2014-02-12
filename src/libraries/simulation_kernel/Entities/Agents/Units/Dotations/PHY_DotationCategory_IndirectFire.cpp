@@ -212,7 +212,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         std::vector< unsigned int > fireEffectsIds;
         fireEffectsIds.push_back( attritionEffect->GetFireEffectId() );
         fireEffectsIds.push_back( neutralizationEffect->GetFireEffectId() );
-        ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, 0 );
+        ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds );
 
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );

@@ -13,8 +13,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/Effects/MIL_Effect_DetectionRange.h"
+#include "Entities/Orders/MIL_Report.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
@@ -86,16 +86,24 @@ void PHY_DotationCategory_IndirectFire_ABC::ApplyStrikeEffect( const MIL_Agent_A
 // Name: PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect
 // Created: JSR 2013-04-26
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect( const MT_Vector2D& vTargetPosition, const std::vector< unsigned int >& fireEffectsIds, double deploymentDuration ) const
+void PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect( const MT_Vector2D& vTargetPosition, const std::vector< unsigned int >& fireEffectsIds ) const
 {
     if( !MIL_AgentServer::IsInitialized() )
         return;
+    client::IndirectFirePerception msg;
     TER_Agent_ABC::T_AgentPtrVector perceivers;
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( vTargetPosition, rDetectionRange_, perceivers );
     std::vector< unsigned int > unitsIds;
     for( auto it = perceivers.begin(); it != perceivers.end(); ++it )
-        unitsIds.push_back( static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent().GetID() );
-    MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_DetectionRange( unitsIds, dotationCategory_.GetMosID(), fireEffectsIds, deploymentDuration ) );
+    {
+        MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
+        msg().add_perceivers()->set_id( agent.GetID() );
+        if( dotationCategory_.IsIED() )
+            MIL_Report::PostEvent( agent, report::eRC_IEDHeard );
+    }
+    msg().mutable_ammunition()->set_id( dotationCategory_.GetMosID() );
+    for( auto it = fireEffectsIds.begin(); it != fireEffectsIds.end(); ++it )
+        msg().add_fire_effects()->set_id( *it );
 }
 
 // -----------------------------------------------------------------------------
