@@ -63,12 +63,14 @@ void PartsView::Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign
     Purge();
     const auto& parts = consign.GetBreakdown()->GetParts();
     int row = 0;
+    valid_ = true;
     for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         model_->setItem( row, 0, new QStandardItem( QString::fromStdString( it->resource ) ) );
         model_->setItem( row, 1, new QStandardItem( QString::number( it->quantity ) ) );
         model_->setItem( row, 2, new QStandardItem( "0" ) );
         parts_.insert( std::make_pair( it->resource, row ) );
+        valid_ &= !it->quantity;
         row++;
     }
     if( auto dotations = base_->Retrieve< kernel::Dotations_ABC >() )
