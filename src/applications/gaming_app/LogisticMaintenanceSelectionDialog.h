@@ -29,6 +29,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class MaintenanceStates_ABC;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -49,6 +50,7 @@ class PartsView;
 class LogisticMaintenanceSelectionDialog : public LogisticSelectionDialog_ABC
                                          , public tools::Observer_ABC
                                          , public tools::ElementObserver_ABC< kernel::MaintenanceStates_ABC >
+                                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT
 
@@ -68,10 +70,8 @@ private:
     virtual void Show( const LogisticsConsign_ABC& consign );
     //@}
 
-    //! @name ElementObserver_ABC< MaintenanceStates_ABC > implementation
-    //@{
     virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
-    //@}
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
 
     //! @name Helpers
     //@{
