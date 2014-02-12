@@ -12,8 +12,8 @@
 
 class PHY_DotationCategory;
 
-namespace logistic {
-
+namespace logistic
+{
 // =============================================================================
 /** @class  SupplyConvoyEventsObserver_ABC
     @brief  SupplyConvoyEventsObserver_ABC
@@ -31,15 +31,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnAllResourcesAssignedToConvoy() = 0;
-    virtual void OnResourceAssignedToConvoy    ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
-    virtual void OnResourceRemovedFromConvoy   ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
-    virtual void OnConvoyEndMission            () = 0;
+    virtual void OnResourceAssignedToConvoy( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
+    virtual void OnResourceRemovedFromConvoy( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
+    virtual void OnConvoyEndMission() = 0;
     //@}
-    
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+
+    template< typename Archive > void serialize( Archive&, const unsigned int )
+    {}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyConveyor_ABC_h_

@@ -104,10 +104,9 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
         while( quantity > 0 )
         {
             SupplyConveyor_ABC* conveyor = CreateConveyor( dotationCategory );
-            if( conveyor )
-                quantity -= conveyor->Convoy( *eventsObserver_, dotationCategory, quantity );
-            else
-                break;
+            if( !conveyor )
+                return;
+            quantity -= conveyor->Convoy( *eventsObserver_, dotationCategory, quantity );
         }
     }
     else if( quantity > 0 )
@@ -143,8 +142,6 @@ unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
 
     if( conveyors_.empty() )
         return std::numeric_limits< unsigned >::max();
-
-    eventsObserver_->OnAllResourcesAssignedToConvoy();
     return 0;
 }
 
