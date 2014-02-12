@@ -39,6 +39,7 @@ MIL_IDManager DEC_Knowledge_PopulationFlow::idManager_;
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( &flowKnown )
+    , pPopulation_             ( &flowKnown.GetPopulation() )
     , nID_                     ( idManager_.GetId() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
@@ -66,6 +67,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationFlow& knowledge )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( knowledge.pFlowKnown_ )
+    , pPopulation_             ( knowledge.pPopulation_ )
     , nID_                     ( idManager_.GetId() )
     , direction_               ( knowledge.direction_ )
     , rSpeed_                  ( knowledge.rSpeed_ )
@@ -94,6 +96,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     : pPopulationKnowledge_    ( 0 )
     , pFlowKnown_              ( 0 )
+    , pPopulation_             ( 0 )
     , nID_                     ( 0 )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
@@ -131,6 +134,7 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
 {
     file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ )
          >> const_cast< MIL_PopulationFlow*& >( pFlowKnown_ )
+         >> const_cast< MIL_Population*& >( pPopulation_ )
          >> const_cast< unsigned int& >( nID_ )
          >> direction_
          >> rSpeed_
@@ -157,6 +161,7 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
     unsigned attitudeId = ( pAttitude_ ? pAttitude_->GetID() : 0 );
     file << pPopulationKnowledge_
          << pFlowKnown_
+         << pPopulation_
          << nID_
          << direction_
          << rSpeed_
@@ -290,12 +295,15 @@ void DEC_Knowledge_PopulationFlow::UpdateFromCrowdPerception( int /*currentTimeS
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
     double rMaxLifeTime = pPopulationKnowledge_->GetMaxLifeTime();
-    if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
+    const bool magicMove = pPopulation_->HasDoneMagicMove();
+    if( magicMove )
+    {
         rMaxLifeTime = 0.;
+    }
     if( flowParts_.UpdateRelevance( rMaxLifeTime ) )
         bFlowPartsUpdated_ = true;
     // L'objet réel va être détruit
-    if( pFlowKnown_ && !pFlowKnown_->IsValid() )
+    if( magicMove || ( pFlowKnown_ && !pFlowKnown_->IsValid() ) )
     {
         pFlowKnown_ = 0;
         bRealFlowUpdated_ = true;
@@ -369,13 +377,10 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         flowParts_.Serialize( *asnMsg().mutable_parts()->add_elem() );
     if( bAttitudeUpdated_ && pAttitude_ )
         asnMsg().set_attitude( pAttitude_->GetAsnID() );
-    if( bReconAttributesValid_ )
+    if( bReconAttributesValid_ && bHumansUpdated_ )
     {
-        if( bHumansUpdated_ )
-        {
-            asnMsg().set_dead( nNbrDeadHumans_  );
-            asnMsg().set_alive( nNbrAliveHumans_ );
-        }
+        asnMsg().set_dead( nNbrDeadHumans_  );
+        asnMsg().set_alive( nNbrAliveHumans_ );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_parts() )

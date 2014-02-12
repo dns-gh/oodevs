@@ -19,6 +19,7 @@
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationCollision;
+class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
@@ -78,6 +79,7 @@ private:
     //@{
     const DEC_Knowledge_Population* pPopulationKnowledge_;
     const MIL_PopulationFlow* pFlowKnown_;
+    const MIL_Population* pPopulation_;
     const unsigned int nID_;
     MT_Vector2D direction_;
     double rSpeed_;
