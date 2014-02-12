@@ -33,7 +33,7 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maint
     , pRepairer_              ( 0 )
     , searchForUpperLevelDone_( false )
 {
-    EnterStateWaitingForParts();
+    EnterStateWaitingForRepairerSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,6 @@ void PHY_MaintenanceRepairConsign::DoReturnComposante()
 bool PHY_MaintenanceRepairConsign::DoWaitingForParts()
 {
     assert( pComposanteState_ );
-    assert( !pRepairer_ );
     return GetPionMaintenance().ConsumePartsForBreakdown( pComposanteState_->GetComposanteBreakdown() );
 }
 
@@ -162,8 +161,6 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForCarrier()
 bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
 {
     assert( pComposanteState_ );
-    assert( !pRepairer_ );
-
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
@@ -180,7 +177,6 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 {
-    assert( pComposanteState_ );
     SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_parts, 0 );
 }
 
@@ -190,11 +186,10 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForParts()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection()
 {
-    assert( pComposanteState_ );
     if( IsManualMode() )
         SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection, 0 );
     else
-        EnterStateWaitingForRepairer();
+        EnterStateWaitingForParts();
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +198,6 @@ void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairerSelection()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceRepairConsign::EnterStateWaitingForRepairer()
 {
-    assert( pComposanteState_ );
     SetState( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer, 0 );
 }
 
@@ -257,7 +251,12 @@ bool PHY_MaintenanceRepairConsign::Update()
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_parts:
             if( DoWaitingForParts() )
-                EnterStateWaitingForRepairerSelection();
+            {
+                if( pRepairer_ )
+                    EnterStateRepairing();
+                else
+                    EnterStateWaitingForRepairer();
+            }
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_repairer:
             if( DoWaitingForRepairer() )
@@ -265,7 +264,7 @@ bool PHY_MaintenanceRepairConsign::Update()
             break;
         case sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection:
             if( !IsManualMode() )
-                EnterStateWaitingForRepairer();
+                EnterStateWaitingForParts();
             break;
         case sword::LogMaintenanceHandlingUpdate::repairing:
             EnterStateGoingBackToWar();
@@ -321,7 +320,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForUpperLevel()
 void PHY_MaintenanceRepairConsign::SelectNewState()
 {
     if( GetState() == sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
-        next_ = [&]() { EnterStateWaitingForRepairer(); };
+        next_ = [&]() { EnterStateWaitingForParts(); };
     else
         throw MASA_EXCEPTION( "repair consign not in a waiting state" );
 }
@@ -351,5 +350,5 @@ void PHY_MaintenanceRepairConsign::SelectRepairTeam( const PHY_ComposanteTypePio
     if( !pRepairer_ )
         throw MASA_EXCEPTION( "no component of specified type available for repair team selection" );
     GetPionMaintenance().StartUsingForLogistic( *pRepairer_ );
-    EnterStateRepairing();
+    EnterStateWaitingForParts();
 }
