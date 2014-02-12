@@ -27,9 +27,6 @@ public:
     static const PHY_ComposanteState dead_;
     static const PHY_ComposanteState maintenance_;
     static const PHY_ComposanteState prisoner_;
-
-    typedef std::vector< const PHY_ComposanteState* >   T_ComposanteStateVector;
-    typedef T_ComposanteStateVector::const_iterator   CIT_ComposanteStateVector;
     //@}
 
 public:
@@ -40,7 +37,6 @@ public:
     static const PHY_ComposanteState& Find        ( unsigned int nID );
     static const PHY_ComposanteState* Find        ( const std::string& strName );
     static unsigned int               GetNbrStates();
-    static T_ComposanteStateVector&   GetStates   ();
     //@}
 
     //! @name Accessors
@@ -60,32 +56,13 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_State
-    {
-        eDead,
-        eRepairableWithEvacuation,
-        eRepairableWithoutEvacuation,
-        eUndamaged,
-        eMaintenance,
-        ePrisoner,
-        eNbrStates
-    };
-    //@}
+    PHY_ComposanteState( const std::string& strName, unsigned int nState, bool bUsable, bool bDamaged );
 
 private:
-     PHY_ComposanteState( const std::string& strName, E_State nState, bool bUsable, bool bDamaged );
-    virtual ~PHY_ComposanteState();
-
-private:
-    const std::string strName_;
-    const E_State     nState_;
-    const bool        bUsable_;
-    const bool        bDamaged_;
-
-private:
-    static T_ComposanteStateVector composanteStates_;
+    const std::string  strName_;
+    const unsigned int nState_;
+    const bool         bUsable_;
+    const bool         bDamaged_;
 };
 
 #endif // __PHY_ComposanteState_h_

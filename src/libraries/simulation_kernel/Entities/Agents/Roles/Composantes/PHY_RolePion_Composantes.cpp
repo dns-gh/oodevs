@@ -646,7 +646,6 @@ PHY_RolePion_Composantes::T_Dotations PHY_RolePion_Composantes::NotifyComposante
 void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState )
 {
     const PHY_ComposanteState& newState = composante.GetState();
-    assert( oldState != newState );
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     T_ComposanteTypeProperties& properties = composanteTypes_[ &composante.GetType() ];
     UpdateDataWhenComposanteRemoved( oldState, properties );
@@ -1972,7 +1971,7 @@ namespace
             if( state == PHY_ComposanteState::repairableWithEvacuation_ && !breakdowns.empty() )
             {
                 const PHY_BreakdownType* breakdown = RemoveBreakdown( (*it)->GetType(), breakdowns );
-                (*it)->ReinitializeState( state, breakdown ); // $$$$ MCO 2014-02-07: no-op for now, see ReinitializeState
+                (*it)->ReinitializeState( state, breakdown );
                 auto it2 = repartition.find( &PHY_ComposanteState::repairableWithEvacuation_ );
                 if( --it2->second == 0 )
                     repartition.erase( it2 );

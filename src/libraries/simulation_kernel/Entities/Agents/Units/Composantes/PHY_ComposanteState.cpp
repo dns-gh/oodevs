@@ -16,14 +16,28 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
+namespace
+{
+    enum E_State
+    {
+        eDead,
+        eRepairableWithEvacuation,
+        eRepairableWithoutEvacuation,
+        eUndamaged,
+        eMaintenance,
+        ePrisoner,
+        eNbrStates
+    };
+
+    std::vector< const PHY_ComposanteState* > states( eNbrStates, 0 );
+}
+
 const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Disponible"             , eUndamaged                  , true  , false ); // bUsable, bDamaged
 const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "ReparableAvecEvacuation", eRepairableWithEvacuation   , true  , true  );
 const PHY_ComposanteState PHY_ComposanteState::repairableWithoutEvacuation_( "ReparableSurPlace"      , eRepairableWithoutEvacuation, true  , true  );
 const PHY_ComposanteState PHY_ComposanteState::dead_                       ( "Detruit"                , eDead                       , false , true  );
 const PHY_ComposanteState PHY_ComposanteState::maintenance_                ( "EnMaintenance"          , eMaintenance                , false , false );
 const PHY_ComposanteState PHY_ComposanteState::prisoner_                   ( "Prisonnier"             , ePrisoner                   , true  , false );
-
-PHY_ComposanteState::T_ComposanteStateVector PHY_ComposanteState::composanteStates_( eNbrStates, 0 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteState::Initialize
@@ -32,12 +46,12 @@ PHY_ComposanteState::T_ComposanteStateVector PHY_ComposanteState::composanteStat
 void PHY_ComposanteState::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing composante states" );
-    composanteStates_[ undamaged_                  .GetID() ] = &undamaged_;
-    composanteStates_[ repairableWithEvacuation_   .GetID() ] = &repairableWithEvacuation_;
-    composanteStates_[ repairableWithoutEvacuation_.GetID() ] = &repairableWithoutEvacuation_;
-    composanteStates_[ dead_                       .GetID() ] = &dead_;
-    composanteStates_[ maintenance_                .GetID() ] = &maintenance_;
-    composanteStates_[ prisoner_                   .GetID() ] = &prisoner_;
+    states[ undamaged_                  .GetID() ] = &undamaged_;
+    states[ repairableWithEvacuation_   .GetID() ] = &repairableWithEvacuation_;
+    states[ repairableWithoutEvacuation_.GetID() ] = &repairableWithoutEvacuation_;
+    states[ dead_                       .GetID() ] = &dead_;
+    states[ maintenance_                .GetID() ] = &maintenance_;
+    states[ prisoner_                   .GetID() ] = &prisoner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,31 +67,13 @@ void PHY_ComposanteState::Terminate()
 // Name: PHY_ComposanteState constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_ComposanteState::PHY_ComposanteState( const std::string& strName, E_State nState, bool bUsable, bool bDamaged )
+PHY_ComposanteState::PHY_ComposanteState( const std::string& strName, unsigned int nState, bool bUsable, bool bDamaged )
     : strName_ ( strName  )
     , nState_  ( nState   )
     , bUsable_ ( bUsable  )
     , bDamaged_( bDamaged )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteState destructor
-// Created: NLD 2004-08-05
-// -----------------------------------------------------------------------------
-PHY_ComposanteState::~PHY_ComposanteState()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposanteState::GetStates
-// Created: NLD 2004-10-07
-// -----------------------------------------------------------------------------
-PHY_ComposanteState::T_ComposanteStateVector& PHY_ComposanteState::GetStates()
-{
-    return composanteStates_;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +136,8 @@ unsigned int PHY_ComposanteState::GetNbrStates()
 // -----------------------------------------------------------------------------
 const PHY_ComposanteState& PHY_ComposanteState::Find( unsigned int nID )
 {
-    assert( composanteStates_.size() > nID );
-    return *composanteStates_[ nID ];
+    assert( states.size() > nID );
+    return *states[ nID ];
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +146,7 @@ const PHY_ComposanteState& PHY_ComposanteState::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 const PHY_ComposanteState* PHY_ComposanteState::Find( const std::string& strName )
 {
-    for( auto it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
+    for( auto it = states.begin(); it != states.end(); ++it )
         if( boost::iequals( (**it).GetName(), strName ) )
             return *it;
     return 0;
