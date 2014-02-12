@@ -284,6 +284,7 @@ private:
     bool CanBeUsedForMove() const;
     bool CanComponentBeUsed( const transport::PHY_RoleAction_Loading* role, bool bWithLoaded ) const;
     void ManageEndMaintenance();
+    bool HasRepairEvacuationMeans() const;
     //@}
 
 private:
@@ -303,8 +304,8 @@ private:
     HumansComposante_ABC* pHumans_;
     // Breakdowns
     unsigned int nAutoRepairTimeStep_;
-    const PHY_Breakdown* pBreakdown_;
-    PHY_MaintenanceComposanteState* pMaintenanceState_;
+    std::unique_ptr< const PHY_Breakdown > pBreakdown_;
+    std::unique_ptr< PHY_MaintenanceComposanteState > pMaintenanceState_;
     // Random breakdowns
     unsigned int nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;

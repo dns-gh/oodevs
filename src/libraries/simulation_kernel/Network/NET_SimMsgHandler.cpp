@@ -82,7 +82,7 @@ void NET_SimMsgHandler::OnReceiveClient( const std::string& /*from*/, const swor
         simulation_.Pause( nCtx, clientId );
     else if( msg.has_control_resume() )
         simulation_.Resume( msg.control_resume().has_tick() ?
-                msg.control_resume().tick() : 0, nCtx, clientId );
+            msg.control_resume().tick() : 0, nCtx, clientId );
     else if( msg.has_control_change_time_factor() )
         simulation_.SetTimeFactor( msg.control_change_time_factor().time_factor() );
     else if( msg.has_control_date_time_change() )
