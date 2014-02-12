@@ -56,3 +56,21 @@ void PropagationAttribute::Send( sword::ObjectAttributes& message ) const
         message.mutable_propagation()->set_date( date_ );
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropagationAttribute::GetModel
+// Created: AHC 2013-07-09
+// -----------------------------------------------------------------------------
+const std::string& PropagationAttribute::GetModel() const
+{
+    return model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropagationAttribute::GetDate
+// Created: AHC 2013-07-09
+// -----------------------------------------------------------------------------
+const std::string& PropagationAttribute::GetDate() const
+{
+    return date_;
+}

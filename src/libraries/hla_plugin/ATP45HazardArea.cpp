@@ -187,3 +187,11 @@ void ATP45HazardArea::ResourcesChanged( const ObjectLocationEventListener_ABC::T
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ATP45HazardArea::PropagationChanged
+// Created: AHC 2013-06-28
+// -----------------------------------------------------------------------------
+void ATP45HazardArea::PropagationChanged( const ObjectPropagationEventListener_ABC::T_DataVector& /*pos*/ )
+{
+}

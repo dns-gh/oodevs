@@ -114,3 +114,13 @@ void SupplyStocksListView::TotalizeStocks( const Dotation& dotation )
         foundDotation.quantity_ += dotation.quantity_;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::showEvent
+// Created: LGY 2014-02-10
+// -----------------------------------------------------------------------------
+void SupplyStocksListView::showEvent( QShowEvent* event )
+{
+    UpdateSelected( selected_ );
+    QTreeView::showEvent( event );
+}

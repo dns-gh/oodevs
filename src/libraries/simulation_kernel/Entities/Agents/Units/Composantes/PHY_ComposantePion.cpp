@@ -220,8 +220,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     {
         if( !pType_->CanHaveBreakdown( breakdownType ) )
             return;
-        if( pBreakdown_ )
-            delete pBreakdown_;
+        delete pBreakdown_;
         pBreakdown_ = new PHY_Breakdown( breakdownType );
     }
     else if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
@@ -776,10 +775,10 @@ void PHY_ComposantePion::Update()
             bool bRepairEvacuationNoMeans = false;
             if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
                 bRepairEvacuationNoMeans = true;
-            else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
+            else if( pMaintenanceState_ )
             {
-                const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
-                if( pConsign && pConsign->SearchForUpperLevelNotFound() )
+                const PHY_MaintenanceConsign_ABC* consign = pMaintenanceState_->GetConsign();
+                if( consign && consign->SearchForUpperLevelNotFound() )
                     bRepairEvacuationNoMeans = true;
             }
             if( bRepairEvacuationNoMeans )

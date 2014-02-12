@@ -20,6 +20,8 @@
 #include "EquipmentUpdater.h"
 #include "RemoteOrbatShaper.h"
 #include "RemoteTacticalObjectController.h"
+#include "TacticalObjectUpdater.h"
+#include "PropagationManager.h"
 #include "protocol/Simulation.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/StaticModel.h"
@@ -61,6 +63,16 @@ namespace
             CONNECT( messageController, *this, unit_creation );
         }
     };
+    class ObjectContextHandler : public ContextHandler< sword::ObjectMagicActionAck >
+    {
+    public:
+        ObjectContextHandler( tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                            const ContextFactory_ABC& contextFactory, dispatcher::SimulationPublisher_ABC& publisher )
+            : ContextHandler< sword::ObjectMagicActionAck >( "object", messageController, contextFactory, publisher )
+        {
+            CONNECT( messageController, *this, object_magic_action_ack );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -73,11 +85,12 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                     dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
                                     const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject,
-                                    const MissionResolver_ABC& missionResolver )
+                                    const MissionResolver_ABC& missionResolver, const tools::ExerciseConfig& config, const SimulationTimeManager_ABC& timeManager )
     : sideResolver_( sideResolver )
     , pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_               ( new UnitContextHandler( messageController, contextFactory, publisher ) )
+    , pObjectHandler_             ( new ObjectContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatDisengager_         ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, automatTypeResolver, dynamicModel.KnowledgeGroups() ) )
@@ -86,9 +99,11 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
-    , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject, logger ) )
+    , pPropagationManager_        ( new PropagationManager( logger, config, timeManager ) )
+    , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, *pObjectHandler_, remoteTacticalSubject, logger, *pPropagationManager_ ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
                                     new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher, automatTypeResolver ) : 0 )
+    , pTacticalObjectUpdater_     ( new TacticalObjectUpdater( publisher, *pObjectHandler_, logger, *pPropagationManager_, remoteTacticalSubject ) )
 
 {
     // NOTHING
@@ -128,4 +143,13 @@ void SimulationFacade::Unregister( ResponseObserver_ABC< sword::UnitCreation >& 
 void SimulationFacade::Send( simulation::UnitMagicAction& message, const std::string& identifier )
 {
     pUnitHandler_->Send( message, identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationFacade::Send
+// Created: AHC 2014-01-22
+// -----------------------------------------------------------------------------
+void SimulationFacade::Send( simulation::ObjectMagicAction& message, const std::string& identifier )
+{
+    pObjectHandler_->Send( message, identifier );
 }

@@ -253,3 +253,13 @@ void RemoteAgentResolver::SubEntitiesChanged(const std::string& rtiIdentifier, c
     BOOST_FOREACH( const std::string& v, children )
         children_[ v ] = rtiIdentifier;
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
+}

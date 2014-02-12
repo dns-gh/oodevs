@@ -50,12 +50,14 @@ namespace
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
 TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, 
-        const rpr::EntityTypeResolver_ABC& objectResolver, const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger )
+        const rpr::EntityTypeResolver_ABC& objectResolver, const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger,
+        const SimulationTimeManager_ABC& timeManager )
     : model_( model )
     , converter_( converter )
     , objectResolver_( objectResolver )
     , dotationResolver_( dotationResolver )
     , logger_( logger )
+    , timeManager_( timeManager )
 {
     model_.RegisterFactory( *this );
 }
@@ -132,12 +134,12 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
 {
     std::string remoteExt;
     const bool isRemote = object.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
-    const bool isPropagation = getPropagationAttribute( object ) != 0;
     // TODO check if object must be created
     if( !isRemote )
     {
-        T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object, dotationResolver_ ) ) ) ).first );
+        T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object, dotationResolver_, timeManager_ ) ) ) ).first );
         const kernel::ObjectType& objectType = object.GetType();
+        const bool isPropagation = !objectType.GetDisasterType().empty();
         const std::string typeName = objectType.GetType();
         rpr::EntityType entityType;
         if( !objectResolver_.Find( typeName, entityType ) )

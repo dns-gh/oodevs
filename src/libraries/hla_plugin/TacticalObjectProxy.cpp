@@ -10,13 +10,26 @@
 #include "hla_plugin_pch.h"
 #include "TacticalObjectProxy.h"
 #include "TacticalObjectEventListener_ABC.h"
+#include "SimulationTimeManager_ABC.h"
 #include "dispatcher/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "dispatcher/Localisation.h"
 #include "rpr/EntityTypeResolver_ABC.h"
+#include "dispatcher/PropagationAttribute.h"
+#include "dispatcher/Object_ABC.h"
+#include "dispatcher/ObjectAttributeContainer.h"
+#include <tools/Path.h>
+#include <tools/FileWrapper.h>
+#include "propagation/PropagationManager.h"
+#include "propagation/ASCExtractor.h"
 
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
+
+#include <set>
+
+using namespace plugins::hla;
 
 namespace
 {
@@ -27,18 +40,44 @@ namespace
         dotationResolver.Find( name, val );
         resources.push_back( val );
     }
+   const dispatcher::PropagationAttribute* getPropagationAttribute(const dispatcher::Object_ABC& object)
+   {
+       const dispatcher::PropagationAttribute* retval = 0;
+       for( auto it = object.GetAttributes().GetAttributes().begin(); it!=object.GetAttributes().GetAttributes().end(); ++it)
+       {
+           retval = dynamic_cast< const dispatcher::PropagationAttribute* >( &*it );
+           if( retval )
+               break;
+       }
+       return retval;
+   }
+   void readPropagation( const dispatcher::PropagationAttribute& attribute, ObjectPropagationEventListener_ABC::T_DataVector& data, const SimulationTimeManager_ABC& timeManager )
+   {
+       const tools::Path path = tools::Path::FromUTF8( attribute.GetModel() );
+       ::PropagationManager propMgr;
+       propMgr.Initialize( path, attribute.GetDate() );
+       const tools::Path::T_Paths files = propMgr.GetFiles( !attribute.GetDate().empty() ? attribute.GetDate() : timeManager.getSimulationTime() );
+       if( files.empty() )
+           return;
+       std::for_each( files.begin(), files.end(), [&]( const tools::Path& f ) {
+           const ASCExtractor extractor( f, propMgr.GetProjectionFile() );
+           ObjectPropagationEventListener_ABC::Data values( extractor.GetCols(), extractor.GetRows(), extractor.GetExtent(), extractor.GetMaximumValue() );
+           values.concentrations = extractor.GetValues();
+           data.push_back( values );
+       });
+   }
 }
 
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalObjectProxy constructor
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
-TacticalObjectProxy::TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver  )
+TacticalObjectProxy::TacticalObjectProxy( dispatcher::Object_ABC& object, const rpr::EntityTypeResolver_ABC& dotationResolver, const SimulationTimeManager_ABC& timeManager )
     : dispatcher::Observer< sword::ObjectUpdate >( object )
     , object_( object )
     , dotationResolver_( dotationResolver )
+    , timeManager_( timeManager )
 {
     // NOTHING
 }
@@ -73,6 +112,13 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
     listeners_.Register( listener );
     const dispatcher::Localisation::T_PositionVector& points( object_.GetLocalisation().GetPoints() );
     Apply( listener, &ObjectLocationEventListener_ABC::SpatialChanged, points );
+    const dispatcher::PropagationAttribute* prop = getPropagationAttribute( object_ );
+    if( prop )
+    {
+        ObjectPropagationEventListener_ABC::T_DataVector data;
+        readPropagation( *prop, data, timeManager_ );
+        Apply( listener, &ObjectPropagationEventListener_ABC::PropagationChanged, data );
+    }
     kernel::ObjectType::CIT_Capacities it( object_.GetType().CapacitiesBegin() );
 
     while( object_.GetType().CapacitiesEnd() != it && it->first != "constructor" )
@@ -110,5 +156,11 @@ void TacticalObjectProxy::Unregister( TacticalObjectEventListener_ABC& listener 
 // -----------------------------------------------------------------------------
 void TacticalObjectProxy::Notify( const sword::ObjectUpdate&  )
 {
-    // NOTHING
+    const dispatcher::PropagationAttribute* prop = getPropagationAttribute( object_ );
+    if( prop )
+    {
+        ObjectPropagationEventListener_ABC::T_DataVector data;
+        readPropagation( *prop, data, timeManager_ );
+        listeners_.Apply( &ObjectPropagationEventListener_ABC::PropagationChanged, data );
+    }
 }

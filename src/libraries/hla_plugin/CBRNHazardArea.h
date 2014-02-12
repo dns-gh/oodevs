@@ -60,22 +60,25 @@ struct RawDataHazardContour
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        static const uint32_t padding = 0;
-        archive << exposureLevel;
+        uint32_t padd = 0;
+        static const uint32_t sz = static_cast<uint32_t>(locations.size());
+        archive << exposureLevel << padd;
         if( locations.empty() )
             return;
-        archive << padding;
+        archive << sz << padd;
         archive << locations;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32_t padding = 0;
-        archive >> exposureLevel;
+        uint32_t padd;
+        uint32_t sz = 0;
+        archive >> exposureLevel >> padd;
         if( archive.GetSize() == 0 )
             return;
         locations.clear();
-        archive >> padding;
+        archive >> sz >> padd;
+        locations.resize( sz );
         archive >> locations;
     }
     //@}

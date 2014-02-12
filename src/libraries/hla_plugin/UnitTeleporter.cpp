@@ -355,10 +355,20 @@ void UnitTeleporter::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitTeleporter::PerimeterChanged
+// Name: UnitTeleporter::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void UnitTeleporter::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void UnitTeleporter::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
 {
     // NOTHING
 }

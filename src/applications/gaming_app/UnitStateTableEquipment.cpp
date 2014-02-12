@@ -74,7 +74,7 @@ int UnitStateTableEquipment::CountLines( const QString& name, int firstRow, E_Eq
 // Name: UnitStateTableEquipment::LineChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ ) const
+bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int >& currentBreakdowns ) const
 {
     for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
         if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
@@ -87,13 +87,15 @@ bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int si
 // Name: UnitStateTableEquipment::BreakdownIDToComboIndex
 // Created: ABR 2011-07-25
 // -----------------------------------------------------------------------------
-std::vector< unsigned int > UnitStateTableEquipment::BreakdownIDToComboIndex( const QStringList& breakdowns, const std::vector< int >& breakdownIDs ) const
+std::vector< unsigned int > UnitStateTableEquipment::BreakdownIDToComboIndex( const QStringList* breakdowns, const std::vector< int >& breakdownIDs ) const
 {
     std::vector< unsigned int > result;
+    if( !breakdowns )
+        return result;
     for( unsigned int i = 0; i < breakdownIDs.size(); ++i )
     {
         const kernel::BreakdownType& type = staticModel_.objectTypes_.Resolver2< kernel::BreakdownType >::Get( breakdownIDs[ i ] );
-        const int index = breakdowns.findIndex( QString::fromStdString( type.GetName() ) );
+        const int index = breakdowns->findIndex( QString::fromStdString( type.GetName() ) );
         assert( index != -1 );
         result.push_back( static_cast< unsigned int >( index ) );
     }
@@ -130,15 +132,13 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 // Name: UnitStateTableEquipment::HasChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const // $$$ SLI: Never called?
+bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
     assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     rowsChanged_.clear();
-    bool hideBreakdown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
-    auto itEquip = selected.Get< Equipments >().CreateIterator();
-    while( itEquip.HasMoreElements() )
+    for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
     {
-        const Equipment& equipment = itEquip.NextElement();
+        const Equipment& equipment = it.NextElement();
         const QString name = QString::fromStdString( equipment.type_.GetName() );
         int row = 0;
         for( ; row < dataModel_.rowCount(); ++row )
@@ -146,12 +146,20 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const /
                 break;
         int first_row = row;
         const QStringList* breakdowns = delegate_.GetComboContent( row, eBreakdown );
-        if( LineChanged( name, row, equipment.available_,     eEquipmentState_Available ) ||
-            LineChanged( name, row, equipment.unavailable_,   eEquipmentState_Destroyed ) ||
-            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns() ) : std::vector< unsigned int >()  ) ||
+        const std::vector< int > maintenanceDiagnosedBreakdowns = equipment.GetBreakdownsInTreatment( true );
+        const std::vector< int > maintenanceUndiagnosedBreakdowns = equipment.GetBreakdownsInTreatment( false );
+        const auto inMaintenanceWithoutBreakdowns = equipment.inMaintenance_ - maintenanceDiagnosedBreakdowns.size() - maintenanceUndiagnosedBreakdowns.size();
+        if( LineChanged( name, row, equipment.available_, eEquipmentState_Available ) ||
+            LineChanged( name, row, equipment.unavailable_, eEquipmentState_Destroyed ) ||
+            LineChanged( name, row, equipment.repairable_, eEquipmentState_RepairableWithEvacuation,
+                BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns() ) ) ||
             LineChanged( name, row, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable ) ||
-            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) : std::vector< unsigned int >() ) ||
-            LineChanged( name, row, equipment.prisonners_,    eEquipmentState_Prisonner ) )
+            LineChanged( name, row, static_cast< int >( maintenanceDiagnosedBreakdowns.size() ), eEquipmentState_InMaintenance,
+                BreakdownIDToComboIndex( breakdowns, maintenanceDiagnosedBreakdowns ) ) ||
+            LineChanged( name, row, static_cast< int >( maintenanceDiagnosedBreakdowns.size() ), eEquipmentState_InMaintenance,
+                BreakdownIDToComboIndex( breakdowns, maintenanceUndiagnosedBreakdowns ) ) ||
+            LineChanged( name, row, equipment.prisonners_, eEquipmentState_Prisonner ) ||
+            LineChanged( name, row, static_cast< int >( inMaintenanceWithoutBreakdowns ), eEquipmentState_InMaintenance ) )
             rowsChanged_[ equipment.type_.GetId() ] = first_row;
     }
     return !rowsChanged_.empty();
@@ -211,12 +219,14 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         AddLines( name, selected, equipment.available_, eEquipmentState_Available, breakdownTypes );
         AddLines( name, selected, equipment.unavailable_, eEquipmentState_Destroyed, breakdownTypes );
         AddLines( name, selected, equipment.repairable_, eEquipmentState_RepairableWithEvacuation, displayTypes,
-                  BreakdownIDToComboIndex( breakdownTypes, equipment.GetBreakdowns() ) );
+                  BreakdownIDToComboIndex( &breakdownTypes, equipment.GetBreakdowns() ) );
         AddLines( name, selected, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable, breakdownTypes );
         AddLines( name, selected, static_cast< int >( maintenanceDiagnosedBreakdowns.size() ), eEquipmentState_InMaintenance, breakdownTypes,
-                  BreakdownIDToComboIndex( breakdownTypes, maintenanceDiagnosedBreakdowns ) );
+                  BreakdownIDToComboIndex( &breakdownTypes, maintenanceDiagnosedBreakdowns ) );
         AddLines( name, selected, static_cast< int >( maintenanceUndiagnosedBreakdowns.size() ), eEquipmentState_InMaintenance, displayTypes,
-                  BreakdownIDToComboIndex( breakdownTypes, maintenanceUndiagnosedBreakdowns ) );
+                  BreakdownIDToComboIndex( &breakdownTypes, maintenanceUndiagnosedBreakdowns ) );
+        const auto inMaintenanceWithoutBreakdowns = equipment.inMaintenance_ - maintenanceDiagnosedBreakdowns.size() - maintenanceUndiagnosedBreakdowns.size();
+        AddLines( name, selected, static_cast< int >( inMaintenanceWithoutBreakdowns ), eEquipmentState_InMaintenance, breakdownTypes );
         AddLines( name, selected, equipment.prisonners_, eEquipmentState_Prisonner, breakdownTypes );
     }
 }

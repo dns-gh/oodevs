@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
@@ -29,7 +30,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceRepairConsign )
 // -----------------------------------------------------------------------------
 PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
-    , pRepairer_                ( 0 )
+    , pRepairer_              ( 0 )
+    , searchForUpperLevelDone_( false )
 {
     EnterStateWaitingForParts();
 }
@@ -40,7 +42,8 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign( MIL_Agent_ABC& maint
 // -----------------------------------------------------------------------------
 PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign()
     : PHY_MaintenanceConsign_ABC()
-    , pRepairer_                ( 0 )
+    , pRepairer_              ( 0 )
+    , searchForUpperLevelDone_( false )
 {
     // NOTHING
 }
@@ -271,12 +274,44 @@ bool PHY_MaintenanceRepairConsign::Update()
             DoReturnComposante();
             EnterStateFinished();
             break;
+        case sword::LogMaintenanceHandlingUpdate::searching_upper_levels:
+            if( DoSearchForUpperLevel() )
+                EnterStateFinished();
+            break;
         case sword::LogMaintenanceHandlingUpdate::finished:
             break;
         default:
             assert( false );
     }
     return GetState() == sword::LogMaintenanceHandlingUpdate::finished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::SearchForUpperLevelNotFound
+// Created: LGY 2014-02-04
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceRepairConsign::SearchForUpperLevelNotFound() const
+{
+    return GetState() == sword::LogMaintenanceHandlingUpdate::searching_upper_levels && searchForUpperLevelDone_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceRepairConsign::DoSearchForUpperLevel
+// Created: LGY 2014-02-04
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceRepairConsign::DoSearchForUpperLevel()
+{
+    searchForUpperLevelDone_ = true;
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    if( !pLogisticManager )
+        return false;
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
+    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    {
+        pComposanteState_ = 0;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +328,9 @@ void PHY_MaintenanceRepairConsign::SelectNewState()
 
 void PHY_MaintenanceRepairConsign::TransferToLogisticSuperior()
 {
-    throw MASA_EXCEPTION( "cannot transfer a repair consign to superior" );
+    if( GetState() != sword::LogMaintenanceHandlingUpdate::waiting_for_repair_team_selection )
+        throw MASA_EXCEPTION( "repair consign not in a waiting state" );
+    next_ = [&]() { SetState( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, 0 ); };
 }
 
 void PHY_MaintenanceRepairConsign::SelectMaintenanceTransporter( const PHY_ComposanteTypePion& /*type*/ )

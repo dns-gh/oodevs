@@ -13,7 +13,6 @@
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 #include "actions/ActionsModel.h"
-#include "clients_gui/LogisticBase.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -21,7 +20,6 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticsConsign_ABC.h"
@@ -162,21 +160,9 @@ namespace
 {
     bool CanRequestEvacuationBySuperior( const kernel::Entity_ABC* entity )
     {
-        if( !entity )
-            return false;
-        if( auto superior = entity->Get< kernel::TacticalHierarchies >().GetSuperior() )
-        {
-            if( auto base = superior->Retrieve< gui::LogisticBase >() )
-            {
-                if( base->IsBase() )
-                {
-                    if( auto links = superior->Retrieve< LogisticLinks >() )
-                        return links->GetCurrentSuperior() != 0;
-                    return false;
-                }
-            }
-            return CanRequestEvacuationBySuperior( superior );
-        }
+        if( auto base = logistic_helpers::GetLogisticBase( entity ) )
+            if( auto links = base->Retrieve< LogisticLinks >() )
+                return links->GetCurrentSuperior() != 0;
         return false;
     }
 }

@@ -90,6 +90,7 @@ namespace hla
     class EntityIdentifierResolver_ABC;
     class FOM_Serializer_ABC;
     class SideResolver_ABC;
+    class SimulationTimeManager_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -171,6 +172,7 @@ private:
     std::auto_ptr< OwnershipController > pOwnershipController_;
     std::auto_ptr< OwnershipPolicy_ABC > pOwnershipPolicy_;
     std::auto_ptr< EntityIdentifierResolver_ABC > pEntityIdentifierResolver_;
+    std::auto_ptr< SimulationTimeManager_ABC > pSimulationTimeManager_;
     //@}
 };
 

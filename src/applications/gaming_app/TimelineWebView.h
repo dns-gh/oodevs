@@ -92,7 +92,7 @@ private:
     void SetProfile( const QString& profile );
 
     void ReadActions( xml::xisubstream xis );
-    void ReadAction( xml::xistream& xis );
+    void ReadAction( timeline::Events& events, xml::xistream& xis );
     //@}
 
     //! @name TimelineHandler_ABC implementation
@@ -115,9 +115,9 @@ private slots:
     void OnCenterView();
     void OnToggleLayoutOrientation();
 
-    void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void OnCreatedEvents( const timeline::Events& events, const timeline::Error& error );
     void OnEditedEvent( const timeline::Event& event, const timeline::Error& error );
-    void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
+    void OnDeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error );
     void OnGetEvents( const timeline::Events& events, const timeline::Error& error );
     void OnLoadedEvents( const timeline::Error& error );
     void OnSavedEvents( const std::string& content, const timeline::Error& error );

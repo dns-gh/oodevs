@@ -119,17 +119,15 @@ void Equipments::DoUpdate( const sword::UnitAttributes& message )
 {
     if( !message.has_equipment_dotations() )
         return;
-
     std::vector< Equipment > differences;
-    uint nSize = message.equipment_dotations().elem_size();
-    while( nSize > 0 )
+    const auto& elems = message.equipment_dotations().elem();
+    for( auto it = elems.begin(); it != elems.end(); ++it )
     {
-        const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( --nSize );
-        Equipment previous( resolver_.Get( value.type().id() ) );
-        if( Equipment* equipment = Find( value.type().id() ) )
+        Equipment previous( resolver_.Get( it->type().id() ) );
+        if( Equipment* equipment = Find( it->type().id() ) )
             previous = *equipment;
         Equipment current( previous );
-        current.Update( value );
+        current.Update( *it );
         differences.push_back( current - previous );
     }
     Update( differences );
@@ -141,7 +139,7 @@ void Equipments::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Equipments::Update( const std::vector< Equipment >& differences )
 {
-    for( std::vector< Equipment >::const_iterator it = differences.begin(); it != differences.end(); ++it )
+    for( auto it = differences.begin(); it != differences.end(); ++it )
     {
         Equipment* equipment = Find( it->type_.GetId() );
         if( !equipment )

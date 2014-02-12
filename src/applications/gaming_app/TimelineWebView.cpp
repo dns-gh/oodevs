@@ -141,9 +141,9 @@ void TimelineWebView::Connect()
     next.url += MakeQuery( query );
     server_.reset( MakeServer( next ).release() );
 
-    connect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    connect( server_.get(), SIGNAL( CreatedEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnCreatedEvents( const timeline::Events&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
-    connect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    connect( server_.get(), SIGNAL( DeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ), this, SLOT( OnDeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
@@ -152,6 +152,8 @@ void TimelineWebView::Connect()
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+
+    server_->Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,19 +164,6 @@ void TimelineWebView::Disconnect()
 {
     if( !server_ )
         return;
-
-    disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
-    disconnect( server_.get(), SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
-    disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
-    disconnect( server_.get(), SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnGetEvents( const timeline::Events&, const timeline::Error& ) ) );
-    disconnect( server_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
-    disconnect( server_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
-
-    disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
-    disconnect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
-    disconnect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
-    disconnect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
-
     server_.reset();
     mainLayout_->removeWidget( timelineWidget_.get() );
     timelineWidget_.reset();
@@ -209,12 +198,11 @@ void TimelineWebView::OnCenterView()
 // -----------------------------------------------------------------------------
 void TimelineWebView::CreateEvent( const timeline::Event& event, bool select /* = false */ )
 {
-    if( server_ )
-    {
-        if( select )
-            eventCreated_ = event.uuid;
-        server_->CreateEvent( event );
-    }
+    if( !server_ )
+        return;
+    if( select )
+        eventCreated_ = event.uuid;
+    server_->CreateEvents( boost::assign::list_of( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,22 +233,24 @@ void TimelineWebView::DeleteEvent( const std::string& uuid )
 {
     controllers_.eventActions_.DeselectAll();
     if( server_ )
-        server_->DeleteEvent( uuid );
+        server_->DeleteEvents( boost::assign::list_of( uuid ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnCreatedEvent
+// Name: TimelineWebView::OnCreatedEvents
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnCreatedEvent( const timeline::Event& event, const timeline::Error& error )
+void TimelineWebView::OnCreatedEvents( const timeline::Events& events, const timeline::Error& error )
 {
     if( error.code != timeline::EC_OK )
         MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
-    model_.events_.Create( event );
-    if( !eventCreated_.empty() && event.uuid == eventCreated_ )
+    for( auto it = events.begin(); it != events.end(); ++it )
     {
-        SelectEvent( event.uuid );
-        eventCreated_ = "";
+        GetOrCreateEvent( *it );
+        if( eventCreated_.empty() || it->uuid != eventCreated_ )
+            continue;
+        SelectEvent( it->uuid );
+        eventCreated_.clear();
     }
 }
 
@@ -276,14 +266,15 @@ void TimelineWebView::OnEditedEvent( const timeline::Event& event, const timelin
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineWebView::OnDeletedEvent
+// Name: TimelineWebView::OnDeletedEvents
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnDeletedEvent( const std::string& uuid, const timeline::Error& error )
+void TimelineWebView::OnDeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error )
 {
     if( error.code != timeline::EC_OK )
         MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
-    model_.events_.Destroy( uuid );
+    for( auto it = uuids.begin(); it != uuids.end(); ++it )
+        model_.events_.Destroy( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,15 +438,19 @@ void TimelineWebView::OnLoadOrderFileRequested( const tools::Path& filename )
 // -----------------------------------------------------------------------------
 void TimelineWebView::ReadActions( xml::xisubstream xis )
 {
+    timeline::Events events;
     xis >> xml::start( "actions" )
-            >> xml::list( "action", *this, &TimelineWebView::ReadAction );
+            >> xml::list( "action", [&]( xml::xistream& xis ){
+                ReadAction( events, xis );
+            });
+    server_->CreateEvents( events );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::ReadAction
 // Created: ABR 2013-06-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::ReadAction( xml::xistream& xis )
+void TimelineWebView::ReadAction( timeline::Events& events,  xml::xistream& xis )
 {
     boost::scoped_ptr< actions::Action_ABC > action;
     action.reset( model_.actionFactory_.CreateAction( xis, false ) );
@@ -472,7 +467,7 @@ void TimelineWebView::ReadAction( xml::xistream& xis )
     const actions::ActionTiming& timing = action->Get< actions::ActionTiming >();
     event.begin = timing.GetTime().toString( EVENT_DATE_FORMAT ).toStdString();
     //event.done = false;
-    CreateEvent( event );
+    events.push_back( event );
 }
 
 // -----------------------------------------------------------------------------

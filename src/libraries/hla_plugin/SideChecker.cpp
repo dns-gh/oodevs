@@ -257,7 +257,7 @@ void SideChecker::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: SideChecker::PerimeterChanged
+// Name: SideChecker::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void SideChecker::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
@@ -265,3 +265,12 @@ void SideChecker::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, cons
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: SideChecker::PropagationChanged
+// Created: AHC 2013-07-10
+// -----------------------------------------------------------------------------
+void SideChecker::PropagationChanged( const std::string& /*rtiIdentifier*/, const std::vector< ObjectListener_ABC::PropagationData >& /*data*/,
+                int /*col*/, int /*lig*/, double /*xll*/, double /*yll*/, double /*dx*/, double /*dy*/ )
+{
+    // NOTHING
+}

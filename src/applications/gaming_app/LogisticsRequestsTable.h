@@ -28,6 +28,7 @@ namespace kernel
 {
     class Entity_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -54,7 +55,8 @@ public:
                                      QWidget* parent,
                                      const QStringList& horizontalHeaders,
                                      const kernel::Controllers& controllers,
-                                     const tools::ExerciseConfig& config );
+                                     const tools::ExerciseConfig& config,
+                                     const kernel::Profile_ABC& profile );
     virtual ~LogisticsRequestsTable();
     //@}
 
@@ -99,6 +101,7 @@ protected:
     gui::LinkItemDelegate*     linkItemDelegate_;
     QStringList                horizontalHeaders_;
     const kernel::Controllers& controllers_;
+    const kernel::Profile_ABC& profile_;
     bool                       manualLogisticActivated_;
     //@}
 };

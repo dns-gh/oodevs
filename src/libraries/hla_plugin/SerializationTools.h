@@ -96,6 +96,66 @@ namespace hla
         }
         std::vector< ElemType > list;
     };
+    // ALIGN : alignment in bytes
+    template < typename T, uint32_t ALIGN=4 >
+    struct PaddedVariableArray
+    {
+        typedef T ElemType;
+        template< typename Archive >
+        void Serialize( Archive& archive ) const
+        {
+            int32_t size = static_cast< int32_t >( list.size() );
+            archive << size;
+            if( size == 0 )
+                return;
+            writePadding( archive, 4 );
+            for( std::size_t i = 0; i < size; ++i)
+            {
+                unsigned long st = archive.GetSize();
+                archive << list[i];
+                unsigned long en = archive.GetSize();
+                writePadding( archive, en-st );
+            }
+        }
+        template< typename Archive >
+        void Deserialize( Archive& archive )
+        {
+            int32_t size = 0;
+            archive >> size;
+            list.resize( size );
+            if( size == 0 )
+                return;
+            readPadding( archive, 4 );
+            for( std::size_t i = 0; i < size; ++i)
+            {
+                T tmp;
+                std::size_t st = archive.GetSize();
+                archive >> tmp;
+                list[i] = tmp;
+                std::size_t en = archive.GetSize();
+                // since we are deserializing, st > en
+                readPadding( archive, st-en );
+            }
+        }
+        std::vector< ElemType > list;
+
+    private:
+        template< typename Archive >
+        void writePadding( Archive& archive, unsigned long diff ) const
+        {
+            unsigned long padd = diff % ALIGN != 0 ? ALIGN - ( diff % ALIGN ): 0;
+            for( ; padd > 0; --padd )
+                archive << (uint8_t)0;
+        }
+        template< typename Archive >
+        void readPadding( Archive& archive, std::size_t diff )
+        {
+            uint8_t garb;
+            unsigned long padd = diff % ALIGN != 0 ? ALIGN - ( diff % ALIGN ): 0;
+            for( ; padd > 0; --padd )
+                archive >> garb;
+        }
+    };
 }
 }
 
