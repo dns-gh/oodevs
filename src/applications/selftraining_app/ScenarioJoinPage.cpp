@@ -175,10 +175,7 @@ void ScenarioJoinPage::OnJoin()
         action.Commit();
     }
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
-    auto devFeatures = registry::ReadString( "DevFeatures" );
-    // Normalize registry input before passing it to gaming
-    devFeatures = tools::JoinFeatures(
-            tools::SplitFeatures( devFeatures.toStdString() )).c_str();
+    const auto devFeatures = registry::ReadFeatures();
     process->Add( boost::make_shared< frontend::JoinExercise >( config_,
         exercise_->GetName(), "remote", static_cast< const QString* >( 0 ), devFeatures ) );
     progressPage_->Attach( process );

@@ -151,8 +151,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
-    auto savedFeatures = tools::SplitFeatures(
-            registry::ReadString( "DevFeatures" ).toStdString() );
+    auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )

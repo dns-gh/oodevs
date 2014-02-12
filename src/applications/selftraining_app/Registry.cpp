@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "Registry.h"
+#include "tools/GeneralConfig.h"
 #include <QSettings>
 
 namespace
@@ -58,4 +59,11 @@ int registry::ReadInt( const QString& key, int defaultValue )
 void registry::WriteInt( const QString& key, int value )
 {
     SetValue( key, value );
+}
+
+QString registry::ReadFeatures()
+{
+    auto features = registry::ReadString( "DevFeatures" );
+    // Normalize registry input before passing it to gaming
+    return tools::JoinFeatures( tools::SplitFeatures( features.toStdString() )).c_str();
 }
