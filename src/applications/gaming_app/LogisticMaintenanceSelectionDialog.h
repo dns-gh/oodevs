@@ -94,6 +94,7 @@ private:
     kernel::Controller& controller_;
     actions::ActionsModel& actionsModel_;
     unsigned int id_;
+    int lastContext_;
     kernel::SafePointer< kernel::Entity_ABC > handler_;
     const kernel::ComponentType* componentType_;
     sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status_;

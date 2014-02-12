@@ -35,7 +35,6 @@ namespace weather
 }
 
 class WeatherModel;
-class WeatherWidget;
 
 // =============================================================================
 /** @class  WeatherPanel

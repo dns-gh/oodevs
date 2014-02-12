@@ -69,15 +69,9 @@ private:
 private:
     //! @name Member data
     //@{
-    //const kernel::AgentTypes& agentTypes_;
-    //actions::ActionFactory_ABC& actionFactory_;
-    //TimelinePublisher& timelinePublisher_;
     actions::ActionsModel& actionsModel_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::Decisions_ABC* decisions_;
-    int context_;
-
-    //int context_;
     //@}
 };
 

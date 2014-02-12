@@ -62,7 +62,7 @@ void PopulationChangeAffinitiesDialog::DoValidate()
     selected_->Get< Affinities >().FillParameterList( affinitiesList );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------

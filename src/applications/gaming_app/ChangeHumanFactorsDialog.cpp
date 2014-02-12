@@ -196,7 +196,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_U
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), stress ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( controllers_.controller_, &entity, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------

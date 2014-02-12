@@ -21,6 +21,7 @@ namespace sword
     class AutomatOrder;
     class ClientToSim;
     class CrowdOrder;
+    enum EnumDiplomacy;
     class FragOrder;
     class KnowledgeMagicAction;
     class MagicAction;
@@ -28,6 +29,13 @@ namespace sword
     class SetAutomatMode;
     class UnitMagicAction;
     class UnitOrder;
+}
+
+namespace gui
+{
+    struct WeatherParameters;
+    struct LocalWeatherParameters;
+    struct ResourceNode;
 }
 
 namespace kernel
@@ -38,6 +46,7 @@ namespace kernel
     class Entity_ABC;
     class EquipmentType;
     class FragOrderType;
+    class Location_ABC;
     class MagicActionType;
     class MissionType;
     class Object_ABC;
@@ -118,8 +127,16 @@ public:
     virtual Action_ABC* CreateLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual ) const = 0;
     virtual Action_ABC* CreateSelectNewLogisticState( unsigned int consignId ) const = 0;
     virtual Action_ABC* CreateTransferToLogisticSuperior( unsigned int consignId ) const = 0;
-    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
-    virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) = 0;
+    virtual Action_ABC* CreateSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId ) const = 0;
+    virtual Action_ABC* CreateSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId ) const = 0;
+
+    virtual Action_ABC* CreateChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy ) const = 0;
+    virtual Action_ABC* CreateKnowledgeGroup( unsigned int id, const std::string& type ) const = 0;
+    virtual Action_ABC* CreateFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType ) const = 0;
+    virtual Action_ABC* CreateChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes ) const = 0;
+    virtual Action_ABC* CreateGlobalWeather( const ::gui::WeatherParameters& params ) const = 0;
+    virtual Action_ABC* CreateLocalWeather( const ::gui::LocalWeatherParameters& params ) const = 0;
+    virtual Action_ABC* CreateLocalDestruction( unsigned int weatherId ) const = 0;
 
     virtual Action_ABC* CreateInvalidAction( const kernel::OrderType& mission ) const = 0;
     //@}

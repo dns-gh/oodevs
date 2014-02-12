@@ -68,7 +68,7 @@ EventOrderPresenter::EventOrderPresenter( EventView_ABC< EventOrderViewState >& 
     , timelinePublisher_( timelinePublisher )
     , entity_( controllers )
     , order_( 0 )
-    , context_( 0 )
+    , lastContext_( 0 )
 {
     // NOTHING
 }
@@ -192,7 +192,7 @@ bool EventOrderPresenter::ShouldEnableClear() const
 // -----------------------------------------------------------------------------
 int EventOrderPresenter::GetLastContext() const
 {
-    return context_;
+    return lastContext_;
 }
 
 namespace
@@ -221,7 +221,7 @@ void EventOrderPresenter::Trigger( const gui::Event& event )
     if( const actions::Action_ABC* action = event.GetAction() )
     {
         missionInterface_.FixOrigin( true );
-        actionsModel_.Publish( *action, ++context_ );
+        lastContext_ = actionsModel_.Publish( *action );
     }
     else
         throw MASA_EXCEPTION( "Invalid action" );

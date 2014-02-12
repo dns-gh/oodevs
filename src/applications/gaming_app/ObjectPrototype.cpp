@@ -277,6 +277,6 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
 
         action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
         action->Attach( *new actions::ActionTasker( controllers_.controller_, 0, false ) );
-        currentActionsModel_->Publish( *action, 0 );
+        currentActionsModel_->Publish( *action );
     }
 }

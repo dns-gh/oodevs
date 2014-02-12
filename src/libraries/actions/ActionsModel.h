@@ -18,6 +18,11 @@
 
 class Publisher_ABC;
 
+namespace sword
+{
+    enum EnumDiplomacy;
+}
+
 namespace kernel
 {
     class AgentType;
@@ -92,7 +97,7 @@ public:
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
     void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
-    void Publish( const Action_ABC& action, int context );
+    int Publish( const Action_ABC& action );
     void RegisterHandler( Publisher_ABC::T_SimHandler handler );
     //@}
 
@@ -104,22 +109,29 @@ public:
     template< typename T >
     Action_ABC* CreateAction( const T& message, bool needRegistration );
 
-    void PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected );
-    void PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
-    void PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase );
-    void PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected );
-    void PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected );
-    void PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected );
-    void PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
-    void PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
-    void PublishObjectMagicAction( const std::string& action, unsigned long targetId );
-    void PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
-    void PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
-    void PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
-    void PublishSelectNewLogisticState( unsigned int consignId );
-    void PublishTransferToLogisticSuperior( unsigned int consignId );
-    void PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
-    void PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
+    int PublishAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected );
+    int PublishAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
+    int PublishFormationCreationAction( int level, const kernel::Entity_ABC& selected, bool isLogisticBase );
+    int PublishCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected );
+    int PublishCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected );
+    int PublishInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected );
+    int PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
+    int PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
+    int PublishObjectMagicAction( const std::string& action, unsigned long targetId );
+    int PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
+    int PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
+    int PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
+    int PublishSelectNewLogisticState( unsigned int consignId );
+    int PublishTransferToLogisticSuperior( unsigned int consignId );
+    int PublishSelectMaintenanceTransporter( unsigned int consignId, unsigned int equipmentTypeId );
+    int PublishSelectMaintenanceDiagnosisTeam( unsigned int consignId, unsigned int equipmentTypeId );
+    int PublishChangeDiplomacy( unsigned int team1, unsigned int team2, sword::EnumDiplomacy diplomacy );
+    int PublishCreateKnowledgeGroup( unsigned int id, const std::string& type );
+    int PublishFireOrderOnLocation( unsigned int resourceId, const kernel::Location_ABC& location, float interventionType );
+    int PublishChangeResourceLinks( unsigned int id, const std::map< std::string, ::gui::ResourceNode >& resourceNodes );
+    int PublishGlobalWeather( const ::gui::WeatherParameters& params );
+    int PublishLocalWeather( const ::gui::LocalWeatherParameters& params );
+    int PublishLocalDestruction( unsigned int weatherId );
     //@}
 
 private:
@@ -135,6 +147,7 @@ private:
     kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
     std::unique_ptr< ActionPublisher > publisher_;
+    int context_;
     //@}
 };
 

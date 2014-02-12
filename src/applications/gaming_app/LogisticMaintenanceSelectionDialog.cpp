@@ -64,6 +64,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     , controller_( controllers.controller_ )
     , actionsModel_( actionsModel )
     , id_( 0 )
+    , lastContext_( 0 )
     , handler_( controllers )
     , status_( sword::LogMaintenanceHandlingUpdate::finished )
     , availability_( 0 )
@@ -112,6 +113,12 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     mainLayout->addLayout( bottomLayout );
     setLayout( mainLayout );
 
+    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
+    {
+        if( message.message().has_magic_action_ack() && lastContext_ == message.context() &&
+            message.message().magic_action_ack().error_code() == sword::MagicActionAck_ErrorCode_error_invalid_parameter )
+             QMessageBox::warning( this, tr( "SWORD" ), tr( "This request cannot be resolved." ) );
+    } );
     controller_.Register( *this );
 }
 
@@ -213,9 +220,9 @@ void LogisticMaintenanceSelectionDialog::accept()
         if( !availability_ || !availability_->type_ )
             throw MASA_EXCEPTION( "Not supposed to accept in manual without an availability or its equipment type" );
         if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_transporter_selection )
-            actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
+            lastContext_ = actionsModel_.PublishSelectMaintenanceTransporter( id_, availability_->type_->GetId() );
         else if( status_ == sword::LogMaintenanceHandlingUpdate::waiting_for_diagnosis_team_selection )
-            actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
+            lastContext_ = actionsModel_.PublishSelectMaintenanceDiagnosisTeam( id_, availability_->type_->GetId() );
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }

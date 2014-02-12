@@ -141,7 +141,7 @@ void ObjectStateDialog::OnOk()
             bypassList.AddQuantity( "Percentage", bypassSpinBox_->value() );
         }
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
     selected_ = 0;
     accept();

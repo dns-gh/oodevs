@@ -112,7 +112,7 @@ void ExtensionsPanel::OnValidate()
     static_cast< const DictionaryExtensions& >( selected_->Get< kernel::DictionaryExtensions >() ).FillParameterList( extensions );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selected_, false ) );
-    actions_.Publish( *action, 0 );
+    actions_.Publish( *action );
     ChangeButtonsState( false );
 }
 

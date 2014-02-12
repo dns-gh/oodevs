@@ -292,16 +292,7 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Team_ABC& team, ker
 void CommunicationTreeView::OnCreateKnowledgeGroup( const kernel::SafePointer< kernel::Entity_ABC >& entity, const std::string& type )
 {
     if( entity )
-    {
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
-        std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > paramIt = actionType.CreateIterator();
-        action->AddParameter( *new actions::parameters::Identifier( paramIt.NextElement(), entity->GetId() ) );
-        action->AddParameter( *new actions::parameters::String( paramIt.NextElement(), type ) );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        action->Attach( *new actions::ActionTasker( controllers_.controller_, entity, false ) );
-        actionsModel_.Publish( *action, 0 );
-    }
+        actionsModel_.PublishCreateKnowledgeGroup( entity->GetId(), type );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +313,7 @@ void CommunicationTreeView::Drop( const kernel::Agent_ABC& item, const kernel::E
             action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     }
 }
@@ -343,7 +334,7 @@ void CommunicationTreeView::Drop( const kernel::Automat_ABC& item, const kernel:
             action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -375,6 +366,6 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
     {
         action->Attach( *new actions::ActionTasker( controllers_.controller_, &item, false ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }

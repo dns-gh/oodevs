@@ -61,7 +61,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
         std::unique_ptr< Action_ABC > action( new ObjectMagicAction( actionType, controllers_.controller_, false ) );
         action->Rename( tools::translate( "gaming_app::Action", "Object Destruction" ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
         return true;
     }
     return false;

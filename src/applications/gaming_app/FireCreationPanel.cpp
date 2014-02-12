@@ -15,8 +15,6 @@
 #include "actions/ActionTiming.h"
 #include "actions/DotationType.h"
 #include "actions/Identifier.h"
-#include "actions/Location.h"
-#include "actions/MagicAction.h"
 #include "actions/Numeric.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/GlTools_ABC.h"
@@ -39,9 +37,14 @@ using namespace actions;
 // Name: FireCreationPanel constructor
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
-FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                                    , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                                    , ::gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools )
+FireCreationPanel::FireCreationPanel( QWidget* parent,
+                                      ::gui::PanelStack_ABC& panel,
+                                      kernel::Controllers& controllers,
+                                      actions::ActionsModel& actionsModel,
+                                      const kernel::Time_ABC& simulation,
+                                      const StaticModel& staticModel,
+                                      ::gui::ParametersLayer& paramLayer,
+                                      const gui::GlTools_ABC& tools )
     : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
@@ -203,17 +206,7 @@ void FireCreationPanel::Commit()
     if( CheckValidity() )
     {
         if( IsStrikeOnLocation() )
-        {
-            kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order_on_location" );
-            std::unique_ptr< MagicAction > action( new MagicAction( actionType, controllers_.controller_, false ) );
-            tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
-            action->AddParameter( *new parameters::Location( it.NextElement(), staticModel_.coordinateConverter_, *location_ ) );
-            action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
-            action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            actionsModel_.Publish( *action, 0 );
-        }
+            actionsModel_.PublishFireOrderOnLocation( ammunitionsBox_->GetValue(), *location_, interventionType_->text().toFloat() );
         else
         {
             kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
@@ -225,7 +218,7 @@ void FireCreationPanel::Commit()
             action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
             action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( controllers_.controller_, selectedReporter_, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     }
 }

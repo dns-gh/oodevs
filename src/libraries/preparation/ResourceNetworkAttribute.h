@@ -39,7 +39,7 @@ class ResourceNetworkAttribute : public gui::ResourceNetwork_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::Object_ABC >
                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
-                               , public tools::ElementObserver_ABC< gui::ResourceNetwork_ABC::Deletion >
+                               , public tools::ElementObserver_ABC< gui::ResourceLinkDeletion >
 {
 public:
     //! @name Types
@@ -64,10 +64,10 @@ public:
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, const geometry::Point2f& position, float alpha ) const;
     void Update( xml::xistream& xis );
-    void Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes );
+    void Update( const std::map< std::string, gui::ResourceNode >& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
-    virtual void NotifyUpdated( const gui::ResourceNetwork_ABC::Deletion& deletion );
+    virtual void NotifyUpdated( const gui::ResourceLinkDeletion& deletion );
     const std::set< std::string >& GetInvalidResources() const;
     bool CleanLinksToDeletedUrbanBlocks();
     void ReplaceLinksUrbanId( unsigned long oldId, unsigned long newId );
@@ -83,7 +83,7 @@ private:
     //! @name Helpers
     //@{
     void ReadNode( xml::xistream& xis );
-    void ReadLink( xml::xistream& xis, ResourceNode& node );
+    void ReadLink( xml::xistream& xis, gui::ResourceNode& node );
     void SetColor( const std::string& resource, float alpha ) const;
     //@}
 

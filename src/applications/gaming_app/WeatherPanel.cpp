@@ -13,19 +13,13 @@
 
 #include "WeatherLayer.h"
 #include "WeatherListView.h"
-#include "WeatherWidget.h"
+
 #include "actions/ActionsModel.h"
-#include "actions/ActionTiming.h"
-#include "actions/DateTime.h"
-#include "actions/Location.h"
-#include "actions/MagicAction.h"
-#include "actions/Identifier.h"
-#include "clients_kernel/AgentTypes.h"
+#include "clients_gui/WeatherHelpers.h"
+#include "clients_gui/WeatherWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/Rectangle.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/MeteoModel.h"
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
@@ -40,16 +34,14 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     : gui::WeatherPanel( parent, panel, layer )
     , controllers_ ( controllers )
     , actionsModel_( actionsModel )
-    , model_       ( model )
-    , simulation_  ( simulation )
     , currentModel_( 0 )
 {
     // Global Weather
-    globalWeatherWidget_ = new WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
+    globalWeatherWidget_ = new gui::WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
     // Local Weather
-    localWeatherWidget_ = new WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
+    localWeatherWidget_ = new gui::WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
     CreateLocalParameters();
-    localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation_ );
+    localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation );
     connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
 
     controllers_.Register( *this );
@@ -99,12 +91,8 @@ void WeatherPanel::Commit()
     if( currentType_ == eWeatherGlobal )
     {
         assert( currentModel_->GetGlobalMeteo() );
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "global_weather" );
-        std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        static_cast< WeatherWidget* >( globalWeatherWidget_ )->CreateParameters( *action, it );
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action, 0 );
+        gui::WeatherParameters params = globalWeatherWidget_->CreateParameters();
+        actionsModel_.PublishGlobalWeather( params );
         const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );
         Reset();
     }
@@ -122,22 +110,15 @@ void WeatherPanel::Commit()
             {
                 if( local->IsValid() )
                 {
-                    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather" );
-                    std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
-                    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
                     localWeatherWidget_->Update( *local );
-                    static_cast< WeatherWidget* >( localWeatherWidget_ )->CreateParameters( *action, it );
-                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), tools::BoostTimeToQTime( local->GetStartTime() ) ) );
-                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), tools::BoostTimeToQTime( local->GetEndTime() ) ) );
-                    kernel::Rectangle rectangle;
-                    rectangle.AddPoint( local->GetBottomRight() );
-                    rectangle.AddPoint( local->GetTopLeft() );
-                    action->AddParameter( *new actions::parameters::Location( it.NextElement(), model_.coordinateConverter_, rectangle ) );
-                    action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), ( local->IsCreated() ) ? 0 : local->GetId() ) );
-
-                    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-                    actionsModel_.Publish( *action, 0 );
+                    gui::LocalWeatherParameters params;
+                    params.globalParams_ = localWeatherWidget_->CreateParameters();
+                    params.startTime_ = tools::BoostTimeToQTime( local->GetStartTime() );
+                    params.endTime_ = tools::BoostTimeToQTime( local->GetEndTime() );
+                    params.location_.AddPoint( local->GetBottomRight() );
+                    params.location_.AddPoint( local->GetTopLeft() );
+                    params.id_ = local->IsCreated() ? 0 : local->GetId();
+                    actionsModel_.PublishLocalWeather( params );
                     hasCommited = true;
                     local->SetModified( false );
                 }
@@ -149,15 +130,9 @@ void WeatherPanel::Commit()
             }
         }
         // Destruction
-        while( unsigned long trashedWeather = static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() )
+        while( unsigned int trashedWeather = static_cast< WeatherListView* >( localWeathers_ )->PopTrashedWeather() )
         {
-            kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "local_weather_destruction" );
-            std::unique_ptr< actions::MagicAction > action( new actions::MagicAction( actionType, controllers_.controller_, false ) );
-            tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
-            action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), trashedWeather ) );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.PublishLocalDestruction( trashedWeather );
             hasCommited = true;
         }
         if( hasCommited )

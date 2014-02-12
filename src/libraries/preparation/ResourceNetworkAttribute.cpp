@@ -21,6 +21,8 @@
 #include "clients_kernel/ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
@@ -160,7 +162,7 @@ namespace
         IsUrbanDeleted( const ResourceNetworkAttribute::T_Urbans& urbans )
             : urbans_( &urbans )
         {}
-        bool operator() ( const gui::ResourceNetwork_ABC::ResourceLink& link )
+        bool operator() ( const gui::ResourceLink& link )
         {
             return link.urban_ && !urbans_->Find( link.id_ );
         }
@@ -208,7 +210,7 @@ void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
         xos << xml::start( "resources" );
         for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
-            const ResourceNetwork_ABC::ResourceNode& node = it->second;
+            const ResourceNode& node = it->second;
             xos << xml::start( "node" )
                 << xml::attribute( "resource-type", node.resource_ );
             if( !node.isEnabled_ )
@@ -260,7 +262,7 @@ void ResourceNetworkAttribute::NotifyDeleted( const kernel::UrbanObject_ABC& obj
 // Name: ResourceNetworkAttribute::NotifyUpdated
 // Created: LDC 2012-09-10
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::NotifyUpdated( const gui::ResourceNetwork_ABC::Deletion& deletion )
+void ResourceNetworkAttribute::NotifyUpdated( const gui::ResourceLinkDeletion& deletion )
 {
     RemoveLinks( deletion.isUrban_, deletion.id_, deletion.resource_ );
 }
@@ -287,7 +289,7 @@ void ResourceNetworkAttribute::Update( xml::xistream& xis )
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes )
+void ResourceNetworkAttribute::Update( const std::map< std::string, gui::ResourceNode >& nodes )
 {
     resourceNodes_ = nodes;
 }

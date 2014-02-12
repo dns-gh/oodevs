@@ -233,7 +233,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
                 action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
                 action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
                 action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-                actionsModel_.Publish( *action, 0 );
+                actionsModel_.Publish( *action );
             }
             catch( ... )
             {
@@ -267,7 +267,7 @@ namespace
             std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
             action->Attach( *new ActionTasker( controllers_.controller_, &agent, false ) );
-            actionsModel_.Publish( *action, 0 );
+            actionsModel_.Publish( *action );
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
@@ -397,7 +397,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -416,7 +416,7 @@ void UnitMagicOrdersInterface::ReloadBrain( QAction* action )
         action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -434,7 +434,7 @@ void UnitMagicOrdersInterface::ActivateBrainDebug()
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), true ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -452,7 +452,7 @@ void UnitMagicOrdersInterface::DeactivateBrainDebug()
         action->AddParameter( *new actions::parameters::Bool( it.NextElement(), false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -468,7 +468,7 @@ void UnitMagicOrdersInterface::FinishLogisticHandlings()
         std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-        actionsModel_.Publish( *action, 0 );
+        actionsModel_.Publish( *action );
     }
 }
 
@@ -525,7 +525,7 @@ void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
     std::unique_ptr< Action_ABC > action( new UnitMagicAction( actionType, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }
 
 namespace
@@ -638,7 +638,7 @@ void UnitMagicOrdersInterface::Engage()
     std::unique_ptr< actions::EngageMagicAction > action( new actions::EngageMagicAction( actionType, controllers_.controller_, true ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
@@ -653,5 +653,5 @@ void UnitMagicOrdersInterface::Disengage()
     std::unique_ptr< actions::EngageMagicAction > action( new actions::EngageMagicAction( actionType, controllers_.controller_, false ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( controllers_.controller_, selectedEntity_, false ) );
-    actionsModel_.Publish( *action, 0 );
+    actionsModel_.Publish( *action );
 }
