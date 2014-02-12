@@ -65,6 +65,7 @@ inline void save(
     const T * const tx = t.get();
     ar << tx;
 }
+
 template<class Archive, class T>
 inline void load(
     Archive & ar,
@@ -73,14 +74,9 @@ inline void load(
 ){
     T *pTarget;
     ar >> pTarget;
-
-    #if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1)
-        t.release();
-        t = std::unique_ptr< T >(pTarget);
-    #else
-        t.reset(pTarget);
-    #endif
+    t.reset(pTarget);
 }
+
 template<class Archive, class T>
 inline void serialize(
     Archive & ar,
