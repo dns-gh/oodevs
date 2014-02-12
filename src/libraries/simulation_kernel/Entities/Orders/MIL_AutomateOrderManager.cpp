@@ -118,6 +118,7 @@ void MIL_AutomateOrderManager::StopAllMissions()
         for( auto it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
         {
             MIL_AgentPion* unit = *it;
+            // Do not reset convoy missions because it would destroy the unit.
             if( &(unit->GetType()) != logistic::SupplyConvoyConfig::convoyAgentType_ )
                 unit->GetOrderManager().CancelMission();
         }
