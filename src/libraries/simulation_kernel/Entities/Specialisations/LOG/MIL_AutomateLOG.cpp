@@ -190,6 +190,17 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceCo
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MaintenanceHandleComposanteForDiagnosis
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::MaintenanceHandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState )
+{
+    MaintenanceDiagnosisVisitor visitor;
+    Visit( visitor );
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForDiagnosis( composanteState ) : false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MaintenanceHandleComposanteForRepair
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
@@ -201,23 +212,34 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler
+// Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler( PHY_MaintenanceComposanteState& composanteState )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ )
 {
-    MaintenanceRepairVisitor visitor( composanteState );
+    MaintenanceTransportVisitor visitor( composanteState.GetComposante(), type );
     Visit( visitor );
     return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler
+// Name: MIL_AutomateLOG::MaintenanceFindAlternativeDiagnosisHandler
+// Created: SLI 2014-02-12
+// -----------------------------------------------------------------------------
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeDiagnosisHandler( const PHY_ComposanteTypePion* type /*= 0*/ )
+{
+    MaintenanceDiagnosisVisitor visitor( type );
+    Visit( visitor );
+    return visitor.selected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler
 // Created: NLD 2012-01-03
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type )
+PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepairHandler( PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type /*= 0*/ )
 {
-    MaintenanceTransportVisitor visitor( composanteState.GetComposante(), type );
+    MaintenanceRepairVisitor visitor( composanteState, type );
     Visit( visitor );
     return visitor.selected_;
 }

@@ -57,14 +57,13 @@ private:
     bool DoSearchForUpperLevel             ();
 
     void EnterStateWaitingForCarrier       ();
-    void EnterStateWaitingForDiagnosisTeam ();
     void EnterStateGoingFrom               ();
     void EnterStateCarrierGoingTo          ();
     void EnterStateCarrierLoading          ();
     void EnterStateCarrierGoingFrom        ();
     void EnterStateCarrierUnloading        ();
-    void EnterStateDiagnosing              ();
-    void ChooseStateAfterDiagnostic        ();
+
+    void ChooseStateAfterTransport         ();
     //@}
 
     //! @name Helpers
