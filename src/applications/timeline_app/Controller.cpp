@@ -56,9 +56,9 @@ Controller::Controller( const Configuration& cfg )
 
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( Ready() ), this, SLOT( OnReady() ) );
-    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( CreatedEvents( const timeline::Events&, const timeline::Error& ) ), this, SLOT( OnCreatedEvents( const timeline::Events&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
-    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ), this, SLOT( OnDeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), this, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SavedEvents( const std::string&, const timeline::Error& ) ), this, SLOT( OnSavedEvents( const std::string&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
@@ -66,6 +66,8 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyPress( int ) ), this, SLOT( OnKeyPress( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
+
+    ctx_->Start();
 }
 
 Controller::~Controller()
@@ -169,18 +171,19 @@ void Controller::OnCreateEvent()
         return;
     Event event;
     ReadEvent( event, ui );
-    ctx_->CreateEvent( event );
+    ctx_->CreateEvents( boost::assign::list_of( event ) );
 }
 
-void Controller::OnCreatedEvent( const Event& event, const Error& error )
+void Controller::OnCreatedEvents( const Events& events, const Error& error )
 {
-    if( error.code == EC_OK )
-        ui_->statusBar->showMessage( QString( "event %1 created" ).arg( QString::fromStdString( event.uuid ) ) );
-    else
-        ui_->statusBar->showMessage( QString( "unable to create event %1 (%2: %3)" )
-            .arg( QString::fromStdString( event.uuid ) )
-            .arg( error.code )
-            .arg( QString::fromStdString( error.text ) ) );
+    for( auto it = events.begin(); it != events.end(); ++it )
+        if( error.code == EC_OK )
+            ui_->statusBar->showMessage( QString( "event %1 created" ).arg( QString::fromStdString( it->uuid ) ) );
+        else
+            ui_->statusBar->showMessage( QString( "unable to create event %1 (%2: %3)" )
+                .arg( QString::fromStdString( it->uuid ) )
+                .arg( error.code )
+                .arg( QString::fromStdString( error.text ) ) );
 }
 
 void Controller::OnSelectedEvent( boost::shared_ptr< Event > event )
@@ -200,18 +203,19 @@ void Controller::OnDeleteEvent()
     if( uuid_.empty() )
         ui_->statusBar->showMessage( "unable to delete unknown event" );
     else
-        ctx_->DeleteEvent( uuid_ );
+        ctx_->DeleteEvents( boost::assign::list_of( uuid_ ) );
 }
 
-void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
+void Controller::OnDeletedEvents( const std::vector< std::string >& uuids, const Error& error )
 {
-    if( error.code == EC_OK )
-        ui_->statusBar->showMessage( QString( "event %1 deleted" ).arg( QString::fromStdString( uuid ) ) );
-    else
-        ui_->statusBar->showMessage( QString( "unable to delete event %1 (%2: %3)" )
-            .arg( QString::fromStdString( uuid ) )
-            .arg( error.code )
-            .arg( QString::fromStdString( error.text ) ) );
+    for( auto it = uuids.begin(); it != uuids.end(); ++it )
+        if( error.code == EC_OK )
+            ui_->statusBar->showMessage( QString( "event %1 deleted" ).arg( QString::fromStdString( *it ) ) );
+        else
+            ui_->statusBar->showMessage( QString( "unable to delete event %1 (%2: %3)" )
+                .arg( QString::fromStdString( *it ) )
+                .arg( error.code )
+                .arg( QString::fromStdString( error.text ) ) );
 }
 
 void Controller::OnTestCrud()
@@ -329,14 +333,14 @@ namespace
         {
             // NOTHING
         }
-        void OnDeletedEvent( const std::string& uuid, const Error& error )
+        void OnDeletedEvents( const std::vector< std::string >& uuids, const Error& error )
         {
-            uuid_  = uuid;
+            uuids_  = uuids;
             error_ = error;
             QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
         }
         QEventLoop& loop_;
-        std::string uuid_;
+        std::vector< std::string > uuids_;
         Error error_;
     };
 
@@ -456,11 +460,13 @@ int Controller::Delete( const std::vector< std::string >& args )
         throw std::runtime_error( "usage: delete <uuid>" );
     QEventLoop wait;
     DeleteEvent deleter( wait );
-    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
-    ctx_->DeleteEvent( args[0] );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ), &deleter, SLOT( OnDeletedEvents( const std::vector< std::string >&, const timeline::Error& ) ) );
+    ctx_->DeleteEvents( boost::assign::list_of( args[0] ) );
     wait.exec();
     Check( deleter.error_ );
-    if( deleter.uuid_ != args[0] )
+    if( deleter.uuids_.size() != 1 )
+        throw std::runtime_error( "invalid number of uuids" );
+    if( deleter.uuids_.front() != args[0] )
         throw std::runtime_error( "invalid uuid" );
     return 0;
 }
@@ -475,23 +481,23 @@ namespace
         {
             // NOTHING
         }
-        void OnCreatedEvent( const Event& event, const Error& error )
+        void OnCreatedEvents( const Events& events, const Error& error )
         {
-            event_  = event;
+            events_  = events;
             error_ = error;
             QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
         }
-        static std::pair< Event, Error > Create( Server_ABC& ctx, const Event& event )
+        static std::pair< Events, Error > Create( Server_ABC& ctx, const Event& event )
         {
             QEventLoop wait;
             CreateEvent creator( wait );
-            QObject::connect( &ctx, SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
-            ctx.CreateEvent( event );
+            QObject::connect( &ctx, SIGNAL( CreatedEvents( const timeline::Events&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvents( const timeline::Events&, const timeline::Error& ) ) );
+            ctx.CreateEvents( boost::assign::list_of( event ) );
             wait.exec();
-            return std::make_pair( creator.event_, creator.error_ );
+            return std::make_pair( creator.events_, creator.error_ );
         }
         QEventLoop& loop_;
-        Event event_;
+        Events events_;
         Error error_;
     };
 }
@@ -504,10 +510,12 @@ int Controller::Create( const std::vector< std::string >& args )
     Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, action );
     const auto pair = CreateEvent::Create( *ctx_, event );
     Check( pair.second );
+    if( pair.first.size() != 1 )
+        throw std::runtime_error( "invalid number of events" );
     // if input uuid is empty, use the server generated uuid
     if( event.uuid.empty() )
-        event.uuid = pair.first.uuid;
-    Check( pair.first, event );
+        event.uuid = pair.first.front().uuid;
+    Check( pair.first.front(), event );
     return 0;
 }
 

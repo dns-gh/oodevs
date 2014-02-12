@@ -13,7 +13,10 @@
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
+#include <tools/StdFileWrapper.h>
+
 #include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
@@ -31,6 +34,7 @@
 #endif
 
 using namespace timeline;
+namespace bpt = boost::posix_time;
 namespace ipc = tools::ipc;
 
 namespace
@@ -38,12 +42,12 @@ namespace
     class Widget : public QWidget
     {
     public:
-        Widget( ipc::Device& device, QWidget* parent )
+        Widget( ipc::Device& device, const controls::T_Logger& log, QWidget* parent )
             : QWidget( parent )
             , device_( device )
-            , resize_( controls::ResizeClient( 0, 0 ) )
+            , log_   ( log )
         {
-            controls::ResizeClient( &resize_[0], resize_.size() );
+            controls::TryResizeClient( device_, log_ );
         }
 
     protected:
@@ -51,7 +55,7 @@ namespace
         {
             try
             {
-                device_.TryWrite( &resize_[0], resize_.size() );
+                controls::TryResizeClient( device_, log_ );
             }
             catch( ... )
             {
@@ -62,28 +66,31 @@ namespace
 
     private:
         ipc::Device& device_;
-        std::vector< uint8_t > resize_;
+        const controls::T_Logger log_;
     };
 }
 
 Server::Server( const Configuration& cfg )
     : cfg_     ( cfg )
     , uuid_    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
+    , logger_  ( cfg.server_log.IsEmpty() ? controls::T_Logger() : [&]( const std::string& msg ){ Log( msg, false ); } )
+    , lock_    ( new boost::mutex() )
     , write_   ( new ipc::Device( uuid_ + "_write", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , embedded_( Embedded_ABC::Factory( *write_, cfg.external ) )
+    , embedded_( Embedded_ABC::Factory( *write_, logger_, cfg.external ).release() )
 {
+    if( !cfg_.server_log.IsEmpty() )
+        log_.reset( new tools::Ofstream( cfg_.server_log, std::ios::out | std::ios::binary ) );
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
     qRegisterMetaType< std::string >( "std::string" );
+    qRegisterMetaType< std::vector< std::string > >( "std::vector< std::string >" );
     qRegisterMetaType< Event >( "timeline::Event" );
     qRegisterMetaType< Events >( "timeline::Events" );
     qRegisterMetaType< Error >( "timeline::Error" );
     auto layout = new QVBoxLayout( cfg.widget );
-    auto widget = new Widget( *write_, cfg.widget );
+    auto widget = new Widget( *write_, logger_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
-    embedded_->Start( cfg_, uuid_ );
-    thread_.reset( new boost::thread( &Server::Run, this ) );
 }
 
 Server::~Server()
@@ -91,6 +98,12 @@ Server::~Server()
     embedded_.reset();
     thread_->interrupt();
     thread_->join();
+}
+
+void Server::Start()
+{
+    thread_.reset( new boost::thread( &Server::Run, this ) );
+    embedded_->Start( cfg_, uuid_ );
 }
 
 namespace
@@ -110,79 +123,98 @@ namespace
     }
 }
 
+void Server::Log( const std::string& msg )
+{
+    boost::lock_guard< boost::mutex > lock( *lock_ );
+    if( log_ )
+        *log_ << bpt::to_simple_string( bpt::second_clock::local_time() )
+              << msg << std::endl;
+}
+
+void Server::Log( const std::string& msg, bool read )
+{
+    Log( ( read ? " read:  " : " write: " ) + msg );
+}
+
 void Server::OnError( QProcess::ProcessError error )
 {
-    qDebug() << GetError( error );
+    const auto err = GetError( error );
+    qDebug() << err;
+    Log( std::string( "error: " ) + err );
 }
 
 void Server::Reload()
 {
-    Write( *write_, &controls::ReloadClient );
+    controls::ReloadClient( *write_, logger_ );
 }
 
 void Server::Load( const std::string& url )
 {
-    Write( *write_, boost::bind( &controls::LoadClient, _1, _2, url ) );
+    controls::LoadClient( *write_, logger_, url );
 }
 
 void Server::Center()
 {
-    Write( *write_, &controls::CenterClient );
+    controls::CenterClient( *write_, logger_ );
 }
 
 void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
 {
-    Write( *write_, boost::bind( &controls::UpdateQuery, _1, _2, boost::cref( parameters ) ) );
+    controls::UpdateQuery( *write_, logger_, parameters );
 }
 
-bool Server::CreateEvent( const Event& event )
+bool Server::CreateEvents( const Events& events )
 {
-    if( !event.IsValid() )
-        return false;
-    return Write( *write_, boost::bind( &controls::CreateEvent, _1, _2, event ) );
+    for( auto it = events.begin(); it != events.end(); ++it )
+        if( !it->IsValid() )
+            return false;
+    return controls::CreateEvents( *write_, logger_, events );
 }
 
 bool Server::SelectEvent( const std::string& uuid )
 {
-    return Write( *write_, boost::bind( &controls::SelectEvent, _1, _2, uuid ) );
+    return controls::SelectEvent( *write_, logger_, uuid );
 }
 
 bool Server::ReadEvents()
 {
-    return Write( *write_, static_cast< size_t ( * )( void*, size_t ) >( &controls::ReadEvents ) );
+    return controls::ReadEvents( *write_, logger_ );
 }
 
 bool Server::ReadEvent( const std::string& uuid )
 {
-    return Write( *write_, boost::bind( &controls::ReadEvent, _1, _2, uuid ) );
+    return controls::ReadEvent( *write_, logger_, uuid );
 }
 
 bool Server::UpdateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    return Write( *write_, boost::bind( &controls::UpdateEvent, _1, _2, event ) );
+    return controls::UpdateEvent( *write_, logger_, event );
 }
 
-bool Server::DeleteEvent( const std::string& uuid )
+bool Server::DeleteEvents( const std::vector< std::string >& uuids )
 {
-    return Write( *write_, boost::bind( &controls::DeleteEvent, _1, _2, uuid ) );
+    return controls::DeleteEvents( *write_, logger_, uuids );
 }
 
 void Server::LoadEvents( const std::string& events )
 {
-    Write( *write_, boost::bind( &controls::LoadEvents, _1, _2, events ) );
+    controls::LoadEvents( *write_, logger_, events );
 }
 
 void Server::SaveEvents() const
 {
-    Write( *write_, &controls::SaveEvents );
+    controls::SaveEvents( *write_, logger_ );
 }
 
 void Server::Run()
 {
     try
     {
+        controls::T_Logger logger;
+        if( log_ )
+            logger = [&]( const std::string& msg ){ Log( msg, true ); };
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !thread_->interruption_requested() )
             if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
@@ -191,7 +223,7 @@ void Server::Run()
                     buffer.resize( read );
                 else
                 {
-                    controls::ParseServer( *this, &buffer[0], read );
+                    controls::ParseServer( *this, &buffer[0], read, logger );
                     buffer.resize( ipc::DEFAULT_MAX_PACKET_SIZE );
                 }
             }
@@ -215,9 +247,9 @@ void Server::OnReadyServer()
     emit Ready();
 }
 
-void Server::OnCreatedEvent( const Event& event, const Error& error )
+void Server::OnCreatedEvents( const Events& events, const Error& error )
 {
-    emit CreatedEvent( event, error );
+    emit CreatedEvents( events, error );
 }
 
 void Server::OnReadEvents( const Events& events, const Error& error )
@@ -235,9 +267,9 @@ void Server::OnUpdatedEvent( const Event& event, const Error& error )
     emit UpdatedEvent( event, error );
 }
 
-void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
+void Server::OnDeletedEvents( const std::vector< std::string >& uuids, const Error& error )
 {
-    emit DeletedEvent( uuid, error );
+    emit DeletedEvents( uuids, error );
 }
 
 void Server::OnLoadedEvents( const Error& error )

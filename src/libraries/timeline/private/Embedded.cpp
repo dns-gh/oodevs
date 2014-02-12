@@ -12,6 +12,7 @@
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
+#include <tools/Path.h>
 #include <QWidget>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/lexical_cast.hpp>
@@ -33,11 +34,9 @@ namespace
         return QString::fromStdWString( path.ToUnicode() );
     }
 
-    void StopClient( ipc::Device& device )
+    void StopClient( ipc::Device& device, const controls::T_Logger& log )
     {
-        std::vector< uint8_t > quit( controls::QuitClient( 0, 0 ) );
-        controls::QuitClient( &quit[0], quit.size() );
-        device.TimedWrite( &quit[0], quit.size(), boost::posix_time::seconds( 4 ) );
+        controls::QuitClient( device, log, 4*1000 );
     }
 
     std::runtime_error Win32Exception( const std::string& err )
@@ -66,15 +65,16 @@ namespace
     class External : public Embedded_ABC
     {
     public:
-        External( ipc::Device& device )
+        External( ipc::Device& device, const controls::T_Logger& log )
             : device_( device )
+            , log_   ( log )
         {
             // NOTHING
         }
 
         virtual ~External()
         {
-            StopClient( device_ );
+            StopClient( device_, log_ );
             WaitForSingleObjectEx( process_.get(), 4*1000, false );
             TerminateProcess( process_.get(), static_cast< unsigned >( -1 ) );
         }
@@ -87,6 +87,8 @@ namespace
                  << QString::fromStdString( cfg.url );
             if( cfg.debug_port )
                 list << "--debug_port" << QString::number( cfg.debug_port );
+            if( !cfg.client_log.IsEmpty() )
+                list << "--log" << QString::fromStdString( cfg.client_log.ToUTF8() );
             const auto join = list.join( " " ).toStdWString();
             std::vector< wchar_t > args;
             args.push_back( L' ' );
@@ -124,6 +126,7 @@ namespace
 
     private:
         ipc::Device&              device_;
+        const controls::T_Logger  log_;
         boost::shared_ptr< void > process_;
         boost::shared_ptr< void > job_;
     };
@@ -132,15 +135,16 @@ namespace
     class Internal : public Embedded_ABC
     {
     public:
-        Internal( ipc::Device& device )
+        Internal( ipc::Device& device, const controls::T_Logger& log )
             : device_( device )
+            , log_   ( log )
         {
             // NOTHING
         }
 
         virtual ~Internal()
         {
-            StopClient( device_ );
+            StopClient( device_, log_ );
             thread_->join();
         }
 
@@ -151,25 +155,27 @@ namespace
             next.uuid = uuid;
             next.url = cfg.url;
             next.debug_port = cfg.debug_port;
+            next.log = cfg.client_log.ToUTF8();
             client_ = core::MakeClient( next );
             thread_.reset( new boost::thread( &core::Client_ABC::Run, client_.get() ) );
         }
 
     private:
         ipc::Device& device_;
+        controls::T_Logger log_;
         std::auto_ptr< timeline::core::Client_ABC > client_;
         std::auto_ptr< boost::thread > thread_;
     };
 #endif
 }
 
-std::auto_ptr< Embedded_ABC > Embedded_ABC::Factory( ipc::Device& device, bool external )
+std::auto_ptr< Embedded_ABC > Embedded_ABC::Factory( ipc::Device& device, const controls::T_Logger& log, bool external )
 {
 #ifdef USE_EMBEDDED_CORE
     if( !external )
-        return std::auto_ptr< Embedded_ABC >( new Internal( device ) );
+        return std::auto_ptr< Embedded_ABC >( new Internal( device, log ) );
 #endif
     if( !external )
         throw std::runtime_error( "not implemented" );
-    return std::auto_ptr< Embedded_ABC >( new External( device ) );
+    return std::auto_ptr< Embedded_ABC >( new External( device, log ) );
 }

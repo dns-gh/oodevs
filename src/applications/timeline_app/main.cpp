@@ -47,6 +47,8 @@ int main( int argc, char* argv[] )
             ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
             ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
             ( "cmdargs",    bpo::value( &cmdargs ), "optional command arguments" )
+            ( "server_log", bpo::value( &cfg.server_log ), "output server log filename" )
+            ( "client_log", bpo::value( &cfg.client_log ), "output client log filename" )
             ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
         bpo::variables_map vmap;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), vmap );

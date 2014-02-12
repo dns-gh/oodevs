@@ -97,20 +97,19 @@ message QueryParameter
 
 message ClientCommand
 {
-    optional ClientType     type  = 1;
-    optional Event          event = 2;
-    optional string         url   = 3;
-    optional string         data  = 4;
-    repeated QueryParameter query = 5;
+    optional ClientType     type   = 1;
+    repeated Event          events = 2;
+    optional string         url    = 3;
+    optional string         data   = 4;
+    repeated QueryParameter query  = 5;
 }
 
 message ServerCommand
 {
     optional ServerType    type          = 1;
-    optional Event         event         = 2;
+    repeated Event         events        = 2;
     optional Error         error         = 3;
     optional KeyBoardEvent keyboardevent = 4;
-    repeated Event         events        = 5;
-    optional string        time          = 6;
-    optional string        data          = 7;
+    optional string        time          = 5;
+    optional string        data          = 6;
 }

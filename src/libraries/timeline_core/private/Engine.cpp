@@ -13,16 +13,17 @@
 #include "timeline/api.h"
 
 #include <tools/Base64Converters.h>
-#include <tools/IpcDevice.h>
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 
 using namespace timeline::core;
 
-Engine::Engine( tools::ipc::Device& device )
-    : device_( device )
+Engine::Engine( tools::ipc::Device& device, const T_Logger& log )
+    : log_   ( log )
+    , device_( device )
 {
     // NOTHING
 }
@@ -89,6 +90,12 @@ namespace
         return src;
     }
 
+    CefRefPtr< CefV8Value > AddValue( CefRefPtr< CefV8Value >& dst, int index, CefRefPtr< CefV8Value > src )
+    {
+        dst->SetValue( index, src );
+        return src;
+    }
+
     CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key )
     {
         return SetValue( dst, key, CefV8Value::CreateObject( 0 ) );
@@ -143,8 +150,9 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
-    SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady, this, _1 ) );
+    SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady,                 this, _1 ) );
     SetValue( gaming, "created_event",          2, boost::bind( &Engine::OnCreatedEvent,          this, _1 ) );
+    SetValue( gaming, "created_events",         2, boost::bind( &Engine::OnCreatedEvents,         this, _1 ) );
     SetValue( gaming, "get_read_events",        2, boost::bind( &Engine::OnReadEvents,            this, _1 ) );
     SetValue( gaming, "get_read_event",         2, boost::bind( &Engine::OnReadEvent,             this, _1 ) );
     SetValue( gaming, "updated_event",          2, boost::bind( &Engine::OnUpdatedEvent,          this, _1 ) );
@@ -259,6 +267,14 @@ namespace
         return dst;
     }
 
+    timeline::Events GetEvents( const CefRefPtr< CefV8Value > src )
+    {
+        timeline::Events dst;
+        for( int i = 0; i < src->GetArrayLength(); ++i )
+            dst.push_back( GetEvent( src->GetValue( i ) ) );
+        return dst;
+    }
+
     timeline::Error GetError( const CefRefPtr< CefV8Value > src )
     {
         timeline::Error dst;
@@ -292,20 +308,25 @@ void Engine::UpdateQuery( const std::map< std::string, std::string >& parameters
     }
 }
 
-void Engine::CreateEvent( const timeline::Event& event )
+void Engine::CreateEvents( const timeline::Events& events )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
-        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
-    auto create_event = GetValue( ctx_, "gaming.create_event" );
-    if( !create_event )
-        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_event" ) );
-    auto data = CefV8Value::CreateObject( 0 );
-    SetEvent( data, event );
+        return SendCreatedEvents( events, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto create_events = GetValue( ctx_, "gaming.create_events" );
+    if( !create_events )
+        return SendCreatedEvents( events, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_events" ) );
+    auto data = CefV8Value::CreateArray( events.size() );
+    size_t idx = 0;
+    for( auto it = events.begin(); it != events.end(); ++it )
+    {
+        auto v = AddValue( data, idx++, CefV8Value::CreateObject( 0 ) );
+        SetEvent( v, *it );
+    }
     CefV8ValueList args;
     args.push_back( data );
-    if( !gate.Execute( create_event, args ) )
-        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.create_event" ) );
+    if( !gate.Execute( create_events, args ) )
+        return SendCreatedEvents( events, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.create_event" ) );
 }
 
 void Engine::SelectEvent( const std::string& uuid )
@@ -320,90 +341,93 @@ void Engine::SelectEvent( const std::string& uuid )
     }
 }
 
-void Engine::SendCreatedEvent( const timeline::Event& event, const timeline::Error& error )
+void Engine::SendCreatedEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::CreatedEvent, _1, _2, event, error ) );
+    controls::CreatedEvents( device_, log_, events, error );
 }
 
 CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 {
-    Write( device_, &controls::ReadyServer );
+    controls::ReadyServer( device_, log_ );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
 {
-    SendCreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    SendCreatedEvents( boost::assign::list_of( GetEvent( args[0] ) ), GetError( args[1] ) );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnCreatedEvents( const CefV8ValueList& args )
+{
+    SendCreatedEvents( GetEvents( args[0] ), GetError( args[1] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::SelectedEvent, _1, _2, event ) );
+    controls::SelectedEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ )
 {
-    Write( device_, &controls::DeselectedEvent );
+    controls::DeselectedEvent( device_, log_ );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::ActivatedEvent, _1, _2, event ) );
+    controls::ActivatedEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 {
-    const Event event = GetEvent( args[0] );
-    Write( device_, boost::bind( &controls::ContextMenuEvent, _1, _2, event ) );
+    controls::ContextMenuEvent( device_, log_, GetEvent( args[0] ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& args )
 {
-    const std::string time = args[0]->GetStringValue();
-    Write( device_, boost::bind( &controls::ContextMenuBackground, _1, _2, time ) );
+    controls::ContextMenuBackground( device_, log_, args[0]->GetStringValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyDown( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyDown, _1, _2, key ) );
+    controls::KeyDown( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyPress( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyPress, _1, _2, key ) );
+    controls::KeyPress( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyUp( const CefV8ValueList& args )
 {
-    int key = args[0]->GetIntValue();
-    Write( device_, boost::bind( &controls::KeyUp, _1, _2, key ) );
+    controls::KeyUp( device_, log_, args[0]->GetIntValue() );
     return 0;
 }
 
-void Engine::DeleteEvent( const std::string& uuid )
+void Engine::DeleteEvents( const std::vector< std::string >& uuids )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
-        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
-    auto delete_event = GetValue( ctx_, "gaming.delete_event" );
-    if( !delete_event )
-        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_event" ) );
+        return SendDeletedEvents( uuids, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto delete_events = GetValue( ctx_, "gaming.delete_events" );
+    if( !delete_events )
+        return SendDeletedEvents( uuids, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_events" ) );
+    auto data = CefV8Value::CreateArray( uuids.size() );
+    size_t idx = 0;
+    for( auto it = uuids.begin(); it != uuids.end(); ++it )
+        AddValue( data, idx++, CefV8Value::CreateString( *it ) );
     CefV8ValueList args;
-    args.push_back( CefV8Value::CreateString( uuid ) );
-    if( !gate.Execute( delete_event, args ) )
-        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_event" ) );
+    args.push_back( data );
+    if( !gate.Execute( delete_events, args ) )
+        return SendDeletedEvents( uuids, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_events" ) );
 }
 
 void Engine::LoadEvents( const std::string& events )
@@ -434,23 +458,23 @@ void Engine::SaveEvents()
 
 CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
 {
-    SendDeletedEvent( args[0]->GetStringValue(), GetError( args[1] ) );
+    SendDeletedEvents( boost::assign::list_of( args[0]->GetStringValue() ), GetError( args[1] ) );
     return 0;
 }
 
-void Engine::SendDeletedEvent( const std::string& uuid, const timeline::Error& error )
+void Engine::SendDeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::DeletedEvent, _1, _2, uuid, error ) );
+    controls::DeletedEvents( device_, log_, uuids, error );
 }
 
 void Engine::SendLoadedEvents( const timeline::Error& err )
 {
-    Write( device_, boost::bind( &controls::LoadedEvents, _1, _2, err ) );
+    controls::LoadedEvents( device_, log_, err );
 }
 
 void Engine::SendSavedEvents( const std::string& events, const timeline::Error& err )
 {
-    Write( device_, boost::bind( &controls::SavedEvents, _1, _2, events, err ) );
+    controls::SavedEvents( device_, log_, events, err );
 }
 
 CefRefPtr< CefV8Value > Engine::OnLoadedEvents( const CefV8ValueList& args )
@@ -489,7 +513,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvents( const CefV8ValueList& args )
 
 void Engine::SendReadEvents( const timeline::Events& events, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::ReadEvents, _1, _2, events, error ) );
+    controls::ReadEvents( device_, log_, events, error );
 }
 
 void Engine::ReadEvent( const std::string& uuid )
@@ -514,7 +538,7 @@ CefRefPtr< CefV8Value > Engine::OnReadEvent( const CefV8ValueList& args )
 
 void Engine::SendReadEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::ReadEvent, _1, _2, event, error ) );
+    controls::ReadEvent( device_, log_, event, error );
 }
 
 void Engine::UpdateEvent( const timeline::Event& event )
@@ -541,5 +565,5 @@ CefRefPtr< CefV8Value > Engine::OnUpdatedEvent( const CefV8ValueList& args )
 
 void Engine::SendUpdatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    Write( device_, boost::bind( &controls::UpdatedEvent, _1, _2, event, error ) );
+    controls::UpdatedEvent( device_, log_, event, error );
 }

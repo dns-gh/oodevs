@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <vector>
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
 #include <QtCore/QObject>
@@ -124,29 +125,31 @@ public:
              Server_ABC() {}
     virtual ~Server_ABC() {}
 
+    virtual void Start() = 0;
+
     // Public slots
 public slots:
     virtual void Reload() = 0;
     virtual void Load( const std::string& url ) = 0;
     virtual void Center() = 0;
     virtual void UpdateQuery( const std::map< std::string, std::string >& parameters ) = 0;
-    virtual bool CreateEvent( const timeline::Event& event ) = 0;
+    virtual bool CreateEvents( const Events& events ) = 0;
     virtual bool SelectEvent( const std::string& uuid ) = 0;
     virtual bool ReadEvents() = 0;
     virtual bool ReadEvent( const std::string& uuid ) = 0;
     virtual bool UpdateEvent( const timeline::Event& event ) = 0;
-    virtual bool DeleteEvent( const std::string& uuid ) = 0;
+    virtual bool DeleteEvents( const std::vector< std::string >& uuids ) = 0;
     virtual void LoadEvents( const std::string& events ) = 0;
     virtual void SaveEvents() const = 0;
 
     // Public signals
 signals:
     void Ready();
-    void CreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void CreatedEvents( const timeline::Events& events, const timeline::Error& error );
     void GetEvents( const timeline::Events& events, const timeline::Error& error );
     void GetEvent( const timeline::Event& event, const timeline::Error& error );
     void UpdatedEvent( const timeline::Event& event, const timeline::Error& error );
-    void DeletedEvent( const std::string& uuid, const timeline::Error& error );
+    void DeletedEvents( const std::vector< std::string >& uuids, const timeline::Error& error );
     void LoadedEvents( const timeline::Error& error );
     void SavedEvents( const std::string& events, const timeline::Error& error );
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
@@ -173,6 +176,8 @@ struct Configuration
     }
     tools::Path rundir;
     tools::Path binary;
+    tools::Path server_log;
+    tools::Path client_log;
     QWidget*    widget;
     std::string url;
     bool        external;   ///< use external process

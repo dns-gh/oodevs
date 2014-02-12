@@ -26,20 +26,22 @@ namespace timeline
 {
 namespace controls
 {
-    size_t ResizeClient( void* dst, size_t size );
-    size_t QuitClient  ( void* dst, size_t size );
-    size_t ReloadClient( void* dst, size_t size );
-    size_t LoadClient  ( void* dst, size_t size, const std::string& url );
-    size_t UpdateQuery ( void* dst, size_t size, const std::map< std::string, std::string >& query );
-    size_t CenterClient( void* dst, size_t size );
-    size_t CreateEvent ( void* dst, size_t size, const Event& event );
-    size_t SelectEvent ( void* dst, size_t size, const std::string& uuid );
-    size_t ReadEvents  ( void* dst, size_t size );
-    size_t ReadEvent   ( void* dst, size_t size, const std::string& uuid );
-    size_t UpdateEvent ( void* dst, size_t size, const Event& event );
-    size_t DeleteEvent ( void* dst, size_t size, const std::string& uuid );
-    size_t LoadEvents  ( void* dst, size_t size, const std::string& events );
-    size_t SaveEvents  ( void* dst, size_t size );
+    typedef std::function< void( const std::string& msg ) > T_Logger;
+
+    size_t TryResizeClient( tools::ipc::Device& device, const T_Logger& log );
+    size_t QuitClient     ( tools::ipc::Device& device, const T_Logger& log, int millisecs );
+    size_t ReloadClient   ( tools::ipc::Device& device, const T_Logger& log );
+    size_t LoadClient     ( tools::ipc::Device& device, const T_Logger& log, const std::string& url );
+    size_t UpdateQuery    ( tools::ipc::Device& device, const T_Logger& log, const std::map< std::string, std::string >& query );
+    size_t CenterClient   ( tools::ipc::Device& device, const T_Logger& log );
+    size_t CreateEvents   ( tools::ipc::Device& device, const T_Logger& log, const Events& events );
+    size_t SelectEvent    ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t ReadEvents     ( tools::ipc::Device& device, const T_Logger& log );
+    size_t ReadEvent      ( tools::ipc::Device& device, const T_Logger& log, const std::string& uuid );
+    size_t UpdateEvent    ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t DeleteEvents   ( tools::ipc::Device& device, const T_Logger& log, const std::vector< std::string >& uuids );
+    size_t LoadEvents     ( tools::ipc::Device& device, const T_Logger& log, const std::string& events );
+    size_t SaveEvents     ( tools::ipc::Device& device, const T_Logger& log );
 
     struct ClientHandler_ABC : public boost::noncopyable
     {
@@ -52,35 +54,34 @@ namespace controls
         virtual void OnLoadClient( const std::string& url ) = 0;
         virtual void OnUpdateQuery( const std::map< std::string, std::string >& query ) = 0;
         virtual void OnCenterClient() = 0;
-        virtual void OnCreateEvent( const Event& event ) = 0;
+        virtual void OnCreateEvents( const std::vector< Event >& events ) = 0;
         virtual void OnSelectEvent( const std::string& uuid ) = 0;
         virtual void OnReadEvents() = 0;
         virtual void OnReadEvent( const std::string& uuid ) = 0;
         virtual void OnUpdateEvent( const Event& event ) = 0;
-        virtual void OnDeleteEvent( const std::string& uuid ) = 0;
+        virtual void OnDeleteEvents( const std::vector< std::string >& uuids ) = 0;
         virtual void OnLoadEvents( const std::string& events ) = 0;
         virtual void OnSaveEvents() = 0;
     };
 
-    void ParseClient( ClientHandler_ABC& client, const void* src, size_t size );
+    void ParseClient( ClientHandler_ABC& client, const void* src, size_t size, const T_Logger& log );
 
-    size_t ReadyServer          ( void* data, size_t size );
-    size_t CreatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
-    size_t ReadEvents           ( void* data, size_t size, const Events& events, const Error& error );
-    size_t ReadEvent            ( void* data, size_t size, const Event& event, const Error& error );
-    size_t UpdatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
-    size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
-    size_t LoadedEvents         ( void* data, size_t size, const Error& error );
-    size_t SavedEvents          ( void* data, size_t size, const std::string& events, const Error& error );
-
-    size_t SelectedEvent        ( void* data, size_t size, const Event& event );
-    size_t DeselectedEvent      ( void* data, size_t size );
-    size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
-    size_t ContextMenuEvent     ( void* data, size_t size, const Event& event );
-    size_t ContextMenuBackground( void* data, size_t size, const std::string& time );
-    size_t KeyDown              ( void* data, size_t size, int key );
-    size_t KeyPress             ( void* data, size_t size, int key );
-    size_t KeyUp                ( void* data, size_t size, int key );
+    size_t ReadyServer          ( tools::ipc::Device& device, const T_Logger& log );
+    size_t CreatedEvents        ( tools::ipc::Device& device, const T_Logger& log, const Events& events, const Error& error );
+    size_t ReadEvents           ( tools::ipc::Device& device, const T_Logger& log, const Events& events, const Error& error );
+    size_t ReadEvent            ( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error );
+    size_t UpdatedEvent         ( tools::ipc::Device& device, const T_Logger& log, const Event& event, const Error& error );
+    size_t DeletedEvents        ( tools::ipc::Device& device, const T_Logger& log, const std::vector< std::string >& uuids, const Error& error );
+    size_t LoadedEvents         ( tools::ipc::Device& device, const T_Logger& log, const Error& error );
+    size_t SavedEvents          ( tools::ipc::Device& device, const T_Logger& log, const std::string& events, const Error& error );
+    size_t SelectedEvent        ( tools::ipc::Device& device, const T_Logger& log,  const Event& event );
+    size_t DeselectedEvent      ( tools::ipc::Device& device, const T_Logger& log );
+    size_t ActivatedEvent       ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t ContextMenuEvent     ( tools::ipc::Device& device, const T_Logger& log, const Event& event );
+    size_t ContextMenuBackground( tools::ipc::Device& device, const T_Logger& log, const std::string& time );
+    size_t KeyDown              ( tools::ipc::Device& device, const T_Logger& log, int key );
+    size_t KeyPress             ( tools::ipc::Device& device, const T_Logger& log, int key );
+    size_t KeyUp                ( tools::ipc::Device& device, const T_Logger& log, int key );
 
     struct ServerHandler_ABC : public boost::noncopyable
     {
@@ -88,11 +89,11 @@ namespace controls
         virtual ~ServerHandler_ABC() {}
 
         virtual void OnReadyServer          () = 0;
-        virtual void OnCreatedEvent         ( const Event& event, const Error& error ) = 0;
+        virtual void OnCreatedEvents        ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvents           ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvent            ( const Event& event, const Error& error ) = 0;
         virtual void OnUpdatedEvent         ( const Event& event, const Error& error ) = 0;
-        virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
+        virtual void OnDeletedEvents        ( const std::vector< std::string >& uuids, const Error& error ) = 0;
         virtual void OnLoadedEvents         ( const Error& error ) = 0;
         virtual void OnSavedEvents          ( const std::string& events, const Error& error ) = 0;
         virtual void OnSelectedEvent        ( const Event& event ) = 0;
@@ -105,16 +106,8 @@ namespace controls
         virtual void OnKeyUp                ( int key ) = 0;
     };
 
-    void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );
+    void ParseServer( ServerHandler_ABC& server, const void* src, size_t size, const T_Logger& log );
 }
-
-    template< typename T >
-    bool Write( tools::ipc::Device& device, const T& operand )
-    {
-        std::vector< uint8_t > buffer( operand( static_cast< void* >( 0 ), 0 ) );
-        operand( &buffer[0], buffer.size() );
-        return device.Write( &buffer[0], buffer.size() );
-    }
 }
 
 #endif//CONTROLS_H__
