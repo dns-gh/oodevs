@@ -452,7 +452,7 @@ func (s *TestSuite) TestLogisticsSupplyChangeQuotas(c *C) {
 }
 
 func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	data := client.Model.GetData()
@@ -520,6 +520,11 @@ func (s *TestSuite) TestLogisticsSupplyPushFlow(c *C) {
 	// error: invalid transporter quantity
 	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{transporter: 0})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter quantity must be positive")
+	c.Assert(result, HasLen, 0)
+
+	// error: transporter cannot load supply nature
+	result, err = client.LogisticsSupplyPushFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{13: 1})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: not all supplies can be loaded by transporters")
 	c.Assert(result, HasLen, 0)
 
 	// error: transporter overloaded
