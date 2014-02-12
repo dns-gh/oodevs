@@ -110,16 +110,15 @@ class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MaintenanceRepairVisitor( const PHY_MaintenanceComposanteState& state )
-            : score_    (  std::numeric_limits< int >::min() )
+            : score_    ( std::numeric_limits< int >::min() )
             , selected_ ( 0 )
-            , state_     ( state )
-        {
-        }
+            , state_    ( state )
+        {}
 
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
-            const int score = candidate!=0 ? candidate->GetAvailabilityScoreForRepair( state_ ) : std::numeric_limits< int >::min();
+            const int score = candidate != 0 ? candidate->GetAvailabilityScoreForRepair( state_ ) : std::numeric_limits< int >::min();
             if( score > score_ )
             {
                 score_    = score;
