@@ -430,25 +430,36 @@ func newReporter(c *C, source uint32, db *phy.PhysicalFile, pattern string) *swa
 }
 
 func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
-	// This test is to verify that the crowd doesn't stay blocked by a checkpoint.
+	// This test is to verify that the crowd doesn't stay blocked by obstacles and inactive checkpoints.
 	// Description:
-	// Police Automat creates a checkpoint on the road of a crowd.
+	// A crows demonstrates. It finds a barricade on its way but doesn't get stuck inside.
+	// A police Automat creates a checkpoint on the road of a crowd.
 	// This crowd is blocked by this checkpoint until the crowd destroy police units.
 	// Then the crowd continue its road until its objective.
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	opts := NewAllUserOpts(ExCrossroadSmallOrbat)
+	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
+	data := client.Model.GetData()
 	// Create agressive crowd
-	party := client.Model.GetData().FindPartyByName("another-party")
+	party := data.FindPartyByName("another-party")
 	c.Assert(party, NotNil)
 	// Create crowd in party
 	crowd, err := client.CreateCrowd(party.Id, 0, "Motorized Crowd",
-		swapi.Point{X: -15.8005, Y: 28.3451}, 600, 0, 0, "crowd")
+		swapi.Point{X: -15.8105, Y: 28.3451}, 600, 0, 0, "crowd")
 
 	err = client.ChangeAttitude(crowd.Id, Agressive)
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return CheckAttitude(data.Crowds[crowd.Id], Agressive)
 	})
+
+	// Create barricade
+	location := swapi.MakePointLocation(swapi.Point{X: -15.8045, Y: 28.3451})
+	party = data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+	object, err := client.CreateObject("barricade", party.Id, location)
+	c.Assert(err, IsNil)
+	c.Assert(object, NotNil)
 
 	// Create Safety police patrol
 	safetyPolicePatrolId := uint32(185)
@@ -510,5 +521,5 @@ func (s *TestSuite) TestCrowdInCheckpoint(c *C) {
 	})
 
 	reports := reporter.Stop()
-	c.Assert(len(reports), Equals, 2)
+	c.Assert(len(reports), Equals, 3) // Barricade once, checkpoint twice
 }

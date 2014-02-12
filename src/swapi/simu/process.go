@@ -14,6 +14,7 @@ import (
 	"log"
 	"net"
 	"os/exec"
+	"strings"
 	"sync"
 	"time"
 )
@@ -189,7 +190,7 @@ func StartServer(executable, addr, runDir string, args []string, logFiles []stri
 		break
 	case <-procch:
 		if !s.Success() {
-			return &s, errors.New("failed to start server process")
+			return &s, errors.New("failed to start server process " + executable + " " + strings.Join(args, " "))
 		}
 	}
 	return &s, err
