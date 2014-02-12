@@ -71,9 +71,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendCreation( unsigned int context = 0 ) const;
-    virtual void SendFullState() const;
-    virtual void SendChangedState() const;
+    void SendCreation( unsigned int context = 0 ) const;
+    void SendFullState() const;
+    void SendChangedState() const;
     //@}
 
     //! @name CheckPoints

@@ -59,8 +59,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : MIL_PopulationElement_ABC( population, id )
     , TER_PopulationConcentration_ABC()
     , pPullingFlow_        ( 0 )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
     // NOTHING
 }
@@ -72,8 +72,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
     : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pPullingFlow_        ( 0 )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -92,8 +92,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , position_            ( position )
     , pPullingFlow_        ( 0 )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
@@ -109,8 +109,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , position_            ( position )
     , pPullingFlow_        ( 0 )
-    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
 {
     PushHumans( humans );
     UpdateLocation();
@@ -138,7 +138,6 @@ bool MIL_PopulationConcentration::Update()
 {
     if( pSplittingObject_ && pSplittingObject_->IsMarkedForDestruction() )
         pSplittingObject_ = 0;
-    ClearCollisions();
     if( !IsValid() )
     {
         if( pPullingFlow_ )
@@ -252,7 +251,13 @@ boost::shared_ptr< MT_Vector2D > MIL_PopulationConcentration::GetSafetyPosition(
 double MIL_PopulationConcentration::GetPullingFlowsDensity() const
 {
     if( pSplittingObject_ )
-        return pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
+    {
+        double density = pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
+        // Slow down crowds but don't prevent them from moving if density == 0:
+        // if density == 0 and the crowd tries to move in the direction of the obstacle, it will be blocked by the pathfind.
+        if( density )
+            return density;
+    }
     return rPullingFlowsDensity_;
 }
 

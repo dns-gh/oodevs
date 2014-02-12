@@ -198,7 +198,6 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
     pTailPath_.reset( new DEC_Population_Path( GetPopulation(), GetTailPosition(), destination ) );
     pTailPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
-    DetachFromDestConcentration();
 }
 
 // -----------------------------------------------------------------------------
@@ -466,9 +465,14 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 {
     if( pDestConcentration_ || !pSplittingObject_ || pFirstSplittingObject_ )
         return false;
+    MIL_PopulationConcentration* target = &GetPopulation().GetConcentration( GetHeadPosition() );
+    if( objectDensity_ == 1 )
+        return false;
+    if( target == pSourceConcentration_ )
+        return true;
     pointsToInsert_.clear();
     MoveToAlternateDestination( GetHeadPosition() );
-    pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
+    pDestConcentration_ = target;
     pDestConcentration_->SetPullingFlowsDensity( *pSplittingObject_ );
     pDestConcentration_->RegisterPushingFlow( *this );
     //pDestConcentration_->Move( destination_ ); $$ Auto next tick
@@ -515,12 +519,19 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     if( pSourceConcentration_ )
         nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
-    SetHeadPosition( position );
-    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ &&
-        ( !pSourceConcentration_ || !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) ) )
+    if( !pDestConcentration_ )
     {
-        pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
-        pDestConcentration_->RegisterPushingFlow( *this );
+        SetHeadPosition( position );
+        if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ &&
+            ( !pSourceConcentration_ || !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) ) )
+        {
+            MIL_PopulationConcentration* target = &GetPopulation().GetConcentration( GetHeadPosition() );
+            if( target != pSourceConcentration_ )
+            {
+                pDestConcentration_ = target;
+                pDestConcentration_->RegisterPushingFlow( *this );
+            }
+        }
     }
     if( pDestConcentration_ )
     {
@@ -555,13 +566,13 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::Update()
 {
-    ClearCollisions();
     if( !IsValid() )
     {
         DetachFromDestConcentration();
         RemoveFromPatch();
         return false; // Must be destroyed
     }
+    
     // Collisions
     UpdateCollisions();
     return true;
