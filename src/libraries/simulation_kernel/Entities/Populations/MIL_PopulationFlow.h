@@ -148,7 +148,7 @@ private:
     bool ManageSplit();
     void MoveToAlternateDestination( const MT_Vector2D& destination );
     void ComputePath( const MT_Vector2D& destination );
-    void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
+    void ComputePathAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& headDestination, const std::vector< boost::shared_ptr< MT_Vector2D > >& tailDestination );
     void DetachFromDestConcentration();
     T_FlowShape::const_iterator FindPointInShape( const MT_Vector2D& v ) const;
     //@}
