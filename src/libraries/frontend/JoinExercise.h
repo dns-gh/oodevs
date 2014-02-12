@@ -26,9 +26,11 @@ class JoinExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
-             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
-                           const QString& profile, const QString& devFeatures );
+             // Pass a null profile to propose login dialog at gaming startup, an
+             // empty string to log anonymously.
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
+                 const tools::Path& session, const QString* profile,
+                 const QString& devFeatures );
     virtual ~JoinExercise();
     //@}
 
