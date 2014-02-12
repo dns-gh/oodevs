@@ -22,6 +22,7 @@ namespace tools
 // split on ';' and trimmed.
 std::unordered_set< std::string > SplitFeatures( const std::string& s );
 std::string JoinFeatures( const std::unordered_set< std::string >& features );
+const std::vector< std::string >& GetAvailableFeatures();
 
 // =============================================================================
 /** @class  GeneralConfig

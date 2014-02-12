@@ -21,13 +21,10 @@
 #include "tools/GeneralConfig.h"
 
 #include <QScrollArea>
-#include <boost/assign.hpp>
 
 namespace
 {
     const int maxIntegrationDir = 5;
-
-    const std::vector< QString > availableFeatures = boost::assign::list_of( "manual-logistic" );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,10 +151,11 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
+    const auto& availableFeatures = tools::GetAvailableFeatures();
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
-        QCheckBox* checkbox = new QCheckBox( *it );
-        checkbox->setChecked( savedFeatures.count( it->toStdString() ) != 0 );
+        QCheckBox* checkbox = new QCheckBox( it->c_str() );
+        checkbox->setChecked( savedFeatures.count( *it ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
         connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged( int ) ));
