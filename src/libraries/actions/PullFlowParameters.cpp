@@ -143,7 +143,7 @@ void PullFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resol
 }
 
 // -----------------------------------------------------------------------------
-// Name: PushFlowParameters::ReadPoint
+// Name: PullFlowParameters::ReadPoint
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 void PullFlowParameters::ReadPoint( xml::xistream& xis, T_PointVector& points )
