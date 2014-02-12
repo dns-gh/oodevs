@@ -334,7 +334,7 @@ struct Reply : public Reply_ABC
     int Write( const void* data, size_t size )
     {
         const int write = mg_write( link_, data, size );
-        if( write != size )
+        if( size != static_cast< size_t >( write ) )
             LOG_ERROR( log_ ) << "[mg] write error"
                               << " (" << write << "/" << size << ") "
                               << runtime_.GetLastError();
