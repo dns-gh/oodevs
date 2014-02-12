@@ -26,7 +26,7 @@ namespace
 {
     const int maxIntegrationDir = 5;
 
-    const std::vector< QString > namesFeature = boost::assign::list_of( "manual-logistic" );
+    const std::vector< QString > availableFeatures = boost::assign::list_of( "manual-logistic" );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     // development features
     featuresBox_ = new QGroupBox();
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
-    for( auto it = namesFeature.begin(); it != namesFeature.end(); ++it )
+    for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
         QCheckBox* checkbox = new QCheckBox( *it );
         featuresLayout->addWidget( checkbox );
