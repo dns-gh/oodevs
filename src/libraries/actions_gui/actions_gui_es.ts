@@ -185,14 +185,6 @@
         <source>Max combustion energy</source>
         <translation>Máxima energía de combustión</translation>
     </message>
-    <message>
-        <source>Demolition target type:</source>
-        <translation>Tipo de blanco de demolición:</translation>
-    </message>
-    <message>
-        <source>Obstacle type</source>
-        <translation>Tipo de Obstáculo</translation>
-    </message>
 </context>
 <context>
     <name>gui::ObstaclePrototype_ABC</name>

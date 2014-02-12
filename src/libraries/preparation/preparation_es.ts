@@ -285,41 +285,10 @@
     </message>
 </context>
 <context>
-    <name>LogisticLevelAttribute</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/Nivel logístico</translation>
-    </message>
-    <message>
-        <source>SWORD</source>
-        <translation>SWORD</translation>
-    </message>
-    <message>
-        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation>Mediante la desactivación de la función logística en esta formación, todos los subordinados de logística se reiniciarán. ¿Desea continuar?</translation>
-    </message>
-</context>
-<context>
     <name>MedicalTreatment</name>
     <message>
         <source></source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Número total de doctores :</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Tratamiento médico</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Id del Hospital:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation>Capacidades de las camas:</translation>
     </message>
 </context>
 <context>
@@ -568,14 +537,6 @@
         <source>Obstacle parameters</source>
         <translation>Parámetros de obstáculo</translation>
     </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Tipo de obstáculo :</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Atributos de demolición/Tipo de obstáculo</translation>
-    </message>
 </context>
 <context>
     <name>Population</name>
@@ -807,21 +768,6 @@ Detalle: %1.</translation>
     <message>
         <source>Info/Karma</source>
         <translation>Info/Karma</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatmentAttribute</name>
-    <message>
-        <source>Info/Medical Treatment attributes/Doctors</source>
-        <translation>Info/Atributos de tratamiento medico/Doctores</translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/Hospital ID</source>
-        <translation>Info/Atributos de tratamiento medico/ID del Hospital</translation>
-    </message>
-    <message>
-        <source>Info/Medical Treatment attributes/</source>
-        <translation>Info/Atributos de tratamiento medico/</translation>
     </message>
 </context>
 </TS>

@@ -247,6 +247,21 @@
     </message>
 </context>
 <context>
+    <name>LogisticBase</name>
+    <message>
+        <source>Info/Logistic base</source>
+        <translation>Info/Base logística</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
+        <translation>Mediante la desactivación de la función logística en esta formación, todos los subordinados de logística se reiniciarán. ¿Desea continuar?</translation>
+    </message>
+</context>
+<context>
     <name>Menu</name>
     <message>
         <source>Increase symbol size</source>
@@ -297,18 +312,6 @@
     <message>
         <source>3D</source>
         <translation>3D</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translation>Preferencias</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -383,6 +386,17 @@
     </message>
 </context>
 <context>
+    <name>XlsHelpers</name>
+    <message>
+        <source>Warning</source>
+        <translation>Advertencia</translation>
+    </message>
+    <message>
+        <source>Unable to save &apos;%1&apos;. Close any programs that might be using the file and try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>
@@ -398,10 +412,6 @@
     <message>
         <source>&lt;br&gt;License will expire on </source>
         <translation>&lt;br&gt;La licence expira en</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Cerrar</translation>
     </message>
 </context>
 <context>
@@ -811,10 +821,6 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
         <source>Load drawing file</source>
         <translation>Cargar archivo de dibujo</translation>
     </message>
-    <message>
-        <source>Load drawings file</source>
-        <translation>Agregar archivos de dibujo</translation>
-    </message>
 </context>
 <context>
     <name>gui::DrawingCategory</name>
@@ -1216,24 +1222,24 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
 <context>
     <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location: </source>
-        <translation>Ubicación:</translation>
+        <source>Location</source>
+        <translation>Ubicación</translation>
     </message>
     <message>
-        <source>long: </source>
-        <translation>long: </translation>
+        <source>Lat</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>lat: </source>
-        <translation>lat: </translation>
+        <source>Long</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>y: </source>
-        <translation>y: </translation>
+        <source>Y</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>x: </source>
-        <translation>x: </translation>
+        <source>X</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1526,18 +1532,6 @@ Desea eliminarlo?</translation>
     <message>
         <source>Never</source>
         <translation>Nunca</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Tipo de obstáculo:</translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
-        <translation>Tiempo de Activación:</translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation>Tiempo de actividad:</translation>
     </message>
 </context>
 <context>
@@ -1849,8 +1843,8 @@ Desea eliminarlo?</translation>
         <translation>h:%L1 </translation>
     </message>
     <message>
-        <source>°</source>
-        <translation>°</translation>
+        <source>invalid</source>
+        <translation>no válido</translation>
     </message>
 </context>
 <context>
@@ -2021,10 +2015,6 @@ Desea eliminarlo?</translation>
     <message>
         <source>State</source>
         <translation>Estado</translation>
-    </message>
-    <message>
-        <source>Unit state</source>
-        <translation>Estado de unidad</translation>
     </message>
 </context>
 <context>
@@ -2312,26 +2302,18 @@ Desea eliminarlo?</translation>
     </message>
 </context>
 <context>
-    <name>gui::MedicalTreatmentPrototype_ABC</name>
+    <name>gui::XlsHelpers</name>
     <message>
-        <source>MedicalTreatment parameters</source>
-        <translation>Parámetros de tratamiento médico</translation>
+        <source>true</source>
+        <translation>verdadero</translation>
     </message>
     <message>
-        <source>MedicalTreatment Type:</source>
-        <translation>Tipo de tratamiento médico:</translation>
+        <source>false</source>
+        <translation>falso</translation>
     </message>
     <message>
-        <source>Doctors:</source>
-        <translation>Doctores:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>ID de Hospital:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation>Capacidad de camas:</translation>
+        <source>sheet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

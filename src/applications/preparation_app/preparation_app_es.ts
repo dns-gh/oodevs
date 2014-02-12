@@ -98,10 +98,6 @@
         <source>Change superior</source>
         <translation>Cambiar superior</translation>
     </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation>Cambiar grupo de conocimiento</translation>
-    </message>
 </context>
 <context>
     <name>CsvExport</name>
@@ -447,26 +443,6 @@
 </source>
         <translatorcomment>ejercicio es reemplazado por escenario en todos los archivos.</translatorcomment>
         <translation>Los siguientes archivos serán copiados al directorio de recursos/scripts del escenario:</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation>Français</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation>Español</translation>
-    </message>
-    <message>
-        <source>Arabic</source>
-        <translation>العربية</translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation>Português</translation>
     </message>
 </context>
 <context>
@@ -1039,10 +1015,6 @@ Este dato no puede ser proyectado.</translation>
         <source>Resource networks</source>
         <translation>Redes de recursos</translation>
     </message>
-    <message>
-        <source>Contour lines</source>
-        <translation>Curvas de nivel</translation>
-    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1241,10 +1213,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>&amp;Settings</source>
         <translation>Con&amp;figuración</translation>
-    </message>
-    <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Mostrar</translation>
     </message>
 </context>
 <context>
@@ -1471,6 +1439,17 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
         <translation>No hay cuotas definidas para &apos;%1&apos;. No será reabastecido.</translation>
+    </message>
+</context>
+<context>
+    <name>MultipleResolverEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2325,6 +2304,33 @@ Este dato no puede ser proyectado.</translation>
     </message>
 </context>
 <context>
+    <name>ScoreVariablesList</name>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valor</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Agregar</translation>
+    </message>
+    <message>
+        <source>Del</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Pegar</translation>
+    </message>
+</context>
+<context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
@@ -2658,6 +2664,10 @@ Este dato no puede ser proyectado.</translation>
         <source>Urban blocks cannot be created on top of existing blocks.</source>
         <translation>Bloques urbanos no pueden ser creados sobre bloques existentes.</translation>
     </message>
+    <message>
+        <source>Road width (m):</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>
@@ -2680,10 +2690,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Display initial state</source>
         <translation>Mostrar estado inicial</translation>
-    </message>
-    <message>
-        <source>Initial state</source>
-        <translation>Estado inicial</translation>
     </message>
 </context>
 <context>
@@ -2876,6 +2882,10 @@ Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
         <source>Knowledge groups:</source>
         <translation>Grupos de conocimiento:</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>
@@ -2953,44 +2963,6 @@ Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
 Do you want to save the exercise &apos;%1&apos;?</source>
         <translation>Modificación detectada
 ¿Desea grabar el escenario &apos;%1&apos;?</translation>
-    </message>
-</context>
-<context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Edition</source>
-        <translation>Edición</translation>
-    </message>
-    <message>
-        <source>Ghost:</source>
-        <translation>Fantasma:</translation>
-    </message>
-</context>
-<context>
-    <name>ScoreVariablesList</name>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Valor</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Agregar</translation>
-    </message>
-    <message>
-        <source>Del</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Pegar</translation>
     </message>
 </context>
 </TS>

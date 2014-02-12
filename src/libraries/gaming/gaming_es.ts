@@ -256,13 +256,6 @@
     </message>
 </context>
 <context>
-    <name>Automat</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/Nivel Logistico</translation>
-    </message>
-</context>
-<context>
     <name>Block</name>
     <message>
         <source>Info/StructuralState</source>
@@ -479,13 +472,6 @@
     </message>
 </context>
 <context>
-    <name>Formation</name>
-    <message>
-        <source>Info/LogisticLevel</source>
-        <translation>Info/Nivel Logistico</translation>
-    </message>
-</context>
-<context>
     <name>Human factors</name>
     <message>
         <source>Human factors/Experience</source>
@@ -606,10 +592,6 @@
         <source>Living Area/Urban blocks number</source>
         <translation>Zona residencial/Número de bloques Urbanos</translation>
     </message>
-    <message>
-        <source>Living Area/Medical infrastructures</source>
-        <translation>Zona residencial/Infraestructuras medicas</translation>
-    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
@@ -692,102 +674,6 @@
     <message>
         <source>Unknown</source>
         <translation>Desconocido</translation>
-    </message>
-    <message>
-        <source>Instruction:</source>
-        <translation>Instrucción:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation>Consumidor:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation>Gestor:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>Estado:</translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation>Enfermo mental:</translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation>Contaminación NBC:</translation>
-    </message>
-    <message>
-        <source>Not diagnosed</source>
-        <translation>No diagnosticado</translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation>Convoy:</translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation>Equipo:</translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation>Falla:</translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation>Herida:</translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation>Proveedor:</translation>
-    </message>
-    <message>
-        <source>Transporters provider:</source>
-        <translation>Proveedor de transportes:</translation>
-    </message>
-    <message>
-        <source>No recipients</source>
-        <translation>Sin beneficiarios</translation>
-    </message>
-    <message>
-        <source>Multiple recipients</source>
-        <translation>Beneficiarios Multiples</translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
-        <translation>Fin del Estado Actual :</translation>
-    </message>
-    <message>
-        <source>Convoy:</source>
-        <translation>Convoy:</translation>
-    </message>
-    <message>
-        <source>Rank:</source>
-        <translation>Clasificar:</translation>
-    </message>
-    <message>
-        <source>Current packaging:</source>
-        <translation>Embalaje Actual:</translation>
-    </message>
-    <message>
-        <source>Current state end:</source>
-        <translation>Fin del Estado Actual :</translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation>Beneficiarios</translation>
-    </message>
-    <message>
-        <source>requested</source>
-        <translation>Requerido</translation>
-    </message>
-    <message>
-        <source>granted</source>
-        <translation>Concedido</translation>
-    </message>
-    <message>
-        <source>convoyed</source>
-        <translation>convoy</translation>
     </message>
 </context>
 <context>
@@ -1215,10 +1101,6 @@
         <source>Obstacle activated:</source>
         <translation>Obstaculo activado:</translation>
     </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Tipo de obstáculo:</translation>
-    </message>
 </context>
 <context>
     <name>ObjectKnowledgePanel</name>
@@ -1418,48 +1300,6 @@
     <message>
         <source>Army %1</source>
         <translation>Ejército %1</translation>
-    </message>
-</context>
-<context>
-    <name>Decisions</name>
-    <message>
-        <source>Mission:</source>
-        <translation>Misión:</translation>
-    </message>
-    <message>
-        <source>Automat mission:</source>
-        <translation>Misión del autómata:</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalTreatment</name>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Número total de doctores:</translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
-        <translation>Número de doctores disponibles:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Tratamiento Medico</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Hospital ID:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment services (Available(Baseline)):</source>
-        <translation>Servicios de tratamiento médico (Disponible(base)):</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation>Número Total de camas:</translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation>Número de camas disponibles:</translation>
     </message>
 </context>
 </TS>

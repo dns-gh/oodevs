@@ -70,8 +70,8 @@
         <translation>Coordenadas locales</translation>
     </message>
     <message>
-        <source>UTM South American 1969, Brazil</source>
-        <translation>UTM Sud América 1969, Brasil</translation>
+        <source>UTM SAD69 Brazil</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

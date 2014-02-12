@@ -28,10 +28,6 @@
         <source>Ammunitions</source>
         <translation>Municiones</translation>
     </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propiedades</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_WeaponsTable</name>
@@ -174,7 +170,7 @@
     </message>
 </context>
 <context>
-    <name>ADN_Armors_Data::ArmorInfos</name>
+    <name>ADN_Armors_Data</name>
     <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation>Categorías - Tipo de blindaje &apos;%1&apos; no es válido</translation>
@@ -484,13 +480,12 @@ Estacionado y motor encendido</translation>
         <source>Percentage</source>
         <translation>Porcentaje</translation>
     </message>
+</context>
+<context>
+    <name>ADN_BaseMultiPercentage</name>
     <message>
-        <source>New warning</source>
-        <translation>Nueva alerta</translation>
-    </message>
-    <message>
-        <source>Delete warning</source>
-        <translation>Borrar alerta</translation>
+        <source>%</source>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -586,51 +581,6 @@ Estacionado y motor encendido</translation>
     <message>
         <source>Logistic resource categories</source>
         <translation>Categorías de recursos logísticos</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Neutralization</source>
-        <translation>Neutralización</translation>
-    </message>
-    <message>
-        <source>Average time</source>
-        <translation>Tiempo promedio</translation>
-    </message>
-    <message>
-        <source>Variance</source>
-        <translation>Varianza</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Averías</translation>
-    </message>
-    <message>
-        <source>Armor class</source>
-        <translation>Blindaje</translation>
-        <translation>Blindaje</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Attrition effects on humans</source>
-        <translation>Efectos de daños en humanos</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Mantenimiento mayor</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Reparable en sitio</translation>
     </message>
 </context>
 <context>
@@ -1595,12 +1545,20 @@ Estacionado y motor encendido</translation>
         <translation>personas</translation>
     </message>
     <message>
-        <source>Carrier</source>
-        <translation>Transporte</translation>
+        <source>°</source>
+        <translation>°</translation>
     </message>
     <message>
-        <source>Max steepness</source>
-        <translation>Pendiente máxima</translation>
+        <source>Min weight carried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min volume carried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipo</translation>
     </message>
 </context>
 <context>
@@ -1740,12 +1698,9 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
         <source>Urban attritions</source>
         <translation>Daños materiales</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Fires_Data::FireClassInfos</name>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
-        <translation>Fuego - Tipo de pocisión no encontrada &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2279,16 +2234,16 @@ tirador</translation>
         <translation>Fuego indirecto</translation>
     </message>
     <message>
-        <source>PIs modificators</source>
-        <translation>Modificadores de PI</translation>
-    </message>
-    <message>
         <source>Shooter&apos;s stance / Target&apos;s stance</source>
         <translation>Postura de tirador / Postura de blanco</translation>
     </message>
     <message>
         <source>Phs modifiers</source>
         <translation>Modificadores de PI</translation>
+    </message>
+    <message>
+        <source>Phs modificators</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2737,38 +2692,6 @@ PNG (*.png)</translation>
         <source>Languages</source>
         <translation>Idiomas</translation>
     </message>
-    <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation>Herramienta de adaptación Sword - </translation>
-    </message>
-    <message>
-        <source>Data test</source>
-        <translation>Prueba de datos</translation>
-    </message>
-    <message>
-        <source>Project will be saved in order to execute data test.</source>
-        <translation>El proyecto será grabado para ejectuar la prueba de datos.</translation>
-    </message>
-    <message>
-        <source>No project loaded, continue anyway?</source>
-        <translation>No hay proyecto cargado, ¿Continuar de todas formas?</translation>
-    </message>
-    <message>
-        <source>Running data check</source>
-        <translation>Ejecutando revisión de datos</translation>
-    </message>
-    <message>
-        <source>Data test failed</source>
-        <translation>Prueba de datos falló</translation>
-    </message>
-    <message>
-        <source>Invalid password</source>
-        <translation>Contraseña incorrecta</translation>
-    </message>
-    <message>
-        <source>The password you entered is not valid. Please try again.</source>
-        <translation>La contraseña que ingresó es inválida. Intente nuevamente.</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
@@ -3055,14 +2978,6 @@ PNG (*.png)</translation>
         <source>Switching off &quot;available without mission&quot; will remove the fragmentary order from all models.</source>
         <translation>Desconectar &quot;disponible sin misión&quot; eliminará la orden fragmentaria de todos los modelos.</translation>
     </message>
-    <message>
-        <source>All</source>
-        <translation>Todo</translation>
-    </message>
-    <message>
-        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
-        <translation>El nombre de la misión no puede contener los siguientes caracteres: / &lt; &gt; * \ : * |</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -3084,18 +2999,6 @@ PNG (*.png)</translation>
     <message>
         <source>Frag orders</source>
         <translation>Órdenes fragmentarias</translation>
-    </message>
-    <message>
-        <source>Unit models</source>
-        <translation>Modelos de unidad</translation>
-    </message>
-    <message>
-        <source>Automata models</source>
-        <translation>Modelos de autómata</translation>
-    </message>
-    <message>
-        <source>Crowds models</source>
-        <translation>Modelos de muchedumbre</translation>
     </message>
 </context>
 <context>
@@ -3139,10 +3042,6 @@ PNG (*.png)</translation>
 </context>
 <context>
     <name>ADN_MultiPercentage</name>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
     <message>
         <source>Warning: total of percentages must equal 100%.</source>
         <translation>Advertencia: El total de los porcentajes debe ser igual a 100%.</translation>
@@ -3775,10 +3674,6 @@ PNG (*.png)</translation>
         <source>DIA type</source>
         <translation>Tipo DIA</translation>
     </message>
-    <message>
-        <source>Medical</source>
-        <translation>Médico</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Point_GUI</name>
@@ -3967,24 +3862,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Created object</source>
         <translation>Objeto creado</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de material urbano inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation>Equipo - Postura inválida &apos;%1&apos;</translation>
@@ -3992,6 +3869,14 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
         <translation>Equipo - Tipo de munición de fuego indirecto &apos;%1&apos; no válida</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de material urbano inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4659,13 +4544,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
-    <name>ADN_Speeds_Table</name>
-    <message>
-        <source>Equipment</source>
-        <translation>Equipamiento</translation>
-    </message>
-</context>
-<context>
     <name>ADN_SupplyUnitSelector</name>
     <message>
         <source>Click here to select</source>
@@ -5293,26 +5171,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Herido de extrema gravedad</translation>
-    </message>
-    <message>
-        <source>Eletronic</source>
-        <translation>Electronica</translation>
-    </message>
-    <message>
-        <source>Mobility</source>
-        <translation>Mobilidad</translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation>Nivel de gravedad 1</translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation>Nivel de gravedad 2</translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation>Nivel de gravedad 3</translation>
     </message>
     <message>
         <source>radar</source>
@@ -6061,9 +5919,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <source>Infrastructure</source>
         <translation>Infraestructura</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
@@ -6380,14 +6235,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <source>Percentage (PH)</source>
         <translation>Porcentaje (PI)</translation>
     </message>
-    <message>
-        <source>New Ph</source>
-        <translation>Nueva PI</translation>
-    </message>
-    <message>
-        <source>Delete Ph</source>
-        <translation>Eliminar PI</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Weapons_WizardPage</name>
@@ -6502,34 +6349,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
         <source>Saving: %1...</source>
         <translation>Grabando: %1...</translation>
     </message>
-    <message>
-        <source>Loading GUI...</source>
-        <translation>Cargando Interfaz...</translation>
-    </message>
-    <message>
-        <source>GUI loaded</source>
-        <translation>Interfaz Cargada</translation>
-    </message>
-    <message>
-        <source>Reseting project...</source>
-        <translation>Reiniciando proyecto...</translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation>Descargando %1...</translation>
-    </message>
-    <message>
-        <source>Project reseted</source>
-        <translation>Proyecto reiniciado</translation>
-    </message>
-    <message>
-        <source>Loading project...</source>
-        <translation>Cargando proyecto...</translation>
-    </message>
-    <message>
-        <source>Saving project...</source>
-        <translation>Grabando proyecto...</translation>
-    </message>
 </context>
 <context>
     <name>ADN_WoundTable</name>
@@ -6608,6 +6427,13 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     </message>
 </context>
 <context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation>Categorías - Estado de equipo &apos;%1&apos; no válido</translation>
+    </message>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
         <source>Doctrine model</source>
@@ -6642,34 +6468,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Categorías - Recurso naural inválido</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation>Categorías - Nombre de tipo de volumen duplicado &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Categorías - Nombre de tipo de recurso natural duplicado &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation>Categorias - Nombre de tipo de volumen duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation>Categorías - nombre de tipo de blindaje duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation>Categorías - Nombre de recurso natural duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation>Categorías - categoria de recurso logístico &apos;%1&apos; duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated logistic resource category</source>
-        <translation>Categorías - Categoría de recurso logístico duplicado</translation>
     </message>
 </context>
 <context>
@@ -6906,221 +6704,6 @@ Click &quot;Aceptar&quot; para destruirlo con todas sus referencias.</translatio
     <message>
         <source>Protection</source>
         <translation>Protección</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
-        <translation>Categorías - Estado de equipo &apos;%1&apos; no válido</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuración</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>Sendero SIM</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>Parámetros SIM</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Ejecutable SWORD (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Seleccionar el SIM à usar en la prueba de datos</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipments_RadarsListView</name>
-    <message>
-        <source>Special sensors</source>
-        <translation>Sensores especiales</translation>
-    </message>
-    <message>
-        <source>Add sensor</source>
-        <translation>Agregar un sensor</translation>
-    </message>
-    <message>
-        <source>Remove sensor</source>
-        <translation>Remover un sensor</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipments_Resources_ListView</name>
-    <message>
-        <source>Resources</source>
-        <translation>Recursos</translation>
-    </message>
-    <message>
-        <source>Add resource</source>
-        <translation>Agregar recurso</translation>
-    </message>
-    <message>
-        <source>Remove resource</source>
-        <translation>Quitar recurso</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FireClass_Data</name>
-    <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Incendio - Datos de herido &apos;%1&apos; &lt; 0 o&gt; 1</translation>
-    </message>
-    <message>
-        <source>Fire - Invalid wound type &apos;%1&apos;</source>
-        <translation>Incendio - Tipo de herido &apos;%1&apos; no válido</translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
-        <translation>Incendio &apos;%1&apos; - suma de datos de lesiones &gt; 100</translation>
-    </message>
-    <message>
-        <source>Extinguisher agents</source>
-        <translation>Agentes extintores</translation>
-    </message>
-    <message>
-        <source>Urban attritions</source>
-        <translation>Daños materiales</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Fire - Location type not found &apos;%1&apos;</source>
-        <translation>Incendio - Tipo de ubicación &apos;%1&apos;no encontrado</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_FireClass_GUI</name>
-    <message>
-        <source>Global fire parameters</source>
-        <translation>Parámetros globales de incendio</translation>
-    </message>
-    <message>
-        <source>Cell size</source>
-        <translation>Tamaño de celda</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Initial heat</source>
-        <translation>Calor inicial</translation>
-    </message>
-    <message>
-        <source>Max heat</source>
-        <translation>Calor máximo</translation>
-    </message>
-    <message>
-        <source>Increase rate</source>
-        <translation>Tasa de incremento</translation>
-    </message>
-    <message>
-        <source>Decrease rate</source>
-        <translation>Tasa de disminución</translation>
-    </message>
-    <message>
-        <source>Injuries</source>
-        <translation>Lesiones</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 1</source>
-        <translation>Herido gravedad nivel 1</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 2</source>
-        <translation>Herido gravedad nivel 2</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 3</source>
-        <translation>Herido gravedad nivel 3</translation>
-    </message>
-    <message>
-        <source>Wounded extreme seriousness</source>
-        <translation>Herido gravedad extrema</translation>
-    </message>
-    <message>
-        <source>Killed</source>
-        <translation>Muerto</translation>
-    </message>
-    <message>
-        <source>Urban attrition</source>
-        <translation>Daños materiales</translation>
-    </message>
-    <message>
-        <source>Extinguisher agents</source>
-        <translation>Agentes extintores</translation>
-    </message>
-    <message>
-        <source>Weather fire effects</source>
-        <translation>Efectos de clima sobre incendio</translation>
-    </message>
-    <message>
-        <source>Surface</source>
-        <translation>Superficie</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_OpenMode_Dialog</name>
-    <message>
-        <source>Open mode configuration</source>
-        <translation>Abrir modo de configuración</translation>
-    </message>
-    <message>
-        <source>Normal mode</source>
-        <translation>Modo normal</translation>
-    </message>
-    <message>
-        <source>Admin mode</source>
-        <translation>Modo administrador</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>Contraseña:</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>helpers::ArmorInfos</name>
-    <message>
-        <source>Categories - Invalid armor type &apos;%1&apos;</source>
-        <translation>Categorías - Tipo de blindaje &apos;%1&apos; no válido</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type name</source>
-        <translation>Categorías - Nombre de tipo de blindaje duplicado</translation>
     </message>
 </context>
 </TS>

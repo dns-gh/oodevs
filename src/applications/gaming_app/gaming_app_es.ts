@@ -104,10 +104,6 @@
         <source>Load request file</source>
         <translation>Cargar archivo de requerimientos</translation>
     </message>
-    <message>
-        <source>Functions</source>
-        <translation>Funciones</translation>
-    </message>
 </context>
 <context>
     <name>AfterActionFunctionList</name>
@@ -147,22 +143,6 @@
         <source>End date</source>
         <translation>Fecha de fin</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Requerimiento</translation>
-    </message>
-    <message>
-        <source>First tick</source>
-        <translation>Primera iteración</translation>
-    </message>
-    <message>
-        <source>Duration</source>
-        <translation>Duración</translation>
-    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -181,10 +161,6 @@
     <message>
         <source>Function</source>
         <translation>Función</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Estado</translation>
     </message>
 </context>
 <context>
@@ -261,10 +237,6 @@
     <message>
         <source>Error</source>
         <translation>Error</translation>
-    </message>
-    <message>
-        <source>Unhandled error</source>
-        <translation>Error irrecuperable</translation>
     </message>
 </context>
 <context>
@@ -357,10 +329,6 @@
         <source>Stress:</source>
         <translation>Estrés:</translation>
     </message>
-    <message>
-        <source>Change human Factors</source>
-        <translation>Cambiar factores humanos</translation>
-    </message>
 </context>
 <context>
     <name>ChangeLogisticLinksDialog</name>
@@ -391,10 +359,6 @@
     <message>
         <source>Current superior</source>
         <translation>Superior actual</translation>
-    </message>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Cambiar enlaces logístico</translation>
     </message>
 </context>
 <context>
@@ -476,18 +440,6 @@
     <message>
         <source>Create Knowledge Group</source>
         <translation>Crear grupo de conocimiento</translation>
-    </message>
-    <message>
-        <source>Change Knowledge Group</source>
-        <translation>Cambiar grupo de conocimeinto</translation>
-    </message>
-    <message>
-        <source>Change knowledge group</source>
-        <translation>Cambiar grupo de conocimiento</translation>
-    </message>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation>Cambiar superior</translation>
     </message>
 </context>
 <context>
@@ -723,26 +675,6 @@ Motivo: %3</translation>
         <source>Show/hide details</source>
         <translation>Mostrar / ocultar detalles</translation>
     </message>
-    <message>
-        <source>Flag as complete</source>
-        <translation>Marcar como completa</translation>
-    </message>
-    <message>
-        <source>Create a reminder</source>
-        <translation>Crear un recordatorio</translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation>Descartar</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Grabar</translation>
-    </message>
-    <message>
-        <source>Detail</source>
-        <translation>Detalle</translation>
-    </message>
 </context>
 <context>
     <name>EventDockWidget</name>
@@ -823,10 +755,6 @@ Motivo: %3</translation>
         <source>Base64 Payload</source>
         <translation>Carga útil Base64</translation>
     </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Perfiles</translation>
-    </message>
 </context>
 <context>
     <name>EventToolbar</name>
@@ -877,14 +805,6 @@ Motivo: %3</translation>
         <source>Set event end date</source>
         <translation>Fijar fecha final del evento</translation>
     </message>
-    <message>
-        <source>Start date</source>
-        <translation>Fecha de inicio</translation>
-    </message>
-    <message>
-        <source>End date</source>
-        <translation>Fecha de Fin</translation>
-    </message>
 </context>
 <context>
     <name>ExtensionsPanel</name>
@@ -895,10 +815,6 @@ Motivo: %3</translation>
     <message>
         <source>Reset</source>
         <translation>Reiniciar</translation>
-    </message>
-    <message>
-        <source>Change extension</source>
-        <translation>Cambio de extensión</translation>
     </message>
 </context>
 <context>
@@ -962,14 +878,6 @@ Motivo: %3</translation>
     <message>
         <source>Location target:</source>
         <translation>Ubicación de objetivo:</translation>
-    </message>
-    <message>
-        <source>Strike order on location</source>
-        <translation>Orden de ataque sobre posición</translation>
-    </message>
-    <message>
-        <source>Strike order</source>
-        <translation>Orden de ataque</translation>
     </message>
 </context>
 <context>
@@ -1100,10 +1008,6 @@ Do you want to replace it?</source>
         <source>Export score data...</source>
         <translation>Exportar datos de indicadores...</translation>
     </message>
-    <message>
-        <source>Create report...</source>
-        <translation>Crear reporte...</translation>
-    </message>
 </context>
 <context>
     <name>InfoCompositionDialog</name>
@@ -1184,10 +1088,6 @@ Do you want to replace it?</source>
         <source>Instructions</source>
         <translation>Consignas</translation>
     </message>
-    <message>
-        <source>Consigns</source>
-        <translation>Consignas</translation>
-    </message>
 </context>
 <context>
     <name>InfoMaintenanceDialog</name>
@@ -1208,8 +1108,12 @@ Do you want to replace it?</source>
         <translation>Estado del sistema</translation>
     </message>
     <message>
-        <source>Consigns</source>
-        <translation>Consignas</translation>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1229,10 +1133,6 @@ Do you want to replace it?</source>
     <message>
         <source>Chain status</source>
         <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Consigns</source>
-        <translation>Consignas</translation>
     </message>
 </context>
 <context>
@@ -1317,10 +1217,6 @@ Do you want to replace it?</source>
     <message>
         <source>Chain status</source>
         <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Consigns</source>
-        <translation>Consignas</translation>
     </message>
 </context>
 <context>
@@ -1692,6 +1588,22 @@ Do you want to replace it?</source>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
+    <message>
+        <source>Capacity (T)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity (m3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volumen</translation>
+    </message>
 </context>
 <context>
     <name>Logistic : supply flow</name>
@@ -1722,13 +1634,98 @@ Do you want to replace it?</source>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
+</context>
+<context>
+    <name>LogisticMagicInterface</name>
     <message>
-        <source>Logistic requests</source>
-        <translation>Requerimientos logísticos</translation>
+        <source>Logistic actions</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Processing consigns</source>
-        <translation>Procesando consignas</translation>
+        <source>Allocate supply quotas</source>
+        <translation>Distribuir cuotas de abastecimiento</translation>
+    </message>
+    <message>
+        <source>Push supply flow</source>
+        <translation>Generar flujo de abastecimiento</translation>
+    </message>
+    <message>
+        <source>Resupply</source>
+        <translation>Reabastecimiento</translation>
+    </message>
+    <message>
+        <source>Pull supply flow</source>
+        <translation>Demandar flujo de abastecimiento</translation>
+    </message>
+    <message>
+        <source>Switch to automated maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch to manual maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticMaintenanceSelectionDialog</name>
+    <message>
+        <source>Resolve automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request evacuation by logistic superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>This request cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request #%1 - %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select tow truck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select diagnosis team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select repair team</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticSupplyCarriersTableWidget</name>
+    <message>
+        <source>The convoy is unable to carry that much weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal volume threshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1757,14 +1754,6 @@ Do you want to replace it?</source>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
-    <message>
-        <source>Allocate supply quotas</source>
-        <translation>Distribuir cuotas de abastecimiento</translation>
-    </message>
-    <message>
-        <source>Log Supply Change Quotas</source>
-        <translation>Cambios en las cuotas de abastecimiento</translation>
-    </message>
 </context>
 <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
@@ -1788,8 +1777,16 @@ Do you want to replace it?</source>
         <translation>Demandar flujo de abastecimiento</translation>
     </message>
     <message>
-        <source>Log Supply Pull Flow</source>
-        <translation>Demanda de Flujo de abastecimiento</translation>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1811,12 +1808,16 @@ Do you want to replace it?</source>
         <translation>Reabastecimiento</translation>
     </message>
     <message>
-        <source>Log Supply Push Flow</source>
-        <translation>Generación de flujo de abastecimiento</translation>
+        <source>Error</source>
+        <translation>Error</translation>
     </message>
     <message>
-        <source>Log Resupply</source>
-        <translation>Reabastecimiento logístico</translation>
+        <source>The convoy is unable to carry that much weight and/or volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1889,10 +1890,6 @@ Do you want to replace it?</source>
         <source>Quantity %</source>
         <translation>Cantidad %</translation>
     </message>
-    <message>
-        <source>Partial Recovery</source>
-        <translation>Recuperación parcial</translation>
-    </message>
 </context>
 <context>
     <name>LogisticsRequestsHistoryTable</name>
@@ -1934,6 +1931,10 @@ Do you want to replace it?</source>
     <message>
         <source>Conveyed</source>
         <translation>Trasladado</translation>
+    </message>
+    <message>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2097,14 +2098,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Orbat</source>
         <translation>Orbat</translation>
     </message>
-    <message>
-        <source>Contour lines</source>
-        <translation>Curvas de nivel</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation>Logo</translation>
-    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
@@ -2127,6 +2120,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Resting</source>
         <translation>En reposo</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2151,6 +2148,25 @@ Los datos no pueden ser proyectados.</translation>
         <source>Resting</source>
         <translation>En reposo</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceStatusWidget</name>
+    <message>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalCollectAmbulancesListView</name>
@@ -2173,6 +2189,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Resting</source>
         <translation>En reposo</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2197,6 +2217,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Resting</source>
         <translation>En reposo</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MedicalReliefAmbulancesListView</name>
@@ -2219,6 +2243,10 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Resting</source>
         <translation>En reposo</translation>
+    </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2443,18 +2471,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>&amp;Settings</source>
         <translation>&amp;Configuración</translation>
     </message>
-    <message>
-        <source>Sound</source>
-        <translation>Sonido</translation>
-    </message>
-    <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
-    </message>
-    <message>
-        <source>&amp;Display</source>
-        <translation>&amp;Mostrar</translation>
-    </message>
 </context>
 <context>
     <name>MessagePanel</name>
@@ -2468,50 +2484,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source></source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Mission</source>
-        <translation>Misión</translation>
-    </message>
-    <message>
-        <source>Agent missions</source>
-        <translation>Misiones de agentes</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Misiones de autómata</translation>
-    </message>
-    <message>
-        <source>Engage</source>
-        <translation>Comprometer</translation>
-    </message>
-    <message>
-        <source>Disengage</source>
-        <translation>Liberar</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Órdenes Fragmentarias</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Misiones de muchedumbre</translation>
-    </message>
-    <message>
-        <source>Plan mission</source>
-        <translation>Planificar misión</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Add to planning</source>
-        <translation>Agregar a plan</translation>
     </message>
 </context>
 <context>
@@ -2700,14 +2672,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Activate obstacle</source>
         <translation>Activar obstáculo</translation>
     </message>
-    <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation>Desactivar obstáculo reservado</translation>
-    </message>
-    <message>
-        <source>Activate reserved obstacle</source>
-        <translation>Activar Obstáculo reservado</translation>
-    </message>
 </context>
 <context>
     <name>ObjectReportPanel</name>
@@ -2801,6 +2765,21 @@ Los datos no pueden ser proyectados.</translation>
     </message>
 </context>
 <context>
+    <name>PartsView</name>
+    <message>
+        <source>Required Parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+</context>
+<context>
     <name>PlanificationModePanel</name>
     <message>
         <source>Planification mode</source>
@@ -2887,18 +2866,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Activate brain debug</source>
         <translation>Activar depuración cerebro</translation>
     </message>
-    <message>
-        <source>Crowd Total Destruction</source>
-        <translation>Muchedumbre - Destrucción total</translation>
-    </message>
-    <message>
-        <source>Crowd Change Attitude</source>
-        <translation>Muchedumbre- Cambiar actitud</translation>
-    </message>
-    <message>
-        <source>Crowd Change Armed Individuals</source>
-        <translation>Muchedumbre - Cambiar individuos armados</translation>
-    </message>
 </context>
 <context>
     <name>PopulationOptionChooser</name>
@@ -2979,22 +2946,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Profiling</source>
         <translation>Perfiles</translation>
-    </message>
-    <message>
-        <source>Shorts: </source>
-        <translation>Cortos: </translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Cuenta</translation>
-    </message>
-    <message>
-        <source>Longs: </source>
-        <translation>Largos: </translation>
-    </message>
-    <message>
-        <source>Pathfinds</source>
-        <translation>Búsqueda de rutas</translation>
     </message>
 </context>
 <context>
@@ -3247,6 +3198,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Resting</source>
         <translation>En reposo</translation>
     </message>
+    <message>
+        <source>Lent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TacticalTreeView</name>
@@ -3261,14 +3216,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Create logistic base</source>
         <translation>Crear base logística</translation>
-    </message>
-    <message>
-        <source>Unit Change Superior</source>
-        <translation>Cambio de superior</translation>
-    </message>
-    <message>
-        <source>Change Formation Superior</source>
-        <translation>Cambiar Superior de formación</translation>
     </message>
 </context>
 <context>
@@ -3401,14 +3348,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
-    <message>
-        <source>Actions timeline</source>
-        <translation>Cronología de acciones</translation>
-    </message>
-    <message>
-        <source>Invalid timeline binary &apos;%1&apos;</source>
-        <translation>Línea de tiempo binaria &apos;%1&apos; no es válida</translation>
-    </message>
 </context>
 <context>
     <name>TimelineListView</name>
@@ -3442,10 +3381,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Legacy Timeline</source>
         <translation>Cronología Anterior</translation>
-    </message>
-    <message>
-        <source>Actions timeline</source>
-        <translation>Cronología de acciones</translation>
     </message>
 </context>
 <context>
@@ -3631,18 +3566,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Disengage</source>
         <translation>Liberar</translation>
     </message>
-    <message>
-        <source>Surrender</source>
-        <translation>Capitular</translation>
-    </message>
-    <message>
-        <source>Destroy Component</source>
-        <translation>Destruir componente</translation>
-    </message>
-    <message>
-        <source>Recover Transporters</source>
-        <translation>Recuperar transportes</translation>
-    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>
@@ -3663,8 +3586,16 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Equipos</translation>
     </message>
     <message>
-        <source>Unit state</source>
-        <translation>Estado de unidad</translation>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export unit state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excel (*.xls)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3673,14 +3604,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Random</source>
         <translation>Aleatório</translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Desconocido</translation>
-    </message>
-    <message>
-        <source>Change equipment state</source>
-        <translation>Cambiar estado de equipos</translation>
-    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>
@@ -3688,10 +3611,6 @@ Los datos no pueden ser proyectados.</translation>
         <source>Maximal capacity</source>
         <oldsource>Resources</oldsource>
         <translation>Capacidad máxima</translation>
-    </message>
-    <message>
-        <source>Change dotations</source>
-        <translation>Cambiar dotaciones</translation>
     </message>
 </context>
 <context>
@@ -3821,6 +3740,10 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <source>Supervisor actions</source>
         <translation>Acciones de supervisor</translation>
     </message>
+    <message>
+        <source>Time Control</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>
@@ -3842,18 +3765,6 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     <message>
         <source>Weather parameters</source>
         <translation>Parámetros de clima</translation>
-    </message>
-    <message>
-        <source>Change Global Weather</source>
-        <translation>Cambiar clima global</translation>
-    </message>
-    <message>
-        <source>Change Local Weather</source>
-        <translation>Cambiar clima local</translation>
-    </message>
-    <message>
-        <source>Local Weather Destruction</source>
-        <translation>Destrucción de clima local</translation>
     </message>
 </context>
 <context>
@@ -3880,259 +3791,6 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     <message>
         <source>Knowledge Group Add knowledge</source>
         <translation>Agregar conocimiento al Grupo de conocimiento</translation>
-    </message>
-</context>
-<context>
-    <name>ChangeDiplomacyDialog</name>
-    <message>
-        <source>Change diplomacy</source>
-        <translation>Cambiar diplomacia</translation>
-    </message>
-</context>
-<context>
-    <name>EventDialog</name>
-    <message>
-        <source>Event creation</source>
-        <translation>Creación de evento</translation>
-    </message>
-    <message>
-        <source>Event edition</source>
-        <translation>Edición de Evento</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Alerta</translation>
-    </message>
-    <message>
-        <source>This event is incomplete so it can&apos;t be triggered.</source>
-        <translation>No se puede disparar el evento por estar incompleto.</translation>
-    </message>
-</context>
-<context>
-    <name>EventMultimediaWidget</name>
-    <message>
-        <source>Browse...</source>
-        <translation>Explorar...</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>Etiqueta</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Archivo</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Perfiles</translation>
-    </message>
-    <message>
-        <source>Select output directory</source>
-        <translation>Seleccionar directorio de salida</translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorReports</name>
-    <message>
-        <source>Create report</source>
-        <translation>Crear reporte</translation>
-    </message>
-    <message>
-        <source>Template</source>
-        <translation>Plantilla</translation>
-    </message>
-    <message>
-        <source>File: </source>
-        <translation>Archivo: </translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Explorar...</translation>
-    </message>
-    <message>
-        <source>Output</source>
-        <translation>Salida</translation>
-    </message>
-    <message>
-        <source>Show generated report</source>
-        <translation>Mostrar reporte generado</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Report template (*.html)</source>
-        <translation>Plantilla de reporte (*.html)</translation>
-    </message>
-    <message>
-        <source>Load report template file</source>
-        <translation>Cargar plantilla de reporte</translation>
-    </message>
-    <message>
-        <source>Report (*.html)</source>
-        <translation>Reporte (*.html)</translation>
-    </message>
-    <message>
-        <source>Save report to</source>
-        <translation>Grabar reporte a</translation>
-    </message>
-</context>
-<context>
-    <name>IndicatorsReports</name>
-    <message>
-        <source>Warning</source>
-        <translation>Alerta</translation>
-    </message>
-    <message>
-        <source>The specified output file is the also the input template.
- Are you sure you want to overwrite the template file?</source>
-        <translation>El archivo de salida especificado es también el archivo de plantilla de entrada.
-¿Desea sobreescribir el archivo de plantilla?</translation>
-    </message>
-</context>
-<context>
-    <name>LogisticTreeView</name>
-    <message>
-        <source>Change Logistic Links</source>
-        <translation>Cambiar enlaces logístico</translation>
-    </message>
-</context>
-<context>
-    <name>MagicAction</name>
-    <message>
-        <source>Recover - All</source>
-        <translation>Recuperar - Todo</translation>
-    </message>
-    <message>
-        <source>Recover - Troops</source>
-        <translation>Recuperar - Tropas</translation>
-    </message>
-    <message>
-        <source>Recover - Equipments</source>
-        <translation>Recuperar - Equipos</translation>
-    </message>
-    <message>
-        <source>Recover - Resources</source>
-        <translation>Recuperar - Recursos</translation>
-    </message>
-    <message>
-        <source>Destroy - All</source>
-        <translation>Destruir - Todo</translation>
-    </message>
-    <message>
-        <source>Cancel - Surrender</source>
-        <translation>Cancelar - Rendición</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalCapacityUpdateDialog</name>
-    <message>
-        <source>Update medical capacity</source>
-        <translation>Actualizar capacidad médica</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type</source>
-        <translation>Tipo de tratamiento médico</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation>Hospital ID:</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Estado</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Estado:</translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation>Doctores</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation>Doctores:</translation>
-    </message>
-    <message>
-        <source>Bed Capacities (Patients/Baseline)</source>
-        <translation>Camas ( Pacientes/Linea base)</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation>Color de estado operacional</translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation>Neutralizado:</translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation>Tácticamente destruida:</translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation>Totalmente destruída:</translation>
-    </message>
-</context>
-<context>
-    <name>ResourceLinksDialog</name>
-    <message>
-        <source>Change resource links</source>
-        <translation>Cambiar enlaces de recursos</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Chain status</source>
-        <translation>Estado de sistema de abastecimiento</translation>
-    </message>
-</context>
-<context>
-    <name>TimelineFilteredViewWidget</name>
-    <message>
-        <source>An error occurred during event creation process: %1</source>
-        <translation>Un error ocurrió durante proceso de creación de evento: %1</translation>
-    </message>
-    <message>
-        <source>An error occurred during event deletion process: %1</source>
-        <translation>Un error ocurrió durante proceso de borrado de evento: %1</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Editar</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Create an event</source>
-        <translation>Crear un evento</translation>
-    </message>
-</context>
-<context>
-    <name>UnitStateTableCrew</name>
-    <message>
-        <source>Change human state</source>
-        <translation>Cambiar estado de humanos</translation>
     </message>
 </context>
 </TS>

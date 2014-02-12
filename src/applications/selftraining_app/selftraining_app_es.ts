@@ -196,22 +196,6 @@
         <source>Enable legacy timeline</source>
         <translation>Habilitar Linea de tiempo anterior</translation>
     </message>
-    <message>
-        <source>Enable Legacy Mode</source>
-        <translation>Activar el modo heredado</translation>
-    </message>
-    <message>
-        <source>Commands (non-legacy)</source>
-        <translation>Comandos (no heredado)</translation>
-    </message>
-    <message>
-        <source>Hooks (non-legacy)</source>
-        <translation>Hooks (no heredado)</translation>
-    </message>
-    <message>
-        <source>Enable Web Timeline</source>
-        <translation>Habilitar Línea de Tiempo Web</translation>
-    </message>
 </context>
 <context>
     <name>ExerciseList</name>
@@ -257,18 +241,6 @@ Do you want to replace it?</source>
 Do you want to replace it?</source>
         <translation>El modelo seleccionado no es el que hace referencia el ejercicio seleccionado. 
 ¿Desea reemplazarlo?</translation>
-    </message>
-    <message>
-        <source>The selected terrain is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>El terreno seleccionado no es el mismo que está declarado en el escenario.
-¿Desea actualizar el escenario con el nuevo terreno?</translation>
-    </message>
-    <message>
-        <source>The selected model is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>El modelo seleccionado no es el mismo que está declarado en el escenario.
-¿Desea actualizar el escenario con el nuevo modelo?</translation>
     </message>
 </context>
 <context>
@@ -326,10 +298,6 @@ Do really you want to replace it ?</source>
 Do you want to replace it?</source>
         <translation>%1 ya existe. 
 ¿Desea reemplazarlo?</translation>
-    </message>
-    <message>
-        <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>El archivo %1 ya existe. ¿Desea sobreescribirlo?</translation>
     </message>
 </context>
 <context>
@@ -497,26 +465,6 @@ Do you want to replace it?</source>
         <source>Models</source>
         <translation>Modelos</translation>
     </message>
-    <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation>Français</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation>Español</translation>
-    </message>
-    <message>
-        <source>Arabic</source>
-        <translation>العربية</translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation>Português</translation>
-    </message>
 </context>
 <context>
     <name>OrbatConfigPanel</name>
@@ -676,14 +624,6 @@ Do you want to replace it?</source>
     <message>
         <source>Debug</source>
         <translation>Depurar</translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation>Host:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation>Puerto:</translation>
     </message>
 </context>
 <context>

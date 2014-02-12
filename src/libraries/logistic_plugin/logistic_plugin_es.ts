@@ -159,9 +159,5 @@
         <source>recipient</source>
         <translation>receptor</translation>
     </message>
-    <message>
-        <source>consign finished</source>
-        <translation>consigna finalizada</translation>
-    </message>
 </context>
 </TS>
