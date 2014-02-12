@@ -15,7 +15,7 @@ import (
 
 const (
 	ReadTimeout  = 1 * time.Hour
-	WriteTimeout = 1 * time.Minute
+	WriteTimeout = 1 * time.Hour
 )
 
 type ProxyContext struct {
