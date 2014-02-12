@@ -751,6 +751,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithAutomaticSelection(c *C) {
 				return client.SelectNewLogisticState(ctx.handlingId)
 			},
 		},
+		&MaintenanceUpdateChecker{"waiting_for_parts", bld},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
@@ -936,6 +937,7 @@ func (s *TestSuite) TestMaintenanceHandlingsWithBaseSwitchedBackToAutomatic(c *C
 				return toAutomatic(bldId)
 			},
 		},
+		&MaintenanceUpdateChecker{"waiting_for_parts", bld},
 		&MaintenanceUpdateChecker{"waiting_for_repairer", bld},
 		&MaintenanceUpdateChecker{"repairing", bld},
 		&MaintenanceUpdateChecker{"moving_back", bld},
