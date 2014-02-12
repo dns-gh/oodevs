@@ -404,7 +404,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
     T_Download down = MakeDownload( id, rpy, fs_, root_ / tmp_dir );
     connect( down.get(), SIGNAL( Progress( size_t, size_t, int ) ), this, SLOT( OnDownloadProgress( size_t, size_t, int ) ) );
     connect( down.get(), SIGNAL( Error( size_t, const QString& ) ), this, SLOT( OnDownloadError( size_t, const QString& ) ) );
-    connect( down.get(), SIGNAL( End( size_t ) ), this, SLOT( OnCloseDownload( size_t ) ) );
+    connect( down.get(), SIGNAL( End( size_t, bool ) ), this, SLOT( OnCloseDownload( size_t, bool ) ) );
     QWriteLocker lock( &access_ );
     downloads_.insert( id, down );
 }
@@ -463,13 +463,19 @@ void Context::OnDownloadError( size_t id, const QString& error )
 // Name: Context::OnCloseDownload
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Context::OnCloseDownload( size_t id )
+void Context::OnCloseDownload( size_t id, bool valid )
 {
     QWriteLocker write( &access_ );
     T_Downloads::iterator it = downloads_.find( id );
     if( it == downloads_.end() )
         return;
     downloads_.erase( it );
+    if( !valid )
+    {
+        emit ClearProgress();
+        emit StatusMessage( "Unable to download some package(s)" );
+        return;
+    }
     if( !downloads_.empty() )
         return;
     async_.Register( QtConcurrent::run( this, &Context::ParsePackages ) );
