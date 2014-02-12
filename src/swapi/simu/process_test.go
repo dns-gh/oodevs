@@ -117,7 +117,7 @@ func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 	sim, err := StartSim(opts)
 	defer sim.Stop()
 
-	c.Assert(err, ErrorMatches, "failed to start server process")
+	c.Assert(err, ErrorMatches, "failed to start server process.*")
 	if sim.Success() {
 		c.Fatal("simulation should have exited on error")
 	}
