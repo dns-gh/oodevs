@@ -9,39 +9,39 @@
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Saltos de tiempo:</translation>
+        <translation>Iterar cada (s):</translation>
     </message>
     <message>
         <source>Time factor:</source>
-        <translation>factor de tiempo:</translation>
+        <translation>Factor de tiempo:</translation>
     </message>
     <message>
         <source>End tick:</source>
-        <translation>Tictac de fin:</translation>
+        <translation>Iteración final (0 significa sin límite):</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanzada</translation>
     </message>
     <message>
         <source>Paused at startup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar en pausa:</translation>
     </message>
     <message>
         <source>Do not start gaming client</source>
-        <translation type="unfinished"></translation>
+        <translation>No iniciar interfaz de juego</translation>
     </message>
     <message>
         <source>Report clean frequency: </source>
-        <translation type="unfinished"></translation>
+        <translation>Máximo número de reportes mostrados por unidad: </translation>
     </message>
     <message>
         <source>Number of pathfind threads:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de procesos para autoruteo:</translation>
     </message>
     <message>
         <source>Recorder fragmentation frequency: </source>
-        <translation type="unfinished"></translation>
+        <translation>Número de iteraciones en cada archivo/fragmento de grabación:</translation>
     </message>
 </context>
 <context>
@@ -55,15 +55,15 @@
     <name>CheckpointConfigPanel</name>
     <message>
         <source>Checkpoint configuration: </source>
-        <translation>Configuración de punto de control:</translation>
+        <translation>Configuración:</translation>
     </message>
     <message>
         <source>Frequency:</source>
-        <translation>Frecuencia:</translation>
+        <translation>Generar cada:</translation>
     </message>
     <message>
         <source>Keep:</source>
-        <translation>Mantener:</translation>
+        <translation>Conservar los últimos:</translation>
     </message>
     <message>
         <source>Load checkpoint: </source>
@@ -71,7 +71,7 @@
     </message>
     <message>
         <source>No session</source>
-        <translation>no hay sesión</translation>
+        <translation>No hay sesión</translation>
     </message>
     <message>
         <source>Session:</source>
@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>Checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de control</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
     <name>CompositePluginConfig</name>
     <message>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
 </context>
 <context>
@@ -115,77 +115,77 @@
     <name>LauncherClient</name>
     <message>
         <source>incompatible protocol version</source>
-        <translation type="unfinished"></translation>
+        <translation>versión de protocolo incompatible</translation>
     </message>
     <message>
         <source>unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>error desconocido</translation>
     </message>
     <message>
         <source>invalid checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>punto de control no válido</translation>
     </message>
     <message>
         <source>Failed to contact launcher service: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al contactar servicio de lanzador: %1.</translation>
     </message>
     <message>
         <source>Failed to stop exercise: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al detener ejercicio: %1.</translation>
     </message>
     <message>
         <source>success</source>
-        <translation type="unfinished"></translation>
+        <translation>éxito</translation>
     </message>
     <message>
         <source>invalid exercise name</source>
-        <translation type="unfinished"></translation>
+        <translation>nombre de ejercício no válido</translation>
     </message>
     <message>
         <source>session already running</source>
-        <translation type="unfinished"></translation>
+        <translation>sesión en ejecución</translation>
     </message>
     <message>
         <source>invalid session name</source>
-        <translation type="unfinished"></translation>
+        <translation>nombre de sesión no válida</translation>
     </message>
     <message>
         <source>session not running</source>
-        <translation type="unfinished"></translation>
+        <translation>la sesión no está ejecutándose</translation>
     </message>
     <message>
         <source>Failed to start session: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al iniciar sesión: %1.</translation>
     </message>
     <message>
         <source>session already paused</source>
-        <translation type="unfinished"></translation>
+        <translation>sesión pausada</translation>
     </message>
     <message>
         <source>Failed to execute command on exercise: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al ejecutar comando en el ejercicio: %1.</translation>
     </message>
     <message>
         <source>invalid date time</source>
-        <translation type="unfinished"></translation>
+        <translation>fecha/hora no válida</translation>
     </message>
 </context>
 <context>
     <name>PluginConfig</name>
     <message>
         <source>Enable %1 plugin v%2 </source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar %1 plugin v%2 </translation>
     </message>
 </context>
 <context>
     <name>PluginSetting</name>
     <message>
         <source>Select a file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar un archivo...</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos</translation>
     </message>
 </context>
 <context>
@@ -196,7 +196,7 @@
     </message>
     <message>
         <source>Seed:</source>
-        <translation>Semilla:</translation>
+        <translation>Valor semilla:</translation>
     </message>
     <message>
         <source>Context:</source>
@@ -212,11 +212,11 @@
     </message>
     <message>
         <source>Perception</source>
-        <translation>PErcepción</translation>
+        <translation>Percepción</translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation>Fallas</translation>
+        <translation>Averías</translation>
     </message>
     <message>
         <source>Distribution:</source>
@@ -236,34 +236,34 @@
     </message>
     <message>
         <source>Mean:</source>
-        <translation>Media:</translation>
+        <translation>Promedio:</translation>
     </message>
     <message>
         <source>Set as default</source>
-        <translation>Activar por defecto</translation>
+        <translation>Configuración por defecto</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Aleatorio</translation>
     </message>
 </context>
 <context>
     <name>SessionConfigPanel</name>
     <message>
         <source>Session name:</source>
-        <translation type="unfinished">Nombre de sesión:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Session comments:</source>
-        <translation type="unfinished">Comentarios de sesión:</translation>
+        <translation>Comentarios:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation type="unfinished">Número de ejercicio:</translation>
+        <translation>Número de ejercicio:</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesión</translation>
     </message>
 </context>
 <context>
@@ -282,7 +282,7 @@
     </message>
     <message>
         <source>Stopped</source>
-        <translation type="unfinished"></translation>
+        <translation>Detenido</translation>
     </message>
 </context>
 <context>
@@ -300,11 +300,11 @@
     <name>frontend::FileList</name>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar</translation>
     </message>
 </context>
 </TS>

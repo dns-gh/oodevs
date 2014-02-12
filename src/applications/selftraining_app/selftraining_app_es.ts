@@ -5,11 +5,11 @@
     <name>Application</name>
     <message>
         <source>Already running</source>
-        <translation>Aplicaciones en ejecución</translation>
+        <translation>Aplicación aún en ejecución</translation>
     </message>
     <message>
         <source>The FrontEnd is already running. Start anyway ?</source>
-        <translation>Aplicación en ejecución ¿Inicio de todos modos?</translation>
+        <translation>Interfaz ejecutándose ¿Iniciar de todos modos?</translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -21,11 +21,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Launcher service cannot be started: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>El servicio lanzador no se puede iniciar: %1.</translation>
     </message>
 </context>
 <context>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Terrain Gen</source>
-        <translation>Generador de Terreno</translation>
+        <translation>Generación de Terreno</translation>
     </message>
     <message>
         <source>Launch Terrain Generation application</source>
@@ -52,22 +52,22 @@
     </message>
     <message>
         <source>Missing Sword-Authoring license</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay licencia de modelamiento de Sword</translation>
     </message>
     <message>
         <source>Missing Sword-Terrain-Generation license</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay la licencia de generación de terreno de Sword</translation>
     </message>
 </context>
 <context>
     <name>CreateExerciceWidget</name>
     <message>
         <source>Create new exercise:</source>
-        <translation>Crear un nuevo ejercicio:</translation>
+        <translation>Crear un nuevo escenario:</translation>
     </message>
     <message>
         <source>Enter exercise name</source>
-        <translation>Ingrese el nombre del ejercicio</translation>
+        <translation>Ingrese el nombre del escenario</translation>
     </message>
     <message>
         <source>Terrain:</source>
@@ -79,27 +79,27 @@
     </message>
     <message>
         <source>Create as copy of:</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear como copia de:</translation>
     </message>
     <message>
         <source>Exercise to copy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escenario a copiar:</translation>
     </message>
     <message>
         <source>Content to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenido a copiar</translation>
     </message>
     <message>
         <source>Checkpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto de Control</translation>
     </message>
     <message>
         <source>Session:</source>
-        <translation type="unfinished">Sesión: </translation>
+        <translation>Sesión:</translation>
     </message>
     <message>
         <source>No session</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay sesiones</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>Create new terrain:</source>
-        <translation>Crear un nuevo terreno:</translation>
+        <translation>Crear nuevo terreno:</translation>
     </message>
     <message>
         <source>Enter terrain name</source>
@@ -127,9 +127,8 @@
     <message>
         <source>The new terrain will be created in:
 %1</source>
-        <translation>
-           El nuevo terreno será creado en:
-            %1</translation>
+        <translation>El nuevo terreno será creado en:
+%1</translation>
     </message>
     <message>
         <source>Starting terrain creation</source>
@@ -140,69 +139,85 @@
     <name>DataWidget</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Are you sure you want to delete?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro que desea eliminar?</translation>
     </message>
 </context>
 <context>
     <name>DebugConfigPanel</name>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Depurar</translation>
     </message>
     <message>
         <source>Integration layer directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de capa de integración</translation>
     </message>
     <message>
         <source>Profiling settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de perfiles</translation>
     </message>
     <message>
         <source>Decisional functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Funciones de conducta</translation>
     </message>
     <message>
         <source>Pathfind settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de autoruteo</translation>
     </message>
     <message>
         <source>Filter :</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro :</translation>
     </message>
     <message>
         <source>Dump pathfinds directory :</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio para volcar autoruteo :</translation>
     </message>
     <message>
         <source>Debug port</source>
-        <translation type="unfinished"></translation>
+        <translation>Puerto de depuración</translation>
     </message>
     <message>
         <source>Mapnik settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de Mapnik</translation>
     </message>
     <message>
         <source>Activate layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa activa</translation>
     </message>
     <message>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea de tiempo</translation>
     </message>
     <message>
         <source>Enable legacy timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar Linea de tiempo anterior</translation>
+    </message>
+    <message>
+        <source>Enable Legacy Mode</source>
+        <translation>Activar el modo heredado</translation>
+    </message>
+    <message>
+        <source>Commands (non-legacy)</source>
+        <translation>Comandos (no heredado)</translation>
+    </message>
+    <message>
+        <source>Hooks (non-legacy)</source>
+        <translation>Hooks (no heredado)</translation>
+    </message>
+    <message>
+        <source>Enable Web Timeline</source>
+        <translation>Habilitar Línea de Tiempo Web</translation>
     </message>
 </context>
 <context>
     <name>ExerciseList</name>
     <message>
         <source>Exercise:</source>
-        <translation>Ejercicio:</translation>
+        <translation>Escenario:</translation>
     </message>
     <message>
         <source>Profile:</source>
@@ -213,44 +228,58 @@
     <name>ExerciseProperties</name>
     <message>
         <source>Exercise parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros del escenario:</translation>
     </message>
     <message>
         <source>Terrain:</source>
-        <translation type="unfinished">Terreno:</translation>
+        <translation>Terreno:</translation>
     </message>
     <message>
         <source>Model:</source>
-        <translation type="unfinished">Modelo:</translation>
+        <translation>Modelo:</translation>
     </message>
     <message>
         <source>No briefing available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ningun resumen disponible</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <source>The selected terrain is not the one referenced by the selected exercise.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>El terreno seleccionado no es el que hace referencia el ejercicio seleccionado. 
+¿Deseareemplazarlo?</translation>
     </message>
     <message>
         <source>The selected model is not the one referenced by the selected exercise.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>El modelo seleccionado no es el que hace referencia el ejercicio seleccionado. 
+¿Desea reemplazarlo?</translation>
+    </message>
+    <message>
+        <source>The selected terrain is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation>El terreno seleccionado no es el mismo que está declarado en el escenario.
+¿Desea actualizar el escenario con el nuevo terreno?</translation>
+    </message>
+    <message>
+        <source>The selected model is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation>El modelo seleccionado no es el mismo que está declarado en el escenario.
+¿Desea actualizar el escenario con el nuevo modelo?</translation>
     </message>
 </context>
 <context>
     <name>ExportWidget</name>
     <message>
         <source>Package description:</source>
-        <translation>Descripción de paquete:</translation>
+        <translation>Descripción del paquete:</translation>
     </message>
     <message>
         <source>Package content:</source>
-        <translation>Contenido de paquete:</translation>
+        <translation>Contenido del paquete:</translation>
     </message>
     <message>
         <source>Select a package</source>
@@ -262,40 +291,45 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Exercise</source>
-        <translation type="unfinished"></translation>
+        <translation>Escenario</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished">Terreno</translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>Decisional model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo de conducta:</translation>
     </message>
     <message>
         <source>Exercise:</source>
-        <translation type="unfinished">Ejercicio:</translation>
+        <translation>Escenario:</translation>
     </message>
     <message>
         <source>Terrain:</source>
-        <translation type="unfinished">Terreno:</translation>
+        <translation>Terreno:</translation>
     </message>
     <message>
         <source>Models</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelos</translation>
     </message>
     <message>
         <source>Physical model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo físico:</translation>
     </message>
     <message>
         <source>Model name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de modelo:</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ya existe. 
+¿Desea reemplazarlo?</translation>
+    </message>
+    <message>
+        <source>A file called %1 already exists. Do you want to overwrite it?</source>
+        <translation>El archivo %1 ya existe. ¿Desea sobreescribirlo?</translation>
     </message>
 </context>
 <context>
@@ -310,7 +344,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Replay</source>
-        <translation>Reproducir</translation>
+        <translation>Revisar</translation>
     </message>
     <message>
         <source>Adapt</source>
@@ -322,7 +356,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Replay scenario</source>
-        <translation>Reproducir escenario</translation>
+        <translation>Revisar sesión de entrenamiento</translation>
     </message>
     <message>
         <source>Start authoring, terrain generation</source>
@@ -334,11 +368,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Missing Sword-Preparation license</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay licencia de  preparacion de Sword</translation>
     </message>
     <message>
         <source>Missing Sword-Replayer license</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay licencia para revisión de Sword</translation>
     </message>
 </context>
 <context>
@@ -357,26 +391,26 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
-        <translation type="unfinished"></translation>
+        <translation>paquete dañado: no se puede cargar el contenido correctamente</translation>
     </message>
     <message>
         <source>Package content:</source>
-        <translation type="unfinished">Contenido de paquete:</translation>
+        <translation>Contenido de paquete:</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión:</translation>
     </message>
 </context>
 <context>
     <name>LauncherClientPage</name>
     <message>
         <source>Failed to connect to host: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fallo al conectar con servidor: %1.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -417,66 +451,86 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Configuración</translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambios no guardados</translation>
     </message>
     <message>
         <source>Unsaved changes will be lost, continue anyway ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Los cambios no guardados se perderán, ¿Desea continuar?</translation>
     </message>
     <message>
         <source>Invalid directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio no es válido</translation>
     </message>
     <message>
         <source>Directory &apos;%1&apos; doesn&apos;t exist. Do you want to create it ?</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio &apos;%1&apos; no existe. ¿Desea crearlo?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede crear el directorio &apos;%1&apos;, error &apos;%2&apos;.</translation>
     </message>
     <message>
         <source>Administration</source>
-        <translation type="unfinished"></translation>
+        <translation>Administración</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">Importar</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished">Exportar</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <source>Terrains</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrenos</translation>
     </message>
     <message>
         <source>Models</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelos</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Português</translation>
     </message>
 </context>
 <context>
     <name>OrbatConfigPanel</name>
     <message>
         <source>Orbat</source>
-        <translation type="unfinished"></translation>
+        <translation>Orbat</translation>
     </message>
     <message>
         <source>Create objects with no sides</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear objetos sin bando</translation>
     </message>
     <message>
         <source>Create entities for those sides only:</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear entidades sólo para esos bandos:</translation>
     </message>
 </context>
 <context>
@@ -503,23 +557,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished">Exportar</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">Importar</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Admin</source>
-        <translation type="unfinished"></translation>
+        <translation>Administración</translation>
     </message>
 </context>
 <context>
@@ -552,18 +606,18 @@ Do you want to replace it?</source>
     <name>ReadProfile</name>
     <message>
         <source>anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>anónimo</translation>
     </message>
 </context>
 <context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
-        <translation>Reproducir</translation>
+        <translation>Revisar</translation>
     </message>
     <message>
         <source>Starting replay session</source>
-        <translation>Iniciando sesión de reproducción</translation>
+        <translation>Iniciando revisión de sesión</translation>
     </message>
 </context>
 <context>
@@ -574,7 +628,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Editing exercise</source>
-        <translation>Editando ejercicio</translation>
+        <translation>Editando escenario</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -582,7 +636,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Prepare</source>
-        <translation type="unfinished">Preparar</translation>
+        <translation>Preparar</translation>
     </message>
 </context>
 <context>
@@ -593,7 +647,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Joining host</source>
-        <translation>Conectar al host</translation>
+        <translation>Uniendose a host</translation>
     </message>
     <message>
         <source>Host</source>
@@ -605,23 +659,31 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea de tiempo</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">General</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Enable Mapnik</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar Mapnik</translation>
     </message>
     <message>
         <source>Enable Legacy Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea de tiempo anterior</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Depurar</translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation>Host:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Puerto:</translation>
     </message>
 </context>
 <context>
@@ -636,11 +698,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Iniciar</translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <source>Starting scenario</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciando escenario</translation>
     </message>
 </context>
 <context>
@@ -651,7 +713,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Start a training session</source>
-        <translation>Iniciar una sesión</translation>
+        <translation>Iniciar una sesión de entrenamiento</translation>
     </message>
     <message>
         <source>Join</source>
@@ -663,14 +725,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Missing Sword-Runtime license</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay licencia de ejecución de Sword</translation>
     </message>
 </context>
 <context>
     <name>SessionList</name>
     <message>
         <source>Session:</source>
-        <translation>Sesión: </translation>
+        <translation>Sesión:</translation>
     </message>
 </context>
 <context>

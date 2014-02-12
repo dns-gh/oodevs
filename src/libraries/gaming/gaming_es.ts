@@ -5,29 +5,29 @@
     <name>Affinities</name>
     <message>
         <source>Affinities</source>
-        <translation type="unfinished"></translation>
+        <translation>Afinidades</translation>
     </message>
 </context>
 <context>
     <name>Agent</name>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Tipo</translation>
     </message>
     <message>
         <source>Info/Weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Peso</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
     <name>AgentDecisions</name>
     <message>
         <source>Mission:</source>
-        <translation type="unfinished">Misión:</translation>
+        <translation>Misión:</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation></translation>
+        <translation>Inteligencia Critica:</translation>
     </message>
 </context>
 <context>
@@ -204,55 +204,62 @@
     </message>
     <message>
         <source>Satisfaction/Lodging</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción/Alojamiento</translation>
     </message>
     <message>
         <source>Satisfaction/Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción/Seguridad</translation>
     </message>
     <message>
         <source>Satisfaction/Health</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción/Salud</translation>
     </message>
     <message>
         <source>Info/Underground</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Subterráneo</translation>
     </message>
     <message>
         <source>Info/Neutralized</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Neutralizado</translation>
     </message>
     <message>
         <source>Crowd transported:</source>
-        <translation type="unfinished"></translation>
+        <translation>Multitud Transportada:</translation>
     </message>
     <message>
         <source>Info/Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Muerto</translation>
     </message>
     <message>
         <source>Info/Troops on board</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Tropas a Bordo</translation>
     </message>
     <message>
         <source>Info/Human transportation available</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Transporte Humano Disponible</translation>
     </message>
     <message>
         <source>Decisional state/Crowd RoE</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado Decisivo/Multitud RoE</translation>
     </message>
     <message>
         <source>Decisional state/Indirect fire availability</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado Decisivo/Disponibilidad de fuego Indirecto</translation>
     </message>
     <message>
         <source>Stances/Safety attitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Posturas/Actitud de Seguridad</translation>
     </message>
     <message>
         <source>Slope:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pendiente:</translation>
+    </message>
+</context>
+<context>
+    <name>Automat</name>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation>Info/Nivel Logistico</translation>
     </message>
 </context>
 <context>
@@ -263,78 +270,78 @@
     </message>
     <message>
         <source>Infrastructure/Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura/Habilitada</translation>
     </message>
     <message>
         <source>Infrastructure/Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura/Umbral</translation>
     </message>
     <message>
         <source>Infrastructure/Role</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura/Rol</translation>
     </message>
     <message>
         <source>Infrastructure</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura</translation>
     </message>
 </context>
 <context>
     <name>Crowd</name>
     <message>
         <source>Domination:</source>
-        <translation type="unfinished">Dominación:</translation>
+        <translation>Dominación:</translation>
     </message>
     <message>
         <source>Dead:</source>
-        <translation type="unfinished">Muerto:</translation>
+        <translation>Muerto:</translation>
     </message>
     <message>
         <source>Concentration</source>
-        <translation type="unfinished">Concentración</translation>
+        <translation>Concentración</translation>
     </message>
     <message>
         <source>Alive people:</source>
-        <translation type="unfinished">Gente viva:</translation>
+        <translation>Gente viva:</translation>
     </message>
     <message>
         <source>Dead people:</source>
-        <translation type="unfinished">Gente muerta:</translation>
+        <translation>Gente muerta:</translation>
     </message>
     <message>
         <source>Perceived:</source>
-        <translation type="unfinished"></translation>
+        <translation>Observado:</translation>
     </message>
     <message>
         <source>Relevance:</source>
-        <translation type="unfinished">Relevancia:</translation>
+        <translation>Relevancia:</translation>
     </message>
     <message>
         <source>Mood:</source>
-        <translation type="unfinished">Actitud:</translation>
+        <translation>Humor:</translation>
     </message>
     <message>
         <source>Known crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Multitud Conocida</translation>
     </message>
     <message>
         <source>Concentration - </source>
-        <translation type="unfinished">Concentración - </translation>
+        <translation>Concentración - </translation>
     </message>
     <message>
         <source>Flow</source>
-        <translation type="unfinished">Flujo</translation>
+        <translation>Flujo</translation>
     </message>
     <message>
         <source>Heading:</source>
-        <translation type="unfinished">Dirección:</translation>
+        <translation>Dirección:</translation>
     </message>
     <message>
         <source>Speed:</source>
-        <translation type="unfinished">Velocidad:</translation>
+        <translation>Velocidad:</translation>
     </message>
     <message>
         <source>Flow - </source>
-        <translation type="unfinished">Flujo - </translation>
+        <translation>Flujo - </translation>
     </message>
     <message>
         <source>Details</source>
@@ -342,91 +349,91 @@
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished">Identificador:</translation>
+        <translation>Identificador:</translation>
     </message>
     <message>
         <source>Associated crowd:</source>
-        <translation type="unfinished"></translation>
+        <translation>Multitud Asociada:</translation>
     </message>
     <message>
         <source>Side:</source>
-        <translation type="unfinished">Bando:</translation>
+        <translation>Bando:</translation>
     </message>
     <message>
         <source>Healthy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Saludable:</translation>
     </message>
     <message>
         <source>Wounded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Herido:</translation>
     </message>
     <message>
         <source>Contaminated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contaminado:</translation>
     </message>
     <message>
         <source>Male:</source>
-        <translation type="unfinished"></translation>
+        <translation>Masculino:</translation>
     </message>
     <message>
         <source>Female:</source>
-        <translation type="unfinished"></translation>
+        <translation>Femenino:</translation>
     </message>
     <message>
         <source>Children:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niños:</translation>
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Inteligencia Critica:</translation>
     </message>
     <message>
         <source>Armed individuals:</source>
-        <translation type="unfinished"></translation>
+        <translation>Individuos Armados:</translation>
     </message>
     <message>
         <source>Info/Domination</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Dominación</translation>
     </message>
     <message>
         <source>Info/Armed individuals</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Individuos Armados</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Male</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Reparto/Masculino</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Female</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Reparto/Femenino</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Children</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Reparto/Niños</translation>
     </message>
     <message>
         <source>State/Healthy</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado/Saludable</translation>
     </message>
     <message>
         <source>State/Wounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado/Herido</translation>
     </message>
     <message>
         <source>State/Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado/Contaminado</translation>
     </message>
     <message>
         <source>State/Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado/Muerto</translation>
     </message>
     <message>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <source>State/Mood</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado/Humor</translation>
     </message>
 </context>
 <context>
@@ -468,7 +475,14 @@
     </message>
     <message>
         <source>On site fixable</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijable en sitio</translation>
+    </message>
+</context>
+<context>
+    <name>Formation</name>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation>Info/Nivel Logistico</translation>
     </message>
 </context>
 <context>
@@ -503,94 +517,98 @@
     </message>
     <message>
         <source>Human factors/Stress</source>
-        <translation type="unfinished"></translation>
+        <translation>Factores Humanos/Estrés</translation>
     </message>
     <message>
         <source>Stress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Estrés:</translation>
     </message>
 </context>
 <context>
     <name>Inhabitant</name>
     <message>
         <source>Alive:</source>
-        <translation type="unfinished">Vivos:</translation>
+        <translation>Vivos:</translation>
     </message>
     <message>
         <source>Wounded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Herido:</translation>
     </message>
     <message>
         <source>Dead:</source>
-        <translation type="unfinished">Muerto:</translation>
+        <translation>Muerto:</translation>
     </message>
     <message>
         <source>Health satisfaction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción de la Salud:</translation>
     </message>
     <message>
         <source>Safety satisfaction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción de la Seguridad:</translation>
     </message>
     <message>
         <source>Lodging satisfaction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacción del alojamiento:</translation>
     </message>
     <message>
         <source>%1 satisfaction:</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 satisfacción:</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Male</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Repartición/Masculina</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Female</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Repartición/Femenina</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Children</source>
-        <translation type="unfinished"></translation>
+        <translation>M/F/N Repartición/Niños</translation>
     </message>
     <message>
         <source>Satisfactions/Health</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacciones/Salud</translation>
     </message>
     <message>
         <source>Satisfactions/Safety</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacciones/Seguridad</translation>
     </message>
     <message>
         <source>Satisfactions/Lodging</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacciones/Alojamiento</translation>
     </message>
     <message>
         <source>Satisfactions/Usage/</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacciones/Uso/</translation>
     </message>
     <message>
         <source>Satisfactions/Resource/</source>
-        <translation type="unfinished"></translation>
+        <translation>Satisfacciones/Recurso/</translation>
     </message>
     <message>
         <source>Motivation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Motivación:</translation>
     </message>
     <message>
         <source>Living Area/Total capacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona residencial/Capacidad Total</translation>
     </message>
     <message>
         <source>Living Area/Non medical infrastructures</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona residencial/Infraestructuras no medicas</translation>
     </message>
     <message>
         <source>Living Area/Capacities/%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona residencial/Capacidades/%1</translation>
     </message>
     <message>
         <source>Living Area/Urban blocks number</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona residencial/Número de bloques Urbanos</translation>
+    </message>
+    <message>
+        <source>Living Area/Medical infrastructures</source>
+        <translation>Zona residencial/Infraestructuras medicas</translation>
     </message>
 </context>
 <context>
@@ -605,7 +623,7 @@
     </message>
     <message>
         <source>Group %L1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo %L1</translation>
     </message>
 </context>
 <context>
@@ -626,54 +644,150 @@
     <name>LogTools</name>
     <message>
         <source>Invalid unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidad no valida</translation>
     </message>
     <message>
         <source>Invalid limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite no valido</translation>
     </message>
     <message>
         <source>Invalid lima</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea de fase no válida</translation>
     </message>
     <message>
         <source>Invalid mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Misión no valida</translation>
     </message>
     <message>
         <source>Invalid parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametros no validos</translation>
     </message>
     <message>
         <source>Invalid frag order</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden de fragmentación no valida</translation>
     </message>
     <message>
         <source>Invalid order mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden de misión invalida</translation>
     </message>
     <message>
         <source>Unit surrendered</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrega de Unidad</translation>
     </message>
     <message>
         <source>Invalid lima function</source>
-        <translation type="unfinished"></translation>
+        <translation>Función de Línea de fase no válida</translation>
     </message>
 </context>
 <context>
     <name>Logistic</name>
     <message>
         <source>Logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlaces logísticos</translation>
     </message>
     <message>
         <source>Logistic links/Superiors</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlaces logísticos/Superiores</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconocido</translation>
+    </message>
+    <message>
+        <source>Instruction:</source>
+        <translation>Instrucción:</translation>
+    </message>
+    <message>
+        <source>Consumer:</source>
+        <translation>Consumidor:</translation>
+    </message>
+    <message>
+        <source>Handler:</source>
+        <translation>Gestor:</translation>
+    </message>
+    <message>
+        <source>State:</source>
+        <translation>Estado:</translation>
+    </message>
+    <message>
+        <source>Mentally injured:</source>
+        <translation>Enfermo mental:</translation>
+    </message>
+    <message>
+        <source>NBC contaminated:</source>
+        <translation>Contaminación NBC:</translation>
+    </message>
+    <message>
+        <source>Not diagnosed</source>
+        <translation>No diagnosticado</translation>
+    </message>
+    <message>
+        <source>Convoyer:</source>
+        <translation>Convoy:</translation>
+    </message>
+    <message>
+        <source>Equipment:</source>
+        <translation>Equipo:</translation>
+    </message>
+    <message>
+        <source>Breakdown:</source>
+        <translation>Falla:</translation>
+    </message>
+    <message>
+        <source>Injury:</source>
+        <translation>Herida:</translation>
+    </message>
+    <message>
+        <source>Supplier:</source>
+        <translation>Proveedor:</translation>
+    </message>
+    <message>
+        <source>Transporters provider:</source>
+        <translation>Proveedor de transportes:</translation>
+    </message>
+    <message>
+        <source>No recipients</source>
+        <translation>Sin beneficiarios</translation>
+    </message>
+    <message>
+        <source>Multiple recipients</source>
+        <translation>Beneficiarios Multiples</translation>
+    </message>
+    <message>
+        <source>Current state end :</source>
+        <translation>Fin del Estado Actual :</translation>
+    </message>
+    <message>
+        <source>Convoy:</source>
+        <translation>Convoy:</translation>
+    </message>
+    <message>
+        <source>Rank:</source>
+        <translation>Clasificar:</translation>
+    </message>
+    <message>
+        <source>Current packaging:</source>
+        <translation>Embalaje Actual:</translation>
+    </message>
+    <message>
+        <source>Current state end:</source>
+        <translation>Fin del Estado Actual :</translation>
+    </message>
+    <message>
+        <source>Recipients</source>
+        <translation>Beneficiarios</translation>
+    </message>
+    <message>
+        <source>requested</source>
+        <translation>Requerido</translation>
+    </message>
+    <message>
+        <source>granted</source>
+        <translation>Concedido</translation>
+    </message>
+    <message>
+        <source>convoyed</source>
+        <translation>convoy</translation>
     </message>
 </context>
 <context>
@@ -712,19 +826,19 @@
     </message>
     <message>
         <source>R%L1</source>
-        <translation type="unfinished"></translation>
+        <translation>R%L1</translation>
     </message>
     <message>
         <source>Maintenance system</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema de mantenimiento</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Habilitado</translation>
+        <translation>Habilitado</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitado</translation>
     </message>
 </context>
 <context>
@@ -755,22 +869,22 @@
     </message>
     <message>
         <source>Medical system</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema médico</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Habilitado</translation>
+        <translation>Habilitado</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitado</translation>
     </message>
 </context>
 <context>
     <name>MeteoModel</name>
     <message>
         <source>Local weather </source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo local</translation>
     </message>
 </context>
 <context>
@@ -821,31 +935,31 @@
     </message>
     <message>
         <source>NBC/Dose</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC/Dosis</translation>
     </message>
     <message>
         <source>Dose:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosis:</translation>
     </message>
     <message>
         <source>NBC/Suit</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC/Traje</translation>
     </message>
     <message>
         <source>NBC/Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC/Contaminado</translation>
     </message>
     <message>
         <source>Contaminated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contaminado:</translation>
     </message>
     <message>
         <source>NBC/Decontamination process</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC/Proceso de descontaminación</translation>
     </message>
     <message>
         <source>Decontamination process:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proceso de descontaminación:</translation>
     </message>
 </context>
 <context>
@@ -872,7 +986,7 @@
     </message>
     <message>
         <source> warning (cause :</source>
-        <translation type="unfinished"></translation>
+        <translation>Advertencia (causa :</translation>
     </message>
 </context>
 <context>
@@ -999,114 +1113,118 @@
     </message>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta logistica</translation>
     </message>
     <message>
         <source>Max combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Max energia de combustión:</translation>
     </message>
     <message>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Quemar</translation>
     </message>
     <message>
         <source>Heat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Calor:</translation>
     </message>
     <message>
         <source>Combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Energia de combustión:</translation>
     </message>
     <message>
         <source>Flood</source>
-        <translation type="unfinished"></translation>
+        <translation>Inundación</translation>
     </message>
     <message>
         <source>Reference distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distancia de referencia:</translation>
     </message>
     <message>
         <source>Cell extinguished</source>
-        <translation type="unfinished"></translation>
+        <translation>Celulas extinguidas</translation>
     </message>
     <message>
         <source>Burn surface</source>
-        <translation type="unfinished"></translation>
+        <translation>Superficie quemada</translation>
     </message>
     <message>
         <source>Nb burning cells:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nb Celulas quemadas:</translation>
     </message>
     <message>
         <source>Capacity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad:</translation>
     </message>
     <message>
         <source>Lodging capacity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de alojamiento:</translation>
     </message>
     <message>
         <source>Altitude modifier:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificador de altitud:</translation>
     </message>
     <message>
         <source>Logistic superior:</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistica Superior:</translation>
     </message>
     <message>
         <source>Underground</source>
-        <translation type="unfinished"></translation>
+        <translation>Subterraneo</translation>
     </message>
     <message>
         <source>Network:</source>
-        <translation type="unfinished"></translation>
+        <translation>Red:</translation>
     </message>
     <message>
         <source>Activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Activado:</translation>
     </message>
     <message>
         <source>Activation time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de activación:</translation>
     </message>
     <message>
         <source>Trafficability parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros de transitabilidad</translation>
     </message>
     <message>
         <source>Trafficability:</source>
-        <translation type="unfinished"></translation>
+        <translation>Transitabilidad:</translation>
     </message>
     <message>
         <source>Cell ignition:  %L1/%L2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignición celular:  %L1/%L2</translation>
     </message>
     <message>
         <source>Cell combustion: %L1/%L2, heat %L3</source>
-        <translation type="unfinished"></translation>
+        <translation>Combustion celular: %L1/%L2, calor %L3</translation>
     </message>
     <message>
         <source>Cell decline: heat %L1</source>
-        <translation type="unfinished"></translation>
+        <translation>Disminución de células: calor %L1</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Descripción:</translation>
     </message>
     <message>
         <source>Life time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de vida:</translation>
     </message>
     <message>
         <source>Obstacle activated:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstaculo activado:</translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation>Tipo de obstáculo:</translation>
     </message>
 </context>
 <context>
     <name>ObjectKnowledgePanel</name>
     <message>
         <source>Known objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetos conocidos</translation>
     </message>
 </context>
 <context>
@@ -1132,7 +1250,7 @@
     </message>
     <message>
         <source>Reinforcing:</source>
-        <translation>Reenforzamiento:</translation>
+        <translation>Reforzamiento:</translation>
     </message>
     <message>
         <source>Reinforced by:</source>
@@ -1175,11 +1293,11 @@
     </message>
     <message>
         <source>Needs</source>
-        <translation type="unfinished"></translation>
+        <translation>Necesidades</translation>
     </message>
     <message>
         <source>Satisfaction</source>
-        <translation type="unfinished"></translation>
+        <translation>satisfacción</translation>
     </message>
 </context>
 <context>
@@ -1213,18 +1331,18 @@
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Habilitado</translation>
+        <translation>Habilitado</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitado</translation>
     </message>
 </context>
 <context>
     <name>TeamFactory</name>
     <message>
         <source>No side</source>
-        <translation type="unfinished"></translation>
+        <translation>Ningun lado</translation>
     </message>
 </context>
 <context>
@@ -1243,7 +1361,7 @@
     </message>
     <message>
         <source>Transports</source>
-        <translation type="unfinished"></translation>
+        <translation>Transportes</translation>
     </message>
 </context>
 <context>
@@ -1258,11 +1376,11 @@
     </message>
     <message>
         <source>Associated block:</source>
-        <translation>Block asociado:</translation>
+        <translation>Bloque asociado:</translation>
     </message>
     <message>
         <source>Perceived:</source>
-        <translation>Percebido:</translation>
+        <translation>Percepción:</translation>
     </message>
     <message>
         <source>Progress:</source>
@@ -1299,7 +1417,49 @@
     <name>gaming::Team</name>
     <message>
         <source>Army %1</source>
-        <translation type="unfinished">Ejército %1</translation>
+        <translation>Ejército %1</translation>
+    </message>
+</context>
+<context>
+    <name>Decisions</name>
+    <message>
+        <source>Mission:</source>
+        <translation>Misión:</translation>
+    </message>
+    <message>
+        <source>Automat mission:</source>
+        <translation>Misión del autómata:</translation>
+    </message>
+</context>
+<context>
+    <name>MedicalTreatment</name>
+    <message>
+        <source>Total number of doctors:</source>
+        <translation>Número total de doctores:</translation>
+    </message>
+    <message>
+        <source>Number of available doctors:</source>
+        <translation>Número de doctores disponibles:</translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation>Tratamiento Medico</translation>
+    </message>
+    <message>
+        <source>Hospital ID:</source>
+        <translation>Hospital ID:</translation>
+    </message>
+    <message>
+        <source>Medical Treatment services (Available(Baseline)):</source>
+        <translation>Servicios de tratamiento médico (Disponible(base)):</translation>
+    </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation>Número Total de camas:</translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation>Número de camas disponibles:</translation>
     </message>
 </context>
 </TS>

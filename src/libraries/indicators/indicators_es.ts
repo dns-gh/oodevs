@@ -17,11 +17,11 @@
     </message>
     <message>
         <source>Cannot convert list parameter.</source>
-        <translation>No se puede convertir parámetro de lista.</translation>
+        <translation>No se puede convertir parámetro lista.</translation>
     </message>
     <message>
         <source> has no type.</source>
-        <translation>no tiene tipo.</translation>
+        <translation> no tiene tipo.</translation>
     </message>
     <message>
         <source>Syntax error: %1.</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>too many parameters.</source>
-        <translation>muchos parámetros.</translation>
+        <translation>demasiados parámetros.</translation>
     </message>
     <message>
         <source>Parameter type mismatch in function &apos;%1&apos;: %2</source>

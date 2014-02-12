@@ -41,11 +41,11 @@
     </message>
     <message>
         <source>b</source>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>c</source>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>oo</source>
@@ -129,19 +129,19 @@
     </message>
     <message>
         <source>wounded seriousness level 1</source>
-        <translation>herido nivel 1 de gravedad</translation>
+        <translation>herido de gravedad nivel 1</translation>
     </message>
     <message>
         <source>wounded seriousness level 2</source>
-        <translation>herido nivel 2 de gravedad</translation>
+        <translation>herido de gravedad nivel 2</translation>
     </message>
     <message>
         <source>wounded seriousness level 3</source>
-        <translation>herido nivel 3 de gravedad</translation>
+        <translation>herido de gravedad nivel 3</translation>
     </message>
     <message>
         <source>wounded extreme seriousness</source>
-        <translation>herido extrema gravedad</translation>
+        <translation>herido de extrema gravedad</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -177,7 +177,7 @@
     </message>
     <message>
         <source>fixed</source>
-        <translation>Fijado</translation>
+        <translation>Fijo</translation>
     </message>
     <message>
         <source>carrying out mission</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>tactically destroyed</source>
-        <translation>destruido a nivel táctico</translation>
+        <translation>tácticamente destruído</translation>
     </message>
     <message>
         <source>operational</source>
@@ -209,11 +209,11 @@
     </message>
     <message>
         <source>moving</source>
-        <translation>movimiento</translation>
+        <translation>en movimiento</translation>
     </message>
     <message>
         <source>infiltrating</source>
-        <translation>infiltración</translation>
+        <translation>infiltrando</translation>
     </message>
     <message>
         <source>stopping</source>
@@ -221,19 +221,19 @@
     </message>
     <message>
         <source>short stopping</source>
-        <translation>parada corta</translation>
+        <translation>en parada corta</translation>
     </message>
     <message>
         <source>parked</source>
-        <translation>establecido</translation>
+        <translation>estacionado</translation>
     </message>
     <message>
         <source>parked on self-prepared area</source>
-        <translation>estabelcido en area preparada por si mismo</translation>
+        <translation>estacionado en área autopreparada</translation>
     </message>
     <message>
         <source>parked on engineer-prepared area</source>
-        <translation>establecido en area preparada por ingenieria</translation>
+        <translation>estacionado en área preparada por ingenieria</translation>
     </message>
     <message>
         <source>ready to fire</source>
@@ -265,7 +265,7 @@
     </message>
     <message>
         <source>exhausted</source>
-        <translation>exausto</translation>
+        <translation>exhausto</translation>
     </message>
     <message>
         <source>fanatical</source>
@@ -282,6 +282,158 @@
     <message>
         <source>newbie</source>
         <translation>novato</translation>
+    </message>
+    <message>
+        <source>moving toward logistic system</source>
+        <translation>moviendo hacia cadena logística</translation>
+    </message>
+    <message>
+        <source>waiting for available tow-truck</source>
+        <translation>esperando remolque</translation>
+    </message>
+    <message>
+        <source>tow-truck moving to target</source>
+        <translation>remolque moviéndose hacia objetivo</translation>
+    </message>
+    <message>
+        <source>tow-truck loading</source>
+        <translation>remolque cargando</translation>
+    </message>
+    <message>
+        <source>tow-truck moving from target</source>
+        <translation>remolque moviéndose desde objetivo</translation>
+    </message>
+    <message>
+        <source>tow-truck unloading</source>
+        <translation>remolque descargando</translation>
+    </message>
+    <message>
+        <source>diagnostic</source>
+        <translation>diagnóstico</translation>
+    </message>
+    <message>
+        <source>waiting to be handled by higher level</source>
+        <translation>esperando para ser atendido por un nivel mas alto</translation>
+    </message>
+    <message>
+        <source>waiting for available parts</source>
+        <translation>esperando disponibilidad de partes</translation>
+    </message>
+    <message>
+        <source>waiting for available repairer</source>
+        <translation>esperando por mecánico</translation>
+    </message>
+    <message>
+        <source>repairing</source>
+        <translation>reparando</translation>
+    </message>
+    <message>
+        <source>unit returning</source>
+        <translation>unidad regresando</translation>
+    </message>
+    <message>
+        <source>finished</source>
+        <translation>terminado</translation>
+    </message>
+    <message>
+        <source>convoy waiting for trucks</source>
+        <translation>convoy esperando por camiones</translation>
+    </message>
+    <message>
+        <source>convoy setting up</source>
+        <translation>convoy conformándose</translation>
+    </message>
+    <message>
+        <source>convoy moving to loading point</source>
+        <translation>convoy moviéndose a punto de carga</translation>
+    </message>
+    <message>
+        <source>convoy loading</source>
+        <translation>convoy cargando</translation>
+    </message>
+    <message>
+        <source>convoy moving to unloading point</source>
+        <translation>convoy moviéndose a punto de descarga</translation>
+    </message>
+    <message>
+        <source>convoy unloading</source>
+        <translation>convoy descargando</translation>
+    </message>
+    <message>
+        <source>convoy moving back</source>
+        <translation>convoy regresando</translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance</source>
+        <translation>esperando por un ambulancia de evacuación</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance coming</source>
+        <translation>ambulancia de evacuación en camino</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance loading</source>
+        <translation>ambulancia de evacuación cargando</translation>
+    </message>
+    <message>
+        <source>waiting for evacuation ambulance loading</source>
+        <translation>esperando por la carga de un ambulancia de evacuación</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance going back</source>
+        <translation>ambulancia de evacuación regresando</translation>
+    </message>
+    <message>
+        <source>evacuation ambulance unloading</source>
+        <translation>ambulancia de evacuación descargando</translation>
+    </message>
+    <message>
+        <source>waiting for doctor</source>
+        <translation>esperando por médico</translation>
+    </message>
+    <message>
+        <source>waiting for triage</source>
+        <translation>esperando por triaje(clasificación)</translation>
+    </message>
+    <message>
+        <source>triage</source>
+        <translation>triaje(clasificación)</translation>
+    </message>
+    <message>
+        <source>looking for treatment area</source>
+        <translation>buscando área de tratamiento</translation>
+    </message>
+    <message>
+        <source>waiting for doctor (treatment)</source>
+        <translation>esperando por médico (tratamiento)</translation>
+    </message>
+    <message>
+        <source>treatment</source>
+        <translation>tratamiento</translation>
+    </message>
+    <message>
+        <source>hospitalization</source>
+        <translation>hospitalización</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance</source>
+        <translation>esperando por ambulancia de recolección</translation>
+    </message>
+    <message>
+        <source>collection ambulance loading</source>
+        <translation>ambulancia de recolección cargando</translation>
+    </message>
+    <message>
+        <source>waiting for collection ambulance loading</source>
+        <translation>esperando por carga de ambulancia de recolección</translation>
+    </message>
+    <message>
+        <source>collection ambulance coming</source>
+        <translation>ambulancia de recolección en camino</translation>
+    </message>
+    <message>
+        <source>collection ambulance unloading</source>
+        <translation>ambulancia de recolección descargando</translation>
     </message>
     <message>
         <source>quiet</source>
@@ -305,7 +457,7 @@
     </message>
     <message>
         <source>Sand storm</source>
-        <translation>tormenta de area</translation>
+        <translation>tormenta de arena</translation>
     </message>
     <message>
         <source>Fog</source>
@@ -373,219 +525,247 @@
     </message>
     <message>
         <source>Extinguisher agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Agente extintor</translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation>buscando área de triaje</translation>
     </message>
     <message>
         <source>Energy</source>
-        <translation type="unfinished"></translation>
+        <translation>Energía</translation>
     </message>
     <message>
         <source>forest</source>
-        <translation type="unfinished"></translation>
+        <translation>bosque</translation>
     </message>
     <message>
         <source>orchard</source>
-        <translation type="unfinished"></translation>
+        <translation>cultivos</translation>
     </message>
     <message>
         <source>swamp</source>
-        <translation type="unfinished"></translation>
+        <translation>pantano</translation>
     </message>
     <message>
         <source>dune</source>
-        <translation type="unfinished"></translation>
+        <translation>duna</translation>
     </message>
     <message>
         <source>urban area</source>
-        <translation type="unfinished"></translation>
+        <translation>área urbana</translation>
     </message>
     <message>
         <source>lake</source>
-        <translation type="unfinished"></translation>
+        <translation>lago</translation>
     </message>
     <message>
         <source>glacier</source>
-        <translation type="unfinished"></translation>
+        <translation>glaciar</translation>
     </message>
     <message>
         <source>forest edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de bosque</translation>
     </message>
     <message>
         <source>suburb</source>
-        <translation type="unfinished"></translation>
+        <translation>suburbio</translation>
     </message>
     <message>
         <source>waterfront</source>
-        <translation type="unfinished"></translation>
+        <translation>costa</translation>
     </message>
     <message>
         <source>orchard edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de bosque</translation>
     </message>
     <message>
         <source>swamp edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de pantano</translation>
     </message>
     <message>
         <source>dune edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de duna</translation>
     </message>
     <message>
         <source>glacier edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de glaciar</translation>
     </message>
     <message>
         <source>country road</source>
-        <translation type="unfinished"></translation>
+        <translation>camino rural</translation>
     </message>
     <message>
         <source>highway</source>
-        <translation type="unfinished"></translation>
+        <translation>autopista</translation>
     </message>
     <message>
         <source>main road</source>
-        <translation type="unfinished"></translation>
+        <translation>vía principal</translation>
     </message>
     <message>
         <source>secondary road</source>
-        <translation type="unfinished"></translation>
+        <translation>vía secundaria</translation>
     </message>
     <message>
         <source>stream</source>
-        <translation type="unfinished"></translation>
+        <translation>arroyo</translation>
     </message>
     <message>
         <source>river</source>
-        <translation type="unfinished"></translation>
+        <translation>río</translation>
     </message>
     <message>
         <source>main river</source>
-        <translation type="unfinished"></translation>
+        <translation>río principal</translation>
     </message>
     <message>
         <source>bridge</source>
-        <translation type="unfinished"></translation>
+        <translation>puente</translation>
     </message>
     <message>
         <source>cliff</source>
-        <translation type="unfinished"></translation>
+        <translation>barranco</translation>
     </message>
     <message>
         <source>railroad</source>
-        <translation type="unfinished"></translation>
+        <translation>ferrovía</translation>
     </message>
     <message>
         <source>crossroad</source>
-        <translation type="unfinished"></translation>
+        <translation>cruce de vías</translation>
     </message>
     <message>
         <source>mountain</source>
-        <translation type="unfinished"></translation>
+        <translation>montaña</translation>
     </message>
     <message>
         <source>mountain edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de montaña</translation>
     </message>
     <message>
         <source>calm</source>
-        <translation type="unfinished"></translation>
+        <translation>calmado</translation>
     </message>
     <message>
         <source>worried</source>
-        <translation type="unfinished"></translation>
+        <translation>aburrido</translation>
     </message>
     <message>
         <source>stressed</source>
-        <translation type="unfinished"></translation>
+        <translation>estresado</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Destroyed</source>
-        <translation type="unfinished"></translation>
+        <translation>Destruído</translation>
     </message>
     <message>
         <source>Healthy</source>
-        <translation type="unfinished"></translation>
+        <translation>Saludable</translation>
     </message>
     <message>
         <source>Injured</source>
-        <translation type="unfinished"></translation>
+        <translation>Herido</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Muerto</translation>
     </message>
     <message>
         <source>Officer</source>
-        <translation type="unfinished"></translation>
+        <translation>Oficial</translation>
     </message>
     <message>
         <source>Warrant officer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sub Oficial</translation>
     </message>
     <message>
         <source>Trooper</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldado</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Necesita soporte de mantenimiento</translation>
     </message>
     <message>
         <source>U1</source>
-        <translation type="unfinished"></translation>
+        <translation>U1</translation>
     </message>
     <message>
         <source>U2</source>
-        <translation type="unfinished"></translation>
+        <translation>U2</translation>
     </message>
     <message>
         <source>U3</source>
-        <translation type="unfinished"></translation>
+        <translation>U3</translation>
     </message>
     <message>
         <source>UE</source>
-        <translation type="unfinished"></translation>
+        <translation>UE</translation>
     </message>
     <message>
         <source>On battlefield</source>
-        <translation type="unfinished"></translation>
+        <translation>En campo de batalla</translation>
     </message>
     <message>
         <source>Assigned to maintenance</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignado a mantenimiento</translation>
     </message>
     <message>
         <source>In medical treatment</source>
-        <translation type="unfinished"></translation>
+        <translation>En tratamiento</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation type="unfinished"></translation>
+        <translation>Reparable en sitio</translation>
     </message>
     <message>
         <source>In maintenance</source>
-        <translation type="unfinished"></translation>
+        <translation>En mantenimiento</translation>
     </message>
     <message>
         <source>Prisoner</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisionero</translation>
+    </message>
+    <message>
+        <source>waiting for handling</source>
+        <translation>esperando por despacho</translation>
+    </message>
+    <message>
+        <source>transporting unpackaged</source>
+        <translation>transportando desempaquetado</translation>
+    </message>
+    <message>
+        <source>waiting for packaging</source>
+        <translation>esperando empaquetado</translation>
+    </message>
+    <message>
+        <source>packaging</source>
+        <translation>empaquetando</translation>
+    </message>
+    <message>
+        <source>waiting for transporter</source>
+        <translation>esperando transporte</translation>
+    </message>
+    <message>
+        <source>transporting packaged</source>
+        <translation>transportando empaquetado</translation>
     </message>
     <message>
         <source>Agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Agente</translation>
     </message>
     <message>
         <source>Automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Autómata</translation>
     </message>
     <message>
         <source>Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>No válido</translation>
     </message>
     <message>
         <source>Shell</source>
@@ -605,750 +785,479 @@
     </message>
     <message>
         <source>ALR</source>
-        <translation type="unfinished"></translation>
+        <translation>ALR</translation>
     </message>
     <message>
         <source>Liquid</source>
-        <translation type="unfinished"></translation>
+        <translation>Líquido</translation>
     </message>
     <message>
         <source>Gaseous</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaseoso</translation>
     </message>
     <message>
         <source>Funeral</source>
-        <translation type="unfinished"></translation>
+        <translation>Funeral</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Por defecto</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>Living Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona residencial</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo</translation>
     </message>
     <message>
         <source>Level 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel 1</translation>
     </message>
     <message>
         <source>Level 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel 2</translation>
     </message>
     <message>
         <source>Level 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel 3</translation>
     </message>
     <message>
         <source>Level 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel 4</translation>
     </message>
     <message>
         <source>Level 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel 5</translation>
     </message>
     <message>
         <source>Prepare</source>
-        <translation type="unfinished"></translation>
+        <translation>Preparar</translation>
     </message>
     <message>
         <source>Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Juego</translation>
     </message>
     <message>
         <source>Planning</source>
-        <translation type="unfinished"></translation>
+        <translation>Planeamiento</translation>
     </message>
     <message>
         <source>Replay</source>
-        <translation type="unfinished"></translation>
+        <translation>Revisar</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidades</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetos</translation>
     </message>
     <message>
         <source>Automata</source>
-        <translation type="unfinished"></translation>
+        <translation>Autómata</translation>
     </message>
     <message>
         <source>Formations</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaciones</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbres</translation>
     </message>
     <message>
         <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos</translation>
     </message>
     <message>
         <source>Tactical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Líneas tácticas</translation>
     </message>
     <message>
         <source>Ghosts</source>
-        <translation type="unfinished"></translation>
+        <translation>Fantasmas</translation>
     </message>
     <message>
         <source>Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcos</translation>
     </message>
     <message>
         <source>Knowledges</source>
-        <translation type="unfinished"></translation>
+        <translation>Conocimiento</translation>
     </message>
     <message>
         <source>Inhabitants</source>
-        <translation type="unfinished"></translation>
+        <translation>Habitantes</translation>
     </message>
     <message>
         <source>Parties</source>
-        <translation type="unfinished"></translation>
+        <translation>Partidos</translation>
     </message>
     <message>
         <source>Resource networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Redes de recursos</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden</translation>
     </message>
     <message>
         <source>Supervisor action</source>
-        <translation type="unfinished"></translation>
+        <translation>Acción de supervisor</translation>
     </message>
     <message>
         <source>Report</source>
-        <translation type="unfinished"></translation>
+        <translation>Reporte</translation>
     </message>
     <message>
         <source>Task</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarea</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Unit missions</source>
-        <translation type="unfinished">Misiones de unidad</translation>
+        <translation>Misiones de unidad</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation type="unfinished">Misiones de autómata</translation>
+        <translation>Misiones de autómata</translation>
     </message>
     <message>
         <source>Crowd missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Misiones de Muchedumbre</translation>
     </message>
     <message>
         <source>Fragmentary Orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Órdenes Fragmentarias</translation>
     </message>
     <message>
         <source>Activated</source>
-        <translation type="unfinished"></translation>
+        <translation>Activado</translation>
     </message>
     <message>
         <source>Deactivated</source>
-        <translation type="unfinished"></translation>
+        <translation>Desactivado</translation>
     </message>
     <message>
         <source>In funeral system</source>
-        <translation type="unfinished"></translation>
+        <translation>En sistema funeral</translation>
     </message>
     <message>
         <source>Short range</source>
-        <translation type="unfinished"></translation>
+        <translation>Corto alcance</translation>
     </message>
     <message>
         <source>Medium range</source>
-        <translation type="unfinished"></translation>
+        <translation>Medio Alcance</translation>
     </message>
     <message>
         <source>Long range</source>
-        <translation type="unfinished"></translation>
+        <translation>Largo alcance</translation>
     </message>
     <message>
         <source>No ammunition</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin munición</translation>
     </message>
     <message>
         <source>Preparation</source>
-        <translation type="unfinished"></translation>
+        <translation>Preparación</translation>
     </message>
     <message>
         <source>All Gaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo juego</translation>
     </message>
     <message>
         <source>Display triggered</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar lanzado</translation>
     </message>
     <message>
         <source>Edit triggered</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar lanzado</translation>
     </message>
     <message>
         <source>Edit planned</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar planeado</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear nuevo</translation>
     </message>
     <message>
-        <source>Electronic</source>
-        <translation type="unfinished"></translation>
+        <source>reserved</source>
+        <translation>reservado</translation>
     </message>
     <message>
-        <source>Mobility</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Seriousness level 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>sword::EnumLogisticLevel</name>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic base</source>
-        <translation type="unfinished"></translation>
+        <source>preliminary</source>
+        <translation>preliminar</translation>
     </message>
 </context>
 <context>
     <name>sword::KnowledgeMagicAction::Type</name>
     <message>
         <source>Knowledge Group Add knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo de conocimiento - Agregar conociiento</translation>
     </message>
     <message>
         <source>Knowledge Group Activation Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio de activación de grupo de conocimiento</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar superior</translation>
     </message>
     <message>
         <source>Knowledge Group Change Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus</name>
-    <message>
-        <source>waiting for handling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transporting unpackaged</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for packaging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>packaging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for transporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transporting packaged</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation type="unfinished">terminado</translation>
-    </message>
-</context>
-<context>
-    <name>sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus</name>
-    <message>
-        <source>moving toward logistic system</source>
-        <translation type="unfinished">moviendo hacia cadena logística</translation>
-    </message>
-    <message>
-        <source>waiting for available tow-truck</source>
-        <translation type="unfinished">esperando remolque disponible</translation>
-    </message>
-    <message>
-        <source>tow-truck moving to target</source>
-        <translation type="unfinished">remolque moviéndose hacia objetivo</translation>
-    </message>
-    <message>
-        <source>tow-truck loading</source>
-        <translation type="unfinished">remolque cargando</translation>
-    </message>
-    <message>
-        <source>tow-truck moving from target</source>
-        <translation type="unfinished">remolque moviéndose desde objetivo</translation>
-    </message>
-    <message>
-        <source>tow-truck unloading</source>
-        <translation type="unfinished">remolque descargando</translation>
-    </message>
-    <message>
-        <source>diagnosis</source>
-        <translation type="unfinished">diagnóstico</translation>
-    </message>
-    <message>
-        <source>waiting to be handled by higher level</source>
-        <translation type="unfinished">esperando para ser atendido por un nivel mas alto</translation>
-    </message>
-    <message>
-        <source>waiting for available parts</source>
-        <translation type="unfinished">esperando por partes disponibles</translation>
-    </message>
-    <message>
-        <source>waiting for available repairer</source>
-        <translation type="unfinished">esperando por mecánico disponible</translation>
-    </message>
-    <message>
-        <source>repairing</source>
-        <translation type="unfinished">reparando</translation>
-    </message>
-    <message>
-        <source>unit returning</source>
-        <translation type="unfinished">unidad en curso de retorno</translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation type="unfinished">terminado</translation>
-    </message>
-    <message>
-        <source>waiting for transporter selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for repair team selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for diagnosis team selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus</name>
-    <message>
-        <source>waiting for evacuation ambulance</source>
-        <translation type="unfinished">esperando por un ambulancia de evacuación</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance coming</source>
-        <translation type="unfinished">ambulancia de evacuación en camino</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance loading</source>
-        <translation type="unfinished">ambulancia de evacuación cargando</translation>
-    </message>
-    <message>
-        <source>waiting for evacuation ambulance loading</source>
-        <translation type="unfinished">esperando por la carga de un ambulancia de evacuación</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance going back</source>
-        <translation type="unfinished">ambulancia de evacuación en retorno</translation>
-    </message>
-    <message>
-        <source>evacuation ambulance unloading</source>
-        <translation type="unfinished">ambulancia de evacuación descargando</translation>
-    </message>
-    <message>
-        <source>waiting for doctor</source>
-        <translation type="unfinished">esperando por médico</translation>
-    </message>
-    <message>
-        <source>diagnosis</source>
-        <translation type="unfinished">diagnóstico</translation>
-    </message>
-    <message>
-        <source>looking for triage area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>waiting for triage</source>
-        <translation type="unfinished">esperando por triaje(clasificación)</translation>
-    </message>
-    <message>
-        <source>triage</source>
-        <translation type="unfinished">triaje(clasificación)</translation>
-    </message>
-    <message>
-        <source>looking for treatment area</source>
-        <translation type="unfinished">buscando área de tratamiento</translation>
-    </message>
-    <message>
-        <source>waiting for doctor (treatment)</source>
-        <translation type="unfinished">esperando por médico (tratamiento)</translation>
-    </message>
-    <message>
-        <source>treatment</source>
-        <translation type="unfinished">tratamiento</translation>
-    </message>
-    <message>
-        <source>hospitalization</source>
-        <translation type="unfinished">hospitalización</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance</source>
-        <translation type="unfinished">esperando por ambulancia de recolección</translation>
-    </message>
-    <message>
-        <source>collection ambulance loading</source>
-        <translation type="unfinished">ambulancia de recolección cargando</translation>
-    </message>
-    <message>
-        <source>waiting for collection ambulance loading</source>
-        <translation type="unfinished">esperando por carga de ambulancia de recolección</translation>
-    </message>
-    <message>
-        <source>collection ambulance coming</source>
-        <translation type="unfinished">ambulancia de recolección en camino</translation>
-    </message>
-    <message>
-        <source>collection ambulance unloading</source>
-        <translation type="unfinished">ambulancia de recolección descargando</translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation type="unfinished">terminado</translation>
-    </message>
-</context>
-<context>
-    <name>sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus</name>
-    <message>
-        <source>convoy waiting for trucks</source>
-        <translation type="unfinished">convoy esperando por camiones</translation>
-    </message>
-    <message>
-        <source>convoy setting up</source>
-        <translation type="unfinished">convoy conformándose</translation>
-    </message>
-    <message>
-        <source>convoy moving to loading point</source>
-        <translation type="unfinished">convoy moviéndose a punto de carga</translation>
-    </message>
-    <message>
-        <source>convoy loading</source>
-        <translation type="unfinished">convoy cargando</translation>
-    </message>
-    <message>
-        <source>convoy moving to unloading point</source>
-        <translation type="unfinished">convoy moviéndose a punto de descarga</translation>
-    </message>
-    <message>
-        <source>convoy unloading</source>
-        <translation type="unfinished">convoy descargando</translation>
-    </message>
-    <message>
-        <source>convoy moving back</source>
-        <translation type="unfinished">convoy en retorno</translation>
-    </message>
-    <message>
-        <source>finished</source>
-        <translation type="unfinished">terminado</translation>
+        <translation>Cambio de tipo de grupo de conocimiento</translation>
     </message>
 </context>
 <context>
     <name>sword::MagicAction::Type</name>
     <message>
         <source>Change diplomacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar diplomacia</translation>
     </message>
     <message>
         <source>Change resource links</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar enlaces logísticos</translation>
     </message>
     <message>
         <source>Strike order on location</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden de tiro sobre posición</translation>
     </message>
     <message>
         <source>Debug internal</source>
-        <translation type="unfinished"></translation>
+        <translation>Depuración interna</translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear un grupo de conocimiento</translation>
     </message>
     <message>
         <source>Change Global Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el clima global</translation>
     </message>
     <message>
         <source>Change Local Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el clima local</translation>
     </message>
     <message>
         <source>Local Weather Destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transfer To Logistic Superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Maintenance Transporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select logistic automated resolution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Diagnosis Team</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Repair Team</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar clima local</translation>
     </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>
     <message>
         <source>Object Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de objeto</translation>
     </message>
     <message>
         <source>Object Destruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar objeto</translation>
     </message>
     <message>
         <source>Object Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar objeto</translation>
     </message>
 </context>
 <context>
     <name>sword::UnitMagicAction::Type</name>
     <message>
         <source>Change brain debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio de modo de depuración de motor decisional</translation>
     </message>
     <message>
         <source>Change extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar la extensión</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar de superior</translation>
     </message>
     <message>
         <source>Change human factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar los factores humanos</translation>
     </message>
     <message>
         <source>Reload brain</source>
-        <translation type="unfinished"></translation>
+        <translation>Recargar el motor decisional</translation>
     </message>
     <message>
         <source>Surrender</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendirse</translation>
     </message>
     <message>
         <source>Teleport</source>
-        <translation type="unfinished"></translation>
+        <translation>Teletransportar</translation>
     </message>
     <message>
         <source>Exec script</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar script</translation>
     </message>
     <message>
         <source>Automat Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de autómata</translation>
     </message>
     <message>
         <source>Cancel - Surrender</source>
-        <translation type="unfinished"></translation>
+        <translation>Anular la rendición</translation>
     </message>
     <message>
         <source>Change critical intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar inteligencia crítica</translation>
     </message>
     <message>
         <source>Change dotations</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar las dotaciones</translation>
     </message>
     <message>
         <source>Change equipment state</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el estado del equipamiento</translation>
     </message>
     <message>
         <source>Change human state</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el estado de los humanos</translation>
     </message>
     <message>
         <source>Change Logistic Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar los enlaces logísticos</translation>
     </message>
     <message>
         <source>Direct strike order</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden de tiro directo</translation>
     </message>
     <message>
         <source>Change affinities</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar afinidades</translation>
     </message>
     <message>
         <source>Crowd Change Armed Individuals</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar los individuos armados de una muchedumbre</translation>
     </message>
     <message>
         <source>Crowd Change Attitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar la actitud de una muchedumbre</translation>
     </message>
     <message>
         <source>Crowd Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de muchedumbre</translation>
     </message>
     <message>
         <source>Crowd Total Destruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Destrucción total de una muchedumbre</translation>
     </message>
     <message>
         <source>Delete unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar unidad</translation>
     </message>
     <message>
         <source>Destroy - All</source>
-        <translation type="unfinished"></translation>
+        <translation>Destruir - Totalmente</translation>
     </message>
     <message>
         <source>Destroy Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Destruir componente</translation>
     </message>
     <message>
         <source>Strike order</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden de tiro</translation>
     </message>
     <message>
         <source>Formation Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de formación</translation>
     </message>
     <message>
         <source>Population Change Alerted State</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio del estado de alerta de la población</translation>
     </message>
     <message>
         <source>Population Change Confined State</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio del estado de confinamiento de la población</translation>
     </message>
     <message>
         <source>Population Change Health State</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio del estado de salud de la población</translation>
     </message>
     <message>
         <source>Load unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar unidad</translation>
     </message>
     <message>
         <source>Finish logistic handlings</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizar los requerimientos logísticos</translation>
     </message>
     <message>
         <source>Log Supply Change Quotas</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar las cuotas de reabastecimiento</translation>
     </message>
     <message>
         <source>Log Supply Pull Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer requerimiento a cadena de abastecimiento</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprovisionar a cadena de abastecimiento</translation>
     </message>
     <message>
         <source>Partial Recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperación parcial</translation>
     </message>
     <message>
         <source>Recover - All</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar - Todo</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar - Equipamiento</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar - Recursos</translation>
     </message>
     <message>
         <source>Recover Transporters</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar transportes</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar - Tropas</translation>
     </message>
     <message>
         <source>Equipment transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia de equipos</translation>
     </message>
     <message>
         <source>Unit Change Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar superior de unidad</translation>
     </message>
     <message>
         <source>Unit Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de unidad</translation>
     </message>
     <message>
         <source>Unload unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargar unidad</translation>
     </message>
     <message>
         <source>Change posture</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar de postura</translation>
     </message>
     <message>
         <source>Crowd Change Health State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat and units creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Switch Log Maintenance Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el estado de salud de la muchedumbre</translation>
     </message>
 </context>
 </TS>

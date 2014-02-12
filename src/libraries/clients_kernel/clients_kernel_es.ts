@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Footman</source>
-        <translation>Soldado de infantería</translation>
+        <translation>Pedestre</translation>
     </message>
     <message>
         <source>Helicopter</source>
@@ -70,15 +70,15 @@
         <translation>Coordenadas locales</translation>
     </message>
     <message>
-        <source>UTM SAD69 Brazil</source>
-        <translation type="unfinished"></translation>
+        <source>UTM South American 1969, Brazil</source>
+        <translation>UTM Sud América 1969, Brasil</translation>
     </message>
 </context>
 <context>
     <name>DisplayExtractor_ABC</name>
     <message>
         <source>Unknown element</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemento desconocido</translation>
     </message>
 </context>
 <context>
@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>ACL</source>
-        <translation>ACL</translation>
+        <translation>LCA</translation>
     </message>
     <message>
         <source>Attitude change line (ACL)</source>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>CL</source>
-        <translation>CL</translation>
+        <translation>LC</translation>
     </message>
     <message>
         <source>Coordination line (CL)</source>
@@ -109,27 +109,27 @@
     </message>
     <message>
         <source>DL</source>
-        <translation>DL</translation>
+        <translation>LD</translation>
     </message>
     <message>
         <source>Denial line (DL)</source>
-        <translation>Línea de negación (DL)</translation>
+        <translation>Línea de denegación (DL)</translation>
     </message>
     <message>
         <source>OL</source>
-        <translation>OL</translation>
+        <translation>LO</translation>
     </message>
     <message>
         <source>Objective line (OL)</source>
-        <translation>Línea de objetivo (OL)</translation>
+        <translation>Línea de objetivo (LO)</translation>
     </message>
     <message>
         <source>BL</source>
-        <translation>LCAR</translation>
+        <translation>LB</translation>
     </message>
     <message>
         <source>Blocking line (BL)</source>
-        <translation>Línea de bloqueo (BL)</translation>
+        <translation>Línea de bloqueo (LB)</translation>
     </message>
     <message>
         <source>HL</source>
@@ -137,19 +137,19 @@
     </message>
     <message>
         <source>Handover line (HL)</source>
-        <translation>Línea de cesión (HL)</translation>
+        <translation>Línea de relevo (LR)</translation>
     </message>
     <message>
         <source>SML</source>
-        <translation>SML</translation>
+        <translation>LIM</translation>
     </message>
     <message>
         <source>Start of mission line (SML)</source>
-        <translation>Línea de inicio de misión (LDM)</translation>
+        <translation>Línea de inicio de misión (LIM)</translation>
     </message>
     <message>
         <source>EML</source>
-        <translation>EML</translation>
+        <translation>LFM</translation>
     </message>
     <message>
         <source>End of mission line (EML)</source>
@@ -157,11 +157,11 @@
     </message>
     <message>
         <source>RRL</source>
-        <translation>RRL</translation>
+        <translation>LRR</translation>
     </message>
     <message>
         <source>Recognition and reception line (RRL)</source>
-        <translation>Línea de reconocimiento y recepciónl (RRL)</translation>
+        <translation>Línea de reconocimiento y recepción (LRR)</translation>
     </message>
 </context>
 <context>
@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Not seen</source>
-        <translation>no se distingue</translation>
+        <translation>No visto</translation>
     </message>
     <message>
         <source>Recognition</source>
@@ -187,46 +187,46 @@
     <name>E_TroopHealthState</name>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Operational</source>
-        <translation type="unfinished"></translation>
+        <translation>Operacional</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished"></translation>
+        <translation>Muerto</translation>
     </message>
     <message>
         <source>Injured</source>
-        <translation type="unfinished"></translation>
+        <translation>Herido</translation>
     </message>
     <message>
         <source>Mentally injured</source>
-        <translation type="unfinished"></translation>
+        <translation>Transtornado</translation>
     </message>
     <message>
         <source>Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Contaminado</translation>
     </message>
     <message>
         <source>Under treatment </source>
-        <translation type="unfinished"></translation>
+        <translation>Bajo tratamiento</translation>
     </message>
     <message>
         <source>Assigned to maintenance</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignado a mantenimiento</translation>
     </message>
     <message>
         <source>Wounded not evacuated</source>
-        <translation type="unfinished"></translation>
+        <translation>Herido no evacuado</translation>
     </message>
 </context>
 <context>
     <name>E_WeatherType</name>
     <message>
         <source>PasDePrecipitation</source>
-        <translation>Sin precipitaciones</translation>
+        <translation>Sin precipitación</translation>
     </message>
     <message>
         <source>TempeteDeSable</source>
@@ -280,11 +280,11 @@
     </message>
     <message>
         <source>Superior Selected</source>
-        <translation>Seleccionado superior</translation>
+        <translation>Superior Seleccionado</translation>
     </message>
     <message>
         <source>Controlled</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlado</translation>
     </message>
 </context>
 <context>
@@ -322,7 +322,7 @@
     </message>
     <message>
         <source>Path</source>
-        <translation>Sendero</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Polygon</source>
@@ -330,18 +330,18 @@
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rectángulo</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Curva</translation>
     </message>
 </context>
 <context>
     <name>Stock</name>
     <message>
         <source>Stock resource attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributo  recurso en stock</translation>
     </message>
 </context>
 <context>
@@ -379,7 +379,7 @@
     </message>
     <message>
         <source>veh/h</source>
-        <translation>veh/s</translation>
+        <translation>veh/h</translation>
     </message>
     <message>
         <source>t</source>
@@ -399,14 +399,14 @@
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
 </context>
 <context>
     <name>XmlDescription</name>
     <message>
         <source>No description available</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay descripción </translation>
     </message>
 </context>
 <context>

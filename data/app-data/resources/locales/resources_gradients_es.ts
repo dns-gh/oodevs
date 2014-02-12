@@ -2,137 +2,137 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es" sourcelanguage="en">
 <context>
-  <name>gradients</name>
-  <message>
-    <source>default</source>
-    <translation type="unfinished"></translation>
-  </message>
-  <message>
-    <source>grey levels</source>
-    <translation type="unfinished"></translation>
-  </message>
-  <message>
-    <source>topography</source>
-    <translation type="unfinished"></translation>
-  </message>
+    <name>gradients</name>
+    <message>
+        <source>default</source>
+        <translation>por defecto</translation>
+    </message>
+    <message>
+        <source>grey levels</source>
+        <translation>niveles de grises</translation>
+    </message>
+    <message>
+        <source>topography</source>
+        <translation>topografía</translation>
+    </message>
 </context>
 <context>
     <name>Terrain type</name>
     <message>
         <source>Terrain type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de terreno</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>desconocido</translation>
     </message>
     <message>
         <source>forest</source>
-        <translation type="unfinished"></translation>
+        <translation>bosque</translation>
     </message>
     <message>
         <source>orchard</source>
-        <translation type="unfinished"></translation>
+        <translation>cultivo</translation>
     </message>
     <message>
         <source>swamp</source>
-        <translation type="unfinished"></translation>
+        <translation>pantano</translation>
     </message>
     <message>
         <source>dune</source>
-        <translation type="unfinished"></translation>
+        <translation>duna</translation>
     </message>
     <message>
         <source>urban area</source>
-        <translation type="unfinished"></translation>
+        <translation>área urbana</translation>
     </message>
     <message>
         <source>lake</source>
-        <translation type="unfinished"></translation>
+        <translation>lago</translation>
     </message>
     <message>
         <source>glacier</source>
-        <translation type="unfinished"></translation>
+        <translation>glaciar</translation>
     </message>
     <message>
         <source>forest edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de bosque</translation>
     </message>
     <message>
         <source>suburb</source>
-        <translation type="unfinished"></translation>
+        <translation>suburbio</translation>
     </message>
     <message>
         <source>waterfront</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de agua</translation>
     </message>
     <message>
         <source>orchard edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de cultivo</translation>
     </message>
     <message>
         <source>swamp edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de pantano</translation>
     </message>
     <message>
         <source>dune edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de duna</translation>
     </message>
     <message>
         <source>glacier edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de glaciar</translation>
     </message>
     <message>
         <source>country road</source>
-        <translation type="unfinished"></translation>
+        <translation>camino rural</translation>
     </message>
     <message>
         <source>highway</source>
-        <translation type="unfinished"></translation>
+        <translation>autopista</translation>
     </message>
     <message>
         <source>main road</source>
-        <translation type="unfinished"></translation>
+        <translation>vía principal</translation>
     </message>
     <message>
         <source>secondary road</source>
-        <translation type="unfinished"></translation>
+        <translation>vía secundaria</translation>
     </message>
     <message>
         <source>stream</source>
-        <translation type="unfinished"></translation>
+        <translation>arroyo</translation>
     </message>
     <message>
         <source>river</source>
-        <translation type="unfinished"></translation>
+        <translation>río</translation>
     </message>
     <message>
         <source>main river</source>
-        <translation type="unfinished"></translation>
+        <translation>río principal</translation>
     </message>
     <message>
         <source>bridge</source>
-        <translation type="unfinished"></translation>
+        <translation>puente</translation>
     </message>
     <message>
         <source>cliff</source>
-        <translation type="unfinished"></translation>
+        <translation>acantilado</translation>
     </message>
     <message>
         <source>railroad</source>
-        <translation type="unfinished"></translation>
+        <translation>ferrocarril</translation>
     </message>
     <message>
         <source>crossroad</source>
-        <translation type="unfinished"></translation>
+        <translation>cruce de caminos</translation>
     </message>
     <message>
         <source>mountain</source>
-        <translation type="unfinished"></translation>
+        <translation>montaña</translation>
     </message>
     <message>
         <source>mountain edge</source>
-        <translation type="unfinished"></translation>
+        <translation>borde de  montaña</translation>
     </message>
 </context>
 </TS>
