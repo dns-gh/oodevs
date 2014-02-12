@@ -76,7 +76,6 @@ private:
     //! @name Helpers
     //@{
     void Purge();
-    void UpdateDisplay();
     void AddWidget( sword::LogMaintenanceHandlingUpdate_EnumLogMaintenanceHandlingStatus status, QWidget* widget );
     void SetCurrentWidget();
     //@}
@@ -87,6 +86,7 @@ private slots:
     virtual void accept();
     virtual void OnRadioButtonChanged();
     virtual void OnSelectionChanged( const QModelIndex&, const QModelIndex& );
+    void UpdateDisplay();
     //@}
 
 private:

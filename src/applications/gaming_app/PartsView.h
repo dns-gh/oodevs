@@ -40,6 +40,9 @@ public:
     void Select( kernel::Entity_ABC* handler, const LogMaintenanceConsign& consign );
     bool IsValid() const;
 
+signals:
+    void Updated();
+
 private:
     void Purge();
     void NotifyUpdated( const kernel::Dotations_ABC& dotations );

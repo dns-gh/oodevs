@@ -99,13 +99,14 @@ void PartsView::NotifyUpdated( const kernel::Dotations_ABC& dotations )
         const QModelIndex& available = model_->index( part->second, 2 );
         model_->setData( available, elem.quantity_ );
         const int required = model_->index( part->second, 1 ).data().toInt();
-        if( elem.quantity_ >= required )
-            continue;
-        valid = false;
+        const bool isRowValid = elem.quantity_ >= required;
+        valid &= isRowValid;
+        const QVariant next = isRowValid ? QVariant() : red;
         for( int i = 0; i < 3; i++ )
-            model_->setData( model_->index( part->second, i ), red, Qt::ForegroundRole );
+            model_->setData( model_->index( part->second, i ), next, Qt::ForegroundRole );
     }
     valid_ = valid;
+    emit Updated();
 }
 
 bool PartsView::IsValid() const

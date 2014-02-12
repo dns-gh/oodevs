@@ -95,6 +95,7 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     auto* layout = new QVBoxLayout( repair );
     repairers_ = AddResourceListView< MaintenanceRepairersListView >( "manual_selection_repair_team_listview", controllers, this );
     parts_ = new PartsView( controllers, this );
+    connect( parts_, SIGNAL( Updated() ), this, SLOT( UpdateDisplay() ) );
     layout->addWidget( repairers_ );
     layout->addWidget( parts_ );
 
