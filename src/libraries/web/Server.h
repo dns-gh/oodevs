@@ -21,6 +21,7 @@ namespace cpplog
 namespace runtime
 {
     struct Pool_ABC;
+    struct Runtime_ABC;
 }
 
 namespace web
@@ -37,7 +38,11 @@ class Server : public boost::noncopyable
 {
 public:
     //! @name Destructor
-             Server( cpplog::BaseLogger& logger, runtime::Pool_ABC& pool, Observer_ABC& observer, int port );
+             Server( const runtime::Runtime_ABC& runtime,
+                     cpplog::BaseLogger& logger,
+                     runtime::Pool_ABC& pool,
+                     Observer_ABC& observer,
+                     int port );
     virtual ~Server();
     //@}
 

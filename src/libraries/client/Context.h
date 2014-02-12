@@ -94,7 +94,7 @@ public slots:
     void OnRemove();
     void OnNetworkRequest( HttpCommand cmd, const QNetworkRequest& req );
     void OnGetSession();
-    void OnCloseDownload( size_t id );
+    void OnCloseDownload( size_t id, bool valid );
     void OnDownloadProgress( size_t id, size_t current, int progress );
     void OnDownloadError( size_t id, const QString& error );
     void ParsePackages();
