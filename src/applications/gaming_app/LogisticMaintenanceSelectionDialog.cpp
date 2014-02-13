@@ -234,7 +234,7 @@ void LogisticMaintenanceSelectionDialog::Show( const LogisticsConsign_ABC& consi
 void LogisticMaintenanceSelectionDialog::accept()
 {
     if( automaticButton_->isChecked() )
-        actionsModel_.PublishSelectNewLogisticState( id_ );
+        lastContext_ = actionsModel_.PublishSelectNewLogisticState( id_ );
     else if( manualButton_->isChecked() )
     {
         if( !availability_ || !availability_->type_ )
@@ -249,10 +249,9 @@ void LogisticMaintenanceSelectionDialog::accept()
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
     else if( evacuateButton_->isChecked() )
-        actionsModel_.PublishTransferToLogisticSuperior( id_ );
+        lastContext_ = actionsModel_.PublishTransferToLogisticSuperior( id_ );
     Purge();
     LogisticSelectionDialog_ABC::accept();
-    // Wait for ack here, if error do not accept and display it
 }
 
 // -----------------------------------------------------------------------------
