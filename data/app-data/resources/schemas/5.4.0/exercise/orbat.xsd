@@ -526,6 +526,12 @@
               <xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="color" type="T_ColorRGB" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Overrides crowd color.</xs:documentation>
+              <xs:documentation xml:lang="fr">Surdéfinit la couleur de la foule</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
         </xs:extension>
       </xs:complexContent>
     </xs:complexType>

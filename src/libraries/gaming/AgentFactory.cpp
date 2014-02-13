@@ -235,6 +235,8 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach< gui::Decisions_ABC >( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
+    if( message.has_color() )
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
     result->Polish();

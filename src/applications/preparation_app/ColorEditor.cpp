@@ -20,6 +20,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorEditor_ABC.h"
@@ -123,6 +124,15 @@ void ColorEditor::NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::Co
 // Created: LGY 2013-03-27
 // -----------------------------------------------------------------------------
 void ColorEditor::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: JSR 2014-02-13
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
 {
     Update( entity, menu );
 }

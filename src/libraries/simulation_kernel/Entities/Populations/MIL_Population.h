@@ -30,6 +30,7 @@ class MIL_AffinitiesMap;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_Army_ABC;
+class MIL_Color;
 class MIL_DictionaryExtensions;
 class MIL_KnowledgeGroup;
 class MIL_PopulationType;
@@ -249,6 +250,7 @@ private:
     boost::scoped_ptr< DEC_PopulationKnowledge >    pKnowledge_;
     boost::scoped_ptr< MIL_PopulationOrderManager > orderManager_;
     boost::shared_ptr< MT_Vector2D >                vBarycenter_;
+    std::auto_ptr< MIL_Color >                      pColor_;
     // Pion effects
     double                                          rOverloadedPionMaxSpeed_;
     bool                                            bPionMaxSpeedOverloaded_;

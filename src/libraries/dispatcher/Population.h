@@ -12,20 +12,7 @@
 
 #include "Population_ABC.h"
 #include "DecisionalState.h"
-
-namespace sword
-{
-    class CrowdOrder;
-    class DecisionalState;
-    class CrowdFlowCreation;
-    class CrowdFlowUpdate;
-    class CrowdFlowDestruction;
-    class CrowdCreation;
-    class CrowdUpdate;
-    class CrowdConcentrationCreation;
-    class CrowdConcentrationUpdate;
-    class CrowdConcentrationDestruction;
-}
+#include "protocol/SimulationSenders.h"
 
 namespace dispatcher
 {
@@ -107,6 +94,7 @@ private:
     Model_ABC& model_;
     const unsigned long nType_;
     const std::string strName_;
+    sword::RgbColor color_;
     dispatcher::Team_ABC& side_;
     float male_;
     float female_;

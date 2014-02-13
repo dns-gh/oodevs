@@ -2263,6 +2263,8 @@ message CrowdCreation {
     required Id               party       = 4;
     //! The crowd repartition @see HumanRepartition
     required HumanRepartition repartition = 5;
+    //! The unit color @see RgbColor
+    optional RgbColor         color       = 6;
 }
 
 /** @struct CrowdUpdate
