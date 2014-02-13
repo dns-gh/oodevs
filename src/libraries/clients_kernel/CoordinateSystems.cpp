@@ -56,3 +56,31 @@ const std::map< int, QString >& CoordinateSystems::GetSystems() const
 {
     return systems_;
 }
+
+QString CoordinateSystems::Convert( Projection proj )
+{
+    switch( proj )
+    {
+        case E_Mgrs:     return "mgrs";
+        case E_SanC:     return "sanc";
+        case E_Wgs84Dd:  return "wgs84dd";
+        case E_Wgs84Dms: return "wgs84dms";
+        case E_Local:    return "local";
+    }
+    return QString();
+}
+
+CoordinateSystems::Projection CoordinateSystems::Convert( const QString& proj )
+{
+    if( proj == "mgrs" )
+        return E_Mgrs;
+    if( proj == "sanc" )
+        return E_SanC;
+    if( proj == "wgs84dd" )
+        return E_Wgs84Dd;
+    if( proj == "wgs84dms" )
+        return E_Wgs84Dms;
+    if( proj == "local" )
+        return E_Local;
+    return static_cast< CoordinateSystems::Projection >( -1 );
+}

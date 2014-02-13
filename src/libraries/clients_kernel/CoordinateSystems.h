@@ -36,6 +36,8 @@ public:
         E_Local
     };
     typedef std::map< int, QString > T_SpatialReference;
+    static QString    Convert( Projection proj );
+    static Projection Convert( const QString& proj );
     //@}
 
 public:

@@ -25,6 +25,11 @@
 using namespace kernel;
 using namespace gui;
 
+namespace
+{
+    static const QString statusBarCoordinates = "/Gaming/StatusBarCoordinates";
+}
+
 // -----------------------------------------------------------------------------
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
@@ -45,11 +50,21 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
     toolButton->setPopup( pMenu_ );
     pMenu_->menuAction()->setCheckable( true );
 
-    AddField( parent, 155, CoordinateSystems::E_Local, true );
-    AddField( parent, 105, CoordinateSystems::E_Mgrs, true );
-    AddField( parent, 105, CoordinateSystems::E_SanC, false );
-    AddField( parent, 155, CoordinateSystems::E_Wgs84Dd, true );
-    AddField( parent, 215, CoordinateSystems::E_Wgs84Dms, false );
+    QSettings settings( "MASA Group", "SWORD" );
+    const QStringList fields = settings.value( statusBarCoordinates, QStringList()
+        << CoordinateSystems::Convert( CoordinateSystems::E_Local )
+        << CoordinateSystems::Convert( CoordinateSystems::E_Mgrs )
+        << CoordinateSystems::Convert( CoordinateSystems::E_Wgs84Dd )
+        ).toStringList();
+    const auto addfield = [&]( unsigned size, CoordinateSystems::Projection proj ){
+        const bool checked = !!fields.contains( CoordinateSystems::Convert( proj ) );
+        AddField( parent, size, proj, checked );
+    };
+    addfield( 155, CoordinateSystems::E_Local );
+    addfield( 155, CoordinateSystems::E_Mgrs );
+    addfield( 155, CoordinateSystems::E_SanC );
+    addfield( 155, CoordinateSystems::E_Wgs84Dd );
+    addfield( 155, CoordinateSystems::E_Wgs84Dms );
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
@@ -170,11 +185,11 @@ void StatusBar::OnMouseMove( const geometry::Point3f& position )
 void StatusBar::ParameterSelected( int index )
 {
     QLabel* field = menuFields_[index - 1];
-    if( field )
-    {
-        pMenu_->setItemChecked( index, field->isHidden() );
-        field->setVisible( field->isHidden() );
-    }
+    if( !field )
+        return;
+    pMenu_->setItemChecked( index, field->isHidden() );
+    field->setVisible( field->isHidden() );
+    SaveSettings();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,4 +246,22 @@ void StatusBar::EnsureIsEnabled()
 bool StatusBar::IsVisible() const
 {
     return parent_->isVisible();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::SaveSettings
+// Created: BAX 2014-02-13
+// -----------------------------------------------------------------------------
+void StatusBar::SaveSettings()
+{
+    QSettings settings( "MASA Group", "SWORD" );
+    QStringList list;
+    for( auto it = coordinateFields_.begin(); it != coordinateFields_.end(); ++it )
+        if( it->second->isVisible() )
+        {
+            const auto proj = CoordinateSystems::Convert( static_cast< CoordinateSystems::Projection >( it->first ) );
+            if( !proj.isEmpty() )
+                list.push_back( proj );
+        }
+    settings.setValue( statusBarCoordinates, list );
 }
