@@ -379,18 +379,12 @@ func (MaintenanceCreateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *s
 	return true
 }
 
-type MaintenanceUpdateChecker struct {
-	name     string
-	provider *sword.Tasker
-	strict   bool
-}
-
 func IsProvider(d *swapi.ModelData, obtained uint32, expected *sword.Tasker, isStrict bool) bool {
 	if obtained == 0 {
 		return expected.Automat == nil && expected.Formation == nil
 	}
 	if isStrict {
-		return d.IsEqualTasker(expected, obtained)
+		return swapi.GetTaskerId(expected) == obtained
 	}
 	// abuse profile queries to check whether our unit is in automat/formation
 	profile := swapi.Profile{}
@@ -404,6 +398,12 @@ func IsProvider(d *swapi.ModelData, obtained uint32, expected *sword.Tasker, isS
 		}
 	}
 	return d.IsUnitInProfile(obtained, &profile)
+}
+
+type MaintenanceUpdateChecker struct {
+	name     string
+	provider *sword.Tasker
+	strict   bool
 }
 
 func (cc *MaintenanceUpdateChecker) Check(c *C, ctx *MaintenanceCheckContext, msg *sword.SimToClient_Content) bool {
