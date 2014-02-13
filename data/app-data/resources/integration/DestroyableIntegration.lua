@@ -46,19 +46,19 @@ integration.startedDestroyingIt = function( target, snipe )
     if target[myself] then
         if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
             target[myself].noAmmo = true
-            meKnowledge:RC( eRC_TirImpossiblePlusDeMunitions )
+            reportFunction(eRC_TirImpossiblePlusDeMunitions )
             return true
         elseif target[myself].eTir == eActionTirDirect_NoCapacity and not target[myself].noCapacity then
             target[myself].noCapacity = true
-            meKnowledge:RC( eRC_TirSansCapacite )
+            reportFunction(eRC_TirSansCapacite )
             return true
         elseif target[myself].eTir == eActionTirDirect_Impossible and not target[myself].noTir then
             target[myself].noTir = true
-            meKnowledge:RC( eRC_TirDirectImpossible )
+            reportFunction(eRC_TirDirectImpossible )
             return true
         elseif snipe and target[myself].eTir == eActionTirDirect_TemporarilyBlocked and not target[myself].blocked then
             target[myself].blocked = true
-            meKnowledge:RC( eRC_ShootingTemporarilyBlocked )
+            reportFunction(eRC_ShootingTemporarilyBlocked )
         elseif target[myself].eTir and target[myself].eTir ~= 2  then
             g_myEnemy = target.source
             return true
@@ -230,7 +230,7 @@ integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
     if not pointInterception then
         return false
     end
-    local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints(meKnowledge:getPosition(), pointInterception )
+    local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints( meKnowledge:getPosition(), pointInterception )
     local tempsInterception =  distancePointInterception / ( speed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
         if targetUnit:isValid() then
