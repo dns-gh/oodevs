@@ -927,6 +927,10 @@ Parked engine running</translation>
         <source>Time</source>
         <translation>Time</translation>
     </message>
+    <message>
+        <source>Collides with other crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>

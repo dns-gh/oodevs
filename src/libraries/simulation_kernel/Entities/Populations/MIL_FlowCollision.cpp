@@ -105,7 +105,7 @@ namespace
     {
         MT_Vector2D result;
         double r = line.ProjectPointOnLine( point, result );
-        if( r >= -0.1 && r <= 1.1 /* && result == point_*/ ) // todo : epsilon et point
+        if( r >= -0.1 && r <= 1.1 && ( result - point ).SquareMagnitude() < 100 )
         {
             hasPassedOver = false;
             return true;

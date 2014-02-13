@@ -51,6 +51,7 @@ void ADN_Crowds_ListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Crowds_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Crowds_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Crowds_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eCrowdCollision]->Connect( &pInfos->bCrowdCollision_, bConnect );
     vItemConnectors_[ADN_Crowds_GUI::eConcentrationDensity]->Connect( &pInfos->rConcentrationDensity_, bConnect );
     vItemConnectors_[ADN_Crowds_GUI::eMoveDensity]->Connect( &pInfos->rMoveDensity_, bConnect );
     vItemConnectors_[ADN_Crowds_GUI::eMoveSpeed]->Connect( &pInfos->rMoveSpeed_, bConnect );

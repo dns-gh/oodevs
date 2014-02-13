@@ -90,6 +90,8 @@ void ADN_Crowds_GUI::Build()
         builder.AddLocalizedField( data_.GetCrowds(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
         ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, eEntityType_Population );
         goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "behavior-model", tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+        builder.AddField< ADN_CheckBox >( pInfoHolder, "crowds-collide", tr( "Collides with other crowds" ), vInfosConnectors[ eCrowdCollision ] );
+
         // Density
         Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, pPropertiesGroup );
         builder.AddField< ADN_EditLine_Double >( pDensity, "density", tr( "Density" ), vInfosConnectors[ eConcentrationDensity ], tr( "people/m²" ), eGreaterZero );

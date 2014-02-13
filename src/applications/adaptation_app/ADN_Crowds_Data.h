@@ -210,6 +210,7 @@ public:
     public:
         ADN_Type_Int nId_;
         ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_Type_Bool bCrowdCollision_;
         ADN_Type_Double rConcentrationDensity_;
         ADN_Type_Double rMoveDensity_;
         ADN_Type_Double rMoveSpeed_;

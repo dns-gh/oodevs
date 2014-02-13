@@ -923,6 +923,10 @@ Arrêt moteur allumé</translation>
         <source>Time</source>
         <translation>Temps</translation>
     </message>
+    <message>
+        <source>Collides with other crowds</source>
+        <translation>Entre en collision avec les autres foules</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
