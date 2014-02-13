@@ -41,7 +41,7 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     else
         team_.Register( *this );
     if( msg.has_color() )
-        color_ = msg.color();
+        color_.reset( new sword::RgbColor( msg.color() ) );
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
@@ -135,8 +135,8 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         logisticEntity_->Send( message() );
     else
         message().set_logistic_level( sword::none );
-    if( color_.IsInitialized() )
-        *message().mutable_color() = color_;
+    if( color_ )
+        *message().mutable_color() = *color_;
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )

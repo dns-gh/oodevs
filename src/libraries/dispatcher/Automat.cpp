@@ -56,7 +56,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
         throw MASA_EXCEPTION( "invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
     if( msg.has_color() )
-        color_ = msg.color();
+        color_.reset( new sword::RgbColor( msg.color() ) );
     if( parentFormation_ )
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
@@ -296,8 +296,8 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         logisticEntity_->Send( msg() );
     else
         msg().set_logistic_level( sword::none );
-    if( color_.IsInitialized() )
-        *msg().mutable_color() = color_;
+    if( color_ )
+        *msg().mutable_color() = *color_;
     for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();

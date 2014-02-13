@@ -14,7 +14,6 @@
 #include "Agent_ABC.h"
 #include "DecisionalState.h"
 #include "ENT/ENT_Enums.h"
-#include "protocol/SimulationSenders.h"
 #include <tools/Resolver.h>
 #include <map>
 
@@ -114,13 +113,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Types
     //@{
     struct Satisfaction
@@ -174,7 +166,7 @@ private:
     const std::string                          name_;
     dispatcher::Automat_ABC*                   automat_;
     geometry::Point2d                          position_; // x = longitude, y = latitude
-    sword::RgbColor                            color_;
+    std::unique_ptr< sword::RgbColor >         color_;
     unsigned int                               nDirection_;
     unsigned int                               nSensorsDirection_;
     unsigned int                               nHeight_;

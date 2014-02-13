@@ -12,7 +12,21 @@
 
 #include "Population_ABC.h"
 #include "DecisionalState.h"
-#include "protocol/SimulationSenders.h"
+
+namespace sword
+{
+    class CrowdOrder;
+    class DecisionalState;
+    class CrowdFlowCreation;
+    class CrowdFlowUpdate;
+    class CrowdFlowDestruction;
+    class CrowdCreation;
+    class CrowdUpdate;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationUpdate;
+    class CrowdConcentrationDestruction;
+    class RgbColor;
+}
 
 namespace dispatcher
 {
@@ -75,13 +89,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Population( const Population& );            //!< Copy constructor
-    Population& operator=( const Population& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::map< unsigned long, float > T_Affinities;
@@ -94,7 +101,7 @@ private:
     Model_ABC& model_;
     const unsigned long nType_;
     const std::string strName_;
-    sword::RgbColor color_;
+    std::unique_ptr< sword::RgbColor > color_;
     dispatcher::Team_ABC& side_;
     float male_;
     float female_;

@@ -44,7 +44,7 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const
     , brainDebug_      ( false )
 {
     if( msg.has_color() )
-        color_ = msg.color();
+        color_.reset( new sword::RgbColor( msg.color() ) );
     side_.Register( *this );
     AddExtension( *this );
 }
@@ -203,8 +203,8 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
     asn().set_name( strName_ );
-    if( color_.IsInitialized() )
-        *asn().mutable_color() = color_;
+    if( color_ )
+        *asn().mutable_color() = *color_;
     asn().mutable_repartition()->set_male( male_ );
     asn().mutable_repartition()->set_female( female_ );
     asn().mutable_repartition()->set_children( children_ );

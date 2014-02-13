@@ -12,7 +12,6 @@
 
 #include "Team_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "protocol/SimulationSenders.h"
 #include <tools/Resolver.h>
 #include <tools/Map.h>
 
@@ -73,12 +72,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Side( const Side& );            //!< Copy constructor
-    Side& operator=( const Side& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef tools::Map< const kernel::Team_ABC*, sword::EnumDiplomacy > T_Diplomacies;
@@ -90,7 +83,7 @@ private:
     const Model_ABC& model_;
     sword::EnumDiplomacy nType_;
     kernel::Karma karma_;
-    sword::RgbColor color_;
+    std::unique_ptr< sword::RgbColor > color_;
     T_Diplomacies diplomacies_;
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< dispatcher::Formation_ABC >      formations_;
