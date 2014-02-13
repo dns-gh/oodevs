@@ -3770,16 +3770,8 @@ This data can&apos;t be projected.</source>
         <translation>Knowledge Group Add knowledge</translation>
     </message>
     <message>
-        <source>Object Update</source>
-        <translation>Object Update</translation>
-    </message>
-    <message>
         <source>Object Creation</source>
         <translation>Object Creation</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Object Destruction</translation>
     </message>
 </context>
 </TS>

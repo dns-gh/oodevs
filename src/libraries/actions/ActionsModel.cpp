@@ -171,9 +171,9 @@ int ActionsModel::PublishObjectMagicAction( const std::string& magicAction, unsi
 // Name: ActionsModel::PublishObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-int ActionsModel::PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
+int ActionsModel::PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, const std::vector< parameters::ParameterList* >& attributes )
 {
-    std::unique_ptr< Action_ABC > action( factory_.CreateObjectUpdateMagicAction( object, attribute ) );
+    std::unique_ptr< Action_ABC > action( factory_.CreateObjectUpdateMagicAction( object, attributes ) );
     return Publish( *action );
 }
 

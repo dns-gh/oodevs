@@ -3781,14 +3781,6 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <translation>Creación de objeto</translation>
     </message>
     <message>
-        <source>Object Update</source>
-        <translation>Actualización de objeto</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Destrucción de objeto</translation>
-    </message>
-    <message>
         <source>Knowledge Group Add knowledge</source>
         <translation>Agregar conocimiento al Grupo de conocimiento</translation>
     </message>

@@ -24,6 +24,8 @@
 #include "gaming/Object.h"
 #include "protocol/SimulationSenders.h"
 
+#include <boost/assign/list_of.hpp>
+
 using namespace actions;
 using namespace kernel;
 using namespace parameters;
@@ -221,13 +223,13 @@ void ObjectMagicOrdersInterface::BuildObject()
 {
     if( !selectedEntity_ )
         return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Construction", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::construction );
-    list.AddIdentifier( "Type", 0 );
-    list.AddQuantity( "Number", 0 );
-    list.AddNumeric( "Density", 0 );
-    list.AddQuantity( "Percentage", 100 );
-    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+    ParameterList* list = new ParameterList( OrderParameter( "Construction", "list", false ) );
+    list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::construction );
+    list->AddIdentifier( "Type", 0 );
+    list->AddQuantity( "Number", 0 );
+    list->AddNumeric( "Density", 0 );
+    list->AddQuantity( "Percentage", 100 );
+    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,13 +251,13 @@ void ObjectMagicOrdersInterface::DoMineObject( int quantity )
 {
     if( !selectedEntity_ )
         return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::mine );
-    list.AddIdentifier( "Type", 0 );
-    list.AddQuantity( "Number", 0 );
-    list.AddNumeric( "Density", 0 );
-    list.AddQuantity( "Percentage", quantity );
-    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+    ParameterList* list = new ParameterList( OrderParameter( "Mine", "list", false ) );
+    list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::mine );
+    list->AddIdentifier( "Type", 0 );
+    list->AddQuantity( "Number", 0 );
+    list->AddNumeric( "Density", 0 );
+    list->AddQuantity( "Percentage", quantity );
+    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,10 +286,10 @@ void ObjectMagicOrdersInterface::DoActivateObstacle( bool activate )
 {
     if( !selectedEntity_ )
         return;
-    ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
-    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::obstacle );
-    list.AddBool( "Activation", activate );
-    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+    ParameterList* list = new ParameterList( OrderParameter( "Obstacle", "list", false ) );
+    list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::obstacle );
+    list->AddBool( "Activation", activate );
+    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,10 +320,10 @@ void ObjectMagicOrdersInterface::ChangeStructuralState()
         return;
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
     {
-        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::structural_state );
-        list.AddNumeric( "Value", 0.01f * editor->text().toInt() );
-        actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+        ParameterList* list = new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::structural_state );
+        list->AddNumeric( "Value", 0.01f * editor->text().toInt() );
+        actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
     }
 }
 
@@ -333,10 +335,10 @@ void ObjectMagicOrdersInterface::PublishActivation( const std::string& name, uns
 {
     if( !selectedEntity_ )
         return;
-    ParameterList& list = *new ParameterList( OrderParameter( name, "list", false ) );
-    list.AddIdentifier( "AttributeId", id );
-    list.AddBool( name, activate );
-    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+    ParameterList* list = new ParameterList( OrderParameter( name, "list", false ) );
+    list->AddIdentifier( "AttributeId", id );
+    list->AddBool( name, activate );
+    actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,10 +370,10 @@ void ObjectMagicOrdersInterface::ChangeThreshold()
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         if( auto infrastructure = selectedEntity_->Retrieve< gui::Infrastructure_ABC >() )
         {
-            ParameterList& list = *new ParameterList( OrderParameter( "Infrastructure", "list", false ) );
-            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::infrastructure );
-            list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
-            actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+            ParameterList* list = new ParameterList( OrderParameter( "Infrastructure", "list", false ) );
+            list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::infrastructure );
+            list->AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
+            actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
         }
 }
 
@@ -464,10 +466,10 @@ void ObjectMagicOrdersInterface::ChangeTrafficability()
             const TrafficabilityAttribute_ABC* trafficability = object->Retrieve< TrafficabilityAttribute_ABC >();
             if( trafficability || object->GetType().CanBeTrafficable() )
             {
-                ParameterList& list = *new ParameterList( OrderParameter( "Trafficability", "list", false ) );
-                list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::trafficability );
-                list.AddNumeric( "Trafficability", editor->text().toFloat() );
-                actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, list );
+                ParameterList* list = new ParameterList( OrderParameter( "Trafficability", "list", false ) );
+                list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::trafficability );
+                list->AddNumeric( "Trafficability", editor->text().toFloat() );
+                actionsModel_.PublishObjectUpdateMagicAction( *selectedEntity_, boost::assign::list_of< ParameterList* >( list ) );
             }
         }
     }

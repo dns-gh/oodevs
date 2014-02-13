@@ -606,13 +606,14 @@ Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& magicActi
 // Name: ActionFactory::CreateObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute ) const
+Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, const std::vector< parameters::ParameterList* >& attributes ) const
 {
     std::unique_ptr< Action_ABC > action( new ObjectMagicAction( magicActions_.Get( "update_object" ), controller_, true ) );
     tools::Iterator< const OrderParameter& > it = action->GetType()->CreateIterator();
     parameters::ParameterList* attributesList = new parameters::ParameterList( it.NextElement() );
     action->AddParameter( *attributesList );
-    attributesList->AddParameter( attribute );
+    for( auto it = attributes.begin(); it != attributes.end(); ++it )
+        attributesList->AddParameter( **it );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &object, false );
     action->Polish();
