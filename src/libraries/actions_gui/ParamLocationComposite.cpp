@@ -159,7 +159,8 @@ QWidget* ParamLocationComposite::BuildInterface( const QString& objectName, QWid
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::InternalBuildInterface()
 {
-    disconnect( group_, SIGNAL( clicked() ), this, SLOT( Update() ) );
+    if( group_ )
+        disconnect( group_, SIGNAL( clicked() ), this, SLOT( Update() ) );
     for( auto it = params_.begin(); it != params_.end(); ++it )
     {
         QWidget* widget = (*it)->BuildInterface( (*it)->GetType().c_str(), stack_ );
