@@ -1874,7 +1874,7 @@ namespace
     template< typename Transporters >
     void CheckTransportersLoad( const Transporters& transporters,
         const tools::Map< const PHY_DotationCategory*, double >& supplies,
-        sword::UnitMagicActionAck& ack )
+        sword::MissionParameter_Value& states )
     {
         tools::Map< const PHY_ComposanteTypePion*, unsigned > result;
         for( auto it = transporters.begin(); it != transporters.end(); ++it )
@@ -1887,21 +1887,20 @@ namespace
         }
         bool massOverloaded = false;
         bool volumeOverloaded = false;
-        auto states = ack.mutable_result()->add_elem()->add_value();
         for( auto it = result.begin(); it != result.end(); ++it )
         {
             double mass, volume, minMass, maxMass, minVolume, maxVolume;
             it->first->GetStockTransporterCapacity( maxMass, maxVolume );
             std::tie( minMass, minVolume ) = it->first->GetStockTransporterCapacity();
             std::tie( mass, volume ) = ComputeMassVolume( *it->first, result, supplies );
-            states->add_list()->set_booleanvalue( mass * maxMass < minMass );
+            states.add_list()->set_booleanvalue( mass * maxMass < minMass );
             if( mass > 1 )
                 massOverloaded = true;
-            states->add_list()->set_booleanvalue( mass > 1 );
-            states->add_list()->set_booleanvalue( volume * maxVolume < minVolume );
+            states.add_list()->set_booleanvalue( mass > 1 );
+            states.add_list()->set_booleanvalue( volume * maxVolume < minVolume );
             if( volume > 1 )
                 volumeOverloaded = true;
-            states->add_list()->set_booleanvalue( volume > 1 );
+            states.add_list()->set_booleanvalue( volume > 1 );
         }
         protocol::Check( !massOverloaded, "transporter capacity mass overloaded" );
         protocol::Check( !volumeOverloaded, "transporter capacity volume overloaded" );
@@ -1941,11 +1940,12 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     protocol::Check( parameters.recipients().size() > 0, "at least one recipient expected" );
     for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
         ReadResources( it->resources(), supplies );
+    auto states = ack.mutable_result()->add_elem()->add_value();
     const auto& transporters = parameters.transporters();
     if( transporters.size() )
     {
         CheckSuppliesCanBeLoaded( transporters, supplies );
-        CheckTransportersLoad( transporters, supplies, ack );
+        CheckTransportersLoad( transporters, supplies, *states );
     }
     if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
         throw MASA_EXCEPTION( "unable to create push flow request" );
@@ -1967,11 +1967,12 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     protocol::Check( supplier, "invalid supplier" );
     tools::Map< const PHY_DotationCategory*, double > supplies;
     ReadResources( parameters.resources(), supplies );
+    auto states = ack.mutable_result()->add_elem()->add_value();
     const auto& transporters = parameters.transporters();
     if( transporters.size() )
     {
         CheckSuppliesCanBeLoaded( transporters, supplies );
-        CheckTransportersLoad( transporters, supplies, ack );
+        CheckTransportersLoad( transporters, supplies, *states );
     }
     if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
         throw MASA_EXCEPTION( "unable to create pull flow request" );
