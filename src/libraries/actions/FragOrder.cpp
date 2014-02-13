@@ -38,18 +38,6 @@ FragOrder::FragOrder( const kernel::FragOrderType* fragOrder, kernel::Controller
 }
 
 // -----------------------------------------------------------------------------
-// Name: FragOrder constructor
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-FragOrder::FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders )
-    : Action_ABC( xis, controller, fragOrders.Find( xis.attribute< unsigned int >( "id", 0 ) ) )
-    , controller_( controller )
-    , registered_( true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: FragOrder destructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------

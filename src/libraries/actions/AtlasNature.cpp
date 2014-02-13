@@ -48,17 +48,6 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const sword::
 }
 
 // -----------------------------------------------------------------------------
-// Name: AtlasNature constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( natures.MakeNature( xis.attribute< unsigned short >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AtlasNature destructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------

@@ -43,18 +43,6 @@ UnitMagicAction::UnitMagicAction( const kernel::MagicActionType& magic, kernel::
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMagicAction::MagicAction
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
-{
-    Rename( ENT_Tr::ConvertFromUnitMagicActionType( ENT_Tr::ConvertToUnitMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UnitMagicAction::~MagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------

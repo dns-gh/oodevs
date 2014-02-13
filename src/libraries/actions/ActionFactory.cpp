@@ -59,8 +59,9 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/XmlAdapter.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
+#include "protocol/XmlReaders.h"
 
 using namespace actions;
 using namespace kernel;
@@ -247,24 +248,12 @@ Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, E_Mis
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool readonly /* = false*/ ) const
+Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 {
-    const std::string type = xis.attribute< std::string >( "type" );
-    if( type == "mission" )
-        return CreateMission( xis, readonly );
-    if( type == "fragorder" )
-        return CreateFragOrder( xis, readonly );
-    if( type == "magic" )
-        return CreateMagicAction( xis, readonly );
-    if( type == "magicunit" )
-        return CreateUnitMagicAction( xis, readonly );
-    if( type == "magicobject" )
-        return CreateObjectMagicAction( xis, readonly );
-    if( type == "magicknowledge" )
-        return CreateKnowledgeGroupMagicAction( xis, readonly );
-    if( type == "change_mode" )
-        return AutomateChangeModeMagicAction( xis, readonly );
-    return 0;
+    XmlAdapter adapter( coordinateConverter_, entities_ );
+    sword::ClientToSim msg;
+    protocol::Read( adapter, *msg.mutable_message(), xis );
+    return CreateAction( msg, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -460,136 +449,6 @@ Action_ABC* ActionFactory::CreateAction( const sword::ObjectMagicAction& message
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateMission
-// Created: LDC 2010-07-28
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateMission( xml::xistream& xis, bool readonly ) const
-{
-    const unsigned long id = xis.attribute< unsigned long >( "target", 0 );
-    std::unique_ptr< Mission > action;
-    auto* type = missions_.Find( xis.attribute< unsigned int >( "id", 0 ) );
-    const kernel::Entity_ABC* target = entities_.FindAgent( id );
-    if( !target )
-        target = entities_.FindAutomat( id );
-    if( !target )
-        target = entities_.FindPopulation( id );
-    if( type )
-    {
-        if( type->GetType() == eMissionType_Automat )
-            action.reset( new AutomatMission( type, controller_, xis ) );
-        else if( type->GetType() == eMissionType_Population )
-            action.reset( new PopulationMission( type, controller_, xis ) );
-    }
-    if( !action )
-        action.reset( new AgentMission( type, controller_, xis ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    AddParameters( *action, xis, target );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateFragOrder
-// Created: LDC 2010-07-28
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis, bool readonly ) const
-{
-    const unsigned long id = xis.attribute< unsigned long >( "target", 0 );
-    const kernel::Entity_ABC* target = entities_.FindAgent( id );
-    if( !target )
-        target = entities_.FindAutomat( id );
-    if( !target )
-        target = entities_.FindPopulation( id );
-    std::unique_ptr< FragOrder > action( new FragOrder( xis, controller_, fragOrders_ ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    AddParameters( *action, xis, target );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateMagicAction
-// Created: SBO 2010-05-07
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool ) const
-{
-    const std::string id = xis.attribute< std::string >( "id" );
-    std::unique_ptr< MagicAction > action( new MagicAction( xis, controller_, magicActions_.Get( id ) ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    action->Polish();
-    AddParameters( *action, xis, 0 );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateUnitMagicAction
-// Created: SBO 2010-05-07
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, bool readonly ) const
-{
-    const unsigned long targetid = xis.attribute< unsigned long >( "target", 0 );
-    const std::string id = xis.attribute< std::string >( "id" );
-    const kernel::Entity_ABC* target = entities_.FindAgent( targetid );
-    if( !target )
-        target = entities_.FindAutomat( targetid );
-    if( !target )
-        target = entities_.FindPopulation( targetid );
-    if( !target )
-        target = entities_.FindFormation( targetid );
-    if( !target )
-        target = entities_.FindTeam( targetid );
-    std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( xis, controller_, magicActions_.Get( id ) ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    AddParameters( *action, xis, target );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::AutomateChangeModeMagicAction
-// Created: FDS 2010-11-23
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::AutomateChangeModeMagicAction( xml::xistream& xis, bool readonly ) const
-{
-    const unsigned long targetid = xis.attribute< unsigned long >( "target", 0 );
-    const std::string type = xis.attribute< std::string >( "type" );
-    std::string name = xis.attribute< std::string >( "name", "" );
-    bool engaged = xis.attribute< bool >( "engaged" );
-    const kernel::Entity_ABC* target = entities_.FindAutomat( targetid );
-    std::unique_ptr< EngageMagicAction > action( new EngageMagicAction( xis, controller_, magicActions_.Get( type ), engaged ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    return action.release();
-}
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateObjectMagicAction
-// Created: SBO 2010-05-07
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis, bool readonly ) const
-{
-    const std::string id = xis.attribute< std::string >( "id" );
-    kernel::Entity_ABC* target = 0;
-    if( id != "create_object" )
-    {
-        const unsigned long targetid = xis.attribute< unsigned long >( "target", 0 );
-        target = entities_.FindObject( targetid );
-        if( !target )
-            target = entities_.FindUrbanObject( targetid );
-    }
-
-    std::unique_ptr< Action_ABC > action( new ObjectMagicAction( xis, controller_, magicActions_.Get( id ) ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    AddParameters( *action, xis, target );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateObjectMagicAction
 // Created: JCR 2011-01-04
 // -----------------------------------------------------------------------------
@@ -636,44 +495,6 @@ Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Entity_
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionFactory::CreateKnowledgeGroupMagicAction
-// Created: SBO 2010-05-07
-// -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const
-{
-    const unsigned long targetid = xis.attribute< unsigned long >( "target", 0 );
-    const std::string id = xis.attribute< std::string >( "id" );
-
-    const kernel::Entity_ABC* target = entities_.FindKnowledgeGroup( targetid );
-    std::unique_ptr< Action_ABC > action( new KnowledgeGroupMagicAction( xis, controller_, magicActions_.Get( id ) ) );
-    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
-    AddTasker( *action, target, readonly );
-    action->Polish();
-    AddParameters( *action, xis, target );
-    return action.release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::AddParameters
-// Created: ABR 2014-01-22
-// -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( Action_ABC& action, xml::xistream& xis, const kernel::Entity_ABC* entity ) const
-{
-    if( action.GetType() )
-    {
-        tools::Iterator< const kernel::OrderParameter& > it = action.GetType()->CreateIterator();
-        if( entity )
-            xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, action, it, *entity );
-        else
-            xis >> xml::list( "parameter", *this, &ActionFactory::ReadParameter, action, it, boost::none );
-        if( it.HasMoreElements() )
-            action.Invalidate();
-    }
-    else
-        action.Invalidate();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionFactory::AddParameters
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
@@ -699,22 +520,6 @@ void ActionFactory::AddParameters( Action_ABC& action, const kernel::OrderType& 
             action.Invalidate();
         param.release();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionFactory::ReadParameter
-// Created: SBO 2010-05-07
-// -----------------------------------------------------------------------------
-void ActionFactory::ReadParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, boost::optional< const kernel::Entity_ABC& > entity ) const
-{
-    std::unique_ptr< Parameter_ABC > param;
-    if( it.HasMoreElements() )
-        param.reset( factory_.CreateParameter( it.NextElement(), xis, entity ) );
-    if( param )
-        action.AddParameter( *param );
-    else
-        action.Invalidate();
-    param.release();
 }
 
 namespace
@@ -1007,7 +812,6 @@ Action_ABC* ActionFactory::CreateChangeDiplomacy( unsigned int team1, unsigned i
     return action.release();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateKnowledgeGroup
 // Created: ABR 2014-02-10
@@ -1022,7 +826,6 @@ Action_ABC* ActionFactory::CreateKnowledgeGroup( unsigned int id, const std::str
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     return action.release();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateFireOrderOnLocation

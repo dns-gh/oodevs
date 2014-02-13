@@ -43,28 +43,6 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlock constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< UrbanObject_ABC >( OrderParameter( xis.attribute< std::string >( "name", "" ), "UrbanBlock", false ), controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlock constructor
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< UrbanObject_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanBlock destructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------

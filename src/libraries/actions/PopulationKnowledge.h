@@ -35,8 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             PopulationKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis,
-                                  const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              PopulationKnowledge( const kernel::OrderParameter& parameter, unsigned int id,
                                   const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~PopulationKnowledge();

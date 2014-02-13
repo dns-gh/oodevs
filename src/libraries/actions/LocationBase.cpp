@@ -64,51 +64,12 @@ LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationBase constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : converter_( converter )
-{
-    std::string type;
-    xis >> xml::optional
-            >> xml::start( "location" )
-                >> xml::attribute( "type", type )
-                >> xml::list( "point", *this, &LocationBase::ReadPoint )
-            >> xml::end;
-    type_ = tools::LocationFromString( type.c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationBase destructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
 LocationBase::~LocationBase()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationBase::ReadPoint
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-void LocationBase::ReadPoint( xml::xistream& xis )
-{
-    std::string mgrs;
-    xis >> xml::attribute( "coordinates", mgrs );
-
-    std::vector< std::string > result;
-    boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
-    geometry::Point2f point;
-    if( result.size() == 2 ) //Location in WGS84
-    {
-        point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
-                                                      boost::lexical_cast< double >( result[ 1 ] ) ) );
-    }
-    else
-        point = converter_.ConvertToXY( mgrs );
-
-    PushBack( point );
 }
 
 // -----------------------------------------------------------------------------

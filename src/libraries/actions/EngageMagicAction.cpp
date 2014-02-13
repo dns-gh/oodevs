@@ -42,19 +42,6 @@ EngageMagicAction::EngageMagicAction( const kernel::MagicActionType& magic, kern
 }
 
 // -----------------------------------------------------------------------------
-// Name: EngageMagicAction::EngageMagicAction
-// Created: FDS 2010-11-22
-// -----------------------------------------------------------------------------
-EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const bool engaged )
-    : Action_ABC( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
-    , engaged_( engaged )
-{
-    Rename( ::GetName( engaged ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EngageMagicAction::~EngageMagicAction
 // Created: FDS 2010-11-22
 // -----------------------------------------------------------------------------

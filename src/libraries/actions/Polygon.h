@@ -29,7 +29,6 @@ public:
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
-             Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Polygon();
     //@}
 

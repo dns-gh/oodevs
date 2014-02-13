@@ -23,7 +23,6 @@
 #include "actions/Lima.h"
 #include "actions/Limit.h"
 #include "actions/Numeric.h"
-#include "actions/ObjectKnowledgeOrder.h"
 #include "actions/Path.h"
 #include "actions/Polygon.h"
 #include "actions/PopulationKnowledge.h"
@@ -36,6 +35,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -156,6 +156,7 @@ namespace
     };
 }
 
+#if 0
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_Bool
 // Created: SBO 2009-10-29
@@ -576,3 +577,5 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42u, message->value( 0 ).agent().id() );
 }
+
+#endif

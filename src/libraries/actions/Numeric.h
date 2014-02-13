@@ -35,7 +35,6 @@ public:
     //@{
     explicit Numeric( const kernel::OrderParameter& parameter );
              Numeric( const kernel::OrderParameter& parameter, float value );
-             Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Numeric();
     //@}
 

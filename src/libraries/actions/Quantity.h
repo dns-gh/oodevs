@@ -35,7 +35,6 @@ public:
     //@{
              Quantity( const kernel::OrderParameter& parameter );
              Quantity( const kernel::OrderParameter& parameter, int value );
-             Quantity( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Quantity();
     //@}
 

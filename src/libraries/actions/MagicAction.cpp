@@ -33,18 +33,6 @@ MagicAction::MagicAction( const kernel::MagicActionType& magic, kernel::Controll
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicAction constructor
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
-{
-    Rename( ENT_Tr::ConvertFromMagicActionType( ENT_Tr::ConvertToMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MagicAction destructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------

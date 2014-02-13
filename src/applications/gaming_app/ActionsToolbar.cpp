@@ -163,7 +163,7 @@ void ActionsToolbar::DoLoad( const tools::Path& filename )
         return;
     try
     {
-        actions_.Load( filename, config_.GetLoader(), hasReplay_ );
+        actions_.Load( filename, config_.GetLoader() );
     }
     catch( const std::exception& e )
     {

@@ -34,7 +34,6 @@ public:
     //@{
     explicit DotationType( const kernel::OrderParameter& parameter );
              DotationType( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::DotationType >& resolver );
-             DotationType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~DotationType();
     //@}
 

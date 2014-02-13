@@ -453,7 +453,7 @@ void TimelineWebView::ReadActions( xml::xisubstream xis )
 void TimelineWebView::ReadAction( timeline::Events& events,  xml::xistream& xis )
 {
     boost::scoped_ptr< actions::Action_ABC > action;
-    action.reset( model_.actionFactory_.CreateAction( xis, false ) );
+    action.reset( model_.actionFactory_.CreateAction( xis ) );
     if( !action )
         return;
 

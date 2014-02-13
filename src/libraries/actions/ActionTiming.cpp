@@ -43,33 +43,6 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     // NOTHING
 }
 
-namespace
-{
-    QDateTime ReadDateTime( xml::xistream& xis, const kernel::Time_ABC& simulation )
-    {
-        std::string datetime;
-        xis >> xml::attribute( "time", datetime );
-        bool ok = false;
-        const unsigned int ticks = QString( datetime.c_str() ).toUInt( &ok );
-        if( ok )
-            return simulation.GetInitialDateTime().addSecs( ticks * simulation.GetTickDuration() );
-        return QDateTime::fromString( datetime.c_str(), Qt::ISODate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionTiming constructor
-// Created: SBO 2007-06-28
-// -----------------------------------------------------------------------------
-ActionTiming::ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation )
-    : controller_( controller )
-    , simulation_( simulation )
-    , enabled_( true )
-    , time_( ReadDateTime( xis, simulation ) )
-{
-    // NOTHING
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionTiming destructor
 // Created: SBO 2007-06-19

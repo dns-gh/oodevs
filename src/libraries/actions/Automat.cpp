@@ -48,28 +48,6 @@ Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat constructor
-// Created: SBO 2007-05-22
-// -----------------------------------------------------------------------------
-Automat::Automat( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( parameter, controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindAutomat( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Automat_ABC >( OrderParameter( xis.attribute< std::string >("name" ), xis.attribute< std::string >( "type" ), false ), controller )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( resolver.FindAutomat( xis.attribute< unsigned long >( "value" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat destructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------

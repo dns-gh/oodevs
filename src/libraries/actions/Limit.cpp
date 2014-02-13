@@ -49,17 +49,6 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limit constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Location( parameter, converter, xis )
-    , limitId_( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Limit destructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------

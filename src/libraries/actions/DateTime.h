@@ -34,7 +34,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              DateTime( const kernel::OrderParameter& parameter );
-             DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
              DateTime( const kernel::OrderParameter& parameter, const sword::DateTime& date );
              DateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
     virtual ~DateTime();

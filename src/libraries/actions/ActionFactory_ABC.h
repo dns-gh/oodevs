@@ -90,7 +90,7 @@ public:
     //! @name Operations
     //@{
     // From xml
-    virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
+    virtual Action_ABC* CreateAction( xml::xistream& xis ) const = 0;
 
     // From proto
     virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const = 0;

@@ -34,18 +34,6 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( const kernel::MagicActionT
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicAction constructor
-// Created: JSR 2010-04-20
-// -----------------------------------------------------------------------------
-KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC( xis, controller, &magic )
-    , controller_         ( controller )
-    , registered_         ( true )
-{
-    Rename( ENT_Tr::ConvertFromKnowledgeMagicActionType( ENT_Tr::ConvertToKnowledgeMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: KnowledgeGroupMagicAction destructor
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------

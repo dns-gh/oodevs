@@ -35,7 +35,6 @@ public:
              Formation( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              Formation( const kernel::OrderParameter& parameter, const kernel::Formation_ABC& formation, kernel::Controller& controller );
              Formation( const kernel::OrderParameter& parameter, const int& message, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             Formation( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~Formation();
     //@}
 

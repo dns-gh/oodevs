@@ -42,7 +42,6 @@ public:
     ResourceNetworkNode( const kernel::OrderParameter& parameter, kernel::Controller& controller );
     ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Entity_ABC& object, const std::string& resource, kernel::Controller& controller );
     ResourceNetworkNode( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-    ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~ResourceNetworkNode();
     //@}
 
@@ -61,7 +60,6 @@ private:
     //@{
     virtual std::string SerializeType() const;
     void AddResourceParameter( const std::string& resource );
-    void ReadParameter( xml::xistream& xis );
     void CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const;
     //@}
 };

@@ -34,18 +34,6 @@ ObjectMagicAction::ObjectMagicAction( const kernel::MagicActionType& magic, kern
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicAction::ObjectMagicAction
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
-    : Action_ABC ( xis, controller, &magic )
-    , controller_( controller )
-    , registered_( true )
-{
-    Rename( ENT_Tr::ConvertFromObjectMagicActionType( ENT_Tr::ConvertToObjectMagicActionType( magic.GetName() ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectMagicAction::~ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------

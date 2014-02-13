@@ -25,11 +25,6 @@ namespace kernel
     class OrderParameter;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace actions
 {
 
@@ -59,9 +54,6 @@ public:
                                                      const sword::MissionParameter_Value& message,
                                                      boost::optional< const kernel::Entity_ABC& > entity,
                                                      bool nullValue = false ) const = 0;
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter,
-                                                     xml::xistream& xis,
-                                                     boost::optional< const kernel::Entity_ABC& > entity ) const = 0;
     //@}
 };
 

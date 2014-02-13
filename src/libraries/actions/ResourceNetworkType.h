@@ -36,7 +36,6 @@ public:
     //@{
     explicit ResourceNetworkType( const kernel::OrderParameter& parameter );
              ResourceNetworkType( const kernel::OrderParameter& parameter, const std::string name, const tools::StringResolver< kernel::ResourceNetworkType >& resolver );
-             ResourceNetworkType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::StringResolver< kernel::ResourceNetworkType >& resolver );
     virtual ~ResourceNetworkType();
     //@}
 

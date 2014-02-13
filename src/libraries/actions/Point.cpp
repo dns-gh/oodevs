@@ -47,16 +47,6 @@ Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& co
 }
 
 // -----------------------------------------------------------------------------
-// Name: Point constructor
-// Created: SBO 2007-05-22
-// -----------------------------------------------------------------------------
-Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Location( parameter, converter, xis )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Point destructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------

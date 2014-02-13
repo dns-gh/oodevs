@@ -21,17 +21,6 @@ EntityMission< T >::EntityMission( const kernel::MissionType* mission, kernel::C
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityMission constructor
-// Created: ABR 2013-06-14
-// -----------------------------------------------------------------------------
-template< typename T >
-EntityMission< T >::EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis )
-    : Mission( mission, controller, xis )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityMission destructor
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------

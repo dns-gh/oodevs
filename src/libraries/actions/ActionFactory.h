@@ -56,7 +56,7 @@ public:
     //! @name Operations
     //@{
     // From xml
-    virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
+    virtual Action_ABC* CreateAction( xml::xistream& xis ) const;
 
     // From proto
     virtual Action_ABC* CreateAction( const sword::ClientToSim& message, bool needRegistration ) const;
@@ -113,17 +113,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    Action_ABC* CreateMission( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* CreateFragOrder( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* CreateMagicAction( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* CreateUnitMagicAction( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* CreateObjectMagicAction( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const;
-    Action_ABC* AutomateChangeModeMagicAction( xml::xistream& xis, bool readonly ) const;
-
     void AddParameters( Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message ) const;
-    void AddParameters( Action_ABC& action, xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
-    void ReadParameter( xml::xistream& xis, Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, boost::optional< const kernel::Entity_ABC& > entity ) const;
     template< typename Message >
     void AddTiming( Action_ABC& action, const Message& message ) const;
     void AddTasker( Action_ABC& action, const sword::Tasker& tasker, bool isSimulation = true ) const;

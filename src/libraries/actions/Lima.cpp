@@ -57,25 +57,6 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lima constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Lima::Lima( const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( OrderParameter( xis.attribute< std::string >( "name" ), "phaseline", false ) )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        std::string value;
-        xis >> xml::attribute( "value", value )
-            >> xml::list( "parameter", *this, &Lima::ReadParameter, converter );
-        QStringList functions = QStringList::split( ", ", value.c_str() );
-        for( int i = 0; i < functions.size(); ++i )
-            functions[i] = tools::ToShortString( tools::LimaTypeFromXmlString( functions[i] ) );
-        SetValue( functions.join( ", " ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: Lima destructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
@@ -109,20 +90,6 @@ void Lima::Serialize( xml::xostream& xos ) const
             functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
         xos << xml::attribute( "value", functions.join( ", " ).toStdString() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::ReadParameter
-// Created: SBO 2007-06-25
-// -----------------------------------------------------------------------------
-void Lima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter )
-{
-    std::string type;
-    xis >> xml::attribute( "type", type );
-    if( type == "location" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toStdString(), "location", false ), converter, xis ) );
-    else if( type == "datetime" )
-        AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", true ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

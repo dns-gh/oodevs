@@ -54,17 +54,6 @@ Location::Location( const OrderParameter& parameter, const CoordinateConverter_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: Location constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, xml::xistream& xis )
-    : Parameter< QString >( parameter )
-    , LocationBase( converter, xis )
-{
-    Set( IsValid() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Location destructor
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------

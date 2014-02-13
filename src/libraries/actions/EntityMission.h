@@ -31,7 +31,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, bool registered = true );
-             EntityMission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis );
     virtual ~EntityMission();
     //@}
 

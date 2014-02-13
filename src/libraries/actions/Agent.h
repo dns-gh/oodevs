@@ -33,9 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::OrderParameter& parameter, kernel::Controller& controller, bool isKnowledge );
-             Agent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge );
              Agent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge );
-             Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge );
     virtual ~Agent();
     //@}
 

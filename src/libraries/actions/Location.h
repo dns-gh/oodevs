@@ -36,7 +36,6 @@ public:
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
-             Location( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Location();
     //@}
 

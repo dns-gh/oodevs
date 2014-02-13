@@ -47,12 +47,6 @@ class EngineerConstruction : public Parameter< std::string >
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types,
                                    const kernel::EntityResolver_ABC& entities, const sword::PlannedWork& message, kernel::Controller& controller,
                                    const tools::StringResolver< kernel::FireClass >& resolver );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter,
-                                   const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities,
-                                   xml::xistream& xis, kernel::Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver );
-             EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types,
-                                   const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller,
-                                   const tools::StringResolver< kernel::FireClass >& resolver );
     virtual ~EngineerConstruction();
     //@}
 
@@ -75,8 +69,6 @@ private:
     //! @name Helpers
     //@{
     void AddParam( Parameter_ABC& parameter, const std::string& keyname );
-    void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities,
-                        kernel::Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver );
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     //@}

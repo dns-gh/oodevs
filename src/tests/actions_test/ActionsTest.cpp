@@ -104,6 +104,7 @@ BOOST_FIXTURE_TEST_CASE( serialize_null_parameter_when_type_attribute_missing, F
 
     MockAgent agent;
     MOCK_EXPECT( entityResolver.FindAgent ).with( 146u ).returns( &agent );
+    MOCK_EXPECT( entityResolver.FindEntity ).with( 146u ).returns( &agent );
     MOCK_EXPECT( agent.GetId ).returns( 146u );
     MOCK_EXPECT( agent.GetName ).returns( "agent" );
 
@@ -115,11 +116,11 @@ BOOST_FIXTURE_TEST_CASE( serialize_null_parameter_when_type_attribute_missing, F
     MOCK_EXPECT( publicher.ClientToSim ).once().with( mock::retrieve( msg ) );
     action->Publish( publicher, 42 );
 
-    BOOST_CHECK( msg.message().has_automat_order() );
-    const sword::AutomatOrder& order = msg.message().automat_order();
+    BOOST_CHECK( msg.message().has_unit_order() );
+    const sword::UnitOrder& order = msg.message().unit_order();
     BOOST_CHECK( order.has_parameters() );
     // Parameter number is consistent
-    const sword::MissionParameters& parameters =order.parameters();
+    const sword::MissionParameters& parameters = order.parameters();
     BOOST_CHECK_EQUAL( parameters.elem_size(), 5 );
     // second and fifth parameter are optional
     BOOST_CHECK( parameters.elem( 1 ).null_value() );

@@ -91,40 +91,6 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
         AddParam( *new Quantity(     OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "integer", false ), message.max_combustion() ), "max_combustion_energy" );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: EngineerConstruction constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types,
-                                           const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver )
-    : Parameter< std::string >( parameter )
-    , type_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-        type_ = &types.Get( xis.attribute< std::string >( "value" ) );
-    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller, resolver );
-    if( type_ )
-        SetValue( type_->GetType() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EngineerConstruction constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types,
-                                            const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller,
-                                            const tools::StringResolver< kernel::FireClass >& resolver )
-    : Parameter< std::string >( OrderParameter( xis.attribute< std::string >( "name" ).c_str(), "genobject", false ) )
-    , type_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-        type_ = &types.Get( xis.attribute< std::string >( "value" ) );
-    xis >> xml::list( "parameter", *this, &EngineerConstruction::ReadParameter, converter, entities, controller, resolver );
-    if( type_ )
-        SetValue( type_->GetType() );
-}
-
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction destructor
 // Created: SBO 2007-04-16
@@ -142,48 +108,6 @@ void EngineerConstruction::AddParam( Parameter_ABC& parameter, const std::string
 {
     parameter.SetKeyName( keyname );
     Parameter< std::string >::AddParameter( parameter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EngineerConstruction::ReadParameter
-// Created: SBO 2007-05-25
-// -----------------------------------------------------------------------------
-void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities,
-                                          Controller& controller, const tools::StringResolver< kernel::FireClass >& resolver )
-{
-    std::string type = xis.attribute< std::string >( "type" );
-    boost::algorithm::to_lower( type );
-    if( type == "tc2" )
-        AddParam( *new Automat(         OrderParameter( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "tc2", false ), xis, entities, controller ), "tc2" );
-    else if( type == "obstacletype" )
-        AddParam( *new ObstacleType( xis ), "obstacletype" );
-    else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
-        AddParam( *new Location(        OrderParameter( tools::translate( "ActionParameter", "Construction location" ).toStdString(), "location", false ), converter, xis ), "location" );
-    else if( type == "string" )
-        AddParam( *new String(          OrderParameter( tools::translate( "ActionParameter", "Name" ).toStdString(), "string", true ), xis ), "name" );
-    else if( type == "boolean" )
-        AddParam( *new Bool(            OrderParameter( tools::translate( "ActionParameter", "Obstacle mining" ).toStdString(), "boolean", false ), xis ), "obstacle_mining" );
-    else if( type == "quantity" || type == "integer" || type == "numeric" )
-    {
-        std::string identifier = xis.attribute( "identifier", std::string() );
-        boost::algorithm::to_lower( identifier );
-        if( identifier == "activitytime" )
-            AddParam( *new Numeric(     OrderParameter( tools::translate( "ActionParameter", "Activity time:" ).toStdString(), "integer", true ), xis ), "activitytime" );
-        else if( identifier == "activationtime" )
-            AddParam( *new Numeric(     OrderParameter( tools::translate( "ActionParameter", "Activation time:" ).toStdString(), "integer", true ), xis ), "activationtime" );
-        else if( identifier == "density" )
-            AddParam( *new Numeric(     OrderParameter( tools::translate( "ActionParameter", "Density" ).toStdString(), "float", false ), xis ), "density" );
-        else if( identifier == "time_limit" )
-            AddParam( *new Numeric(     OrderParameter( tools::translate( "ActionParameter", "Time limit" ).toStdString(), "integer", false ), xis ), "time_limit" );
-        if( identifier == "altitude_modifier" )
-            AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "integer", false ), xis ), "altitude_modifier" );
-        else if( identifier == "lodging" )
-            AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "integer", false ), xis ), "lodging" );
-        else if( identifier == "max_combustion_energy" )
-            AddParam( *new Quantity(    OrderParameter( tools::translate( "ActionParameter", "Max combustion energy:" ).toStdString(), "integer", false ), xis ), "max_combustion_energy" );
-    }
-    else if( type == "fireclass" )
-        AddParam( *new FireClass( OrderParameter( tools::translate( "ActionParameter", "Fire class:" ).toStdString(), "fireclass", false ), xis, resolver ), "fire_class" );
 }
 
 // -----------------------------------------------------------------------------

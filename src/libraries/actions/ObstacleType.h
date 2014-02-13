@@ -40,7 +40,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObstacleType( const kernel::OrderParameter& parameter, unsigned int value );
-    explicit ObstacleType( xml::xistream& xis );
     virtual ~ObstacleType();
     //@}
 

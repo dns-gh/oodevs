@@ -39,21 +39,6 @@ ResourceNetworkType::ResourceNetworkType( const kernel::OrderParameter& paramete
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkType constructor
-// Created: ABR 2012-02-15
-// -----------------------------------------------------------------------------
-ResourceNetworkType::ResourceNetworkType( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::StringResolver< kernel::ResourceNetworkType >& resolver )
-    : Parameter< std::string >( parameter )
-    , type_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        type_ = &resolver.Get( xis.attribute< std::string >( "value" ) );
-        SetValue( type_->GetName() );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ResourceNetworkType destructor
 // Created: ABR 2012-02-15
 // -----------------------------------------------------------------------------

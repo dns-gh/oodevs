@@ -34,21 +34,6 @@ Enumeration::Enumeration( const kernel::OrderParameter& parameter )
 // Name: Enumeration constructor
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-Enumeration::Enumeration( const OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< std::string >( parameter )
-    , value_( 0 )
-{
-    if( xis.has_attribute( "value" ) )
-    {
-        value_ = new OrderParameterValue( parameter.GetValue( xis.attribute< unsigned long >( "value" ) ) );
-        SetValue( value_->GetName() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Enumeration constructor
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
 Enumeration::Enumeration( const OrderParameter& parameter, unsigned int value )
     : Parameter< std::string >( parameter )
     , value_( new OrderParameterValue( parameter.GetValue( value ) ) )

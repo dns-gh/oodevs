@@ -29,13 +29,3 @@ void actions::parameters::FillFromPointList( T_PointVector& vector,
         vector.push_back( converter.ConvertToXY( location.coordinates().elem( 0 ) ) );
     }
 }
-
-void actions::parameters::WalkPointList( const std::string& key,
-                                         const boost::function< void( xml::xistream& ) >& operand,
-                                         const std::string&,
-                                         std::string name,
-                                         xml::xistream& xis )
-{
-    if( name == key )
-        xis >> xml::list( "point", operand );
-}

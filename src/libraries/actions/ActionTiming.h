@@ -20,7 +20,6 @@
 
 namespace xml
 {
-    class xistream;
     class xostream;
 }
 
@@ -49,7 +48,6 @@ public:
     //@{
              ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation );
              ActionTiming( kernel::Controller& controller, const kernel::Time_ABC& simulation, const std::string& datetime );
-             ActionTiming( xml::xistream& xis, kernel::Controller& controller, const kernel::Time_ABC& simulation );
     virtual ~ActionTiming();
     //@}
 

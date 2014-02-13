@@ -32,18 +32,6 @@ Mission::Mission( const kernel::MissionType* mission, kernel::Controller& contro
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission constructor
-// Created: SBO 2007-05-16
-// -----------------------------------------------------------------------------
-Mission::Mission( const kernel::MissionType* mission, kernel::Controller& controller, xml::xistream& xis )
-    : Action_ABC( xis, controller, mission )
-    , controller_( controller )
-    , registered_( true )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Mission destructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------

@@ -37,17 +37,6 @@ Quantity::Quantity( const kernel::OrderParameter& parameter, int value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Quantity constructor
-// Created: JSR 2010-04-14
-// -----------------------------------------------------------------------------
-Quantity::Quantity( const kernel::OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< int >( parameter )
-{
-    if( xis.has_attribute( "value" ) )
-        SetValue( xis.attribute< int >( "value" ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Quantity destructor
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------

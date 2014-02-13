@@ -34,7 +34,6 @@ public:
 //! @name Constructors/Destructor
     //@{
              EngageMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, const bool engaged, bool registered = true );
-             EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const bool engaged);
     virtual ~EngageMagicAction();
     //@}
 

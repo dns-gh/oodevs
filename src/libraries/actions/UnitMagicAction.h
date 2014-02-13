@@ -33,7 +33,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitMagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true);
-             UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
     virtual ~UnitMagicAction();
     //@}
 
