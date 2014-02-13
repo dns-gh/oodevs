@@ -16,6 +16,7 @@ namespace gui
 {
     class EventTaskPresenter;
     struct EventTaskViewState;
+    class RichTextEdit;
 }
 
 // =============================================================================
@@ -42,30 +43,17 @@ private:
     virtual void Build( const gui::EventTaskViewState& state );
     //@}
 
-    //! @name Helpers
-    //@{
-    void SaveCursor( QTextEdit& textEdit );
-    void RestoreCursor( QTextEdit& textEdit );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnDescriptionChanged();
-    void OnPayloadChanged();
-    //@}
-
 private:
     //! @name Member data
     //@{
     boost::shared_ptr< gui::EventTaskPresenter > taskPresenter_;
 
     QLineEdit* label_;
-    QTextEdit* description_;
+    gui::RichTextEdit* description_;
     QLineEdit* url_;
     QLabel* bytes_;
     QPushButton* showButton_;
-    QTextEdit* payload_;
+    gui::RichTextEdit* payload_;
     QLabel* payloadLabel_;
     int cursorPos_;
     //@}
