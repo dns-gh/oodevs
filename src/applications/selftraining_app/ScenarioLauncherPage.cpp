@@ -256,9 +256,10 @@ void ScenarioLauncherPage::OnStart()
         config_, exerciseName, session.first ) );
     if( hasClient_ )
     {
+        auto profile = profile_.GetLogin();
         QString devFeatures = configPanel_ ? configPanel_->GetDevFeatures() : QString();
         process->Add( boost::make_shared< frontend::JoinExercise >(
-            config_, exerciseName, session.first, profile_.GetLogin(), devFeatures ) );
+            config_, exerciseName, session.first, &profile, devFeatures ) );
     }
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );

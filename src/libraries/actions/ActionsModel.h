@@ -118,7 +118,7 @@ public:
     int PublishInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
     int PublishInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
     int PublishObjectMagicAction( const std::string& action, unsigned long targetId );
-    int PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
+    int PublishObjectUpdateMagicAction( const kernel::Entity_ABC& object, const std::vector< parameters::ParameterList* >& attributes );
     int PublishObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     int PublishLogMaintenanceSetManualAction( const kernel::Entity_ABC& tasker, bool manual );
     int PublishSelectNewLogisticState( unsigned int consignId );

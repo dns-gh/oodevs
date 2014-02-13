@@ -29,7 +29,6 @@ ScoreProfilesPage::ScoreProfilesPage( QWidget* parent, kernel::Controllers& cont
     gui::SubObjectName subObject( "ScoreProfilesPage" );
     setMargin( 5 );
     {
-
         //label
         QLabel* scoreProfilesLabel = new QLabel( tools::translate( "ScoreProfilesPage", "Selected profiles will have access to the score during the exercise." ) );
         //tree view

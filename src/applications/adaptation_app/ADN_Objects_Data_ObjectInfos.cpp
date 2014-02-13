@@ -25,7 +25,7 @@ namespace
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
-    : pointSize_ ( 0 )
+    : pointSize_ ( 1 )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eObjects, "objects" ) );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
@@ -184,7 +184,8 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "object" )
         << xml::attribute( "name", *this );
-    if( pointSize_.GetData() )
+    // distance effect > 0 for geometry point
+    if( pointSize_.GetData() > 0 && geometries_[ 1 ].GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
     xos << xml::attribute( "type", strType_ );
     if( !description_.GetData().empty() )

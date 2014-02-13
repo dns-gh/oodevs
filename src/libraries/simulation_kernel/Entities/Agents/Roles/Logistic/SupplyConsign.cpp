@@ -370,7 +370,15 @@ void SupplyConsign::SupplyAndProceedWithNextRecipient()
 // -----------------------------------------------------------------------------
 void SupplyConsign::DoConvoyReserveTransporters()
 {
-    if( IsActionDone( convoy_->ReserveTransporters( resources_ ) ) )
+    const auto remainingTime = convoy_->ReserveTransporters( resources_ );
+    if( !remainingTime )
+    {
+        BOOST_FOREACH( const auto& it1, requestsQueued_ )
+            BOOST_FOREACH( const auto& it2, it1.second )
+                it2.second->ReturnStockNotAssignedToConvoy();
+        requestsNeedNetworkUpdate_ = true;
+    }
+    if( IsActionDone( remainingTime ) )
         SetState( sword::LogSupplyHandlingUpdate::convoy_setup );
     if( convoy_->IsImpossible() )
         ResetConsign();
@@ -504,18 +512,6 @@ void SupplyConsign::Clean()
 {
     needNetworkUpdate_ = false;
     requestsNeedNetworkUpdate_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConsign::OnAllResourcesAssignedToConvoy
-// Created: NLD 2008-08-01
-// -----------------------------------------------------------------------------
-void SupplyConsign::OnAllResourcesAssignedToConvoy()
-{
-    BOOST_FOREACH( const auto& it1, requestsQueued_ )
-        BOOST_FOREACH( const auto& it2, it1.second )
-            it2.second->ReturnStockNotAssignedToConvoy();
-    requestsNeedNetworkUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------

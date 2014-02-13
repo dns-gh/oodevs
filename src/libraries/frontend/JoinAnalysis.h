@@ -26,7 +26,9 @@ class JoinAnalysis : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile );
+             JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise,
+                     const tools::Path& session, const QString& profile,
+                     const QString& features );
     virtual ~JoinAnalysis();
     //@}
 };

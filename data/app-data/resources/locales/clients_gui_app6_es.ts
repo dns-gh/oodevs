@@ -5,27 +5,27 @@
     <name>models::app6</name>
     <message>
         <source>undefined</source>
-        <translation>Indefinido</translation>
+        <translation>No definido</translation>
     </message>
     <message>
         <source>category</source>
-        <translation>Categoría</translation>
+        <translation>categoría</translation>
     </message>
     <message>
         <source>combat</source>
-        <translation>Combate</translation>
+        <translation>combate</translation>
     </message>
     <message>
         <source>weapon</source>
-        <translation>Arma</translation>
+        <translation>arma</translation>
     </message>
     <message>
         <source>air defense</source>
-        <translation>Defensa anti aérea</translation>
+        <translation>defensa aérea</translation>
     </message>
     <message>
         <source>capacity</source>
-        <translation>Capacidad</translation>
+        <translation>capacidad</translation>
     </message>
     <message>
         <source>composite</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>gun unit</source>
-        <translation>Cañon</translation>
+        <translation>cañon</translation>
     </message>
     <message>
         <source>specialization</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>qualifier</source>
-        <translation>Calificador</translation>
+        <translation>calificador</translation>
     </message>
     <message>
         <source>heavy</source>
@@ -65,11 +65,11 @@
     </message>
     <message>
         <source>motorized avenger</source>
-        <translation>motorizado (avenger)</translation>
+        <translation>motorizado (misil avenger)</translation>
     </message>
     <message>
         <source>targeting unit</source>
-        <translation>unidad de apuntamiento</translation>
+        <translation>unidad de designación</translation>
     </message>
     <message>
         <source>theater missile defense unit</source>
@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>arctic</source>
-        <translation>artico</translation>
+        <translation>ártico</translation>
     </message>
     <message>
         <source>armored</source>
@@ -177,7 +177,7 @@
     </message>
     <message>
         <source>vertical short takeoff and landing</source>
-        <translation>desegue vertical corto y aterrizaje</translation>
+        <translation>despegue vertical corto y aterrizaje</translation>
     </message>
     <message>
         <source>engineer</source>
@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>multi rocket launcher</source>
-        <translation>lanzado multi-cohete</translation>
+        <translation>lanzador multi-cohete</translation>
     </message>
     <message>
         <source>truck</source>
@@ -241,7 +241,7 @@
     </message>
     <message>
         <source>infantry</source>
-        <translation>infanterie</translation>
+        <translation>infanteria</translation>
     </message>
     <message>
         <source>infantry fighting vehicle</source>
@@ -278,7 +278,7 @@
     </message>
     <message>
         <source>cavalry</source>
-        <translation>caballeria</translation>
+        <translation>caballería</translation>
     </message>
     <message>
         <source>horse</source>
@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>judge advocate general</source>
-        <translation>jurídico</translation>
+        <translation>corte militar</translation>
     </message>
     <message>
         <source>labor</source>
@@ -475,7 +475,7 @@
     </message>
     <message>
         <source>law enforcement unit</source>
-        <translation>unidades de fuerzas del ordel</translation>
+        <translation>unidades de fuerzas del orden</translation>
     </message>
     <message>
         <source>central intelligence division</source>
@@ -499,7 +499,7 @@
     </message>
     <message>
         <source>military intelligence</source>
-        <translation>renseignement militaire</translation>
+        <translation>inteligencia militar</translation>
     </message>
     <message>
         <source>aerial exploitation</source>
@@ -523,7 +523,7 @@
     </message>
     <message>
         <source>signal intelligence</source>
-        <translation>intelogencia electrónica (sigint)</translation>
+        <translation>inteligencia electrónica (sigint)</translation>
     </message>
     <message>
         <source>electronic warfare</source>
@@ -713,7 +713,7 @@
     </message>
     <message>
         <source>fire suppression</source>
-        <translation>extinsión de fuego</translation>
+        <translation>extinción de fuego</translation>
     </message>
     <message>
         <source>law enforcement</source>
@@ -741,7 +741,7 @@
     </message>
     <message>
         <source>staging area</source>
-        <translation>area de organización</translation>
+        <translation>área de organización</translation>
     </message>
     <message>
         <source>incident command center</source>

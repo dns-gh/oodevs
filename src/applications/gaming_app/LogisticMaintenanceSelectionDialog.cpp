@@ -22,6 +22,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceFunctions.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticsConsign_ABC.h"
@@ -342,4 +343,9 @@ void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Maintenanc
         else
             throw MASA_EXCEPTION( "Unhandled status " + ENT_Tr::ConvertFromLogMaintenanceHandlingStatus( status_ ) );
     }
+}
+
+void LogisticMaintenanceSelectionDialog::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    automaticButton_->setVisible( profile.IsSupervision() );
 }

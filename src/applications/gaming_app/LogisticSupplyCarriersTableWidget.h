@@ -35,6 +35,7 @@ public:
 
     bool IsOverloaded() const;
     bool IsUnderloaded() const;
+    bool IsIncomplete() const;
 
 private slots:
     void Update();

@@ -15,6 +15,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
@@ -54,16 +55,8 @@ ObjectsLayer::~ObjectsLayer()
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( selected_ && key->key() == Qt::Key_Delete )
-    {
-        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "destroy_object" );
-        std::unique_ptr< Action_ABC > action( new ObjectMagicAction( actionType, controllers_.controller_, false ) );
-        action->Rename( tools::translate( "gaming_app::Action", "Object Destruction" ) );
-        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action );
-        return true;
-    }
+    if( selected_ && profile_.CanDoMagic( *selected_ ) && key->key() == Qt::Key_Delete )
+        actionsModel_.PublishObjectDestroyMagicAction( *selected_ );
     return false;
 }
 

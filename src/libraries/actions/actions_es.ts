@@ -27,58 +27,58 @@
     </message>
     <message>
         <source>Obstacle tc2</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2 del obstáculo</translation>
     </message>
     <message>
         <source>Altitude modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificador de Altitud</translation>
     </message>
     <message>
         <source>Obstacle mining</source>
-        <translation type="unfinished"></translation>
+        <translation>Minar obstáculo</translation>
     </message>
     <message>
         <source>Time limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite de tiempo</translation>
     </message>
     <message>
         <source>Lodging</source>
-        <translation type="unfinished"></translation>
+        <translation>Alojamiento</translation>
     </message>
     <message>
         <source>Construction location</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición de la construcción</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Activation time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Retardo de activación:</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de actividad:</translation>
     </message>
     <message>
         <source>Activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Activación</translation>
     </message>
     <message>
         <source>Max combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Máxima energía de combustion:</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuego clase:</translation>
     </message>
 </context>
 <context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
-        <translation>Tiempo</translation>
+        <translation>Hora</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -89,18 +89,18 @@
     <name>AtlasNature</name>
     <message>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
+        <translation>No definido</translation>
     </message>
 </context>
 <context>
     <name>EngageMagicAction</name>
     <message>
         <source>Engage</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprometer</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation type="unfinished"></translation>
+        <translation>Descomprometer</translation>
     </message>
 </context>
 <context>
@@ -131,22 +131,22 @@
     </message>
     <message>
         <source>%1 (item %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (item %2)</translation>
     </message>
     <message>
         <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Recurso</translation>
     </message>
 </context>
 <context>
     <name>ParameterList</name>
     <message>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
+        <translation>No definido</translation>
     </message>
     <message>
         <source>List</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista</translation>
     </message>
 </context>
 </TS>

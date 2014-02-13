@@ -63,7 +63,7 @@ public:
     //@{
     ADN_Type_String strType_;
     ADN_Type_String description_;
-    ADN_Type_Double pointSize_;
+    ADN_Type_Int pointSize_;
     ADN_Type_Bool geometries_[ 4 ];
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbols_[ 4 ];
     T_CapacityMap capacities_;

@@ -1786,6 +1786,10 @@ Do you want to replace it?</source>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The convoy is unable to carry all types of resources</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1815,6 +1819,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry all types of resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3770,14 +3778,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Object Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

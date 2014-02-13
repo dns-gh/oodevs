@@ -99,7 +99,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
                                                         const sword::MissionParameter& message,
                                                         boost::optional< const kernel::Entity_ABC& > entity ) const
 {
-    if( ( !parameter.IsList() && message.value_size() == 1 ) )
+    if( !parameter.IsList() && message.value_size() == 1 && parameter.GetType() != "list" )
         return CreateParameter( parameter, message.value( 0 ), entity, message.null_value() );
     return new parameters::ParameterList( parameter, message.value(), *this, entity );
 }
@@ -187,7 +187,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_resourcenetworktype() )
         return ( nullValue ) ? new parameters::ResourceNetworkType( parameter )             : new parameters::ResourceNetworkType( parameter, message.resourcenetworktype().name(), staticModel_.objectTypes_ );
     if( message.list_size() )
-        return new parameters::ParameterList( parameter );
+        return new parameters::ParameterList( parameter, message.list(), *this, entity );
     if( message.has_extensionlist() )
         return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )

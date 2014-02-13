@@ -73,10 +73,9 @@ public:
 
     //! @name SupplyConvoyEventsObserver_ABC
     //@{
-    virtual void OnAllResourcesAssignedToConvoy();
-    virtual void OnResourceAssignedToConvoy    ( const PHY_DotationCategory& dotationCategory, double quantity );
-    virtual void OnResourceRemovedFromConvoy   ( const PHY_DotationCategory& dotationCategory, double quantity );
-    virtual void OnConvoyEndMission            ();
+    virtual void OnResourceAssignedToConvoy( const PHY_DotationCategory& dotationCategory, double quantity );
+    virtual void OnResourceRemovedFromConvoy( const PHY_DotationCategory& dotationCategory, double quantity );
+    virtual void OnConvoyEndMission();
     //@}
 
     //! @name Network - A refactorer

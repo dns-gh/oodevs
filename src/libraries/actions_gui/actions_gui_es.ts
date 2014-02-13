@@ -5,196 +5,196 @@
     <name>InterfaceBuilder</name>
     <message>
         <source>Unknown mission parameter: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetro de misión desconocido: %1</translation>
     </message>
 </context>
 <context>
     <name>LimaParameter</name>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished"></translation>
+        <translation>Horario</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Funciones</translation>
     </message>
 </context>
 <context>
     <name>LimitParameter</name>
     <message>
         <source>New limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo límite</translation>
     </message>
 </context>
 <context>
     <name>ListParameter</name>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar Lista</translation>
     </message>
     <message>
         <source>%1 (item %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (item %2)</translation>
     </message>
 </context>
 <context>
     <name>ParamBool</name>
     <message>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Falso</translation>
     </message>
 </context>
 <context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objeto</translation>
     </message>
     <message>
         <source>Resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Recurso</translation>
     </message>
 </context>
 <context>
     <name>Param_ABC</name>
     <message>
         <source>Add item</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar Item</translation>
     </message>
     <message>
         <source>Add automat&apos;s agents</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar agentes de autómata</translation>
     </message>
     <message>
         <source>Add formation&apos;s agents</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar agentes de la formación</translation>
     </message>
 </context>
 <context>
     <name>actions::gui::MissionInterface</name>
     <message>
         <source>Mandatory</source>
-        <translation type="unfinished">Obligatorio</translation>
+        <translation>Obligatorio</translation>
     </message>
     <message>
         <source>Optional</source>
-        <translation type="unfinished">Opcional</translation>
+        <translation>Opcional</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <source>Doctrine</source>
-        <translation type="unfinished"></translation>
+        <translation>Doctrina</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Uso</translation>
     </message>
 </context>
 <context>
     <name>actions::gui::ParamBool</name>
     <message>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Falso</translation>
     </message>
 </context>
 <context>
     <name>actions::gui::ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation type="unfinished">Agregar...</translation>
+        <translation>Agregar...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Retirar</translation>
     </message>
 </context>
 <context>
     <name>actions::gui::ParamObstacle</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished"></translation>
+        <translation>TC2</translation>
     </message>
     <message>
         <source>Density per 100 square meter</source>
-        <translation type="unfinished"></translation>
+        <translation>Densidad por cada 100 metros cuadrados</translation>
     </message>
     <message>
         <source>Altitude modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificador de Altitud</translation>
     </message>
     <message>
         <source>Obstacle mining</source>
-        <translation type="unfinished"></translation>
+        <translation>Minado de obstáculo</translation>
     </message>
     <message>
         <source>Time limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite de tiempo</translation>
     </message>
     <message>
         <source>Lodging</source>
-        <translation type="unfinished"></translation>
+        <translation>Alojamiento</translation>
     </message>
     <message>
         <source>Construction location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lugar de construcción</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar:</translation>
     </message>
     <message>
         <source>Activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Activación</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuego clase:</translation>
     </message>
     <message>
         <source>Max combustion energy</source>
-        <translation type="unfinished"></translation>
+        <translation>Máxima energía de combustión</translation>
     </message>
 </context>
 <context>
     <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de Actividad:</translation>
     </message>
     <message>
         <source>Activation time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de activación:</translation>
     </message>
 </context>
 </TS>

@@ -1,163 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="es_PE">
 <context>
     <name>logistic</name>
     <message>
         <source>request id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de requerimiento</translation>
     </message>
     <message>
         <source>tick</source>
-        <translation type="unfinished"></translation>
+        <translation>iteración</translation>
     </message>
     <message>
         <source>GDH</source>
-        <translation type="unfinished"></translation>
+        <translation>GDH</translation>
     </message>
     <message>
         <source>rank</source>
-        <translation type="unfinished"></translation>
+        <translation>grado</translation>
     </message>
     <message>
         <source>wound</source>
-        <translation type="unfinished"></translation>
+        <translation>herido</translation>
     </message>
     <message>
         <source>nbc</source>
-        <translation type="unfinished"></translation>
+        <translation>nbq</translation>
     </message>
     <message>
         <source>mental</source>
-        <translation type="unfinished"></translation>
+        <translation>mental</translation>
     </message>
     <message>
         <source>requested</source>
-        <translation type="unfinished"></translation>
+        <translation>requerido</translation>
     </message>
     <message>
         <source>granted</source>
-        <translation type="unfinished"></translation>
+        <translation>concedido</translation>
     </message>
     <message>
         <source>conveyed</source>
-        <translation type="unfinished"></translation>
+        <translation>transportado</translation>
     </message>
     <message>
         <source>unit id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de unidad</translation>
     </message>
     <message>
         <source>unit</source>
-        <translation type="unfinished"></translation>
+        <translation>unidad</translation>
     </message>
     <message>
         <source>handling unit id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de unidad operadora</translation>
     </message>
     <message>
         <source>handling unit</source>
-        <translation type="unfinished"></translation>
+        <translation>unidad operadora</translation>
     </message>
     <message>
         <source>conveying unit id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de unidad transportista</translation>
     </message>
     <message>
         <source>conveying unit</source>
-        <translation type="unfinished"></translation>
+        <translation>unidad transportista</translation>
     </message>
     <message>
         <source>packaging resource id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de material para embalaje</translation>
     </message>
     <message>
         <source>packaging resource</source>
-        <translation type="unfinished"></translation>
+        <translation>material para embalaje</translation>
     </message>
     <message>
         <source>state id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de estado</translation>
     </message>
     <message>
         <source>state</source>
-        <translation type="unfinished"></translation>
+        <translation>estado</translation>
     </message>
     <message>
         <source>provider id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de proveedor</translation>
     </message>
     <message>
         <source>provider</source>
-        <translation type="unfinished"></translation>
+        <translation>proveedor</translation>
     </message>
     <message>
         <source>equipment id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de equipo</translation>
     </message>
     <message>
         <source>equipment</source>
-        <translation type="unfinished"></translation>
+        <translation>equipo</translation>
     </message>
     <message>
         <source>breakdown id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de falla</translation>
     </message>
     <message>
         <source>breakdown</source>
-        <translation type="unfinished"></translation>
+        <translation>falla</translation>
     </message>
     <message>
         <source>resource type id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de tipo de recurso</translation>
     </message>
     <message>
         <source>resource type</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo de recurso</translation>
     </message>
     <message>
         <source>transport provider id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de proveedor de transporte</translation>
     </message>
     <message>
         <source>transport provider</source>
-        <translation type="unfinished"></translation>
+        <translation>proveedor de transporte</translation>
     </message>
     <message>
         <source>conveyor id</source>
-        <translation type="unfinished"></translation>
+        <translation>Id de transportista</translation>
     </message>
     <message>
         <source>conveyor</source>
-        <translation type="unfinished"></translation>
+        <translation>transportista</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>no</translation>
     </message>
     <message>
         <source>creation tick</source>
-        <translation type="unfinished"></translation>
+        <translation>iteración de creación</translation>
     </message>
     <message>
         <source>state end tick</source>
-        <translation type="unfinished"></translation>
+        <translation>iteración de estado final</translation>
     </message>
     <message>
         <source>instruction finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Consigna terminada</translation>
     </message>
     <message>
         <source>recipient id</source>
-        <translation type="unfinished"></translation>
+        <translation>id de receptor</translation>
     </message>
     <message>
         <source>recipient</source>
-        <translation type="unfinished"></translation>
+        <translation>receptor</translation>
     </message>
 </context>
 </TS>

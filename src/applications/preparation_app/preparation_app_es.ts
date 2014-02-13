@@ -5,26 +5,26 @@
     <name>AffinitiesDialog</name>
     <message>
         <source>Change affinities</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar afinidad</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>AgentsLayer</name>
     <message>
         <source>Logistic units can not be placed under a non logistic automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Las unidades logísticas no pueden subordinarse a un autómata no logístico</translation>
     </message>
 </context>
 <context>
@@ -35,244 +35,244 @@
     </message>
     <message>
         <source>The following files do not match their xsd : </source>
-        <translation type="unfinished"></translation>
+        <translation>Los siguientes archivos no concuerdan con su xsd : </translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error inesperado</translation>
     </message>
 </context>
 <context>
     <name>ChangeAutomatTypeDialog</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select new automat type for </source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar nuevo tipo de autómata para</translation>
     </message>
     <message>
         <source>Current type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo actual: </translation>
     </message>
     <message>
         <source>Replace by a new automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Reemplazar por un nuevo autómata</translation>
     </message>
 </context>
 <context>
     <name>ColorEditor</name>
     <message>
         <source>Change color</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar color</translation>
     </message>
     <message>
         <source>Reset color</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar color</translation>
     </message>
     <message>
         <source>Select color</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar color</translation>
     </message>
 </context>
 <context>
     <name>CommunicationTreeView</name>
     <message>
         <source>Create knowledge group</source>
-        <translation>Crear grupo de información</translation>
+        <translation>Crear grupo de conocimiento</translation>
     </message>
     <message>
         <source>Create sub knowledge group</source>
-        <translation>Crear subgrupo de información</translation>
+        <translation>Crear subgrupo de conocimiento</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar superior</translation>
     </message>
 </context>
 <context>
     <name>CsvExport</name>
     <message>
         <source>Automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Autómata</translation>
     </message>
     <message>
         <source>Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Entidad</translation>
     </message>
     <message>
         <source>SIDE</source>
-        <translation type="unfinished"></translation>
+        <translation>BANDO</translation>
     </message>
     <message>
         <source>CATEGORY</source>
-        <translation type="unfinished"></translation>
+        <translation>CATEGORIA</translation>
     </message>
     <message>
         <source>NAME</source>
-        <translation type="unfinished"></translation>
+        <translation>NOMBRE</translation>
     </message>
     <message>
         <source>TYPE</source>
-        <translation type="unfinished"></translation>
+        <translation>TIPO</translation>
     </message>
     <message>
         <source>POSITION</source>
-        <translation type="unfinished"></translation>
+        <translation>POSICIÓN</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objeto</translation>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Población</translation>
     </message>
     <message>
         <source>Inhabitant</source>
-        <translation type="unfinished"></translation>
+        <translation>Habitantes</translation>
     </message>
     <message>
         <source>orbat</source>
-        <translation type="unfinished"></translation>
+        <translation>orbat</translation>
     </message>
     <message>
         <source>resources</source>
-        <translation type="unfinished"></translation>
+        <translation>recursos</translation>
     </message>
     <message>
         <source>ENTITY</source>
-        <translation type="unfinished"></translation>
+        <translation>ENTIDAD</translation>
     </message>
     <message>
         <source>QUANTITY</source>
-        <translation type="unfinished"></translation>
+        <translation>CANTIDAD</translation>
     </message>
     <message>
         <source>stocks</source>
-        <translation type="unfinished"></translation>
+        <translation>stocks</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation type="unfinished"></translation>
+        <translation>clima</translation>
     </message>
     <message>
         <source>WIND SPEED</source>
-        <translation type="unfinished"></translation>
+        <translation>VELOCIDAD DE VIENTO</translation>
     </message>
     <message>
         <source>TEMPERATURE</source>
-        <translation type="unfinished"></translation>
+        <translation>TEMPERATURA</translation>
     </message>
     <message>
         <source>CLOUDS FLOOR</source>
-        <translation type="unfinished"></translation>
+        <translation>PISO DE NUBES</translation>
     </message>
     <message>
         <source>CLOUDS CEILING</source>
-        <translation type="unfinished"></translation>
+        <translation>TECHO DE NUBES</translation>
     </message>
     <message>
         <source>DENSITY CEILING</source>
-        <translation type="unfinished"></translation>
+        <translation>DENSIDAD DE NUBES</translation>
     </message>
     <message>
         <source>WEATHER TYPE</source>
-        <translation type="unfinished"></translation>
+        <translation>TIPO DE CLIMA</translation>
     </message>
     <message>
         <source>START TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>HORA DE INICIO</translation>
     </message>
     <message>
         <source>END TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>HORA DE FIN</translation>
     </message>
     <message>
         <source>WIND DIRECTION</source>
-        <translation type="unfinished"></translation>
+        <translation>DIRECCIÓN DE VIENTO</translation>
     </message>
     <message>
         <source>diplomacy</source>
-        <translation type="unfinished"></translation>
+        <translation>diplomacia</translation>
     </message>
     <message>
         <source>profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>perfiles</translation>
     </message>
     <message>
         <source>logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>logística</translation>
     </message>
 </context>
 <context>
     <name>DialogContainer</name>
     <message>
         <source>Orbat</source>
-        <translation type="unfinished"></translation>
+        <translation>Orbat</translation>
     </message>
 </context>
 <context>
     <name>DockContainer</name>
     <message>
         <source>ORBAT</source>
-        <translation type="unfinished"></translation>
+        <translation>ORBAT</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propiedades</translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished">Unidades</translation>
+        <translation>Unidades</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objetos</translation>
+        <translation>Objetos</translation>
     </message>
     <message>
         <source>Urban</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbres</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Poblaciones</translation>
+        <translation>Poblaciones</translation>
     </message>
     <message>
         <source>Tactical</source>
-        <translation type="unfinished"></translation>
+        <translation>Táctico</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <translation>Comunicación</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logística</translation>
     </message>
 </context>
 <context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
-        <translation>Editor de dotaciones</translation>
+        <translation>Editor de Recursos</translation>
     </message>
     <message>
         <source>Type</source>
@@ -292,91 +292,91 @@
     </message>
     <message>
         <source>Display information</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar información</translation>
     </message>
     <message>
         <source>Hide information</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar información</translation>
     </message>
     <message>
         <source>Current weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Peso actual</translation>
     </message>
     <message>
         <source>Maximal weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Peso máximo</translation>
     </message>
     <message>
         <source>Current volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen actual</translation>
     </message>
     <message>
         <source>Maximal volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volumen máximo</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar</translation>
     </message>
 </context>
 <context>
     <name>EditorFactory</name>
     <message>
         <source>NBC agent(s) editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de agente(s) NBQ</translation>
     </message>
     <message>
         <source>&lt;Select a type&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Seleccionar un tipo&gt;</translation>
     </message>
 </context>
 <context>
     <name>EntitySymbolEditor</name>
     <message>
         <source>Hierarchy level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel jerárquico:</translation>
     </message>
     <message>
         <source>Select a parent automat or formation</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar un autómata o formación</translation>
     </message>
 </context>
 <context>
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación de escenario</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished">Terreno</translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
     <name>ExerciseDialog</name>
     <message>
         <source>Exercise</source>
-        <translation>Ejercicio</translation>
+        <translation>Escenario</translation>
     </message>
     <message>
         <source>Briefing</source>
@@ -424,24 +424,25 @@
     </message>
     <message>
         <source>Infinite resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Recursos infinitos</translation>
     </message>
     <message>
         <source>Human factors automatic evolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Evolución automática de factores humanos</translation>
     </message>
     <message>
         <source>Order files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de órdenes</translation>
     </message>
     <message>
         <source>Order files (*.ord)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de órdenes ( *.ord)</translation>
     </message>
     <message>
         <source>The following files will be copied to the exercise scripts/resources subfolder:
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>ejercicio es reemplazado por escenario en todos los archivos.</translatorcomment>
+        <translation>Los siguientes archivos serán copiados al directorio de recursos/scripts del escenario:</translation>
     </message>
 </context>
 <context>
@@ -455,407 +456,407 @@
     <name>FilterCommand</name>
     <message>
         <source>Command overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Resumen del comando</translation>
     </message>
     <message>
         <source>Command:</source>
-        <translation type="unfinished"></translation>
+        <translation>Comando:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta:</translation>
     </message>
     <message>
         <source>File not found, move your binary to the filters directory, or update the $PATH environment variable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo no encontrado, mueva su binario al directorio de filtros o actualice la variable de entorno $PATH.</translation>
     </message>
     <message>
         <source>Reload exercise:</source>
-        <translation type="unfinished"></translation>
+        <translation>Recargar escenario:</translation>
     </message>
     <message>
         <source>Argument &apos;%1&apos;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumento &apos;%1&apos;:</translation>
     </message>
     <message>
         <source>Is blocking:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta bloqueando:</translation>
     </message>
 </context>
 <context>
     <name>FilterCsv</name>
     <message>
         <source>CSV export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar a CSV</translation>
     </message>
     <message>
         <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar orbat, recursos, stocks, clima, matriz de diplomacia, perfiles y enlaces logísticos como archivos CSV.</translation>
     </message>
     <message>
         <source>Select output directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar directorio de salida</translation>
     </message>
     <message>
         <source>Output to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de salida:</translation>
     </message>
     <message>
         <source>Enter output directory here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese el directorio de salida aquí</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
 </context>
 <context>
     <name>FilterDialog</name>
     <message>
         <source>Select filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecione un filtro:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Descripción:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Error on filter execution</source>
-        <translation type="unfinished"></translation>
+        <translation>Error en ejecución del filtro</translation>
     </message>
 </context>
 <context>
     <name>FilterDialogs</name>
     <message>
         <source>Error loading filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Error cargando filtros</translation>
     </message>
     <message>
         <source>Unknown section: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sección desconocida: %1.</translation>
     </message>
     <message>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar...</translation>
     </message>
     <message>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar...</translation>
     </message>
 </context>
 <context>
     <name>FilterInputArgument</name>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un archivo</translation>
     </message>
     <message>
         <source>Select a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un directorio</translation>
     </message>
     <message>
         <source>Invalid or missing orbat file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo orbat no válido o no encontrado.</translation>
     </message>
 </context>
 <context>
     <name>FilterManager</name>
     <message>
         <source>Bad filter attribute, either &apos;command&apos; attribute or &apos;target&apos;, &apos;xsl&apos; and &apos;output&apos; attributes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributo de filtro errado, puede ser o el atributo &apos;command&apos; o los atributos  &apos;target&apos;, &apos;xls&apos; y &apos;output&apos;.</translation>
     </message>
 </context>
 <context>
     <name>FilterOrbatReIndexer</name>
     <message>
         <source>Load orbat file</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar archivo orbat</translation>
     </message>
     <message>
         <source>Select order of battle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar orden de batalla:</translation>
     </message>
     <message>
         <source>Enter path to the new orbat here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese ruta para el nuevo orbat aquí</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Import options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de importación:</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objetos</translation>
+        <translation>Objetos</translation>
     </message>
     <message>
         <source>Import parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros de importación</translation>
     </message>
     <message>
         <source>Import an order of battle</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar un orden de batalla</translation>
     </message>
     <message>
         <source>Import an order of battle into current exercise.&lt;br&gt;May import the populations and the objects if relative checkbox are checked.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar un orden de batalla en el escenario actual &lt;br&gt; Puede importar poblaciones y objetos si el correspondiente checkbox está activado.</translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado inicial</translation>
     </message>
     <message>
         <source>Logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlaces logísticos</translation>
     </message>
     <message>
         <source>Stocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Stocks</translation>
     </message>
     <message>
         <source>Diplomacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Diplomacia</translation>
     </message>
     <message>
         <source>Parties:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandos:</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbres</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Poblaciones</translation>
+        <translation>Poblaciones</translation>
     </message>
 </context>
 <context>
     <name>FilterXsl</name>
     <message>
         <source>Select output directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un directorio de salida</translation>
     </message>
     <message>
         <source>Output to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de salida:</translation>
     </message>
     <message>
         <source>Enter output directory here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingresar directorio de salida aquí</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
 </context>
 <context>
     <name>GhostsPanel</name>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nombre:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>- Name not set.&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>- Nombre no definido.&lt;br&gt;</translation>
     </message>
     <message>
         <source>- Type not set.&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>- Tipo no definido.&lt;br&gt;</translation>
     </message>
     <message>
         <source>Error, missing informations:&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Error, información faltante&lt;br&gt;</translation>
     </message>
     <message>
         <source>- Superior not set to a formation or an automat.&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>- Superior no definido para una formación o autómata.&lt;br&gt;</translation>
     </message>
     <message>
         <source>Ghost</source>
-        <translation type="unfinished"></translation>
+        <translation>Fantasma</translation>
     </message>
     <message>
         <source>Drag and drop symbol to map to create a new ghost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrastrar un símbolo a mapa para crear un nuevo fantasma.</translation>
     </message>
     <message>
         <source>Enter ghost name here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese nombre del fantasma aquí</translation>
     </message>
     <message>
         <source>Enter ghost type here</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese tipo de fantasma aquí</translation>
     </message>
 </context>
 <context>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Información</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nombre:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Side:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bando:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <source>New Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva población</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crear</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Poblaciones</translation>
+        <translation>Poblaciones</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubicación:</translation>
     </message>
     <message>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation>---</translation>
     </message>
 </context>
 <context>
     <name>LimitsLayer</name>
     <message>
         <source>Edit...</source>
-        <translation type="unfinished">Editar...</translation>
+        <translation>Editar...</translation>
     </message>
 </context>
 <context>
     <name>LivingAreaEditor</name>
     <message>
         <source>Change living Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar área residencial</translation>
     </message>
 </context>
 <context>
     <name>LivingAreaPanel</name>
     <message>
         <source>Validation</source>
-        <translation type="unfinished"></translation>
+        <translation>Validación</translation>
     </message>
     <message>
         <source>Remove urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar bloques urbanos</translation>
     </message>
     <message>
         <source>Add urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar bloques urbanos</translation>
     </message>
     <message>
         <source>Click on a urban block to add or remove it from the living area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Click en un bloque urbano para agregar o eliminarlo del área residencial.</translation>
     </message>
     <message>
         <source>Living Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Area residencial</translation>
     </message>
     <message>
         <source>Use the context menu to add or remove several urban blocks at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Use el menú contextual para adherir diversos bloques urbanos en un solo paso.</translation>
     </message>
 </context>
 <context>
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignar subordinados logísticos</translation>
     </message>
     <message>
         <source>Generate logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar enlaces logísticos</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logística</translation>
     </message>
     <message>
         <source>Remove logistic subordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover subordinados logísticos</translation>
     </message>
     <message>
         <source>Remove logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar enlaces logísticos</translation>
     </message>
 </context>
 <context>
     <name>LogisticStockEditor</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoría</translation>
     </message>
     <message>
         <source>Days</source>
-        <translation type="unfinished"></translation>
+        <translation>Días</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logística</translation>
     </message>
     <message>
         <source>Edit Stocks</source>
-        <translation>Editer les stocks</translation>
+        <translation>Generar stocks</translation>
     </message>
     <message>
         <source>Edit Quotas</source>
-        <translation>Editer les quotas</translation>
+        <translation>Generar cuotas</translation>
     </message>
 </context>
 <context>
     <name>LogisticSuperiorEditor</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguno</translation>
     </message>
 </context>
 <context>
     <name>LongNameEditor</name>
     <message>
         <source>Generate long names</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar nombres largos</translation>
     </message>
 </context>
 <context>
@@ -890,7 +891,7 @@
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
+        <translation>Cargar archivo de definición de escenario (exercise.xml)</translation>
     </message>
     <message>
         <source>Watershed</source>
@@ -898,120 +899,121 @@
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbre</translation>
     </message>
     <message>
         <source>Formations</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaciones</translation>
     </message>
     <message>
         <source>Save exercise as ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabar escenario como...</translation>
     </message>
     <message>
         <source>Type exercise name here</source>
-        <translation type="unfinished"></translation>
+        <translation>Escriba el nombre del escenario aquí</translation>
     </message>
     <message>
         <source>The exercise &apos;%1&apos; already exists. Please, enter a new exercise name:</source>
-        <translation type="unfinished"></translation>
+        <translation>El escenario &apos;%1&apos; ya existe. Por favor ingrese otro nombre:</translation>
     </message>
     <message>
         <source>Enter an exercise name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese un nombre de escenario:</translation>
     </message>
     <message>
         <source>No file loaded</source>
-        <translation type="unfinished">No hay archivo cargado</translation>
+        <translation>No hay archivo cargado</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished">Nuevo ORBAT</translation>
+        <translation>Sin título</translation>
     </message>
     <message>
         <source>Preparation - [%1]</source>
-        <translation type="unfinished">Preparación - [%1]</translation>
+        <translation>Preparación - [%1]</translation>
     </message>
     <message>
         <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Curvas de nivel</translation>
     </message>
     <message>
         <source>Loading configuration ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando configuración ...</translation>
     </message>
     <message>
         <source>Loading physical model ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando modelo físico ...</translation>
     </message>
     <message>
         <source>Loading options ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando opciones ...</translation>
     </message>
     <message>
         <source>Loading exercise ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando escenario ...</translation>
     </message>
     <message>
         <source>Loading complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Carga completa</translation>
     </message>
     <message>
         <source>Initialize data ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializando datos ...</translation>
     </message>
     <message>
         <source>Loading graphical interface ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargando interfaz gráfica ...</translation>
     </message>
     <message>
         <source>Preparation - %1 - [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Preparación - %1 - [%2]</translation>
     </message>
     <message>
         <source>Error loading image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Error cargando archivo de imagen</translation>
     </message>
     <message>
         <source>Error while loading Raster source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error cargando imagen Raster.</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <source>This functionality is not available with old terrain format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta funcionalidad no está disponible con el antiguo formato de terreno.</translation>
     </message>
     <message>
         <source>Fatal error adding Raster source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Error grave agregando imagen Raster.</translation>
     </message>
     <message>
         <source>User layer [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa de usuario [%1]</translation>
     </message>
     <message>
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
-        <translation type="unfinished"></translation>
+        <translation>La siguiente imagen que agregó no tiene información de georeferencia.
+Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <source>Ghost</source>
-        <translation type="unfinished"></translation>
+        <translation>Fantasma</translation>
     </message>
     <message>
         <source>Generate symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar símbolos</translation>
     </message>
     <message>
         <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos</translation>
     </message>
     <message>
         <source>Resource networks</source>
-        <translation type="unfinished">Redes de recursos</translation>
+        <translation>Redes de recursos</translation>
     </message>
 </context>
 <context>
@@ -1154,7 +1156,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&amp;Exercise</source>
-        <translation>&amp;Ejercicio</translation>
+        <translation>&amp;Escenario</translation>
     </message>
     <message>
         <source>Success factors...</source>
@@ -1174,43 +1176,43 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Selected: all links</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionado: todos los enlaces</translation>
     </message>
     <message>
         <source>Selected: outgoing links</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionado: enlaces salientes</translation>
     </message>
     <message>
         <source>Toggle fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar modo pantalla completa</translation>
     </message>
     <message>
         <source>Toggle dock windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar ventanas ancladas</translation>
     </message>
     <message>
         <source>Save &amp;As</source>
-        <translation type="unfinished"></translation>
+        <translation>Grab&amp;ar como</translation>
     </message>
     <message>
         <source>&amp;Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Recargar</translation>
     </message>
     <message>
         <source>Consistency analysis...</source>
-        <translation type="unfinished"></translation>
+        <translation>Análisis de consistencia...</translation>
     </message>
     <message>
         <source>Performance...</source>
-        <translation type="unfinished"></translation>
+        <translation>Desempeño...</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportar...</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Con&amp;figuración</translation>
     </message>
 </context>
 <context>
@@ -1233,240 +1235,240 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
-        <translation type="unfinished"></translation>
+        <translation>No es posible borrar el grupo de conocimiento. Debe existir al menos un grupo por cada bando.</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nombre</translation>
     </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Descripción</translation>
     </message>
     <message>
         <source>Duplicate long name for units %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre largo duplicado para unidades %1.</translation>
     </message>
     <message>
         <source>Duplicate name for parties %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre duplicado para lados %1.</translation>
     </message>
     <message>
         <source>Duplicate name for objects %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre duplicado para objetos %1.</translation>
     </message>
     <message>
         <source>Duplicate name for limas %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre duplicado para lineas de fase %1.</translation>
     </message>
     <message>
         <source>Duplicate name for limits %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre duplicado para límites %1.</translation>
     </message>
     <message>
         <source>No stocks initialized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stocks no inicializados.</translation>
     </message>
     <message>
         <source>No logistic link initialized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlaces logísticos no inicializados.</translation>
     </message>
     <message>
         <source> and </source>
-        <translation type="unfinished"></translation>
+        <translation> y </translation>
     </message>
     <message>
         <source>Association with multiple profiles: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Asociación con múltiples perfiles: %1.</translation>
     </message>
     <message>
         <source>Not &apos;readable&apos; to any user profile. You will not be able to see it on the game.</source>
-        <translation type="unfinished"></translation>
+        <translation>No &apos;observable&apos; por ningún perfil. No será visible en la simulación.</translation>
     </message>
     <message>
         <source>Not &apos;writable&apos; to any user profile. You will not be able to give orders to it on the game.</source>
-        <translation type="unfinished"></translation>
+        <translation>No &apos;controlable&apos; por ningún perfil. No será posible darle órdenes durante la simulación.</translation>
     </message>
     <message>
         <source>Long name size limit exceeded : %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite de nombre largo es excedido: %1.</translation>
     </message>
     <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
-        <translation type="unfinished"></translation>
+        <translation>JStocks de naturaleza %1 excedieron la máxima capacidad.</translation>
     </message>
     <message>
         <source>Unknown object type &quot;%1&quot;, some objects could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Objeto de tipo desconocido &quot;%1&quot;, algunos objetos no serán cargados.</translation>
     </message>
     <message>
         <source>Unknown crowd type &quot;%1&quot;, some crowds could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de muchedumbre desconocido &quot;%1&quot;, algunas muchedumbre no serán cargadas.</translation>
     </message>
     <message>
         <source>Unknown population type &quot;%1&quot;, some populations could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de población desconocido &quot;%1&quot;, algunas poblaciones no serán cargadas.</translation>
     </message>
     <message>
         <source>Automat has no command post.</source>
-        <translation type="unfinished"></translation>
+        <translation>Autómato no tiene puesto de comando.</translation>
     </message>
     <message>
         <source>Automat has more than one command post.</source>
-        <translation type="unfinished"></translation>
+        <translation>El autómata tiene más de un puesto de comando.</translation>
     </message>
     <message>
         <source>Automat has no knowledge group.</source>
-        <translation type="unfinished"></translation>
+        <translation>El autómata no pertenece a ningún grupo de conocimiento.</translation>
     </message>
     <message>
         <source>Score definitions contain errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La definición de indicadores contiene errores: %1</translation>
     </message>
     <message>
         <source>Success factor definitions contain errors: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Las definiciones de factores de éxito contiene errores: %1</translation>
     </message>
     <message>
         <source>No valid logistic base defined.</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay definida una base logística válida.</translation>
     </message>
     <message>
         <source>Logistic sector not included in a logistic base.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sector logístico no está incluído en una base logística.</translation>
     </message>
     <message>
         <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunos recursos usados por los subordinados logísticos no están inicializados: %1.</translation>
     </message>
     <message>
         <source>Logistic base&apos;s party differs from object&apos;s party.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bando de base logística difiere del bando del objeto.</translation>
     </message>
     <message>
         <source>Unicity</source>
-        <translation type="unfinished"></translation>
+        <translation>Unicidad</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logística</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfil</translation>
     </message>
     <message>
         <source>Command Post</source>
-        <translation type="unfinished"></translation>
+        <translation>Puesto de comando</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Otros</translation>
     </message>
     <message>
         <source>Ghost</source>
-        <translation type="unfinished"></translation>
+        <translation>Fantasma</translation>
     </message>
     <message>
         <source>Invalid stock resource &apos;%1&apos; in orbat.xml. This resource will not be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Recurso de stock no valido &apos;%1&apos; en orbat.xml. Este recursos no será grabado.</translation>
     </message>
     <message>
         <source>No orbat.xml found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró orbat.xml</translation>
     </message>
     <message>
         <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de red de recurso desconocido &quot;%1&quot;. Redes relacionadas serán eliminadas en la siguiente grabación.</translation>
     </message>
     <message>
         <source>Unknown infrastructure &quot;%1&quot;. It will be deleted at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura &quot;%1&quot; desconocida; será eliminada en la siguiente grabación.</translation>
     </message>
     <message>
         <source>Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunos nodos de redes de recursos están en bloques urbanos no existentes; serán eliminados en la siguiente grabación.</translation>
     </message>
     <message>
         <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Subordinado logistico no válido para &apos;%1&apos;en orbat.xml. El enlace será eliminado en la siguiente grabación.</translation>
     </message>
     <message>
         <source>A ghost unit is present.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidad fantasma encontrada.</translation>
     </message>
     <message>
         <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo &apos;%1&apos; desconocido, una unidad fantasma será creada en su lugar.</translation>
     </message>
     <message>
         <source>Entity &apos;%1&apos; is outside the map. It will be repositioned to the origin.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entidad &apos;%1&apos;esta fuera del mapa. Será reposicionada al origen.</translation>
     </message>
     <message>
         <source>The following object is invalid and will be deleted at next save: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El siguiente objeto no es valido y será eliminado en la siguiente grabación: %1</translation>
     </message>
     <message>
         <source>Equipments in maintenance or surrendered state have been reset to on site fixable.</source>
-        <translation type="unfinished"></translation>
+        <translation>El equipamiento en estado &apos;mantenimiento mayor&apos; o &apos;rendido&apos; ha mudado al estado &apos;reparable en sitio&apos;.</translation>
     </message>
     <message>
         <source>Unknown material &quot;%1&quot;. It will be replaced by default material at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Material &apos;%1&apos; desconocido. Será reempazado por el material por defecto en la siguiente grabación.</translation>
     </message>
     <message>
         <source>Unknown roof shape &quot;%1&quot;. It will be replaced by default roof shape at next save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de techo &apos;%1&apos;. Será reemplazado por la forma por defecto en la siguiente grabación.</translation>
     </message>
     <message>
         <source>No quotas defined for &apos;%1&apos; : It will not be resupplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay cuotas definidas para &apos;%1&apos;. No será reabastecido.</translation>
     </message>
 </context>
 <context>
     <name>MultipleResolverEditor</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
     <message>
         <source>New profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo perfil</translation>
     </message>
     <message>
         <source>Profile name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de Perfil:</translation>
     </message>
     <message>
         <source>Profile name is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de perfíl vacio.</translation>
     </message>
     <message>
         <source>Profile &apos;%1&apos; already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfil &apos;%1&apos; ya existe.</translation>
     </message>
 </context>
 <context>
@@ -1477,197 +1479,197 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crear</translation>
+        <translation>Crear</translation>
     </message>
 </context>
 <context>
     <name>PerformanceDialog</name>
     <message>
         <source>Performance dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogo de desempeño</translation>
     </message>
     <message>
         <source>Detail: </source>
-        <translation type="unfinished"></translation>
+        <translation>Detalle:</translation>
     </message>
     <message>
         <source>Terrain memory size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de memoria de terreno: </translation>
     </message>
     <message>
         <source>Max automats in a knowledge group: </source>
-        <translation type="unfinished"></translation>
+        <translation>Número máximo de autómatas en un grupo de conocimiento: </translation>
     </message>
     <message>
         <source>Max units in a knowledge group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Máximo número de unidades en un grupo de conocimiento:</translation>
     </message>
     <message>
         <source>Average automats by knowledge group: </source>
-        <translation type="unfinished"></translation>
+        <translation>Promedio de autómatas por grupo de conocimiento: </translation>
     </message>
     <message>
         <source>Average units by knowledge group: </source>
-        <translation type="unfinished"></translation>
+        <translation>Promedio de unidades por grupo de conocimiento: </translation>
     </message>
     <message>
         <source>Exercise: </source>
-        <translation type="unfinished"></translation>
+        <translation>Escenario: </translation>
     </message>
     <message>
         <source>Teams: </source>
-        <translation type="unfinished"></translation>
+        <translation>Equipos: </translation>
     </message>
     <message>
         <source>Profiles: </source>
-        <translation type="unfinished"></translation>
+        <translation>Perfiles: </translation>
     </message>
     <message>
         <source>Automats: </source>
-        <translation type="unfinished"></translation>
+        <translation>Autómatas: </translation>
     </message>
     <message>
         <source>Units: </source>
-        <translation type="unfinished"></translation>
+        <translation>Unidades: </translation>
     </message>
     <message>
         <source>Crowds: </source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbres: </translation>
     </message>
     <message>
         <source>Populations: </source>
-        <translation type="unfinished"></translation>
+        <translation>Poblaciones: </translation>
     </message>
     <message>
         <source>Urban blocs: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos: </translation>
     </message>
     <message>
         <source>Objects: </source>
-        <translation type="unfinished"></translation>
+        <translation>Objetos: </translation>
     </message>
     <message>
         <source>Knowledge groups: </source>
-        <translation type="unfinished"></translation>
+        <translation>Grupos de conocimiento: </translation>
     </message>
     <message>
         <source>Terrain: </source>
-        <translation type="unfinished"></translation>
+        <translation>Terreno: </translation>
     </message>
     <message>
         <source>Team: </source>
-        <translation type="unfinished"></translation>
+        <translation>Equipo: </translation>
     </message>
     <message>
         <source>Formations: </source>
-        <translation type="unfinished"></translation>
+        <translation>Formaciones: </translation>
     </message>
     <message>
         <source>Number of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de perfiles</translation>
     </message>
     <message>
         <source>Number of units</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de unidades</translation>
     </message>
     <message>
         <source>Number of populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de poblaciones</translation>
     </message>
     <message>
         <source>Number of crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de muchedumbres</translation>
     </message>
     <message>
         <source>Number of urban blocs</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de bloques urbanos</translation>
     </message>
     <message>
         <source>Number of objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de objetos</translation>
     </message>
     <message>
         <source>Number of knowledge groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de grupos de conocimiento</translation>
     </message>
     <message>
         <source>Terrain memory size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de memoria de terreno</translation>
     </message>
     <message>
         <source>Terrain size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de terreno</translation>
     </message>
     <message>
         <source>Max automats in a knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Máximo número de autómatas en un grupo de conocimiento</translation>
     </message>
     <message>
         <source>Max units in a knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Máxima cantidad de unidades en un grupo de conocimiento</translation>
     </message>
     <message>
         <source>Average automats by knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Promedio de automatas por grupo de conocimiento</translation>
     </message>
     <message>
         <source>Average units by knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Promedio de unidades por grupo de conocimiento</translation>
     </message>
     <message>
         <source>Single station load level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de carga de estación</translation>
     </message>
     <message>
         <source>Multi station load level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de carga de multiestación</translation>
     </message>
     <message>
         <source>Single station</source>
-        <translation type="unfinished"></translation>
+        <translation>Estación individual</translation>
     </message>
     <message>
         <source>Multi station</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiestación</translation>
     </message>
     <message>
         <source>Single station load level: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de carga de estación: </translation>
     </message>
     <message>
         <source>Multi station load level: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de carga multiestación: </translation>
     </message>
 </context>
 <context>
     <name>PopulationRepartitionEditor</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Repartition Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de distribución</translation>
     </message>
     <message>
         <source>Male (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hombres ( %)</translation>
     </message>
     <message>
         <source>Female (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mujeres (%)</translation>
     </message>
     <message>
         <source>Children (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niños (%)</translation>
     </message>
     <message>
         <source>&lt;font color=&quot;#ff0000&quot;&gt;Total must be equal to 100&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#ff0000&quot;&gt;El total debe ser igual a 100&lt;/font&gt;</translation>
     </message>
 </context>
 <context>
@@ -1686,7 +1688,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Invalid coordinates</source>
-        <translation>Cordenadas no válidas</translation>
+        <translation>Coordenadas no válidas</translation>
     </message>
     <message>
         <source> Location is outside terrain bounding box </source>
@@ -1736,7 +1738,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>clear existing profiles</source>
-        <translation>Limpiar perfiles existentes</translation>
+        <translation>Eliminar perfiles existentes</translation>
     </message>
     <message>
         <source>add new profiles to existing</source>
@@ -1767,82 +1769,83 @@ This data can&apos;t be projected.</source>
     <name>PropertyDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Editar Propiedades...&gt;</translation>
     </message>
     <message>
         <source>not set</source>
-        <translation type="unfinished"></translation>
+        <translation>no definido</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>no válido</translation>
     </message>
     <message>
         <source>&lt;Edit repartition...&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Editar distribución...&gt;</translation>
     </message>
 </context>
 <context>
     <name>RemoveBlocksDialog</name>
     <message>
         <source>Remove urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar bloques urbanos</translation>
     </message>
     <message>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño mínimo:</translation>
     </message>
     <message>
         <source>m²</source>
-        <translation type="unfinished">m²</translation>
+        <translation>m²</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Area (m²)</source>
-        <translation type="unfinished">Area (m²)</translation>
+        <translation>Area (m²)</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>The following urban blocks will be removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Los siguientes bloques urbanos serán eliminados:</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todo</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <source>Check:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar:</translation>
     </message>
 </context>
 <context>
     <name>ResourceNetworkDialog</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
+        <translation>Alerta</translation>
     </message>
     <message>
         <source>A cycle has been detected in the resource network for the block %1.
  The network automatic generation cannot be computed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se ha detectado un ciclo en la red de recursos para el bloque %1.
+ No se puede continuar con la generación automática de la red.</translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1928,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>In maintenance</source>
-        <translation>En mantenimiento</translation>
+        <translation>En mantenimiento mayor</translation>
     </message>
     <message>
         <source>Prisoner</source>
@@ -1933,87 +1936,87 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Evacuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Evacuación</translation>
     </message>
     <message>
         <source>Collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Colección</translation>
     </message>
     <message>
         <source>Healthy</source>
-        <translation type="unfinished"></translation>
+        <translation>Saludable</translation>
     </message>
     <message>
         <source>Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Contamido</translation>
     </message>
     <message>
         <source>Direct fires</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuegos directo</translation>
     </message>
     <message>
         <source>Indirect fires</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuegos indirecto</translation>
     </message>
     <message>
         <source>Non fratricide fires</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuegos no fratricidas</translation>
     </message>
     <message>
         <source>Fratricide fires</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuegos Fraticidas</translation>
     </message>
     <message>
         <source>Repairers</source>
-        <translation type="unfinished"></translation>
+        <translation>Reparadores</translation>
     </message>
     <message>
         <source>Haulers</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargadores</translation>
     </message>
     <message>
         <source>Lodging</source>
-        <translation type="unfinished"></translation>
+        <translation>Alojamiento</translation>
     </message>
     <message>
         <source>Health</source>
-        <translation type="unfinished"></translation>
+        <translation>Salud</translation>
     </message>
     <message>
         <source>Safety</source>
-        <translation type="unfinished"></translation>
+        <translation>Seguridad</translation>
     </message>
     <message>
         <source>Favorable</source>
-        <translation type="unfinished"></translation>
+        <translation>Favorable</translation>
     </message>
     <message>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutral</translation>
     </message>
     <message>
         <source>Unfavorable</source>
-        <translation type="unfinished"></translation>
+        <translation>No favorable</translation>
     </message>
     <message>
         <source>Wounded U1</source>
-        <translation type="unfinished"></translation>
+        <translation>Heridos U1</translation>
     </message>
     <message>
         <source>Wounded U2</source>
-        <translation type="unfinished"></translation>
+        <translation>Heridos U2</translation>
     </message>
     <message>
         <source>Wounded U3</source>
-        <translation type="unfinished"></translation>
+        <translation>Heridos U3</translation>
     </message>
     <message>
         <source>Wounded UE</source>
-        <translation type="unfinished"></translation>
+        <translation>Heridos UE</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation type="unfinished"></translation>
+        <translation>Reparable en sitio</translation>
     </message>
 </context>
 <context>
@@ -2047,7 +2050,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Information</source>
-        <translation>Informacion</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -2083,11 +2086,11 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Edición de indicador - %1</translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>La formula está vacia.</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2148,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Generate default indicators</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar indicadores por defecto</translation>
     </message>
 </context>
 <context>
@@ -2170,15 +2173,15 @@ This data can&apos;t be projected.</source>
     <name>ScoreProfilesPage</name>
     <message>
         <source>Access rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Privilegios de acceso</translation>
     </message>
     <message>
         <source>Selected profiles will have access to the score during the exercise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los perfiles seleccionados tendrán acceso a los puntajes durante el ejercicio.</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfil</translation>
     </message>
 </context>
 <context>
@@ -2249,93 +2252,93 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Ambulance types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de ambulancia</translation>
     </message>
     <message>
         <source>Crowd states</source>
-        <translation type="unfinished"></translation>
+        <translation>Estados de muchedumbre</translation>
     </message>
     <message>
         <source>Fire types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de fuego</translation>
     </message>
     <message>
         <source>Population states</source>
-        <translation type="unfinished"></translation>
+        <translation>Estados de población</translation>
     </message>
     <message>
         <source>Satisfaction types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de satisfacción</translation>
     </message>
     <message>
         <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos</translation>
     </message>
     <message>
         <source>Maintenance types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de Mantenimiento</translation>
     </message>
     <message>
         <source>Fratricide fires</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuegos fratricidas</translation>
     </message>
     <message>
         <source>Force ratio types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de relación de fuerza</translation>
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbre</translation>
     </message>
     <message>
         <source>Crowd list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de muchedumbres</translation>
     </message>
     <message>
         <source>Inhabitant</source>
-        <translation type="unfinished"></translation>
+        <translation>Poblador</translation>
     </message>
     <message>
         <source>Inhabitant list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de pobladores</translation>
     </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Agregar</translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Pegar</translation>
     </message>
 </context>
 <context>
     <name>StocksEditionDialog</name>
     <message>
         <source>Stocks Edition</source>
-        <translation type="unfinished">Edition des stocks</translation>
+        <translation>Generación de Stocks</translation>
     </message>
     <message>
         <source>Quotas Edition</source>
-        <translation type="unfinished">Edition des quotas</translation>
+        <translation>Generación de Cuotas</translation>
     </message>
 </context>
 <context>
@@ -2473,19 +2476,19 @@ This data can&apos;t be projected.</source>
     <name>SymbolDialog</name>
     <message>
         <source>Symbol and hierarchy level editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de símbolos y niveles de jerarquía</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Symbol and hierarchy level</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolo y nivel de jerarquía</translation>
     </message>
 </context>
 <context>
@@ -2496,53 +2499,53 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Por defecto</translation>
     </message>
 </context>
 <context>
     <name>TacticalTreeView</name>
     <message>
         <source>Create side</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear lado</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar superior</translation>
     </message>
     <message>
         <source>Change hierarchy level</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar nivel jerárquico</translation>
     </message>
     <message>
         <source>Engage</source>
-        <translation type="unfinished">Comprometer</translation>
+        <translation>Comprometer</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation type="unfinished">Liberar</translation>
+        <translation>Liberar</translation>
     </message>
     <message>
         <source>Change automat type</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar tipo de autómata</translation>
     </message>
     <message>
         <source>Replace by a new automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Reemplazar por un nuevo autómata</translation>
     </message>
     <message>
         <source>Create formation</source>
-        <translation type="unfinished">Crear una formación</translation>
+        <translation>Crear formación</translation>
     </message>
 </context>
 <context>
     <name>TemplateListView</name>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar</translation>
     </message>
 </context>
 <context>
@@ -2560,106 +2563,106 @@ This data can&apos;t be projected.</source>
     <name>TerrainExportDialog</name>
     <message>
         <source>Terrain Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar terreno</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select export directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar directorio de exportación</translation>
     </message>
     <message>
         <source>Error during export process</source>
-        <translation type="unfinished"></translation>
+        <translation>Error durante exportación</translation>
     </message>
     <message>
         <source>Terrain export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar terreno</translation>
     </message>
     <message>
         <source>Export directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de Exportación:</translation>
     </message>
     <message>
         <source>Export vector data (Shapefile)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar datos vectoriales (Shapefile)</translation>
     </message>
     <message>
         <source>Export raster data (GeoTIFF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar imagen raster ( GeoTiff)</translation>
     </message>
     <message>
         <source>Export elevation data (ESRI Ascii GRID)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar datos de elevación (ESRI Ascii GRID)</translation>
     </message>
     <message>
         <source>Export successful.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportación exitosa.</translation>
     </message>
     <message>
         <source>Exporting terrain data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportando datos de terreno...</translation>
     </message>
     <message>
         <source>Exporting urban data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportando datos urbanos...</translation>
     </message>
     <message>
         <source>Exporting raster data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportando imagen raster...</translation>
     </message>
     <message>
         <source>Exporting elevation data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportando datos de elevación...</translation>
     </message>
 </context>
 <context>
     <name>TerrainToolBar</name>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished">Terreno</translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>Edit urban area</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar área urbana</translation>
     </message>
     <message>
         <source>Manual block creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación manual de bloques</translation>
     </message>
     <message>
         <source>Automatic block creation on built-up area</source>
-        <translation type="unfinished"></translation>
+        <translation>Creación automática de bloques en zona urbana</translation>
     </message>
     <message>
         <source>Remove urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar bloques urbanos</translation>
     </message>
     <message>
         <source>Error during automatic process creation of urban blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Error durante creación automática de bloques urbanos</translation>
     </message>
     <message>
         <source>Change shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar forma</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <source>Urban blocks cannot be created on top of existing blocks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques urbanos no pueden ser creados sobre bloques existentes.</translation>
     </message>
     <message>
         <source>Road width (m):</source>
@@ -2670,131 +2673,131 @@ This data can&apos;t be projected.</source>
     <name>UnitStateDialog</name>
     <message>
         <source>Crew</source>
-        <translation type="unfinished"></translation>
+        <translation>Tripulación</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipos</translation>
     </message>
     <message>
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Recursos</translation>
     </message>
     <message>
         <source>Change initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar estado inicial</translation>
     </message>
     <message>
         <source>Display initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar estado inicial</translation>
     </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>
     <message>
         <source>Default capacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad por defecto</translation>
     </message>
     <message>
         <source>Add resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar recurso</translation>
     </message>
     <message>
         <source>Remove resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar recurso</translation>
     </message>
 </context>
 <context>
     <name>UrbanInfosDockWidget</name>
     <message>
         <source>Urban informations</source>
-        <translation type="unfinished"></translation>
+        <translation>Información sobre bloques urbanos</translation>
     </message>
     <message>
         <source>Total urban blocks number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Total de bloques urbanos:</translation>
     </message>
     <message>
         <source>Selected urban blocks number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Número de bloques urbanos seleccionado: </translation>
     </message>
     <message>
         <source>Non medical infrastructures: </source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructuras no médicas: </translation>
     </message>
     <message>
         <source>Medical infrastructures: </source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura médica: </translation>
     </message>
     <message>
         <source>Total capacity: </source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad total: </translation>
     </message>
     <message>
         <source>Capacity  %1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad %1: </translation>
     </message>
     <message>
         <source>Resource %1 production: </source>
-        <translation type="unfinished"></translation>
+        <translation>Producción recurso %1: </translation>
     </message>
     <message>
         <source>Resource %1 consumption: </source>
-        <translation type="unfinished"></translation>
+        <translation>Consumo recurso %1: </translation>
     </message>
 </context>
 <context>
     <name>UrbanTreeView</name>
     <message>
         <source>Create city</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear ciudad</translation>
     </message>
     <message>
         <source>Infrastructure</source>
-        <translation type="unfinished"></translation>
+        <translation>Infraestructura</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ninguna</translation>
     </message>
     <message>
         <source>Usages</source>
-        <translation type="unfinished"></translation>
+        <translation>Usos</translation>
     </message>
     <message>
         <source>Resource network</source>
-        <translation type="unfinished"></translation>
+        <translation>Red de recursos</translation>
     </message>
     <message>
         <source>Material</source>
-        <translation type="unfinished"></translation>
+        <translation>Material</translation>
     </message>
     <message>
         <source>RoofShape</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de Techo</translation>
     </message>
     <message>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Area</translation>
     </message>
 </context>
 <context>
     <name>UsagesDockWidget</name>
     <message>
         <source>Usages</source>
-        <translation type="unfinished"></translation>
+        <translation>Usos</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Agregar</translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Proportion(%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Proporción(%)</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation>Borrar</translation>
     </message>
 </context>
 <context>
@@ -2855,28 +2858,29 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
+        <translation>Muchedumbres</translation>
     </message>
     <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
+        <translation>Login repetido: &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Supervisor actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Acciones de supervisor</translation>
     </message>
     <message>
         <source>&apos;Read&apos; permission allows you to see a unit.
 &apos;Write&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permiso &apos;Visualizar&apos; permite observar una unidad.
+Permiso &apos;Controlar&apos; permite manejar una unidad.</translation>
     </message>
     <message>
         <source>Automats:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autómatas:</translation>
     </message>
     <message>
         <source>Knowledge groups:</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupos de conocimiento:</translation>
     </message>
     <message>
         <source>Time Control</source>
@@ -2887,61 +2891,61 @@ This data can&apos;t be projected.</source>
     <name>WeatherListView</name>
     <message>
         <source>Time parameters or location are incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros de tiempo o ubicación no son correctos</translation>
     </message>
     <message>
         <source>Local weather </source>
-        <translation type="unfinished"></translation>
+        <translation>Clima local</translation>
     </message>
     <message>
         <source>Weather</source>
-        <translation type="unfinished"></translation>
+        <translation>Clima</translation>
     </message>
     <message>
         <source>Weather modifications applied</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificaciones al Clima aplicadas</translation>
     </message>
 </context>
 <context>
     <name>WeatherPanel</name>
     <message>
         <source>Exercise date:</source>
-        <translation type="unfinished">Fecha de ejercicio:</translation>
+        <translation>Fecha de ejercicio:</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation type="unfinished">Efemérides</translation>
+        <translation>Efemérides</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation type="unfinished">Salida de sol:</translation>
+        <translation>Salida de sol:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation type="unfinished">Puesta de sol:</translation>
+        <translation>Puesta de sol:</translation>
     </message>
     <message>
         <source>Day lighting:</source>
-        <translation type="unfinished">Iluminación de día:</translation>
+        <translation>Iluminación de día:</translation>
     </message>
     <message>
         <source>Night lighting:</source>
-        <translation type="unfinished">Iluminación nocturna:</translation>
+        <translation>Iluminación nocturna:</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation type="unfinished">Parámetros de clima</translation>
+        <translation>Parámetros de clima</translation>
     </message>
 </context>
 <context>
     <name>preparation::OrbatPanel</name>
     <message>
         <source>Edition</source>
-        <translation type="unfinished"></translation>
+        <translation>Edición</translation>
     </message>
     <message>
         <source>Ghost:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fantasma:</translation>
     </message>
 </context>
 <context>
@@ -2952,12 +2956,13 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error loading exercise: </source>
-        <translation>Error cargando ejercicio: </translation>
+        <translation>Error cargando escenario: </translation>
     </message>
     <message>
         <source>Unsaved modification detected.
 Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificación detectada
+¿Desea grabar el escenario &apos;%1&apos;?</translation>
     </message>
 </context>
 </TS>
