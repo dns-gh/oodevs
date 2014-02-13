@@ -370,43 +370,6 @@ class SupplyStockReturnVisitor : public MIL_LogisticEntitiesVisitor
         double quantity_;
 };
 
-class SupplyConvoyTransporterVisitor : public MIL_LogisticEntitiesVisitor
-                                     , private boost::noncopyable
-{
-    public:
-        SupplyConvoyTransporterVisitor( const PHY_ComposanteTypePion& type )
-            : type_            ( type )
-            , pConvoySelected_ ( 0 )
-            , selected_       ( 0 )
-        {
-        }
-
-        void Visit( const MIL_AgentPion& tmp )
-        {
-            // NLD 2011-04-07 : Totally bugged ...
-            // We must not use BL internal TC2 for external use
-            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            //if( bExternalTransfert_ && testBrain )
-                //return;
-
-            if( selected_ )
-                return;
-
-            const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
-            PHY_ComposantePion* pTmpConvoySelected = candidate!=0 ? candidate->GetAvailableConvoyTransporter( type_ ) : 0;
-            if( pTmpConvoySelected )
-            {
-                pConvoySelected_ = pTmpConvoySelected;
-                selected_       = const_cast<MIL_AgentPion*>(&tmp);
-            }
-        }
-
-    public:
-        const PHY_ComposanteTypePion& type_;
-              PHY_ComposantePion*     pConvoySelected_;
-              MIL_AgentPion*          selected_;
-};
-
 class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
                                   , private boost::noncopyable
 {

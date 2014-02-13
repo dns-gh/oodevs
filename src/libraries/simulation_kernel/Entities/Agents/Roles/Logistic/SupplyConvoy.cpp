@@ -18,7 +18,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
-#include <boost/foreach.hpp>
 
 using namespace logistic;
 
@@ -41,6 +40,7 @@ SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, Supp
     , finished_                     ( false )
     , impossible_                   ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ SupplyConvoy::SupplyConvoy()
     , finished_                     ( false )
     , impossible_                   ( false )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -104,10 +104,9 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
         while( quantity > 0 )
         {
             SupplyConveyor_ABC* conveyor = CreateConveyor( dotationCategory );
-            if( conveyor )
-                quantity -= conveyor->Convoy( *eventsObserver_, dotationCategory, quantity );
-            else
-                break;
+            if( !conveyor )
+                return;
+            quantity -= conveyor->Convoy( *eventsObserver_, dotationCategory, quantity );
         }
     }
     else if( quantity > 0 )
@@ -132,19 +131,16 @@ bool SupplyConvoy::IsImpossible() const
 unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
 {
     // Allocate the specified transporters
-    BOOST_FOREACH( const auto& data, parameters_->GetTransporters() )
-        for( unsigned i = 0; i < data.second; ++i )
-            if( !CreateConveyor( *data.first ) )
+    const auto& transporters = parameters_->GetTransporters();
+    for( auto it = transporters.begin(); it != transporters.end(); ++it )
+        for( unsigned i = 0; i < it->second; ++i )
+            if( !CreateConveyor( *it->first ) )
                 break;
-
     // Link the resources to the transporters
-    BOOST_FOREACH( const T_Resources::value_type& data, resources )
-        ReserveTransporters( *data.first, data.second );
-
+    for( auto it = resources.begin(); it != resources.end(); ++it )
+        ReserveTransporters( *it->first, it->second );
     if( conveyors_.empty() )
         return std::numeric_limits< unsigned >::max();
-
-    eventsObserver_->OnAllResourcesAssignedToConvoy();
     return 0;
 }
 
