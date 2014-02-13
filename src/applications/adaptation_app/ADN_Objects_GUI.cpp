@@ -98,7 +98,7 @@ void ADN_Objects_GUI::Build()
     ADN_EditLine_String* typeField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "DIA type"), vInfosConnectors[ eType ], 0, eDIAType );
     typeField->ConnectWithRefValidity( data_.GetObjectInfos() );
 
-    pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, "point-effect-distance", tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
+    pPointDistance_ = builder.AddField< ADN_EditLine_Int >( pInfoHolder, "point-effect-distance", tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterZero );
     pPointDistance_->SetAutoEnabled( false );
     ADN_TextEdit_String* field = builder.AddField< ADN_TextEdit_String >( pInfoHolder, "description", tr( "Description"), vInfosConnectors[ eDescription ] );
     field->setFixedHeight( 80 );

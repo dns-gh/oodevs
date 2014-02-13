@@ -173,7 +173,7 @@ private:
     ADN_Objects_Data& data_;
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
-    ADN_EditLine_Double* pPointDistance_;
+    ADN_EditLine_Int* pPointDistance_;
     Q3GroupBox* attrition_;
     Q3GroupBox* attritionDotation_;
     Q3GroupBox* attritionMine_;
