@@ -64,7 +64,7 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual void AddRequest( const LogisticsConsign_ABC& consign, const QString& id, 
+    virtual void AddRequest( const LogisticsConsign_ABC& consign, unsigned int id,
                              const QString& requester, const QString& handler, const QString& state );
     virtual void SelectRequest( unsigned int id );
     virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
@@ -77,7 +77,8 @@ protected:
     //! @name Helpers
     //@{
      int GetRequestRow( const LogisticsConsign_ABC& consign );
-     void SetData( int row, int col, QString text, const LogisticsConsign_ABC& consign );
+     void SetData( int row, int col, QString displayText,
+                   QVariant sortText, const LogisticsConsign_ABC& consign );
     //@}
 
 signals:

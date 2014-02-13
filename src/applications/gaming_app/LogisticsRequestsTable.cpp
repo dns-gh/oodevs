@@ -12,6 +12,7 @@
 #include "moc_LogisticsRequestsTable.cpp"
 #include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/InternalLinks.h"
+#include "clients_gui/Roles.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/LogisticHelpers.h"
@@ -70,6 +71,7 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
     setSelectionBehavior( SelectRows );
     setEditTriggers( AllEditTriggers );
     verticalHeader()->setDefaultSectionSize( 22 );
+    proxyModel_->setSortRole( gui::Roles::SortRole );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,30 +155,32 @@ void LogisticsRequestsTable::OnLinkClicked( const QString&, const QModelIndex& i
 // Name: LogisticsRequestsTable::AddRequest
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, const QString& id, 
+void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, unsigned int id,
                                          const QString& requester, const QString& handler, const QString& state )
 {
     auto base = logistic_helpers::GetLogisticBase( consign.GetHandler() );
     int rowIndex = GetRequestRow( consign );
-    SetData( rowIndex, 0, id , consign );
-    SetData( rowIndex, 1, requester , consign );
-    SetData( rowIndex, 2, handler , consign );
+    SetData( rowIndex, 0, QString::number( id ), id, consign );
+    SetData( rowIndex, 1, requester, requester, consign );
+    SetData( rowIndex, 2, handler, handler, consign );
     SetData( rowIndex, 3, manualLogisticActivated_ && ( consign.NeedResolution() && base && profile_.CanBeOrdered( *base ) )
-        && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
+        && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, state, consign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-void LogisticsRequestsTable::SetData( int row, int col, QString text, const LogisticsConsign_ABC& consign )
+void LogisticsRequestsTable::SetData( int row, int col, QString displayText,
+                                      QVariant sortText, const LogisticsConsign_ABC& consign )
 {
     QStandardItem* item = dataModel_.item( row, col );
     if( !item )
         item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     item->setData( QVariant::fromValue( &consign ), Qt::UserRole );
-    item->setData( QVariant( text ), Qt::DisplayRole );
+    item->setData( QVariant( displayText ), Qt::DisplayRole );
+    item->setData( sortText, gui::Roles::SortRole );
     item->setTextAlignment( Qt::AlignCenter );
     dataModel_.setItem( row, col, item );
 }
