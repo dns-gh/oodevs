@@ -14,6 +14,7 @@
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
+#include "Registry.h"
 #include "SessionList.h"
 
 #include "frontend/Config.h"
@@ -101,11 +102,13 @@ void ReplayPage::StartExercise()
         return;
     const tools::Path exerciseName = exercise_->GetName();
     const unsigned int port = exercise_->GetPort();
+    const auto features = registry::ReadFeatures();
     ConfigureSession( exerciseName, session_ );
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
-    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin() ) );
+    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_,
+            exerciseName, session_, profile_.GetLogin(), features ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

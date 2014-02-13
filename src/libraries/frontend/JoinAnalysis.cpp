@@ -17,7 +17,8 @@ using namespace frontend;
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile )
+JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Path& exercise,
+        const tools::Path& session, const QString& profile, const QString& features )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
@@ -28,6 +29,8 @@ JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const tools::Pat
         AddArgument( "login", "anonymous" );
     else
         AddArgument( "login", profile.toStdString() );
+    if( !features.isEmpty() )
+        AddArgument( "features", features.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

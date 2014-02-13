@@ -18,15 +18,13 @@
 
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
+#include "tools/GeneralConfig.h"
 
 #include <QScrollArea>
-#include <boost/assign.hpp>
 
 namespace
 {
     const int maxIntegrationDir = 5;
-
-    const std::vector< QString > namesFeature = boost::assign::list_of( "manual-logistic" );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,13 +148,18 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
+    const auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
+    featuresBox_->setTitle( "Features" );
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
-    for( auto it = namesFeature.begin(); it != namesFeature.end(); ++it )
+    const auto& availableFeatures = tools::GetAvailableFeatures();
+    for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
-        QCheckBox* checkbox = new QCheckBox( *it );
+        QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
+        checkbox->setChecked( savedFeatures.count( *it ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
+        connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
     }
 
     //general Layout
@@ -332,11 +335,16 @@ void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
     registry::WriteBool( "HasMapnikLayer", checked );
 }
 
+void DebugConfigPanel::OnDevFeaturesChanged()
+{
+    registry::WriteString( "DevFeatures", GetDevFeatures() );
+}
+
 QString DebugConfigPanel::GetDevFeatures() const
 {
-    QString result;
+    std::unordered_set< std::string > checked;
     for( auto it = features_.begin(); it != features_.end(); ++it )
         if( (*it)->isChecked() )
-            result += ( !result.isEmpty() ? ";" : "" ) + (*it)->text();
-    return result;
+            checked.insert( (*it)->text() );
+    return tools::JoinFeatures( checked ).c_str();
 }

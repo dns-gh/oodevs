@@ -20,31 +20,17 @@ using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: JoinExercise constructor
-// Created: AGE 2007-10-05
-// -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
-    : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
-{
-    AddRootArgument();
-    AddExerciseArgument( exercise );
-    AddSessionArgument( session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
-                            const QString& profile, const QString& devFeatures )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise,
+        const tools::Path& session, const QString* profile, const QString& devFeatures )
     : SpawnCommand( config, MakeBinaryName( "gaming_app" ), "gaming" )
 {
     AddRootArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    if( profile.isEmpty() )
-        AddArgument( "login", "anonymous" );
-    else
-        AddArgument( "login", profile.toStdString() );
+    if( profile )
+        AddArgument( "login", !profile->isEmpty() ? profile->toStdString() : "anonymous" );
     if( !devFeatures.isEmpty() )
         AddArgument( "features", devFeatures.toStdString() );
 }

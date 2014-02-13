@@ -18,6 +18,7 @@ namespace registry
     void    WriteString( const QString& key, const QString& value );
     int     ReadInt( const QString& key, int defaultValue = 0 );
     void    WriteInt( const QString& key, int value );
+    QString ReadFeatures();
 }
 
 #endif // SELFTRAINING_REGISTRY_H__
