@@ -139,3 +139,23 @@ bool LogisticSupplyCarriersTableWidget::IsUnderloaded() const
     }
     return false;
 }
+
+bool LogisticSupplyCarriersTableWidget::IsIncomplete() const
+{
+    QMap< QString, int > quantities;
+    resources_.GetQuantities( quantities );
+    for( auto it = quantities.begin(); it != quantities.end(); ++it )
+    {
+        auto it2 = dotations_.find( it.key() );
+        bool found = false;
+        for( int row = 0; row < model()->rowCount() - 1 && !found; ++row )
+        {
+            const auto function = GetLogSupplyFunctionCarrying( row );
+            if( function && it2->second.type_->GetNature() == function->stockNature_ )
+                found = true;
+        }
+        if( !found )
+            return true;
+    }
+    return false;
+}
