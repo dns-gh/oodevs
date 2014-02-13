@@ -491,7 +491,7 @@ void ExportWidget::ExportPackage()
     if( BrowseClicked() )
     {
         tools::zip::OutputArchive archive( package_.first / package_.second );
-        InternalExportPackage( archive );
+        ExportPackage( archive );
     }
 }
 
@@ -538,10 +538,10 @@ void ExportWidget::WriteContent( tools::zip::OutputArchive& archive ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExportWidget::InternalExportPackage
+// Name: ExportWidget::ExportPackage
 // Created: ABR 2011-11-03
 // -----------------------------------------------------------------------------
-void ExportWidget::InternalExportPackage( tools::zip::OutputArchive& archive )
+void ExportWidget::ExportPackage( tools::zip::OutputArchive& archive )
 {
     progress_->show();
     setCursor( Qt::WaitCursor );
@@ -549,54 +549,63 @@ void ExportWidget::InternalExportPackage( tools::zip::OutputArchive& archive )
     switch( tabs_->currentIndex() )
     {
     case eTabs_Exercise:
-        progress_->setValue( 0 );
-        progress_->setMaximum( ListViewSize( exerciseContentModel_ ) );
-        BrowseFiles( config_.GetRootDir(), exerciseContentModel_, archive, progress_ );
+        ExportExercise( archive );
         break;
     case eTabs_Terrain:
-        {
-            assert( terrainList_->currentItem() );
-            progress_->setValue( 0 );
-            progress_->setMaximum( 100 );
-            tools::Path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( tools::Path::FromUnicode( terrainList_->currentItem()->text().toStdWString() ) ) );
-            Serialize( config_.GetRootDir(), diffPath, archive, true, progress_ );
-            progress_->setValue( 100 );
-        }
+        ExportTerrain( archive );
         break;
     case eTabs_Models:
-        {
-            assert( physicalList_->currentItem() );
-            std::pair< tools::Path, tools::Path > content( Extract( physicalList_->currentItem()->text() ) );
-
-            tools::Path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
-            tools::Path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / tools::Path::FromUnicode( modelName_->text().toStdWString() );
-
-            if( decisionalCheckBox_->isChecked() )
-            {
-                progress_->setValue( 0 );
-                progress_->setMaximum( 100 );
-                Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_,
-                                                 exportPath / "physical" / content.second );
-                progress_->setValue( 50 );
-                Serialize( config_.GetRootDir(), diffPath / "decisional", archive, true, progress_,
-                                                 exportPath / "decisional" );
-                progress_->setValue( 100 );
-            }
-            else
-            {
-                progress_->setValue( 0 );
-                progress_->setMaximum( 100 );
-                Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_,
-                                                 exportPath / "physical" / content.second );
-                progress_->setValue( 100 );
-            }
-            break;
-        }
+        ExportModels( archive );
     default:
         break;
     }
     setCursor( Qt::ArrowCursor );
     progress_->hide();
+}
+
+void ExportWidget::ExportExercise( tools::zip::OutputArchive& archive )
+{
+    progress_->setValue( 0 );
+    progress_->setMaximum( ListViewSize( exerciseContentModel_ ) );
+    BrowseFiles( config_.GetRootDir(), exerciseContentModel_, archive, progress_ );
+}
+
+void ExportWidget::ExportTerrain( tools::zip::OutputArchive& archive )
+{
+    assert( terrainList_->currentItem() );
+    progress_->setValue( 0 );
+    progress_->setMaximum( 100 );
+    const tools::Path diffPath =
+        GetDiffPath( config_.GetRootDir(),
+            config_.GetTerrainDir( tools::Path::FromUnicode( terrainList_->currentItem()->text().toStdWString() ) ) );
+    Serialize( config_.GetRootDir(), diffPath, archive, true, progress_ );
+    progress_->setValue( 100 );
+}
+
+void ExportWidget::ExportModels( tools::zip::OutputArchive& archive )
+{
+    assert( physicalList_->currentItem() );
+    std::pair< tools::Path, tools::Path > content( Extract( physicalList_->currentItem()->text() ) );
+
+    tools::Path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
+    tools::Path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / tools::Path::FromUnicode( modelName_->text().toStdWString() );
+
+    if( decisionalCheckBox_->isChecked() )
+    {
+        progress_->setValue( 0 );
+        progress_->setMaximum( 100 );
+        Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_, exportPath / "physical" / content.second );
+        progress_->setValue( 50 );
+        Serialize( config_.GetRootDir(), diffPath / "decisional", archive, true, progress_, exportPath / "decisional" );
+        progress_->setValue( 100 );
+    }
+    else
+    {
+        progress_->setValue( 0 );
+        progress_->setMaximum( 100 );
+        Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_, exportPath / "physical" / content.second );
+        progress_->setValue( 100 );
+    }
 }
 
 // -----------------------------------------------------------------------------

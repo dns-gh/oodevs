@@ -95,7 +95,10 @@ private:
     QTextEdit* GetCurrentDescription() const;
     QString GetCurrentPackage() const;
     bool BrowseClicked();
-    void InternalExportPackage( tools::zip::OutputArchive& archive );
+    void ExportPackage( tools::zip::OutputArchive& archive );
+    void ExportExercise( tools::zip::OutputArchive& archive );
+    void ExportTerrain( tools::zip::OutputArchive& archive );
+    void ExportModels( tools::zip::OutputArchive& archive );
     void WriteContent( tools::zip::OutputArchive& archive ) const;
     //@}
 
