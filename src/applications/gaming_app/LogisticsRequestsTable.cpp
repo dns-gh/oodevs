@@ -16,7 +16,6 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/LogisticsConsign_ABC.h"
-#include "tools/ExerciseConfig.h"
 
 Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
 
@@ -28,7 +27,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
                                                 QWidget* parent,
                                                 const QStringList& horizontalHeaders,
                                                 const kernel::Controllers& controllers,
-                                                const tools::ExerciseConfig& config,
                                                 const kernel::Profile_ABC& profile )
     : gui::RichTableView( objectName, parent )
     , dataModel_ ( parent )
@@ -37,7 +35,6 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
     , horizontalHeaders_( horizontalHeaders )
     , controllers_( controllers )
     , profile_( profile )
-    , manualLogisticActivated_( config.IsActivated( "manual-logistic" ) )
 {
     if( horizontalHeaders_.isEmpty() )
     {
@@ -161,8 +158,13 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
     SetData( rowIndex, 0, id , consign );
     SetData( rowIndex, 1, requester , consign );
     SetData( rowIndex, 2, handler , consign );
-    SetData( rowIndex, 3, manualLogisticActivated_ && ( consign.NeedResolution() && base && profile_.CanBeOrdered( *base ) )
-        && controllers_.GetCurrentMode() != eModes_Replay ? CreateLink( state, consign.GetId() ) : state, consign );
+    SetData( rowIndex, 3, 
+        consign.NeedResolution()
+        && base
+        && profile_.CanBeOrdered( *base )
+        && controllers_.GetCurrentMode() != eModes_Replay 
+        ? CreateLink( state, consign.GetId() ) : state,
+        consign );
 }
 
 // -----------------------------------------------------------------------------

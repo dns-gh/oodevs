@@ -50,9 +50,11 @@ std::string tools::JoinFeatures( const std::unordered_set< std::string >& featur
 
 const std::vector< std::string >& tools::GetAvailableFeatures()
 {
-    static const std::vector< std::string > features = boost::assign::list_of(
-            "manual-logistic"
-            );
+    // Fill this with experimental feature switches
+    static const std::vector< std::string > features; /*=
+        boost::assign::list_of< std::string >(
+        );
+        */
     return features;
 }
 

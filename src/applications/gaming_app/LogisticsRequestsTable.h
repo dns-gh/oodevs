@@ -19,11 +19,6 @@ namespace actions
     class ActionsModel;
 }
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace kernel
 {
     class Entity_ABC;
@@ -55,7 +50,6 @@ public:
                                      QWidget* parent,
                                      const QStringList& horizontalHeaders,
                                      const kernel::Controllers& controllers,
-                                     const tools::ExerciseConfig& config,
                                      const kernel::Profile_ABC& profile );
     virtual ~LogisticsRequestsTable();
     //@}
@@ -102,7 +96,6 @@ protected:
     QStringList                horizontalHeaders_;
     const kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    bool                       manualLogisticActivated_;
     //@}
 };
 
