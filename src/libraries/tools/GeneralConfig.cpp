@@ -45,11 +45,7 @@ std::string tools::JoinFeatures( const std::unordered_set< std::string >& featur
             sorted.push_back( f );
     }
     std::sort( sorted.begin(), sorted.end() );
-
-    std::stringstream output;
-    for( auto it = sorted.begin(); it != sorted.end(); ++it )
-        output << *it << ( it + 1 != sorted.end() ? ";" : "" );
-    return output.str();
+    return boost::algorithm::join( sorted, ";" );
 }
 
 const std::vector< std::string >& tools::GetAvailableFeatures()
