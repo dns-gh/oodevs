@@ -15,6 +15,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
@@ -54,7 +55,7 @@ ObjectsLayer::~ObjectsLayer()
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( selected_ && key->key() == Qt::Key_Delete )
+    if( selected_ && profile_.CanDoMagic( *selected_ ) && key->key() == Qt::Key_Delete )
         actionsModel_.PublishObjectDestroyMagicAction( *selected_ );
     return false;
 }

@@ -19,6 +19,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MineAttribute.h"
@@ -169,10 +170,11 @@ void ObjectStateDialog::Show()
 // -----------------------------------------------------------------------------
 void ObjectStateDialog::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
-    if( (object.Retrieve< kernel::MineAttribute_ABC >()
-     || object.Retrieve< kernel::ConstructionAttribute_ABC>()
-     || object.Retrieve< kernel::BypassAttribute_ABC >() )
-     && controllers_.GetCurrentMode() != eModes_Replay )
+    if( profile_.CanDoMagic( object ) &&
+        controllers_.GetCurrentMode() != eModes_Replay &&
+        ( object.Retrieve< kernel::MineAttribute_ABC >() ||
+          object.Retrieve< kernel::ConstructionAttribute_ABC>() ||
+          object.Retrieve< kernel::BypassAttribute_ABC >() ) )
     {
         selected_ = &object;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
