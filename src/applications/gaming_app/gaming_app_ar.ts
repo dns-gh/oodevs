@@ -3771,16 +3771,8 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">مجموعة المعارف إضافة المعرفة</translation>
     </message>
     <message>
-        <source>Object Update</source>
-        <translation type="unfinished">تحديث الكائن</translation>
-    </message>
-    <message>
         <source>Object Creation</source>
         <translation type="unfinished">إنشاء كائن</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation type="unfinished">تدمير الكائن</translation>
     </message>
 </context>
 </TS>

@@ -107,41 +107,38 @@ void ObjectStateDialog::OnOk()
 {
     if( selected_ )
     {
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
-        std::unique_ptr< actions::Action_ABC > action( new actions::ObjectMagicAction( actionType, controllers_.controller_, false ) );
-        action->Rename( tools::translate( "gaming_app::Action", "Object Update" ) );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
-        actions::parameters::ParameterList* attributesList = new actions::parameters::ParameterList( it.NextElement() );
-        action->AddParameter( *attributesList );
-
+        std::vector< actions::parameters::ParameterList* > attributes;
         if( selected_->Retrieve< kernel::ConstructionAttribute_ABC >() )
         {
-            actions::parameters::ParameterList& constructionList = attributesList->AddList( "Construction" );
-            constructionList.AddIdentifier( "AttributeId", sword::ObjectMagicAction::construction );
-            constructionList.AddIdentifier( "Type", 0 );
-            constructionList.AddQuantity( "Number", 0 );
-            constructionList.AddNumeric( "Density", 0 );
-            constructionList.AddQuantity( "Percentage", constructionSpinBox_->value() );
+            actions::parameters::ParameterList* list =
+                new actions::parameters::ParameterList( kernel::OrderParameter( "Construction", "list", false ) );
+            list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::construction );
+            list->AddIdentifier( "Type", 0 );
+            list->AddQuantity( "Number", 0 );
+            list->AddNumeric( "Density", 0 );
+            list->AddQuantity( "Percentage", constructionSpinBox_->value() );
+            attributes.push_back( list );
         }
-
         if( selected_->Retrieve< kernel::MineAttribute_ABC >() )
         {
-            actions::parameters::ParameterList& mineList = attributesList->AddList( "Mine" );
-            mineList.AddIdentifier( "AttributeId", sword::ObjectMagicAction::mine );
-            mineList.AddIdentifier( "Type", 0 );
-            mineList.AddQuantity( "Number", 0 );
-            mineList.AddNumeric( "Density", 0 );
-            mineList.AddQuantity( "Percentage", miningSpinBox_->value() );
+            actions::parameters::ParameterList* list =
+                new actions::parameters::ParameterList( kernel::OrderParameter( "Mine", "list", false ) );
+            list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::mine );
+            list->AddIdentifier( "Type", 0 );
+            list->AddQuantity( "Number", 0 );
+            list->AddNumeric( "Density", 0 );
+            list->AddQuantity( "Percentage", miningSpinBox_->value() );
+            attributes.push_back( list );
         }
         if( selected_->Retrieve< kernel::BypassAttribute_ABC >() )
         {
-            actions::parameters::ParameterList& bypassList = attributesList->AddList( "Bypass" );
-            bypassList.AddIdentifier( "AttributeId", sword::ObjectMagicAction::bypass );
-            bypassList.AddQuantity( "Percentage", bypassSpinBox_->value() );
+            actions::parameters::ParameterList* list =
+                new actions::parameters::ParameterList( kernel::OrderParameter( "Bypass", "list", false ) );
+            list->AddIdentifier( "AttributeId", sword::ObjectMagicAction::bypass );
+            list->AddQuantity( "Percentage", bypassSpinBox_->value() );
+            attributes.push_back( list );
         }
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-        actionsModel_.Publish( *action );
+        actionsModel_.PublishObjectUpdateMagicAction( *selected_, attributes );
     }
     selected_ = 0;
     accept();

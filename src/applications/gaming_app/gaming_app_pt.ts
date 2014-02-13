@@ -3772,13 +3772,5 @@ This data can&apos;t be projected.</source>
         <source>Object Creation</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object Update</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>

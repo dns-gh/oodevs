@@ -3785,14 +3785,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Création d&apos;objet</translation>
     </message>
     <message>
-        <source>Object Update</source>
-        <translation>Mise à jour d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Destruction d&apos;objet</translation>
-    </message>
-    <message>
         <source>Knowledge Group Add knowledge</source>
         <translation>Groupe de connaissance Ajout de connaissance</translation>
     </message>
