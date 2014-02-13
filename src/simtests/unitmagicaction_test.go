@@ -617,6 +617,11 @@ func (s *TestSuite) TestLogisticsSupplyPullFlow(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter quantity must be positive")
 	c.Assert(result, HasLen, 0)
 
+	// error: transporter cannot load supply nature
+	result, err = client.LogisticsSupplyPullFlow(supplier, receiver, map[uint32]uint32{resource: 1}, map[uint32]uint32{13: 1})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: not all supplies can be loaded by transporters")
+	c.Assert(result, HasLen, 0)
+
 	// error: transporter overloaded
 	result, err = client.LogisticsSupplyPullFlow(receiver, supplier, map[uint32]uint32{resource: 10000000}, map[uint32]uint32{transporter: 1})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter: transporter capacity mass overloaded")
