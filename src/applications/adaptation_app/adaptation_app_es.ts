@@ -1700,7 +1700,7 @@ Click &quot;Aceptar&quot; para asignar la nueva velocidad máxima.</translation>
     </message>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuego - Tipo de pocisión no encontrada &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
