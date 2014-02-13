@@ -65,5 +65,6 @@ QString registry::ReadFeatures()
 {
     auto features = registry::ReadString( "DevFeatures" );
     // Normalize registry input before passing it to gaming
-    return tools::JoinFeatures( tools::SplitFeatures( features.toStdString() )).c_str();
+    return QString::fromStdString( tools::JoinFeatures(
+                tools::SplitFeatures( features.toStdString() )));
 }

@@ -148,17 +148,17 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     mapnik->addWidget( mapnikLayerBox_, 0, 0 );
 
     // development features
-    auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
+    const auto savedFeatures = tools::SplitFeatures( registry::ReadFeatures().toStdString() );
     featuresBox_ = new QGroupBox();
     QVBoxLayout* featuresLayout = new QVBoxLayout( featuresBox_ );
     const auto& availableFeatures = tools::GetAvailableFeatures();
     for( auto it = availableFeatures.begin(); it != availableFeatures.end(); ++it )
     {
-        QCheckBox* checkbox = new QCheckBox( it->c_str() );
+        QCheckBox* checkbox = new QCheckBox( QString::fromStdString( *it ) );
         checkbox->setChecked( savedFeatures.count( *it ) != 0 );
         featuresLayout->addWidget( checkbox );
         features_.push_back( checkbox );
-        connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged( int ) ));
+        connect( checkbox, SIGNAL( stateChanged( int ) ), SLOT( OnDevFeaturesChanged() ));
     }
 
     //general Layout
@@ -334,7 +334,7 @@ void DebugConfigPanel::OnMapnikLayerChecked( bool checked )
     registry::WriteBool( "HasMapnikLayer", checked );
 }
 
-void DebugConfigPanel::OnDevFeaturesChanged( int )
+void DebugConfigPanel::OnDevFeaturesChanged()
 {
     registry::WriteString( "DevFeatures", GetDevFeatures() );
 }

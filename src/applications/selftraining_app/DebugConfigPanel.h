@@ -65,7 +65,7 @@ private slots:
     void OnEditIntegrationDirectory( const QString& );
     void OnChangeDataDirectory();
     void OnChangeDataFilter();
-    void OnDevFeaturesChanged( int );
+    void OnDevFeaturesChanged();
     //@}
 
 private:
