@@ -42,9 +42,10 @@ Equipment::Equipment( const Equipment& rhs )
     , onSiteFixable_( rhs.onSiteFixable_ )
     , inMaintenance_( rhs.inMaintenance_ )
     , prisonners_   ( rhs.prisonners_ )
+    , breakdowns_   ( rhs.breakdowns_ )
+    , consigns_     ( rhs.consigns_ )
 {
-    breakdowns_ = rhs.breakdowns_;
-    consigns_ = rhs.consigns_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,6 @@ void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& messa
     breakdowns_.resize( message.breakdowns_size() );
     for( int i = 0; i < message.breakdowns_size(); ++i )
         breakdowns_[ i ] = message.breakdowns( i );
-    assert( static_cast< int >( breakdowns_.size() ) == repairable_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +113,7 @@ Equipment Equipment::operator+( const Equipment& diff ) const
         assert( diff.breakdowns_[ i ] != 0 );
         if( diff.breakdowns_[ i ] < 0 ) // Remove breakdown
         {
-            auto it = equipment.breakdowns_.begin();
-            for( ; it != equipment.breakdowns_.end(); ++it )
+            for( auto it = equipment.breakdowns_.begin(); it != equipment.breakdowns_.end(); ++it )
                 if( -diff.breakdowns_[ i ] == *it )
                 {
                     equipment.breakdowns_.erase( it );
