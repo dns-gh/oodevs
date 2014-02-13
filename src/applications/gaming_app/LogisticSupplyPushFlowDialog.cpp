@@ -138,6 +138,11 @@ void LogisticSupplyPushFlowDialog::Validate()
 {
     if( profile_.IsSupervision() )
     {
+        if( carriersTable_->IsIncomplete() )
+        {
+            QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry all types of resources" ) );
+            return;
+        }
         if( carriersTable_->IsOverloaded() )
         {
             QMessageBox::critical( this, tr( "Error" ), tr( "The convoy is unable to carry that much weight and/or volume" ) );

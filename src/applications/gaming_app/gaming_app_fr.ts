@@ -1785,6 +1785,10 @@ Voulez-vous le remplacer ?</translation>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation>Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
     </message>
+    <message>
+        <source>The convoy is unable to carry all types of resources</source>
+        <translation>Le convoi ne peut pas transporter tous les types de ressources</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
@@ -1815,6 +1819,10 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>The convoy is under its minimal mass and/or volume threshold. Do you want to continue?</source>
         <translation type="unfinished">Le convoi est sous son seuil minimal en masse et/ou volume transportés. Souhaitez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>The convoy is unable to carry all types of resources</source>
+        <translation>Le convoi ne peut pas transporter tous les types de ressources</translation>
     </message>
 </context>
 <context>
