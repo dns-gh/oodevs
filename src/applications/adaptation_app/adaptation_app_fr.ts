@@ -927,6 +927,10 @@ Arrêt moteur allumé</translation>
         <source>Collides with other crowds</source>
         <translation>Entre en collision avec les autres foules</translation>
     </message>
+    <message>
+        <source>Speeds</source>
+        <translation>Vitesses</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
@@ -940,6 +944,17 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Volumes</source>
         <translation>Volumes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Speeds_GUI</name>
+    <message>
+        <source>Ground type</source>
+        <translation>Type de terrain</translation>
+    </message>
+    <message>
+        <source>Speed (km/h)</source>
+        <translation>Vitesse (km/h)</translation>
     </message>
 </context>
 <context>
@@ -6487,6 +6502,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Catégories - Nature de ressource invalide</translation>
+    </message>
+</context>
+<context>
+    <name>Crowds_Data</name>
+    <message>
+        <source>Crowd - Invalid terrain type &apos;%1&apos;</source>
+        <translation>Foule - Type de terrain invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

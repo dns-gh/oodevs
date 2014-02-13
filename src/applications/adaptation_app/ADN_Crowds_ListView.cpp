@@ -47,23 +47,25 @@ void ADN_Crowds_ListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
-    PopulationInfos* pInfos = (PopulationInfos*)pCurData_;
+    PopulationInfos* pInfos = static_cast< PopulationInfos* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Crowds_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Crowds_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eCrowdCollision]->Connect( &pInfos->bCrowdCollision_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eConcentrationDensity]->Connect( &pInfos->rConcentrationDensity_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eMoveDensity]->Connect( &pInfos->rMoveDensity_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eMoveSpeed]->Connect( &pInfos->rMoveSpeed_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eMale ]->Connect( &pInfos->repartition_.male_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eArmedIndividuals ]->Connect( &pInfos->armedIndividuals_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eDecontaminationDelay ]->Connect( &pInfos->decontaminationDelay_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eSpeedEffectAttitude]->Connect( &pInfos->vSpeedEffectInfos_  , bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eFireEffectAttitude] ->Connect( &pInfos->vFireEffectInfos_   , bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eFireEffectRoe]      ->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );
-    vItemConnectors_[ADN_Crowds_GUI::eUrbanBlocDestructionAttitude] ->Connect( &pInfos->vUrbanEffectInfos_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eModel ]->Connect( &pInfos->ptrModel_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eCrowdCollision ]->Connect( &pInfos->bCrowdCollision_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eConcentrationDensity ]->Connect( &pInfos->rConcentrationDensity_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eMoveDensity ]->Connect( &pInfos->rMoveDensity_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eMoveSpeed ]->Connect( &pInfos->rMoveSpeed_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eMale ]->Connect( &pInfos->repartition_.male_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eArmedIndividuals ]->Connect( &pInfos->armedIndividuals_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eDecontaminationDelay ]->Connect( &pInfos->decontaminationDelay_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eSpeeds ]->Connect( &pInfos->vSpeedInfos_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eHasSpeeds ]->Connect( &pInfos->bHasSpeeds_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eSpeedEffectAttitude ]->Connect( &pInfos->vSpeedEffectInfos_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eFireEffectAttitude ]->Connect( &pInfos->vFireEffectInfos_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eFireEffectRoe ]->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );
+    vItemConnectors_[ ADN_Crowds_GUI::eUrbanBlocDestructionAttitude ]->Connect( &pInfos->vUrbanEffectInfos_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

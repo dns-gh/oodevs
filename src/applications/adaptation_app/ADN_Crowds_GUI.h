@@ -38,6 +38,8 @@ public:
         eChildren,
         eArmedIndividuals,
         eDecontaminationDelay,
+        eHasSpeeds,
+        eSpeeds,
         eSpeedEffectAttitude,
         eSpeedEffectVolume,
         eSpeedEffectDensity,

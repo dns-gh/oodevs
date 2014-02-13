@@ -18,6 +18,7 @@
 				<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
+							<xs:element name="speeds" type="T_Speed" minOccurs="0"/>
 							<xs:element name="slowing-effects" type="T_SlowingEffects"/>
 							<xs:element name="attrition-effects" type="T_AttritionEffects"/>
 							<xs:element name="unit-fire-effects" type="T_UnitFireEffects"/>
@@ -44,6 +45,16 @@
 			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
+	<xs:complexType name="T_Speed">
+		<xs:sequence>
+			<xs:element name="speed" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="terrain" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="T_SlowingEffects">
 		<xs:sequence>
 			<xs:element name="slowing-effect" minOccurs="0" maxOccurs="unbounded">

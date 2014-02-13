@@ -29,6 +29,39 @@ class ADN_Crowds_Data : public ADN_Data_ABC
 {
 public:
 // *****************************************************************************
+    class SpeedInfos : public ADN_Ref_ABC
+    {
+    public:
+        explicit SpeedInfos( E_Location nTypeTerrain );
+        virtual ~SpeedInfos() {}
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+
+    public:
+        E_Location nTypeTerrain_;
+        ADN_Type_Double rSpeed_;
+
+    public:
+        class Cmp : public std::unary_function< SpeedInfos*, bool >
+        {
+        public:
+            Cmp( E_Location& val ) : val_( val ) {}
+            ~Cmp() {}
+
+            bool operator()( SpeedInfos* tgtnfos ) const
+            {
+                return tgtnfos->nTypeTerrain_ == val_;
+            }
+
+        private:
+            E_Location val_;
+        };
+    };
+
+    typedef ADN_Type_Vector_ABC< SpeedInfos > T_SpeedInfos_Vector;
+
+    // *****************************************************************************
     class FireEffectProtectionInfos : public ADN_CrossedRef< ADN_Armors_Data::ArmorInfos >
     {
     public:
@@ -199,6 +232,7 @@ public:
         void Initialize();
         CrowdsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
+        void ReadSpeed( xml::xistream& input );
         void ReadSlowingEffect( xml::xistream& input );
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
@@ -217,6 +251,8 @@ public:
         ADN_Type_Repartition repartition_;
         ADN_Type_Int armedIndividuals_;
         ADN_Type_Time decontaminationDelay_;
+        ADN_Type_Bool bHasSpeeds_;
+        T_SpeedInfos_Vector vSpeedInfos_;
         T_SpeedEffectInfosVector vSpeedEffectInfos_;
         T_FireEffectInfosVector vFireEffectInfos_;
         T_FireEffectRoeInfosVector vFireEffectRoeInfos_;

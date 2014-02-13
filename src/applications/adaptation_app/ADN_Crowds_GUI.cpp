@@ -17,6 +17,7 @@
 #include "ADN_GoToButton.h"
 #include "ADN_MultiPercentage.h"
 #include "ADN_Crowds_ListView.h"
+#include "ADN_Crowds_Speeds_GUI.h"
 #include "ADN_Crowds_SpeedEffect_Attitude_ListView.h"
 #include "ADN_Crowds_SpeedEffect_Volume_ListView.h"
 #include "ADN_Crowds_FireEffect_Attitude_ListView.h"
@@ -83,27 +84,34 @@ void ADN_Crowds_GUI::Build()
     builder.PopSubName(); //! global
 
     // Population parameters
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 5, Qt::Vertical, tr( "Details" ) );
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Details" ) );
     //{
+        QGroupBox* groupBox = new QGroupBox( pPropertiesGroup );
+        QVBoxLayout* vLayout = new QVBoxLayout;
+        groupBox->setLayout( vLayout );
         // Information
-        QWidget* pInfoHolder = builder.AddFieldHolder( pPropertiesGroup );
+        QWidget* pInfoHolder = builder.AddFieldHolder( groupBox );
+        vLayout->addWidget( pInfoHolder );
         builder.AddLocalizedField( data_.GetCrowds(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
         ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, eEntityType_Population );
         goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "behavior-model", tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
         builder.AddField< ADN_CheckBox >( pInfoHolder, "crowds-collide", tr( "Collides with other crowds" ), vInfosConnectors[ eCrowdCollision ] );
 
         // Density
-        Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, pPropertiesGroup );
+        Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, groupBox );
+        vLayout->addWidget( pDensity );
         builder.AddField< ADN_EditLine_Double >( pDensity, "density", tr( "Density" ), vInfosConnectors[ eConcentrationDensity ], tr( "people/m²" ), eGreaterZero );
         builder.AddField< ADN_EditLine_Double >( pDensity, "density-while-moving", tr( "Density while moving" ), vInfosConnectors[ eMoveDensity ], tr( "people/m²" ), eGreaterZero );
         builder.AddField< ADN_EditLine_Double >( pDensity, "average-movement-speed", tr( "Average movement speed" ), vInfosConnectors[ eMoveSpeed ], tr( "km/h" ), eGreaterZero );
 
         // Armed
-        Q3GroupBox* pArmed = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
+        Q3GroupBox* pArmed = new Q3GroupBox( 3, Qt::Horizontal, "", groupBox );
+        vLayout->addWidget( pArmed );
         builder.AddField< ADN_EditLine_Int >( pArmed, "armed-individuals", tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
 
         // Human
-        Q3GroupBox* pHuman = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
+        Q3GroupBox* pHuman = new Q3GroupBox( 3, Qt::Horizontal, "", groupBox );
+        vLayout->addWidget( pHuman );
         ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pHuman, builder, builder.GetChildName( "human-repartition" ) );
         pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ], "males" );
         pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ], "females" );
@@ -111,8 +119,12 @@ void ADN_Crowds_GUI::Build()
         pMultiPercentage->AddWarning();
 
         // NBC
-        Q3GroupBox* pNBC = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
+        Q3GroupBox* pNBC = new Q3GroupBox( 3, Qt::Horizontal, "", groupBox );
+        vLayout->addWidget( pNBC );
         builder.AddField< ADN_TimeField >( pNBC, "decontamination-delay", tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ] );
+
+        ADN_GroupBox* pSpeedGroup = builder.AddGroupBox( pPropertiesGroup, "crowd-speeds", tr( "Speeds" ), vInfosConnectors[ eHasSpeeds ], 1 );
+        new ADN_Crowds_Speeds_GUI( builder.GetChildName( "speeds-table" ), vInfosConnectors[ eSpeeds ], pSpeedGroup );
     //}
 
     // Speed effects
