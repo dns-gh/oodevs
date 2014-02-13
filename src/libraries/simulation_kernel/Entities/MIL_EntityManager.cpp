@@ -1825,8 +1825,6 @@ namespace
     void CheckSuppliesCanBeLoaded( const Transporters& transporters,
         const tools::Map< const PHY_DotationCategory*, double >& supplies )
     {
-        if( !transporters.size() )
-            return;
         for( auto it = supplies.begin(); it != supplies.end(); ++it )
         {
             bool found = false;
@@ -1943,8 +1941,12 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     protocol::Check( parameters.recipients().size() > 0, "at least one recipient expected" );
     for( auto it = parameters.recipients().begin(); it != parameters.recipients().end(); ++it )
         ReadResources( it->resources(), supplies );
-    CheckSuppliesCanBeLoaded( parameters.transporters(), supplies );
-    CheckTransportersLoad( parameters.transporters(), supplies, ack );
+    const auto& transporters = parameters.transporters();
+    if( transporters.size() )
+    {
+        CheckSuppliesCanBeLoaded( transporters, supplies );
+        CheckTransportersLoad( transporters, supplies, ack );
+    }
     if( !pBrainLog->OnReceiveLogSupplyPushFlow( parameters, *automateFactory_ ) )
         throw MASA_EXCEPTION( "unable to create push flow request" );
 }
@@ -1965,8 +1967,12 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     protocol::Check( supplier, "invalid supplier" );
     tools::Map< const PHY_DotationCategory*, double > supplies;
     ReadResources( parameters.resources(), supplies );
-    CheckSuppliesCanBeLoaded( parameters.transporters(), supplies );
-    CheckTransportersLoad( parameters.transporters(), supplies, ack );
+    const auto& transporters = parameters.transporters();
+    if( transporters.size() )
+    {
+        CheckSuppliesCanBeLoaded( transporters, supplies );
+        CheckTransportersLoad( transporters, supplies, ack );
+    }
     if( !pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier ) )
         throw MASA_EXCEPTION( "unable to create pull flow request" );
 }
