@@ -98,6 +98,14 @@ integration.canDecontaminateAgents = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "decontamination" )
 end
 
+--- Returns true if the provided planned object has the given capacity, false otherwise
+-- @param Simulation object
+-- @param String, the name of the capacity
+-- @return Boolean, whether or not the planned object has the capacity
+integration.hasCapacityGenKnowledgeObject = function( plannedObject, capacity )
+    return plannedObject.source:DEC_GenObject_HasCapacity( capacity )
+end
+
 --- Returns true if the given object can be used for logistic means, false otherwise
 -- @param object Object knowledge
 -- @return Boolean
