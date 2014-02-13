@@ -226,7 +226,10 @@ end
 integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
     local integration = integration
     local distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    local pointInterception = integration.positionInterception( targetUnit, speed ) or targetUnit:getPosition()
+    local pointInterception = integration.positionInterception( targetUnit, speed )
+    if not pointInterception then
+        return false
+    end
     local distancePointInterception = DEC_Geometrie_DistanceBetweenPoints(meKnowledge:getPosition(), pointInterception )
     local tempsInterception =  distancePointInterception / ( speed * 60 )
     if( distancePointInterception <= distanceCouverte ) then
