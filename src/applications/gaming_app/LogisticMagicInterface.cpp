@@ -114,10 +114,11 @@ void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu )
     subMenu->InsertItem( "Command", tr( "Resupply" ), this, SLOT( OnResupply() ) );
     if( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ )
         subMenu->InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( OnPullFlow() ) );
-    const QString switchMaintenance = selected_->Get< gui::LogisticBase >().IsMaintenanceManual()
-                                      ? tr( "Switch to automated maintenance" )
-                                      : tr( "Switch to manual maintenance" );
-    subMenu->InsertItem( "Command", switchMaintenance, this, SLOT( OnSwitchMaintenanceMode() ) );
+    if( profile_.IsSupervision() )
+        subMenu->InsertItem( "Command",
+            selected_->Get< gui::LogisticBase >().IsMaintenanceManual()
+                ? tr( "Switch to automated maintenance" )
+                : tr( "Switch to manual maintenance" ), this, SLOT( OnSwitchMaintenanceMode() ) );
 }
 
 // -----------------------------------------------------------------------------
