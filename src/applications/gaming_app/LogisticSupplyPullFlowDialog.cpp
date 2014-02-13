@@ -158,7 +158,7 @@ void LogisticSupplyPullFlowDialog::Validate()
 {
     if( !selected_ || !supplier_ )
         return;
-    if( profile_.IsSupervision() )
+    if( carriersUseCheck_->isChecked() && profile_.IsSupervision() )
     {
         if( carriersTable_->IsIncomplete() )
         {

@@ -136,7 +136,7 @@ void LogisticSupplyPushFlowDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-    if( profile_.IsSupervision() )
+    if( carriersUseCheck_->isChecked() && profile_.IsSupervision() )
     {
         if( carriersTable_->IsIncomplete() )
         {
