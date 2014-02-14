@@ -285,18 +285,9 @@ namespace
 // -----------------------------------------------------------------------------
 QString ExportWidget::GetCurrentPackage() const
 {
-    QString text = GetCurrentSelection();
-    switch( tabs_->currentIndex() )
-    {
-    case eTabs_Exercise:
-        return text;
-    case eTabs_Terrain:
-        return text;
-    case eTabs_Models:
+    const QString text = GetCurrentSelection();
+    if( tabs_->currentIndex() == eTabs_Models )
         return modelName_->text() + Extract( text ).second.ToUTF8().c_str();
-    default:
-        break;
-    }
     return text;
 }
 
@@ -447,7 +438,7 @@ namespace
                     frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( treeNode->child( row2 ) );
                     if( item && item->checkState() == Qt::Checked )
                     {
-                        tools::Path file = tools::Path::FromUnicode( item->text().toStdWString() );
+                        const tools::Path file = tools::Path::FromUnicode( item->text().toStdWString() );
                         Serialize( base, file, archive, item->IsRecursive(), progress );
                         if( item->hasChildren() )
                             BrowseChildren( base, item, archive, progress, true );

@@ -12,7 +12,6 @@
 #include "moc_ScenarioEditPage.cpp"
 #include "CreateExerciceWidget.h"
 #include "ExerciseList.h"
-#include "ExportWidget.h"
 #include "ProgressPage.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"

@@ -9,7 +9,6 @@
 
 #include "frontend_pch.h"
 #include "CreateExercise.h"
-#include "ListViewHelper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
 #include <boost/algorithm/string.hpp>
