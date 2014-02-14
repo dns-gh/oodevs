@@ -22,7 +22,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/StartTimeline.h"
-#include "frontend/JoinAnalysis.h"
+#include "frontend/JoinExercise.h"
 #include "frontend/ProcessWrapper.h"
 
 #include "clients_kernel/Tools.h"
@@ -107,8 +107,9 @@ void ReplayPage::StartExercise()
     auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
     process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, "" ) );
     process->Add( boost::make_shared< frontend::StartTimeline >( config_, exerciseName, session_ ) );
-    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_,
-            exerciseName, session_, profile_.GetLogin(), features ) );
+    const auto profile = profile_.GetLogin();
+    process->Add( boost::make_shared< frontend::JoinExercise >( config_,
+            exerciseName, session_, &profile, features ) );
     progressPage_->Attach( process );
     frontend::ProcessWrapper::Start( process );
     progressPage_->show();

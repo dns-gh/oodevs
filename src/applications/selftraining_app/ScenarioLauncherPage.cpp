@@ -22,7 +22,6 @@
 #include "frontend/CreateSession.h"
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
-#include "frontend/JoinAnalysis.h"
 #include "frontend/JoinExercise.h"
 #include "frontend/PluginConfigBuilder.h"
 #include "frontend/ProcessWrapper.h"

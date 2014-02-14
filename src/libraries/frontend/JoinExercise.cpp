@@ -28,7 +28,8 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Pat
 {
     AddRootArgument();
     AddExerciseArgument( exercise );
-    AddSessionArgument( session );
+    if( !session.IsEmpty() )
+        AddSessionArgument( session );
     if( profile )
         AddArgument( "login", !profile->isEmpty() ? profile->toStdString() : "anonymous" );
     if( !devFeatures.isEmpty() )
