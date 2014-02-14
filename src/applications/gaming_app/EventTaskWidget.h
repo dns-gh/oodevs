@@ -16,6 +16,7 @@ namespace gui
 {
     class EventTaskPresenter;
     struct EventTaskViewState;
+    class RichLineEdit;
     class RichTextEdit;
 }
 
@@ -48,9 +49,9 @@ private:
     //@{
     boost::shared_ptr< gui::EventTaskPresenter > taskPresenter_;
 
-    QLineEdit* label_;
+    gui::RichLineEdit* label_;
     gui::RichTextEdit* description_;
-    QLineEdit* url_;
+    gui::RichLineEdit* url_;
     QLabel* bytes_;
     QPushButton* showButton_;
     gui::RichTextEdit* payload_;

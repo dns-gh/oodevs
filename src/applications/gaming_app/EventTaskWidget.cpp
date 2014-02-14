@@ -15,6 +15,7 @@
 #include "clients_gui/EventTaskPresenter.h"
 #include "clients_gui/EventTaskViewState.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichTextEdit.h"
 #include <boost/make_shared.hpp>
 
@@ -30,9 +31,9 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
     presenter_.AddSubPresenter( taskPresenter_ );
 
     // Editors
-    label_ = new QLineEdit();
+    label_ = new gui::RichLineEdit( "task-label" );
     description_ = new gui::RichTextEdit( "task-description" );
-    url_ = new QLineEdit();
+    url_ = new gui::RichLineEdit( "task-url" );
     bytes_ = new QLabel();
     bytes_->setEnabled( false );
     showButton_ = new QPushButton( tr( "Show" ) );
@@ -106,9 +107,9 @@ void EventTaskWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void EventTaskWidget::Build( const gui::EventTaskViewState& state )
 {
-    label_->setText( QString::fromStdString( state.label_ ) );
+    label_->SetText( QString::fromStdString( state.label_ ) );
     description_->SetText( QString::fromStdString( state.description_ ) );
-    url_->setText( QString::fromStdString( state.url_ ) );
+    url_->SetText( QString::fromStdString( state.url_ ) );
     bytes_->clear();
     if( state.bytes_ != 0 )
         bytes_->setText( QString::number( state.bytes_ ) + QString( " bytes" ) );
