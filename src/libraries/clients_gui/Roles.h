@@ -21,7 +21,8 @@ namespace gui
             MimeTypeRole = Qt::UserRole + 2,
             SafeRole     = Qt::UserRole + 3,
             OtherRole    = Qt::UserRole + 4,
-            ExcelColorRole = Qt::UserRole + 5
+            ExcelColorRole = Qt::UserRole + 5,
+            SortRole       = Qt::UserRole + 6
         };
     }//! namespace Roles
 }//! namespace gui

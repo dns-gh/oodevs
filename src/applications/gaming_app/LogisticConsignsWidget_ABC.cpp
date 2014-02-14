@@ -150,7 +150,7 @@ void LogisticConsignsWidget_ABC::OnLinkClicked( const QString& url, const QModel
 void LogisticConsignsWidget_ABC::DisplayRequest( const LogisticsConsign_ABC& consign
                                                , const QString& requester, const QString& handler, const QString& state )
 {
-    requestsTable_->AddRequest( consign, QString::number( consign.GetId() ), requester, handler, state );
+    requestsTable_->AddRequest( consign, consign.GetId(), requester, handler, state );
     if( requestSelected_ && requestSelected_->GetId() == consign.GetId() )
         requestsTable_->SelectRequest( consign.GetId() );
 }
