@@ -14,7 +14,6 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/assign.hpp>
 
 using namespace tools;
 namespace po = boost::program_options;
@@ -51,10 +50,7 @@ std::string tools::JoinFeatures( const std::unordered_set< std::string >& featur
 const std::vector< std::string >& tools::GetAvailableFeatures()
 {
     // Fill this with experimental feature switches
-    static const std::vector< std::string > features; /*=
-        boost::assign::list_of< std::string >(
-        );
-        */
+    static const std::vector< std::string > features;
     return features;
 }
 

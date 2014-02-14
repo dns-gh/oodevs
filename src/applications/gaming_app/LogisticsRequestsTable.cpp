@@ -163,7 +163,7 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign, co
         && base
         && profile_.CanBeOrdered( *base )
         && controllers_.GetCurrentMode() != eModes_Replay 
-        ? CreateLink( state, consign.GetId() ) : state,
+            ? CreateLink( state, consign.GetId() ) : state,
         consign );
 }
 

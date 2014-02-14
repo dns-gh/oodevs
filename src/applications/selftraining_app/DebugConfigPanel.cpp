@@ -171,8 +171,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     layout->addWidget( profilingBox_ );
     layout->addWidget( pathfindsBox_ );
     layout->addWidget( mapnikBox_ );
-    if( featuresBox_ )
-        layout->addWidget( featuresBox_ );
+    layout->addWidget( featuresBox_ );
     layout->setAlignment( Qt::AlignTop );
     QScrollArea* scroll = new QScrollArea();
     scroll->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
