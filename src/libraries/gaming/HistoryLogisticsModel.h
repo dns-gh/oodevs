@@ -28,9 +28,7 @@ class HistoryLogisticsModel : public LogisticsModel
 public:
     //! @name Constructors/Destructor
     //@{
-             HistoryLogisticsModel( LogisticConsignFactory_ABC& factory, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
-                                    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                                    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+             HistoryLogisticsModel( LogisticConsignFactory_ABC& factory, const kernel::EntityResolver_ABC& resolver,
                                     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::Controller& controller );
     virtual ~HistoryLogisticsModel();
     //@}

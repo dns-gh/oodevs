@@ -87,7 +87,13 @@ bool MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlin
     {
         const uint32_t providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
-        nameResolver.GetAgentName( providerId, provider_ );
+        std::string provider;
+        nameResolver.GetAgentName( providerId, provider );
+        if( provider.empty() )
+            nameResolver.GetAutomatName( providerId, provider );
+        if( provider.empty() )
+            nameResolver.GetFormationName( providerId, provider );
+        provider_ = provider;
     }
     if( msg.has_state() )
     {

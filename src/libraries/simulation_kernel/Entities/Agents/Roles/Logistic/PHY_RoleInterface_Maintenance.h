@@ -65,10 +65,13 @@ public:
 
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
     virtual bool HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState ) = 0;
-    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const = 0;
+    virtual int GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante, const PHY_ComposanteTypePion* type = 0 ) const = 0;
+
+    virtual bool HandleComposanteForDiagnosis( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual int GetAvailabilityScoreForDiagnosis( const PHY_ComposanteTypePion* type = 0 ) const = 0;
 
     virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
-    virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const = 0;
+    virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState, const PHY_ComposanteTypePion* type = 0 ) const = 0;
 
     virtual bool FinishAllHandlingsSuccessfullyWithoutDelay() = 0;
     //@}

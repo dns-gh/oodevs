@@ -194,7 +194,7 @@ class HasUsableComponentFunctor : public OnComponentFunctor_ABC
 public:
     HasUsableComponentFunctor( ComponentTypePredicate_ABC& functor )
         : functor_( functor )
-        , result_( false )
+        , result_ ( false )
     {
     }
     virtual ~HasUsableComponentFunctor() {}

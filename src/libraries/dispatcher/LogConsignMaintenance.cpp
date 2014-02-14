@@ -27,7 +27,7 @@ LogConsignMaintenance::LogConsignMaintenance( const Model& model, const sword::L
     , nTickCreation_      ( msg.tick() )
     , nEquipmentType_     ( msg.equipement().id() )
     , nBreakdownType_     ( msg.breakdown().id() )
-    , pTreatingAgent_     ( 0 )
+    , providerId_         ( 0 )
     , nState_             ( sword::LogMaintenanceHandlingUpdate::waiting_for_parts )
     , currentStateEndTick_( std::numeric_limits< unsigned long >::max() )
     , bDiagnosed_         ( false )
@@ -58,7 +58,7 @@ void LogConsignMaintenance::Update( const sword::LogMaintenanceHandlingUpdate& m
         currentStateEndTick_ = msg.current_state_end_tick();
     else
         currentStateEndTick_ = std::numeric_limits< unsigned long >::max();
-    pTreatingAgent_ = ( msg.provider().id() == 0 )? 0 : &model_.Agents().Get( msg.provider().id() );
+    providerId_ = msg.provider().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
     client::LogMaintenanceHandlingUpdate message;
     message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
-    message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
+    message().mutable_provider()->set_id( providerId_ );
     message().set_state( nState_ );
     message().set_diagnosed( bDiagnosed_ );
     if( currentStateEndTick_ != std::numeric_limits< unsigned long >::max() )
@@ -120,5 +120,5 @@ void LogConsignMaintenance::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 bool LogConsignMaintenance::IsObsoleteForUnit( unsigned int id ) const
 {
-    return agent_.GetId() == id || ( pTreatingAgent_ && pTreatingAgent_->GetId() == id );
+    return agent_.GetId() == id || ( providerId_ == id );
 }

@@ -143,6 +143,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach( *new gui::LogisticBase( controllers_, *result, dico, true, message.logistic_level() == sword::logistic_base ) );
     if( result->Get< gui::LogisticBase >().IsBase() )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, dico, *result ) );
+    result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
+    result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
     result->Attach( *new Equipments( *result,controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );

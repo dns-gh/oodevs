@@ -49,7 +49,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message, kernel::Agent_ABC& consumer )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_, simulation_, consumer );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_, static_.types_, static_.objectTypes_, simulation_, consumer );
 }
 
 // -----------------------------------------------------------------------------
