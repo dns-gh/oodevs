@@ -817,12 +817,12 @@
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost" version="1.50.r653"/>
         <update name="bugtrap" version="1.3.3291.42976"/>
-        <update name="buildtools" version="5.3"/>
+        <update name="buildtools" version="qa"/>
         <update name="cmake" version="2.8.11.1-masa1"/>
         <update name="depends" version="2.2.6000"/>
         <update name="flexlm" version="11.8"/>
         <update name="gdal" version="1.9.1.r671"/>
-        <update name="geometry" version="5.3"/>
+        <update name="geometry" version="qa"/>
         <update name="geos" version="3.3.7.r662"/>
         <update name="glew" version="1.9.0"/>
         <update name="hla" version="2.2" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
@@ -833,11 +833,11 @@
         <update name="icu" version="4.52.1"/>
         <update name="libpng" version="1.6.6"/>
         <update name="mapnik" version="2.2.0.r683"/>
-        <update name="masalife/brain" version="2013-2.0"/>
-        <update name="models" version="5.3" package="decisional-dev" todir="${data.dir}/data/models"/>
-        <update name="models" version="5.3" package="exercises-dev" todir="${data.dir}/exercises"/>
-        <update name="models" version="5.3" package="propagations-dev" todir="${data.dir}/data/propagations"/>
-        <update name="models" version="5.3" package="terrains-dev" todir="${data.dir}/data/terrains"/>
+        <update name="masalife/brain" version="qa"/>
+        <update name="models" version="qa" package="decisional-dev" todir="${data.dir}/data/models"/>
+        <update name="models" version="qa" package="exercises-dev" todir="${data.dir}/exercises"/>
+        <update name="models" version="qa" package="propagations-dev" todir="${data.dir}/data/propagations"/>
+        <update name="models" version="qa" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose" version="3.3.r351"/>
         <update name="openssl" version="1.0.0d"/>
         <update name="proj4" version="4.8.0"/>
@@ -846,13 +846,13 @@
         <update name="qt" version="4.7.0.r660"/>
         <update name="spatialite" version="3.1.0.r669"/>
         <update name="sqlite" version="3.7.13.r229"/>
-        <update name="steel" version="5.3"/>
-        <update name="svgl" version="5.3"/>
+        <update name="steel" version="qa"/>
+        <update name="svgl" version="qa"/>
         <update name="sword-proto" version="5.3" package="sword-protobuf" todir="${bin.dir}"/>
-        <update name="sword-doc" version="5.3" package="doc" todir="${root.dir}/doc"/>
+        <update name="sword-doc" version="qa" package="doc" todir="${root.dir}/doc"/>
         <update name="sword/testdata" version="5.2" package="testdata" todir="${data.dir}/tests"/>
-        <update name="terrain" version="5.3"/>
-        <update name="tools" version="1.3"/>
+        <update name="terrain" version="qa"/>
+        <update name="tools" version="qa"/>
         <update name="turtle" version="1.688"/>
         <update name="vcredist" version="1.1" package="vcredist"/>
         <update name="xalan-c" version="svn rev 990605 + patch"/>
@@ -861,10 +861,10 @@
         <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" version="1.1364.1123" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline" version="5.3"/>
-        <update name="timeline_ui" version="5.3" package="dll/${platform32}" todir="${run.dir}/cef"/>
-        <update name="timeline_ui" version="5.3" package="include"           todir="${include.dir}"/>
-        <update name="timeline_ui" version="5.3" package="lib/${platform}"   todir="${lib.dir}"/>
+        <update name="timeline" version="qa"/>
+        <update name="timeline_ui" version="qa" package="dll/${platform32}" todir="${run.dir}/cef"/>
+        <update name="timeline_ui" version="qa" package="include"           todir="${include.dir}"/>
+        <update name="timeline_ui" version="qa" package="lib/${platform}"   todir="${lib.dir}"/>
     </target>
 
     <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
