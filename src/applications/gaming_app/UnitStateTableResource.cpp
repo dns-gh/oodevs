@@ -287,19 +287,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
                 unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( capacityAndConsumption.first * percentage ) );
                 quantity -= newQuantity;
 
-                kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
-                std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, true ) );
-
-                tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-                actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
-                action->AddParameter( *parameterList );
-                actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
-                list.AddIdentifier( "ID", dotation.type_->GetId() );
-                list.AddQuantity( "Quantity", newQuantity );
-                list.AddNumeric( "Threshold",dotation.thresholdPercentage_ );
-                action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-                action->Attach( *new actions::ActionTasker( controllers_.controller_, &entity, false ) );
-                actionsModel_.Publish( *action, 0 );
+                CreateMagicAction( newQuantity, dotation, &entity );
                 break;
             }
         }
@@ -314,6 +302,27 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
             RecursiveMagicAction( const_cast< kernel::Entity_ABC& >( subEntity ), name, percentage, quantity, last );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::CreateMagicAction
+// Created: LDC 2014-02-14
+// -----------------------------------------------------------------------------
+void UnitStateTableResource::CreateMagicAction( unsigned int quantity, const Dotation& dotation, kernel::Entity_ABC* entity ) const
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
+    std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, true ) );
+
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
+    action->AddParameter( *parameterList );
+    actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
+    list.AddIdentifier( "ID", dotation.type_->GetId() );
+    list.AddQuantity( "Quantity", quantity );
+    list.AddNumeric( "Threshold", dotation.thresholdPercentage_ );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( controllers_.controller_, entity, false ) );
+    actionsModel_.Publish( *action );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,19 +376,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
                     const Dotation& dotation = dotationIterator.NextElement();
                     if( dotation.type_ && dotation.type_->GetName().c_str() == name )
                     {
-                        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
-                        std::unique_ptr< actions::Action_ABC > action( new actions::UnitMagicAction( actionType, controllers_.controller_, true ) );
-
-                        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-                        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
-                        action->AddParameter( *parameterList );
-                        actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
-                        list.AddIdentifier( "ID", dotation.type_->GetId() );
-                        list.AddQuantity( "Quantity", dotation.quantity_ + quantity );
-                        list.AddNumeric( "Threshold",dotation.thresholdPercentage_ );
-                        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-                        action->Attach( *new actions::ActionTasker( controllers_.controller_, last, false ) );
-                        actionsModel_.Publish( *action, 0 );
+                        CreateMagicAction( dotation.quantity_ + quantity, dotation, last );
                         break;
                     }
                 }
