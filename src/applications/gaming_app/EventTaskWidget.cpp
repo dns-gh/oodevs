@@ -15,6 +15,8 @@
 #include "clients_gui/EventTaskPresenter.h"
 #include "clients_gui/EventTaskViewState.h"
 #include "clients_gui/EventViewState.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichTextEdit.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -29,13 +31,13 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
     presenter_.AddSubPresenter( taskPresenter_ );
 
     // Editors
-    label_ = new QLineEdit();
-    description_ = new QTextEdit();
-    url_ = new QLineEdit();
+    label_ = new gui::RichLineEdit( "task-label" );
+    description_ = new gui::RichTextEdit( "task-description" );
+    url_ = new gui::RichLineEdit( "task-url" );
     bytes_ = new QLabel();
     bytes_->setEnabled( false );
     showButton_ = new QPushButton( tr( "Show" ) );
-    payload_ = new QTextEdit();
+    payload_ = new gui::RichTextEdit( "task-payload" );
     payload_->setVisible( false );
     payloadLabel_ = new QLabel( tr( "Base64 Payload" ) );
 
@@ -68,13 +70,13 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
     connect( label_,       SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnLabelChanged( const QString& ) ) );
     connect( url_,         SIGNAL( textChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnUrlChanged( const QString& ) ) );
     connect( showButton_,  SIGNAL( clicked() ),                     taskPresenter_.get(), SLOT( OnShowClicked() ) );
-    connect( description_, SIGNAL( textChanged() ),                 this,                 SLOT( OnDescriptionChanged() ) );
-    connect( payload_,     SIGNAL( textChanged() ),                 this,                 SLOT( OnPayloadChanged() ) );
+    connect( description_, SIGNAL( TextChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnDescriptionChanged( const QString& ) ) );
+    connect( payload_,     SIGNAL( TextChanged( const QString& ) ), taskPresenter_.get(), SLOT( OnPayloadChanged( const QString& ) ) );
     // We want theses slots to be called after those from task presenter
     connect( label_,       SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
     connect( url_,         SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
-    connect( description_, SIGNAL( textChanged() ),                 &presenter_, SLOT( OnEventContentChanged() ) );
-    connect( payload_,     SIGNAL( textChanged() ),                 &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( description_, SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( payload_,     SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,51 +86,6 @@ EventTaskWidget::EventTaskWidget( gui::EventPresenter& presenter )
 EventTaskWidget::~EventTaskWidget()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::SaveCursor
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskWidget::SaveCursor( QTextEdit& textEdit )
-{
-    cursorPos_ = textEdit.textCursor().position();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::RestoreCursor
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskWidget::RestoreCursor( QTextEdit& textEdit )
-{
-    if( cursorPos_ < 0 )
-        return;
-    QTextCursor cursor = textEdit.textCursor();
-    cursor.setPosition( cursorPos_, QTextCursor::MoveAnchor );
-    textEdit.setTextCursor( cursor );
-    cursorPos_ = -1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::OnDescriptionChanged
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskWidget::OnDescriptionChanged()
-{
-    SaveCursor( *description_ );
-    taskPresenter_->OnDescriptionChanged( description_->text() );
-    RestoreCursor( *description_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventTaskWidget::OnPayloadChanged
-// Created: ABR 2013-12-10
-// -----------------------------------------------------------------------------
-void EventTaskWidget::OnPayloadChanged()
-{
-    SaveCursor( *payload_ );
-    taskPresenter_->OnPayloadChanged( payload_->text() );
-    RestoreCursor( *payload_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,15 +107,13 @@ void EventTaskWidget::BlockSignals( bool blocked )
 // -----------------------------------------------------------------------------
 void EventTaskWidget::Build( const gui::EventTaskViewState& state )
 {
-    label_->setText( QString::fromStdString( state.label_ ) );
-    description_->setText( QString::fromStdString( state.description_ ) );
-    url_->setText( QString::fromStdString( state.url_ ) );
-    payload_->clear();
+    label_->SetText( QString::fromStdString( state.label_ ) );
+    description_->SetText( QString::fromStdString( state.description_ ) );
+    url_->SetText( QString::fromStdString( state.url_ ) );
     bytes_->clear();
     if( state.bytes_ != 0 )
         bytes_->setText( QString::number( state.bytes_ ) + QString( " bytes" ) );
-    if( !state.payload_.empty() && !state.url_.empty() )
-        payload_->setText( QString::fromStdString( state.payload_ ) );
+    payload_->SetText( QString::fromStdString( state.payload_ ) );
     showButton_->setText( state.isPayloadVisible_ ? tr( "Hide" ) : tr( "Show" ) );
     showButton_->setVisible( state.isUrlValid_ );
     bytes_->setVisible( state.isUrlValid_ );
