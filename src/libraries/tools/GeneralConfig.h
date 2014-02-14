@@ -75,7 +75,6 @@ public:
     Path BuildPopulationChildFile( const Path& file ) const;
 
     virtual void Parse( int argc, char** argv );
-    virtual bool IsActivated( const std::string& feature ) const;
 
     const Languages& GetLanguages() const;
     const std::string& GetCommandLineLanguage() const;
@@ -88,6 +87,9 @@ protected:
     static void ResolveNewRelativePath( const Path& oldRoot, const Path& newRoot, Path& path );
     void LoadExercise( const Path& file );
     //@}
+
+private:
+    bool IsActivated( const std::string& feature ) const;
 
 private:
     //! @name Member data

@@ -42,9 +42,10 @@ Equipment::Equipment( const Equipment& rhs )
     , onSiteFixable_( rhs.onSiteFixable_ )
     , inMaintenance_( rhs.inMaintenance_ )
     , prisonners_   ( rhs.prisonners_ )
+    , breakdowns_   ( rhs.breakdowns_ )
+    , consigns_     ( rhs.consigns_ )
 {
-    breakdowns_ = rhs.breakdowns_;
-    consigns_ = rhs.consigns_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,6 @@ void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& messa
     breakdowns_.resize( message.breakdowns_size() );
     for( int i = 0; i < message.breakdowns_size(); ++i )
         breakdowns_[ i ] = message.breakdowns( i );
-    assert( static_cast< int >( breakdowns_.size() ) == repairable_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +113,7 @@ Equipment Equipment::operator+( const Equipment& diff ) const
         assert( diff.breakdowns_[ i ] != 0 );
         if( diff.breakdowns_[ i ] < 0 ) // Remove breakdown
         {
-            auto it = equipment.breakdowns_.begin();
-            for( ; it != equipment.breakdowns_.end(); ++it )
+            for( auto it = equipment.breakdowns_.begin(); it != equipment.breakdowns_.end(); ++it )
                 if( -diff.breakdowns_[ i ] == *it )
                 {
                     equipment.breakdowns_.erase( it );
@@ -210,8 +209,9 @@ const std::vector< int >& Equipment::GetBreakdowns() const
 std::vector< int > Equipment::GetBreakdownsInTreatment( bool isDiagnosed ) const
 {
     std::vector< int > result;
-    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
-        if( it->second.inMaintenance_ && it->second.diagnosed_ == isDiagnosed )
+    int i = 0;
+    for( auto it = consigns_.begin(); it != consigns_.end() && i < inMaintenance_; ++it, ++i )
+        if( it->second.diagnosed_ == isDiagnosed )
             result.push_back( it->second.type_ );
     return result;
 }
@@ -224,7 +224,6 @@ void Equipment::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCre
 {
     int id = message.request().id();
     consigns_[ id ].diagnosed_ = false;
-    consigns_[ id ].inMaintenance_ = false;
     consigns_[ id ].type_ = message.breakdown().id();
 }
 
@@ -243,10 +242,7 @@ void Equipment::DeleteMaintenanceConsign( int id )
 // -----------------------------------------------------------------------------
 void Equipment::UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message )
 {
-    int id = message.request().id();
-    if( consigns_.end() == consigns_.find( id ) )
-        return;
-    consigns_[ id ].diagnosed_ = message.diagnosed();
-    consigns_[id].inMaintenance_ |= ( message.state() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter && 
-        message.state() != sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
+    auto it = consigns_.find( message.request().id() );
+    if( it != consigns_.end() )
+        it->second.diagnosed_ = message.diagnosed();
 }
