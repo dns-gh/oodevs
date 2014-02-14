@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:simpleType name="T_IntegralPercentage">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="units">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="unit" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nature">
+								<xs:complexType>
+									<xs:attribute name="nature-app6" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Chaine permettant de reconstituer le symbole associé à l'unité.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="atlas-nature" type="xs:string" use="required"/>
+									<xs:attribute name="level" type="T_NatureLevel" use="required">
+										<xs:annotation>
+											<xs:documentation>niveau hierarchique du pion.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+                  <xs:attribute name="depth" type="T_NonNegativeDouble" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="equipments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="equipment" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="convoyer" type="xs:boolean"/>
+												<xs:attribute name="count" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="crew" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="loadable" type="xs:boolean" use="optional"/>
+												<xs:attribute name="major" type="xs:boolean" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="sensors-range" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>portee des capteurs (en m)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="range" type="xs:nonNegativeInteger"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="equipments-range" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>portee des armes (en m)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="range" type="xs:nonNegativeInteger"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="crew-ranks">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="crew-rank" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="count" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="type" type="T_CrewRank" use="required">
+													<xs:annotation>
+														<xs:documentation>rang du personnel</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="logistics" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="category" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="resource" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="logistic-threshold" type="xs:nonNegativeInteger" use="required"/>
+															<xs:attribute name="name" type="xs:string" use="required"/>
+															<xs:attribute name="normalized-consumption" type="xs:nonNegativeInteger" use="required"/>
+															<xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="stocks" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="stock" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="logistic-supply-class" type="T_LogisticSupplyClass" use="required"/>
+												<xs:attribute name="threshold" type="xs:nonNegativeInteger" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="postures">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="posture" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="setup-time" type="T_Time" use="required"/>
+                                                <xs:attribute name="tear-down-time" type="T_Time" use="required"/>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="setup" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="installation-time" type="T_Time" use="required"/>
+									<xs:attribute name="uninstallation-time" type="T_Time" use="required"/>
+									<xs:attribute name="footprint-radius" type="xs:positiveInteger" use="optional"/>
+									<xs:attribute name="speed-modifier" type="T_ZeroToOneDouble" use="optional"/>									
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="nbc">
+								<xs:complexType>
+									<xs:attribute name="decontamination-delay" type="T_Time" use="required"/>
+									<xs:attribute name="suit" type="T_NbcSuit" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="distance-before-points" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="distance-before-point" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="drill-blow" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="length" type="xs:nonNegativeInteger" use="required"/>
+									<xs:attribute name="width" type="xs:nonNegativeInteger" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="force-ratio" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="feedback-time" type="T_Time" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="efficiencies" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="recon" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="combat-support" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="combat" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="mobility-support" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="counter-mobility-support" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="protection-support" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="engineering-support" type="T_IntegralPercentage" use="required"/>
+									<xs:attribute name="urban-area" type="T_IntegralPercentage" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
+							<xs:element name="crossing-height" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="height" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="decisional-model" type="xs:string" use="required"/>
+						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="type" type="T_UnitType" use="required"/>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="can-fly" type="xs:boolean" use="optional"/>
+						<xs:attribute name="standard-flying-height" type="xs:nonNegativeInteger" use="optional"/>
+						<xs:attribute name="tactical-flying-height" type="xs:nonNegativeInteger" use="optional"/>
+						<xs:attribute name="is-autonomous" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
