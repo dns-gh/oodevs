@@ -419,7 +419,7 @@ func (s *TestSuite) TestSelectDiagnosisTeam(c *C) {
 
 	// error: not in diagnosis team waiting state
 	err = client.SelectDiagnosisTeam(handlingId, MobilityRepairsTeam)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter: transport consign not in a waiting for diagnosis team selection state")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter: cannot select a diagnosis team for a transport consign")
 
 	// skip transporter selection
 	WaitStateEntered(c, client, handlingId,
