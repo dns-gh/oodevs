@@ -13,13 +13,13 @@
 #include "Localisation.h"
 #include "Object_ABC.h"
 #include "ObjectAttributeContainer.h"
-#include "protocol/SimulationSenders.h"
 #include <tools/Resolver.h>
 
 namespace sword
 {
     class ObjectCreation;
     class ObjectUpdate;
+    class RgbColor;
 }
 
 namespace dispatcher
@@ -60,13 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Object( const Object& );            //!< Copy constructor
-    Object& operator=( const Object& ); //!< Assignment operator
-    //@}
-
-private:
 
     //! @name Types
     //@{
@@ -83,8 +76,8 @@ private:
     Team_ABC& side_;
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
-    std::map< std::string, std::string >       extensions_;
-    sword::RgbColor                            color_;
+    std::map< std::string, std::string > extensions_;
+    std::unique_ptr< sword::RgbColor > color_;
 };
 
 }

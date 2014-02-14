@@ -36,7 +36,7 @@ Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_color() )
-         color_ = msg.color();
+         color_.reset( new sword::RgbColor( msg.color() ) );
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
@@ -89,8 +89,8 @@ void Side::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( GetId() );
     asn().set_name( GetName().toStdString() );
     asn().set_type( nType_ );
-    if( color_.IsInitialized() )
-        *asn().mutable_color() = color_;
+    if( color_ )
+        *asn().mutable_color() = *color_;
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();

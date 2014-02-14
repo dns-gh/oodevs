@@ -11,7 +11,6 @@
 #define __Formation_h_
 
 #include "Formation_ABC.h"
-#include "protocol/SimulationSenders.h"
 #include "ENT/ENT_Enums.h"
 
 namespace sword
@@ -21,6 +20,7 @@ namespace sword
     class FormationCreation;
     class FormationUpdate;
     class FormationChangeSuperior;
+    class RgbColor;
 }
 
 namespace dispatcher
@@ -79,12 +79,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Formation( const Formation& );            //!< Copy constructor
-    Formation& operator=( const Formation& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename Superior, typename Entity >
@@ -101,7 +95,7 @@ private:
     dispatcher::Team_ABC&                        team_;
     E_NatureLevel                                level_;
     std::string                                  app6symbol_;
-    sword::RgbColor                              color_;
+    std::unique_ptr< sword::RgbColor >           color_;
     std::auto_ptr< LogisticEntity >              logisticEntity_;
     dispatcher::Formation_ABC*                   parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;

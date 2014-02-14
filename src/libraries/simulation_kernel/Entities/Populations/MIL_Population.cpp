@@ -32,6 +32,7 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_Color.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Geometry.h"
 #include "Tools/MIL_IDManager.h"
@@ -100,6 +101,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     , pKnowledge_                 ( new DEC_PopulationKnowledge( *this ) )
     , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
     , vBarycenter_                ( new MT_Vector2D() )
+    , pColor_                     ( new MIL_Color( xis ) )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -151,6 +153,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MissionControlle
     , pKnowledge_                 ( new DEC_PopulationKnowledge( *this ) )
     , orderManager_               ( new MIL_PopulationOrderManager( controller, *this ) )
     , vBarycenter_                ( new MT_Vector2D() )
+    , pColor_                     ( 0 )
     , bPionMaxSpeedOverloaded_    ( false )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
@@ -208,6 +211,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type,
     pKnowledgeGroup_ = army.FindCrowdKnowledgeGroup();
     if( pKnowledgeGroup_ )
         pKnowledgeGroup_->RegisterPopulation( *this );
+    pColor_.reset( new MIL_Color( army.GetColor() ) );
     SendCreation( context );
     concentrations_.push_back( boost::make_shared< MIL_PopulationConcentration >( *this, point, number ) );
     pArmy_->RegisterPopulation( *this );
@@ -257,6 +261,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     DEC_PopulationDecision* pRole;
+    MIL_Color* pColor;
     assert( pDefaultAttitude_ );
     file >> rArmedIndividuals_
          >> rNewArmedIndividuals_
@@ -276,9 +281,11 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pAffinities_
          >> pExtensions_
          >> vBarycenter_
+         >> pColor
          >> pRole;
     RegisterRole( *pRole );
     RegisterRole( *new DEC_Representations() );
+    pColor_.reset( pColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,6 +296,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
+    const MIL_Color* const pColor = pColor_.get();
     file << pArmy_
          << attitude
          << rArmedIndividuals_
@@ -308,7 +316,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << bHasDoneMagicMove_
          << pAffinities_
          << pExtensions_
-         << vBarycenter_;
+         << vBarycenter_
+         << pColor;
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
 
@@ -329,6 +338,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
+    pColor_->WriteODB( xos );
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else if( !flows_.empty() )
@@ -1421,6 +1431,7 @@ void MIL_Population::SendCreation( unsigned int context ) const
     asnMsg().mutable_repartition()->set_male( static_cast< float >( rMale_ ) );
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
     asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
+    pColor_->SendFullState( asnMsg );
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SendCreation( context );

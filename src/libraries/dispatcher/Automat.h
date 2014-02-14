@@ -13,7 +13,6 @@
 #include "Automat_ABC.h"
 #include "DecisionalState.h"
 #include "LogisticHierarchy.h"
-#include "protocol/SimulationSenders.h"
 #include <tools/Resolver_ABC.h>
 
 namespace sword
@@ -123,7 +122,7 @@ private:
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;
     dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
-    sword::RgbColor color_;
+    std::unique_ptr< sword::RgbColor > color_;
     sword::EnumAutomatMode nAutomatState_;
     sword::ForceRatio_Value nForceRatioState_;
     sword::EnumMeetingEngagementStatus nCloseCombatState_;

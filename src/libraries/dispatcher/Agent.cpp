@@ -100,7 +100,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
 
     automat_->Register( *this );
     if( msg.has_color() )
-        color_ = msg.color();
+        color_.reset( new sword::RgbColor( msg.color() ) );
 
     if( msg.has_level() )
         level_ = static_cast< E_NatureLevel >( msg.level() );
@@ -509,8 +509,8 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_name( name_ );
     message().mutable_automat()->set_id( automat_->GetId() );
     message().set_pc( bPC_ );
-    if( color_.IsInitialized() )
-        *message().mutable_color() = color_;
+    if( color_ )
+        *message().mutable_color() = *color_;
     if( humanRepartition_.get() )
     {
         message().mutable_repartition()->set_male( humanRepartition_->male_ );
