@@ -56,7 +56,10 @@ ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config,
     //exercise list
     exerciseLabel_ = new QLabel();
     exerciseList_ = new ExerciseListView( config, fileLoader );
-    connect( exerciseList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
+    exerciseList_->setSelectionMode( QAbstractItemView::ExtendedSelection );
+    connect( exerciseList_->selectionModel(),
+        SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ),
+        SLOT( OnSelectionChanged( const QItemSelection&, const QItemSelection& ) ) );
     QHBoxLayout* exerciseListLayout = new QHBoxLayout();
     exerciseListLayout->addWidget( exerciseLabel_ );
     exerciseListLayout->addWidget( exerciseList_ );
@@ -307,16 +310,33 @@ bool ExportWidget::IsButtonEnabled()
 // Name: ExportWidget::OnSelectionChanged
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QModelIndex& /*previous*/ )
+void ExportWidget::OnSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected )
 {
-    tools::Path exercise = exerciseList_->GetExerciseName( modelIndex );
-    exerciseContentModel_.clear();
-    if( !exercise.IsEmpty() )
+    const auto selections = selected.indexes();
+    for( auto it = selections.begin(); it != selections.end(); ++it )
     {
-        frontend::BuildExerciseFeatures( exercise, config_, exerciseContentModel_ );
-        frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
-        exerciseContent_->expandAll();
-        exerciseContent_->resizeColumnToContents( 0 );
+        const tools::Path exercise = exerciseList_->GetExerciseName( *it );
+        if( !exercise.IsEmpty() )
+        {
+            frontend::BuildExerciseFeatures( exercise, config_, exerciseContentModel_ );
+            frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
+            exerciseContent_->expandAll();
+            exerciseContent_->resizeColumnToContents( 0 );
+        }
+    }
+    const auto deselections = deselected.indexes();
+    for( auto it = deselections.begin(); it != deselections.end(); ++it )
+    {
+        const tools::Path exercise = exerciseList_->GetExerciseName( *it );
+        if( !exercise.IsEmpty() )
+        {
+            frontend::RemoveExerciseFeatures( exercise, exerciseContentModel_ );
+            std::vector< tools::Path > exercises;
+            const auto indexes = exerciseList_->selectionModel()->selectedIndexes();
+            for( auto it = indexes.begin(); it != indexes.end(); ++it )
+                exercises.push_back( exerciseList_->GetExerciseName( *it ) );
+            frontend::RemoveExerciseData( exercise, exercises, config_, exerciseContentModel_, fileLoader_ );
+        }
     }
     OnButtonChanged();
 }

@@ -78,7 +78,7 @@ public slots:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( const QModelIndex& next, const QModelIndex& previous );
+    void OnSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected );
     void OnSelectionChanged( QListWidgetItem* item );
     void OnModelNameChanged( const QString& text );
     //@}
